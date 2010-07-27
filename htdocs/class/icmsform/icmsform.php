@@ -455,7 +455,7 @@ class IcmsForm extends XoopsThemeForm {
 				break;
 
 			case 'country':
-				return new XoopsFormSelectCountry($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
+				return new icms_form_elements_select_Country($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
 				break;
 
 			case 'urllink':

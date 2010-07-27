@@ -31,11 +31,6 @@ if (!defined('ICMS_ROOT_PATH')) {
 include_once ICMS_ROOT_PATH."/class/xoopslists.php";
 
 /**
- * Parent
- */
-include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
-
-/**
  * A select field with countries
  *
  * @package     kernel
@@ -44,8 +39,9 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectCountry extends icms_form_elements_Select
-{
+class XoopsFormSelectCountry extends icms_form_elements_select_Country {
+
+	private $_deprecated;
 	/**
 	 * Constructor
 	 *
@@ -58,7 +54,7 @@ class XoopsFormSelectCountry extends icms_form_elements_Select
 	function XoopsFormSelectCountry($caption, $name, $value = null, $size = 1)
 	{
 		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(IcmsLists::getCountryList());
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Country', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
