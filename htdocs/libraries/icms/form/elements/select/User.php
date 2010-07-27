@@ -53,7 +53,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 	 */
 	function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false, $showremovedusers = false, $justremovedusers = false) {
 		$limit = 200;
-		$select_element = new XoopsFormSelect('', $name, $value, $size, $multiple);
+		$select_element = new icms_form_elements_Select('', $name, $value, $size, $multiple);
 		if ($include_anon) {
 			$select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
 		}

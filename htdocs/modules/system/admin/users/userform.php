@@ -34,7 +34,7 @@ if ($icmsConfigAuth['auth_openid'] == 1) {
 	$openid_tray->addElement($openid_cbox);
 }
 $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
-//  $avatar_select = new XoopsFormSelect("", "user_avatar", $avatar_value);
+//  $avatar_select = new icms_form_elements_Select("", "user_avatar", $avatar_value);
 //  $avatar_array = IcmsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
 //  $avatar_select->addOptionArray($avatar_array);
 //  $a_dirlist = IcmsLists::getDirListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
@@ -83,20 +83,20 @@ $sig_tray->addElement($sig_tarea);
 $sig_cbox = new icms_form_elements_Checkbox("", "attachsig", $sig_cbox_value);
 $sig_cbox->addOption(1, _US_SHOWSIG);
 $sig_tray->addElement($sig_cbox);
-$umode_select = new XoopsFormSelect(_US_CDISPLAYMODE, "umode", $umode_value);
+$umode_select = new icms_form_elements_Select(_US_CDISPLAYMODE, "umode", $umode_value);
 $umode_select->addOptionArray(array("nest"=>_NESTED, "flat"=>_FLAT, "thread"=>_THREADED));
-$uorder_select = new XoopsFormSelect(_US_CSORTORDER, "uorder", $uorder_value);
+$uorder_select = new icms_form_elements_Select(_US_CSORTORDER, "uorder", $uorder_value);
 $uorder_select->addOptionArray(array("0"=>_OLDESTFIRST, "1"=>_NEWESTFIRST));
 
 // RMV-NOTIFY
 icms_loadLanguageFile('core', 'notification');
 include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-$notify_method_select = new XoopsFormSelect(_NOT_NOTIFYMETHOD, 'notify_method', $notify_method_value);
+$notify_method_select = new icms_form_elements_Select(_NOT_NOTIFYMETHOD, 'notify_method', $notify_method_value);
 $notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
-$notify_mode_select = new XoopsFormSelect(_NOT_NOTIFYMODE, 'notify_mode', $notify_mode_value);
+$notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', $notify_mode_value);
 $notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
 $bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, "bio", $bio_value);
-$rank_select = new XoopsFormSelect(_AM_RANK, "rank", $rank_value);
+$rank_select = new icms_form_elements_Select(_AM_RANK, "rank", $rank_value);
 $ranklist = IcmsLists::getUserRankList();
 if (count($ranklist) > 0) {
 	$rank_select->addOption(0, "--------------");
@@ -121,7 +121,7 @@ if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $icmsUser->ge
 		$group_select = array(new XoopsFormSelectGroup(_US_GROUPS, 'groups', false, $groups, 5, true));
 	} else {
 		$group_manager_value = array_intersect_key(icms::handler('icms_member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', $icmsUser->getGroups()))) ;
-		$group_array = new XoopsFormSelect(_US_GROUPS, 'groups',$groups, 5, true);
+		$group_array = new icms_form_elements_Select(_US_GROUPS, 'groups',$groups, 5, true);
 		$group_array->addOptionArray($group_manager_value);
 		$group_select = array ($group_array);
 		//$group_hidden = array_diff(icms::handler('icms_member')->getGroupList(),$group_manager_value);

@@ -96,7 +96,7 @@ class SystemBlocksadmin extends icms_block_Object {
 
 	private function side() {
 		$block_positions = $this->handler->getBlockPositions( true );
-		//		$form_object = new XoopsFormSelect( '', "side[".$this->getVar('bid','n')."]", $this->getVar('side','n'));
+		//		$form_object = new icms_form_elements_Select( '', "side[".$this->getVar('bid','n')."]", $this->getVar('side','n'));
 		//		foreach ( array_keys( $block_positions ) as $j) {
 		//			$form_object->addOption( $j, $block_positions[$j]);
 		//		}
@@ -183,7 +183,7 @@ class SystemBlocksadmin extends icms_block_Object {
 
 	function getSideControl() {
 		include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
-		$control = new XoopsFormSelect('','block_side[]',$this->getVar( 'side', 'e'));
+		$control = new icms_form_elements_Select('','block_side[]',$this->getVar( 'side', 'e'));
 		$positions = $this->handler->getBlockPositions( true );
 		$block_positions = array();
 		foreach ($positions as $k=>$position) {

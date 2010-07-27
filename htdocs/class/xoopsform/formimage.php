@@ -29,7 +29,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
-class MastopFormSelectImage extends XoopsFormSelect
+class MastopFormSelectImage extends icms_form_elements_Select
 {
 	/**
 	 * OptGroup
@@ -49,7 +49,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 	 */
 	function MastopFormSelectImage($caption, $name, $value=null, $cat = null)
 	{
-		$this->XoopsFormSelect($caption, $name, $value);
+		parent::__construct($caption, $name, $value);
 		$this->addOptGroupArray($this->getImageList($cat));
 	}
 

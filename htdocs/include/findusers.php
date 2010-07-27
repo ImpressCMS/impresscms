@@ -369,12 +369,12 @@ if (empty($_POST["user_submit"])) {
 			$member_handler = icms::handler('icms_member');
 			$groups = $member_handler->getGroupList();
 			$groups[0] = _ALL;
-			$group_select = new XoopsFormSelect(_MA_USER_GROUP, 'groups', @$_POST['groups'], 3, true);
+			$group_select = new icms_form_elements_Select(_MA_USER_GROUP, 'groups', @$_POST['groups'], 3, true);
 			$group_select->addOptionArray($groups);
 
 			$ranks = $rank_handler->getList();
 			$ranks[0] = _ALL;
-			$rank_select = new XoopsFormSelect(_MA_USER_RANK, 'rank', (int) ( @$_POST['rank'] ));
+			$rank_select = new icms_form_elements_Select(_MA_USER_RANK, 'rank', (int) ( @$_POST['rank'] ));
 			$rank_select->addOptionArray($ranks);
 
 
@@ -401,9 +401,9 @@ if (empty($_POST["user_submit"])) {
 			}
 		}
 
-		$sort_select = new XoopsFormSelect(_MA_USER_SORT, "user_sort", @$_POST["user_sort"]);
+		$sort_select = new icms_form_elements_Select(_MA_USER_SORT, "user_sort", @$_POST["user_sort"]);
 		$sort_select->addOptionArray(array("uname"=>_MA_USER_UNAME, "last_login"=>_MA_USER_LASTLOGIN, "user_regdate"=>_MA_USER_REGDATE, "posts"=>_MA_USER_POSTS));
-		$order_select = new XoopsFormSelect(_MA_USER_ORDER, "user_order", @$_POST["user_order"]);
+		$order_select = new icms_form_elements_Select(_MA_USER_ORDER, "user_order", @$_POST["user_order"]);
 		$order_select->addOptionArray(array("ASC"=>_MA_USER_ASC,"DESC"=>_MA_USER_DESC));
 
 		$form->addElement($sort_select);

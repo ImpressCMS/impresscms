@@ -44,7 +44,7 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectCountry extends XoopsFormSelect
+class XoopsFormSelectCountry extends icms_form_elements_Select
 {
 	/**
 	 * Constructor
@@ -57,7 +57,7 @@ class XoopsFormSelectCountry extends XoopsFormSelect
 	 */
 	function XoopsFormSelectCountry($caption, $name, $value = null, $size = 1)
 	{
-		$this->XoopsFormSelect($caption, $name, $value, $size);
+		parent::__construct($caption, $name, $value, $size);
 		$this->addOptionArray(IcmsLists::getCountryList());
 	}
 }

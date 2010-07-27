@@ -200,7 +200,7 @@ function imanager_index($imgcat_id=null) {
 		$form = new XoopsThemeForm(_ADDIMAGE, 'image_form', 'xoopsimagebrowser.php', 'post', true);
 		$form->setExtra('enctype="multipart/form-data"');
 		$form->addElement(new XoopsFormText(_IMAGENAME, 'image_nicename', 50, 255), true);
-		$select = new XoopsFormSelect(_IMAGECAT, 'imgcat_id');
+		$select = new icms_form_elements_Select(_IMAGECAT, 'imgcat_id');
 		$select->addOptionArray($imgcat_handler->getCategList($groups,'imgcat_write'));
 		$form->addElement($select, true);
 		$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'image_file', 5000000));
@@ -219,7 +219,7 @@ function imanager_index($imgcat_id=null) {
 	}
 	$form = new XoopsThemeForm(_MD_ADDIMGCAT, 'imagecat_form', 'xoopsimagebrowser.php', 'post', true);
 	$list =& $imgcat_handler->getCategList($groups,'imgcat_write');
-	$sup = new XoopsFormSelect(_MD_IMGCATPARENT, 'imgcat_pid', $id);
+	$sup = new icms_form_elements_Select(_MD_IMGCATPARENT, 'imgcat_pid', $id);
 	$list[0] = '--------------------';
 	ksort($list);
 	$sup->addOptionArray($list);
@@ -798,7 +798,7 @@ function showAddImgForm($imgcat_id) {
 	$form = new XoopsThemeForm(_ADDIMAGE, 'image_form', $_SERVER['PHP_SELF'], 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');
 	$form->addElement(new XoopsFormText(_IMAGENAME, 'image_nicename', 50, 255), true);
-	$select = new XoopsFormSelect(_IMAGECAT, 'imgcat_id', (int) ($imgcat_id));
+	$select = new icms_form_elements_Select(_IMAGECAT, 'imgcat_id', (int) ($imgcat_id));
 	$select->addOptionArray($imgcat_handler->getCategList());
 	$form->addElement($select, true);
 	$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'image_file', 5000000));

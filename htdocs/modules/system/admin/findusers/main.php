@@ -88,9 +88,9 @@ if ($op == "form") {
 	$mailok_radio->addOptionArray(array("mailok"=>_AM_MAILOK, "mailng"=>_AM_MAILNG, "both"=>_AM_BOTH));
 	$type_radio = new icms_form_elements_Radio(_AM_SHOWTYPE, "user_type", "actv");
 	$type_radio->addOptionArray(array("actv"=>_AM_ACTIVE, "inactv"=>_AM_INACTIVE, "both"=>_AM_BOTH));
-	$sort_select = new XoopsFormSelect(_AM_SORT, "user_sort");
+	$sort_select = new icms_form_elements_Select(_AM_SORT, "user_sort");
 	$sort_select->addOptionArray(array("uname"=>_AM_UNAME,"login_name"=>_AM_LOGINNAME,"email"=>_AM_EMAIL,"last_login"=>_AM_LASTLOGIN,"user_regdate"=>_AM_REGDATE,"posts"=>_AM_POSTS));
-	$order_select = new XoopsFormSelect(_AM_ORDER, "user_order");
+	$order_select = new icms_form_elements_Select(_AM_ORDER, "user_order");
 	$order_select->addOptionArray(array("ASC"=>_AM_ASC,"DESC"=>_AM_DESC));
 	$limit_text = new XoopsFormText(_AM_LIMIT, "limit", 6, 2);
 	$fct_hidden = new icms_form_elements_Hidden("fct", "findusers");

@@ -177,7 +177,7 @@ class IcmsForm extends XoopsThemeForm {
 				if (isset($controls[$key])) {
 					/* If the control has name, it's because it's an object already present in the script
 					 * for example, "user"
-					 * If the field does not have a name, than we will use a "select" (ie XoopsFormSelect)
+					 * If the field does not have a name, than we will use a "select" (ie icms_form_elements_Select)
 					 */
 					if (!isset($controls[$key]['name']) || !$controls[$key]['name']) {
 						$controls[$key]['name'] = 'select';
@@ -313,7 +313,7 @@ class IcmsForm extends XoopsThemeForm {
 				} else {
 					$groups_value = $this->targetObject->getGroupPerm($permission['perm_name']);
 				}
-				$groups_select = new XoopsFormSelect($permission['caption'], $permission['perm_name'], $groups_value, 4, true);
+				$groups_select = new icms_form_elements_Select($permission['caption'], $permission['perm_name'], $groups_value, 4, true);
 				$groups_select->setDescription($permission['description']);
 				$groups_select->addOptionArray($group_list);
 				$this->addElement($groups_select);
@@ -512,7 +512,7 @@ class IcmsForm extends XoopsThemeForm {
 	function getThemeSelect($key, $var, $multiple=false) {
 
 		$size = $multiple ? 5 : 1;
-		$theme_select = new XoopsFormSelect($var['form_caption'], $key, $this->targetObject->getVar($key), $size, $multiple);
+		$theme_select = new icms_form_elements_Select($var['form_caption'], $key, $this->targetObject->getVar($key), $size, $multiple);
 
 		$handle = opendir(ICMS_THEME_PATH.'/');
 		$dirlist = array();

@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormParentcategoryElement extends XoopsFormSelect {
+class IcmsFormParentcategoryElement extends icms_form_elements_Select {
 
 	/**
 	 * Constructor
@@ -30,7 +30,7 @@ class IcmsFormParentcategoryElement extends XoopsFormSelect {
 
 		include_once ICMS_ROOT_PATH . "/class/tree.php" ;
 		$mytree = new icms_core_ObjectTree($categories, "category_id", "category_pid");
-		$this->XoopsFormSelect( $object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e') );
+		parent::__construct( $object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e') );
 
 		$ret = array();
 		$options = $this->getOptionArray($mytree, $category_title_field, 0, "", $ret);

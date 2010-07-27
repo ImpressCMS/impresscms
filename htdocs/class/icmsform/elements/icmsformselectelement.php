@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormSelectElement extends XoopsFormSelect {
+class IcmsFormSelectElement extends icms_form_elements_Select {
 	var $multiple = false;
 
 	/**
@@ -30,7 +30,7 @@ class IcmsFormSelectElement extends XoopsFormSelect {
 
 		$value = isset($control['value']) ? $control['value'] : $object->getVar($key, 'e');
 
-		$this->XoopsFormSelect($var['form_caption'], $key, $value, $size, $this->multiple);
+		parent::__construct($var['form_caption'], $key, $value, $size, $this->multiple);
 
 		if (isset($control['options'])) {
 			$this->addOptionArray($control['options']);
@@ -39,7 +39,7 @@ class IcmsFormSelectElement extends XoopsFormSelect {
 			if (isset($control['object'])) {
 				if (method_exists($control['object'], $control['method'])) {
 					if ($option_array = $control['object']->$control['method']()) {
-						// Adding the options array to the XoopsFormSelect
+						// Adding the options array to the select element
 						$this->addOptionArray($option_array);
 					}
 				}
@@ -60,7 +60,7 @@ class IcmsFormSelectElement extends XoopsFormSelect {
 				if (method_exists($control_handler, $control['method'])) {
 					// TODO : How could I pass the parameters in the following call ...
 					if ($option_array = $control_handler->$control['method']()) {
-						// Adding the options array to the XoopsFormSelect
+						// Adding the options array to the select element
 						$this->addOptionArray($option_array);
 					}
 				}

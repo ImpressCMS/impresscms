@@ -40,7 +40,7 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Theme extends XoopsFormSelect {
+class icms_form_elements_select_Theme extends icms_form_elements_Select {
 	/**
 	 * Constructor
 	 *
@@ -50,7 +50,7 @@ class icms_form_elements_select_Theme extends XoopsFormSelect {
 	 * @param	int		$size	Number or rows. "1" makes a drop-down-list
 	 */
 	function __construct($caption, $name, $value = null, $size = 1) {
-		$this->XoopsFormSelect($caption, $name, $value, $size);
+		parent::__construct($caption, $name, $value, $size);
 		$this->addOptionArray(IcmsLists::getThemesList());
 	}
 }

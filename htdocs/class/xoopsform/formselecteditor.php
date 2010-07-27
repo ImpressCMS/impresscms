@@ -45,7 +45,7 @@ class XoopsFormSelectEditor extends icms_form_elements_Tray
 
 		parent::__construct(_SELECT);
 		$edtlist = IcmsLists::getEditorsList();
-		$option_select = new XoopsFormSelect("", $name, $value);
+		$option_select = new icms_form_elements_Select("", $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
 				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&'.$querys.'\';

@@ -2,45 +2,34 @@
 /**
  * Creates a form attribute which is able to select a language
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formselectlang.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-/**
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 /**
  * lists of values
  */
-include_once ICMS_ROOT_PATH."/class/xoopslists.php";
+include_once ICMS_ROOT_PATH . "/class/xoopslists.php";
 /**
  * parent class
  */
-include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
+include_once ICMS_ROOT_PATH . "/class/xoopsform/formselect.php";
 
 /**
  * A select field with available languages
  *
- * @package     kernel
- * @subpackage  form
- *
+ * @category	ICMS
+ * @package     Form
+ * @subpackage  Elements
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Lang extends XoopsFormSelect
-{
+class icms_form_elements_select_Lang extends icms_form_elements_Select {
 	/**
 	 * Constructor
 	 *
@@ -50,11 +39,9 @@ class icms_form_elements_select_Lang extends XoopsFormSelect
 	 * 							Legal is any name of a ICMS_ROOT_PATH."/language/" subdirectory.
 	 * @param	int		$size	Number of rows. "1" makes a drop-down-list.
 	 */
-	function icms_form_elements_select_Lang($caption, $name, $value = null, $size = 1)
-	{
-		$this->XoopsFormSelect($caption, $name, $value, $size);
+	public function __construct($caption, $name, $value = null, $size = 1) {
+		parent::__construct($caption, $name, $value, $size);
 		$this->addOptionArray(IcmsLists::getLangList());
 	}
 }
 
-?>

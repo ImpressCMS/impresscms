@@ -60,7 +60,7 @@ if (is_object($icmsUser)) {
 		// show status change box when editing (comment id is not empty)
 		if (!empty($com_id)) {
 			include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
-			$status_select = new XoopsFormSelect(_CM_STATUS, 'com_status', $com_status);
+			$status_select = new icms_form_elements_Select(_CM_STATUS, 'com_status', $com_status);
 			$status_select->addOptionArray(
 				array(
 					XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE,

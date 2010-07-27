@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormTimeElement extends XoopsFormSelect {
+class IcmsFormTimeElement extends icms_form_elements_Select {
 
 	/**
 	 * Constructor
@@ -29,7 +29,7 @@ class IcmsFormTimeElement extends XoopsFormSelect {
 			}
 		}
 		ksort($timearray);
-		$this->XoopsFormSelect($var['form_caption'], $key, $object->getVar($key, 'e'));
+		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'));
 		$this->addOptionArray($timearray);
 	}
 }

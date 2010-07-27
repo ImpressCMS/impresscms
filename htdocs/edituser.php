@@ -349,17 +349,17 @@ if ($op == 'editprofile')
 		}
 	}
 
-	$umode_select = new XoopsFormSelect(_US_CDISPLAYMODE, 'umode', $icmsUser->getVar('umode'));
+	$umode_select = new icms_form_elements_Select(_US_CDISPLAYMODE, 'umode', $icmsUser->getVar('umode'));
 	$umode_select->addOptionArray(array('nest'=>_NESTED, 'flat'=>_FLAT, 'thread'=>_THREADED));
-	$uorder_select = new XoopsFormSelect(_US_CSORTORDER, 'uorder', $icmsUser->getVar('uorder'));
+	$uorder_select = new icms_form_elements_Select(_US_CSORTORDER, 'uorder', $icmsUser->getVar('uorder'));
 	$uorder_select->addOptionArray(array(XOOPS_COMMENT_OLD1ST => _OLDESTFIRST, XOOPS_COMMENT_NEW1ST => _NEWESTFIRST));
-	$selected_theme = new XoopsFormSelect(_US_SELECT_THEME, 'theme_selected' , $icmsUser->theme() );
+	$selected_theme = new icms_form_elements_Select(_US_SELECT_THEME, 'theme_selected' , $icmsUser->theme() );
 	foreach ($icmsConfig['theme_set_allowed'] as $theme)
 	{
 		$selected_theme->addOption($theme, $theme);
 	}
 
-	$selected_language = new XoopsFormSelect(_US_SELECT_LANG, 'language_selected', $icmsUser->language());
+	$selected_language = new icms_form_elements_Select(_US_SELECT_LANG, 'language_selected', $icmsUser->language());
 	include_once ICMS_ROOT_PATH."/class/xoopslists.php" ;
 	foreach (IcmsLists::getLangList() as $language)
 	{
@@ -370,9 +370,9 @@ if ($op == 'editprofile')
 	// TODO: add this to admin user-edit functions...
 	icms_loadLanguageFile('core', 'notification');
 	include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
-	$notify_method_select = new XoopsFormSelect(_NOT_NOTIFYMETHOD, 'notify_method', $icmsUser->getVar('notify_method'));
+	$notify_method_select = new icms_form_elements_Select(_NOT_NOTIFYMETHOD, 'notify_method', $icmsUser->getVar('notify_method'));
 	$notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
-	$notify_mode_select = new XoopsFormSelect(_NOT_NOTIFYMODE, 'notify_mode', $icmsUser->getVar('notify_mode'));
+	$notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', $icmsUser->getVar('notify_mode'));
 	$notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
 	$bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $icmsUser->getVar('bio', 'E'));
 	$cookie_radio_value = empty($_COOKIE[$icmsConfig['usercookie']]) ? 0 : 1;
@@ -467,7 +467,7 @@ if ($op == 'avatarform')
 	}
 	$avatar_handler = icms::handler('icms_data_avatar');
 	$form2 = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
-	$avatar_select = new XoopsFormSelect('', 'user_avatar', $icmsUser->getVar('user_avatar'));
+	$avatar_select = new icms_form_elements_Select('', 'user_avatar', $icmsUser->getVar('user_avatar'));
 	$avatar_select->addOptionArray($avatar_handler->getList('S'));
 	$avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"".ICMS_URL."\")'");
 	$avatar_tray = new icms_form_elements_Tray(_US_AVATAR, '&nbsp;');

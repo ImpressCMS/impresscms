@@ -43,7 +43,7 @@ class icms_form_elements_Datetime extends icms_form_elements_Tray {
 			}
 		}
 		ksort($timearray);
-		$timeselect = new XoopsFormSelect('', $name.'[time]', $datetime['hours'] * 3600 + 600 * ceil($datetime['minutes'] / 10));
+		$timeselect = new icms_form_elements_Select('', $name.'[time]', $datetime['hours'] * 3600 + 600 * ceil($datetime['minutes'] / 10));
 		$timeselect->addOptionArray($timearray);
 		$this->addElement($timeselect);
 	}

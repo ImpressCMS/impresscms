@@ -107,14 +107,14 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'autotasksystem':
 					$handler = icms_getModuleHandler('autotasks', 'system');
 					$options = &$handler->getSystemHandlersList(true);
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 1, false );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 1, false );
 					foreach ($options as $option) {
 						$ele->addOption ( $option, $option );
 					}
 					unset($handler, $options, $option);
 				break;
 				case 'select' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ),  $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ),  $config [$i]->getConfValueForOutput () );
 					$options = $config_handler->getConfigOptions ( new icms_criteria_Item ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for ($j = 0; $j < $opcount; $j ++) {
@@ -124,7 +124,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'select_multi' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
 					$options = $config_handler->getConfigOptions ( new icms_criteria_Item ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for ($j = 0; $j < $opcount; $j ++) {
@@ -139,7 +139,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'theme' :
 				case 'theme_multi' :
 				case 'theme_admin' :
-					$ele = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_multi') ? new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () ) : new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
+					$ele = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_multi') ? new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () ) : new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 					$dirlist = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_admin') ? IcmsLists::getThemesList () : IcmsLists::getAdminThemesList ();
 					if (! empty ( $dirlist )) {
@@ -155,10 +155,10 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$count = count($type);
 					$isMulti = $type[$count-1] == 'multi';
 					if ($isMulti) {
-						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
+						$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
 						$type = $type[$count-2];
 					} else {
-						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+						$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 						$type = $type[$count-1];
 					}
 					if ($type == 'editor') $type = '';
@@ -178,7 +178,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					unset($type, $count, $isMulti);
 				break;
 				case 'select_font' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 					$dirlist = IcmsLists::getFontListAsArray ( ICMS_ROOT_PATH . '/libraries/icms/captcha/fonts/' );
 					if (! empty ( $dirlist )) {
@@ -188,7 +188,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					//$form->addElement ( new icms_form_elements_Hidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'select_plugin' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 8, true );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 8, true );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 					$dirlist = IcmsLists::getDirListAsArray ( ICMS_ROOT_PATH.'/plugins/textsanitizer/' );
 					if (! empty ( $dirlist )) {
@@ -198,7 +198,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					//$form->addElement ( new icms_form_elements_Hidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'tplset' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					$tplset_handler = icms::handler('icms_view_template_set');
 					$tplsetlist = $tplset_handler->getList ();
 					asort ( $tplsetlist );
@@ -247,7 +247,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						if (! isset ( $value [$k] )) {
 							$value [$k] = '--';
 						}
-						$f = new XoopsFormSelect ( '<b>' . $v . ':</b>', $config [$i]->getVar ( 'conf_name' ) . '[' . $k . ']', $value [$k] );
+						$f = new icms_form_elements_Select( '<b>' . $v . ':</b>', $config [$i]->getVar ( 'conf_name' ) . '[' . $k . ']', $value [$k] );
 						$f->addOptionArray ( $list );
 						$ele->addElement ( $f );
 						unset ( $f );
@@ -275,7 +275,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						$ele = new icms_form_elements_Tray ( $title, '<br />' );
 						foreach ( array_keys ( $modules ) as $mid) {
 							$c_val = isset ( $currrent_val [$mid] ) ? (int) ( $currrent_val [$mid] ) : null;
-							$selform = new XoopsFormSelect ( $modules [$mid]->getVar ( 'name' ), $config [$i]->getVar ( 'conf_name' ) . "[$mid]", $c_val );
+							$selform = new icms_form_elements_Select( $modules [$mid]->getVar ( 'name' ), $config [$i]->getVar ( 'conf_name' ) . "[$mid]", $c_val );
 							$selform->addOptionArray ( $cache_options );
 							$ele->addElement ( $selform );
 							unset ( $selform );
@@ -285,7 +285,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'site_cache' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					$ele->addOptionArray ( array ('0' => _NOCACHE, '30' => sprintf ( _SECONDS, 30 ), '60' => _MINUTE, '300' => sprintf ( _MINUTES, 5 ), '1800' => sprintf ( _MINUTES, 30 ), '3600' => _HOUR, '18000' => sprintf ( _HOURS, 5 ), '86400' => _DAY, '259200' => sprintf ( _DAYS, 3 ), '604800' => _WEEK ) );
 				break;
 				case 'password' :
@@ -310,7 +310,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						 */
 						$content_handler = & xoops_gethandler('content');
 					}
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					$ele->addOptionArray ( $content_handler->getContentList () );
 				break;
 				##############################################################################################
@@ -329,12 +329,12 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						foreach ( $st as $style) {
 							$arr [$style ['fcss']] = $style ['name'];
 						}
-						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+						$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 						$ele->addOptionArray ( $arr );
 					}
 				break;
 				case 'select_geshi' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 					$dirlist = IcmsLists::getPhpListAsArray ( ICMS_LIBRARIES_PATH.'/geshi/geshi/' );
 					if (! empty ( $dirlist )) {
@@ -415,7 +415,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'select' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 
 					$options = & $config_handler->getConfigOptions ( new icms_criteria_Item ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
@@ -426,7 +426,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'select_multi' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
 					$options = & $config_handler->getConfigOptions ( new icms_criteria_Item ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for ($j = 0; $j < $opcount; $j ++) {
@@ -477,7 +477,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						 */
 						$content_handler = & xoops_gethandler('content');
 					}
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					$ele->addOptionArray ( $content_handler->getContentList () );
 				break;
 				case 'textbox' :

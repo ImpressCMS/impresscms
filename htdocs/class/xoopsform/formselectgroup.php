@@ -38,7 +38,7 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectGroup extends XoopsFormSelect
+class XoopsFormSelectGroup extends icms_form_elements_Select
 {
 	/**
 	 * Constructor
@@ -52,7 +52,7 @@ class XoopsFormSelectGroup extends XoopsFormSelect
 	 */
 	function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
 	{
-		$this->XoopsFormSelect($caption, $name, $value, $size, $multiple);
+		parent::__construct($caption, $name, $value, $size, $multiple);
 		$member_handler = icms::handler('icms_member');
 		if (!$include_anon) {
 			$this->addOptionArray($member_handler->getGroupList(new icms_criteria_Item('groupid', XOOPS_GROUP_ANONYMOUS, '!=')));

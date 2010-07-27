@@ -36,7 +36,7 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Matchoption extends XoopsFormSelect
+class icms_form_elements_select_Matchoption extends icms_form_elements_Select
 {
 	/**
 	 * Constructor
@@ -50,7 +50,7 @@ class icms_form_elements_select_Matchoption extends XoopsFormSelect
 	 */
 	function __construct($caption, $name, $value = null, $size = 1)
 	{
-		$this->XoopsFormSelect($caption, $name, $value, $size, false);
+		parent::__construct($caption, $name, $value, $size, false);
 		$this->addOption(XOOPS_MATCH_START, _STARTSWITH);
 		$this->addOption(XOOPS_MATCH_END, _ENDSWITH);
 		$this->addOption(XOOPS_MATCH_EQUAL, _MATCHES);

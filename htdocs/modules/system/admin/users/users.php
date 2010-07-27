@@ -30,7 +30,7 @@ function displayUsers()
 	$usercount = $member_handler->getUserCount(new icms_criteria_Item('level', '-1', '!='));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
 	$editform = new XoopsThemeForm(_AM_EDEUSER, 'edituser', 'admin.php');
-	$user_select = new XoopsFormSelect('', 'uid');
+	$user_select = new icms_form_elements_Select('', 'uid');
 	$criteria = new icms_criteria_Compo();
 	$criteria->add(new icms_criteria_Item('level', '-1', '!='));
 	$criteria->setSort('uname');
@@ -42,7 +42,7 @@ function displayUsers()
 	$user_select_tray->addElement($user_select);
 	$user_select_nav = new icms_form_elements_Label('', $nav->renderNav(4));
 	$user_select_tray->addElement($user_select_nav);
-	$op_select = new XoopsFormSelect('', 'op');
+	$op_select = new icms_form_elements_Select('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER, 'delUser'=>_AM_DELUSER));
 	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
 	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');
@@ -56,7 +56,7 @@ function displayUsers()
 	$usercount = $member_handler->getUserCount(new icms_criteria_Item('level', '-1'));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
 	$editform = new XoopsThemeForm(_AM_REMOVED_USERS, 'edituser', 'admin.php');
-	$user_select = new XoopsFormSelect('', 'uid');
+	$user_select = new icms_form_elements_Select('', 'uid');
 	$criteria = new icms_criteria_Compo();
 	$criteria->add(new icms_criteria_Item('level', '-1'));
 	$criteria->setSort('uname');
@@ -68,7 +68,7 @@ function displayUsers()
 	$user_select_tray->addElement($user_select);
 	$user_select_nav = new icms_form_elements_Label('', $nav->renderNav(4));
 	$user_select_tray->addElement($user_select_nav);
-	$op_select = new XoopsFormSelect('', 'op');
+	$op_select = new icms_form_elements_Select('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER));
 	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
 	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');

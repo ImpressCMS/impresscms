@@ -24,7 +24,7 @@ class IcmsFormRadioElement extends icms_form_elements_Radio {
 
 		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'));
 
-		// Adding the options inside this SelectBox
+		// Adding the options inside this Radio element
 		// If the custom method is not from a module, than it's from the core
 		$control = $object->getControl($key);
 
@@ -36,7 +36,7 @@ class IcmsFormRadioElement extends icms_form_elements_Radio {
 			if (isset($control['object'])) {
 				if (method_exists($control['object'], $control['method'])) {
 					if ($option_array = $control['object']->$control['method']()) {
-						// Adding the options array to the XoopsFormSelect
+						// Adding the options array to the Radio element
 						$this->addOptionArray($option_array);
 					}
 				}
@@ -57,7 +57,7 @@ class IcmsFormRadioElement extends icms_form_elements_Radio {
 				if (method_exists($control_handler, $control['method'])) {
 					// TODO : How could I pass the parameters in the following call ...
 					if ($option_array = $control_handler->$control['method']()) {
-						// Adding the options array to the XoopsFormSelect
+						// Adding the options array to the Radio element
 						$this->addOptionArray($option_array);
 					}
 				}
