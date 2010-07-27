@@ -167,6 +167,13 @@ class XoopsGroupPermForm extends XoopsForm
         $ret .= $this->renderValidationJS( true );
         return $ret;
     }
+
+	/**
+	 * This method is required - this method in the parent (abstract) class is also abstract
+	 * @param string $extra
+	 */
+	public function insertBreak($extra = null) {
+	}
 }
 
 
