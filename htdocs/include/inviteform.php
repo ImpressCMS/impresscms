@@ -17,7 +17,7 @@ include_once ICMS_ROOT_PATH."/class/xoopslists.php";
 include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 
 $invite_form = new XoopsThemeForm(_US_USERINVITE, "userinvite", "invite.php", "post", true);
-$invite_form->addElement(new XoopsFormText(_US_EMAIL, "email", 25, 60, $myts->htmlSpecialChars($email)), true);
+$invite_form->addElement(new icms_form_elements_Text(_US_EMAIL, "email", 25, 60, $myts->htmlSpecialChars($email)), true);
 $invite_form->addElement(new icms_form_elements_Captcha(_SECURITYIMAGE_GETCODE, "scode"), true);
 $invite_form->addElement(new icms_form_elements_Hidden("op", "finish"));
 $invite_form->addElement(new icms_form_elements_Button("", "submit", _US_SUBMIT, "submit"));

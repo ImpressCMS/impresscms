@@ -280,7 +280,7 @@ if ($op == 'editprofile')
 	$email_tray = new icms_form_elements_Tray(_US_EMAIL, '<br />');
 	if ($icmsConfigUser['allow_chgmail'] == 1)
 	{
-		$email_text = new XoopsFormText('', 'email', 30, 60, $icmsUser->getVar('email'));
+		$email_text = new icms_form_elements_Text('', 'email', 30, 60, $icmsUser->getVar('email'));
 	} else {
 		$email_text = new icms_form_elements_Label('', $icmsUser->getVar('email'));
 	}
@@ -294,7 +294,7 @@ if ($op == 'editprofile')
 
 	if ($icmsConfigAuth['auth_openid'] == 1) {
 		$openid_tray = new icms_form_elements_Tray(_US_OPENID_FORM_CAPTION, '<br />');
-		$openid_text = new XoopsFormText('', 'openid', 30, 255, $icmsUser->getVar('openid'));
+		$openid_text = new icms_form_elements_Text('', 'openid', 30, 255, $icmsUser->getVar('openid'));
 		$openid_tray->setDescription(_US_OPENID_FORM_DSC);
 		$openid_tray->addElement($openid_text);
 		$openid_cbox_value = $icmsUser->user_viewoid() ? 1 : 0;
@@ -306,25 +306,25 @@ if ($op == 'editprofile')
 
 	if ($icmsConfigUser['allow_chguname'] == 1)
 	{
-		$uname_label = new XoopsFormText(_US_NICKNAME, 'uname', 30, 60, $icmsUser->getVar('uname', 'E'));
+		$uname_label = new icms_form_elements_Text(_US_NICKNAME, 'uname', 30, 60, $icmsUser->getVar('uname', 'E'));
 	} else {
 		$uname_label = new icms_form_elements_Label(_US_NICKNAME, $icmsUser->getVar('uname'));
 	}
 
 	$form->addElement($uname_label);
-	$name_text = new XoopsFormText(_US_REALNAME, 'name', 30, 60, $icmsUser->getVar('name', 'E'));
+	$name_text = new icms_form_elements_Text(_US_REALNAME, 'name', 30, 60, $icmsUser->getVar('name', 'E'));
 	$form->addElement($name_text);
-	$url_text = new XoopsFormText(_US_WEBSITE, 'url', 30, 100, $icmsUser->getVar('url', 'E'));
+	$url_text = new icms_form_elements_Text(_US_WEBSITE, 'url', 30, 100, $icmsUser->getVar('url', 'E'));
 	$form->addElement($url_text);
 
 	$timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, 'timezone_offset', $icmsUser->getVar('timezone_offset'));
-	$icq_text = new XoopsFormText(_US_ICQ, 'user_icq', 15, 15, $icmsUser->getVar('user_icq', 'E'));
-	$aim_text = new XoopsFormText(_US_AIM, 'user_aim', 18, 18, $icmsUser->getVar('user_aim', 'E'));
-	$yim_text = new XoopsFormText(_US_YIM, 'user_yim', 25, 25, $icmsUser->getVar('user_yim', 'E'));
-	$msnm_text = new XoopsFormText(_US_MSNM, 'user_msnm', 30, 100, $icmsUser->getVar('user_msnm', 'E'));
-	$location_text = new XoopsFormText(_US_LOCATION, 'user_from', 30, 100, $icmsUser->getVar('user_from', 'E'));
-	$occupation_text = new XoopsFormText(_US_OCCUPATION, 'user_occ', 30, 100, $icmsUser->getVar('user_occ', 'E'));
-	$interest_text = new XoopsFormText(_US_INTEREST, 'user_intrest', 30, 150, $icmsUser->getVar('user_intrest', 'E'));
+	$icq_text = new icms_form_elements_Text(_US_ICQ, 'user_icq', 15, 15, $icmsUser->getVar('user_icq', 'E'));
+	$aim_text = new icms_form_elements_Text(_US_AIM, 'user_aim', 18, 18, $icmsUser->getVar('user_aim', 'E'));
+	$yim_text = new icms_form_elements_Text(_US_YIM, 'user_yim', 25, 25, $icmsUser->getVar('user_yim', 'E'));
+	$msnm_text = new icms_form_elements_Text(_US_MSNM, 'user_msnm', 30, 100, $icmsUser->getVar('user_msnm', 'E'));
+	$location_text = new icms_form_elements_Text(_US_LOCATION, 'user_from', 30, 100, $icmsUser->getVar('user_from', 'E'));
+	$occupation_text = new icms_form_elements_Text(_US_OCCUPATION, 'user_occ', 30, 100, $icmsUser->getVar('user_occ', 'E'));
+	$interest_text = new icms_form_elements_Text(_US_INTEREST, 'user_intrest', 30, 150, $icmsUser->getVar('user_intrest', 'E'));
 	/** include the file to display the xoopscodes and smilies */
 	include_once 'include/xoopscodes.php';
 	if ($icmsConfigUser['allwshow_sig'] == 1)

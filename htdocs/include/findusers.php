@@ -334,7 +334,7 @@ if (empty($_POST["user_submit"])) {
 
 		if (FINDUSERS_MODE_ADVANCED == $mode) {
 			foreach ($items_match as $var => $title) {
-				$text = new XoopsFormText("", $var, 30, 100, @$_POST[$var]);
+				$text = new icms_form_elements_Text("", $var, 30, 100, @$_POST[$var]);
 				$match = new icms_form_elements_select_Matchoption("", "{$var}_match", @$_POST["{$var}_match"]);
 				$match_tray = new icms_form_elements_Tray($title, "&nbsp;");
 				$match_tray->addElement($match);
@@ -343,13 +343,13 @@ if (empty($_POST["user_submit"])) {
 				unset($text, $match, $match_tray);
 			}
 
-			$url_text = new XoopsFormText(_MA_USER_URLC, "url", 30, 100, @$_POST["url"]);
-			$location_text = new XoopsFormText(_MA_USER_LOCATION, "user_from", 30, 100, @$_POST["user_from"]);
-			$occupation_text = new XoopsFormText(_MA_USER_OCCUPATION, "user_occ", 30, 100, @$_POST["user_occ"]);
-			$interest_text = new XoopsFormText(_MA_USER_INTEREST, "user_intrest", 30, 100, @$_POST["user_intrest"]);
+			$url_text = new icms_form_elements_Text(_MA_USER_URLC, "url", 30, 100, @$_POST["url"]);
+			$location_text = new icms_form_elements_Text(_MA_USER_LOCATION, "user_from", 30, 100, @$_POST["user_from"]);
+			$occupation_text = new icms_form_elements_Text(_MA_USER_OCCUPATION, "user_occ", 30, 100, @$_POST["user_occ"]);
+			$interest_text = new icms_form_elements_Text(_MA_USER_INTEREST, "user_intrest", 30, 100, @$_POST["user_intrest"]);
 			foreach ($items_range as $var => $title) {
-				$more = new XoopsFormText("", "{$var}_more", 10, 5, @$_POST["{$var}_more"]);
-				$less = new XoopsFormText("", "{$var}_less", 10, 5, @$_POST["{$var}_less"]);
+				$more = new icms_form_elements_Text("", "{$var}_more", 10, 5, @$_POST["{$var}_more"]);
+				$less = new icms_form_elements_Text("", "{$var}_less", 10, 5, @$_POST["{$var}_less"]);
 				$range_tray = new icms_form_elements_Tray($title, "&nbsp;-&nbsp;&nbsp;");
 				$range_tray->addElement($less);
 				$range_tray->addElement($more);
@@ -391,7 +391,7 @@ if (empty($_POST["user_submit"])) {
 		} else {
 			foreach (array("uname", "email") as $var) {
 				$title = $items_match[$var];
-				$text = new XoopsFormText("", $var, 30, 100, @$_POST[$var]);
+				$text = new icms_form_elements_Text("", $var, 30, 100, @$_POST[$var]);
 				$match = new icms_form_elements_select_Matchoption("", "{$var}_match", @$_POST["{$var}_match"]);
 				$match_tray = new icms_form_elements_Tray($title, "&nbsp;");
 				$match_tray->addElement($match);
@@ -410,7 +410,7 @@ if (empty($_POST["user_submit"])) {
 		$form->addElement($order_select);
 	}
 
-	$form->addElement( new XoopsFormText(_MA_USER_LIMIT, "limit", 6, 6, empty($_REQUEST["limit"]) ? 50 : (int) ($_REQUEST["limit"])) );
+	$form->addElement( new icms_form_elements_Text(_MA_USER_LIMIT, "limit", 6, 6, empty($_REQUEST["limit"]) ? 50 : (int) ($_REQUEST["limit"])) );
 	$form->addElement( new icms_form_elements_Hidden("mode", $mode) );
 	$form->addElement( new icms_form_elements_Hidden("target", @$_REQUEST["target"]) );
 	$form->addElement( new icms_form_elements_Hidden("multiple", @$_REQUEST["multiple"]) );

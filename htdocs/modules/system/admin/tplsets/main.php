@@ -86,7 +86,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$form = new XoopsThemeForm(_MD_UPLOADTAR, 'tplupload_form', 'admin.php', 'post', true);
 			$form->setExtra('enctype="multipart/form-data"');
 			$form->addElement(new icms_form_elements_File(_MD_CHOOSETAR.'<br /><span style="color:#ff0000;">'._MD_ONLYTAR.'</span>', 'tpl_upload', 1000000));
-			$form->addElement(new XoopsFormText(_MD_NTHEMENAME.'<br /><span style="font-weight:normal;">'._MD_ENTERTH.'</span>', 'tplset_name', 20, 50));
+			$form->addElement(new icms_form_elements_Text(_MD_NTHEMENAME.'<br /><span style="font-weight:normal;">'._MD_ENTERTH.'</span>', 'tplset_name', 20, 50));
 			$form->addElement(new icms_form_elements_Hidden('op', 'uploadtar_go'));
 			$form->addElement(new icms_form_elements_Hidden('fct', 'tplsets'));
 			$form->addElement(new icms_form_elements_Button('', 'upload_button', _MD_UPLOAD, 'submit'));
@@ -402,7 +402,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new XoopsThemeForm(_MD_CLONETHEME, 'template_form', 'admin.php', 'post', true);
 			$form->addElement(new icms_form_elements_Label(_MD_THEMENAME, $tplset));
-			$form->addElement(new XoopsFormText(_MD_NEWNAME, 'newtheme', 30, 50), true);
+			$form->addElement(new icms_form_elements_Text(_MD_NEWNAME, 'newtheme', 30, 50), true);
 			$form->addElement(new icms_form_elements_Hidden('tplset', $tplset));
 			$form->addElement(new icms_form_elements_Hidden('op', 'clone_go'));
 			$form->addElement(new icms_form_elements_Hidden('fct', 'tplsets'));

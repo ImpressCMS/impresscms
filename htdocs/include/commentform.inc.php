@@ -22,7 +22,7 @@ $cform = new XoopsThemeForm(_CM_POSTCOMMENT, "commentform", "postcomment.php", "
 if (!preg_match("/^re:/i", $subject)) {
 	$subject = "Re: " . icms_substr($subject,0,56);
 }
-$cform->addElement(new XoopsFormText(_CM_TITLE, 'subject', 50, 255, $subject), true);
+$cform->addElement(new icms_form_elements_Text(_CM_TITLE, 'subject', 50, 255, $subject), true);
 $icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'icon', $icon);
 $subject_icons = IcmsLists::getSubjectsList();
 foreach ($subject_icons as $iconfile) {

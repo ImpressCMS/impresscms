@@ -345,7 +345,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'textbox' :
 				default :
 					$myts = & icms_core_Textsanitizer::getInstance ();
-					$ele = new XoopsFormText ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlspecialchars ( $config [$i]->getConfValueForOutput () ) );
+					$ele = new icms_form_elements_Text( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlspecialchars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 			}
 			$hidden = new icms_form_elements_Hidden ( 'conf_ids[]', $config [$i]->getVar ( 'conf_id' ) );
@@ -483,7 +483,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'textbox' :
 				default :
 					$myts = & icms_core_Textsanitizer::getInstance ();
-					$ele = new XoopsFormText ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
+					$ele = new icms_form_elements_Text( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 			}
 			$hidden = new icms_form_elements_Hidden ( 'conf_ids[]', $config [$i]->getVar ( 'conf_id' ) );

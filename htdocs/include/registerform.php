@@ -18,7 +18,7 @@ include_once ICMS_ROOT_PATH."/class/xoopslists.php";
 include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 
 $email_tray = new icms_form_elements_Tray(_US_EMAIL, "<br />");
-$email_text = new XoopsFormText("", "email", 25, 60, $myts->htmlSpecialChars($email));
+$email_text = new icms_form_elements_Text("", "email", 25, 60, $myts->htmlSpecialChars($email));
 $email_option = new icms_form_elements_Checkbox("", "user_viewemail", $user_viewemail);
 $email_option->addOption(1, _US_ALLOWVIEWEMAIL);
 $email_tray->addElement($email_text, true);
@@ -26,16 +26,16 @@ $email_tray->addElement($email_option);
 $reg_form = new XoopsThemeForm(_US_USERREG, "userinfo", "register.php", "post", true);
 $uname_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'] : 75;
 $uname_size = $icmsConfigUser['maxuname'] > 3 ? $icmsConfigUser['maxuname'] : 3;
-$reg_form->addElement(new XoopsFormText(_US_NICKNAME, "uname", $uname_size, $uname_size, $myts->htmlSpecialChars($uname)), true);
+$reg_form->addElement(new icms_form_elements_Text(_US_NICKNAME, "uname", $uname_size, $uname_size, $myts->htmlSpecialChars($uname)), true);
 $login_name_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'] : 75;
-$reg_form->addElement(new XoopsFormText(_US_LOGIN_NAME, "login_name", $login_name_size, $login_name_size, $myts->htmlSpecialChars($login_name)), true);
+$reg_form->addElement(new icms_form_elements_Text(_US_LOGIN_NAME, "login_name", $login_name_size, $login_name_size, $myts->htmlSpecialChars($login_name)), true);
 $reg_form->addElement($email_tray);
 if ($icmsConfigUser['pass_level']>20) {
 	icms_PasswordMeter();
 }
 $reg_form->addElement(new icms_form_elements_Password(_US_PASSWORD, "pass", 10, 255, $myts->htmlSpecialChars($pass), false, ($icmsConfigUser['pass_level']?'password_adv':'')), true);
 $reg_form->addElement(new icms_form_elements_Password(_US_VERIFYPASS, "vpass", 10, 255, $myts->htmlSpecialChars($vpass)), true);
-$reg_form->addElement(new XoopsFormText(_US_WEBSITE, "url", 25, 255, $myts->htmlSpecialChars($url)));
+$reg_form->addElement(new icms_form_elements_Text(_US_WEBSITE, "url", 25, 255, $myts->htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $icmsConfig['default_TZ'];
 $reg_form->addElement(new icms_form_elements_select_Timezone(_US_TIMEZONE, "timezone_offset", $tzselected));
 //$reg_form->addElement($avatar_tray);

@@ -16,24 +16,24 @@
 global $icmsConfigUser, $icmsConfigAuth;
 
 $uid_label = new icms_form_elements_Label(_AM_USERID, $uid_value);
-$uname_text = new XoopsFormText(_AM_NICKNAME, "username", 25, 25, $uname_value);
-$login_name_text = new XoopsFormText(_AM_LOGINNAME, "login_name", 25, 25, $login_name_value);
-$name_text = new XoopsFormText(_AM_NAME, "name", 30, 60, $name_value);
+$uname_text = new icms_form_elements_Text(_AM_NICKNAME, "username", 25, 25, $uname_value);
+$login_name_text = new icms_form_elements_Text(_AM_LOGINNAME, "login_name", 25, 25, $login_name_value);
+$name_text = new icms_form_elements_Text(_AM_NAME, "name", 30, 60, $name_value);
 $email_tray = new icms_form_elements_Tray(_AM_EMAIL, "<br />");
-$email_text = new XoopsFormText("", "email", 30, 60, $email_value);
+$email_text = new icms_form_elements_Text("", "email", 30, 60, $email_value);
 $email_tray->addElement($email_text, true);
 $email_cbox = new icms_form_elements_Checkbox("", "user_viewemail", $email_cbox_value);
 $email_cbox->addOption(1, _AM_AOUTVTEAD);
 $email_tray->addElement($email_cbox);
 if ($icmsConfigAuth['auth_openid'] == 1) {
 	$openid_tray = new icms_form_elements_Tray(_AM_OPENID, "<br />");
-	$openid_text = new XoopsFormText("", "openid", 30, 255, $openid_value);
+	$openid_text = new icms_form_elements_Text("", "openid", 30, 255, $openid_value);
 	$openid_tray->addElement($openid_text);
 	$openid_cbox = new icms_form_elements_Checkbox("", "user_viewoid", $openid_cbox_value);
 	$openid_cbox->addOption(1, _AM_AOUTVTOIAD);
 	$openid_tray->addElement($openid_cbox);
 }
-$url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
+$url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_select = new icms_form_elements_Select("", "user_avatar", $avatar_value);
 //  $avatar_array = IcmsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
 //  $avatar_select->addOptionArray($avatar_array);
@@ -69,13 +69,13 @@ $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  }
 //  $theme_select = new icms_form_elements_select_Theme(_AM_THEME, "theme", $theme_value);
 $timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, "timezone_offset", $timezone_value);
-$icq_text = new XoopsFormText(_AM_ICQ, "user_icq", 15, 15, $icq_value);
-$aim_text = new XoopsFormText(_AM_AIM, "user_aim", 18, 18, $aim_value);
-$yim_text = new XoopsFormText(_AM_YIM, "user_yim", 25, 25, $yim_value);
-$msnm_text = new XoopsFormText(_AM_MSNM, "user_msnm", 30, 100, $msnm_value);
-$location_text = new XoopsFormText(_AM_LOCATION, "user_from", 30, 100, $location_value);
-$occupation_text = new XoopsFormText(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
-$interest_text = new XoopsFormText(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
+$icq_text = new icms_form_elements_Text(_AM_ICQ, "user_icq", 15, 15, $icq_value);
+$aim_text = new icms_form_elements_Text(_AM_AIM, "user_aim", 18, 18, $aim_value);
+$yim_text = new icms_form_elements_Text(_AM_YIM, "user_yim", 25, 25, $yim_value);
+$msnm_text = new icms_form_elements_Text(_AM_MSNM, "user_msnm", 30, 100, $msnm_value);
+$location_text = new icms_form_elements_Text(_AM_LOCATION, "user_from", 30, 100, $location_value);
+$occupation_text = new icms_form_elements_Text(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
+$interest_text = new icms_form_elements_Text(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
 $sig_tray = new icms_form_elements_Tray(_AM_SIGNATURE, "<br />");
 if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
 else {$sig_tarea = new icms_form_elements_Dhtmltextarea("", "user_sig", $sig_value);}

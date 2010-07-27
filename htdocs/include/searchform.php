@@ -25,7 +25,7 @@ include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 $search_form = new XoopsThemeForm(_SR_SEARCH, "search", "search.php", 'get');
 
 // create form elements
-$search_form->addElement(new XoopsFormText(_SR_KEYWORDS, "query", 30, 255, htmlspecialchars(stripslashes(implode(" ", $queries)), ENT_QUOTES)), true);
+$search_form->addElement(new icms_form_elements_Text(_SR_KEYWORDS, "query", 30, 255, htmlspecialchars(stripslashes(implode(" ", $queries)), ENT_QUOTES)), true);
 $type_select = new icms_form_elements_Select(_SR_TYPE, "andor", $andor);
 $type_select->addOptionArray(array("AND"=>_SR_ALL, "OR"=>_SR_ANY, "exact"=>_SR_EXACT));
 $search_form->addElement($type_select);

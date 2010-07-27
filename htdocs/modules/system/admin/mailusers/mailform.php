@@ -36,12 +36,12 @@ if (!empty($_POST['memberslist_id'])) {
 if (!empty($display_criteria)) {
 	$selected_groups = array();
 	$group_select = new icms_form_elements_select_Group(_AM_GROUPIS."<br />", "mail_to_group", false, $selected_groups, 5, true);
-	$lastlog_min = new XoopsFormText(_AM_LASTLOGMIN."<br />"._AM_TIMEFORMAT."<br />", "mail_lastlog_min", 20, 10);
-	$lastlog_max = new XoopsFormText(_AM_LASTLOGMAX."<br />"._AM_TIMEFORMAT."<br />", "mail_lastlog_max", 20, 10);
-	$regd_min = new XoopsFormText(_AM_REGDMIN."<br />"._AM_TIMEFORMAT."<br />", "mail_regd_min", 20, 10);
-	$regd_max = new XoopsFormText(_AM_REGDMAX."<br />"._AM_TIMEFORMAT."<br />", "mail_regd_max", 20, 10);
-	$idle_more = new XoopsFormText(_AM_IDLEMORE."<br />", "mail_idle_more", 10, 5);
-	$idle_less = new XoopsFormText(_AM_IDLELESS."<br />", "mail_idle_less", 10, 5);
+	$lastlog_min = new icms_form_elements_Text(_AM_LASTLOGMIN."<br />"._AM_TIMEFORMAT."<br />", "mail_lastlog_min", 20, 10);
+	$lastlog_max = new icms_form_elements_Text(_AM_LASTLOGMAX."<br />"._AM_TIMEFORMAT."<br />", "mail_lastlog_max", 20, 10);
+	$regd_min = new icms_form_elements_Text(_AM_REGDMIN."<br />"._AM_TIMEFORMAT."<br />", "mail_regd_min", 20, 10);
+	$regd_max = new icms_form_elements_Text(_AM_REGDMAX."<br />"._AM_TIMEFORMAT."<br />", "mail_regd_max", 20, 10);
+	$idle_more = new icms_form_elements_Text(_AM_IDLEMORE."<br />", "mail_idle_more", 10, 5);
+	$idle_less = new icms_form_elements_Text(_AM_IDLELESS."<br />", "mail_idle_less", 10, 5);
 	$mailok_cbox = new icms_form_elements_Checkbox('', 'mail_mailok');
 	$mailok_cbox->addOption(1, _AM_MAILOK);
 	$inactive_cbox = new icms_form_elements_Checkbox('', 'mail_inactive');
@@ -60,12 +60,12 @@ if (!empty($display_criteria)) {
 	$form->addElement($criteria_tray);
 }
 
-$fname_text = new XoopsFormText(_AM_MAILFNAME, "mail_fromname", 30, 255, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
+$fname_text = new icms_form_elements_Text(_AM_MAILFNAME, "mail_fromname", 30, 255, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
 $fromemail = !empty($xoopsConfig['adminmail']) ? $xoopsConfig['adminmail'] : $icmsUser->getVar("email", "E");
-$femail_text = new XoopsFormText(_AM_MAILFMAIL, "mail_fromemail", 30, 255, $fromemail);
+$femail_text = new icms_form_elements_Text(_AM_MAILFMAIL, "mail_fromemail", 30, 255, $fromemail);
 //$subject_caption = _AM_MAILSUBJECT."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILTAGS1."<br />"._AM_MAILTAGS2."<br />"._AM_MAILTAGS3."</span>";
 $subject_caption = _AM_MAILSUBJECT."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILTAGS2."</span>";
-$subject_text = new XoopsFormText($subject_caption, "mail_subject", 50, 255);
+$subject_text = new icms_form_elements_Text($subject_caption, "mail_subject", 50, 255);
 $body_caption = _AM_MAILBODY."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILTAGS1."<br />"._AM_MAILTAGS2."<br />"._AM_MAILTAGS3."<br />"._AM_MAILTAGS4."</span>";
 $body_text = new XoopsFormTextArea($body_caption, "mail_body", "", 10);
 $to_checkbox = new icms_form_elements_Checkbox(_AM_SENDTO, "mail_send_to", "mail");

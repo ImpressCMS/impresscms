@@ -34,7 +34,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 
-class XoopsFormTextDateSelect extends XoopsFormText
+class XoopsFormTextDateSelect extends icms_form_elements_Text
 {
 
 	/**
@@ -43,7 +43,7 @@ class XoopsFormTextDateSelect extends XoopsFormText
 	function XoopsFormTextDateSelect($caption, $name, $size = 15, $value= 0)
 	{
 		$value = !is_numeric($value) ? time() : (int) ($value);
-		$this->XoopsFormText($caption, $name, $size, 25, $value);
+		parent::__construct($caption, $name, $size, 25, $value);
 	}
 
 	/**

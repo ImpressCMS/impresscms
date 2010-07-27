@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormTextElement extends XoopsFormText {
+class IcmsFormTextElement extends icms_form_elements_Text {
 
 	/**
 	 * Constructor
@@ -31,7 +31,7 @@ class IcmsFormTextElement extends XoopsFormText {
 			$form_size = 50;
 		}
 
-		$this->XoopsFormText($var['form_caption'], $key, $form_size, $form_maxlength, $object->getVar($key, 'e'));
+		parent::__construct($var['form_caption'], $key, $form_size, $form_maxlength, $object->getVar($key, 'e'));
 	}
 }
 

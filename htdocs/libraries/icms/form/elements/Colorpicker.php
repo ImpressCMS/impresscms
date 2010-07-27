@@ -29,7 +29,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_form_elements_Colorpicker extends XoopsFormText {
+class icms_form_elements_Colorpicker extends icms_form_elements_Text {
 
 	/**
 	 * Constructor
@@ -38,7 +38,7 @@ class icms_form_elements_Colorpicker extends XoopsFormText {
 	 * @param	string  $value    Value of the element
 	 */
 	public function __construct($caption, $name, $value = "#FFFFFF") {
-		$this->XoopsFormText($caption, $name, 9, 7, $value);
+		parent::__construct($caption, $name, 9, 7, $value);
 	}
 
 	/**

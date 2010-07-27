@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsAutocompleteElement extends XoopsFormText {
+class IcmsAutocompleteElement extends icms_form_elements_Text {
 
 	var $_include_file;
 
@@ -23,7 +23,7 @@ class IcmsAutocompleteElement extends XoopsFormText {
 	 */
 	function IcmsAutocompleteElement($caption, $name, $include_file, $size, $maxlength, $value="") {
 		$this->_include_file = $include_file;
-		$this->XoopsFormText($caption, $name, $size, $maxlength, $value);
+		parent::__construct($caption, $name, $size, $maxlength, $value);
 	}
 
 	/**
