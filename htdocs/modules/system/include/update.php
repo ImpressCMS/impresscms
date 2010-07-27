@@ -254,6 +254,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 
 	$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-	return icms_clean_folders ( array ('templates_c' => ICMS_ROOT_PATH . "/templates_c/", 'cache' => ICMS_ROOT_PATH . "/cache/" ), $CleanWritingFolders );
+	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_ROOT_PATH . "/templates_c/", 'cache' => ICMS_ROOT_PATH . "/cache/" ), $CleanWritingFolders);
 }
 ?>

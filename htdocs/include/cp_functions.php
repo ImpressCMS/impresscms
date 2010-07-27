@@ -700,7 +700,7 @@ function xoops_module_write_admin_menu($content) {
 
 	// write index.html file in cache folder
 	// file is delete after clear_cache (smarty)
-	xoops_write_index_file(ICMS_CACHE_PATH);
+	icms_core_Filesystem::writeIndexFile(ICMS_CACHE_PATH);
 	return true;
 }
 
@@ -712,23 +712,7 @@ function xoops_module_write_admin_menu($content) {
  * @todo Move to static class Filesystem
  */
 function xoops_write_index_file($path = '') {
-	if (empty($path)) {
-		return false;
-	}
-	$path = substr($path, -1) == "/" ? substr($path, 0, -1) : $path;
-	$filename = $path . '/index.html';
-	if (file_exists($filename)) {
-		return true;
-	}
-	if (! $file = fopen($filename, "w")) {
-		echo 'failed open file';
-		return false;
-	}
-	if (fwrite($file, "<script>history.go(-1);</script>") == FALSE) {
-		echo 'failed write file';
-		return false;
-	}
-	fclose($file);
-	return true;
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::writeIndexFile', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::writeIndexFile($path);
 }
 

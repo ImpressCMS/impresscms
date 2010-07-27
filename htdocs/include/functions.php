@@ -2369,13 +2369,12 @@ function icms_getCurrentUrls() {
  *
  * @param string $dirname path of the file
  * @return	The unlinked dirname
- * @todo Move to static class Filesystem
+ * @deprecated	Use icms_core_Filesystem::deleteFile
+ * @todo		Remove in version 1.4 - all instances have been removed from the core
  */
 function icms_deleteFile($dirname) {
-	// Simple delete for a file
-	if (is_file($dirname)) {
-		return unlink($dirname);
-	}
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::deleteFile', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::deleteFile($dirname);
 }
 
 /**
@@ -2616,33 +2615,23 @@ function one_wordwrap($string,$width=false){
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @param	string	$path	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
  * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
+ * @deprecated	Use icms_core_Filesystem::cleanFolders
  * @todo Move to static class Filesystem
  */
 function icms_clean_folders($dir, $remove_admin_cache=false) {
-	global $icmsConfig;
-	foreach ($dir as $d)
-	{
-		$dd = opendir($d);
-		while($file = readdir($dd))
-		{
-			$files_array = $remove_admin_cache ? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn') : ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
-			if(is_file($d.$file) && $files_array)
-			{
-				unlink($d.$file);
-			}
-		}
-		closedir($dd);
-	}
-	return true;
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::cleanFolders', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::cleanFolders($dir, $remove_admin_cache);
 }
 
 /**
  * Clean up all the writeable folders
  * @param bool
- * @todo Move to static class Filesystem
+ * @deprecated	User icms_core_Filesystem::cleanFolders
+ * @todo		Remove in versison 1.4 - all instances have been removed from the core
  */
 function icms_cleaning_write_folders() {
-	return icms_clean_folders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/"));
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::cleanFolders', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/"));
 }
 
 /**
@@ -2650,35 +2639,12 @@ function icms_cleaning_write_folders() {
  *
  * @param string $dir Directory name
  * @param bool $deleteRootToo Delete specified top-level directory as well
- * @todo Move to static class Filesystem
+ * @deprecated	Use icms_core_Filesystem::deleteRecursive
+ * @todo		Remove in version 1.4 - all instances have been removed from the core
  */
-function icms_unlinkRecursive($dir, $deleteRootToo=true)
-{
-	if(!$dh = @opendir($dir))
-	{
-		return;
-	}
-	while (false !== ($obj = readdir($dh)))
-	{
-		if($obj == '.' || $obj == '..')
-		{
-			continue;
-		}
-
-		if (!@unlink($dir . '/' . $obj))
-		{
-			icms_unlinkRecursive($dir.'/'.$obj, true);
-		}
-	}
-
-	closedir($dh);
-
-	if ($deleteRootToo)
-	{
-		@rmdir($dir);
-	}
-
-	return;
+function icms_unlinkRecursive($dir, $deleteRootToo=true){
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::deleteRecursive', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::deleteRecursive($dir, $deleteRootToo);
 }
 
 /**
@@ -2763,34 +2729,13 @@ function icms_makeSmarty($items) {
  * @param	string	$src	The source
  * @param	string  $dest	  The destination
  * @return   bool	Returns stream_copy_to_stream($src, $dest) on success, false on failure
- * @todo Move to a static class method - Filesystem
+ * @deprecated	Use icms_core_Filesystem::copyStream
+ * @todo		Remove in version 1.4 - all instances have been removed from the core
  */
 function icms_stream_copy($src, $dest)
 {
-	$len = false;
-	if(@ini_get('allow_url_fopen')){
-		//if(!ini_get('allow_url_fopen')){
-		/*$output = $input = '';
-		$chdest = $chsrc = curl_init();
-		curl_setopt($chsrc, CURLOPT_URL, "$src");
-		curl_setopt($chsrc, CURLOPT_HEADER,0);
-		curl_setopt($chsrc, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($chdest, CURLOPT_URL, "$dest");
-		curl_setopt($chdest, CURLOPT_POST, 1);
-		curl_setopt($chdest, CURLOPT_POSTFIELDS, 1);
-		$input .=curl_exec($chsrc);
-		$output .=curl_exec($chdest);
-		curl_close($chsrc);
-		curl_close($chdest);
-		$len = stream_copy_to_stream($input,$output);
-		}else{*/
-		$fsrc = fopen($src,'r');
-		$fdest = fopen($dest,'w+');
-		$len = stream_copy_to_stream($fsrc,$fdest);
-		fclose($fsrc);
-		fclose($fdest);
-	}
-	return $len;
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::copyStream', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::copyStream($src, $dest);
 }
 /**
  * Is a module being installed, updated or uninstalled

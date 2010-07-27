@@ -72,7 +72,7 @@
 				icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . '/preload/customtag.php');
 				icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . '/preload/userinfo.php');
 				if (icms_core_Filesystem::copyRecursive ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' )) {
-					icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
+					icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . '/preload');
 				} else {
 					$newDbVersion = 13;
 					echo '<br />'.sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads');
