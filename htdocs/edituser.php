@@ -214,7 +214,7 @@ if ($op == 'saveuser')
 		$edituser->setVar('user_msnm', $_POST['user_msnm']);
 		if ($password != '')
 		{
-			//include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+			
 			$icmspass = new icms_core_Password();
 			$salt = $icmspass->createSalt();
 			$edituser->setVar('salt', $salt, true);

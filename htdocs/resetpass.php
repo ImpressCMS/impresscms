@@ -43,7 +43,6 @@ if (empty($getuser)) {redirect_header('user.php',2,_US_SORRYNOTFOUND);} else {
 		$current_salt = $getuser[0]->getVar('salt');
 		$enc_type = $getuser[0]->getVar('enc_type');
 
-		// include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 		$icmspass = new icms_core_Password();
 
 		$c_pass = $icmspass->encryptPass($c_password, $current_salt, $enc_type, 1);

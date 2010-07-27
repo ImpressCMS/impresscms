@@ -137,8 +137,7 @@ else {
 		$group_select[] = new icms_form_elements_Hidden('groups[' . $key . ']', $group);
 	}
 }
-include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-$icmspass = new icms_Password();
+$icmspass = new icms_core_Password();
 
 $salt_hidden = new icms_form_elements_Hidden('salt', $icmspass->icms_createSalt());
 

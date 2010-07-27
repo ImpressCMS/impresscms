@@ -302,7 +302,7 @@ class icms_member_Handler {
 	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
 	 */
 	public function loginUser($uname, $pwd) {
-		//include_once ICMS_ROOT_PATH . '/class/icms_Password.php';
+		
 		$icmspass = new icms_core_Password();
 
 		if (strstr($uname, '@')) {

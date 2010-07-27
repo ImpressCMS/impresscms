@@ -39,7 +39,6 @@ if (empty($getuser))
 	$msg = _US_SORRYNOTFOUND;
 	redirect_header('user.php',2,$msg);
 } else {
-//	include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 	$icmspass = new icms_core_Password();
 
 	$code = isset($_GET['code']) ? trim(StopXSS($_GET['code'])) : '';
