@@ -9,7 +9,7 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
 ==System requirements==
 
 *PHP
-    ** PHP 5.1 or higher (5.2 or higher recommended, 5.3 is supported in ImpressCMS 1.3)
+    ** PHP 5.2.5 or higher (5.1 may work, but is not officially supported, 5.3 is supported in ImpressCMS 1.3)
     ** 16MB memory
 *MySQL
     ** MySQL 4.1.0 or higher
