@@ -15,7 +15,10 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * Date and time selection field
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
+ * This extends the icms_form_elements_Tray class because this field actually contains
+ * 2 different elements - the date and the time
+ *
+ * @author		Kazumi Ono	<onokazu@xoops.org>
  * @category	ICMS
  * @package     Form
  * @subpackage	Elements
@@ -34,7 +37,7 @@ class icms_form_elements_Datetime extends icms_form_elements_Tray {
 		$value = (int) ($value);
 		$value = ($value > 0) ? $value : time();
 		$datetime = getDate($value);
-		$this->addElement(new XoopsFormTextDateSelect('', $name.'[date]', $size, $value));
+		$this->addElement(new icms_form_elements_Date('', $name.'[date]', $size, $value));
 		$timearray = array();
 		for ($i = 0; $i < 24; $i++) {
 			for ($j = 0; $j < 60; $j = $j + 10) {

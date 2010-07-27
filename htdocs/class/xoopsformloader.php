@@ -26,7 +26,7 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
 //include_once ICMS_ROOT_PATH."/class/xoopsform/formtextarea.php"; // completed: icms_form_elements_Textarea
 include_once ICMS_ROOT_PATH."/class/xoopsform/themeform.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/simpleform.php";
-include_once ICMS_ROOT_PATH."/class/xoopsform/formtextdateselect.php";
+//include_once ICMS_ROOT_PATH."/class/xoopsform/formtextdateselect.php"; // completed: icms_form_elements_Date
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselecteditor.php";
 
 ?>

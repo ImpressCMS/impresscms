@@ -17,14 +17,6 @@ if (!defined('ICMS_ROOT_PATH')) {
 }
 
 /**
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-
-/**
  * A text field with calendar popup
  *
  * @package     kernel
@@ -32,11 +24,14 @@ if (!defined('ICMS_ROOT_PATH')) {
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @deprecated	use icms_form_elements_Date
+ * @todo		Remove in version 1.4
  */
 
-class XoopsFormTextDateSelect extends icms_form_elements_Text
+class XoopsFormTextDateSelect extends icms_form_elements_Date
 {
 
+	private $_deprecated;
 	/**
 	 * Constructor
 	 */
@@ -44,35 +39,6 @@ class XoopsFormTextDateSelect extends icms_form_elements_Text
 	{
 		$value = !is_numeric($value) ? time() : (int) ($value);
 		parent::__construct($caption, $name, $size, 25, $value);
-	}
-
-	/**
-	 * Render the Date Select
-	 */
-	function render()
-	{
-		global $icmsConfigPersona;
-		$ele_name = $this->getName();
-		$ele_value = $this->getValue(false);
-		$jstime = formatTimestamp( $ele_value, 'Y-m-d' );
-		global $icmsConfigPersona;
-		include_once ICMS_ROOT_PATH.'/include/calendar'.($icmsConfigPersona['use_jsjalali'] == true ?'jalali':'').'js.php';
-		$result = "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' onclick='return showCalendar(\"".$ele_name."\");'>";
-		if($icmsConfigPersona['use_jsjalali'] == true)
-		{
-			$result = "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? icms_conv_nr2local(jdate("Y-m-d", $ele_value)) : date("Y-m-d", $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' id='btn_".$ele_name."'><script type='text/javascript'>
-				Calendar.setup({
-				inputField  : 'tmp_".$ele_name."',   // id of the input field
-		       		ifFormat    : '%Y-%m-%d',       // format of the input field
-		       		button      : 'btn_".$ele_name."',   // trigger for the calendar (button ID)
-        			langNumbers : true,
-        			dateType	: '"._CALENDAR_TYPE."',
-				onUpdate	: function(cal){document.getElementById('".$ele_name."').value = cal.date.print('%Y-%m-%d');}
-				});
-			</script>";
-		}
-		return $result;
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Date', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
-
-?>

@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormDateElement extends XoopsFormTextDateSelect {
+class IcmsFormDateElement extends icms_form_elements_Date {
 
 	/**
 	 * Constructor
@@ -20,7 +20,7 @@ class IcmsFormDateElement extends XoopsFormTextDateSelect {
 	 * @param	string    $key      the form name
 	 */
 	function IcmsFormDateElement($object, $key) {
-		$this->XoopsFormTextDateSelect($object->vars[$key]['form_caption'], $key, 15, $object->getVar($key, 'e'));
+		parent::__construct($object->vars[$key]['form_caption'], $key, 15, $object->getVar($key, 'e'));
 	}
 }
 
