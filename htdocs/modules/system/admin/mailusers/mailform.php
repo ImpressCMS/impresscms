@@ -35,7 +35,7 @@ if (!empty($_POST['memberslist_id'])) {
 
 if (!empty($display_criteria)) {
 	$selected_groups = array();
-	$group_select = new XoopsFormSelectGroup(_AM_GROUPIS."<br />", "mail_to_group", false, $selected_groups, 5, true);
+	$group_select = new icms_form_elements_select_Group(_AM_GROUPIS."<br />", "mail_to_group", false, $selected_groups, 5, true);
 	$lastlog_min = new XoopsFormText(_AM_LASTLOGMIN."<br />"._AM_TIMEFORMAT."<br />", "mail_lastlog_min", 20, 10);
 	$lastlog_max = new XoopsFormText(_AM_LASTLOGMAX."<br />"._AM_TIMEFORMAT."<br />", "mail_lastlog_max", 20, 10);
 	$regd_min = new XoopsFormText(_AM_REGDMIN."<br />"._AM_TIMEFORMAT."<br />", "mail_regd_min", 20, 10);

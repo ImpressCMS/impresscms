@@ -254,10 +254,10 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'group' :
-					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 1, false );
+					$ele = new icms_form_elements_select_Group ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 1, false );
 				break;
 				case 'group_multi' :
-					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 5, true );
+					$ele = new icms_form_elements_select_Group ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 5, true );
 				break;
 				// RMV-NOTIFY - added 'user' and 'user_multi'
 				case 'user' :
@@ -440,11 +440,11 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'group' :
 					include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 1, false );
+					$ele = new icms_form_elements_select_Group ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 1, false );
 				break;
 				case 'group_multi' :
 					include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 5, true );
+					$ele = new icms_form_elements_select_Group ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 5, true );
 				break;
 				// RMV-NOTIFY: added 'user' and 'user_multi'
 				case 'user' :

@@ -21,7 +21,7 @@ if (!defined('ICMS_ROOT_PATH')) exit();
 include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
 //include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php"; // - completed: icms_form_elements_Select
 //include_once ICMS_ROOT_PATH."/class/xoopsform/formselectcountry.php"; // completed: icms_form_elements_select_Country
-include_once ICMS_ROOT_PATH."/class/xoopsform/formselectgroup.php";
+//include_once ICMS_ROOT_PATH."/class/xoopsform/formselectgroup.php"; // completed: icms_form_elements_select_Group
 include_once ICMS_ROOT_PATH."/class/xoopsform/formtext.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formtextarea.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/themeform.php";

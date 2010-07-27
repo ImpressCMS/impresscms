@@ -118,7 +118,7 @@ $gperm_handler = icms::handler('icms_member_groupperm');
 if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $icmsUser->getGroups(), 1)) {
 	//add group selection
 	if (in_array(XOOPS_GROUP_ADMIN, $icmsUser->getGroups())) {
-		$group_select = array(new XoopsFormSelectGroup(_US_GROUPS, 'groups', false, $groups, 5, true));
+		$group_select = array(new icms_form_elements_select_Group(_US_GROUPS, 'groups', false, $groups, 5, true));
 	} else {
 		$group_manager_value = array_intersect_key(icms::handler('icms_member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', $icmsUser->getGroups()))) ;
 		$group_array = new icms_form_elements_Select(_US_GROUPS, 'groups',$groups, 5, true);

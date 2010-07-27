@@ -435,11 +435,11 @@ class IcmsForm extends XoopsThemeForm {
 				break;
 
 			case 'group':
-				return new XoopsFormSelectGroup($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 1, false);
+				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 1, false);
 				break;
 
 			case 'group_multi':
-				return new XoopsFormSelectGroup($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
+				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
 				break;
 
 				/*case 'user':

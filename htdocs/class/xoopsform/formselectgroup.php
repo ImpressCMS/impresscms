@@ -16,18 +16,6 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
-/**
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-
-/**
- * Parent
- */
-include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 /**
  * A select field with a choice of available groups
@@ -37,9 +25,12 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @deprecated	Use icms_form_elements_select_Group
+ * @todo		Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsFormSelectGroup extends icms_form_elements_Select
+class XoopsFormSelectGroup extends icms_form_elements_select_Group
 {
+	private $_deprecated;
 	/**
 	 * Constructor
 	 *
@@ -52,13 +43,8 @@ class XoopsFormSelectGroup extends icms_form_elements_Select
 	 */
 	function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
 	{
-		parent::__construct($caption, $name, $value, $size, $multiple);
-		$member_handler = icms::handler('icms_member');
-		if (!$include_anon) {
-			$this->addOptionArray($member_handler->getGroupList(new icms_criteria_Item('groupid', XOOPS_GROUP_ANONYMOUS, '!=')));
-		} else {
-			$this->addOptionArray($member_handler->getGroupList());
-		}
+		parent::__construct($caption, $name, $include_anon, $value, $size, $multiple);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Group', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 ?>
