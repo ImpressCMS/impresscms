@@ -335,7 +335,7 @@ class icms_core_Filesystem {
 			}
 			echo '<br /><strong>' . count($permVariations) . _CORE_CHECKSUM_PERMISSIONS_ALTERED . '</strong><br />';
 			foreach ($permVariations as $file=>$perms) {
-				echo $file .'<br />';
+				echo $file . '<br />';
 			}
 		} else {
 			echo _CORE_CHECKSUM_CHECKFILE_UNREADABLE;
@@ -344,6 +344,102 @@ class icms_core_Filesystem {
 		unset($item);
 		unset($dir);
 
+	}
+
+	/**
+	 * Gets a list of all directories within a path
+	 *
+	 * @param	string $dirname A path to a directory
+	 * @return	array An array of directory names
+	 */
+	static public function getDirList($dirname) {
+		$dirList = array();
+		$iterator = new DirectoryIterator($dirname);
+		foreach ($iterator as $file) {
+			if ($file->isDir() && !$file->isDot()) {
+				$dirList[$file] = $file->getFilename();
+			}
+		}
+		return $dirList;
+	}
+
+	/**
+	 * Get a list of files in a directory
+	 *
+	 * @param string $dirname A path to a directory
+	 * @param string $prefix A prefix to add to the beginning of the file names
+	 * @param array $extension Filter the list by this extension
+	 */
+	static public function getFileList($dirname, $prefix = '', array $extension = array()) {
+		$fileList = array();
+		if (empty($extension)) {
+			$extList = implode('|\.', $extension);
+		} else {
+			$extList = '';
+		}
+		$iterator = new DirectoryIterator($dirname);
+		foreach ($iterator as $file) {
+			if ($file->isFile() && !$file->isDot()) {
+				$filename = $file->getFilename();
+				if ($extList == '') {
+					$file = $prefix . $filename;
+					$fileList[$file] = $file;
+				} else {
+					if (preg_match("/(\." . $extList . ")$/i", $filename)) {
+						$file = $prefix . $filename;
+						$fileList[$file] = $file;
+					}
+				}
+			}
+		}
+		asort($fileList);
+		return $fileList;
+	}
+/* These will not be in the final release, but are only placeholders while the refactoring
+ * is being completed
+ */
+	static public function getImgList($dirname, $prefix = '', $extension = array('gif', 'jpg', 'png')) {
+		return self::getFileList($dirname, $prefix, $extension);
+	}
+
+	static public function getFontList($dirname, $prefix = '', $extension = array('ttf')) {
+		return self::getFileList($dirname, $prefix, $extension);
+	}
+
+	static public function getPhpList($dirname, $prefix = '', $extension = array('php')) {
+		return self::getFileList($dirname, $prefix, $extension);
+	}
+
+	static public function getHtmlList($dirname, $prefix = '', $extension = array('htm', 'html', 'xhtml')) {
+		return self::getFileList($dirname, $prefix, $extension);
+	}
+/* The above will be removed */
+
+	static public function getAdminThemesList() {
+	}
+
+	static public function getThemesList() {
+	}
+
+	static public function getModulesList() {
+	}
+
+	static public function getActiveModulesList() {
+	}
+
+	static public function getAvatarsList($avatar_dir = '') {
+	}
+
+	static public function getAllAvatarsList() {
+	}
+
+	static public function getSubjectsList($sub_dir = '') {
+	}
+
+	static public function getLangList() {
+	}
+
+	static public function getEditorsList($type = '') {
 	}
 
 }
