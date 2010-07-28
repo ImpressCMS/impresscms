@@ -234,7 +234,10 @@ class icms_core_SessionHandler {
 			if ($num_blocks > 4) {
 				$num_blocks = 4;
 			}
-			$blocks = explode('.', $_SERVER['REMOTE_ADDR']);
+			/** @todo implement a final solution for IPv6
+			 * for now ::1 (IPv6 for localhost) will be raplced with 127.0.0.1
+			 */
+			$blocks = ($_SERVER['REMOTE_ADDR'] == '::1') ? array(127,0,0,1) : explode('.', $_SERVER['REMOTE_ADDR']);
 			for ($i = 0; $i < $num_blocks; $i++) {
 				$fingerprint .= $blocks[$i] . '.';
 			}
