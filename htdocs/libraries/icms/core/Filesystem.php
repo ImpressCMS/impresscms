@@ -357,7 +357,8 @@ class icms_core_Filesystem {
 		$iterator = new DirectoryIterator($dirname);
 		foreach ($iterator as $file) {
 			if ($file->isDir() && !$file->isDot()) {
-				$dirList[$file] = $file->getFilename();
+				$filename = $file->getFilename();
+				$dirList[$filename] = $filename;
 			}
 		}
 		return $dirList;
@@ -373,9 +374,9 @@ class icms_core_Filesystem {
 	static public function getFileList($dirname, $prefix = '', array $extension = array()) {
 		$fileList = array();
 		if (empty($extension)) {
-			$extList = implode('|\.', $extension);
-		} else {
 			$extList = '';
+		} else {
+			$extList = implode('|\.', $extension);
 		}
 		$iterator = new DirectoryIterator($dirname);
 		foreach ($iterator as $file) {
