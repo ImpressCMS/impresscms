@@ -17,26 +17,23 @@
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
- * XOOPS member handler class.
+ * Member handler class.
  * This class provides simple interface (a facade class) for handling groups/users/
  * membership data.
  *
- *
- * @author  Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
- * @package kernel
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Member
  */
-
-class icms_ipf_member_Handler extends icms_member_Handler{
+class icms_ipf_member_Handler extends icms_member_Handler {
 
 	/**
 	 * constructor
 	 *
 	 */
-	function icms_ipf_member_Handler(&$db)
-	{
-		$this->icms_member_Handler($db);
-		$this->_uHandler = new IcmsPersistableUserHandler($db);
+	public function __construct(&$db) {
+		parent::__construct($db);
+		$this->_uHandler = new icms_member_user_Handler($db);
 	}
 
 	// This function here below needs some changes to work under 1.2 Final. it's temporarily disabled.
@@ -163,11 +160,8 @@ class icms_ipf_member_Handler extends icms_member_Handler{
 	 * @param int $count number of names to generate
 	 * @return array $names
 	 * @author xHelp Team
-	 *
-	 * @access public
 	 */
-	function genUserNames($email, $count=20)
-	{
+	public function genUserNames($email, $count=20) {
 		$name = substr($email, 0, strpos($email, "@")); //Take the email adress without domain as username
 
 		$names = array();
@@ -219,11 +213,8 @@ class icms_ipf_member_Handler extends icms_member_Handler{
 	 * @param int $digits number of digits
 	 * @return return int random number
 	 * @author xHelp Team
-	 *
-	 * @access public
 	 */
-	function genRandNumber($digits = 2)
-	{
+	public function genRandNumber($digits = 2) {
 		$this->initRand();
 		$tmp = array();
 
@@ -240,15 +231,12 @@ class icms_ipf_member_Handler extends icms_member_Handler{
 	 *
 	 * @access public
 	 */
-	function initRand()
-	{
+	public function initRand() {
 		static $randCalled = FALSE;
-		if (!$randCalled)
-		{
+		if (!$randCalled) {
 			srand((double) microtime() * 1000000);
 			$randCalled = TRUE;
 		}
 	}
 }
 
-?>
