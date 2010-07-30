@@ -287,7 +287,7 @@ Revision: 9336
 * #302: imProfile: redirecting from userinfo.php to index.php if social_mode is on | ticket from addons (Phoenyx)
 * #752: SQL syntax error when upgrading to 1.1 (skenow)
 * #337: imProfile: setting umode and uorder for new users according to system settings | ticket from addons (Phoenyx)
-* #755: fixed wrong parameter handling in IcmsSecureForm (Phoenyx)
+* #755: fixed wrong parameter handling in icms_form_Secure (Phoenyx)
 * #727: Incorrect URL for tags in content manager (skenow)
 * #758: IPF improvements to userrank admin
 * #707: installer ... selection box on the right (MrTheme)
@@ -752,7 +752,7 @@ Revision: 9336
 '''Added'''
 * Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
 * Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
-* Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
+* Adding icms_form_Secure to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
 * Added option to select calendar type for forms. (stranger)
 * Updated system to version 1.05. (stranger)
 

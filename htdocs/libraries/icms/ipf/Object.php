@@ -9,7 +9,7 @@
  * @subpackage	Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -388,13 +388,13 @@ class icms_ipf_Object extends icms_core_Object {
 	/**
 	 * Create the secure form for this object
 	 *
-	 * @return a {@link IcmsSecureForm} object for this object
+	 * @return a {@link icms_form_Secure} object for this object
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getSecureForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
 		//include_once ICMS_ROOT_PATH . "/class/icmsform/icmssecureform.php";
-		$form = new IcmsSecureForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+		$form = new icms_form_Secure($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 
 		return $form;
 	}
