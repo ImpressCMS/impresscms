@@ -10,7 +10,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 class XoopsImage extends icms_image_Object {
 	private $_deprecated;
 	public function __construct() {
-		parent::getInstance();
+		parent::__construct();
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_image_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
