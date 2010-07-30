@@ -142,7 +142,7 @@ switch ($op) {
 		$thread_comments =& $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
 
 		include_once ICMS_ROOT_PATH . '/class/tree.php';
-		$xot = new icms_core_ObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new icms_ipf_Tree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 
 		$child_comments =& $xot->getFirstChild($com_id);
 
@@ -193,7 +193,7 @@ switch ($op) {
 
 		// construct a comment tree
 		include_once ICMS_ROOT_PATH . '/class/tree.php';
-		$xot = new icms_core_ObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new icms_ipf_Tree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 		$child_comments =& $xot->getAllChild($com_id);
 		// add itself here
 		$child_comments[$com_id] =& $comment;

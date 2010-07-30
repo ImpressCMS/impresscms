@@ -1,4 +1,5 @@
 <?php
+
 /**
  * icms_ipf_Tree
  *
@@ -10,7 +11,7 @@
  * @subpackage	Object
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @author		marcan aka Marc-André Lanciault <marcan@smartfactory.ca>
- * @version		$Id$
+ * @version		$Id:Tree.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
@@ -30,9 +31,9 @@ class icms_ipf_Tree {
 	 * @access	private
 	 */
 	private $_parentId;
-	private $_myId;
+	public $_myId;
 	private $_rootId = null;
-	private $_tree = array();
+	public $_tree = array ();
 	private $_objects;
 	/**#@-*/
 
@@ -44,11 +45,11 @@ class icms_ipf_Tree {
 	 * @param   string	$parentId   field name of parent object ID
 	 * @param   string	$rootId     field name of root object ID
 	 **/
-	public function __construct(&$objectArr, $myId, $parentId, $rootId = null) {
-		$this->_objects =& $objectArr;
+	public function __construct(& $objectArr, $myId, $parentId, $rootId = null) {
+		$this->_objects = & $objectArr;
 		$this->_myId = $myId;
 		$this->_parentId = $parentId;
-		if (isset($rootId)) {
+		if (isset ($rootId)) {
 			$this->_rootId = $rootId;
 		}
 		$this->_initialize();
@@ -62,11 +63,11 @@ class icms_ipf_Tree {
 	private function _initialize() {
 		foreach (array_keys($this->_objects) as $i) {
 			$key1 = $this->_objects[$i]->getVar($this->_myId);
-			$this->_tree[$key1]['obj'] =& $this->_objects[$i];
+			$this->_tree[$key1]['obj'] = & $this->_objects[$i];
 			$key2 = $this->_objects[$i]->getVar($this->_parentId, 'e');
 			$this->_tree[$key1]['parent'] = $key2;
 			$this->_tree[$key2]['child'][] = $key1;
-			if (isset($this->_rootId)) {
+			if (isset ($this->_rootId)) {
 				$this->_tree[$key1]['root'] = $this->_objects[$i]->getVar($this->_rootId);
 			}
 		}
@@ -77,7 +78,7 @@ class icms_ipf_Tree {
 	 *
 	 * @return  array   Associative array comprising the tree
 	 **/
-	public function &getTree() {
+	public function & getTree() {
 		return $this->_tree;
 	}
 
@@ -87,7 +88,7 @@ class icms_ipf_Tree {
 	 * @param   string  $key    ID of the object to retrieve
 	 * @return  object  Object within the tree
 	 **/
-	public function &getByKey($key) {
+	public function & getByKey($key) {
 		return $this->_tree[$key]['obj'];
 	}
 
@@ -98,10 +99,10 @@ class icms_ipf_Tree {
 	 * @return  array   Array of children of the parent
 	 **/
 	public function getFirstChild($key) {
-		$ret = array();
-		if (isset($this->_tree[$key]['child'])) {
+		$ret = array ();
+		if (isset ($this->_tree[$key]['child'])) {
 			foreach ($this->_tree[$key]['child'] as $childkey) {
-				$ret[$childkey] =& $this->_tree[$childkey]['obj'];
+				$ret[$childkey] = & $this->_tree[$childkey]['obj'];
 			}
 		}
 		return $ret;
@@ -114,13 +115,13 @@ class icms_ipf_Tree {
 	 * @param   array   $ret    (Empty when called from client) Array of children from previous recursions.
 	 * @return  array   Array of child nodes.
 	 **/
-	public function getAllChild($key, $ret = array()) {
-		if (isset($this->_tree[$key]['child'])) {
+	public function getAllChild($key, $ret = array ()) {
+		if (isset ($this->_tree[$key]['child'])) {
 			foreach ($this->_tree[$key]['child'] as $childkey) {
-				$ret[$childkey] =& $this->_tree[$childkey]['obj'];
-				$children =& $this->getAllChild($childkey, $ret);
+				$ret[$childkey] = & $this->_tree[$childkey]['obj'];
+				$children = & $this->getAllChild($childkey, $ret);
 				foreach (array_keys($children) as $newkey) {
-					$ret[$newkey] =& $children[$newkey];
+					$ret[$newkey] = & $children[$newkey];
 				}
 			}
 		}
@@ -136,12 +137,12 @@ class icms_ipf_Tree {
 	 * @param   int $uplevel (empty when called from outside) level of recursion
 	 * @return  array   Array of parent nodes.
 	 **/
-	public function getAllParent($key, $ret = array(), $uplevel = 1) {
-		if (isset($this->_tree[$key]['parent']) && isset($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
-			$ret[$uplevel] =& $this->_tree[$this->_tree[$key]['parent']]['obj'];
-			$parents =& $this->getAllParent($this->_tree[$key]['parent'], $ret, $uplevel+1);
+	public function getAllParent($key, $ret = array (), $uplevel = 1) {
+		if (isset ($this->_tree[$key]['parent']) && isset ($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
+			$ret[$uplevel] = & $this->_tree[$this->_tree[$key]['parent']]['obj'];
+			$parents = & $this->getAllParent($this->_tree[$key]['parent'], $ret, $uplevel +1);
 			foreach (array_keys($parents) as $newkey) {
-				$ret[$newkey] =& $parents[$newkey];
+				$ret[$newkey] = & $parents[$newkey];
 			}
 		}
 		return $ret;
@@ -161,7 +162,7 @@ class icms_ipf_Tree {
 	 *
 	 * @access	private
 	 **/
-	private function _makeSelBoxOptions($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = '') {
+	private function _makeSelBoxOptions($fieldName, $selected, $key, & $ret, $prefix_orig, $prefix_curr = '') {
 		if ($key > 0) {
 			$value = $this->_tree[$key]['obj']->getVar($this->_myId);
 			$ret .= '<option value="' . $value . '"';
@@ -171,7 +172,7 @@ class icms_ipf_Tree {
 			$ret .= '>' . $prefix_curr . $this->_tree[$key]['obj']->getVar($fieldName) . '</option>';
 			$prefix_curr .= $prefix_orig;
 		}
-		if (isset($this->_tree[$key]['child']) && !empty($this->_tree[$key]['child'])) {
+		if (isset ($this->_tree[$key]['child']) && !empty ($this->_tree[$key]['child'])) {
 			foreach ($this->_tree[$key]['child'] as $childkey) {
 				$this->_makeSelBoxOptions($fieldName, $selected, $childkey, $ret, $prefix_orig, $prefix_curr);
 			}
@@ -200,4 +201,3 @@ class icms_ipf_Tree {
 	}
 
 }
-

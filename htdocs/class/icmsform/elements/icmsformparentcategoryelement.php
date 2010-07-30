@@ -29,7 +29,7 @@ class IcmsFormParentcategoryElement extends icms_form_elements_Select {
 		$categories = $category_handler->getObjects($criteria);
 
 		include_once ICMS_ROOT_PATH . "/class/tree.php" ;
-		$mytree = new icms_core_ObjectTree($categories, "category_id", "category_pid");
+		$mytree = new icms_ipf_Tree($categories, "category_id", "category_pid");
 		parent::__construct( $object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e') );
 
 		$ret = array();
@@ -47,7 +47,7 @@ class IcmsFormParentcategoryElement extends icms_form_elements_Select {
 	/**
 	 * Get options for a category select with hierarchy (recursive)
 	 *
-	 * @param object  $tree         icms_core_ObjectTree $tree (@link icms_core_ObjectTree)
+	 * @param object  $tree         icms_ipf_Tree $tree (@link icms_ipf_Tree)
 	 * @param string  $fieldName    The fieldname to get the option array for
 	 * @param int     $key          the key to get the optionarray for
 	 * @param string  $prefix_curr  the prefix
