@@ -58,6 +58,18 @@ class icms_core_Logger {
 	}
 
 	/**
+	 * This was added in 1.3 because there was a separate class - XoopsErrorHandler -
+	 * having the additional class is unnecessary and the methods existed in other forms.
+	 *
+	 * @param bool $showErrors
+	 * @deprecated	Use $activated = TRUE/FALSE, instead
+	 * @todo		Remove in version 1.4 - no occurrences in the core
+	 */
+	public function activate($showErrors = false) {
+		$this->activated = $showErrors;
+	}
+
+	/**
 	 * Enable logger output rendering
 	 * When output rendering is enabled, the logger will insert its output within the page content.
 	 * If the string <!--{xo-logger-output}--> is found in the page content, the logger output will
@@ -267,7 +279,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpAll() {
-		icms_core_Debug::setDeprecated('$this->dump("")', 'This method will be removed in version 1.4');
+		icms_core_Debug::setDeprecated('$this->dump("")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump( '' );
 	}
 
@@ -279,7 +291,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpBlocks() {
-		icms_core_Debug::setDeprecated('$this->dump("blocks")', 'This method will be removed in version 1.4');
+		icms_core_Debug::setDeprecated('$this->dump("blocks")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump('blocks');
 	}
 
@@ -291,7 +303,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpExtra() {
-		icms_core_Debug::setDeprecated('$this->dump("extra")', 'This method will be removed in version 1.4');
+		icms_core_Debug::setDeprecated('$this->dump("extra")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump('extra');
 	}
 
@@ -303,7 +315,22 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpQueries() {
-		icms_core_Debug::setDeprecated('$this->dump("queries")', 'This method will be removed in version 1.4');
+		icms_core_Debug::setDeprecated('$this->dump("queries")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump('queries');
 	}
+
+	/**
+	 * Render the list of errors
+	 * This was added in 1.3 because there was a separate class - XoopsErrorHandler -
+	 * having the additional class is unnecessary and the methods existed in other forms.
+	 *
+	 * @return   string  $list of errors
+	 * @deprecated	use dump('errors'), instead
+	 * @todo		Remove in version 1.4 - no occurrences in the core
+	 */
+	public function renderErrors() {
+		icms_core_Debug::setDeprecated('$this->dump("errors")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return $this->dump( 'errors' );
+	}
+
 }
