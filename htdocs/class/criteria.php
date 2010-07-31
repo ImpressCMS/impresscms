@@ -42,7 +42,7 @@
  */
 abstract class CriteriaElement extends icms_criteria_Element
 {
-	private function __construct() {
+	public function __construct() {
 	}
 }
 
