@@ -16,7 +16,7 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
-require_once ICMS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
+require_once ICMS_LIBRARIES_PATH . '/xml/rpc/xmlrpcapi.php';
 
 class XoopsApi extends XoopsXmlRpcApi
 {

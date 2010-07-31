@@ -18,8 +18,8 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
-include_once ICMS_ROOT_PATH.'/class/xml/saxparser.php';
-include_once ICMS_ROOT_PATH.'/class/xml/xmltaghandler.php';
+include_once ICMS_LIBRARIES_PATH . '/xml/saxparser.php';
+include_once ICMS_LIBRARIES_PATH . '/xml/xmltaghandler.php';
 
 class XoopsThemeSetParser extends SaxParser
 {

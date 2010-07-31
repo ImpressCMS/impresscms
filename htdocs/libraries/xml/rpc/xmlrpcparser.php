@@ -18,8 +18,8 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
-require_once ICMS_ROOT_PATH.'/class/xml/saxparser.php';
-require_once ICMS_ROOT_PATH.'/class/xml/xmltaghandler.php';
+require_once ICMS_LIBRARIES_PATH . '/xml/saxparser.php';
+require_once ICMS_LIBRARIES_PATH . '/xml/xmltaghandler.php';
 
 /**
  * Class RSS Parser
