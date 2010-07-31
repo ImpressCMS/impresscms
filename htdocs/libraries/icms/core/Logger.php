@@ -66,6 +66,7 @@ class icms_core_Logger {
 	 * @todo		Remove in version 1.4 - no occurrences in the core
 	 */
 	public function activate($showErrors = false) {
+		icms_core_Debug::setDeprecated('$this->activated = ', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$this->activated = $showErrors;
 	}
 
