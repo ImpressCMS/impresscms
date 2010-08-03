@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package 	View
  * @subpackage 	Theme
- * @version		SVN: $Id: theme.php 19180 2010-05-02 10:54:45Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 /**
@@ -61,9 +61,12 @@ class icms_view_theme_Factory {
 			}
 			$GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
 		}
-		$options['path'] = ( is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName']) ) ? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'] : ICMS_THEME_PATH . '/' . $options['folderName'];
+		$options['path'] =
+			(is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName']))
+			? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName']
+			: ICMS_THEME_PATH . '/' . $options['folderName'];
 		$inst = new icms_view_theme_Object();
-		foreach ( $options as $k => $v) {
+		foreach ($options as $k => $v) {
 			$inst->$k = $v;
 		}
 		$inst->xoInit();
@@ -76,7 +79,7 @@ class icms_view_theme_Factory {
 	 * @return bool
 	 */
 	public function isThemeAllowed($name) {
-		return ( empty($this->allowedThemes) || in_array($name, $this->allowedThemes) );
+		return (empty($this->allowedThemes) || in_array($name, $this->allowedThemes));
 	}
 }
 

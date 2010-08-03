@@ -4,7 +4,7 @@
  *
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author       Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: theme.php 19180 2010-05-02 10:54:45Z phoenyx $
+ * @version		$Id$
  * @category	ICMS
  * @package		View
  * @subpackage 	Theme
@@ -58,9 +58,8 @@ class icms_view_theme_Object {
 	/**
 	 * Page construction plug-ins to use
 	 * @public array
-	 * @access public
 	 */
-	public $plugins = array( 'icms_view_PageBuilder' );
+	public $plugins = array('icms_view_PageBuilder');
 
 	public $renderCount = 0;
 	/**
@@ -71,7 +70,6 @@ class icms_view_theme_Object {
 
 	/**
 	 * Array containing the document meta-information
-	 * @public array
 	 */
 	public $metas = array(
 		'http' => array(
@@ -118,10 +116,10 @@ class icms_view_theme_Object {
 	public function xoInit($options = array()) {
 		global $xoops;
 
-		$this->path = ( is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName) )
+		$this->path = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName))
 			? ICMS_MODULES_PATH . '/system/themes/' . $this->folderName
 			: ICMS_THEME_PATH . '/' . $this->folderName;
-		$this->url = ( is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName) )
+		$this->url = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName))
 			? ICMS_MODULES_URL . '/system/themes/' . $this->folderName
 			: ICMS_THEME_URL . '/' . $this->folderName;
 
@@ -132,9 +130,9 @@ class icms_view_theme_Object {
 		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule, $icmsUser;
 		$this->template->assign(
 			array(
-				'icms_style' => ICMS_URL . '/icms' . (( defined('_ADM_USE_RTL') && _ADM_USE_RTL ) ? '_rtl' : '') . '.css',
+				'icms_style' => ICMS_URL . '/icms' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css',
 				'icms_theme' => $this->folderName,
-				'icms_imageurl' => ( is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName . '/') )
+				'icms_imageurl' => (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName . '/'))
 					? ICMS_MODULES_URL . '/system/themes/' . $this->folderName . '/'
 					: ICMS_THEME_URL . '/' . $this->folderName . '/',
 				'icms_themecss'=> xoops_getcss($this->folderName),
@@ -153,7 +151,7 @@ class icms_view_theme_Object {
 		$this->template->assign(array(
 			'xoops_theme' => $this->template->get_template_vars('icms_theme'),
 			'xoops_imageurl' => $this->template->get_template_vars('icms_imageurl'),
-			'xoops_themecss'=> $this->template->get_template_vars('icms_themecss'),
+			'xoops_themecss' => $this->template->get_template_vars('icms_themecss'),
 			'xoops_requesturi' => $this->template->get_template_vars('icms_requesturi'),
 			'xoops_sitename' => $this->template->get_template_vars('icms_sitename'),
 			'xoops_slogan' => $this->template->get_template_vars('icms_slogan'),
@@ -189,8 +187,8 @@ class icms_view_theme_Object {
 			} elseif (substr($name, 0, 6) == 'footer') {
 				$values = $value;
 				if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
-					$values = $value.'<script type="text/javascript">
-                    var pageTracker = _gat._getTracker("UA-'.$icmsConfigMetaFooter['google_analytics'].'"); pageTracker._trackPageview();
+					$values = $value . '<script type="text/javascript">
+                    var pageTracker = _gat._getTracker("UA-' . $icmsConfigMetaFooter['google_analytics'] . '"); pageTracker._trackPageview();
                     </script>';
 				}
 				$this->template->assign("xoops_$name", $values);
@@ -208,12 +206,12 @@ class icms_view_theme_Object {
 		$GLOBALS['xoTheme'] =& $this;
 		$GLOBALS['xoopsTpl'] =& $this->template;
 		// Instanciate and initialize all the theme plugins
-		foreach ( $this->plugins as $k => $bundleId) {
+		foreach ($this->plugins as $k => $bundleId) {
 			if (!is_object($bundleId)) {
 				$this->plugins[$bundleId] = new $bundleId();
 				$this->plugins[$bundleId]->theme =& $this;
 				$this->plugins[$bundleId]->xoInit();
-				unset( $this->plugins[$k] );
+				unset($this->plugins[$k]);
 			}
 		}
 		return true;
@@ -253,7 +251,7 @@ class icms_view_theme_Object {
 					// Generate group string for non-anonymous groups,
 					// XOOPS_DB_PASS and XOOPS_DB_NAME (before we find better variables) are used to protect group sensitive contents
 					$extra_string .= '|' . implode(",", $groups)
-						. substr(md5(XOOPS_DB_PASS.XOOPS_DB_NAME), 0, strlen(XOOPS_DB_USER) * 2);
+						. substr(md5(XOOPS_DB_PASS . XOOPS_DB_NAME), 0, strlen(XOOPS_DB_USER) * 2);
 				}
 			}
 			$extraString = $extra_string;
@@ -276,15 +274,15 @@ class icms_view_theme_Object {
 
 			$this->template->caching = 2;
 			$this->template->cache_lifetime = $this->contentCacheLifetime;
-			$uri = str_replace( ICMS_URL, '', $_SERVER['REQUEST_URI'] );
+			$uri = str_replace(ICMS_URL, '', $_SERVER['REQUEST_URI']);
 			// Clean uri by removing session id
 			if (defined('SID') && SID && strpos($uri, SID)) {
 				$uri = preg_replace("/([\?&])(" . SID . "$|" . SID . "&)/", "\\1", $uri);
 			}
 			$this->contentCacheId = $this->generateCacheId($dirname . '|' . $uri);
 
-			if ($this->template->is_cached( $template, $this->contentCacheId )) {
-				$xoopsLogger->addExtra( $template, sprintf(_REGENERATES, $this->contentCacheLifetime));
+			if ($this->template->is_cached($template, $this->contentCacheId)) {
+				$xoopsLogger->addExtra($template, sprintf(_REGENERATES, $this->contentCacheLifetime));
 				$this->render(null, null, $template);
 				return true;
 			}
@@ -316,7 +314,7 @@ class icms_view_theme_Object {
 
 		// @internal: Lame fix to ensure the metas specified in the xoops config page don't appear twice
 		$old = array('robots', 'keywords', 'description', 'rating', 'author', 'copyright');
-		foreach ( $this->metas['meta'] as $name => $value) {
+		foreach ($this->metas['meta'] as $name => $value) {
 			if (in_array($name, $old)) {
 				$this->template->assign("xoops_meta_$name", htmlspecialchars($value, ENT_QUOTES));
 				$this->template->assign("icms_meta_$name", htmlspecialchars($value, ENT_QUOTES));
@@ -324,8 +322,8 @@ class icms_view_theme_Object {
 			}
 		}
 
-		if ($canvasTpl )		$this->canvasTemplate	= $canvasTpl;
-		if ($contentTpl )		$this->contentTemplate	= $contentTpl;
+		if ($canvasTpl)	$this->canvasTemplate	= $canvasTpl;
+		if ($contentTpl) $this->contentTemplate	= $contentTpl;
 
 		if (!empty($vars)) {
 			$this->template->assign($vars);
@@ -353,7 +351,7 @@ class icms_view_theme_Object {
 
 		// Do not cache the main (theme.html) template output
 		$this->template->caching = 0;
-		$this->template->display( $this->path . '/' . $this->canvasTemplate );
+		$this->template->display($this->path . '/' . $this->canvasTemplate);
 
 		$this->renderCount++;
 		$xoopsLogger->stopTime('Page rendering');
@@ -373,12 +371,12 @@ class icms_view_theme_Object {
 	 *
 	 * <code>
 	 * // Add an external script using a physical path
-	 * $theme->addScript( 'www/script.js', null, '' );
-	 * $theme->addScript( 'modules/newbb/script.js', null, '' );
+	 * $theme->addScript('www/script.js', null, '');
+	 * $theme->addScript('modules/newbb/script.js', null, '');
 	 * // Specify attributes for the <script> tag
-	 * $theme->addScript( 'mod_xoops_SiteManager#common.js', array( 'type' => 'application/x-javascript' ), '' );
+	 * $theme->addScript('mod_xoops_SiteManager#common.js', array('type' => 'application/x-javascript'), '');
 	 * // Insert a code snippet
-	 * $theme->addScript( null, array( 'type' => 'application/x-javascript' ), 'window.open("Hello world");' );
+	 * $theme->addScript(null, array('type' => 'application/x-javascript'), 'window.open("Hello world");');
 	 * </code>
 	 *
 	 * @param string $src path to an external script file
@@ -389,10 +387,18 @@ class icms_view_theme_Object {
 	 **/
 	public function addScript($src = '', $attributes = array(), $content = '') {
 		global $xoops;
-		if (empty($attributes) )     		$attributes = array();
-		if (!empty($src) ) 				$attributes['src'] = $xoops->url($this->resourcePath($src));
-		if (!empty($content) )				$attributes['_'] = $content;
-		if (!isset($attributes['type']) ) 	$attributes['type'] = 'text/javascript';
+		if (empty($attributes))	{
+			$attributes = array();
+		}
+		if (!empty($src)) {
+			$attributes['src'] = $xoops->url($this->resourcePath($src));
+		}
+		if (!empty($content)) {
+			$attributes['_'] = $content;
+		}
+		if (!isset($attributes['type'])) {
+			$attributes['type'] = 'text/javascript';
+		}
 		$this->addMeta('script', $src, $attributes);
 	}
 
@@ -406,10 +412,18 @@ class icms_view_theme_Object {
 	 **/
 	public function addStylesheet($src = '', $attributes = array(), $content = '') {
 		global $xoops;
-		if (empty($attributes) )     		$attributes = array();
-		if (!empty($src) ) 				$attributes['href'] = $xoops->url($this->resourcePath($src));
-		if (!isset($attributes['type']) ) 	$attributes['type'] = 'text/css';
-		if (!empty($content) ) 			$attributes['_'] = $content;
+		if (empty($attributes)) {
+			$attributes = array();
+		}
+		if (!empty($src)) {
+			$attributes['href'] = $xoops->url($this->resourcePath($src));
+		}
+		if (!isset($attributes['type'])) {
+			$attributes['type'] = 'text/css';
+		}
+		if (!empty($content)) {
+			$attributes['_'] = $content;
+		}
 		$this->addMeta('stylesheet', $src, $attributes);
 	}
 
@@ -419,11 +433,15 @@ class icms_view_theme_Object {
 	 * @param string	$href		URI of the anchored document
 	 * @param array		$attributes	Additional attributes to add to the <link> element
 	 */
-	public function addLink( $rel, $href = '', $attributes = array()) {
+	public function addLink($rel, $href = '', $attributes = array()) {
 		global $xoops;
 
-		if (empty($attributes) ) $attributes = array();
-		if (!empty($href) ) 		$attributes['href'] = $href;
+		if (empty($attributes)) {
+			$attributes = array();
+		}
+		if (!empty($href)) {
+			$attributes['href'] = $href;
+		}
 		$this->addMeta('link', $rel, $attributes);
 	}
 
@@ -444,7 +462,6 @@ class icms_view_theme_Object {
 		if (!isset($this->metas[$type])) {
 			$this->metas[$type] = array();
 		}
-
 		if (!empty($name)) {
 			$this->metas[$type][$name] = $value;
 		} else {
@@ -477,14 +494,14 @@ class icms_view_theme_Object {
 	public function renderMetas($type = null, $return = false) {
 		$str = '';
 		if (!isset($type)) {
-			foreach ( array_keys($this->metas) as $type) {
+			foreach (array_keys($this->metas) as $type) {
 				$str .= $this->renderMetas($type, true);
 			}
 			$str .= implode("\n", $this->htmlHeadStrings);
 		} else {
 			switch($type) {
 				case 'script':
-					foreach ( $this->metas[$type] as $attrs) {
+					foreach ($this->metas[$type] as $attrs) {
 						$str .= '<script' . $this->renderAttributes($attrs) . ">\n";
 						if (@$attrs['_']) {
 							$str .= "\n\n" . $attrs['_'] . "\n";
@@ -494,13 +511,13 @@ class icms_view_theme_Object {
 					break;
 
 				case 'link':
-					foreach ( $this->metas[$type] as $rel => $attrs) {
-						$str .= '<link rel="' . $rel . '"' . $this->renderAttributes( $attrs ) . " />\n";
+					foreach ($this->metas[$type] as $rel => $attrs) {
+						$str .= '<link rel="' . $rel . '"' . $this->renderAttributes($attrs) . " />\n";
 					}
 					break;
 
 				case 'stylesheet':
-					foreach ( $this->metas[$type] as $attrs) {
+					foreach ($this->metas[$type] as $attrs) {
 						if (@$attrs['_']) {
 							$str .= '<style' . $this->renderAttributes($attrs) . ">\n" . $attrs['_'] . "\n</style>";
 						} else {
@@ -510,13 +527,13 @@ class icms_view_theme_Object {
 					break;
 
 				case 'http':
-					foreach ( $this->metas[$type] as $name => $content) {
-						$str .= '<meta http-equiv="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars( $content, ENT_QUOTES) . "\" />\n";
+					foreach ($this->metas[$type] as $name => $content) {
+						$str .= '<meta http-equiv="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES) . "\" />\n";
 					}
 					break;
 
 				default:
-					foreach ( $this->metas[$type] as $name => $content) {
+					foreach ($this->metas[$type] as $name => $content) {
 						$str .= '<meta name="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES) . "\" />\n";
 					}
 					break;
@@ -534,7 +551,7 @@ class icms_view_theme_Object {
 	 * @param string $tagName
 	 * @return string
 	 */
-	public function genElementId( $tagName = 'xos') {
+	public function genElementId($tagName = 'xos') {
 		static $cache = array();
 		if (!isset($cache[$tagName])) {
 			$cache[$tagName] = 1;
@@ -547,9 +564,9 @@ class icms_view_theme_Object {
 	 * @param array $coll
 	 * @return string
 	 */
-	public function renderAttributes( $coll) {
+	public function renderAttributes($coll) {
 		$str = '';
-		foreach ( $coll as $name => $val) {
+		foreach ($coll as $name => $val) {
 			if ($name != '_') {
 				$str .= ' ' . $name . '="' . htmlspecialchars($val, ENT_QUOTES) . '"';
 			}
@@ -563,7 +580,7 @@ class icms_view_theme_Object {
 	 * @param string $path
 	 * @return string
 	 */
-	public function resourcePath( $path) {
+	public function resourcePath($path) {
 		global $xoops;
 		if (substr($path, 0, 1) == '/') {
 			$path = substr($path, 1);

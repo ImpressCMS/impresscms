@@ -8,7 +8,7 @@
  * @package     Core
  * @subpackage	Template
  *
- * @version		SVN: $Id: theme_blocks.php 8565 2009-04-11 12:44:10Z icmsunderdog $
+ * @version		SVN: $Id$
  *
  * @author      Skalpa Keo <skalpa@xoops.org>
  * @author      Gustavo Pilla (aka nekro) <nekro@impresscms.org>
@@ -17,7 +17,7 @@
 /**
  * This file cannot be requested directly
  */
-if (!defined('ICMS_ROOT_PATH')) exit ();
+defined('ICMS_ROOT_PATH') or exit();
 
 /**
  * icms_view_PageBuilder main class
@@ -90,7 +90,7 @@ class icms_view_PageBuilder {
 			$icmsurl_parsed['scheme'] . "://"
 			. $icmsurl_parsed['host']
 			. $_SERVER ['REQUEST_URI']
-			);
+		);
 		$url = urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1));
 
 		$icms_page_handler = icms::handler('icms_page');
@@ -126,7 +126,7 @@ class icms_view_PageBuilder {
 			$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$pid = 0;
-			foreach ( $pages as $page) {
+			foreach ($pages as $page) {
 				$purl = $page->getVar('page_url');
 				if (substr($purl, - 1) == '*') {
 					$purl = substr($purl, 0, - 1);
@@ -147,7 +147,7 @@ class icms_view_PageBuilder {
 		$icms_block_handler = icms::handler('icms_block');
 		$oldzones = $icms_block_handler->getBlockPositions();
 
-		foreach ( $oldzones as $zone) {
+		foreach ($oldzones as $zone) {
 			$this->blocks[$zone] = array();
 		}
 		if ($this->theme) {
@@ -165,7 +165,7 @@ class icms_view_PageBuilder {
 		/** End of snippet */
 
 		$block_arr = $icms_block_handler->getAllByGroupModule($groups, $modid, $isStart, XOOPS_BLOCK_VISIBLE);
-		foreach ( $block_arr as $block) {
+		foreach ($block_arr as $block) {
 			$side = $oldzones[$block->getVar('side', 'n')];
 			if ($var = $this->buildBlock($block, $template)) {
 				$this->blocks[$side][$var["id"]] = $var;
@@ -230,14 +230,14 @@ class icms_view_PageBuilder {
 		    'id' => $xobject->getVar('bid'),
 		    'module' => $xobject->getVar('dirname'),
 		    'title' => $xobject->getVar('title') . $titlebtns,
-		//'name' => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
+			//'name' => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
 		    'weight' => $xobject->getVar('weight'),
 		    'lastmod' => $xobject->getVar('last_modified')
 		);
 
 		$xoopsLogger =& icms_core_Logger::instance ();
 
-		$bcachetime = (int) ( $xobject->getVar('bcachetime') );
+		$bcachetime = (int) ($xobject->getVar('bcachetime'));
 		//$template = new icms_view_Tpl();
 		if (empty($bcachetime)) {
 			$template->caching = 0;
@@ -245,8 +245,12 @@ class icms_view_PageBuilder {
 			$template->caching = 2;
 			$template->cache_lifetime = $bcachetime;
 		}
-		$tplName = ( $tplName = $xobject->getVar('template') ) ? "db:$tplName" : "db:system_block_dummy.html";
-		$cacheid = $this->generateCacheId('blk_' . $xobject->getVar('dirname', 'n') . '_' . $xobject->getVar('bid')/*, $xobject->getVar( 'show_func', 'n' )*/ );
+		$tplName = ($tplName = $xobject->getVar('template')) ? "db:$tplName" : "db:system_block_dummy.html";
+		$cacheid = $this->generateCacheId(
+			'blk_' . $xobject->getVar('dirname', 'n') . '_'
+			. $xobject->getVar('bid')
+			/*, $xobject->getVar( 'show_func', 'n' )*/
+		);
 
 		if (! $bcachetime || ! $template->is_cached($tplName, $cacheid)) {
 			$xoopsLogger->addBlock($xobject->getVar('name'));
@@ -254,7 +258,7 @@ class icms_view_PageBuilder {
 				return false;
 			}
 			$template->assign('block', $bresult);
-			$block ['content'] = $template->fetch($tplName, $cacheid);
+			$block['content'] = $template->fetch($tplName, $cacheid);
 		} else {
 			$xoopsLogger->addBlock($xobject->getVar('name'), true, $bcachetime);
 			$block['content'] = $template->fetch($tplName, $cacheid);
