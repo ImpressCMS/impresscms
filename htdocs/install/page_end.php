@@ -26,6 +26,7 @@ if ($success) {
 		unlinkRecursive(ICMS_ROOT_PATH.'/install', true);
 		header('Location: '.ICMS_URL.'/index.php');
 	}
+	$_SESSION = array();
 }
 
 $wizard->setPage( 'end' );
