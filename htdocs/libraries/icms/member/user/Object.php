@@ -1,61 +1,48 @@
 <?php
 /**
- * Manage of users
+ * Manage users
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: user.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Member
+ * @subpackage	User
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {exit();}
-/**
- * @package kernel
- * @copyright copyright &copy; 2000 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or exit();
 /**
  * Class for users
- * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
- * @package kernel
- * @subpackage users
+ * @author		Kazumi Ono <onokazu@xoops.org>
+ * @category	ICMS
+ * @package		Member
+ * @subpackage	User
  */
-class icms_member_user_Object extends icms_core_Object
-{
+class icms_member_user_Object extends icms_core_Object {
 	/**
 	 * Array of groups that user belongs to
 	 * @var array
-	 * @access private
 	 */
-	var $_groups = array();
+	private $_groups = array();
 	/**
 	 * @var bool is the user admin?
-	 * @access private
 	 */
-	var $_isAdmin = null;
+	private $_isAdmin = null;
 	/**
 	 * @var string user's rank
-	 * @access private
 	 */
-	var $_rank = null;
+	private $_rank = null;
 	/**
 	 * @var bool is the user online?
-	 * @access private
 	 */
-	var $_isOnline = null;
+	private $_isOnline = null;
 
 	/**
 	 * constructor
 	 * @param array $id Array of key-value-pairs to be assigned to the user. (for backward compatibility only)
 	 * @param int $id ID of the user to be loaded from the database.
 	 */
-	function icms_member_user_Object($id = null)
-	{
+	public function __construct($id = null) {
 		$this->initVar('uid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, false, 60);
 		$this->initVar('uname', XOBJ_DTYPE_TXTBOX, null, true, 255);
@@ -98,16 +85,13 @@ class icms_member_user_Object extends icms_core_Object
 		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 
 		// for backward compatibility
-		if (isset($id))
-		{
-			if (is_array($id))
-			{
+		if (isset($id)) {
+			if (is_array($id)) {
 				$this->assignVars($id);
 			} else {
 				$member_handler = icms::handler('icms_member');
 				$user =& $member_handler->getUser($id);
-				foreach ($user->vars as $k => $v)
-				{
+				foreach ($user->vars as $k => $v) {
 					$this->assignVar($k, $v['value']);
 				}
 			}
@@ -119,8 +103,7 @@ class icms_member_user_Object extends icms_core_Object
 	 *
 	 * @return bool returns false
 	 */
-	function isGuest()
-	{
+	public function isGuest() {
 		return false;
 	}
 
@@ -132,22 +115,17 @@ class icms_member_user_Object extends icms_core_Object
 	 * @param int $usereal switch for usename or realname
 	 * @return string name of the user. name for "anonymous" if not found.
 	 */
-	static public function getUnameFromId($userid, $usereal = 0)
-	{
-		$userid = (int) ($userid);
-		$usereal = (int) ($usereal);
-		if ($userid > 0)
-		{
+	static public function getUnameFromId($userid, $usereal = 0) {
+		$userid = (int) $userid;
+		$usereal = (int) $usereal;
+		if ($userid > 0) {
 			$member_handler = icms::handler('icms_member');
 			$user =& $member_handler->getUser($userid);
-			if (is_object($user))
-			{
+			if (is_object($user)) {
 				$ts =& icms_core_Textsanitizer::getInstance();
-				if ($usereal)
-				{
+				if ($usereal) {
 					$name = $user->getVar('name');
-					if ($name != '')
-					{
+					if ($name != '') {
 						return $ts->htmlSpecialChars($name);
 					} else {
 						return $ts->htmlSpecialChars($user->getVar('uname'));
@@ -165,8 +143,7 @@ class icms_member_user_Object extends icms_core_Object
 	 *
 	 * @deprecated
 	 */
-	function incrementPost()
-	{
+	public function incrementPost() {
 		$member_handler = icms::handler('icms_member');
 		return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
 	}
@@ -176,10 +153,8 @@ class icms_member_user_Object extends icms_core_Object
 	 *
 	 * @param array $groupsArr Array of groups that user belongs to
 	 */
-	function setGroups($groupsArr)
-	{
-		if (is_array($groupsArr))
-		{
+	public function setGroups($groupsArr) {
+		if (is_array($groupsArr)) {
 			$this->_groups =& $groupsArr;
 		}
 	}
@@ -189,8 +164,7 @@ class icms_member_user_Object extends icms_core_Object
 	 *
 	 * return TRUE if success, FALSE if not
 	 */
-	function sendWelcomeMessage()
-	{
+	public function sendWelcomeMessage() {
 		global $icmsConfig, $icmsConfigUser;
 
 		$myts =& icms_core_Textsanitizer::getInstance();
@@ -207,12 +181,12 @@ class icms_member_user_Object extends icms_core_Object
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
 		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, $myts->stripSlashesGPC($icmsConfig['sitename'])));
-		if (!$xoopsMailer->send(true))
-		{
+		if (!$xoopsMailer->send(true)) {
 			$this->setErrors(_US_WELCOMEMSGFAILED);
 			return false;
+		} else {
+			return true;
 		}
-		else{return true;}
 	}
 
 	/**
@@ -223,12 +197,10 @@ class icms_member_user_Object extends icms_core_Object
 	 *
 	 * return TRUE if success, FALSE if not
 	 */
-	function newUserNotifyAdmin()
-	{
+	public function newUserNotifyAdmin() {
 		global $icmsConfigUser, $icmsConfig;
 
-		if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group']))
-		{
+		if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
 			$member_handler = ('icms_member');
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
@@ -238,15 +210,16 @@ class icms_member_user_Object extends icms_core_Object
 			$xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['new_user_notify_group']));
 			$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 			$xoopsMailer->setFromName($icmsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$icmsConfig['sitename']));
-			if (!$xoopsMailer->send(true))
-			{
+			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT, $icmsConfig['sitename']));
+			if (!$xoopsMailer->send(true)) {
 				$this->setErrors(_US_NEWUSERNOTIFYADMINFAIL);
 				return false;
+			} else {
+				return true;
 			}
-			else{return true;}
+		} else {
+			return true;
 		}
-		else{return true;}
 	}
 
 	/**
@@ -254,10 +227,8 @@ class icms_member_user_Object extends icms_core_Object
 	 *
 	 * @return array array of groups
 	 */
-	function &getGroups()
-	{
-		if (empty($this->_groups))
-		{
+	public function &getGroups() {
+		if (empty($this->_groups)) {
 			$member_handler = icms::handler('icms_member');
 			$this->_groups =& $member_handler->getGroupsByUser($this->getVar('uid'));
 		}
@@ -268,10 +239,11 @@ class icms_member_user_Object extends icms_core_Object
 	 * alias for {@link getGroups()}
 	 * @see getGroups()
 	 * @return array array of groups
-	 * @deprecated
+	 * @deprecated	Use getGroups(), instead
+	 * @todo		Remove in version 1.4 - no occurrences in the core
 	 */
-	function &groups()
-	{
+	public function &groups() {
+		icms_core_Debug::setDeprecated('$this->getGroups', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$groups =& $this->getGroups();
 		return $groups;
 	}
@@ -287,12 +259,11 @@ class icms_member_user_Object extends icms_core_Object
 	 * @staticvar array $buffer result buffer
 	 * @return bool is the user admin of that module?
 	 */
-	function isAdmin($module_id = null)
-	{
+	public function isAdmin($module_id = null) {
 		static $buffer = array();
 		if (is_null($module_id)) {
 			$module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
-		} elseif((int)$module_id < 1) {$module_id = 0;}
+		} elseif((int) $module_id < 1) {$module_id = 0;}
 
 		if (!isset($buffer[$module_id])) {
 			$moduleperm_handler = icms::handler('icms_member_groupperm');
@@ -305,10 +276,8 @@ class icms_member_user_Object extends icms_core_Object
 	 * get the user's rank
 	 * @return array array of rank ID and title
 	 */
-	function rank()
-	{
-		if (!isset($this->_rank))
-		{
+	public function rank() {
+		if (!isset($this->_rank)) {
 			$this->_rank = xoops_getrank($this->getVar('rank'), $this->getVar('posts'));
 		}
 		return $this->_rank;
@@ -318,8 +287,7 @@ class icms_member_user_Object extends icms_core_Object
 	 * is the user activated?
 	 * @return bool
 	 */
-	function isActive()
-	{
+	public function isActive() {
 		if ($this->getVar('level') <= 0) {return false;}
 		return true;
 	}
@@ -328,12 +296,13 @@ class icms_member_user_Object extends icms_core_Object
 	 * is the user currently logged in?
 	 * @return bool
 	 */
-	function isOnline()
-	{
-		if (!isset($this->_isOnline))
-		{
+	public function isOnline() {
+		if (!isset($this->_isOnline)) {
 			$onlinehandler = icms::handler('icms_core_Online');
-			$this->_isOnline = ($onlinehandler->getCount(new icms_criteria_Item('online_uid', $this->getVar('uid'))) > 0) ? true : false;
+			$this->_isOnline =
+				($onlinehandler->getCount(new icms_criteria_Item('online_uid', $this->getVar('uid'))) > 0)
+				? true
+				: false;
 		}
 		return $this->_isOnline;
 	}
@@ -344,14 +313,16 @@ class icms_member_user_Object extends icms_core_Object
 	 * kept for compatibility reasons.
 	 *
 	 * @see icms_core_Object::getVar()
-	 * @deprecated
+	 * @deprecated	Use user->getVar, instead
+	 * @todo		Remove in version 1.4
 	 */
 	/**
 	 * get the users UID
 	 * @return int
+	 * all instances have been removed from the core
 	 */
-	function uid()
-	{
+	public function uid() {
+		icms_core_Debug::setDeprecated('$this->getVar("uid")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('uid');
 	}
 
@@ -359,9 +330,11 @@ class icms_member_user_Object extends icms_core_Object
 	 * get the users name
 	 * @param string $format format for the output, see {@link icms_core_Object::getVar()}
 	 * @return string
+	 * No occurrences found in the core
 	 */
 	function name($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("name", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('name', $format);
 	}
 
@@ -369,9 +342,11 @@ class icms_member_user_Object extends icms_core_Object
 	 * get the user's uname
 	 * @param string $format format for the output, see {@link icms_core_Object::getVar()}
 	 * @return string
+	 * All occurrences removed from the core
 	 */
 	function uname($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("uname", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('uname', $format);
 	}
 
@@ -379,9 +354,11 @@ class icms_member_user_Object extends icms_core_Object
 	 * get the user's login_name
 	 * @param string $format format for the output, see {@link icms_core_Object::getVar()}
 	 * @return string
+	 * no occurrences found in the core
 	 */
 	function login_name($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("login_name", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('login_name', $format);
 	}
 
@@ -390,134 +367,198 @@ class icms_member_user_Object extends icms_core_Object
 	 *
 	 * @param string $format format for the output, see {@link icms_core_Object::getVar()}
 	 * @return string
+	 * removed all occurrences in the core
 	 */
 	function email($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("email", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('email', $format);
 	}
+	/* no occurrences found in the core */
 	function url($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("url", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('url', $format);
 	}
+	/* no occurrences found in the core */
 	function user_avatar($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_avatar")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_avatar');
 	}
+	/* no occurrences found in the core */
 	function user_regdate()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_regdate")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_regdate');
 	}
+	/* no occurrences found in the core */
 	function user_icq($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_icq")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_icq', $format);
 	}
+	/* no occurrences found in the core */
 	function user_from($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_from")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_from', $format);
 	}
+	/* no occurrences found in the core */
 	function user_sig($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_sig", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_sig', $format);
 	}
+	/* all occurrences replaced in the core */
 	function user_viewemail()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_viewemail")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_viewemail');
 	}
+	/* no occurrences found in the core */
 	function actkey()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("actkey")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('actkey');
 	}
+	/* no occurrences found in the core */
 	function user_aim($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_aim", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_aim', $format);
 	}
+	/* no occurrences found in the core */
 	function user_yim($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_yim", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_yim', $format);
 	}
+	/* no occurrences found in the core */
 	function user_msnm($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_msnm", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_msnm', $format);
 	}
+	/* no occurrences found in the core */
 	function pass()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("pass")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('pass');
 	}
+	/* no occurrences found in the core */
 	function posts()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("posts")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('posts');
 	}
+	/* no occurrences found in the core */
 	function attachsig()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("attachsig")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar("attachsig");
 	}
+	/* no occurrences found in the core */
 	function level()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("level")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('level');
 	}
+	/* all occurrences replaced in the core */
 	function theme()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("theme")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('theme');
 	}
+	/* no occurrences found in the core */
 	function timezone()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("timezone_offset")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('timezone_offset');
 	}
+	/* no occurrences found in the core */
 	function umode()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("umode")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('umode');
 	}
+	/* no occurrences found in the core */
 	function uorder()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("uorder")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('uorder');
 	}
 	// RMV-NOTIFY
+	/* all occurrences replaced in the core */
 	function notify_method()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("notify_method")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('notify_method');
 	}
+	/* no occurrences found in the core */
 	function notify_mode()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("notify_mode")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('notify_mode');
 	}
+	/* no occurrences found in the core */
 	function user_occ($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_occ")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_occ', $format);
 	}
+	/* no occurrences found in the core */
 	function bio($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("bio", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('bio', $format);
 	}
+	/* no occurrences found in the core */
 	function user_intrest($format='S')
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_intrest", $format)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_intrest', $format);
 	}
+	/* no occurrences found in the core */
 	function last_login()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("last_login")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('last_login');
 	}
+	/* all occurrences replaced in the core */
 	function language()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("language")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('language');
 	}
+	/* no occurrences found in the core */
 	function openid()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("openid")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('openid');
 	}
+	/* no occurrences found in the core */
 	function salt()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("salt")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('salt');
 	}
+	/* no occurrences found in the core */
 	function pass_expired()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("pass_expired")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('pass_expired');
 	}
+	/* no occurrences found in the core */
 	function enc_type()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("enc_type")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('enc_type');
 	}
+	/* all occurrences replaced in the core */
 	function user_viewoid()
 	{
+		icms_core_Debug::setDeprecated('$this->getVar("user_viewoid")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('user_viewoid');
 	}
 
@@ -532,19 +573,16 @@ class icms_member_user_Object extends icms_core_Object
 	 *
 	 * @return string (gravatar or ImpressCMS avatar)
 	 */
-	function gravatar($rating = false, $size = false, $default = false, $border = false, $overwrite = false)
-	{
-		if (!$overwrite && is_file(ICMS_UPLOAD_PATH.'/'.$this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif')
-		{
-			return ICMS_UPLOAD_URL.'/'.$this->getVar('user_avatar');
+	public function gravatar($rating = false, $size = false, $default = false, $border = false, $overwrite = false) {
+		if (!$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif') {
+			return ICMS_UPLOAD_URL . '/' . $this->getVar('user_avatar');
 		}
-		$ret = "http://www.gravatar.com/avatar/".md5(strtolower($this->getVar('email', 'E')))."?d=identicon";
-		if ($rating && $rating != '') {$ret .= "&amp;rating=".$rating;}
-		if ($size && $size != '') {$ret .="&amp;size=".$size;}
-		if ($default && $default != '') {$ret .= "&amp;default=".urlencode($default);}
-		if ($border && $border != '') {$ret .= "&amp;border=".$border;}
+		$ret = "http://www.gravatar.com/avatar/" . md5(strtolower($this->getVar('email', 'E'))) . "?d=identicon";
+		if ($rating && $rating != '') {$ret .= "&amp;rating=" . $rating;}
+		if ($size && $size != '') {$ret .="&amp;size=" . $size;}
+		if ($default && $default != '') {$ret .= "&amp;default=" . urlencode($default);}
+		if ($border && $border != '') {$ret .= "&amp;border=" . $border;}
 		return $ret;
 	}
 
 }
-?>

@@ -261,7 +261,7 @@ if (empty($_SESSION['xoopsUserId'])
 		$_SESSION['xoopsUserGroups'] = $user->getGroups();
 		// begin newly added in 2004-11-30
 		$user_theme = $user->getVar('theme');
-		$user_language = $user->language();
+		$user_language = $user->getVar('language');
 		if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
 			$_SESSION['xoopsUserTheme'] = $user_theme;
 		}
@@ -306,7 +306,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
 		$icmsUser->setGroups($_SESSION['xoopsUserGroups']);
 		$xoopsUserIsAdmin = $icmsUserIsAdmin = $icmsUser->isAdmin();
 		if (!isset($_SESSION['UserLanguage'])) {
-			$_SESSION['UserLanguage'] = $icmsUser->language();
+			$_SESSION['UserLanguage'] = $icmsUser->getVar('language');
 		}
 	}
 }
@@ -434,7 +434,7 @@ if ($icmsConfigPersona['multi_login']) {
 	if (is_object($icmsUser)) {
 		$online_handler = icms::handler('icms_core_Online');
 		$online_handler->write(
-			$icmsUser->uid(), $icmsUser->uname(),
+			$icmsUser->getVar('uid'), $icmsUser->getVar('uname'),
 			time(), 0, $_SERVER['REMOTE_ADDR']
 		);
 	}

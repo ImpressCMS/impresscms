@@ -62,15 +62,15 @@ if (false != $user) {
 			$online_handler->gc(300);
 			$onlines =& $online_handler->getAll();
 			foreach ( $onlines as $online) {
-				if ($online['online_uid'] == $user->uid()) {
+				if ($online['online_uid'] == $user->getVar('uid')) {
 					$user = false;
 					redirect_header(ICMS_URL . '/index.php', 3, _US_MULTLOGIN);
 				}
 			}
 			if (is_object($user)) {
 				$online_handler->write(
-					$user->uid(),
-					$user->uname(),
+					$user->getVar('uid'),
+					$user->getVar('uname'),
 					time(),
 					0,
 					$_SERVER['REMOTE_ADDR']

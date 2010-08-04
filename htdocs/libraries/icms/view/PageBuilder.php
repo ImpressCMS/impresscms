@@ -76,7 +76,7 @@ class icms_view_PageBuilder {
 		//Getting the start module and page configured in the admin panel
 		if (is_array($icmsConfig['startpage'])) {
 			$member_handler = icms::handler('icms_member');
-			$group = $member_handler->getUserBestGroup((@is_object($icmsUser) ? $icmsUser->uid() : 0));
+			$group = $member_handler->getUserBestGroup((@is_object($icmsUser) ? $icmsUser->getVar('uid') : 0));
 			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 		}
 

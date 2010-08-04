@@ -214,7 +214,7 @@ if ($op == 'saveuser')
 		$edituser->setVar('user_msnm', $_POST['user_msnm']);
 		if ($password != '')
 		{
-			
+
 			$icmspass = new icms_core_Password();
 			$salt = $icmspass->createSalt();
 			$edituser->setVar('salt', $salt, true);
@@ -286,7 +286,7 @@ if ($op == 'editprofile')
 	}
 
 	$email_tray->addElement($email_text);
-	$email_cbox_value = $icmsUser->user_viewemail() ? 1 : 0;
+	$email_cbox_value = $icmsUser->getVar('user_viewemail') ? 1 : 0;
 	$email_cbox = new icms_form_elements_Checkbox('', 'user_viewemail', $email_cbox_value);
 	$email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
 	$email_tray->addElement($email_cbox);
@@ -297,7 +297,7 @@ if ($op == 'editprofile')
 		$openid_text = new icms_form_elements_Text('', 'openid', 30, 255, $icmsUser->getVar('openid'));
 		$openid_tray->setDescription(_US_OPENID_FORM_DSC);
 		$openid_tray->addElement($openid_text);
-		$openid_cbox_value = $icmsUser->user_viewoid() ? 1 : 0;
+		$openid_cbox_value = $icmsUser->getVar('user_viewoid') ? 1 : 0;
 		$openid_cbox = new icms_form_elements_Checkbox('', 'user_viewoid', $openid_cbox_value);
 		$openid_cbox->addOption(1, _US_ALLOWVIEWEMAILOPENID);
 		$openid_tray->addElement($openid_cbox);
@@ -353,13 +353,13 @@ if ($op == 'editprofile')
 	$umode_select->addOptionArray(array('nest'=>_NESTED, 'flat'=>_FLAT, 'thread'=>_THREADED));
 	$uorder_select = new icms_form_elements_Select(_US_CSORTORDER, 'uorder', $icmsUser->getVar('uorder'));
 	$uorder_select->addOptionArray(array(XOOPS_COMMENT_OLD1ST => _OLDESTFIRST, XOOPS_COMMENT_NEW1ST => _NEWESTFIRST));
-	$selected_theme = new icms_form_elements_Select(_US_SELECT_THEME, 'theme_selected' , $icmsUser->theme() );
+	$selected_theme = new icms_form_elements_Select(_US_SELECT_THEME, 'theme_selected' , $icmsUser->getVar('theme'));
 	foreach ($icmsConfig['theme_set_allowed'] as $theme)
 	{
 		$selected_theme->addOption($theme, $theme);
 	}
 
-	$selected_language = new icms_form_elements_Select(_US_SELECT_LANG, 'language_selected', $icmsUser->language());
+	$selected_language = new icms_form_elements_Select(_US_SELECT_LANG, 'language_selected', $icmsUser->getVar('language'));
 	include_once ICMS_ROOT_PATH."/class/xoopslists.php" ;
 	foreach (IcmsLists::getLangList() as $language)
 	{

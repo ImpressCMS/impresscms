@@ -65,13 +65,13 @@ if ($icmsUser) {
 				$userHandler = icms::handler('icms_member_user');
 				$toUser =& $userHandler->get( (int) ($_POST['to_userid']));
 				// Only send email notif if notification method is mail
-				if ($toUser->notify_method() == 2) {
+				if ($toUser->getVar('notify_method') == 2) {
 					$xoopsMailer =& getMailer();
 					$xoopsMailer->useMail();
-					$xoopsMailer->setToEmails($toUser->email());
+					$xoopsMailer->setToEmails($toUser->getVar('email'));
 					if ($icmsUser->getVar('user_viewemail')) {
-						$xoopsMailer->setFromEmail($icmsUser->email());
-						$xoopsMailer->setFromName($icmsUser->uname());
+						$xoopsMailer->setFromEmail($icmsUser->getVar('email'));
+						$xoopsMailer->setFromName($icmsUser->getVar('uname'));
 					} else {
 						$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 						$xoopsMailer->setFromName($icmsConfig['sitename']);
@@ -80,8 +80,8 @@ if ($icmsUser) {
 					$xoopsMailer->assign('X_SITENAME', $icmsConfig['sitename']);
 					$xoopsMailer->assign('X_SITEURL', ICMS_URL."/");
 					$xoopsMailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
-					$xoopsMailer->assign('X_UNAME', $toUser->uname());
-					$xoopsMailer->assign('X_FROMUNAME', $icmsUser->uname());
+					$xoopsMailer->assign('X_UNAME', $toUser->getVar('uname'));
+					$xoopsMailer->assign('X_FROMUNAME', $icmsUser->getVar('uname'));
 					$xoopsMailer->assign('X_SUBJECT', $myts->stripSlashesGPC($_POST['subject']));
 					$xoopsMailer->assign('X_MESSAGE', $myts->stripSlashesGPC($_POST['message']));
 					$xoopsMailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
