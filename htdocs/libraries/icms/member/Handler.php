@@ -46,6 +46,8 @@ class icms_member_Handler {
 	private $_members = array();
 	/**#@-*/
 
+	protected $db;
+
 	/**
 	 * constructor
 	 *
@@ -54,6 +56,7 @@ class icms_member_Handler {
 		$this->_gHandler = new icms_member_group_Handler($db);
 		$this->_uHandler = new icms_member_user_Handler($db);
 		$this->_mHandler = new icms_member_group_membership_Handler($db);
+		$this->db = &$db;
 	}
 
 	/**
@@ -302,7 +305,7 @@ class icms_member_Handler {
 	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
 	 */
 	public function loginUser($uname, $pwd) {
-		
+
 		$icmspass = new icms_core_Password();
 
 		if (strstr($uname, '@')) {
@@ -434,8 +437,8 @@ class icms_member_Handler {
 
 		$select = $asobject ? "u.*" : "u.uid";
 		$sql[] = "	SELECT DISTINCT {$select} "
-				. "	FROM " . $this->_uHandler->db->prefix("users") . " AS u"
-				. " LEFT JOIN " . $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
+				. "	FROM " . $this->db->prefix("users") . " AS u"
+				. " LEFT JOIN " . $this->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
 		if (! empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
@@ -453,10 +456,10 @@ class icms_member_Handler {
 			}
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if (! $result = $this->_uHandler->db->query($sql_string, $limit, $start)) {
+		if (! $result = $this->db->query($sql_string, $limit, $start)) {
 			return $ret;
 		}
-		while ($myrow = $this->_uHandler->db->fetchArray($result)) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			if ($asobject) {
 				$user = new icms_member_user_Object();
 				$user->assignVars($myrow);
@@ -484,8 +487,8 @@ class icms_member_Handler {
 		$ret = 0;
 
 		$sql[] = "	SELECT COUNT(DISTINCT u.uid) "
-				. "	FROM " . $this->_uHandler->db->prefix("users") . " AS u"
-				. " LEFT JOIN " . $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
+				. "	FROM " . $this->db->prefix("users") . " AS u"
+				. " LEFT JOIN " . $this->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
 		if (! empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
@@ -494,10 +497,10 @@ class icms_member_Handler {
 			$sql[] = $criteria->render();
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if (! $result = $this->_uHandler->db->query($sql_string)) {
+		if (! $result = $this->db->query($sql_string)) {
 			return $ret;
 		}
-		list($ret) = $this->_uHandler->db->fetchRow($result);
+		list($ret) = $this->db->fetchRow($result);
 		return $ret;
 	}
 
@@ -522,12 +525,12 @@ class icms_member_Handler {
 		} else {
 			foreach ($groups as $group) {
 				$sql = 'SELECT COUNT(gperm_id) as total FROM '
-					. $this->_uHandler->db->prefix("group_permission")
+					. $this->db->prefix("group_permission")
 					. ' WHERE gperm_groupid=' . $group;
-				if (! $result = $this->_uHandler->db->query($sql)) {
+				if (! $result = $this->db->query($sql)) {
 					return $ret;
 				}
-				list($t) = $this->_uHandler->db->fetchRow($result);
+				list($t) = $this->db->fetchRow($result);
 				$gperms[$group] = $t;
 			}
 			foreach ($gperms as $key => $val) {
