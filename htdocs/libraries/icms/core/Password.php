@@ -10,10 +10,7 @@
  **/
 final class icms_core_Password
 {
-	private $pass;
-	private $salt;
-	private $mainSalt = XOOPS_DB_SALT;
-	private $uname;
+	private $pass, $salt, $mainSalt = XOOPS_DB_SALT, $uname;
 
 	public function __construct()
 	{
@@ -52,9 +49,9 @@ final class icms_core_Password
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
-		$sql = $db->query("SELECT uname, pass_expired FROM ".$db->prefix('users')." WHERE
+		$sql = $db->query("SELECT pass_expired FROM ".$db->prefix('users')." WHERE
                 uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-		list($uname, $pass_expired) = $db->fetchRow($sql);
+		list($pass_expired) = $db->fetchRow($sql);
 
 		if($pass_expired == 1)
 		{
@@ -86,21 +83,21 @@ final class icms_core_Password
 		$table = new IcmsDatabasetable('users');
 		if($table->fieldExists('loginname'))
 		{
-			$sql = $db->query("SELECT loginname, salt FROM ".$db->prefix('users')." WHERE
+			$sql = $db->query("SELECT salt FROM ".$db->prefix('users')." WHERE
 					loginname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-			list($loginname, $salt) = $db->fetchRow($sql);
+			list($salt) = $db->fetchRow($sql);
 		}
 		elseif($table->fieldExists('login_name'))
 		{
-			$sql = $db->query("SELECT login_name, salt FROM ".$db->prefix('users')." WHERE
+			$sql = $db->query("SELECT salt FROM ".$db->prefix('users')." WHERE
                     login_name = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-			list($login_name, $salt) = $db->fetchRow($sql);
+			list($salt) = $db->fetchRow($sql);
 		}
 		else
 		{
-			$sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE
+			$sql = $db->query("SELECT salt FROM ".$db->prefix('users')." WHERE
                     uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-			list($uname, $salt) = $db->fetchRow($sql);
+			list($salt) = $db->fetchRow($sql);
 		}
 		
 		return $salt;
@@ -129,69 +126,74 @@ final class icms_core_Password
 		{
 			$pass_hash = md5($pass);
 		}
-		elseif($enc_type == 1)
+		else
 		{
-			$pass_hash = hash('sha256', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 2)
-		{
-			$pass_hash = hash('sha384', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 3)
-		{
-			$pass_hash = hash('sha512', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 4)
-		{
-			$pass_hash = hash('ripemd128', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 5)
-		{
-			$pass_hash = hash('ripemd160', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 6)
-		{
-			$pass_hash = hash('whirlpool', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 7)
-		{
-			$pass_hash = hash('haval128,4', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 8)
-		{
-			$pass_hash = hash('haval160,4', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 9)
-		{
-			$pass_hash = hash('haval192,4', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 10)
-		{
-			$pass_hash = hash('haval224,4', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 11)
-		{
-			$pass_hash = hash('haval256,4', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 12)
-		{
-			$pass_hash = hash('haval128,5', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 13)
-		{
-			$pass_hash = hash('haval160,5', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 14)
-		{
-			$pass_hash = hash('haval192,5', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 15)
-		{
-			$pass_hash = hash('haval224,5', $salt.md5($pass).$this->mainSalt);
-		}
-		elseif($enc_type == 16)
-		{
-			$pass_hash = hash('haval256,5', $salt.md5($pass).$this->mainSalt);
+			$pass = $salt.md5($pass).$this->mainSalt;
+
+			if($enc_type == 1)
+			{
+				$pass_hash = hash('sha256', $pass);
+			}
+			elseif($enc_type == 2)
+			{
+				$pass_hash = hash('sha384', $pass);
+			}
+			elseif($enc_type == 3)
+			{
+				$pass_hash = hash('sha512', $pass);
+			}
+			elseif($enc_type == 4)
+			{
+				$pass_hash = hash('ripemd128', $pass);
+			}
+			elseif($enc_type == 5)
+			{
+				$pass_hash = hash('ripemd160', $pass);
+			}
+			elseif($enc_type == 6)
+			{
+				$pass_hash = hash('whirlpool', $pass);
+			}
+			elseif($enc_type == 7)
+			{
+				$pass_hash = hash('haval128,4', $pass);
+			}
+			elseif($enc_type == 8)
+			{
+				$pass_hash = hash('haval160,4', $pass);
+			}
+			elseif($enc_type == 9)
+			{
+				$pass_hash = hash('haval192,4', $pass);
+			}
+			elseif($enc_type == 10)
+			{
+				$pass_hash = hash('haval224,4', $pass);
+			}
+			elseif($enc_type == 11)
+			{
+				$pass_hash = hash('haval256,4', $pass);
+			}
+			elseif($enc_type == 12)
+			{
+				$pass_hash = hash('haval128,5', $pass);
+			}
+			elseif($enc_type == 13)
+			{
+				$pass_hash = hash('haval160,5', $pass);
+			}
+			elseif($enc_type == 14)
+			{
+				$pass_hash = hash('haval192,5', $pass);
+			}
+			elseif($enc_type == 15)
+			{
+				$pass_hash = hash('haval224,5', $pass);
+			}
+			elseif($enc_type == 16)
+			{
+				$pass_hash = hash('haval256,5', $pass);
+			}
 		}
 		unset($mainSalt, $pass);
 		return $pass_hash;
@@ -226,7 +228,7 @@ final class icms_core_Password
 	 */
 	public function passExpired($uname = '')
 	{
-		return $this->passwordExpired($uname);
+		return self::passwordExpired($uname);
 	}
 
 	/**
@@ -236,9 +238,9 @@ final class icms_core_Password
 	 * @param    string  $uname      Username to find User Salt key for.
 	 * @return   string  returns the Salt key of the user.
 	 */
-	final public function getUserSalt($uname = '')
+	public function getUserSalt($uname = '')
 	{
-		return $this->getUserSaltFromUname($uname);
+		return self::getUserSaltFromUname($uname);
 	}
 
 	/**
@@ -252,9 +254,9 @@ final class icms_core_Password
 	 *                               use in conjunction only with $enc_type above.
 	 * @return   string  returns the final encrypted hash of users password.
 	 */
-	final public function encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
+	public function encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 	{
-		return $this->encryptPassword($pass, $salt, $enc_type, $reset);
+		return self::encryptPassword($pass, $salt, $enc_type, $reset);
 	}
 }
 ?>
