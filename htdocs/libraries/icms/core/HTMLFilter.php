@@ -10,7 +10,7 @@
  * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  * @version       $Id: HTMLFilter.php 19866 2010-07-17 20:00:30Z phoenyx $
 **/
-class icms_core_HTMLFilter
+class icms_core_HTMLFilter extends icms_core_DataFilter
 {
 	/**
 	 * variable used by HTML Filter Library
@@ -22,6 +22,8 @@ class icms_core_HTMLFilter
 	 */
 	public function __construct()
 	{
+		parent::__construct();
+
 		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
@@ -32,69 +34,47 @@ class icms_core_HTMLFilter
 			require_once ICMS_ROOT_PATH.'/plugins/csstidy/class.csstidy.php';
 		}
 	}
-
-	/**
-	 * Constructor
-	 */
-/*	public function HTMLFilter()
-	{
-		$config_handler = icms::handler('icms_config');
-		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
-
-		require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
-		require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
-		if($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0)
-		{
-			require_once ICMS_ROOT_PATH.'/plugins/csstidy/class.csstidy.php';
-		}
-	} */
 
 	/**
 	 * Access the only instance of this class
 	 * @return      object
-	 * @static      $purify_instance
+	 * @static      $instance
 	 * @staticvar   object
 	 **/
-	public static function getPurifierInstance()
+	public static function getInstance()
 	{
-		static $purify_instance;
-		if(!isset($purify_instance))
+		static $instance;
+		if(!isset($instance))
 		{
-			$purify_instance = new icms_core_HTMLFilter();
+			$instance = new icms_core_HTMLFilter();
 		}
-		return $purify_instance;
+		return $instance;
 	}
+
+// ----- Public Functions -----
 
 	/**
-	 * Filters Multidimensional Array Recursively removing keys with empty values
-	 * @param       array     $array       Array to be filtered
-	 * @return      array     $array
+	 * Allows HTML Purifier library to be called when required
+	 * @param    string  $html    input to be cleaned
+	 * @return   string
 	 **/
-	public function icms_purifyCleanArray($arr)
+	public function icms_html_purifier($html)
 	{
-		$rtn = array();
-
-		foreach($arr as $key => $a)
+		if(get_magic_quotes_gpc())
 		{
-			if(!is_array($a) && (!empty($a) || $a === 0))
-			{
-				$rtn[$key] = $a;
-			}
-			elseif(is_array($a))
-			{
-				if(count($a) > 0)
-				{
-					$a = $this->icms_purifyCleanArray($a);
-					$rtn[$key] = $a;
-					if(count($a) == 0)
-					{
-						unset($rtn[$key]);
-					}
-				}
-			}
+			$html = stripslashes($html);
 		}
-		return $rtn;
+
+		$icmsPurifyConf = $this->icms_getPurifierConfig(); // gets the Config Data
+		//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
+
+		$this->purifier = new HTMLPurifier($icmsPurifyConf);
+		$html = $this->purifier->purify($html);
+
+		return $html;
 	}
+
+// ----- Private Functions -----
 
 	/**
 	 * Gets Custom Purifier configurations ** this function will improve in time **
@@ -169,36 +149,7 @@ class icms_core_HTMLFilter
             'Filter.ExtractStyleBlocks' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'],
             'Filter.YouTube' => $icmsConfigPurifier['purifier_Filter_YouTube'],
 		);
-		return $this->icms_purifyCleanArray($icmsPurifierConf);
-	}
-
-	public function icms_purify_debug_info($text, $msg)
-	{
-		echo "<div style='padding: 5px; color: red; font-weight: bold'>$text</div>";
-		echo "<div><pre>";
-		print_r($msg);
-		echo "</pre></div>";
-	}
-
-	/**
-	 * Allows HTML Purifier library to be called when required
-	 * @param    string  $html    input to be cleaned
-	 * @return   string
-	 **/
-	public function icms_html_purifier($html)
-	{
-		if(get_magic_quotes_gpc())
-		{
-			$html = stripslashes($html);
-		}
-
-		$icmsPurifyConf = $this->icms_getPurifierConfig(); // gets the Config Data
-		//$this->icms_debug_info('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
-
-		$this->purifier = new HTMLPurifier($icmsPurifyConf);
-		$html = $this->purifier->purify($html);
-
-		return $html;
+		return parent::cleanArray($icmsPurifierConf);
 	}
 
 	/**
@@ -218,48 +169,5 @@ class icms_core_HTMLFilter
 		}
 	}
 
-	/**
-	 * Filters & Cleans HTMLArea form RAW data submitted for display
-	 * @param   string  $html
-	 * @return  string
-	 **/
-	public function displayHTMLarea($html)
-	{
-		// ################# Preload Trigger beforeDisplayTarea ##############
-		global $icmsPreloadHandler;
-		if(!is_object($icmsPreloadHandler))
-			$icmsPreloadHandler = icms_preload_Handler::getInstance();
-
-		$icmsPreloadHandler->triggerEvent('beforedisplayHTMLarea', array(&$html));
-
-		$html = $this->icms_html_purifier($html);
-
-		// ################# Preload Trigger afterDisplayTarea ##############
-		global $icmsPreloadHandler;
-		$icmsPreloadHandler->triggerEvent('afterdisplayHTMLarea', array(&$html));
-		return $html;
-	}
-
-	/**
-	 * Filters & Cleans HTMLArea form RAW data submitted for preview
-	 * @param   string  $html
-	 * @return  string
-	 **/
-	public function previewHTMLarea($html)
-	{
-		// ################# Preload Trigger beforeDisplayTarea ##############
-		global $icmsPreloadHandler;
-
-		if(!is_object($icmsPreloadHandler))
-			$icmsPreloadHandler = icms_preload_Handler::getInstance();
-		$icmsPreloadHandler->triggerEvent('beforepreviewHTMLarea', array(&$html));
-
-		$html = $this->icms_html_purifier($html);
-
-		// ################# Preload Trigger afterDisplayTarea ##############
-		$icmsPreloadHandler->triggerEvent('afterpreviewHTMLarea', array(&$html));
-
-		return $html;
-	}
 }
 ?>
