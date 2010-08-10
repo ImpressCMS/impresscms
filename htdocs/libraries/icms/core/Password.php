@@ -40,7 +40,7 @@ final class icms_core_Password
 	* @param    string  $uname      The username of the account to be checked
 	* @return   bool     returns true if password is expired, false if password is not expired.
 	*/
-	private function passwordExpired($uname)
+	private function priv_passExpired($uname)
 	{
 		$db = Database::getInstance();
 		
@@ -70,7 +70,7 @@ final class icms_core_Password
 	 * @param    string  $uname      Username to find User Salt key for.
 	 * @return   string  returns the Salt key of the user.
 	 */
-	private function getUserSaltFromUname($uname)
+	private function priv_getUserSalt($uname)
 	{
 		$db = Database::getInstance();
 
@@ -114,7 +114,7 @@ final class icms_core_Password
 	 *                               use in conjunction only with $enc_type above.
 	 * @return   string  returns the final encrypted hash of users password.
 	 */
-	private function encryptPassword($pass, $salt, $enc_type, $reset)
+	private function priv_encryptPass($pass, $salt, $enc_type, $reset)
 	{
 		global $icmsConfigUser;
 
@@ -228,7 +228,7 @@ final class icms_core_Password
 	 */
 	public function passExpired($uname = '')
 	{
-		return self::passwordExpired($uname);
+		return self::priv_passExpired($uname);
 	}
 
 	/**
@@ -240,7 +240,7 @@ final class icms_core_Password
 	 */
 	public function getUserSalt($uname = '')
 	{
-		return self::getUserSaltFromUname($uname);
+		return self::priv_getUserSalt($uname);
 	}
 
 	/**
@@ -256,7 +256,7 @@ final class icms_core_Password
 	 */
 	public function encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 	{
-		return self::encryptPassword($pass, $salt, $enc_type, $reset);
+		return self::priv_encryptPass($pass, $salt, $enc_type, $reset);
 	}
 }
 ?>

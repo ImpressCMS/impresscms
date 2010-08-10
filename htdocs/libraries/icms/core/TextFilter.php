@@ -36,7 +36,7 @@ class icms_core_TextFilter extends icms_core_DataFilter
 
 	public function checkVar($data, $type, $option1 = '', $option2 = '')
 	{
-		return parent::icms_CheckVar($data, $type, $option1, $option2);
+		return parent::checkVar($data, $type, $option1, $option2);
 	}
 	
 	/**
@@ -72,9 +72,9 @@ class icms_core_TextFilter extends icms_core_DataFilter
 		}
 		if ($imcode != 0) {
 			if ($image != 0) {
-				$text = parent::icmsCodeDecode($text);
+				$text = parent::codeDecode($text);
 			} else {
-				$text = parent::icmsCodeDecode($text, 0);
+				$text = parent::codeDecode($text, 0);
 			}
 		}
 

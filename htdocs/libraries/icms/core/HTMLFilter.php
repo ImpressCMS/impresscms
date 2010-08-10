@@ -58,14 +58,9 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
 	 * @param    string  $html    input to be cleaned
 	 * @return   string
 	 **/
-	public function icms_html_purifier($html)
+	public function htmlpurify($html)
 	{
-		if(get_magic_quotes_gpc())
-		{
-			$html = stripslashes($html);
-		}
-
-		$icmsPurifyConf = $this->icms_getPurifierConfig(); // gets the Config Data
+		$icmsPurifyConf = self::getPurifierConfig(); // gets the Config Data
 		//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
 
 		$this->purifier = new HTMLPurifier($icmsPurifyConf);
@@ -80,7 +75,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
 	 * Gets Custom Purifier configurations ** this function will improve in time **
 	 * @return  array    $icmsPurifierConf
 	 **/
-	protected function icms_getPurifierConfig()
+	protected function getPurifierConfig()
 	{
 		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
@@ -151,23 +146,5 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
 		);
 		return parent::cleanArray($icmsPurifierConf);
 	}
-
-	/**
-	 * Purifies $data recursively
-	 * @param    array   $data   data array to purify
-	 * @return   string  $data   purified data array
-	 */
-	function icms_purify_recursive($data)
-	{
-		if(is_array($data))
-		{
-			return array_map(array($this, 'icms_purify_recursive'), $data);
-		}
-		else
-		{
-			return strlen($data) > 32 ? $this->purifier->purify($data) : $data;
-		}
-	}
-
 }
 ?>
