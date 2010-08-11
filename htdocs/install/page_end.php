@@ -34,5 +34,12 @@ $pageHasForm = false;
 $content = "";
 include "./language/$wizard->language/finish.php";
 
+// Destroy the Installation Session.
+unset($_SESSION);
+if(isset($_COOKIE[session_name()]))
+{
+	setcookie(session_name(), '', time()-60);
+}
+
 include 'install_tpl.php';
 ?>
