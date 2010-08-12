@@ -259,4 +259,3 @@ final class icms_core_Password
 		return self::priv_encryptPass($pass, $salt, $enc_type, $reset);
 	}
 }
-?>

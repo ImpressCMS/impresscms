@@ -893,4 +893,3 @@ class icms_core_DataFilter
 		return $all ? $this->allSmileys : $this->displaySmileys;
 	}
 }
-?>

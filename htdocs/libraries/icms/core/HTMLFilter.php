@@ -147,4 +147,3 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
 		return parent::cleanArray($icmsPurifierConf);
 	}
 }
-?>

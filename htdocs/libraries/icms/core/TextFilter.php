@@ -91,4 +91,3 @@ class icms_core_TextFilter extends icms_core_DataFilter
 	// -------- Private Functions --------
 
 }
-?>
