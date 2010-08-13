@@ -10,13 +10,13 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @version	$Id$
- * @deprecated	Use icms_core_ZipFileHandler instead
+ * @deprecated	Use icms_file_ZipFileHandler instead
  * @todo Remove in version 1.4
 */
-class zipfile extends icms_core_ZipFileHandler {
+class zipfile extends icms_file_ZipFileHandler {
 	private $_deprecated;
 	public function __construct() {
 		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_core_ZipFileHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_file_ZipFileHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
