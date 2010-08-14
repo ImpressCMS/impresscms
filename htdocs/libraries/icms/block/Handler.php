@@ -393,7 +393,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 						. (int) $obj->getVar("bid") . "', '"
 						. (int) $mid . "', '"
 						. (int) $pageid . "')";
-					if (false != $forc) {
+					if (false != $force) {
 						$this->db->queryF($sql);
 					} else {
 						$this->db->query($sql);
