@@ -377,7 +377,7 @@ class icms_block_Object extends icms_ipf_Object {
 
 class IcmsBlock extends icms_block_Object {
 	public function __construct(&$db) {
-		parent::__construct(&$db);
+		parent::__construct($db);
 		$this->setErrors = icms_core_Debug::setDeprecated('icms_block_Object');
 	}
 
