@@ -39,11 +39,11 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectLang extends icms_form_elements_Lang {
+class XoopsFormSelectLang extends icms_form_elements_select_Lang {
 	private $_deprecated;
 	public function __construct() {
 		parent::getInstance();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Lang', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Lang', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
