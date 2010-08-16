@@ -11,6 +11,11 @@ class IcmsPersistableObject extends icms_ipf_Object {
 		parent::__construct($handler);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
+
+	public function IcmsPersistableObject(&$handler) {
+		parent::__construct($handler);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	}
 }
 
 ?>
