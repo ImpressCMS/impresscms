@@ -42,7 +42,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  *
  */
 
-class IcmsFormCaptcha extends icms_form_elements_captcha {
+class IcmsFormCaptcha extends icms_form_elements_Captcha {
 	private $_deprecated;
 	public function __construct() {
 		parent::__construct();
