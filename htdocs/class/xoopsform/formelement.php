@@ -35,7 +35,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  form
  */
-class XoopsFormElement extends icms_form_Element{
+abstract class XoopsFormElement extends icms_form_Element{
 	private $_deprecated;
 	public function __construct() {
 		parent::getInstance();
