@@ -133,8 +133,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
-		include_once ICMS_ROOT_PATH.'/class/uploader.php';
-		$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), 500000);
+		$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), 500000);
 		$uploader->setPrefix('savt');
 		$err = array();
 		$ucount = count($_POST['xoops_upload_file']);

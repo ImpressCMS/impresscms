@@ -49,8 +49,7 @@ switch($op) {
 		}
 		$db =& Database::getInstance();
 		$myts =& icms_core_Textsanitizer::getInstance();
-		include_once ICMS_ROOT_PATH.'/class/uploader.php';
-		$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
+		$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 		$uploader->setPrefix('smil');
 		if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 			if (!$uploader->upload()) {
