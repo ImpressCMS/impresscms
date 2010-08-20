@@ -713,6 +713,31 @@ class icms_core_DataFilter
 		return trim($text);
 	}
 
+	public function utf8_strrev($str, $reverse = false)
+	{
+		preg_match_all('/./us', $str, $ar);
+		if($reverse) {return join('',array_reverse($ar[0]));}
+		else
+		{
+			$temp = array();
+			foreach($ar[0] as $value)
+			{
+				if(is_numeric($value) && !empty($temp[0]) && is_numeric($temp[0]))
+				{
+					foreach ($temp as $key => $value2)
+					{
+						if(is_numeric($value2)) {$pos = ($key + 1);}
+						else {break;}
+						$temp2 = array_splice($temp, $pos);
+						$temp = array_merge($temp, array($value), $temp2);
+					}
+				}
+				else {array_unshift($temp, $value);}
+			}
+			return implode('', $temp);
+		}
+	}
+
 // -------- Private Functions --------
 
 	/*
