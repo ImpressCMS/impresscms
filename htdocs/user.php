@@ -19,8 +19,8 @@
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 
-$op = (isset($_GET['op'])) ? trim(StopXSS($_GET['op'])) : ((isset($_POST['op']))
-? trim(StopXSS($_POST['op'])) : 'main');
+$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, $_GET['op'], FILTER_SANITIZE STRING))
+		: ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, $_POST['op'], FILTER_SANITIZE STRING)) : 'main');
 
 if ($op == 'main')
 {
