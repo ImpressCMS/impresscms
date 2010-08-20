@@ -43,11 +43,8 @@ class icms_auth_Xoops extends icms_auth_Object {
 		$member_handler = icms::handler('icms_member');
 		$user = $member_handler->loginUser($uname, $pwd);
 		$sess_handler = icms::handler('icms_core_Session');
-		$sess_handler->securityLevel = 3;
-		$sess_handler->check_ip_blocks = 2;
-		$sess_handler->salt_key = XOOPS_DB_SALT;
 		$sess_handler->enableRegenerateId = true;
-		$sess_handler->icms_sessionOpen();
+		$sess_handler->sessionOpen();
 		if ($user == false) {
 			$sess_handler->destroy(session_id());
 			$this->setErrors(1, _US_INCORRECTLOGIN);

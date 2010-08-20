@@ -309,7 +309,7 @@ class icms_member_Handler {
 		$icmspass = new icms_core_Password();
 
 		if (strstr($uname, '@')) {
-			$uname = $this->icms_getLoginFromUserEmail($uname);
+			$uname = self::icms_getLoginFromUserEmail($uname);
 		}
 
 		$is_expired = $icmspass->passExpired($uname);

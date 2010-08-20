@@ -22,10 +22,10 @@ if (!defined("XOOPS_FOOTER_INCLUDED"))
 
 	$_SESSION['ad_sess_regen'] = false;
 	if (isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
-		$sess_handler->icms_sessionOpen(true);
+		$sess_handler->sessionOpen(true);
 		$_SESSION['sess_regen'] = false;
 	} else {
-		$sess_handler->icms_sessionOpen();
+		$sess_handler->sessionOpen();
 	}
 
 	// ################# Preload Trigger beforeFooter ##############

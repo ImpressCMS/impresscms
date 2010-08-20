@@ -149,145 +149,29 @@ if (defined('ICMS_INCLUDE_OPENID')) {
 	require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
 }
 
-// ############## Login a user with a valid session ##############
+// ############## Validate & Start User Session ##############
 $xoopsUser = $icmsUser = '';
 $xoopsUserIsAdmin = $icmsUserIsAdmin = false;
 $member_handler = icms::handler('icms_member');
 global $sess_handler;
 $sess_handler = icms::handler('icms_core_Session');
-if ($icmsConfig['use_ssl']
-	&& isset($_POST[$icmsConfig['sslpost_name']])
-	&& $_POST[$icmsConfig['sslpost_name']] != '') {
-	session_id($_POST[$icmsConfig['sslpost_name']]);
-} elseif ($icmsConfig['use_mysession']
-	&& $icmsConfig['session_name'] != '' && $icmsConfig['session_expire'] > 0) {
-	if (isset($_COOKIE[$icmsConfig['session_name']])) {
-		session_id($_COOKIE[$icmsConfig['session_name']]);
-	}
-	if (function_exists('session_cache_expire')) {
-		session_cache_expire($icmsConfig['session_expire']);
-	}
-	@ini_set('session.gc_maxlifetime', $icmsConfig['session_expire'] * 60);
-}
 
 session_set_save_handler(
-	array(&$sess_handler, 'open'),
-	array(&$sess_handler, 'close'), array(&$sess_handler, 'read'),
-	array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'),
-	array(&$sess_handler, 'gc')
-);
+							array(&$sess_handler, 'open'), array(&$sess_handler, 'close'),
+							array(&$sess_handler, 'read'), array(&$sess_handler, 'write'),
+							array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc')
+						);
 
-if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
-	session_name($icmsConfig['session_name']);
-} else {
-	session_name('ICMSSESSION');
+$sslpost_name = isset($_POST[$icmsConfig['sslpost_name']]) ? $_POST[$icmsConfig['sslpost_name']] : '';
+$sess_handler->sessionStart($sslpost_name);
+
+// Autologin if correct cookie present.
+if (empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass'])) {
+	$autologinName = $_COOKIE['autologin_uname'];
+	$autologinPass = $_COOKIE['autologin_pass'];
+
+	$sess_handler->sessionAutologin($autologinName, $autologinPass, $_POST);
 }
-session_start();
-/*
- $sess_handler->securityLevel = 3;
- $sess_handler->check_ip_blocks = 2;
- $sess_handler->salt_key = XOOPS_DB_SALT;
- $sess_handler->enableRegenerateId = true;
- $sess_handler->icms_sessionOpen(); */
-
-// Remove expired session for xoopsUserId
-if ($icmsConfig['use_mysession']
-	&& $icmsConfig['session_name'] != ''
-	&& !isset($_COOKIE[$icmsConfig['session_name']])
-	&& !empty($_SESSION['xoopsUserId'])) {
-	unset($_SESSION['xoopsUserId']);
-}
-
-// autologin hack GIJ
-if (empty($_SESSION['xoopsUserId'])
-	&& isset($_COOKIE['autologin_uname'])
-	&& isset($_COOKIE['autologin_pass'])) {
-
-	// autologin V2 GIJ
-	if (! empty($_POST)) {
-		$_SESSION['AUTOLOGIN_POST'] = $_POST;
-		$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-		redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
-	} else if (! empty($_SERVER['QUERY_STRING']) && substr($_SERVER['SCRIPT_NAME'], -19) != 'session_confirm.php') {
-		$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-		redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
-	}
-	// end of autologin V2
-
-	// redirect to ICMS_URL/ when query string exists (anti-CSRF) V1 code
-	/* if (! empty( $_SERVER['QUERY_STRING'] )) {
-	redirect_header( ICMS_URL . '/' , 0 , 'Now, logging in automatically' ) ;
-	exit ;
-	}*/
-
-	$myts =& icms_core_Textsanitizer::getInstance();
-	$uname = $myts->stripSlashesGPC($_COOKIE['autologin_uname']);
-	$pass = $myts->stripSlashesGPC($_COOKIE['autologin_pass']);
-	if (empty($uname) || is_numeric($pass)) {
-		$user = false ;
-	} else {
-		// V3
-		$uname4sql = addslashes($uname);
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname4sql ));
-		$user_handler = icms::handler('icms_member_user');
-		$users =& $user_handler->getObjects($criteria, false);
-		if (empty($users) || count($users) != 1) {
-			$user = false ;
-		} else {
-			// V3.1 begin
-			$user = $users[0] ;
-			$old_limit = time() - ( defined('XOOPS_AUTOLOGIN_LIFETIME')
-				? XOOPS_AUTOLOGIN_LIFETIME
-				: 604800 ) ; // 1 week default
-			list($old_Ynj, $old_encpass) = explode(':', $pass);
-			if (strtotime($old_Ynj) < $old_limit
-				|| md5($user->getVar('pass') . XOOPS_DB_PASS . XOOPS_DB_PREFIX . $old_Ynj) != $old_encpass)
-				$user = false ;
-			// V3.1 end
-		}
-		unset($users) ;
-	}
-	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH')
-		? XOOPS_COOKIE_PATH
-		: preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
-	if ($xoops_cookie_path == ICMS_URL ) $xoops_cookie_path = '/' ;
-	if (false != $user && $user->getVar('level') > 0) {
-		// update time of last login
-		$user->setVar('last_login', time());
-		if (!$member_handler->insertUser($user, true)) {
-		}
-		//$_SESSION = array();
-		$_SESSION['xoopsUserId'] = $user->getVar('uid');
-		$_SESSION['xoopsUserGroups'] = $user->getGroups();
-		// begin newly added in 2004-11-30
-		$user_theme = $user->getVar('theme');
-		$user_language = $user->getVar('language');
-		if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
-			$_SESSION['xoopsUserTheme'] = $user_theme;
-		}
-		$_SESSION['UserLanguage'] = $user_language;
-
-		// end newly added in 2004-11-30
-		// update autologin cookies
-		$expire = time() + (
-			defined('XOOPS_AUTOLOGIN_LIFETIME')
-			? XOOPS_AUTOLOGIN_LIFETIME
-				: 604800
-			) ; // 1 week default
-		setcookie('autologin_uname', $uname, $expire, $xoops_cookie_path, '', 0);
-		// V3.1
-		$Ynj = date('Y-n-j');
-		setcookie(
-			'autologin_pass',
-			$Ynj . ':' . md5($user->getVar('pass') . XOOPS_DB_PASS . XOOPS_DB_PREFIX . $Ynj),
-			$expire, $xoops_cookie_path, '', 0
-		);
-	} else {
-		setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
-		setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
-	}
-}
-// end of autologin hack GIJ
 
 if (!empty($_SESSION['xoopsUserId'])) {
 	$xoopsUser = $icmsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
@@ -298,10 +182,9 @@ if (!empty($_SESSION['xoopsUserId'])) {
 		$_SESSION = array();
 	} else {
 		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
-			setcookie(
-				$icmsConfig['session_name'],
-				session_id(), time()+(60*$icmsConfig['session_expire']), '/', '', 0
-			);
+			$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
+			setcookie($icmsConfig['session_name'], session_id(),
+				time()+(60*$icmsConfig['session_expire']), '/', '', $secure, 0);
 		}
 		$icmsUser->setGroups($_SESSION['xoopsUserGroups']);
 		$xoopsUserIsAdmin = $icmsUserIsAdmin = $icmsUser->isAdmin();

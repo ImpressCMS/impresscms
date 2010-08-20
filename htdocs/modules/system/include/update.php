@@ -221,6 +221,13 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 	unset ( $table );
 
+	/* change IP address to varchar(64) in session to accomodate IPv6 addresses */
+	$table = new IcmsDatabasetable( 'session' );
+	if ($table->fieldExists( 'sess_ip' )) {
+		$table->addAlteredField( 'sess_ip', "varchar(64) NOT NULL default ''", 'sess_ip' );
+		$table->alterTable();
+	}
+	unset ( $table );
 
 	/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
