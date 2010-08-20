@@ -245,7 +245,8 @@ class icms_core_DataFilter
 	*					'true' = URLEncode the URL (ie. http://www.example > http%3A%2F%2Fwww.example)
 	*					'false' = Do Not URLEncode the URL
 	*				EMAIL:
-	*					NOT USED!
+	*					'true' = Reject if email is banned (Uses: $icmsConfigUser['bad_emails'])
+	*					'false' = Do Not use Email Blacklist
 	*				IP:
 	*					NOT USED!
 	*				INT:
@@ -288,7 +289,7 @@ class icms_core_DataFilter
 			if($type == 'email')
 			{
 				$valid_options1 = array(0, 1);
-				$options2 = '';
+				$valid_options2 = array(0, 1);
 
 				if(!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1))
 				{
@@ -297,6 +298,14 @@ class icms_core_DataFilter
 				else
 				{
 					$options1 = 1;
+				}
+				if(!isset($options2) || $options2 == '' || !in_array($options2, $valid_options2))
+				{
+					$options2 = 0;
+				}
+				else
+				{
+					$options2 = 1;
 				}
 			}
 
@@ -747,7 +756,18 @@ class icms_core_DataFilter
 		{
 			$data = filter_var($data, FILTER_SANITIZE_EMAIL);
 
-			if(!filter_var($data, FILTER_VALIDATE_EMAIL))
+			if(filter_var($data, FILTER_VALIDATE_EMAIL))
+			{
+				if(isset($options2) && is_array($icmsConfigUser['bad_emails']))
+				{
+					foreach($icmsConfigUser['bad_emails'] as $be) {
+						if(!empty($be) && preg_match('/' . $be . '/i', $email)) {
+							return false;
+						}
+					}
+				}
+			}
+			else
 			{
 				return false;
 			}
