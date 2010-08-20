@@ -568,16 +568,3 @@ class icms_file_MediaUploadHandler {
 			}
 		}
 }
-
-/**
- * XoopsMediaUploader
- * @copyright    The XOOPS Project <http://www.xoops.org/>
- * @copyright    XOOPS_copyrights.txt
- * @license      LICENSE.txt
- * @since        XOOPS
- * @author       The XOOPS Project Community <http://www.xoops.org>
- * @deprecated
- * TODO: Does having 2 classes in 1 file actually work with AutoLoader????
- */
-class XoopsMediaUploader extends icms_file_MediaUploadHandler { /* For Backwards Compatibility */
-}
