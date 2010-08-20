@@ -262,6 +262,7 @@ function userTimeToServerTime($timestamp, $userTZ=null)
  *
  * @return string  $makepass  The generated password
  * d@todo Move to a static class method - password/user
+ * or why not just remove and use icms_core_Password::createSalt($length); instead?
  */
 function xoops_makepass() {
 	$makepass = '';
@@ -344,6 +345,7 @@ function CloseWaitBox()
  * @param string     $antispam   Generate an email address that is protected from spammers
  * @return string    $email      The generated email address
  * @todo Move to a static class method - text validation/formatting
+ * new filter can use icms_core_DataFilter::checkVar($email, 'email', $antispam, $blacklist)
  */
 function checkEmail($email, $antispam = false)
 {
@@ -928,8 +930,10 @@ function xoops_getLinkedUnameFromId($userid)
  */
 function xoops_trim($text)
 {
-	if(function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
-	return trim($text);
+	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_trim', 'This function will be removed in version 1.4');
+	$dataFilter = & icms_core_DataFilter::getInstance();
+
+	return $dataFilter->icms_trim($str, $start, $length, $trimmarker);
 }
 
 /**
@@ -1760,27 +1764,10 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
  */
 function icms_utf8_strrev($str, $reverse = false)
 {
-	preg_match_all('/./us', $str, $ar);
-	if($reverse) {return join('',array_reverse($ar[0]));}
-	else
-	{
-		$temp = array();
-		foreach($ar[0] as $value)
-		{
-			if(is_numeric($value) && !empty($temp[0]) && is_numeric($temp[0]))
-			{
-				foreach ($temp as $key => $value2)
-				{
-					if(is_numeric($value2)) {$pos = ($key + 1);}
-					else {break;}
-					$temp2 = array_splice($temp, $pos);
-					$temp = array_merge($temp, array($value), $temp2);
-				}
-			}
-			else {array_unshift($temp, $value);}
-		}
-		return implode('', $temp);
-	}
+	icms_core_Debug::setDeprecated('icms_core_DataFilter::utf8_strrev', 'This function will be removed in version 1.4');
+	$dataFilter = & icms_core_DataFilter::getInstance();
+
+	return $dataFilter->utf8_strrev($str, $reverse);
 }
 
 /**
