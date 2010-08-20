@@ -701,6 +701,18 @@ class icms_core_DataFilter
 		return $code;
 	}
 
+	/**
+	 * Trims certain text
+	 *
+	 * @param	string	$text	The Text to trim
+	 * @return	string	$text	The trimmed text
+	 */
+	public function icms_trim($text)
+	{
+		if(function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
+		return trim($text);
+	}
+
 // -------- Private Functions --------
 
 	/*
@@ -714,6 +726,8 @@ class icms_core_DataFilter
 	*/
 	private function priv_checkVar($data, $type, $options1, $options2)
 	{
+		global $icmsConfigUser;
+		
 		if($type == 'url')
 		{
 			$data = filter_var($data, FILTER_SANITIZE_URL);
