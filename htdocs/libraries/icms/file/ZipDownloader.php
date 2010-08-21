@@ -2,30 +2,27 @@
 /**
  * Handles all functions related to downloading zipfiles within ImpressCMS
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: ZipDownloader.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		File
+ * @version		SVN: $Id$
  */
-if (!defined('ICMS_ROOT_PATH')) {
-	exit();
-}
-
-class icms_file_ZipDownloader extends icms_file_DownloadHandler
-{
+defined('ICMS_ROOT_PATH') or exit();
+/**
+ * Handles compression of files in zip format and sending to the browser for download
+ *
+ * @category	ICMS
+ * @package		File
+ */
+class icms_file_ZipDownloader extends icms_file_DownloadHandler {
 	/**
 	 * Constructor
 	 *
 	 * @param	string     $ext             extension of the file
 	 * @param	string    $mimyType    the mimytype (mimetype) of the file
 	 */
-	function __construct($ext = '.zip', $mimyType = 'application/x-zip')
-	{
+	public function __construct($ext = '.zip', $mimyType = 'application/x-zip') {
 		$this->archiver = new icms_file_ZipFileHandler();
 		$this->ext      = trim($ext);
 		$this->mimeType = trim($mimyType);
@@ -37,8 +34,7 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler
 	 * @param	string    $filepath      path of the file to add
 	 * @param	string    $newfilename    name of the newly created file
 	 */
-	function addFile($filepath, $newfilename=null)
-	{
+	public function addFile($filepath, $newfilename=null) {
 		// Read in the file's contents
 		$fp = fopen($filepath, "r");
 		$data = fread($fp, filesize($filepath));
@@ -53,8 +49,7 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler
 	 * @param	string    $filepath      path of the file to add
 	 * @param	string    $newfilename    name of the newly created file
 	 */
-	function addBinaryFile($filepath, $newfilename=null)
-	{
+	public function addBinaryFile($filepath, $newfilename=null) {
 		// Read in the file's contents
 		$fp = fopen($filepath, "rb");
 		$data = fread($fp, filesize($filepath));
@@ -70,8 +65,7 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler
 	 * @param	string    $filename     filename to add the data to
 	 * @param	string    $time         timestamp
 	 */
-	function addFileData(&$data, $filename, $time=0)
-	{
+	public function addFileData(&$data, $filename, $time=0) {
 		$this->archiver->addFile($data, $filename, $time);
 	}
 
@@ -82,8 +76,7 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler
 	 * @param	string    $filename     filename to add the data to
 	 * @param	string    $time         timestamp
 	 */
-	function addBinaryFileData(&$data, $filename, $time=0)
-	{
+	public function addBinaryFileData(&$data, $filename, $time=0) {
 		self::addFileData($data, $filename, $time);
 	}
 
@@ -93,9 +86,8 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler
 	 * @param   string  $name     filename to download
 	 * @param   bool    $gzip     turn on gzip compression
 	 */
-	function download($name, $gzip = true)
-	{
-		parent::_header($name.$this->ext);
+	public function download($name, $gzip = true) {
+		parent::_header($name . $this->ext);
 		echo $this->archiver->file();
 	}
 }

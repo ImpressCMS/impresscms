@@ -2,26 +2,19 @@
 /**
  * Creates Zipfiles
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: ZipFileHandler.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Core
+ * @version		SVN: $Id$
  */
 
-/*
- package::i.tools
-
- php-downloader	v1.0	-	www.ipunkt.biz
-
- (c)	2002 - www.ipunkt.biz (rok)
-
+/**
  * Zip file creation class.
  * Makes zip files.
+ * package::i.tools
+ *
+ * php-downloader	v1.0	-	www.ipunkt.biz
  *
  * Based on :
  *
@@ -37,40 +30,38 @@
  * Official ZIP file format: http://www.pkware.com/appnote.txt
  *
  * @copyright	(c)	2002 - www.ipunkt.biz (rok)
- * @access  public
- *
- * @package     kernel
- * @subpackage  core
+ * @access		public
+ * @category	ICMS
+ * @package     Core
  */
-class icms_core_ZipFileHandler
-{
+class icms_file_ZipFileHandler {
 	/**
 	 * Array to store compressed data
 	 *
 	 * @var  array    $datasec
 	 */
-	var $datasec      = array();
+	private $datasec      = array();
 
 	/**
 	 * Central directory
 	 *
 	 * @var  array    $ctrl_dir
 	 */
-	var $ctrl_dir     = array();
+	private $ctrl_dir     = array();
 
 	/**
 	 * End of central directory record
 	 *
 	 * @var  string   $eof_ctrl_dir
 	 */
-	var $eof_ctrl_dir = "\x50\x4b\x05\x06\x00\x00\x00\x00";
+	private $eof_ctrl_dir = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 
 	/**
 	 * Last offset position
 	 *
 	 * @var  integer  $old_offset
 	 */
-	var $old_offset   = 0;
+	private $old_offset   = 0;
 
 	/**
 	 * Converts an Unix timestamp to a four byte DOS date and time format (date
@@ -82,8 +73,7 @@ class icms_core_ZipFileHandler
 	 *
 	 * @access private
 	 */
-	function unix2DosTime($unixtime = 0)
-	{
+	private function unix2DosTime($unixtime = 0) {
 		$timearray = ($unixtime == 0) ? getdate() : getdate($unixtime);
 
 		if ($timearray['year'] < 1980) {
@@ -108,8 +98,7 @@ class icms_core_ZipFileHandler
 	 *
 	 * @access public
 	 */
-	function addFile($data, $name, $time = 0)
-	{
+	public function addFile($data, $name, $time = 0) {
 		$name     = str_replace('\\', '/', $name);
 
 		$dtime    = dechex(self::unix2DosTime($time));
@@ -161,14 +150,14 @@ class icms_core_ZipFileHandler
 		$cdrec .= pack('V', $crc);           // crc32
 		$cdrec .= pack('V', $c_len);         // compressed filesize
 		$cdrec .= pack('V', $unc_len);       // uncompressed filesize
-		$cdrec .= pack('v', strlen($name) ); // length of filename
-		$cdrec .= pack('v', 0 );             // extra field length
-		$cdrec .= pack('v', 0 );             // file comment length
-		$cdrec .= pack('v', 0 );             // disk number start
-		$cdrec .= pack('v', 0 );             // internal file attributes
-		$cdrec .= pack('V', 32 );            // external file attributes - 'archive' bit set
+		$cdrec .= pack('v', strlen($name)) ; // length of filename
+		$cdrec .= pack('v', 0) ;             // extra field length
+		$cdrec .= pack('v', 0) ;             // file comment length
+		$cdrec .= pack('v', 0) ;             // disk number start
+		$cdrec .= pack('v', 0) ;             // internal file attributes
+		$cdrec .= pack('V', 32) ;            // external file attributes - 'archive' bit set
 
-		$cdrec .= pack('V', $this -> old_offset ); // relative offset of local header
+		$cdrec .= pack('V', $this -> old_offset) ; // relative offset of local header
 		$this -> old_offset = $new_offset;
 
 		$cdrec .= $name;
@@ -185,20 +174,19 @@ class icms_core_ZipFileHandler
 	 *
 	 * @access public
 	 */
-	function file()
-	{
+	public function file() {
 		$data    = implode('', $this -> datasec);
 		$ctrldir = implode('', $this -> ctrl_dir);
 
 		return
-		$data .
-		$ctrldir .
-		$this -> eof_ctrl_dir .
-		pack('v', count($this -> ctrl_dir)) .  // total # of entries "on this disk"
-		pack('v', count($this -> ctrl_dir)) .  // total # of entries overall
-		pack('V', strlen($ctrldir)) .           // size of central dir
-		pack('V', strlen($data)) .              // offset to start of central dir
-            "\x00\x00";                             // .zip file comment length
+			$data
+			. $ctrldir
+			. $this -> eof_ctrl_dir
+			. pack('v', count($this -> ctrl_dir))   // total # of entries "on this disk"
+			. pack('v', count($this -> ctrl_dir))   // total # of entries overall
+			. pack('V', strlen($ctrldir))           // size of central dir
+			. pack('V', strlen($data))              // offset to start of central dir
+	        . "\x00\x00";                           // .zip file comment length
 	} // end of the 'file()' method
 
 } // end of the 'zipfile' class

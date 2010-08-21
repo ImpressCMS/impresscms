@@ -2,32 +2,25 @@
 /**
  * The Tar files downloader class
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: tardownloader.php 19874 2010-07-18 17:22:25Z david-sf $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		File
+ *
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	exit();
-}
+defined('ICMS_ROOT_PATH') or exit();
 
 /**
  * Send tar files through a http socket
  *
- * @package		kernel
- * @subpackage	core
+ * @category	ICMS
+ * @package		File
  *
  * @author		Kazumi Ono 	<onokazu@xoops.org>
- * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class icms_file_TarDownloader extends icms_file_Downloader
-{
+class icms_file_TarDownloader extends icms_file_Downloader {
 
 	/**
 	 * Constructor
@@ -35,8 +28,7 @@ class icms_file_TarDownloader extends icms_file_Downloader
 	 * @param string $ext       file extension
 	 * @param string $mimyType  Mimetype
 	 **/
-	function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip')
-	{
+	public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip') {
 		$this->archiver = new icms_file_TarFileHandler();
 		$this->ext = trim($ext);
 		$this->mimeType = trim($mimyType);
@@ -48,8 +40,7 @@ class icms_file_TarDownloader extends icms_file_Downloader
 	 * @param   string  $filepath       Full path to the file
 	 * @param   string  $newfilename    Filename (if you don't want to use the original)
 	 **/
-	function addFile($filepath, $newfilename=null)
-	{
+	public function addFile($filepath, $newfilename = null) {
 		$this->archiver->addFile($filepath);
 		if (isset($newfilename)) {
 			// dirty, but no other way
@@ -68,8 +59,7 @@ class icms_file_TarDownloader extends icms_file_Downloader
 	 * @param   string  $filepath       Full path to the file
 	 * @param   string  $newfilename    Filename (if you don't want to use the original)
 	 **/
-	function addBinaryFile($filepath, $newfilename=null)
-	{
+	public function addBinaryFile($filepath, $newfilename = null) {
 		$this->archiver->addFile($filepath, true);
 		if (isset($newfilename)) {
 			// dirty, but no other way
@@ -89,9 +79,8 @@ class icms_file_TarDownloader extends icms_file_Downloader
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
 	 **/
-	function addFileData(&$data, $filename, $time=0)
-	{
-		$dummyfile = ICMS_CACHE_PATH.'/dummy_'.time().'.html';
+	public function addFileData(&$data, $filename, $time=0) {
+		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
 		$fp = fopen($dummyfile, 'w');
 		fwrite($fp, $data);
 		fclose($fp);
@@ -117,9 +106,8 @@ class icms_file_TarDownloader extends icms_file_Downloader
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
 	 **/
-	function addBinaryFileData(&$data, $filename, $time=0)
-	{
-		$dummyfile = ICMS_CACHE_PATH.'/dummy_'.time().'.html';
+	public function addBinaryFileData(&$data, $filename, $time=0) {
+		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
 		$fp = fopen($dummyfile, 'wb');
 		fwrite($fp, $data);
 		fclose($fp);
@@ -144,9 +132,8 @@ class icms_file_TarDownloader extends icms_file_Downloader
 	 * @param   string  $name   Filename
 	 * @param   boolean $gzip   Use GZ compression
 	 **/
-	function download($name, $gzip = true)
-	{
-		$this->_header($name.$this->ext);
-		echo $this->archiver->toTarOutput($name.$this->ext, $gzip);
+	public function download($name, $gzip = true) {
+		$this->_header($name . $this->ext);
+		echo $this->archiver->toTarOutput($name . $this->ext, $gzip);
 	}
 }

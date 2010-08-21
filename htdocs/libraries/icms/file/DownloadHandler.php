@@ -4,41 +4,34 @@
  *
  * Base class for the zipfile and tarfile downloads
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: downloader.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		File
+ * @version		SVN: $Id$
  */
 /**
  * Sends non HTML files through a http socket
  *
- * @package     kernel
- * @subpackage  core
+ * @category	ICMS
+ * @package     File
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_file_DownloadHandler
-{
+abstract class icms_file_DownloadHandler {
 
 	/**#@+
 	 * file information
 	 */
-	var $mimetype;
-	var $ext;
-	var $archiver;
+	protected $mimetype;
+	protected $ext;
+	protected $archiver;
 	/**#@-*/
 
 	/**
 	 * Constructor
 	 */
-	function __construct()
-	{
+	public function __construct() {
 		//EMPTY
 	}
 
@@ -47,80 +40,63 @@ class icms_file_DownloadHandler
 	 *
 	 * @param	string  $filename
 	 *
-	 * @access	private
 	 */
-	function _header($filename)
-	{
+	protected function _header($filename) {
 		if (function_exists('mb_http_output')) {
 			mb_http_output('pass');
 		}
-		header('Content-Type: '.$this->mimetype);
+		header('Content-Type: ' . $this->mimetype);
 		if (preg_match("/MSIE ([0-9]\.[0-9]{1,2})/", $_SERVER['HTTP_USER_AGENT'])) {
-			header('Content-Disposition: attachment; filename="'.$filename.'"');
+			header('Content-Disposition: attachment; filename="' . $filename . '"');
 			header('Expires: 0');
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
 		} else {
-			header('Content-Disposition: attachment; filename="'.$filename.'"');
+			header('Content-Disposition: attachment; filename="' . $filename . '"');
 			header('Expires: 0');
 			header('Pragma: no-cache');
 		}
 	}
 
 	/**
-	 * XoopsDownloader::addFile()
+	 *
 	 *
 	 * @param   string    $filepath
 	 * @param   string    $newfilename
 	 **/
-	function addFile($filepath, $newfilename=null)
-	{
-		//EMPTY
-	}
+	abstract function addFile($filepath, $newfilename = NULL);
 
 	/**
-	 * XoopsDownloader::addBinaryFile()
+	 * addBinaryFile()
 	 *
 	 * @param   string    $filepath
 	 * @param   string    $newfilename
 	 **/
-	function addBinaryFile($filepath, $newfilename=null)
-	{
-		//EMPTY
-	}
+	abstract function addBinaryFile($filepath, $newfilename = NULL);
 
 	/**
-	 * XoopsDownloader::addFileData()
+	 * addFileData()
 	 *
 	 * @param   mixed     $data
 	 * @param   string    $filename
 	 * @param   integer   $time
 	 **/
-	function addFileData(&$data, $filename, $time=0)
-	{
-		//EMPTY
-	}
+	abstract function addFileData(&$data, $filename, $time = 0);
 
 	/**
-	 * XoopsDownloader::addBinaryFileData()
+	 * addBinaryFileData()
 	 *
 	 * @param   mixed   $data
 	 * @param   string  $filename
 	 * @param   integer $time
 	 **/
-	function addBinaryFileData(&$data, $filename, $time=0)
-	{
-		//EMPTY
-	}
+	abstract function addBinaryFileData(&$data, $filename, $time = 0);
 
 	/**
-	 * XoopsDownloader::download()
+	 * download()
 	 *
 	 * @param   string  $name
 	 * @param   boolean $gzip
 	 **/
-	function download($name, $gzip = true)
-	{
-		//EMPTY
-	}
+	abstract function download($name, $gzip = true);
 }
