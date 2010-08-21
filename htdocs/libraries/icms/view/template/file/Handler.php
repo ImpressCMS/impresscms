@@ -23,6 +23,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono <onokazu@xoops.org>
  */
 class icms_view_template_file_Handler extends icms_core_ObjectHandler {
+	private $_prefetch_cache = array();
 
 	/**
 	 * create a new template instance
@@ -368,5 +369,84 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 		}
 		return false;
 	}
-}
 
+	/**
+	 * Prefetch blocks to reduce the amount of queries required by Smarty to generate all blocks
+	 * This function is called exclusively in icms_view_PageBuilder
+	 *
+	 * @global	array	$icmsConfig		icms configuration array
+	 * @param	array	$block_arr		array of blocks to prefetch
+	 * @return	bool					false if there are no blocks to prefetch, otherwise true
+	 */
+	public function prefetchBlocks(&$block_arr) {
+		global $icmsConfig;
+
+		if (count($block_arr) == 0) return false;
+		$tplNames = array();
+
+		/**
+		 * @todo As soon as the criteria object is capable of rendering complex conditions,
+		 * this should be converted into the criteria approach
+		 */
+		$sql = "SELECT f.*, s.tpl_source FROM " . $this->db->prefix("tplfile") . " f "
+		     . "LEFT JOIN " . $this->db->prefix("tplsource") . " s ON s.tpl_id=f.tpl_id "
+		     . "WHERE (tpl_tplset = '" . $icmsConfig["template_set"] . "' "
+		     // always load the default templates as a fallback
+		     . "OR tpl_tplset = 'default') AND (";
+
+		foreach ($block_arr as $block) {
+			$tplName = ($tplName = $block->getVar("template")) ? "$tplName" : "system_block_dummy.html";
+			$tplNames[] = "tpl_file = '" . $tplName . "'";
+		}
+		$sql .= implode(" OR ", $tplNames);
+		$sql .= ") ORDER BY tpl_refid";
+
+		$result = $this->db->query($sql);
+		if (!$result) return false;
+		while ($myrow = $this->db->fetchArray($result)) {
+			$tplfile = new icms_view_template_file_Object();
+			$tplfile->assignVars($myrow);
+			$this->_prefetch_cache[] =& $tplfile;
+			unset($tplfile);
+		}
+		return true;
+	}
+
+	/**
+	 * Return a prefetched block. This function only works if prefetchBlocks was called in advance.
+	 * This function is used in the user function smarty_resource_db_tplinfo().
+	 *
+	 * @param	str		$tplset		template set that's currently in use
+	 * @param	str		$tpl_name	name of the template
+	 * @return	array				array of templates (just one item)
+	 */
+	public function getPrefetchedBlock($tplset, $tpl_name) {
+		foreach($this->_prefetch_cache as $block) {
+			if ($block->getVar("tpl_tplset") == $tplset && $block->getVar("tpl_file") == $tpl_name) {
+				return array($block);
+			}
+		}
+
+		/**
+		 * try to get the template from the default template set (we've also prefetched it) if the
+		 * template set is different from default
+		 */
+		if ($tplset != 'default') {
+			foreach($this->_prefetch_cache as $block) {
+				if ($block->getVar("tpl_tplset") == "default" && $block->getVar("tpl_file") == $tpl_name) {
+					return array($block);
+				}
+			}
+		}
+
+		/**
+		 * In case nothing was found, the following fallback tries to read the template again.
+		 * This is the case for all non-block templates since blocks are prefetched before the
+		 * content template(s) are required.
+		 * To avoid further queries for the same block, we're adding it to the cache
+		 */
+		$blocks = $this->find($tplset, null, null, null, $tpl_name, true);
+		array_merge($this->_prefetch_cache, $blocks);
+		return $blocks;
+	}
+}

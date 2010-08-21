@@ -165,6 +165,9 @@ class icms_view_PageBuilder {
 		/** End of snippet */
 
 		$block_arr = $icms_block_handler->getAllByGroupModule($groups, $modid, $isStart, XOOPS_BLOCK_VISIBLE);
+		// prefetch blocks to reduce the amount of queries required in the later step of rendering
+		$tplfile_handler = icms::handler('icms_view_template_file');
+		$tplfile_handler->prefetchBlocks($block_arr);
 		foreach ($block_arr as $block) {
 			$side = $oldzones[$block->getVar('side', 'n')];
 			if ($var = $this->buildBlock($block, $template)) {
@@ -265,6 +268,4 @@ class icms_view_PageBuilder {
 		}
 		return $block;
 	}
-
 }
-
