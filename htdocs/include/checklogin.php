@@ -110,65 +110,64 @@ if (false != $user) {
 		$_SESSION['xoopsUserTheme'] = $user_theme;
 	}
 	if (!empty($_POST['xoops_redirect']) && !strpos($_POST['xoops_redirect'], 'register')) {
-		$_POST['xoops_redirect'] = trim( $_POST['xoops_redirect'] );
+		$_POST['xoops_redirect'] = trim($_POST['xoops_redirect']);
 		$parsed = parse_url(ICMS_URL);
-		$url = isset($parsed['scheme']) ? $parsed['scheme'].'://' : 'http://';
-		if ( isset( $parsed['host'] ) ) {
+		$url = isset($parsed['scheme']) ? $parsed['scheme'] . '://' : 'http://';
+		if (isset($parsed['host'])) {
 			$url .= $parsed['host'];
-			if ( isset( $parsed['port'] ) ) {
+			if (isset($parsed['port'])) {
 				$url .= ':' . $parsed['port'];
 			}
 		} else {
 			$url .= $_SERVER['HTTP_HOST'];
 		}
-		if ( @$parsed['path'] ) {
-			if ( strncmp( $parsed['path'], $_POST['xoops_redirect'], strlen( $parsed['path'] ) ) ) {
+		if (@$parsed['path']) {
+			if (strncmp($parsed['path'], $_POST['xoops_redirect'], strlen($parsed['path']))) {
 				$url .= $parsed['path'];
 			}
 		}
 		$url .= $_POST['xoops_redirect'];
 	} else {
-		$url = ICMS_URL.'/index.php';
+		$url = ICMS_URL . '/index.php';
 	}
-	if ($pos = strpos( $url, '://' )) {
-		$xoopsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
-		if ( substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
+	if ($pos = strpos($url, '://')) {
+		$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
+		if (substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {
 			$url = ICMS_URL;
-		 }elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+		} elseif (substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation . '.') {
 			$url = ICMS_URL;
-		 }
-		 if( substr($url, 0, strlen(ICMS_URL)*2) ==  ICMS_URL.ICMS_URL){
-		 	$url = substr($url, strlen(ICMS_URL));
-
-		 }
+		}
+		if (substr($url, 0, strlen(ICMS_URL)*2) ==  ICMS_URL . ICMS_URL) {
+			$url = substr($url, strlen(ICMS_URL));
+		}
 	}
 
 	// autologin hack V3.1 GIJ (set cookie)
 	$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
 	$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH :
-		preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL ) ;
-	if( $icms_cookie_path == ICMS_URL ) $icms_cookie_path = '/' ;
+		preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL );
+	if($icms_cookie_path == ICMS_URL) $icms_cookie_path = '/';
 	if (!empty($_POST['rememberme'])) {
-		$expire = time() + ( defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800 ) ; // 1 week default
+		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800) ; // 1 week default
 		setcookie('autologin_uname', $user->getVar('login_name'), $expire, $icms_cookie_path, '', $secure, 0);
-		$Ynj = date( 'Y-n-j' ) ;
-		setcookie('autologin_pass', $Ynj . ':' . md5( $user->getVar('pass') .
-				ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj ) , $expire, $icms_cookie_path, '', $secure, 0);
+		$Ynj = date('Y-n-j') ;
+		setcookie('autologin_pass', $Ynj . ':' . md5($user->getVar('pass') .
+				ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj) , $expire, $icms_cookie_path, '', $secure, 0);
 	}
 	// end of autologin hack V3.1 GIJ
 
 	// RMV-NOTIFY
 	// Perform some maintenance of notification records
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = icms::handler('icms_notification');
 	$notification_handler->doLoginMaintenance($user->getVar('uid'));
 
 	redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
-} elseif (empty($redirect)) {
+} elseif (empty($_POST['xoops_redirect'])) {
 	redirect_header(ICMS_URL . '/user.php', 5, $icmsAuth->getHtmlErrors());
 } else {
 	redirect_header(
 		ICMS_URL . '/user.php?xoops_redirect='
-		. urlencode(trim($redirect)), 5, $icmsAuth->getHtmlErrors(), false
+		. urlencode(trim($_POST['xoops_redirect'])), 5, $icmsAuth->getHtmlErrors(), false
 	);
 }
 exit();

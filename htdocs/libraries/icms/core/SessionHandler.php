@@ -245,31 +245,27 @@ class icms_core_SessionHandler {
 	 * @param   string  $uid    User ID of user to close
 	 * @return
 	 **/
-	public function sessionClose($uid)
-	{
+	public function sessionClose($uid) {
 		global $icmsConfig;
 
 		$uid = (int)$uid;
 		
 		session_regenerate_id(true);
 		$_SESSION = array();
-		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '')
-		{
+		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
 			setcookie($icmsConfig['session_name'], '', time()- 3600, '/',  '', 0, 0);
 		}
 		// autologin hack GIJ (clear autologin cookies)
 		$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH
 				: preg_replace('?http://[^/]+(/.*)$?', '$1', ICMS_URL);
-		if ($icms_cookie_path == ICMS_URL)
-		{
+		if ($icms_cookie_path == ICMS_URL) {
 			$icms_cookie_path = '/';
 		}
 		setcookie('autologin_uname', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 		setcookie('autologin_pass', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 		// end of autologin hack GIJ
 		// clear entry from online users table
-		if (is_object($uid))
-		{
+		if ($uid > 0) {
 			$online_handler = icms::handler('icms_core_Online');
 			$online_handler->destroy($uid);
 		}
@@ -324,50 +320,41 @@ class icms_core_SessionHandler {
 	}
 
 	// Internal function. Returns sha256 from fingerprint.
-	private function sessionFingerprint($ip, $userAgent)
-	{
+	private function sessionFingerprint($ip, $userAgent) {
 		$securityLevel = (int)$this->securityLevel;
 		$ipv6securityLevel = (int)$this->ipv6securityLevel;
 
 		$fingerprint = $this->mainSaltKey;
 
-		if(isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
-		{
-			if($securityLevel >= 1)
-			{
+		if(isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+			if($securityLevel >= 1) {
 				$fingerprint .= $userAgent;
 			}
-			if($securityLevel >= 2)
-			{
+			if($securityLevel >= 2) {
 				$num_blocks = abs($securityLevel);
-				if($num_blocks > 4)
-				{
+				if ($num_blocks > 4) {
 					$num_blocks = 4;
 				}
 				$blocks = explode('.', $ip);
-				for($i = 0; $i < $num_blocks; $i++)
-				{
+				for($i = 0; $i < $num_blocks; $i++) {
 					$fingerprint .= $blocks[$i].'.';
 				}
 			}
-		}
-		elseif(isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6))
-		{
-			if($securityLevel >= 1)
-			{
+		} elseif(isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+			if($securityLevel >= 1) {
 				$fingerprint .= $userAgent;
 			}
-			if($securityLevel >= 2)
-			{
+			if($securityLevel >= 2) {
+				$num_blocks = abs($securityLevel);
+				if ($num_blocks > 4) {
+					$num_blocks = 4;
+				}
 				$blocks = explode(':', $ip);
-				for($i = 0; $i < $num_blocks; $i++)
-				{
+				for($i = 0; $i < $num_blocks; $i++) {
 					$fingerprint .= $blocks[$i].':';
 				}
 			}
-		}
-		else
-		{
+		} else {
 			icms_core_Debug::message('ERROR (Session Fingerprint): Invalid IP format,
 				IP must be a valid IPv4 or IPv6 format', false);
 			$fingerprint = '';
@@ -381,29 +368,28 @@ class icms_core_SessionHandler {
 	 * @param	string  &sess_id    ID of the session
 	 * @return	array   Session data
 	 */
-	private function readSession($sess_id)
-	{
+	private function readSession($sess_id) {
 		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
-			$this->db->prefix('session'), $this->db->quoteString($sess_id));
-		if (false != $result = $this->db->query($sql))
-		{
-			if (list($sess_data, $sess_ip) = $this->db->fetchRow($result))
-			{
-				if ($this->ipv6securityLevel > 1 && filter_var($sess_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6))
-				{
-					$pos = strpos($sess_ip, ":", $this->ipv6securityLevel - 1);
+		$this->db->prefix('session'), $this->db->quoteString($sess_id));
+		if (false != $result = $this->db->query($sql)) {
+			if (list($sess_data, $sess_ip) = $this->db->fetchRow($result)) {
+				if ($this->ipv6securityLevel > 1 && filter_var($sess_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+					/**
+					 * also cover IPv6 localhost string
+					 */
+					if ($_SERVER['REMOTE_ADDR'] == "::1") {
+						$pos = 3;
+					} else {
+						$pos = strpos($sess_ip, ":", $this->ipv6securityLevel - 1);
+					}
 
-					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos))
-					{
+					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
 						$sess_data = '';
 					}
-				}
-				elseif ($this->securityLevel > 1 && filter_var($sess_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
-				{
+				} elseif ($this->securityLevel > 1 && filter_var($sess_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
 					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
 
-					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos))
-					{
+					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
 						$sess_data = '';
 					}
 				}

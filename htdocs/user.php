@@ -18,30 +18,23 @@
  */
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
+$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING)) :
+	  ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
 
-$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, $_GET['op'], FILTER_SANITIZE STRING))
-		: ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, $_POST['op'], FILTER_SANITIZE STRING)) : 'main');
-
-if ($op == 'main')
-{
-	if (!$icmsUser)
-	{
+if ($op == 'main') {
+	if (!$icmsUser) {
 		$xoopsOption['template_main'] = 'system_userform.html';
 		include 'header.php';
 		$redirect = false;
-		if (isset($_GET['xoops_redirect']))
-		{
+		if (isset($_GET['xoops_redirect'])) {
 			$redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
 			$isExternal = false;
-			if ($pos = strpos($redirect, '://'))
-			{
+			if ($pos = strpos($redirect, '://')) {
 				$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
-				if (substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)
-				{
+				if (substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {
 					$redirect = ICMS_URL;
 				}
-				elseif (substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.')
-				{
+				elseif (substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
 					$redirect = ICMS_URL;
 				}
 			}
@@ -68,20 +61,14 @@ if ($op == 'main')
             'xoops_pagetitle' => _LOGIN
 		));
 		include 'footer.php';
-	}
-	elseif (!empty($_GET['xoops_redirect']))
-	{
+	} elseif (!empty($_GET['xoops_redirect'])) {
 		$redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
 		$isExternal = false;
-		if ($pos = strpos($redirect, '://'))
-		{
+		if ($pos = strpos($redirect, '://')) {
 			$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
-			if (substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)
-			{
+			if (substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {
 				$redirect = ICMS_URL;
-			}
-			elseif (substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.')
-			{
+			} elseif (substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
 				$redirect = ICMS_URL;
 			}
 		}
@@ -94,26 +81,19 @@ if ($op == 'main')
 	exit();
 }
 
-if ($op == 'resetpass')
-{
-	if (!$icmsUser)
-	{
+if ($op == 'resetpass') {
+	if (!$icmsUser) {
 		$xoopsOption['template_main'] = 'system_userform.html';
 		include 'header.php';
 		$redirect = false;
-		if (isset($_GET['xoops_redirect']))
-		{
+		if (isset($_GET['xoops_redirect'])) {
 			$redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
 			$isExternal = false;
-			if ($pos = strpos( $redirect, '://' ))
-			{
+			if ($pos = strpos( $redirect, '://' )) {
 				$xoopsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
-				if (substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)
-				{
+				if (substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {
 					$redirect = ICMS_URL;
-				}
-				elseif (substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.')
-				{
+				} elseif (substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
 					$redirect = ICMS_URL;
 				}
 			}
@@ -135,20 +115,14 @@ if ($op == 'resetpass')
             'xoops_pagetitle' => _LOGIN
 		));
 		include 'footer.php';
-	}
-	elseif (!empty($_GET['xoops_redirect']))
-	{
+	} elseif (!empty($_GET['xoops_redirect'])) {
 		$redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
 		$isExternal = false;
-		if ($pos = strpos($redirect, '://'))
-		{
+		if ($pos = strpos($redirect, '://')) {
 			$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
-			if (substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)
-			{
+			if (substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {
 				$redirect = ICMS_URL;
-			}
-			elseif (substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.')
-			{
+			} elseif (substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
 				$redirect = ICMS_URL;
 			}
 		}
@@ -161,63 +135,49 @@ if ($op == 'resetpass')
 	exit();
 }
 
-if ($op == 'login')
-{
+if ($op == 'login') {
 	include_once ICMS_ROOT_PATH.'/include/checklogin.php';
 	exit();
 }
 
-if ($op == 'logout')
-{
-	$message = '';
+if ($op == 'logout') {
 	$sessHandler = icms::handler('icms_core_Session');
-	// Regenrate a new session id and destroy old session
 	$sessHandler->sessionClose($icmsUser->getVar('uid'));
-
-	$message = _US_LOGGEDOUT.'<br />'._US_THANKYOUFORVISIT;
-	redirect_header('index.php', 1, $message);
+	redirect_header(ICMS_URL.'/index.php', 3, _US_LOGGEDOUT.'<br />'._US_THANKYOUFORVISIT);
 }
 
-if ($op == 'actv')
-{
-	$id = (int) ($_GET['id']);
+if ($op == 'actv') {
+	$id = (int)$_GET['id'];
 	$actkey = trim($_GET['actkey']);
-	if (empty($id))
-	{
+	if (empty($id)) {
 		redirect_header('index.php',1,'');
 	}
 	$member_handler = icms::handler('icms_member');
 	$thisuser =& $member_handler->getUser($id);
-	if (!is_object($thisuser))
-	{
+	if (!is_object($thisuser)) {
 		exit();
 	}
-	if ($thisuser->getVar('actkey') != $actkey)
-	{
+	if ($thisuser->getVar('actkey') != $actkey) {
 		redirect_header('index.php',5,_US_ACTKEYNOT);
 	} else {
-		if ($thisuser->getVar('level') > 0)
-		{
+		if ($thisuser->getVar('level') > 0) {
 			redirect_header('user.php', 5, _US_ACONTACT, false);
 		} else {
-			if (false != $member_handler->activateUser($thisuser))
-			{
-				if ($icmsConfigUser['activation_type'] == 2)
-				{
+			if (false != $member_handler->activateUser($thisuser)) {
+				if ($icmsConfigUser['activation_type'] == 2) {
 					$myts = icms_core_Textsanitizer::getInstance();
-					$xoopsMailer = getMailer();
-					$xoopsMailer->useMail();
-					$xoopsMailer->setTemplate('activated.tpl');
-					$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-					$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-					$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
-					$xoopsMailer->setToUsers($thisuser);
-					$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-					$xoopsMailer->setFromName($icmsConfig['sitename']);
-					$xoopsMailer->setSubject(sprintf(_US_YOURACCOUNT, $icmsConfig['sitename']));
+					$icmsMailer = getMailer();
+					$icmsMailer->useMail();
+					$icmsMailer->setTemplate('activated.tpl');
+					$icmsMailer->assign('SITENAME', $icmsConfig['sitename']);
+					$icmsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+					$icmsMailer->assign('SITEURL', ICMS_URL.'/');
+					$icmsMailer->setToUsers($thisuser);
+					$icmsMailer->setFromEmail($icmsConfig['adminmail']);
+					$icmsMailer->setFromName($icmsConfig['sitename']);
+					$icmsMailer->setSubject(sprintf(_US_YOURACCOUNT, $icmsConfig['sitename']));
 					include 'header.php';
-					if (!$xoopsMailer->send())
-					{
+					if (!$icmsMailer->send()) {
 						printf(_US_ACTVMAILNG, $thisuser->getVar('uname'));
 					} else {
 						printf(_US_ACTVMAILOK, $thisuser->getVar('uname'));
@@ -225,38 +185,33 @@ if ($op == 'actv')
 					include 'footer.php';
 				} else {
 					$thisuser->sendWelcomeMessage();
-					redirect_header('user.php', 5, _US_ACTLOGIN, false);
+					redirect_header('user.php', 3, _US_ACTLOGIN, false);
 				}
 			} else {
-				redirect_header('index.php',5,'Activation failed!');
+				redirect_header('index.php', 3, 'Activation failed!');
 			}
 		}
 	}
 	exit();
 }
 
-if ($op == 'delete')
-{
-	if (!$icmsUser || $icmsConfigUser['self_delete'] != 1)
-	{
+if ($op == 'delete') {
+	if (!$icmsUser || $icmsConfigUser['self_delete'] != 1) {
 		redirect_header('index.php',5,_US_NOPERMISS);
 	} else {
 		$groups = $icmsUser->getGroups();
-		if (in_array(XOOPS_GROUP_ADMIN, $groups))
-		{
+		if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
 			redirect_header('user.php', 5, _US_ADMINNO);
 		}
 		$ok = !isset($_POST['ok']) ? 0 : (int) ($_POST['ok']);
-		if ($ok != 1)
-		{
+		if ($ok != 1) {
 			include 'header.php';
 			icms_core_Message::confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL.'<br/>'._US_REMOVEINFO);
 			include 'footer.php';
 		} else {
 			$del_uid = (int) ($icmsUser->getVar('uid'));
 			$member_handler = icms::handler('icms_member');
-			if (false != $member_handler->deleteUser($icmsUser))
-			{
+			if (false != $member_handler->deleteUser($icmsUser)) {
 				$online_handler = icms::handler('icms_core_Online');
 				$online_handler->destroy($del_uid);
 				xoops_notification_deletebyuser($del_uid);
@@ -267,4 +222,3 @@ if ($op == 'delete')
 		exit();
 	}
 }
-?>

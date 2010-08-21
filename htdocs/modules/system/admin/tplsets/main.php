@@ -563,8 +563,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$tpltpl_handler =& icms::handler('icms_view_template_file');
 			$tpl =& $tpltpl_handler->get($tpl_id);
 			if (is_object($tpl)) {
-				include_once ICMS_ROOT_PATH.'/class/uploader.php';
-				$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
+				$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
 				$uploader->setPrefix('tmp');
 				if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 					if (!$uploader->upload()) {
@@ -624,8 +623,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			if (!$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			include_once ICMS_ROOT_PATH.'/class/uploader.php';
-			$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
+			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
 			$uploader->setPrefix('tmp');
 			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 				if (!$uploader->upload()) {
@@ -822,8 +820,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			if (!$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			include_once ICMS_ROOT_PATH.'/class/uploader.php';
-			$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('application/x-gzip', 'application/gzip', 'application/gzip-compressed', 'application/x-gzip-compressed', 'application/x-tar', 'application/x-tar-compressed', 'application/octet-stream'), 1000000);
+			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('application/x-gzip', 'application/gzip', 'application/gzip-compressed', 'application/x-gzip-compressed', 'application/x-tar', 'application/x-tar-compressed', 'application/octet-stream'), 1000000);
 			$uploader->setPrefix('tmp');
 			icms_cp_header();
 			echo '<code>';
@@ -1002,8 +999,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			if (!$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			include_once ICMS_ROOT_PATH.'/class/uploader.php';
-			$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf'), 200000);
+			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf'), 200000);
 			$uploader->setPrefix('tmp');
 			$msg = array();
 			foreach ($_POST['xoops_upload_file'] as $upload_file) {
