@@ -11,11 +11,7 @@
  * @version		$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	exit();
-}
-
-//include_once ICMS_ROOT_PATH . '/class/template.php';
+defined('ICMS_ROOT_PATH') or exit();
 
 class IcmsFeed {
 
@@ -34,38 +30,38 @@ class IcmsFeed {
 	public $width;
 	public $height;
 	public $ttl;
-	public $image = array ();
+	public $image = array();
 
 	/**
 	 * Constructor
 	 */
-	function IcmsFeed () {
+	public function __construct() {
 		global $icmsConfig;
-		$this->title = $icmsConfig['sitename'];
+		$this->title = htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET);
 		$this->url = ICMS_URL;
-		$this->description = $icmsConfig['slogan'];
+		$this->description = htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET);
 		$this->language = _LANGCODE;
 		$this->charset = _CHARSET;
 		$this->pubDate = date(_DATESTRING, time());
-		$this->lastbuild = formatTimestamp( time(), 'D, d M Y H:i:s' );
+		$this->lastbuild = formatTimestamp(time(), 'rss');
 		$this->webMaster = $icmsConfig['adminmail'];
 		$this->channelEditor = $icmsConfig['adminmail'];
-		$this->generator = XOOPS_VERSION;
-		$this-> copyright = 'Copyright ' . formatTimestamp( time(), 'Y' ) . ' ' . $icmsConfig['sitename'];
+		$this->generator = ICMS_VERSION_NAME;
+		$this-> copyright = _COPYRIGHT . ' ' . formatTimestamp(time(), 'Y') . ' ' . htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET);
 		$this->width  = 200;
 		$this->height = 50;
 		$this->ttl    = 60;
-		$this->image = array (
+		$this->image = array(
 			'title' => $this->title,
 			'url' => ICMS_URL.'/images/logo.gif',
 		);
-		$this->feeds = array ();
+		$this->feeds = array();
 	}
 
 	/**
 	 * Render the feed and display it directly
 	 */
-	function render() {
+	public function render() {
 		global $xoopsLogger;
 		$xoopsLogger->disableLogger();
 
@@ -94,4 +90,3 @@ class IcmsFeed {
 	}
 }
 
-?>
