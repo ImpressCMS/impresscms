@@ -707,13 +707,24 @@ class icms_core_DataFilter
 	 * @param	string	$text	The Text to trim
 	 * @return	string	$text	The trimmed text
 	 */
-	public function icms_trim($text)
+	public static function icms_trim($text)
 	{
 		if(function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
 		return trim($text);
 	}
 
-	public function utf8_strrev($str, $reverse = false)
+	/**
+	 * Function to reverse given text with utf-8 character sets
+	 *
+	 * credit for this function should goto lwc courtesy of php.net.
+	 *
+	 * @param string $str		The text to be reversed.
+	 * @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
+	 *				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
+	 * @return string
+	 * @todo Move to a static class method - String
+	 */
+	public static function utf8_strrev($str, $reverse = false)
 	{
 		preg_match_all('/./us', $str, $ar);
 		if($reverse) {return join('',array_reverse($ar[0]));}

@@ -931,9 +931,7 @@ function xoops_getLinkedUnameFromId($userid)
 function xoops_trim($text)
 {
 	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_trim', 'This function will be removed in version 1.4');
-	$dataFilter = & icms_core_DataFilter::getInstance();
-
-	return $dataFilter->icms_trim($str, $start, $length, $trimmarker);
+	return icms_core_DataFilter::icms_trim($str, $start, $length, $trimmarker);
 }
 
 /**
@@ -1764,10 +1762,8 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
  */
 function icms_utf8_strrev($str, $reverse = false)
 {
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::utf8_strrev', 'This function will be removed in version 1.4');
-	$dataFilter = & icms_core_DataFilter::getInstance();
-
-	return $dataFilter->utf8_strrev($str, $reverse);
+	icms_core_Debug::setDeprecated('icms_core_DataFilter.utf8_strrev', 'This function will be removed in version 1.4');
+	return icms_core_DataFilter::utf8_strrev($str, $reverse);
 }
 
 /**

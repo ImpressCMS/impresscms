@@ -157,7 +157,7 @@ if ($op == 'saveuser')
 			$errors[] = _US_PASSNOTSAME;
 		}
 
-		if ($password == $username || $password == icms_utf8_strrev($username, true) || strripos($password, $username) === true)
+		if ($password == $username || $password == icms_core_DataFilter::utf8_strrev($username, true) || strripos($password, $username) === true)
 		{
 			$errors[] = _US_BADPWD;
 		}

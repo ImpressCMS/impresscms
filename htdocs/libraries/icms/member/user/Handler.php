@@ -198,7 +198,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	/**
 	 *  Validates username, email address and password entries during registration
 	 *  Username is validated for uniqueness and length, password is validated for length and strictness,
-	 *  email is validated as a proper email address pattern
+	 *  email is validated as a proper email address pattern & uses email blacklist stored in user preferences.
 	 *
 	 *  @param string $uname User display name entered by the user
 	 *  @param string $login_name Username entered by the user
@@ -209,21 +209,16 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 */
 	public function userCheck($login_name, $uname, $email, $pass, $vpass) {
 		global $icmsConfigUser, $xoopsDB;
-		$myts =& icms_core_Textsanitizer::getInstance();
 		$stop = '';
-		if (!checkEmail($email)) {
+
+		if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) {
 			$stop .= _US_INVALIDMAIL . '<br />';
 		}
-		foreach ($icmsConfigUser['bad_emails'] as $be) {
-			if (!empty($be) && preg_match('/' . $be . '/i', $email)) {
-				$stop .= _US_INVALIDMAIL . '<br />';
-				break;
-			}
-		}
+
 		if (strrpos($email, ' ') > 0) {
 			$stop .= _US_EMAILNOSPACES . '<br />';
 		}
-		$login_name = xoops_trim($login_name);
+		$login_name = icms_core_DataFilter::icms_trim($login_name);
 		switch ($icmsConfigUser['uname_test_level']) {
 			case 0:
 				// strict
@@ -303,7 +298,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 			$stop .= sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']) . '<br />';
 		}
 		if ((isset($pass)) && (isset($login_name))) {
-			if ($pass == $login_name || $pass == icms_utf8_strrev($login_name, true) || strripos($pass, $login_name) === true) {
+			if ($pass == $login_name || $pass == $dataFilter->utf8_strrev($login_name, true) || strripos($pass, $login_name) === true) {
 				$stop .= _US_BADPWD . '<br />';
 			}
 		}
