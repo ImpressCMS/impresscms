@@ -27,7 +27,7 @@ class icms_member_user_Object extends icms_core_Object {
 	/**
 	 * @var bool is the user admin?
 	 */
-	private $_isAdmin = null;
+	static private $_isAdmin = array();
 	/**
 	 * @var string user's rank
 	 */
@@ -141,9 +141,11 @@ class icms_member_user_Object extends icms_core_Object {
 	/**
 	 * increase the number of posts for the user
 	 *
-	 * @deprecated
+	 * @deprecated	Use the handler, instead
+	 * @todo		Remove in version 1.4 - there are no occurrences in the core
 	 */
 	public function incrementPost() {
+		icms_core_Debug::setDeprecated('icms_member_Handler->updateUserByField', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$member_handler = icms::handler('icms_member');
 		return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
 	}
@@ -584,5 +586,4 @@ class icms_member_user_Object extends icms_core_Object {
 		if ($border && $border != '') {$ret .= "&amp;border=" . $border;}
 		return $ret;
 	}
-
 }
