@@ -298,7 +298,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 			$stop .= sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']) . '<br />';
 		}
 		if ((isset($pass)) && (isset($login_name))) {
-			if ($pass == $login_name || $pass == $dataFilter->utf8_strrev($login_name, true) || strripos($pass, $login_name) === true) {
+			if ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true) {
 				$stop .= _US_BADPWD . '<br />';
 			}
 		}
