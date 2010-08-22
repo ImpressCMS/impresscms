@@ -197,111 +197,88 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 *  Validates username, email address and password entries during registration
-	 *  Username is validated for uniqueness and length, password is validated for length and strictness,
-	 *  email is validated as a proper email address pattern & uses email blacklist stored in user preferences.
+	 *  Username is validated for uniqueness and length
+	 *  password is validated for length and strictness
+	 *  email is validated as a proper email address pattern
 	 *
 	 *  @param string $uname User display name entered by the user
 	 *  @param string $login_name Username entered by the user
 	 *  @param string $email Email address entered by the user
 	 *  @param string $pass Password entered by the user
 	 *  @param string $vpass Password verification entered by the user
+	 *  @param int $uid user id (only applicable if the user already exists)
+	 *  @global array $icmsConfigUser user configuration
 	 *  @return string of errors encountered while validating the user information, will be blank if successful
 	 */
-	public function userCheck($login_name, $uname, $email, $pass, $vpass) {
-		global $icmsConfigUser, $xoopsDB;
+	function userCheck($login_name, $uname, $email, $pass, $vpass, $uid = 0)
+	{
+		global $icmsConfigUser;
+
+		// initializations
+		$myts = icms_core_Textsanitizer::getInstance();
+		$member_handler = icms::handler('icms_member');
+		$thisUser = ($uid > 0) ? $thisUser = $member_handler->getUser($uid) : false;
+		$icmsStopSpammers = new icms_core_StopSpammer();
 		$stop = '';
-
-		if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) {
-			$stop .= _US_INVALIDMAIL . '<br />';
-		}
-
-		if (strrpos($email, ' ') > 0) {
-			$stop .= _US_EMAILNOSPACES . '<br />';
-		}
-		$login_name = icms_core_DataFilter::icms_trim($login_name);
 		switch ($icmsConfigUser['uname_test_level']) {
-			case 0:
-				// strict
+			case 0: // strict
 				$restriction = '/[^a-zA-Z0-9\_\-]/';
 				break;
-
-			case 1:
-				// medium
+			case 1: // medium
 				$restriction = '/[^a-zA-Z0-9\_\-\<\>\,\.\$\%\#\@\!\\\'\"]/';
 				break;
-
-			case 2:
-				// loose
+			case 2: // loose
 				$restriction = '/[\000-\040]/';
 				break;
-			default:
-				break;
 		}
-		$icmsStopSpammers = new icms_core_StopSpammer();
-		if ($icmsStopSpammers->badUsername($uname)) {
-			$stop .= _US_INVALIDNICKNAME . '<br />';
+
+		// check email
+		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') != $email && $email !== false) || !is_object($thisUser)) {
+			if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) $stop .= _US_INVALIDMAIL.'<br />';
+			if (strrpos($email, ' ') > 0) $stop .= _US_EMAILNOSPACES.'<br />';
+			if ($icmsStopSpammers->badEmail($email)) $stop .= _US_INVALIDMAIL.'<br />';
+			$count = $this->getCount(icms_buildCriteria(array('email' => addslashes($email))));
+			if ($count > 0) $stop .= _US_EMAILTAKEN.'<br />';
 		}
-		if ($icmsStopSpammers->badEmail($email)) {
-			$stop .= _US_INVALIDMAIL . '<br />';
-		}
-		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) {
-			$stop .= _US_INVALIDIP . '<br />';
-		}
-		if (empty($login_name) || preg_match($restriction, $login_name)) {
-			$stop .= _US_INVALIDNICKNAME . '<br />';
-		}
-		if (strlen($login_name) > $icmsConfigUser['maxuname']) {
-			$stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']) . '<br />';
-		}
-		if (strlen($login_name) < $icmsConfigUser['minuname']) {
-			$stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']) . '<br />';
-		}
-		foreach ($icmsConfigUser['bad_unames'] as $bu) {
-			if (!empty($bu) && preg_match('/' . $bu . '/i', $login_name)) {
-				$stop .= _US_NAMERESERVED . '<br />';
-				break;
+
+		// check login_name
+		$login_name = icms_core_DataFilter::icms_trim($login_name);
+		if ((is_object($thisUser) && $thisUser->getVar('login_name', 'e') != $login_name && $login_name !== false) || !is_object($thisUser)) {
+			if (empty($login_name) || preg_match($restriction, $login_name)) $stop .= _US_INVALIDNICKNAME.'<br />';
+			if (strlen($login_name) > $icmsConfigUser['maxuname']) $stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']).'<br />';
+			if (strlen($login_name) < $icmsConfigUser['minuname']) $stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']).'<br />';
+			foreach ($icmsConfigUser['bad_unames'] as $bu) {
+				if (!empty($bu) && preg_match('/'.$bu.'/i', $login_name)) {
+					$stop .= _US_NAMERESERVED.'<br />';
+					break;
+				}
 			}
+			if (strrpos($login_name, ' ') > 0) $stop .= _US_NICKNAMENOSPACES.'<br />';
+			$count = $this->getCount(icms_buildCriteria(array('login_name' => addslashes($login_name))));
+			if ($count > 0) $stop .= _US_LOGINNAMETAKEN.'<br />';
 		}
-		if (strrpos($login_name, ' ') > 0) {
-			$stop .= _US_NICKNAMENOSPACES . '<br />';
+
+		// check uname
+		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') != $uname && $uname !== false) || !is_object($thisUser)) {
+			if ($icmsStopSpammers->badUsername($uname)) $stop .= _US_INVALIDNICKNAME.'<br />';
+			$count = $this->getCount(icms_buildCriteria(array('uname' => addslashes($uname))));
+			if ($count > 0) $stop .= _US_NICKNAMETAKEN.'<br />';
 		}
-		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE login_name = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($login_name)));
-		$result = $xoopsDB->query($sql);
-		list($count) = $xoopsDB->fetchRow($result);
-		if ($count > 0) {
-			$stop .= _US_LOGINNAMETAKEN . '<br />';
-		}
-		$count = 0;
-		if ($uname) {
-			$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
-			$result = $xoopsDB->query($sql);
-			list($count) = $xoopsDB->fetchRow($result);
-			if ($count > 0) {
-				$stop .= _US_NICKNAMETAKEN . '<br />';
+
+		// check password
+		if ($pass !== false) {
+			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD.'<br />';
+			if ((isset($pass)) && ($pass != $vpass)) {
+				$stop .= _US_PASSNOTSAME.'<br />';
+			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
+				$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']).'<br />';
 			}
+			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)) $stop .= _US_BADPWD.'<br />';
 		}
-		$count = 0;
-		if ($email) {
-			$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
-			$result = $xoopsDB->query($sql);
-			list($count) = $xoopsDB->fetchRow($result);
-			if ($count > 0) {
-				$stop .= _US_EMAILTAKEN . '<br />';
-			}
-		}
-		if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') {
-			$stop .= _US_ENTERPWD . '<br />';
-		}
-		if ((isset($pass)) && ($pass != $vpass)) {
-			$stop .= _US_PASSNOTSAME . '<br />';
-		} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
-			$stop .= sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']) . '<br />';
-		}
-		if ((isset($pass)) && (isset($login_name))) {
-			if ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true) {
-				$stop .= _US_BADPWD . '<br />';
-			}
-		}
+
+		// check other things
+		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) $stop .= _US_INVALIDIP.'<br />';
+
 		return $stop;
 	}
 
