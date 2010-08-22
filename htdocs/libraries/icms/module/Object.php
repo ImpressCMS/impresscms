@@ -63,6 +63,8 @@ class icms_module_Object extends icms_core_Object {
 		// RMV-NOTIFY
 		$this->initVar('hasnotification', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('dbversion', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('modname', XOBJ_DTYPE_OTHER, null, true);
+		$this->initVar('ipf', XOBJ_DTYPE_INT, 0, false);
 	}
 
 	/**
@@ -90,6 +92,9 @@ class icms_module_Object extends icms_core_Object {
 		$this->setVar('hascomments', $hascomments);
 		// RMV-NOTIFY
 		$this->setVar('hasnotification', $hasnotification);
+		$this->setVar('modname', $this->modinfo['modname'], true);
+		$ipf = (isset($this->modinfo['object_items']) && is_array($this->modinfo['object_items'])) ? 1 : 0;
+		$this->setVar('ipf', $ipf);
 	}
 
 	/**

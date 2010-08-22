@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * All common information used in the core goes from here.
  * Be careful while editing this file!
  *
@@ -20,52 +19,53 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 @set_magic_quotes_runtime(0);
 
-require_once(XOOPS_ROOT_PATH . "/include/constants.php");
+require_once ICMS_ROOT_PATH . "/include/constants.php";
 
-// Instantiate security object
-require_once ICMS_ROOT_PATH . '/class/xoopssecurity.php';
+// ################################## Instantiate security object ##################################
+require_once ICMS_ROOT_PATH . "/class/xoopssecurity.php";
 global $xoopsSecurity;
 $xoopsSecurity = $icmsSecurity = new IcmsSecurity();
-//Check super globals
-$xoopsSecurity->checkSuperglobals();
+$icmsSecurity->checkSuperglobals();
 
-// ################# Initialize kernel and launch bootstrap
-
-require_once( ICMS_ROOT_PATH . '/libraries/icms.php' );
+// ############################ Initialize kernel and launch bootstrap #############################
+require_once ICMS_ROOT_PATH . '/libraries/icms.php';
 icms::setup();
 icms::boot();
 
-// ################# Creation of old global variables for backward compat ##############
+// ##################### Creation of old global variables for backward compat ######################
 global $icmsPreloadHandler;
 $icmsPreloadHandler = icms::$preload;
 
 global $xoopsLogger, $xoopsErrorHandler;
 $xoopsLogger = $xoopsErrorHandler = icms::$logger;
 
-// ################# Creation of the non-static ImpressCMS Kernel object for BC ##############
-global $impresscms, $xoops;
+// ################## Creation of the non-static ImpressCMS Kernel object for BC ###################
+global $xoops, $impresscms;
 $xoops = $impresscms = new icms_core_Kernel();
 
-// ############## Include common functions file ##############
+// ################################# Include common functions file #################################
 include_once ICMS_ROOT_PATH . '/include/functions.php';
 
-// #################### Connect to DB ##################
-if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
+// ######################################### Connect to DB #########################################
+if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$icmsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
 	define('XOOPS_DB_PROXY', 1);
 }
 $xoopsDB =& icms_database_Factory::getDatabaseConnection();
 
-// ################# Include required files ##############
+// ############################## register module class repositories ###############################
+icms_Autoloader::registerModules();
+
+// #################################### Include required files #####################################
 //require_once ICMS_ROOT_PATH.'/kernel/object.php';
 //require_once ICMS_ROOT_PATH.'/class/criteria.php';
 
-// #################### Include text sanitizer ##################
+// #################################### Include text sanitizer #####################################
 //include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 
-// #################### Including debuging functions ##################
+// ################################# Including debuging functions ##################################
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
 
-// ################# Load Config Settings ##############
+// ##################################### Load Config Settings ######################################
 $config_handler = icms::handler('icms_config');
 $configs = $config_handler->getConfigsByCat(
 	array(
@@ -86,7 +86,7 @@ $icmsConfigCaptcha    = $configs[ICMS_CONF_CAPTCHA];
 $icmsConfigSearch     = $configs[ICMS_CONF_SEARCH];
 unset($configs);
 
-// #################### Easiest ML by Gijoe #################
+// ###################################### Easiest ML by Gijoe ######################################
 
 // Disable gzip compression if PHP is run under CLI mode
 // To be refactored
@@ -101,21 +101,21 @@ if ($icmsConfig['gzip_compression'] == 1
 	ob_start('ob_gzhandler');
 }
 
-// #################### Error reporting settings ##################
+// ################################### Error reporting settings ####################################
 if (!isset($xoopsOption['nodebug']) || !$xoopsOption['nodebug']) {
-	if ( $icmsConfig['debug_mode'] == 1 || $icmsConfig['debug_mode'] == 2) {
+	if ($icmsConfig['debug_mode'] == 1 || $icmsConfig['debug_mode'] == 2) {
 		error_reporting(E_ALL);
-		$xoopsLogger->enableRendering();
-		$xoopsLogger->usePopup = ( $icmsConfig['debug_mode'] == 2 );
+		icms::$logger->enableRendering();
+		icms::$logger->usePopup = ( $icmsConfig['debug_mode'] == 2 );
 	} else {
 		error_reporting(0);
-		$xoopsLogger->activated = false;
+		icms::$logger->activated = false;
 	}
 }
 
-$xoopsSecurity->checkBadips();
+$icmsSecurity->checkBadips();
 
-// ################# Include version info file ##############
+// ################################### Include version info file ###################################
 include_once ICMS_ROOT_PATH."/include/version.php";
 
 // for older versions...will be DEPRECATED!
@@ -149,28 +149,23 @@ if (defined('ICMS_INCLUDE_OPENID')) {
 	require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
 }
 
-// ############## Validate & Start User Session ##############
+// ################################# Validate & Start User Session #################################
 $xoopsUser = $icmsUser = '';
 $xoopsUserIsAdmin = $icmsUserIsAdmin = false;
 $member_handler = icms::handler('icms_member');
 global $sess_handler;
 $sess_handler = icms::handler('icms_core_Session');
 
-session_set_save_handler(
-							array(&$sess_handler, 'open'), array(&$sess_handler, 'close'),
-							array(&$sess_handler, 'read'), array(&$sess_handler, 'write'),
-							array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc')
-						);
+session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'),
+						 array(&$sess_handler, 'read'), array(&$sess_handler, 'write'),
+						 array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
 
-$sslpost_name = isset($_POST[$icmsConfig['sslpost_name']]) ? $_POST[$icmsConfig['sslpost_name']] : '';
+$sslpost_name = isset($_POST[$icmsConfig['sslpost_name']]) ? $_POST[$icmsConfig['sslpost_name']] : "";
 $sess_handler->sessionStart($sslpost_name);
 
 // Autologin if correct cookie present.
 if (empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass'])) {
-	$autologinName = $_COOKIE['autologin_uname'];
-	$autologinPass = $_COOKIE['autologin_pass'];
-
-	$sess_handler->sessionAutologin($autologinName, $autologinPass, $_POST);
+	$sess_handler->sessionAutologin($_COOKIE['autologin_uname'], $_COOKIE['autologin_pass'], $_POST);
 }
 
 if (!empty($_SESSION['xoopsUserId'])) {
@@ -182,7 +177,8 @@ if (!empty($_SESSION['xoopsUserId'])) {
 		$_SESSION = array();
 	} else {
 		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
-			$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
+			// we need to secure cookie when using SSL
+			$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0;
 			setcookie($icmsConfig['session_name'], session_id(),
 				time()+(60*$icmsConfig['session_expire']), '/', '', $secure, 0);
 		}
@@ -195,7 +191,6 @@ if (!empty($_SESSION['xoopsUserId'])) {
 }
 $UserGroups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 if ($icmsConfigMultilang['ml_enable']) {
-
 	require ICMS_ROOT_PATH . '/include/im_multilanguage.php' ;
 	$easiestml_langs = explode(',', $icmsConfigMultilang['ml_tags']);
 	//include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
@@ -241,9 +236,9 @@ if ($icmsConfigMultilang['ml_enable']) {
 			$icmsConfig['language'] = $langs[$_GET['lang']];
 		}
 	}
-} //END if ($icmsConfigMultilang['ml_enable'])
+}
 
-// #################### Include site-wide lang file ##################
+// ################################## Include site-wide lang file ##################################
 icms_loadLanguageFile('core', 'global');
 icms_loadLanguageFile('core', 'theme');
 icms_loadLanguageFile('core', 'core');
@@ -251,7 +246,7 @@ icms_loadLanguageFile('system', 'common');
 @define('_GLOBAL_LEFT', @_ADM_USE_RTL == 1 ? 'right' : 'left');
 @define('_GLOBAL_RIGHT', @_ADM_USE_RTL == 1 ? 'left' : 'right');
 
-// ################ Include page-specific lang file ################
+// ################################ Include page-specific lang file ################################
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
 	icms_loadLanguageFile('core', $xoopsOption['pagetype']);
 }
@@ -294,12 +289,12 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	if ($icmsUser) {
 		if (!$moduleperm_handler->checkRight('module_read', $icmsModule->getVar('mid'), $icmsUser->getGroups())) {
-			redirect_header(ICMS_URL . "/user.php", 1, _NOPERM, false);
+			redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, false);
 		}
 		$xoopsUserIsAdmin = $icmsUserIsAdmin = $icmsUser->isAdmin($icmsModule->getVar('mid'));
 	} else {
 		if (!$moduleperm_handler->checkRight('module_read', $icmsModule->getVar('mid'), ICMS_GROUP_ANONYMOUS)) {
-			redirect_header(ICMS_URL . "/user.php", 1, _NOPERM);
+			redirect_header(ICMS_URL . "/user.php", 3, _NOPERM);
 		}
 	}
 	icms_loadLanguageFile($icmsModule->getVar('dirname'), 'main');
@@ -316,14 +311,12 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 if ($icmsConfigPersona['multi_login']) {
 	if (is_object($icmsUser)) {
 		$online_handler = icms::handler('icms_core_Online');
-		$online_handler->write(
-			$icmsUser->getVar('uid'), $icmsUser->getVar('uname'),
-			time(), 0, $_SERVER['REMOTE_ADDR']
-		);
+		$online_handler->write($icmsUser->getVar('uid'), $icmsUser->getVar('uname'),
+							   time(), 0, $_SERVER['REMOTE_ADDR']);
 	}
 }
-// ################# Preload Trigger finishCoreBoot ##############
-$icmsPreloadHandler->triggerEvent('finishCoreBoot');
 
-$xoopsLogger->stopTime('ICMS Boot');
-$xoopsLogger->startTime('Module init');
+// ##################################### finalize boot process #####################################
+icms::$preload->triggerEvent('finishCoreBoot');
+icms::$logger->stopTime('ICMS Boot');
+icms::$logger->startTime('Module init');

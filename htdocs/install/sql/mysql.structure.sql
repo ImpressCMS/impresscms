@@ -374,6 +374,8 @@ CREATE TABLE modules (
   hascomments tinyint(1) unsigned NOT NULL default '0',
   hasnotification tinyint(1) unsigned NOT NULL default '0',
   dbversion int(11) unsigned NOT NULL default '1',
+  modname varchar(25) NOT NULL default '',
+  ipf tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (mid),
   KEY dirname (dirname(5)),
   KEY active_main_weight (isactive, hasmain, weight)

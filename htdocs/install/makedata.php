@@ -116,7 +116,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	/* do not alter the value for dbversion (the last field) - all updates for
 	 * this will be handled by the module update process
 	 */
-	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 39)");
+	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 39, 'system', 0)");
 
 	foreach ($modversion['templates'] as $tplfile) {
 		if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {

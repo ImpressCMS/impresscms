@@ -55,13 +55,11 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 **/
 	public function &get($id) {
-		static $_cachedModule_dirname;
-		static $_cachedModule_mid;
 		$id = (int) ($id);
 		$module = false;
 		if ($id > 0) {
-			if (!empty($_cachedModule_mid[$id])) {
-				return $_cachedModule_mid[$id];
+			if (!empty($this->_cachedModule_mid[$id])) {
+				return $this->_cachedModule_mid[$id];
 			} else {
 				$sql = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE mid = '" . $id . "'";
 				if (!$result = $this->db->query($sql)) {return $module;}
@@ -70,8 +68,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 					$module = new icms_module_Object();
 					$myrow = $this->db->fetchArray($result);
 					$module->assignVars($myrow);
-					$_cachedModule_mid[$id] =& $module;
-					$_cachedModule_dirname[$module->getVar('dirname')] =& $module;
+					$this->_cachedModule_mid[$id] =& $module;
+					$this->_cachedModule_dirname[$module->getVar('dirname')] =& $module;
 					return $module;
 				}
 			}
@@ -86,10 +84,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 **/
 	public function &getByDirname($dirname) {
-		static $_cachedModule_mid;
-		static $_cachedModule_dirname;
-		if (!empty($_cachedModule_dirname[$dirname]) && $_cachedModule_dirname[$dirname]->getVar('dirname') == $dirname) {
-			return $_cachedModule_dirname[$dirname];
+		if (!empty($this->_cachedModule_dirname[$dirname]) && $this->_cachedModule_dirname[$dirname]->getVar('dirname') == $dirname) {
+			return $this->_cachedModule_dirname[$dirname];
 		} else {
 			$module = false;
 			$sql = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
@@ -99,8 +95,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 				$module = new icms_module_Object();
 				$myrow = $this->db->fetchArray($result);
 				$module->assignVars($myrow);
-				$_cachedModule_dirname[$dirname] =& $module;
-				$_cachedModule_mid[$module->getVar('mid')] =& $module;
+				$this->_cachedModule_dirname[$dirname] =& $module;
+				$this->_cachedModule_mid[$module->getVar('mid')] =& $module;
 			}
 			return $module;
 		}
@@ -267,6 +263,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			} else {
 				$ret[$myrow['mid']] =& $module;
 			}
+			$this->_cachedModule_mid[$myrow['mid']] =& $module;
+			$this->_cachedModule_dirname[$myrow['dirname']] =& $module;
 			unset($module);
 		}
 		return $ret;

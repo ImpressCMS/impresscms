@@ -82,6 +82,34 @@ class icms_Autoloader {
 			self::$globalRepositories[] = $path;
 		}
 	}
+
+	/**
+	 * Register module class repositories for all modules except system
+	 *
+	 * We have to register all module (not only the active ones) because we might need that in some
+	 * cases (e.g. system module upgrade). We also need an existing database connection before this
+	 * function can be called.
+	 * The system module is not excluded from getObjects to make sure it's already cached for later
+	 * use throughout the system. This function is one of the first functions called in the boot
+	 * process so it's the best place to cache the modules.
+	 * IPF based modules are definied in their own namespace.
+	 */
+	static public function registerModules() {
+		$module_handler = icms::handler("icms_module");
+		$modules = $module_handler->getObjects();
+		foreach ($modules as $module) {
+			if ($module->getVar("dirname") == "system") continue;
+			$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
+			if ($module->getVar("ipf")) {
+				$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :
+																$module->getVar("dirname");
+				self::register($class_path, "mod_" . $modname);
+			} else {
+				self::register($class_path);
+			}
+		}
+	}
+
 	/**
 	 * Import a namespace global elements (constants and functions)
 	 *

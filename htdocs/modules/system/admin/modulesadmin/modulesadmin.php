@@ -824,6 +824,8 @@ function xoops_module_change($mid, $weight, $name) {
 function icms_module_update($dirname) {
 	global $icmsUser, $xoopsConfig, $xoopsDB, $icmsAdminTpl;
 
+	$msgs = array();
+
 	$dirname = trim($dirname);
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->getByDirname($dirname);
@@ -840,12 +842,23 @@ function icms_module_update($dirname) {
 	$temp_name = $module->getVar('name');
 	$module->loadInfoAsVar($dirname);
 	$module->setVar('name', $temp_name);
+
+	/**
+	 * ensure to only update those fields that are currently available in the database
+	 * this is required to allow structural updates for the module table
+	 */
+	include_once ICMS_ROOT_PATH . "/class/database/databaseupdater.php";
+	$table = new IcmsDatabasetable("modules");
+	foreach (array_keys($module->vars) as $k) {
+		if (!$table->fieldExists($k)) {
+			unset($module->vars[$k]);
+		}
+	}
+
 	if (!$module_handler->insert($module)) {
-		echo '<p>Could not update '.$module->getVar('name').'</p>';
-		echo "<br /><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a>";
+		$msgs[] = '<p>Could not update '.$module->getVar('name').'</p>';
 	} else {
 		$newmid = $module->getVar('mid');
-		$msgs = array();
 		$msgs[] = _MD_AM_MOD_DATA_UPDATED;
 		$tplfile_handler =& icms::handler('icms_view_template_file');
 		$deltpl =& $tplfile_handler->find('default', 'module', $module->getVar('mid'));
