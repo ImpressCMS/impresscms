@@ -22,8 +22,7 @@ class icms_core_DataFilter
 
 	public $censorConf;
 
-	public function __construct()
-	{
+	public function __construct() {
 	}
 
 	/**
@@ -32,11 +31,9 @@ class icms_core_DataFilter
 	* @static       $DataFilter_instance
 	* @staticvar    object
 	**/
-	public static function getInstance()
-	{
+	public static function getInstance() {
 		static $instance;
-		if(!isset($instance))
-		{
+		if(!isset($instance)) {
 			$instance = new icms_core_DataFilter();
 		}
 		return $instance;
@@ -44,8 +41,7 @@ class icms_core_DataFilter
 
 // -------- Public Functions --------
 
-	public function filterDebugInfo($text, $msg)
-	{
+	public function filterDebugInfo($text, $msg) {
 		echo "<div style='padding: 5px; color: red; font-weight: bold'>$text</div>";
 		echo "<div><pre>";
 		print_r($msg);
@@ -155,18 +151,13 @@ class icms_core_DataFilter
 	* @param	string	$html	Text to purify
 	* @return	string	$html	the purified text
 	*/
-	public function html_filter($html)
-	{
-		if($icmsConfigPurifier['enable_purifier'] !== 0)
-		{
+	public function html_filter($html) {
+		if($icmsConfigPurifier['enable_purifier'] !== 0) {
 			$htmlfilter = &icms_core_HTMLFilter::getInstance();
-
 			$html = $htmlfilter->htmlpurify($html);
 
 			return $html;
-		}
-		else
-		{
+		} else {
 			return $html;
 		}
 	}
@@ -176,24 +167,17 @@ class icms_core_DataFilter
 	* @param       array     $array       Array to be filtered
 	* @return      array     $array
 	**/
-	public function cleanArray($arr)
-	{
+	public function cleanArray($arr) {
 		$rtn = array();
 
-		foreach($arr as $key => $a)
-		{
-			if(!is_array($a) && (!empty($a) || $a === 0))
-			{
+		foreach ($arr as $key => $a) {
+			if (!is_array($a) && (!empty($a) || $a === 0)) {
 				$rtn[$key] = $a;
-			}
-			elseif(is_array($a))
-			{
-				if(count($a) > 0)
-				{
+			} elseif (is_array($a)) {
+				if(count($a) > 0) {
 					$a = self::cleanArray($a);
 					$rtn[$key] = $a;
-					if(count($a) == 0)
-					{
+					if(count($a) == 0) {
 						unset($rtn[$key]);
 					}
 				}
@@ -254,99 +238,72 @@ class icms_core_DataFilter
 	*
 	* @return	mixed
 	*/
-	public function checkVar($data, $type, $options1 = '', $options2 = '')
-	{
-		if(!$data || !$type)
-		{
-			return false;
-		}
+	public function checkVar($data, $type, $options1 = '', $options2 = '') {
+		if (!$data || !$type) return false;
+
 		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html');
-		if(!in_array($type, $valid_types))
-		{
+		if (!in_array($type, $valid_types)) {
 			return false;
-		}
-		else
-		{
-			if($type == 'url')
-			{
+		} else {
+			if ($type == "url") {
 				$valid_options1 = array('scheme', 'path', 'host', 'query');
 				$valid_options2 = array(0, 1);
 
-				if(!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1))
-				{
+				if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 					$options1 = '';
 				}
-				if(!isset($options2) || $options2 == '' || !in_array($options2, $valid_options2))
-				{
+				if (!isset($options2) || $options2 == '' || !in_array($options2, $valid_options2)) {
 					$options2 = 0;
-				}
-				else
-				{
+				} else {
 					$options2 = 1;
 				}
 			}
 
-			if($type == 'email')
-			{
+			if ($type == "email") {
 				$valid_options1 = array(0, 1);
 				$valid_options2 = array(0, 1);
 
-				if(!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1))
-				{
+				if(!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 					$options1 = 0;
-				}
-				else
-				{
+				} else {
 					$options1 = 1;
 				}
-				if(!isset($options2) || $options2 == '' || !in_array($options2, $valid_options2))
-				{
+				if (!isset($options2) || $options2 == '' || !in_array($options2, $valid_options2)) {
 					$options2 = 0;
-				}
-				else
-				{
+				} else {
 					$options2 = 1;
 				}
 			}
 
-			if($type == 'ip')
-			{
+			if ($type == "ip") {
 				$valid_options1 = array('ipv4', 'ipv6', 'rfc', 'res');
 				$options2 = '';
 
-				if(!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1))
-				{
+				if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 					$options1 = 'ipv4';
 				}
 			}
 
-			if($type == 'str')
-			{
+			if ($type == "str") {
 				$valid_options1 = array('noencode', 'striplow', 'striphigh', 'encodelow', 'encodehigh', 'encodeamp');
 				$options2 = '';
 
-				if(!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1))
-				{
+				if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 					$options1 = '';
 				}
 			}
 
-			if($type == 'int')
-			{
-				if(!is_int($options1) || !is_int($options2))
-				{
+			if ($type == "int") {
+				if (!is_int($options1) || !is_int($options2)) {
 					$options1 = '';
 					$options2 = '';
-				}
-				else
-				{
+				} else {
 					$options1 = (int)$options1;
 					$options2 = (int)$options2;
 				}
 			}
 
-			if($type == 'html')
-			{
+			if ($type == "html") {
 				$options1 = '';
 				$options2 = '';
 			}
@@ -679,9 +636,8 @@ class icms_core_DataFilter
 	public function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
 
-		if (!@include_once ICMS_LIBRARIES_PATH.'/geshi/geshi.php') {
-			return false;
-		}
+		if (!@include_once ICMS_LIBRARIES_PATH.'/geshi/geshi.php') return false;
+
 		$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
 
 		// Create the new GeSHi object, passing relevant stuff
@@ -707,8 +663,7 @@ class icms_core_DataFilter
 	 * @param	string	$text	The Text to trim
 	 * @return	string	$text	The trimmed text
 	 */
-	public static function icms_trim($text)
-	{
+	static public function icms_trim($text) {
 		if(function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
 		return trim($text);
 	}
@@ -724,26 +679,26 @@ class icms_core_DataFilter
 	 * @return string
 	 * @todo Move to a static class method - String
 	 */
-	public static function utf8_strrev($str, $reverse = false)
-	{
+	static public function utf8_strrev($str, $reverse = false){
 		preg_match_all('/./us', $str, $ar);
-		if($reverse) {return join('',array_reverse($ar[0]));}
-		else
-		{
+		if ($reverse) {
+			return join('', array_reverse($ar[0]));
+		} else {
 			$temp = array();
-			foreach($ar[0] as $value)
-			{
-				if(is_numeric($value) && !empty($temp[0]) && is_numeric($temp[0]))
-				{
-					foreach ($temp as $key => $value2)
-					{
-						if(is_numeric($value2)) {$pos = ($key + 1);}
-						else {break;}
+			foreach ($ar[0] as $value) {
+				if (is_numeric($value) && !empty($temp[0]) && is_numeric($temp[0])) {
+					foreach ($temp as $key => $value2) {
+						if (is_numeric($value2)) {
+							$pos = ($key + 1);
+						} else {
+							break;
+						}
 						$temp2 = array_splice($temp, $pos);
 						$temp = array_merge($temp, array($value), $temp2);
 					}
+				} else {
+					array_unshift($temp, $value);
 				}
-				else {array_unshift($temp, $value);}
 			}
 			return implode('', $temp);
 		}
@@ -760,69 +715,50 @@ class icms_core_DataFilter
 	*
 	* @return
 	*/
-	private function priv_checkVar($data, $type, $options1, $options2)
-	{
+	private function priv_checkVar($data, $type, $options1, $options2) {
 		global $icmsConfigUser;
 		
-		if($type == 'url')
-		{
+		if($type == "url") {
 			$data = filter_var($data, FILTER_SANITIZE_URL);
 
-			if($options1 == 'scheme')
-			{
+			if ($options1 == "scheme") {
 				$opt1 = FILTER_FLAG_SCHEME_REQUIRED;
-			}
-			elseif($options1 == 'host')
-			{
+			} elseif ($options1 == "host") {
 				$opt1 = FILTER_FLAG_HOST_REQUIRED;
-			}
-			elseif($options1 == 'path')
-			{
+			} elseif ($options1 == "path") {
 				$opt1 = FILTER_FLAG_PATH_REQUIRED;
-			}
-			elseif($options1 == 'query')
-			{
+			} elseif ($options1 == "query") {
 				$opt1 = FILTER_FLAG_QUERY_REQUIRED;
 			}
 
-			if(isset($opt1) && $opt1 !== '')
-			{
+			if (isset($opt1) && $opt1 !== "") {
 				$data = filter_var($data, FILTER_VALIDATE_URL, $opt1);
-			}
-			else
-			{
+			} else {
 				$data = filter_var($data, FILTER_VALIDATE_URL);
 			}
 
-			if(is_set($options2) && $options2 == 1)
-			{
+			if (isset($options2) && $options2 == 1) {
 				$data = filter_var($data, FILTER_SANITIZE_ENCODED);
 			}
 
 			return $data;
 		}
 
-		if($type == 'email')
-		{
+		if ($type == "email") {
 			$data = filter_var($data, FILTER_SANITIZE_EMAIL);
 
-			if(filter_var($data, FILTER_VALIDATE_EMAIL))
-			{
-				if(isset($options2) && is_array($icmsConfigUser['bad_emails']))
-				{
+			if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
+				if (isset($options2) && is_array($icmsConfigUser['bad_emails'])) {
 					foreach($icmsConfigUser['bad_emails'] as $be) {
-						if(!empty($be) && preg_match('/' . $be . '/i', $email)) {
+						if (!empty($be) && preg_match('/' . $be . '/i', $email)) {
 							return false;
 						}
 					}
 				}
-			}
-			else
-			{
+			} else {
 				return false;
 			}
-			if(isset($options1) && $options1 == 1)
-			{
+			if (isset($options1) && $options1 == 1) {
 				$data = str_replace('@', ' at ', $data);
 				$data = str_replace('.', ' dot ', $data);
 			}
@@ -830,94 +766,63 @@ class icms_core_DataFilter
 			return $data;
 		}
 
-		if($type == 'ip')
-		{
-			if($options1 == 'ipv4')
-			{
+		if ($type == "ip") {
+			if ($options1 == "ipv4") {
 				$opt1 = FILTER_FLAG_IPV4;
-			}
-			elseif($options1 == 'ipv6')
-			{
+			} elseif ($options1 == "ipv6") {
 				$opt1 = FILTER_FLAG_IPV6;
-			}
-			elseif($options1 == 'rfc')
-			{
+			} elseif ($options1 == "rfc") {
 				$opt1 = FILTER_FLAG_NO_PRIV_RANGE;
-			}
-			elseif($options1 == 'res')
-			{
+			} elseif ($options1 == "res") {
 				$opt1 = FILTER_FLAG_NO_RES_RANGE;
 			}
 
-			if(isset($opt1) && $opt1 !== '')
-			{
+			if(isset($opt1) && $opt1 !== "") {
 				$data = filter_var($data, FILTER_VALIDATE_IP, $opt1);
-			}
-			else
-			{
+			} else {
 				$data = filter_var($data, FILTER_VALIDATE_IP);
 			}
 
 			return $data;
 		}
 
-		if($type == 'str')
-		{
-			if($options1 == 'noencode')
-			{
+		if ($type == "str") {
+			if ($options1 == "noencode") {
 				$opt1 = FILTER_FLAG_NO_ENCODE_QUOTES;
-			}
-			elseif($options1 == 'striplow')
-			{
+			} elseif ($options1 == "striplow") {
 				$opt1 = FILTER_FLAG_STRIP_LOW;
-			}
-			elseif($options1 == 'striphigh')
-			{
+			} elseif ($options1 == "striphigh") {
 				$opt1 = FILTER_FLAG_STRIP_HIGH;
-			}
-			elseif($options1 == 'encodelow')
-			{
+			} elseif ($options1 == "encodelow") {
 				$opt1 = FILTER_FLAG_ENCODE_LOW;
-			}
-			elseif($options1 == 'encodehigh')
-			{
+			} elseif ($options1 == "encodehigh") {
 				$opt1 = FILTER_FLAG_ENCODE_HIGH;
-			}
-			elseif($options1 == 'encodeamp')
-			{
+			} elseif ($options1 == "encodeamp") {
 				$opt1 = FILTER_FLAG_ENCODE_AMP;
 			}
 
-			if(isset($opt1) && $opt1 !== '')
-			{
+			if (isset($opt1) && $opt1 !== "") {
 				$data = filter_var($data, FILTER_SANITIZE_STRING, $opt1);
-			}
-			else
-			{
+			} else {
 				$data = filter_var($data, FILTER_SANITIZE_STRING);
 			}
 
 			return $data;
 		}
 
-		if($type == 'int')
-		{
-			if((isset($options1) && is_int($options1)) && (isset($options2) && is_int($options2)))
-			{
+		if ($type == "int") {
+			if ((isset($options1) && is_int($options1)) && (isset($options2) && is_int($options2))) {
 				$option = array('options' => array('min_range' => $options1,
 													'max_range' => $options2
 													));
 
 				return filter_var($data, FILTER_VALIDATE_INT, $option);
-			}
-			else
-			{
+			} else {
 				return filter_var($data, FILTER_VALIDATE_INT);
 			}
 		}
 
-		if($type == 'html')
-		{
+		if ($type == "html") {
 			$data = self::stripSlashesGPC($data);
 			return filter_var($data, FILTER_CALLBACK, array("options"=>"html_filter"));
 		}
