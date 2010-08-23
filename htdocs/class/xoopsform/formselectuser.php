@@ -39,7 +39,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 class XoopsFormSelectUser extends icms_form_elements_select_User {
 	private $_deprecated;
 	public function __construct() {
-		parent::getInstance();
+		parent::__construct();
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_User', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }

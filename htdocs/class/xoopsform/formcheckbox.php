@@ -35,7 +35,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 class XoopsFormCheckBox extends icms_form_elements_Checkbox {
 	private $_deprecated;
 	public function __construct() {
-		parent::getInstance();
+		parent::__construct();
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Checkbox', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
