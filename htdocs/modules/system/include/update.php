@@ -232,7 +232,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		/* add modname and ipf to modules table */
 		$table = new IcmsDatabasetable("modules");
 		$alter = false;
-		if ($table->fieldExists("modname")) {
+		if (!$table->fieldExists("modname")) {
 			$table->addNewField("modname", "varchar(25) NOT NULL default ''");
 			$alter = true;
 		}
