@@ -700,59 +700,8 @@ function xoops_substr($str, $start, $length, $trimmarker = '...')
  */
 function icms_substr($str, $start, $length, $trimmarker = '...')
 {
-	global $icmsConfigMultilang;
-
-	if($icmsConfigMultilang['ml_enable'])
-	{
-		$tags = explode(',',$icmsConfigMultilang['ml_tags']);
-		$strs = array();
-		$hasML = false;
-		foreach($tags as $tag)
-		{
-			if(preg_match("/\[".$tag."](.*)\[\/".$tag."\]/sU",$str,$matches))
-			{
-				if(count($matches) > 0)
-				{
-					$hasML = true;
-					$strs[] = $matches[1];
-				}
-			}
-		}
-	}
-	else {$hasML = false;}
-
-	if(!$hasML) {$strs = array($str);}
-
-	for($i = 0; $i <= count($strs)-1; $i++)
-	{
-		if(!XOOPS_USE_MULTIBYTES)
-		{
-			$strs[$i] = (strlen($strs[$i]) - $start <= $length) ? substr($strs[$i], $start, $length) : substr($strs[$i], $start, $length - strlen($trimmarker)).$trimmarker;
-		}
-		if(function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET))
-		{
-			$str2 = mb_strcut($strs[$i] , $start , $length - strlen($trimmarker));
-			$strs[$i] = $str2.(mb_strlen($strs[$i])!=mb_strlen($str2) ? $trimmarker : '');
-		}
-
-		$DEP_CHAR=127;
-		$pos_st=0;
-		$action = false;
-		for($pos_i = 0; $pos_i < strlen($strs[$i]); $pos_i++ )
-		{
-			if(ord(substr($strs[$i], $pos_i, 1)) > 127) {$pos_i++;}
-			if($pos_i<=$start) {$pos_st=$pos_i;}
-			if($pos_i>=$pos_st+$length)
-			{
-				$action = true;
-				break;
-			}
-		}
-		$strs[$i] = ($action) ? substr($strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker)).$trimmarker : $strs[$i];
-		$strs[$i] = ($hasML)?'['.$tags[$i].']'.$strs[$i].'[/'.$tags[$i].']':$strs[$i];
-	}
-	$str = implode('',$strs);
-	return $str;
+	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_substr', 'This function will be removed in version 1.4');
+	return icms_core_DataFilter::icms_substr($str, $start, $length, $trimmarker);
 }
 
 // RMV-NOTIFY
