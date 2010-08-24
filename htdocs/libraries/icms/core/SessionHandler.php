@@ -5,7 +5,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Session
- * @version		SVN: $Id: SessionHandler.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @version		SVN: $Id$
  */
 /*
  Based on SecureSession class
@@ -25,7 +25,7 @@ class icms_core_SessionHandler {
 	 * @access	private
 	 */
 	private $db;
-	
+
 	private $mainSaltKey = XOOPS_DB_SALT;
 
 	/**
@@ -190,32 +190,27 @@ class icms_core_SessionHandler {
 	 * To be refactored
 	 * @return  string
 	 **/
-	public function createFingerprint()
-	{
+	public function createFingerprint() {
 		$userAgent = $_SERVER['HTTP_USER_AGENT'];
 		$userIP = $_SERVER['REMOTE_ADDR'];
-		
+
 		return self::sessionFingerprint($userIP, $userAgent);
 	}
-	
+
 	/**
 	 * Compares the Fingerprint stored in $_SESSION['icms_fprint'] by creating a new Fingerprint.
 	 * If they match, the Session is valid.
 	 * To be refactored
 	 * @return  bool
 	 **/
-	public function checkFingerprint()
-	{
+	public function checkFingerprint() {
 		$userAgent = $_SERVER['HTTP_USER_AGENT'];
 		$userIP = $_SERVER['REMOTE_ADDR'];
 		$sessFprint = self::sessionFingerprint($userIP, $userAgent);
-		
-		if($sessFprint == $_SESSION['icms_fprint'])
-		{
+
+		if ($sessFprint == $_SESSION['icms_fprint']) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
@@ -223,16 +218,14 @@ class icms_core_SessionHandler {
 	// Call this when init session.
 	public function sessionOpen($regenerate = false) {
 		$_SESSION['icms_fprint'] = self::createFingerprint();
-		if($regenerate)
-		{
+		if ($regenerate) {
 			self::icms_sessionRegenerateId(true);
 		}
 	}
 
-	public function removeExpiredCustomSession($sess)
-	{
+	public function removeExpiredCustomSession($sess) {
 		global $icmsConfig;
-		if($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != ''
+		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != ''
 				&& !isset($_COOKIE[$icmsConfig['session_name']]) && !empty($_SESSION[$sess]))
 		{
 			unset($_SESSION[$sess]);
@@ -249,7 +242,7 @@ class icms_core_SessionHandler {
 		global $icmsConfig;
 
 		$uid = (int)$uid;
-		
+
 		session_regenerate_id(true);
 		$_SESSION = array();
 		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
@@ -278,23 +271,18 @@ class icms_core_SessionHandler {
 	 * @param   string  $sslpost_name    sets the session_id as ssl Name defined in preferences (if SSL enabled)
 	 * @return
 	 **/
-	public function sessionStart($sslpost_name = '')
-	{
+	public function sessionStart($sslpost_name = '') {
 		global $icmsConfig;
-		
-		if ($icmsConfig['use_ssl'] && isset($sslpost_name) && $sslpost_name != '')
-		{
+
+		if ($icmsConfig['use_ssl'] && isset($sslpost_name) && $sslpost_name != '') {
 			session_id($sslpost_name);
-		}
-		elseif ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '' 
+		} elseif ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != ''
 			&& $icmsConfig['session_expire'] > 0)
-		{		
-			if (isset($_COOKIE[$icmsConfig['session_name']]))
-			{
+		{
+			if (isset($_COOKIE[$icmsConfig['session_name']])) {
 				session_id($_COOKIE[$icmsConfig['session_name']]);
 			}
-			if (function_exists('session_cache_expire'))
-			{
+			if (function_exists('session_cache_expire')) {
 				session_cache_expire($icmsConfig['session_expire']);
 			}
 			@ini_set('session.gc_maxlifetime', $icmsConfig['session_expire'] * 60);
@@ -302,9 +290,7 @@ class icms_core_SessionHandler {
 
 		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
 			session_name($icmsConfig['session_name']);
-		}
-		else
-		{		
+		} else {
 			session_name('ICMSSESSION');
 		}
 		session_start();
@@ -314,44 +300,43 @@ class icms_core_SessionHandler {
 		return;
 	}
 
-	public function sessionAutologin($autologinName, $autologinPass, $_POST)
-	{
+	public function sessionAutologin($autologinName, $autologinPass, $_POST) {
 		return self::autologinSession($autologinName, $autologinPass, $_POST);
 	}
 
 	// Internal function. Returns sha256 from fingerprint.
 	private function sessionFingerprint($ip, $userAgent) {
-		$securityLevel = (int)$this->securityLevel;
-		$ipv6securityLevel = (int)$this->ipv6securityLevel;
+		$securityLevel = (int) $this->securityLevel;
+		$ipv6securityLevel = (int) $this->ipv6securityLevel;
 
 		$fingerprint = $this->mainSaltKey;
 
-		if(isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-			if($securityLevel >= 1) {
+		if (isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+			if ($securityLevel >= 1) {
 				$fingerprint .= $userAgent;
 			}
-			if($securityLevel >= 2) {
+			if ($securityLevel >= 2) {
 				$num_blocks = abs($securityLevel);
 				if ($num_blocks > 4) {
 					$num_blocks = 4;
 				}
 				$blocks = explode('.', $ip);
-				for($i = 0; $i < $num_blocks; $i++) {
-					$fingerprint .= $blocks[$i].'.';
+				for ($i = 0; $i < $num_blocks; $i++) {
+					$fingerprint .= $blocks[$i] . '.';
 				}
 			}
-		} elseif(isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-			if($securityLevel >= 1) {
+		} elseif (isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+			if ($securityLevel >= 1) {
 				$fingerprint .= $userAgent;
 			}
-			if($securityLevel >= 2) {
+			if ($securityLevel >= 2) {
 				$num_blocks = abs($securityLevel);
 				if ($num_blocks > 4) {
 					$num_blocks = 4;
 				}
 				$blocks = explode(':', $ip);
-				for($i = 0; $i < $num_blocks; $i++) {
-					$fingerprint .= $blocks[$i].':';
+				for ($i = 0; $i < $num_blocks; $i++) {
+					$fingerprint .= $blocks[$i] . ':';
 				}
 			}
 		} else {
@@ -458,54 +443,44 @@ class icms_core_SessionHandler {
 		return $this->db->queryF($sql);
 	}
 
-	private function autologinSession($autologinName, $autologinPass, $_POST)
-	{
+	private function autologinSession($autologinName, $autologinPass, $_POST) {
 		// autologin V2 GIJ
-		if(!empty($_POST))
-		{
+		if (!empty($_POST)) {
 			$_SESSION['AUTOLOGIN_POST'] = $_POST;
 			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-			redirect_header(ICMS_URL.'/session_confirm.php', 0, '&nbsp;');
-		}
-		elseif(!empty($_SERVER['QUERY_STRING']) && substr($_SERVER['SCRIPT_NAME'], -19) != 'session_confirm.php')
-		{
+			redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
+		} elseif (!empty($_SERVER['QUERY_STRING']) && substr($_SERVER['SCRIPT_NAME'], -19) != 'session_confirm.php') {
 			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-			redirect_header(ICMS_URL.'/session_confirm.php', 0, '&nbsp;');
+			redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
 		}
 		// end of autologin V2
 
 		// redirect to ICMS_URL/ when query string exists (anti-CSRF) V1 code
-		/* if (! empty( $_SERVER['QUERY_STRING'] )) {
-		redirect_header( ICMS_URL . '/' , 0 , 'Now, logging in automatically' ) ;
+		/* if (! empty($_SERVER['QUERY_STRING'])) {
+		redirect_header(ICMS_URL . '/' , 0 , 'Now, logging in automatically') ;
 		exit ;
 		}*/
 
 		$myts =& icms_core_Textsanitizer::getInstance();
 		$uname = $myts->stripSlashesGPC($autologinName);
 		$pass = $myts->stripSlashesGPC($autologinPass);
-		if(empty($uname) || is_numeric($pass))
-		{
+		if (empty($uname) || is_numeric($pass)) {
 			$user = false ;
-		}
-		else
-		{
+		} else {
 			// V3
 			$uname4sql = addslashes($uname);
 			$criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname4sql));
 			$user_handler = icms::handler('icms_member_user');
 			$users =& $user_handler->getObjects($criteria, false);
-			if(empty($users) || count($users) != 1)
-			{
+			if (empty($users) || count($users) != 1) {
 				$user = false ;
-			}
-			else
-			{
+			} else {
 				// V3.1 begin
 				$user = $users[0] ;
 				$old_limit = time() - (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
 				list($old_Ynj, $old_encpass) = explode(':', $pass);
-				if(strtotime($old_Ynj) < $old_limit || md5($user->getVar('pass') .
-						ICMS_DB_PASS.ICMS_DB_PREFIX.$old_Ynj) != $old_encpass)
+				if (strtotime($old_Ynj) < $old_limit || md5($user->getVar('pass') .
+						ICMS_DB_PASS . ICMS_DB_PREFIX . $old_Ynj) != $old_encpass)
 				{
 					$user = false;
 				}
@@ -515,16 +490,13 @@ class icms_core_SessionHandler {
 		}
 		$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH
 			: preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
-		if($icms_cookie_path == ICMS_URL)
-		{
+		if ($icms_cookie_path == ICMS_URL) {
 			$icms_cookie_path = '/';
 		}
-		if(false != $user && $user->getVar('level') > 0)
-		{
+		if (false != $user && $user->getVar('level') > 0) {
 			// update time of last login
 			$user->setVar('last_login', time());
-			if(!$member_handler->insertUser($user, true))
-			{
+			if (!$member_handler->insertUser($user, true)) {
 			}
 			//$_SESSION = array();
 			$_SESSION['xoopsUserId'] = $user->getVar('uid');
@@ -532,26 +504,28 @@ class icms_core_SessionHandler {
 
 			$user_theme = $user->getVar('theme');
 			$user_language = $user->getVar('language');
-			if(in_array($user_theme, $icmsConfig['theme_set_allowed']))
-			{
+			if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
 				$_SESSION['xoopsUserTheme'] = $user_theme;
 			}
 			$_SESSION['UserLanguage'] = $user_language;
 
 			// update autologin cookies
-			$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
-			$expire = time() + (
-				defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800) ; // 1 week default
+			// we need to secure cookie when using SSL
+			$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0;
+			// 1 week default
+			$expire = time()
+					+ (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
 			setcookie('autologin_uname', $uname, $expire, $icms_cookie_path, '', $secure, 1);
 			// V3.1
 			$Ynj = date('Y-n-j');
-			setcookie('autologin_pass', $Ynj.':'.md5($user->getVar('pass').ICMS_DB_PASS.ICMS_DB_PREFIX.$Ynj),
-				$expire, $icms_cookie_path, '', $secure, 1);
-		}
-		else
-		{
+			setcookie(
+				'autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
+				$expire, $icms_cookie_path, '', $secure, 1
+			);
+		} else {
 			setcookie('autologin_uname', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 			setcookie('autologin_pass', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 		}
 	}
 }
+
