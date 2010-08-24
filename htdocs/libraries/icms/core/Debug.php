@@ -10,7 +10,7 @@
  * @author		Steve Kenow <skenow@impresscms.org>
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id: Debug.php 19523 2010-06-22 15:49:19Z skenow $
+ * @version		SVN: $Id$
  * @since		1.3
  */
 
@@ -29,7 +29,7 @@ class icms_core_Debug {
 	 * @param boolean $exit
 	 */
 	static public function message($msg, $exit = false) {
-		echo "<div style='padding: 5px; color: red; font-weight: bold'>debug :: $msg</div>";
+		echo "<div style='padding: 5px; color: red; font-weight: bold'>". _CORE_DEBUG . " :: " . $msg . "</div>";
 		if ($exit) {
 			die();
 		}
@@ -41,8 +41,8 @@ class icms_core_Debug {
  	 * @param string $var
  	 */
  	static public function vardump($var) {
- 		if (class_exists('MyTextSanitizer')) {
-			$myts = MyTextSanitizer::getInstance();
+ 		if (class_exists('icms_core_Textsanitizer')) {
+			$myts = icms_core_Textsanitizer::getInstance();
 			self::message($myts->displayTarea(var_export($var, true)));
  		} else {
 			$var = var_export($var, true);
@@ -87,3 +87,4 @@ class icms_core_Debug {
 		);
  	}
  }
+
