@@ -10,7 +10,7 @@
  * @author		Steve Kenow <skenow@impresscms.org>
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id: Filesystem.php 19523 2010-06-22 15:49:19Z skenow $
+ * @version		SVN: $Id$
  * @since		1.3
  */
 
@@ -48,22 +48,22 @@ class icms_core_Filesystem {
 	 */
 	static public function mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = array()) {
 
-		if (is_dir( $target )) return TRUE;
+		if (is_dir($target)) return TRUE;
 		if (!isset($metachars)) {
-			$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':' );
+			$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':');
 		}
 
-		$base = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $base);
-		$target = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $target);
+		$base = preg_replace ('/[\\|\/]/', DIRECTORY_SEPARATOR, $base);
+		$target = preg_replace ('/[\\|\/]/', DIRECTORY_SEPARATOR, $target);
 		if ($base !== '') {
 			$target = str_ireplace($base . DIRECTORY_SEPARATOR, '', $target);
-			$target = $base . DIRECTORY_SEPARATOR . str_replace( $metachars , '_', $target );
+			$target = $base . DIRECTORY_SEPARATOR . str_replace($metachars , '_', $target);
 		} else {
 			$target = str_replace($metachars , '_', $target);
 		}
 		if (mkdir($target, $mode, TRUE)) {
 			// create an index.html file in this directory
-			if ($fh = @fopen($target.'/index.html', 'w')) {
+			if ($fh = @fopen($target . '/index.html', 'w')) {
 				fwrite($fh, '<script>history.go(-1);</script>');
 				@fclose($fh);
 			}
@@ -79,11 +79,12 @@ class icms_core_Filesystem {
 	 *
 	 * Removes the content of a folder.
 	 * Replaces icms_clean_folders()
+	 * @todo	Rewrite with SPL Directory Iterators
 	 *
 	 * @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
 	 * @author	modified by Vaughan <vaughan@impresscms.org>
 	 * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-	 * @param	string	$dir	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
+	 * @param	string	$dir	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH . "/templates_c/");
 	 * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
 	 */
 	static public function cleanFolders($dir, $remove_admin_cache = FALSE) {
@@ -96,8 +97,8 @@ class icms_core_Filesystem {
 							&& $file != '.svn')
 						: ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
 							&& $file != '.svn' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
-				if (is_file($d.$file) && $files_array) {
-					unlink($d.$file);
+				if (is_file($d . $file) && $files_array) {
+					unlink($d . $file);
 				}
 			}
 			closedir($dd);
@@ -124,6 +125,7 @@ class icms_core_Filesystem {
 	 *
 	 * Copy a file, or a folder and its contents
 	 * Replaces icms_copyr()
+	 * @todo	Can be rewritten with SPL Directory Iterators
 	 *
 	 * @author	Aidan Lister <aidan@php.net>
 	 * @param	string	$source	The source
@@ -198,6 +200,7 @@ class icms_core_Filesystem {
 	 *
 	 * Recursively delete a directory
 	 * Replaces icms_unlinkRecursive()
+	 * @todo	Can be rewritten with SPL Directory Iterators
 	 *
 	 * @param string $dir Directory name
 	 * @param bool $deleteRootToo Delete specified top-level directory as well
