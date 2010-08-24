@@ -1,27 +1,42 @@
 <?php
 /**
 * Class to filter Data
-* @package      libraries
-* @subpackage   core
+* @category		ICMS
+* @package		Core
 * @since        1.3
 * @author       vaughan montgomery (vaughan@impresscms.org)
 * @author       ImpressCMS Project
 * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
-* @version      $Id: DataFilter.php 19858 2010-07-15 12:01:13Z m0nty_ $
+* @version      SVN: $Id$
 **/
-class icms_core_DataFilter
-{
+/**
+ *
+ *
+ * @category	ICMS
+ * @package		Core
+ *
+ */
+class icms_core_DataFilter {
+
 	/**
 	* @public	array
 	*/
 	public $displaySmileys = array();
+
 	/**
 	* @public	array
 	*/
 	public $allSmileys = array();
 
+	/**
+	 *
+	 * @var unknown_type
+	 */
 	public $censorConf;
 
+	/**
+	 *
+	 */
 	public function __construct() {
 	}
 
@@ -31,9 +46,9 @@ class icms_core_DataFilter
 	* @static       $DataFilter_instance
 	* @staticvar    object
 	**/
-	public static function getInstance() {
+	static public function getInstance() {
 		static $instance;
-		if(!isset($instance)) {
+		if (!isset($instance)) {
 			$instance = new icms_core_DataFilter();
 		}
 		return $instance;
@@ -41,6 +56,11 @@ class icms_core_DataFilter
 
 // -------- Public Functions --------
 
+	/**
+	 *
+	 * @param $text
+	 * @param $msg
+	 */
 	public function filterDebugInfo($text, $msg) {
 		echo "<div style='padding: 5px; color: red; font-weight: bold'>$text</div>";
 		echo "<div><pre>";
@@ -108,6 +128,10 @@ class icms_core_DataFilter
 		return htmlspecialchars_decode($text, ENT_QUOTES);
 	}
 
+	/**
+	 *
+	 * @param unknown_type $text
+	 */
 	public function htmlEntities($text) {
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
 				@htmlentities($text, ENT_QUOTES, _CHARSET));
@@ -152,7 +176,7 @@ class icms_core_DataFilter
 	* @return	string	$html	the purified text
 	*/
 	public function html_filter($html) {
-		if($icmsConfigPurifier['enable_purifier'] !== 0) {
+		if ($icmsConfigPurifier['enable_purifier'] !== 0) {
 			$htmlfilter = &icms_core_HTMLFilter::getInstance();
 			$html = $htmlfilter->htmlpurify($html);
 
@@ -174,10 +198,10 @@ class icms_core_DataFilter
 			if (!is_array($a) && (!empty($a) || $a === 0)) {
 				$rtn[$key] = $a;
 			} elseif (is_array($a)) {
-				if(count($a) > 0) {
+				if (count($a) > 0) {
 					$a = self::cleanArray($a);
 					$rtn[$key] = $a;
-					if(count($a) == 0) {
+					if (count($a) == 0) {
 						unset($rtn[$key]);
 					}
 				}
@@ -238,6 +262,14 @@ class icms_core_DataFilter
 	*
 	* @return	mixed
 	*/
+
+	/**
+	 *
+	 * @param $data
+	 * @param $type
+	 * @param $options1
+	 * @param $options2
+	 */
 	public function checkVar($data, $type, $options1 = '', $options2 = '') {
 		if (!$data || !$type) return false;
 
@@ -245,6 +277,7 @@ class icms_core_DataFilter
 		if (!in_array($type, $valid_types)) {
 			return false;
 		} else {
+			/** @todo Use switch(), instead  - better performance */
 			if ($type == "url") {
 				$valid_options1 = array('scheme', 'path', 'host', 'query');
 				$valid_options2 = array(0, 1);
@@ -263,7 +296,7 @@ class icms_core_DataFilter
 				$valid_options1 = array(0, 1);
 				$valid_options2 = array(0, 1);
 
-				if(!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
+				if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 					$options1 = 0;
 				} else {
 					$options1 = 1;
@@ -324,7 +357,7 @@ class icms_core_DataFilter
 		$patterns = array();
 		$replacements = array();
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
-		$replacements[] = '<a href="'.ICMS_URL.'/\\2">\\3</a>';
+		$replacements[] = '<a href="' . ICMS_URL . '/\\2">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
 		$replacements[] = '<a href="\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(ftp?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
@@ -366,19 +399,19 @@ class icms_core_DataFilter
 		if ($allowimage != 1) {
 			$replacements[] = '<a href="\\3" rel="external">\\3</a>';
 			$replacements[] = '<a href="\\1" rel="external">\\1</a>';
-			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\4" rel="external">\\5</a>';
-			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\2" rel="external">\\3</a>';
+			$replacements[] = '<a href="' . ICMS_URL . '/image.php?id=\\4" rel="external">\\5</a>';
+			$replacements[] = '<a href="' . ICMS_URL . '/image.php?id=\\2" rel="external">\\3</a>';
 		} else {
 			$replacements[] = '<img src="\\3" align="\\2" alt="" />';
 			$replacements[] = '<img src="\\1" alt="" />';
-			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\4" align="\\2" alt="\\5" />';
-			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\2" alt="\\3" />';
+			$replacements[] = '<img src="' . ICMS_URL . '/image.php?id=\\4" align="\\2" alt="\\5" />';
+			$replacements[] = '<img src="' . ICMS_URL . '/image.php?id=\\2" alt="\\3" />';
 		}
 		$patterns[] = "/\[quote]/sU";
-		$replacements[] = _QUOTEC.'<div class="icmsQuote"><blockquote><p>';
+		$replacements[] = _QUOTEC . '<div class="icmsQuote"><blockquote><p>';
 		$patterns[] = "/\[\/quote]/sU";
 		$replacements[] = '</p></blockquote></div>';
-		$text = str_replace( "\x00", "", $text );
+		$text = str_replace("\x00", "", $text);
 		$c = "[\x01-\x1f]*";
 		$patterns[] = "/j{$c}a{$c}v{$c}a{$c}s{$c}c{$c}r{$c}i{$c}p{$c}t{$c}:/si";
 		$replacements[] = "(script removed)";
@@ -416,7 +449,7 @@ class icms_core_DataFilter
 			$countlinks = count($links);
 			for ($i = 0; $i < $countlinks; $i++) {
 				$link = $links[$i];
-				$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a'.$link : $link;
+				$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a' . $link : $link;
 				$begin = strpos($link, '>') + 1;
 				$end = strpos($link, '<', $begin);
 				$length = $end - $begin;
@@ -428,15 +461,18 @@ class icms_core_DataFilter
 				$middleurl = " ... ";
 				$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is',
 				$urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
-				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text);
+				$text = str_replace('>' . $urlname . '<', '>' . $chunked . '<', $text);
 			}
 		}
 		$text = substr($text, 1);
 		return $text;
 	}
 
-	public function smiley($message)
-	{
+	/**
+	 *
+	 * @param $message
+	 */
+	public function smiley($message) {
 		return self::priv_smiley($message);
 	}
 
@@ -478,7 +514,7 @@ class icms_core_DataFilter
 	public function codePreConv($text, $imcode = 1) {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/esU";
-			$replacements = "'[code]'.base64_encode('$1').'[/code]'";
+			$replacements = "'[code]' . base64_encode('$1') . '[/code]'";
 			$text = preg_replace($patterns, $replacements, $text);
 		}
 		return $text;
@@ -623,7 +659,7 @@ class icms_core_DataFilter
 		$length_text = ($pos_close) ? $pos_close - $length_open : 0;
 		$str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
 
-		$buffer = $str_open.$str_internal.$str_close;
+		$buffer = $str_open . $str_internal . $str_close;
 		return $buffer;
 	}
 
@@ -636,7 +672,7 @@ class icms_core_DataFilter
 	public function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
 
-		if (!@include_once ICMS_LIBRARIES_PATH.'/geshi/geshi.php') return false;
+		if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') return false;
 
 		$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
 
@@ -664,7 +700,7 @@ class icms_core_DataFilter
 	 * @return	string	$text	The trimmed text
 	 */
 	static public function icms_trim($text) {
-		if(function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
+		if (function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
 		return trim($text);
 	}
 
@@ -679,7 +715,7 @@ class icms_core_DataFilter
 	 * @return string
 	 * @todo Move to a static class method - String
 	 */
-	static public function utf8_strrev($str, $reverse = false){
+	static public function utf8_strrev($str, $reverse = false) {
 		preg_match_all('/./us', $str, $ar);
 		if ($reverse) {
 			return join('', array_reverse($ar[0]));
@@ -716,60 +752,49 @@ class icms_core_DataFilter
 	 *
 	 * @return   string
 	 */
-	function icms_substr($str, $start, $length, $trimmarker = '...')
-	{
+	function icms_substr($str, $start, $length, $trimmarker = '...') {
 		global $icmsConfigMultilang;
 
-		if($icmsConfigMultilang['ml_enable'])
-		{
-			$tags = explode(',',$icmsConfigMultilang['ml_tags']);
+		if ($icmsConfigMultilang['ml_enable']) {
+			$tags = explode(',', $icmsConfigMultilang['ml_tags']);
 			$strs = array();
 			$hasML = false;
-			foreach($tags as $tag)
-			{
-				if(preg_match("/\[".$tag."](.*)\[\/".$tag."\]/sU",$str,$matches))
-				{
-					if(count($matches) > 0)
-					{
+			foreach ($tags as $tag) {
+				if (preg_match("/\[" . $tag . "](.*)\[\/" . $tag . "\]/sU", $str, $matches)) {
+					if (count($matches) > 0) {
 						$hasML = true;
 						$strs[] = $matches[1];
 					}
 				}
 			}
-		}
-		else {$hasML = false;}
+		} else {$hasML = false;}
 
-		if(!$hasML) {$strs = array($str);}
+		if (!$hasML) {$strs = array($str);}
 
-		for($i = 0; $i <= count($strs)-1; $i++)
-		{
-			if(!XOOPS_USE_MULTIBYTES)
-			{
-				$strs[$i] = (strlen($strs[$i]) - $start <= $length) ? substr($strs[$i], $start, $length) : substr($strs[$i], $start, $length - strlen($trimmarker)).$trimmarker;
+		for ($i = 0; $i <= count($strs)-1; $i++) {
+			if (!XOOPS_USE_MULTIBYTES) {
+				$strs[$i] = (strlen($strs[$i]) - $start <= $length) ? substr($strs[$i], $start, $length) : substr($strs[$i], $start, $length - strlen($trimmarker)) . $trimmarker;
 			}
-			if(function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET))
-			{
+			if (function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
 				$str2 = mb_strcut($strs[$i] , $start , $length - strlen($trimmarker));
-				$strs[$i] = $str2.(mb_strlen($strs[$i])!=mb_strlen($str2) ? $trimmarker : '');
+				$strs[$i] = $str2 . (mb_strlen($strs[$i])!=mb_strlen($str2) ? $trimmarker : '');
 			}
 
-			$DEP_CHAR=127;
-			$pos_st=0;
+			$DEP_CHAR = 127;
+			$pos_st = 0;
 			$action = false;
-			for($pos_i = 0; $pos_i < strlen($strs[$i]); $pos_i++ )
-			{
-				if(ord(substr($strs[$i], $pos_i, 1)) > 127) {$pos_i++;}
-				if($pos_i<=$start) {$pos_st=$pos_i;}
-				if($pos_i>=$pos_st+$length)
-				{
+			for ($pos_i = 0; $pos_i < strlen($strs[$i]); $pos_i++) {
+				if (ord(substr($strs[$i], $pos_i, 1)) > 127) {$pos_i++;}
+				if ($pos_i<=$start) {$pos_st = $pos_i;}
+				if ($pos_i>=$pos_st+$length) {
 					$action = true;
 					break;
 				}
 			}
-			$strs[$i] = ($action) ? substr($strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker)).$trimmarker : $strs[$i];
-			$strs[$i] = ($hasML)?'['.$tags[$i].']'.$strs[$i].'[/'.$tags[$i].']':$strs[$i];
+			$strs[$i] = ($action) ? substr($strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker)) . $trimmarker : $strs[$i];
+			$strs[$i] = ($hasML)?'[' . $tags[$i] . ']' . $strs[$i] . '[/' . $tags[$i] . ']':$strs[$i];
 		}
-		$str = implode('',$strs);
+		$str = implode('', $strs);
 		return $str;
 	}
 
@@ -786,8 +811,9 @@ class icms_core_DataFilter
 	*/
 	private function priv_checkVar($data, $type, $options1, $options2) {
 		global $icmsConfigUser;
-		
-		if($type == "url") {
+
+		/** @todo Use switch() here, instead - better performance */
+		if ($type == "url") {
 			$data = filter_var($data, FILTER_SANITIZE_URL);
 
 			if ($options1 == "scheme") {
@@ -815,12 +841,12 @@ class icms_core_DataFilter
 
 		if ($type == "email") {
 			$icmsStopSpammers = new icms_core_StopSpammer();
-			
+
 			$data = filter_var($data, FILTER_SANITIZE_EMAIL);
 
 			if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
 				if (isset($options2) && is_array($icmsConfigUser['bad_emails'])) {
-					foreach($icmsConfigUser['bad_emails'] as $be) {
+					foreach ($icmsConfigUser['bad_emails'] as $be) {
 						if ((!empty($be) && preg_match('/' . $be . '/i', $data))
 							|| $icmsStopSpammers->badEmail($data)) {
 							return false;
@@ -849,7 +875,7 @@ class icms_core_DataFilter
 				$opt1 = FILTER_FLAG_NO_RES_RANGE;
 			}
 
-			if(isset($opt1) && $opt1 !== "") {
+			if (isset($opt1) && $opt1 !== "") {
 				$data = filter_var($data, FILTER_VALIDATE_IP, $opt1);
 			} else {
 				$data = filter_var($data, FILTER_VALIDATE_IP);
@@ -911,7 +937,7 @@ class icms_core_DataFilter
 		foreach ($smileys as $smile) {
 			$message = str_replace(
 				$smile['code'],
-				'<img src="'.ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'])
+				'<img src="' . ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'])
 				. '" alt="" />', $message
 				);
 		}
@@ -928,7 +954,7 @@ class icms_core_DataFilter
 		global $xoopsDB;
 
 		if (count($this->allSmileys) == 0) {
-			if ($result = $xoopsDB->query("SELECT * FROM ".$xoopsDB->prefix('smiles'))) {
+			if ($result = $xoopsDB->query("SELECT * FROM " . $xoopsDB->prefix('smiles'))) {
 				while ($smiley = $GLOBALS['xoopsDB']->fetchArray($result)) {
 					if ($smiley['display']) {
 						array_push($this->displaySmileys, $smiley);
