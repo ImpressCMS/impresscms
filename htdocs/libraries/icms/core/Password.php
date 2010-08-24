@@ -1,19 +1,31 @@
 <?php
 /**
  * Class to encrypt User Passwords.
- * @package      libraries
- * @subpackage   core
- * @since        1.2
- * @author       vaughan montgomery (vaughan@impresscms.org)
- * @author       ImpressCMS Project
- * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+ *
+ * @category	ICMS
+ * @package		Core
+ * @since		1.2
+ * @author		vaughan montgomery (vaughan@impresscms.org)
+ * @author		ImpressCMS Project
+ * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+ * @version		SVN: $Id$
  **/
-final class icms_core_Password
-{
+/**
+ * Password generation and validation
+ *
+ * @category	ICMS
+ * @package		Core
+ *
+ */
+final class icms_core_Password {
+
+
 	private $pass, $salt, $mainSalt = XOOPS_DB_SALT, $uname;
 
-	public function __construct()
-	{
+	/**
+	 * Constructor for the Password class
+	 */
+	public function __construct() {
 	}
 
 	/**
@@ -22,11 +34,9 @@ final class icms_core_Password
 	 * @static       $instance
 	 * @staticvar    object
 	 **/
-	public static function getInstance()
-	{
+	static public function getInstance() {
 		static $instance;
-		if(!isset($instance))
-		{
+		if (!isset($instance)) {
 			$instance = new icms_core_Password();
 		}
 		return $instance;
@@ -40,25 +50,20 @@ final class icms_core_Password
 	* @param    string  $uname      The username of the account to be checked
 	* @return   bool     returns true if password is expired, false if password is not expired.
 	*/
-	private function priv_passExpired($uname)
-	{
+	private function priv_passExpired($uname) {
 		$db = Database::getInstance();
-		
-		if(!isset($uname) || (isset($uname) && $uname == ''))
-		{
+
+		if (!isset($uname) || (isset($uname) && $uname == '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
-		$sql = $db->query("SELECT pass_expired FROM ".$db->prefix('users')." WHERE
-                uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+		$sql = $db->query("SELECT pass_expired FROM " . $db->prefix('users') . " WHERE
+                uname = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");
 		list($pass_expired) = $db->fetchRow($sql);
 
-		if($pass_expired == 1)
-		{
+		if ($pass_expired == 1) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
@@ -70,36 +75,29 @@ final class icms_core_Password
 	 * @param    string  $uname      Username to find User Salt key for.
 	 * @return   string  returns the Salt key of the user.
 	 */
-	private function priv_getUserSalt($uname)
-	{
+	private function priv_getUserSalt($uname) {
 		$db = Database::getInstance();
 
-		if(!isset($uname) || (isset($uname) && $uname == ''))
-		{
+		if (!isset($uname) || (isset($uname) && $uname == '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
-		include_once ICMS_ROOT_PATH.'/class/database/databaseupdater.php';
+		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 		$table = new IcmsDatabasetable('users');
-		if($table->fieldExists('loginname'))
-		{
-			$sql = $db->query("SELECT salt FROM ".$db->prefix('users')." WHERE
-					loginname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+		if ($table->fieldExists('loginname')) {
+			$sql = $db->query("SELECT salt FROM " . $db->prefix('users') . " WHERE
+					loginname = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");
+			list($salt) = $db->fetchRow($sql);
+		} elseif ($table->fieldExists('login_name')) {
+			$sql = $db->query("SELECT salt FROM " . $db->prefix('users') . " WHERE
+                    login_name = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");
+			list($salt) = $db->fetchRow($sql);
+		} else {
+			$sql = $db->query("SELECT salt FROM " . $db->prefix('users') . " WHERE
+                    uname = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");
 			list($salt) = $db->fetchRow($sql);
 		}
-		elseif($table->fieldExists('login_name'))
-		{
-			$sql = $db->query("SELECT salt FROM ".$db->prefix('users')." WHERE
-                    login_name = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-			list($salt) = $db->fetchRow($sql);
-		}
-		else
-		{
-			$sql = $db->query("SELECT salt FROM ".$db->prefix('users')." WHERE
-                    uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-			list($salt) = $db->fetchRow($sql);
-		}
-		
+
 		return $salt;
 	}
 
@@ -114,84 +112,48 @@ final class icms_core_Password
 	 *                               use in conjunction only with $enc_type above.
 	 * @return   string  returns the final encrypted hash of users password.
 	 */
-	private function priv_encryptPass($pass, $salt, $enc_type, $reset)
-	{
+	private function priv_encryptPass($pass, $salt, $enc_type, $reset) {
 		global $icmsConfigUser;
 
-		if($reset == 0)
-		{
+		if ($reset == 0) {
 			$enc_type = (int) ($icmsConfigUser['enc_type']);
 		}
-		if($enc_type == 0)
-		{
+		if ($enc_type == 0) {
 			$pass_hash = md5($pass);
-		}
-		else
-		{
-			$pass = $salt.md5($pass).$this->mainSalt;
-
-			if($enc_type == 1)
-			{
+		} else {
+			$pass = $salt . md5($pass) . $this->mainSalt;
+			/* would it be more appropriate to use switch? */
+			if ($enc_type == 1) {
 				$pass_hash = hash('sha256', $pass);
-			}
-			elseif($enc_type == 2)
-			{
+			} elseif ($enc_type == 2) {
 				$pass_hash = hash('sha384', $pass);
-			}
-			elseif($enc_type == 3)
-			{
+			} elseif ($enc_type == 3) {
 				$pass_hash = hash('sha512', $pass);
-			}
-			elseif($enc_type == 4)
-			{
+			} elseif ($enc_type == 4) {
 				$pass_hash = hash('ripemd128', $pass);
-			}
-			elseif($enc_type == 5)
-			{
+			} elseif ($enc_type == 5) {
 				$pass_hash = hash('ripemd160', $pass);
-			}
-			elseif($enc_type == 6)
-			{
+			} elseif ($enc_type == 6) {
 				$pass_hash = hash('whirlpool', $pass);
-			}
-			elseif($enc_type == 7)
-			{
+			} elseif ($enc_type == 7) {
 				$pass_hash = hash('haval128,4', $pass);
-			}
-			elseif($enc_type == 8)
-			{
+			} elseif ($enc_type == 8) {
 				$pass_hash = hash('haval160,4', $pass);
-			}
-			elseif($enc_type == 9)
-			{
+			} elseif ($enc_type == 9) {
 				$pass_hash = hash('haval192,4', $pass);
-			}
-			elseif($enc_type == 10)
-			{
+			} elseif ($enc_type == 10) {
 				$pass_hash = hash('haval224,4', $pass);
-			}
-			elseif($enc_type == 11)
-			{
+			} elseif ($enc_type == 11) {
 				$pass_hash = hash('haval256,4', $pass);
-			}
-			elseif($enc_type == 12)
-			{
+			} elseif ($enc_type == 12) {
 				$pass_hash = hash('haval128,5', $pass);
-			}
-			elseif($enc_type == 13)
-			{
+			} elseif ($enc_type == 13) {
 				$pass_hash = hash('haval160,5', $pass);
-			}
-			elseif($enc_type == 14)
-			{
+			} elseif ($enc_type == 14) {
 				$pass_hash = hash('haval192,5', $pass);
-			}
-			elseif($enc_type == 15)
-			{
+			} elseif ($enc_type == 15) {
 				$pass_hash = hash('haval224,5', $pass);
-			}
-			elseif($enc_type == 16)
-			{
+			} elseif ($enc_type == 16) {
 				$pass_hash = hash('haval256,5', $pass);
 			}
 		}
@@ -208,13 +170,12 @@ final class icms_core_Password
 	* @param    string  $slength    The length of the key to produce
 	* @return   string  returns the generated random key.
 	*/
-	public function createSalt($slength=64)
-	{
+	public function createSalt($slength=64) {
 		$salt = '';
 		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$microtime = function_exists('microtime') ? microtime() : time();
 		srand((double)$microtime * 1000000);
-		for($i=0; $i<=$slength; $i++)
+		for ($i=0; $i<=$slength; $i++)
 		$salt.= substr($base, rand() % strlen($base), 1);
 		return $salt;
 	}
@@ -226,8 +187,7 @@ final class icms_core_Password
 	 * @param    string  $uname      The username of the account to be checked
 	 * @return   bool     returns true if password is expired, false if password is not expired.
 	 */
-	public function passExpired($uname = '')
-	{
+	public function passExpired($uname = '') {
 		return self::priv_passExpired($uname);
 	}
 
@@ -238,8 +198,7 @@ final class icms_core_Password
 	 * @param    string  $uname      Username to find User Salt key for.
 	 * @return   string  returns the Salt key of the user.
 	 */
-	public function getUserSalt($uname = '')
-	{
+	public function getUserSalt($uname = '') {
 		return self::priv_getUserSalt($uname);
 	}
 
@@ -254,8 +213,8 @@ final class icms_core_Password
 	 *                               use in conjunction only with $enc_type above.
 	 * @return   string  returns the final encrypted hash of users password.
 	 */
-	public function encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
-	{
+	public function encryptPass($pass, $salt, $enc_type = 0, $reset = 0) {
 		return self::priv_encryptPass($pass, $salt, $enc_type, $reset);
 	}
 }
+
