@@ -2,16 +2,25 @@
 /**
  * Class to Clean & Filter HTML for various uses.
  * Class uses external HTML Purifier for filtering.
- * @package      libraries
- * @subpackage   core
- * @since        1.3
- * @author       vaughan montgomery (vaughan@impresscms.org)
- * @author       ImpressCMS Project
- * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version       $Id: HTMLFilter.php 19866 2010-07-17 20:00:30Z phoenyx $
+ *
+ * @category	ICMS
+ * @package		Core
+ * @since		1.3
+ * @author		vaughan montgomery (vaughan@impresscms.org)
+ * @author		ImpressCMS Project
+ * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+ * @version		$Id$
 **/
-class icms_core_HTMLFilter extends icms_core_DataFilter
-{
+/**
+ *
+ * HTML Purifier filters
+ *
+ * @category	ICMS
+ * @package		Core
+ *
+ */
+class icms_core_HTMLFilter extends icms_core_DataFilter {
+
 	/**
 	 * variable used by HTML Filter Library
 	 **/
@@ -20,18 +29,16 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
 	/**
 	 * Constructor
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
 
 		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
-		require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
-		require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
-		if($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0)
-		{
-			require_once ICMS_ROOT_PATH.'/plugins/csstidy/class.csstidy.php';
+		require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.standalone.php';
+		require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.autoload.php';
+		if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
+			require_once ICMS_ROOT_PATH . '/plugins/csstidy/class.csstidy.php';
 		}
 	}
 
@@ -41,11 +48,9 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
 	 * @static      $instance
 	 * @staticvar   object
 	 **/
-	public static function getInstance()
-	{
+	public static function getInstance() {
 		static $instance;
-		if(!isset($instance))
-		{
+		if (!isset($instance)) {
 			$instance = new icms_core_HTMLFilter();
 		}
 		return $instance;
@@ -58,9 +63,9 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
 	 * @param    string  $html    input to be cleaned
 	 * @return   string
 	 **/
-	public function htmlpurify($html)
-	{
-		$icmsPurifyConf = self::getPurifierConfig(); // gets the Config Data
+	public function htmlpurify($html) {
+		// get the Config Data
+		$icmsPurifyConf = self::getPurifierConfig();
 		//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
 
 		$this->purifier = new HTMLPurifier($icmsPurifyConf);
@@ -75,8 +80,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
 	 * Gets Custom Purifier configurations ** this function will improve in time **
 	 * @return  array    $icmsPurifierConf
 	 **/
-	protected function getPurifierConfig()
-	{
+	protected function getPurifierConfig() {
 		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
@@ -107,14 +111,13 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
             'AutoFormat.Custom' => $icmsConfigPurifier['purifier_AutoFormat_Custom'],
             'AutoFormat.RemoveEmpty' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmpty'],
             'AutoFormat.RemoveEmpty.RemoveNbsp' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbsp'],
-            'AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions' =>
-		$icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbspExceptions'],
+            'AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbspExceptions'],
             'Core.EscapeNonASCIICharacters' => $icmsConfigPurifier['purifier_Core_EscapeNonASCIICharacters'],
             'Core.HiddenElements' => $icmsConfigPurifier['purifier_Core_HiddenElements'],
             'Core.RemoveInvalidImg' => $icmsConfigPurifier['purifier_Core_RemoveInvalidImg'],
             'Core.Encoding' => _CHARSET,
             'Cache.DefinitionImpl' => 'Serializer',
-            'Cache.SerializerPath' => ICMS_TRUST_PATH.'/cache/htmlpurifier',
+            'Cache.SerializerPath' => ICMS_TRUST_PATH . '/cache/htmlpurifier',
             'URI.Host' => $icmsConfigPurifier['purifier_URI_Host'],
             'URI.Base' => $icmsConfigPurifier['purifier_URI_Base'],
             'URI.Disable' => $icmsConfigPurifier['purifier_URI_Disable'],
@@ -147,3 +150,4 @@ class icms_core_HTMLFilter extends icms_core_DataFilter
 		return parent::cleanArray($icmsPurifierConf);
 	}
 }
+
