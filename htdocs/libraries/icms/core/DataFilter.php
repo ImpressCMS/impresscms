@@ -241,7 +241,7 @@ class icms_core_DataFilter
 	public function checkVar($data, $type, $options1 = '', $options2 = '') {
 		if (!$data || !$type) return false;
 
-		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html');
+		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html', 'pass');
 		if (!in_array($type, $valid_types)) {
 			return false;
 		} else {
@@ -745,12 +745,15 @@ class icms_core_DataFilter
 		}
 
 		if ($type == "email") {
+			$icmsStopSpammers = new icms_core_StopSpammer();
+			
 			$data = filter_var($data, FILTER_SANITIZE_EMAIL);
 
 			if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
 				if (isset($options2) && is_array($icmsConfigUser['bad_emails'])) {
 					foreach($icmsConfigUser['bad_emails'] as $be) {
-						if (!empty($be) && preg_match('/' . $be . '/i', $email)) {
+						if ((!empty($be) && preg_match('/' . $be . '/i', $data))
+							|| $icmsStopSpammers->badEmail($data)) {
 							return false;
 						}
 					}

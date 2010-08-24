@@ -235,8 +235,6 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		// check email
 		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') != $email && $email !== false) || !is_object($thisUser)) {
 			if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) $stop .= _US_INVALIDMAIL.'<br />';
-			if (strrpos($email, ' ') > 0) $stop .= _US_EMAILNOSPACES.'<br />';
-			if ($icmsStopSpammers->badEmail($email)) $stop .= _US_INVALIDMAIL.'<br />';
 			$count = $this->getCount(icms_buildCriteria(array('email' => addslashes($email))));
 			if ($count > 0) $stop .= _US_EMAILTAKEN.'<br />';
 		}
