@@ -59,22 +59,20 @@ if ($op == 'saveuser')
 	$errors = array();
 	$myts =& icms_core_Textsanitizer::getInstance();
 
-	if ($icmsConfigUser['allow_chgmail'] == 1)
-	{
+	if ($icmsConfigUser['allow_chgmail'] == 1) {
 		$email = '';
-		if (!empty($_POST['email']))
-		{
-			$email = $myts->stripSlashesGPC(trim($_POST['email']));
+		if (!empty($_POST['email'])) {
+			$email = icms_core_DataFilter::stripSlashesGPC(trim($_POST['email']));
 		}
 
-		if ($email == '' || !checkEmail($email) )
-		{
+		if ($email == '' || !icms_core_DataFilter::checkVar($email, 'email', 0, 1))	{
 			$errors[] = _US_INVALIDMAIL;
 		}
 
 		$count = 0;
 		if ($email) {
-			$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
+			$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s',
+					$xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
 			$result = $xoopsDB->query($sql);
 			list($count) = $xoopsDB->fetchRow($result);
 			if ($count > 1) {
@@ -88,7 +86,7 @@ if ($op == 'saveuser')
 		$uname = '';
 		if (!empty($_POST['uname']))
 		{
-			$uname = $myts->stripSlashesGPC(trim($_POST['uname']));
+			$uname = icms_core_DataFilter::stripSlashesGPC(trim($_POST['uname']));
 		}
 
 		if ($uname == '')
@@ -130,8 +128,8 @@ if ($op == 'saveuser')
 	$password = $oldpass = '';
 	if (!empty($_POST['password']))
 	{
-		$password = $myts->stripSlashesGPC(trim($_POST['password']));
-		$oldpass = !empty($_POST['old_password'])?$myts->stripSlashesGPC(trim($_POST['old_password'])):'';
+		$password = icms_core_DataFilter::stripSlashesGPC(trim($_POST['password']));
+		$oldpass = !empty($_POST['old_password']) ? icms_core_DataFilter::stripSlashesGPC(trim($_POST['old_password'])) : '';
 	}
 
 	if ($password !== '' && $_POST['change_pass'] == 1)
@@ -149,7 +147,7 @@ if ($op == 'saveuser')
 		$vpass = '';
 		if (!empty($_POST['vpass']))
 		{
-			$vpass = $myts->stripSlashesGPC(trim($_POST['vpass']));
+			$vpass = icms_core_DataFilter::stripSlashesGPC(trim($_POST['vpass']));
 		}
 
 		if ($password != $vpass)
@@ -561,7 +559,6 @@ if ($op == 'avatarchoose')
 		redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
 
-	$myts =& icms_core_Textsanitizer::getInstance();
 	$uid = 0;
 	if (!empty($_POST['uid']))
 	{
@@ -577,7 +574,7 @@ if ($op == 'avatarchoose')
 	$avt_handler = icms::handler('icms_data_avatar');
 	if (!empty($_POST['user_avatar']))
 	{
-		$user_avatar = $myts->addSlashes( trim($_POST['user_avatar']) );
+		$user_avatar = icms_core_DataFilter::addSlashes( trim($_POST['user_avatar']) );
 		$criteria_avatar = new icms_criteria_Compo(new icms_criteria_Item('avatar_file', $user_avatar));
 		$criteria_avatar->add(new icms_criteria_Item('avatar_type', "S"));
 		$avatars =& $avt_handler->getObjects($criteria_avatar);
