@@ -241,7 +241,7 @@ class icms_core_DataFilter
 	public function checkVar($data, $type, $options1 = '', $options2 = '') {
 		if (!$data || !$type) return false;
 
-		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html', 'pass');
+		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html');
 		if (!in_array($type, $valid_types)) {
 			return false;
 		} else {
