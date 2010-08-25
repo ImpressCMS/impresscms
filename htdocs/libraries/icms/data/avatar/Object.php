@@ -5,7 +5,8 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Avatar
+ * @package		Data
+ * @subpackage	Avatar
  * @author		Kazumi Ono (aka onokazo)
  * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
@@ -15,7 +16,8 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * Avatar class
  * @category	ICMS
- * @package		Avatar
+ * @package		Data
+ * @subpackage	Avatar
  *
  */
 class icms_data_avatar_Object extends icms_core_Object {
