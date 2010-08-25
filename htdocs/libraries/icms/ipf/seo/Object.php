@@ -9,7 +9,7 @@
  * @subpackage	SeoObject
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -29,15 +29,21 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class icms_ipf_seo_Object extends icms_ipf_Object {
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
+	public function initiate() {
 		$this->initCommonVar('meta_keywords');
 		$this->initCommonVar('meta_description');
 		$this->initCommonVar('short_url');
 		$this->seoEnabled = true;
 	}
+
+	/**
+	 * Backward compat
+	 *
+	 * @todo to be removed in 1.4
+	 */
+    function IcmsPersistableSeoObject() {
+		$this->initiate();
+    }
 
 	/**
 	 * Return the value of the short_url field of this object
