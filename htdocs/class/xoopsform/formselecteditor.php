@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Creates a form attribute which is able to select an editor
  *
@@ -25,35 +26,11 @@
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectEditor extends icms_form_elements_Tray
-{
-	/**
-	 * Constructor
-	 *
-	 * @param	object	$form	the form calling the editor selection
-	 * @param	string	$name	editor name
-	 * @param	string	$value	Pre-selected text value
-	 * @param	bool	$noHtml  dohtml disabled
-	 */
-	function XoopsFormSelectEditor(&$form, $name="editor", $value=null, $noHtml=false)
-	{
-		global $icmsConfig;
-
-		if (empty($value)){
-			$value = $icmsConfig['editor_default'];
-		}
-
-		parent::__construct(_SELECT);
-		$edtlist = IcmsLists::getEditorsList();
-		$option_select = new icms_form_elements_Select("", $name, $value);
-		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);
-		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
-				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&'.$querys.'\';
-			}"';
-		$option_select->setExtra($extra);
-		$option_select->addOptionArray($edtlist);
-
-		$this->addElement($option_select);
+class XoopsFormSelectEditor extends icms_form_elements_select_Editor {
+	private $_errors;
+	public function __construct(&$form, $name="editor", $value=null, $noHtml=false) {
+		parent::__construct($form, $name, $value, $noHtml);
+		$this->_errors = icms_core_Debug::setDeprecated('icms_form_elements_select_Editor', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 ?>
