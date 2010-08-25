@@ -38,7 +38,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
  * @package     kernel
  * @subpackage  form
  */
-class XoopsSimpleForm extends icms_from_Simple {
+class XoopsSimpleForm extends icms_form_Simple {
 	private $_deprecated;
 	public function __construct() {
 		parent::__construct();
