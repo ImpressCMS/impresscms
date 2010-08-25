@@ -4,19 +4,20 @@
  * A single criteria for a database query
  *
  * @category	ICMS
- * @package		Core
- * @subpackage	Database
+ * @package		Database
+ * @subpackage	Criteria
  * @version		SVN: $Id$
  */
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+
 /**
  * A single criteria
  *
  * @category	ICMS
- * @package     Core
- * @subpackage  Database
+ * @package     Database
+ * @subpackage  Criteria
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_criteria_Item extends icms_criteria_Element {
 

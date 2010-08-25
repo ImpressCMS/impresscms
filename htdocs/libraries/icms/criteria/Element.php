@@ -5,21 +5,12 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Core
+ * @package		Database
  * @subpackage	Criteria
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @version		SVN: $Id$
  */
-
-/**
- *
- * @category	ICMS
- * @package     Core
- * @subpackage  Criteria
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * A criteria (grammar?) for a database query.
@@ -27,9 +18,9 @@
  * Abstract base class should never be instantiated directly.
  *
  * @abstract
- *
- * @package     Core
- * @subpackage  Database
+ * @category	ICMS
+ * @package     Database
+ * @subpackage  Criteria
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org

@@ -4,22 +4,24 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @category	ICMS
+ * @package     Database
+ * @subpackage  Criteria
  * @since		1.3
  * @author		marcan <marcan@impresscms.org>
  * @version		SVN: $Id$
  */
 
-if (!defined("ICMS_ROOT_PATH") ) die("ImpressCMS root path not defined");
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * Collection of multiple {@link icms_criteria_Element}s
  *
  * @category	ICMS
- * @package     Core
- * @subpackage  Database
+ * @package     Database
+ * @subpackage  Criteria
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_criteria_Compo extends icms_criteria_Element {
 
@@ -70,7 +72,7 @@ class icms_criteria_Compo extends icms_criteria_Element {
 		$ret = '';
 		$count = count($this->criteriaElements);
 		if ($count > 0) {
-			$ret = '('. $this->criteriaElements[0]->render();
+			$ret = '(' . $this->criteriaElements[0]->render();
 			for ($i = 1; $i < $count; $i++) {
 				$ret .= ' ' . $this->conditions[$i] . ' ' . $this->criteriaElements[$i]->render();
 			}
@@ -105,10 +107,10 @@ class icms_criteria_Compo extends icms_criteria_Element {
 				$cond = $this->conditions[$i];
 				if (strtoupper($cond) == 'AND') {
 					$op = '&';
-				} elseif (strtoupper($cond)=='OR') {
+				} elseif (strtoupper($cond) == 'OR') {
 					$op = '|';
 				}
-				$retval = "($op$retval" . $this->criteriaElements[$i]->renderLdap() . ")";
+				$retval = "(" . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ")";
 			}
 		}
 		return $retval;
