@@ -1,45 +1,31 @@
 <?php
-
 /**
  * user select with page navigation
  *
  * limit: Only works with javascript enabled
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formselectuser.php 19817 2010-07-14 00:13:39Z malanciault $
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH'))
-	die("ImpressCMS root path not defined");
-/**
- * @package	 kernel
- * @subpackage  form
- *
- * @author		Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 /**
  * user select with page navigation
  *
- * @package	 kernel
- * @subpackage  form
- *
+ * @category	ICMS
+ * @package		Form
+ * @subpackage  Elements
  * @author		Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-
-include_once ICMS_ROOT_PATH . '/class/xoopsform/formselect.php';
-
 class icms_form_elements_select_User extends icms_form_elements_Tray {
+
 	/**
 	 * Constructor
 	 *
@@ -51,7 +37,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 	 * @param	int		$size			Number or rows. "1" makes a drop-down-list.
 	 * @param	bool	$multiple	   Allow multiple selections?
 	 */
-	function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false, $showremovedusers = false, $justremovedusers = false) {
+	public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false, $showremovedusers = false, $justremovedusers = false) {
 		$limit = 200;
 		$select_element = new icms_form_elements_Select('', $name, $value, $size, $multiple);
 		if ($include_anon) {
@@ -71,8 +57,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		$criteria->setSort('uname');
 		if (!$showremovedusers) {
 			$criteria->add(new icms_criteria_Item('level', '-1', '!='));
-		}
-		elseif ($showremovedusers && $justremovedusers) {
+		} elseif ($showremovedusers && $justremovedusers) {
 			$criteria->add(new icms_criteria_Item('level', '-1'));
 		}
 		$criteria->setOrder('ASC');
@@ -101,7 +86,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 							opts = opts.substring(nm - val.length, opts.length);
 							var added = false;
 							for (var k = 0; k < sel.options.length; k++) {
-								if(sel.options[k].value == val){
+								if (sel.options[k].value == val){
 									added = true;
 									break;
 								}
@@ -125,3 +110,4 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		$this->addElement($action_tray);
 	}
 }
+

@@ -2,42 +2,34 @@
 /**
  * Creates form attribute which shows match possibilities for search form
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formselectmatchoption.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * @package     kernel
- * @subpackage  form
  *
+ * @category	ICMS
+ * @package     Form
+ * @subpackage  Elements
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-/**
- * base class
- */
-include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 /**
  * A selection box with options for matching search terms.
  *
- * @package     kernel
- * @subpackage  form
+ * @category	ICMS
+ * @package     Form
+ * @subpackage  Elements
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Matchoption extends icms_form_elements_Select
-{
+class icms_form_elements_select_Matchoption extends icms_form_elements_Select {
 	/**
 	 * Constructor
 	 *
@@ -48,8 +40,7 @@ class icms_form_elements_select_Matchoption extends icms_form_elements_Select
 	 * 							{@link XOOPS_MATCH_EQUAL}, and {@link XOOPS_MATCH_CONTAIN}
 	 * @param	int		$size	Number of rows. "1" makes a drop-down-list
 	 */
-	function __construct($caption, $name, $value = null, $size = 1)
-	{
+	public function __construct($caption, $name, $value = null, $size = 1) {
 		parent::__construct($caption, $name, $value, $size, false);
 		$this->addOption(XOOPS_MATCH_START, _STARTSWITH);
 		$this->addOption(XOOPS_MATCH_END, _ENDSWITH);
@@ -57,3 +48,4 @@ class icms_form_elements_select_Matchoption extends icms_form_elements_Select
 		$this->addOption(XOOPS_MATCH_CONTAIN, _CONTAINS);
 	}
 }
+

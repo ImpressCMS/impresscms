@@ -2,43 +2,28 @@
 /**
  * Creates a form attribute which is able to select a theme
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formselecttheme.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-/**
- * lists of values
+ * lists of values - this will go away after the refactoring is complete
  */
 include_once ICMS_ROOT_PATH."/class/xoopslists.php";
-/**
- * base class
- */
-include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 /**
  * A select box with available themes
  *
- * @package     kernel
- * @subpackage  form
- *
+ * @category	ICMS
+ * @package     Form
+ * @subpackage  Elements
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_elements_select_Theme extends icms_form_elements_Select {
 	/**
@@ -49,8 +34,9 @@ class icms_form_elements_select_Theme extends icms_form_elements_Select {
 	 * @param	mixed	$value	Pre-selected value (or array of them).
 	 * @param	int		$size	Number or rows. "1" makes a drop-down-list
 	 */
-	function __construct($caption, $name, $value = null, $size = 1) {
+	public function __construct($caption, $name, $value = null, $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
 		$this->addOptionArray(IcmsLists::getThemesList());
 	}
 }
+
