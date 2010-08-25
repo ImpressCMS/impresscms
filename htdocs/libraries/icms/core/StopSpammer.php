@@ -9,10 +9,18 @@
  * @category	ICMS
  * @package		Core
  * @subpackage	StopSpammer
- * @since	1.2
+ * @since		1.2
  * @author		marcan <marcan@impresscms.org>
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		SVN: $Id$
+ */
+/**
+ * Checks usernames, emails and ip addresses against a blacklist
+ *
+ *
+ * @category	ICMS
+ * @package		Core
+ *
  */
 class icms_core_StopSpammer {
 	private $api_url;
@@ -49,7 +57,7 @@ class icms_core_StopSpammer {
 			$output .= curl_exec($ch);
 			curl_close($ch);
 
-			if (preg_match( "/<appears>(.*)</appears>/i", $output, $out)) {
+			if (preg_match("/<appears>(.*)</appears>/i", $output, $out)) {
 				$spam = $out[1];
 			}
 		} else {
@@ -60,7 +68,7 @@ class icms_core_StopSpammer {
 			}
 			while (!feof($file)) {
 				$line = fgets($file, 1024);
-				if (preg_match( "/<appears>(.*)</appears>/i", $line, $out)) {
+				if (preg_match("/<appears>(.*)</appears>/i", $line, $out)) {
 					$spam = $out[1];
 					break;
 				}
@@ -76,7 +84,7 @@ class icms_core_StopSpammer {
 	 * @param string $username username to check
 	 * @return true if spammer was found with this username
 	 */
-	function badUsername($username) {
+	public function badUsername($username) {
 		return $this->checkForField('username', $username);
 	}
 
