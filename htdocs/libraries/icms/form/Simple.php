@@ -11,6 +11,7 @@
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
  * @version	$Id: simpleform.php 19125 2010-04-04 02:13:34Z skenow $
+ * @todo	this class is not used by the core; we will probably remove it in 1.4
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
