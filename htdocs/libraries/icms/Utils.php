@@ -8,7 +8,7 @@
  * @subpackage	Object
  * @since		1.3
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Object.php 19741 2010-07-03 20:04:22Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
