@@ -1,22 +1,21 @@
 <?php
 /**
- * @package database
- * @subpackage  main
- * @since XOOPS
- * @version $Id: databasefactory.php 19538 2010-06-22 20:27:51Z malanciault $
+ * Creates a database object and connection
  *
- * @author		The XOOPS Project Community <http://www.xoops.org>
+ * @category	ICMS
+ * @package		Database
+ *
  * @author      Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
- * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version		SVN: $Id$
  */
 
 /**
  * ImpressCMS Database Factory Class
  *
- * @package database
- * @subpackage  main
+ * @category	ICMS
+ * @package		Database
  *
  * @author      Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
@@ -44,15 +43,15 @@ class icms_database_Factory{
 	static public function &getDatabaseConnection() {
 		static $instance;
 		if (!isset($instance)) {
-			$file = ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php';
+			$file = ICMS_ROOT_PATH . '/class/database/drivers/' . XOOPS_DB_TYPE . '/database.php';
 			require_once $file;
 			/* begin DB Layer Trapping patch */
-			if (defined('XOOPS_DB_ALTERNATIVE') && class_exists( XOOPS_DB_ALTERNATIVE )) {
+			if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
 				$class = XOOPS_DB_ALTERNATIVE ;
 			} else /* end DB Layer Trapping patch */if (!defined('XOOPS_DB_PROXY')) {
-				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseSafe';
+				$class = 'Xoops' . ucfirst(XOOPS_DB_TYPE) . 'DatabaseSafe';
 			} else {
-				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseProxy';
+				$class = 'Xoops' . ucfirst(XOOPS_DB_TYPE) . 'DatabaseProxy';
 			}
 			$instance = new $class();
 			$instance->setLogger(icms_core_Logger::instance());
@@ -76,12 +75,12 @@ class icms_database_Factory{
 	static public function &getDatabase() {
 		static $database;
 		if (!isset($database)) {
-			$file = ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php';
+			$file = ICMS_ROOT_PATH . '/class/database/drivers/' . XOOPS_DB_TYPE . '/database.php';
 			require_once $file;
 			if (!defined('XOOPS_DB_PROXY')) {
-				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseSafe';
+				$class = 'Xoops' . ucfirst(XOOPS_DB_TYPE) . 'DatabaseSafe';
 			} else {
-				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseProxy';
+				$class = 'Xoops' . ucfirst(XOOPS_DB_TYPE) . 'DatabaseProxy';
 			}
 			$database = new $class();
 		}
@@ -89,17 +88,17 @@ class icms_database_Factory{
 	}
 
 	/**
-	 * Gets the databaseupdater object.
+	 * Gets the databaseupdater object .
 	 *
 	 * @return	object  @link IcmsDatabaseUpdater
 	 * @static
 	 */
 	static public function getDatabaseUpdater() {
-		$file = ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/databaseupdater.php';
+		$file = ICMS_ROOT_PATH . '/class/database/drivers/' . XOOPS_DB_TYPE . '/databaseupdater.php';
 		require_once $file;
-		$class = 'Icms'.ucfirst(XOOPS_DB_TYPE).'Databaseupdater';
+		$class = 'Icms' . ucfirst(XOOPS_DB_TYPE) . 'Databaseupdater';
 		$databaseUpdater = new $class();
 		return $databaseUpdater;
 	}
 }
-?>
+
