@@ -14,8 +14,8 @@
 */
 class IcmsMediaUploader extends icms_file_MediaUploadHandler {
 	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
+	public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
+		parent::__construct($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_file_MediaUploadHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
