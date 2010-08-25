@@ -42,8 +42,8 @@ include_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
  */
 class XoopsTableForm extends icms_form_Table {
 	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
+	public function __construct($title, $name, $action, $method = "post", $addtoken = false) {
+		parent::__construct($title, $name, $action, $method, $addtoken);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_Table', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
