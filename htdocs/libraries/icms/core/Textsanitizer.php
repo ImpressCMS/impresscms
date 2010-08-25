@@ -43,11 +43,9 @@ class icms_core_Textsanitizer {
 	 * <br> should not be allowed since nl2br will be used
 	 * when storing data.
 	 *
-	 * @access	private
-	 *
 	 * @todo Sofar, this does nuttin' ;-)
 	 **/
-	function __construct() {
+	public function __construct() {
 	}
 
 	/**
@@ -91,7 +89,7 @@ class icms_core_Textsanitizer {
 		global $xoopsDB;
 
 		if (count($this->allSmileys) == 0) {
-			if ($result = $xoopsDB->query("SELECT * FROM ".$xoopsDB->prefix('smiles'))) {
+			if ($result = $xoopsDB->query("SELECT * FROM " . $xoopsDB->prefix('smiles'))) {
 				while ($smiley = $GLOBALS['xoopsDB']->fetchArray($result)) {
 					if ($smiley['display']) {
 						array_push($this->displaySmileys, $smiley);
@@ -114,7 +112,7 @@ class icms_core_Textsanitizer {
 		foreach ($smileys as $smile) {
 			$message = str_replace(
 				$smile['code'],
-				'<img src="'.ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'])
+				'<img src="' . ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'])
 				. '" alt="" />', $message
 				);
 		}
@@ -148,7 +146,7 @@ class icms_core_Textsanitizer {
 			$countlinks = count($links);
 			for ($i = 0; $i < $countlinks; $i++) {
 				$link = $links[$i];
-				$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a'.$link : $link;
+				$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a' . $link : $link;
 				$begin = strpos($link, '>') + 1;
 				$end = strpos($link, '<', $begin);
 				$length = $end - $begin;
@@ -160,7 +158,7 @@ class icms_core_Textsanitizer {
 				$middleurl = " ... ";
 				$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is',
 				$urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
-				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text);
+				$text = str_replace('>' . $urlname . '<', '>' . $chunked . '<', $text);
 			}
 		}
 		$text = substr($text, 1);
@@ -179,7 +177,7 @@ class icms_core_Textsanitizer {
 		$patterns = array();
 		$replacements = array();
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
-		$replacements[] = '<a href="'.ICMS_URL.'/\\2">\\3</a>';
+		$replacements[] = '<a href="' . ICMS_URL . '/\\2">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
 		$replacements[] = '<a href="\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(ftp?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
@@ -221,19 +219,19 @@ class icms_core_Textsanitizer {
 		if ($allowimage != 1) {
 			$replacements[] = '<a href="\\3" rel="external">\\3</a>';
 			$replacements[] = '<a href="\\1" rel="external">\\1</a>';
-			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\4" rel="external">\\5</a>';
-			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\2" rel="external">\\3</a>';
+			$replacements[] = '<a href="' . ICMS_URL . '/image.php?id=\\4" rel="external">\\5</a>';
+			$replacements[] = '<a href="' . ICMS_URL . '/image.php?id=\\2" rel="external">\\3</a>';
 		} else {
 			$replacements[] = '<img src="\\3" align="\\2" alt="" />';
 			$replacements[] = '<img src="\\1" alt="" />';
-			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\4" align="\\2" alt="\\5" />';
-			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\2" alt="\\3" />';
+			$replacements[] = '<img src="' . ICMS_URL . '/image.php?id=\\4" align="\\2" alt="\\5" />';
+			$replacements[] = '<img src="' . ICMS_URL . '/image.php?id=\\2" alt="\\3" />';
 		}
 		$patterns[] = "/\[quote]/sU";
-		$replacements[] = _QUOTEC.'<div class="xoopsQuote"><blockquote><p>';
+		$replacements[] = _QUOTEC . '<div class="xoopsQuote"><blockquote><p>';
 		$patterns[] = "/\[\/quote]/sU";
 		$replacements[] = '</p></blockquote></div>';
-		$text = str_replace( "\x00", "", $text );
+		$text = str_replace("\x00", "", $text);
 		$c = "[\x01-\x1f]*";
 		$patterns[] = "/j{$c}a{$c}v{$c}a{$c}s{$c}c{$c}r{$c}i{$c}p{$c}t{$c}:/si";
 		$replacements[] = "(script removed)";
@@ -492,7 +490,7 @@ class icms_core_Textsanitizer {
 	public function codePreConv($text, $xcode = 1) {
 		if ($xcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/esU";
-			$replacements = "'[code]'.base64_encode('$1').'[/code]'";
+			$replacements = "'[code]' . base64_encode('$1') . '[/code]'";
 			$text = preg_replace($patterns, $replacements, $text);
 		}
 		return $text;
@@ -510,9 +508,9 @@ class icms_core_Textsanitizer {
 		if ($xcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if ($image != 0) {
-				$replacements = "'<div class=\"xoopsCode\">'.icms_core_Textsanitizer::textsanitizer_syntaxhighlight(icms_core_Textsanitizer::codeSanitizer('$1')).'</div>'";
+				$replacements = "'<div class=\"xoopsCode\">' . icms_core_Textsanitizer::textsanitizer_syntaxhighlight(icms_core_Textsanitizer::codeSanitizer('$1')) . '</div>'";
 			} else {
-				$replacements = "'<div class=\"xoopsCode\">'.icms_core_Textsanitizer::textsanitizer_syntaxhighlight(icms_core_Textsanitizer::codeSanitizer('$1',0)).'</div>'";
+				$replacements = "'<div class=\"xoopsCode\">' . icms_core_Textsanitizer::textsanitizer_syntaxhighlight(icms_core_Textsanitizer::codeSanitizer('$1',0)) . '</div>'";
 			}
 			$text = preg_replace($patterns, $replacements, $text);
 		}
@@ -907,7 +905,7 @@ class icms_core_Textsanitizer {
 		$length_text = ($pos_close) ? $pos_close - $length_open : 0;
 		$str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
 
-		$buffer = $str_open.$str_internal.$str_close;
+		$buffer = $str_open . $str_internal . $str_close;
 		return $buffer;
 	}
 
@@ -920,7 +918,7 @@ class icms_core_Textsanitizer {
 	public function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
 
-		if (!@include_once ICMS_LIBRARIES_PATH.'/geshi/geshi.php') {
+		if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') {
 			return false;
 		}
 		$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
