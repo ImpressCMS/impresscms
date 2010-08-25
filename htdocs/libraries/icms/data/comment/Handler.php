@@ -3,14 +3,15 @@
  * Core class for managing comments
  *
  * @category	ICMS
- * @package		Comment
+ * @package		Data
+ * @subpackage	Comment
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * Comment handler class.
@@ -19,7 +20,8 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * of comment class objects.
  *
  * @category	ICMS
- * @package  	Comment
+ * @package		Data
+ * @subpackage  Comment
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
 class icms_data_comment_Handler extends icms_core_ObjectHandler {
@@ -75,7 +77,9 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 * @see icms_core_ObjectHandler#insert($object)
 	 **/
 	public function insert(&$comment) {
-		/* As of PHP5.3.0, is_a() is no longer deprecated */
+		/* As of PHP5.3.0, is_a() is no longer deprecated,
+		 * but we can use type hinting
+		 */
 		if (!is_a($comment, 'icms_data_comment_Object')) {
 			return false;
 		}
@@ -198,7 +202,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 *  @see icms_core_ObjectHandler#delete($object)
 	 **/
 	public function delete(&$comment) {
-		/* As of PHP5.3.0, is_a() is no longer deprecated */
+		/* As of PHP5.3.0, is_a() is no longer deprecated - use type hinting */
 		if (!is_a($comment, 'icms_data_comment_Object')) {
 			return false;
 		}
