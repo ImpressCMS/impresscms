@@ -63,6 +63,15 @@ class icms_ipf_Object extends icms_core_Object {
 	}
 
 	/**
+	 * For backward compat
+	 *
+	 * @todo to be removed in 1.4
+	 */
+	function IcmsPersistableObject(&$handler) {
+		$this->handler = $handler;
+	}
+
+	/**
 	 * Checks if the user has a specific access on this object
 	 *
 	 * @param string $gperm_name name of the permission to test
