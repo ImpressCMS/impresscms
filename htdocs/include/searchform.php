@@ -22,7 +22,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 
 // create form
-$search_form = new XoopsThemeForm(_SR_SEARCH, "search", "search.php", 'get');
+$search_form = new icms_form_Theme(_SR_SEARCH, "search", "search.php", 'get');
 
 // create form elements
 $search_form->addElement(new icms_form_elements_Text(_SR_KEYWORDS, "query", 30, 255, htmlspecialchars(stripslashes(implode(" ", $queries)), ENT_QUOTES)), true);

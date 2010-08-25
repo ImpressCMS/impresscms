@@ -156,7 +156,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			echo $xoopsMailer->getErrors();
 
 			if ($count_criteria > $limit) {
-				$form = new XoopsThemeForm(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', true);
+				$form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', true);
 				if (!empty($_POST['mail_to_group'])) {
 					foreach ( $_POST['mail_to_group'] as $mailgroup) {
 						$group_hidden = new icms_form_elements_Hidden("mail_to_group[]", $mailgroup);

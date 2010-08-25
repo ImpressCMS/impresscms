@@ -76,7 +76,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 		include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 		global $icmsConfigUser;
-		$form = new XoopsThemeForm ( constant ( $confcat->getVar ( 'confcat_name' ) ), 'pref_form', 'admin.php?fct=preferences', 'post', true );
+		$form = new icms_form_Theme ( constant ( $confcat->getVar ( 'confcat_name' ) ), 'pref_form', 'admin.php?fct=preferences', 'post', true );
 		$config_handler = icms::handler('icms_config');
 		$criteria = new icms_criteria_Compo ( );
 		$criteria->add ( new icms_criteria_Item ( 'conf_modid', 0 ) );
@@ -375,7 +375,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			redirect_header ( 'admin.php?fct=preferences', 1 );
 		}
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
-		$form = new XoopsThemeForm ( _MD_AM_MODCONFIG, 'pref_form', 'admin.php?fct=preferences', 'post', true );
+		$form = new icms_form_Theme ( _MD_AM_MODCONFIG, 'pref_form', 'admin.php?fct=preferences', 'post', true );
 		$module_handler = icms::handler('icms_module');
 		$module = & $module_handler->get ( $mod );
 		icms_loadLanguageFile($module->getVar ( 'dirname' ), 'modinfo');

@@ -19,7 +19,7 @@ if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 $com_modid = $icmsModule->getVar('mid');
 include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
-$cform = new XoopsThemeForm(_CM_POSTCOMMENT, 'commentform', 'comment_post.php', 'post', true);
+$cform = new icms_form_Theme(_CM_POSTCOMMENT, 'commentform', 'comment_post.php', 'post', true);
 if (isset($icmsModuleConfig['com_rule'])) {
 	include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 	switch ($icmsModuleConfig['com_rule']) {

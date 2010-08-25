@@ -15,9 +15,9 @@
 
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 if ($tform['tpl_tplset'] != 'default') {
-	$form = new XoopsThemeForm(_MD_EDITTEMPLATE, 'template_form', 'admin.php', 'post', true);
+	$form = new icms_form_Theme(_MD_EDITTEMPLATE, 'template_form', 'admin.php', 'post', true);
 } else {
-	$form = new XoopsThemeForm(_MD_VIEWTEMPLATE, 'template_form', 'admin.php', 'post', true);
+	$form = new icms_form_Theme(_MD_VIEWTEMPLATE, 'template_form', 'admin.php', 'post', true);
 }
 $form->addElement(new icms_form_elements_Label(_MD_FILENAME, $tform['tpl_file']));
 $form->addElement(new icms_form_elements_Label(_MD_FILEDESC, $tform['tpl_desc']));

@@ -18,7 +18,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 }
 include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 include ICMS_ROOT_PATH . '/class/xoopsformloader.php';
-$cform = new XoopsThemeForm(_CM_POSTCOMMENT, "commentform", "postcomment.php", "post", true);
+$cform = new icms_form_Theme(_CM_POSTCOMMENT, "commentform", "postcomment.php", "post", true);
 if (!preg_match("/^re:/i", $subject)) {
 	$subject = "Re: " . icms_substr($subject,0,56);
 }

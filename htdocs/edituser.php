@@ -272,7 +272,7 @@ if ($op == 'editprofile')
 	}
 
 	echo '<a href="userinfo.php?uid='. (int) ($icmsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_EDITPROFILE.'<br /><br />';
-	$form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
+	$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
 	$login_name_label = new icms_form_elements_Label(_US_LOGINNAME, $icmsUser->getVar('login_name'));
 	$form->addElement($login_name_label);
 	$email_tray = new icms_form_elements_Tray(_US_EMAIL, '<br />');
@@ -447,7 +447,7 @@ if ($op == 'avatarform')
 	{
 		/* since this has been included at the beginning of the file, we shouldn't need it here
 		 include_once 'class/xoopsformloader.php'; */
-		$form = new XoopsThemeForm(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', true);
+		$form = new icms_form_Theme(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', true);
 		$form->setExtra('enctype="multipart/form-data"');
 		/* the avatar resizer shall later be included
 		 if ($icmsConfigUser['avatar_auto_resize'])
@@ -464,7 +464,7 @@ if ($op == 'avatarform')
 		$form->display();
 	}
 	$avatar_handler = icms::handler('icms_data_avatar');
-	$form2 = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
+	$form2 = new icms_form_Theme(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
 	$avatar_select = new icms_form_elements_Select('', 'user_avatar', $icmsUser->getVar('user_avatar'));
 	$avatar_select->addOptionArray($avatar_handler->getList('S'));
 	$avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"".ICMS_URL."\")'");

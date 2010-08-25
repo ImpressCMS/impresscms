@@ -127,7 +127,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 				$op_hidden = new icms_form_elements_Hidden("op", $op_value);
 				$fct_hidden = new icms_form_elements_Hidden("fct", "groups");
 				$submit_button = new icms_form_elements_Button("", "groupsubmit", $submit_value, "submit");
-				$form = new XoopsThemeForm($form_title, "groupform", "admin.php", "post", true);
+				$form = new icms_form_Theme($form_title, "groupform", "admin.php", "post", true);
 				$form->addElement($name_text);
 				$form->addElement($desc_text);
 				$form->addElement($s_cat_checkbox);

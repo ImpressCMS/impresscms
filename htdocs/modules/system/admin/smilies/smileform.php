@@ -14,7 +14,7 @@
  */
 
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
-$smile_form = new XoopsThemeForm($smiles['smile_form'], 'smileform', 'admin.php', 'post', true);
+$smile_form = new icms_form_Theme($smiles['smile_form'], 'smileform', 'admin.php', 'post', true);
 $smile_form->setExtra('enctype="multipart/form-data"');
 $smile_form->addElement(new icms_form_elements_Text(_AM_SMILECODE, 'smile_code', 26, 25, $smiles['smile_code']), true);
 $smile_form->addElement(new icms_form_elements_Text(_AM_SMILEEMOTION, 'smile_desc', 26, 25, $smiles['smile_desc']), true);

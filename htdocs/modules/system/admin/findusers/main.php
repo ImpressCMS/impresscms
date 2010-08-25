@@ -97,7 +97,7 @@ if ($op == "form") {
 	$op_hidden = new icms_form_elements_Hidden("op", "submit");
 	$submit_button = new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit");
 
-	$form = new XoopsThemeForm(_AM_FINDUS, "uesr_findform", "admin.php", 'post', true);
+	$form = new icms_form_Theme(_AM_FINDUS, "uesr_findform", "admin.php", 'post', true);
 	$form->addElement($uname_tray);
 	$form->addElement($name_tray);
 	$form->addElement($login_name_tray);

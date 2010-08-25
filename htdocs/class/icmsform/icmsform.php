@@ -29,7 +29,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
  * @author		  marcan <marcan@impresscms.org>
  * @version		$Id$
  */
-class IcmsForm extends XoopsThemeForm {
+class IcmsForm extends icms_form_Theme {
 
 	var $targetObject = null;
 	var $form_fields = null;

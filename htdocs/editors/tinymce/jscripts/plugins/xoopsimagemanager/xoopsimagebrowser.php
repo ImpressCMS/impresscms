@@ -197,7 +197,7 @@ function imanager_index($imgcat_id=null) {
 	$icmsTpl->assign('scount',$scount);
 
 	if (!empty($catcount)) {
-		$form = new XoopsThemeForm(_ADDIMAGE, 'image_form', 'xoopsimagebrowser.php', 'post', true);
+		$form = new icms_form_Theme(_ADDIMAGE, 'image_form', 'xoopsimagebrowser.php', 'post', true);
 		$form->setExtra('enctype="multipart/form-data"');
 		$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'image_nicename', 50, 255), true);
 		$select = new icms_form_elements_Select(_IMAGECAT, 'imgcat_id');
@@ -217,7 +217,7 @@ function imanager_index($imgcat_id=null) {
 		$form->addElement($tray);
 		$icmsTpl->assign('addimgform',$form->render());
 	}
-	$form = new XoopsThemeForm(_MD_ADDIMGCAT, 'imagecat_form', 'xoopsimagebrowser.php', 'post', true);
+	$form = new icms_form_Theme(_MD_ADDIMGCAT, 'imagecat_form', 'xoopsimagebrowser.php', 'post', true);
 	$list =& $imgcat_handler->getCategList($groups,'imgcat_write');
 	$sup = new icms_form_elements_Select(_MD_IMGCATPARENT, 'imgcat_pid', $id);
 	$list[0] = '--------------------';
@@ -794,7 +794,7 @@ function showAddImgForm($imgcat_id) {
 	global $target,$type;
 	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	$imgcat_handler = icms::handler('icms_image_category');
-	$form = new XoopsThemeForm(_ADDIMAGE, 'image_form', $_SERVER['PHP_SELF'], 'post', true);
+	$form = new icms_form_Theme(_ADDIMAGE, 'image_form', $_SERVER['PHP_SELF'], 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');
 	$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'image_nicename', 50, 255), true);
 	$select = new icms_form_elements_Select(_IMAGECAT, 'imgcat_id', (int) ($imgcat_id));

@@ -29,7 +29,7 @@ function displayUsers()
 	$member_handler = icms::handler('icms_member');
 	$usercount = $member_handler->getUserCount(new icms_criteria_Item('level', '-1', '!='));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
-	$editform = new XoopsThemeForm(_AM_EDEUSER, 'edituser', 'admin.php');
+	$editform = new icms_form_Theme(_AM_EDEUSER, 'edituser', 'admin.php');
 	$user_select = new icms_form_elements_Select('', 'uid');
 	$criteria = new icms_criteria_Compo();
 	$criteria->add(new icms_criteria_Item('level', '-1', '!='));
@@ -55,7 +55,7 @@ function displayUsers()
 	echo "<br />\n";
 	$usercount = $member_handler->getUserCount(new icms_criteria_Item('level', '-1'));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
-	$editform = new XoopsThemeForm(_AM_REMOVED_USERS, 'edituser', 'admin.php');
+	$editform = new icms_form_Theme(_AM_REMOVED_USERS, 'edituser', 'admin.php');
 	$user_select = new icms_form_elements_Select('', 'uid');
 	$criteria = new icms_criteria_Compo();
 	$criteria->add(new icms_criteria_Item('level', '-1'));

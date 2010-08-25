@@ -23,7 +23,7 @@ $email_option = new icms_form_elements_Checkbox("", "user_viewemail", $user_view
 $email_option->addOption(1, _US_ALLOWVIEWEMAIL);
 $email_tray->addElement($email_text, true);
 $email_tray->addElement($email_option);
-$reg_form = new XoopsThemeForm(_US_USERREG, "userinfo", "register.php", "post", true);
+$reg_form = new icms_form_Theme(_US_USERREG, "userinfo", "register.php", "post", true);
 $uname_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'] : 75;
 $uname_size = $icmsConfigUser['maxuname'] > 3 ? $icmsConfigUser['maxuname'] : 3;
 $reg_form->addElement(new icms_form_elements_Text(_US_NICKNAME, "uname", $uname_size, $uname_size, $myts->htmlSpecialChars($uname)), true);

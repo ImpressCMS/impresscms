@@ -16,7 +16,7 @@
  * @version	$Id$
  */
 
-$form = new XoopsThemeForm(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', true);
+$form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', true);
 
 // from finduser section
 if (!empty($_POST['memberslist_id'])) {

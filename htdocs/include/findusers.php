@@ -325,7 +325,7 @@ if (empty($_POST["user_submit"])) {
 
 	include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 
-	$form = new XoopsThemeForm(_MA_USER_FINDUS, "uesr_findform", "findusers.php", 'post', true);
+	$form = new icms_form_Theme(_MA_USER_FINDUS, "uesr_findform", "findusers.php", 'post', true);
 
 	$mode = (int) ( @$_REQUEST["mode"] );
 	if (FINDUSERS_MODE_QUERY == $mode) {
