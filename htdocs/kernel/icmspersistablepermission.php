@@ -7,8 +7,8 @@ if (!defined("ICMS_ROOT_PATH")) die("ImpressCMS root path not defined");
  */
 class IcmsPersistablePermissionHandler extends icms_ipf_permission_Handler {
 	private $_deprecated;
-	public function __construct() {
-		parent::getInstance();
+	public function __construct($handler) {
+		parent::__construct();
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_permission_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
