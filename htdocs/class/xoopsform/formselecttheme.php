@@ -42,8 +42,8 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  */
 class XoopsFormSelectTheme extends icms_form_elements_select_Theme {
 	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
+	public function __construct($caption, $name, $value = null, $size = 1) {
+		parent::__construct($caption, $name, $value, $size);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Theme', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }

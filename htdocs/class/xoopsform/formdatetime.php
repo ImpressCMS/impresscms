@@ -38,8 +38,8 @@ if (!defined('ICMS_ROOT_PATH')) {
  */
 class XoopsFormDateTime extends icms_form_elements_Datetime {
 	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
+	public function __construct($caption, $name, $size = 15, $value=0) {
+		parent::__construct($caption, $name, $size, $value);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Datetime', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }

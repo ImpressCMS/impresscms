@@ -44,8 +44,10 @@ if (!defined('ICMS_ROOT_PATH')) {
 
 class IcmsFormCaptcha extends icms_form_elements_Captcha {
 	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
+	public function __construct($caption = '', $name = 'icmscaptcha', $skipmember = null,
+			$numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null,
+			$backgroundnum = null) {
+		parent::__construct($caption, $name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_captcha', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
