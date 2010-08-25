@@ -29,7 +29,11 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class icms_ipf_seo_Object extends icms_ipf_Object {
 
-	public function initiate() {
+    public function __construct(&$handler) {
+		parent::__construct($handler);
+    }
+
+	public function initiateSEO() {
 		$this->initCommonVar('meta_keywords');
 		$this->initCommonVar('meta_description');
 		$this->initCommonVar('short_url');
@@ -42,7 +46,7 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 	 * @todo to be removed in 1.4
 	 */
     function IcmsPersistableSeoObject() {
-		$this->initiate();
+		$this->initiateSEO();
     }
 
 	/**
