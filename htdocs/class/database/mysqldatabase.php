@@ -269,6 +269,91 @@ class XoopsMySQLDatabase extends XoopsDatabase {
 	}
 
 	/**
+	* Execute a query and return all the rows of the result set
+	* @param string $sql query to execute
+	* @param int $mode
+	* @param int $limit
+	* @param int $start
+	* @return array
+	*/
+	public function queryAll( $sql, $mode = MYSQL_ASSOC, $limit = 0, $start = 0 ) {
+		if ( $limit || $start ) {
+			$sql .= " LIMIT " . ( $start ? "$start," : "" ) . $limit;
+		}
+		$res = mysql_unbuffered_query( $sql, $this->conn );
+		if ( !$res ) {
+			$this->logger->addQuery( $sql, $this->error(), $this->errno() );
+			return false;
+		}
+		$this->logger->addQuery( $sql );
+		$out = array();
+		while ( $row = mysql_fetch_array( $res, $mode ) ) {
+			$out[] = $row;
+		}
+		mysql_free_result( $res );
+		return $out;
+	}
+
+	/**
+	* Execute a query and return a single result row
+	*
+	* list( $uid, $name ) = $db->queryOne( "SELECT uid,name FROM table WHERE id=$id", MYSQL_NUM );
+	*
+	* @param string $sql query to execute
+	* @param int $mode
+	* @param int $start
+	* @return array
+	*/
+	public function queryOne($sql, $mode = MYSQL_ASSOC, $start = 0) {
+		$all = $this->queryAll($sql, $mode, 1, $start);
+		return $all === false ? false : $all[0];
+	}
+
+	/**
+	* Execute a query and return the value of the specified column
+	*
+	* $id = $db->queryColumn( "SELECT id FROM table WHERE name='thing'", 0 );
+	* $count = $db->queryColumn( "SELECT COUNT(*) FROM table", 0 );
+	*
+	* @param string $sql query to execute
+	* @param int $num Index of the column to return
+	* @param int $start
+	* @return string
+	*/
+	public function queryColumn($sql, $num = 0, $start = 0) {
+		$all = $this->queryOne($sql, MYSQL_NUM, $start);
+		return $all === false ? false : $all[$num];
+	}
+
+	/**
+	* Execute a query and return the values of the specified column
+	*
+	* $ids = $db->queryAllColumn( "SELECT id FROM table WHERE cat_id=3", 0 );
+	*
+	* @param string $sql query to execute
+	* @param int $num Index of the column to return
+	* @param int $start
+	* @return array
+	*/
+	public function queryAllColumn($sql, $column = 0, $limit = 0, $start = 0) {
+		if ($limit || $start) {
+			$sql .= " LIMIT " . ($start ? "$start," : "") . $limit;
+		}
+		$res = mysql_unbuffered_query($sql, $this->conn);
+		if (!$res) {
+			$this->logger->addQuery($sql, $this->error(), $this->errno());
+			return false;
+		}
+		$this->logger->addQuery($sql);
+		$out = array ();
+		while ($row = mysql_fetch_array($res, MYSQL_NUM)) {
+			$out[] = $row[$column];
+		}
+		mysql_free_result($res);
+		return $out;
+	}
+
+	/**
 	 * perform queries from SQL dump file in a batch
 	 *
 	 * @param string $file file path to an SQL dump file
