@@ -36,7 +36,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @package     kernel
  * @subpackage  form
  */
-class icms_form_Table extends XoopsForm {
+class icms_form_Table extends icms_form_Base {
 	/**
 	 * Insert an empty row in the table to serve as a separator.
 	 *

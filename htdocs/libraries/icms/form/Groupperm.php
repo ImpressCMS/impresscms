@@ -34,7 +34,7 @@ require_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
  * @package kernel
  * @subpackage form
  */
-class icms_form_Groupperm extends XoopsForm {
+class icms_form_Groupperm extends icms_form_Base {
 	/**
 	 * Module ID
 	 *
@@ -64,7 +64,7 @@ class icms_form_Groupperm extends XoopsForm {
 	 * Constructor
 	 */
 	public function __construct($title, $modid, $permname, $permdesc, $url = "") {
-		$this->XoopsForm($title, 'groupperm_form', ICMS_URL . '/modules/system/admin/groupperm.php', 'post');
+		parent::__construct($title, 'groupperm_form', ICMS_URL . '/modules/system/admin/groupperm.php', 'post');
 		$this->_modid = intval($modid);
 		$this->_permName = $permname;
 		$this->_permDesc = $permdesc;

@@ -35,7 +35,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @package     kernel
  * @subpackage  form
  */
-class icms_form_Simple extends XoopsForm {
+class icms_form_Simple extends icms_form_Base {
 	/**
 	 * This method is required - this method in the parent (abstract) class is also abstract
 	 * @param string $extra
