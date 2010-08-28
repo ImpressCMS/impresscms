@@ -19,7 +19,9 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 @set_magic_quotes_runtime(0);
 
+// ########################## Include common functions and constants file ##########################
 require_once ICMS_ROOT_PATH . "/include/constants.php";
+include_once ICMS_ROOT_PATH . "/include/functions.php";
 
 // ################################## Instantiate security object ##################################
 require_once ICMS_ROOT_PATH . "/class/xoopssecurity.php";
@@ -49,9 +51,6 @@ $xoopsDB = icms::$db;
 // ################## Creation of the non-static ImpressCMS Kernel object for BC ###################
 global $xoops, $impresscms;
 $xoops = $impresscms = new icms_core_Kernel();
-
-// ################################# Include common functions file #################################
-include_once ICMS_ROOT_PATH . "/include/functions.php";
 
 // ############################## register module class repositories ###############################
 icms_Autoloader::registerModules();
