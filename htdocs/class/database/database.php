@@ -21,7 +21,7 @@
  * Make sure this is only included once!
  */
 if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
-	define("XOOPS_C_DATABASE_INCLUDED",1);
+	define("XOOPS_C_DATABASE_INCLUDED", 1);
 
 	/**
 	 * Abstract base class for Database access classes
@@ -135,8 +135,6 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
  */
 class Database {
 	static public function &getInstance() {
-		return icms_database_Factory::getDatabaseConnection();
+		return icms_database_Factory::instance();
 	}
 }
-
-?>

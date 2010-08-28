@@ -9,7 +9,7 @@
  * @subpackage	icms
  * @since		1.3
  * @version		SVN: $Id: Kernel.php 19775 2010-07-11 18:54:25Z malanciault $
- * @internal	This class should normally be "icms_Kernel", marcand and I agreed on calling it "icms"
+ * @internal	This class should normally be "icms_Kernel", marcan and I agreed on calling it "icms"
  * @internal	for convenience, as we are not targetting php 5.3+ yet
  */
 
@@ -37,7 +37,7 @@ abstract class icms {
 	static public $logger;
 	/**
 	 * Database connection
-	 * @var icms_db_IConnection
+	 * @var icms_database_Facotry
 	 */
 	static public $db;
 
@@ -47,8 +47,8 @@ abstract class icms {
 	 */
 	static public $services = array(
 		"boot" => array(
-			//"preload" => "icms_preload_Handler",		// Always created at boot start, no need here
 			"logger" => "icms_core_Logger",
+			"db" => "icms_database_Factory",
 		),
 		"optional" => array(),
 	);
@@ -226,4 +226,3 @@ abstract class icms {
 		return self::$urls;
 	}
 }
-

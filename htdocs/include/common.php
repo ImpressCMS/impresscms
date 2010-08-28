@@ -27,8 +27,13 @@ global $xoopsSecurity;
 $xoopsSecurity = $icmsSecurity = new IcmsSecurity();
 $icmsSecurity->checkSuperglobals();
 
+// #################################### Initialize db constant #####################################
+if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$icmsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
+	define('XOOPS_DB_PROXY', 1);
+}
+
 // ############################ Initialize kernel and launch bootstrap #############################
-require_once ICMS_ROOT_PATH . '/libraries/icms.php';
+require_once ICMS_ROOT_PATH . "/libraries/icms.php";
 icms::setup();
 icms::boot();
 
@@ -39,28 +44,17 @@ $icmsPreloadHandler = icms::$preload;
 global $xoopsLogger, $xoopsErrorHandler;
 $xoopsLogger = $xoopsErrorHandler = icms::$logger;
 
+$xoopsDB = icms::$db;
+
 // ################## Creation of the non-static ImpressCMS Kernel object for BC ###################
 global $xoops, $impresscms;
 $xoops = $impresscms = new icms_core_Kernel();
 
 // ################################# Include common functions file #################################
-include_once ICMS_ROOT_PATH . '/include/functions.php';
-
-// ######################################### Connect to DB #########################################
-if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$icmsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
-	define('XOOPS_DB_PROXY', 1);
-}
-$xoopsDB =& icms_database_Factory::getDatabaseConnection();
+include_once ICMS_ROOT_PATH . "/include/functions.php";
 
 // ############################## register module class repositories ###############################
 icms_Autoloader::registerModules();
-
-// #################################### Include required files #####################################
-//require_once ICMS_ROOT_PATH.'/kernel/object.php';
-//require_once ICMS_ROOT_PATH.'/class/criteria.php';
-
-// #################################### Include text sanitizer #####################################
-//include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 
 // ################################# Including debuging functions ##################################
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
@@ -193,7 +187,6 @@ $UserGroups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_A
 if ($icmsConfigMultilang['ml_enable']) {
 	require ICMS_ROOT_PATH . '/include/im_multilanguage.php' ;
 	$easiestml_langs = explode(',', $icmsConfigMultilang['ml_tags']);
-	//include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
 	$easiestml_langpaths = IcmsLists::getLangList();
 	$langs = array_combine($easiestml_langs, explode(',', $icmsConfigMultilang['ml_names']));
