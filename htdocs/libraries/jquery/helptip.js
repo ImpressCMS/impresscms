@@ -14,4 +14,12 @@ $(function() {
      $(this).filter('span.helptext').toggle("slow");
     });
    });
+
+ $('input.checkemall').click(function() {
+  if($(this).is(":checked")) {
+   $(this).parents(".grouped").find("input").attr("checked",true);
+  } else {
+   $(this).parents(".grouped").find("input").attr("checked",false);
+  }
+ });
 });
