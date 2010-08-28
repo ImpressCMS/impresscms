@@ -401,7 +401,7 @@ if ($op == 'editprofile')
 		$form->addElement($selected_theme);
 	}
 
-	if ($im_multilanguageConfig['ml_enable'])
+	if ($icmsConfigMultilang['ml_enable'])
 	{
 		$form->addElement($selected_language);
 	}

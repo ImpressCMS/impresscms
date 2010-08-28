@@ -61,7 +61,6 @@ define('_US_NEWUSERREGAT','New user registration at %s');
 define('_US_HASJUSTREG','%s has just registered!');
 
 define('_US_INVALIDMAIL','ERROR: Invalid email');
-define('_US_EMAILNOSPACES','ERROR: Email addresses do not contain spaces.');
 define('_US_INVALIDNICKNAME','ERROR: Invalid Username');
 define('_US_NICKNAMETOOLONG','Username is too long. It must be less than %s characters.');
 define('_US_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');

@@ -218,7 +218,7 @@ function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
  * @todo Remove this in 1.4 - all occurrences have been replaced in the core
  **/
 function xoops_refcheck($docheck=1) {
-	icms_core_Debug::setDeprecated('IcmsSecurity->checkReferer','- this function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('IcmsSecurity->checkReferer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return $GLOBALS['xoopsSecurity']->checkReferer($docheck);
 }
 
@@ -681,8 +681,8 @@ function xoops_getrank($rank_id =0, $posts = 0)
  */
 function xoops_substr($str, $start, $length, $trimmarker = '...')
 {
-	icms_core_Debug::setDeprecated('icms_substr', 'This function will be removed in version 1.4');
-	return icms_substr($str, $start, $length, $trimmarker);
+	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_substr', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_DataFilter::icms_substr($str, $start, $length, $trimmarker);
 }
 
 /**
@@ -700,7 +700,7 @@ function xoops_substr($str, $start, $length, $trimmarker = '...')
  */
 function icms_substr($str, $start, $length, $trimmarker = '...')
 {
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_substr', 'This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_substr', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_core_DataFilter::icms_substr($str, $start, $length, $trimmarker);
 }
 
@@ -879,7 +879,7 @@ function xoops_getLinkedUnameFromId($userid)
  */
 function xoops_trim($text)
 {
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_trim', 'This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_trim', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_core_DataFilter::icms_trim($str, $start, $length, $trimmarker);
 }
 
@@ -1711,7 +1711,7 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
  */
 function icms_utf8_strrev($str, $reverse = false)
 {
-	icms_core_Debug::setDeprecated('icms_core_DataFilter.utf8_strrev', 'This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('icms_core_DataFilter::utf8_strrev', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_core_DataFilter::utf8_strrev($str, $reverse);
 }
 
@@ -2195,7 +2195,7 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
  */
 function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
 {
-	icms_core_Debug::setDeprecated('icms_getModuleHandler','This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('icms_getModuleHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_getModuleHandler($name, $module_dir, $module_dir, $optional);
 }
 

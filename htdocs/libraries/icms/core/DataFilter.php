@@ -145,7 +145,7 @@ class icms_core_DataFilter {
 	 * @param   string  $text
 	 * @return  string
 	 **/
-	public function addSlashes($text) {
+	static public function addSlashes($text) {
 		if (!get_magic_quotes_gpc()) {
 			$text = addslashes($text);
 		}
@@ -160,7 +160,7 @@ class icms_core_DataFilter {
 	 * @param	string  $text
 	 * @return   string
 	 **/
-	public function stripSlashesGPC($text) {
+	static public function stripSlashesGPC($text) {
 		if (get_magic_quotes_gpc()) {
 			$text = stripslashes($text);
 		}
@@ -752,7 +752,7 @@ class icms_core_DataFilter {
 	 *
 	 * @return   string
 	 */
-	function icms_substr($str, $start, $length, $trimmarker = '...') {
+	static public function icms_substr($str, $start, $length, $trimmarker = '...') {
 		global $icmsConfigMultilang;
 
 		if ($icmsConfigMultilang['ml_enable']) {
