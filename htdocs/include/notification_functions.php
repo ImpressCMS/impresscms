@@ -29,9 +29,8 @@
  * @deprecated	Use the notification class method instead - isEnabled
  * @todo
  */
-function notificationEnabled($style, $module_id=null)
-{
-	icms_core_Debug::setDeprecated('icms_notification_Handler->isEnabled', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+function notificationEnabled($style, $module_id=null) {
+	icms_core_Debug::setDeprecated('icms_notification_Handler::isEnabled', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_notification_Handler::isEnabled($style);
 }
 
@@ -46,9 +45,8 @@ function notificationEnabled($style, $module_id=null)
  * @deprecated	Use the notification class method instead - categoryInfo
  * @todo
  */
-function &notificationCategoryInfo($category_name='', $module_id=null)
-{
-	icms_core_Debug::setDeprecated('icms_notification_Handler->categoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+function &notificationCategoryInfo($category_name='', $module_id=null) {
+	icms_core_Debug::setDeprecated('icms_notification_Handler::categoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_notification_Handler::categoryInfo();
 }
 
@@ -67,9 +65,8 @@ function &notificationCategoryInfo($category_name='', $module_id=null)
  * @deprecated	Use the notification class method instead - commentCategoryInfo
  * @todo
  */
-function &notificationCommentCategoryInfo($module_id=null)
-{
-	icms_core_Debug::setDeprecated('icms_notification_Handler->commentCategoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+function &notificationCommentCategoryInfo($module_id=null) {
+	icms_core_Debug::setDeprecated('icms_notification_Handler::commentCategoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_notification_Handler::commentCategoryInfo();
 }
 
@@ -86,11 +83,9 @@ function &notificationCommentCategoryInfo($module_id=null)
  * @deprecated	Use the notification class method instead - categoryEvents
  * @todo
  */
-function &notificationEvents($category_name, $enabled_only, $module_id=null)
-{
-	icms_core_Debug::setDeprecated('icms_notification_Handler->categoryEvents', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
-	return $notification_handler->categoryEvents($category_name, $enabled_only, $module_id);
+function &notificationEvents($category_name, $enabled_only, $module_id=null) {
+	icms_core_Debug::setDeprecated('icms_notification_Handler::categoryEvents', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_notification_Handler::categoryEvents($category_name, $enabled_only, $module_id);
 
 }
 
@@ -108,11 +103,9 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
  * @deprecated	Use the notification class method instead - eventEnabled
  * @todo
  **/
-function notificationEventEnabled(&$category, &$event, &$module)
-{
-	icms_core_Debug::setDeprecated('icms_notification_Handler->eventEnabled', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
-	return $notification_handler->eventEnabled($category, $event, $module);
+function notificationEventEnabled(&$category, &$event, &$module) {
+	icms_core_Debug::setDeprecated('icms_notification_Handler::eventEnabled', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_notification_Handler::eventEnabled($category, $event, $module);
 
 }
 
@@ -127,11 +120,9 @@ function notificationEventEnabled(&$category, &$event, &$module)
  * @deprecated	Use the notification class method instead - eventInfo
  * @todo
  */
-function &notificationEventInfo($category_name, $event_name, $module_id=null)
-{
-	icms_core_Debug::setDeprecated('icms_notification_Handler->eventInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
-	return $notification_handler->eventInfo($category_name, $event_name);
+function &notificationEventInfo($category_name, $event_name, $module_id=null) {
+	icms_core_Debug::setDeprecated('icms_notification_Handler::eventInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_notification_Handler::eventInfo($category_name, $event_name);
 
 }
 
@@ -144,11 +135,9 @@ function &notificationEventInfo($category_name, $event_name, $module_id=null)
  * @deprecated	Use the notification class method instead - subscribableCategoryInfo
  * @todo
  */
-function &notificationSubscribableCategoryInfo($module_id=null)
-{
-	icms_core_Debug::setDeprecated('icms_notification_Handler->subscribableCategoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
-	return $notification_handler->subscribableCategoryInfo($module_id);
+function &notificationSubscribableCategoryInfo($module_id=null) {
+	icms_core_Debug::setDeprecated('icms_notification_Handler::subscribableCategoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_notification_Handler::subscribableCategoryInfo($module_id);
 
 }
 
@@ -166,11 +155,8 @@ function &notificationSubscribableCategoryInfo($module_id=null)
  * @deprecated	Use the notification class method instead - generateConfig
  * @todo
  **/
-function notificationGenerateConfig(&$category, &$event, $type)
-{
-	icms_core_Debug::setDeprecated('icms_notification_Handler->generateConfig', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
-	return $notification_handler->generateConfig($category, $event, $type);
+function notificationGenerateConfig(&$category, &$event, $type) {
+	icms_core_Debug::setDeprecated('icms_notification_Handler::generateConfig', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_notification_Handler::generateConfig($category, $event, $type);
 
 }
-

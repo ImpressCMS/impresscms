@@ -745,12 +745,12 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 */
 	static public function &commentCategoryInfo($module_id=null) {
 		$ret = false;
-		$all_categories =& $this->categoryInfo('', $module_id);
+		$all_categories =& self::categoryInfo('', $module_id);
 		if (empty($all_categories)) {
 			return $ret;
 		}
 		foreach ($all_categories as $category) {
-			$all_events =& $this->categoryEvents($category['name'], false, $module_id);
+			$all_events =& self::categoryEvents($category['name'], false, $module_id);
 			if (empty($all_events)) {
 				continue;
 			}
@@ -776,7 +776,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 * @param  int	 $module_id	  ID of the module (default current module)
 	 * @return mixed
 	 */
-	public function &categoryEvents($category_name, $enabled_only, $module_id=null) {
+	static public function &categoryEvents($category_name, $enabled_only, $module_id=null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
 			$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
@@ -789,7 +789,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 		$config_handler = new icms_config_Handler($GLOBALS['xoopsDB']);
 		$mod_config = $config_handler->getConfigsByCat(0,$module_id);
 
-		$category =& $this->categoryInfo($category_name, $module_id);
+		$category =& self::categoryInfo($category_name, $module_id);
 
 		global $icmsConfig;
 		$event_array = array();
@@ -801,7 +801,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 		foreach ($not_config['event'] as $event) {
 			if ($event['category'] == $category_name) {
 				$event['mail_template_dir'] = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/language/' . $icmsConfig['language'] . '/mail_template/';
-				if (!$enabled_only || $this->eventEnabled($category, $event, $module)) {
+				if (!$enabled_only || self::eventEnabled($category, $event, $module)) {
 					$event_array[] = $event;
 				}
 				if ($event['name'] == 'comment') {
@@ -857,13 +857,13 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 				}
 				if ($insert_comment) {
 					$event = array('name'=>'comment', 'category'=>$category['name'], 'title'=>_NOT_COMMENT_NOTIFY, 'caption'=>_NOT_COMMENT_NOTIFYCAP, 'description'=>_NOT_COMMENT_NOTIFYDSC, 'mail_template_dir'=>$mail_template_dir, 'mail_template'=>'comment_notify', 'mail_subject'=>_NOT_COMMENT_NOTIFYSBJ);
-					if (!$enabled_only || $this->eventEnabled($category, $event, $module)) {
+					if (!$enabled_only || self::eventEnabled($category, $event, $module)) {
 						$event_array[] = $event;
 					}
 				}
 				if ($insert_submit) {
 					$event = array('name'=>'comment_submit', 'category'=>$category['name'], 'title'=>_NOT_COMMENTSUBMIT_NOTIFY, 'caption'=>_NOT_COMMENTSUBMIT_NOTIFYCAP, 'description'=>_NOT_COMMENTSUBMIT_NOTIFYDSC, 'mail_template_dir'=>$mail_template_dir, 'mail_template'=>'commentsubmit_notify', 'mail_subject'=>_NOT_COMMENTSUBMIT_NOTIFYSBJ, 'admin_only'=>1);
-					if (!$enabled_only || $this->eventEnabled($category, $event, $module)) {
+					if (!$enabled_only || self::eventEnabled($category, $event, $module)) {
 						$event_array[] = $event;
 					}
 				}
@@ -877,7 +877,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 		if (!empty($category['allow_bookmark'])) {
 			if (!$override_bookmark) {
 				$event = array('name'=>'bookmark', 'category'=>$category['name'], 'title'=>_NOT_BOOKMARK_NOTIFY, 'caption'=>_NOT_BOOKMARK_NOTIFYCAP, 'description'=>_NOT_BOOKMARK_NOTIFYDSC);
-				if (!$enabled_only || $this->eventEnabled($category, $event, $module)) {
+				if (!$enabled_only || self::eventEnabled($category, $event, $module)) {
 					$event_array[] = $event;
 				}
 			}
@@ -901,12 +901,12 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 * @param  object $module	Module
 	 * @return bool
 	 **/
-	public function eventEnabled(&$category, &$event, &$module) {
+	static public function eventEnabled(&$category, &$event, &$module) {
 		$config_handler = new icms_config_Handler($GLOBALS['xoopsDB']);
 		$mod_config = $config_handler->getConfigsByCat(0,$module->getVar('mid'));
 
 		if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
-			$option_name = $this->generateConfig($category, $event, 'option_name');
+			$option_name = self::generateConfig($category, $event, 'option_name');
 			if (in_array($option_name, $mod_config['notification_events'])) {
 				return true;
 			}
@@ -925,8 +925,8 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 * @param  int	 $module_id	  ID of the module (default current module)
 	 * @return mixed
 	 */
-	public function &eventInfo($category_name, $event_name, $module_id=null) {
-		$all_events =& $this->categoryEvents($category_name, false, $module_id);
+	static public function &eventInfo($category_name, $event_name, $module_id=null) {
+		$all_events =& self::categoryEvents($category_name, false, $module_id);
 		foreach ($all_events as $event) {
 			if ($event['name'] == $event_name) {
 				return $event;
@@ -945,8 +945,8 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 * @param  int  $module_id  ID of the module
 	 * @return mixed
 	 */
-	public function &subscribableCategoryInfo($module_id=null) {
-		$all_categories =& $this->categoryInfo('', $module_id);
+	static public function &subscribableCategoryInfo($module_id=null) {
+		$all_categories =& self::categoryInfo('', $module_id);
 
 		// FIXME: better or more standardized way to do this?
 		$script_url = explode('/', $_SERVER['PHP_SELF']);
@@ -1005,7 +1005,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 * @param  string $type	  The particular name to generate
 	 * return string
 	 **/
-	public function generateConfig(&$category, &$event, $type) {
+	static public function generateConfig(&$category, &$event, $type) {
 		switch ($type) {
 			case 'option_value':
 			case 'name':

@@ -880,7 +880,7 @@ function xoops_getLinkedUnameFromId($userid)
 function xoops_trim($text)
 {
 	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_trim', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::icms_trim($str, $start, $length, $trimmarker);
+	return icms_core_DataFilter::icms_trim($text);
 }
 
 /**
