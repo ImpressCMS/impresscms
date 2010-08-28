@@ -62,7 +62,7 @@ class icms_ipf_About {
 	public function __construct($aboutTitle = _MODABOUT_ABOUT) {
 		global $icmsModule, $icmsConfig;
 
-		icms_loadLanguageFile($icmsModule->dirname(), 'modinfo');
+		icms_loadLanguageFile($icmsModule->getVar("dirname"), 'modinfo');
 		icms_loadLanguageFile('core', 'moduleabout');
 
 		$this->_aboutTitle = $aboutTitle;

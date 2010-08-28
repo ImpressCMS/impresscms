@@ -98,7 +98,7 @@ class icms_Autoloader {
 		$module_handler = icms::handler("icms_module");
 		$modules = $module_handler->getObjects();
 		foreach ($modules as $module) {
-			if ($module->getVar("dirname") == "system") continue;
+			if ($module->getVar("dirname") == "system" || $module->getVar("isactive") == 0) continue;
 			$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
 			if ($module->getVar("ipf")) {
 				$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :

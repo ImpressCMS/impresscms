@@ -94,6 +94,18 @@ function xoops_module_install($dirname) {
 	if ($module_handler->getCount(new icms_criteria_Item('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
+
+		if ($module->getVar("dirname") != "system") {
+			$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
+			if ($module->getVar("ipf")) {
+				$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :
+																$module->getVar("dirname");
+				icms_Autoloader::register($class_path, "mod_" . $modname);
+			} else {
+				icms_Autoloader::register($class_path);
+			}
+		}
+
 		$module->setVar('weight', 1);
 		$error = false;
 		$errs = array();
