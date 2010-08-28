@@ -2,39 +2,24 @@
 /**
  * Creates a form attribut styled by the theme
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: themeform.php 19939 2010-08-06 15:13:01Z phoenyx $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
-/**
- *
- *
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
 
 /**
  * Form that will output as a theme-enabled HTML table
  *
  * Also adds JavaScript to validate required fields
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @category	ICMS
+ * @package     Form
  *
- * @package     kernel
- * @subpackage  form
  */
 class icms_form_Theme extends icms_form_Base {
 	/**
@@ -43,7 +28,7 @@ class icms_form_Theme extends icms_form_Base {
 	 * @param	string  $extra  HTML to be displayed in the empty row.
 	 * @param	string	$class	CSS class name for <td> tag
 	 */
-	function insertBreak($extra = '', $class= '') 	{
+	public function insertBreak($extra = '', $class= '') {
 		$class = ($class != '') ? " class='$class'" : '';
 		//Fix for $extra tag not showing
 		if ($extra) {
@@ -60,13 +45,16 @@ class icms_form_Theme extends icms_form_Base {
 	 *
 	 * @return	string
 	 */
-	function render() 	{
+	public function render() {
 		$ele_name = $this->getName();
-		$ret = "
-			<form id='".$ele_name."' name='".$ele_name."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$ele_name."();'".$this->getExtra().">
+		$ret = "<form id='" . $ele_name
+				. "' name='" . $ele_name
+				. "' action='" . $this->getAction()
+				. "' method='" . $this->getMethod()
+				. "' onsubmit='return xoopsFormValidate_" . $ele_name . "();'" . $this->getExtra() . ">
 			<div class='xo-theme-form'>
 			<table width='100%' class='outer' cellspacing='1'>
-			<tr><th colspan='2'>".$this->getTitle()."</th></tr>
+			<tr><th colspan='2'>" . $this->getTitle() . "</th></tr>
 		";
 		$hidden = '';
 		$class ='even';
@@ -74,24 +62,25 @@ class icms_form_Theme extends icms_form_Base {
 			if (!is_object($ele)) {
 				$ret .= $ele;
 			} elseif ( !$ele->isHidden() ) {
-				$ret .= "<tr valign='top' align='"._GLOBAL_LEFT."'><td class='head'>";
-				if ( ($caption = $ele->getCaption()) != '' ) {
+				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>";
+				if (($caption = $ele->getCaption()) != '') {
 					$ret .=
-				        "<div class='xoops-form-element-caption" . ($ele->isRequired() ? "-required" : "" ) . "'>".
-				        "<span class='caption-text'>{$caption}</span>".
-				        "<span class='caption-marker'>*</span>".
-				        "</div>";
+				        "<div class='xoops-form-element-caption" . ($ele->isRequired() ? "-required" : "" ) . "'>"
+						. "<span class='caption-text'>{$caption}</span>"
+						. "<span class='caption-marker'>*</span>"
+						. "</div>";
 				}
-				if ( ($desc = $ele->getDescription()) != '' ) {
+				if (($desc = $ele->getDescription()) != '') {
 					$ret .= "<div class='xoops-form-element-help'>{$desc}</div>";
 				}
-				$ret .= "</td><td class='$class'>".$ele->render()."</td></tr>\n";
+				$ret .= "</td><td class='$class'>" . $ele->render() . "</td></tr>\n";
 			} else {
 				$hidden .= $ele->render();
 			}
 		}
 		$ret .= "</table>\n$hidden\n</div>\n</form>\n";
-		$ret .= $this->renderValidationJS( true );
+		$ret .= $this->renderValidationJS(true);
 		return $ret;
 	}
 }
+
