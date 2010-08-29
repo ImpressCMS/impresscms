@@ -9,11 +9,19 @@
   <{if $item.id == 'cphome'}>
    <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>"><img src="<{if $sub.small!=''}><{$sub.small}><{else}><{$icms_url}>/modules/system/images/imagesarrow1.gif<{/if}>" alt="" width="16" />&nbsp;<{$sub.title}></a></li>
   <{elseif $item.id == 'opsystem'}>
-   <li><a <{if $sub.hassubs}>class="sf-with-ul"<{/if}> href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>"><img src="<{if $sub.small!=''}><{$icms_url}>/modules/system/<{$sub.small}><{/if}>" alt="" />&nbsp;<{$sub.title}></a>
+   <li><a <{if $sub.hassubs}>class="sf-with-ul"<{/if}> href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>"><{$sub.title}></a>
    <{if $sub.hassubs}>
     <ul>
     <{foreach item=subitem from=$sub.subs}>
-     <li><a href="<{$subitem.link}>"><{$subitem.title}></a></li>
+     <li><a <{if $subitem.hassubs}>class="sf-with-ul"<{/if}> href="<{$subitem.link}>"><{if $subitem.small!=''}><img src="<{$icms_url}>/modules/system/<{$subitem.small}>" alt="" />&nbsp;<{/if}><{$subitem.title}></a>
+     <{if $subitem.hassubs}>
+      <ul>
+       <{foreach item=subsubitem from=$subitem.subs}>
+        <li><a href="<{$subsubitem.link}>"><{$subsubitem.title}></a></li>
+       <{/foreach}>
+      </ul>
+     <{/if}>
+     </li>
     <{/foreach}>  
     </ul>
    <{/if}>

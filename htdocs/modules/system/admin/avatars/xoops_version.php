@@ -15,7 +15,8 @@
  * @version		$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_AVATARS,
+$modversion = array(
+	'name' => _MD_AM_AVATARS,
 	'version' => "",
 	'description' => "ImpressCMS Site Avatar Manager",
 	'author' => "",
@@ -27,4 +28,4 @@ $modversion = array( 'name' => _MD_AM_AVATARS,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=avatars",
 	'category' => XOOPS_SYSTEM_AVATAR,
-	'group' => 'Users and Groups');
+	'group' => _MD_AM_GROUPS_USERSANDGROUPS);

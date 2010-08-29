@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_RANK,
+$modversion = array(
+	'name' => _MD_AM_RANK,
 	'version' => "",
 	'description' => "User Posts Ranks Configuration",
 	'author' => "phpBB Group ( http://www.phpbb.com/ )",
@@ -25,4 +26,4 @@ $modversion = array( 'name' => _MD_AM_RANK,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=userrank",
 	'category' => XOOPS_SYSTEM_URANK,
-	'group' => 'Users and Groups');
+	'group' => _MD_AM_GROUPS_USERSANDGROUPS);

@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_BKAD,
+$modversion = array(
+	'name' => _MD_AM_BKAD,
 	'version' => 2.0,
 	'description' => "Side Blocks Administration",
 	'author' => "Gustavo Pilla (aka nekro) <nekro@impresscms.org>",
@@ -25,4 +26,4 @@ $modversion = array( 'name' => _MD_AM_BKAD,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=blocksadmin",
 	'category' => XOOPS_SYSTEM_BLOCK,
-	'group' => 'Layout');
+	'group' => _MD_AM_GROUPS_LAYOUT);

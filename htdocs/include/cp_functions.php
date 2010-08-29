@@ -216,26 +216,40 @@ function icms_cp_header(){
 			 */
 			$adminmenuorder = 1;
 			$adminsubmenuorder = 1;
+			$adminsubsubmenuorder = 1;
 			if ($adminmenuorder == 1) {
 				foreach ( $navitem ['menu'] as $k => $sortarray ) {
 					$column[] = $sortarray['title'];
 					if (isset($sortarray['subs']) && count($sortarray['subs']) > 0 && $adminsubmenuorder) {
-						asort($navitem['menu'][$k]['subs']); //Sorting submenus of preferences
+						asort($navitem['menu'][$k]['subs']);
+					}
+					if (isset($sortarray['subs']) && count($sortarray['subs']) > 0) {
+						foreach ($sortarray['subs'] as $k2 => $sortarray2) {
+							if (isset($sortarray2['subs']) && count($sortarray2['subs']) > 0 && $adminsubsubmenuorder) {
+								asort($navitem['menu'][$k]['subs'][$k2]['subs']); //Sorting submenus of preferences
+							}
+						}
 					}
 				}
 				//sort arrays after loop
 				array_multisort($column, SORT_ASC, $navitem['menu']);
 			}
 			foreach ( $navitem['menu'] as $item ) {
-				if (false != $all_ok || in_array($item['id'], $ok_syscats)) {
-					$perm_itens[] = $item;
+				foreach ($item['subs'] as $key => $subitem) {
+					if ($all_ok == false && !in_array($subitem['id'], $ok_syscats)) {
+						// remove the subitem
+						unset($item['subs'][$key]);
+					}
 				}
+				// only add the item (first layer: groups) if it has subitems
+				if (count($item['subs']) > 0) $perm_itens[] = $item;
 			}
-			$navitem['menu'] = $sysprefs = $perm_itens; //Getting array of allowed system prefs
+			//Getting array of allowed system prefs
+			$navitem['menu'] = $sysprefs = $perm_itens;
 		}
 		$icmsAdminTpl->append('navitems', $navitem);
 	}
-	//icms_core_Debug::vardump($sysprefs);
+
 	if (count($sysprefs) > 0) {
 		$icmsAdminTpl->assign('systemadm', 1);
 	} else {
@@ -253,6 +267,13 @@ function icms_cp_header(){
 	if ($icmsModule) {
 		if ($icmsModule->getVar('dirname') == 'system') {
 			if (isset($sysprefs) && count($sysprefs) > 0) {
+				// remove the grouping for the system module preferences (first layer)
+				$sysprefs_tmp = array();
+				foreach ($sysprefs as $pref) {
+					$sysprefs_tmp = array_merge($sysprefs_tmp, $pref['subs']);
+				}
+				$sysprefs = $sysprefs_tmp;
+				unset($sysprefs_tmp);
 				for ($i = count($sysprefs) - 1; $i >= 0; $i = $i - 1) {
 					if (isset($sysprefs [$i])) {
 						$reversed_sysprefs[] = $sysprefs[$i];

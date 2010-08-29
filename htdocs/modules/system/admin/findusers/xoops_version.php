@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_FINDUSER,
+$modversion = array(
+	'name' => _MD_AM_FINDUSER,
 	'version' => "",
 	'description' => "Find Users",
 	'author' => "Kazumi Ono<br />( http://www.myweb.ne.jp/ )",
@@ -22,8 +23,7 @@ $modversion = array( 'name' => _MD_AM_FINDUSER,
 	'license' => "GPL see LICENSE",
 	'official' => 1,
 	'image' => "users.gif",
-
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=findusers",
 	'category' => XOOPS_SYSTEM_FINDU,
-	'group' => 'Users and Groups');
+	'group' => _MD_AM_GROUPS_USERSANDGROUPS);

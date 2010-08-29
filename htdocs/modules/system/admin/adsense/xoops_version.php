@@ -10,7 +10,8 @@
  * @version		$Id$
  */
 
-$modversion = array('name' => _MD_AM_ADSENSES,
+$modversion = array(
+	'name' => _MD_AM_ADSENSES,
 	'version' => "1.0",
 	'description' => "Adsense Administration",
 	'author' => "Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>",
@@ -22,4 +23,4 @@ $modversion = array('name' => _MD_AM_ADSENSES,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=adsense",
 	'category' => XOOPS_SYSTEM_ADSENSES,
-	'group' => 'Advertising');
+	'group' => _MD_AM_GROUPS_ADVERTISING);

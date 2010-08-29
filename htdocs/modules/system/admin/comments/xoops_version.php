@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_COMMENTS,
+$modversion = array(
+	'name' => _MD_AM_COMMENTS,
 	'version' => "",
 	'description' => "ImpressCMS Site Comment Manager",
 	'author' => "",
@@ -25,4 +26,4 @@ $modversion = array( 'name' => _MD_AM_COMMENTS,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=comments",
 	'category' => XOOPS_SYSTEM_COMMENT,
-	'group' => 'Content');
+	'group' => _MD_AM_GROUPS_CONTENT);

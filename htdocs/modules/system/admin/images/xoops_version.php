@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_IMAGES,
+$modversion = array(
+	'name' => _MD_AM_IMAGES,
 	'version' => "",
 	'description' => "ImpressCMS Image Manager",
 	'author' => "",
@@ -25,4 +26,4 @@ $modversion = array( 'name' => _MD_AM_IMAGES,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=images",
 	'category' => XOOPS_SYSTEM_IMAGE,
-	'group' => 'Media');
+	'group' => _MD_AM_GROUPS_MEDIA);

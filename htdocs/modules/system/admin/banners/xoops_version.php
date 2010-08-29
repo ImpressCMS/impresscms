@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_BANS,
+$modversion = array(
+	'name' => _MD_AM_BANS,
 	'version' => "",
 	'description' => "Banners Administration",
 	'author' => "Francisco Burzi <br />( http://phpnuke.org/ )",
@@ -25,4 +26,4 @@ $modversion = array( 'name' => _MD_AM_BANS,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=banners",
 	'category' => XOOPS_SYSTEM_BANNER,
-	'group' => 'Advertising');
+	'group' => _MD_AM_GROUPS_ADVERTISING);

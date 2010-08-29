@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_USER,
+$modversion = array(
+	'name' => _MD_AM_USER,
 	'version' => "",
 	'description' => "Users Administration",
 	'author' => "Francisco Burzi<br />( http://phpnuke.org/ )",
@@ -25,4 +26,4 @@ $modversion = array( 'name' => _MD_AM_USER,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=users",
 	'category' => XOOPS_SYSTEM_USER,
-	'group' => 'Users and Groups');
+	'group' => _MD_AM_GROUPS_USERSANDGROUPS);

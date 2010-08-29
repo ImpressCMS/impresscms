@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_SMLS,
+$modversion = array(
+	'name' => _MD_AM_SMLS,
 	'version' => "",
 	'description' => "Smilies Settings",
 	'author' => "",
@@ -25,4 +26,4 @@ $modversion = array( 'name' => _MD_AM_SMLS,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=smilies",
 	'category' => XOOPS_SYSTEM_SMILE,
-	'group' => 'Content');
+	'group' => _MD_AM_GROUPS_CONTENT);

@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_ADGS,
+$modversion = array(
+	'name' => _MD_AM_ADGS,
 	'version' => "",
 	'description' => "User Groups Configuration",
 	'author' => "",
@@ -25,4 +26,4 @@ $modversion = array( 'name' => _MD_AM_ADGS,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=groups",
 	'category' => XOOPS_SYSTEM_GROUP,
-	'group' => 'Users and Groups');
+	'group' => _MD_AM_GROUPS_USERSANDGROUPS);

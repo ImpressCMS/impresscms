@@ -10,7 +10,8 @@
  * @version		$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_CUSTOMTAGS,
+$modversion = array(
+	'name' => _MD_AM_CUSTOMTAGS,
 	'version' => "1.0",
 	'description' => "Custom Tags Administration",
 	'author' => "marcan <marcan@impresscms.org",
@@ -22,4 +23,4 @@ $modversion = array( 'name' => _MD_AM_CUSTOMTAGS,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=customtag",
 	'category' => XOOPS_SYSTEM_CUSTOMTAGS,
-	'group' => 'Content');
+	'group' => _MD_AM_GROUPS_CONTENT);

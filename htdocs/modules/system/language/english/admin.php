@@ -29,9 +29,19 @@ define('_MD_AM_PERMADDNG', 'Could not add %s permission to %s for group %s');
 define('_MD_AM_PERMADDOK','Added %s permission to %s for group %s');
 define('_MD_AM_PERMRESETNG','Could not reset group permission for module %s');
 define('_MD_AM_PERMADDNGP', 'All parent items must be selected.');
-######################## Added in 1.2 ###################################
+
+// added in 1.2
 if (!defined('_MD_AM_AUTOTASKS')) {define('_MD_AM_AUTOTASKS', 'Auto Tasks');}
 define('_MD_AM_ADSENSES', 'Adsenses');
 define('_MD_AM_RATINGS', 'Ratings');
 define('_MD_AM_MIMETYPES', 'Mime Types');
+
+// added in 1.3
+define("_MD_AM_GROUPS_ADVERTISING", "Advertising");
+define("_MD_AM_GROUPS_CONTENT", "Content");
+define("_MD_AM_GROUPS_LAYOUT", "Layout");
+define("_MD_AM_GROUPS_MEDIA", "Media");
+define("_MD_AM_GROUPS_SITECONFIGURATION", "Site Configuration");
+define("_MD_AM_GROUPS_SYSTEMTOOLS", "System Tools");
+define("_MD_AM_GROUPS_USERSANDGROUPS", "Users and Groups");
 ?>

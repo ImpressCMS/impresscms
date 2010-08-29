@@ -9,7 +9,8 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-$modversion = array( 'name' => _MD_AM_AUTOTASKS,
+$modversion = array(
+	'name' => _MD_AM_AUTOTASKS,
 	'version' => "1.0",
 	'description' => "AutoTasks Administration",
 	'author' => "mekdrop <mekdrop@gmail.com>",
@@ -21,5 +22,4 @@ $modversion = array( 'name' => _MD_AM_AUTOTASKS,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=autotasks",
 	'category' => XOOPS_SYSTEM_AUTOTASKS,
-	'group' => 'System Tools');
-
+	'group' => _MD_AM_GROUPS_SYSTEMTOOLS);

@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_TPLSETS,
+$modversion = array(
+	'name' => _MD_AM_TPLSETS,
 	'version' => "",
 	'description' => "ImpressCMS Template Set Manager",
 	'author' => "",
@@ -25,5 +26,4 @@ $modversion = array( 'name' => _MD_AM_TPLSETS,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=tplsets",
 	'category' => XOOPS_SYSTEM_TPLSET,
-	'group' => 'Layout');
-?>
+	'group' => _MD_AM_GROUPS_LAYOUT);

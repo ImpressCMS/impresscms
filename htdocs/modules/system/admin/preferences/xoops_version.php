@@ -13,7 +13,8 @@
 * @version	$Id$
 */
 
-$modversion = array( 'name' => _MD_AM_PREF,
+$modversion = array(
+	'name' => _MD_AM_PREF,
 	'version' => "",
 	'description' => "ImpressCMS Site Preferences",
 	'author' => "",
@@ -25,4 +26,4 @@ $modversion = array( 'name' => _MD_AM_PREF,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=preferences",
 	'category' => XOOPS_SYSTEM_PREF,
-	'group' => 'Site Configuration');
+	'group' => _MD_AM_GROUPS_SITECONFIGURATION);

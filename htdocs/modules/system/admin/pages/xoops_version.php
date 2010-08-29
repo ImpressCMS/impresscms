@@ -10,7 +10,8 @@
 * @version		$Id$
 */
 
-$modversion = array( 'name' => _MD_AM_PAGES,
+$modversion = array(
+	'name' => _MD_AM_PAGES,
 	'version' => "1",
 	'description' => "ImpressCMS Content Manager",
 	'author' => "Rodrigo Pereira Lima aka TheRplima",
@@ -22,4 +23,4 @@ $modversion = array( 'name' => _MD_AM_PAGES,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=pages",
 	'category' => XOOPS_SYSTEM_PAGES,
-	'group' => 'Content');
+	'group' => _MD_AM_GROUPS_CONTENT);

@@ -12,7 +12,8 @@
  * @version		$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_BKPOSAD,
+$modversion = array(
+	'name' => _MD_AM_BKPOSAD,
 	'version' => "",
 	'description' => "Blocks Position Administration",
 	'author' => "",
@@ -24,4 +25,4 @@ $modversion = array( 'name' => _MD_AM_BKPOSAD,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=blockspadmin",
 	'category' => XOOPS_SYSTEM_BLOCKP,
-	'group' => 'Layout');
+	'group' => _MD_AM_GROUPS_LAYOUT);

@@ -13,7 +13,8 @@
  * @version	$Id$
  */
 
-$modversion = array( 'name' => _MD_AM_MDAD,
+$modversion = array(
+	'name' => _MD_AM_MDAD,
 	'version' => "",
 	'description' => "Modules Administrationr",
 	'author' => "Kazumi Ono<br />( http://www.mywebaddons.com/ )",
@@ -25,5 +26,4 @@ $modversion = array( 'name' => _MD_AM_MDAD,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=modulesadmin",
 	'category' => XOOPS_SYSTEM_MODULE,
-	'group' => 'Content');
-
+	'group' => _MD_AM_GROUPS_SITECONFIGURATION);

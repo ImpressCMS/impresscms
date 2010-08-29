@@ -10,7 +10,8 @@
  * @version		$Id: xoops_version.php 9853 2010-02-23 17:44:27Z skenow $
  */
 
-$modversion = array( 'name' => _MD_AM_MIMETYPES,
+$modversion = array(
+	'name' => _MD_AM_MIMETYPES,
 	'version' => "1.0",
 	'description' => "Custom Tags Administration",
 	'author' => "Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>",
@@ -22,4 +23,4 @@ $modversion = array( 'name' => _MD_AM_MIMETYPES,
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=mimetype",
 	'category' => XOOPS_SYSTEM_MIMETYPES,
-	'group' => 'Media');
+	'group' => _MD_AM_GROUPS_MEDIA);
