@@ -215,15 +215,11 @@ function b_system_admin_modules_show(){
 }
 
 /**
- * Admin Control Panel Block
+ * New Admin Control Panel Block, with grouping of items
  *
- * @since ImpressCMS 1.2
- *
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- *
+ * @since ImpressCMS 1.3
  * @return array
  *
- * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
 function b_system_admin_cp_new_show() {
 	global $icmsTpl, $xoopsConfig, $icmsUser;
