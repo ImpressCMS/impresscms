@@ -213,6 +213,8 @@ class icms_core_DataFilter {
 	/*
 	* Public Function checks Variables using specified filter type
 	*
+	* @TODO needs error trapping for debug if invalid types and options used!!
+	*
 	* @param	string		$data		Data to be checked
 	* @param	string		$type		Type of Filter To use for Validation
 	*			Valid Filter Types:
@@ -277,71 +279,68 @@ class icms_core_DataFilter {
 		if (!in_array($type, $valid_types)) {
 			return false;
 		} else {
-			/** @todo Use switch(), instead  - better performance */
-			if ($type == "url") {
-				$valid_options1 = array('scheme', 'path', 'host', 'query');
-				$valid_options2 = array(0, 1);
+			switch ($type)
+			{
+				case 'url':
+					$valid_options1 = array('scheme', 'path', 'host', 'query');
+					$valid_options2 = array(0, 1);
+					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
+						$options1 = '';
+					}
+					if (!isset($options2) || $options2 == '' || !in_array($options2, $valid_options2)) {
+						$options2 = 0;
+					} else {
+						$options2 = 1;
+					}
+				break;
 
-				if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
-					$options1 = '';
-				}
-				if (!isset($options2) || $options2 == '' || !in_array($options2, $valid_options2)) {
-					$options2 = 0;
-				} else {
-					$options2 = 1;
-				}
-			}
+				case 'email':
+					$valid_options1 = array(0, 1);
+					$valid_options2 = array(0, 1);
+					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
+						$options1 = 0;
+					} else {
+						$options1 = 1;
+					}
+					if (!isset($options2) || $options2 == '' || !in_array($options2, $valid_options2)) {
+						$options2 = 0;
+					} else {
+						$options2 = 1;
+					}
+				break;
 
-			if ($type == "email") {
-				$valid_options1 = array(0, 1);
-				$valid_options2 = array(0, 1);
+				case 'ip':
+					$valid_options1 = array('ipv4', 'ipv6', 'rfc', 'res');
+					$options2 = '';
+					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
+						$options1 = 'ipv4';
+					}
+				break;
 
-				if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
-					$options1 = 0;
-				} else {
-					$options1 = 1;
-				}
-				if (!isset($options2) || $options2 == '' || !in_array($options2, $valid_options2)) {
-					$options2 = 0;
-				} else {
-					$options2 = 1;
-				}
-			}
+				case 'str':
+					$valid_options1 = array('noencode', 'striplow', 'striphigh', 'encodelow', 'encodehigh', 'encodeamp');
+					$options2 = '';
+					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
+						$options1 = '';
+					}
+				break;
 
-			if ($type == "ip") {
-				$valid_options1 = array('ipv4', 'ipv6', 'rfc', 'res');
-				$options2 = '';
+				case 'int':
+					if (!is_int($options1) || !is_int($options2)) {
+						$options1 = '';
+						$options2 = '';
+					} else {
+						$options1 = (int)$options1;
+						$options2 = (int)$options2;
+					}
+				break;
 
-				if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
-					$options1 = 'ipv4';
-				}
-			}
-
-			if ($type == "str") {
-				$valid_options1 = array('noencode', 'striplow', 'striphigh', 'encodelow', 'encodehigh', 'encodeamp');
-				$options2 = '';
-
-				if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
-					$options1 = '';
-				}
-			}
-
-			if ($type == "int") {
-				if (!is_int($options1) || !is_int($options2)) {
+				case 'html':
 					$options1 = '';
 					$options2 = '';
-				} else {
-					$options1 = (int)$options1;
-					$options2 = (int)$options2;
-				}
-			}
-
-			if ($type == "html") {
-				$options1 = '';
-				$options2 = '';
+				break;
 			}
 		}
-
 		return self::priv_checkVar($data, $type, $options1, $options2);
 	}
 
@@ -810,120 +809,140 @@ class icms_core_DataFilter {
 	* @return
 	*/
 	private function priv_checkVar($data, $type, $options1, $options2) {
-		global $icmsConfigUser;
+		switch ($type)
+		{
+			case "url":
 
-		/** @todo Use switch() here, instead - better performance */
-		if ($type == "url") {
-			$data = filter_var($data, FILTER_SANITIZE_URL);
+				$data = filter_var($data, FILTER_SANITIZE_URL);
 
-			if ($options1 == "scheme") {
-				$opt1 = FILTER_FLAG_SCHEME_REQUIRED;
-			} elseif ($options1 == "host") {
-				$opt1 = FILTER_FLAG_HOST_REQUIRED;
-			} elseif ($options1 == "path") {
-				$opt1 = FILTER_FLAG_PATH_REQUIRED;
-			} elseif ($options1 == "query") {
-				$opt1 = FILTER_FLAG_QUERY_REQUIRED;
-			}
+				switch ($options1)
+				{
+					case "scheme":
+						$data = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
+					break;
 
-			if (isset($opt1) && $opt1 !== "") {
-				$data = filter_var($data, FILTER_VALIDATE_URL, $opt1);
-			} else {
-				$data = filter_var($data, FILTER_VALIDATE_URL);
-			}
+					case "host":
+						$data = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
+					break;
 
-			if (isset($options2) && $options2 == 1) {
-				$data = filter_var($data, FILTER_SANITIZE_ENCODED);
-			}
+					case "path":
+						$data = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED);
+					break;
 
-			return $data;
-		}
+					case "query":
+						$data = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_QUERY_REQUIRED);
+					break;
 
-		if ($type == "email") {
-			$icmsStopSpammers = new icms_core_StopSpammer();
+					default:
+						$data = filter_var($data, FILTER_VALIDATE_URL);
+					break;
+				}
+				if (isset($options2) && $options2 == 1) {
+					$data = filter_var($data, FILTER_SANITIZE_ENCODED);
+				}
+			break;
 
-			$data = filter_var($data, FILTER_SANITIZE_EMAIL);
+			case "email":
 
-			if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
-				if (isset($options2) && is_array($icmsConfigUser['bad_emails'])) {
-					foreach ($icmsConfigUser['bad_emails'] as $be) {
-						if ((!empty($be) && preg_match('/' . $be . '/i', $data))
-							|| $icmsStopSpammers->badEmail($data)) {
-							return false;
+				$icmsStopSpammers = new icms_core_StopSpammer();
+
+				$data = filter_var($data, FILTER_SANITIZE_EMAIL);
+
+				if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
+					if (isset($options2) && is_array($icmsConfigUser['bad_emails'])) {
+						foreach ($icmsConfigUser['bad_emails'] as $be) {
+							if ((!empty($be) && preg_match('/' . $be . '/i', $data))
+								|| $icmsStopSpammers->badEmail($data)) {
+								return false;
+							}
 						}
 					}
+				} else {
+					return false;
 				}
-			} else {
-				return false;
-			}
-			if (isset($options1) && $options1 == 1) {
-				$data = str_replace('@', ' at ', $data);
-				$data = str_replace('.', ' dot ', $data);
-			}
+				if (isset($options1) && $options1 == 1) {
+					$data = str_replace('@', ' at ', $data);
+					$data = str_replace('.', ' dot ', $data);
+				}
+			break;
 
-			return $data;
+			case "ip":
+				switch ($options1)
+				{
+					case "ipv4":
+						$data = filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+					break;
+
+					case "ipv6":
+						$data = filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+					break;
+
+					case "rfc":
+						$data = filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE);
+					break;
+
+					case "res":
+						$data = filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE);
+					break;
+
+					default:
+						$data = filter_var($data, FILTER_VALIDATE_IP);
+					break;
+				}
+			break;
+
+			case 'str':
+				switch($options1)
+				{
+					case "noencode":
+						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+					break;
+
+					case "striplow":
+						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+					break;
+
+					case "striphigh":
+						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+					break;
+
+					case "encodelow":
+						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+					break;
+
+					case "encodehigh":
+						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH);
+					break;
+
+					case "encodeamp":
+						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
+					break;
+
+					default:
+						$data = filter_var($data, FILTER_SANITIZE_STRING);
+					break;
+				}
+			break;
+
+			case "int":
+				if ((isset($options1) && is_int($options1)) && (isset($options2) && is_int($options2))) {
+					$option = array('options' => array('min_range' => $options1,
+														'max_range' => $options2
+														));
+
+					$data = filter_var($data, FILTER_VALIDATE_INT, $option);
+				} else {
+					$data = filter_var($data, FILTER_VALIDATE_INT);
+				}
+			break;
+
+			case "html":
+				$data = self::stripSlashesGPC($data);
+				$data = filter_var($data, FILTER_CALLBACK, array("options"=>"html_filter"));
+			break;
 		}
-
-		if ($type == "ip") {
-			if ($options1 == "ipv4") {
-				$opt1 = FILTER_FLAG_IPV4;
-			} elseif ($options1 == "ipv6") {
-				$opt1 = FILTER_FLAG_IPV6;
-			} elseif ($options1 == "rfc") {
-				$opt1 = FILTER_FLAG_NO_PRIV_RANGE;
-			} elseif ($options1 == "res") {
-				$opt1 = FILTER_FLAG_NO_RES_RANGE;
-			}
-
-			if (isset($opt1) && $opt1 !== "") {
-				$data = filter_var($data, FILTER_VALIDATE_IP, $opt1);
-			} else {
-				$data = filter_var($data, FILTER_VALIDATE_IP);
-			}
-
-			return $data;
-		}
-
-		if ($type == "str") {
-			if ($options1 == "noencode") {
-				$opt1 = FILTER_FLAG_NO_ENCODE_QUOTES;
-			} elseif ($options1 == "striplow") {
-				$opt1 = FILTER_FLAG_STRIP_LOW;
-			} elseif ($options1 == "striphigh") {
-				$opt1 = FILTER_FLAG_STRIP_HIGH;
-			} elseif ($options1 == "encodelow") {
-				$opt1 = FILTER_FLAG_ENCODE_LOW;
-			} elseif ($options1 == "encodehigh") {
-				$opt1 = FILTER_FLAG_ENCODE_HIGH;
-			} elseif ($options1 == "encodeamp") {
-				$opt1 = FILTER_FLAG_ENCODE_AMP;
-			}
-
-			if (isset($opt1) && $opt1 !== "") {
-				$data = filter_var($data, FILTER_SANITIZE_STRING, $opt1);
-			} else {
-				$data = filter_var($data, FILTER_SANITIZE_STRING);
-			}
-
-			return $data;
-		}
-
-		if ($type == "int") {
-			if ((isset($options1) && is_int($options1)) && (isset($options2) && is_int($options2))) {
-				$option = array('options' => array('min_range' => $options1,
-													'max_range' => $options2
-													));
-
-				return filter_var($data, FILTER_VALIDATE_INT, $option);
-			} else {
-				return filter_var($data, FILTER_VALIDATE_INT);
-			}
-		}
-
-		if ($type == "html") {
-			$data = self::stripSlashesGPC($data);
-			return filter_var($data, FILTER_CALLBACK, array("options"=>"html_filter"));
-		}
+		
+		return $data;
 	}
 
 	/**
