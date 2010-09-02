@@ -3,6 +3,7 @@
 * Class to filter Data
 * @category		ICMS
 * @package		Core
+* @subpackage	Filters
 * @since        1.3
 * @author       vaughan montgomery (vaughan@impresscms.org)
 * @author       ImpressCMS Project
@@ -14,6 +15,7 @@
  *
  * @category	ICMS
  * @package		Core
+ * @subpackage	Filters
  *
  */
 class icms_core_DataFilter {
@@ -112,7 +114,7 @@ class icms_core_DataFilter {
 	*
 	* @param	string  $text
 	* @return   string
-	**/
+	*/
 	public function htmlSpecialChars($text) {
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
 				@htmlspecialchars($text, ENT_QUOTES, _CHARSET));
@@ -123,7 +125,7 @@ class icms_core_DataFilter {
 	*
 	* @param   string  $text
 	* @return  string
-	**/
+	*/
 	static public function undoHtmlSpecialChars($text) {
 		return htmlspecialchars_decode($text, ENT_QUOTES);
 	}
@@ -144,7 +146,7 @@ class icms_core_DataFilter {
 	 *
 	 * @param   string  $text
 	 * @return  string
-	 **/
+	 */
 	static public function addSlashes($text) {
 		if (!get_magic_quotes_gpc()) {
 			$text = addslashes($text);
@@ -159,7 +161,7 @@ class icms_core_DataFilter {
 	 *
 	 * @param	string  $text
 	 * @return   string
-	 **/
+	 */
 	static public function stripSlashesGPC($text) {
 		if (get_magic_quotes_gpc()) {
 			$text = stripslashes($text);
@@ -190,7 +192,7 @@ class icms_core_DataFilter {
 	* Filters Multidimensional Array Recursively removing keys with empty values
 	* @param       array     $array       Array to be filtered
 	* @return      array     $array
-	**/
+	*/
 	public function cleanArray($arr) {
 		$rtn = array();
 
@@ -279,8 +281,7 @@ class icms_core_DataFilter {
 		if (!in_array($type, $valid_types)) {
 			return false;
 		} else {
-			switch ($type)
-			{
+			switch ($type) {
 				case 'url':
 					$valid_options1 = array('scheme', 'path', 'host', 'query');
 					$valid_options2 = array(0, 1);
@@ -330,8 +331,8 @@ class icms_core_DataFilter {
 						$options1 = '';
 						$options2 = '';
 					} else {
-						$options1 = (int)$options1;
-						$options2 = (int)$options2;
+						$options1 = (int) $options1;
+						$options2 = (int) $options2;
 					}
 				break;
 
@@ -351,7 +352,7 @@ class icms_core_DataFilter {
 	 * @param   bool	$allowimage Allow images in the text?
 	 *				  On FALSE, uses links to images.
 	 * @return  string
-	 **/
+	 */
 	public function codeDecode(&$text, $allowimage = 1) {
 		$patterns = array();
 		$replacements = array();
@@ -426,7 +427,7 @@ class icms_core_DataFilter {
 	 *
 	 * @param   string  $text
 	 * @return  string
-	 **/
+	 */
 	public function makeClickable(&$text) {
 		global $icmsConfigPersona;
 		$text = ' ' . $text;
@@ -481,7 +482,7 @@ class icms_core_DataFilter {
 	 * @param   string $text
 	 * @return  string
 	 *
-	 **/
+	 */
 	public function censorString(&$text) {
 		$config_handler = icms::handler('icms_config');
 		$icmsConfigCensor =& $config_handler->getConfigsByCat(ICMS_CONF_CENSOR);
@@ -776,7 +777,7 @@ class icms_core_DataFilter {
 			}
 			if (function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
 				$str2 = mb_strcut($strs[$i] , $start , $length - strlen($trimmarker));
-				$strs[$i] = $str2 . (mb_strlen($strs[$i])!=mb_strlen($str2) ? $trimmarker : '');
+				$strs[$i] = $str2 . (mb_strlen($strs[$i]) != mb_strlen($str2) ? $trimmarker : '');
 			}
 
 			$DEP_CHAR = 127;
@@ -791,7 +792,7 @@ class icms_core_DataFilter {
 				}
 			}
 			$strs[$i] = ($action) ? substr($strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker)) . $trimmarker : $strs[$i];
-			$strs[$i] = ($hasML)?'[' . $tags[$i] . ']' . $strs[$i] . '[/' . $tags[$i] . ']':$strs[$i];
+			$strs[$i] = ($hasML) ? '[' . $tags[$i] . ']' . $strs[$i] . '[/' . $tags[$i] . ']' : $strs[$i];
 		}
 		$str = implode('', $strs);
 		return $str;
@@ -809,14 +810,12 @@ class icms_core_DataFilter {
 	* @return
 	*/
 	private function priv_checkVar($data, $type, $options1, $options2) {
-		switch ($type)
-		{
+		switch ($type) {
 			case "url":
 
 				$data = filter_var($data, FILTER_SANITIZE_URL);
 
-				switch ($options1)
-				{
+				switch ($options1) {
 					case "scheme":
 						$data = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
 					break;
@@ -867,8 +866,7 @@ class icms_core_DataFilter {
 			break;
 
 			case "ip":
-				switch ($options1)
-				{
+				switch ($options1) {
 					case "ipv4":
 						$data = filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
 					break;
@@ -892,8 +890,7 @@ class icms_core_DataFilter {
 			break;
 
 			case 'str':
-				switch($options1)
-				{
+				switch ($options1) {
 					case "noencode":
 						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 					break;
@@ -941,7 +938,7 @@ class icms_core_DataFilter {
 				$data = filter_var($data, FILTER_CALLBACK, array("options"=>"html_filter"));
 			break;
 		}
-		
+
 		return $data;
 	}
 
@@ -957,7 +954,8 @@ class icms_core_DataFilter {
 			$message = str_replace(
 				$smile['code'],
 				'<img src="' . ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'])
-				. '" alt="" />', $message
+					. '" alt="" />',
+				$message
 				);
 		}
 		return $message;
