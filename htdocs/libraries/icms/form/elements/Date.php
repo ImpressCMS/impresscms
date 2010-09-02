@@ -44,12 +44,12 @@ class icms_form_elements_Date extends icms_form_elements_Text {
 		global $icmsConfigPersona;
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue(false);
-		$jstime = formatTimestamp($ele_value, 'Y-m-d');
+		$jstime = formatTimestamp($ele_value, _SHORTDATESTRING);
 		global $icmsConfigPersona;
 		include_once ICMS_ROOT_PATH.'/include/calendar'.($icmsConfigPersona['use_jsjalali'] == true ?'jalali':'').'js.php';
-		$result = "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' onclick='return showCalendar(\"".$ele_name."\");'>";
+		$result = "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date(_SHORTDATESTRING, $ele_value)."'".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' onclick='return showCalendar(\"".$ele_name."\");'>";
 		if ($icmsConfigPersona['use_jsjalali'] == true) {
-			$result = "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? icms_conv_nr2local(jdate("Y-m-d", $ele_value)) : date("Y-m-d", $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' id='btn_".$ele_name."'><script type='text/javascript'>
+			$result = "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? icms_conv_nr2local(jdate(_SHORTDATESTRING, $ele_value)) : date(_SHORTDATESTRING, $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date(_SHORTDATESTRING, $ele_value)."' ".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' id='btn_".$ele_name."'><script type='text/javascript'>
 				Calendar.setup({
 				inputField  : 'tmp_".$ele_name."',   // id of the input field
 		       		ifFormat    : '%Y-%m-%d',       // format of the input field

@@ -305,4 +305,5 @@ define('_FILE_DELETED', 'File %s was deleted successfully');
 // added in 1.3
 define('_CHECKALL', 'Check all');
 define('_COPYRIGHT', 'Copyright');
+define("_LONGDATESTRING", "F jS Y, h:iA");
 ?>

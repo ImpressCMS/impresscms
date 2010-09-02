@@ -216,7 +216,7 @@ function EmailStats($cid, $bid)
 						} else {
 							$left = $imptotal-$impmade;
 						}
-						$fecha = date("F jS Y, h:iA.");
+						$fecha = date(_LONGDATESTRING);
 						$subject = sprintf(_BANNERS_MAIL_SUBJECT, $icmsConfig['sitename']);
 						$message = sprintf(_BANNERS_MAIL_MESSAGE, $icmsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
 						$xoopsMailer =& getMailer();

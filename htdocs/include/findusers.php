@@ -686,8 +686,8 @@ if (empty($_POST["user_submit"])) {
 				echo "</td>
 				<td><a href='".ICMS_URL."/userinfo.php?uid=".$foundusers[$j]->getVar("uid")."' target='_blank'>".$foundusers[$j]->getVar("uname")."</a></td>
 				<td>".$fuser_name."</td>
-				<td align='center'>".($foundusers[$j]->getVar("user_regdate") ? date("Y-m-d", $foundusers[$j]->getVar("user_regdate")) : "")."</td>
-				<td align='center'>".($foundusers[$j]->getVar("last_login") ? date("Y-m-d H:i", $foundusers[$j]->getVar("last_login")) : "")."</td>
+				<td align='center'>".($foundusers[$j]->getVar("user_regdate") ? date(_SHORTDATESTRING, $foundusers[$j]->getVar("user_regdate")) : "")."</td>
+				<td align='center'>".($foundusers[$j]->getVar("last_login") ? date(_MEDIUMDATESTRING, $foundusers[$j]->getVar("last_login")) : "")."</td>
 				<td align='center'>".$foundusers[$j]->getVar("posts")."</td>";
 				echo "</tr>\n";
 			}
