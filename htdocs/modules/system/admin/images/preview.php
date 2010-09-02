@@ -14,7 +14,7 @@
  */
 
 include '../../../../mainfile.php' ;
-include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
+include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 
 $file = $_GET['file'];
 $resize = isset($_GET['resize'])?$_GET['resize']:1;
