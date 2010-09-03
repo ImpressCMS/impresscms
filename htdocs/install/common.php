@@ -403,7 +403,7 @@ if ($xoopsConfig['closesite'] == 1) {
             	'lang_username' => _USERNAME,
             	'lang_password' => _PASSWORD,
             	'lang_siteclosemsg' => $xoopsConfig['closesite_text'],
-            	'xoops_requesturi' => $_SERVER['REQUEST_URI'],
+            	'icms_requesturi' => $_SERVER['REQUEST_URI'],
 		) );
 		$xoopsTpl->caching = 0;
 		$xoopsTpl->display('db:system_siteclosed.html');

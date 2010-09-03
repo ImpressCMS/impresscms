@@ -459,31 +459,6 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$xoopsThemeFactory->defaultTheme = $theme;
 	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
 	$xoopsTpl = $icmsTpl =& $xoTheme->template;
-	$xoopsTpl->assign(array(
-		'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
-		'icms_theme' => $theme,
-		'icms_imageurl' => ICMS_THEME_URL.'/'.$theme.'/',
-		'icms_themecss'=> xoops_getcss($theme),
-		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
-		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
-		'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES)
-	));
-
-	// this is for backward compatibility only!
-	$xoopsTpl->assign(array(
-		'xoops_theme' => $xoopsTpl->get_template_vars('icms_theme'),
-		'xoops_imageurl' => $xoopsTpl->get_template_vars('icms_imageurl'),
-		'xoops_themecss'=> $xoopsTpl->get_template_vars('icms_themecss'),
-		'xoops_requesturi' => $xoopsTpl->get_template_vars('icms_requesturi'),
-		'xoops_sitename' => $xoopsTpl->get_template_vars('icms_sitename'),
-		'xoops_slogan' => $xoopsTpl->get_template_vars('icms_slogan'),
-		'xoops_dirname' => $xoopsTpl->get_template_vars('icms_dirname'),
-		'xoops_banner' => $xoopsTpl->get_template_vars('icms_banner'),
-		'xoops_pagetitle' => $xoopsTpl->get_template_vars('icms_pagetitle')
-	));
 
 	if($icmsConfig['debug_mode'] == 2 && $icmsUserIsAdmin)
 	{

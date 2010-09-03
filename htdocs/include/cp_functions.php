@@ -59,7 +59,7 @@ function icms_cp_header(){
 	$icmsAdminTpl = new icms_view_Tpl();
 
 	$icmsAdminTpl->assign('xoops_url', ICMS_URL);
-	$icmsAdminTpl->assign('xoops_sitename', $icmsConfig['sitename']);
+	$icmsAdminTpl->assign('icms_sitename', $icmsConfig['sitename']);
 
 	if ( @$xoopsOption['template_main'] ) {
 		if ( false === strpos( $xoopsOption['template_main'], ':' ) ) {
