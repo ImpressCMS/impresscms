@@ -58,7 +58,7 @@ if ($op == 'main') {
             'allow_registration' => $icmsConfigUser['allow_register'],
             'rememberme' => $icmsConfigUser['remember_me'],
             'auth_openid' => $icmsConfigAuth['auth_openid'],
-            'xoops_pagetitle' => _LOGIN
+            'icms_pagetitle' => _LOGIN
 		));
 		include 'footer.php';
 	} elseif (!empty($_GET['xoops_redirect'])) {
@@ -112,7 +112,7 @@ if ($op == 'resetpass') {
             'lang_newpass' => _US_NEWPASSWORD,
             'lang_newpass2' => _US_VERIFYPASS,
             'resetpassword_token' => $GLOBALS['xoopsSecurity']->createToken(),
-            'xoops_pagetitle' => _LOGIN
+            'icms_pagetitle' => _LOGIN
 		));
 		include 'footer.php';
 	} elseif (!empty($_GET['xoops_redirect'])) {

@@ -374,7 +374,7 @@ class icms_ipf_Metagen {
 			$xoopsTpl->assign('xoops_meta_keywords', $this->_keywords);
 			$xoopsTpl->assign('xoops_meta_description', $this->_description);
 		}
-		$xoopsTpl->assign('xoops_pagetitle', $this->_title);
+		$xoopsTpl->assign('icms_pagetitle', $this->_title);
 	}
 
 }

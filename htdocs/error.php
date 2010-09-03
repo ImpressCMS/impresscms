@@ -35,7 +35,7 @@ $lang_error_no = sprintf(_ERR_NO, $e);
 $xoopsTpl->assign('lang_error_no', $lang_error_no);
 $xoopsTpl->assign('lang_error_desc', sprintf(constant('_ERR_'.$e.'_DESC'), $siteName));
 $xoopsTpl->assign('lang_error_title', $lang_error_no.' '.constant('_ERR_'.$e.'_TITLE'));
-$xoopsTpl->assign('xoops_pagetitle', $lang_error_no.' '.constant('_ERR_'.$e.'_TITLE'));
+$xoopsTpl->assign('icms_pagetitle', $lang_error_no.' '.constant('_ERR_'.$e.'_TITLE'));
 $xoopsTpl->assign('lang_found_contact', sprintf(_ERR_CONTACT, $icmsConfig['adminmail']));
 $xoopsTpl->assign('lang_search', _ERR_SEARCH);
 $xoopsTpl->assign('lang_advanced_search', _ERR_ADVANCED_SEARCH);

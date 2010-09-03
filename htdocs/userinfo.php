@@ -157,7 +157,7 @@ icms_makeSmarty(array(
         '<img src="'.ICMS_UPLOAD_URL.'/system/userrank/'.$userrank['image'].'" alt="'.$userrank['title'].'" />' : '',
     'user_ranktitle' => $userrank['title'],
     'user_lastlogin' => !empty($date) ? formatTimestamp($thisUser->getVar('last_login'), 'm') : '',
-    'xoops_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
+    'icms_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
     'user_email' => ($thisUser->getVar('user_viewemail') == true || (is_object($icmsUser) &&
         ($icmsUserIsAdmin || ($icmsUser->getVar('uid') == $thisUser->getVar('uid')))))
         ? $thisUser->getVar('email', 'E') : '&nbsp;',

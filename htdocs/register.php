@@ -107,7 +107,7 @@ switch ( $op) {
 			include 'include/registerform.php';
 			$reg_form->display();
 		}
-		$xoopsTpl->assign('xoops_pagetitle', _US_USERREG);
+		$xoopsTpl->assign('icms_pagetitle', _US_USERREG);
 		include 'footer.php';
 		break;
 	case 'finish':
@@ -229,7 +229,7 @@ switch ( $op) {
 			include 'include/registerform.php';
 			$reg_form->display();
 		}
-		$xoopsTpl->assign('xoops_pagetitle', _US_USERREG);
+		$xoopsTpl->assign('icms_pagetitle', _US_USERREG);
 		include 'footer.php';
 		break;
 	case 'register':
@@ -243,7 +243,7 @@ switch ( $op) {
 		include 'header.php';
 		include 'include/registerform.php';
 		$reg_form->display();
-		$xoopsTpl->assign('xoops_pagetitle', _US_USERREG);
+		$xoopsTpl->assign('icms_pagetitle', _US_USERREG);
 		include 'footer.php';
 		break;
 }
