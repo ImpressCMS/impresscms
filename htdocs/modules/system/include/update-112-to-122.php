@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-	if ($dbVersion < 12 ) include 'update-to-112.php';
+	if ($dbVersion < 12) include 'update-to-112.php';
 
 	/*
 	 * These are updates to the database that occured between 1.1.2 and 1.2.2
@@ -19,195 +19,195 @@
 
 	if ($dbVersion < $newDbVersion) {
 		$from_112 = true;
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"' ) == FALSE) {
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')" );
+		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == FALSE) {
+			$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configcategory") . " (confcat_id, confcat_name) VALUES ('11', '_MD_AM_CAPTCHA')");
 		}
-		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE (conf_modid='1' AND conf_catid='11')" );
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE (conf_modid='1' AND conf_catid='11')");
 		// Adding new function of Captcha
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', 1 );
-		$config_id = $icmsDB->getInsertId ();
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', 1);
+		$config_id = $icmsDB->getInsertId();
 
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_CAPTCHA_OFF', 'none', {$config_id})," . " (NULL, '_MD_AM_CAPTCHA_IMG', 'image', {$config_id})," . " (NULL, '_MD_AM_CAPTCHA_TXT', 'text', {$config_id})";
-		if (! $icmsDB->queryF ( $sql )) {
+		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_CAPTCHA_OFF', 'none', {$config_id}), " . " (NULL, '_MD_AM_CAPTCHA_IMG', 'image', {$config_id}), " . " (NULL, '_MD_AM_CAPTCHA_TXT', 'text', {$config_id})";
+		if (! $icmsDB->queryF($sql)) {
 			return false;
 		}
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', serialize(array('2')), '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', 2 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', 3 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', serialize(array('o', '0', 'i', 'l', '1')), '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', 4 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', 5 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_num_chars', '_MD_AM_CAPTCHA_NUMCHARS', '4', '_MD_AM_CAPTCHA_NUMCHARSDSC', 'textbox', 'int', 6 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', 7 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_fontsize_max', '_MD_AM_CAPTCHA_FONTMAX', '12', '_MD_AM_CAPTCHA_FONTMAXDSC', 'textbox', 'int', 8 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_background_type', '_MD_AM_CAPTCHA_BGTYPE', '100', '_MD_AM_CAPTCHA_BGTYPEDSC', 'select', 'text', 9 );
-		$config_id = $icmsDB->getInsertId ();
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', serialize(array('2')), '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', 2);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', 3);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', serialize(array('o', '0', 'i', 'l', '1')), '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', 4);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', 5);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_num_chars', '_MD_AM_CAPTCHA_NUMCHARS', '4', '_MD_AM_CAPTCHA_NUMCHARSDSC', 'textbox', 'int', 6);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', 7);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_max', '_MD_AM_CAPTCHA_FONTMAX', '12', '_MD_AM_CAPTCHA_FONTMAXDSC', 'textbox', 'int', 8);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_type', '_MD_AM_CAPTCHA_BGTYPE', '100', '_MD_AM_CAPTCHA_BGTYPEDSC', 'select', 'text', 9);
+		$config_id = $icmsDB->getInsertId();
 
-		$sql2 = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_BAR', '0', {$config_id})," . " (NULL, '_MD_AM_CIRCLE', '1', {$config_id})," . " (NULL, '_MD_AM_LINE', '2', {$config_id})," . " (NULL, '_MD_AM_RECTANGLE', '3', {$config_id})," . " (NULL, '_MD_AM_ELLIPSE', '4', {$config_id})," . " (NULL, '_MD_AM_POLYGON', '5', {$config_id})," . " (NULL, '_MD_AM_RANDOM', '100', {$config_id})";
-		if (! $icmsDB->queryF ( $sql2 )) {
+		$sql2 = "INSERT INTO " . $icmsDB->prefix('configoption') . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_BAR', '0', {$config_id}), " . " (NULL, '_MD_AM_CIRCLE', '1', {$config_id}), " . " (NULL, '_MD_AM_LINE', '2', {$config_id}), " . " (NULL, '_MD_AM_RECTANGLE', '3', {$config_id}), " . " (NULL, '_MD_AM_ELLIPSE', '4', {$config_id}), " . " (NULL, '_MD_AM_POLYGON', '5', {$config_id}), " . " (NULL, '_MD_AM_RANDOM', '100', {$config_id})";
+		if (! $icmsDB->queryF($sql2)) {
 			return false;
 		}
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', 10 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', 11 );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', 10);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', 11);
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 13;
 
 	if ($dbVersion < $newDbVersion) {
-		//echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
+		//echo sprintf(_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
 
-		$icmsDB->queryF ( "UPDATE `" . $icmsDB->prefix ( 'config' ) . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'reg_disclaimer'" );
+		$icmsDB->queryF("UPDATE `" . $icmsDB->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'reg_disclaimer'");
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 14;
 
 	if ($dbVersion < $newDbVersion) {
-		if (is_writable ( ICMS_PLUGINS_PATH ) || (is_dir(ICMS_ROOT_PATH . '/plugins/preloads') && is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' ))) {
-			if (is_dir ( ICMS_ROOT_PATH . '/preload' )) {
+		if (is_writable(ICMS_PLUGINS_PATH) || (is_dir(ICMS_ROOT_PATH . '/plugins/preloads') && is_writable(ICMS_ROOT_PATH . '/plugins/preloads'))) {
+			if (is_dir(ICMS_ROOT_PATH . '/preload')) {
 				/* Remove these 2 files so they don't overwrite the updated versions provided in 1.3 */
 				icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . '/preload/customtag.php');
 				icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . '/preload/userinfo.php');
-				if (icms_core_Filesystem::copyRecursive ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' )) {
+				if (icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads')) {
 					icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . '/preload');
 				} else {
 					$newDbVersion = 13;
-					echo '<br />'.sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads');
+					echo '<br />'.sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH, ICMS_ROOT_PATH . '/plugins/preloads');
 					$abortUpdate = true;
 				}
 			}
 		} else {
 			$newDbVersion = 13;
-			echo '<br />'.sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads');
+			echo '<br />'.sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH, ICMS_ROOT_PATH . '/plugins/preloads');
 			$abortUpdate = true;
 		}
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 15;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new IcmsDatabasetable ( 'users' );
-		if (! $table->fieldExists ( 'login_name' )) {
-			$table->addNewField ( 'login_name', "varchar(255) NOT NULL default ''" );
-			$icmsDatabaseUpdater->updateTable ( $table );
-			$icmsDB->queryF ( "UPDATE `" . $icmsDB->prefix ( "users" ) . "` SET login_name=uname" );
-			$icmsDatabaseUpdater->runQuery ( "ALTER TABLE `" . $table->name () . "` ADD INDEX login_name (login_name)", 'Successfully altered the index login_name on table users', '' );
+		$table = new IcmsDatabasetable('users');
+		if (! $table->fieldExists('login_name')) {
+			$table->addNewField('login_name', "varchar(255) NOT NULL default ''");
+			$icmsDatabaseUpdater->updateTable($table);
+			$icmsDB->queryF("UPDATE `" . $icmsDB->prefix("users") . "` SET login_name=uname");
+			$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` ADD INDEX login_name(login_name)", 'Successfully altered the index login_name on table users', '');
 		}
-		unset ( $table );
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		unset($table);
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 16;
 
 	if ($dbVersion < $newDbVersion) {
-		$sql = "SELECT conf_id FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name = 'email_protect'";
-		$result = $icmsDB->query ( $sql );
-		list ( $conf_id ) = $icmsDB->FetchRow ( $result );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ( NULL, '_MD_AM_NOMAILPROTECT', '0', " . $conf_id . ");" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ( NULL, '_MD_AM_GDMAILPROTECT', '1', " . $conf_id . ");" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ( NULL, '_MD_AM_REMAILPROTECT', '2', " . $conf_id . ");" );
-		$icmsDB->queryF ( "UPDATE `" . $icmsDB->prefix ( 'config' ) . "` SET conf_formtype = 'select', conf_valuetype = 'text' WHERE conf_name = 'email_protect'" );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17 );
+		$sql = "SELECT conf_id FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name = 'email_protect'";
+		$result = $icmsDB->query($sql);
+		list($conf_id) = $icmsDB->FetchRow($result);
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configoption") . " VALUES(NULL, '_MD_AM_NOMAILPROTECT', '0', " . $conf_id . ");");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configoption") . " VALUES(NULL, '_MD_AM_GDMAILPROTECT', '1', " . $conf_id . ");");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configoption") . " VALUES(NULL, '_MD_AM_REMAILPROTECT', '2', " . $conf_id . ");");
+		$icmsDB->queryF("UPDATE `" . $icmsDB->prefix('config') . "` SET conf_formtype = 'select', conf_valuetype = 'text' WHERE conf_name = 'email_protect'");
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17);
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 17;
 
 	if ($dbVersion < $newDbVersion) {
 		//$icmsDatabaseUpdater->insertConfig(ICMS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"' ) == FALSE) {
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')" );
+		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"') == FALSE) {
+			$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configcategory") . " (confcat_id, confcat_name) VALUES ('12', '_MD_AM_PLUGINS')");
 		}
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS',  serialize ( array ('' ) ), '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PLUGINS, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', 2 );
-		$config_id = $icmsDB->getInsertId ();
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_HIGHLIGHTER_OFF', 'none', {$config_id})," . " (NULL, '_MD_AM_HIGHLIGHTER_PHP', 'php', {$config_id})," . " (NULL, '_MD_AM_HIGHLIGHTER_GESHI', 'geshi', {$config_id})";
-		if (! $icmsDB->queryF ( $sql )) {
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS',  serialize(array('')), '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', 2);
+		$config_id = $icmsDB->getInsertId();
+		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_HIGHLIGHTER_OFF', 'none', {$config_id}), " . " (NULL, '_MD_AM_HIGHLIGHTER_PHP', 'php', {$config_id}), " . " (NULL, '_MD_AM_HIGHLIGHTER_GESHI', 'geshi', {$config_id})";
+		if (! $icmsDB->queryF($sql)) {
 			return false;
 		}
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PLUGINS, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', 3 );
-		$icmsDB->queryF ( "UPDATE `" . $icmsDB->prefix ( 'config' ) . "` SET conf_valuetype = 'array' WHERE conf_name = 'startpage'" );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '30', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 6 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', 11 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'num_pages', '_MD_AM_CONT_NUMPAGES', '10', '_MD_AM_CONT_NUMPAGESDSC', 'textbox', 'int', 5 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', 6 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', 24 );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', 3);
+		$icmsDB->queryF("UPDATE `" . $icmsDB->prefix('config') . "` SET conf_valuetype = 'array' WHERE conf_name = 'startpage'");
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '30', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 6);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_USER, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', 11);
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'num_pages', '_MD_AM_CONT_NUMPAGES', '10', '_MD_AM_CONT_NUMPAGESDSC', 'textbox', 'int', 5);
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', 6);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PERSONA, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', 24);
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 18;
 	/* errors discovered after 1.2 beta release (dbversion 31) moved to dbversion 32 */
 	if ($dbVersion < $newDbVersion) {
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-	    echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+	    echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 19;
 
 	if ($dbVersion < $newDbVersion) {
 		$module_handler = icms::handler('icms_module');
-		$smartprofile_module = $module_handler->getByDirname ( 'smartprofile' );
-		$table = new IcmsDatabasetable ( 'profile_category' );
-		if ($smartprofile_module && $smartprofile_module->getVar ( 'isactive' ) && ! $table->exists ()) {
-			$icmsDB->queryF ( "RENAME TABLE `" . $icmsDB->prefix ( "smartprofile_category" ) . "` TO `" . $icmsDB->prefix ( "profile_category" ) . "`" );
-			$icmsDB->queryF ( "RENAME TABLE `" . $icmsDB->prefix ( "smartprofile_field" ) . "` TO `" . $icmsDB->prefix ( "profile_field" ) . "`" );
-			$icmsDB->queryF ( "RENAME TABLE `" . $icmsDB->prefix ( "smartprofile_visibility" ) . "` TO `" . $icmsDB->prefix ( "profile_visibility" ) . "`" );
-			$icmsDB->queryF ( "RENAME TABLE `" . $icmsDB->prefix ( "smartprofile_profile" ) . "` TO `" . $icmsDB->prefix ( "profile_profile" ) . "`" );
-			$icmsDB->queryF ( "RENAME TABLE `" . $icmsDB->prefix ( "smartprofile_regstep" ) . "` TO `" . $icmsDB->prefix ( "profile_regstep" ) . "`" );
-			$command = array ("ALTER TABLE `" . $icmsDB->prefix ( "profile_profile" ) . "` ADD `newemail` varchar(255) NOT NULL default '' AFTER `profile_id`", "ALTER TABLE `" . $icmsDB->prefix ( "profile_field" ) . "` ADD `exportable` int unsigned NOT NULL default 0 AFTER `step_id`", "UPDATE `" . $icmsDB->prefix ( 'modules' ) . "` SET dirname='profile' WHERE dirname='smartprofile'" );
+		$smartprofile_module = $module_handler->getByDirname('smartprofile');
+		$table = new IcmsDatabasetable('profile_category');
+		if ($smartprofile_module && $smartprofile_module->getVar('isactive') && ! $table->exists()) {
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_category") . "` TO `" . $icmsDB->prefix("profile_category") . "`");
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_field") . "` TO `" . $icmsDB->prefix("profile_field") . "`");
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_visibility") . "` TO `" . $icmsDB->prefix("profile_visibility") . "`");
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_profile") . "` TO `" . $icmsDB->prefix("profile_profile") . "`");
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_regstep") . "` TO `" . $icmsDB->prefix("profile_regstep") . "`");
+			$command = array("ALTER TABLE `" . $icmsDB->prefix("profile_profile") . "` ADD `newemail` varchar(255) NOT NULL default '' AFTER `profile_id`", "ALTER TABLE `" . $icmsDB->prefix("profile_field") . "` ADD `exportable` int unsigned NOT NULL default 0 AFTER `step_id`", "UPDATE `" . $icmsDB->prefix('modules') . "` SET dirname='profile' WHERE dirname='smartprofile'");
 
-			foreach ( $command as $sql) {
-				if (! $result = $icmsDB->queryF ( $sql )) {
-					icms_core_Debug::message ( 'An error occurred while executing "' . $sql . '" - ' . $icmsDB->error () );
+			foreach($command as $sql) {
+				if (! $result = $icmsDB->queryF($sql)) {
+					icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $icmsDB->error());
 					return false;
 				}
 			}
 		}
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 20;
 
 	if ($dbVersion < $newDbVersion) {
 		// Adding configurations of search preferences
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_SEARCH, 'enable_deep_search', '_MD_AM_DODEEPSEARCH', '1', '_MD_AM_DODEEPSEARCHDSC', 'yesno', 'int', 2 );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_SEARCH, 'num_shallow_search', '_MD_AM_NUMINITSRCHRSLTS', '5', '_MD_AM_NUMINITSRCHRSLTSDSC', 'textbox', 'int', 4 );
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_SEARCH, 'enable_deep_search', '_MD_AM_DODEEPSEARCH', '1', '_MD_AM_DODEEPSEARCHDSC', 'yesno', 'int', 2);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_SEARCH, 'num_shallow_search', '_MD_AM_NUMINITSRCHRSLTS', '5', '_MD_AM_NUMINITSRCHRSLTSDSC', 'textbox', 'int', 4);
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 21;
 
 	if ($dbVersion < $newDbVersion) {
 		// create extended date function's config option
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', 12 );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', 12);
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 22;
 
 	if ($dbVersion < $newDbVersion) {
-		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'modules' ) . "` WHERE dirname='waiting'" );
-		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE dirname='waiting'" );
-		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'tplfile' ) . "` WHERE tpl_module='waiting'" );
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('modules') . "` WHERE dirname='waiting'");
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('newblocks') . "` WHERE dirname='waiting'");
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('tplfile') . "` WHERE tpl_module='waiting'");
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	/*	if (!$abortUpdate) $newDbVersion =  23;
@@ -222,52 +222,52 @@
 	if (!$abortUpdate) $newDbVersion = 24;
 
 	if ($dbVersion < $newDbVersion) {
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '0', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', 9 );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PERSONA, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '0', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', 9);
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 25;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new IcmsDatabasetable ( 'icmscontent' );
-		if (! $table->fieldExists ( 'content_seo_description' )) {
-			$table->addNewField ( 'content_seo_description', "text" );
-			$icmsDatabaseUpdater->updateTable ( $table );
+		$table = new IcmsDatabasetable('icmscontent');
+		if (! $table->fieldExists('content_seo_description')) {
+			$table->addNewField('content_seo_description', "text");
+			$icmsDatabaseUpdater->updateTable($table);
 		}
-		unset ( $table );
+		unset($table);
 
-		$table = new IcmsDatabasetable ( 'icmscontent' );
-		if (! $table->fieldExists ( 'content_seo_keywords' )) {
-			$table->addNewField ( 'content_seo_keywords', "text" );
-			$icmsDatabaseUpdater->updateTable ( $table );
+		$table = new IcmsDatabasetable('icmscontent');
+		if (! $table->fieldExists('content_seo_keywords')) {
+			$table->addNewField('content_seo_keywords', "text");
+			$icmsDatabaseUpdater->updateTable($table);
 		}
-		unset ( $table );
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		unset($table);
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 26;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new IcmsDatabasetable ( 'system_mimetype' );
-		if (! $table->exists ()) {
-			$table->setStructure ( "mimetypeid int(11) NOT NULL auto_increment,
+		$table = new IcmsDatabasetable('system_mimetype');
+		if (! $table->exists()) {
+			$table->setStructure("mimetypeid int(11) NOT NULL auto_increment,
 					extension varchar(60) NOT NULL default '',
 					types text NOT NULL,
 					name varchar(255) NOT NULL default '',
 					dirname VARCHAR(255) NOT NULL,
 					KEY mimetypeid (mimetypeid)
-					" );
-			$table->createTable ();
+					");
+			$table->createTable();
 		}
-		$icmsDB->queryFromFile ( ICMS_ROOT_PATH . "/modules/" . $module->getVar ( 'dirname', 'n' ) . "/include/upgrade.sql" );
-		unset ( $table );
+		$icmsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/include/upgrade.sql");
+		unset($table);
 
-		$table = new IcmsDatabasetable ( 'system_adsense' );
-		if (! $table->exists ()) {
-			$table->setStructure ( "adsenseid int(11) NOT NULL auto_increment,
+		$table = new IcmsDatabasetable('system_adsense');
+		if (! $table->exists()) {
+			$table->setStructure("adsenseid int(11) NOT NULL auto_increment,
 					format VARCHAR(100) NOT NULL,
 					description TEXT NOT NULL,
 					style TEXT NOT NULL,
@@ -279,14 +279,14 @@
 					client_id varchar(100) NOT NULL default '',
 					tag varchar(50) NOT NULL default '',
 					PRIMARY KEY  (`adsenseid`)
-					" );
-			$table->createTable ();
+					");
+			$table->createTable();
 		}
-		unset ( $table );
+		unset($table);
 
-		$table = new IcmsDatabasetable ( 'system_rating' );
-		if (! $table->exists ()) {
-			$table->setStructure ( "ratingid int(11) NOT NULL auto_increment,
+		$table = new IcmsDatabasetable('system_rating');
+		if (! $table->exists()) {
+			$table->setStructure("ratingid int(11) NOT NULL auto_increment,
 					dirname VARCHAR(255) NOT NULL,
 					item VARCHAR(255) NOT NULL,
 					itemid int(11) NOT NULL,
@@ -294,29 +294,29 @@
 					rate int(1) NOT NULL,
 					date int(11) NOT NULL,
 					PRIMARY KEY  (`ratingid`)
-					" );
-			$table->createTable ();
+					");
+			$table->createTable();
 		}
-		unset ( $table );
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		unset($table);
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 27;
 
 	if ($dbVersion < $newDbVersion) {
-		$handler = icms_getModulehandler ( 'userrank', 'system' );
-		$handler->MoveAllRanksImagesToProperPath ();
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$handler = icms_getModulehandler('userrank', 'system');
+		$handler->MoveAllRanksImagesToProperPath();
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 28;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new IcmsDatabasetable ( 'system_autotasks' );
-		if (! $table->exists ()) {
-			$table->setStructure ( "sat_id int(10) unsigned NOT NULL AUTO_INCREMENT,
+		$table = new IcmsDatabasetable('system_autotasks');
+		if (! $table->exists()) {
+			$table->setStructure("sat_id int(10) unsigned NOT NULL AUTO_INCREMENT,
 					sat_name varchar(255) NOT NULL,
 					sat_code text NOT NULL,
 					sat_repeat int(11) NOT NULL,
@@ -330,136 +330,136 @@
 					KEY sat_interval (sat_interval),
 					KEY sat_lastruntime (sat_lastruntime),
 					KEY sat_type (sat_type)
-					" );
-			$table->createTable ();
+					");
+			$table->createTable();
 		}
-		unset ( $table );
+		unset($table);
 
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_AUTOTASKS"' ) == FALSE) {
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES (13, '_MD_AM_AUTOTASKS')" );
+		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_AUTOTASKS"') == FALSE) {
+			$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configcategory") . " (confcat_id, confcat_name) VALUES (13, '_MD_AM_AUTOTASKS')");
 		}
 
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', 16 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_AUTOTASKS, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', 1 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_AUTOTASKS, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', 2 );
-		$config_id = $icmsDB->getInsertId ();
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, 'PHP-CGI', 'php -f %path%', {$config_id})," . " (NULL, 'wget', 'wget %url%', {$config_id})," . " (NULL, 'Lynx', 'lynx --dump %url%', {$config_id})";
-		if (! $icmsDB->queryF ( $sql )) {
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', 16);
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', 1);
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', 2);
+		$config_id = $icmsDB->getInsertId();
+		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, 'PHP-CGI', 'php -f %path%', {$config_id}), " . " (NULL, 'wget', 'wget %url%', {$config_id}), " . " (NULL, 'Lynx', 'lynx --dump %url%', {$config_id})";
+		if (! $icmsDB->queryF($sql)) {
 			return false;
 		}
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_AUTOTASKS, 'autotasks_helper_path', '_MD_AM_AUTOTASKS_HELPER_PATH', '/usr/bin/', '_MD_AM_AUTOTASKS_HELPER_PATHDSC', 'text', 'text', 3 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_AUTOTASKS, 'autotasks_user', '_MD_AM_AUTOTASKS_USER', '', '_MD_AM_AUTOTASKS_USERDSC', 'text', 'text', 4 );
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_helper_path', '_MD_AM_AUTOTASKS_HELPER_PATH', '/usr/bin/', '_MD_AM_AUTOTASKS_HELPER_PATHDSC', 'text', 'text', 3);
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_user', '_MD_AM_AUTOTASKS_USER', '', '_MD_AM_AUTOTASKS_USERDSC', 'text', 'text', 4);
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 29;
 
 	if ($dbVersion < $newDbVersion) {
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"' ) == FALSE) {
-			$icmsDB->queryF ( "INSERT INTO " . $icmsDB->prefix ( 'configcategory' ) . " (confcat_id,confcat_name) VALUES ('14', '_MD_AM_PURIFIER')" );
+		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"') == FALSE) {
+			$icmsDB->queryF("INSERT INTO " . $icmsDB->prefix('configcategory') . " (confcat_id, confcat_name) VALUES ('14', '_MD_AM_PURIFIER')");
 		}
 
-		$table = new IcmsDatabasetable ( 'config' );
-		$icmsDatabaseUpdater->runQuery ( "ALTER TABLE `" . $table->name () . "` MODIFY conf_name VARCHAR(75) NOT NULL default ''", 'Successfully altered field conf_name in config', '' );
-		unset ( $table );
+		$table = new IcmsDatabasetable('config');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` MODIFY conf_name VARCHAR(75) NOT NULL default ''", 'Successfully altered field conf_name in config', '');
+		unset($table);
 
 		include_once ICMS_ROOT_PATH . '/include/functions.php';
-		$host_domain = icms_get_base_domain ( ICMS_URL );
-		$host_base = icms_get_url_domain ( ICMS_URL );
+		$host_domain = icms_get_base_domain(ICMS_URL);
+		$host_base = icms_get_url_domain(ICMS_URL);
 
 		// Allowed Elements in HTML
-		$HTML_Allowed_Elms = array ('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl', 'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's', 'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var' );
+		$HTML_Allowed_Elms = array('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl', 'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's', 'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var');
 
 		// Allowed Element Attributes in HTML', 'element must also be allowed in Allowed Elements for these attributes to work.
-		$HTML_Allowed_Attr = array ('a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title', 'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style', 'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id', 'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan', 'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan', 'th.style', 'th.valign', 'ul.style' );
+		$HTML_Allowed_Attr = array('a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title', 'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style', 'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id', 'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan', 'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan', 'th.style', 'th.valign', 'ul.style');
 
 		$p = 0;
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'enable_purifier', '_MD_AM_PURIFIER_ENABLE', '1', '_MD_AM_PURIFIER_ENABLEDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionID', '_MD_AM_PURIFIER_URI_DEFID', 'system', '_MD_AM_PURIFIER_URI_DEFIDDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionRev', '_MD_AM_PURIFIER_URI_DEFREV', '1', '_MD_AM_PURIFIER_URI_DEFREVDSC', 'textbox', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_Host', '_MD_AM_PURIFIER_URI_HOST', addslashes ( $host_domain ), '_MD_AM_PURIFIER_URI_HOSTDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_Base', '_MD_AM_PURIFIER_URI_BASE', addslashes ( $host_base ), '_MD_AM_PURIFIER_URI_BASEDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_Disable', '_MD_AM_PURIFIER_URI_DISABLE', '0', '_MD_AM_PURIFIER_URI_DISABLEDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_DisableExternal', '_MD_AM_PURIFIER_URI_DISABLEEXT', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_DisableExternalResources', '_MD_AM_PURIFIER_URI_DISABLEEXTRES', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTRESDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_DisableResources', '_MD_AM_PURIFIER_URI_DISABLERES', '0', '_MD_AM_PURIFIER_URI_DISABLERESDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_MakeAbsolute', '_MD_AM_PURIFIER_URI_MAKEABS', '0', '_MD_AM_PURIFIER_URI_MAKEABSDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_HostBlacklist', '_MD_AM_PURIFIER_URI_BLACKLIST', '', '_MD_AM_PURIFIER_URI_BLACKLISTDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_URI_AllowedSchemes', '_MD_AM_PURIFIER_URI_ALLOWSCHEME',  serialize ( array ('http', 'https', 'mailto', 'ftp', 'nntp', 'news' ) ), '_MD_AM_PURIFIER_URI_ALLOWSCHEMEDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_DefinitionID', '_MD_AM_PURIFIER_HTML_DEFID', 'system', '_MD_AM_PURIFIER_HTML_DEFIDDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_DefinitionRev', '_MD_AM_PURIFIER_HTML_DEFREV', '1', '_MD_AM_PURIFIER_HTML_DEFREVDSC', 'textbox', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_Doctype', '_MD_AM_PURIFIER_HTML_DOCTYPE', 'XHTML 1.0 Transitional', '_MD_AM_PURIFIER_HTML_DOCTYPEDSC', 'select', 'text', $p++ );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'enable_purifier', '_MD_AM_PURIFIER_ENABLE', '1', '_MD_AM_PURIFIER_ENABLEDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionID', '_MD_AM_PURIFIER_URI_DEFID', 'system', '_MD_AM_PURIFIER_URI_DEFIDDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionRev', '_MD_AM_PURIFIER_URI_DEFREV', '1', '_MD_AM_PURIFIER_URI_DEFREVDSC', 'textbox', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Host', '_MD_AM_PURIFIER_URI_HOST', addslashes($host_domain), '_MD_AM_PURIFIER_URI_HOSTDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Base', '_MD_AM_PURIFIER_URI_BASE', addslashes($host_base), '_MD_AM_PURIFIER_URI_BASEDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Disable', '_MD_AM_PURIFIER_URI_DISABLE', '0', '_MD_AM_PURIFIER_URI_DISABLEDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DisableExternal', '_MD_AM_PURIFIER_URI_DISABLEEXT', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DisableExternalResources', '_MD_AM_PURIFIER_URI_DISABLEEXTRES', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTRESDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DisableResources', '_MD_AM_PURIFIER_URI_DISABLERES', '0', '_MD_AM_PURIFIER_URI_DISABLERESDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_MakeAbsolute', '_MD_AM_PURIFIER_URI_MAKEABS', '0', '_MD_AM_PURIFIER_URI_MAKEABSDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_HostBlacklist', '_MD_AM_PURIFIER_URI_BLACKLIST', '', '_MD_AM_PURIFIER_URI_BLACKLISTDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_AllowedSchemes', '_MD_AM_PURIFIER_URI_ALLOWSCHEME',  serialize(array('http', 'https', 'mailto', 'ftp', 'nntp', 'news')), '_MD_AM_PURIFIER_URI_ALLOWSCHEMEDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_DefinitionID', '_MD_AM_PURIFIER_HTML_DEFID', 'system', '_MD_AM_PURIFIER_HTML_DEFIDDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_DefinitionRev', '_MD_AM_PURIFIER_HTML_DEFREV', '1', '_MD_AM_PURIFIER_HTML_DEFREVDSC', 'textbox', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_Doctype', '_MD_AM_PURIFIER_HTML_DOCTYPE', 'XHTML 1.0 Transitional', '_MD_AM_PURIFIER_HTML_DOCTYPEDSC', 'select', 'text', $p++);
 
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_TidyLevel', '_MD_AM_PURIFIER_HTML_TIDYLEVEL', 'medium', '_MD_AM_PURIFIER_HTML_TIDYLEVELDSC', 'select', 'text', $p++ );
-		$config_id = $icmsDB->getInsertId ();
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_NONE', 'none', {$config_id})," . " (NULL, '_MD_AM_PURIFIER_LIGHT', 'light', {$config_id})," . " (NULL, '_MD_AM_PURIFIER_MEDIUM', 'medium', {$config_id})," . " (NULL, '_MD_AM_PURIFIER_HEAVY', 'heavy', {$config_id})";
-		if (! $icmsDB->queryF ( $sql )) {
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_TidyLevel', '_MD_AM_PURIFIER_HTML_TIDYLEVEL', 'medium', '_MD_AM_PURIFIER_HTML_TIDYLEVELDSC', 'select', 'text', $p++);
+		$config_id = $icmsDB->getInsertId();
+		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_NONE', 'none', {$config_id}), " . " (NULL, '_MD_AM_PURIFIER_LIGHT', 'light', {$config_id}), " . " (NULL, '_MD_AM_PURIFIER_MEDIUM', 'medium', {$config_id}), " . " (NULL, '_MD_AM_PURIFIER_HEAVY', 'heavy', {$config_id})";
+		if (! $icmsDB->queryF($sql)) {
 			return false;
 		}
 
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedElements', '_MD_AM_PURIFIER_HTML_ALLOWELE',  serialize ( $HTML_Allowed_Elms ), '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedAttributes', '_MD_AM_PURIFIER_HTML_ALLOWATTR',  serialize ( $HTML_Allowed_Attr ), '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_ForbiddenElements', '_MD_AM_PURIFIER_HTML_FORBIDELE', '', '_MD_AM_PURIFIER_HTML_FORBIDELEDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_ForbiddenAttributes', '_MD_AM_PURIFIER_HTML_FORBIDATTR', '', '_MD_AM_PURIFIER_HTML_FORBIDATTRDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_MaxImgLength', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTH', '1200', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTHDSC', 'textbox', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_SafeEmbed', '_MD_AM_PURIFIER_HTML_SAFEEMBED', '0', '_MD_AM_PURIFIER_HTML_SAFEEMBEDDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_SafeObject', '_MD_AM_PURIFIER_HTML_SAFEOBJECT', '0', '_MD_AM_PURIFIER_HTML_SAFEOBJECTDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_HTML_AttrNameUseCDATA', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATA', '0', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATADSC', 'yesno', 'int', $p++ );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedElements', '_MD_AM_PURIFIER_HTML_ALLOWELE',  serialize($HTML_Allowed_Elms), '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedAttributes', '_MD_AM_PURIFIER_HTML_ALLOWATTR',  serialize($HTML_Allowed_Attr), '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_ForbiddenElements', '_MD_AM_PURIFIER_HTML_FORBIDELE', '', '_MD_AM_PURIFIER_HTML_FORBIDELEDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_ForbiddenAttributes', '_MD_AM_PURIFIER_HTML_FORBIDATTR', '', '_MD_AM_PURIFIER_HTML_FORBIDATTRDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_MaxImgLength', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTH', '1200', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTHDSC', 'textbox', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_SafeEmbed', '_MD_AM_PURIFIER_HTML_SAFEEMBED', '0', '_MD_AM_PURIFIER_HTML_SAFEEMBEDDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_SafeObject', '_MD_AM_PURIFIER_HTML_SAFEOBJECT', '0', '_MD_AM_PURIFIER_HTML_SAFEOBJECTDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AttrNameUseCDATA', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATA', '0', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATADSC', 'yesno', 'int', $p++);
 
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks_Escaping', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEESC', '1', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEESCDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks_Scope', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEBLKSCOPE', '', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEBLKSCOPEDSC', 'textsarea', 'text', $p++ );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks_Escaping', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEESC', '1', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEESCDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks_Scope', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEBLKSCOPE', '', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEBLKSCOPEDSC', 'textsarea', 'text', $p++);
 
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Filter_YouTube', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE', '1', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Core_EscapeNonASCIICharacters', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARS', '1', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARSDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Core_HiddenElements', '_MD_AM_PURIFIER_CORE_HIDDENELE',  serialize ( array ('script', 'style' ) ), '_MD_AM_PURIFIER_CORE_HIDDENELEDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Core_RemoveInvalidImg', '_MD_AM_PURIFIER_CORE_REMINVIMG', '1', '_MD_AM_PURIFIER_CORE_REMINVIMGDSC', 'yesno', 'int', $p++ );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_YouTube', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE', '1', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_EscapeNonASCIICharacters', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARS', '1', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARSDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_HiddenElements', '_MD_AM_PURIFIER_CORE_HIDDENELE',  serialize(array('script', 'style')), '_MD_AM_PURIFIER_CORE_HIDDENELEDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_RemoveInvalidImg', '_MD_AM_PURIFIER_CORE_REMINVIMG', '1', '_MD_AM_PURIFIER_CORE_REMINVIMGDSC', 'yesno', 'int', $p++);
 
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_AutoFormat_AutoParagraph', '_MD_AM_PURIFIER_AUTO_AUTOPARA', '0', '_MD_AM_PURIFIER_AUTO_AUTOPARADSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_AutoFormat_DisplayLinkURI', '_MD_AM_PURIFIER_AUTO_DISPLINKURI', '0', '_MD_AM_PURIFIER_AUTO_DISPLINKURIDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_AutoFormat_Linkify', '_MD_AM_PURIFIER_AUTO_LINKIFY', '1', '_MD_AM_PURIFIER_AUTO_LINKIFYDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_AutoFormat_PurifierLinkify', '_MD_AM_PURIFIER_AUTO_PURILINKIFY', '0', '_MD_AM_PURIFIER_AUTO_PURILINKIFYDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_AutoFormat_Custom', '_MD_AM_PURIFIER_AUTO_CUSTOM', '', '_MD_AM_PURIFIER_AUTO_CUSTOMDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_AutoFormat_RemoveEmpty', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTY', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_AutoFormat_RemoveEmptyNbsp', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSP', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_AutoFormat_RemoveEmptyNbspExceptions', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPT',  serialize ( array ('td', 'th' ) ), '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPTDSC', 'textsarea', 'array', $p++ );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_AutoParagraph', '_MD_AM_PURIFIER_AUTO_AUTOPARA', '0', '_MD_AM_PURIFIER_AUTO_AUTOPARADSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_DisplayLinkURI', '_MD_AM_PURIFIER_AUTO_DISPLINKURI', '0', '_MD_AM_PURIFIER_AUTO_DISPLINKURIDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_Linkify', '_MD_AM_PURIFIER_AUTO_LINKIFY', '1', '_MD_AM_PURIFIER_AUTO_LINKIFYDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_PurifierLinkify', '_MD_AM_PURIFIER_AUTO_PURILINKIFY', '0', '_MD_AM_PURIFIER_AUTO_PURILINKIFYDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_Custom', '_MD_AM_PURIFIER_AUTO_CUSTOM', '', '_MD_AM_PURIFIER_AUTO_CUSTOMDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_RemoveEmpty', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTY', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_RemoveEmptyNbsp', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSP', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_RemoveEmptyNbspExceptions', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPT',  serialize(array('td', 'th')), '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPTDSC', 'textsarea', 'array', $p++);
 
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedFrameTargets', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGET',  serialize ( array ('_blank', '_parent', '_self', '_top' ) ), '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGETDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', serialize ( array ('external', 'nofollow', 'external nofollow', 'lightbox' ) ), '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultInvalidImage', '_MD_AM_PURIFIER_ATTR_DEFINVIMG', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultInvalidImageAlt', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALTDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultImageAlt', '_MD_AM_PURIFIER_ATTR_DEFIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFIMGALTDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_ClassUseCDATA', '_MD_AM_PURIFIER_ATTR_CLASSUSECDATA', '1', '_MD_AM_PURIFIER_ATTR_CLASSUSECDATADSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_EnableID', '_MD_AM_PURIFIER_ATTR_ENABLEID', '1', '_MD_AM_PURIFIER_ATTR_ENABLEIDDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_IDPrefix', '_MD_AM_PURIFIER_ATTR_IDPREFIX', '', '_MD_AM_PURIFIER_ATTR_IDPREFIXDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_IDPrefixLocal', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCAL', '', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCALDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_Attr_IDBlacklist', '_MD_AM_PURIFIER_ATTR_IDBLACKLIST', '', '_MD_AM_PURIFIER_ATTR_IDBLACKLISTDSC', 'textsarea', 'array', $p++ );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedFrameTargets', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGET',  serialize(array('_blank', '_parent', '_self', '_top')), '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGETDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', serialize(array('external', 'nofollow', 'external nofollow', 'lightbox')), '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultInvalidImage', '_MD_AM_PURIFIER_ATTR_DEFINVIMG', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultInvalidImageAlt', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALTDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultImageAlt', '_MD_AM_PURIFIER_ATTR_DEFIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFIMGALTDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_ClassUseCDATA', '_MD_AM_PURIFIER_ATTR_CLASSUSECDATA', '1', '_MD_AM_PURIFIER_ATTR_CLASSUSECDATADSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_EnableID', '_MD_AM_PURIFIER_ATTR_ENABLEID', '1', '_MD_AM_PURIFIER_ATTR_ENABLEIDDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_IDPrefix', '_MD_AM_PURIFIER_ATTR_IDPREFIX', '', '_MD_AM_PURIFIER_ATTR_IDPREFIXDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_IDPrefixLocal', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCAL', '', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCALDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_IDBlacklist', '_MD_AM_PURIFIER_ATTR_IDBLACKLIST', '', '_MD_AM_PURIFIER_ATTR_IDBLACKLISTDSC', 'textsarea', 'array', $p++);
 
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_CSS_DefinitionRev', '_MD_AM_PURIFIER_CSS_DEFREV', '1', '_MD_AM_PURIFIER_CSS_DEFREVDSC', 'textbox', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_CSS_AllowImportant', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANT', '1', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANTDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_CSS_AllowTricky', '_MD_AM_PURIFIER_CSS_ALLOWTRICKY', '1', '_MD_AM_PURIFIER_CSS_ALLOWTRICKYDSC', 'yesno', 'int', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_CSS_AllowedProperties', '_MD_AM_PURIFIER_CSS_ALLOWPROP', '', '_MD_AM_PURIFIER_CSS_ALLOWPROPDSC', 'textsarea', 'array', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_CSS_MaxImgLength', '_MD_AM_PURIFIER_CSS_MAXIMGLEN', '1200px', '_MD_AM_PURIFIER_CSS_MAXIMGLENDSC', 'textbox', 'text', $p++ );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PURIFIER, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', $p++ );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_DefinitionRev', '_MD_AM_PURIFIER_CSS_DEFREV', '1', '_MD_AM_PURIFIER_CSS_DEFREVDSC', 'textbox', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_AllowImportant', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANT', '1', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANTDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_AllowTricky', '_MD_AM_PURIFIER_CSS_ALLOWTRICKY', '1', '_MD_AM_PURIFIER_CSS_ALLOWTRICKYDSC', 'yesno', 'int', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_AllowedProperties', '_MD_AM_PURIFIER_CSS_ALLOWPROP', '', '_MD_AM_PURIFIER_CSS_ALLOWPROPDSC', 'textsarea', 'array', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_MaxImgLength', '_MD_AM_PURIFIER_CSS_MAXIMGLEN', '1200px', '_MD_AM_PURIFIER_CSS_MAXIMGLENDSC', 'textbox', 'text', $p++);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', $p++);
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 30;
 
 	if ($dbVersion < $newDbVersion) {
 
-		$table = new IcmsDatabasetable ( 'users' );
-		if ($table->fieldExists ( 'level' )) {
-			$icmsDatabaseUpdater->runQuery ( "ALTER TABLE `" . $table->name () . "` MODIFY level varchar(3) NOT NULL default '1'", 'Successfully modified field level in table users', '' );
+		$table = new IcmsDatabasetable('users');
+		if ($table->fieldExists('level')) {
+			$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` MODIFY level varchar(3) NOT NULL default '1'", 'Successfully modified field level in table users', '');
 		}
-		unset ( $table );
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		unset($table);
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	/* 1.2 beta release */
@@ -475,15 +475,15 @@
 		}
 		unset($table);
 		*/
-		$table = new IcmsDatabasetable ( 'imagecategory' );
-		if (! $table->fieldExists ( 'imgcat_foldername' )) {
-			$table->addNewField ( 'imgcat_foldername', "varchar(100) default ''" );
+		$table = new IcmsDatabasetable('imagecategory');
+		if (! $table->fieldExists('imgcat_foldername')) {
+			$table->addNewField('imgcat_foldername', "varchar(100) default ''");
 		}
-		if (! $table->fieldExists ( 'imgcat_pid' )) {
-			$table->addNewField ( 'imgcat_pid', "smallint(5) unsigned NOT NULL default '0'" );
+		if (! $table->fieldExists('imgcat_pid')) {
+			$table->addNewField('imgcat_pid', "smallint(5) unsigned NOT NULL default '0'");
 		}
-		$icmsDatabaseUpdater->updateTable ( $table );
-		unset ( $table );
+		$icmsDatabaseUpdater->updateTable($table);
+		unset($table);
 
 		/**
 		 * DEVELOPER, PLEASE NOTE !!!
@@ -495,8 +495,8 @@
 		 */
 		$CleanWritingFolders = true;
 		/* end of dbversion 18 update */
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 
 	}
 	if (!$abortUpdate) $newDbVersion = 33;
@@ -504,8 +504,8 @@
 	 * New symlinks need to be added to the db
 	 */
 	if ($dbVersion < $newDbVersion) {
-		$table = new IcmsDatabasetable ( 'icmspage' );
-		$new_pages = array (
+		$table = new IcmsDatabasetable('icmspage');
+		$new_pages = array(
 			"NULL, 1, '" . _CPHOME . "', 'admin.php', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU14 . "', 'modules/system/admin.php?fct=avatars*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU1 . "', 'modules/system/admin.php?fct=banners*', 1",
@@ -526,13 +526,13 @@
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU10 . "', 'modules/system/admin.php?fct=users*', 1",
 			"NULL, 1, '" . _MD_AM_VRSN . "', 'modules/system/admin.php?fct=version*', 1"
 			);
-		foreach ( $new_pages as $new_page) {
-			$table->setData ( $new_page );
+		foreach($new_pages as $new_page) {
+			$table->setData($new_page);
 		}
-		$table->addData ();
-		unset ( $table );
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$table->addData();
+		unset($table);
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 34;
@@ -540,31 +540,31 @@
 		 * Control Panel, System Warnings, Modules Installed
 		 */
 	if ($dbVersion < $newDbVersion) {
-		$admin_blocks = array (array ('b_system_admin_cp_show', 'page_topleft_admin' ), array ('b_system_admin_modules_show', 'page_topright_admin' ), array ('b_system_admin_warnings_show', 'page_topcenter_admin' ) );
+		$admin_blocks = array(array('b_system_admin_cp_show', 'page_topleft_admin'), array('b_system_admin_modules_show', 'page_topright_admin'), array('b_system_admin_warnings_show', 'page_topcenter_admin'));
 		/* Get block positions */
-		$sql = 'SELECT id, pname FROM ' . $icmsDB->prefix ( 'block_positions' ) . ' WHERE pname = "page_topleft_admin"' . ' OR pname = "page_topright_admin"' . ' OR pname = "page_topcenter_admin"';
-		$result = $icmsDB->query ( $sql );
-		while ($row = $icmsDB->fetchArray ( $result )) {
+		$sql = 'SELECT id, pname FROM ' . $icmsDB->prefix('block_positions') . ' WHERE pname = "page_topleft_admin"' . ' OR pname = "page_topright_admin"' . ' OR pname = "page_topcenter_admin"';
+		$result = $icmsDB->query($sql);
+		while ($row = $icmsDB->fetchArray($result)) {
 			$block_positions [$row ['pname']] = $row ['id'];
 		}
 		/* Get symlink id for Admin Control Panel */
-		$page_id = getDbValue ( $icmsDB, 'icmspage', 'page_id', 'page_url="admin.php"' );
+		$page_id = getDbValue($icmsDB, 'icmspage', 'page_id', 'page_url="admin.php"');
 
-		foreach ( $admin_blocks as $admin_block) {
+		foreach($admin_blocks as $admin_block) {
 			/* Get block ids for Control Panel, System Warnings, Installed Modules */
-			$sql_find = 'SELECT bid FROM `' . $icmsDB->prefix ( 'newblocks' ) . '` WHERE show_func="' . $admin_block [0] . '"';
+			$sql_find = 'SELECT bid FROM `' . $icmsDB->prefix('newblocks') . '` WHERE show_func="' . $admin_block [0] . '"';
 			$goodmsg = $admin_block [0] . ' updated';
 			$badmsg = $admin_block [0] . ' failed';
-			$result = $icmsDB->query ( $sql_find );
-			list ( $block_id ) = $icmsDB->fetchRow ( $result );
+			$result = $icmsDB->query($sql_find);
+			list($block_id) = $icmsDB->fetchRow($result);
 			/* Modify the visible, side and visiblein properties of the blocks */
-			$sql_update = 'UPDATE `' . $icmsDB->prefix ( 'newblocks' ) . '` SET `visible`=1, `side`=' . $block_positions [$admin_block [1]] . ' WHERE `bid`=' . $block_id;
-			$icmsDatabaseUpdater->runQuery ( $sql_update, $goodmsg, $badmsg, true );
-			$sql_page_update = 'UPDATE `' . $icmsDB->prefix ( 'block_module_link' ) . '` SET `module_id`=1, `page_id`=' . $page_id . ' WHERE `block_id`=' . $block_id;
-			$icmsDatabaseUpdater->runQuery ( $sql_page_update, $goodmsg, $badmsg, true );
+			$sql_update = 'UPDATE `' . $icmsDB->prefix('newblocks') . '` SET `visible`=1, `side`=' . $block_positions [$admin_block [1]] . ' WHERE `bid`=' . $block_id;
+			$icmsDatabaseUpdater->runQuery($sql_update, $goodmsg, $badmsg, true);
+			$sql_page_update = 'UPDATE `' . $icmsDB->prefix('block_module_link') . '` SET `module_id`=1, `page_id`=' . $page_id . ' WHERE `block_id`=' . $block_id;
+			$icmsDatabaseUpdater->runQuery($sql_page_update, $goodmsg, $badmsg, true);
 		}
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 	if (!$abortUpdate) $newDbVersion = 35;
 	/* copy settings for the old waiting contents block to the new block
@@ -573,33 +573,33 @@
 	 * is not correct for the system module, adding todo in modulesadmin
 	 */
 	if ($dbVersion < $newDbVersion) {
-		$result = $icmsDB->query ( 'SELECT title, side, weight, visible, bcachetime, bid' . ' FROM `' . $icmsDB->prefix ( 'newblocks' ) . '` WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_blocks.php"' );
-		list ( $title, $side, $weight, $visible, $bcachetime, $bid ) = $icmsDB->fetchRow ( $result );
-		$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'newblocks' ) . '` SET `title`="' . $title . '", `side`=' . $side . ', `weight`=' . $weight . ', `visible`=' . $visible . ', `bcachetime`=' . $bcachetime . ' WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_waiting.php"' );
-		$icmsDB->queryF ( 'DELETE FROM `' . $icmsDB->prefix ( 'newblocks' ) . '` WHERE `bid`=' . $bid );
-		$icmsDB->queryF ( 'DELETE FROM `' . $icmsDB->prefix ( 'block_module_link' ) . '` WHERE `block_id`=' . $bid );
-		$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'newblocks' ) . '` SET `block_type`="S"' . ' WHERE `dirname`="system" AND `block_type`="M"' );
+		$result = $icmsDB->query('SELECT title, side, weight, visible, bcachetime, bid' . ' FROM `' . $icmsDB->prefix('newblocks') . '` WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_blocks.php"');
+		list($title, $side, $weight, $visible, $bcachetime, $bid) = $icmsDB->fetchRow($result);
+		$icmsDB->queryF('UPDATE `' . $icmsDB->prefix('newblocks') . '` SET `title`="' . $title . '", `side`=' . $side . ', `weight`=' . $weight . ', `visible`=' . $visible . ', `bcachetime`=' . $bcachetime . ' WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_waiting.php"');
+		$icmsDB->queryF('DELETE FROM `' . $icmsDB->prefix('newblocks') . '` WHERE `bid`=' . $bid);
+		$icmsDB->queryF('DELETE FROM `' . $icmsDB->prefix('block_module_link') . '` WHERE `block_id`=' . $bid);
+		$icmsDB->queryF('UPDATE `' . $icmsDB->prefix('newblocks') . '` SET `block_type`="S"' . ' WHERE `dirname`="system" AND `block_type`="M"');
 
 		/* Change the field type of welcome_msg_content to textsarea */
-		$sql_welcome_msg_content = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_formtype` = "textsarea"' . ' WHERE `conf_name`="welcome_msg_content"';
-		$icmsDatabaseUpdater->runQuery ( $sql_welcome_msg_content, 'Welcome message form type successfully updated', 'Unable to update the welcome message form type', true );
+		$sql_welcome_msg_content = 'UPDATE ' . $icmsDB->prefix('config') . ' SET `conf_formtype` = "textsarea"' . ' WHERE `conf_name`="welcome_msg_content"';
+		$icmsDatabaseUpdater->runQuery($sql_welcome_msg_content, 'Welcome message form type successfully updated', 'Unable to update the welcome message form type', true);
 
 		/* Set the start page for each group, so they don't default to Admin Control Panel */
-		$groups = icms::handler('icms_member_group')->getObjects ( NULL, true );
-		$start_page = getDbValue ( $icmsDB, 'config', 'conf_value', 'conf_name="startpage"' );
-		foreach ( $groups as $groupid => $group) {
+		$groups = icms::handler('icms_member_group')->getObjects(NULL, true);
+		$start_page = getDbValue($icmsDB, 'config', 'conf_value', 'conf_name="startpage"');
+		foreach($groups as $groupid => $group) {
 			$start_pages [$groupid] = $start_page;
 		}
-		$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'config' ) . '`' . ' SET `conf_value`="' . addslashes ( serialize ( $start_pages ) ) . '"' . ' WHERE `conf_name`="startpage"' );
+		$icmsDB->queryF('UPDATE `' . $icmsDB->prefix('config') . '`' . ' SET `conf_value`="' . addslashes(serialize($start_pages)) . '"' . ' WHERE `conf_name`="startpage"');
 
 		/* Check for HTMLPurifier cache path and create, if needed */
-		$purifier_path = icms_core_Filesystem::mkdir ( ICMS_TRUST_PATH . '/cache/htmlpurifier' );
+		$purifier_path = icms_core_Filesystem::mkdir(ICMS_TRUST_PATH . '/cache/htmlpurifier');
 		/* Removing the option for multilogin text, as we're using a constant for it */
-		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name='multi_login_msg'" );
-		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name='use_hidden'" );
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='multi_login_msg'");
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='use_hidden'");
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	/* 1.2 RC1 released */
@@ -607,22 +607,22 @@
 	if (!$abortUpdate) $newDbVersion = 36;
 	if ($dbVersion < $newDbVersion) {
 		/* Change the the constant name for extractsyleblock_escape & styleblocks */
-		$sql_extract_esc = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_title` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Escaping"';
-		$icmsDatabaseUpdater->runQuery ( $sql_extract_esc, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC', true );
+		$sql_extract_esc = 'UPDATE ' . $icmsDB->prefix('config') . ' SET `conf_title` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Escaping"';
+		$icmsDatabaseUpdater->runQuery($sql_extract_esc, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC', true);
 
 		/* Change the the constant name for extractsyleblock_escape & styleblocks Descriptions*/
-		$sql_extract_escdsc = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_desc` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Escaping"';
-		$icmsDatabaseUpdater->runQuery ( $sql_extract_escdsc, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC', true );
+		$sql_extract_escdsc = 'UPDATE ' . $icmsDB->prefix('config') . ' SET `conf_desc` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Escaping"';
+		$icmsDatabaseUpdater->runQuery($sql_extract_escdsc, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC', true);
 
 		/* Change the the constant name for extractsyleblock_scope */
-		$sql_extract_scope = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_title` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Scope"';
-		$icmsDatabaseUpdater->runQuery ( $sql_extract_scope, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE', true );
+		$sql_extract_scope = 'UPDATE ' . $icmsDB->prefix('config') . ' SET `conf_title` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Scope"';
+		$icmsDatabaseUpdater->runQuery($sql_extract_scope, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE', true);
 
 		/* Change the the constant name for extractsyleblock_scope Descriptions*/
-		$sql_extract_scopedsc = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_desc` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Scope"';
-		$icmsDatabaseUpdater->runQuery ( $sql_extract_scopedsc, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC', true );
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$sql_extract_scopedsc = 'UPDATE ' . $icmsDB->prefix('config') . ' SET `conf_desc` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Scope"';
+		$icmsDatabaseUpdater->runQuery($sql_extract_scopedsc, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC', true);
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	if (!$abortUpdate) $newDbVersion = 37;
@@ -630,17 +630,17 @@
 	if ($dbVersion < $newDbVersion) {
 		if (is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
 
-			$result = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'imagecategory' ) . '`' );
-			while ($row = $icmsDB->fetchArray ( $result )) {
-				if (empty ( $row ['imgcat_foldername'] ) && $row[ 'imgcat_storetype' ] = 'file') {
-					$new_folder =  preg_replace( '/[:?".<>\/\\\|\s]/', '_', strtolower ( $row[ 'imgcat_name' ] ));
+			$result = $icmsDB->query('SELECT * FROM `' . $icmsDB->prefix('imagecategory') . '`');
+			while ($row = $icmsDB->fetchArray($result)) {
+				if (empty($row ['imgcat_foldername']) && $row[ 'imgcat_storetype' ] = 'file') {
+					$new_folder =  preg_replace( '/[:?".<>\/\\\|\s]/', '_', strtolower($row[ 'imgcat_name' ]));
 				} else {
 					$new_folder = $row ['imgcat_foldername '];
 				}
 				/* attempt to create the new folder for the image category */
 				if (FALSE === icms_core_Filesystem::mkdir(ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder)) {
 					$newDbVersion = 36;
-					echo '<br />'.sprintf('Unable to create category folder - %s', $new_folder);
+					echo '<br />' . sprintf('Unable to create category folder - %s', $new_folder);
 					$abortUpdate = true;
 
 				} else {
@@ -657,7 +657,7 @@
 						) {
 							if (icms_core_Filesystem::copyRecursive(
 								ICMS_UPLOAD_PATH . '/' . $row1['image_name'],
-								ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1['image_name'] )
+								ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1['image_name'])
 							) {
 								$moved[] = $row1['image_name'];
  							} else {
@@ -668,7 +668,7 @@
 						}
 					}
 					/* if all the images were successfully copied for this category - update the category folder and
-					 * delete the old imags
+					 * Do NOT delete the old images - it affects existing content
 					 */
 					if (FALSE === $abortUpdate) {
 						$icmsDB->queryF(
@@ -676,33 +676,36 @@
 							. '` SET imgcat_foldername="' . $new_folder
 							. '" WHERE imgcat_id=' . $row['imgcat_id']
 						);
+						/* This would delete the images from the uploads folder after they are moved
+						 * do not do this - it will affect any existing content
 						foreach ($moved as $image) {
 							@unlink(ICMS_UPLOAD_PATH . '/' . $image);
 						}
+						*/
 					}
 				}
 			}
 			/**
 			 *Changing the path of the left and right admin logo, defined in the personalization preferences area.
 			 */
-			$result = $icmsDB->query ( 'SELECT conf_id,conf_value FROM `' . $icmsDB->prefix ( 'config' ) . '` WHERE conf_name = "adm_left_logo" or conf_name = "adm_right_logo"' );
-			while (list ( $conf_id, $conf_value ) = $icmsDB->fetchRow ( $result )) {
-				$img = explode ( '/', $conf_value );
-				$img = $img [count ( $img ) - 1];
-				$result1 = $icmsDB->query ( 'SELECT imgcat_id FROM `' . $icmsDB->prefix ( 'image' ) . '` WHERE image_name="' . $img . '"' );
-				list ( $imgcat_id ) = $icmsDB->fetchRow ( $result1 );
-				$result2 = $icmsDB->query ( 'SELECT imgcat_foldername FROM `' . $icmsDB->prefix ( 'imagecategory' ) . '` WHERE imgcat_id="' . $imgcat_id . '"' );
-				list ( $imgcat_foldername ) = $icmsDB->fetchRow ( $result2 );
-				$new_conf_value = str_replace ( ICMS_ROOT_PATH, '', ICMS_IMANAGER_FOLDER_PATH ) . '/' . $imgcat_foldername . '/' . $img;
-				$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'config' ) . '` SET conf_value="' . $new_conf_value . '" WHERE conf_id=' . $conf_id );
+			$result = $icmsDB->query('SELECT conf_id, conf_value FROM `' . $icmsDB->prefix('config') . '` WHERE conf_name = "adm_left_logo" or conf_name = "adm_right_logo"');
+			while (list($conf_id, $conf_value) = $icmsDB->fetchRow($result)) {
+				$img = explode('/', $conf_value);
+				$img = $img [count($img) - 1];
+				$result1 = $icmsDB->query('SELECT imgcat_id FROM `' . $icmsDB->prefix('image') . '` WHERE image_name="' . $img . '"');
+				list($imgcat_id) = $icmsDB->fetchRow($result1);
+				$result2 = $icmsDB->query('SELECT imgcat_foldername FROM `' . $icmsDB->prefix('imagecategory') . '` WHERE imgcat_id="' . $imgcat_id . '"');
+				list($imgcat_foldername) = $icmsDB->fetchRow($result2);
+				$new_conf_value = str_replace(ICMS_ROOT_PATH, '', ICMS_IMANAGER_FOLDER_PATH) . '/' . $imgcat_foldername . '/' . $img;
+				$icmsDB->queryF('UPDATE `' . $icmsDB->prefix('config') . '` SET conf_value="' . $new_conf_value . '" WHERE conf_id=' . $conf_id);
 			}
 		} else {
 			$newDbVersion = 36;
-			echo '<br />'.sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, ICMS_IMANAGER_FOLDER_PATH);
+			echo '<br />' . sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, ICMS_IMANAGER_FOLDER_PATH);
 			$abortUpdate = true;
 		}
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	/* 1.2 RC2 released */
@@ -710,11 +713,11 @@
 	if (!$abortUpdate) $newDbVersion = 38;
 	if ($dbVersion < $newDbVersion) {
 		/* Change the system preference with textarea control to textsarea */
-		$sql_extract_esc = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_formtype` = "textsarea"' . ' WHERE  `conf_modid` =0 AND `conf_formtype` = "textarea"';
-		$icmsDatabaseUpdater->runQuery ( $sql_extract_esc, 'System Preferences textarea controls set to textsarea', true );
+		$sql_extract_esc = 'UPDATE ' . $icmsDB->prefix('config') . ' SET `conf_formtype` = "textsarea"' . ' WHERE  `conf_modid` =0 AND `conf_formtype` = "textarea"';
+		$icmsDatabaseUpdater->runQuery($sql_extract_esc, 'System Preferences textarea controls set to textsarea', true);
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 
 	/* 1.2.1 release */
@@ -722,14 +725,14 @@
 	if (!$abortUpdate) $newDbVersion = 39;
 	if ($dbVersion < $newDbVersion) {
 		// retrieve config_id for purifier_HTML_Doctype
-		$sql = "SELECT conf_id FROM " . $icmsDB->prefix ( 'config' ) . " WHERE conf_name='purifier_HTML_Doctype'";
-		$result = $icmsDB->query ($sql);
+		$sql = "SELECT conf_id FROM " . $icmsDB->prefix('config') . " WHERE conf_name='purifier_HTML_Doctype'";
+		$result = $icmsDB->query($sql);
 		if (!$result) $abortUpdate = true;
 		$myrow = $icmsDB->fetchArray($result);
 		if (!isset($myrow['conf_id'])) $abortUpdate = true;
 		$config_id = $myrow['conf_id'];
 
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_401T', 'HTML 4.01 Transitional', {$config_id}), "
+		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_401T', 'HTML 4.01 Transitional', {$config_id}), "
 		. " (NULL, '_MD_AM_PURIFIER_401S', 'HTML 4.01 Strict', {$config_id}), "
 		. " (NULL, '_MD_AM_PURIFIER_X10T', 'XHTML 1.0 Transitional', {$config_id}), "
 		. " (NULL, '_MD_AM_PURIFIER_X10S', 'XHTML 1.0 Strict', {$config_id}), "
@@ -737,19 +740,19 @@
 		if (!$icmsDB->queryF($sql)) $abortUpdate = true;
 
 	/* New config options and values for mail settings */
-		$sql = 'UPDATE `' . $icmsDB->prefix( 'config' ) . '` SET `conf_order`=9 WHERE `conf_name`="sendmailpath"';
-		$result = $icmsDB->query( $sql );
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_MAILER, 'smtpsecure', '_MD_AM_SMTPSECURE', 'ssl', '_MD_AM_SMTPSECUREDESC', 'select', 'text', 7 );
+		$sql = 'UPDATE `' . $icmsDB->prefix( 'config') . '` SET `conf_order`=9 WHERE `conf_name`="sendmailpath"';
+		$result = $icmsDB->query( $sql);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_MAILER, 'smtpsecure', '_MD_AM_SMTPSECURE', 'ssl', '_MD_AM_SMTPSECUREDESC', 'select', 'text', 7);
 		$config_id = $icmsDB->getInsertId();
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)"
+		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') . " (confop_id, confop_name, confop_value, conf_id)"
 		. " VALUES" . " (NULL, 'None', 'none', {$config_id}), "
 		. " (NULL, 'SSL', 'ssl', {$config_id}), "
 		. " (NULL, 'TLS', 'tls', {$config_id})";
 		if (!$icmsDB->queryF($sql)) $abortUpdate = true;
-		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_MAILER, 'smtpauthport', '_MD_AM_SMTPAUTHPORT', '465', '_MD_AM_SMTPAUTHPORTDESC', 'textbox', 'int', 8 );
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_MAILER, 'smtpauthport', '_MD_AM_SMTPAUTHPORT', '465', '_MD_AM_SMTPAUTHPORTDESC', 'textbox', 'int', 8);
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
 	/* 1.2.2 release */
 
@@ -764,6 +767,6 @@
 			}
 		}
 
-		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
