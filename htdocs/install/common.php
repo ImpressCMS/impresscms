@@ -397,8 +397,8 @@ if ($xoopsConfig['closesite'] == 1) {
 		$xoopsTpl = new icms_view_Tpl();
 		$xoopsTpl->assign( array(
             	'sitename' => $xoopsConfig['sitename'],
-            	'xoops_themecss' => xoops_getcss(),
-            	'xoops_imageurl' => XOOPS_THEME_URL.'/'.$xoopsConfig['theme_set'].'/',
+            	'icms_themecss' => xoops_getcss(),
+            	'icms_imageurl' => XOOPS_THEME_URL.'/'.$xoopsConfig['theme_set'].'/',
             	'lang_login' => _LOGIN,
             	'lang_username' => _USERNAME,
             	'lang_password' => _PASSWORD,

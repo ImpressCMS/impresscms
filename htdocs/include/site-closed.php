@@ -46,8 +46,8 @@ if (! $allowed) {
 
 	$xoopsTpl->assign(array(
 		'icms_theme' => $icmsConfig ['theme_set'],
-		'xoops_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig ['theme_set'] . '/',
-		'xoops_themecss' => xoops_getcss ( $icmsConfig ['theme_set'] ),
+		'icms_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig ['theme_set'] . '/',
+		'icms_themecss' => xoops_getcss ( $icmsConfig ['theme_set'] ),
 		'xoops_requesturi' => htmlspecialchars ( $_SERVER ['REQUEST_URI'], ENT_QUOTES ),
 		'xoops_sitename' => htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ),
 		'xoops_slogan' => htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ),
