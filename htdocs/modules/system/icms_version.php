@@ -8,9 +8,9 @@
  * @license		LICENSE.txt
  * @license		GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @package		core
- * @since	1.2
- * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @since		1.2
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		SVN: $Id$
  */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
@@ -18,14 +18,14 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
-	'version'=> 1.21,
+	'version'=> 1.3,
 	'description'=> _MI_SYSTEM_DESC,
 	'author'=> "",
 	'credits'=> "The ImpressCMS Project",
 	'help'=> "",
 	'license'=> "GNU General Public License (GPL)",
 	'official'=> true,
-	'dirname'=> basename( dirname( __FILE__ ) ),
+	'dirname'=> basename(dirname(__FILE__ )),
 	'modname' => 'system',
 
 /**  Images information  */
@@ -41,7 +41,7 @@ $modversion = array(
 
 /** Contributors */
 	'developer_website_url' => "http://www.impresscms.org",
-	'developer_website_name' => "ImpressCMS Core & Module developpers",
+	'developer_website_name' => "ImpressCMS Core & Module developers",
 	'developer_email' => "contact@impresscms.org" );
 
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=168]marcan[/url] (Marc-Andr&eacute; Lanciault)";
@@ -90,21 +90,24 @@ $modversion['blocks'][1] = array(
 	'name' => _MI_SYSTEM_BNAME2,
 	'description' => '',
 	'show_func' => 'b_system_user_show',
-	'template' => 'system_block_user.html');
+	'template' => 'system_block_user.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME3,
 	'description' => '',
 	'show_func' => 'b_system_login_show',
-	'template' => 'system_block_login.html');
+	'template' => 'system_block_login.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME4,
 	'description' => '',
 	'show_func' => 'b_system_search_show',
-	'template' => 'system_block_search.html');
+	'template' => 'system_block_search.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_waiting.php',
@@ -113,14 +116,16 @@ $modversion['blocks'][] = array(
 	'show_func' => 'b_system_waiting_show',
 	'edit_func' => 'b_system_waiting_edit',
 	'options' => '1|5',
-	'template' => 'system_block_waiting.html');
+	'template' => 'system_block_waiting.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME6,
 	'description' => '',
 	'show_func' => 'b_system_main_show',
-	'template' => 'system_block_mainmenu.html');
+	'template' => 'system_block_mainmenu.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
@@ -129,14 +134,16 @@ $modversion['blocks'][] = array(
 	'show_func' => 'b_system_info_show',
 	'edit_func' => 'b_system_info_edit',
 	'options' => '320|190|s_poweredby.gif|1',
-	'template' => 'system_block_siteinfo.html');
+	'template' => 'system_block_siteinfo.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME8,
 	'description' => '',
 	'show_func' => 'b_system_online_show',
-	'template' => 'system_block_online.html');
+	'template' => 'system_block_online.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
@@ -145,7 +152,8 @@ $modversion['blocks'][] = array(
 	'show_func' => 'b_system_topposters_show',
 	'edit_func' => 'b_system_topposters_edit',
 	'options' => '10|1',
-	'template' => 'system_block_topusers.html');
+	'template' => 'system_block_topusers.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
@@ -154,7 +162,8 @@ $modversion['blocks'][] = array(
 	'show_func' => 'b_system_newmembers_show',
 	'edit_func' => 'b_system_newmembers_edit',
 	'options' => '10|1|1',
-	'template' => 'system_block_newusers.html');
+	'template' => 'system_block_newusers.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
@@ -163,14 +172,16 @@ $modversion['blocks'][] = array(
 	'show_func' => 'b_system_comments_show',
 	'edit_func' => 'b_system_comments_edit',
 	'options' => '10',
-	'template' => 'system_block_comments.html');
+	'template' => 'system_block_comments.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME12,
 	'description' => '',
 	'show_func' => 'b_system_notification_show',
-	'template' => 'system_block_notification.html');
+	'template' => 'system_block_notification.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
@@ -179,53 +190,17 @@ $modversion['blocks'][] = array(
 	'show_func' => 'b_system_themes_show',
 	'edit_func' => 'b_system_themes_edit',
 	'options' => '0|80',
-	'template' => 'system_block_themes.html');
+	'template' => 'system_block_themes.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME14,
 	'description' => '',
 	'show_func' => 'b_system_multilanguage_show',
-	'template' => 'system_block_multilanguage.html');
+	'template' => 'system_block_multilanguage.html'
+	);
 
-/**
- * @todo Remove this blocks on future versions. When 1.1.2 isn't supported anymore.
-
-if (function_exists('xoops_gethandler')) {
-	$icms_modules_handler = xoops_gethandler('module');
-	$module = $icms_modules_handler->getByDirname('content');
-
-	if (!is_object($module)) {
-	//Content Manager
-	$modversion['blocks'][] = array(
-		'file' => 'content_blocks.php',
-		'name' => _MI_SYSTEM_BNAME15,
-		'description' => '',
-		'show_func' => 'b_content_show',
-		'edit_func' => 'b_content_edit',
-		'options' => '1|1|1|1',
-		'template' => 'system_block_content.html');
-
-	$modversion['blocks'][] = array(
-		'file' => 'content_blocks.php',
-		'name' => _MI_SYSTEM_BNAME16,
-		'description' => '',
-		'show_func' => 'b_content_menu_show',
-		'edit_func' => 'b_content_menu_edit',
-		'options' => 'content_weight|ASC|1|#F2E2A0|0',
-		'template' => 'system_block_contentmenu.html');
-
-	$modversion['blocks'][] = array(
-		'file' => 'content_blocks.php',
-		'name' => _MI_SYSTEM_BNAME17,
-		'description' => '',
-		'show_func' => 'b_content_relmenu_show',
-		'edit_func' => 'b_content_relmenu_edit',
-		'options' => 'content_weight|ASC|1',
-		'template' => 'system_block_contentmenu.html');
-	}
-}
-*/
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME18,
@@ -233,42 +208,48 @@ $modversion['blocks'][] = array(
 	'show_func' => 'b_system_social_show',
 	'edit_func' => 'b_system_social_edit',
 	'options' => '1|1|1|1|0|0|0|0|0|0|0|0|0|1|0|0|0|0|1|0|1|0|0|1|0|0|0|0|0|0|0|0',
-	'template' => 'system_block_socialbookmark.html');
+	'template' => 'system_block_socialbookmark.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_admin_blocks.php',
 	'name' => _MI_SYSTEM_BNAME101,
 	'description' => '',
 	'show_func' => 'b_system_admin_warnings_show',
-	'template' => 'system_admin_block_warnings.html');
+	'template' => 'system_admin_block_warnings.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_admin_blocks.php',
 	'name' => _MI_SYSTEM_BNAME102,
 	'description' => '',
 	'show_func' => 'b_system_admin_cp_show',
-	'template' => 'system_admin_block_cp.html');
+	'template' => 'system_admin_block_cp.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_admin_blocks.php',
 	'name' => _MI_SYSTEM_BNAME103,
 	'description' => '',
 	'show_func' => 'b_system_admin_modules_show',
-	'template' => 'system_admin_block_modules.html');
+	'template' => 'system_admin_block_modules.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BLOCK_BOOKMARKS,
 	'description' => _MI_SYSTEM_BLOCK_BOOKMARKS_DESC,
 	'show_func' => 'b_system_bookmarks_show',
-	'template' => 'system_block_bookmarks.html');
+	'template' => 'system_block_bookmarks.html'
+	);
 
 $modversion['blocks'][] = array(
 	'file' => 'system_admin_blocks.php',
 	'name' => _MI_SYSTEM_BLOCK_CP_NEW,
 	'description' => '',
 	'show_func' => 'b_system_admin_cp_new_show',
-	'template' => 'system_admin_block_cp_new.html');
+	'template' => 'system_admin_block_cp_new.html'
+	);
 
 /** Templates information */
 $modversion['templates'][1] = array(
@@ -277,166 +258,206 @@ $modversion['templates'][1] = array(
 
 $modversion['templates'][] = array(
 	'file' => 'system_imagemanager2.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][]= array(
 	'file' => 'system_userinfo.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_userform.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_rss.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_comment.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_comments_flat.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_comments_thread.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_comments_nest.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_siteclosed.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_redirect.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_dummy.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_notification_list.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_notification_select.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_block_dummy.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_privpolicy.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_error.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_openid.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/blockspadmin/system_adm_blockspadmin.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/pages/system_adm_pagemanager_index.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/blocksadmin/system_adm_blocksadmin.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/modulesadmin/system_adm_modulesadmin.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_common_form.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_persistabletable_display.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/customtag/system_adm_customtag.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_default_form.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/images/system_adm_imagemanager.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/images/system_adm_imagemanager_imglist.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/images/system_adm_imagemanager_img.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/images/system_adm_imagemanager_editimg.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/images/system_adm_imagemanager_cloneimg.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/system_adm_rss.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_search.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_persistable_singleview.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_breadcrumb.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/adsense/system_adm_adsense.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_print.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/rating/system_adm_rating.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_rating_form.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/mimetype/system_adm_mimetype.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/userrank/system_adm_userrank.html',
-	'description' => '');
+	'description' => ''
+	);
 
 $modversion['templates'][] = array(
 	'file' => 'admin/autotasks/system_adm_autotasks.html',
-	'description' => '');
+	'description' => ''
+	);
 
-?>
