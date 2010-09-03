@@ -45,7 +45,7 @@ if (! $allowed) {
 	$xoopsTpl = & $xoTheme->template;
 
 	$xoopsTpl->assign(array(
-		'xoops_theme' => $icmsConfig ['theme_set'],
+		'icms_theme' => $icmsConfig ['theme_set'],
 		'xoops_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig ['theme_set'] . '/',
 		'xoops_themecss' => xoops_getcss ( $icmsConfig ['theme_set'] ),
 		'xoops_requesturi' => htmlspecialchars ( $_SERVER ['REQUEST_URI'], ENT_QUOTES ),
