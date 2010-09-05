@@ -133,22 +133,12 @@ class IcmsDatabasetable {
 	function exists() {
 		$table = $this->_name;
 		$bRetVal = false;
-		//Verifies that a MySQL table exists
 		$realname = $this->_db->prefix($table);
-		/**
-		 * @todo mysql_list_tables is deprecated - rewrite to use mysql_query()
-		 * to issue an SQL SHOW TABLES [FROM db_name] [LIKE 'pattern'] statement instead.
-		 * http://www.php.net/manual/en/function.mysql-list-tables.php
-		 */
-		$ret = mysql_list_tables(XOOPS_DB_NAME, $this->_db->conn);
-		while (list ($m_table) = $this->_db->fetchRow($ret)) {
-			if ($m_table == $realname) {
-				$bRetVal = true;
-				break;
-			}
-		}
-		$this->_db->freeRecordSet($ret);
-		return ($bRetVal);
+		$ret = $this->_db->queryF("SHOW TABLES FROM " . $this->name() . " = " . $realname);
+		list($m_table) = $this->_db->fetchRow($ret);
+		if ($m_table == $realname) $bRetVal = true;
+
+		return $bRetVal;
 	}
 
 	/*
