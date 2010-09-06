@@ -23,6 +23,13 @@
  */
 class icms_db_icms_mysql_Utility
 {
+
+	/**
+	 * Creates a new utility object
+	 */
+	public function __construct(){
+	}
+
 	/**
 	 * Function from phpMyAdmin (http://phpwizard.net/projects/phpMyAdmin/)
 	 *
