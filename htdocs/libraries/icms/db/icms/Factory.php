@@ -75,12 +75,12 @@ class icms_db_icms_Factory{
 	static public function &getDatabase() {
 		static $database;
 		if (!isset($database)) {
-			$file = ICMS_ROOT_PATH . '/class/database/drivers/' . XOOPS_DB_TYPE . '/database.php';
+			$file = ICMS_ROOT_PATH . '/libraries/icms/db/icms/' . XOOPS_DB_TYPE . '/Database.php';
 			require_once $file;
 			if (!defined('XOOPS_DB_PROXY')) {
-				$class = 'Xoops' . ucfirst(XOOPS_DB_TYPE) . 'DatabaseSafe';
+				$class = 'icms_db_icms_' . XOOPS_DB_TYPE . '_Safe';
 			} else {
-				$class = 'Xoops' . ucfirst(XOOPS_DB_TYPE) . 'DatabaseProxy';
+				$class = 'icms_db_icms_' . XOOPS_DB_TYPE . '_Proxy';
 			}
 			$database = new $class();
 		}
