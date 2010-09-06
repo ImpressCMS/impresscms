@@ -36,7 +36,7 @@ function make_groups(&$dbm) {
 
 function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $adminsalt, $gruops) {
 
-	//$xoopsDB =& Database::getInstance();
+	//$xoopsDB =& icms_db_Factory::getInstance();
 	//$dbm = new db_manager;
 
 	$tables = array();

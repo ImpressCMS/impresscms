@@ -1,6 +1,6 @@
 <?php
 function b_waiting_system() {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$ret = array() ;
 
 	// comments

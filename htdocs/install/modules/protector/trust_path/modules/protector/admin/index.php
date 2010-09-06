@@ -3,7 +3,7 @@
 require_once XOOPS_ROOT_PATH.'/class/pagenav.php' ;
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
 $myts =& icms_core_Textsanitizer::getInstance() ;
-$db =& Database::getInstance() ;
+$db =& icms_db_Factory::getInstance() ;
 
 // GET vars
 $pos = empty( $_GET[ 'pos' ] ) ? 0 : intval( $_GET[ 'pos' ] ) ;
@@ -18,7 +18,7 @@ $log_table = $db->prefix( $mydirname."_log" ) ;
 
 // Protector object
 require_once dirname(dirname(__FILE__)).'/class/protector.php' ;
-$db =& Database::getInstance() ;
+$db =& icms_db_Factory::getInstance() ;
 $protector =& Protector::getInstance( $db->conn ) ;
 $conf = $protector->getConf() ;
 

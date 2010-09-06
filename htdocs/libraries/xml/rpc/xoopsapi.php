@@ -307,7 +307,7 @@ class XoopsApi extends XoopsXmlRpcApi
 			$this->response->add(new XoopsXmlRpcFault(104));
 		} else {
 			include_once ICMS_ROOT_PATH.'/class/xoopstopic.php';
-			$db =& Database::getInstance();
+			$db =& icms_db_Factory::getInstance();
 			$xt = new XoopsTopic($db->prefix('topics'));
 			$ret = $xt->getTopicsList();
 			if (!$respond) {

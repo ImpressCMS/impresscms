@@ -1,7 +1,7 @@
 <?php
 function b_waiting_extcal()
 {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$block = array();
 
 	// extcal events

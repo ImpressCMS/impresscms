@@ -26,7 +26,7 @@ function load_invite_code($code) {
 		// redirect_header('invite.php', 0, _US_INVITENONE);
 		exit();
 	}
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$sql = sprintf(
 		'SELECT invite_to, invite_date, register_id, extra_info FROM %s WHERE invite_code = %s AND register_id = 0',
 		$xoopsDB->prefix('invites'), $xoopsDB->quoteString(addslashes($code))
@@ -70,7 +70,7 @@ function check_invite_code($code) {
 	if (empty($code) || strlen($code) != 8) {
 		return false;
 	}
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$sql = sprintf(
 		'SELECT invite_to, invite_date FROM %s WHERE invite_code = %s AND register_id = 0',
 		$xoopsDB->prefix('invites'), $xoopsDB->quoteString(addslashes($code))
@@ -91,7 +91,7 @@ function check_invite_code($code) {
  * @return   true
  **/
 function update_invite_code($code, $new_id) {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	// update register_id
 	$sql = sprintf(
 		'UPDATE ' . $xoopsDB->prefix('invites') . ' SET register_id = %d WHERE invite_code = %s AND register_id = 0',

@@ -10,7 +10,7 @@
 /*************************************************************************/
 function b_waiting_smartsection()
 {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$ret = array() ;
 
 	// smartsection submitted

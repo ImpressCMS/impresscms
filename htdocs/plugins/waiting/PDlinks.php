@@ -10,7 +10,7 @@
 /*************************************************************************/
 function b_waiting_PDlinks()
 {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$ret = array() ;
 
 	// PDlinks waiting

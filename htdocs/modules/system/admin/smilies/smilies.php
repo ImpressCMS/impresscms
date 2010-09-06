@@ -19,7 +19,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 
 function SmilesAdmin()
 {
-	$db =& Database::getInstance();
+	$db =& icms_db_Factory::getInstance();
 	$url_smiles = ICMS_UPLOAD_URL;
 	$myts =& icms_core_Textsanitizer::getInstance();
 	icms_cp_header();
@@ -79,7 +79,7 @@ function SmilesAdmin()
 
 function SmilesEdit($id)
 {
-	$db =& Database::getInstance();
+	$db =& icms_db_Factory::getInstance();
 	$myts =& icms_core_Textsanitizer::getInstance();
 	icms_cp_header();
 	echo '<a href="admin.php?fct=smilies">'._AM_SMILESCONTROL .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITSMILE.'<br /><br />';

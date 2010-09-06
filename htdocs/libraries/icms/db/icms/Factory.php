@@ -8,7 +8,7 @@
  * @author      Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Factory.php 20013 2010-08-25 01:26:18Z skenow $
  */
 
 /**
@@ -21,7 +21,7 @@
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-class icms_database_Factory {
+class icms_db_icms_Factory{
 
 	/**
 	 * Constructor
@@ -33,7 +33,8 @@ class icms_database_Factory {
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
 	 *
-	 * if the class has not been instantiated yet, this will also take care of that
+	 * if the class has not been instantiated yet, this will also take
+	 * care of that
 	 *
 	 * @static
 	 * @staticvar   object  The only instance of database class
@@ -42,14 +43,15 @@ class icms_database_Factory {
 	static public function &instance() {
 		static $instance;
 		if (!isset($instance)) {
-			$file = ICMS_ROOT_PATH . '/class/database/drivers/' . XOOPS_DB_TYPE . '/database.php';
+			$file = ICMS_ROOT_PATH . '/libraries/icms/db/icms/' . XOOPS_DB_TYPE . '/Database.php';
 			require_once $file;
+			/* begin DB Layer Trapping patch */
 			if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
 				$class = XOOPS_DB_ALTERNATIVE ;
-			} elseif (!defined('XOOPS_DB_PROXY')) {
-				$class = 'Xoops' . ucfirst(XOOPS_DB_TYPE) . 'DatabaseSafe';
+			} else /* end DB Layer Trapping patch */if (!defined('XOOPS_DB_PROXY')) {
+				$class = 'icms_db_icms_' . XOOPS_DB_TYPE . '_Safe';
 			} else {
-				$class = 'Xoops' . ucfirst(XOOPS_DB_TYPE) . 'DatabaseProxy';
+				$class = 'icms_db_icms_' . XOOPS_DB_TYPE . '_Proxy';
 			}
 			$instance = new $class();
 			$instance->setLogger(icms_core_Logger::instance());
@@ -60,17 +62,6 @@ class icms_database_Factory {
 			}
 		}
 		return $instance;
-	}
-
-	/**
-	 * For backward compatibility
-	 *
-	 * @todo	remove in 1.4
-	 * @return	object	Reference to the only instance of database class
-	 */
-	static public function &getDatabaseConnection() {
-		icms_core_Debug::setDeprecated('icms_database_Factory::instance', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return self::instance();
 	}
 
 	/**
@@ -99,7 +90,7 @@ class icms_database_Factory {
 	/**
 	 * Gets the databaseupdater object .
 	 *
-	 * @return	object  @link IcmsDatabaseUpdater
+	 * @return	object  @link icms_db_icms_updater_Handler
 	 * @static
 	 */
 	static public function getDatabaseUpdater() {
@@ -110,3 +101,4 @@ class icms_database_Factory {
 		return $databaseUpdater;
 	}
 }
+

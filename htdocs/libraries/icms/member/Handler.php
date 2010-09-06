@@ -279,9 +279,9 @@ class icms_member_Handler {
 	}
 
 	public function icms_getLoginFromUserEmail($email = '') {
-		$db = Database::getInstance();
+		$db = icms_db_Factory::getInstance();
 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
-		$table = new IcmsDatabasetable('users');
+		$table = new icms_db_icms_updater_Table('users');
 
 		if ($email !== '') {
 			if ($table->fieldExists('loginname')) {
@@ -319,7 +319,7 @@ class icms_member_Handler {
 		$salt = $icmspass->getUserSalt($uname);
 		$pwd = $icmspass->encryptPass($pwd, $salt);
 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
-		$table = new IcmsDatabasetable('users');
+		$table = new icms_db_icms_updater_Table('users');
 		if ($table->fieldExists('loginname')) {
 			$criteria = new icms_criteria_Compo(new icms_criteria_Item('loginname', $uname));
 		} elseif ($table->fieldExists('login_name')) {
@@ -345,7 +345,7 @@ class icms_member_Handler {
 	 */
 	/*	function &loginUserMd5($uname, $md5pwd) {
 	 include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
-	 $table = new IcmsDatabasetable('users');
+	 $table = new icms_db_icms_updater_Table('users');
 	 if ($table->fieldExists('loginname')) {
 	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('loginname', $uname));
 	 } elseif ($table->fieldExists('login_name')) {

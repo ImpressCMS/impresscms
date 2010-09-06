@@ -19,7 +19,7 @@ class upgrade_220
 	var $updater;
 
 	function __construct() {
-		$this->updater = icms_database_Factory::getDatabaseUpdater();
+		$this->updater = icms_db_icms_Factory::getDatabaseUpdater();
 	}
 
 	function isApplied()

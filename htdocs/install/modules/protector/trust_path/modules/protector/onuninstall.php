@@ -20,7 +20,7 @@ function protector_onuninstall_base( $module , $mydirname )
 		if( ! is_array( $ret ) ) $ret = array() ;
 	}
 
-	$db =& Database::getInstance() ;
+	$db =& icms_db_Factory::getInstance() ;
 	$mid = $module->getVar('mid') ;
 
 	// TABLES (loading mysql.sql)

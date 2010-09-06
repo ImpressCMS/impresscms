@@ -26,7 +26,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	function BannersAdmin()
 	{
 		global $xoopsConfig, $icmsModule;
-		$xoopsDB =& Database::getInstance();
+		$xoopsDB =& icms_db_Factory::getInstance();
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/banners/images/banners_big.png)">'._MD_AM_BANS.'</div><br />';
 		// Banners List
@@ -192,7 +192,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	function BannerDelete($bid)
 	{
 		global $xoopsConfig, $icmsModule;
-		$xoopsDB =& Database::getInstance();
+		$xoopsDB =& icms_db_Factory::getInstance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		icms_cp_header();
 		$result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='". (int) ($bid)."'");
@@ -245,7 +245,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		global $xoopsConfig, $icmsModule;
 		$bid = (int) ($bid);
 		icms_cp_header();
-		$xoopsDB =& Database::getInstance();
+		$xoopsDB =& icms_db_Factory::getInstance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		$result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='". (int) ($bid)."'");
 		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result);
@@ -317,7 +317,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	function BannerClientDelete($cid)
 	{
 		global $xoopsConfig, $icmsModule;
-		$xoopsDB =& Database::getInstance();
+		$xoopsDB =& icms_db_Factory::getInstance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		icms_cp_header();
 		$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
@@ -365,7 +365,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	function BannerClientEdit($cid)
 	{
 		global $xoopsConfig, $icmsModule;
-		$xoopsDB =& Database::getInstance();
+		$xoopsDB =& icms_db_Factory::getInstance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		icms_cp_header();
 		$result = $xoopsDB->query("SELECT name, contact, email, login, passwd, extrainfo FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");

@@ -22,14 +22,14 @@
  * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-class icms_database_Factory{
+class icms_db_icms_Factory{
 
 	/**
 	 * Constructor
 	 *
 	 * Makes nothing.
 	 */
-	function icms_database_Factory(){}
+	function icms_db_icms_Factory(){}
 
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
@@ -92,7 +92,7 @@ class icms_database_Factory{
 	/**
 	 * Gets the databaseupdater object.
 	 *
-     * @return	object  @link IcmsDatabaseUpdater
+     * @return	object  @link icms_db_icms_updater_Handler
 	 */
 	function getDatabaseUpdater()
 	{

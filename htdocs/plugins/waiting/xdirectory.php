@@ -2,7 +2,7 @@
 // This code is not tested
 function b_waiting_xdirectory()
 {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$ret = array() ;
 
 	// xdirectory links

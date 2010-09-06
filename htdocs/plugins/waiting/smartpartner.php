@@ -7,7 +7,7 @@
  */
 function b_waiting_smartpartner()
 {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$block = array();
 
 	// smartpartner submitted

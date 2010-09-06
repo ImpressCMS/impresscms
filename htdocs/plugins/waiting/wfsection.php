@@ -5,7 +5,7 @@
 //
 function b_waiting_wfsection()
 {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$ret = array();
 
 	// wf-section articles - new

@@ -22,7 +22,7 @@
 	if ($dbVersion <= $newDbVersion) {
 
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
-		$table = new IcmsDatabasetable ( 'config' );
+		$table = new icms_db_icms_updater_Table ( 'config' );
 		$criteria = new icms_criteria_Compo ( );
 		$criteria->add ( new icms_criteria_Item ( 'conf_order', 3, '>' ) );
 		$table->addUpdateAll ( 'conf_order', 'conf_order + 2', $criteria, true );
@@ -112,19 +112,19 @@
 		// Adding new function of authentication
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_AUTH, 'auth_openid', '_MD_AM_AUTHOPENID', '0', '_MD_AM_AUTHOPENIDDSC', 'yesno', 'int', 1 );
 
-		$table = new IcmsDatabasetable ( 'imagecategory' );
+		$table = new icms_db_icms_updater_Table ( 'imagecategory' );
 		$icmsDatabaseUpdater->runQuery ( 'INSERT INTO ' . $table->name () . ' (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, "Logos", 350000, 350, 80, 1, 0, "C", "file")', 'Successfully created Logos imagecategory', 'Problems when try to create Logos imagecategory' );
 		unset ( $table );
 		$result = $icmsDB->query ( "SELECT imgcat_id FROM " . $icmsDB->prefix ( 'imagecategory' ) . " WHERE imgcat_name = 'Logos'" );
 		list ( $categ_id ) = $icmsDB->fetchRow ( $result );
-		$table = new IcmsDatabasetable ( 'image' );
+		$table = new icms_db_icms_updater_Table ( 'image' );
 		$icmsDatabaseUpdater->runQuery ( 'INSERT INTO ' . $table->name () . ' (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (NULL, "img482278e29e81c.png", "ImpressCMS", "image/png", ' . time () . ', 1, 0, ' . $categ_id . ')', 'Successfully added default ImpressCMS admin logo', 'Problems when try to add ImpressCMS admin logo' );
 		unset ( $table );
-		$table = new IcmsDatabasetable ( 'group_permission' );
+		$table = new icms_db_icms_updater_Table ( 'group_permission' );
 		$icmsDatabaseUpdater->runQuery ( 'INSERT INTO ' . $table->name () . ' VALUES(0,1,' . $categ_id . ',1,"imgcat_write")', '', '' );
 		$icmsDatabaseUpdater->runQuery ( 'INSERT INTO ' . $table->name () . ' VALUES(0,1,' . $categ_id . ',1,"imgcat_read")', '', '' );
 		unset ( $table );
-		$table = new IcmsDatabasetable ( 'block_module_link' );
+		$table = new icms_db_icms_updater_Table ( 'block_module_link' );
 		if (! $table->fieldExists ( 'page_id' )) {
 			$table->addNewField ( 'page_id', "smallint(5) NOT NULL default '0'" );
 		}
@@ -170,28 +170,28 @@
 	if (!$abortUpdate) $newDbVersion = 3;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new IcmsDatabasetable ( 'users' );
+		$table = new icms_db_icms_updater_Table ( 'users' );
 		if (! $table->fieldExists ( 'openid' )) {
 			$table->addNewField ( 'openid', "varchar(255) NOT NULL default ''" );
 			$icmsDatabaseUpdater->updateTable ( $table );
 		}
 		unset ( $table );
 
-		$table = new IcmsDatabasetable ( 'users' );
+		$table = new icms_db_icms_updater_Table ( 'users' );
 		if (! $table->fieldExists ( 'user_viewoid' )) {
 			$table->addNewField ( 'user_viewoid', "tinyint(1) UNSIGNED NOT NULL default 0" );
 			$icmsDatabaseUpdater->updateTable ( $table );
 		}
 		unset ( $table );
 
-		$table = new IcmsDatabasetable ( 'users' );
+		$table = new icms_db_icms_updater_Table ( 'users' );
 		if (! $table->fieldExists ( 'pass_expired' )) {
 			$table->addNewField ( 'pass_expired', "tinyint(1) UNSIGNED NOT NULL default 0" );
 			$icmsDatabaseUpdater->updateTable ( $table );
 		}
 		unset ( $table );
 
-		$table = new IcmsDatabasetable ( 'users' );
+		$table = new icms_db_icms_updater_Table ( 'users' );
 		if (! $table->fieldExists ( 'enc_type' )) {
 			$table->addNewField ( 'enc_type', "tinyint(2) UNSIGNED NOT NULL default 0" );
 			$icmsDatabaseUpdater->updateTable ( $table );
@@ -207,7 +207,7 @@
 		/* this syntax is incorrect and does not alter the table, as desired
 		 * commenting out this and correcting in db version 40 - skenow
 
-		$table = new IcmsDatabasetable ( 'users' );
+		$table = new icms_db_icms_updater_Table ( 'users' );
 		if ($table->fieldExists ( 'pass' )) {
 			$table->alterTable ( 'pass', 'pass', "varchar(255) NOT NULL default ''" );
 			$icmsDatabaseUpdater->updateTable ( $table );
@@ -260,7 +260,7 @@
 
 	if ($dbVersion < $newDbVersion) {
 
-		$table = new IcmsDatabasetable ( 'modules' );
+		$table = new icms_db_icms_updater_Table ( 'modules' );
 		if ($table->fieldExists ( 'dbversion' )) {
 			$icmsDatabaseUpdater->runQuery ( "ALTER TABLE `" . $table->name () . "` MODIFY dbversion INT(11) unsigned NOT NULL DEFAULT 1", 'Successfully modified field dbversion in table modules', '' );
 		}
@@ -273,7 +273,7 @@
 	if (!$abortUpdate) $newDbVersion = 9;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new IcmsDatabasetable ( 'users' );
+		$table = new icms_db_icms_updater_Table ( 'users' );
 		$icmsDatabaseUpdater->runQuery ( "ALTER TABLE `" . $table->name () . "` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))", 'Successfully altered the index unamepass on table users', '' );
 		$icmsDatabaseUpdater->runQuery ( "ALTER TABLE `" . $table->name () . "` MODIFY pass_expired tinyint(1) unsigned NOT NULL default 0", 'Successfully altered field pass_expired in table users', '' );
 		unset ( $table );

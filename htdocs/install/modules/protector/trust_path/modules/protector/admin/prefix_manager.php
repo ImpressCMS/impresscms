@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
-$db =& Database::getInstance() ;
+$db =& icms_db_Factory::getInstance() ;
 
 	// for RTL users
 	@define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;

@@ -22,7 +22,7 @@ class upgrade_impcms06 {
     var $updater;
 
     function __construct() {
-    	$this->updater = icms_database_Factory::getDatabaseUpdater();
+    	$this->updater = icms_db_icms_Factory::getDatabaseUpdater();
     }
 
     function isApplied()
@@ -72,13 +72,13 @@ class upgrade_impcms06 {
 
     function check_table1()
     {
-    	$table = new IcmsDatabasetable('modules');
+    	$table = new icms_db_icms_updater_Table('modules');
     	return $table->fieldExists('dbversion');
     }
 
     function apply_table1() {
     	// Create table icmspage
-    	$table = new IcmsDatabasetable('icmspage');
+    	$table = new icms_db_icms_updater_Table('icmspage');
     	if (!$table->exists()) {
     		$table->setStructure("page_id mediumint(8) unsigned NOT NULL auto_increment,
 					  page_moduleid mediumint(8) unsigned NOT NULL default '1',
@@ -93,13 +93,13 @@ class upgrade_impcms06 {
     }
     function check_table2()
     {
-    	$table = new IcmsDatabasetable('modules');
+    	$table = new icms_db_icms_updater_Table('modules');
     	return $table->fieldExists('dbversion');
     }
 
     function apply_table2() {
     	// Create table icmscontent
-    	$table = new IcmsDatabasetable('icmscontent');
+    	$table = new icms_db_icms_updater_Table('icmscontent');
     	if (!$table->exists()) {
     		$table->setStructure("`content_id` mediumint(8) unsigned NOT NULL auto_increment,
   				`content_catid` mediumint(8) unsigned NOT NULL default '1',
@@ -123,13 +123,13 @@ class upgrade_impcms06 {
     }
     function check_table3()
     {
-    	$table = new IcmsDatabasetable('modules');
+    	$table = new icms_db_icms_updater_Table('modules');
     	return $table->fieldExists('dbversion');
     }
 
     function apply_table3() {
     	// Create table invites
-    	$table = new IcmsDatabasetable('invites');
+    	$table = new icms_db_icms_updater_Table('invites');
     	if (!$table->exists()) {
     		$table->setStructure("`invite_id` mediumint(8) unsigned NOT NULL auto_increment,
 						  `from_id` mediumint(8) unsigned NOT NULL default '0',
@@ -150,13 +150,13 @@ class upgrade_impcms06 {
     }
     function check_table4()
     {
-    	$table = new IcmsDatabasetable('modules');
+    	$table = new icms_db_icms_updater_Table('modules');
     	return $table->fieldExists('dbversion');
     }
 
     function apply_table4() {
     	// Create table system_customtag
-    	$table = new IcmsDatabasetable('system_customtag');
+    	$table = new icms_db_icms_updater_Table('system_customtag');
     	if (!$table->exists()) {
     		$table->setStructure("`customtagid` int(11) unsigned NOT NULL auto_increment,
 					  `name` varchar(255) NOT NULL default '',
@@ -172,7 +172,7 @@ class upgrade_impcms06 {
 
     function check_customblocks()
     {
-    	$table = new IcmsDatabasetable('modules');
+    	$table = new icms_db_icms_updater_Table('modules');
     	return $table->fieldExists('dbversion');
     }
 
@@ -185,7 +185,7 @@ class upgrade_impcms06 {
 
     function check_conf()
     {
-    	$table = new IcmsDatabasetable('modules');
+    	$table = new icms_db_icms_updater_Table('modules');
     	return $table->fieldExists('dbversion');
     }
 
@@ -364,13 +364,13 @@ class upgrade_impcms06 {
 
     function check_dbversion()
     {
-    	$table = new IcmsDatabasetable('modules');
+    	$table = new icms_db_icms_updater_Table('modules');
     	return $table->fieldExists('dbversion');
     }
 
     function apply_dbversion() {
     	// First let's create the dbversion field in the modules table
-    	$table = new IcmsDatabasetable('modules');
+    	$table = new icms_db_icms_updater_Table('modules');
     	$table->addNewField('dbversion', 'INT(11) unsigned NOT NULL DEFAULT 1');
     	return $this->updater->updateTable($table, true);
     }

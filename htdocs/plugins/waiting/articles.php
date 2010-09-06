@@ -1,6 +1,6 @@
 <?php
 function b_waiting_articles() {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$block = array();
 
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("articles_main")." WHERE art_validated = 0");

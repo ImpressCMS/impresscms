@@ -1,6 +1,6 @@
 <?php
 function b_waiting_tutorials() {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$block = array();
 
 	// tutorials

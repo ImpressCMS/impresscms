@@ -1,8 +1,8 @@
 <?php
-class icms_database_Factory
+class icms_db_icms_Factory
 {
 
-	function icms_database_Factory()
+	function icms_db_icms_Factory()
 	{
 	}
 

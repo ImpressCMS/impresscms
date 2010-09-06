@@ -31,7 +31,7 @@ class db_manager {
 	var $db;
 
 	function db_manager() {
-		$this->db = icms_database_Factory::getDatabase();
+		$this->db = icms_db_icms_Factory::getDatabase();
 		$this->db->setPrefix(XOOPS_DB_PREFIX);
 		$this->db->setLogger(XoopsLogger::instance());
 	}
@@ -60,13 +60,13 @@ class db_manager {
 			return false;
 		}
 		$sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));
-		SqlUtility::splitSqlFile($pieces, $sql_query);
+		icms_db_icms_mysql_Utility::splitSqlFile($pieces, $sql_query);
 		$this->db->connect();
 		foreach ($pieces as $piece) {
 			$piece = trim($piece);
 			// [0] contains the prefixed query
 			// [4] contains unprefixed table name
-			$prefixed_query = SqlUtility::prefixQuery($piece, $this->db->prefix());
+			$prefixed_query = icms_db_icms_mysql_Utility::prefixQuery($piece, $this->db->prefix());
 			if ($prefixed_query != false) {
 				$table = $this->db->prefix($prefixed_query[4]);
 				if ($prefixed_query[1] == 'CREATE TABLE') {

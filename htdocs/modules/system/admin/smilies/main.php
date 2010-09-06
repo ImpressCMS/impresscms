@@ -29,7 +29,7 @@ switch($op) {
 			redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
 		$count = (!empty($_POST['smile_id']) && is_array($_POST['smile_id'])) ? count($_POST['smile_id']) : 0;
-		$db =& Database::getInstance();
+		$db =& icms_db_Factory::getInstance();
 		for ($i = 0; $i < $count; $i++) {
 			$smile_id = (int) ($_POST['smile_id'][$i]);
 			if (empty($smile_id)) {
@@ -47,7 +47,7 @@ switch($op) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
-		$db =& Database::getInstance();
+		$db =& icms_db_Factory::getInstance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 		$uploader->setPrefix('smil');
@@ -94,7 +94,7 @@ switch($op) {
 		$smile_code = $myts->stripSlashesGPC($_POST['smile_code']);
 		$smile_desc = $myts->stripSlashesGPC($_POST['smile_desc']);
 		$smile_display = (int) ($_POST['smile_display']) > 0 ? 1 : 0;
-		$db =& Database::getInstance();
+		$db =& icms_db_Factory::getInstance();
 		if ($_FILES['smile_url']['name'] != "") {
 			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 			$uploader->setPrefix('smil');
@@ -146,7 +146,7 @@ switch($op) {
 		if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
-		$db =& Database::getInstance();
+		$db =& icms_db_Factory::getInstance();
 		$sql = sprintf("DELETE FROM %s WHERE id = '%u'", $db->prefix('smiles'), $id);
 		$db->query($sql);
 		redirect_header("admin.php?fct=smilies&amp;op=SmilesAdmin",2,_AM_DBUPDATED);

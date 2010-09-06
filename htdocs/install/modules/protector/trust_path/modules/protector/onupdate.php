@@ -20,7 +20,7 @@ function protector_onupdate_base( $module , $mydirname )
 		if( ! is_array( $msgs ) ) $msgs = array() ;
 	}
 
-	$db =& Database::getInstance() ;
+	$db =& icms_db_Factory::getInstance() ;
 	$mid = $module->getVar('mid') ;
 
 	// TABLES (write here ALTER TABLE etc. if necessary)

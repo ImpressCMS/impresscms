@@ -51,7 +51,7 @@ final class icms_core_Password {
 	* @return   bool     returns true if password is expired, false if password is not expired.
 	*/
 	private function priv_passExpired($uname) {
-		$db = Database::getInstance();
+		$db = icms_db_Factory::getInstance();
 
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
@@ -76,14 +76,14 @@ final class icms_core_Password {
 	 * @return   string  returns the Salt key of the user.
 	 */
 	private function priv_getUserSalt($uname) {
-		$db = Database::getInstance();
+		$db = icms_db_Factory::getInstance();
 
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
-		$table = new IcmsDatabasetable('users');
+		$table = new icms_db_icms_updater_Table('users');
 		if ($table->fieldExists('loginname')) {
 			$sql = $db->query("SELECT salt FROM " . $db->prefix('users') . " WHERE
 					loginname = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");

@@ -10,7 +10,7 @@
 /*************************************************************************/
 function b_waiting_xyp4all()
 {
-	$xoopsDB =& Database::getInstance();
+	$xoopsDB =& icms_db_Factory::getInstance();
 	$ret = array() ;
 
 	// xyp4all links
