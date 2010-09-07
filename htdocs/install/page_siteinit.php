@@ -28,13 +28,9 @@ $vars =& $_SESSION['siteconfig'];
 
 $error =& $_SESSION['error'];
 
-function createSalt() {
-	include_once './include/functions.php';
-	return imcms_createSalt();
-}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$vars['adminsalt'] = createSalt();
+	$vars['adminsalt'] = icms_core_Password::createSalt();
 	$vars['adminname'] = $_POST['adminname'];
 	$vars['adminlogin_name'] = $_POST['adminlogin_name'];
 	$vars['adminmail'] = $_POST['adminmail'];

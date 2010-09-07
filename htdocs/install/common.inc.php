@@ -27,9 +27,8 @@ define('XOOPS_INSTALL', 1);
 include_once '../include/version.php';
 // including a few functions
 require_once 'include/functions.php';
-include_once '../include/debug_functions.php';
 
-require_once( '../libraries/icms/Autoloader.php' );
+require_once '../libraries/icms/Autoloader.php';
 icms_Autoloader::setup();
 
 error_reporting( E_ALL );
@@ -62,34 +61,6 @@ class XoopsInstallWizard {
 
 		// Load the main language file
 		$this->initLanguage( !@empty( $_COOKIE['xo_install_lang'] ) ? $_COOKIE['xo_install_lang'] : 'english' );
-		// Setup pages
-
-		/**
-		 * For ImpressCMS 1.0, we will remove the install modules step
-		 * This is the original code, commenting out
-		 */
-		/*
-		 $this->pages		= array(
-			'langselect', 'start', 'modcheck',
-			'pathsettings', 'dbsettings', 'configsave',
-			'tablescreate', 'siteinit',
-			'tablesfill', 'modulesinstall', 'end'
-			);
-			$this->lastpage = end($this->pages);
-			$this->secondlastpage = $this->pages[count($this->pages) - 2];
-			$this->pagesNames	= array(
-			LANGUAGE_SELECTION, INTRODUCTION, CONFIGURATION_CHECK,
-			PATHS_SETTINGS, DATABASE_CONFIG, CONFIG_SAVE,
-			TABLES_CREATION, INITIAL_SETTINGS,
-			DATA_INSERTION, MODULES_INSTALL, WELCOME
-			);
-			$this->pagesTitles	= array(
-			LANGUAGE_SELECTION_TITLE, INTRODUCTION_TITLE, CONFIGURATION_CHECK_TITLE,
-			PATHS_SETTINGS_TITLE, DATABASE_CONFIG_TITLE, CONFIG_SAVE_TITLE,
-			TABLES_CREATION_TITLE, INITIAL_SETTINGS_TITLE,
-			DATA_INSERTION_TITLE, MODULES_INSTALL_TITLE, WELCOME_TITLE
-			);
-			*/
 		// Setup pages
 		if ($this->no_php5) {
 			$this->pages[]= 'no_php5';

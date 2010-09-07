@@ -170,7 +170,7 @@ final class icms_core_Password {
 	* @param    string  $slength    The length of the key to produce
 	* @return   string  returns the generated random key.
 	*/
-	public function createSalt($slength=64) {
+	static public function createSalt($slength=64) {
 		$salt = '';
 		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$microtime = function_exists('microtime') ? microtime() : time();
