@@ -148,7 +148,7 @@ switch ( $op) {
 
 			$icmspass = new icms_core_Password();
 
-			$salt = $icmspass->createSalt();
+			$salt = $icmspass::createSalt();
 			$newuser->setVar('salt', $salt, true);
 			$pass1 = $icmspass->encryptPass($pass, $salt);
 			$newuser->setVar('pass', $pass1, true);

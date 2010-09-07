@@ -139,7 +139,7 @@ else {
 }
 $icmspass = new icms_core_Password();
 
-$salt_hidden = new icms_form_elements_Hidden('salt', $icmspass->createSalt());
+$salt_hidden = new icms_form_elements_Hidden('salt', $icmspass::createSalt());
 
 $enc_type_hidden = new icms_form_elements_Hidden('enc_type', $icmsConfigUser['enc_type']);
 $pass_expired_hidden = new icms_form_elements_Hidden('pass_expired', 0);

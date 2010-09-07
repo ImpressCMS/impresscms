@@ -46,8 +46,8 @@ if (empty($getuser))
 	$enc_type = (int) ($icmsConfigUser['enc_type']);
 	if ($code != '' && $areyou == $code)
 	{
-		$newpass = $icmspass->createSalt(8);
-		$salt = $icmspass->createSalt();
+		$newpass = $icmspass::createSalt(8);
+		$salt = $icmspass::createSalt();
 		$pass = $icmspass->encryptPass($newpass, $salt);
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
