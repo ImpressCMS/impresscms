@@ -196,8 +196,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	}
 
 	// data for table 'users'
-	$mainSalt = XOOPS_DB_SALT;
-	$temp = icms_core_Password::encryptPass($adminpass, $adminsalt, $mainSalt);
+	$pwd = new icms_core_Password();
+	$temp = $pwd->encryptPass($adminpass, $adminsalt, 1, 1);
 	$regdate = time();
 	//$dbadminname= addslashes($adminname);
 	// RMV-NOTIFY (updated for extra columns in user table)
