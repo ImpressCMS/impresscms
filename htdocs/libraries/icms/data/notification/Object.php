@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Notification
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -19,7 +19,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * @author	    Michael van Dam	<mvandam@caltech.edu>
  */
-class icms_notification_Object extends icms_core_Object {
+class icms_data_notification_Object extends icms_core_Object {
 
 	/**
 	 * Constructor
@@ -100,7 +100,7 @@ class icms_notification_Object extends icms_core_Object {
 		// If send-once-then-wait, disable notification
 
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-		$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
+		$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
 
 		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
 			$notification_handler->delete($this);

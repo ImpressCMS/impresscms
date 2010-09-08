@@ -255,9 +255,9 @@ function xoops_module_install($dirname) {
 					// Event-specific notification options
 					// FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
 					$options = array();
-					$categories =& icms_notification_Handler::categoryInfo('',$module->getVar('mid'));
+					$categories =& icms_data_notification_Handler::categoryInfo('',$module->getVar('mid'));
 					foreach ($categories as $category) {
-						$events =& icms_notification_Handler::categoryEvents($category['name'], false, $module->getVar('mid'));
+						$events =& icms_data_notification_Handler::categoryEvents($category['name'], false, $module->getVar('mid'));
 						foreach ($events as $event) {
 							if (!empty($event['invisible'])) {
 								continue;
@@ -762,9 +762,9 @@ function icms_module_update($dirname) {
 			// FIXME: for some reason the default doesn't come up properly
 			//  initially is ok, but not when 'update' module..
 			$options = array();
-			$categories =& icms_notification_Handler::categoryInfo('', $module->getVar('mid'));
+			$categories =& icms_data_notification_Handler::categoryInfo('', $module->getVar('mid'));
 			foreach ($categories as $category) {
-				$events =& icms_notification_Handler::categoryEvents($category['name'], false, $module->getVar('mid'));
+				$events =& icms_data_notification_Handler::categoryEvents($category['name'], false, $module->getVar('mid'));
 				foreach ($events as $event) {
 					if (!empty($event['invisible'])) {
 						continue;
@@ -772,7 +772,7 @@ function icms_module_update($dirname) {
 					$option_name = $category['title'] . ' : ' . $event['title'];
 					$option_value = $category['name'] . '-' . $event['name'];
 					$options[$option_name] = $option_value;
-					//$configs[] = array ('name' => icms_notification_Handler::generateConfig($category,$event,'name'), 'title' => icms_notification_Handler::generateConfig($category,$event,'title_constant'), 'description' => icms_notification_Handler::generateConfig($category,$event,'description_constant'), 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 1);
+					//$configs[] = array ('name' => icms_data_notification_Handler::generateConfig($category,$event,'name'), 'title' => icms_data_notification_Handler::generateConfig($category,$event,'title_constant'), 'description' => icms_data_notification_Handler::generateConfig($category,$event,'description_constant'), 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 1);
 				}
 			}
 			$configs[] = array ('name' => 'notification_events', 'title' => '_NOT_CONFIG_EVENTS', 'description' => '_NOT_CONFIG_EVENTSDSC', 'formtype' => 'select_multi', 'valuetype' => 'array', 'default' => array_values($options), 'options' => $options);

@@ -2,7 +2,7 @@
 /**
  * Handles all notification update functions within ImpressCMS
  *
- * @todo		This should be a method of the icms_notification_Handler class
+ * @todo		This should be a method of the icms_data_notification_Handler class
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
@@ -65,7 +65,7 @@ $user_id = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 // FIXME: right now I just ignore database errors (e.g. if already
 //  subscribed)... deal with this more gracefully?
 
-$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
+$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
 
 foreach ($update_list as $update_item) {
 
@@ -93,7 +93,7 @@ foreach ($update_list as $update_item) {
 $redirect_args = array();
 foreach ($update_list as $update_item) {
 	list($category,$item_id,$event) = explode( ',',$update_item['params'] );
-	$category_info =& icms_notification_Handler::categoryInfo($category);
+	$category_info =& icms_data_notification_Handler::categoryInfo($category);
 	if (!empty($category_info['item_name'])) {
 		$redirect_args[$category_info['item_name']] = $item_id;
 	}

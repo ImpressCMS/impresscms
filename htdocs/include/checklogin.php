@@ -158,7 +158,7 @@ if (false != $user) {
 
 	// RMV-NOTIFY
 	// Perform some maintenance of notification records
-	$notification_handler = icms::handler('icms_notification');
+	$notification_handler = icms::handler('icms_data_notification');
 	$notification_handler->doLoginMaintenance($user->getVar('uid'));
 
 	redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);

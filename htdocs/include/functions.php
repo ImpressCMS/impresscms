@@ -691,7 +691,7 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
  */
 function xoops_notification_deletebymodule ($module_id)
 {
-	$notification_handler = icms::handler('icms_notification');
+	$notification_handler = icms::handler('icms_data_notification');
 	return $notification_handler->unsubscribeByModule ($module_id);
 }
 
@@ -704,7 +704,7 @@ function xoops_notification_deletebymodule ($module_id)
  */
 function xoops_notification_deletebyuser ($user_id)
 {
-	$notification_handler =& icms::handler('icms_notification');
+	$notification_handler =& icms::handler('icms_data_notification');
 	return $notification_handler->unsubscribeByUser ($user_id);
 }
 
@@ -719,7 +719,7 @@ function xoops_notification_deletebyuser ($user_id)
  */
 function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 {
-	$notification_handler =& icms::handler('icms_notification');
+	$notification_handler =& icms::handler('icms_data_notification');
 	return $notification_handler->unsubscribeByItem ($module_id, $category, $item_id);
 }
 

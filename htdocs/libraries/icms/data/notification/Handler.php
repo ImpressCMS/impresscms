@@ -25,17 +25,17 @@ include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
  * @package		Notification
  * @author	    Michael van Dam <mvandam@caltech.edu>
  */
-class icms_notification_Handler extends icms_core_ObjectHandler {
+class icms_data_notification_Handler extends icms_core_ObjectHandler {
 
 	/**
-	 * Create a {@link icms_notification_Object}
+	 * Create a {@link icms_data_notification_Object}
 	 *
 	 * @param	bool    $isNew  Flag the object as "new"?
 	 *
 	 * @return	object
 	 */
 	public function &create($isNew = true) {
-		$notification = new icms_notification_Object();
+		$notification = new icms_data_notification_Object();
 		if ($isNew) {
 			$notification->setNew();
 		}
@@ -43,11 +43,11 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Retrieve a {@link icms_notification_Object}
+	 * Retrieve a {@link icms_data_notification_Object}
 	 *
 	 * @param   int $id ID
 	 *
-	 * @return  object  {@link icms_notification_Object}, FALSE on fail
+	 * @return  object  {@link icms_data_notification_Object}, FALSE on fail
 	 **/
 	public function &get($id) {
 		$notification = false;
@@ -59,7 +59,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$notification = new icms_notification_Object();
+				$notification = new icms_data_notification_Object();
 				$notification->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -77,7 +77,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($notification, 'icms_notification_Object')) {
+		if (!is_a($notification, 'icms_data_notification_Object')) {
 			return false;
 		}
 		if (!$notification->isDirty()) {
@@ -106,9 +106,9 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Delete a {@link icms_notification_Object} from the database
+	 * Delete a {@link icms_data_notification_Object} from the database
 	 *
-	 * @param   object  &$notification {@link icms_notification_Object}
+	 * @param   object  &$notification {@link icms_data_notification_Object}
 	 *
 	 * @return  bool
 	 **/
@@ -116,7 +116,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($notification, 'icms_notification_Object')) {
+		if (!is_a($notification, 'icms_data_notification_Object')) {
 			return false;
 		}
 
@@ -128,12 +128,12 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Get some {@link icms_notification_Object}s
+	 * Get some {@link icms_data_notification_Object}s
 	 *
 	 * @param   object  $criteria
 	 * @param   bool    $id_as_key  Use IDs as keys into the array?
 	 *
-	 * @return  array   Array of {@link icms_notification_Object} objects
+	 * @return  array   Array of {@link icms_data_notification_Object} objects
 	 **/
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
@@ -151,7 +151,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$notification = new icms_notification_Object();
+			$notification = new icms_data_notification_Object();
 			$notification->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $notification;
@@ -337,7 +337,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param  int  $user_id  ID of the user
 	 *
-	 * @return array  Array of {@link icms_notification_Object} objects
+	 * @return array  Array of {@link icms_data_notification_Object} objects
 	 **/
 	public function getByUser($user_id) {
 		$criteria = new icms_db_criteria_Item('not_uid', $user_id);
@@ -351,7 +351,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	* @param  int      $item_id  ID of the subscribed items
 	* @param  int      $module_id  ID of the module of the subscribed items
 	* @param  int      $user_id  ID of the user of the subscribed items
-	* @return array    Array of {@link icms_notification_Object} objects
+	* @return array    Array of {@link icms_data_notification_Object} objects
 	**/
 	public function getSubscribedEvents($category, $item_id, $module_id, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
@@ -378,7 +378,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 * @param   string  $order      Sort order
 	 * @param   string  $status     status
 	 *
-	 * @return  array   Array of {@link icms_notification_Object} objects
+	 * @return  array   Array of {@link icms_data_notification_Object} objects
 	 **/
 	public function getByItemId($module_id, $item_id, $order = null, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
@@ -647,7 +647,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Update
 	 *
-	 * @param   object  &$notification  {@link icms_notification_Object} object
+	 * @param   object  &$notification  {@link icms_data_notification_Object} object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *

@@ -403,10 +403,10 @@ function b_system_notification_show()
 	//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 	icms_loadLanguageFile('core', 'notification');
 	// Notification must be enabled, and user must be logged in
-	if (empty($icmsUser) || !icms_notification_Handler::isEnabled('block')) {
+	if (empty($icmsUser) || !icms_data_notification_Handler::isEnabled('block')) {
 		return false; // do not display block
 	}
-	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
+	$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
 	// Now build the a nested associative array of info to pass
 	// to the block template.
 	$block = array();
@@ -630,7 +630,7 @@ function b_system_bookmarks_show()
 	}
 	// Get an array of all notifications for the selected user
 
-	$notification_handler = icms::handler('icms_notification');
+	$notification_handler = icms::handler('icms_data_notification');
 	$notifications =& $notification_handler->getByUser($icmsUser->getVar('uid'));
 
 	// Generate the info for the template

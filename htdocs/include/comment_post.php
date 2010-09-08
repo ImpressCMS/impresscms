@@ -346,7 +346,7 @@ switch ($op) {
 			// trigger notification event if necessary
 			if ($notify_event) {
 				$not_modid = $com_modid;
-				$notification_handler = icms::handler("icms_notification");
+				$notification_handler = icms::handler("icms_data_notification");
 				$not_catinfo =& $notification_handler->commentCategoryInfo($not_modid);
 				$not_category = $not_catinfo['name'];
 				$not_itemid = $com_itemid;
