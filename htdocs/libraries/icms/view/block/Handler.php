@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Block
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 19961 2010-08-15 16:24:09Z phoenyx $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -24,14 +24,14 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
  * @since		ImpressCMS 1.2
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class icms_block_Handler extends icms_ipf_Handler {
+class icms_view_block_Handler extends icms_ipf_Handler {
 
 	private $block_positions;
 	private $modules_name;
 
 	public function __construct(& $db) {
 		parent::__construct($db, 'block', 'bid', 'title', 'content', 'icms');
-		//$this->className = 'icms_block_Object';
+		$this->className = 'icms_view_block_Object';
 		$this->table = $this->db->prefix('newblocks');
 	}
 
@@ -46,7 +46,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 	public function getBlockPositions($full = false) {
 		if (!count($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
-			$icms_blockposition_handler = icms::handler('icms_block_position');
+			$icms_blockposition_handler = icms::handler('icms_view_block_position');
 			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
 			//			$result = $this->db->query($sql);
 			//			while ($row = $this->db->fetchArray($result)) {
@@ -109,7 +109,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
 			if ($tp != '') {
 			 	$q_side = "";
-				$icms_blockposition_handler = icms::handler('icms_block_position');
+				$icms_blockposition_handler = icms::handler('icms_view_block_position');
 				$criteria = new icms_criteria_Compo();
 				$criteria->add(new icms_criteria_Item('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
@@ -331,7 +331,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 	}
 
 	/**
-	 * Save a icms_block_Object Object
+	 * Save a icms_view_block_Object Object
 	 *
 	 * Overwrited Method
 	 *
@@ -480,13 +480,13 @@ class icms_block_Handler extends icms_ipf_Handler {
 }
 
 /**
- * @deprecated  use icms_block_Handler instead
+ * @deprecated  use icms_view_block_Handler instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-class IcmsBlockHandler extends icms_block_Handler {
+class IcmsBlockHandler extends icms_view_block_Handler {
 	public function __construct(&$db) {
 		parent::__construct($db);
-		$this->setVar('_errors', icms_core_Debug::setDeprecated('icms_block_Handler'));
+		$this->setVar('_errors', icms_core_Debug::setDeprecated('icms_view_block_Handler'));
 	}
 
 }

@@ -144,7 +144,7 @@ class icms_view_PageBuilder {
 			$modid = $mid . '-' . $pid;
 		}
 
-		$icms_block_handler = icms::handler('icms_block');
+		$icms_block_handler = icms::handler('icms_view_block');
 		$oldzones = $icms_block_handler->getBlockPositions();
 
 		foreach ($oldzones as $zone) {

@@ -95,7 +95,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 					if ($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $icmsUser->getGroups()))
 					$group_manager_checkbox->addOption($group->getVar('groupid'),$group->getVar('name'));
 				}
-				$icms_block_handler = icms::handler('icms_block');
+				$icms_block_handler = icms::handler('icms_view_block');
 				$posarr = $icms_block_handler->getBlockPositions(true);
 				$block_checkbox = array();
 				$i = 0;

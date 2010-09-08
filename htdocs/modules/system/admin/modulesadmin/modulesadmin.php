@@ -392,7 +392,7 @@ function xoops_module_install($dirname) {
 			}
 
 			// retrieve all block ids for this module
-			$icms_block_handler = icms::handler('icms_block');
+			$icms_block_handler = icms::handler('icms_view_block');
 			$blocks =& $icms_block_handler->getByModule($newmid, false);
 			$msgs[] = 'Setting group rights...';
 			$gperm_handler = icms::handler('icms_member_groupperm');
@@ -615,7 +615,7 @@ function xoops_module_uninstall($dirname) {
 			unset($templates);
 
 			// delete blocks and block tempalte files
-			$icms_block_handler = icms::handler('icms_block');
+			$icms_block_handler = icms::handler('icms_view_block');
 			$block_arr =& $icms_block_handler->getByModule($module->getVar('mid'));
 			if (is_array($block_arr)) {
 				$bcount = count($block_arr);
@@ -1056,7 +1056,7 @@ function icms_module_update($dirname) {
 				}
 			}
 
-			$icms_block_handler = icms::handler('icms_block');
+			$icms_block_handler = icms::handler('icms_view_block');
 			$block_arr = $icms_block_handler->getByModule($module->getVar('mid'));
 			foreach ($block_arr as $block) {
 				if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {

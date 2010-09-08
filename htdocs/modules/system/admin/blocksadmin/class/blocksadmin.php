@@ -20,7 +20,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlocksadmin extends icms_block_Object {
+class SystemBlocksadmin extends icms_view_block_Object {
 
 	/**
 	 * Constructor
@@ -209,7 +209,7 @@ class SystemBlocksadmin extends icms_block_Object {
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlocksadminHandler extends icms_block_Handler {
+class SystemBlocksadminHandler extends icms_view_block_Handler {
 
 	private $block_positions;
 	private $modules_name;

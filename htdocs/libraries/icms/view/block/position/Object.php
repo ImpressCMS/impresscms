@@ -8,23 +8,23 @@
  * @package		Block
  * @subpackage	Position
  * @since		1.0
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
- * icms_block_position_Object
+ * icms_view_block_position_Object
  * @category	ICMS
  * @package		Block
  * @subpackage	Position
  */
-class icms_block_position_Object extends icms_ipf_Object {
+class icms_view_block_position_Object extends icms_ipf_Object {
 
 	/**
 	 * Constructor
 	 *
-	 * @param icms_block_position_Handler $handler
+	 * @param icms_view_block_position_Handler $handler
 	 */
 	public function __construct(& $handler) {
 

@@ -10,19 +10,19 @@
  * @package		Block
  * @subpackage	Position
  * @since		1.0
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
- * icms_block_position_Handler
+ * icms_view_block_position_Handler
  * @category	ICMS
  * @package		Block
  * @subpackage	Position
  *
  */
-class icms_block_position_Handler extends icms_ipf_Handler {
+class icms_view_block_position_Handler extends icms_ipf_Handler {
 
 	/**
 	 * Constructor
@@ -31,7 +31,7 @@ class icms_block_position_Handler extends icms_ipf_Handler {
 	 */
 	public function __construct(& $db) {
 		parent::__construct($db, 'blockposition', 'id', 'title', 'description', 'icms');
-		$this->className = 'icms_block_position_Object';
+		$this->className = 'icms_view_block_position_Object';
 		$this->table = $this->db->prefix('block_positions');
 	}
 

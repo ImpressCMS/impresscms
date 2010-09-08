@@ -22,12 +22,12 @@
  * @since 			ImpressCMS 1.2
  * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlockspadmin extends icms_block_position_Object {
+class SystemBlockspadmin extends icms_view_block_position_Object {
 
 	/**
 	 * Constructor
 	 *
-	 * @param icms_block_position_Handler $handler
+	 * @param icms_view_block_position_Handler $handler
 	 */
 	public function __construct(& $handler) {
 		parent::__construct( $handler );
@@ -89,7 +89,7 @@ class SystemBlockspadmin extends icms_block_position_Object {
  * @since 			ImpressCMS 1.2
  * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlockspadminHandler extends icms_block_position_Handler {
+class SystemBlockspadminHandler extends icms_view_block_position_Handler {
 
 	/**
 	 * Constructor
