@@ -40,19 +40,6 @@ class db_manager {
 		return ($this->db->connect(false) != false) ? true : false;
 	}
 
-	function dbExists() {
-		return ($this->db->connect() != false) ? true : false;
-	}
-
-	function createDB()
-	{
-		$this->db->connect(false);
-
-		$result = $this->db->query("CREATE DATABASE ".XOOPS_DB_NAME);
-
-		return ($result != false) ? true : false;
-	}
-
 	function queryFromFile($sql_file_path) {
 		$tables = array();
 
@@ -199,17 +186,6 @@ class db_manager {
 
 	function isError() {
 		return (isset($this->f_tables)) ? true : false;
-	}
-
-	function deleteTables($tables) {
-		$deleted = array();
-		$this->db->connect();
-		foreach ($tables as $key => $val) {
-			if (! $this->db->query("DROP TABLE ".$this->db->prefix($key))) {
-				$deleted[] = $ct;
-			}
-		}
-		return $deleted;
 	}
 
 	function tableExists($table) {
