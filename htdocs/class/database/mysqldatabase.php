@@ -65,7 +65,7 @@ class XoopsMySQLDatabase extends icms_db_icms_mysql_Database {
  * @package kernel
  * @subpackage database
  */
-class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase {
+class XoopsMySQLDatabaseSafe extends icms_db_icms_mysql_Safe {
 	private $_errors;
 	public function __construct() {
 		parent::__construct();
@@ -86,7 +86,7 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase {
  * @package kernel
  * @subpackage database
  */
-class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase {
+class XoopsMySQLDatabaseProxy extends icms_db_icms_mysql_Proxy {
 	private $_errors;
 	public function __construct() {
 		parent::__construct();

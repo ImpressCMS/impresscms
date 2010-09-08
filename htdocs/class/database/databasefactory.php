@@ -25,7 +25,7 @@
 class IcmsDatabaseFactory extends icms_db_icms_Factory {
 	private $_deprecated;
 	public function __construct() {
-		parent::getInstance();
+		parent::__construct();
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_db_icms_Factory', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
