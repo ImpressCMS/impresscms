@@ -322,7 +322,7 @@ class XoopsMailer
 	function sendPM($uid, $subject, $body)
 	{
 		global $icmsUser;
-		$pm_handler = icms::handler('icms_privmessage');
+		$pm_handler = icms::handler('icms_data_privmessage');
 		$pm =& $pm_handler->create();
 		$pm->setVar("subject", $subject);
 		// RMV-NOTIFY

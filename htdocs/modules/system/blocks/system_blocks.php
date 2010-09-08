@@ -175,7 +175,7 @@ function b_system_user_show()
 {
 	global $icmsUser;
 	if (is_object($icmsUser)) {
-		$pm_handler = icms::handler('icms_privmessage');
+		$pm_handler = icms::handler('icms_data_privmessage');
 		$block = array();
 		$block['lang_youraccount'] = _MB_SYSTEM_VACNT;
 		$block['lang_editaccount'] = _MB_SYSTEM_EACNT;

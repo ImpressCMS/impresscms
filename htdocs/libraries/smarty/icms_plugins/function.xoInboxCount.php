@@ -12,7 +12,7 @@ function smarty_function_xoInboxCount( $params, &$smarty ) {
 	if ( isset( $_SESSION['xoops_inbox_count'] ) && @$_SESSION['xoops_inbox_count_expire'] > $time ) {
 		$count = (int) $_SESSION['xoops_inbox_count'] ;
 	} else {
-        $pm_handler = icms::handler('icms_privmessage');
+        $pm_handler = icms::handler('icms_data_privmessage');
         $criteria = new icms_db_criteria_Compo( new icms_db_criteria_Item('read_msg', 0) );
         $criteria->add( new icms_db_criteria_Item( 'to_userid', $xoopsUser->getVar('uid') ) );
         $count = (int) $pm_handler->getCount($criteria) ;

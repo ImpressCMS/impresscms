@@ -51,7 +51,7 @@ if ($icmsUser) {
 			}
 			echo "[ <a href='javascript:history.go(-1)'>"._PM_GOBACK."</a> ]</div>";
 		} else {
-			$pm_handler = icms::handler('icms_privmessage');
+			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->create();
 			$pm->setVar("subject", $_POST['subject']);
 			$pm->setVar("msg_text", $_POST['message']);
@@ -94,7 +94,7 @@ if ($icmsUser) {
 	} elseif ($reply == 1 || $send == 1 || $send2 == 1) {
 		include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 		if ($reply == 1) {
-			$pm_handler = icms::handler('icms_privmessage');
+			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
 				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
@@ -134,7 +134,7 @@ if ($icmsUser) {
 		echo "<tr valign='top'><td class='head' width='25%'>"._PM_MESSAGEC."</td>";
 		echo "<td class='even'>";
 		if ($reply == 1) {
-			$pm_handler = icms::handler('icms_privmessage');
+			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
 				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));

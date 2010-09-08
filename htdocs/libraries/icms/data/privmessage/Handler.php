@@ -24,15 +24,15 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package     Privmessage
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_privmessage_Handler extends icms_core_ObjectHandler {
+class icms_data_privmessage_Handler extends icms_core_ObjectHandler {
 
 	/**
-	 * Create a new {@link icms_privmessage_Object} object
+	 * Create a new {@link icms_data_privmessage_Object} object
 	 * @param 	bool 	$isNew 	Flag as "new"?
-	 * @return 	object {@link icms_privmessage_Object}
+	 * @return 	object {@link icms_data_privmessage_Object}
 	 **/
 	public function &create($isNew = true) {
-		$pm = new icms_privmessage_Object();
+		$pm = new icms_data_privmessage_Object();
 		if ($isNew) {
 			$pm->setNew();
 		}
@@ -40,9 +40,9 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Load a {@link icms_privmessage_Object} object
+	 * Load a {@link icms_data_privmessage_Object} object
 	 * @param 	int 	$id ID of the message
-	 * @return 	object {@link icms_privmessage_Object}
+	 * @return 	object {@link icms_data_privmessage_Object}
 	 **/
 	public function &get($id) {
 		$pm = false;
@@ -54,7 +54,7 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$pm = new icms_privmessage_Object();
+				$pm = new icms_data_privmessage_Object();
 				$pm->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -64,12 +64,12 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Insert a message in the database
 	 *
-	 * @param 	object 	$pm	{@link icms_privmessage_Object} object
+	 * @param 	object 	$pm	{@link icms_data_privmessage_Object} object
 	 * @param 	bool 	$force 	flag to force the query execution skip request method check, which might be required in some situations
 	 * @return 	bool
 	 **/
 	public function insert(&$pm, $force = false) {
-		if (!is_a($pm, 'icms_privmessage_Object')) {
+		if (!is_a($pm, 'icms_data_privmessage_Object')) {
 			return false;
 		}
 
@@ -120,11 +120,11 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Delete from the database
-	 * @param 	object 	$pm 	{@link icms_privmessage_Object} object
+	 * @param 	object 	$pm 	{@link icms_data_privmessage_Object} object
 	 * @return 	bool
 	 **/
 	public function delete(&$pm) {
-		if (!is_a($pm, 'icms_privmessage_Object')) {
+		if (!is_a($pm, 'icms_data_privmessage_Object')) {
 			return false;
 		}
 
@@ -138,7 +138,7 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 	 * Load messages from the database
 	 * @param 	object 	$criteria 	{@link icms_db_criteria_Element} object
 	 * @param 	bool 	$id_as_key 	use ID as key into the array?
-	 * @return 	array	Array of {@link icms_privmessage_Object} objects
+	 * @return 	array	Array of {@link icms_data_privmessage_Object} objects
 	 **/
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
@@ -156,7 +156,7 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$pm = new icms_privmessage_Object();
+			$pm = new icms_data_privmessage_Object();
 			$pm->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $pm;
@@ -187,11 +187,11 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Mark a message as read
-	 * @param 	object 	$pm 	{@link icms_privmessage_Object} object
+	 * @param 	object 	$pm 	{@link icms_data_privmessage_Object} object
 	 * @return 	bool
 	 **/
 	public function setRead(&$pm) {
-		if (!is_a($pm, 'icms_privmessage_Object')) {
+		if (!is_a($pm, 'icms_data_privmessage_Object')) {
 			return false;
 		}
 

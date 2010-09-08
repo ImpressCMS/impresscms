@@ -25,7 +25,7 @@ if (!is_object($icmsUser))
 	$errormessage = _PM_SORRY.'<br />'._PM_PLZREG.'';
 	redirect_header('user.php', 2, $errormessage);
 } else {
-	$pm_handler = icms::handler('icms_privmessage');
+	$pm_handler = icms::handler('icms_data_privmessage');
 	if (isset($_POST['delete_messages']) && isset($_POST['msg_id']))
 	{
 		if (!$GLOBALS['xoopsSecurity']->check())
