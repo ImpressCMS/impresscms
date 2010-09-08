@@ -8,7 +8,7 @@
  * @package		Member
  * @subpackage	GroupMembership
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -141,7 +141,7 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	/**
 	 * retrieve memberships from the database
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} conditions to meet
+	 * @param object $criteria {@link icms_db_criteria_Element} conditions to meet
 	 * @param bool $id_as_key should the ID be used as the array's key?
 	 * @return array array of references
 	 */
@@ -149,7 +149,7 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . $this->db->prefix('groups_users_link');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -174,12 +174,12 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	/**
 	 * count how many memberships meet the conditions
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} conditions to meet
+	 * @param object $criteria {@link icms_db_criteria_Element} conditions to meet
 	 * @return int
 	 */
 	public function getCount($criteria = null) {
 		$sql = "SELECT COUNT(*) FROM " . $this->db->prefix('groups_users_link');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 		}
 		$result = $this->db->query($sql);
@@ -193,12 +193,12 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	/**
 	 * delete all memberships meeting the conditions
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} with conditions to meet
+	 * @param object $criteria {@link icms_db_criteria_Element} with conditions to meet
 	 * @return bool
 	 */
 	public function deleteAll($criteria = null) {
 		$sql = "DELETE FROM " . $this->db->prefix('groups_users_link');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {

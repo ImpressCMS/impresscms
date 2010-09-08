@@ -153,9 +153,9 @@ function b_system_admin_modules_show(){
 	$block['mods'] = array();
 	$module_handler = icms::handler('icms_module');
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
-	$criteria = new icms_criteria_Compo ( );
-	$criteria->add ( new icms_criteria_Item ( 'hasadmin', 1 ) );
-	$criteria->add ( new icms_criteria_Item ( 'isactive', 1 ) );
+	$criteria = new icms_db_criteria_Compo ( );
+	$criteria->add ( new icms_db_criteria_Item ( 'hasadmin', 1 ) );
+	$criteria->add ( new icms_db_criteria_Item ( 'isactive', 1 ) );
 	$criteria->setSort ( 'mid' );
 	$modules = $module_handler->getObjects ( $criteria );
 	foreach ( $modules as $module ) {

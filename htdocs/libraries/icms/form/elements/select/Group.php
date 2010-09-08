@@ -36,7 +36,7 @@ class icms_form_elements_select_Group extends icms_form_elements_Select {
 		parent::__construct($caption, $name, $value, $size, $multiple);
 		$member_handler = icms::handler('icms_member');
 		if (!$include_anon) {
-			$this->addOptionArray($member_handler->getGroupList(new icms_criteria_Item('groupid', XOOPS_GROUP_ANONYMOUS, '!=')));
+			$this->addOptionArray($member_handler->getGroupList(new icms_db_criteria_Item('groupid', XOOPS_GROUP_ANONYMOUS, '!=')));
 		} else {
 			$this->addOptionArray($member_handler->getGroupList());
 		}

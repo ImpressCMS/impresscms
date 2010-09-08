@@ -35,14 +35,14 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$status = (!isset($_GET['status']) || !in_array( (int) ($_GET['status']), array_keys($status_array))) ? 0 : (int) ($_GET['status']);
 			$module = !isset($_GET['module']) ? 0 : (int) ($_GET['module']);
 			$module_handler = icms::handler('icms_module');
-			$module_array =& $module_handler->getList(new icms_criteria_Item('hascomments', 1));
+			$module_array =& $module_handler->getList(new icms_db_criteria_Item('hascomments', 1));
 			$comment_handler = icms::handler('icms_data_comment');
-			$criteria = new icms_criteria_Compo();
+			$criteria = new icms_db_criteria_Compo();
 			if ($status > 0) {
-				$criteria->add(new icms_criteria_Item('com_status', $status));
+				$criteria->add(new icms_db_criteria_Item('com_status', $status));
 			}
 			if ($module > 0) {
-				$criteria->add(new icms_criteria_Item('com_modid', $module));
+				$criteria->add(new icms_db_criteria_Item('com_modid', $module));
 			}
 			$total = $comment_handler->getCount($criteria);
 			if ($total > 0) {

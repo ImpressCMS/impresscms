@@ -24,8 +24,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/avatars/images/avatars_big.png)">'._MD_AVATARMAN.'</div><br />';
 		$avt_handler = icms::handler('icms_data_avatar');
-		$savatar_count = $avt_handler->getCount(new icms_criteria_Item('avatar_type', 'S'));
-		$cavatar_count = $avt_handler->getCount(new icms_criteria_Item('avatar_type', 'C'));
+		$savatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'S'));
+		$cavatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'C'));
 		echo '<ul><li>'._MD_SYSAVATARS.' ('.sprintf(_NUMIMAGES, '<b>'.icms_conv_nr2local($savatar_count).'</b>').') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=S">'._LIST.'</a>]</li><li>'._MD_CSTAVATARS.' ('.sprintf(_NUMIMAGES, '<b>'.icms_conv_nr2local($cavatar_count).'</b>').') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=C">'._LIST.'</a>]</li></ul>';
 		include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 		$form = new icms_form_Theme(_MD_ADDAVT, 'avatar_form', 'admin.php', "post", true);
@@ -53,7 +53,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			echo _MD_CSTAVATARS;
 		}
 		echo '</div><br /><br /><br />';
-		$criteria = new icms_criteria_Item('avatar_type', $type);
+		$criteria = new icms_db_criteria_Item('avatar_type', $type);
 		$avtcount = $avt_handler->getCount($criteria);
 		$start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 		$criteria->setStart($start);

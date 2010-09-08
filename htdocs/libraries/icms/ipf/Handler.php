@@ -231,7 +231,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		$icmspermissions_handler = new icms_ipf_permission_Handler($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
-			$criteria->add(new icms_criteria_Item($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
+			$criteria->add(new icms_db_criteria_Item($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
 			return true;
 		} else {
 			return false;
@@ -288,7 +288,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &get($id, $as_object = true, $debug = false, $criteria = false) {
 		if (!$criteria) {
-			$criteria = new icms_criteria_Compo();
+			$criteria = new icms_db_criteria_Compo();
 		}
 		if (is_array($this->keyName)) {
 			for ($i = 0; $i < count($this->keyName); $i++) {
@@ -296,16 +296,16 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
-				//$criteria->add(new icms_criteria_Item($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
-				$criteria->add(new icms_criteria_Item($this->keyName[$i], $id[$i], '=', $this->_itemname));
+				//$criteria->add(new icms_db_criteria_Item($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
+				$criteria->add(new icms_db_criteria_Item($this->keyName[$i], $id[$i], '=', $this->_itemname));
 			}
 		} else {
-			//$criteria = new icms_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
+			//$criteria = new icms_db_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
 			/**
 			 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 			 * Is the fact that we removed the intval() represents a security risk ?
 			 */
-			$criteria->add(new icms_criteria_Item($this->keyName, $id, '=', $this->_itemname));
+			$criteria->add(new icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname));
 		}
 		$criteria->setLimit(1);
 		if ($debug) {
@@ -342,7 +342,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * retrieve objects from the database
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} conditions to be met
+	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
@@ -358,7 +358,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$sql = 'SELECT * FROM ' . $this->table . " AS " . $this->_itemname;
 		}
 
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -381,7 +381,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * query the database with the constructed $criteria object
 	 *
 	 * @param string $sql The SQL Query
-	 * @param object $criteria {@link icms_criteria_Element} conditions to be met
+	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
 	 * @param bool $force Force the query?
 	 * @param bool $debug Turn Debug on?
 	 *
@@ -390,7 +390,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	public function query($sql, $criteria, $force = false, $debug = false) {
 		$ret = array();
 
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
@@ -424,7 +424,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * retrieve objects with debug mode - so will show the query
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} conditions to be met
+	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
@@ -504,7 +504,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} conditions to be met
+	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
 	 * @param int   $limit      Max number of objects to fetch
 	 * @param int   $start      Which record to start at
 	 *
@@ -513,7 +513,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 		$ret = array();
 		if ($criteria == null) {
-			$criteria = new icms_criteria_Compo();
+			$criteria = new icms_db_criteria_Compo();
 		}
 
 		if ($criteria->getSort() == '') {
@@ -525,7 +525,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$sql .= ', ' . $this->getIdentifierName();
 		}
 		$sql .= ' FROM '.$this->table . " AS " . $this->_itemname;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -554,13 +554,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * count objects matching a condition
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} to match
+	 * @param object $criteria {@link icms_db_criteria_Element} to match
 	 * @return int count of objects
 	 */
 	public function getCount($criteria = null) {
 		$field = "";
 		$groupby = false;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			if ($criteria->groupby != "") {
 				$groupby = true;
 				$field = $criteria->groupby . ", "; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
@@ -576,7 +576,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		} else {
 			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->_itemname;
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby != "") {
 				$sql .= $criteria->getGroupby();
@@ -854,7 +854,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return  bool
 	 **/
@@ -868,7 +868,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$set_clause .= $this->db->quoteString($fieldvalue);
 		}
 		$sql = 'UPDATE '.$this->table.' SET '.$set_clause;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (false != $force) {
@@ -885,12 +885,12 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} with conditions to meet
+	 * @param object $criteria {@link icms_db_criteria_Element} with conditions to meet
 	 * @return bool
 	 */
 
 	public function deleteAll($criteria = null) {
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql = 'DELETE FROM ' . $this->table;
 			$sql .= ' ' . $criteria->renderWhere();
 			if (!$this->db->query($sql)) {

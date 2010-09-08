@@ -61,7 +61,7 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		$newuser = false;
 		$i = 0;
 		while ($newuser == false) {
-		$crit = new icms_criteria_Item('uname', $usernames[$i]);
+		$crit = new icms_db_criteria_Item('uname', $usernames[$i]);
 		$count = $this->getUserCount($crit);
 		if ($count == 0) {
 		$newuser = true;

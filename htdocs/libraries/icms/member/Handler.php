@@ -110,7 +110,7 @@ class icms_member_Handler {
 	 */
 	public function deleteGroup(&$group) {
 		$this->_gHandler->delete($group);
-		$this->_mHandler->deleteAll(new icms_criteria_Item('groupid', $group->getVar('groupid')));
+		$this->_mHandler->deleteAll(new icms_db_criteria_Item('groupid', $group->getVar('groupid')));
 		return true;
 	}
 
@@ -122,7 +122,7 @@ class icms_member_Handler {
 	 */
 	public function deleteUser(&$user) {
 		$this->_uHandler->delete($user);
-		$this->_mHandler->deleteAll(new icms_criteria_Item('uid', $user->getVar('uid')));
+		$this->_mHandler->deleteAll(new icms_db_criteria_Item('uid', $user->getVar('uid')));
 		return true;
 	}
 
@@ -151,7 +151,7 @@ class icms_member_Handler {
 	/**
 	 * retrieve groups from the database
 	 *
-	 * @param object $criteria {@link icms_criteria_Element}
+	 * @param object $criteria {@link icms_db_criteria_Element}
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 * @return array array of {@link icms_member_group_Object} objects
 	 */
@@ -162,7 +162,7 @@ class icms_member_Handler {
 	/**
 	 * retrieve users from the database
 	 *
-	 * @param object $criteria {@link icms_criteria_Element}
+	 * @param object $criteria {@link icms_db_criteria_Element}
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 * @return array array of {@link icms_member_user_Object} objects
 	 */
@@ -173,7 +173,7 @@ class icms_member_Handler {
 	/**
 	 * get a list of groupnames and their IDs
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} object
+	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return array associative array of group-IDs and names
 	 */
 	public function getGroupList($criteria = null) {
@@ -188,7 +188,7 @@ class icms_member_Handler {
 	/**
 	 * get a list of usernames and their IDs
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} object
+	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return array associative array of user-IDs and names
 	 */
 	public function getUserList($criteria = null) {
@@ -222,11 +222,11 @@ class icms_member_Handler {
 	 * @return bool success?
 	 */
 	public function removeUsersFromGroup($group_id, $user_ids = array()) {
-		$criteria = new icms_criteria_Compo();
-		$criteria->add(new icms_criteria_Item('groupid', $group_id));
-		$criteria2 = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item('groupid', $group_id));
+		$criteria2 = new icms_db_criteria_Compo();
 		foreach ($user_ids as $uid) {
-			$criteria2->add(new icms_criteria_Item('uid', $uid), 'OR');
+			$criteria2->add(new icms_db_criteria_Item('uid', $uid), 'OR');
 		}
 		$criteria->add($criteria2);
 		return $this->_mHandler->deleteAll($criteria);
@@ -321,13 +321,13 @@ class icms_member_Handler {
 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 		$table = new icms_db_icms_updater_Table('users');
 		if ($table->fieldExists('loginname')) {
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('loginname', $uname));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
 		} elseif ($table->fieldExists('login_name')) {
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('login_name', $uname));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
 		} else {
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
 		}
-		$criteria->add(new icms_criteria_Item('pass', $pwd));
+		$criteria->add(new icms_db_criteria_Item('pass', $pwd));
 		$user = $this->_uHandler->getObjects($criteria, false);
 		if (!$user || count($user) != 1) {
 			$user = false;
@@ -347,13 +347,13 @@ class icms_member_Handler {
 	 include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 	 $table = new icms_db_icms_updater_Table('users');
 	 if ($table->fieldExists('loginname')) {
-	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('loginname', $uname));
+	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
 	 } elseif ($table->fieldExists('login_name')) {
-	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('login_name', $uname));
+	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
 	 } else {
-	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname));
+	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
 	 }
-	 $criteria->add(new icms_criteria_Item('pass', $md5pwd));
+	 $criteria->add(new icms_db_criteria_Item('pass', $md5pwd));
 	 $user = $this->_uHandler->getObjects($criteria, false);
 	 if (! $user || count($user) != 1) {
 	 $user = false;
@@ -365,7 +365,7 @@ class icms_member_Handler {
 	/**
 	 * count users matching certain conditions
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} object
+	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return int
 	 */
 	public function getUserCount($criteria = null) {
@@ -379,7 +379,7 @@ class icms_member_Handler {
 	 * @return int
 	 */
 	public function getUserCountByGroup($group_id) {
-		return $this->_mHandler->getCount(new icms_criteria_Item('groupid', $group_id));
+		return $this->_mHandler->getCount(new icms_db_criteria_Item('groupid', $group_id));
 	}
 
 	/**
@@ -400,7 +400,7 @@ class icms_member_Handler {
 	 *
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
-	 * @param object $criteria {@link icms_criteria_Element} object
+	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return bool TRUE if success or unchanged, FALSE on failure
 	 */
 	public function updateUsersByField($fieldName, $fieldValue, $criteria = null) {
@@ -426,7 +426,7 @@ class icms_member_Handler {
 	 * Temporary solution
 	 *
 	 * @param int $groups IDs of groups
-	 * @param object $criteria {@link icms_criteria_Element} object
+	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @param bool $asobject return the users as objects?
 	 * @param bool $id_as_key use the UID as key for the array if $asobject is TRUE
 	 * @return array Array of {@link icms_member_user_Object} objects (if $asobject is TRUE)
@@ -444,7 +444,7 @@ class icms_member_Handler {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
 		}
 		$limit = $start = 0;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql_criteria = $criteria->render();
 			if ($criteria->getSort() != '') {
 				$sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -493,7 +493,7 @@ class icms_member_Handler {
 		if (! empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql[] = $criteria->render();
 		}
 		$sql_string = implode(" AND ", array_filter($sql));

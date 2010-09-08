@@ -49,16 +49,16 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 			$value
 		));
 		if ($user_count > $limit && count($value) > 0) {
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item("uid", "(" . implode(",", $value) . ")", "IN"));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("uid", "(" . implode(",", $value) . ")", "IN"));
 		} else {
-			$criteria = new icms_criteria_Compo();
+			$criteria = new icms_db_criteria_Compo();
 			$criteria->setLimit($limit);
 		}
 		$criteria->setSort('uname');
 		if (!$showremovedusers) {
-			$criteria->add(new icms_criteria_Item('level', '-1', '!='));
+			$criteria->add(new icms_db_criteria_Item('level', '-1', '!='));
 		} elseif ($showremovedusers && $justremovedusers) {
-			$criteria->add(new icms_criteria_Item('level', '-1'));
+			$criteria->add(new icms_db_criteria_Item('level', '-1'));
 		}
 		$criteria->setOrder('ASC');
 		$users = $member_handler->getUserList($criteria);

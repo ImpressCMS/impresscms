@@ -25,7 +25,7 @@ function xoops_module_install($dirname) {
 	$db =& icms_db_Factory::getInstance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
 	$module_handler = icms::handler('icms_module');
-	if ($module_handler->getCount(new icms_criteria_Item('dirname', $dirname)) == 0) {
+	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
 		$module->setVar('weight', 1);
@@ -706,7 +706,7 @@ function icms_module_update($dirname) {
 
 		// first delete all config entries
 		$config_handler = icms::handler('icms_config');
-		$configs =& $config_handler->getConfigs(new icms_criteria_Item('conf_modid', $module->getVar('mid')));
+		$configs =& $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
 		$confcount = count($configs);
 		$config_delng = array();
 		if ($confcount > 0) {
@@ -831,8 +831,8 @@ function icms_module_update($dirname) {
 		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 		if (count($atasks) > 0) {
 			$msgs[] = 'Updating autotasks...';
-			$criteria = new icms_criteria_Compo();
-			$criteria->add( new icms_criteria_Item( 'sat_type', 'addon/'.$module->getInfo('dirname')));
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add( new icms_db_criteria_Item( 'sat_type', 'addon/'.$module->getInfo('dirname')));
 			$items_atasks = $atasks_handler->getObjects( $criteria , false );
 			foreach ($items_atasks as $task) {
 				$taskID = (int) ($task->getVar('sat_addon_id'));

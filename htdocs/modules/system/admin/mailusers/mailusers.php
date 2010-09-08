@@ -99,12 +99,12 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		}
 
 		if (!empty($criteria) || !empty($_POST['mail_to_group'])) {
-			$criteria_object = new icms_criteria_Compo();
+			$criteria_object = new icms_db_criteria_Compo();
 			$criteria_object->setStart( @$_POST['mail_start'] );
 			$criteria_object->setLimit( $limit );
 			foreach ($criteria as $c) {
 				list ($field, $op, $value) = explode( ' ', $c );
-				$crit = new icms_criteria_Item($field, $value, $op);
+				$crit = new icms_db_criteria_Item($field, $value, $op);
 				$crit->prefix = "u";
 				$criteria_object->add($crit, 'AND');
 			}

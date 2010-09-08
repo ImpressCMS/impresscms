@@ -114,7 +114,7 @@ class XoopsRankHandler extends icms_core_ObjectHandler
 	/**
 	 * Gets list of ranks
 	 *
-	 * @param   object  $criteria Criteria (@link icms_criteria_Compo) to match when getting the ranks
+	 * @param   object  $criteria Criteria (@link icms_db_criteria_Compo) to match when getting the ranks
 	 * @param   string  $limit How many ranks to get
 	 * @param   string  $start Where to start with getting the ranks (for pagination)
 	 * @return  array
@@ -123,11 +123,11 @@ class XoopsRankHandler extends icms_core_ObjectHandler
 	{
 		$ret = array();
 		if ($criteria == null) {
-			$criteria = new icms_criteria_Compo();
+			$criteria = new icms_db_criteria_Compo();
 		}
 
 		$sql = 'SELECT rank_id, rank_title FROM '.$this->db->prefix('ranks');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
@@ -228,7 +228,7 @@ class XoUserHandler extends icms_core_ObjectHandler
 			"	WHERE g.groupid IN (".implode(', ', array_map( 'intval', $groups) ) . ")";
 		}
 
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			// Use the direct renderer, assuming no `uid` in criteria
 			if ($render = $criteria->render()) {
 				$sql .= " AND ".$render;
@@ -264,7 +264,7 @@ class XoUserHandler extends icms_core_ObjectHandler
 			"	WHERE g.groupid IN (".implode(', ', array_map( 'intval', $groups) ) . ")";
 		}
 
-		if (isset($criteria) && is_subclass_of($criteria, "icms_criteria_Element")) {
+		if (isset($criteria) && is_subclass_of($criteria, "icms_db_criteria_Element")) {
 
 			if ($render = $criteria->render()) {
 				$sql .= " AND ".$render;
@@ -417,8 +417,8 @@ if (empty($_POST["user_submit"])) {
 	$form->addElement( new icms_form_elements_Hidden("token", $token) );
 	$form->addElement( new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit") );
 
-	$acttotal = $user_handler->getCount(new icms_criteria_Item('level', 0, '>'));
-	$inacttotal = $user_handler->getCount(new icms_criteria_Item('level', 0, '<='));
+	$acttotal = $user_handler->getCount(new icms_db_criteria_Item('level', 0, '>'));
+	$inacttotal = $user_handler->getCount(new icms_db_criteria_Item('level', 0, '<='));
 	echo "</html><body>";
 	echo "<h2 style='text-align:"._GLOBAL_LEFT.";'>"._MA_USER_FINDUS." - ".$modes[$mode]."</h2>";
 	$modes_switch = array();
@@ -440,23 +440,23 @@ if (empty($_POST["user_submit"])) {
 	$start = (int) ( @$_POST['start'] );
 
 	if (!isset($_POST["query"])) {
-		$criteria = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
 		foreach (array_keys($items_match) as $var) {
 			if (!empty($_POST[$var])) {
 				$match = (!empty($_POST["{$var}_match"])) ? (int) ($_POST["{$var}_match"]) : XOOPS_MATCH_START;
 				$value = str_replace("_", "\\\_", $myts->addSlashes(trim($_POST[$var])));
 				switch ($match) {
 					case XOOPS_MATCH_START:
-						$criteria->add(new icms_criteria_Item($var, $value.'%', 'LIKE'));
+						$criteria->add(new icms_db_criteria_Item($var, $value.'%', 'LIKE'));
 						break;
 					case XOOPS_MATCH_END:
-						$criteria->add(new icms_criteria_Item($var, '%'.$value, 'LIKE'));
+						$criteria->add(new icms_db_criteria_Item($var, '%'.$value, 'LIKE'));
 						break;
 					case XOOPS_MATCH_EQUAL:
-						$criteria->add(new icms_criteria_Item($var, $value));
+						$criteria->add(new icms_db_criteria_Item($var, $value));
 						break;
 					case XOOPS_MATCH_CONTAIN:
-						$criteria->add(new icms_criteria_Item($var, '%'.$value.'%', 'LIKE'));
+						$criteria->add(new icms_db_criteria_Item($var, '%'.$value.'%', 'LIKE'));
 						break;
 				}
 			}
@@ -464,73 +464,73 @@ if (empty($_POST["user_submit"])) {
 
 		if (!empty($_POST['url'])) {
 			$url = formatURL(trim($_POST['url']));
-			$criteria->add(new icms_criteria_Item('url', $url.'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('url', $url.'%', 'LIKE'));
 		}
 
 		if (!empty($_POST['user_from'])) {
-			$criteria->add(new icms_criteria_Item('user_from', '%'.$myts->addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_from', '%'.$myts->addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
 		}
 
 		if (!empty($_POST['user_intrest'])) {
-			$criteria->add(new icms_criteria_Item('user_intrest', '%'.$myts->addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_intrest', '%'.$myts->addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
 		}
 		if (!empty($_POST['user_occ'])) {
-			$criteria->add(new icms_criteria_Item('user_occ', '%'.$myts->addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_occ', '%'.$myts->addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
 		}
 
 		foreach (array("last_login", "user_regdate") as $var) {
 			if (!empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"])) {
 				$time = time() - (60 * 60 * 24 * (int) (trim($_POST["{$var}_more"])));
 				if ($time > 0) {
-					$criteria->add(new icms_criteria_Item($var, $time, '<='));
+					$criteria->add(new icms_db_criteria_Item($var, $time, '<='));
 				}
 			}
 			if (!empty($_POST["{$var}_less"]) && is_numeric($_POST["{$var}_less"])) {
 				$time = time() - (60 * 60 * 24 * (int) (trim($_POST["{$var}_less"])));
 				if ($time > 0) {
-					$criteria->add(new icms_criteria_Item($var, $time, '>='));
+					$criteria->add(new icms_db_criteria_Item($var, $time, '>='));
 				}
 			}
 		}
 
 		if (!empty($_POST['posts_more']) && is_numeric($_POST['posts_more'])) {
-			$criteria->add(new icms_criteria_Item('posts', (int) ($_POST['posts_more']), '<='));
+			$criteria->add(new icms_db_criteria_Item('posts', (int) ($_POST['posts_more']), '<='));
 		}
 		if (!empty($_POST['posts_less']) && is_numeric($_POST['posts_less'])) {
-			$criteria->add(new icms_criteria_Item('posts', (int) ($_POST['posts_less']), '>='));
+			$criteria->add(new icms_db_criteria_Item('posts', (int) ($_POST['posts_less']), '>='));
 		}
 		if (!empty($_POST['user_mailok'])) {
 			if ($_POST['user_mailok'] == "mailng") {
-				$criteria->add(new icms_criteria_Item('user_mailok', 0));
+				$criteria->add(new icms_db_criteria_Item('user_mailok', 0));
 			} elseif ($_POST['user_mailok'] == "mailok") {
-				$criteria->add(new icms_criteria_Item('user_mailok', 1));
+				$criteria->add(new icms_db_criteria_Item('user_mailok', 1));
 			}
 		}
 		if (!empty($_POST['user_avatar'])) {
 			if ($_POST['user_avatar'] == "y") {
-				$criteria->add(new icms_criteria_Item('user_avatar', "('', 'blank.gif')", 'NOT IN'));
+				$criteria->add(new icms_db_criteria_Item('user_avatar', "('', 'blank.gif')", 'NOT IN'));
 			} elseif ($_POST['user_avatar'] == "n") {
-				$criteria->add(new icms_criteria_Item('user_avatar', "('', 'blank.gif')", 'IN'));
+				$criteria->add(new icms_db_criteria_Item('user_avatar', "('', 'blank.gif')", 'IN'));
 			}
 		}
 
 		if (!empty($_POST['level'])) {
 			$level_value = array(1 => 1, 2 => 0, 3 => -1);
 			$level = isset($level_value[ (int) ($_POST["level"])]) ? $level_value[ (int) ($_POST["level"])] : 1;
-			$criteria->add(new icms_criteria_Item("level", $level));
+			$criteria->add(new icms_db_criteria_Item("level", $level));
 		}
 
 		if (!empty($_POST['rank'])) {
 			$rank_obj = $rank_handler->get( $_POST['rank'] );
 			if ($rank_obj->getVar("rank_special")) {
-				$criteria->add(new icms_criteria_Item("rank", (int) ($_POST['rank'])));
+				$criteria->add(new icms_db_criteria_Item("rank", (int) ($_POST['rank'])));
 			} else {
 				if ($rank_obj->getVar("rank_min")) {
-					$criteria->add(new icms_criteria_Item('posts', $rank_obj->getVar("rank_min"), '>='));
+					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->getVar("rank_min"), '>='));
 				}
 
 				if ($rank_obj->getVar("rank_max")) {
-					$criteria->add(new icms_criteria_Item('posts', $rank_obj->getVar("rank_max"), '<='));
+					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->getVar("rank_max"), '<='));
 				}
 			}
 		}

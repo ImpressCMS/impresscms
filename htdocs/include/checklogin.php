@@ -38,8 +38,8 @@ $uname4sql = addslashes($myts->stripSlashesGPC($uname));
 $pass4sql = addslashes($myts->stripSlashesGPC($pass));
 /*if (strstr( $uname , '@' )) {
  // check by email if uname includes '@'
- $criteria = new icms_criteria_Compo(new icms_criteria_Item('email', $uname4sql ));
- $criteria->add(new icms_criteria_Item('pass', $pass4sql));
+ $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('email', $uname4sql ));
+ $criteria->add(new icms_db_criteria_Item('pass', $pass4sql));
  $user_handler = icms::handler('icms_member_user');
  $users =& $user_handler->getObjects($criteria, false);
  if (empty( $users ) || count( $users ) != 1 ) $user = false ;

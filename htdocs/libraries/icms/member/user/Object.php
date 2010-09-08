@@ -302,7 +302,7 @@ class icms_member_user_Object extends icms_core_Object {
 		if (!isset($this->_isOnline)) {
 			$onlinehandler = icms::handler('icms_core_Online');
 			$this->_isOnline =
-				($onlinehandler->getCount(new icms_criteria_Item('online_uid', $this->getVar('uid'))) > 0)
+				($onlinehandler->getCount(new icms_db_criteria_Item('online_uid', $this->getVar('uid'))) > 0)
 				? true
 				: false;
 		}

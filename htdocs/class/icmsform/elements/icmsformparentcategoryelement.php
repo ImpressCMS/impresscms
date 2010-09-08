@@ -23,7 +23,7 @@ class IcmsFormParentcategoryElement extends icms_form_elements_Select {
 		$category_title_field = $object->handler->identifierName;
 
 		$addNoParent = isset($object->controls[$key]['addNoParent']) ? $object->controls[$key]['addNoParent'] : true;
-		$criteria = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
 		$criteria->setSort("weight, " . $category_title_field);
 		$category_handler = icms_getModuleHandler('category', $object->handler->_moduleName);
 		$categories = $category_handler->getObjects($criteria);

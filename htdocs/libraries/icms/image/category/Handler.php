@@ -149,7 +149,7 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * retrieve array of {@link icms_image_category_Object}s meeting certain conditions
-	 * @param object $criteria {@link icms_criteria_Element} with conditions for the image categories
+	 * @param object $criteria {@link icms_db_criteria_Element} with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
 	 * @return array {@link icms_image_category_Object}s matching the conditions
 	 **/
@@ -158,7 +158,7 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT c.* FROM ' . $this->db->prefix('imagecategory') . ' c LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$where = $criteria->render();
 			$sql .= ($where != '') ? ' AND ' . $where : '';
 			$limit = $criteria->getLimit();
@@ -191,7 +191,7 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('imagecategory') . ' i LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$where = $criteria->render();
 			$sql .= ($where != '') ? ' AND ' . $where : '';
 		}
@@ -208,23 +208,23 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	 * @return array array of {@link icms_image_category_Object}s matching the conditions
 	 **/
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
-		$criteria = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_criteria_Compo();
+			$criteriaTray = new icms_db_criteria_Compo();
 			foreach ( $groups as $gid) {
-				$criteriaTray->add(new icms_criteria_Item('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
 			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new icms_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_criteria_Item('gperm_modid', 1));
+				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
+				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new icms_criteria_Item('imgcat_display', (int) ($display)));
+			$criteria->add(new icms_db_criteria_Item('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new icms_criteria_Item('imgcat_storetype', $storetype));
+			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
 		}
 		$categories = &$this->getObjects($criteria, true);
 		$ret = array();
@@ -246,26 +246,26 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		* @return array  list of categories
 		*/
 	public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id=null) {
-		$criteria = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_criteria_Compo();
+			$criteriaTray = new icms_db_criteria_Compo();
 			foreach ( $groups as $gid) {
-				$criteriaTray->add(new icms_criteria_Item('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
 			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new icms_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_criteria_Item('gperm_modid', 1));
+				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
+				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new icms_criteria_Item('imgcat_display', (int) ($display)));
+			$criteria->add(new icms_db_criteria_Item('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new icms_criteria_Item('imgcat_storetype', $storetype));
+			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
 		}
 		if ($imgcat_id === NULL ) $imgcat_id = 0;
-		$criteria->add(new icms_criteria_Item('imgcat_pid', $imgcat_id));
+		$criteria->add(new icms_db_criteria_Item('imgcat_pid', $imgcat_id));
 		$categories = &$this->getObjects($criteria, true);
 		$ret = array();
 		foreach ( array_keys($categories) as $i) {

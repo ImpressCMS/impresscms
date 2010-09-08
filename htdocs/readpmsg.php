@@ -37,7 +37,7 @@ if (!is_object($icmsUser)) {
 	$start = !empty($_GET['start']) ? (int) ($_GET['start']) : 0;
 	$total_messages = !empty($_GET['total_messages']) ? (int) ($_GET['total_messages']) : 0;
 	include ICMS_ROOT_PATH.'/header.php';
-	$criteria = new icms_criteria_Item('to_userid', (int) ($icmsUser->getVar('uid')));
+	$criteria = new icms_db_criteria_Item('to_userid', (int) ($icmsUser->getVar('uid')));
 	$criteria->setLimit(1);
 	$criteria->setStart($start);
 	$criteria->setSort('msg_time');

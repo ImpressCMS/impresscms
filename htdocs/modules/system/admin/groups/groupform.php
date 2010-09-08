@@ -43,42 +43,42 @@ unset($dirlist);
 
 $a_mod_checkbox = new icms_form_elements_Checkbox(_AM_ACTIVERIGHTS, "admin_mids[]", $a_mod_value);
 $module_handler = icms::handler('icms_module');
-$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasadmin', 1));
-$criteria->add(new icms_criteria_Item('isactive', 1));
-$criteria->add(new icms_criteria_Item('dirname', 'system', '<>'));
+$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hasadmin', 1));
+$criteria->add(new icms_db_criteria_Item('isactive', 1));
+$criteria->add(new icms_db_criteria_Item('dirname', 'system', '<>'));
 /* criteria added to see if the active user can admin the module, do not filter for administrator group  (module_admin)*/
 if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 	$a_mod = $gperm->getItemIds('module_admin',$groups);
-	$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$a_mod).')', 'IN'));}
+	$criteria->add(new icms_db_criteria_Item('mid', '('.implode(',',$a_mod).')', 'IN'));}
 	$a_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
 	$r_mod_checkbox = new icms_form_elements_Checkbox(_AM_ACCESSRIGHTS, "read_mids[]", $r_mod_value);
-	$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
-	$criteria->add(new icms_criteria_Item('isactive', 1));
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hasmain', 1));
+	$criteria->add(new icms_db_criteria_Item('isactive', 1));
 	/* criteria added to see if the active user can access the module, do not filter for administrator group  (module_read)*/
 	if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 		$r_mod = $gperm->getItemIds('module_read',$groups);
-		$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$r_mod).')', 'IN'));}
+		$criteria->add(new icms_db_criteria_Item('mid', '('.implode(',',$r_mod).')', 'IN'));}
 		$r_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
 		$ed_mod_checkbox = new icms_form_elements_Checkbox(_AM_EDPERM, "useeditor_mids[]", $ed_mod_value);
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('isactive', 1));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
 		/* criteria added to see where the active user can use the wysiwyg editors (use_wysiwygeditor)
 		 * administrators don't have explicit entries for this, do not filter
 		 */
 		if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 			$ed_mod = $gperm->getItemIds('use_wysiwygeditor',$groups);
-			$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$ed_mod).')', 'IN'));}
+			$criteria->add(new icms_db_criteria_Item('mid', '('.implode(',',$ed_mod).')', 'IN'));}
 			$ed_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
 			$debug_mod_checkbox = new icms_form_elements_Checkbox(_AM_DEBUG_PERM, "enabledebug_mids[]", $debug_mod_value);
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('isactive', 1));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
 			/* criteria added to see where the active user can view the debug mode (enable_debug)
 			 * administrators do not have explicit entries for this, do not filter
 			 */
 			if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 				$debug_mod = $gperm->getItemIds('enable_debug',$groups);
-				$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$debug_mod).')', 'IN'));}
+				$criteria->add(new icms_db_criteria_Item('mid', '('.implode(',',$debug_mod).')', 'IN'));}
 				$debug_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
 				/**
@@ -86,7 +86,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 				 * @todo: Create the language constant.
 				 */
 				$group_manager_checkbox = new icms_form_elements_Checkbox(_AM_GROUPMANAGER_PERM, "groupmanager_gids[]", $group_manager_value);
-				$criteria = new icms_criteria_Compo(new icms_criteria_Item('isactive', 1));
+				$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
 				$groups = $member_handler->getGroups();
 				$gperm_handler = icms::handler('icms_member_groupperm');
 

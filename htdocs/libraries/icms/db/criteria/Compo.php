@@ -1,6 +1,6 @@
 <?php
 /**
- * icms_criteria_Compo
+ * icms_db_criteria_Compo
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -15,7 +15,7 @@
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
- * Collection of multiple {@link icms_criteria_Element}s
+ * Collection of multiple {@link icms_db_criteria_Element}s
  *
  * @category	ICMS
  * @package     Database
@@ -23,11 +23,11 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_criteria_Compo extends icms_criteria_Element {
+class icms_db_criteria_Compo extends icms_db_criteria_Element {
 
 	/**
 	 * The elements of the collection
-	 * @var	array   Array of {@link icms_criteria_Element} objects
+	 * @var	array   Array of {@link icms_db_criteria_Element} objects
 	 */
 	public $criteriaElements = array();
 

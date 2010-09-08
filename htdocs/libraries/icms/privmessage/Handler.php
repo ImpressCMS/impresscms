@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Privmessage
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -136,7 +136,7 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Load messages from the database
-	 * @param 	object 	$criteria 	{@link icms_criteria_Element} object
+	 * @param 	object 	$criteria 	{@link icms_db_criteria_Element} object
 	 * @param 	bool 	$id_as_key 	use ID as key into the array?
 	 * @return 	array	Array of {@link icms_privmessage_Object} objects
 	 **/
@@ -144,7 +144,7 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('priv_msgs');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('msg_id', 'msg_time', 'from_userid')) ? 'msg_id' : $criteria->getSort();
 			$sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -170,12 +170,12 @@ class icms_privmessage_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Count message
-	 * @param 	object 	$criteria = null 	{@link icms_criteria_Element} object
+	 * @param 	object 	$criteria = null 	{@link icms_db_criteria_Element} object
 	 * @return 	int
 	 **/
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('priv_msgs');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {

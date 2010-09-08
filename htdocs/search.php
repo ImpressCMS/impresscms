@@ -185,9 +185,9 @@ switch ($action) {
 	case "results":
 		$max_results_per_page = (int) ($icmsConfigSearch['num_shallow_search']);
 		$module_handler = icms::handler('icms_module');
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('hassearch', 1));
-		$criteria->add(new icms_criteria_Item('isactive', 1));
-		$criteria->add(new icms_criteria_Item('mid', "(" . implode(',', $available_modules) . ")", 'IN'));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hassearch', 1));
+		$criteria->add(new icms_db_criteria_Item('isactive', 1));
+		$criteria->add(new icms_db_criteria_Item('mid', "(" . implode(',', $available_modules) . ")", 'IN'));
 		$modules =& $module_handler->getObjects($criteria, true);
 		$mids = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
 		if (empty($mids) || !is_array($mids)) {

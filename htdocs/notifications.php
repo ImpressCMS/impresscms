@@ -60,7 +60,7 @@ switch ($op) {
 
 		// Get an array of all notifications for the selected user
 
-		$criteria = new icms_criteria_Item('not_uid', $uid);
+		$criteria = new icms_db_criteria_Item('not_uid', $uid);
 		$criteria->setSort('not_modid,not_category,not_itemid');
 		$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 		$notifications =& $notification_handler->getObjects($criteria);

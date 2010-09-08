@@ -285,12 +285,12 @@ class SystemBlocksadminHandler extends icms_view_block_Handler {
 
 	public function upWeight( $bid) {
 		$blockObj = $this->get($bid);
-		$criteria = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
 		$criteria->setLimit(1);
 		$criteria->setSort('weight');
 		$criteria->setOrder('DESC');
-		$criteria->add(new icms_criteria_Item('side', $blockObj->vars['side']['value']));
-		$criteria->add(new icms_criteria_Item('weight', $blockObj->getVar('weight'), '<'));
+		$criteria->add(new icms_db_criteria_Item('side', $blockObj->vars['side']['value']));
+		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '<'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1) ? $sideBlocks[0]->getVar('weight') - 1 : $blockObj->getVar('weight') - 1;
 		if ($weight < 0) $weight = 0;
@@ -300,12 +300,12 @@ class SystemBlocksadminHandler extends icms_view_block_Handler {
 
 	public function downWeight( $bid) {
 		$blockObj = $this->get($bid);
-		$criteria = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
 		$criteria->setLimit(1);
 		$criteria->setSort('weight');
 		$criteria->setOrder('ASC');
-		$criteria->add(new icms_criteria_Item('side', $blockObj->vars['side']['value']));
-		$criteria->add(new icms_criteria_Item('weight', $blockObj->getVar('weight'), '>'));
+		$criteria->add(new icms_db_criteria_Item('side', $blockObj->vars['side']['value']));
+		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '>'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1) ? $sideBlocks[0]->getVar('weight') + 1 : $blockObj->getVar('weight') + 1;
 		$blockObj->setVar('weight', $weight);

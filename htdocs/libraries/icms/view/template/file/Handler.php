@@ -240,7 +240,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * retrieve array of {@link icms_view_template_file_Object}s meeting certain conditions
-	 * @param object $criteria {@link icms_criteria_Element} with conditions for the blocks
+	 * @param object $criteria {@link icms_db_criteria_Element} with conditions for the blocks
 	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
 	 * @return array {@link icms_view_template_file_Object}s matching the conditions
 	 **/
@@ -253,7 +253,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 		} else {
 			$sql = "SELECT * FROM " . $this->db->prefix('tplfile');
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere() . " ORDER BY tpl_refid";
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -278,12 +278,12 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Count some tplfiles
 	 *
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @return  int
 	 **/
 	public function getCount($criteria = null)	{
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('tplfile');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {
@@ -327,28 +327,28 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	 * @return  array $ret containing number of templates in the tpl_set or empty array if fails
 	 **/
 	public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false) {
-		$criteria = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
 		if (isset($tplset)) {
-			$criteria->add(new icms_criteria_Item('tpl_tplset', $tplset));
+			$criteria->add(new icms_db_criteria_Item('tpl_tplset', $tplset));
 		}
 		if (isset($module)) {
-			$criteria->add(new icms_criteria_Item('tpl_module', $module));
+			$criteria->add(new icms_db_criteria_Item('tpl_module', $module));
 		}
 		if (isset($refid)) {
-			$criteria->add(new icms_criteria_Item('tpl_refid', $refid));
+			$criteria->add(new icms_db_criteria_Item('tpl_refid', $refid));
 		}
 		if (isset($file)) {
-			$criteria->add(new icms_criteria_Item('tpl_file', $file));
+			$criteria->add(new icms_db_criteria_Item('tpl_file', $file));
 		}
 		if (isset($type)) {
 			if (is_array($type)) {
-				$criteria2 = new icms_criteria_Compo();
+				$criteria2 = new icms_db_criteria_Compo();
 				foreach ( $type as $t) {
-					$criteria2->add(new icms_criteria_Item('tpl_type', $t), 'OR');
+					$criteria2->add(new icms_db_criteria_Item('tpl_type', $t), 'OR');
 				}
 				$criteria->add($criteria2);
 			} else {
-				$criteria->add(new icms_criteria_Item('tpl_type', $type));
+				$criteria->add(new icms_db_criteria_Item('tpl_type', $type));
 			}
 		}
 		return $this->getObjects($criteria, $getsource, false);
@@ -362,8 +362,8 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	 * @return  bool true if exists, false if not
 	 **/
 	public function templateExists($tplname, $tplset_name) {
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('tpl_file', trim($tplname)));
-		$criteria->add(new icms_criteria_Item('tpl_tplset', trim($tplset_name)));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('tpl_file', trim($tplname)));
+		$criteria->add(new icms_db_criteria_Item('tpl_tplset', trim($tplset_name)));
 		if ($this->getCount($criteria) > 0) {
 			return true;
 		}

@@ -136,11 +136,11 @@ class SystemRatingHandler extends icms_ipf_Handler {
 	}
 	function already_rated($item, $itemid, $dirname, $uid) {
 
-		$criteria = new icms_criteria_Compo();
-		$criteria->add(new icms_criteria_Item('item',$item ));
-		$criteria->add(new icms_criteria_Item('itemid',$itemid ));
-		$criteria->add(new icms_criteria_Item('dirname', $dirname));
-		$criteria->add(new icms_criteria_Item('user.uid', $uid));
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item('item',$item ));
+		$criteria->add(new icms_db_criteria_Item('itemid',$itemid ));
+		$criteria->add(new icms_db_criteria_Item('dirname', $dirname));
+		$criteria->add(new icms_db_criteria_Item('user.uid', $uid));
 
 		$ret = $this->getObjects($criteria);
 

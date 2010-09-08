@@ -9,7 +9,7 @@
  * @subpackage	Registry
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -55,7 +55,7 @@ class icms_ipf_registry_Handler {
 	 * Adding objects to the registry
 	 *
 	 * @param icms_ipf_Handler $handler of the objects to add
-	 * @param icms_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param icms_db_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */
@@ -73,7 +73,7 @@ class icms_ipf_registry_Handler {
 	 * Adding objects as list to the registry
 	 *
 	 * @param icms_ipf_Handler $handler of the objects to add
-	 * @param icms_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param icms_db_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */
@@ -93,7 +93,7 @@ class icms_ipf_registry_Handler {
 	 *
 	 * @param string $item name of the item
 	 * @param string $modulename name of the module
-	 * @param icms_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param icms_db_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */
@@ -116,7 +116,7 @@ class icms_ipf_registry_Handler {
 	 *
 	 * @param string $item name of the item
 	 * @param string $modulename name of the module
-	 * @param icms_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param icms_db_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */

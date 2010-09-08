@@ -46,7 +46,7 @@ function b_system_waiting_show($options)
 	$block = array();
 
 	// get module's list installed
-	$mod_lists = $module_handler->getList(new icms_criteria_Item(1,1),true);
+	$mod_lists = $module_handler->getList(new icms_db_criteria_Item(1,1),true);
 	foreach ($mod_lists as $dirname => $name) {
 
 		$plugin_info = system_get_plugin_info( $dirname , $xoopsConfig['language'] ) ;

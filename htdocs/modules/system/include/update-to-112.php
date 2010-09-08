@@ -23,8 +23,8 @@
 
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
 		$table = new icms_db_icms_updater_Table ( 'config' );
-		$criteria = new icms_criteria_Compo ( );
-		$criteria->add ( new icms_criteria_Item ( 'conf_order', 3, '>' ) );
+		$criteria = new icms_db_criteria_Compo ( );
+		$criteria->add ( new icms_db_criteria_Item ( 'conf_order', 3, '>' ) );
 		$table->addUpdateAll ( 'conf_order', 'conf_order + 2', $criteria, true );
 		$icmsDatabaseUpdater->updateTable ( $table );
 		unset ( $table );
@@ -149,9 +149,9 @@
 	if ($dbVersion < $newDbVersion) {
 		$configitem_handler = icms::handler('icms_config_item');
 		// fetch the rss_local configitem
-		$criteria = new icms_criteria_Compo ( );
-		$criteria->add ( new icms_criteria_Item ( 'conf_name', 'rss_local' ) );
-		$criteria->add ( new icms_criteria_Item ( 'conf_catid', ICMS_CONF_PERSONA ) );
+		$criteria = new icms_db_criteria_Compo ( );
+		$criteria->add ( new icms_db_criteria_Item ( 'conf_name', 'rss_local' ) );
+		$criteria->add ( new icms_db_criteria_Item ( 'conf_catid', ICMS_CONF_PERSONA ) );
 		$configitemsObj = $configitem_handler->getObjects ( $criteria );
 		if (isset ( $configitemsObj [0] ) && $configitemsObj [0]->getVar ( 'conf_value', 'n' ) == 'http://www.impresscms.org/modules/smartsection/backend.php') {
 			$configitemsObj [0]->setVar ( 'conf_value', 'http://community.impresscms.org/modules/smartsection/backend.php' );
@@ -243,9 +243,9 @@
 	if ($dbVersion < $newDbVersion) {
 		$configitem_handler = icms::handler('icms_config_item');
 		// fetch the rss_local configitem
-		$criteria = new icms_criteria_Compo ( );
-		$criteria->add ( new icms_criteria_Item ( 'conf_name', 'google_analytics' ) );
-		$criteria->add ( new icms_criteria_Item ( 'conf_catid', ICMS_CONF_METAFOOTER ) );
+		$criteria = new icms_db_criteria_Compo ( );
+		$criteria->add ( new icms_db_criteria_Item ( 'conf_name', 'google_analytics' ) );
+		$criteria->add ( new icms_db_criteria_Item ( 'conf_catid', ICMS_CONF_METAFOOTER ) );
 		$configitemsObj = $configitem_handler->getObjects ( $criteria );
 		if (isset ( $configitemsObj [0] ) && $configitemsObj [0]->getVar ( 'conf_formtype', 'n' ) == 'textarea') {
 			$configitemsObj [0]->setVar ( 'conf_formtype', 'textbox' );

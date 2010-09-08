@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		View
  * @subpackage	Template
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -181,7 +181,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * retrieve array of {@link icms_view_template_set_Object}s meeting certain conditions
-	 * @param object $criteria {@link icms_criteria_Element} with conditions for the blocks
+	 * @param object $criteria {@link icms_db_criteria_Element} with conditions for the blocks
 	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
 	 * @return array {@link icms_view_template_set_Object}s matching the conditions
 	 **/
@@ -189,7 +189,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere() . ' ORDER BY tplset_id';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -214,12 +214,12 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Count some tplfilesets
 	 *
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @return  int $count number of template filesets that match the criteria
 	 **/
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {

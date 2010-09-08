@@ -735,8 +735,8 @@ function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 function xoops_comment_count($module_id, $item_id = null)
 {
 	$comment_handler = icms::handler('icms_data_comment');
-	$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', (int) ($module_id)));
-	if(isset($item_id)) {$criteria->add(new icms_criteria_Item('com_itemid', (int) ($item_id)));}
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) ($module_id)));
+	if(isset($item_id)) {$criteria->add(new icms_db_criteria_Item('com_itemid', (int) ($item_id)));}
 	return $comment_handler->getCount($criteria);
 }
 
@@ -2589,13 +2589,13 @@ function icms_PasswordMeter(){
  * Build criteria automatically from an array of key=>value
  *
  * @param array $criterias array of fieldname=>value criteria
- * @return object (@link icms_criteria_Compo) the icms_criteria_Compo object
+ * @return object (@link icms_db_criteria_Compo) the icms_db_criteria_Compo object
  * @todo Move to a static class method - Criteria
  */
 function icms_buildCriteria($criterias) {
-	$criteria = new icms_criteria_Compo();
+	$criteria = new icms_db_criteria_Compo();
 	foreach($criterias as $k=>$v) {
-		$criteria->add(new icms_criteria_Item($k, $v));
+		$criteria->add(new icms_db_criteria_Item($k, $v));
 	}
 	return $criteria;
 }

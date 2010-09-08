@@ -8,7 +8,7 @@
  * @package		Member
  * @subpackage	Group
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -141,7 +141,7 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	/**
 	 * retrieve groups from the database
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} with conditions for the groups
+	 * @param object $criteria {@link icms_db_criteria_Element} with conditions for the groups
 	 * @param bool $id_as_key should the groups' IDs be used as keys for the associative array?
 	 * @return mixed Array of groups
 	 */
@@ -149,7 +149,7 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . $this->db->prefix('groups');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();

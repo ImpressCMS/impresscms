@@ -526,7 +526,7 @@ if ($op == 'avatarupload')
 					$oldavatar = $icmsUser->getVar('user_avatar');
 					if (!empty($oldavatar) && preg_match("/^cavt/", strtolower($oldavatar)))
 					{
-						$avatars =& $avt_handler->getObjects(new icms_criteria_Item('avatar_file', $oldavatar));
+						$avatars =& $avt_handler->getObjects(new icms_db_criteria_Item('avatar_file', $oldavatar));
 						if (!empty($avatars) && count($avatars) == 1 && is_object($avatars[0]))
 						{
 							$avt_handler->delete($avatars[0]);
@@ -575,8 +575,8 @@ if ($op == 'avatarchoose')
 	if (!empty($_POST['user_avatar']))
 	{
 		$user_avatar = icms_core_DataFilter::addSlashes( trim($_POST['user_avatar']) );
-		$criteria_avatar = new icms_criteria_Compo(new icms_criteria_Item('avatar_file', $user_avatar));
-		$criteria_avatar->add(new icms_criteria_Item('avatar_type', "S"));
+		$criteria_avatar = new icms_db_criteria_Compo(new icms_db_criteria_Item('avatar_file', $user_avatar));
+		$criteria_avatar->add(new icms_db_criteria_Item('avatar_type', "S"));
 		$avatars =& $avt_handler->getObjects($criteria_avatar);
 		if (!is_array($avatars) || !count($avatars))
 		{
@@ -602,7 +602,7 @@ if ($op == 'avatarchoose')
 		}
 		if ($oldavatar && preg_match("/^cavt/", strtolower($oldavatar)))
 		{
-			$avatars =& $avt_handler->getObjects(new icms_criteria_Item('avatar_file', $oldavatar));
+			$avatars =& $avt_handler->getObjects(new icms_db_criteria_Item('avatar_file', $oldavatar));
 			if (!empty($avatars) && count($avatars) == 1 && is_object($avatars[0]))
 			{
 				$avt_handler->delete($avatars[0]);
@@ -615,7 +615,7 @@ if ($op == 'avatarchoose')
 		}
 		if ($user_avatar != 'blank.gif')
 		{
-			$avatars =& $avt_handler->getObjects(new icms_criteria_Item('avatar_file', $user_avatar));
+			$avatars =& $avt_handler->getObjects(new icms_db_criteria_Item('avatar_file', $user_avatar));
 			if (is_object($avatars[0]))
 			{
 				$avt_handler->addUser($avatars[0]->getVar('avatar_id'), $icmsUser->getVar('uid'));

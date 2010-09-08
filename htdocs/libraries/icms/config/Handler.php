@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Config
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -82,7 +82,7 @@ class icms_config_Handler {
 	public function &getConfig($id, $withoptions = false) {
 		$config =& $this->_cHandler->get($id);
 		if ($withoptions == true) {
-			$config->setConfOptions($this->getConfigOptions(new icms_criteria_Item('conf_id', $id)));
+			$config->setConfOptions($this->getConfigOptions(new icms_db_criteria_Item('conf_id', $id)));
 		}
 		return $config;
 	}
@@ -128,7 +128,7 @@ class icms_config_Handler {
 		$options =& $config->getConfOptions();
 		$count = count($options);
 		if ($count == 0) {
-			$options = $this->getConfigOptions(new icms_criteria_Item('conf_id', $config->getVar('conf_id')));
+			$options = $this->getConfigOptions(new icms_db_criteria_Item('conf_id', $config->getVar('conf_id')));
 			$count = count($options);
 		}
 		if (is_array($options) && $count > 0) {
@@ -145,7 +145,7 @@ class icms_config_Handler {
 	/**
 	 * get one or more Configs
 	 *
-	 * @param	object  $criteria       {@link icms_criteria_Element}
+	 * @param	object  $criteria       {@link icms_db_criteria_Element}
 	 * @param	bool    $id_as_key      Use the configs' ID as keys?
 	 * @param	bool    $with_options   get the options now?
 	 *
@@ -158,7 +158,7 @@ class icms_config_Handler {
 	/**
 	 * Count some configs
 	 *
-	 * @param	object  $criteria   {@link icms_criteria_Element}
+	 * @param	object  $criteria   {@link icms_db_criteria_Element}
 	 * @return	int count result
 	 */
 	public function getConfigCount($criteria = null) {
@@ -177,8 +177,8 @@ class icms_config_Handler {
 		static $_cachedConfigs;
 
 		if (is_array($category)) {
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('conf_modid', (int) $module));
-			$criteria->add(new icms_criteria_Item('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
+			$criteria->add(new icms_db_criteria_Item('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach ( array_keys($configs) as $i) {
@@ -192,9 +192,9 @@ class icms_config_Handler {
 		} else {
 			if (!empty($_cachedConfigs[$module][$category]) ) return $_cachedConfigs[$module][$category];
 
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('conf_modid', (int) $module));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
 			if (!empty($category)) {
-				$criteria->add(new icms_criteria_Item('conf_catid', (int) $category));
+				$criteria->add(new icms_db_criteria_Item('conf_catid', (int) $category));
 			}
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
@@ -232,7 +232,7 @@ class icms_config_Handler {
 	/**
 	 * Get one or more {@link icms_config_option_Object}s
 	 *
-	 * @param	object  $criteria   {@link icms_criteria_Element}
+	 * @param	object  $criteria   {@link icms_db_criteria_Element}
 	 * @param	bool    $id_as_key  Use IDs as keys in the array?
 	 *
 	 * @return	array   Array of {@link icms_config_option_Object}s
@@ -244,7 +244,7 @@ class icms_config_Handler {
 	/**
 	 * Count some {@link icms_config_option_Object}s
 	 *
-	 * @param	object  $criteria   {@link icms_criteria_Element}
+	 * @param	object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return	int     Count of {@link icms_config_option_Object}s matching $criteria
 	 */
@@ -264,9 +264,9 @@ class icms_config_Handler {
 		if (!empty($this->_cachedConfigs[$conf_modid][$conf_catid])) {
 			return $this->_cachedConfigs[$conf_modid][$conf_catid];
 		} else {
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('conf_modid', $conf_modid));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', $conf_modid));
 			if (empty($conf_catid)) {
-				$criteria->add(new icms_criteria_Item('conf_catid', $conf_catid));
+				$criteria->add(new icms_db_criteria_Item('conf_catid', $conf_catid));
 			}
 			$configs =& $this->_cHandler->getObjects($criteria);
 			$confcount = count($configs);

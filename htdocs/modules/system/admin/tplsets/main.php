@@ -365,7 +365,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$msgs = array();
 			if ($tplset != 'default' && $tplset != $xoopsConfig['template_set']) {
 				$tpltpl_handler =& icms::handler('icms_view_template_file');
-				$templates =& $tpltpl_handler->getObjects(new icms_criteria_Item('tpl_tplset', $tplset));
+				$templates =& $tpltpl_handler->getObjects(new icms_db_criteria_Item('tpl_tplset', $tplset));
 				$tcount = count($templates);
 				if ($tcount > 0) {
 					$msgs[] = 'Deleting template files...';
@@ -378,7 +378,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 					}
 				}
 				$tplset_handler = icms::handler('icms_view_template_set');
-				$tplsets =& $tplset_handler->getObjects(new icms_criteria_Item('tplset_name', $tplset));
+				$tplsets =& $tplset_handler->getObjects(new icms_db_criteria_Item('tplset_name', $tplset));
 				if (count($tplsets) > 0 && is_object($tplsets[0])) {
 					$msgs[] = 'Deleting template set data...';
 					if (!$tplset_handler->delete($tplsets[0])) {
@@ -425,7 +425,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			icms_cp_header();
 			if ($tplset == $newtheme) {
 				icms_core_Message::error('Template set name must be a different name.');
-			} elseif ($tpltpl_handler->getCount(new icms_criteria_Item('tpl_tplset', $newtheme)) > 0) {
+			} elseif ($tpltpl_handler->getCount(new icms_db_criteria_Item('tpl_tplset', $newtheme)) > 0) {
 				icms_core_Message::error('Template set <b>'.$newtheme.'</b> already exists.');
 			} else {
 				$tplset_handler = icms::handler('icms_view_template_set');
@@ -436,7 +436,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 					$msgs[] = '<span style="color:#ff0000;">ERROR: Could not create template set <b>'.$newtheme.'</b>.</span><br />';
 				} else {
 					$tplsetid = $tplsetobj->getVar('tplset_id');
-					$templates =& $tpltpl_handler->getObjects(new icms_criteria_Item('tpl_tplset', $tplset), true);
+					$templates =& $tpltpl_handler->getObjects(new icms_db_criteria_Item('tpl_tplset', $tplset), true);
 					$tcount = count($templates);
 					if ($tcount > 0) {
 						$msgs[] = 'Copying template files...';
@@ -684,7 +684,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 					$tplsetobj =& $tplset_handler->getByName($tplset);
 					$xml = "<"."?xml version=\"1.0\"?".">\r\n<tplset>\r\n  <name>".$tplset."</name>\r\n  <dateCreated>".$tplsetobj->getVar('tplset_created')."</dateCreated>\r\n  <credits>\r\n".$tplsetobj->getVar('tplset_credits')."\r\n  </credits>\r\n  <generator>".XOOPS_VERSION."</generator>\r\n  <templates>";
 					$tpltpl_handler =& icms::handler('icms_view_template_file');
-					$files =& $tpltpl_handler->getObjects(new icms_criteria_Item('tpl_tplset', $tplset), true);
+					$files =& $tpltpl_handler->getObjects(new icms_db_criteria_Item('tpl_tplset', $tplset), true);
 					$fcount = count($files);
 					if ($fcount > 0) {
 						for ($i = 0; $i < $fcount; $i++) {
@@ -854,7 +854,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 						echo '<span style="color:#ff0000;">ERROR: Invalid Template Set Name</span><br />';
 					} else {
 						$tplset_handler = icms::handler('icms_view_template_set');
-						if ($tplset_handler->getCount(new icms_criteria_Item('tplset_name', $tplset_name)) > 0) {
+						if ($tplset_handler->getCount(new icms_db_criteria_Item('tplset_name', $tplset_name)) > 0) {
 							echo '<span style="color:#ff0000;">ERROR: Template set <b>'.htmlspecialchars($tplset_name, ENT_QUOTES).'</b> already exists.</span><br />';
 						} else {
 							$tplset =& $tplset_handler->create();

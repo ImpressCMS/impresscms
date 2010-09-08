@@ -323,9 +323,9 @@ switch ($op) {
 					}
 				}
 				if (!$skip) {
-					$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', $com_modid));
-					$criteria->add(new icms_criteria_Item('com_itemid', $com_itemid));
-					$criteria->add(new icms_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
+					$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', $com_modid));
+					$criteria->add(new icms_db_criteria_Item('com_itemid', $com_itemid));
+					$criteria->add(new icms_db_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 					$comment_count = $comment_handler->getCount($criteria);
 					$func = $comment_config['callback']['update'];
 					call_user_func_array($func, array($com_itemid, $comment_count, $comment->getVar('com_id')));

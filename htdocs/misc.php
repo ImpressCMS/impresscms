@@ -168,13 +168,13 @@ case 'online':
 	$online_handler = icms::handler('icms_core_Online');
 	$online_total =& $online_handler->getCount();
 	$limit = ($online_total > 20) ? 20 : $online_total;
-	$criteria = new icms_criteria_Compo();
+	$criteria = new icms_db_criteria_Compo();
 	$criteria->setLimit($limit);
 	$criteria->setStart($start);
 	$onlines =& $online_handler->getAll($criteria);
 	$count = count($onlines);
 	$module_handler = icms::handler('icms_module');
-	$modules =& $module_handler->getList(new icms_criteria_Item('isactive', 1));
+	$modules =& $module_handler->getList(new icms_db_criteria_Item('isactive', 1));
 	for ($i = 0; $i < $count; $i++)
 	{
 		if ($onlines[$i]['online_uid'] == 0) {$onlineUsers[$i]['user'] = '';}

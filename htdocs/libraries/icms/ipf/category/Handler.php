@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -53,7 +53,7 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	public function getAllCategoriesArray($parentid=0, $perm_name=false, $sort = 'parentid', $order='ASC') {
 
 		if (!$this->allCategoriesObj) {
-			$criteria = new icms_criteria_Compo();
+			$criteria = new icms_db_criteria_Compo();
 			$criteria->setSort($sort);
 			$criteria->setOrder($order);
 			global $icmsUser;

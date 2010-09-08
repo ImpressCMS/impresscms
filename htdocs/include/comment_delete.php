@@ -121,9 +121,9 @@ switch ($op) {
 				}
 			}
 			if (!$skip) {
-				$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', $com_modid));
-				$criteria->add(new icms_criteria_Item('com_itemid', $com_itemid));
-				$criteria->add(new icms_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
+				$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', $com_modid));
+				$criteria->add(new icms_db_criteria_Item('com_itemid', $com_itemid));
+				$criteria->add(new icms_db_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 				$comment_count = $comment_handler->getCount($criteria);
 				$comment_config['callback']['update']($com_itemid, $comment_count);
 			}
@@ -240,9 +240,9 @@ switch ($op) {
 				}
 			}
 			if (!$skip) {
-				$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', $com_modid));
-				$criteria->add(new icms_criteria_Item('com_itemid', $com_itemid));
-				$criteria->add(new icms_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
+				$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', $com_modid));
+				$criteria->add(new icms_db_criteria_Item('com_itemid', $com_itemid));
+				$criteria->add(new icms_db_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 				$comment_count = $comment_handler->getCount($criteria);
 				$comment_config['callback']['update']($com_itemid, $comment_count);
 			}

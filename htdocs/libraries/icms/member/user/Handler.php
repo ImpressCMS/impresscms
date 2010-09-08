@@ -117,7 +117,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	/**
 	 * retrieve users from the database
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} conditions to be met
+	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
 	 * @param bool $id_as_key use the UID as key for the array?
 	 * @return array array of {@link icms_member_user_Object} objects
 	 */
@@ -125,7 +125,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . $this->db->prefix('users');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= " ORDER BY " . $criteria->getSort() . " " . $criteria->getOrder();
@@ -151,12 +151,12 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	/**
 	 * count users matching a condition
 	 *
-	 * @param object $criteria {@link icms_criteria_Element} to match
+	 * @param object $criteria {@link icms_db_criteria_Element} to match
 	 * @return int count of users
 	 */
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('users');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
 		$result = $this->db->query($sql);
 		if (!$result) {return 0;}
 		list($count) = $this->db->fetchRow($result);
@@ -166,14 +166,14 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	/**
 	 * delete users matching a set of conditions
 	 *
-	 * @param object $criteria {@link icms_criteria_Element}
+	 * @param object $criteria {@link icms_db_criteria_Element}
 	 * @return bool FALSE if deletion failed
 	 */
 	public function deleteAll($criteria = null) {
 		$pass = substr(md5(time()), 0, 8);
 		$salt = substr(md5(time() * 2), 0, 12);
 		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s", $this->db->prefix('users'), $pass, $salt);
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {$sql .= " " . $criteria->renderWhere();}
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= " " . $criteria->renderWhere();}
 		if (!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}
@@ -183,14 +183,14 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return  bool
 	 **/
 	public function updateAll($fieldname, $fieldvalue, $criteria = null) {
 		$set_clause = is_numeric($fieldvalue) ? $fieldname . ' = ' . $fieldvalue : $fieldname . ' = ' . $this->db->quoteString($fieldvalue);
 		$sql = 'UPDATE ' . $this->db->prefix('users') . ' SET ' . $set_clause;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
 		if (!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}

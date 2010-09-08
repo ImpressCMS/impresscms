@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Image
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -178,7 +178,7 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Load {@link icms_image_Object}s from the database
 	 *
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
 	 * @param   boolean $getbinary
 	 * @return  array   Array of {@link icms_image_Object} objects
@@ -191,7 +191,7 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 		} else {
 			$sql = "SELECT * FROM ".$this->db->prefix('image');
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " ".$criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))
 					? 'image_weight'
@@ -220,12 +220,12 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Count some images
 	 *
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @return  int
 	 **/
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('image');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result = &$this->db->query($sql)) {
@@ -243,9 +243,9 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	 * @return  array   Array of {@link icms_image_Object} objects
 	 **/
 	public function getList($imgcat_id, $image_display = null) {
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('imgcat_id', (int) ($imgcat_id)));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id)));
 		if (isset($image_display)) {
-			$criteria->add(new icms_criteria_Item('image_display', (int) ($image_display)));
+			$criteria->add(new icms_db_criteria_Item('image_display', (int) ($image_display)));
 		}
 		$images = &$this->getObjects($criteria, false, true);
 		$ret = array();

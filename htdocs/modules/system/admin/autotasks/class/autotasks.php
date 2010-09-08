@@ -253,12 +253,12 @@ class SystemAutotasksHandler extends icms_ipf_Handler
 	 */
 	function getTasks()
 	{
-		$criteria = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
 		$criteria->setSort('sat_lastruntime');
 		$criteria->setOrder('ASC');
-		$criteria->add( new icms_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', null, "%s" ));
-		$criteria->add( new icms_criteria_Item('sat_repeat', 0, '>=', null, "'%s'"));
-		$criteria->add( new icms_criteria_Item('sat_enabled', 1));
+		$criteria->add( new icms_db_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', null, "%s" ));
+		$criteria->add( new icms_db_criteria_Item('sat_repeat', 0, '>=', null, "'%s'"));
+		$criteria->add( new icms_db_criteria_Item('sat_enabled', 1));
 		$rez = $this->getObjects($criteria, false);
 		return $rez;
 	}

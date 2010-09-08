@@ -102,8 +102,8 @@ class SystemMimetypeHandler extends icms_ipf_Handler {
 	function AllowedModules($mimetype, $module) {
 		$mimetypeid_allowed = $dirname_allowed = false;
 		$GrantedItems =  $this->UserCanUpload();
-		$criteria = new icms_criteria_Compo();
-		$criteria->add(new icms_criteria_Item('types', '%'.$mimetype.'%', 'LIKE'));
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item('types', '%'.$mimetype.'%', 'LIKE'));
 
 		$sql = 'SELECT mimetypeid, dirname, types FROM ' . $this->table;
 		$rows = $this->query($sql, $criteria);

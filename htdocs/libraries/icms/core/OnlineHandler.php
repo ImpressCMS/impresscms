@@ -110,14 +110,14 @@ class icms_core_OnlineHandler {
 	/**
 	 * Get an array of online information
 	 *
-	 * @param	object  $criteria   {@link icms_criteria_Element}
+	 * @param	object  $criteria   {@link icms_db_criteria_Element}
 	 * @return	array   Array of associative arrays of online information
 	 */
 	public function getAll($criteria = null) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('online');
-		if (is_object($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (is_object($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -136,11 +136,11 @@ class icms_core_OnlineHandler {
 	/**
 	 * Count the number of online users
 	 *
-	 * @param	object  $criteria   {@link icms_criteria_Element}
+	 * @param	object  $criteria   {@link icms_db_criteria_Element}
 	 */
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online');
-		if (is_object($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (is_object($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {

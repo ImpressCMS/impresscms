@@ -54,7 +54,7 @@ function b_system_online_show()
 		}
 		$block['online_total'] = sprintf(_ONLINEPHRASE, $total);
 		if (is_object($icmsModule)) {
-			$mytotal = $online_handler->getCount(new icms_criteria_Item('online_module', $icmsModule->getVar('mid')));
+			$mytotal = $online_handler->getCount(new icms_db_criteria_Item('online_module', $icmsModule->getVar('mid')));
 			$block['online_total'] .= ' ('.sprintf(_ONLINEPHRASEX, $mytotal, $icmsModule->getVar('name')).')';
 		}
 		$block['lang_members'] = _MEMBERS;
@@ -129,9 +129,9 @@ function b_system_main_show()
 	}
 	$block['lang_close'] = _CLOSE;
 	$module_handler = icms::handler('icms_module');
-	$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
-	$criteria->add(new icms_criteria_Item('isactive', 1));
-	$criteria->add(new icms_criteria_Item('weight', 0, '>'));
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hasmain', 1));
+	$criteria->add(new icms_db_criteria_Item('isactive', 1));
+	$criteria->add(new icms_db_criteria_Item('weight', 0, '>'));
 	$modules = $module_handler->getObjects($criteria, true);
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -182,8 +182,8 @@ function b_system_user_show()
 		$block['lang_notifications'] = _MB_SYSTEM_NOTIF;
 		$block['uid'] = $icmsUser->getVar('uid');
 		$block['lang_logout'] = _MB_SYSTEM_LOUT;
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('read_msg', 0));
-		$criteria->add(new icms_criteria_Item('to_userid', $icmsUser->getVar('uid')));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('read_msg', 0));
+		$criteria->add(new icms_db_criteria_Item('to_userid', $icmsUser->getVar('uid')));
 		$block['new_messages'] = $pm_handler->getCount($criteria);
 		$block['lang_inbox'] = _MB_SYSTEM_INBOX;
 		$block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
@@ -246,7 +246,7 @@ function b_system_newmembers_show($options)
 	global $icmsConfigUser;
 
 	$block = array();
-	$criteria = new icms_criteria_Compo(new icms_criteria_Item('level', 0, '>'));
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('level', 0, '>'));
 	$limit = (!empty($options[0])) ? $options[0] : 10;
 	$criteria->setOrder('DESC');
 	$criteria->setSort('user_regdate');
@@ -273,9 +273,9 @@ function b_system_newmembers_show($options)
 	}
 	if (!empty($options[2]) && $options[2] == 1) {
 		$block['index_enabled'] = true;
-		$block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level')));
-		$block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level', 0)));
-		$block['active'] = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level', 0, '>')));
+		$block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new icms_db_criteria_Item('level')));
+		$block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new icms_db_criteria_Item('level', 0)));
+		$block['active'] = icms_conv_nr2local($member_handler->getUserCount(new icms_db_criteria_Item('level', 0, '>')));
 		$block['lang_totalusers'] = _MB_SYSTEM_TOTAL_USERS;
 		$block['lang_activeusers'] = _MB_SYSTEM_ACT_USERS;
 		$block['lang_inactiveusers'] = _MB_SYSTEM_INACT_USERS;
@@ -294,11 +294,11 @@ function b_system_topposters_show($options)
 	global $icmsConfigUser;
 
 	$block = array();
-	$criteria = new icms_criteria_Compo(new icms_criteria_Item('level', 0, '>'));
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('level', 0, '>'));
 	$limit = (!empty($options[0])) ? $options[0] : 10;
 	$size = count($options);
 	for ( $i = 2; $i < $size; $i++) {
-		$criteria->add(new icms_criteria_Item('rank', $options[$i], '<>'));
+		$criteria->add(new icms_db_criteria_Item('rank', $options[$i], '<>'));
 	}
 	$criteria->setOrder('DESC');
 	$criteria->setSort('posts');
@@ -336,7 +336,7 @@ function b_system_comments_show($options)
 	$block = array();
 	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 	$comment_handler = icms::handler('icms_data_comment');
-	$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 	$criteria->setLimit( (int) ($options[0]));
 	$criteria->setSort('com_created');
 	$criteria->setOrder('DESC');
@@ -345,8 +345,8 @@ function b_system_comments_show($options)
 	global $icmsUser;
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	$gperm_groupid = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-	$criteria1 = new icms_criteria_Compo(new icms_criteria_Item('gperm_name','module_read','='));
-	$criteria1->add(new icms_criteria_Item('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));
+	$criteria1 = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name','module_read','='));
+	$criteria1->add(new icms_db_criteria_Item('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));
 	$perms = $moduleperm_handler->getObjects($criteria1, true);
 	$modIds = array();
 	foreach ($perms as $item) {
@@ -354,14 +354,14 @@ function b_system_comments_show($options)
 	}
 	if (count($modIds) > 0) {
 		$modIds = array_unique($modIds);
-		$criteria->add(new icms_criteria_Item('com_modid', '('.implode(',', $modIds).')', 'IN'));
+		$criteria->add(new icms_db_criteria_Item('com_modid', '('.implode(',', $modIds).')', 'IN'));
 	}
 	// Check modules permissions
 
 	$comments = $comment_handler->getObjects($criteria, true);
 	$member_handler = icms::handler('icms_member');
 	$module_handler = icms::handler('icms_module');
-	$modules = $module_handler->getObjects(new icms_criteria_Item('hascomments', 1), true);
+	$modules = $module_handler->getObjects(new icms_db_criteria_Item('hascomments', 1), true);
 	$comment_config = array();
 	foreach (array_keys($comments) as $i) {
 		$mid = $comments[$i]->getVar('com_modid');

@@ -175,8 +175,8 @@ icms_makeSmarty(array(
         }
 
         $module_handler = icms::handler('icms_module');
-        $criteria = new icms_criteria_Compo(new icms_criteria_Item('hassearch', 1));
-        $criteria->add(new icms_criteria_Item('isactive', 1));
+        $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hassearch', 1));
+        $criteria->add(new icms_db_criteria_Item('isactive', 1));
         $mids = & array_keys($module_handler->getList($criteria));
 
         foreach ($mids as $mid)

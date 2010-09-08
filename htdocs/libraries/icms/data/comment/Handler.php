@@ -227,7 +227,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('xoopscomments');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'com_id';
 			$sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -254,13 +254,13 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Count Comments
 	 *
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return  int     Count
 	 **/
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('xoopscomments');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {
@@ -273,13 +273,13 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Delete multiple comments
 	 *
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return  bool
 	 **/
 	public function deleteAll($criteria = null) {
 		$sql = 'DELETE FROM ' . $this->db->prefix('xoopscomments');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {
@@ -291,7 +291,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Get a list of comments
 	 *
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return  array   Array of raw database records
 	 **/
@@ -317,10 +317,10 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
 	 **/
 	public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', (int) $module_id));
-		$criteria->add(new icms_criteria_Item('com_itemid', (int) $item_id));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
+		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
 		if (isset($status)) {
-			$criteria->add(new icms_criteria_Item('com_status', (int) ($status)));
+			$criteria->add(new icms_db_criteria_Item('com_status', (int) ($status)));
 		}
 		if (isset($order)) {
 			$criteria->setOrder($order);
@@ -342,10 +342,10 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
 	 **/
 	public function getCountByItemId($module_id, $item_id, $status = null) {
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', (int) $module_id));
-		$criteria->add(new icms_criteria_Item('com_itemid', (int) $item_id));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
+		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
 		if (isset($status)) {
-			$criteria->add(new icms_criteria_Item('com_status', (int) $status));
+			$criteria->add(new icms_db_criteria_Item('com_status', (int) $status));
 		}
 		return $this->getCount($criteria);
 	}
@@ -361,11 +361,11 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
 	 **/
 	public function getTopComments($module_id, $item_id, $order, $status = null) {
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', (int) $module_id));
-		$criteria->add(new icms_criteria_Item('com_itemid', (int) $item_id));
-		$criteria->add(new icms_criteria_Item('com_pid', 0));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
+		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
+		$criteria->add(new icms_db_criteria_Item('com_pid', 0));
 		if (isset($status)) {
-			$criteria->add(new icms_criteria_Item('com_status', (int) $status));
+			$criteria->add(new icms_db_criteria_Item('com_status', (int) $status));
 		}
 		$criteria->setOrder($order);
 		return $this->getObjects($criteria);
@@ -381,10 +381,10 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
 	 **/
 	public function getThread($comment_rootid, $comment_id, $status = null) {
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_rootid', (int) $comment_rootid));
-		$criteria->add(new icms_criteria_Item('com_id', (int) $comment_id, '>='));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_rootid', (int) $comment_rootid));
+		$criteria->add(new icms_db_criteria_Item('com_id', (int) $comment_id, '>='));
 		if (isset($status)) {
-			$criteria->add(new icms_criteria_Item('com_status', (int) $status));
+			$criteria->add(new icms_db_criteria_Item('com_status', (int) $status));
 		}
 		return $this->getObjects($criteria);
 	}
@@ -411,7 +411,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 * @return  bool
 	 **/
 	public function deleteByModule($module_id) {
-		return $this->deleteAll(new icms_criteria_Item('com_modid', (int) $module_id));
+		return $this->deleteAll(new icms_db_criteria_Item('com_modid', (int) $module_id));
 	}
 
 	/**
@@ -419,7 +419,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_criteria_Element}
+	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return  bool
 	 **/
@@ -428,7 +428,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 {
 	 $set_clause = is_numeric($fieldvalue) ? $filedname.' = '.$fieldvalue : $filedname.' = '.$this->db->quoteString($fieldvalue);
 	 $sql = 'UPDATE '.$this->db->prefix('xoopscomments').' SET '.$set_clause;
-	 if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+	 if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 	 $sql .= ' '.$criteria->renderWhere();
 	 }
 	 if (!$result = $this->db->query($sql)) {

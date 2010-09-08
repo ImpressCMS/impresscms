@@ -169,7 +169,7 @@ class icms_data_avatar_Handler extends icms_core_ObjectHandler {
 		$sql = "SELECT a.*, COUNT(u.user_id) AS count FROM "
 			. $this->db->prefix('avatar') . " a LEFT JOIN "
 			. $this->db->prefix('avatar_user_link') . " u ON u.avatar_id=a.avatar_id";
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			$sql .= " GROUP BY a.avatar_id ORDER BY avatar_weight, avatar_id";
 			$limit = $criteria->getLimit();
@@ -200,7 +200,7 @@ class icms_data_avatar_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('avatar');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {
@@ -268,13 +268,13 @@ class icms_data_avatar_Handler extends icms_core_ObjectHandler {
 	 * @return array
 	 */
 	public function getList($avatar_type = null, $avatar_display = null) {
-		$criteria = new icms_criteria_Compo();
+		$criteria = new icms_db_criteria_Compo();
 		if (isset($avatar_type)) {
 			$avatar_type = ($avatar_type == 'C') ? 'C' : 'S';
-			$criteria->add(new icms_criteria_Item('avatar_type', $avatar_type));
+			$criteria->add(new icms_db_criteria_Item('avatar_type', $avatar_type));
 		}
 		if (isset($avatar_display)) {
-			$criteria->add(new icms_criteria_Item('avatar_display', (int) $avatar_display));
+			$criteria->add(new icms_db_criteria_Item('avatar_display', (int) $avatar_display));
 		}
 		$avatars =& $this->getObjects($criteria, true);
 		$ret = array('blank.gif' => _NONE);

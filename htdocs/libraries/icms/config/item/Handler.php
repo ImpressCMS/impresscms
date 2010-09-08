@@ -11,7 +11,7 @@
  * @since        XOOPS
  * @author       Kazumi Ono (aka onokazo)
  * @author       http://www.xoops.org The XOOPS Project
- * @version      $Id$
+ * @version      $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -193,7 +193,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Get configs from the database
 	 *
-	 * @param	object  $criteria   {@link icms_criteria_Element}
+	 * @param	object  $criteria   {@link icms_db_criteria_Element}
 	 * @param	bool    $id_as_key  return the config's id as key?
 	 * @return	array   Array of {@link icms_config_Item_Object} objects
 	 */
@@ -201,7 +201,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$sql .= ' ORDER BY conf_order ASC';
 			$limit = $criteria->getLimit();
@@ -227,14 +227,14 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Count configs
 	 *
-	 * @param	object  $criteria   {@link icms_criteria_Element}
+	 * @param	object  $criteria   {@link icms_db_criteria_Element}
 	 * @return	int     Count of configs matching $criteria
 	 */
 	public function getCount($criteria = null) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		$result =& $this->db->query($sql);

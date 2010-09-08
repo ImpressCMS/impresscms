@@ -105,7 +105,7 @@ function modifyGroup($g_id)
 
 	include ICMS_ROOT_PATH."/modules/system/admin/groups/groupform.php";
 	echo "<br /><h4 style='text-align:"._GLOBAL_LEFT."'>"._AM_EDITMEMBER."</h4>";
-	$usercount = $member_handler->getUserCount(new icms_criteria_Item('level', 0, '>'));
+	$usercount = $member_handler->getUserCount(new icms_db_criteria_Item('level', 0, '>'));
 	$member_handler = icms::handler('icms_member');
 	$membercount = $member_handler->getUserCountByGroup($g_id);
 	if ($usercount < 200 && $membercount < 200) {
@@ -113,11 +113,11 @@ function modifyGroup($g_id)
 		$mlist = array();
 		$members =& $member_handler->getUsersByGroup($g_id, false);
 		if (count($members) > 0) {
-			$member_criteria = new icms_criteria_Item('uid', "(".implode(',', $members).")", "IN");
+			$member_criteria = new icms_db_criteria_Item('uid', "(".implode(',', $members).")", "IN");
 			$member_criteria->setSort('uname');
 			$mlist = $member_handler->getUserList($member_criteria);
 		}
-		$criteria = new icms_criteria_Item('level', 0, '>');
+		$criteria = new icms_db_criteria_Item('level', 0, '>');
 		$criteria->setSort('uname');
 		$userslist =& $member_handler->getUserList($criteria);
 		$users =& array_diff($userslist, $mlist);
@@ -160,7 +160,7 @@ function modifyGroup($g_id)
 		$members =& $member_handler->getUsersByGroup($g_id, false, 200, $memstart);
 		$mlist = array();
 		if (count($members) > 0) {
-			$member_criteria = new icms_criteria_Item('uid', "(".implode(',', $members).")", "IN");
+			$member_criteria = new icms_db_criteria_Item('uid', "(".implode(',', $members).")", "IN");
 			$member_criteria->setSort('uname');
 			$mlist = $member_handler->getUserList($member_criteria);
 		}

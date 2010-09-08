@@ -71,17 +71,17 @@ switch ($op) {
 		} else {
 			$groupid = $group->getVar('groupid');
 			$gperm_handler = icms::handler('icms_member_groupperm');
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('gperm_groupid', $groupid));
-			$criteria->add(new icms_criteria_Item('gperm_modid', 1));
-			$criteria2 = new icms_criteria_Compo(new icms_criteria_Item('gperm_name', 'system_admin'));
-			$criteria2->add(new icms_criteria_Item('gperm_name', 'module_admin'), 'OR');
-			$criteria2->add(new icms_criteria_Item('gperm_name', 'module_read'), 'OR');
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_groupid', $groupid));
+			$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
+			$criteria2 = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', 'system_admin'));
+			$criteria2->add(new icms_db_criteria_Item('gperm_name', 'module_admin'), 'OR');
+			$criteria2->add(new icms_db_criteria_Item('gperm_name', 'module_read'), 'OR');
 			if ($g_id != 3) {
-				$criteria2->add(new icms_criteria_Item('gperm_name', 'use_wysiwygeditor'), 'OR');
+				$criteria2->add(new icms_db_criteria_Item('gperm_name', 'use_wysiwygeditor'), 'OR');
 			}
-			$criteria2->add(new icms_criteria_Item('gperm_name', 'enable_debug'), 'OR');
-			$criteria2->add(new icms_criteria_Item('gperm_name', 'block_read'), 'OR');
-			$criteria2->add(new icms_criteria_Item('gperm_name', 'group_manager'), 'OR');
+			$criteria2->add(new icms_db_criteria_Item('gperm_name', 'enable_debug'), 'OR');
+			$criteria2->add(new icms_db_criteria_Item('gperm_name', 'block_read'), 'OR');
+			$criteria2->add(new icms_db_criteria_Item('gperm_name', 'group_manager'), 'OR');
 			$criteria->add($criteria2);
 			$gperm_handler->deleteAll($criteria);
 			if (count($system_catids) > 0) {

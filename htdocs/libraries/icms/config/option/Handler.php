@@ -8,7 +8,7 @@
  * @package		Config
  * @subpackage	Option
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -141,7 +141,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Get some {@link icms_config_option_Object}s
 	 *
-	 * @param	object  $criteria   {@link icms_criteria_Element}
+	 * @param	object  $criteria   {@link icms_db_criteria_Element}
 	 * @param	bool    $id_as_key  Use the IDs as array-keys?
 	 *
 	 * @return	array   Array of {@link icms_config_option_Object}s
@@ -150,7 +150,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('configoption');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere() . ' ORDER BY confop_id ' . $criteria->getOrder();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();

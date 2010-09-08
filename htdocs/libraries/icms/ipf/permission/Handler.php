@@ -84,11 +84,11 @@ class icms_ipf_permission_Handler {
 
 		$icmsModule =& $this->handler->getModuleInfo();
 
-		$criteria = new icms_criteria_Compo();
-		$criteria->add(new icms_criteria_Item('gperm_modid', $icmsModule->getVar('mid')));
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item('gperm_modid', $icmsModule->getVar('mid')));
 
 		if ($gperm_name) {
-			$criteria->add(new icms_criteria_Item('gperm_name', $gperm_name));
+			$criteria->add(new icms_db_criteria_Item('gperm_name', $gperm_name));
 		}
 
 		//Get group permissions handler

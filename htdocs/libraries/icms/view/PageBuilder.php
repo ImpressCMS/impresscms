@@ -94,9 +94,9 @@ class icms_view_PageBuilder {
 		$url = urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1));
 
 		$icms_page_handler = icms::handler('icms_page');
-		$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_url', $fullurl));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_url', $fullurl));
 		if (! empty($url))
-		$criteria->add(new icms_criteria_Item('page_url', $url), 'OR');
+		$criteria->add(new icms_db_criteria_Item('page_url', $url), 'OR');
 		$pages = $icms_page_handler->getCount($criteria);
 
 		if ($pages > 0) { //We have a sym-link defined for this page
@@ -123,7 +123,7 @@ class icms_view_PageBuilder {
 		if ($isStart) {
 			$modid = '0-1';
 		} else {
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_status', 1));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$pid = 0;
 			foreach ($pages as $page) {

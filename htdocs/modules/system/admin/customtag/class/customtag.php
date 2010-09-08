@@ -147,18 +147,18 @@ class SystemCustomtagHandler extends icms_ipf_Handler {
 
 			$ret = array ( );
 
-			$criteria = new icms_criteria_Compo ( );
+			$criteria = new icms_db_criteria_Compo ( );
 
-			$criteria_language = new icms_criteria_Compo ( );
-			$criteria_language->add ( new icms_criteria_Item ( 'language', $xoopsConfig ['language'] ) );
-			$criteria_language->add ( new icms_criteria_Item ( 'language', 'all' ), 'OR' );
+			$criteria_language = new icms_db_criteria_Compo ( );
+			$criteria_language->add ( new icms_db_criteria_Item ( 'language', $xoopsConfig ['language'] ) );
+			$criteria_language->add ( new icms_db_criteria_Item ( 'language', 'all' ), 'OR' );
 			$criteria->add ( $criteria_language );
 
 			$icms_permissions_handler = new icms_ipf_permission_Handler ( $this );
 			$granted_ids = $icms_permissions_handler->getGrantedItems ( 'view' );
 
 			if ($granted_ids && count ( $granted_ids ) > 0) {
-				$criteria->add ( new icms_criteria_Item ( 'customtagid', '(' . implode ( ', ', $granted_ids ) . ')', 'IN' ) );
+				$criteria->add ( new icms_db_criteria_Item ( 'customtagid', '(' . implode ( ', ', $granted_ids ) . ')', 'IN' ) );
 				$customtagsObj = $this->getObjects ( $criteria, true );
 				foreach ( $customtagsObj as $customtagObj) {
 					$ret [$customtagObj->getVar ( 'name' )] = $customtagObj;
