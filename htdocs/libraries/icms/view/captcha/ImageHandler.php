@@ -21,7 +21,7 @@
  * @author
  * @copyright
  */
-class icms_captcha_ImageHandler {
+class icms_view_captcha_ImageHandler {
 	//var $mode = "gd"; // GD or bmp
 	var $code;
 	var $invalid = false;
@@ -34,9 +34,9 @@ class icms_captcha_ImageHandler {
 	/**
 	 * Constructor
 	 */
-	function icms_captcha_ImageHandler()
+	function icms_view_captcha_ImageHandler()
 	{
-		if (empty($_SESSION['icms_captcha_Object_name'])) {
+		if (empty($_SESSION['icms_view_captcha_Object_name'])) {
 			$this->invalid = true;
 		}
 
@@ -99,13 +99,13 @@ class icms_captcha_ImageHandler {
 			return;
 		}
 
-		$_SESSION['icms_captcha_Object_sessioncode'] = strval( $this->code );
-		$maxAttempts = (int) ( @$_SESSION['icms_captcha_Object_maxattempts'] );
+		$_SESSION['icms_view_captcha_Object_sessioncode'] = strval( $this->code );
+		$maxAttempts = (int) ( @$_SESSION['icms_view_captcha_Object_maxattempts'] );
 
 		// Increase the attempt records on refresh
 		if (!empty($maxAttempts)) {
-			$_SESSION['icms_captcha_Object_attempt_'.$_SESSION['icms_captcha_Object_name']]++;
-			if ($_SESSION['icms_captcha_Object_attempt_'.$_SESSION['icms_captcha_Object_name']] > $maxAttempts) {
+			$_SESSION['icms_view_captcha_Object_attempt_'.$_SESSION['icms_view_captcha_Object_name']]++;
+			if ($_SESSION['icms_view_captcha_Object_attempt_'.$_SESSION['icms_view_captcha_Object_name']] > $maxAttempts) {
 				$this->invalid = true;
 			}
 		}

@@ -14,26 +14,26 @@
  * @version		$Id: image.php 9864 2010-02-26 17:44:26Z skenow $
  */
 
-class icms_captcha_Image {
+class icms_view_captcha_Image {
 	//var $config	= array();
 
 	/**
 	 * Constructor
 	 */
-	function icms_captcha_Image()
+	function icms_view_captcha_Image()
 	{
 		//$this->name = md5( session_id() );
 	}
 
 	/**
 	 * Creates instance of icmsCaptchaImage
-	 * @return  object the icms_captcha_Image object
+	 * @return  object the icms_view_captcha_Image object
 	 */
 	function &instance()
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_captcha_Image();
+			$instance = new icms_view_captcha_Image();
 		}
 		return $instance;
 	}

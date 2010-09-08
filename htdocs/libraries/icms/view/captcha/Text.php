@@ -14,26 +14,26 @@
  * @version		$Id: text.php 19090 2010-03-13 17:41:42Z skenow $
  */
 
-class icms_captcha_Text {
+class icms_view_captcha_Text {
 	var $config	= array();
 	var $code;
 
 	/**
 	 * Constructor
 	 */
-	function icms_captcha_Text()
+	function icms_view_captcha_Text()
 	{
 	}
 
 	/**
-	 * Creates icms_captcha_Text object
-	 * @return object	reference to icms_captcha_Text (@link icms_captcha_Text) Object
+	 * Creates icms_view_captcha_Text object
+	 * @return object	reference to icms_view_captcha_Text (@link icms_view_captcha_Text) Object
 	 */
 	function &instance()
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_captcha_Text();
+			$instance = new icms_view_captcha_Text();
 		}
 		return $instance;
 	}
@@ -53,7 +53,7 @@ class icms_captcha_Text {
 	 */
 	function setCode()
 	{
-		$_SESSION['icms_captcha_Object_sessioncode'] = strval( $this->code );
+		$_SESSION['icms_view_captcha_Object_sessioncode'] = strval( $this->code );
 	}
 
 	/**

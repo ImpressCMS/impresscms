@@ -126,7 +126,7 @@ switch ($op) {
 
 	case "post":
 		if ($icmsConfig['use_captchaf'] == true) {
-			$icmsCaptcha = icms_captcha_Object::instance();
+			$icmsCaptcha = icms_view_captcha_Object::instance();
 			if (!$icmsCaptcha->verify(true)) {
 				redirect_header($redirect_page . '=' . $com_itemid . '&com_id=' . $com_id . '&com_mode=' . $com_mode . '&com_order=' . $com_order,
 				2, $icmsCaptcha->getMessage());

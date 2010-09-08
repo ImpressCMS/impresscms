@@ -31,7 +31,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * For verification:
  *   if (@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
- *	    $icmsCaptcha = icms_captcha_Object::instance();
+ *	    $icmsCaptcha = icms_view_captcha_Object::instance();
  *	    if (! $icmsCaptcha->verify()) {
  *		    echo $icmsCaptcha->getMessage();
  *		    ...
@@ -59,7 +59,7 @@ class icms_form_elements_Captcha extends icms_form_Element {
 			$numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null,
 			$backgroundnum = null
 			) {
-		$this->_captchaHandler =& icms_captcha_Object::instance();
+		$this->_captchaHandler =& icms_view_captcha_Object::instance();
 		$this->_captchaHandler->init(
 			$name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum
 		);
@@ -75,7 +75,7 @@ class icms_form_elements_Captcha extends icms_form_Element {
 	 * Sets the Config
 	 * @param   string $name Config Name
 	 * @param   string $val Config Value
-	 * @return  object reference to the icms_captcha_Object Object (@link icms_captcha_Object)
+	 * @return  object reference to the icms_view_captcha_Object Object (@link icms_view_captcha_Object)
 	 */
 	public function setConfig($name, $val) {
 		return $this->_captchaHandler->setConfig($name, $val);

@@ -33,7 +33,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  *
  * For verification:
  *   if(@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
- *	    $icmsCaptcha = icms_captcha_Object::instance();
+ *	    $icmsCaptcha = icms_view_captcha_Object::instance();
  *	    if(! $icmsCaptcha->verify() ) {
  *		    echo $icmsCaptcha->getMessage();
  *		    ...
