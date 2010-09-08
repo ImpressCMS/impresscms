@@ -20,11 +20,12 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
-class icms_page_Handler extends icms_ipf_Handler {
+class icms_data_page_Handler extends icms_ipf_Handler {
 
 	public function __construct(& $db) {
 		parent::__construct($db, 'page', 'page_id', 'page_title', '', 'icms');
 		$this->table = $db->prefix('icmspage');
+		$this->className = 'icms_data_page_Object';
 	}
 
 	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {

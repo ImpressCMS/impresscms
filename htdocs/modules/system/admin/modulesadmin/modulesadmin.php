@@ -578,7 +578,7 @@ function xoops_module_uninstall($dirname) {
 			return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
 		}
 
-		$page_handler = icms::handler('icms_page');
+		$page_handler = icms::handler('icms_data_page');
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_moduleid', $module->getVar('mid')));
 		$pages = $page_handler->getCount($criteria);
 

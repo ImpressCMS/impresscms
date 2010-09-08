@@ -14,7 +14,7 @@ class IcmsFormPageElement extends icms_form_elements_Tray {
 
 	public function __construct($object, $key) {
 		parent::__construct(_AM_VISIBLEIN , ' ', $key . '_password_tray');
-		$icms_page_handler = icms::handler('icms_page');
+		$icms_page_handler = icms::handler('icms_data_page');
 		$visible_label = new icms_form_elements_Label('', '<select name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">'.$this->getPageSelOptions($icms_page_handler, $object->getVar('visiblein')).'</select>');
 		$this->addElement($visible_label);
 	}

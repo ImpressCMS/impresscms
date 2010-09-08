@@ -24,7 +24,7 @@ $icmsConfig ['startpage'] = $icmsConfig ['startpage'] [$group];
 if (isset ( $icmsConfig ['startpage'] ) && $icmsConfig ['startpage'] != "" && $icmsConfig ['startpage'] != "--") {
 	$arr = explode ( '-', $icmsConfig ['startpage'] );
 	if (count ( $arr ) > 1) {
-		$page_handler = icms::handler('icms_page');
+		$page_handler = icms::handler('icms_data_page');
 		$page = $page_handler->get ( $arr [1] );
 		if (is_object ( $page )) {
 			$url = (substr ( $page->getVar ( 'page_url' ), 0, 7 ) == 'http://') ? $page->getVar ( 'page_url' ) : ICMS_URL . '/' . $page->getVar ( 'page_url' );

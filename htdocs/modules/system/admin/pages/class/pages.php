@@ -13,7 +13,7 @@
 * @version	$Id$
 */
 
-class SystemPages extends icms_page_Object {
+class SystemPages extends icms_data_page_Object {
 
 	public function __construct( & $handler) {
 		parent::__construct( $handler );
@@ -58,7 +58,7 @@ class SystemPages extends icms_page_Object {
 }
 
 
-class SystemPagesHandler extends icms_page_Handler {
+class SystemPagesHandler extends icms_data_page_Handler {
 
 	private $modules_name;
 

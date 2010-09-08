@@ -93,7 +93,7 @@ class icms_view_PageBuilder {
 		);
 		$url = urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1));
 
-		$icms_page_handler = icms::handler('icms_page');
+		$icms_page_handler = icms::handler('icms_data_page');
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_url', $fullurl));
 		if (! empty($url))
 		$criteria->add(new icms_db_criteria_Item('page_url', $url), 'OR');

@@ -19,15 +19,15 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @deprecated	use icms_page_Object, insted
+ * @deprecated	use icms_data_page_Object, insted
  * @todo		Remove in version 1.4
  */
-class IcmsPage extends icms_page_Object {
+class IcmsPage extends icms_data_page_Object {
 	private $_deprecated;
 
 	public function __construct( & $handler ){
 		parent::__construct( $handler );
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_page_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_data_page_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 
 	}
 
@@ -39,12 +39,12 @@ class IcmsPage extends icms_page_Object {
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
-class IcmsPageHandler extends icms_page_Handler {
+class IcmsPageHandler extends icms_data_page_Handler {
 	private $_deprecated;
 
 	public function __construct( & $db ){
 		parent::__construct($db);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_page_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_data_page_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 
 }
@@ -52,7 +52,7 @@ class IcmsPageHandler extends icms_page_Handler {
 /**
  * XOOPS page handler class.
  *
- * @deprecated	use icms_page_Object, insted
+ * @deprecated	use icms_data_page_Object, insted
  * @todo		Remove in version 1.4
  */
 class XoopsPage extends IcmsPage { /* For backwards compatibility */ }

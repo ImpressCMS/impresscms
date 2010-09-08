@@ -233,7 +233,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$moduleslist ['--'] = _MD_AM_NONE;
 
 					//Adding support to select custom links to be the start page
-					$page_handler = icms::handler('icms_page');
+					$page_handler = icms::handler('icms_data_page');
 					$criteria = new icms_db_criteria_Compo ( new icms_db_criteria_Item ( 'page_status', 1 ) );
 					$criteria->add ( new icms_db_criteria_Item ( 'page_url', '%*', 'NOT LIKE' ) );
 					$pagelist = $page_handler->getList ( $criteria );
