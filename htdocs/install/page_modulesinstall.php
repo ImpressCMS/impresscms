@@ -27,8 +27,6 @@ $vars =& $_SESSION['settings'];
 
 include_once ICMS_ROOT_PATH."/mainfile.php";
 include_once "common.php";
-include_once "../kernel/block.php";
-include_once "../kernel/module.php";
 include_once "../include/cp_functions.php";
 include_once './class/dbmanager.php';
 require_once "../class/xoopslists.php";
@@ -104,21 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../modules/$lang/images/icon_small.png\" alt=\"$lang\" /><br />$lang <br /><input type=\"checkbox\" checked=\"checked\" name=\"install_mods[]\" value=\"$lang\" /></a></div>";
 	}
 	$content .= "</div><div class='clear'>&nbsp;</div>";
-	/*$content .= '<td>';
-	 $content .= _INSTALL_SELECT_MODULES_ANON_VISIBLE.'<br />';
-	 $content .= '<select id="modperms" name="anon_accessible_mods[]"  multiple>';
-	 $langarr = getDirList("../modules/");
-	 foreach ($langarr as $lang) {
-		if ($lang == 'system' || $lang == 'protector') {
-		continue;
-		}
-		$content .= "<option value='".$lang."'";
-		if ($lang == 'contact' || $lang == 'news') {
-		$content .= ' selected="selected"';
-		}
-		$content .= ">".$lang."</option>";
-		}
-		$content .= "</select>";*/
 	$content .= '</div>';
 	$content .= '<input type="hidden" name="mod" value="1" />';
 }

@@ -22,28 +22,10 @@ if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 $wizard->setPage( 'langselect' );
 
-/*
- * gets list of name of directories inside a directory
- */
-function getDirList($dirname) {
-	$dirlist = array();
-	if ($handle = opendir($dirname)) {
-		while ($file = readdir($handle)) {
-			if ($file{0} != '.' && is_dir( $dirname . $file )) {
-				$dirlist[] = $file;
-			}
-		}
-		closedir($handle);
-		asort($dirlist);
-		reset($dirlist);
-	}
-	return $dirlist;
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$lang = $_REQUEST['lang'];
 
-	$languages = getDirList( "./language/" );
+	$languages = icms_core_Filesystem::getDirList( "./language/" );
 	if (!in_array($lang, $languages)) {
 		$lang = 'english';
 	}
@@ -58,7 +40,7 @@ $pageHasHelp = true;
 $title = LANGUAGE_SELECTION;
 $content = "";
 
-$languages = getDirList( "./language/" );
+$languages = icms_core_Filesystem::getDirList( "./language/" );
 foreach ( $languages as $lang) {
 	$sel = ( $lang == $wizard->language ) ? ' checked="checked"' : '';
 	$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../images/flags/$lang.gif\" alt=\"$lang\" /><br />$lang<br /> <input type=\"checkbox\" name=\"lang\" value=\"$lang\"$sel /></a></div><br /><br />\n";
@@ -75,6 +57,6 @@ $content .= '<div class="langselect" style="text-decoration: none;"><a href="htt
 $content .= '<div class="langselect" style="text-decoration: none;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=240" target="_blank" style="text-decoration: none;"><img src="../images/flags/spanish.gif" alt="Spanish Language Pack" /><br />Spanish<br /></a></div>';
 $content .= '<div style="text-align: center; margin-top: 5px;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=11" target="_blank">Select another language not listed here.</a></div>';
 $content .= '</fieldset>';
- 
+
 include 'install_tpl.php';
 ?>

@@ -260,13 +260,9 @@ class setting_manager {
 	function getDBList()
 	{
 		$dirname = '../class/database/drivers';
-		include '../class/xoopslists.php';
-		$list = XoopsLists::getDirListAsArray( $dirname );
-		foreach ($list as $item) {
-			// TODO: Add any verification of compatibility between the database drivers and the system.
-			$dirlist[] = $item;
-		}
-		return $dirlist;
+		$list = icms_core_Filesystem::getDirList($dirname);
+		// TODO: Add any verification of compatibility between the database drivers and the system.
+		return $list;
 	}
 
 	function generatePrefix() {

@@ -353,18 +353,22 @@ class icms_core_Filesystem {
 	 * Gets a list of all directories within a path
 	 *
 	 * @param	string $dirname A path to a directory
+	 * @param	array	$ignore	A list of folders to ignore
+	 * @param	boolean	$hideDot	Hide folders starting with a dot?
 	 * @return	array An array of directory names
 	 */
-	static public function getDirList($dirname) {
+	static public function getDirList($dirname, array $ignore = array('cvs', '_darcs', '.svn'), $hideDot = TRUE) {
 		$dirList = array();
 		$iterator = new DirectoryIterator($dirname);
 		foreach ($iterator as $file) {
 			if ($file->isDir() && !$file->isDot()) {
 				$filename = $file->getFilename();
-				$dirList[$filename] = $filename;
+				if (!$hideDot || substr($filename, 0, 1) != '.') {
+					$dirList[$filename] = $filename;
+				}
 			}
 		}
-		return $dirList;
+		return array_diff($dirList, $ignore);
 	}
 
 	/**

@@ -471,15 +471,6 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 	return $ret;
 }
 
-/*
- * gets list of name of directories inside a directory
- */
-function getDirList($dirname)
-{
-	require_once dirname(dirname(__FILE__))."/class/xoopslists.php";
-	return XoopsLists::getDirListAsArray($dirname);
-}
-
 function icms_module_update($dirname) {
 	global $icmsUser, $xoopsConfig;
 	$dirname = trim($dirname);

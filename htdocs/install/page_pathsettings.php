@@ -156,7 +156,7 @@ class PathStuffController {
 	}
 
 	function createTrustPath() {
-		if (@imcms_install_mkdir($this->xoopsTrustPath)) {
+		if (@icms_core_Filesystem::mkdir($this->xoopsTrustPath, 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))) {
 			if (@is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath )) {
 				$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
 				return $this->validTrustPath = true;

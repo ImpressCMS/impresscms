@@ -213,7 +213,7 @@ final class icms_core_Password {
 	 *                               use in conjunction only with $enc_type above.
 	 * @return   string  returns the final encrypted hash of users password.
 	 */
-	public function encryptPass($pass, $salt, $enc_type = 0, $reset = 0) {
+	static public function encryptPass($pass, $salt, $enc_type = 0, $reset = 0) {
 		return self::priv_encryptPass($pass, $salt, $enc_type, $reset);
 	}
 }
