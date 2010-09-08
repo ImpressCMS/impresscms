@@ -32,7 +32,7 @@ switch ( $op) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 		}
-		$icmsCaptcha = icms_view_captcha_Object::instance();
+		$icmsCaptcha = icms_form_captcha_Object::instance();
 		if (! $icmsCaptcha->verify()) {
 			$stop .= $icmsCaptcha->getMessage().'<br />';
 

@@ -21,7 +21,7 @@
  */
 
 icms_loadLanguageFile('core', 'captcha');
-class icms_view_captcha_Object {
+class icms_form_captcha_Object {
 	var $active	= true;
 	var $mode 	= "text";	// potential values: image, text
 	var $config	= array();
@@ -31,7 +31,7 @@ class icms_view_captcha_Object {
 	/**
 	 * Constructor
 	 */
-	function icms_view_captcha_Object()
+	function icms_form_captcha_Object()
 	{
 		// Loading default preferences
 		$this->config = @include dirname(__FILE__)."/config.php";
@@ -41,14 +41,14 @@ class icms_view_captcha_Object {
 	}
 
 	/**
-	 * Creates instance of icms_view_captcha_Object Object
-	 * @return  object Reference to the icms_view_captcha_Object Object
+	 * Creates instance of icms_form_captcha_Object Object
+	 * @return  object Reference to the icms_form_captcha_Object Object
 	 */
 	static public function &instance()
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_view_captcha_Object();
+			$instance = new icms_form_captcha_Object();
 		}
 		return $instance;
 	}
@@ -142,9 +142,9 @@ class icms_view_captcha_Object {
 	function verify($skipMember = null)
 	{
 		global $icmsConfig, $icmsConfigCaptcha;
-		$sessionName	= @$_SESSION['icms_view_captcha_Object_name'];
-		$skipMember		= ($skipMember === null) ? @$_SESSION['icms_view_captcha_Object_skipmember'] : $skipMember;
-		$maxAttempts	= (int) ( @$_SESSION['icms_view_captcha_Object_maxattempts'] );
+		$sessionName	= @$_SESSION['icms_form_captcha_Object_name'];
+		$skipMember		= ($skipMember === null) ? @$_SESSION['icms_form_captcha_Object_skipmember'] : $skipMember;
+		$maxAttempts	= (int) ( @$_SESSION['icms_form_captcha_Object_maxattempts'] );
 
 		$is_valid = false;
 
@@ -158,25 +158,25 @@ class icms_view_captcha_Object {
 		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($icmsUser)) {
 			$is_valid = true;
-		} elseif (!empty($maxAttempts) && $_SESSION['icms_view_captcha_Object_attempt_'.$sessionName] > $maxAttempts) {
+		} elseif (!empty($maxAttempts) && $_SESSION['icms_form_captcha_Object_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 			// Verify the code
-		} elseif (!empty($_SESSION['icms_view_captcha_Object_sessioncode'])) {
+		} elseif (!empty($_SESSION['icms_form_captcha_Object_sessioncode'])) {
 			$func = ($icmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
-			$is_valid = ! $func( trim(@$_POST[$sessionName]), $_SESSION['icms_view_captcha_Object_sessioncode']);
+			$is_valid = ! $func( trim(@$_POST[$sessionName]), $_SESSION['icms_form_captcha_Object_sessioncode']);
 		}
 
 		if (!empty($maxAttempts)) {
 			if (!$is_valid) {
 				// Increase the attempt records on failure
-				$_SESSION['icms_view_captcha_Object_attempt_'.$sessionName]++;
+				$_SESSION['icms_form_captcha_Object_attempt_'.$sessionName]++;
 				// Log the error message
 				$this->message[] = ICMS_CAPTCHA_INVALID_CODE;
 
 			} else {
 				// reset attempt records on success
-				$_SESSION['icms_view_captcha_Object_attempt_'.$sessionName] = null;
+				$_SESSION['icms_form_captcha_Object_attempt_'.$sessionName] = null;
 			}
 		}
 
@@ -218,10 +218,10 @@ class icms_view_captcha_Object {
 		}
 
 		if ($clearSession) {
-			$_SESSION['icms_view_captcha_Object_name'] = null;
-			$_SESSION['icms_view_captcha_Object_skipmember'] = null;
-			$_SESSION['icms_view_captcha_Object_sessioncode'] = null;
-			$_SESSION['icms_view_captcha_Object_maxattempts'] = null;
+			$_SESSION['icms_form_captcha_Object_name'] = null;
+			$_SESSION['icms_form_captcha_Object_skipmember'] = null;
+			$_SESSION['icms_form_captcha_Object_sessioncode'] = null;
+			$_SESSION['icms_form_captcha_Object_maxattempts'] = null;
 		}
 
 		return true;
@@ -239,18 +239,18 @@ class icms_view_captcha_Object {
 		if (!$this->active || empty($this->config["name"])) {
 			return $form;
 		}
-		$_SESSION['icms_view_captcha_Object_name'] = $this->config["name"];
-		$_SESSION['icms_view_captcha_Object_skipmember'] = $icmsConfigCaptcha['captcha_skipmember'];
+		$_SESSION['icms_form_captcha_Object_name'] = $this->config["name"];
+		$_SESSION['icms_form_captcha_Object_skipmember'] = $icmsConfigCaptcha['captcha_skipmember'];
 		$maxAttempts = $icmsConfigCaptcha['captcha_maxattempt'];
-		$_SESSION['icms_view_captcha_Object_maxattempts'] = $maxAttempts;
+		$_SESSION['icms_form_captcha_Object_maxattempts'] = $maxAttempts;
 
 		 if (!empty($maxAttempts)) {
-			$_SESSION['icms_view_captcha_Object_maxattempts_'.$_SESSION['icms_view_captcha_Object_name']] = $maxAttempts;
+			$_SESSION['icms_form_captcha_Object_maxattempts_'.$_SESSION['icms_form_captcha_Object_name']] = $maxAttempts;
 			}
 
 
 		// Fail on too many attempts
-		if (!empty($maxAttempts) && @$_SESSION['icms_view_captcha_Object_attempt_'.$this->config["name"]] > $maxAttempts) {
+		if (!empty($maxAttempts) && @$_SESSION['icms_form_captcha_Object_attempt_'.$this->config["name"]] > $maxAttempts) {
 			$form = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 			// Load the form element
 		} else {

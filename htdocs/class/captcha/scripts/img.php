@@ -29,11 +29,11 @@ if(empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(ICMS_URL, '/')
  * @author
  * @copyright
  */
-class IcmsCaptchaImageHandler extends icms_view_captcha_ImageHandler{
+class IcmsCaptchaImageHandler extends icms_form_captcha_ImageHandler{
 	private $_deprecated;
 	public function __construct() {
 		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_view_captcha_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_captcha_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 $image_handler = new IcmsCaptchaImageHandler();

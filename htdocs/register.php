@@ -118,7 +118,7 @@ switch ( $op) {
 		}
 		if ($icmsConfigUser['use_captcha'] == 1) {
 			include_once ICMS_ROOT_PATH ."/class/xoopsformloader.php" ;
-			$icmsCaptcha = icms_view_captcha_Object::instance();
+			$icmsCaptcha = icms_form_captcha_Object::instance();
 			if (! $icmsCaptcha->verify()) {
 				$stop .= $icmsCaptcha->getMessage().'<br />';
 
