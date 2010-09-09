@@ -8,7 +8,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
  * @return mixed Did the query succeed or not? Returns nothing if succeeded, false if not succeeded
  **/
 function remove_usersxdays () {
-	$db =& icms_db_Factory::getInstance();
+	$db =& icms_db_Factory::instance();
 	global $icmsConfigUser;
 	$days = $icmsConfigUser['delusers'];
 	$delete_regdate= time() - ( $days * 24 * 60 * 60 );  // X days/month * 24 hrs/day

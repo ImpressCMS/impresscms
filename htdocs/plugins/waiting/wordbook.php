@@ -2,7 +2,7 @@
 
 function b_waiting_wordbook()
 {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$ret = array() ;
 
 	// Waiting

@@ -29,11 +29,11 @@
  * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-abstract class IcmsDatabase extends icms_db_icms_Database{
+abstract class IcmsDatabase extends icms_db_legacy_Database{
 	private $_errors;
 	public function __construct() {
 		parent::__construct();
-		$this->_errors = icms_core_Debug::setDeprecated('icms_db_icms_database', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_errors = icms_core_Debug::setDeprecated('icms_db_legacy_database', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
@@ -66,13 +66,11 @@ abstract class XoopsDatabase extends IcmsDatabase { /* For Backwards compatibili
  * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @deprecated Use icms_db_icms_Factory instead
+ * @deprecated Use icms_db_legacy_Factory instead
  * @todo		Remove this in version 1.4?
  */
 class Database {
 	static public function &getInstance() {
-		return icms_db_icms_Factory::instance();
+		return icms_db_legacy_Factory::instance();
 	}
 }
-
-?>

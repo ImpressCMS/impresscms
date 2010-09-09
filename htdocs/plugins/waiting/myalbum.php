@@ -1,6 +1,6 @@
 <?php
 function b_waiting_myalbum_0( $mydirnumber = '') {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$block = array();
 
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("myalbum{$mydirnumber}_photos")." WHERE status=0");

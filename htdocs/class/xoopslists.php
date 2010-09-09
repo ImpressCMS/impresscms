@@ -668,7 +668,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 * @return  array	 $ret   list of user ranks
 		 */
 		static public function getUserRankList() {
-			$db = icms_db_Factory::getInstance();
+			$db = icms_db_Factory::instance();
 			$myts = icms_core_Textsanitizer::getInstance();
 			$sql = "SELECT rank_id, rank_title FROM ".$db->prefix("ranks")." WHERE rank_special = '1'";
 			$ret = array();

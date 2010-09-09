@@ -286,7 +286,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @param string $email Email address for a user
 	 */
 	static public function getUnameFromEmail($email = '') {
-		$db = icms_db_Factory::getInstance();
+		$db = icms_db_Factory::instance();
 		if ($email !== '') {
 			$sql = $db->query("SELECT uname, email FROM " . $db->prefix('users')
 				. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET)

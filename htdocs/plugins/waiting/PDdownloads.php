@@ -10,7 +10,7 @@
 /*************************************************************************/
 function b_waiting_PDdownloads()
 {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$ret = array() ;
 
 	// PDdownloads waiting

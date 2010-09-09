@@ -67,7 +67,7 @@ function xoopsSmilies($textarea_id)
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$smiles =& $myts->getSmileys();
 	if (empty($smileys)) {
-		$db =& icms_db_Factory::getInstance();
+		$db =& icms_db_Factory::instance();
 		if ($result = $db->query("SELECT * FROM ".$db->prefix('smiles')." WHERE display='1'")) {
 			while ($smiles = $db->fetchArray($result)) {
 				//hack smilies move for the smilies !!

@@ -1,6 +1,6 @@
 <?php
 function b_waiting_myAds() {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$block = array();
 
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("ann_annonces")." WHERE valid='No'");

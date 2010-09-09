@@ -20,7 +20,7 @@ function protector_oninstall_base( $module , $mydirname )
 		if( ! is_array( $ret ) ) $ret = array() ;
 	}
 
-	$db =& icms_db_Factory::getInstance() ;
+	$db =& icms_db_Factory::instance() ;
 	$mid = $module->getVar('mid') ;
 
 	// TABLES (loading mysql.sql)

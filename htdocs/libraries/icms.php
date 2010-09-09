@@ -48,7 +48,7 @@ abstract class icms {
 	static public $services = array(
 		"boot" => array(
 			"logger" => "icms_core_Logger",
-			"db" => "icms_db_icms_Factory",
+			"db" => "icms_db_Factory",
 		),
 		"optional" => array(),
 	);

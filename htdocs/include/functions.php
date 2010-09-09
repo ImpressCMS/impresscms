@@ -393,7 +393,7 @@ function showbanner() {
 function xoops_getbanner() {
 	global $icmsConfig;
 
-	$db = icms_db_Factory::getInstance();
+	$db = icms_db_Factory::instance();
 	$bresult = $db->query("SELECT * FROM ".$db->prefix('banner')." ORDER BY RAND()", 1);
 	if ($db->getRowsNum($bresult) > 0) {
 		list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
@@ -630,7 +630,7 @@ function &xoops_gethandler($name, $optional = false) {
  */
 function xoops_getrank($rank_id =0, $posts = 0)
 {
-	$db =& icms_db_Factory::getInstance();
+	$db =& icms_db_Factory::instance();
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$rank_id = (int) ($rank_id);
 	$posts = (int) ($posts);
@@ -2815,7 +2815,7 @@ function icms_MakePrinterFriendly($content, $title=false, $description=false, $p
  */
 function icms_getUnameFromUserEmail($email = '')
 {
-	$db = icms_db_Factory::getInstance();
+	$db = icms_db_Factory::instance();
 	if($email !== '')
 	{
 		$sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email,

@@ -91,7 +91,7 @@
 	if (!$abortUpdate) $newDbVersion = 15;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new icms_db_icms_updater_Table('users');
+		$table = new icms_db_legacy_updater_Table('users');
 		if (! $table->fieldExists('login_name')) {
 			$table->addNewField('login_name', "varchar(255) NOT NULL default ''");
 			$icmsDatabaseUpdater->updateTable($table);
@@ -159,7 +159,7 @@
 	if ($dbVersion < $newDbVersion) {
 		$module_handler = icms::handler('icms_module');
 		$smartprofile_module = $module_handler->getByDirname('smartprofile');
-		$table = new icms_db_icms_updater_Table('profile_category');
+		$table = new icms_db_legacy_updater_Table('profile_category');
 		if ($smartprofile_module && $smartprofile_module->getVar('isactive') && ! $table->exists()) {
 			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_category") . "` TO `" . $icmsDB->prefix("profile_category") . "`");
 			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_field") . "` TO `" . $icmsDB->prefix("profile_field") . "`");
@@ -231,14 +231,14 @@
 	if (!$abortUpdate) $newDbVersion = 25;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new icms_db_icms_updater_Table('icmscontent');
+		$table = new icms_db_legacy_updater_Table('icmscontent');
 		if (! $table->fieldExists('content_seo_description')) {
 			$table->addNewField('content_seo_description', "text");
 			$icmsDatabaseUpdater->updateTable($table);
 		}
 		unset($table);
 
-		$table = new icms_db_icms_updater_Table('icmscontent');
+		$table = new icms_db_legacy_updater_Table('icmscontent');
 		if (! $table->fieldExists('content_seo_keywords')) {
 			$table->addNewField('content_seo_keywords', "text");
 			$icmsDatabaseUpdater->updateTable($table);
@@ -251,7 +251,7 @@
 	if (!$abortUpdate) $newDbVersion = 26;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new icms_db_icms_updater_Table('system_mimetype');
+		$table = new icms_db_legacy_updater_Table('system_mimetype');
 		if (! $table->exists()) {
 			$table->setStructure("mimetypeid int(11) NOT NULL auto_increment,
 					extension varchar(60) NOT NULL default '',
@@ -265,7 +265,7 @@
 		$icmsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/include/upgrade.sql");
 		unset($table);
 
-		$table = new icms_db_icms_updater_Table('system_adsense');
+		$table = new icms_db_legacy_updater_Table('system_adsense');
 		if (! $table->exists()) {
 			$table->setStructure("adsenseid int(11) NOT NULL auto_increment,
 					format VARCHAR(100) NOT NULL,
@@ -284,7 +284,7 @@
 		}
 		unset($table);
 
-		$table = new icms_db_icms_updater_Table('system_rating');
+		$table = new icms_db_legacy_updater_Table('system_rating');
 		if (! $table->exists()) {
 			$table->setStructure("ratingid int(11) NOT NULL auto_increment,
 					dirname VARCHAR(255) NOT NULL,
@@ -314,7 +314,7 @@
 	if (!$abortUpdate) $newDbVersion = 28;
 
 	if ($dbVersion < $newDbVersion) {
-		$table = new icms_db_icms_updater_Table('system_autotasks');
+		$table = new icms_db_legacy_updater_Table('system_autotasks');
 		if (! $table->exists()) {
 			$table->setStructure("sat_id int(10) unsigned NOT NULL AUTO_INCREMENT,
 					sat_name varchar(255) NOT NULL,
@@ -360,7 +360,7 @@
 			$icmsDB->queryF("INSERT INTO " . $icmsDB->prefix('configcategory') . " (confcat_id, confcat_name) VALUES ('14', '_MD_AM_PURIFIER')");
 		}
 
-		$table = new icms_db_icms_updater_Table('config');
+		$table = new icms_db_legacy_updater_Table('config');
 		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` MODIFY conf_name VARCHAR(75) NOT NULL default ''", 'Successfully altered field conf_name in config', '');
 		unset($table);
 
@@ -453,7 +453,7 @@
 
 	if ($dbVersion < $newDbVersion) {
 
-		$table = new icms_db_icms_updater_Table('users');
+		$table = new icms_db_legacy_updater_Table('users');
 		if ($table->fieldExists('level')) {
 			$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` MODIFY level varchar(3) NOT NULL default '1'", 'Successfully modified field level in table users', '');
 		}
@@ -468,14 +468,14 @@
 	/* this was in dbversion 18, but there were errors discovered after 1.2 beta relase */
 	if ($dbVersion < $newDbVersion) {
 		/*
-		$table = new icms_db_icms_updater_Table('icmscontent');
+		$table = new icms_db_legacy_updater_Table('icmscontent');
 		if (!$table->fieldExists('content_tags')) {
 		$table->addNewField('content_tags', "text");
 		$icmsDatabaseUpdater->updateTable($table);
 		}
 		unset($table);
 		*/
-		$table = new icms_db_icms_updater_Table('imagecategory');
+		$table = new icms_db_legacy_updater_Table('imagecategory');
 		if (! $table->fieldExists('imgcat_foldername')) {
 			$table->addNewField('imgcat_foldername', "varchar(100) default ''");
 		}
@@ -504,7 +504,7 @@
 	 * New symlinks need to be added to the db
 	 */
 	if ($dbVersion < $newDbVersion) {
-		$table = new icms_db_icms_updater_Table('icmspage');
+		$table = new icms_db_legacy_updater_Table('icmspage');
 		$new_pages = array(
 			"NULL, 1, '" . _CPHOME . "', 'admin.php', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU14 . "', 'modules/system/admin.php?fct=avatars*', 1",

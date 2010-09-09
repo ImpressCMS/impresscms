@@ -53,7 +53,7 @@ class XoopsStory
 	 **/
 	function Story($storyid=-1)
 	{
-		$this->db = icms_db_Factory::getInstance();
+		$this->db = icms_db_Factory::instance();
 		$this->table = '';
 		$this->topicstable = '';
 		if(is_array($storyid))

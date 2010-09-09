@@ -42,7 +42,7 @@ switch ( $op) {
 		}
 		if (empty($stop)) {
 			$invite_code = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
-			$xoopsDB =& icms_db_Factory::getInstance();
+			$xoopsDB =& icms_db_Factory::instance();
 			$myts =& icms_core_Textsanitizer::getInstance();
 			$sql = sprintf('INSERT INTO '.$xoopsDB->prefix('invites').' (invite_code, from_id, invite_to, invite_date, extra_info) VALUES (%s, %d, %s, %d, %s)',
 			$xoopsDB->quoteString(addslashes($invite_code)),

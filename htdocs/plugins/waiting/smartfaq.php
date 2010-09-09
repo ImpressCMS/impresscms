@@ -7,7 +7,7 @@
  */
 function b_waiting_smartfaq()
 {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$ret = array() ;
 
 	// smartfaq submitted

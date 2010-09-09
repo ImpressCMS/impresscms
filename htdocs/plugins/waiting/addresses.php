@@ -2,7 +2,7 @@
 // This code is not tested
 function b_waiting_addresses()
 {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$ret = array() ;
 
 	// addresses links

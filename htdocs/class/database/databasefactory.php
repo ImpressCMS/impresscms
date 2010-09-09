@@ -22,11 +22,11 @@
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-class IcmsDatabaseFactory extends icms_db_icms_Factory {
+class IcmsDatabaseFactory extends icms_db_legacy_Factory {
 	private $_deprecated;
 	public function __construct() {
 		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_db_icms_Factory', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_db_legacy_Factory', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 

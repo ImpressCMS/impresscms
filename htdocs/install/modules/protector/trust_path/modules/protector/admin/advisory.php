@@ -1,6 +1,6 @@
 <?php
 
-$db =& icms_db_Factory::getInstance() ;
+$db =& icms_db_Factory::instance() ;
 
 // beggining of Output
 xoops_cp_header();
@@ -94,7 +94,7 @@ echo "</dl>\n" ;
 
 // patch to databasefactory.php
 echo "<dl><dt>'databasefactory.php' : " ;
-$db =& icms_db_Factory::getInstance() ;
+$db =& icms_db_Factory::instance() ;
 if( strtolower( get_class( $db ) ) != 'protectormysqldatabase' ) {
 	echo "<span style='color:red;font-weight:bold;'>"._AM_ADV_DBFACTORYUNPATCHED."</span></dt>\n" ;
 } else {

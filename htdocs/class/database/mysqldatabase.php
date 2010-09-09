@@ -47,11 +47,11 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  database
  */
-class XoopsMySQLDatabase extends icms_db_icms_mysql_Database {
+class XoopsMySQLDatabase extends icms_db_legacy_mysql_Database {
 	private $_errors;
 	public function __construct() {
 		parent::__construct();
-		$this->_errors = icms_core_Debug::setDeprecated('icms_db_icms_mysql_Database', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_errors = icms_core_Debug::setDeprecated('icms_db_legacy_mysql_Database', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
@@ -65,11 +65,11 @@ class XoopsMySQLDatabase extends icms_db_icms_mysql_Database {
  * @package kernel
  * @subpackage database
  */
-class XoopsMySQLDatabaseSafe extends icms_db_icms_mysql_Safe {
+class XoopsMySQLDatabaseSafe extends icms_db_legacy_mysql_Safe {
 	private $_errors;
 	public function __construct() {
 		parent::__construct();
-		$this->_errors = icms_core_Debug::setDeprecated('icms_db_icms_mysql_Safe', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_errors = icms_core_Debug::setDeprecated('icms_db_legacy_mysql_Safe', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
@@ -86,11 +86,11 @@ class XoopsMySQLDatabaseSafe extends icms_db_icms_mysql_Safe {
  * @package kernel
  * @subpackage database
  */
-class XoopsMySQLDatabaseProxy extends icms_db_icms_mysql_Proxy {
+class XoopsMySQLDatabaseProxy extends icms_db_legacy_mysql_Proxy {
 	private $_errors;
 	public function __construct() {
 		parent::__construct();
-		$this->_errors = icms_core_Debug::setDeprecated('icms_db_icms_mysql_Proxy', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_errors = icms_core_Debug::setDeprecated('icms_db_legacy_mysql_Proxy', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 ?>

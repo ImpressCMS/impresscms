@@ -1,6 +1,6 @@
 <?php
 function b_waiting_news() {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$block = array();
 
 	// news

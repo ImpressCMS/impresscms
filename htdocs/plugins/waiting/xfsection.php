@@ -5,7 +5,7 @@
 //
 function b_waiting_xfsection()
 {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$ret = array();
 
 	// xf-section articles - waiting

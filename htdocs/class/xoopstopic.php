@@ -37,7 +37,7 @@ class XoopsTopic
 	 **/
 	function XoopsTopic($table, $topicid=0)
 	{
-		$this->db =& icms_db_Factory::getInstance();
+		$this->db =& icms_db_Factory::instance();
 		$this->table = $table;
 		if ( is_array($topicid) ) {
 			$this->makeTopic($topicid);

@@ -44,7 +44,7 @@ class XoopsTree
 	 **/
 	function XoopsTree($table_name, $id_name, $pid_name)
 	{
-		$this->db =& icms_db_Factory::getInstance();
+		$this->db =& icms_db_Factory::instance();
 		$this->table = $table_name;
 		$this->id = $id_name;
 		$this->pid = $pid_name;

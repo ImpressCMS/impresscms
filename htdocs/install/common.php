@@ -207,7 +207,7 @@ include_once XOOPS_ROOT_PATH.'/include/functions.php';
 if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
 	define('XOOPS_DB_PROXY', 1);
 }
-$xoopsDB =& icms_db_icms_Factory::instance();
+$xoopsDB = icms_db_Factory::instance();
 
 // ################# Include required files ##############
 //require_once XOOPS_ROOT_PATH.'/kernel/object.php';

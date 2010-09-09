@@ -22,7 +22,7 @@ icms_loadLanguageFile('system', 'modulesadmin', true);
 function xoops_module_install($dirname) {
 	global $icmsUser, $xoopsConfig;
 	$dirname = trim($dirname);
-	$db =& icms_db_Factory::getInstance();
+	$db =& icms_db_Factory::instance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
 	$module_handler = icms::handler('icms_module');
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
@@ -54,12 +54,12 @@ function xoops_module_install($dirname) {
 				include_once ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
 				$sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
 				$sql_query = trim($sql_query);
-				icms_db_icms_mysql_Utility::splitSqlFile($pieces, $sql_query);
+				icms_db_legacy_mysql_Utility::splitSqlFile($pieces, $sql_query);
 				$created_tables = array();
 				foreach ($pieces as $piece) {
 					// [0] contains the prefixed query
 					// [4] contains unprefixed table name
-					$prefixed_query = icms_db_icms_mysql_Utility::prefixQuery($piece, $db->prefix());
+					$prefixed_query = icms_db_legacy_mysql_Utility::prefixQuery($piece, $db->prefix());
 					if (!$prefixed_query) {
 						$errs[] = "<b>$piece</b> is not a valid SQL!";
 						$error = true;
@@ -393,7 +393,7 @@ function xoops_module_install($dirname) {
 
 				$is_IPF = $module->getInfo('object_items');
 				if (!empty($is_IPF)) {
-					$icmsDatabaseUpdater = icms_db_icms_Factory::getDatabaseUpdater();
+					$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 					$icmsDatabaseUpdater->moduleUpgrade($module, true);
 					foreach ($icmsDatabaseUpdater->_messages as $msg) {
 						$msgs[] = $msg;
@@ -474,7 +474,7 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 function icms_module_update($dirname) {
 	global $icmsUser, $xoopsConfig;
 	$dirname = trim($dirname);
-	$db =& icms_db_Factory::getInstance();
+	$db =& icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->getByDirname($dirname);
 
@@ -870,7 +870,7 @@ function icms_module_update($dirname) {
 
 			$is_IPF = $module->getInfo('object_items');
 			if (!empty($is_IPF)) {
-				$icmsDatabaseUpdater = icms_db_icms_Factory::getDatabaseUpdater();
+				$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 				$icmsDatabaseUpdater->moduleUpgrade($module, true);
 				foreach ($icmsDatabaseUpdater->_messages as $msg) {
 					$msgs[] = $msg;

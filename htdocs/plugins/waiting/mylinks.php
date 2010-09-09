@@ -1,7 +1,7 @@
 <?php
 function b_waiting_mylinks()
 {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$ret = array() ;
 
 	// mylinks links

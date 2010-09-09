@@ -13,7 +13,7 @@
 /*************************************************************************/
 function b_waiting_wfdownloads()
 {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$ret = array() ;
 
 	// wfdownloads pending

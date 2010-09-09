@@ -201,7 +201,7 @@ function b_system_user_show()
 function b_system_info_show($options)
 {
 	global $icmsConfig, $icmsUser;
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$block = array();
 	if (!empty($options[3])) {

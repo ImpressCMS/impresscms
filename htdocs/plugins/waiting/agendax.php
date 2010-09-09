@@ -2,7 +2,7 @@
 // not tested
 function b_waiting_agendax()
 {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$block = array();
 
 	// agenda-x events

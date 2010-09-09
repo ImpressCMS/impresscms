@@ -1,6 +1,6 @@
 <?php
 function b_waiting_xcgal() {
-	$xoopsDB =& icms_db_Factory::getInstance();
+	$xoopsDB =& icms_db_Factory::instance();
 	$block = array();
 
 	$result = $xoopsDB->query("SELECT count(*) FROM ".$xoopsDB->prefix("xcgal_pictures")." WHERE approved = 'NO'");
