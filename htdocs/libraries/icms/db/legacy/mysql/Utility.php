@@ -3,7 +3,7 @@
  * @package database
  * @subpackage  mysql
  * @since XOOPS
- * @version $Id: sqlutility.php 19118 2010-03-27 17:46:23Z skenow $
+ * @version $Id$
  *
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright   copyright (c) 2000-2003 XOOPS.org

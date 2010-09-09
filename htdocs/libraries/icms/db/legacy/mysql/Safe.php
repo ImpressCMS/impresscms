@@ -1,5 +1,5 @@
 <?php
-// $Id: database.php 19118 2010-03-27 17:46:23Z skenow $
+// $Id$
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**

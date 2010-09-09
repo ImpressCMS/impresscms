@@ -11,7 +11,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: database.php 19118 2010-03-27 17:46:23Z skenow $
+ * @version	$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -19,7 +19,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * @package    database
  * @subpackage  mysql
- * @version $Id: database.php 19118 2010-03-27 17:46:23Z skenow $
+ * @version $Id$
  * @since XOOPS
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>

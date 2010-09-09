@@ -10,7 +10,7 @@
  * @license	LICENSE.txt
  * @package	database
  * @since	XOOPS
- * @version	$Id: database.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @version	$Id$
  * @author	The XOOPS Project Community <http://www.xoops.org>
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @author	modified by UnderDog <underdog@impresscms.org>
