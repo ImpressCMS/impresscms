@@ -110,55 +110,70 @@ final class icms_core_Password {
 	 * @param    int     $enc_type   encryption type to use (this is required & only used when passwords are expired)
 	 * @param    int     $reset      set to 1 if we have determined that the user password has been expired
 	 *                               use in conjunction only with $enc_type above.
-	 * @return   string  returns the final encrypted hash of users password.
+	 * @return   Hash of users password.
 	 */
 	private function priv_encryptPass($pass, $salt, $enc_type, $reset) {
 		global $icmsConfigUser;
 
-		if ($reset == 0) {
+		if ($reset !== 1) {
 			$enc_type = (int) ($icmsConfigUser['enc_type']);
 		}
 		if ($enc_type == 0) {
-			$pass_hash = md5($pass);
+			return md5($pass);
 		} else {
 			$pass = $salt . md5($pass) . $this->mainSalt;
-			/* would it be more appropriate to use switch? */
-			if ($enc_type == 1) {
-				$pass_hash = hash('sha256', $pass);
-			} elseif ($enc_type == 2) {
-				$pass_hash = hash('sha384', $pass);
-			} elseif ($enc_type == 3) {
-				$pass_hash = hash('sha512', $pass);
-			} elseif ($enc_type == 4) {
-				$pass_hash = hash('ripemd128', $pass);
-			} elseif ($enc_type == 5) {
-				$pass_hash = hash('ripemd160', $pass);
-			} elseif ($enc_type == 6) {
-				$pass_hash = hash('whirlpool', $pass);
-			} elseif ($enc_type == 7) {
-				$pass_hash = hash('haval128,4', $pass);
-			} elseif ($enc_type == 8) {
-				$pass_hash = hash('haval160,4', $pass);
-			} elseif ($enc_type == 9) {
-				$pass_hash = hash('haval192,4', $pass);
-			} elseif ($enc_type == 10) {
-				$pass_hash = hash('haval224,4', $pass);
-			} elseif ($enc_type == 11) {
-				$pass_hash = hash('haval256,4', $pass);
-			} elseif ($enc_type == 12) {
-				$pass_hash = hash('haval128,5', $pass);
-			} elseif ($enc_type == 13) {
-				$pass_hash = hash('haval160,5', $pass);
-			} elseif ($enc_type == 14) {
-				$pass_hash = hash('haval192,5', $pass);
-			} elseif ($enc_type == 15) {
-				$pass_hash = hash('haval224,5', $pass);
-			} elseif ($enc_type == 16) {
-				$pass_hash = hash('haval256,5', $pass);
+			switch ($enc_type) {
+				default:
+					case '1':
+						return hash('sha256', $pass);
+				break;
+				case '2':
+					return hash('sha384', $pass);
+				break;
+				case '3':
+					return hash('sha512', $pass);
+				break;
+				case '4':
+					return hash('ripemd128', $pass);
+				break;
+				case '5':
+					return hash('ripemd160', $pass);
+				break;
+				case '6':
+					return hash('whirlpool', $pass);
+				break;
+				case '7':
+					return hash('haval128,4', $pass);
+				break;
+				case '8':
+					return hash('haval160,4', $pass);
+				break;
+				case '9':
+					return hash('haval192,4', $pass);
+				break;
+				case '10':
+					return hash('haval224,4', $pass);
+				break;
+				case '11':
+					return hash('haval256,4', $pass);
+				break;
+				case '12':
+					return hash('haval128,5', $pass);
+				break;
+				case '13':
+					return hash('haval160,5', $pass);
+				break;
+				case '14':
+					return hash('haval192,5', $pass);
+				break;
+				case '15':
+					return hash('haval224,5', $pass);
+				break;
+				case '16':
+					return hash('haval256,5', $pass);
+				break;
 			}
 		}
-		unset($mainSalt, $pass);
-		return $pass_hash;
 	}
 
 	// ***** Public Functions *****
@@ -211,7 +226,7 @@ final class icms_core_Password {
 	 * @param    int     $enc_type   encryption type to use (this is required & only used when passwords are expired)
 	 * @param    int     $reset      set to 1 if we have determined that the user password has been expired
 	 *                               use in conjunction only with $enc_type above.
-	 * @return   string  returns the final encrypted hash of users password.
+	 * @return   Hash of users password.
 	 */
 	public function encryptPass($pass, $salt, $enc_type = 0, $reset = 0) {
 		return self::priv_encryptPass($pass, $salt, $enc_type, $reset);
