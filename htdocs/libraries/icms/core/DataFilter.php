@@ -238,8 +238,8 @@ class icms_core_DataFilter {
 	*					'true' = Generate an email address that is protected from spammers
 	*					'false' = Generate an email address that is NOT protected from spammers
 	*				IP:
-	*					'ip4' = Requires the value to be a valid IPv4 IP (like 255.255.255.255)
-	*					'ip6' = Requires the value to be a valid IPv6 IP (like 2001:0db8:85a3:08d3:1319:8a2e:0370:7334)
+	*					'ipv4' = Requires the value to be a valid IPv4 IP (like 255.255.255.255)
+	*					'ipv6' = Requires the value to be a valid IPv6 IP (like 2001:0db8:85a3:08d3:1319:8a2e:0370:7334)
 	*					'rfc' = Requires the value to be a RFC specified private range IP (like 192.168.0.1)
 	*					'res' = Requires that the value is not within the reserved IP range. both IPV4 and IPV6 values
 	*				STR:
@@ -713,7 +713,6 @@ class icms_core_DataFilter {
 	 * @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
 	 *				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
 	 * @return string
-	 * @todo Move to a static class method - String
 	 */
 	static public function utf8_strrev($str, $reverse = false) {
 		preg_match_all('/./us', $str, $ar);
@@ -839,6 +838,7 @@ class icms_core_DataFilter {
 				if (isset($options2) && $options2 == 1) {
 					$data = filter_var($data, FILTER_SANITIZE_ENCODED);
 				}
+				return $data;
 			break;
 
 			case "email":
@@ -863,28 +863,29 @@ class icms_core_DataFilter {
 					$data = str_replace('@', ' at ', $data);
 					$data = str_replace('.', ' dot ', $data);
 				}
+				return $data;
 			break;
 
 			case "ip":
 				switch ($options1) {
 					case "ipv4":
-						$data = filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
 					break;
 
 					case "ipv6":
-						$data = filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 					break;
 
 					case "rfc":
-						$data = filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE);
+						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE);
 					break;
 
 					case "res":
-						$data = filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE);
+						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE);
 					break;
 
 					default:
-						$data = filter_var($data, FILTER_VALIDATE_IP);
+						return filter_var($data, FILTER_VALIDATE_IP);
 					break;
 				}
 			break;
@@ -892,31 +893,31 @@ class icms_core_DataFilter {
 			case 'str':
 				switch ($options1) {
 					case "noencode":
-						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 					break;
 
 					case "striplow":
-						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
 					break;
 
 					case "striphigh":
-						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 					break;
 
 					case "encodelow":
-						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
 					break;
 
 					case "encodehigh":
-						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH);
+						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH);
 					break;
 
 					case "encodeamp":
-						$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
+						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
 					break;
 
 					default:
-						$data = filter_var($data, FILTER_SANITIZE_STRING);
+						return filter_var($data, FILTER_SANITIZE_STRING);
 					break;
 				}
 			break;
@@ -927,15 +928,15 @@ class icms_core_DataFilter {
 														'max_range' => $options2
 														));
 
-					$data = filter_var($data, FILTER_VALIDATE_INT, $option);
+					return filter_var($data, FILTER_VALIDATE_INT, $option);
 				} else {
-					$data = filter_var($data, FILTER_VALIDATE_INT);
+					return filter_var($data, FILTER_VALIDATE_INT);
 				}
 			break;
 
 			case "html":
 				$data = self::stripSlashesGPC($data);
-				$data = filter_var($data, FILTER_CALLBACK, array("options"=>"html_filter"));
+				return filter_var($data, FILTER_CALLBACK, array("options"=>"html_filter"));
 			break;
 		}
 
