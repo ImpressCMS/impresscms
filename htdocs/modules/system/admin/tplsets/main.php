@@ -898,7 +898,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 
 								$icount = count($themeimages);
 								if ($icount > 0) {
-									$imageset_handler =& xoops_gethandler('imageset');
+									$imageset_handler = icms::handler('icms_image_set');
 									$imgset =& $imageset_handler->create();
 									$imgset->setVar('imgset_name', $tplset_name);
 									$imgset->setVar('imgset_refid', 0);
