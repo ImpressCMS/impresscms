@@ -7,8 +7,8 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Block
- * @subpackage	Position
+ * @package		View
+ * @subpackage	Block
  * @since		1.0
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
@@ -18,8 +18,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * icms_view_block_position_Handler
  * @category	ICMS
- * @package		Block
- * @subpackage	Position
+ * @package		View
+ * @subpackage	Block
  *
  */
 class icms_view_block_position_Handler extends icms_ipf_Handler {
@@ -45,7 +45,7 @@ class icms_view_block_position_Handler extends icms_ipf_Handler {
 	 *
 	 * @return bool  the result of the insert action
 	 */
-	public function insert(& $obj, $force = false, $checkObject = true, $debug=false) {
+	public function insert(& $obj, $force = false, $checkObject = true, $debug = false) {
 		$obj->setVar('block_default', 0);
 		$obj->setVar('block_type', 'L');
 		return parent::insert($obj, $force, $checkObject, $debug);

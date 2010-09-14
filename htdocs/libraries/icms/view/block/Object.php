@@ -5,9 +5,10 @@
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
  * @category	ICMS
- * @package		Block
+ * @package		View
+ * @subpackage	Block
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id: Object.php 19961 2010-08-15 16:24:09Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -16,7 +17,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * ImpressCMS Core Block Object Class
  *
  * @category	ICMS
- * @package		Block
+ * @package		View
+ * @subpackage	Block
  * @since		ImpressCMS 1.2
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
@@ -90,7 +92,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * (HTML-) form for setting the options of the block
 	 *
 	 * @return string|false $edit_form is HTML for the form, FALSE if no options defined for this block
-	 **/
+	 */
 	public function getOptions() {
 		if ($this->getVar('block_type') != 'C') {
 			$edit_func = $this->getVar('edit_func');
@@ -210,9 +212,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @return array
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function getBlockPositions($full = false) {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->getBlockPositions');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->getBlockPositions', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getBlockPositions($full);
 	}
 
@@ -222,9 +225,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @param integer $id
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function load($id) {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->getObject');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->getObject', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$this->$this->handler->getObject($id);
 	}
 
@@ -234,9 +238,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @return integer
 	 *
 	 * @deprecated use the handler method 'insert', instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function store() {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->insert');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->insert', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$this->handler->insert($this);
 		return $this->getVar('bid');
 	}
@@ -247,9 +252,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @return boolean
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function delete() {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->delete');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->delete', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->delete($this);
 	}
 
@@ -269,9 +275,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @return array of block objects
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = "b.weight, b.bid", $isactive = 1) {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->getAllBlocksByGroup');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->getAllBlocksByGroup', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getAllBlocksByGroup($groupid, $asobject, $side, $visible, $orderby, $isactive);
 	}
 
@@ -288,9 +295,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @return unknown
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side, weight, bid", $isactive = 1) {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->getAllBlocks');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->getAllBlocks', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getAllBlocks($rettype, $side, $visible, $orderby, $isactive);
 	}
 
@@ -304,9 +312,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @return unknown
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function getByModule($moduleid, $asobject = true) {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->getByModule');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->getByModule', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getByModule($moduleid, $asobject);
 	}
 
@@ -324,10 +333,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @return unknown
 	 *
 	 * @deprecated use the handler method, instead
-	 *
+	 * @todo	Remove in version 1.4
 	 */
 	public function getAllByGroupModule($groupid, $module_id = '0-0', $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->getAllByGroupModule');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->getAllByGroupModule', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getAllByGroupModule($groupid, $module_id, $toponlyblock, $visible, $orderby, $isactive);
 	}
 
@@ -342,9 +351,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @return array
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->getNonGroupedBlocks');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->getNonGroupedBlocks', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getNonGroupedBlocks($module_id, $toponlyblock, $visible, $orderby, $isactive);
 	}
 
@@ -362,23 +372,12 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @return integer
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
-		icms_core_Debug::setDeprecated('icms_view_block_Handler->getCountSimilarBlocks');
+		icms_core_Debug::setDeprecated('icms_view_block_Handler->getCountSimilarBlocks', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getCountSimilarBlocks($moduleId, $funcNum, $showFunc);
 	}
 
 }
 
-/**
- * @deprecated use icms_view_block_Object instead
- * @todo Remove in version 1.4 - all instances have been removed from the core
- */
-
-class IcmsBlock extends icms_view_block_Object {
-	public function __construct(&$db) {
-		parent::__construct($db);
-		$this->setErrors = icms_core_Debug::setDeprecated('icms_view_block_Object');
-	}
-
-}

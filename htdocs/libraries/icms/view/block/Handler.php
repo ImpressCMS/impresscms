@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Block
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id: Handler.php 19961 2010-08-15 16:24:09Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -479,14 +479,3 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 
 }
 
-/**
- * @deprecated  use icms_view_block_Handler instead
- * @todo Remove in version 1.4 - all instances have been removed from the core
- */
-class IcmsBlockHandler extends icms_view_block_Handler {
-	public function __construct(&$db) {
-		parent::__construct($db);
-		$this->setVar('_errors', icms_core_Debug::setDeprecated('icms_view_block_Handler'));
-	}
-
-}

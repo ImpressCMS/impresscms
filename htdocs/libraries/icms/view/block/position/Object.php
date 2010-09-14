@@ -5,8 +5,8 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Block
- * @subpackage	Position
+ * @package		View
+ * @subpackage	Block
  * @since		1.0
  * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
@@ -16,8 +16,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * icms_view_block_position_Object
  * @category	ICMS
- * @package		Block
- * @subpackage	Position
+ * @package		View
+ * @subpackage	Block
  */
 class icms_view_block_position_Object extends icms_ipf_Object {
 
