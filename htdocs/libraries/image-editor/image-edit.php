@@ -74,7 +74,7 @@ if (! is_null ( $op ) && $op == 'cancel') {
 		@unlink ( $orig_img_path );
 	}
 
-	$plugins_arr = IcmsLists::getDirListAsArray ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
+	$plugins_arr = icms_core_Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 	foreach ( $plugins_arr as $plugin_folder ) {
 		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
 			$arr = explode ( '/', $image_path );
@@ -234,7 +234,7 @@ $icmsTpl->assign ( 'image', $img );
 
 #Getting the plugins for the editor
 global $xoopsConfig;
-$plugins_arr = IcmsLists::getDirListAsArray ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
+$plugins_arr = icms_core_Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 foreach ( $plugins_arr as $plugin_folder ) {
 	if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
 		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/language/' . $xoopsConfig ['language'] . '/main.php' )) {

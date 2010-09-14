@@ -37,7 +37,7 @@ $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_select = new icms_form_elements_Select("", "user_avatar", $avatar_value);
 //  $avatar_array = IcmsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
 //  $avatar_select->addOptionArray($avatar_array);
-//  $a_dirlist = IcmsLists::getDirListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
+//  $a_dirlist = icms_core_Filesystem::getDirList(XOOPS_ROOT_PATH."/images/avatar/");
 //  $a_dir_labels = array();
 //  $a_count = 0;
 //  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;start=".$a_count."','avatars',600,400);\">XOOPS</a>";

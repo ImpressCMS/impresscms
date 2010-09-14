@@ -27,7 +27,7 @@ $s_cat_checkbox = new icms_form_elements_Checkbox(_AM_SYSTEMRIGHTS, "system_cati
 include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 $admin_dir = ICMS_ROOT_PATH.'/modules/system/admin/';
-$dirlist = IcmsLists::getDirListAsArray($admin_dir);
+$dirlist = icms_core_Filesystem::getDirList($admin_dir);
 /* changes to only allow permission admins you already have */
 global $icmsUser;
 $gperm = icms::handler('icms_member_groupperm');

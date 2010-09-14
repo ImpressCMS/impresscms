@@ -190,7 +190,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'select_plugin' :
 					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 8, true );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = IcmsLists::getDirListAsArray ( ICMS_ROOT_PATH.'/plugins/textsanitizer/' );
+					$dirlist = icms_core_Filesystem::getDirList ( ICMS_ROOT_PATH.'/plugins/textsanitizer/' );
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );

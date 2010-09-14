@@ -33,25 +33,12 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 *
 		 * @param   string	$dirname	name of the directory to scan
 		 * @return  array	 $list	   list of directories in the directory
+		 * @deprecated	Use icms_core_Filesystem::getDirList, instead
+		 * @todo		Remove in version 1.4 - all instances have been removed from the core
 		 */
 		static public function getDirListAsArray( $dirname ) {
-			$ignored = array( 'cvs', '_darcs', '.svn' );
-			$list = array();
-			if ( substr( $dirname, -1 ) != '/' ) {
-				$dirname .= '/';
-			}
-			if ( $handle = opendir( $dirname ) ) {
-				while ( $file = readdir( $handle ) ) {
-					if ( substr( $file, 0, 1 ) == '.' || in_array( strtolower( $file ), $ignored ) ) continue;
-					if ( is_dir( $dirname . $file ) ) {
-						$list[$file] = $file;
-					}
-				}
-				closedir( $handle );
-				asort( $list );
-				reset( $list );
-			}
-			return $list;
+			icms_core_Debug::setDeprecated('icms_core_Filesystem::getDirList', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+			return icms_core_Filesystem::getDirList($dirname);
 		}
 
 		/**
@@ -184,8 +171,8 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		static public function getAdminThemesList(){
 			$dirtyList1 = $cleanList1 = Array();
 			$dirtyList2 = $cleanList2 = Array();
-			$dirtyList1 = IcmsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
-			$dirtyList2 = IcmsLists::getDirListAsArray(ICMS_MODULES_PATH.'/system/themes/');
+			$dirtyList1 = icms_core_Filesystem::getDirList(ICMS_THEME_PATH.'/');
+			$dirtyList2 = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH.'/system/themes/');
 			foreach($dirtyList1 as $item1){
 				if(file_exists(ICMS_THEME_PATH.'/'.$item1.'/theme_admin.html'))
 				$cleanList1[$item1] = $item1;
@@ -204,7 +191,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 */
 		static public function getThemesList(){
 			$dirtyList = $cleanList = Array();
-			$dirtyList = IcmsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
+			$dirtyList = icms_core_Filesystem::getDirList(ICMS_THEME_PATH.'/');
 			foreach($dirtyList as $item){
 				if(file_exists(ICMS_THEME_PATH.'/'.$item.'/theme.html'))
 				$cleanList[$item] = $item;
@@ -217,7 +204,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 */
 		static public function getModulesList() {
 			$dirtyList = $cleanList = array();
-			$dirtyList = IcmsLists::getDirListAsArray(ICMS_ROOT_PATH.'/modules/');
+			$dirtyList = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH.'/modules/');
 			foreach($dirtyList as $item){
 				if(file_exists(ICMS_ROOT_PATH.'/modules/'.$item.'/icms_version.php'))
 				$cleanList[$item] = $item;
@@ -265,7 +252,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		static public function getAllAvatarsList() {
 			$avatars = array();
 			$dirlist = array();
-			$dirlist = IcmsLists::getDirListAsArray(ICMS_ROOT_PATH."/images/avatar/");
+			$dirlist = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH."/images/avatar/");
 			if ( count($dirlist) > 0 )
 			foreach ( $dirlist as $dir )
 			$avatars[$dir] =& IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/".$dir."/", $dir."/");
@@ -298,7 +285,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 */
 		static public function getLangList() {
 			$lang_list = array();
-			$lang_list = IcmsLists::getDirListAsArray(ICMS_ROOT_PATH."/language/");
+			$lang_list = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH."/language/");
 			return $lang_list;
 		}
 
@@ -315,7 +302,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			} else {
 				$path = ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
 			}
-			$editor_list = IcmsLists::getDirListAsArray($path);
+			$editor_list = icms_core_Filesystem::getDirList($path);
 			return $editor_list;
 		}
 

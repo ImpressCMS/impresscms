@@ -32,7 +32,7 @@ require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 require_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
 $admin_dir = ICMS_ROOT_PATH . '/modules/system/admin';
-$dirlist = IcmsLists::getDirListAsArray($admin_dir);
+$dirlist = icms_core_Filesystem::getDirList($admin_dir);
 
 icms_loadLanguageFile('system', 'admin');
 asort($dirlist);
