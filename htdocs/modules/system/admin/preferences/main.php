@@ -180,7 +180,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'select_font' :
 					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = IcmsLists::getFontListAsArray ( ICMS_ROOT_PATH . '/libraries/icms/captcha/fonts/' );
+					$dirlist = IcmsLists::getFontListAsArray ( ICMS_ROOT_PATH . '/libraries/icms/form/captcha/fonts/' );
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );

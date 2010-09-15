@@ -73,7 +73,7 @@ class icms_form_captcha_Image {
 	{
 		global $icmsConfigCaptcha;
 		$rule = $icmsConfigCaptcha['captcha_casesensitive'] ? constant("ICMS_CAPTCHA_RULE_CASESENSITIVE") : constant("ICMS_CAPTCHA_RULE_CASEINSENSITIVE");
-		$ret = "<img id='captcha' src='" . ICMS_URL. "/libraries/icms/captcha/img.php' onclick=\"this.src='" . ICMS_URL. "/libraries/icms/captcha/img.php?refresh='+Math.random()"."\" style='cursor: pointer;margin-left: auto;margin-right: auto;text-align:center;' alt='".htmlspecialchars($rule, ENT_QUOTES)."' />";
+		$ret = "<img id='captcha' src='" . ICMS_URL. "/libraries/icms/form/captcha/img.php' onclick=\"this.src='" . ICMS_URL. "/libraries/icms/form/captcha/img.php?refresh='+Math.random()"."\" style='cursor: pointer;margin-left: auto;margin-right: auto;text-align:center;' alt='".htmlspecialchars($rule, ENT_QUOTES)."' />";
 		return $ret;
 	}
 }
