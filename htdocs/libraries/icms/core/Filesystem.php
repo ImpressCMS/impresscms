@@ -416,11 +416,11 @@ class icms_core_Filesystem {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
 
-	static public function getPhpList($dirname, $prefix = '', $extension = array('php')) {
+	static public function getPhpFiles($dirname, $prefix = '', $extension = array('php')) {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
 
-	static public function getHtmlList($dirname, $prefix = '', $extension = array('htm', 'html', 'xhtml')) {
+	static public function getHtmlFiles($dirname, $prefix = '', $extension = array('htm', 'html', 'xhtml')) {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
 /* The above will be removed */

@@ -57,6 +57,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of image file names in a directory
+		 * @see	icms_core_Filesystem::getImgList
 		 *
 		 * @param   string	$dirname	name of the directory to scan for image files
 		 * @param   string	$prefix	 prefix to put in front of the image file
@@ -80,6 +81,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of font file names in a directory
+		 * @see	icms_core_Filesystem::getFontList
 		 *
 		 * @param   string	$dirname	name of the directory to scan for font files
 		 * @param   string	$prefix	 prefix to put in front of the font file
@@ -103,6 +105,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of php file names in a directory
+		 * @see	icms_core_Filesystem::getPhpFiles
 		 *
 		 * @param   string	$dirname	name of the directory to scan for PHP files
 		 * @param   string	$prefix	 prefix to put in front of the PHP file
@@ -126,6 +129,8 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of html file names in a certain directory
+		 * @see	icms_core_Filesystem::getHtmlFiles
+		 *
 		 * @param   string	$dirname	name of the directory to scan for HTML files
 		 * @param   string	$prefix	 prefix to put in front of the HTML file
 		 * @return  array	 $filelist   list of HTML files in the directory
@@ -154,6 +159,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of administration themes folder from themes directory, excluding any directories that do not have theme_admin.html
+		 * @todo	This should be a method of the theme handler
 		 * @return	array
 		 */
 		static public function getAdminThemesList(){
@@ -175,6 +181,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
+		 * @todo	This should be a method of the theme handler
 		 * @return	array
 		 */
 		static public function getThemesList(){
@@ -189,6 +196,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets a list of module folders from the modules directory
+		 * @todo	This should be a method of the module handler
 		 */
 		static public function getModulesList() {
 			$dirtyList = $cleanList = array();
@@ -204,6 +212,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets a list of active module folders from database
+		 * @todo	This should be a method of the module handler
 		 */
 		static public function getActiveModulesList() {
 			$modules_list = IcmsLists::getModulesList();
@@ -219,6 +228,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		/**
 		 * Gets list of avatar file names in a certain directory
 		 * if directory is not specified, default directory will be searched
+		 * @todo	This should be a method of the Avatar handler
 		 *
 		 * @param   string	$avatar_dir name of the directory to scan for files
 		 * @return  array	 $avatars	list of avatars in the directory
@@ -234,6 +244,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of all avatar image files inside default avatars directory
+		 * @todo	This should be a method of the Avatar handler
 		 *
 		 * @return  mixed	 $avatars|false  list of avatar files in the directory or false if no avatars
 		 */
@@ -268,6 +279,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of language folders inside default language directory
+		 * @see	icms_core_Filesystem::getDirList
 		 *
 		 * @return  array	 $lang_list   list of language files in the directory
 		 */
@@ -639,6 +651,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of all user ranks in the database
+		 * @todo	this should be a method of the user rank handler
 		 *
 		 * @return  array	 $ret   list of user ranks
 		 */
