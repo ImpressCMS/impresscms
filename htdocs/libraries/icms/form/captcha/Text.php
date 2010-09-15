@@ -2,35 +2,38 @@
 /**
  * Text form for CAPTCHA
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		FormCaptcha
- * @since		XOOPS
- * @author		http://www.xoops.org/ The XOOPS Project
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: text.php 19090 2010-03-13 17:41:42Z skenow $
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Captcha
+ * @autho		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		SVN: $Id$
  */
-
+/**
+ * Creates text version of Captcha element
+ *
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Captcha
+ *
+ */
 class icms_form_captcha_Text {
-	var $config	= array();
-	var $code;
+
+	public $config = array();
+	public $code;
 
 	/**
 	 * Constructor
 	 */
-	function icms_form_captcha_Text()
-	{
+	public function __construct() {
 	}
 
 	/**
 	 * Creates icms_form_captcha_Text object
 	 * @return object	reference to icms_form_captcha_Text (@link icms_form_captcha_Text) Object
 	 */
-	function &instance()
-	{
+	public function &instance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new icms_form_captcha_Text();
@@ -42,8 +45,7 @@ class icms_form_captcha_Text {
 	 * Loading configs from CAPTCHA class
 	 * @param string	$config	the config array
 	 */
-	function loadConfig($config = array())
-	{
+	public function loadConfig($config = array()) {
 		// Loading default preferences
 		$this->config =& $config;
 	}
@@ -51,19 +53,22 @@ class icms_form_captcha_Text {
 	/**
 	 * Sets CAPTCHA code
 	 */
-	function setCode()
-	{
-		$_SESSION['icms_form_captcha_Object_sessioncode'] = strval( $this->code );
+	public function setCode() {
+		$_SESSION['icms_form_captcha_Object_sessioncode'] = strval($this->code);
 	}
 
 	/**
 	 * Render the form
 	 * @return string	$form the Captcha Form
 	 */
-	function render()
-	{
+	public function render() {
 		global $icmsConfigCaptcha;
-		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $icmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars'] . "' value='' />";
+		$form = $this->loadText()
+			. "&nbsp;&nbsp; <input type='text' name='" . $this->config["name"]
+			."' id='" . $this->config["name"]
+			. "' size='" . $icmsConfigCaptcha['captcha_num_chars']
+			. "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars']
+			. "' value='' />";
 		$rule = constant("ICMS_CAPTCHA_RULE_TEXT");
 		if (!empty($rule)) {
 			$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
@@ -78,8 +83,7 @@ class icms_form_captcha_Text {
 	 * Load the ICMS Captcha Text
 	 * @return string	The Captcha Expression
 	 */
-	function loadText()
-	{
+	public function loadText() {
 		$val_a = rand(0, 9);
 		$val_b = rand(0, 9);
 		if ($val_a > $val_b) {
@@ -95,4 +99,3 @@ class icms_form_captcha_Text {
 
 }
 
-?>

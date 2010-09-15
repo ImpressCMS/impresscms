@@ -1,6 +1,6 @@
 <?php
 /**
- * CAPTCHA class For XOOPS
+ * CAPTCHA class
  *
  * Currently there are two types of CAPTCHA forms, text and image
  * The default mode is "text", it can be changed in the priority:
@@ -8,33 +8,40 @@
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		FormCaptcha
- * @since		XOOPS
- * @author		http://www.xoops.org/ The XOOPS Project
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: captcha.php 19612 2010-06-24 23:28:29Z malanciault $
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Captcha
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		SVN: $Id$
  */
 
 icms_loadLanguageFile('core', 'captcha');
+/**
+ * Creates the captcha object
+ *
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Captcha
+ *
+ */
 class icms_form_captcha_Object {
-	var $active	= true;
-	var $mode 	= "text";	// potential values: image, text
-	var $config	= array();
 
-	var $message = array(); // Logging error messages
+	public $active	= TRUE;
+	/** potential values: image, text */
+	public $mode = "text";
+	/** */
+	public $config	= array();
+	/** Logging error messages */
+	public $message = array();
 
 	/**
 	 * Constructor
 	 */
-	function icms_form_captcha_Object()
-	{
+	public function __construct() {
 		// Loading default preferences
-		$this->config = @include dirname(__FILE__)."/config.php";
+		$this->config = @include dirname(__FILE__) . "/config.php";
 
 		global $icmsConfigCaptcha;
 		$this->setMode($icmsConfigCaptcha['captcha_mode']);
@@ -44,8 +51,7 @@ class icms_form_captcha_Object {
 	 * Creates instance of icms_form_captcha_Object Object
 	 * @return  object Reference to the icms_form_captcha_Object Object
 	 */
-	static public function &instance()
-	{
+	static public function &instance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new icms_form_captcha_Object();
@@ -59,8 +65,7 @@ class icms_form_captcha_Object {
 	 * @param   string $val Config Value
 	 * @return  bool  Always returns true if the setting of the config has succeeded
 	 */
-	function setConfig($name, $val)
-	{
+	public function setConfig($name, $val) {
 		if ($name == "mode") {
 			$this->setMode($val);
 		} elseif (isset($this->$name)) {
@@ -68,7 +73,7 @@ class icms_form_captcha_Object {
 		} else {
 			$this->config[$name] = $val;
 		}
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -78,8 +83,7 @@ class icms_form_captcha_Object {
 	 *
 	 * @param string	$mode	if no mode is set, just verify current mode
 	 */
-	function setMode($mode = null)
-	{
+	public function setMode($mode = NULL) {
 		if (!empty($mode) && in_array($mode, array("text", "image"))) {
 			$this->mode = $mode;
 
@@ -92,7 +96,10 @@ class icms_form_captcha_Object {
 		if (!extension_loaded('gd')) {
 			$this->mode = "text";
 		} else {
-			$required_functions = array("imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle", "imagejpeg", "imagedestroy", "imageftbbox");
+			$required_functions = array(
+				"imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle",
+				"imagejpeg", "imagedestroy", "imageftbbox"
+			);
 			foreach ($required_functions as $func) {
 				if (!function_exists($func)) {
 					$this->mode = "text";
@@ -113,12 +120,15 @@ class icms_form_captcha_Object {
 	 * @param   string  $background_type  comes from config, just initializes the variable
 	 * @param   string  $background_num   comes from config, just initializes the variable
 	 */
-	function init($name = 'icmscaptcha', $skipmember = null, $num_chars = null, $fontsize_min = null, $fontsize_max = null, $background_type = null, $background_num = null)
-	{
+	public function init(
+			$name = 'icmscaptcha', $skipmember = NULL, $num_chars = NULL,
+			$fontsize_min = NULL, $fontsize_max = NULL, $background_type = NULL,
+			$background_num = NULL)
+		{
 		global $icmsConfigCaptcha;
 		// Loading RUN-TIME settings
 		foreach (array_keys($this->config) as $key) {
-			if (isset(${$key}) && ${$key} !== null) {
+			if (isset(${$key}) && ${$key} !== NULL) {
 				$this->config[$key] = ${$key};
 			}
 		}
@@ -129,9 +139,9 @@ class icms_form_captcha_Object {
 		$icmsUser = $GLOBALS["icmsUser"];
 		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
-			$this->active = false;
+			$this->active = FALSE;
 		} elseif ($icmsConfigCaptcha['captcha_mode'] =='none') {
-			$this->active = false;
+			$this->active = FALSE;
 		}
 	}
 
@@ -139,32 +149,25 @@ class icms_form_captcha_Object {
 	 * Verify user submission
 	 * @param bool	$skipMember	Skip Captcha because user is member / logged in
 	 */
-	function verify($skipMember = null)
-	{
+	public function verify($skipMember = NULL) {
 		global $icmsConfig, $icmsConfigCaptcha;
 		$sessionName	= @$_SESSION['icms_form_captcha_Object_name'];
-		$skipMember		= ($skipMember === null) ? @$_SESSION['icms_form_captcha_Object_skipmember'] : $skipMember;
-		$maxAttempts	= (int) ( @$_SESSION['icms_form_captcha_Object_maxattempts'] );
+		$skipMember		= ($skipMember === NULL) ? @$_SESSION['icms_form_captcha_Object_skipmember'] : $skipMember;
+		$maxAttempts	= (int) (@$_SESSION['icms_form_captcha_Object_maxattempts']);
 
-		$is_valid = false;
+		$is_valid = FALSE;
 
-		// Skip CAPTCHA for member if set & Kept for backward compatibilities
-		/*		if (is_object($GLOBALS["xoopsUser"]) && !empty($skipMember)) {
-			$is_valid = true;
-			*/
-		// Kill too many attempts
-		/*} else*/
 		$icmsUser = $GLOBALS["xoopsUser"];
 		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($icmsUser)) {
-			$is_valid = true;
+			$is_valid = TRUE;
 		} elseif (!empty($maxAttempts) && $_SESSION['icms_form_captcha_Object_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 			// Verify the code
 		} elseif (!empty($_SESSION['icms_form_captcha_Object_sessioncode'])) {
 			$func = ($icmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
-			$is_valid = ! $func( trim(@$_POST[$sessionName]), $_SESSION['icms_form_captcha_Object_sessioncode']);
+			$is_valid = ! $func(trim(@$_POST[$sessionName]), $_SESSION['icms_form_captcha_Object_sessioncode']);
 		}
 
 		if (!empty($maxAttempts)) {
@@ -176,11 +179,11 @@ class icms_form_captcha_Object {
 
 			} else {
 				// reset attempt records on success
-				$_SESSION['icms_form_captcha_Object_attempt_'.$sessionName] = null;
+				$_SESSION['icms_form_captcha_Object_attempt_'.$sessionName] = NULL;
 			}
 		}
 
-		$this->destroyGarbage(true);
+		$this->destroyGarbage(TRUE);
 
 		return $is_valid;
 	}
@@ -189,8 +192,7 @@ class icms_form_captcha_Object {
 	 * Get Caption
 	 * @return string	The Caption Constant
 	 */
-	function getCaption()
-	{
+	public function getCaption() {
 		return defined("ICMS_CAPTCHA_CAPTION") ? constant("ICMS_CAPTCHA_CAPTION") : "";
 	}
 
@@ -198,8 +200,7 @@ class icms_form_captcha_Object {
 	 * Set Message
 	 * @return string	The message
 	 */
-	function getMessage()
-	{
+	public function getMessage() {
 		return implode("<br />", $this->message);
 	}
 
@@ -208,9 +209,8 @@ class icms_form_captcha_Object {
 	 * @param bool	$clearSession	also clear session variables?
 	 * @return bool True if destroying succeeded
 	 */
-	function destroyGarbage($clearSession = false)
-	{
-		$class = "icms_captcha_".ucfirst($this->mode);
+	public function destroyGarbage($clearSession = FALSE) {
+		$class = "icms_captcha_" . ucfirst($this->mode);
 		$captcha_handler = new $class();
 		if (method_exists($captcha_handler, "destroyGarbage")) {
 			$captcha_handler->loadConfig($this->config);
@@ -218,21 +218,20 @@ class icms_form_captcha_Object {
 		}
 
 		if ($clearSession) {
-			$_SESSION['icms_form_captcha_Object_name'] = null;
-			$_SESSION['icms_form_captcha_Object_skipmember'] = null;
-			$_SESSION['icms_form_captcha_Object_sessioncode'] = null;
-			$_SESSION['icms_form_captcha_Object_maxattempts'] = null;
+			$_SESSION['icms_form_captcha_Object_name'] = NULL;
+			$_SESSION['icms_form_captcha_Object_skipmember'] = NULL;
+			$_SESSION['icms_form_captcha_Object_sessioncode'] = NULL;
+			$_SESSION['icms_form_captcha_Object_maxattempts'] = NULL;
 		}
 
-		return true;
+		return TRUE;
 	}
 
 	/**
 	 * Render
 	 * @return  string  the rendered form
 	 */
-	function render()
-	{
+	public function render() {
 		global $icmsConfigCaptcha;
 		$form = "";
 
@@ -245,12 +244,12 @@ class icms_form_captcha_Object {
 		$_SESSION['icms_form_captcha_Object_maxattempts'] = $maxAttempts;
 
 		 if (!empty($maxAttempts)) {
-			$_SESSION['icms_form_captcha_Object_maxattempts_'.$_SESSION['icms_form_captcha_Object_name']] = $maxAttempts;
-			}
+			$_SESSION['icms_form_captcha_Object_maxattempts_'. $_SESSION['icms_form_captcha_Object_name']] = $maxAttempts;
+		}
 
 
 		// Fail on too many attempts
-		if (!empty($maxAttempts) && @$_SESSION['icms_form_captcha_Object_attempt_'.$this->config["name"]] > $maxAttempts) {
+		if (!empty($maxAttempts) && @$_SESSION['icms_form_captcha_Object_attempt_' . $this->config["name"]] > $maxAttempts) {
 			$form = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 			// Load the form element
 		} else {
@@ -264,9 +263,8 @@ class icms_form_captcha_Object {
 	 * Load Form
 	 * @return string	The Loaded Captcha Form
 	 */
-	function loadForm()
-	{
-		$class = "icms_captcha_".ucfirst($this->mode);
+	public function loadForm() {
+		$class = "icms_captcha_" . ucfirst($this->mode);
 		$captcha_handler = new $class();
 		$captcha_handler->loadConfig($this->config);
 
@@ -274,4 +272,3 @@ class icms_form_captcha_Object {
 		return $form;
 	}
 }
-?>
