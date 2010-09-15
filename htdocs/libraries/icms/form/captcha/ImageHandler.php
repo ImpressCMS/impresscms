@@ -205,7 +205,7 @@ class icms_form_captcha_ImageHandler {
 		$items = array();
 
 		$file_path = "{$name}";
-		$files = IcmsLists::getFileListAsArray($file_path);
+		$files = icms_core_Filesystem::getFileList($file_path);
 		foreach ($files as $item) {
 			if (empty($extension) || preg_match("/(\.{$extension})$/i",$item)) {
 				$items[] = $item;

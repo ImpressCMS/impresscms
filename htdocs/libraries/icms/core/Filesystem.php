@@ -374,11 +374,13 @@ class icms_core_Filesystem {
 	/**
 	 * Get a list of files in a directory
 	 *
-	 * @param string $dirname A path to a directory
-	 * @param string $prefix A prefix to add to the beginning of the file names
-	 * @param array $extension Filter the list by this extension
+	 * @param	string	$dirname	A path to a directory
+	 * @param	string	$prefix		A prefix to add to the beginning of the file names
+	 * @param	array	$extension	Filter the list by these extensions
+	 * @param	bool	$hideDot	Hide files starting with a dot?
+	 * @return	array	$fileList	A list of files in a directory
 	 */
-	static public function getFileList($dirname, $prefix = '', array $extension = array()) {
+	static public function getFileList($dirname, $prefix = '', array $extension = array(), $hideDot = FALSE) {
 		$fileList = array();
 		if (empty($extension)) {
 			$extList = '';
@@ -389,13 +391,13 @@ class icms_core_Filesystem {
 		foreach ($iterator as $file) {
 			if ($file->isFile() && !$file->isDot()) {
 				$filename = $file->getFilename();
-				if ($extList == '') {
-					$file = $prefix . $filename;
-					$fileList[$file] = $file;
-				} else {
-					if (preg_match("/(\." . $extList . ")$/i", $filename)) {
+				if (!$hideDot || substr($filename, 0, 1) != '.') {
+					if ($extList == '') {
 						$file = $prefix . $filename;
 						$fileList[$file] = $file;
+					} elseif (preg_match("/(\." . $extList . ")$/i", $filename)) {
+							$file = $prefix . $filename;
+							$fileList[$file] = $file;
 					}
 				}
 			}

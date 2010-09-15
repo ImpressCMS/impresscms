@@ -157,7 +157,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			if ($tplset != 'default') {
 				include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 				// get difference between already installed files and the files under modules directory. which will be recognized as files that are not installed
-				$notinst_files = array_diff(IcmsLists::getFileListAsArray(ICMS_ROOT_PATH.'/modules/'.$moddir.'/templates/'), $inst_files);
+				$notinst_files = array_diff(icms_core_Filesystem::getFileList(ICMS_ROOT_PATH.'/modules/'.$moddir.'/templates/'), $inst_files);
 				foreach ($notinst_files as $nfile) {
 					if ($nfile != 'index.html') {
 						echo  '<tr><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
@@ -217,7 +217,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			}
 			if ($tplset != 'default') {
 				include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
-				$bnotinst_files = array_diff(IcmsLists::getFileListAsArray(ICMS_ROOT_PATH.'/modules/'.$moddir.'/templates/blocks/'), $binst_files);
+				$bnotinst_files = array_diff(icms_core_Filesystem::getFileList(ICMS_ROOT_PATH.'/modules/'.$moddir.'/templates/blocks/'), $binst_files);
 				foreach ($bnotinst_files as $nfile) {
 					if ($nfile != 'index.html') {
 						echo  '<tr style="background-color:#FFFF99;"><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';

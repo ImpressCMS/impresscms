@@ -47,24 +47,12 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 * @param   string	$dirname	name of the directory to scan for files
 		 * @param   string	$prefix	 prefix to put in front of the file
 		 * @return  array	 $filelist   list of files in the directory
+		 * @deprecated	Use icms_core_Filesystem::getFileList
+		 * @todo		Remove in version 1.4 - all instances have been removed from the core
 		 */
 		static public function getFileListAsArray($dirname, $prefix="") {
-			$filelist = array();
-			if (substr($dirname, -1) == '/') {
-				$dirname = substr($dirname, 0, -1);
-			}
-			if (is_dir($dirname) && $handle = opendir($dirname)) {
-				while (false !== ($file = readdir($handle))) {
-					if (!preg_match("/^[\.]{1,2}$/",$file) && is_file($dirname.'/'.$file)) {
-						$file = $prefix.$file;
-						$filelist[$file] = $file;
-					}
-				}
-				closedir($handle);
-				asort($filelist);
-				reset($filelist);
-			}
-			return $filelist;
+			icms_core_Debug::setDeprecated('icms_core_Filesystem::getFileList', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+			return icms_core_Filesystem::getFileList($dirname, $prefix);
 		}
 
 		/**
