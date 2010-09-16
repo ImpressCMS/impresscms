@@ -1,28 +1,24 @@
 <?php
 /**
- * @package database
- * @subpackage  mysql
- * @since XOOPS
- * @version $Id$
+ * Legacy MySQL utilities
  *
+ * @category	ICMS
+ * @package		Database
+ * @subpackage  Legacy
  * @author      Kazumi Ono  <onokazu@xoops.org>
- * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version		SVN: $Id$
  */
 
 /**
  * Provide some utility methods for databases
  *
- * @package     database
- * @subpackage  mysql
- * @since XOOPS
- *
+ * @category	ICMS
+ * @package		Database
+ * @subpackage	Legacy
  * @author      Kazumi Ono  <onokazu@xoops.org>
- * @copyright   copyright (c) 2000-2003 XOOPS.org
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-class icms_db_legacy_mysql_Utility
-{
+class icms_db_legacy_mysql_Utility {
 
 	/**
 	 * Creates a new utility object
@@ -37,18 +33,16 @@ class icms_db_legacy_mysql_Utility
 	 *
 	 * Last revision: September 23, 2001 - gandon
 	 *
-	 * @param   array    the splitted sql commands
+	 * @param   array    the split sql commands
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
-	 * @access  public
 	 */
-	function splitMySqlFile(&$ret, $sql)
-	{
+	public function splitMySqlFile(&$ret, $sql) {
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);
 		$char              = '';
 		$string_start      = '';
-		$in_string         = false;
+		$in_string         = FALSE;
 
 		for ($i = 0; $i < $sql_len; ++$i) {
 			$char = $sql[$i];
@@ -57,27 +51,25 @@ class icms_db_legacy_mysql_Utility
 			// strings except for backquotes that can't be escaped
 			if ($in_string) {
 				for (;;) {
-					$i         = strpos($sql, $string_start, $i);
+					$i = strpos($sql, $string_start, $i);
 					// No end of string found -> add the current
 					// substring to the returned array
 					if (!$i) {
 						$ret[] = $sql;
-						return true;
-					}
+						return TRUE;
+					} elseif ($string_start == '`' || $sql[$i-1] != '\\') {
 					// Backquotes or no backslashes before
 					// quotes: it's indeed the end of the
 					// string -> exit the loop
-					else if ($string_start == '`' || $sql[$i-1] != '\\') {
 						$string_start      = '';
-						$in_string         = false;
+						$in_string         = FALSE;
 						break;
-					}
+					} else {
 					// one or more Backslashes before the presumed
 					// end of string...
-					else {
 						// first checks for escaped backslashes
 						$j                     = 2;
-						$escaped_backslash     = false;
+						$escaped_backslash     = FALSE;
 						while ($i-$j > 0 && $sql[$i-$j] == '\\') {
 							$escaped_backslash = !$escaped_backslash;
 							$j++;
@@ -86,18 +78,15 @@ class icms_db_legacy_mysql_Utility
 						// end of the string -> exit the loop
 						if ($escaped_backslash) {
 							$string_start  = '';
-							$in_string     = false;
+							$in_string     = FALSE;
 							break;
-						}
-						// ... else loop
-						else {
+						} else {
 							$i++;
 						}
-					} // end if...elseif...else
-				} // end for
-			} // end if (in string)
+					}
+				}
+			} elseif ($char == ';') {
 			// We are not in a string, first check for delimiter...
-			else if ($char == ';') {
 				// if delimiter found, add the parsed part to the returned array
 				$ret[]    = substr($sql, 0, $i);
 				$sql      = ltrim(substr($sql, min($i + 1, $sql_len)));
@@ -106,24 +95,21 @@ class icms_db_legacy_mysql_Utility
 					$i      = -1;
 				} else {
 					// The submited statement(s) end(s) here
-					return true;
+					return TRUE;
 				}
-			} // end else if (is delimiter)
+			} elseif (($char == '"') || ($char == '\'') || ($char == '`')) {
 			// ... then check for start of a string,...
-			else if (($char == '"') || ($char == '\'') || ($char == '`')) {
-				$in_string    = true;
+				$in_string    = TRUE;
 				$string_start = $char;
-			} // end else if (is start of string)
-
+			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i-2] . $sql[$i-1] == '--')) {
 			// for start of a comment (and remove this comment if found)...
-			else if ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i-2] . $sql[$i-1] == '--')) {
 				// starting position of the comment depends on the comment type
 				$start_of_comment = (($sql[$i] == '#') ? $i : $i-2);
 				// if no "\n" exits in the remaining string, checks for "\r"
 				// (Mac eol style)
 				$end_of_comment   = (strpos(' ' . $sql, "\012", $i+2))
-				? strpos(' ' . $sql, "\012", $i+2)
-				: strpos(' ' . $sql, "\015", $i+2);
+					? strpos(' ' . $sql, "\012", $i+2)
+					: strpos(' ' . $sql, "\015", $i+2);
 				if (!$end_of_comment) {
 					// no eol found after '#', add the parsed part to the returned
 					// array and exit
@@ -132,20 +118,20 @@ class icms_db_legacy_mysql_Utility
 					if (!empty($last)) {
 						$ret[] = $last;
 					}
-					return true;
+					return TRUE;
 				} else {
 					$sql     = substr($sql, 0, $start_of_comment) . ltrim(substr($sql, $end_of_comment));
 					$sql_len = strlen($sql);
 					$i--;
-				} // end if...else
-			} // end else if (is comment)
-		} // end for
+				}
+			}
+		}
 
 		// add any rest to the returned array
 		if (!empty($sql) && trim($sql) != '') {
 			$ret[] = $sql;
 		}
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -155,18 +141,16 @@ class icms_db_legacy_mysql_Utility
 	 *
 	 * Last revision: September 23, 2001 - gandon
 	 *
-	 * @param   array    the splitted sql commands
+	 * @param   array    the split sql commands
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
-	 * @access  public
 	 */
-	function splitSqlFile(&$ret, $sql)
-	{
+	public function splitSqlFile(&$ret, $sql) {
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);
 		$char              = '';
 		$string_start      = '';
-		$in_string         = false;
+		$in_string         = FALSE;
 
 		for ($i = 0; $i < $sql_len; ++$i) {
 			$char = $sql[$i];
@@ -180,22 +164,20 @@ class icms_db_legacy_mysql_Utility
 					// substring to the returned array
 					if (!$i) {
 						$ret[] = $sql;
-						return true;
-					}
+						return TRUE;
+					} elseif ($string_start == '`' || $sql[$i-1] != '\\') {
 					// Backquotes or no backslashes before
 					// quotes: it's indeed the end of the
 					// string -> exit the loop
-					else if ($string_start == '`' || $sql[$i-1] != '\\') {
 						$string_start      = '';
-						$in_string         = false;
+						$in_string         = FALSE;
 						break;
-					}
+					} else {
 					// one or more Backslashes before the presumed
 					// end of string...
-					else {
 						// first checks for escaped backslashes
 						$j                     = 2;
-						$escaped_backslash     = false;
+						$escaped_backslash     = FALSE;
 						while ($i-$j > 0 && $sql[$i-$j] == '\\') {
 							$escaped_backslash = !$escaped_backslash;
 							$j++;
@@ -204,18 +186,16 @@ class icms_db_legacy_mysql_Utility
 						// end of the string -> exit the loop
 						if ($escaped_backslash) {
 							$string_start  = '';
-							$in_string     = false;
+							$in_string     = FALSE;
 							break;
-						}
+						} else {
 						// ... else loop
-						else {
 							$i++;
 						}
-					} // end if...elseif...else
-				} // end for
-			} // end if (in string)
+					}
+				}
+			} elseif ($char == ';') {
 			// We are not in a string, first check for delimiter...
-			else if ($char == ';') {
 				// if delimiter found, add the parsed part to the returned array
 				$ret[]    = substr($sql, 0, $i);
 				$sql      = ltrim(substr($sql, min($i + 1, $sql_len)));
@@ -224,24 +204,21 @@ class icms_db_legacy_mysql_Utility
 					$i      = -1;
 				} else {
 					// The submited statement(s) end(s) here
-					return true;
+					return TRUE;
 				}
-			} // end else if (is delimiter)
+			} elseif (($char == '"') || ($char == '\'') || ($char == '`')) {
 			// ... then check for start of a string,...
-			else if (($char == '"') || ($char == '\'') || ($char == '`')) {
-				$in_string    = true;
+				$in_string    = TRUE;
 				$string_start = $char;
-			} // end else if (is start of string)
-
+			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i-2] . $sql[$i-1] == '--')) {
 			// for start of a comment (and remove this comment if found)...
-			else if ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i-2] . $sql[$i-1] == '--')) {
 				// starting position of the comment depends on the comment type
 				$start_of_comment = (($sql[$i] == '#') ? $i : $i-2);
 				// if no "\n" exits in the remaining string, checks for "\r"
 				// (Mac eol style)
 				$end_of_comment   = (strpos(' ' . $sql, "\012", $i+2))
-				? strpos(' ' . $sql, "\012", $i+2)
-				: strpos(' ' . $sql, "\015", $i+2);
+					? strpos(' ' . $sql, "\012", $i+2)
+					: strpos(' ' . $sql, "\015", $i+2);
 				if (!$end_of_comment) {
 					// no eol found after '#', add the parsed part to the returned
 					// array and exit
@@ -250,20 +227,20 @@ class icms_db_legacy_mysql_Utility
 					if (!empty($last)) {
 						$ret[] = $last;
 					}
-					return true;
+					return TRUE;
 				} else {
 					$sql     = substr($sql, 0, $start_of_comment) . ltrim(substr($sql, $end_of_comment));
 					$sql_len = strlen($sql);
 					$i--;
-				} // end if...else
-			} // end else if (is comment)
-		} // end for
+				}
+			}
+		}
 
 		// add any rest to the returned array
 		if (!empty($sql) && trim($sql) != '') {
 			$ret[] = $sql;
 		}
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -273,17 +250,15 @@ class icms_db_legacy_mysql_Utility
 	 * @param   string  $prefix prefix to add to all table names
 	 * @return  mixed   FALSE on failure
 	 */
-	function prefixQuery($query, $prefix)
-	{
+	public function prefixQuery($query, $prefix) {
 		$pattern = "/^(INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
 		if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
-			$replace = "\\1 ".$prefix."_\\4\\5";
+			$replace = "\\1 " . $prefix . "_\\4\\5";
 			$matches[0] = preg_replace($pattern, $replace, $query);
 			return $matches;
 		}
-		return false;
+		return FALSE;
 	}
 }
 
-?>

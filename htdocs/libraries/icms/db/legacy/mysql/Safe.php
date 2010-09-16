@@ -1,17 +1,20 @@
 <?php
-// $Id$
+/**
+ * Legacy MySQL query method
+ *
+ * @category	ICMS
+ * @package		Database
+ * @subpackage	Legacy
+ */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * Safe Connection to a MySQL database.
  *
- * @package     database
- * @subpackage  mysql
- * @since XOOPS
- *
+ * @category	ICMS
+ * @package     Database
+ * @subpackage  Legacy
  * @author      Kazumi Ono  <onokazu@xoops.org>
- * @copyright   copyright (c) 2000-2003 XOOPS.org
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 class icms_db_legacy_mysql_Safe extends icms_db_legacy_mysql_Database {
 
@@ -24,7 +27,7 @@ class icms_db_legacy_mysql_Safe extends icms_db_legacy_mysql_Database {
 	 * @return resource query result or FALSE if successful
 	 * or TRUE if successful and no result
 	 */
-	function query($sql, $limit = 0, $start = 0) {
+	public function query($sql, $limit = 0, $start = 0) {
 		return $this->queryF($sql, $limit, $start);
 	}
 }
