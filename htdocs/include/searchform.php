@@ -1,25 +1,15 @@
 <?php
-// $Id$
 /**
  * Search Form
  *
  * Shows form with options where to search in ImpressCMS
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @package	core
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @author		modified by author <email@domain.tld>
- * @version		$Id$
+ * @package		core
+ * @version		SVN: $Id$
  */
-if (!defined("ICMS_ROOT_PATH")) {
-	die("ImpressCMS root path not defined");
-}
-
-include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 // create form
 $search_form = new icms_form_Theme(_SR_SEARCH, "search", "search.php", 'get');
@@ -41,12 +31,12 @@ if (empty($modules)) {
 	$criteria->add(new icms_db_criteria_Item('hassearch', 1));
 	$criteria->add(new icms_db_criteria_Item('isactive', 1));
 	if (!empty($available_modules)) {
-		$criteria->add(new icms_db_criteria_Item('mid', "(".implode(',', $available_modules).")", 'IN'));
+		$criteria->add(new icms_db_criteria_Item('mid', "(" . implode(',', $available_modules) . ")", 'IN'));
 	}
 	$module_handler = icms::handler('icms_module');
 	$mods_checkbox->addOptionArray($module_handler->getList($criteria));
-}
-else {
+} else {
+	unset($module);
 	foreach (array_keys($modules) as $mid) $module_array[$mid] = $modules[$mid]->getVar('name');
 	$mods_checkbox->addOptionArray($module_array);
 }
@@ -59,6 +49,5 @@ if ($icmsConfigSearch['keyword_min'] > 0) {
 $search_form->addElement(new icms_form_elements_Hidden("action", "results"));
 $search_form->addElement(new icms_form_elements_Hiddentoken('id'));
 $search_form->addElement(new icms_form_elements_Button("", "submit", _SR_SEARCH, "submit"));
-return $search_form->render();	// Added by Lankford on 2007/7/26.
+return $search_form->render();
 
-?>
