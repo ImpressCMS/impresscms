@@ -72,7 +72,6 @@ class IcmsPluginsHandler {
 	}
 
 	function getPluginsArray($path) {
-		include_once ICMS_ROOT_PATH . "/class/xoopslists.php" ;
 
 		$module_handler = icms::handler('icms_module');
 		$criteria = new icms_db_criteria_Compo();
@@ -83,7 +82,7 @@ class IcmsPluginsHandler {
 			$modulesObj[$moduleObj->getVar('dirname')] = $moduleObj;
 		}
 
-		$aFiles = IcmsLists::getPhpListAsArray(ICMS_ROOT_PATH . '/plugins/'.$path.'/');
+		$aFiles = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/plugins/'.$path.'/', '', array('php')));
 		$ret = array();
 		foreach($aFiles as $pluginName) {
 			$module_xoops_version_file = ICMS_ROOT_PATH . "/modules/$pluginName/xoops_version.php";

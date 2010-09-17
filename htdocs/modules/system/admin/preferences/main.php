@@ -179,8 +179,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'select_font' :
 					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
-					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = IcmsLists::getFontListAsArray ( ICMS_ROOT_PATH . '/libraries/icms/form/captcha/fonts/' );
+					$dirlist = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/libraries/icms/form/captcha/fonts/', '', array('ttf'));
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
@@ -189,8 +188,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'select_plugin' :
 					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 8, true );
-					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = icms_core_Filesystem::getDirList ( ICMS_ROOT_PATH.'/plugins/textsanitizer/' );
+					$dirlist = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH.'/plugins/textsanitizer/');
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
@@ -335,8 +333,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'select_geshi' :
 					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
-					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = IcmsLists::getPhpListAsArray ( ICMS_LIBRARIES_PATH.'/geshi/geshi/' );
+					$dirlist = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH.'/geshi/geshi/', '', array('php')));
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );

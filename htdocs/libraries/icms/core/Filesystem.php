@@ -374,6 +374,12 @@ class icms_core_Filesystem {
 	/**
 	 * Get a list of files in a directory
 	 *
+	 * This can be used for several different situations -
+	 * 		To retrieve an array of images, use getFileList($dirname, $prefix, array('gif', 'jpg', 'png'))
+	 * 		To retrieve an array of fonts, use getFileList($dirname, $prefix, array('ttf'))
+	 * 		To retrieve an array of HTML files, use getFileList($dirname, $prefix, array('html', 'htm', 'xhtml'))
+	 *
+	 *
 	 * @param	string	$dirname	A path to a directory
 	 * @param	string	$prefix		A prefix to add to the beginning of the file names
 	 * @param	array	$extension	Filter the list by these extensions
@@ -424,32 +430,5 @@ class icms_core_Filesystem {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
 /* The above will be removed */
-
-	static public function getAdminThemesList() {
-	}
-
-	static public function getThemesList() {
-	}
-
-	static public function getModulesList() {
-	}
-
-	static public function getActiveModulesList() {
-	}
-
-	static public function getAvatarsList($avatar_dir = '') {
-	}
-
-	static public function getAllAvatarsList() {
-	}
-
-	static public function getSubjectsList($sub_dir = '') {
-	}
-
-	static public function getLangList() {
-	}
-
-	static public function getEditorsList($type = '') {
-	}
 
 }

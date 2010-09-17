@@ -14,8 +14,6 @@
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-
 /**
  * icms_preload_Handler
  *
@@ -46,7 +44,7 @@ class icms_preload_Handler {
 	 * @return	void
 	 */
 	public function __construct() {
-		$preloadFilesArray = IcmsLists::getPhpListAsArray(ICMS_PRELOAD_PATH);
+		$preloadFilesArray = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_PRELOAD_PATH, '', array('php')));
 		foreach ($preloadFilesArray as $filename) {
 			// exclude index.html
 			if (!class_exists($this->getClassName($filename))) {
