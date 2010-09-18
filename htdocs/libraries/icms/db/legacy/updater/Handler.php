@@ -217,7 +217,7 @@ class icms_db_legacy_updater_Handler {
 	 * @return string default value
 	 */
 	function getFieldDefaultFromVar($var, $key = false) {
-		if ($var['data_type'] == XOBJ_DTYPE_TXTAREA) {
+		if ($var['data_type'] == XOBJ_DTYPE_TXTAREA || $var['data_type'] == XOBJ_DTYPE_SOURCE) {
 			return 'nodefault';
 		} elseif ($var['value']) {
 			return $var['value'];
