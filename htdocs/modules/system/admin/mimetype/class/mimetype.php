@@ -93,10 +93,9 @@ class SystemMimetypeHandler extends icms_ipf_Handler {
 		}
 		return $array;
 	}
+
 	function getModuleList() {
-		include_once ICMS_ROOT_PATH . "/class/xoopslists.php" ;
-		$IcmsList = new IcmsLists;
-		return $IcmsList->getActiveModulesList();
+		return icms_module_Handler::getActive();
 	}
 
 	function AllowedModules($mimetype, $module) {
