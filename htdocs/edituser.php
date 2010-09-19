@@ -358,8 +358,7 @@ if ($op == 'editprofile')
 	}
 
 	$selected_language = new icms_form_elements_Select(_US_SELECT_LANG, 'language_selected', $icmsUser->getVar('language'));
-	include_once ICMS_ROOT_PATH."/class/xoopslists.php" ;
-	foreach (IcmsLists::getLangList() as $language)
+	foreach (icms_core_Filesystem::getDirList(ICMS_ROOT_PATH."/language/") as $language)
 	{
 		$selected_language->addOption($language, $language);
 	}

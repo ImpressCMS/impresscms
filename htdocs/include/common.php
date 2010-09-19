@@ -187,7 +187,7 @@ if ($icmsConfigMultilang['ml_enable']) {
 	require ICMS_ROOT_PATH . '/include/im_multilanguage.php' ;
 	$easiestml_langs = explode(',', $icmsConfigMultilang['ml_tags']);
 
-	$easiestml_langpaths = IcmsLists::getLangList();
+	$easiestml_langpaths = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH."/language/");
 	$langs = array_combine($easiestml_langs, explode(',', $icmsConfigMultilang['ml_names']));
 
 	if ($icmsConfigMultilang['ml_autoselect_enabled']

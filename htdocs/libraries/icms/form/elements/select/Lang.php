@@ -13,15 +13,6 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * lists of values
- */
-include_once ICMS_ROOT_PATH . "/class/xoopslists.php";
-/**
- * parent class
- */
-include_once ICMS_ROOT_PATH . "/class/xoopsform/formselect.php";
-
-/**
  * A select field with available languages
  *
  * @category	ICMS
@@ -41,7 +32,6 @@ class icms_form_elements_select_Lang extends icms_form_elements_Select {
 	 */
 	public function __construct($caption, $name, $value = null, $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(IcmsLists::getLangList());
+		$this->addOptionArray(icms_core_Filesystem::getDirList(ICMS_ROOT_PATH."/language/"));
 	}
 }
-

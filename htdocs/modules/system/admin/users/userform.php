@@ -35,7 +35,7 @@ if ($icmsConfigAuth['auth_openid'] == 1) {
 }
 $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_select = new icms_form_elements_Select("", "user_avatar", $avatar_value);
-//  $avatar_array = IcmsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
+//  $avatar_array = icms_core_Filesystem::getImgList(XOOPS_ROOT_PATH."/images/avatar/");
 //  $avatar_select->addOptionArray($avatar_array);
 //  $a_dirlist = icms_core_Filesystem::getDirList(XOOPS_ROOT_PATH."/images/avatar/");
 //  $a_dir_labels = array();
