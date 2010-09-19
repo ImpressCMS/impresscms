@@ -41,7 +41,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-class XoopsMySQLDatabase extends icms_db_legacy_mysql_Database {
+abstract class XoopsMySQLDatabase extends icms_db_legacy_mysql_Database {
 	private $_errors;
 	public function __construct() {
 		parent::__construct();
