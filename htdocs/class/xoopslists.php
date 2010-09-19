@@ -82,7 +82,7 @@ class IcmsLists {
 	static public function getFontListAsArray($dirname, $prefix="") {
 		icms_core_Debug::setDeprecated('icms_core_Filesystem::getFileList', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return icms_core_Filesystem::getFileList($dirname, $prefix, array('ttf'));
-			}
+	}
 
 	/**
 	 * Gets list of php file names in a directory
@@ -196,34 +196,24 @@ class IcmsLists {
 
 	/**
 	 * Gets a list of module folders from the modules directory
-	 * @todo	This should be a method of the module handler
+	 * @todo	Remove in version 1.4
+	 * @deprecated	Use icms_module_Handler::getAvailable, instead
 	 */
 	static public function getModulesList() {
-		$dirtyList = $cleanList = array();
-		$dirtyList = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . '/modules/');
-		foreach ($dirtyList as $item) {
-			if (file_exists(ICMS_ROOT_PATH . '/modules/' . $item . '/icms_version.php')) {
-				$cleanList[$item] = $item;
-			} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $item . '/xoops_version.php')) {
-				$cleanList[$item] = $item;
-			}
-		}
-		return $cleanList;
+	    icms_core_Debug::setDeprecated('icms_module_Handler::getAvailable', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return icms_module_Handler::getAvailable();
 	}
 
 	/**
 	 * Gets a list of active module folders from database
-	 * @todo	This should be a method of the module handler
+	 *
+	 * @see	icms_module_Handler::getActive
+	 * @deprecated	Use icms_module_Handler::getActive, instead
+	 * @todo		Remove in version 1.4
 	 */
 	static public function getActiveModulesList() {
-		$modules_list = IcmsLists::getModulesList();
-		$cleanList= array();
-		foreach ($modules_list as $single_moduleID=>$single_module) {
-			if (icms_get_module_status($single_module)) {
-				$cleanList[$single_moduleID] = $single_module;
-			}
-		}
-		return $cleanList;
+		icms_core_Debug::setDeprecated('icms_module_Handler::getActive', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return icms_module_Handler::getActive();
 	}
 
 	/**

@@ -29,7 +29,6 @@ include_once ICMS_ROOT_PATH."/mainfile.php";
 include_once "common.php";
 include_once "../include/cp_functions.php";
 include_once './class/dbmanager.php';
-require_once "../class/xoopslists.php";
 include "modulesadmin.php";
 $dbm = new db_manager();
 
@@ -94,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$content .= '<div class="dbconn_line">';
 	$content .= '<h3>'. _INSTALL_SELECT_MODULES.'</h3>';
 	$content .= '<div id="modinstall" name="install_mods[]">';
-	$langarr = XoopsLists::getModulesList();
+	$langarr = icms_module_Handler::getAvailable();
 	foreach ($langarr as $lang) {
 		if ($lang == 'system' || $lang == 'protector') {
 			continue;
@@ -107,4 +106,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 include 'install_tpl.php';
-?>

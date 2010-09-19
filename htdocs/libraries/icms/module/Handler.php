@@ -287,14 +287,14 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * returns an array of module names
+	 * returns an array of installed module names
 	 *
 	 * @param   bool    $criteria
 	 * @param   boolean $dirname_as_key
 	 *      if true, array keys will be module directory names
 	 *      if false, array keys will be module id
 	 * @return  array
-	 **/
+	 */
 	public function getList($criteria = null, $dirname_as_key = false) {
 		$ret = array();
 		$modules = & $this->getObjects($criteria, true);
@@ -306,6 +306,40 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			}
 		}
 		return $ret;
+	}
+
+	/**
+	 * Returns an array of all available modules, based on folders in the modules directory
+	 *
+	 * The getList method cannot be used for this, because uninstalled modules are not listed
+	 * in the database
+	 *
+	 * @since	1.3
+	 * @return	array	List of folder names in the modules directory
+	 */
+	static public function getAvailable() {
+		$dirtyList = $cleanList = array();
+		$dirtyList = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . '/modules/');
+		foreach ($dirtyList as $item) {
+			if (file_exists(ICMS_ROOT_PATH . '/modules/' . $item . '/icms_version.php')) {
+				$cleanList[$item] = $item;
+			} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $item . '/xoops_version.php')) {
+				$cleanList[$item] = $item;
+			}
+		}
+		return $cleanList;
+	}
+
+	/**
+	 * Get a list of active modules, with the folder name as the key
+	 *
+	 * @since	1.3
+	 * @return	array	List of active modules
+	 */
+	static public function getActive() {
+		$module_handler = new self(icms::$db);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
+		return $module_handler->getList($criteria, TRUE);
 	}
 }
 
