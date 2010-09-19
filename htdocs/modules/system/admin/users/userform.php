@@ -47,7 +47,7 @@ $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //	  if ($a_dir == "users") {
 //		  continue;
 //	  }
-//	  $avatars_array = IcmsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
+//	  $avatars_array = icms_core_Filesystem::getImgList(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
 //	  $avatar_select->addOptionArray($avatars_array);
 //	  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
 //	  $a_dir_labels[] = new icms_form_elements_Label("", $a_dir_link);
