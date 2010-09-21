@@ -477,5 +477,89 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 
 	}
 
+	/**
+	 * get all the blocks that match the supplied parameters
+	 *
+	 * This is added back in for backwards compatibility. Note - this only selects blocks form
+	 * the system module
+	 *
+	 * @param $side   0: sideblock - left
+	 *        1: sideblock - right
+	 *        2: sideblock - left and right
+	 *        3: centerblock - left
+	 *        4: centerblock - right
+	 *        5: centerblock - center
+	 *        6: centerblock - left, right, center
+	 * @param $groupid   groupid (can be an array)
+	 * @param $visible   0: not visible 1: visible
+	 * @param $orderby   order of the blocks
+	 * @return 		array of block objects
+	 * @deprecated	Use getObjects() instead
+	 * @todo		Remove in version 1.4
+	 */
+	public function getAllBlocksByGroup($groupid, $asobject = TRUE, $side = NULL, $visible = NULL, $orderby = "b.weight,b.bid", $isactive = 1) {
+		$db =& icms::$db;
+		$ret = array();
+
+		if (!$asobject) {
+			$sql = "SELECT b.bid ";
+		} else {
+			$sql = "SELECT b.* ";
+		}
+		$sql .= "FROM " . $db->prefix("newblocks")
+			. " b LEFT JOIN " . $db->prefix("group_permission")
+			. " l ON l.gperm_itemid=b.bid WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
+
+		if (is_array($groupid)) {
+			$sql .= " AND (l.gperm_groupid='" . (int) $groupid[0] . "'";
+			$size = count($groupid);
+			if ($size  > 1) {
+				for ($i = 1; $i < $size; $i++) {
+					$sql .= " OR l.gperm_groupid='" . (int) $groupid[$i] . "'";
+				}
+			}
+			$sql .= ")";
+		} else {
+			$sql .= " AND l.gperm_groupid='" . (int) $groupid . "'";
+		}
+		$sql .= " AND b.isactive='" . (int) $isactive . "'";
+
+		if (isset($side)) {
+			// get both sides in sidebox? (some themes need this)
+			$tp = ($side == -2)
+				? 'L'
+				: ($side == -6) ? 'C' : '';
+			if ($tp != '') {
+				$side = "";
+				$s1 = "SELECT id FROM " . $db->prefix('block_positions') . " WHERE block_type='" . $tp . "' ORDER BY id ASC";
+				$res = $db->query($s1);
+				while ($myrow = $db->fetchArray($res)) {
+					$side .= "side='" . (int) $myrow['id'] . "' OR ";
+				}
+				$side = "('" . substr($side, 0, strlen($side) - 4) . "')";
+			} else {
+				$side = "side='" . (int) $side . "'";
+			}
+			$where_query .= " AND '" . (int) $side . "'";
+		}
+
+		if (isset($visible)) {
+			$sql .= " AND b.visible='" . (int) $visible . "'";
+		}
+		$sql .= " ORDER BY $orderby";
+		$result = $db->query($sql);
+		$added = array();
+		while ($myrow = $db->fetchArray($result)) {
+			if (!in_array($myrow['bid'], $added)) {
+				if (!$asobject) {
+					$ret[] = $myrow['bid'];
+				} else {
+					$ret[] = $this->get($myrow['bid']);
+				}
+				array_push($added, $myrow['bid']);
+			}
+		}
+		return $ret;
+	}
 }
 
