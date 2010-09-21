@@ -333,6 +333,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Get a list of active modules, with the folder name as the key
 	 *
+	 * This method is necessary to be able to use a static method
+	 *
 	 * @since	1.3
 	 * @return	array	List of active modules
 	 */
