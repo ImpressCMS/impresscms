@@ -42,6 +42,16 @@ function xoops_module_list() {
 	$installed_mods =& $module_handler->getObjects();
 	$listed_mods = array();
 	foreach ( $installed_mods as $module) {
+		if ($module->getVar("dirname") != "system" && $module->getVar("isactive") == "0") {
+			$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
+			if ($module->getVar("ipf")) {
+				$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :
+																$module->getVar("dirname");
+				icms_Autoloader::register($class_path, "mod_" . $modname);
+			} else {
+				icms_Autoloader::register($class_path);
+			}
+		}
 		$module -> getInfo();
 		$mod = array();
 		$mod['mid'] = $module->getVar('mid');
@@ -556,6 +566,18 @@ function xoops_module_uninstall($dirname) {
 	$db =& icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->getByDirname($dirname);
+
+	if ($module->getVar("dirname") != "system") {
+		$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
+		if ($module->getVar("ipf")) {
+			$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :
+															$module->getVar("dirname");
+			icms_Autoloader::register($class_path, "mod_" . $modname);
+		} else {
+			icms_Autoloader::register($class_path);
+		}
+	}
+
 	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
 	if ($module->getVar('dirname') == 'system') {
 		return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_SYSNO."</p>";
