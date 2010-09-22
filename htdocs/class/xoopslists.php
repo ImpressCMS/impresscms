@@ -220,39 +220,28 @@ class IcmsLists {
 	 * Gets list of avatar file names in a certain directory
 	 * if directory is not specified, default directory will be searched
 	 *
-	 * @todo	This should be a method of the Avatar handler. Is this really used? I couldn't find any occurrences
+	 * @deprecated	Use icms_data_avatar_Handler::getListFromDir instead
+	 * @todo	Remove in version 1.4 - no occurrences in the core
 	 *
 	 * @param   string	$avatar_dir name of the directory to scan for files
 	 * @return  array	 $avatars	list of avatars in the directory
 	 */
 	static public function getAvatarsList($avatar_dir="") {
-		$avatars = array();
-		if ($avatar_dir != "") {
-			$avatars = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $avatar_dir . "/", $avatar_dir . "/", array('gif', 'jpg', 'png'));
-		} else {
-			$avatars = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/", '', array('gif', 'jpg', 'png'));
-		}
-		return $avatars;
+		icms_core_Debug::setDeprecated('icms_data_avatar_Handler::getListFromDir', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return icms_data_avatar_Handler::getListFromDir($avatar_dir);
 	}
 
 	/**
 	 * Gets list of all avatar image files inside default avatars directory
-	 * @todo	This should be a method of the Avatar handler. Is this really used? I can't find any occurrences
+	 *
+	 * @deprecated	use icms_data_avatar_Handler::getAllFromDir instead
+	 * @todo	Remove in version 1.4 - no occurrences in the core
 	 *
 	 * @return  mixed	 $avatars|false  list of avatar files in the directory or false if no avatars
 	 */
 	static public function getAllAvatarsList() {
-		$avatars = array();
-		$dirlist = array();
-		$dirlist = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/images/avatar/");
-		if (count($dirlist) > 0) {
-			foreach ($dirlist as $dir) {
-				$avatars[$dir] =& icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $dir . "/", $dir . "/", array('gif', 'jpg', 'png'));
-			}
-		} else {
-			return false;
-		}
-		return $avatars;
+		icms_core_Debug::setDeprecated('icms_data_avatar_Handler::getAllFromDir', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return icms_data_avatar_Handler::getAllFromDir();
 	}
 
 	/**

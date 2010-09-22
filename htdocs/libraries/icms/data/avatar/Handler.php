@@ -283,5 +283,40 @@ class icms_data_avatar_Handler extends icms_core_ObjectHandler {
 		}
 		return $ret;
 	}
+	/**
+	 * Gets list of avatar file names in a certain directory
+	 * if directory is not specified, default avatar directory will be searched
+	 *
+	 * @param   string	$avatar_dir name of the directory to scan for files,
+	 * @return  array	 $avatars	list of avatars in the directory
+	 */
+	static public function getListFromDir($avatar_dir="") {
+		$avatars = array();
+		if ($avatar_dir != "") {
+			$avatars = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $avatar_dir . "/", $avatar_dir . "/", array('gif', 'jpg', 'png'));
+		} else {
+			$avatars = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/", '', array('gif', 'jpg', 'png'));
+		}
+		return $avatars;
+	}
+
+	/**
+	 * Gets list of all avatar image files inside default avatars directory
+	 *
+	 * @return  mixed	 $avatars|false  list of avatar files in the directory or false if no avatars
+	 */
+	static public function getAllFromDir() {
+		$avatars = array();
+		$dirlist = array();
+		$dirlist = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/images/avatar/");
+		if (count($dirlist) > 0) {
+			foreach ($dirlist as $dir) {
+				$avatars[$dir] =& icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $dir . "/", $dir . "/", array('gif', 'jpg', 'png'));
+			}
+		} else {
+			return false;
+		}
+		return $avatars;
+	}
 }
 
