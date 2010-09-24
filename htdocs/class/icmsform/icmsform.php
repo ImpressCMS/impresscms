@@ -471,7 +471,7 @@ class IcmsForm extends icms_form_Theme {
 			case 'source':
 			case 'sourceeditor':
 				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsourceeditor.php" ;
-				return new IcmsFormSourceEditor($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
+				return new IcmsFormSourceEditor($this->targetObject, $key);
 				break;
 
 			default:
