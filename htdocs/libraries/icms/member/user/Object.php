@@ -203,7 +203,7 @@ class icms_member_user_Object extends icms_core_Object {
 		global $icmsConfigUser, $icmsConfig;
 
 		if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
-			$member_handler = ('icms_member');
+			$member_handler = icms::handler('icms_member');
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('newuser_notify.tpl');
