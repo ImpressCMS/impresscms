@@ -14,7 +14,7 @@
  * @version		$Id: image.php 9864 2010-02-26 17:44:26Z skenow $
  */
 
-class icms_form_elements_captcha_ObjectImage extends icms_form_elements_captcha_Image{
+class IcmsCaptchaImage extends icms_form_elements_captcha_Image{
 	private $_deprecated;
 	public function __construct() {
 		parent::__construct();

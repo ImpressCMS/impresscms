@@ -14,7 +14,7 @@
  * @version		$Id: text.php 19090 2010-03-13 17:41:42Z skenow $
  */
 
-class icms_form_elements_captcha_ObjectText extends icms_form_elements_captcha_Text {
+class IcmsCaptchaText extends icms_form_elements_captcha_Text {
 	private $_deprecated;
 	public function __construct() {
 		parent::__construct();

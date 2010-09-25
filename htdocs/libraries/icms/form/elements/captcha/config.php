@@ -12,7 +12,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
  * @package		Form
- * @subpackage	Captcha
+ * @subpackage	Elements
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		SVN: $Id$
  */

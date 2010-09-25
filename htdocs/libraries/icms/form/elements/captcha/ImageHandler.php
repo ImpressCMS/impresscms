@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
  * @package		Form
- * @subpackage	Captcha
+ * @subpackage	Elements
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
@@ -15,17 +15,17 @@
  *
  * @category	ICMS
  * @package		Form
- * @subpackage	Captcha
+ * @subpackage	Elements
  */
 class icms_form_elements_captcha_ImageHandler {
 	//var $mode = "gd"; // GD or bmp
-	var $code;
-	var $invalid = FALSE;
+	private $code;
+	public $invalid = FALSE;
 
-	var $font;
-	var $spacing;
-	var $width;
-	var $height;
+	private $font;
+	private $spacing;
+	private $width;
+	private $height;
 
 	/**
 	 * Constructor

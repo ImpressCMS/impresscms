@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
  * @package		Form
- * @subpackage	Captcha
+ * @subpackage	Elements
  * @autho		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		SVN: $Id$
  */
@@ -15,7 +15,7 @@
  *
  * @category	ICMS
  * @package		Form
- * @subpackage	Captcha
+ * @subpackage	Elements
  *
  */
 class icms_form_elements_captcha_Text {
@@ -36,7 +36,7 @@ class icms_form_elements_captcha_Text {
 	public function &instance() {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_form_elements_captcha_Text();
+			$instance = new self();
 		}
 		return $instance;
 	}

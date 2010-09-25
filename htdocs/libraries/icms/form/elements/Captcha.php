@@ -8,16 +8,13 @@
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -39,7 +36,15 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *  }
  *
  */
-
+/**
+ * CAPTCHA form element
+ *
+ *
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ *
+ */
 class icms_form_elements_Captcha extends icms_form_Element {
 
 	private $_captchaHandler;
