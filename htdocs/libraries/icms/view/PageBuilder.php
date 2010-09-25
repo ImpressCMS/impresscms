@@ -39,7 +39,7 @@ class icms_view_PageBuilder {
 	private $uagroups = array();
 
 	/** */
-	static public $modid;
+	static private $modid;
 
 	/**
 	 * Initializes the page object and loads all the blocks
@@ -75,7 +75,7 @@ class icms_view_PageBuilder {
 		global $xoops, $icmsUser, $icmsModule, $icmsConfig;
 
 		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-		self::generateModId();
+		self::getPage();
 		$modid = self::$modid['module'] . '-' . self::$modid['page'];
 		$isStart = self::$modid['isStart'];
 
@@ -123,8 +123,10 @@ class icms_view_PageBuilder {
 	 * @global icms_module_Object $icmsModule current module
 	 * @return void
 	 */
-	static public function generateModId() {
+	static public function getPage() {
 		global $icmsUser, $icmsConfig, $icmsModule;
+
+		if (is_array(self::$modid)) return self::$modid;
 
 		// getting the start module and page configured in the admin panel
 		if (is_array($icmsConfig['startpage'])) {
@@ -193,6 +195,8 @@ class icms_view_PageBuilder {
 			}
 			self::$modid = array('module' => $mid, 'page' => $pid, 'isStart' => $isStart);
 		}
+
+		return self::$modid;
 	}
 
 	public function generateCacheId($cache_id) {
