@@ -11,13 +11,9 @@
  * @version		SVN: $Id$
  */
 
-include "../../../mainfile.php";
+include "../../../../../mainfile.php";
 error_reporting(0);
-$xoopsLogger->activated = FALSE;
-/*
-if (empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(ICMS_URL, '/')."/", $_SERVER['HTTP_REFERER'])) {
-	exit();
-}*/
-$image_handler = new icms_form_elements_captcha_ImageHandler();
-$image_handler->loadImage();
+icms::$logger->activated = FALSE;
 
+$image_handler = icms::handler('icms_form_elements_captcha_Image');
+$image_handler->loadImage();
