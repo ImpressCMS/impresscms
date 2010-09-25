@@ -38,6 +38,9 @@ class icms_view_PageBuilder {
 	/** */
 	private $uagroups = array();
 
+	/** */
+	static public $modid;
+
 	/**
 	 * Initializes the page object and loads all the blocks
 	 * @param $options
@@ -71,78 +74,10 @@ class icms_view_PageBuilder {
 	public function retrieveBlocks() {
 		global $xoops, $icmsUser, $icmsModule, $icmsConfig;
 
-		$groups = @is_object($icmsUser) ? $icmsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS);
-
-		//Getting the start module and page configured in the admin panel
-		if (is_array($icmsConfig['startpage'])) {
-			$member_handler = icms::handler('icms_member');
-			$group = $member_handler->getUserBestGroup((@is_object($icmsUser) ? $icmsUser->getVar('uid') : 0));
-			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
-		}
-
-		$startMod = ( $icmsConfig['startpage'] == '--' )
-			? 'system'
-			: $icmsConfig ['startpage'];
-
-		//Setting the full and relative url of the actual page
-		$icmsurl_parsed = parse_url(ICMS_URL);
-		$fullurl = urldecode(
-			$icmsurl_parsed['scheme'] . "://"
-			. $icmsurl_parsed['host']
-			. $_SERVER ['REQUEST_URI']
-		);
-		$url = urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1));
-
-		$icms_page_handler = icms::handler('icms_data_page');
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_url', $fullurl));
-		if (! empty($url))
-		$criteria->add(new icms_db_criteria_Item('page_url', $url), 'OR');
-		$pages = $icms_page_handler->getCount($criteria);
-
-		if ($pages > 0) { //We have a sym-link defined for this page
-			$pages = $icms_page_handler->getObjects($criteria);
-			$page = $pages[0];
-			$purl = $page->getVar('page_url');
-			$mid = $page->getVar('page_moduleid');
-			$pid = $page->getVar('page_id');
-			$module_handler = icms::handler('icms_module');
-			$module =& $module_handler->get($mid);
-			$dirname = $module->getVar('dirname');
-			$isStart = ($startMod == $mid.'-'.$pid);
-		} else { //Don't have a sym-link for this page
-			if (@is_object($icmsModule)) {
-				list($mid, $dirname) = array($icmsModule->getVar('mid'), $icmsModule->getVar('dirname'));
-				$isStart = ( substr($_SERVER['PHP_SELF'], - 9) == 'index.php' && $startMod == $dirname );
-			} else {
-				list($mid, $dirname) = array(1, 'system');
-				$isStart = ! @empty($GLOBALS['xoopsOption']['show_cblock']);
-			}
-			$pid = 0;
-		}
-
-		if ($isStart) {
-			$modid = '0-1';
-		} else {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_status', 1));
-			$pages = $icms_page_handler->getObjects($criteria);
-			$pid = 0;
-			foreach ($pages as $page) {
-				$purl = $page->getVar('page_url');
-				if (substr($purl, - 1) == '*') {
-					$purl = substr($purl, 0, - 1);
-					if (substr($url, 0, strlen($purl)) == $purl || substr($fullurl, 0, strlen($purl)) == $purl) {
-						$pid = $page->getVar('page_id');
-						break;
-					}
-				} else {
-					if ($purl == $url || $purl == $fullurl) {
-						$pid = $page->getVar('page_id');
-						break;
-					}
-				}
-			}
-			$modid = $mid . '-' . $pid;
-		}
+		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		self::generateModId();
+		$modid = self::$modid['module'] . '-' . self::$modid['page'];
+		$isStart = self::$modid['isStart'];
 
 		$icms_block_handler = icms::handler('icms_view_block');
 		$oldzones = $icms_block_handler->getBlockPositions();
@@ -176,6 +111,87 @@ class icms_view_PageBuilder {
 		}
 		if ($this->theme) {
 			list($template->caching, $template->cache_lifetime) = $backup;
+		}
+	}
+
+	/**
+	 * generate the modid (combination of current module and page) and store it in a static var
+	 * isStart is only needed for this class (used in function retrieveBlocks()).
+	 *
+	 * @global icms_member_User_Object $icmsUser current user
+	 * @global array $icmsConfig ImpressCMS configuration array
+	 * @global icms_module_Object $icmsModule current module
+	 * @return void
+	 */
+	static public function generateModId() {
+		global $icmsUser, $icmsConfig, $icmsModule;
+
+		// getting the start module and page configured in the admin panel
+		if (is_array($icmsConfig['startpage'])) {
+			$member_handler = icms::handler('icms_member');
+			$group = $member_handler->getUserBestGroup((is_object($icmsUser) ? $icmsUser->getVar('uid') : 0));
+			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
+		}
+
+		$startMod = ($icmsConfig['startpage'] == '--') ? 'system' : $icmsConfig['startpage'];
+
+		// setting the full and relative url of the actual page
+		$icmsurl_parsed = parse_url(ICMS_URL);
+		$fullurl = urldecode($icmsurl_parsed['scheme'] . "://" . $icmsurl_parsed['host'] . $_SERVER ['REQUEST_URI']);
+		$url = urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1));
+
+		$icms_page_handler = icms::handler('icms_data_page');
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_url', $fullurl));
+		if (!empty($url)) $criteria->add(new icms_db_criteria_Item('page_url', $url), 'OR');
+		$pages = $icms_page_handler->getCount($criteria);
+
+		if ($pages > 0) {
+			// we have a sym-link defined for this page
+			$pages = $icms_page_handler->getObjects($criteria);
+			$page = $pages[0];
+			$purl = $page->getVar('page_url');
+			$mid = $page->getVar('page_moduleid');
+			$pid = $page->getVar('page_id');
+			$module_handler = icms::handler('icms_module');
+			$module = $module_handler->get($mid);
+			$dirname = $module->getVar('dirname');
+			$isStart = ($startMod == $mid.'-'.$pid);
+		} else {
+			// we don't have a sym-link for this page
+			if (is_object($icmsModule)) {
+				$mid = $icmsModule->getVar('mid');
+				$dirname = $icmsModule->getVar('dirname');
+				$isStart = (substr($_SERVER['PHP_SELF'], -9) == 'index.php' && $startMod == $dirname);
+			} else {
+				$mid = 1;
+				$dirname = 'system';
+				$isStart = !empty($GLOBALS['xoopsOption']['show_cblock']);
+			}
+			$pid = 0;
+		}
+
+		if ($isStart) {
+			self::$modid = array('module' => 0, 'page' => 1, 'isStart' => $isStart);
+		} else {
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_status', 1));
+			$pages = $icms_page_handler->getObjects($criteria);
+			$pid = 0;
+			foreach ($pages as $page) {
+				$purl = $page->getVar('page_url');
+				if (substr($purl, -1) == '*') {
+					$purl = substr($purl, 0, -1);
+					if (substr($url, 0, strlen($purl)) == $purl || substr($fullurl, 0, strlen($purl)) == $purl) {
+						$pid = $page->getVar('page_id');
+						break;
+					}
+				} else {
+					if ($purl == $url || $purl == $fullurl) {
+						$pid = $page->getVar('page_id');
+						break;
+					}
+				}
+			}
+			self::$modid = array('module' => $mid, 'page' => $pid, 'isStart' => $isStart);
 		}
 	}
 
