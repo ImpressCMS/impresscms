@@ -18,6 +18,6 @@ $xoopsLogger->activated = FALSE;
 if (empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(ICMS_URL, '/')."/", $_SERVER['HTTP_REFERER'])) {
 	exit();
 }*/
-$image_handler = new icms_form_captcha_ImageHandler();
+$image_handler = new icms_form_elements_captcha_ImageHandler();
 $image_handler->loadImage();
 

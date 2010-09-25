@@ -7,13 +7,20 @@ Build Version:
 
 List of changes to this release can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
 
-=== ImpressCMS 1.2.3 Beta ===
-Release date:
+=== ImpressCMS 1.2.3 RC ===
+Release date:  Sep 2010
 Revision:
+DB Version: 40
+Build Version: 38
+
+=== ImpressCMS 1.2.3 Beta ===
+Release date: 17 Sep 2010
+Revision: 20154
 DB Version: 40
 Build Version: 37
 
-Maintenance release, addresses #462, #480 and #482
+Maintenance release, addresses #462, #480 and #482, #493
+Security Fix: Blind SQLi & Path disclosure in search.php & settingmanager (if install folder left on server)
 
 === ImpressCMS 1.2.2 Final ===
 Release date: 17 July 2010

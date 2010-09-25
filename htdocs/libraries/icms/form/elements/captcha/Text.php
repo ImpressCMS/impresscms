@@ -18,7 +18,7 @@
  * @subpackage	Captcha
  *
  */
-class icms_form_captcha_Text {
+class icms_form_elements_captcha_Text {
 
 	public $config = array();
 	public $code;
@@ -30,13 +30,13 @@ class icms_form_captcha_Text {
 	}
 
 	/**
-	 * Creates icms_form_captcha_Text object
-	 * @return object	reference to icms_form_captcha_Text (@link icms_form_captcha_Text) Object
+	 * Creates icms_form_elements_captcha_Text object
+	 * @return object	reference to icms_form_elements_captcha_Text (@link icms_form_elements_captcha_Text) Object
 	 */
 	public function &instance() {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_form_captcha_Text();
+			$instance = new icms_form_elements_captcha_Text();
 		}
 		return $instance;
 	}
@@ -54,7 +54,7 @@ class icms_form_captcha_Text {
 	 * Sets CAPTCHA code
 	 */
 	public function setCode() {
-		$_SESSION['icms_form_captcha_Object_sessioncode'] = strval($this->code);
+		$_SESSION['icms_form_elements_captcha_Object_sessioncode'] = strval($this->code);
 	}
 
 	/**

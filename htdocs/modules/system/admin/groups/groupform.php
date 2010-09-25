@@ -147,5 +147,5 @@ if (!empty($g_id_value)) {
 }
 $form->addElement($submit_button);
 $form->setRequired($name_text);
-$form->render();
+$form->display(); // render() does not output the form, just contains the output
 

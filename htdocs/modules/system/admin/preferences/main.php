@@ -179,7 +179,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'select_font' :
 					$ele = new icms_form_elements_Select( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
-					$dirlist = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/libraries/icms/form/captcha/fonts/', '', array('ttf'));
+					$dirlist = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/libraries/icms/form/elements/captcha/fonts/', '', array('ttf'));
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );

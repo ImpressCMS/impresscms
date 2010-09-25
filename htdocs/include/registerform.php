@@ -14,8 +14,6 @@
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
-include_once ICMS_ROOT_PATH."/class/xoopslists.php";
-include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 
 $email_tray = new icms_form_elements_Tray(_US_EMAIL, "<br />");
 $email_text = new icms_form_elements_Text("", "email", 25, 60, $myts->htmlSpecialChars($email));

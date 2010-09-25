@@ -52,7 +52,7 @@ $actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey']
 $salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
 $enc_type = $icmsConfigUser['enc_type'];
 
-$thisuser = new icms_member_user_Handler();
+$thisuser = new icms_member_user_Handler(icms::$db);
 switch ( $op) {
 	case 'newuser':
 		include 'header.php';
@@ -117,8 +117,7 @@ switch ( $op) {
 			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 		}
 		if ($icmsConfigUser['use_captcha'] == 1) {
-			include_once ICMS_ROOT_PATH ."/class/xoopsformloader.php" ;
-			$icmsCaptcha = icms_form_captcha_Object::instance();
+			$icmsCaptcha = icms_form_elements_captcha_Object::instance();
 			if (! $icmsCaptcha->verify()) {
 				$stop .= $icmsCaptcha->getMessage().'<br />';
 
@@ -148,7 +147,7 @@ switch ( $op) {
 
 			$icmspass = new icms_core_Password();
 
-			$salt = $icmspass::createSalt();
+			$salt = $icmspass->createSalt();
 			$newuser->setVar('salt', $salt, true);
 			$pass1 = $icmspass->encryptPass($pass, $salt);
 			$newuser->setVar('pass', $pass1, true);
