@@ -454,9 +454,8 @@ class icms_core_SessionHandler {
 				$user = $users[0] ;
 				$old_limit = time() - (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
 				list($old_Ynj, $old_encpass) = explode(':', $pass);
-				if (strtotime($old_Ynj) < $old_limit || hash('sha256', $user->getVar('pass') .
-						$this->mainSaltKey . $old_Ynj) != $old_encpass)
-				{
+				if (strtotime($old_Ynj) < $old_limit || md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX
+						. $old_Ynj) != $old_encpass) {
 					$user = false;
 				}
 				// V3.1 end
@@ -494,9 +493,8 @@ class icms_core_SessionHandler {
 			// V3.1
 			$Ynj = date('Y-n-j');
 			setcookie(
-				'autologin_pass', $Ynj . ':' . hash('sha256', $user->getVar('pass') . $this->mainSaltKey . $Ynj),
-				$expire, $icms_cookie_path, '', $secure, 1
-			);
+				'autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX
+						. $old_Ynj), $expire, $icms_cookie_path, '', $secure, 1);
 		} else {
 			setcookie('autologin_uname', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 			setcookie('autologin_pass', '', time() - 3600, $icms_cookie_path, '', 0, 0);
