@@ -151,8 +151,8 @@ if (false != $user) {
 		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800) ; // 1 week default
 		setcookie('autologin_uname', $user->getVar('login_name'), $expire, $icms_cookie_path, '', $secure, 0);
 		$Ynj = date('Y-n-j') ;
-		setcookie('autologin_pass', $Ynj . ':' . md5($user->getVar('pass') .
-				ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj) , $expire, $icms_cookie_path, '', $secure, 0);
+		setcookie('autologin_pass', $Ynj . ':' . hash('sha256', $user->getVar('pass') .
+				ICMS_DB_SALT . $Ynj) , $expire, $icms_cookie_path, '', $secure, 0);
 	}
 	// end of autologin hack V3.1 GIJ
 
