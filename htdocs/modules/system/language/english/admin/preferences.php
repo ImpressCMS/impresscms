@@ -668,4 +668,9 @@ define("_MD_AM_SMTPAUTHPORTDESC","The Port use by your SMTP Mail server (default
 // added in 1.3 beta
 define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT","Enable IE Flash Compatibility");
 define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC","If true, HTML Purifier will generate Internet Explorer compatibility code for all object code. This is highly recommended if you enable HTML.SafeObject.");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRN","Allow FullScreen in Flash objects");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC","If true, HTML Purifier will allow use of 'allowFullScreen' in embedded flash content when using HTML.SafeObject.");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINES","Normalize Newlines");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC","Whether or not to normalize newlines to the operating system default. When false, HTML Purifier will attempt to preserve mixed newline files.");
+
 ?>

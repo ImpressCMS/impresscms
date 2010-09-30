@@ -624,6 +624,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_SafeEmbed', '_MD_AM_PURIFIER_HTML_SAFEEMBED', '0', '_MD_AM_PURIFIER_HTML_SAFEEMBEDDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_SafeObject', '_MD_AM_PURIFIER_HTML_SAFEOBJECT', '0', '_MD_AM_PURIFIER_HTML_SAFEOBJECTDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_AttrNameUseCDATA', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATA', '0', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATADSC', 'yesno', 'int', " . $p++ . ")");
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_FlashAllowFullScreen', '_MD_AM_PURIFIER_HTML_FLASHFULLSCRN', '0', '_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC', 'yesno', 'int', " . $p++ . ")");
 
     $dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_Output_FlashCompat', '_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT', '0', '_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC', 'yesno', 'int', " . $p++ . ")");
 
@@ -634,6 +635,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_Core_EscapeNonASCIICharacters', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARS', '1', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARSDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_Core_HiddenElements', '_MD_AM_PURIFIER_CORE_HIDDENELE', '".addslashes(serialize(array('script','style')))."', '_MD_AM_PURIFIER_CORE_HIDDENELEDSC', 'textsarea', 'array', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_Core_RemoveInvalidImg', '_MD_AM_PURIFIER_CORE_REMINVIMG', '1', '_MD_AM_PURIFIER_CORE_REMINVIMGDSC', 'yesno', 'int', " . $p++ . ")");
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_Core_NormalizeNewlines', '_MD_AM_PURIFIER_CORE_NORMALNEWLINES', '1', '_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_AutoFormat_AutoParagraph', '_MD_AM_PURIFIER_AUTO_AUTOPARA', '0', '_MD_AM_PURIFIER_AUTO_AUTOPARADSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_AutoFormat_DisplayLinkURI', '_MD_AM_PURIFIER_AUTO_DISPLINKURI', '0', '_MD_AM_PURIFIER_AUTO_DISPLINKURIDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_AutoFormat_Linkify', '_MD_AM_PURIFIER_AUTO_LINKIFY', '1', '_MD_AM_PURIFIER_AUTO_LINKIFYDSC', 'yesno', 'int', " . $p++ . ")");
