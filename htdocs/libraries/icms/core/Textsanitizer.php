@@ -49,21 +49,6 @@ class icms_core_Textsanitizer {
 	}
 
 	/**
-	 * Starts HTML Purifier (from icms.htmlpurifier class)
-	 *
-	 * @param	 string	$text	 Text to purify
-	 * @return	string	$text	the purified text
-	 */
-	public function html_purifier($text) {
-		include_once ICMS_ROOT_PATH . '/class/icms_HTMLPurifier.php';
-		$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
-
-		$text = $html_purifier->icms_html_purifier($text);
-
-		return $text;
-	}
-
-	/**
 	 * Access the only instance of this class
 	 *
 	 * @return   object
@@ -388,7 +373,7 @@ class icms_core_Textsanitizer {
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 
 		if ($html != 0 && $icmsConfigPurifier['enable_purifier'] !== 0) {
-			$text = $this->html_purifier($text);
+			$text = icms_core_DataFilter::checkVar($text, 'html');
 		}
 
 		// ################# Preload Trigger afterDisplayTarea ##############
@@ -442,7 +427,7 @@ class icms_core_Textsanitizer {
 		$text = $this->codeConv($text, $xcode, $image); // Ryuji_edit(2003-11-18)
 
 		if ($html != 0 && $icmsConfigPurifier['enable_purifier'] !== 0) {
-			$text = $this->html_purifier($text);
+			$text = icms_core_DataFilter::checkVar($text, 'html');
 		}
 
 		// ################# Preload Trigger afterPreviewTarea ##############
