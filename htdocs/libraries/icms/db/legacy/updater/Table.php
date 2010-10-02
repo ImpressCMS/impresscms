@@ -123,7 +123,6 @@ class icms_db_legacy_updater_Table {
 	 * @author xhelp development team
 	 */
 	function exists() {
-		$table = $this->_name;
 		$bRetVal = false;
 		$ret = $this->_db->queryF("SHOW TABLES FROM " . XOOPS_DB_NAME . " LIKE '" . $this->name() . "'");
 		list ($m_table) = $this->_db->fetchRow($ret);
