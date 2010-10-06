@@ -124,7 +124,7 @@ class icms_db_legacy_updater_Table {
 	 */
 	function exists() {
 		$bRetVal = false;
-		$ret = $this->_db->queryF("SHOW TABLES FROM " . XOOPS_DB_NAME . " LIKE '" . $this->name() . "'");
+		$ret = $this->_db->queryF("SHOW TABLES FROM `" . XOOPS_DB_NAME . "` LIKE '" . $this->name() . "'");
 		list ($m_table) = $this->_db->fetchRow($ret);
 		if ($m_table == $this->name()) $bRetVal = true;
 		return $bRetVal;
