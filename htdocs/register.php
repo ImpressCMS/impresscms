@@ -149,7 +149,7 @@ switch ( $op) {
 
 			$salt = $icmspass->createSalt();
 			$newuser->setVar('salt', $salt, true);
-			$pass1 = $icmspass->encryptPass($pass, $salt);
+			$pass1 = $icmspass->encryptPass($pass, $salt, $enc_type);
 			$newuser->setVar('pass', $pass1, true);
 			$newuser->setVar('timezone_offset', $timezone_offset, true);
 			$newuser->setVar('user_regdate', time(), true);

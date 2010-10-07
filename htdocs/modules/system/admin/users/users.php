@@ -264,7 +264,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 			$edituser->setVar('salt', $salt);
 			$edituser->setVar('enc_type', $enc_type);
 			$edituser->setVar('pass_expired', $pass_expired);
-			$pass = $icmspass->encryptPass($pass, $salt);
+			$pass = $icmspass->encryptPass($pass, $salt, $enc_type);
 			$edituser->setVar('pass', $pass);
 		}
 		if (!$member_handler->insertUser($edituser))

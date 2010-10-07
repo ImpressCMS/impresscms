@@ -181,7 +181,7 @@ switch ($op)
 					$icmspass = new icms_core_Password();
 					$newuser->setVar('salt', $salt);
 					$newuser->setVar('enc_type', $enc_type);
-					$password = $icmspass->encryptPass($password, $salt);
+					$password = $icmspass->encryptPass($password, $salt, $enc_type);
 					$newuser->setVar('pass', $password);
 				}
 				$newuser->setVar('timezone_offset', $timezone_offset);

@@ -48,7 +48,7 @@ if (empty($getuser))
 	{
 		$newpass = $icmspass::createSalt(8);
 		$salt = $icmspass::createSalt();
-		$pass = $icmspass->encryptPass($newpass, $salt);
+		$pass = $icmspass->encryptPass($newpass, $salt, $icmsConfigUser['enc_type']);
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass2.tpl');

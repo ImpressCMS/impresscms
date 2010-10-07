@@ -217,7 +217,7 @@ if ($op == 'saveuser')
 			$salt = $icmspass::createSalt();
 			$edituser->setVar('salt', $salt, true);
 			$edituser->setVar('enc_type', $icmsConfigUser['enc_type'], true);
-			$pass = $icmspass->encryptPass($password, $salt);
+			$pass = $icmspass->encryptPass($password, $salt, $icmsConfigUser['enc_type']);
 			$edituser->setVar('pass', $pass, true);
 		}
 

@@ -317,7 +317,8 @@ class icms_member_Handler {
 			redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
 		}
 		$salt = $icmspass->getUserSalt($uname);
-		$pwd = $icmspass->encryptPass($pwd, $salt);
+		$enc_type = $icmspass->getUserEncType($uname);
+		$pwd = $icmspass->encryptPass($pwd, $salt, $enc_type);
 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 		$table = new icms_db_legacy_updater_Table('users');
 		if ($table->fieldExists('loginname')) {
