@@ -153,6 +153,7 @@ class icms_core_SessionHandler {
 		$old_session_id = session_id();
 		if ($regenerate) {
 			$success = session_regenerate_id(true);
+			//			$this->destroy($old_session_id);
 		} else {
 			$success = session_regenerate_id();
 		}
@@ -225,7 +226,8 @@ class icms_core_SessionHandler {
 	public function removeExpiredCustomSession($sess) {
 		global $icmsConfig;
 		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != ''
-				&& !isset($_COOKIE[$icmsConfig['session_name']]) && !empty($_SESSION[$sess])) {
+				&& !isset($_COOKIE[$icmsConfig['session_name']]) && !empty($_SESSION[$sess]))
+		{
 			unset($_SESSION[$sess]);
 		}
 	}
@@ -275,7 +277,8 @@ class icms_core_SessionHandler {
 		if ($icmsConfig['use_ssl'] && isset($sslpost_name) && $sslpost_name != '') {
 			session_id($sslpost_name);
 		} elseif ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != ''
-			&& $icmsConfig['session_expire'] > 0) {
+			&& $icmsConfig['session_expire'] > 0)
+		{
 			if (isset($_COOKIE[$icmsConfig['session_name']])) {
 				session_id($_COOKIE[$icmsConfig['session_name']]);
 			}
@@ -291,9 +294,6 @@ class icms_core_SessionHandler {
 			session_name('ICMSSESSION');
 		}
 		session_start();
-
-		self::sessionOpen();
-		self::writeSession(session_id(), $_SERVER['REMOTE_ADDR'], $this->createFingerprint());
 
 		self::removeExpiredCustomSession('xoopsUserId');
 
@@ -358,11 +358,28 @@ class icms_core_SessionHandler {
 		$this->db->prefix('session'), $this->db->quoteString($sess_id));
 		if (false != $result = $this->db->query($sql)) {
 			if (list($sess_data, $sess_ip) = $this->db->fetchRow($result)) {
-				if (!$this->checkFingerprint() || $sess_data !== $_SESSION['icms_fprint']) {
+				if ($this->ipv6securityLevel > 1 && filter_var($sess_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+					/**
+					 * also cover IPv6 localhost string
+					 */
+					if ($_SERVER['REMOTE_ADDR'] == "::1") {
+						$pos = 3;
+					} else {
+						$pos = strpos($sess_ip, ":", $this->ipv6securityLevel - 1);
+					}
+
+					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
 						$sess_data = '';
+					}
+				} elseif ($this->securityLevel > 1 && filter_var($sess_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
+
+					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
+						$sess_data = '';
+					}
 				}
+				return $sess_data;
 			}
-			return $sess_data;
 		}
 		return '';
 	}
@@ -373,11 +390,9 @@ class icms_core_SessionHandler {
 	 * @param   string  $sess_data
 	 * @return  bool
 	 **/
-	private function writeSession($sess_id, $sess_data, $sess_ip) {
+	private function writeSession($sess_id, $sess_data) {
 		$sess_id = $this->db->quoteString($sess_id);
 		$sess_data = $this->db->quoteString($sess_data);
-		$sess_ip = (isset($sess_ip) ? $this->db->quoteString($sess_ip)
-				: $this->db->quoteString($_SERVER['REMOTE_ADDR']));
 
 		$sql = sprintf(
 			"UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s",
@@ -388,7 +403,10 @@ class icms_core_SessionHandler {
 			$sql = sprintf(
 				"INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)"
 				. " VALUES (%s, '%u', %s, %s)",
-				$this->db->prefix('session'), $sess_id, time(), $sess_ip, $sess_data
+				$this->db->prefix('session'),
+				$sess_id, time(),
+				$this->db->quoteString($_SERVER['REMOTE_ADDR']),
+				$sess_data
 			);
 			return $this->db->queryF($sql);
 		}
@@ -437,8 +455,15 @@ class icms_core_SessionHandler {
 		}
 		// end of autologin V2
 
-		$uname = icms_core_DataFilter::stripSlashesGPC($autologinName);
-		$pass = icms_core_DataFilter::stripSlashesGPC($autologinPass);
+		// redirect to ICMS_URL/ when query string exists (anti-CSRF) V1 code
+		/* if (! empty($_SERVER['QUERY_STRING'])) {
+		redirect_header(ICMS_URL . '/' , 0 , 'Now, logging in automatically') ;
+		exit ;
+		}*/
+
+		$myts =& icms_core_Textsanitizer::getInstance();
+		$uname = $myts->stripSlashesGPC($autologinName);
+		$pass = $myts->stripSlashesGPC($autologinPass);
 		if (empty($uname) || is_numeric($pass)) {
 			$user = false ;
 		} else {
@@ -454,8 +479,9 @@ class icms_core_SessionHandler {
 				$user = $users[0] ;
 				$old_limit = time() - (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
 				list($old_Ynj, $old_encpass) = explode(':', $pass);
-				if (strtotime($old_Ynj) < $old_limit || md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX
-						. $old_Ynj) != $old_encpass) {
+				if (strtotime($old_Ynj) < $old_limit || md5($user->getVar('pass') .
+						ICMS_DB_PASS . ICMS_DB_PREFIX . $old_Ynj) != $old_encpass)
+				{
 					$user = false;
 				}
 				// V3.1 end
@@ -493,12 +519,12 @@ class icms_core_SessionHandler {
 			// V3.1
 			$Ynj = date('Y-n-j');
 			setcookie(
-				'autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX
-						. $old_Ynj), $expire, $icms_cookie_path, '', $secure, 1);
+				'autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
+				$expire, $icms_cookie_path, '', $secure, 1
+			);
 		} else {
 			setcookie('autologin_uname', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 			setcookie('autologin_pass', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 		}
 	}
 }
-
