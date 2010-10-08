@@ -178,6 +178,8 @@ class icms_core_DataFilter {
 	* @return	string	$html	the purified text
 	*/
 	public function html_filter($html) {
+		global $icmsConfigPurifier;
+		
 		if ($icmsConfigPurifier['enable_purifier'] !== 0) {
 			$htmlfilter = &icms_core_HTMLFilter::getInstance();
 			$html = $htmlfilter->htmlpurify($html);
@@ -936,7 +938,7 @@ class icms_core_DataFilter {
 
 			case "html":
 				$data = self::stripSlashesGPC($data);
-				return filter_var($data, FILTER_CALLBACK, array("options"=>"html_filter"));
+				return self::html_filter($data);
 			break;
 		}
 
