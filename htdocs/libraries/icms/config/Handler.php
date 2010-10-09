@@ -196,6 +196,7 @@ class icms_config_Handler {
 			if (!empty($category)) {
 				$criteria->add(new icms_db_criteria_Item('conf_catid', (int) $category));
 			}
+			$ret = array();
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach ( array_keys($configs) as $i) {
