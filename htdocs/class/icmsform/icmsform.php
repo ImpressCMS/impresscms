@@ -475,25 +475,29 @@ class IcmsForm extends icms_form_Theme {
 				break;
 
 			default:
-				$classname = "IcmsForm".ucfirst($controlName)."Element";
+				$classname = "icms_ipf_form_elements_" . ucfirst($controlName);
 				if (!class_exists($classname)) {
-					if (file_exists(ICMS_ROOT_PATH."/class/icmsform/elements/".strtolower($classname).".php")) {
-						include_once ICMS_ROOT_PATH."/class/icmsform/elements/".strtolower($classname).".php" ;
-					} else {
-						// perhaps this is a control created by the module
-						$moduleName = $this->targetObject->handler->_moduleName;
-						if($module_dir != 'system')
-						$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/class/form/elements/';
-						else
-						$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/admin/{$name}/class/form/elements/';
-						$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
-						$classFileName = strtolower($classname).".php";
-
-						if (file_exists($moduleFormElementsPath . $classFileName)) {
-							include_once $moduleFormElementsPath . $classFileName ;
+					$classname = "IcmsForm" . ucfirst($controlName) . "Element";
+					if (!class_exists($classname)) {
+						if (file_exists(ICMS_ROOT_PATH . "/class/icmsform/elements/" . strtolower($classname) . ".php")) {
+							include_once ICMS_ROOT_PATH . "/class/icmsform/elements/" . strtolower($classname) . ".php" ;
 						} else {
-							trigger_error($classname." Not found", E_USER_WARNING);
-							return new icms_form_elements_Label(); //Empty object
+							// perhaps this is a control created by the module
+							$moduleName = $this->targetObject->handler->_moduleName;
+							if ($module_dir != 'system') {
+								$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/class/form/elements/";
+							} else {
+								$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/admin/{$name}/class/form/elements/";
+							}
+							$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
+							$classFileName = strtolower($classname).".php";
+
+							if (file_exists($moduleFormElementsPath . $classFileName)) {
+								include_once $moduleFormElementsPath . $classFileName ;
+							} else {
+								trigger_error($classname." not found", E_USER_WARNING);
+								return new icms_form_elements_Label();
+							}
 						}
 					}
 				}
