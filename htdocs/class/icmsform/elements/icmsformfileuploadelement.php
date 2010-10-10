@@ -13,9 +13,7 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-include_once ICMS_ROOT_PATH . "/class/icmsform/elements/icmsformuploadelement.php";
-
-class IcmsFormFileUploadElement extends IcmsFormUploadElement {
+class IcmsFormFileUploadElement extends icms_ipf_form_elements_Upload {
 
 	/**
 	 * Constructor
