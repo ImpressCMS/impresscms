@@ -23,16 +23,13 @@ class IcmsFormUrlLinkElement extends icms_form_elements_Tray {
 	function __construct($form_caption, $key, $object) {
 		parent::__construct($form_caption, '&nbsp;' );
 
-		$this->addElement( new icms_form_elements_Label( '', '<br/>'._CO_ICMS_URLLINK_URL));
-		$this->addElement(new IcmsFormTextElement($object, 'url_'.$key));
-
-		$this->addElement( new icms_form_elements_Label( '', '<br/>'._CO_ICMS_CAPTION));
-		$this->addElement(new IcmsFormTextElement($object, 'caption_'.$key));
-
-		$this->addElement( new icms_form_elements_Label( '', '<br/>'._CO_ICMS_DESC.'<br/>'));
+		$this->addElement(new icms_form_elements_Label('', '<br/>'._CO_ICMS_URLLINK_URL));
+		$this->addElement(new icms_ipf_form_elements_Text($object, 'url_'.$key));
+		$this->addElement(new icms_form_elements_Label( '', '<br/>'._CO_ICMS_CAPTION));
+		$this->addElement(new icms_ipf_form_elements_Text($object, 'caption_'.$key));
+		$this->addElement(new icms_form_elements_Label('', '<br/>'._CO_ICMS_DESC.'<br/>'));
 		$this->addElement(new icms_form_elements_Textarea('', 'desc_'.$key, $object->getVar('description')));
-
-		$this->addElement( new icms_form_elements_Label( '', '<br/>'._CO_ICMS_URLLINK_TARGET));
+		$this->addElement( new icms_form_elements_Label('', '<br/>'._CO_ICMS_URLLINK_TARGET));
 		$targ_val = $object->getVar('target');
 		$targetRadio = new icms_form_elements_Radio('', 'target_'.$key, $targ_val!= '' ? $targ_val : '_blank');
 		$control = $object->getControl('target');

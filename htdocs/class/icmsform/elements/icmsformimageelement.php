@@ -40,7 +40,6 @@ class IcmsFormImageElement extends icms_form_elements_Tray {
 		$this->addElement(new IcmsFormFileUploadElement($object, $key));
 
 		if (!isset($control['nourl']) || !$control['nourl']) {
-			include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformtextelement.php";
 			$this->addElement(new icms_form_elements_Label( '<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
 			$this->addElement(new icms_form_elements_Label( '', '<br />' . _CO_ICMS_URL_FILE));
 			$this->addElement(new icms_form_elements_Text('', 'url_'.$key, 50, 500));
