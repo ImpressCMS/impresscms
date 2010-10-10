@@ -5,33 +5,18 @@
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		icms_ipf_Object
- * @since		  1.1
- * @author		  marcan <marcan@impresscms.org>
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class IcmsFormTimeElement extends icms_form_elements_Select {
+class IcmsFormTimeElement extends icms_ipf_form_elements_Time {
+	private $_deprecated;
 
-	/**
-	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
-	 * @param	string    $key      the form name
-	 */
-	function IcmsFormTimeElement($object, $key) {
-		$var = $object->vars[$key];
-		$timearray = array();
-		for ($i = 0; $i < 24; $i++) {
-			for ($j = 0; $j < 60; $j = $j + 10) {
-				$key_t = ($i * 3600) + ($j * 60);
-				$timearray[$key_t] = ($j != 0) ? $i.':'.$j : $i.':0'.$j;
-			}
-		}
-		ksort($timearray);
-		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'));
-		$this->addOptionArray($timearray);
+	public function __construct($object, $key) {
+		parent::__construct($object, $key);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Time', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
-
-?>
