@@ -37,8 +37,7 @@ class icms_ipf_form_elements_Image extends icms_form_elements_Tray {
 			$this->addElement(new icms_form_elements_Label('', "<img src='" . $object_imageurl . $object->getVar($key, 'e') . "' alt='' /><br/><br/>" ));
 		}
 
-		include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformfileuploadelement.php";
-		$this->addElement(new IcmsFormFileUploadElement($object, $key));
+		$this->addElement(new icms_ipf_form_elements_Fileupload($object, $key));
 
 		if (!isset($control['nourl']) || !$control['nourl']) {
 			$this->addElement(new icms_form_elements_Label('<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));

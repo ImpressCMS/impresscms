@@ -17,7 +17,6 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  */
 
 class IcmsFormRichFileElement extends icms_form_elements_Tray {
-
 	/**
 	 * Get a config
 	 *
@@ -33,10 +32,8 @@ class IcmsFormRichFileElement extends icms_form_elements_Tray {
 			$this->addElement(new icms_form_elements_Label( '', _CO_ICMS_CURRENT_FILE."<a href='" . str_replace('{ICMS_URL}', ICMS_URL ,$object->getVar('url')) . "' target='_blank' >". $caption."</a><br/><br/>" ) );
 		}
 
-		include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformfileuploadelement.php";
-
 		if($object->isNew()){
-			$this->addElement(new IcmsFormFileUploadElement($object, $key));
+			$this->addElement(new icms_ipf_form_elements_Fileupload($object, $key));
 			$this->addElement(new icms_form_elements_Label('', '<br/><br/><small>'._CO_ICMS_URL_FILE_DSC.'</small>'));
 			$this->addElement(new icms_form_elements_Label('','<br/>'._CO_ICMS_URL_FILE));
 			$this->addElement(new icms_ipf_form_elements_Text($object, 'url_'.$key));
@@ -49,12 +46,10 @@ class IcmsFormRichFileElement extends icms_form_elements_Tray {
 
 		if(!$object->isNew()){
 			$this->addElement(new icms_form_elements_Label('','<br/>'._CO_ICMS_CHANGE_FILE));
-			$this->addElement(new IcmsFormFileUploadElement($object, $key));
+			$this->addElement(new icms_ipf_form_elements_Fileupload($object, $key));
 			$this->addElement(new icms_form_elements_Label('', '<br/><br/><small>'._CO_ICMS_URL_FILE_DSC.'</small>'));
 			$this->addElement(new icms_form_elements_Label('','<br/>'._CO_ICMS_URL_FILE));
 			$this->addElement(new icms_ipf_form_elements_Text($object, 'url_'.$key));
 		}
 	}
 }
-
-?>
