@@ -392,14 +392,6 @@ class IcmsForm extends icms_form_Theme {
 				return $controlObj;
 				break;
 
-			case 'radio':
-				$control = $this->targetObject->getControl($key);
-
-				$controlObj = new icms_form_elements_Radio($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
-				$controlObj->addOptionArray($control['options']);
-				return $controlObj;
-				break;
-
 			case 'label':
 				return new icms_form_elements_Label($this->targetObject->vars[$key]['form_caption'], $this->targetObject->getVar($key));
 				break;
