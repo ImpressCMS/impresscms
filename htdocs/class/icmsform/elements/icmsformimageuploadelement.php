@@ -13,28 +13,11 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class IcmsFormImageUploadElement extends icms_ipf_form_elements_Upload {
+class IcmsFormImageUploadElement extends icms_ipf_form_elements_Imageupload {
+	private $_deprecated;
 
-	/**
-	 * Constructor
-	 * @param	object    $object     object to be passed (@todo : Which object?)
-	 * @param	string    $key        key of the object to be passed
-	 */
 	public function __construct($object, $key) {
 		parent::__construct($object, $key);
-		// Override name for upload purposes
-		$this->setName('upload_' . $key);
-	}
-
-	/**
-	 * prepare HTML for output
-	 *
-	 * @return	string	HTML
-	 */
-	public function render() {
-		return "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />
-		        <input type='file' name='" . $this->getName() . "' id='" . $this->getName() . "'" . $this->getExtra() . " />
-		        <input type='hidden' name='icms_upload_image[]' id='icms_upload_image[]' value='" . $this->getName() . "' />";
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Imageupload', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
-
