@@ -14,23 +14,11 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class IcmsFormLanguageElement extends icms_form_elements_select_Lang {
+class IcmsFormLanguageElement extends icms_ipf_form_elements_Language {
+	private $_deprecated;
 
-	/**
-	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
-	 * @param	string    $key      the form name
-	 */
 	public function __construct($object, $key) {
-
-		$var = $object->vars[$key];
-		$control = $object->controls[$key];
-		$all = isset($control['all']) ? true : false;
-
-		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'));
-		if ($all) {
-			$this->addOption('all', _ALL);
-		}
+		parent::__construct($object, $key);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Language', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
-
