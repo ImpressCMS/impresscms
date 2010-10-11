@@ -205,20 +205,20 @@ class IcmsForm extends icms_form_Theme {
 																'name' => 'text',
 																'size' => '5'
 																));
-																$form_text = $this->getControl("text", $key);
-																$this->addElement($form_text, $key, $var);
-																unset($form_text);
-																break;
+							$form_text = $this->getControl("text", $key);
+							$this->addElement($form_text, $key, $var);
+							unset($form_text);
+							break;
 
 						case XOBJ_DTYPE_FLOAT:
 							$this->targetObject->setControl($key, array(
 																'name' => 'text',
 																'size' => '5'
 																));
-																$form_text = $this->getControl("text", $key);
-																$this->addElement($form_text, $key, $var);
-																unset($form_text);
-																break;
+							$form_text = $this->getControl("text", $key);
+							$this->addElement($form_text, $key, $var);
+							unset($form_text);
+							break;
 
 						case XOBJ_DTYPE_LTIME:
 							$form_date_time = $this->getControl('date_time', $key);
@@ -243,10 +243,10 @@ class IcmsForm extends icms_form_Theme {
 																'name' => 'text',
 																'size' => '15'
 																));
-																$form_currency = $this->getControl("text", $key);
-																$this->addElement($form_currency, $key, $var);
-																unset($form_currency);
-																break;
+							$form_currency = $this->getControl("text", $key);
+							$this->addElement($form_currency, $key, $var);
+							unset($form_currency);
+							break;
 
 						case XOBJ_DTYPE_URLLINK:
 							$form_urllink = $this->getControl("urllink", $key);
@@ -441,10 +441,6 @@ class IcmsForm extends icms_form_Theme {
 			case 'group_multi':
 				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
 				break;
-
-				/*case 'user':
-				 return new icms_form_elements_select_User($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 1, false);
-				 break;*/
 
 			case 'user_multi':
 				return new icms_form_elements_select_User($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
@@ -649,7 +645,11 @@ class IcmsForm extends icms_form_Theme {
 				if (myOption == -1) {
 					window.alert(\"{$eltmsg}\"); myform.{$eltname}[0].focus(); return false; }\n";
 
-			}elseif (strtolower(get_class($elt)) == 'icmsformselect_multielement') {
+			/**
+			 * @todo remove icmsformselect_multielement in 1.4
+			 */
+			}elseif (strtolower(get_class($elt)) == 'icms_ipf_form_elements_selectmulti' ||
+					 strtolower(get_class($elt)) == 'icmsformselect_multielement') {
 				$js .= "var hasSelections = false;";
 				$js .= "for(var i = 0; i < myform['{$eltname}[]'].length; i++){
 					if (myform['{$eltname}[]'].options[i].selected) {

@@ -12,14 +12,11 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class IcmsFormSelect_multiElement extends icms_ipf_form_elements_Select  {
-	/**
-	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
-	 * @param	string    $key      the form name
-	 */
-	function IcmsFormSelect_multiElement($object, $key) {
-		$this->_multiple = true;
+class IcmsFormSelect_multiElement extends icms_ipf_form_elements_Selectmulti  {
+	private $_deprecated;
+
+	public function __construct($object, $key) {
 		parent::__construct($object, $key);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Selectmulti', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
