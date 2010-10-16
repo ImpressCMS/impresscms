@@ -14,22 +14,11 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-/**
- * Create a date/time picker element for a object based on IPF
- *
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- */
-class IcmsFormDate_timeElement extends icms_form_elements_Datetime {
+class IcmsFormDate_timeElement extends icms_ipf_form_elements_Datetime {
+	private $_deprecated;
 
-	/**
-	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
-	 * @param	string    $key      the form name
-	 */
 	public function __construct($object, $key) {
-		parent::__construct($object->vars[$key]['form_caption'], $key, 15, $object->getVar($key, 'e'));
+		parent::__construct($object, $key);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Datetime', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
-
