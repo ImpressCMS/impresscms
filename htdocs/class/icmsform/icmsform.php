@@ -378,14 +378,6 @@ class IcmsForm extends icms_form_Theme {
 	 */
 	function getControl($controlName, $key) {
 		switch ($controlName) {
-			case 'check':
-				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php" ;
-				$control = $this->targetObject->getControl($key);
-				$controlObj = new IcmsFormCheckElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
-				$controlObj->addOptionArray($control['options']);
-				return $controlObj;
-				break;
-
 			case 'color':
 				$control = $this->targetObject->getControl($key);
 				$controlObj = new icms_form_elements_Colorpicker($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));

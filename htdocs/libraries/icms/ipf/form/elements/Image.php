@@ -45,9 +45,8 @@ class icms_ipf_form_elements_Image extends icms_form_elements_Tray {
 			$this->addElement(new icms_form_elements_Text('', 'url_'.$key, 50, 500));
 		}
 		if (!$object->isNew()) {
-			include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php";
 			$this->addElement(new icms_form_elements_Label('', '<br /><br />'));
-			$delete_check = new IcmsFormCheckElement('', 'delete_'.$key);
+			$delete_check = new icms_form_elements_Checkbox('', 'delete_'.$key);
 			$delete_check->addOption(1, '<span style="color:red;">'._CO_ICMS_DELETE.'</span>');
 			$this->addElement($delete_check);
 		}
