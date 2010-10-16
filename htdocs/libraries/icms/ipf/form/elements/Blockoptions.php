@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author		phoenyx
- * @version		$Id:$
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
