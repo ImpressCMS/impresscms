@@ -79,7 +79,7 @@ define('_AM_BLOCKS_PERMGROUPS','Groups allowed to view this block');
 
 /**
  * The next Language definitions are included since 2.0 of blockadmin module, because now is based on IPF.
- * TODO: Add the rest of the fields, are added only the ones wich are shown.
+ * TODO: Add the rest of the fields, are added only the ones which are shown.
  */
 // Texts
 
@@ -114,7 +114,7 @@ define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME", "Block Cache Time");
 define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME_DSC", "");
 
 define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS", "Block View permission");
-define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC", "Select wich groups will have view permission for this block. This means that a user belonging to one of these groups will be able to view the block when it is activated in the site.");
+define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC", "Select which groups will have view permission for this block. This means that a user belonging to one of these groups will be able to view the block when it is activated in the site.");
 
 define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
 define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
