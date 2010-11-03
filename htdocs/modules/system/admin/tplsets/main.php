@@ -672,12 +672,12 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 					if (isset($_GET['method']) && $_GET['method'] == 'tar') {
 						if (@function_exists('gzencode')) {
 							require_once ICMS_ROOT_PATH.'/class/tardownloader.php' ;
-							$downloader = new XoopsTarDownloader();
+							$downloader = new icms_file_TarDownloader();
 						}
 					} else {
 						if (@function_exists('gzcompress')) {
 							require_once ICMS_ROOT_PATH.'/class/zipdownloader.php' ;
-							$downloader = new XoopsZipDownloader();
+							$downloader = new icms_file_ZipDownloader();
 						}
 					}
 					$tplset_handler = icms::handler('icms_view_template_set');
