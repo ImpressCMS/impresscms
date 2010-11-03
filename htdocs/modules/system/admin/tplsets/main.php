@@ -954,7 +954,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				$dummylayout .= "\n".'</style></head><body><div id="xo-canvas"><{$content}></div></body></html>';
 				if ($tplfile->getVar('tpl_type') == 'block') {
 
-					$block = new XoopsBlock($tplfile->getVar('tpl_refid'));
+					$block = new icms_view_block_Object($tplfile->getVar('tpl_refid'));
 					$xoopsTpl->assign('block', $block->buildBlock());
 				}
 
