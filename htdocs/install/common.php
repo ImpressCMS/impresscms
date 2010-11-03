@@ -125,7 +125,7 @@ $xoops = new xos_kernel_Xoops2();
 
 // Instantiate security object
 require_once XOOPS_ROOT_PATH."/class/xoopssecurity.php";
-$xoopsSecurity = new IcmsSecurity();
+$xoopsSecurity = new icms_core_Security();
 global $xoopsSecurity;
 //Check super globals
 $xoopsSecurity->checkSuperglobals();
@@ -179,7 +179,7 @@ $icms_images_setname = 'crystal';
 define("ICMS_IMAGES_SET_URL", ICMS_IMAGES_URL."/" . $icms_images_setname);
 
 /**#@+
- * Deprectaed: for backward compatibility
+ * Deprecated: for backward compatibility
  */
 define("XOOPS_INCLUDE_PATH", ICMS_INCLUDE_PATH);
 define("XOOPS_INCLUDE_URL", ICMS_INCLUDE_URL);

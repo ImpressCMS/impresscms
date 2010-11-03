@@ -218,7 +218,7 @@ function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
  * @todo Remove this in 1.4 - all occurrences have been replaced in the core
  **/
 function xoops_refcheck($docheck=1) {
-	icms_core_Debug::setDeprecated('IcmsSecurity->checkReferer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_core_Security->checkReferer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return $GLOBALS['xoopsSecurity']->checkReferer($docheck);
 }
 

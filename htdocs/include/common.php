@@ -26,7 +26,7 @@ include_once ICMS_ROOT_PATH . "/include/functions.php";
 // ################################## Instantiate security object ##################################
 require_once ICMS_ROOT_PATH . "/class/xoopssecurity.php";
 global $xoopsSecurity;
-$xoopsSecurity = $icmsSecurity = new IcmsSecurity();
+$xoopsSecurity = $icmsSecurity = new icms_core_Security();
 $icmsSecurity->checkSuperglobals();
 
 // #################################### Initialize db constant #####################################
