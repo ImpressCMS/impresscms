@@ -49,7 +49,7 @@ if (empty($getuser))
 		$newpass = $icmspass::createSalt(8);
 		$salt = $icmspass::createSalt();
 		$pass = $icmspass->encryptPass($newpass, $salt, $icmsConfigUser['enc_type']);
-		$xoopsMailer =& getMailer();
+		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass2.tpl');
 		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
@@ -77,7 +77,7 @@ if (empty($getuser))
 		redirect_header('user.php', 3, sprintf(_US_PWDMAILED,$getuser[0]->getVar('uname')), false);
 		// If no Code, send it
 	} else {
-		$xoopsMailer =& getMailer();
+		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass1.tpl');
 		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);

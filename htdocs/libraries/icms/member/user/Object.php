@@ -173,7 +173,7 @@ class icms_member_user_Object extends icms_core_Object {
 
 		if (!$icmsConfigUser['welcome_msg']) {return true;}
 
-		$xoopsMailer =& getMailer();
+		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setBody($icmsConfigUser['welcome_msg_content']);
 		$xoopsMailer->assign('UNAME', $this->getVar('uname'));
@@ -204,7 +204,7 @@ class icms_member_user_Object extends icms_core_Object {
 
 		if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
 			$member_handler = icms::handler('icms_member');
-			$xoopsMailer =& getMailer();
+			$xoopsMailer = new icms_messaging_Handler();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('newuser_notify.tpl');
 			$xoopsMailer->assign('UNAME', $this->getVar('uname'));

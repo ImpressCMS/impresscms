@@ -166,7 +166,7 @@ if ($op == 'actv') {
 			if (false != $member_handler->activateUser($thisuser)) {
 				if ($icmsConfigUser['activation_type'] == 2) {
 					$myts = icms_core_Textsanitizer::getInstance();
-					$icmsMailer = getMailer();
+					$icmsMailer = new icms_messaging_Handler();
 					$icmsMailer->useMail();
 					$icmsMailer->setTemplate('activated.tpl');
 					$icmsMailer->assign('SITENAME', $icmsConfig['sitename']);

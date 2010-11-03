@@ -124,7 +124,7 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 
 		if ($notifyUser) {
 		// send some notifications
-		$xoopsMailer = & getMailer();
+		$xoopsMailer =  new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplateDir(ICMS_ROOT_PATH . 'language/' . $icmsConfig['language'] . '/mail_template');
 		$xoopsMailer->setTemplate('smartobject_notify_user_added_by_admin.tpl');

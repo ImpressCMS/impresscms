@@ -54,7 +54,7 @@ switch ( $op) {
 			$xoopsDB->query($sql);
 			// if query executed successful
 			if ($xoopsDB->getAffectedRows() == 1) {
-				$xoopsMailer =& getMailer();
+				$xoopsMailer = new icms_messaging_Handler();
 				$xoopsMailer->useMail();
 				$xoopsMailer->setTemplate('invite.tpl');
 				$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);

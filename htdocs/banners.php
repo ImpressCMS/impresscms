@@ -219,7 +219,7 @@ function EmailStats($cid, $bid)
 						$fecha = date(_LONGDATESTRING);
 						$subject = sprintf(_BANNERS_MAIL_SUBJECT, $icmsConfig['sitename']);
 						$message = sprintf(_BANNERS_MAIL_MESSAGE, $icmsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
-						$xoopsMailer =& getMailer();
+						$xoopsMailer = new icms_messaging_Handler();
 						$xoopsMailer->useMail();
 						$xoopsMailer->setToEmails($email);
 						$xoopsMailer->setFromEmail($icmsConfig['adminmail']);

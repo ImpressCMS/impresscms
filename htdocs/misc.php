@@ -144,7 +144,7 @@ case 'friend':
 			$errormessage = _MSC_INVALIDEMAIL1.'<br />'._MSC_INVALIDEMAIL2.'';
 			redirect_header(ICMS_URL.'/misc.php?action=showpopups&amp;type=friend&amp;op=sendform',2,$errormessage);
 		}
-		$xoopsMailer =& getMailer();
+		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->setTemplate('tellfriend.tpl');
 		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
 		$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);

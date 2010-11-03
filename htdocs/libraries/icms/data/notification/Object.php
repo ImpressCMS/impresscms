@@ -63,7 +63,7 @@ class icms_data_notification_Object extends icms_core_Object {
 		}
 		$method = $user->getVar('notify_method');
 
-		$xoopsMailer =& getMailer();
+		$xoopsMailer = new icms_messaging_Handler();
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 		switch($method) {
 			case XOOPS_NOTIFICATION_METHOD_PM:

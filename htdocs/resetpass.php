@@ -51,7 +51,7 @@ if (empty($getuser)) {redirect_header('user.php',2,_US_SORRYNOTFOUND);} else {
 
 		$salt = $icmspass::createSalt();
 		$pass = $icmspass->encryptPass($password, $salt, $icmsConfigUser['enc_type']);
-		$xoopsMailer =& getMailer();
+		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('resetpass2.tpl');
 		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);

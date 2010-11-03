@@ -224,7 +224,7 @@ switch ($op)
 							 */
 							/*
 							 $myts =& icms_core_Textsanitizer::getInstance();
-							 $xoopsMailer =& getMailer();
+							 $xoopsMailer = new icms_messaging_Handler();
 							 $xoopsMailer->useMail();
 							 $xoopsMailer->setTemplate('welcome.tpl');
 							 $xoopsMailer->assign('UNAME', $uname);

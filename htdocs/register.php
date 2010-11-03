@@ -191,7 +191,7 @@ switch ( $op) {
 
 			// Activation by user
 			if ($icmsConfigUser['activation_type'] == 0) {
-				$xoopsMailer =& getMailer();
+				$xoopsMailer = new icms_messaging_Handler();
 				$xoopsMailer->useMail();
 				$xoopsMailer->setTemplate('register.tpl');
 				$xoopsMailer->setToUsers(new icms_member_user_Object($newid));
@@ -205,7 +205,7 @@ switch ( $op) {
 				}
 				// activation by admin
 			} elseif ($icmsConfigUser['activation_type'] == 2) {
-				$xoopsMailer =& getMailer();
+				$xoopsMailer = new icms_messaging_Handler();
 				$xoopsMailer->useMail();
 				$xoopsMailer->setTemplate('adminactivate.tpl');
 				$xoopsMailer->assign('USERNAME', $uname);

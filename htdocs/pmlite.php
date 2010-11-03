@@ -66,7 +66,7 @@ if ($icmsUser) {
 				$toUser =& $userHandler->get( (int) ($_POST['to_userid']));
 				// Only send email notif if notification method is mail
 				if ($toUser->getVar('notify_method') == 2) {
-					$xoopsMailer =& getMailer();
+					$xoopsMailer = new icms_messaging_Handler();
 					$xoopsMailer->useMail();
 					$xoopsMailer->setToEmails($toUser->getVar('email'));
 					if ($icmsUser->getVar('user_viewemail')) {

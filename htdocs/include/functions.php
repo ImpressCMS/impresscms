@@ -566,18 +566,13 @@ function xoops_getcss($theme = '')
 /**
  * Gets Mailer object
  *
- * @return		object  $inst  Reference to the (@link XoopsMailerLocal) or (@link XoopsMailer) object
- * @todo This should be part of the mailer class
+ * @return		object  localized email object handler
+ * @todo 		Remove in version 1.4
+ * @deprecated	Use icms_messaging_Handler, instead
  */
-function &getMailer()
-{
-	global $icmsConfig;
-	$inst = false;
-	include_once ICMS_ROOT_PATH.'/class/xoopsmailer.php';
-	icms_loadLanguageFile('core', 'xoopsmailerlocal');
-	if(class_exists('XoopsMailerLocal')) {$inst = new XoopsMailerLocal();}
-	if(!$inst) {$inst = new XoopsMailer();}
-	return $inst;
+function &getMailer() {
+	icms_core_Debug::setDeprecated('icms_messaging_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return new icms_messaging_Handler();
 }
 
 /**

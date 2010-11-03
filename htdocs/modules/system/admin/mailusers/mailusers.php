@@ -135,7 +135,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		//OpenTable();
 		if ($added_count > 0) {
 			$myts =& icms_core_Textsanitizer::getInstance();
-			$xoopsMailer =& getMailer();
+			$xoopsMailer = new icms_messaging_Handler();
 			for ( $i = 0; $i < $added_count; $i++) {
 				$xoopsMailer->setToUsers($added[$i]);
 			}
