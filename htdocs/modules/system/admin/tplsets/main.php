@@ -828,8 +828,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				if (!$uploader->upload()) {
 					icms_core_Message::error($uploader->getErrors());
 				} else {
-					include_once ICMS_ROOT_PATH.'/class/class.tar.php';
-					$tar = new tar();
+					$tar = new icms_file_TarFileHandler();
 					$tar->openTar($uploader->getSavedDestination());
 					@unlink($uploader->getSavedDestination());
 					$themefound = false;
