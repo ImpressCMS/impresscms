@@ -35,117 +35,34 @@ $name_userid = 'uid' . ( @$_REQUEST['multiple'] ? "[]" : "" );
 $name_username = 'uname' . ( @$_REQUEST['multiple'] ? "[]" : "" );
 
 icms_loadLanguageFile('core', 'findusers');
+/**
+ * @deprecated	Use icms_data_rank_Object, instead
+ * @todo		Remove in 1.4
+ */
+class XoopsRank extends icms_data_rank_Object {
 
-class XoopsRank extends icms_core_Object
-{
-	function __construct() {
-		$this->XoopsRank();
-	}
+	private $_deprecated;
 
-	/**
-	 * Constructor
-	 **/
-	function XoopsRank()
-	{
+	public function __construct() {
 		parent::__construct();
-		$this->initVar('rank_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('rank_title', XOBJ_DTYPE_TXTBOX, null, false);
-		$this->initVar('rank_min', XOBJ_DTYPE_INT, 0);
-		$this->initVar('rank_max', XOBJ_DTYPE_INT, 0);
-		$this->initVar('rank_special', XOBJ_DTYPE_INT, 0);
-		$this->initVar('rank_image', XOBJ_DTYPE_TXTBOX, "");
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_data_rank_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
-class XoopsRankHandler extends icms_core_ObjectHandler
-{
+/**
+ * @deprecated	Use icms_data_rank_Handler, instead
+ * @todo		Remove in 1.4
+ */
+class XoopsRankHandler extends icms_data_rank_Handler {
+
+	private $_deprecated;
 
 	/**
-	 * Constructor for PHP5
 	 * @param   object  $db reference to the DB class object
 	 **/
 	function __construct(&$db) {
-		$this->XoopsRankHandler($db);
-	}
-
-	/**
-	 * Constructor for PHP4
-	 * @param   object  $db reference to the DB class object
-	 **/
-	function XoopsRankHandler(&$db) {
 		parent::__construct($db);
-	}
-
-	/**
-	 * Create a new rank
-	 *
-	 * @param   bool  $isNew is it a new rank?
-	 * @return  object	reference to the (@link XoopsRank) object
-	 **/
-	function &create($isNew = true) {
-		$obj = new XoopsRank();
-		if ($isNew === true) {
-			$obj->setNew();
-		}
-		return $obj;
-	}
-
-	/**
-	 * Gets the rank from the database
-	 *
-	 * @param   int  $id
-	 * @return  object
-	 **/
-	function &get($id = 0)
-	{
-		$object =& $this->create(false);
-		$sql = "SELECT * FROM " . $this->db->prefix('ranks') . " WHERE rank_id = '" . $this->db->quoteString($id)."'";
-		if (!$result = $this->db->query($sql)) {
-			$ret = null;
-			return $ret;
-		}
-		while ($row = $this->db->fetchArray($result)) {
-			$object->assignVars($row);
-		}
-
-		return $object;
-	}
-
-	/**
-	 * Gets list of ranks
-	 *
-	 * @param   object  $criteria Criteria (@link icms_db_criteria_Compo) to match when getting the ranks
-	 * @param   string  $limit How many ranks to get
-	 * @param   string  $start Where to start with getting the ranks (for pagination)
-	 * @return  array
-	 **/
-	function getList($criteria = null, $limit = 0, $start = 0)
-	{
-		$ret = array();
-		if ($criteria == null) {
-			$criteria = new icms_db_criteria_Compo();
-		}
-
-		$sql = 'SELECT rank_id, rank_title FROM '.$this->db->prefix('ranks');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
-			if ($criteria->getSort() != '') {
-				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
-			}
-			$limit = $criteria->getLimit();
-			$start = $criteria->getStart();
-		}
-
-		$result = $this->db->query($sql, $limit, $start);
-		if (!$result) {
-			return $ret;
-		}
-
-		$myts =& icms_core_Textsanitizer::getInstance();
-		while ($myrow = $this->db->fetchArray($result)) {
-			$ret[$myrow["rank_id"]] = $myts->htmlSpecialChars($myrow["rank_title"]);
-		}
-		return $ret;
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_data_rank_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
@@ -292,7 +209,7 @@ class XoUserHandler extends icms_core_ObjectHandler
 	}
 }
 
-$rank_handler = new XoopsRankHandler($xoopsDB);
+$rank_handler = new icms_data_rank_Handler($xoopsDB);
 $user_handler = new XoUserHandler($xoopsDB);
 
 $items_match = array(
