@@ -49,7 +49,7 @@ if (empty($getuser)) {redirect_header('user.php',2,_US_SORRYNOTFOUND);} else {
 
 		if ($c_pass !== $current_pass) {redirect_header('user.php',2,_US_SORRYINCORRECTPASS);}
 
-		$salt = $icmspass::createSalt();
+		$salt = $icmspass->createSalt();
 		$pass = $icmspass->encryptPass($password, $salt, $icmsConfigUser['enc_type']);
 		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
