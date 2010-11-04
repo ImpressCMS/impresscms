@@ -102,9 +102,9 @@ class icms_file_TarFileHandler {
 	/**#@+
 	 * Processed Archive Information
 	 */
-	private $files;
+	public $files;
 	private $directories;
-	private $numFiles;
+	public $numFiles;
 	private $numDirectories;
 	/**#@-*/
 

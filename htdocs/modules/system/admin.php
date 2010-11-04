@@ -27,7 +27,6 @@ icms_loadLanguageFile('system', 'admin');
 icms_loadLanguageFile('core', 'moduleabout');
 
 // Check if function call does exist (security)
-require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 $admin_dir = ICMS_ROOT_PATH.'/modules/system/admin';
 $dirlist = icms_core_Filesystem::getDirList($admin_dir);
 if ($fct && !in_array($fct,$dirlist)) {redirect_header(ICMS_URL.'/',3,_INVALID_ADMIN_FUNCTION);}

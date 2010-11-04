@@ -124,7 +124,7 @@ global $xoops;
 $xoops = new xos_kernel_Xoops2();
 
 // Instantiate security object
-require_once XOOPS_ROOT_PATH."/class/xoopssecurity.php";
+require_once XOOPS_ROOT_PATH."libraries/icms/core/Security.php";
 $xoopsSecurity = new icms_core_Security();
 global $xoopsSecurity;
 //Check super globals
@@ -133,7 +133,7 @@ $xoopsSecurity->checkSuperglobals();
 // ############## Activate error handler / logger class ##############
 global $xoopsLogger, $xoopsErrorHandler;
 
-include_once XOOPS_ROOT_PATH . '/class/logger.php';
+include_once XOOPS_ROOT_PATH . '/libraries/icms/core/Logger.php';
 $xoopsLogger =& icms_core_Logger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
 $xoopsLogger->startTime();
@@ -210,8 +210,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_
 $xoopsDB = icms_db_Factory::instance();
 
 // ################# Include required files ##############
-//require_once XOOPS_ROOT_PATH.'/kernel/object.php';
-//require_once XOOPS_ROOT_PATH.'/class/criteria.php';
 
 // #################### Include text sanitizer ##################
 include_once XOOPS_ROOT_PATH."/class/module.textsanitizer.php";

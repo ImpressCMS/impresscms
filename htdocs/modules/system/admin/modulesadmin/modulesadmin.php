@@ -881,7 +881,6 @@ function icms_module_update($dirname) {
 	 * ensure to only update those fields that are currently available in the database
 	 * this is required to allow structural updates for the module table
 	 */
-	include_once ICMS_ROOT_PATH . "/class/database/databaseupdater.php";
 	$table = new icms_db_legacy_updater_Table("modules");
 	foreach (array_keys($module->vars) as $k) {
 		if (!$table->fieldExists($k)) {

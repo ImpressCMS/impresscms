@@ -49,8 +49,6 @@ if ($uid <= 0)
 	redirect_header('index.php', 3, _US_SELECTNG);
 }
 
-//include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
-
 $gperm_handler = icms::handler('icms_member_groupperm');
 $groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 

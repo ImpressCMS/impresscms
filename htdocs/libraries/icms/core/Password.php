@@ -82,7 +82,6 @@ final class icms_core_Password {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
-		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 		$table = new icms_db_legacy_updater_Table('users');
 		if ($table->fieldExists('loginname')) {
 			$sql = $db->query("SELECT salt FROM " . $db->prefix('users') . " WHERE
@@ -112,7 +111,6 @@ final class icms_core_Password {
         $db = icms_db_Factory::instance();
 
         if($uname !== '') {
-			include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 			$table = new icms_db_legacy_updater_Table('users');
             if($table->fieldExists('loginname')) {
                 $sql = $db->query("SELECT loginname, enc_type FROM ".$db->prefix('users')." WHERE

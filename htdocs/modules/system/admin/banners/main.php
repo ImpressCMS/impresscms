@@ -16,7 +16,6 @@
 
 if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {exit('Access Denied');}
 include_once ICMS_ROOT_PATH.'/modules/system/admin/banners/banners.php';
-//include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 $allowedHTML = array('htmlcode');
 
 if (!empty($_POST)) { foreach ($_POST as $k => $v) { if (!in_array($k,$allowedHTML)) {${$k} = StopXSS($v);} else {${$k} = $v;}}}

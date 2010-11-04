@@ -16,7 +16,6 @@ if (!defined("ICMS_ROOT_PATH")) {
 /**
  * base class
  */
-include_once ICMS_ROOT_PATH."/class/database/databaseupdater.php";
 
 class IcmsMysqlDatabasetable extends icms_db_legacy_updater_Table {
 	private $_errors;

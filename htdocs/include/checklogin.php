@@ -29,7 +29,6 @@ $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
 $member_handler = icms::handler('icms_member');
 $myts =& icms_core_Textsanitizer::getInstance();
 
-//include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
 icms_loadLanguageFile('core', 'auth');
 $icmsAuth =& icms_auth_Factory::getAuthConnection($myts->addSlashes($uname));
 

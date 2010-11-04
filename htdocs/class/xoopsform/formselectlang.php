@@ -24,11 +24,10 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 /**
  * lists of values
  */
-include_once ICMS_ROOT_PATH."/class/xoopslists.php";
+
 /**
  * parent class
  */
-include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 /**
  * A select field with available languages

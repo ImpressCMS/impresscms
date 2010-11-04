@@ -20,8 +20,6 @@
  */
 if ( !defined ( 'ICMS_ROOT_PATH' )) exit ();
 
-include_once ICMS_ROOT_PATH . '/class/template.php';
-
 /**
  * xos_logos_PageBuilder main class
  *

@@ -109,7 +109,6 @@ function b_system_admin_cp_show(){
 	}
 	else {$all_ok = true;}
 
-	require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 	require_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 
 	$admin_dir = ICMS_ROOT_PATH.'/modules/system/admin';
@@ -240,7 +239,6 @@ function b_system_admin_cp_new_show() {
 		$all_ok = true;
 	}
 
-	require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 	require_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
 	$admin_dir = ICMS_ROOT_PATH . '/modules/system/admin';

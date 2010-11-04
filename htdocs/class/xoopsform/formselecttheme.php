@@ -22,14 +22,6 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-/**
- * lists of values
- */
-include_once ICMS_ROOT_PATH."/class/xoopslists.php";
-/**
- * base class
- */
-include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 /**
  * A select box with available themes

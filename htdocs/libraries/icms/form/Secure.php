@@ -14,11 +14,6 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * Including the IcmsForm class
- */
-include_once ICMS_ROOT_PATH . '/class/icmsform/icmsform.php';
-
-/**
  * icms_form_Secure extending IcmsForm with the addition of the Security Token
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
@@ -28,7 +23,7 @@ include_once ICMS_ROOT_PATH . '/class/icmsform/icmsform.php';
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  */
-class icms_form_Secure extends IcmsForm {
+class icms_form_Secure extends icms_form_Theme {
 
 	/**
 	 * Constructor

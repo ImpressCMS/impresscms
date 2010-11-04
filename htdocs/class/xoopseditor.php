@@ -86,7 +86,6 @@ class XoopsEditorHandler
 
 			$list = array();
 			$order = array();
-			require_once ICMS_ROOT_PATH."/class/xoopslists.php";
 			$_list = icms_core_Filesystem::getDirList($this->root_path.'/');
 
 			foreach($_list as $item){

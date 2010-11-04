@@ -24,10 +24,6 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 
-/**
- * base class
- */
-include_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
 
 /**
  * Form that will output as a simple HTML form with minimum formatting

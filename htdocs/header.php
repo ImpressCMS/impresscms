@@ -23,11 +23,6 @@ $xoopsLogger->startTime('ICMS output init');
 global $xoopsOption, $icmsConfig, $icmsModule;
 $xoopsOption['theme_use_smarty'] = 1;
 
-/**  include Smarty template engine and initialize it*/
-//require_once ICMS_ROOT_PATH.'/class/template.php';
-//require_once ICMS_ROOT_PATH.'/class/theme.php';
-//require_once ICMS_ROOT_PATH.'/class/theme_blocks.php';
-
 if (@$xoopsOption['template_main'])
 {
 	if (false === strpos($xoopsOption['template_main'], ':')) {$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];}

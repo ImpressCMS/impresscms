@@ -28,7 +28,6 @@ if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 	$all_ok = true;
 }
 
-require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 require_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
 $admin_dir = ICMS_ROOT_PATH . '/modules/system/admin';

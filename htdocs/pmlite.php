@@ -114,7 +114,6 @@ if ($icmsUser) {
 			$to_username = icms_member_user_Object::getUnameFromId($to_userid);
 			echo "<td class='even'><input type='hidden' name='to_userid' value='".$to_userid."' />".$to_username."</td>";
 		} else {
-			require_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 			$user_sel = new icms_form_elements_select_User("", "to_userid");
 			echo "<td class='even'>".$user_sel->render();
 			echo "</td>";

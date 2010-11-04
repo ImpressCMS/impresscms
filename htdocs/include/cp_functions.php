@@ -22,7 +22,6 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /** Creates constant indicating this file has been loaded */
 define ('XOOPS_CPFUNC_LOADED', 1);
 /** Load the template class */
-//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 /**
  * Function icms_cp_header
@@ -49,10 +48,6 @@ function icms_cp_header(){
 		header("Pragma: no-cache");
 	}
 
-	//require_once ICMS_ROOT_PATH . '/class/template.php';
-	//require_once ICMS_ROOT_PATH . '/class/theme'.(( file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html' ) || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme.html' )) ?'_admin':'').'.php';
-	//require_once ICMS_ROOT_PATH . '/class/theme.php';
-	//require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
 	if( !isset($icmsPreloadHandler) )
 	$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
 

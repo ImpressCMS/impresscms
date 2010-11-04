@@ -20,7 +20,7 @@ defined('ICMS_ROOT_PATH') or exit();
  *
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  */
-class icms_file_TarDownloader extends icms_file_Downloader {
+class icms_file_TarDownloader extends icms_file_DownloadHandler {
 
 	/**
 	 * Constructor

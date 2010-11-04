@@ -16,7 +16,6 @@
 
 if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {exit('Access Denied');}
 
-include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
 function displayUsers()
@@ -259,7 +258,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 				icms_cp_footer();
 				exit();
 			}
-			
+
 			$icmspass = new icms_core_Password();
 			$edituser->setVar('salt', $salt);
 			$edituser->setVar('enc_type', $enc_type);

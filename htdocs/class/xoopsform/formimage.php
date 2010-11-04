@@ -27,7 +27,6 @@ if (!defined('ICMS_ROOT_PATH')) {
 	die("Oooops!!");
 }
 
-include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 class MastopFormSelectImage extends icms_form_elements_Select
 {

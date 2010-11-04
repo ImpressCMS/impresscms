@@ -16,8 +16,6 @@
 
 defined( 'ICMS_ROOT_PATH' ) or die();
 
-require_once ICMS_ROOT_PATH . '/class/logger.php';
-
 /**
  * Backward compatibility code, do not use this class directly
  * @deprecated	Use icms_core_Logger, instead

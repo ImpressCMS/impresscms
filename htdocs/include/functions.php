@@ -451,9 +451,6 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	// if the user selected a theme in the theme block, let's use this theme
 	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
 
-	//require_once ICMS_ROOT_PATH.'/class/template.php';
-	//require_once ICMS_ROOT_PATH.'/class/theme.php';
-
 	$xoopsThemeFactory = new icms_view_theme_Factory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $theme;

@@ -26,8 +26,6 @@ $redirect_url = $_SESSION['frompage'];
 $myts = icms_core_Textsanitizer :: getInstance();
 $member_handler = icms::handler('icms_member');
 
-/** Including the authentication class */
-include_once ICMS_ROOT_PATH . '/class/auth/authfactory.php';
 /** Including the language files for the authentication pages */
 icms_loadLanguageFile('core', 'auth');
 

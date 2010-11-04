@@ -444,8 +444,6 @@ if ($op == 'avatarform')
 
 	if ($icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') >= $icmsConfigUser['avatar_minposts'])
 	{
-		/* since this has been included at the beginning of the file, we shouldn't need it here
-		 include_once 'class/xoopsformloader.php'; */
 		$form = new icms_form_Theme(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', true);
 		$form->setExtra('enctype="multipart/form-data"');
 		/* the avatar resizer shall later be included
