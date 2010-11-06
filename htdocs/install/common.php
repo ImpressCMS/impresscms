@@ -124,7 +124,7 @@ global $xoops;
 $xoops = new xos_kernel_Xoops2();
 
 // Instantiate security object
-require_once XOOPS_ROOT_PATH."libraries/icms/core/Security.php";
+require_once XOOPS_ROOT_PATH."/libraries/icms/core/Security.php";
 $xoopsSecurity = new icms_core_Security();
 global $xoopsSecurity;
 //Check super globals
