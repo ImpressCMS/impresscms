@@ -122,7 +122,7 @@ class icms_messaging_Handler {
 	}
 
 	public function setFromUser(&$user) {
-		if (strtolower(get_class($user)) == "icms_member_user_Object") {
+		if (get_class($user) == "icms_member_user_Object") {
 			$this->fromUser =& $user;
 		}
 	}
@@ -369,7 +369,7 @@ class icms_messaging_Handler {
 
 	public function setToUsers(&$user) {
 		if (!is_array($user)) {
-			if (strtolower(get_class($user)) == "icms_member_user_Object") {
+			if (get_class($user) == "icms_member_user_Object") {
 				array_push($this->toUsers, $user);
 			}
 		} else {
@@ -381,7 +381,7 @@ class icms_messaging_Handler {
 
 	public function setToGroups($group) {
 		if (!is_array($group)) {
-			if (strtolower(get_class($group)) == "icms_member_group_Object") {
+			if (get_class($group) == "icms_member_group_Object") {
 				$member_handler = icms::handler('icms_member');
 				$this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
 			}
