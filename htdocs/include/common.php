@@ -46,7 +46,7 @@ $icmsPreloadHandler = icms::$preload;
 global $xoopsLogger, $xoopsErrorHandler;
 $xoopsLogger = $xoopsErrorHandler = icms::$logger;
 
-$xoopsDB = icms::$db;
+$xoopsDB = icms::$xoopsDB;
 
 // ################## Creation of the non-static ImpressCMS Kernel object for BC ###################
 global $xoops, $impresscms;

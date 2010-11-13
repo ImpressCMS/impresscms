@@ -28,10 +28,10 @@ class icms_ipf_form_elements_User extends icms_form_elements_Select {
 
 		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'), $size, $this->_multiple);
 
-		$sql = "SELECT uid, uname FROM " . icms::$db->prefix("users"). " ORDER BY uname ASC";
-		$result = icms::$db->query($sql);
+		$sql = "SELECT uid, uname FROM " . icms::$xoopsDB->prefix("users"). " ORDER BY uname ASC";
+		$result = icms::$xoopsDB->query($sql);
 		if ($result) {
-			while ($myrow = icms::$db->fetchArray($result)) {
+			while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 				$uArray[$myrow["uid"]] = $myrow["uname"];
 			}
 		}

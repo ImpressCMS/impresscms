@@ -52,7 +52,7 @@ $actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey']
 $salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
 $enc_type = $icmsConfigUser['enc_type'];
 
-$thisuser = new icms_member_user_Handler(icms::$db);
+$thisuser = new icms_member_user_Handler(icms::$xoopsDB);
 switch ( $op) {
 	case 'newuser':
 		include 'header.php';

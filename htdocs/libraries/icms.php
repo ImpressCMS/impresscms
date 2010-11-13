@@ -39,7 +39,7 @@ abstract class icms {
 	 * Database connection
 	 * @var icms_database_Facotry
 	 */
-	static public $db;
+	static public $xoopsDB;
 
 	/**
 	 * Registered services definition
@@ -48,7 +48,7 @@ abstract class icms {
 	static public $services = array(
 		"boot" => array(
 			"logger" => "icms_core_Logger",
-			"db" => "icms_db_Factory",
+			"xoopsDB" => "icms_db_Factory",
 		),
 		"optional" => array(),
 	);

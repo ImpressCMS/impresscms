@@ -339,7 +339,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return	array	List of active modules
 	 */
 	static public function getActive() {
-		$module_handler = new self(icms::$db);
+		$module_handler = new self(icms::$xoopsDB);
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
 		return $module_handler->getList($criteria, TRUE);
 	}

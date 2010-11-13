@@ -498,7 +498,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @todo		Remove in version 1.4
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject = TRUE, $side = NULL, $visible = NULL, $orderby = "b.weight,b.bid", $isactive = 1) {
-		$db =& icms::$db;
+		$db =& icms::$xoopsDB;
 		$ret = array();
 
 		if (!$asobject) {
