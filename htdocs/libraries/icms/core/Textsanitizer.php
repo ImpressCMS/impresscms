@@ -397,7 +397,6 @@ class icms_core_Textsanitizer {
 		global $icmsPreloadHandler;
 
 		if (!is_object($icmsPreloadHandler)) {
-			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
 			$icmsPreloadHandler = icms_preload_Handler::getInstance();
 		}
 		$icmsPreloadHandler->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
