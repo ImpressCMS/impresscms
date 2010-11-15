@@ -32,8 +32,7 @@ if (isset($_GET['mid'])) {
  * Now here is the version checker :-)
  */
 global $icmsAdminTpl, $xoTheme;
-require_once ICMS_ROOT_PATH.'/class/icmsversionchecker.php';
-$icmsVersionChecker = IcmsVersionChecker::getInstance();
+$icmsVersionChecker = icms_core_Versionchecker::getInstance();
 icms_cp_header();
 if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('update_available', true);

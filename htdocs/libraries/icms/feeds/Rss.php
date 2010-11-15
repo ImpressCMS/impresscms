@@ -1,11 +1,12 @@
 <?php
 /**
- *
  * Module RSS Feed Class
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	    core
+ * @category	ICMS
+ * @package	    Feeds
+ * @subpackage	RSS
  * @since		1.1
  * @author		Ignacio Segura, "Nachenko"
  * @version		$Id$
@@ -13,6 +14,14 @@
 
 defined('ICMS_ROOT_PATH') or exit();
 
+/**
+ * Generates the data necessary for an RSS feed and assigns it to a smarty template
+ *
+ * @category	ICMS
+ * @package		Feeds
+ * @subpackage	RSS
+ *
+ */
 class icms_feeds_Rss {
 
 	public $title;
