@@ -7,86 +7,24 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	    core
  * @since		1.1
+ * @deprecated	Use icms_feeds_Rss, instead
+ * @todo		Remove in version 1.4
  * @author		Ignacio Segura, "Nachenko"
  * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or exit();
 
-class IcmsFeed {
+class IcmsFeed extends icms_feeds_Rss {
 
-	public $title;
-	public $url;
-	public $description;
-	public $language;
-	public $charset;
-	public $category;
-	public $pubDate;
-	public $webMaster;
-	public $generator;
-	public $copyright;
-	public $lastbuild;
-	public $channelEditor;
-	public $width;
-	public $height;
-	public $ttl;
-	public $image = array();
+	private $_deprecated;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		global $icmsConfig;
-		$this->title = htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET);
-		$this->url = ICMS_URL;
-		$this->description = htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET);
-		$this->language = _LANGCODE;
-		$this->charset = _CHARSET;
-		$this->pubDate = date(_DATESTRING, time());
-		$this->lastbuild = formatTimestamp(time(), 'rss');
-		$this->webMaster = $icmsConfig['adminmail'];
-		$this->channelEditor = $icmsConfig['adminmail'];
-		$this->generator = ICMS_VERSION_NAME;
-		$this-> copyright = _COPYRIGHT . ' ' . formatTimestamp(time(), 'Y') . ' ' . htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET);
-		$this->width  = 200;
-		$this->height = 50;
-		$this->ttl    = 60;
-		$this->image = array(
-			'title' => $this->title,
-			'url' => ICMS_URL.'/images/logo.gif',
-		);
-		$this->feeds = array();
+		parent::__construct();
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_feeds_Rss', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 
-	/**
-	 * Render the feed and display it directly
-	 */
-	public function render() {
-		global $xoopsLogger;
-		$xoopsLogger->disableLogger();
-
-		//header ('Content-Type:text/xml; charset='._CHARSET);
-		$xoopsOption['template_main'] = "db:system_rss.html";
-		$tpl = new icms_view_Tpl();
-
-		$tpl->assign('channel_title', $this->title);
-		$tpl->assign('channel_link', $this->url);
-		$tpl->assign('channel_desc', $this->description);
-		$tpl->assign('channel_webmaster', $this->webMaster);
-		$tpl->assign('channel_editor', $this->channelEditor);
-		$tpl->assign('channel_category', $this->category);
-		$tpl->assign('channel_generator', $this->generator);
-		$tpl->assign('channel_language', $this->language);
-		$tpl->assign('channel_lastbuild', $this->lastbuild);
-		$tpl->assign('channel_copyright', $this->copyright);
-		$tpl->assign('channel_width', $this->width);
-		$tpl->assign('channel_height', $this->height);
-		$tpl->assign('channel_ttl', $this->ttl);
-		$tpl->assign('image_url', $this->image['url']);
-		foreach ($this->feeds as $feed) {
-			$tpl->append('items', $feed);
-		}
-		$tpl->display('db:system_rss.html');
-	}
 }
-

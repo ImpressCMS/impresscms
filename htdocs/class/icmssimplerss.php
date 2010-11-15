@@ -11,51 +11,22 @@
  * @package		core
  * @since		1.2
  * @author		malanciault <marcan@impresscms.org)
+ * @deprecated	use icms_feeds_Simplerss, instead
+ * @todo		Remove in version 1.4
  * @version		$Id$
  */
 
-include_once ICMS_LIBRARIES_PATH . '/simplepie/simplepie.inc' ;
-include_once ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php' ;
 
-class IcmsSimpleRss extends SimplePie {
+class IcmsSimpleRss extends icms_feeds_Simplerss {
+
+	private $_deprecated;
 
 	/**
-	 * The IcmsSimpleRss class contains feed level data and options
-	 *
-	 * There are two ways that you can create a new IcmsSimpleRss object. The first
-	 * is by passing a feed URL as a parameter to the IcmsSimpleRss constructor
-	 * (as well as optionally setting the cache expiry - The cache location is automatically set
-	 * as ICMS_CACHE_PATH). This will initialise the whole feed with all of the default settings, and you
-	 * can begin accessing methods and properties immediately.
-	 *
-	 * The second way is to create the IcmsSimpleRss object with no parameters
-	 * at all. This will enable you to set configuration options. After setting
-	 * them, you must initialise the feed using $feed->init(). At that point the
-	 * object's methods and properties will be available to you.
-	 *
-	 * @access public
-	 * @param string $feed_url This is the URL you want to parse.
-	 * @param int $cache_duration This is the number of seconds that you want to store the cache file for.
+	 * Constructor
 	 */
-	function IcmsSimpleRss($feed_url = null, $cache_duration = null)
-	{
-		// Other objects, instances created here so we can set options on them
-		$this->sanitize = new SimplePie_Sanitize;
-
-		$this->set_cache_location(ICMS_CACHE_PATH);
-
-		if ($cache_duration !== null)
-		{
-			$this->set_cache_duration($cache_duration);
-		}
-
-		// Only init the script if we're passed a feed URL
-		if ($feed_url !== null)
-		{
-			$this->set_feed_url($feed_url);
-			$this->init();
-		}
+	public function __construct() {
+		parent::__construct();
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_feeds_Simplerss', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
-}
 
-?>
+}
