@@ -12,8 +12,6 @@
  * @version			$Id$
  */
 
-//require_once ICMS_ROOT_PATH.'/kernel/blockposition.php' ;
-
 /**
  * System Blockspadmin Class
  *
