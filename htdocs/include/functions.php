@@ -2784,21 +2784,18 @@ function icms_close_collapsable($name) {
 	echo "<br />";
 }
 /**
- * @todo Move to a static class method
  * Enter description here ...
  * @param $content
  * @param $title
  * @param $description
  * @param $pagetitle
  * @param $width
+ * @deprecated	Use icms_view_Printerfriendly::generate, instead
+ * @todo		Remove in versions 1.4
  */
 function icms_MakePrinterFriendly($content, $title=false, $description=false, $pagetitle=false, $width=680) {
-	require_once ICMS_ROOT_PATH . '/class/icmsprinterfriendly.php';
-	$PrintDataBuilder = new IcmsPrinterFriendly;
-	$PrintDataBuilder->IcmsPrinterFriendly($content, $title, $description);
-	$PrintDataBuilder->setPageTitle($pagetitle);
-	$PrintDataBuilder->setWidth($width);
-	$PrintDataBuilder->render();
+	icms_core_Debug::setDeprecated('icms_view_Printerfriendly::generate', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_view_Printerfriendly::generate($content, $title, $description, $pagetitle, $width);
 }
 /**
  * @todo Move to a static class method - user
