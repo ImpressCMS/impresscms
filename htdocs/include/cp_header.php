@@ -13,32 +13,14 @@
  * @author	modified by underdog <underdog@impresscms.org>
  * @version	$Id$
  */
+// Make sure the kernel launches the module in admin mode and checks the correct permissions
+define('ICMS_IN_ADMIN', 1);
+
 //error_reporting(0);
 /** Load the mainfile */
 include_once '../../../mainfile.php';
 /** Load the admin functions */
 include_once ICMS_ROOT_PATH . '/include/cp_functions.php';
-$moduleperm_handler = icms::handler('icms_member_groupperm');
-if ($icmsUser) {
-	$url_arr = explode('/', strstr($xoopsRequestUri, '/modules/'));
-	$module_handler = icms::handler('icms_module');
-	$icmsModule =& $module_handler->getByDirname($url_arr[2]);
-	$xoopsModule =& $module_handler->getByDirname($url_arr[2]);
-	unset($url_arr);
-
-	if (!$moduleperm_handler->checkRight('module_admin', $icmsModule->getVar('mid'), $icmsUser->getGroups())) {
-		redirect_header(ICMS_URL . '/user.php', 1, _NOPERM, false);
-	}
-} else {
-	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM, false);
-}
-
-// set config values for this module
-if ($icmsModule->getVar('hasconfig') == 1 || $icmsModule->getVar('hascomments') == 1) {
-	$config_handler = icms::handler('icms_config');
-	$icmsModuleConfig =& $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
-	$xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
-}
 
 // include the default language file for the admin interface
 icms_loadLanguageFile($icmsModule->getVar('dirname'), 'admin');

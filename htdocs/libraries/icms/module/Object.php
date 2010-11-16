@@ -21,6 +21,11 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  **/
 class icms_module_Object extends icms_core_Object {
 	/**
+	 * Module configuration
+	 * @var array
+	 */
+	public $config;
+	/**
 	 * @var string
 	 */
 	public $modinfo;
@@ -65,6 +70,15 @@ class icms_module_Object extends icms_core_Object {
 		$this->initVar('dbversion', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('modname', XOBJ_DTYPE_OTHER, null, true);
 		$this->initVar('ipf', XOBJ_DTYPE_INT, 0, false);
+	}
+
+	/**
+	 * Initializes the module/application.
+	 * This method is called during execution of icms::launchModule() to allow the module
+	 * to setup its global structures.
+	 * @return void
+	 **/
+	public function launch() {
 	}
 
 	/**

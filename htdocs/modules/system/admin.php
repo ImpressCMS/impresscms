@@ -14,6 +14,8 @@
  * @version		$Id$
  */
 
+define('ICMS_IN_ADMIN', 1);
+
 include_once '../../include/functions.php';
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);

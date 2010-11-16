@@ -973,7 +973,7 @@ Top | Contents | Next | Previous
 Once you've called parse_code, you can get the time it took to run the highlighting by calling the get_time method:
 $geshi = new GeSHi($source, $language, $path);
 
-$code = mysql_real_escape_string($geshi->parse_code());
+$code = $GLOBALS['xoopsDB']->escape($geshi->parse_code());
 $time = $geshi->get_time();
 
 // do something with it

@@ -18,17 +18,11 @@
  * @version		$Id$
  */
 
+define('ICMS_IN_ADMIN', 1);
+
 $xoopsOption['pagetype'] = 'admin';
 include 'mainfile.php';
 include ICMS_ROOT_PATH.'/include/cp_functions.php';
-
-// Admin Authentication
-if ($icmsUser)
-{
-	if (!$icmsUser->isAdmin(-1)) {redirect_header('index.php',2,_AD_NORIGHT);}
-}
-else {redirect_header('index.php',2,_AD_NORIGHT);}
-// end Admin Authentication
 
 // test to see if the system module should be updated, added in 1.2
 if (icms_getModuleInfo('system')->getDBVersion() < ICMS_SYSTEM_DBVERSION) {

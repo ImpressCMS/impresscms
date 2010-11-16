@@ -11,7 +11,7 @@
 include 'mainfile.php';
 global $xoopsDB;
 if (isset($_POST['queryString'])) {
-	$queryString = mysql_real_escape_string($_POST['queryString']);
+	$queryString = $GLOBALS['xoopsDB']->escape($_POST['queryString']);
 
 	// Is the string length greater than 2?
 	if (strlen($queryString) > 2) {

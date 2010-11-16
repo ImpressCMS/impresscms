@@ -86,19 +86,16 @@ class icms_preload_Handler {
 				if (strpos($method, 'event') === 0) {
 					$preload_event = strtolower(str_replace('event', '', $method));
 
-					$preload_event_array = array(
-											'object' => &$preloadItem,
-											'method' => $method
-					);
-
+					$callback = array( $preloadItem, $method );
+					icms_Event::attach('icms', $preload_event, $callback);
+					/*
 					$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
-
 					if (defined($preload_event_weight_define_name)) {
 						$preload_event_weight = constant($preload_event_weight_define_name);
 						$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
 					} else {
 						$this->_preloadEventsArray[$preload_event][] = $preload_event_array;
-					}
+					}*/
 				}
 			}
 		}
@@ -135,14 +132,9 @@ class icms_preload_Handler {
 	 *
 	 * @return	TRUE if successful, FALSE if not
 	 */
-	public function triggerEvent($event, $array = false) {
+	public function triggerEvent($event, $array = array()) {
 		$event = strtolower($event);
-		if (isset($this->_preloadEventsArray[$event])) {
-			foreach ($this->_preloadEventsArray[$event] as $eventArray) {
-				$method = $eventArray['method'];
-				$eventArray['object']->$method($array);
-			}
-		}
+		icms_Event::trigger('icms', $event, null, $array);
 	}
 
 	/**

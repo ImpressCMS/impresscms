@@ -194,7 +194,9 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	public function quote($string) {
 		return "'" . mysql_real_escape_string($string, $this->conn) . "'";
 	}
-
+	public function escape($string) {
+		return mysql_real_escape_string($string, $this->conn);
+	}
 	/**
 	 * perform a query on the database
 	 *
@@ -220,19 +222,6 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 			return false;
 		}
 	}
-
-	/**
-	 * perform a query
-	 *
-	 * This method is empty and does nothing! It should therefore only be
-	 * used if nothing is exactly what you want done! ;-)
-	 *
-	 * @param string $sql a valid MySQL query
-	 * @param int $limit number of records to return
-	 * @param int $start offset of first record to return
-	 *
-	 */
-	abstract function query($sql, $limit = 0, $start = 0);
 
 	/**
 	 * perform queries from SQL dump file in a batch

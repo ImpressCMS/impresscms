@@ -25,6 +25,34 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @access		public
  */
 class icms_config_Handler {
+	static protected $instance;
+	/**
+	 * Initialize the config handler.
+	 * @param $db
+	 */
+	static public function service() {
+		if (isset(self::$instance)) return self::$instance;
+		$instance = icms::handler('icms_config');
+		$configs = $instance->getConfigsByCat(
+			array(
+				ICMS_CONF, ICMS_CONF_USER, ICMS_CONF_METAFOOTER, ICMS_CONF_MAILER,
+				ICMS_CONF_AUTH, ICMS_CONF_MULILANGUAGE, ICMS_CONF_PERSONA, ICMS_CONF_PLUGINS,
+				ICMS_CONF_CAPTCHA, ICMS_CONF_SEARCH
+			)
+		);
+		$GLOBALS['xoopsConfig']			 = $configs[ICMS_CONF];
+		$GLOBALS['icmsConfig']			 = $configs[ICMS_CONF];
+		$GLOBALS['icmsConfigUser']       = $configs[ICMS_CONF_USER];
+		$GLOBALS['icmsConfigMetaFooter'] = $configs[ICMS_CONF_METAFOOTER];
+		$GLOBALS['icmsConfigMailer']     = $configs[ICMS_CONF_MAILER];
+		$GLOBALS['icmsConfigAuth']       = $configs[ICMS_CONF_AUTH];
+		$GLOBALS['icmsConfigMultilang']  = $configs[ICMS_CONF_MULILANGUAGE];
+		$GLOBALS['icmsConfigPersona']    = $configs[ICMS_CONF_PERSONA];
+		$GLOBALS['icmsConfigPlugins']    = $configs[ICMS_CONF_PLUGINS];
+		$GLOBALS['icmsConfigCaptcha']    = $configs[ICMS_CONF_CAPTCHA];
+		$GLOBALS['icmsConfigSearch']     = $configs[ICMS_CONF_SEARCH];
+		return self::$instance = $instance;
+	}
 
 	/**
 	 * holds reference to config item handler(DAO) class

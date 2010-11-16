@@ -14,12 +14,7 @@
  * @version		SVN: $Id$
  */
 
-/**
- * Make sure this is only included once!
- */
-if (defined("XOOPS_C_DATABASE_INCLUDED")) exit();
-define("XOOPS_C_DATABASE_INCLUDED",1);
-
+defined( 'XOOPS_ROOT_PATH' ) or die();
 /**
  * Abstract base class for Database access classes
  *
@@ -27,8 +22,7 @@ define("XOOPS_C_DATABASE_INCLUDED",1);
  * @subpackage  main
  * @author		Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
  */
-abstract class icms_db_legacy_Database {
-
+abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	/**
 	 * Prefix for tables in the database
 	 * @var string
@@ -48,33 +42,15 @@ abstract class icms_db_legacy_Database {
 	 */
 	public $allowWebChanges = false;
 
-	/**
-	 * assign a {@link icms_core_Logger} object to the database
-	 *
-	 * @see icms_core_Logger
-	 * @param object $logger reference to a {@link icms_core_Logger} object
-	 */
-	public function setLogger(&$logger) {
-		$this->logger =& $logger;
+	public function __construct( $connection, $allowWebChanges = false ) {
+		$this->allowWebChanges = $allowWebChanges;
 	}
-
-	/**
-	 * set the prefix for tables in the database
-	 *
-	 * @param string $value table prefix
-	 */
+	public function setLogger($logger) {
+		$this->logger = $logger;
+	}
 	public function setPrefix($value) {
 		$this->prefix = $value;
 	}
-
-	/**
-	 * attach the prefix.'_' to a given tablename
-	 *
-	 * if tablename is empty, only prefix will be returned
-	 *
-	 * @param string $tablename tablename
-	 * @return string prefixed tablename, just prefix if tablename is empty
-	 */
 	public function prefix($tablename='') {
 		if ( $tablename != '' ) {
 			return $this->prefix .'_'. $tablename;

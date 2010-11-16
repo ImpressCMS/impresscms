@@ -139,7 +139,7 @@ function quote_smart($value)
     }
     // Escape non-numeric string
     if (!is_numeric($value)) {
-        $value = "'" . mysql_real_escape_string($value) . "'";
+        $value = "'" . $GLOBALS['xoopsDB']->escape($value) . "'";
     }
     return $value;
 }

@@ -22,6 +22,61 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  **/
 class icms_module_Handler extends icms_core_ObjectHandler {
 	/**
+	 * Finds and initializes the current module.
+	 * @param bool $inAdmin Whether we are on the admin side or not
+	 */
+	static public function service($inAdmin = false) {
+		$module = null;
+		if ($inAdmin || file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
+			$url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
+			/* @var $module icms_module_Object */
+			$module = icms::handler('icms_module')->getByDirname($url_arr[2]);
+			if (!$inAdmin && (!$module || !$module->getVar('isactive'))) {
+				include_once ICMS_ROOT_PATH . '/header.php';
+				echo "<h4>" . _MODULENOEXIST . "</h4>";
+				include_once ICMS_ROOT_PATH . '/footer.php';
+				exit();
+			}
+		}
+		if (!self::checkModuleAccess($module, $inAdmin)) {
+			redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, false);
+		}
+		if ($module) {
+			icms_loadLanguageFile($module->getVar('dirname'), 'main');
+			if ($module->getVar('hasconfig') == 1
+				|| $module->getVar('hascomments') == 1
+				|| $module->getVar('hasnotification') == 1) {
+				$module->config = icms::$config->getConfigsByCat(0, $module->getVar('mid'));
+			}
+			$module->launch();
+		}
+		return $module ? $module : null;
+	}
+	/**
+	 * Checks if the current user can access the specified module
+	 * @param icms_module_Object $module
+	 * @param bool $inAdmin
+	 * @return bool
+	 */
+	static protected function checkModuleAccess($module, $inAdmin = false) {
+		if ($inAdmin && !icms::$user) return false;
+		/* @var $perm_handler icms_member_groupperm_Handler */
+		$perm_handler = icms::handler('icms_member_groupperm');
+		if ($inAdmin) {
+			if (!$module) {							// We are in /admin.php
+				return icms::$user->isAdmin(-1);
+			} else {
+				return $perm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
+			}
+		} elseif ($module) {
+			$groups = (icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+			return $perm_handler->checkRight('module_read', $module->getVar('mid'), $groups);
+		}
+		// We are in /something.php: let the page handle permissions
+		return true;
+	}
+
+	/**
 	 * holds an array of cached module references, indexed by module id
 	 *
 	 * @var    array

@@ -1719,7 +1719,7 @@ function icms_escapeValue($value, $quotes = true)
 	if(is_string($value))
 	{
 		if(get_magic_quotes_gpc) {$value = stripslashes($value);}
-		$value = mysql_real_escape_string($value);
+		$value = $GLOBALS['xoopsDB']->escape($value);
 		if($quotes) {$value = '"'.$value.'"';}
 	}
 	elseif($value === null) {$value = 'NULL';}
@@ -1728,7 +1728,7 @@ function icms_escapeValue($value, $quotes = true)
 	elseif(is_int($value)) {$value = (int) ($value);}
 	elseif(!is_numeric($value))
 	{
-		$value = mysql_real_escape_string($value);
+		$value = $GLOBALS['xoopsDB']->escape($value);
 		if($quotes) {$value = '"'.$value.'"';}
 	}
 	return $value;

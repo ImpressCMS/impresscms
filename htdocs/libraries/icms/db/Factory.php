@@ -1,35 +1,68 @@
 <?php
-/**
- * Creates a database object and connection
- *
- * @category	ICMS
- * @package		Database
- *
- * @copyright   The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id: Factory.php 20013 2010-08-25 01:26:18Z skenow $
- */
 
-class icms_db_Factory {
+
+abstract class icms_db_Factory {
 	/**
-	 * Lowest level of DB abstraction
+	 * PDO database adapter
+	 * @var icms_db_IConnection
+	 */
+	static protected $pdoInstance = false;
+	/**
+	 * Legacy database adapter
+	 * @var icms_db_legacy_Database
+	 */
+	static protected $xoopsInstance = false;
+
+	/**
+	 * Instanciate the PDO compatible DB adapter (if appropriate).
+	 * @throws RuntimeException
+	 */
+	static public function pdoInstance() {
+		if ( self::$pdoInstance !== false ) return self::$pdoInstance;
+		if (substr(XOOPS_DB_TYPE, 0, 4) != 'pdo.') return self::$pdoInstance = null;
+		if (!class_exists('PDO', false)) {
+			throw new RuntimeException("PDO extension not available.");
+		}
+		$driver = substr(XOOPS_DB_TYPE, 4);
+		$dsn = $driver . ':' . XOOPS_DB_DSN;
+		$class = "icms_db_{$driver}_Connection";
+		if (!class_exists($class)) {
+			$class = "icms_db_Connection";
+		}
+		return self::$pdoInstance = new $class($dsn, XOOPS_DB_USER, XOOPS_DB_PASS);
+	}
+	/**
+	 * Get a reference to the only instance of database class and connects to DB
 	 *
-	 * @todo this needs to be improved when we add another DB engine, other then MySQL
+	 * if the class has not been instantiated yet, this will also take
+	 * care of that
+	 *
 	 * @static
-	 * @return icms_db_legacy_Database
+	 * @return      object  Reference to the only instance of database class
 	 */
-	static public function &instance() {
-		return icms_db_legacy_Factory::instance();
+	static public function instance() {
+		if ( self::$xoopsInstance !== false ) return self::$xoopsInstance;
+		$allowWebChanges = defined('XOOPS_DB_PROXY') ? false : true;
+		if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
+			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
+		} else {
+			if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
+				$class = XOOPS_DB_ALTERNATIVE;
+			} else {
+				$class = 'icms_db_legacy_' . XOOPS_DB_TYPE;
+				$class .= $allowWebChanges ? '_Safe' : '_Proxy';
+			}
+			self::$xoopsInstance = new $class();
+			self::$xoopsInstance->setLogger(icms::$logger);
+			if (!self::$xoopsInstance->connect()) {
+				icms_loadLanguageFile('core', 'core');
+				trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
+			}
+		}
+		self::$xoopsInstance->setPrefix(XOOPS_DB_PREFIX);
+		return self::$xoopsInstance;
 	}
 
-	/**
-	 *
-	 * @deprecated Use icms_db_Factory::instance instead
-	 * @todo Remove in version 1.4
-	 * @return icms_db_legacy_Database
-	 */
-	static public function &getInstance() {
-		icms_core_Debug::setDeprecated('icms_db_Factory::instance', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return self::instance();
-	}
+
+
 }

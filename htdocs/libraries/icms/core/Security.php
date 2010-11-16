@@ -23,6 +23,19 @@ class icms_core_Security {
 	public $errors = array();
 
 	/**
+	 * Initialize the icms::$security service
+	 */
+	static public function service() {
+		$instance = new icms_core_Security();
+		$instance->checkSuperglobals();
+		if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$instance->checkReferer(XOOPS_DB_CHKREF)) {
+			define('XOOPS_DB_PROXY', 1);
+		}
+		icms_Event::attach('icms', 'loadService-config', array($instance, 'checkBadips'));
+		return $instance;
+	}
+
+	/**
 	 * Constructor
 	 *
 	 **/

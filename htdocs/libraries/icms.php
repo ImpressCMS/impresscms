@@ -31,24 +31,57 @@ abstract class icms {
 	 */
 	static public $preload;
 	/**
+	 * Security service
+	 * @var icms_core_Security
+	 */
+	static public $security;
+	/**
 	 * Logger
 	 * @var icms_core_Logger
 	 */
 	static public $logger;
 	/**
 	 * Database connection
-	 * @var icms_database_Facotry
+	 * @var icms_db_IConnection
+	 */
+	static public $db;
+	/**
+	 * Legacy database connection
+	 * @var icms_db_legacy_Database
 	 */
 	static public $xoopsDB;
-
+	/**
+	 * Configuration service
+	 * @var icms_config_Handler
+	 */
+	static public $config;
+	/**
+	 * Session service
+	 * @var icms_core_Session
+	 */
+	static public $session;
+	/**
+	 * Current user
+	 * @var icms_member_user_Object
+	 */
+	static public $user;
+	/**
+	 * Current module / application
+	 * @var icms_module_Object
+	 */
+	static public $module;
 	/**
 	 * Registered services definition
 	 * @var array
 	 */
 	static public $services = array(
 		"boot" => array(
-			"logger" => "icms_core_Logger",
-			"xoopsDB" => "icms_db_Factory",
+			'security'	=> array(array('icms_core_Security', 'service'), null),
+			"logger"	=> array(array("icms_core_Logger", 'instance'), null),
+			"db"		=> array(array('icms_db_Factory', 'pdoInstance'), null),
+			"xoopsDB"	=> array(array('icms_db_Factory', 'instance'), null),
+			'config'	=> array(array('icms_config_Handler', 'service'), null),
+			'session'	=> array(array('icms_core_Session', 'service'), null),
 		),
 		"optional" => array(),
 	);
@@ -81,6 +114,7 @@ abstract class icms {
 		// Initialize the autoloader
 		require_once dirname(__FILE__ )  . '/icms/Autoloader.php';
 		icms_Autoloader::setup();
+		register_shutdown_function(array(__CLASS__, 'shutdown'));
 	}
 	/**
 	 * Launch bootstrap and instanciate global services
@@ -91,17 +125,61 @@ abstract class icms {
 		self::$preload = icms_preload_Handler::getInstance();
 		self::$preload->triggerEvent('startCoreBoot');
 
-		foreach (self::$services['boot'] as $name => $class ) {
-			if (method_exists($class, "instance")) {
-				$inst = call_user_func(array($class,"instance"));
-			} else {
-				$inst = new $class;
-			}
-			self::$$name = $inst;
-			self::$preload->triggerEvent("loadService", array($name,$inst));
+		foreach (self::$services['boot'] as $name => $definition) {
+			list($factory, $args) = $definition;
+			self::loadService($name, $factory, $args);
 		}
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
+	}
+	/**
+	 * Instanciate the specified service
+	 * @param string $name
+	 * @param mixed $factory
+	 * @param array $args
+	 * @return object
+	 */
+	static public function loadService($name, $factory, $args = null) {
+			self::$$name = self::create($factory, $args);
+			icms_Event::trigger('icms', 'loadService', null, array('name' => $name, 'service' => self::$$name));
+			icms_Event::trigger('icms', 'loadService-' . $name, null, array('name' => $name, 'service' => self::$$name));
+	}
+	static public function launchModule() {
+		$isAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
+		self::loadService('module', array('icms_module_Handler', 'service'), array($isAdmin));
+	}
+
+	static public function shutdown() {
+		// Ensure the session service can write data before the DB connection is closed
+		if (session_id()) session_write_close();
+		// Ensure the logger can decorate output before objects are destroyed
+		while (ob_get_level()) {
+			ob_end_flush();
+		}
+	}
+	/**
+	 * Creates an object instance from an object definition.
+	 * The factory parameter can be:
+	 * - A fully qualified class name starting with '\': \MyClass or on PHP 5.3+ \ns\sub\MyClass
+	 * - A valid PHP callback
+	 *
+	 * @param mixed $factory
+	 * @param array $args Factory/Constructor arguments
+	 * @return object
+	 */
+	static public function create($factory, $args = null) {
+		if (is_string($factory) && substr($factory, 0, 1) == '\\') {	// Class name
+			$class = substr($factory, 1);
+			if (!isset($args)) {
+				$instance = new $class();
+			} else {
+				$reflection = new ReflectionClass($class);
+				$instance = $reflection->newInstanceArgs($args);
+			}
+		} else {
+			$instance = call_user_func_array($factory, $args);
+		}
+		return $instance;
 	}
 
 	/**
@@ -184,7 +262,7 @@ abstract class icms {
 					}
 				}
 			}
-			self::$handlers[$name] = $class ? new $class($GLOBALS["xoopsDB"]) : false;
+			self::$handlers[$name] = $class ? new $class(self::$xoopsDB) : false;
 		}
 		if (!self::$handlers[$name] && !$optional) {
 			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);

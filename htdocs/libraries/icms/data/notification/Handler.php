@@ -242,9 +242,9 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	public function &getNotification($module_id, $category, $item_id, $event, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int)$module_id));
-		$criteria->add(new icms_db_criteria_Item('not_category', mysql_real_escape_string($category)));
+		$criteria->add(new icms_db_criteria_Item('not_category', $GLOBALS['xoopsDB']->escape($category)));
 		$criteria->add(new icms_db_criteria_Item('not_itemid', (int)$item_id));
-		$criteria->add(new icms_db_criteria_Item('not_event', mysql_real_escape_string($event)));
+		$criteria->add(new icms_db_criteria_Item('not_event', $GLOBALS['xoopsDB']->escape($event)));
 		$criteria->add(new icms_db_criteria_Item('not_uid', (int)$user_id));
 		$objects = $this->getObjects($criteria);
 		if (count($objects) == 1) {
@@ -268,9 +268,9 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	public function isSubscribed($category, $item_id, $event, $module_id, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int)$module_id));
-		$criteria->add(new icms_db_criteria_Item('not_category', mysql_real_escape_string($category)));
+		$criteria->add(new icms_db_criteria_Item('not_category', $GLOBALS['xoopsDB']->escape($category)));
 		$criteria->add(new icms_db_criteria_Item('not_itemid', (int)$item_id));
-		$criteria->add(new icms_db_criteria_Item('not_event', mysql_real_escape_string($event)));
+		$criteria->add(new icms_db_criteria_Item('not_event', $GLOBALS['xoopsDB']->escape($event)));
 		$criteria->add(new icms_db_criteria_Item('not_uid', (int)$user_id));
 		return $this->getCount($criteria);
 	}
@@ -356,7 +356,7 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	public function getSubscribedEvents($category, $item_id, $module_id, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int) $module_id));
-		$criteria->add(new icms_db_criteria_Item('not_category', mysql_real_escape_string($category)));
+		$criteria->add(new icms_db_criteria_Item('not_category', $GLOBALS['xoopsDB']->escape($category)));
 		if ($item_id) {
 			$criteria->add(new icms_db_criteria_Item('not_itemid', (int) $item_id));
 		}
@@ -463,9 +463,9 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 		}
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int) $module_id));
-		$criteria->add(new icms_db_criteria_Item('not_category', mysql_real_escape_string($category)));
+		$criteria->add(new icms_db_criteria_Item('not_category', $GLOBALS['xoopsDB']->escape($category)));
 		$criteria->add(new icms_db_criteria_Item('not_itemid', (int) $item_id));
-		$criteria->add(new icms_db_criteria_Item('not_event', mysql_real_escape_string($event)));
+		$criteria->add(new icms_db_criteria_Item('not_event', $GLOBALS['xoopsDB']->escape($event)));
 		$mode_criteria = new icms_db_criteria_Compo();
 		$mode_criteria->add(new icms_db_criteria_Item('not_mode', XOOPS_NOTIFICATION_MODE_SENDALWAYS), 'OR');
 		$mode_criteria->add(new icms_db_criteria_Item('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE), 'OR');
@@ -494,7 +494,7 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 					if (!empty($not_config['tags_func'])) {
 						$tags_func = $not_config['tags_func'];
 						if (function_exists($tags_func)) {
-							$tags = $tags_func(mysql_real_escape_string($category), (int) $item_id, mysql_real_escape_string($event));
+							$tags = $tags_func($GLOBALS['xoopsDB']->escape($category), (int) $item_id, $GLOBALS['xoopsDB']->escape($event));
 						}
 					}
 				}
@@ -507,7 +507,7 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 					if (!empty($not_config['lookup_func'])) {
 						$lookup_func = $not_config['lookup_func'];
 						if (function_exists($lookup_func)) {
-							$item_info = $lookup_func(mysql_real_escape_string($category), (int) $item_id);
+							$item_info = $lookup_func($GLOBALS['xoopsDB']->escape($category), (int) $item_id);
 						}
 					}
 				}
@@ -579,7 +579,7 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int) $module_id));
-		$criteria->add(new icms_db_criteria_Item('not_category', mysql_real_escape_string($category)));
+		$criteria->add(new icms_db_criteria_Item('not_category', $GLOBALS['xoopsDB']->escape($category)));
 		$criteria->add(new icms_db_criteria_Item('not_itemid', (int) $item_id));
 		$criteria->add(new icms_db_criteria_Item('not_uid', (int) $user_id));
 		if (!is_array($events)) {
@@ -587,7 +587,7 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 		}
 		$event_criteria = new icms_db_criteria_Compo();
 		foreach ($events as $event) {
-			$event_criteria->add(new icms_db_criteria_Item('not_event', mysql_real_escape_string($event)), 'OR');
+			$event_criteria->add(new icms_db_criteria_Item('not_event', $GLOBALS['xoopsDB']->escape($event)), 'OR');
 		}
 		$criteria->add($event_criteria);
 		return $this->deleteAll($criteria);
@@ -619,7 +619,7 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	public function unsubscribeByItem($module_id, $category, $item_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int) $module_id));
-		$criteria->add(new icms_db_criteria_Item('not_category', mysql_real_escape_string($category)));
+		$criteria->add(new icms_db_criteria_Item('not_category', $GLOBALS['xoopsDB']->escape($category)));
 		$criteria->add(new icms_db_criteria_Item('not_itemid', (int) $item_id));
 		return $this->deleteAll($criteria);
 	}

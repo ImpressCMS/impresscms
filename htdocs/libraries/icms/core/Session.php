@@ -4,7 +4,8 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Session
+ * @package		icms_core
+ * @subpackage	icms_core_Session
  * @version		SVN: $Id$
  */
 /*
@@ -18,7 +19,49 @@
  * @package     Session
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_core_SessionHandler {
+class icms_core_Session {
+
+	/**
+	 * Initialize the session service
+	 * @return icms_core_Session
+	 */
+	static public function service() {
+		global $icmsConfig;
+		$instance = new icms_core_Session(icms::$xoopsDB);
+		session_set_save_handler(
+			array($instance, 'open'), array($instance, 'close'), array($instance, 'read'),
+			array($instance, 'write'), array($instance, 'destroy'), array($instance, 'gc')
+		);
+		$sslpost_name = isset($_POST[$icmsConfig['sslpost_name']]) ? $_POST[$icmsConfig['sslpost_name']] : "";
+		$instance->sessionStart($sslpost_name);
+
+		if (!empty($_SESSION['xoopsUserId'])) {
+			$user = icms::handler('icms_member')->getUser($_SESSION['xoopsUserId']);
+			if (!is_object($user)) {
+				// Regenerate a new session id and destroy old session
+				$instance->icms_sessionRegenerateId(true);
+				$_SESSION = array();
+			} else {
+				icms::$user = $user;
+				if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
+					// we need to secure cookie when using SSL
+					$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0;
+					setcookie(
+						$icmsConfig['session_name'], session_id(),
+						time()+(60*$icmsConfig['session_expire']), '/', '', $secure, 1
+					);
+				}
+				$user->setGroups($_SESSION['xoopsUserGroups']);
+				if (!isset($_SESSION['UserLanguage']) || empty($_SESSION['UserLanguage'])) {
+					$_SESSION['UserLanguage'] = $user->getVar('language');
+				}
+			}
+		}
+		return $instance;
+	}
+
+
+
 	/**
 	 * Database connection
 	 * @var	object
@@ -242,26 +285,17 @@ class icms_core_SessionHandler {
 		global $icmsConfig;
 
 		$uid = (int)$uid;
-
 		session_regenerate_id(true);
 		$_SESSION = array();
 		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
 			setcookie($icmsConfig['session_name'], '', time()- 3600, '/',  '', 0, 0);
 		}
-		// autologin hack GIJ (clear autologin cookies)
-		$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH
-				: preg_replace('?http://[^/]+(/.*)$?', '$1', ICMS_URL);
-		if ($icms_cookie_path == ICMS_URL) {
-			$icms_cookie_path = '/';
-		}
-		setcookie('autologin_uname', '', time() - 3600, $icms_cookie_path, '', 0, 0);
-		setcookie('autologin_pass', '', time() - 3600, $icms_cookie_path, '', 0, 0);
-		// end of autologin hack GIJ
 		// clear entry from online users table
 		if ($uid > 0) {
 			$online_handler = icms::handler('icms_core_Online');
 			$online_handler->destroy($uid);
 		}
+		icms_Event::trigger('icms_core_Session', 'sessionClose', $this);
 		return;
 	}
 
@@ -296,12 +330,8 @@ class icms_core_SessionHandler {
 		session_start();
 
 		self::removeExpiredCustomSession('xoopsUserId');
-
+		icms_Event::trigger('icms_core_Session', 'sessionStart', $this);
 		return;
-	}
-
-	public function sessionAutologin($autologinName, $autologinPass, $_POST) {
-		return self::autologinSession($autologinName, $autologinPass, $_POST);
 	}
 
 	// Internal function. Returns sha256 from fingerprint.
@@ -443,88 +473,4 @@ class icms_core_SessionHandler {
 		return $this->db->queryF($sql);
 	}
 
-	private function autologinSession($autologinName, $autologinPass, $_POST) {
-		// autologin V2 GIJ
-		if (!empty($_POST)) {
-			$_SESSION['AUTOLOGIN_POST'] = $_POST;
-			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-			redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
-		} elseif (!empty($_SERVER['QUERY_STRING']) && substr($_SERVER['SCRIPT_NAME'], -19) != 'session_confirm.php') {
-			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-			redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
-		}
-		// end of autologin V2
-
-		// redirect to ICMS_URL/ when query string exists (anti-CSRF) V1 code
-		/* if (! empty($_SERVER['QUERY_STRING'])) {
-		redirect_header(ICMS_URL . '/' , 0 , 'Now, logging in automatically') ;
-		exit ;
-		}*/
-
-		$myts =& icms_core_Textsanitizer::getInstance();
-		$uname = $myts->stripSlashesGPC($autologinName);
-		$pass = $myts->stripSlashesGPC($autologinPass);
-		if (empty($uname) || is_numeric($pass)) {
-			$user = false ;
-		} else {
-			// V3
-			$uname4sql = addslashes($uname);
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname4sql));
-			$user_handler = icms::handler('icms_member_user');
-			$users =& $user_handler->getObjects($criteria, false);
-			if (empty($users) || count($users) != 1) {
-				$user = false ;
-			} else {
-				// V3.1 begin
-				$user = $users[0] ;
-				$old_limit = time() - (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
-				list($old_Ynj, $old_encpass) = explode(':', $pass);
-				if (strtotime($old_Ynj) < $old_limit || md5($user->getVar('pass') .
-						ICMS_DB_PASS . ICMS_DB_PREFIX . $old_Ynj) != $old_encpass)
-				{
-					$user = false;
-				}
-				// V3.1 end
-			}
-			unset($users);
-		}
-		$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH
-			: preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
-		if ($icms_cookie_path == ICMS_URL) {
-			$icms_cookie_path = '/';
-		}
-		if (false != $user && $user->getVar('level') > 0) {
-			// update time of last login
-			$user->setVar('last_login', time());
-			if (!$member_handler->insertUser($user, true)) {
-			}
-			//$_SESSION = array();
-			$_SESSION['xoopsUserId'] = $user->getVar('uid');
-			$_SESSION['xoopsUserGroups'] = $user->getGroups();
-
-			$user_theme = $user->getVar('theme');
-			$user_language = $user->getVar('language');
-			if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
-				$_SESSION['xoopsUserTheme'] = $user_theme;
-			}
-			$_SESSION['UserLanguage'] = $user_language;
-
-			// update autologin cookies
-			// we need to secure cookie when using SSL
-			$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0;
-			// 1 week default
-			$expire = time()
-					+ (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
-			setcookie('autologin_uname', $uname, $expire, $icms_cookie_path, '', $secure, 1);
-			// V3.1
-			$Ynj = date('Y-n-j');
-			setcookie(
-				'autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
-				$expire, $icms_cookie_path, '', $secure, 1
-			);
-		} else {
-			setcookie('autologin_uname', '', time() - 3600, $icms_cookie_path, '', 0, 0);
-			setcookie('autologin_pass', '', time() - 3600, $icms_cookie_path, '', 0, 0);
-		}
-	}
 }
