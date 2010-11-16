@@ -42,7 +42,7 @@ abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	 */
 	public $allowWebChanges = false;
 
-	public function __construct( $connection, $allowWebChanges = false ) {
+	public function __construct( $connection = null, $allowWebChanges = false ) {
 		$this->allowWebChanges = $allowWebChanges;
 	}
 	public function setLogger($logger) {
