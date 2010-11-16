@@ -141,7 +141,7 @@ if ($op == 'login') {
 }
 
 if ($op == 'logout') {
-	$sessHandler = icms::handler('icms_core_Session');
+	$sessHandler = icms::$session;
 	$sessHandler->sessionClose($icmsUser->getVar('uid'));
 	redirect_header(ICMS_URL.'/index.php', 3, _US_LOGGEDOUT.'<br />'._US_THANKYOUFORVISIT);
 }

@@ -108,7 +108,7 @@ class icms_auth_Ldap extends icms_auth_Object {
 			if (!$userDN) return false;
 			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userDN, stripslashes($pwd));
-			$sess_handler = icms::handler('icms_core_Session');
+			$sess_handler = icms::$session;
 			if ($authenticated) {
 				$sess_handler->securityLevel = 3;
 				$sess_handler->check_ip_blocks = 2;

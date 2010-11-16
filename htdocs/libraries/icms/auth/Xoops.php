@@ -42,7 +42,7 @@ class icms_auth_Xoops extends icms_auth_Object {
 	public function authenticate($uname, $pwd = null) {
 		$member_handler = icms::handler('icms_member');
 		$user = $member_handler->loginUser($uname, $pwd);
-		$sess_handler = icms::handler('icms_core_Session');
+		$sess_handler = icms::$session;
 		$sess_handler->enableRegenerateId = true;
 		$sess_handler->sessionOpen();
 		if ($user == false) {
