@@ -3,12 +3,6 @@
 
 interface icms_db_legacy_IDatabase {
 	/**
-	 * Public constructor
-	 * @var mixed $connection Connection handler or DSN definition
-	 * @var bool $allowWebChanges Whether to allow DB modifications
-	 */
-	public function __construct( $connection, $allowWebChanges = false );
-	/**
 	 * assign a {@link icms_core_Logger} object to the database
 	 *
 	 * @see icms_core_Logger
