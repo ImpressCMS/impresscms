@@ -20,7 +20,8 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database {
 		return true;
 	}
 	public function close() {
-		return true;
+ 		$this->pdo = null;
+  		return true;
 	}
 	public function quoteString($string) {
 		return $this->pdo->quote($string);
