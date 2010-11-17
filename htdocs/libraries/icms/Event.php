@@ -11,7 +11,6 @@
  */
 
 class icms_Event {
-	// ------------------------------------------ STATIC PROPERTIES ------------------------------------------
 	/**
 	 * Registered event handlers
 	 * @var array
@@ -22,15 +21,16 @@ class icms_Event {
 	 * @var array
 	 */
 	static protected $events = array();
-	// ------------------------------------------ STATIC METHODS ------------------------------------------
+
 	/**
 	 * Returns information about a fired event.
 	 * @param int $index 0 for current, 1 for parent (if current event due to another event), and so on...
 	 * @return icms_Event
 	 */
-	static public function current( $index = 0 ) {
-		return isset( self::$events[ $index ] ) ? self::$events[ $index ] : false;
+	static public function current($index = 0) {
+		return isset(self::$events[$index]) ? self::$events[$index] : false;
 	}
+
 	/**
 	 * Registers an event handler
 	 *
@@ -51,11 +51,11 @@ class icms_Event {
 	 * @param mixed $callback
 	 * @return void
 	 */
-	static public function attach( $namespace, $name, $callback ) {
-		if ( !isset( self::$handlers[$namespace][$name] ) ) {
+	static public function attach($namespace, $name, $callback) {
+		if (!isset(self::$handlers[$namespace][$name])) {
 			self::$handlers[$namespace][$name] = array();
 		}
-		self::$handlers[$namespace][$name][] =$callback;
+		self::$handlers[$namespace][$name][] = $callback;
 	}
 	/**
 	 * Detach the specified event handler.
@@ -63,16 +63,17 @@ class icms_Event {
 	 * @param string $name
 	 * @param mixed $callback
 	 */
-	static public function detach( $namespace, $name, $callback ) {
-		if ( isset( self::$handlers[$namespace][$name] ) ) {
-			foreach ( self::$handlers[$namespace][$name] as $k => $handler ) {
-				if ( $handler === $callback ) {
-					unset( self::$handlers[$namespace][$name][$k] );
+	static public function detach($namespace, $name, $callback) {
+		if (isset(self::$handlers[$namespace][$name])) {
+			foreach (self::$handlers[$namespace][$name] as $k => $handler) {
+				if ($handler === $callback) {
+					unset(self::$handlers[$namespace][$name][$k]);
 					return;
 				}
 			}
 		}
 	}
+
 	/**
 	 * Triggers an event.
 	 *
@@ -82,68 +83,71 @@ class icms_Event {
 	 * @param array $parameters Event parameters
 	 * @return icms_Event
 	 */
-	static public function trigger( $namespace, $name, $source, $parameters = array() ) {
+	static public function trigger($namespace, $name, $source, $parameters = array()) {
 		$cancancel = false;
-		if ( substr( $name, 0, 1 ) == "*" ) {
+		if (substr($name, 0, 1) == "*") {
 			$cancancel = true;
-			$name = substr( $name, 1 );
+			$name = substr($name, 1);
 		}
-		$event = new icms_Event( $namespace, $name, $source, $parameters, $cancancel );
-		array_unshift( self::$events, $event );
-		foreach ( array( "*", $name ) as $handlers ) {
-			if ( isset( self::$handlers[$namespace][$handlers] ) ) {
-				foreach ( self::$handlers[$namespace][$handlers] as $callback ) {
-					call_user_func( $callback, $parameters, $event );
-					if ( $cancancel && $event->canceled ) break 2;
+		$event = new icms_Event($namespace, $name, $source, $parameters, $cancancel);
+		array_unshift(self::$events, $event);
+		foreach (array("*", $name) as $handlers) {
+			if (isset(self::$handlers[$namespace][$handlers])) {
+				foreach (self::$handlers[$namespace][$handlers] as $callback) {
+					call_user_func($callback, $parameters, $event);
+					if ($cancancel && $event->canceled) break 2;
 				}
 			}
 		}
-		return array_shift( self::$events );
+		return array_shift(self::$events);
 	}
-	// ------------------------------------------ INSTANCE PROPERTIES ------------------------------------------
+
 	/**
 	 * Namespace this event belongs to.
 	 * @var string
 	 * @readonly
 	 */
 	public $namespace = "";
+
 	/**
 	 * Name of this event
 	 * @var string
 	 * @readonly
 	 */
 	public $name = "";
+
 	/**
 	 * Object that fired this event.
 	 * @var object
 	 * @readonly
 	 */
 	public $source;
+
 	/**
 	 * Parameters
 	 * @var array()
 	 * @readonly
 	 */
 	public $parameters = array();
+
 	/**
 	 * Whether this event can be canceled or not.
 	 * @var bool
 	 * @readonly
 	 */
 	public $canCancel = false;
+
 	/**
 	 * Whether this event has been canceled or not.
 	 * @var bool
 	 */
 	public $canceled = false;
-	// ------------------------------------------ CONSTRUCTOR ------------------------------------------
-	public function __construct( $namespace, $name, $source, $params = array(), $canCancel = false ) {
-		$this->namespace	= $namespace;
-		$this->name			= $name;
-		$this->source		= $source;
-		$this->parameters	= $params;
-		$this->canCancel	= $canCancel;
+
+	public function __construct($namespace, $name, $source, $params = array(), $canCancel = false) {
+		$this->namespace = $namespace;
+		$this->name	= $name;
+		$this->source = $source;
+		$this->parameters = $params;
+		$this->canCancel = $canCancel;
 	}
-
 }
-

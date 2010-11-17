@@ -76,12 +76,12 @@ abstract class icms {
 	 */
 	static public $services = array(
 		"boot" => array(
-			'security'	=> array(array('icms_core_Security', 'service'), null),
-			"logger"	=> array(array("icms_core_Logger", 'instance'), null),
-			"db"		=> array(array('icms_db_Factory', 'pdoInstance'), null),
-			"xoopsDB"	=> array(array('icms_db_Factory', 'instance'), null),
-			'config'	=> array(array('icms_config_Handler', 'service'), null),
-			'session'	=> array(array('icms_core_Session', 'service'), null),
+			'security'	=> array(array('icms_core_Security', 'service'), array()),
+			"logger"	=> array(array("icms_core_Logger", 'instance'), array()),
+			"db"		=> array(array('icms_db_Factory', 'pdoInstance'), array()),
+			"xoopsDB"	=> array(array('icms_db_Factory', 'instance'), array()),
+			'config'	=> array(array('icms_config_Handler', 'service'), array()),
+			'session'	=> array(array('icms_core_Session', 'service'), array()),
 		),
 		"optional" => array(),
 	);
@@ -94,6 +94,7 @@ abstract class icms {
 	static public $paths = array(
 		'www' => array(), 'modules' => array(), 'themes' => array(),
 	);
+
 	/** @var array */
 	static public $urls = false;
 
@@ -116,6 +117,7 @@ abstract class icms {
 		icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
 	}
+
 	/**
 	 * Launch bootstrap and instanciate global services
 	 * @return void
@@ -132,6 +134,7 @@ abstract class icms {
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
 	}
+
 	/**
 	 * Instanciate the specified service
 	 * @param string $name
@@ -139,11 +142,12 @@ abstract class icms {
 	 * @param array $args
 	 * @return object
 	 */
-	static public function loadService($name, $factory, $args = null) {
+	static public function loadService($name, $factory, $args = array()) {
 			self::$$name = self::create($factory, $args);
 			icms_Event::trigger('icms', 'loadService', null, array('name' => $name, 'service' => self::$$name));
 			icms_Event::trigger('icms', 'loadService-' . $name, null, array('name' => $name, 'service' => self::$$name));
 	}
+
 	static public function launchModule() {
 		$isAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
 		self::loadService('module', array('icms_module_Handler', 'service'), array($isAdmin));
@@ -157,6 +161,7 @@ abstract class icms {
 			ob_end_flush();
 		}
 	}
+
 	/**
 	 * Creates an object instance from an object definition.
 	 * The factory parameter can be:
@@ -167,7 +172,7 @@ abstract class icms {
 	 * @param array $args Factory/Constructor arguments
 	 * @return object
 	 */
-	static public function create($factory, $args = null) {
+	static public function create($factory, $args = array()) {
 		if (is_string($factory) && substr($factory, 0, 1) == '\\') {	// Class name
 			$class = substr($factory, 1);
 			if (!isset($args)) {
@@ -200,6 +205,7 @@ abstract class icms {
 		}
 		return !isset(self::$paths[$root][1]) ? '' : (self::$paths[$root][1] . '/' . $path );
 	}
+
 	/**
 	 * Convert a ImpressCMS path to an URL
 	 * @param 	string	$url
@@ -208,6 +214,7 @@ abstract class icms {
 	static public function url($url) {
 		return (false !== strpos($url, '://' ) ? $url : self::path($url, true ));
 	}
+
 	/**
 	 * Build an URL with the specified request params
 	 * @param 	string 	$url

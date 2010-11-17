@@ -16,7 +16,6 @@
  *
  */
 class icms_BootstrapEventHandler {
-
 	static public function setup() {
 		icms_Event::attach('icms', 'loadService', array(__CLASS__, 'loadService'));
 		icms_Event::attach('icms', 'finishcoreboot', array(__CLASS__, 'finishCoreBoot'));
@@ -24,7 +23,7 @@ class icms_BootstrapEventHandler {
 	}
 
 	/**
-	 * Called after the kernel initializes a service
+	 * Called after the kernel initializes a service in icms::loadService
 	 * @return	void
 	 */
 	static public function loadService($params, $event) {
@@ -35,10 +34,12 @@ class icms_BootstrapEventHandler {
 				break;
 		}
 	}
+
 	static public function finishCoreBoot() {
 		icms::$logger->stopTime('ICMS Boot');
 		icms::$logger->startTime('Module init');
 	}
+
 	/**
 	 * Create variables necessary for XOOPS / ICMS < 1.4 BC
 	 * @param array $params
@@ -107,4 +108,5 @@ class icms_BootstrapEventHandler {
 
 	}
 }
+
 icms_BootstrapEventHandler::setup();
