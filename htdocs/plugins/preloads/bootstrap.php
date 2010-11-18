@@ -55,11 +55,11 @@ class icms_BootstrapEventHandler {
 			} elseif (isset($_SERVER['PATH_TRANSLATED']) && !isset($_SERVER['SCRIPT_FILENAME'])) {
 				$_SERVER['SCRIPT_FILENAME'] =& $_SERVER['PATH_TRANSLATED'];	 // For IIS/2K now I think :-(
 			}
-			if (empty($_SERVER[ 'REQUEST_URI' ])) {
+			if (empty($_SERVER['REQUEST_URI'])) {
 				// Not defined by IIS
 				// Under some configs, IIS makes SCRIPT_NAME point to php.exe :-(
-				if (!( $_SERVER[ 'REQUEST_URI' ] = @$_SERVER['PHP_SELF'] )) {
-					$_SERVER[ 'REQUEST_URI' ] = $_SERVER['SCRIPT_NAME'];
+				if (!($_SERVER['REQUEST_URI'] = @$_SERVER['PHP_SELF'])) {
+					$_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
 				}
 				if (isset($_SERVER[ 'QUERY_STRING' ])) {
 					$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
@@ -97,10 +97,10 @@ class icms_BootstrapEventHandler {
 				$GLOBALS['icmsModule'] = $GLOBALS['xoopsModule'] = icms::$module;
 				if (icms::$user) {
 					$GLOBALS['xoopsUserIsAdmin'] = $GLOBALS['icmsUserIsAdmin'] =
-							icms::$user->isAdmin(icms::$module ? icms::$module->getVar('mid') : 1);
+						icms::$user->isAdmin(icms::$module ? icms::$module->getVar('mid') : 1);
 				}
 				if (icms::$module) {
-					$GLOBALS['moduleConfig'] = $GLOBALS['xoopsModuleConfig'] = icms::$module->config;
+					$GLOBALS['icmsModuleConfig'] = $GLOBALS['xoopsModuleConfig'] = icms::$module->config;
 				}
 				break;
 			}

@@ -29,13 +29,15 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		$module = null;
 		if ($inAdmin || file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 			$url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-			/* @var $module icms_module_Object */
-			$module = icms::handler('icms_module')->getByDirname($url_arr[2]);
-			if (!$inAdmin && (!$module || !$module->getVar('isactive'))) {
-				include_once ICMS_ROOT_PATH . '/header.php';
-				echo "<h4>" . _MODULENOEXIST . "</h4>";
-				include_once ICMS_ROOT_PATH . '/footer.php';
-				exit();
+			if (isset($url_arr[2])) {
+				/* @var $module icms_module_Object */
+				$module = icms::handler('icms_module')->getByDirname($url_arr[2]);
+				if (!$inAdmin && (!$module || !$module->getVar('isactive'))) {
+					include_once ICMS_ROOT_PATH . '/header.php';
+					echo "<h4>" . _MODULENOEXIST . "</h4>";
+					include_once ICMS_ROOT_PATH . '/footer.php';
+					exit();
+				}
 			}
 		}
 		if (!self::checkModuleAccess($module, $inAdmin)) {
