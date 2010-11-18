@@ -1,34 +1,35 @@
 function lookup(inputString) {
  if(inputString.length < 3) {
-  $('#suggestions').fadeOut(); // Hide the suggestions box
+  jQuery('#suggestions').fadeOut(); // Hide the suggestions box
  } else {
-  $.post(""+suggestpath+"", {queryString: ""+inputString+""}, function(data) { // Do an AJAX call
-   $('#suggestions').fadeIn(); // Show the suggestions box
-   $('#suggestions').html(data); // Fill the suggestions box
+  jQuery.post(""+suggestpath+"", {queryString: ""+inputString+""}, function(data) { // Do an AJAX call
+   jQuery('#suggestions').fadeIn(); // Show the suggestions box
+   jQuery('#suggestions').html(data); // Fill the suggestions box
   });
  }
 }
 
 var currentSelection = 0;
 var currentUrl = '';
-$(document).ready(function() {
+jQuery(document).ready(function() {
 	// Register keypress events on the whole document
-	$(document).keypress(function(e) {
+	jQuery(document).keypress(function(e) {
+	 if(jQuery('#inputString').has(':focus')) {
 		switch(e.keyCode) { 
 			case 37:
-				$('#inputString').focus().blur(); // Disable keyboard
+				jQuery('#inputString').blur(); // Disable keyboard
 			break;
 			// User pressed "up" arrow
 			case 38:
 				navigate('up');
 			break;
 			case 39:
-				$('#suggestions ul li a:first').focus(); // Enable keyboard
+				jQuery('#suggestions ul li a:first').focus(); // Enable keyboard
 			break;
 			// User pressed "down" arrow
 			case 40:
 				navigate('down');
-				$('#suggestions ul li a:first').blur();
+				jQuery('#suggestions ul li a:first').blur();
 			break;
 			// User pressed "enter"
 			case 13:
@@ -37,20 +38,20 @@ $(document).ready(function() {
 				}
 			break;
 		}
+	}
 	});
-	
 	// Add data to let the hover know which index they have
-	for(var i = 0; i < $("#suggestions ul li a").size(); i++) {
-		$("#suggestions ul li a").eq(i).data("number", i);
+	for(var i = 0; i < jQuery("#suggestions ul li a").size(); i++) {
+		jQuery("#suggestions ul li a").eq(i).data("number", i);
 	}
 	
 	// Simulote the "hover" effect with the mouse
-	$("#suggestions ul li a").hover(
+	jQuery("#suggestions ul li a").hover(
 		function () {
-			currentSelection = $(this).data("number");
+			currentSelection = jQuery(this).data("number");
 			setSelected(currentSelection);
 		}, function() {
-			$("#suggestions ul li a").removeClass("itemhover");
+			jQuery("#suggestions ul li a").removeClass("itemhover");
 			currentUrl = '';
 		}
 	);
@@ -58,7 +59,7 @@ $(document).ready(function() {
 
 function navigate(direction) {
 	// Check if any of the menu items is selected
-	if($("#suggestions ul li .itemhover").size() == 0) {
+	if(jQuery("#suggestions ul li .itemhover").size() == 0) {
 		currentSelection = -1;
 	}
 	
@@ -67,7 +68,7 @@ function navigate(direction) {
 			currentSelection--;
 		}
 	} else if (direction == 'down') {
-		if(currentSelection != $("#suggestions ul li").size() -1) {
+		if(currentSelection != jQuery("#suggestions ul li").size() -1) {
 			currentSelection++;
 		}
 	}
@@ -75,7 +76,7 @@ function navigate(direction) {
 }
 
 function setSelected(menuitem) {
-	$("#suggestions ul li a").removeClass("itemhover");
-	$("#suggestions ul li a").eq(menuitem).addClass("itemhover");
-	currentUrl = $("#suggestions ul li a").eq(menuitem).attr("href");
+	jQuery("#suggestions ul li a").removeClass("itemhover");
+	jQuery("#suggestions ul li a").eq(menuitem).addClass("itemhover");
+	currentUrl = jQuery("#suggestions ul li a").eq(menuitem).attr("href");
 }

@@ -120,9 +120,11 @@ if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 }
 
 $xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/ui/ui.min.js', array('type' => 'text/javascript'));
+$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/css/ui-smoothness/ui.css', array('media' => 'screen'));
+$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/jgrowl'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css', array('media' => 'screen'));
 if (! empty( $_SESSION['redirect_message'] )) {
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jgrowl.js', array('type' => 'text/javascript'));
-	$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/jgrowl'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css', array('media' => 'screen'));
 	$xoTheme->addScript('', array('type' => 'text/javascript'), '
 	if (!window.console || !console.firebug) {
 		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
@@ -140,13 +142,8 @@ if (! empty( $_SESSION['redirect_message'] )) {
 	unset( $_SESSION['redirect_message'] ) ;
 }
 
-$xoTheme->addScript(ICMS_URL.'/libraries/jquery/ui/ui.core.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_URL.'/libraries/jquery/ui/ui.dialog.js', array('type' => 'text/javascript'));
-$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
-
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/jquery.colorbox-min.js');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
 
 if (@is_object($xoTheme->plugins['icms_view_PageBuilder'])) {
 	$aggreg =& $xoTheme->plugins['icms_view_PageBuilder'];

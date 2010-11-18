@@ -1,25 +1,25 @@
-$(function() {
-   $("span.helptext").hide();
-   $("img.helptip").hover(function() {
-     $(this).nextAll().each( function() {
-    if ($(this).filter('span.helptext').is(":visible")) {
-     $(this).filter('span.helptext').toggle("slow");
+jQuery(function() {
+jQuery("span.helptext").hide();
+   jQuery("img.helptip").hover(function() {
+     jQuery(this).nextAll().each( function() {
+    if (jQuery(this).filter('span.helptext').is(":visible")) {
+     jQuery(this).filter('span.helptext').toggle("slow");
        return false;
     } else {
-	$("span.helptext").fadeOut("slow");
+	jQuery("span.helptext").fadeOut("slow");
     }
-      if ($(this).filter('img.helptip').length) {
+      if (jQuery(this).filter('img.helptip').length) {
        return false;
       }
-     $(this).filter('span.helptext').toggle("slow");
+     jQuery(this).filter('span.helptext').toggle("slow");
     });
-   });
+   }, function() {return false;});
 
- $('input.checkemall').click(function() {
-  if($(this).is(":checked")) {
-   $(this).parents(".grouped").find("input").attr("checked",true);
+jQuery('input.checkemall').click(function() {
+  if(jQuery(this).is(":checked")) {
+   jQuery(this).parents(".grouped").find("input").attr("checked",true);
   } else {
-   $(this).parents(".grouped").find("input").attr("checked",false);
+   jQuery(this).parents(".grouped").find("input").attr("checked",false);
   }
  });
 });

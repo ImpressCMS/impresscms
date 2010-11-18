@@ -2,6 +2,8 @@
 div.jGrowl {
 	padding: 			10px;
 	z-index: 			9999;
+	color: 				#fff;
+	font-size: 			12px;
 }
 
 /** Special IE6 Style Positioning **/
@@ -74,11 +76,12 @@ div.center div.jGrowl-notification, div.center div.jGrowl-closer {
 	margin-right: 		auto;
 }
 
-div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
-	background-color: 		#000;
+div.jGrowl div.jGrowl-notification, div.jGrowl .ui-state-highlight, div.jGrowl div.jGrowl-closer {
+	border: 				none;
+	background: 			#000;
 	color: 					#fff;
-	opacity: 				.85;
-	filter: 				alpha(opacity = 85);
+	opacity:				.75;
+	filter:					alpha(opacity=75);
 	zoom: 					1;
 	width: 					235px;
 	padding: 				10px;
@@ -88,8 +91,6 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
 	font-size: 				12px;
 	text-align: 			left;
 	display: 				none;
-	-moz-border-radius: 	5px;
-	-webkit-border-radius:	5px;
 }
 
 div.jGrowl div.jGrowl-notification {
