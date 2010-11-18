@@ -106,7 +106,6 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		$pass = substr(md5(time()), 0, 8);
 		$salt = substr(md5(time() * 2), 0, 12);
 		$sql = sprintf("UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'", $this->db->prefix('users'), $pass, $salt, (int) ($user->getVar('uid')));
-		$sql2 = sprintf("DELETE FROM %s WHERE to_userid = '%u'", $this->db->prefix('priv_msgs'), (int) ($user->getVar('uid')));
 		if (false != $force) {
 			$result = $this->db->queryF($sql);
 		} else {
@@ -114,16 +113,6 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		}
 		if (!$result) {
 			return false;
-		} else {
-			$sql = sprintf("DELETE FROM %s WHERE to_userid = '%u'", $this->db->prefix('priv_msgs'), (int) ($user->getVar('uid')));
-			if (false != $force) {
-				$result = $this->db->queryF($sql);
-			} else {
-				$result = $this->db->query($sql);
-			}
-			if (!result) {
-				return false;
-			}
 		}
 		return true;
 	}
