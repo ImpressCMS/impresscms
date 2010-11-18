@@ -98,6 +98,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @param object $user reference to the user to delete
 	 * @param bool $force
 	 * @return bool FALSE if failed.
+	 * @TODO we need some kind of error message instead of just a false return to inform whether user was deleted aswell as PM messages.
 	 */
 	public function delete(&$user, $force = false) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
@@ -105,12 +106,25 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		$pass = substr(md5(time()), 0, 8);
 		$salt = substr(md5(time() * 2), 0, 12);
 		$sql = sprintf("UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'", $this->db->prefix('users'), $pass, $salt, (int) ($user->getVar('uid')));
+		$sql2 = sprintf("DELETE FROM %s WHERE to_userid = '%u'", $this->db->prefix('priv_msgs'), (int) ($user->getVar('uid')));
 		if (false != $force) {
 			$result = $this->db->queryF($sql);
 		} else {
 			$result = $this->db->query($sql);
 		}
-		if (!$result) {return false;}
+		if (!$result) {
+			return false;
+		} else {
+			$sql = sprintf("DELETE FROM %s WHERE to_userid = '%u'", $this->db->prefix('priv_msgs'), (int) ($user->getVar('uid')));
+			if (false != $force) {
+				$result = $this->db->queryF($sql);
+			} else {
+				$result = $this->db->query($sql);
+			}
+			if (!result) {
+				return false;
+			}
+		}
 		return true;
 	}
 
@@ -168,6 +182,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param object $criteria {@link icms_db_criteria_Element}
 	 * @return bool FALSE if deletion failed
+	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
 	 */
 	public function deleteAll($criteria = null) {
 		$pass = substr(md5(time()), 0, 8);
