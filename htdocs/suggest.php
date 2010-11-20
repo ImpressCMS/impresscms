@@ -27,7 +27,7 @@ if (isset($_POST['queryString'])) {
 				$catid = 0;
 				while ($result = $xoopsDB->fetchArray($query)) {
 					echo '<li><a href="' . ICMS_URL . $result['url'] . '">';
-					echo '<img src="'.$result['img'].'" alt="" />';
+					echo '<img src="'.ICMS_URL.$result['img'].'" alt="" />';
 
 					$name = $result['name'];
 					if (strlen($name) > 35) {

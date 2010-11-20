@@ -665,12 +665,24 @@ define("_MD_AM_SMTPSECUREDESC","Authentication Method used for SMTPAuthenticatio
 define("_MD_AM_SMTPAUTHPORT","SMTP Port");
 define("_MD_AM_SMTPAUTHPORTDESC","The Port use by your SMTP Mail server (default is 465)");
 
-// added in 1.3 beta
+// added in 1.3
 define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT","Enable IE Flash Compatibility");
 define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC","If true, HTML Purifier will generate Internet Explorer compatibility code for all object code. This is highly recommended if you enable HTML.SafeObject.");
 define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRN","Allow FullScreen in Flash objects");
 define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC","If true, HTML Purifier will allow use of 'allowFullScreen' in embedded flash content when using HTML.SafeObject.");
 define("_MD_AM_PURIFIER_CORE_NORMALNEWLINES","Normalize Newlines");
 define("_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC","Whether or not to normalize newlines to the operating system default. When false, HTML Purifier will attempt to preserve mixed newline files.");
-
+define('_MD_AM_AUTHENTICATION_DSC', 'Manage security settings related to accessibility. Settings that will effect how users accounts are handled.');
+define('_MD_AM_AUTOTASKS_PREF_DSC', 'Preferences for the Auto Tasks system.');
+define('_MD_AM_CAPTCHA_DSC', 'Manage the settings used by captcha throughout your site.');
+define('_MD_AM_GENERAL_DSC', 'The primary settings page for basic information needed by the system.');
+define('_MD_AM_PURIFIER_DSC', 'HTMLPurifier is used to protect your site against common attack methods.');
+define('_MD_AM_MAILER_DSC', 'Configure how your site will handle mail.');
+define('_MD_AM_METAFOOTER_DSC', 'Manage your meta information and site footer as well as your crawler options.');
+define('_MD_AM_MULTILANGUAGE_DSC', 'Manage your sites Multi-language settings. Enable, and configure what languages are available and how they are triggered.');
+define('_MD_AM_PERSON_DSC', 'Personalize the system with custom logos and other settings.');
+define('_MD_AM_PLUGINS_DSC', 'Select which plugins are used and available to be used throughout your site.');
+define('_MD_AM_SEARCH_DSC', 'Manage how the search function operates for your users.');
+define('_MD_AM_USERSETTINGS_DSC', 'Manage how users register for your site. ser names length, formatting and password options.');
+define('_MD_AM_CENSOR_DSC', 'Manage the language that is not permitted on your site.');
 ?>

@@ -91,6 +91,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				$newDbVersion = 40;
 			}
 			if (!$abortUpdate) {
+				icms_loadLanguageFile('system', 'admin');
 				$search_cats = array(
 					"NULL, '" . _MD_AM_ADSENSES . "', '/modules/system/admin.php?fct=adsense'",
 					"NULL, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin.php?fct=autotasks'",
@@ -138,42 +139,43 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				$newDbVersion = 40;
 			}
 			if (!$abortUpdate) {
-				icms_loadLanguageFile( 'system', 'preferences', TRUE );
+				icms_loadLanguageFile('system', 'admin');
+				icms_loadLanguageFile('system', 'preferences', TRUE);
 				$search_items = array(
-					"NULL, 1, '" . _MD_AM_ADSENSES . "', '/modules/system/admin/adsense/images/adsense_small.png', 'Adsenses are tags that you can define and use anywhere on your ImpressCMS site. ', '/modules/system/admin.php?fct=adsense'",
-					"NULL, 2, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin/autotasks/images/autotasks_small.png', 'Auto Tasks allow you to create a schedule of actions that the system will perform automatically.', '/modules/system/admin.php?fct=autotasks'",
-					"NULL, 3, '" . _MD_AM_AVATARS . "', '/modules/system/admin/avatars/images/avatars_small.png', 'Manage the avatars available to the users of your website.', '/modules/system/admin.php?fct=avatars'",
-					"NULL, 4, '" . _MD_AM_BANS . "', '/modules/system/admin/banners/images/banners_small.png', 'Manage ad campaigns and advertiser accounts.', '/modules/system/admin.php?fct=banners'",
-					"NULL, 5, '" . _MD_AM_BKPOSAD . "', '/modules/system/admin/blockspadmin/images/blockspadmin_small.png', 'Manage and create blocks positions that are used within the themes on your website.', '/modules/system/admin.php?fct=blockspadmin'",
-					"NULL, 6, '" . _MD_AM_BKAD . "', '/modules/system/admin/blocksadmin/images/blocksadmin_small.png', 'Manage and create blocks used throughout your website.', '/modules/system/admin.php?fct=blocksadmin'",
-					"NULL, 7, '" . _MD_AM_COMMENTS . "', '/modules/system/admin/comments/images/comments_small.png', 'Manage the comments made by users on your website.', '/modules/system/admin.php?fct=comments'",
-					"NULL, 8, '" . _MD_AM_CUSTOMTAGS . "', '/modules/system/admin/customtag/images/customtag_small.png', 'Custom Tags are tags that you can define and use anywhere on your ImpressCMS site.', '/modules/system/admin.php?fct=customtag'",
-					"NULL, 9, '" . _MD_AM_USER . "', '/modules/system/admin/users/images/users_small.png', 'Create, Modify or Delete registered users.', '/modules/system/admin.php?fct=users'",
-					"NULL, 10, '" . _MD_AM_FINDUSER . "', '/modules/system/admin/findusers/images/findusers_small.png', 'Search through registered users with filters.', '/modules/system/admin.php?fct=findusers'",
-					"NULL, 11, '" . _MD_AM_ADGS . "', '/modules/system/admin/groups/images/groups_small.png', 'Manage permissions, members, visibility and access rights of groups of users.', '/modules/system/admin.php?fct=groups'",
-					"NULL, 12, '" . _MD_AM_IMAGES . "', '/modules/system/admin/images/images/images_small.png', 'Create groups of images and manage the permissions for each group. Crop and resize uploaded photos.', '/modules/system/admin.php?fct=images'",
-					"NULL, 13, '" . _MD_AM_MLUS . "', '/modules/system/admin/mailusers/images/mailusers_small.png', 'Send mail to users of whole groups - or filter recipients based on matching criteria.', '/modules/system/admin.php?fct=mailusers'",
-					"NULL, 14, '" . _MD_AM_MIMETYPES . "', '/modules/system/admin/mimetype/images/mimetype_small.png', 'manage the allowed extensions for files uploaded to your website.', '/modules/system/admin.php?fct=mimetype'",
-					"NULL, 15, '" . _MD_AM_MDAD . "', '/modules/system/admin/modulesadmin/images/modulesadmin_small.png', 'Manage modules menu weight, status, name or update modules as needed.', '/modules/system/admin.php?fct=modulesadmin'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_AUTHENTICATION . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Manage security settings related to accessibility. Settings that will effect how users accounts are handled.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=7'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_AUTOTASKS . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Preferences for the Auto Tasks system.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=13'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_CAPTCHA . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Manage the settings used by captcha throughout your site.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=11'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_GENERAL . "', '/modules/system/admin/preferences/images/preferences_small.png', 'The primary settings page for basic information needed by the system.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=1'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PURIFIER . "', '/modules/system/admin/preferences/images/preferences_small.png', 'HTMLPurifier is used to protect your site against common attack methods.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=14'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_MAILER . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Configure how your site will handle mail.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=6'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_METAFOOTER . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Manage your meta information and site footer as well as your crawler options.', '/modules/system/admin/preferences/images/preferences_small.png'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_MULTILANGUAGE . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Manage your sites Multi-language settings. Enable, and configure what languages are available and how they are triggered.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=8'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PERSON . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Personalize the system with custom logos and other settings.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=10'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PLUGINS . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Select which plugins are used and available to be used throughout your site.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=12'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_SEARCH . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Manage how the search function operates for your users.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=5'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_USERSETTINGS . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Manage how users register for your site. ser names length, formatting and password options.', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=2'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_CENSOR . "', '/modules/system/admin/preferences/images/preferences_small.png', 'Manage the language that is not permitted on your site..', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=4'",
-					"NULL, 17, '" . _MD_AM_RATINGS . "', '/modules/system/admin/rating/images/rating_small.png', 'Ratings is a new feature in ImpressCMS. With using this tool, you can add a new rating method to your modules, and control the results through this section!', '/modules/system/admin.php?fct=rating'",
-					"NULL, 18, '" . _MD_AM_SMLS . "', '/modules/system/admin/smilies/images/smilies_small.png', 'Manage the available smilies and define the code associatted with each.', '/modules/system/admin.php?fct=smilies'",
-					"NULL, 19, '" . _MD_AM_PAGES . "', '/modules/system/admin/pages/images/pages_small.png', 'Symlink allows you to create a unique link based on any page of your website, which can be used for blocks specific to a page URL, or to link directly within the content of a module.', '/modules/system/admin.php?fct=pages'",
-					"NULL, 20, '" . _MD_AM_TPLSETS . "', '/modules/system/admin/tplsets/images/tplsets_small.png', 'Templates are sets of html/css files that render the screen layout of modules. This function can be accessed by the administrator or webmaster via the Control Panel Home.', '/modules/system/admin.php?fct=tplsets'",
-					"NULL, 21, '" . _MD_AM_RANK . "', '/modules/system/admin/userrank/images/userrank_small.png', 'User ranks are picture, used to make difference between users in different levels of your site!', '/modules/system/admin.php?fct=userrank'",
-					"NULL, 22, '" . _MD_AM_VERSION . "', '/modules/system/admin/version/images/version_small.png', 'Use this tool to check your system for updates.', '/modules/system/admin.php?fct=version'"
+					"NULL, 1, '" . _MD_AM_ADSENSES . "', '/modules/system/admin/adsense/images/adsense_small.png', '" . _MD_AM_ADSENSES_DSC . "', '/modules/system/admin.php?fct=adsense'",
+					"NULL, 2, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin/autotasks/images/autotasks_small.png', '" . _MD_AM_AUTOTASKS_DSC . "', '/modules/system/admin.php?fct=autotasks'",
+					"NULL, 3, '" . _MD_AM_AVATARS . "', '/modules/system/admin/avatars/images/avatars_small.png', '" . _MD_AM_AVATARS_DSC . "', '/modules/system/admin.php?fct=avatars'",
+					"NULL, 4, '" . _MD_AM_BANS . "', '/modules/system/admin/banners/images/banners_small.png', '" . _MD_AM_BANS_DSC . "', '/modules/system/admin.php?fct=banners'",
+					"NULL, 5, '" . _MD_AM_BKPOSAD . "', '/modules/system/admin/blockspadmin/images/blockspadmin_small.png', '" . _MD_AM_BKPOSAD_DSC . "', '/modules/system/admin.php?fct=blockspadmin'",
+					"NULL, 6, '" . _MD_AM_BKAD . "', '/modules/system/admin/blocksadmin/images/blocksadmin_small.png', '" . _MD_AM_BKAD_DSC . "', '/modules/system/admin.php?fct=blocksadmin'",
+					"NULL, 7, '" . _MD_AM_COMMENTS . "', '/modules/system/admin/comments/images/comments_small.png', '" . _MD_AM_COMMENTS_DSC . "', '/modules/system/admin.php?fct=comments'",
+					"NULL, 8, '" . _MD_AM_CUSTOMTAGS . "', '/modules/system/admin/customtag/images/customtag_small.png', '" . _MD_AM_CUSTOMTAGS_DSC . "', '/modules/system/admin.php?fct=customtag'",
+					"NULL, 9, '" . _MD_AM_USER . "', '/modules/system/admin/users/images/users_small.png', '" . _MD_AM_USER_DSC . "', '/modules/system/admin.php?fct=users'",
+					"NULL, 10, '" . _MD_AM_FINDUSER . "', '/modules/system/admin/findusers/images/findusers_small.png', '" . _MD_AM_FINDUSER_DSC . "', '/modules/system/admin.php?fct=findusers'",
+					"NULL, 11, '" . _MD_AM_ADGS . "', '/modules/system/admin/groups/images/groups_small.png', '" . _MD_AM_ADGS_DSC . "', '/modules/system/admin.php?fct=groups'",
+					"NULL, 12, '" . _MD_AM_IMAGES . "', '/modules/system/admin/images/images/images_small.png', '" . _MD_AM_IMAGES_DSC . "', '/modules/system/admin.php?fct=images'",
+					"NULL, 13, '" . _MD_AM_MLUS . "', '/modules/system/admin/mailusers/images/mailusers_small.png', '" . _MD_AM_MLUS_DSC . "', '/modules/system/admin.php?fct=mailusers'",
+					"NULL, 14, '" . _MD_AM_MIMETYPES . "', '/modules/system/admin/mimetype/images/mimetype_small.png', '" . _MD_AM_MIMETYPES_DSC . "', '/modules/system/admin.php?fct=mimetype'",
+					"NULL, 15, '" . _MD_AM_MDAD . "', '/modules/system/admin/modulesadmin/images/modulesadmin_small.png', '" . _MD_AM_MDAD_DSC . "', '/modules/system/admin.php?fct=modulesadmin'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_AUTHENTICATION . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_AUTHENTICATION_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=7'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_AUTOTASKS . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_AUTOTASKS_PREF_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=13'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_CAPTCHA . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_CAPTCHA_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=11'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_GENERAL . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_GENERAL_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=1'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PURIFIER . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_PURIFIER_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=14'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_MAILER . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_MAILER_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=6'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_METAFOOTER . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_METAFOOTER_DSC . "', '/modules/system/admin/preferences/images/preferences_small.png'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_MULTILANGUAGE . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_MULTILANGUAGE_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=8'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PERSON . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_PERSON_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=10'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PLUGINS . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_PLUGINS_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=12'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_SEARCH . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_SEARCH_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=5'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_USERSETTINGS . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_USERSETTINGS_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=2'",
+					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_CENSOR . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_CENSOR_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=4'",
+					"NULL, 17, '" . _MD_AM_RATINGS . "', '/modules/system/admin/rating/images/rating_small.png', '" . _MD_AM_RATINGS_DSC . "', '/modules/system/admin.php?fct=rating'",
+					"NULL, 18, '" . _MD_AM_SMLS . "', '/modules/system/admin/smilies/images/smilies_small.png', '" . _MD_AM_SMLS_DSC . "', '/modules/system/admin.php?fct=smilies'",
+					"NULL, 19, '" . _MD_AM_PAGES . "', '/modules/system/admin/pages/images/pages_small.png', '" . _MD_AM_PAGES_DSC . "', '/modules/system/admin.php?fct=pages'",
+					"NULL, 20, '" . _MD_AM_TPLSETS . "', '/modules/system/admin/tplsets/images/tplsets_small.png', '" . _MD_AM_TPLSETS_DSC . "', '/modules/system/admin.php?fct=tplsets'",
+					"NULL, 21, '" . _MD_AM_RANK . "', '/modules/system/admin/userrank/images/userrank_small.png', '" . _MD_AM_RANK_DSC . "', '/modules/system/admin.php?fct=userrank'",
+					"NULL, 22, '" . _MD_AM_VRSN . "', '/modules/system/admin/version/images/version_small.png', '" . _MD_AM_VRSN_DSC . "', '/modules/system/admin.php?fct=version'"
 				);
 				foreach ($search_items as $item) {
 					$table->setData( $item );
