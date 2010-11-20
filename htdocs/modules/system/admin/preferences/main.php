@@ -528,7 +528,7 @@ if (! is_object ( icms::$user ) || ! is_object ( $icmsModule ) || ! icms::$user-
 				$config = & $config_handler->getConfig ( $conf_ids [$i] );
 				$new_value = & ${$config->getVar ( 'conf_name' )};
 				$old_value = $config->getVar('conf_value');
-				$icmsPreloadHandler->triggerEvent ( 'savingSystemAdminPreferencesItem', array((int)$config->getVar ( 'conf_catid' ), $config->getVar ( 'conf_name' ), $config->getVar ( 'conf_value' )));
+				icms::$preload->triggerEvent ( 'savingSystemAdminPreferencesItem', array((int)$config->getVar ( 'conf_catid' ), $config->getVar ( 'conf_name' ), $config->getVar ( 'conf_value' )));
 
                 if (is_array($new_value) || $new_value != $config->getVar('conf_value'))
                 {
@@ -643,7 +643,7 @@ if (! is_object ( icms::$user ) || ! is_object ( $icmsModule ) || ! icms::$user-
 			}
 		}
 
-		$icmsPreloadHandler->triggerEvent ( 'afterSaveSystemAdminPreferencesItems', $saved_config_items);
+		icms::$preload->triggerEvent ( 'afterSaveSystemAdminPreferencesItems', $saved_config_items);
 		unset($saved_config_items);
 
 		if (! empty ( $use_mysession ) && $xoopsConfig ['use_mysession'] == 0 && $session_name != '') {

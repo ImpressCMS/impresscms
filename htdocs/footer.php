@@ -15,7 +15,7 @@
 if (!defined('ICMS_ROOT_PATH')) {die('ICMS root path not defined');}
 if (!defined("XOOPS_FOOTER_INCLUDED"))
 {
-	global $icmsPreloadHandler, $xoopsOption, $icmsConfigMetaFooter, $xoopsTpl, $icmsModule;
+	global $xoopsOption, $icmsConfigMetaFooter, $xoopsTpl, $icmsModule;
 
 	/** Set the constant XOOPS_FOOTER_INCLUDED to 1 - this file has been included */
 	define("XOOPS_FOOTER_INCLUDED",1);
@@ -29,7 +29,7 @@ if (!defined("XOOPS_FOOTER_INCLUDED"))
 	}
 
 	// ################# Preload Trigger beforeFooter ##############
-	$icmsPreloadHandler->triggerEvent('beforeFooter');
+	icms::$preload->triggerEvent('beforeFooter');
 
 	icms::$logger->stopTime('Module display');
 	if (isset($xoopsOption['theme_use_smarty']) && $xoopsOption['theme_use_smarty'] == 0)

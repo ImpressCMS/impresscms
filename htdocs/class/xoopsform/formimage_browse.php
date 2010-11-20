@@ -788,7 +788,7 @@ function imanager_clone() {
  * Just echoes the whole HTML
  */
 function icmsPopupHeader(){
-	global $icmsConfig,$icmsPreloadHandler;
+	global $icmsConfig;
 	if (! headers_sent ()) {
 		header ( 'Content-Type:text/html; charset=' . _CHARSET );
 		header ( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
@@ -815,8 +815,8 @@ function icmsPopupHeader(){
 	}
 
 	#Adding necessary scripts
-	$icmsPreloadHandler->triggerEvent('adminHeader');
-	$icmsPreloadHandler->triggerEvent('adminBeforeFooter');
+	icms::$preload->triggerEvent('adminHeader');
+	icms::$preload->triggerEvent('adminBeforeFooter');
 
 	echo "</head><body>";
 	echo "<div id='containBodyCP'><br /><div id='bodyCP'>";

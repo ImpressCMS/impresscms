@@ -12,9 +12,6 @@
  */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-if (!isset($icmsPreloadHandler) )
-$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
-
 icms::$logger->stopTime('Module init');
 icms::$logger->startTime('ICMS output init');
 
@@ -52,7 +49,7 @@ if (isset($icmsConfigMetaFooter['google_meta']) && $icmsConfigMetaFooter['google
 	$xoTheme->addMeta('meta','google-site-verification',$icmsConfigMetaFooter['google_meta']);
 }
 // ################# Preload Trigger startOutputInit ##############
-$icmsPreloadHandler->triggerEvent('startOutputInit');
+icms::$preload->triggerEvent('startOutputInit');
 
 $xoTheme->addScript(ICMS_URL.'/include/xoops.js', array('type' => 'text/javascript'));
 $xoTheme->addScript(ICMS_URL.'/include/linkexternal.js', array('type' => 'text/javascript'));

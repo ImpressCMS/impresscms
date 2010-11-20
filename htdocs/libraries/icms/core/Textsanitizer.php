@@ -338,16 +338,7 @@ class icms_core_Textsanitizer {
 	 * @return  string
 	 **/
 	public function displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
-		// ################# Preload Trigger beforeDisplayTarea ##############
-		global $icmsPreloadHandler;
-
-		// FIXME: Review this fix, is not the best. I dont found the problem,
-		// it really should never worked in the admin side!
-		// Maybe the preload handler should be in the install kernel.
-		if (!is_object($icmsPreloadHandler)) {
-			$icmsPreloadHandler = icms_preload_Handler::getInstance();
-		}
-		$icmsPreloadHandler->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		if ($html != 1) {
 			$text = $this->htmlSpecialChars($text);
@@ -377,7 +368,7 @@ class icms_core_Textsanitizer {
 		}
 
 		// ################# Preload Trigger afterDisplayTarea ##############
-		$icmsPreloadHandler->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		icms::$preload->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 		return $text;
 	}
 
@@ -393,13 +384,7 @@ class icms_core_Textsanitizer {
 	 * @return  string
 	 **/
 	public function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
-		// ################# Preload Trigger beforePreviewTarea ##############
-		global $icmsPreloadHandler;
-
-		if (!is_object($icmsPreloadHandler)) {
-			$icmsPreloadHandler = icms_preload_Handler::getInstance();
-		}
-		$icmsPreloadHandler->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		$text = $this->stripSlashesGPC($text);
 		if ($html != 1) {
@@ -429,9 +414,7 @@ class icms_core_Textsanitizer {
 			$text = icms_core_DataFilter::checkVar($text, 'html');
 		}
 
-		// ################# Preload Trigger afterPreviewTarea ##############
-		global $icmsPreloadHandler;
-		$icmsPreloadHandler->triggerEvent('afterPreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		icms::$preload->triggerEvent('afterPreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		return $text;
 	}

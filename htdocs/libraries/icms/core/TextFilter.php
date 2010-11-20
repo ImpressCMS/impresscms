@@ -63,16 +63,7 @@ class icms_core_TextFilter extends icms_core_DataFilter {
 	 * @return  string
 	 **/
 	public function filterTarea($text, $smiley = 1, $imcode = 1, $image = 1, $br = 1) {
-		// ################# Preload Trigger beforefilterTarea ##############
-		global $icmsPreloadHandler;
-
-		// FIXME: Review this fix, is not the best. I dont found the problem,
-		// it really should never worked in the admin side!
-		// Maybe the preload handler should be in the install kernel.
-		if (!is_object($icmsPreloadHandler)) {
-			$icmsPreloadHandler = icms_preload_Handler::getInstance();
-		}
-		$icmsPreloadHandler->triggerEvent('beforeFilterTarea', array(&$text, $smiley, $imcode, $image, $br));
+		icms::$preload->triggerEvent('beforeFilterTarea', array(&$text, $smiley, $imcode, $image, $br));
 
 		$text = parent::htmlSpecialChars($text);
 
@@ -95,11 +86,9 @@ class icms_core_TextFilter extends icms_core_DataFilter {
 		$text = parent::codeConv($text, $imcode, $image);
 
 		// ################# Preload Trigger afterFilterTarea ##############
-		$icmsPreloadHandler->triggerEvent('afterFilterTarea', array(&$text, $smiley, $imcode, $image, $br));
+		icms::$preload->triggerEvent('afterFilterTarea', array(&$text, $smiley, $imcode, $image, $br));
 		return $text;
 	}
 
 	// -------- Private Functions --------
-
 }
-

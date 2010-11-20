@@ -35,7 +35,8 @@ define ('XOOPS_CPFUNC_LOADED', 1);
 function icms_cp_header(){
 	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule,
 		$xoopsModule, $xoopsTpl, $xoopsOption, $xoTheme,
-		$icmsConfigMultilang, $icmsAdminTpl, $icmsPreloadHandler;
+		$icmsConfigMultilang, $icmsAdminTpl;
+
 	icms::$logger->stopTime('Module init');
 	icms::$logger->startTime('ImpressCMS CP Output Init');
 
@@ -47,9 +48,6 @@ function icms_cp_header(){
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 	}
-
-	if( !isset($icmsPreloadHandler) )
-	$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
 
 	$icmsAdminTpl = new icms_view_Tpl();
 
@@ -79,7 +77,7 @@ function icms_cp_header(){
 	$icmsAdminTpl = $xoTheme->template;
 
 	// ################# Preload Trigger startOutputInit ##############
-	$icmsPreloadHandler->triggerEvent('adminHeader');
+	icms::$preload->triggerEvent('adminHeader');
 
 	$xoTheme->addScript(ICMS_URL . '/include/xoops.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript('' , array( 'type' => 'text/javascript' ) , 'startList = function() {

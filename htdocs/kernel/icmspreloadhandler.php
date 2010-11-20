@@ -11,9 +11,7 @@
  * @version	$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * IcmsPreloadHandler
@@ -57,10 +55,6 @@ class IcmsPreloadHandler extends icms_preload_Handler {
  * @deprecated	Use icms_preload_Item, instead
  * @todo		Remove in version 1.4
  */
-
 class IcmsPreloadItem  extends icms_preload_Item {
-
-	function IcmsPreloadItem() {
-	}
+	function IcmsPreloadItem() {}
 }
-?>
