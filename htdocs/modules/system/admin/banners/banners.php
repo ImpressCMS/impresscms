@@ -23,10 +23,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	/**
 	 /* Banners Administration Functions
 	 */
-	function BannersAdmin()
-	{
+	function BannersAdmin() {
 		global $xoopsConfig, $icmsModule;
-		$xoopsDB =& icms_db_Factory::instance();
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/banners/images/banners_big.png)">'._MD_AM_BANS.'</div><br />';
 		// Banners List
@@ -41,11 +39,11 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		<td align='center'>"._AM_NCLICKS."</td>
 		<td align='center'>"._AM_CLINAME."</td>
 		<td align='center'>"._AM_FUNCTION."</td></tr><tr align='center'>";
-		$result = $xoopsDB->query("SELECT bid, cid, imptotal, impmade, clicks, date FROM ".$xoopsDB->prefix("banner")." ORDER BY bid");
+		$result = icms::$xoopsDB->query("SELECT bid, cid, imptotal, impmade, clicks, date FROM ".icms::$xoopsDB->prefix("banner")." ORDER BY bid");
 		$myts =& icms_core_Textsanitizer::getInstance();
-		while (list($bid, $cid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result)) {
-			$result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
-			list($cid, $name) = $xoopsDB->fetchRow($result2);
+		while (list($bid, $cid, $imptotal, $impmade, $clicks, $date) = icms::$xoopsDB->fetchRow($result)) {
+			$result2 = icms::$xoopsDB->query("SELECT cid, name FROM ".icms::$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
+			list($cid, $name) = icms::$xoopsDB->fetchRow($result2);
 			$name = $myts->htmlSpecialChars($name);
 			if ($impmade == 0) {
 				$percent = 0;
@@ -82,10 +80,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		<td align='center'>"._AM_CLINAME."</td>
 		<td align='center'>"._AM_FUNCTION."</td></tr>
 		<tr>";
-		$result = $xoopsDB->query("SELECT bid, cid, impressions, clicks, datestart, dateend FROM ".$xoopsDB->prefix("bannerfinish")." ORDER BY bid");
-		while (list($bid, $cid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result)) {
-			$result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
-			list($cid, $name) = $xoopsDB->fetchRow($result2);
+		$result = icms::$xoopsDB->query("SELECT bid, cid, impressions, clicks, datestart, dateend FROM ".icms::$xoopsDB->prefix("bannerfinish")." ORDER BY bid");
+		while (list($bid, $cid, $impressions, $clicks, $datestart, $dateend) = icms::$xoopsDB->fetchRow($result)) {
+			$result2 = icms::$xoopsDB->query("SELECT cid, name FROM ".icms::$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
+			list($cid, $name) = icms::$xoopsDB->fetchRow($result2);
 			$name = $myts->htmlSpecialChars($name);
 			$percent = substr(100 * $clicks / $impressions, 0, 5);
 			echo "
@@ -112,13 +110,13 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		<td align='center'>"._AM_CONTNAME."</td>
 		<td align='center'>"._AM_CONTMAIL."</td>
 		<td align='center'>"._AM_FUNCTION."</td></tr><tr align='center'>";
-		$result = $xoopsDB->query("SELECT cid, name, contact, email FROM ".$xoopsDB->prefix("bannerclient")." ORDER BY cid");
-		while (list($cid, $name, $contact, $email) = $xoopsDB->fetchRow($result)) {
+		$result = icms::$xoopsDB->query("SELECT cid, name, contact, email FROM ".icms::$xoopsDB->prefix("bannerclient")." ORDER BY cid");
+		while (list($cid, $name, $contact, $email) = icms::$xoopsDB->fetchRow($result)) {
 			$name = htmlspecialchars($name,ENT_QUOTES);
 			$contact = htmlspecialchars($contact,ENT_QUOTES);
 			$email = htmlspecialchars($email,ENT_QUOTES);
-			$result2 = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("banner")." WHERE cid='". (int) ($cid)."'");
-			list($numrows) = $xoopsDB->fetchRow($result2);
+			$result2 = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("banner")." WHERE cid='". (int) ($cid)."'");
+			list($numrows) = icms::$xoopsDB->fetchRow($result2);
 			echo "
 			<td align='center'>".icms_conv_nr2local($cid)."</td>
 			<td align='center'>$name</td>
@@ -131,8 +129,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		echo "</td></tr></table>";
 		echo "<br />";
 		// Add Banner
-		$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("bannerclient"));
-		list($numrows) = $xoopsDB->fetchRow($result);
+		$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("bannerclient"));
+		list($numrows) = icms::$xoopsDB->fetchRow($result);
 		if ($numrows > 0) {
 			echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 			echo"
@@ -140,8 +138,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			<form action='admin.php' method='post'>
 			"._AM_CLINAMET."
 			<select name='cid'>";
-			$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient"));
-			while (list($cid, $name) = $xoopsDB->fetchRow($result)) {
+			$result = icms::$xoopsDB->query("SELECT cid, name FROM ".icms::$xoopsDB->prefix("bannerclient"));
+			while (list($cid, $name) = icms::$xoopsDB->fetchRow($result)) {
 				$name = $myts->htmlSpecialChars($name);
 				echo "<option value='$cid'>$name</option>";
 			}
@@ -192,11 +190,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	function BannerDelete($bid)
 	{
 		global $xoopsConfig, $icmsModule;
-		$xoopsDB =& icms_db_Factory::instance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		icms_cp_header();
-		$result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='". (int) ($bid)."'");
-		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result);
+		$result=icms::$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".icms::$xoopsDB->prefix("banner")." where bid='". (int) ($bid)."'");
+		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = icms::$xoopsDB->fetchRow($result);
 		$imageurl = htmlspecialchars($imageurl, ENT_QUOTES);
 		$clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
 		echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
@@ -214,8 +211,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			}
 		}
 		echo "<a href='$clickurl'>$clickurl</a><br /><br /><table width='100%' border='0'><tr align='center'><td align='center'>"._AM_BANNERID."</td><td align='center'>"._AM_IMPRESION."</td><td align='center'>"._AM_IMPLEFT."</td><td align='center'>"._AM_CLICKS."</td><td align='center'>"._AM_NCLICKS."</td><td align='center'>"._AM_CLINAME."</td></tr><tr align='center'>";
-		$result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
-		list($cid, $name) = $xoopsDB->fetchRow($result2);
+		$result2 = icms::$xoopsDB->query("SELECT cid, name FROM ".icms::$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
+		list($cid, $name) = icms::$xoopsDB->fetchRow($result2);
 		$name = $myts->htmlSpecialChars($name);
 		$percent = substr(100 * $clicks / $impmade, 0, 5);
 		if ($imptotal == 0) {
@@ -245,10 +242,9 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		global $xoopsConfig, $icmsModule;
 		$bid = (int) ($bid);
 		icms_cp_header();
-		$xoopsDB =& icms_db_Factory::instance();
 		$myts =& icms_core_Textsanitizer::getInstance();
-		$result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='". (int) ($bid)."'");
-		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result);
+		$result=icms::$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".icms::$xoopsDB->prefix("banner")." where bid='". (int) ($bid)."'");
+		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = icms::$xoopsDB->fetchRow($result);
 		echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo"<h4>"._AM_EDITBNR."</h4>";
 		if ($htmlbanner) {
@@ -266,12 +262,12 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		echo "<form action='admin.php' method='post'>
 		"._AM_CLINAMET."
 		<select name='cid'>\n";
-		$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." where cid='". (int) ($cid)."'");
-		list($cid, $name) = $xoopsDB->fetchRow($result);
+		$result = icms::$xoopsDB->query("SELECT cid, name FROM ".icms::$xoopsDB->prefix("bannerclient")." where cid='". (int) ($cid)."'");
+		list($cid, $name) = icms::$xoopsDB->fetchRow($result);
 		$name = $myts->htmlSpecialChars($name);
 		echo "<option value='$cid' selected='selected'>$name</option>";
-		$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient"));
-		while (list($ccid, $name) = $xoopsDB->fetchRow($result)) {
+		$result = icms::$xoopsDB->query("SELECT cid, name FROM ".icms::$xoopsDB->prefix("bannerclient"));
+		while (list($ccid, $name) = icms::$xoopsDB->fetchRow($result)) {
 			$name = $myts->htmlSpecialChars($name);
 			if ($cid != $ccid) {
 				echo "<option value='$ccid'>$name</option>";
@@ -317,22 +313,21 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	function BannerClientDelete($cid)
 	{
 		global $xoopsConfig, $icmsModule;
-		$xoopsDB =& icms_db_Factory::instance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		icms_cp_header();
-		$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
-		list($cid, $name) = $xoopsDB->fetchRow($result);
+		$result = icms::$xoopsDB->query("SELECT cid, name FROM ".icms::$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
+		list($cid, $name) = icms::$xoopsDB->fetchRow($result);
 		$name = $myts->htmlSpecialChars($name);
 		echo "<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo "<h4>"._AM_DELEADC."</h4>".sprintf(_AM_SUREDELCLI,$name)."<br /><br />";
-		$result2 = $xoopsDB->query("SELECT imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." WHERE cid='". (int) ($cid)."'");
-		$numrows = $xoopsDB->getRowsNum($result2);
+		$result2 = icms::$xoopsDB->query("SELECT imageurl, clickurl, htmlbanner, htmlcode FROM ".icms::$xoopsDB->prefix("banner")." WHERE cid='". (int) ($cid)."'");
+		$numrows = icms::$xoopsDB->getRowsNum($result2);
 		if ($numrows == 0) {
 			echo ""._AM_NOBNRRUN."<br /><br />";
 		} else {
 			echo "<font color='#ff0000'><b>"._AM_WARNING."</b></font><br />"._AM_ACTBNRRUN."<br /><br />";
 		}
-		while (list($imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result2)) {
+		while (list($imageurl, $clickurl, $htmlbanner, $htmlcode) = icms::$xoopsDB->fetchRow($result2)) {
 			$imageurl = htmlspecialchars($imageurl, ENT_QUOTES);
 			$clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
 			$bannerobject = "";
@@ -365,11 +360,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	function BannerClientEdit($cid)
 	{
 		global $xoopsConfig, $icmsModule;
-		$xoopsDB =& icms_db_Factory::instance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		icms_cp_header();
-		$result = $xoopsDB->query("SELECT name, contact, email, login, passwd, extrainfo FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
-		list($name, $contact, $email, $login, $passwd, $extrainfo) = $xoopsDB->fetchRow($result);
+		$result = icms::$xoopsDB->query("SELECT name, contact, email, login, passwd, extrainfo FROM ".icms::$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
+		list($name, $contact, $email, $login, $passwd, $extrainfo) = icms::$xoopsDB->fetchRow($result);
 		$name = $myts->htmlSpecialChars($name);
 		$contact = $myts->htmlSpecialChars($contact);
 		$email = $myts->htmlSpecialChars($email);

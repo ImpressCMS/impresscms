@@ -56,7 +56,7 @@ class icms_data_notification_Object extends icms_core_Object {
 		global $icmsConfigMailer;
 		// Check the user's notification preference.
 
-		$member_handler = new icms_member_Handler($GLOBALS['xoopsDB']);
+		$member_handler = icms::handler('icms_member');
 		$user =& $member_handler->getUser($this->getVar('not_uid'));
 		if (!is_object($user)) {
 			return true;
@@ -100,7 +100,7 @@ class icms_data_notification_Object extends icms_core_Object {
 		// If send-once-then-wait, disable notification
 
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-		$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
+		$notification_handler = icms::handler('icms_data_notification');
 
 		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
 			$notification_handler->delete($this);

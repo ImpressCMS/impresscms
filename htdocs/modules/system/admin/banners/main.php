@@ -63,7 +63,7 @@ switch($op)
 		$extrainfo = isset($_POST['extrainfo']) ? trim($_POST['extrainfo']) : '';
 		$db =& icms_db_Factory::instance();
 		$myts =& icms_core_Textsanitizer::getInstance();
-		$newid = $db->genId($xoopsDB->prefix('bannerclient').'_cid_seq');
+		$newid = $db->genId(icms::$xoopsDB->prefix('bannerclient').'_cid_seq');
 		$sql = sprintf("INSERT INTO %s (cid, name, contact, email, login, passwd, extrainfo) VALUES ('%d', %s, %s, %s, %s, %s, %s)", $db->prefix("bannerclient"), (int) ($newid), $db->quoteString($myts->stripSlashesGPC($name)), $db->quoteString($myts->stripSlashesGPC($contact)), $db->quoteString($myts->stripSlashesGPC($email)), $db->quoteString($myts->stripSlashesGPC($login)), $db->quoteString($myts->stripSlashesGPC($passwd)), $db->quoteString($myts->stripSlashesGPC($extrainfo)));
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);

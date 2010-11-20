@@ -71,11 +71,9 @@ class icms_core_Textsanitizer {
 	 * @return   array
 	 */
 	public function getSmileys($all = false) {
-		global $xoopsDB;
-
 		if (count($this->allSmileys) == 0) {
-			if ($result = $xoopsDB->query("SELECT * FROM " . $xoopsDB->prefix('smiles'))) {
-				while ($smiley = $GLOBALS['xoopsDB']->fetchArray($result)) {
+			if ($result = icms::$xoopsDB->query("SELECT * FROM " . icms::$xoopsDB->prefix('smiles'))) {
+				while ($smiley = icms::$xoopsDB->fetchArray($result)) {
 					if ($smiley['display']) {
 						array_push($this->displaySmileys, $smiley);
 					}

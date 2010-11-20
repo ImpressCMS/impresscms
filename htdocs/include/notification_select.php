@@ -24,7 +24,7 @@ $xoops_notification = array();
 $xoops_notification['show'] = isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline') ? 1 : 0;
 if ($xoops_notification['show']) {
 	icms_loadLanguageFile('core', 'notification');
-	$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
+	$notification_handler = icms::handler('icms_data_notification');
 	$categories =& $notification_handler->subscribableCategoryInfo();
 	$event_count = 0;
 	if (!empty($categories)) {

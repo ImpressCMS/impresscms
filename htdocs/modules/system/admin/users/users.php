@@ -18,9 +18,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
-function displayUsers()
-{
-	global $xoopsDB, $xoopsConfig, $icmsModule, $icmsConfigUser;
+function displayUsers() {
+	global $xoopsConfig, $icmsModule, $icmsConfigUser;
 	$userstart = isset($_GET['userstart']) ? (int) ($_GET['userstart']) : 0;
 
 	icms_cp_header();
@@ -121,7 +120,7 @@ function displayUsers()
 
 function modifyUser($user)
 {
-	global $xoopsDB, $xoopsConfig, $icmsModule;
+	global $xoopsConfig, $icmsModule;
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler = icms::handler('icms_member');
@@ -197,7 +196,7 @@ function modifyUser($user)
 // RMV-NOTIFY
 function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
 {
-	global $xoopsConfig, $xoopsDB, $icmsModule, $icmsConfigUser;
+	global $xoopsConfig, $icmsModule, $icmsConfigUser;
 	$member_handler = icms::handler('icms_member');
 	$edituser =& $member_handler->getUser($uid);
 	if ($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new icms_db_criteria_Item('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new icms_db_criteria_Item('login_name', $login_name)) > 0)
@@ -291,9 +290,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 	exit();
 }
 
-function synchronize($id, $type)
-{
-	global $xoopsDB;
+function synchronize($id, $type) {
 	switch($type)
 	{
 		case 'user':
@@ -310,20 +307,20 @@ function synchronize($id, $type)
 				$criteria = new icms_db_criteria_Compo();
 				$criteria->add (new icms_db_criteria_Item($table['uid_column'], $id));
 				if (!empty($table['criteria'])) {$criteria->add ($table['criteria']);}
-				$sql = "SELECT COUNT(*) AS total FROM ".$xoopsDB->prefix($table['table_name']).' '.$criteria->renderWhere();
-				if ($result = $xoopsDB->query($sql))
+				$sql = "SELECT COUNT(*) AS total FROM ".icms::$xoopsDB->prefix($table['table_name']).' '.$criteria->renderWhere();
+				if ($result = icms::$xoopsDB->query($sql))
 				{
-					if ($row = $xoopsDB->fetchArray($result)) {$total_posts = $total_posts + $row['total'];}
+					if ($row = icms::$xoopsDB->fetchArray($result)) {$total_posts = $total_posts + $row['total'];}
 				}
 			}
-			$sql = "UPDATE ".$xoopsDB->prefix("users")." SET posts = '". (int) ($total_posts)."' WHERE uid = '". (int) ($id)."'";
-			if (!$result = $xoopsDB->query($sql)) {exit(sprintf(_AM_CNUUSER %s ,$id));}
+			$sql = "UPDATE ".icms::$xoopsDB->prefix("users")." SET posts = '". (int) ($total_posts)."' WHERE uid = '". (int) ($id)."'";
+			if (!$result = icms::$xoopsDB->query($sql)) {exit(sprintf(_AM_CNUUSER %s ,$id));}
 			break;
 
 		case 'all users':
-			$sql = "SELECT uid FROM ".$xoopsDB->prefix('users')."";
-			if (!$result = $xoopsDB->query($sql)) {exit(_AM_CNGUSERID);}
-			while ($row = $xoopsDB->fetchArray($result))
+			$sql = "SELECT uid FROM ".icms::$xoopsDB->prefix('users')."";
+			if (!$result = icms::$xoopsDB->query($sql)) {exit(_AM_CNGUSERID);}
+			while ($row = icms::$xoopsDB->fetchArray($result))
 			{
 				$id = $row['uid'];
 				synchronize($id, "user");

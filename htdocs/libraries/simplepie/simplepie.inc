@@ -8879,7 +8879,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 	{
 		if ($this->mysql)
 		{
-			$feed_id = "'" . $GLOBALS['xoopsDB']->escape($this->id) . "'";
+			$feed_id = "'" . icms::$xoopsDB->escape($this->id) . "'";
 
 			if (is_a($data, 'SimplePie'))
 			{
@@ -8898,11 +8898,11 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 						$items = count($prepared[1]);
 						if ($items)
 						{
-							$sql = 'UPDATE `' . $this->options['prefix'][0] . 'cache_data` SET `items` = ' . $items . ', `data` = \'' . $GLOBALS['xoopsDB']->escape($prepared[0]) . '\', `mtime` = ' . time() . ' WHERE `id` = ' . $feed_id;
+							$sql = 'UPDATE `' . $this->options['prefix'][0] . 'cache_data` SET `items` = ' . $items . ', `data` = \'' . icms::$xoopsDB->escape($prepared[0]) . '\', `mtime` = ' . time() . ' WHERE `id` = ' . $feed_id;
 						}
 						else
 						{
-							$sql = 'UPDATE `' . $this->options['prefix'][0] . 'cache_data` SET `data` = \'' . $GLOBALS['xoopsDB']->escape($prepared[0]) . '\', `mtime` = ' . time() . ' WHERE `id` = ' . $feed_id;
+							$sql = 'UPDATE `' . $this->options['prefix'][0] . 'cache_data` SET `data` = \'' . icms::$xoopsDB->escape($prepared[0]) . '\', `mtime` = ' . time() . ' WHERE `id` = ' . $feed_id;
 						}
 
 						if (!mysql_query($sql, $this->mysql))
@@ -8910,7 +8910,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 							return false;
 						}
 					}
-					elseif (!mysql_query('INSERT INTO `' . $this->options['prefix'][0] . 'cache_data` (`id`, `items`, `data`, `mtime`) VALUES(' . $feed_id . ', ' . count($prepared[1]) . ', \'' . $GLOBALS['xoopsDB']->escape($prepared[0]) . '\', ' . time() . ')', $this->mysql))
+					elseif (!mysql_query('INSERT INTO `' . $this->options['prefix'][0] . 'cache_data` (`id`, `items`, `data`, `mtime`) VALUES(' . $feed_id . ', ' . count($prepared[1]) . ', \'' . icms::$xoopsDB->escape($prepared[0]) . '\', ' . time() . ')', $this->mysql))
 					{
 						return false;
 					}
@@ -8920,7 +8920,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 					{
 						foreach ($ids as $id)
 						{
-							$database_ids[] = $GLOBALS['xoopsDB']->escape($id);
+							$database_ids[] = icms::$xoopsDB->escape($id);
 						}
 
 						if ($query = mysql_unbuffered_query('SELECT `id` FROM `' . $this->options['prefix'][0] . 'items` WHERE `id` = \'' . implode('\' OR `id` = \'', $database_ids) . '\' AND `feed_id` = ' . $feed_id, $this->mysql))
@@ -8940,7 +8940,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 									$date = time();
 								}
 
-								if (!mysql_query('INSERT INTO `' . $this->options['prefix'][0] . 'items` (`feed_id`, `id`, `data`, `posted`) VALUES(' . $feed_id . ', \'' . $GLOBALS['xoopsDB']->escape($new_id) . '\', \'' . $GLOBALS['xoopsDB']->escape(serialize($prepared[1][$new_id]->data)) . '\', ' . $date . ')', $this->mysql))
+								if (!mysql_query('INSERT INTO `' . $this->options['prefix'][0] . 'items` (`feed_id`, `id`, `data`, `posted`) VALUES(' . $feed_id . ', \'' . icms::$xoopsDB->escape($new_id) . '\', \'' . icms::$xoopsDB->escape(serialize($prepared[1][$new_id]->data)) . '\', ' . $date . ')', $this->mysql))
 								{
 									return false;
 								}
@@ -8958,12 +8958,12 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 			{
 				if (mysql_num_rows($query))
 				{
-					if (mysql_query('UPDATE `' . $this->options['prefix'][0] . 'cache_data` SET `items` = 0, `data` = \'' . $GLOBALS['xoopsDB']->escape(serialize($data)) . '\', `mtime` = ' . time() . ' WHERE `id` = ' . $feed_id, $this->mysql))
+					if (mysql_query('UPDATE `' . $this->options['prefix'][0] . 'cache_data` SET `items` = 0, `data` = \'' . icms::$xoopsDB->escape(serialize($data)) . '\', `mtime` = ' . time() . ' WHERE `id` = ' . $feed_id, $this->mysql))
 					{
 						return true;
 					}
 				}
-				elseif (mysql_query('INSERT INTO `' . $this->options['prefix'][0] . 'cache_data` (`id`, `items`, `data`, `mtime`) VALUES(\'' . $GLOBALS['xoopsDB']->escape($this->id) . '\', 0, \'' . $GLOBALS['xoopsDB']->escape(serialize($data)) . '\', ' . time() . ')', $this->mysql))
+				elseif (mysql_query('INSERT INTO `' . $this->options['prefix'][0] . 'cache_data` (`id`, `items`, `data`, `mtime`) VALUES(\'' . icms::$xoopsDB->escape($this->id) . '\', 0, \'' . icms::$xoopsDB->escape(serialize($data)) . '\', ' . time() . ')', $this->mysql))
 				{
 					return true;
 				}
@@ -8974,7 +8974,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 
 	function load()
 	{
-		if ($this->mysql && ($query = mysql_query('SELECT `items`, `data` FROM `' . $this->options['prefix'][0] . 'cache_data` WHERE `id` = \'' . $GLOBALS['xoopsDB']->escape($this->id) . "'", $this->mysql)) && ($row = mysql_fetch_row($query)))
+		if ($this->mysql && ($query = mysql_query('SELECT `items`, `data` FROM `' . $this->options['prefix'][0] . 'cache_data` WHERE `id` = \'' . icms::$xoopsDB->escape($this->id) . "'", $this->mysql)) && ($row = mysql_fetch_row($query)))
 		{
 			$data = unserialize($row[1]);
 
@@ -9012,7 +9012,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 
 				if ($feed !== null)
 				{
-					$sql = 'SELECT `data` FROM `' . $this->options['prefix'][0] . 'items` WHERE `feed_id` = \'' . $GLOBALS['xoopsDB']->escape($this->id) . '\' ORDER BY `posted` DESC';
+					$sql = 'SELECT `data` FROM `' . $this->options['prefix'][0] . 'items` WHERE `feed_id` = \'' . icms::$xoopsDB->escape($this->id) . '\' ORDER BY `posted` DESC';
 					if ($items > 0)
 					{
 						$sql .= ' LIMIT ' . $items;
@@ -9038,7 +9038,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 
 	function mtime()
 	{
-		if ($this->mysql && ($query = mysql_query('SELECT `mtime` FROM `' . $this->options['prefix'][0] . 'cache_data` WHERE `id` = \'' . $GLOBALS['xoopsDB']->escape($this->id) . "'", $this->mysql)) && ($row = mysql_fetch_row($query)))
+		if ($this->mysql && ($query = mysql_query('SELECT `mtime` FROM `' . $this->options['prefix'][0] . 'cache_data` WHERE `id` = \'' . icms::$xoopsDB->escape($this->id) . "'", $this->mysql)) && ($row = mysql_fetch_row($query)))
 		{
 			return $row[0];
 		}
@@ -9050,7 +9050,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 
 	function touch()
 	{
-		if ($this->mysql && ($query = mysql_query('UPDATE `' . $this->options['prefix'][0] . 'cache_data` SET `mtime` = ' . time() . ' WHERE `id` = \'' . $GLOBALS['xoopsDB']->escape($this->id) . "'", $this->mysql)) && mysql_affected_rows($this->mysql))
+		if ($this->mysql && ($query = mysql_query('UPDATE `' . $this->options['prefix'][0] . 'cache_data` SET `mtime` = ' . time() . ' WHERE `id` = \'' . icms::$xoopsDB->escape($this->id) . "'", $this->mysql)) && mysql_affected_rows($this->mysql))
 		{
 			return true;
 		}
@@ -9062,7 +9062,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 
 	function unlink()
 	{
-		if ($this->mysql && ($query = mysql_query('DELETE FROM `' . $this->options['prefix'][0] . 'cache_data` WHERE `id` = \'' . $GLOBALS['xoopsDB']->escape($this->id) . "'", $this->mysql)) && ($query2 = mysql_query('DELETE FROM `' . $this->options['prefix'][0] . 'items` WHERE `feed_id` = \'' . $GLOBALS['xoopsDB']->escape($this->id) . "'", $this->mysql)))
+		if ($this->mysql && ($query = mysql_query('DELETE FROM `' . $this->options['prefix'][0] . 'cache_data` WHERE `id` = \'' . icms::$xoopsDB->escape($this->id) . "'", $this->mysql)) && ($query2 = mysql_query('DELETE FROM `' . $this->options['prefix'][0] . 'items` WHERE `feed_id` = \'' . icms::$xoopsDB->escape($this->id) . "'", $this->mysql)))
 		{
 			return true;
 		}

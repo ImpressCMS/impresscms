@@ -66,7 +66,7 @@ if (isset($_POST['icms_rating_submit'])) {
 	$ratingObj->setVar('date', time());
 	$ratingObj->setVar('rate', $_POST['icms_rating_value']);
 	if (!$icms_rating_handler->insert($ratingObj)) {
-		if ($xoopsDB->errno() == 1062) {
+		if (icms::$xoopsDB->errno() == 1062) {
 			$message = _CO_ICMS_RATING_DUPLICATE_ENTRY;
 		} else {
 			$message = _CO_ICMS_RATING_ERROR;

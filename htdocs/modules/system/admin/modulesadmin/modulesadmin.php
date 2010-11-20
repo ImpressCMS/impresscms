@@ -340,7 +340,7 @@ function xoops_module_install($dirname) {
 					// Event-specific notification options
 					// FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
 					$options = array();
-					$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
+					$notification_handler = icms::handler('icms_data_notification');
 					$categories =& $notification_handler->categoryInfo('',$module->getVar('mid'));
 					foreach ($categories as $category) {
 						$events =& $notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
@@ -856,7 +856,7 @@ function xoops_module_change($mid, $weight, $name) {
 }
 
 function icms_module_update($dirname) {
-	global $xoopsConfig, $xoopsDB, $icmsAdminTpl;
+	global $xoopsConfig, $icmsAdminTpl;
 
 	$msgs = array();
 
@@ -973,13 +973,13 @@ function icms_module_update($dirname) {
 					if (!empty($blocks[$i]['options'])) {
 						$options = $blocks[$i]['options'];
 					}
-					$sql = "SELECT bid, name FROM ".$xoopsDB->prefix('newblocks')." WHERE mid='". (int) ($module->getVar('mid'))."' AND func_num='". (int) ($i)."' AND show_func='".addslashes($blocks[$i]['show_func'])."' AND func_file='".addslashes($blocks[$i]['file'])."'";
-					$fresult = $xoopsDB->query($sql);
+					$sql = "SELECT bid, name FROM ".icms::$xoopsDB->prefix('newblocks')." WHERE mid='". (int) ($module->getVar('mid'))."' AND func_num='". (int) ($i)."' AND show_func='".addslashes($blocks[$i]['show_func'])."' AND func_file='".addslashes($blocks[$i]['file'])."'";
+					$fresult = icms::$xoopsDB->query($sql);
 					$fcount = 0;
-					while ($fblock = $xoopsDB->fetchArray($fresult)) {
+					while ($fblock = icms::$xoopsDB->fetchArray($fresult)) {
 						$fcount++;
-						$sql = "UPDATE ".$xoopsDB->prefix("newblocks")." SET name='".addslashes($blocks[$i]['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid='". (int) ($fblock['bid'])."'";
-						$result = $xoopsDB->query($sql);
+						$sql = "UPDATE ".icms::$xoopsDB->prefix("newblocks")." SET name='".addslashes($blocks[$i]['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid='". (int) ($fblock['bid'])."'";
+						$result = icms::$xoopsDB->query($sql);
 						if (!$result) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COULDNOTUPDATE,$fblock['name']);
 						} else {
@@ -1018,16 +1018,16 @@ function icms_module_update($dirname) {
 					}
 
 					if ($fcount == 0) {
-						$newbid = $xoopsDB->genId($xoopsDB->prefix('newblocks').'_bid_seq');
+						$newbid = icms::$xoopsDB->genId(icms::$xoopsDB->prefix('newblocks').'_bid_seq');
 						$block_name = addslashes($blocks[$i]['name']);
 						/* @todo properly handle the block_type when updating the system module */
-						$sql = "INSERT INTO ".$xoopsDB->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('". (int) ($newbid)."', '". (int) ($module->getVar('mid'))."', '". (int) ($i)."','".addslashes($options)."','".$block_name."', '".$block_name."', '', '1', '0', '0', 'M', 'H', '1', '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', '0', '".time()."')";
-						$result = $xoopsDB->query($sql);
+						$sql = "INSERT INTO ".icms::$xoopsDB->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('". (int) ($newbid)."', '". (int) ($module->getVar('mid'))."', '". (int) ($i)."','".addslashes($options)."','".$block_name."', '".$block_name."', '', '1', '0', '0', 'M', 'H', '1', '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', '0', '".time()."')";
+						$result = icms::$xoopsDB->query($sql);
 						if (!$result) {
 							$msgs[] = '&nbsp;&nbsp;ERROR: Could not create '.$blocks[$i]['name'];echo $sql;
 						} else {
 							if (empty($newbid)) {
-								$newbid = $xoopsDB->getInsertId();
+								$newbid = icms::$xoopsDB->getInsertId();
 							}
 							$groups =& icms::$user->getGroups();
 							$gperm_handler = icms::handler('icms_member_groupperm');
@@ -1070,8 +1070,8 @@ function icms_module_update($dirname) {
 								}
 							}
 							$msgs[] = '&nbsp;&nbsp;Block <b>'.$blocks[$i]['name'].'</b> created. Block ID: <b>'.$newbid.'</b>';
-							$sql = "INSERT INTO ".$xoopsDB->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('". (int) ($newbid)."', '0', '1')";
-							$xoopsDB->query($sql);
+							$sql = "INSERT INTO ".icms::$xoopsDB->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('". (int) ($newbid)."', '0', '1')";
+							icms::$xoopsDB->query($sql);
 						}
 					}
 				}
@@ -1081,8 +1081,8 @@ function icms_module_update($dirname) {
 			$block_arr = $icms_block_handler->getByModule($module->getVar('mid'));
 			foreach ($block_arr as $block) {
 				if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
-					$sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $xoopsDB->prefix('newblocks'), (int) ($block->getVar('bid')));
-					if (!$xoopsDB->query($sql)) {
+					$sql = sprintf("DELETE FROM %s WHERE bid = '%u'", icms::$xoopsDB->prefix('newblocks'), (int) ($block->getVar('bid')));
+					if (!icms::$xoopsDB->query($sql)) {
 						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block->getVar('name').'</b>. Block ID: <b>'.$block->getVar('bid').'</b></span>';
 					} else {
 						$msgs[] = '&nbsp;&nbsp;Block <b>'.$block->getVar('name').' deleted. Block ID: <b>'.$block->getVar('bid').'</b>';
@@ -1162,7 +1162,7 @@ function icms_module_update($dirname) {
 			// FIXME: for some reason the default doesn't come up properly
 			//  initially is ok, but not when 'update' module..
 			$options = array();
-			$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
+			$notification_handler = icms::handler('icms_data_notification');
 			$categories =& $notification_handler->categoryInfo('',$module->getVar('mid'));
 			foreach ($categories as $category) {
 				$events =& $notification_handler->categoryEvents ($category['name'], false, $module->getVar('mid'));

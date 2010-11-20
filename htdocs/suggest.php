@@ -10,14 +10,13 @@
  **/
 include 'mainfile.php';
 icms::$logger->disableLogger();
-global $xoopsDB;
 if (isset($_POST['queryString'])) {
-	$queryString = $GLOBALS['xoopsDB']->escape($_POST['queryString']);
+	$queryString = icms::$xoopsDB->escape($_POST['queryString']);
 
 	// Is the string length greater than 2?
 	if (strlen($queryString) > 2) {
-		$sql = "SELECT * FROM ".$xoopsDB->prefix("autosearch_list")." s INNER JOIN ".$xoopsDB->prefix("autosearch_cat")." c ON s.cat_id = c.cid WHERE name LIKE '%" . $queryString . "%' ORDER BY cat_id LIMIT 8";
-		$query = $xoopsDB->query($sql);
+		$sql = "SELECT * FROM ".icms::$xoopsDB->prefix("autosearch_list")." s INNER JOIN ".icms::$xoopsDB->prefix("autosearch_cat")." c ON s.cat_id = c.cid WHERE name LIKE '%" . $queryString . "%' ORDER BY cat_id LIMIT 8";
+		$query = icms::$xoopsDB->query($sql);
 		$num_results = mysql_num_rows($query);
 
 		echo "<ul id='searchresults'>";
@@ -26,7 +25,7 @@ if (isset($_POST['queryString'])) {
 				echo "<li><a href='javascript:void(0);'><img src='".ICMS_URL."/images/crystal/actions/exit.png' alt='no results found' /><span class='searchheading'>Sorry</span><span class='searchdesc'>No results were found that matched your query. Please try again.</span></a></li>";
 			} else {
 				$catid = 0;
-				while ($result = $xoopsDB->fetchArray($query)) {
+				while ($result = icms::$xoopsDB->fetchArray($query)) {
 					echo '<li><a href="' . ICMS_URL . $result['url'] . '">';
 					echo '<img src="'.ICMS_URL.$result['img'].'" alt="" />';
 

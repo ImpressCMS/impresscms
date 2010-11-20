@@ -254,7 +254,7 @@ switch ($op)
 		break;
 
 	case 'reactivate':
-		$result=$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET level='1' WHERE uid='". (int) ($uid)."'");
+		$result=icms::$xoopsDB->query("UPDATE ".icms::$xoopsDB->prefix('users')." SET level='1' WHERE uid='". (int) ($uid)."'");
 		if (!$result) {exit();}
 		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='. (int) ($uid),1,_AM_DBUPDATED);
 		break;

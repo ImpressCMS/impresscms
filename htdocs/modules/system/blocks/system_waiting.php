@@ -41,7 +41,6 @@ function b_system_waiting_show($options)
 	icms_loadLanguageFile('system', 'plugins');
 
 	$plugins_path = ICMS_PLUGINS_PATH."/waiting";
-	$xoopsDB =& icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');
 	$block = array();
 

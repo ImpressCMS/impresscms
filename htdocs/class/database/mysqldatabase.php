@@ -20,7 +20,7 @@
 /**
  * Old mysqldatabase.php
  *
- * This file is for backward compatibility only, for module not using the $xoopsDB and calling
+ * This file is for backward compatibility only, for module not using the icms::$xoopsDB and calling
  * this file directly
  *
  * @package ImpressCMS

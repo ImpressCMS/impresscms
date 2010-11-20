@@ -197,19 +197,17 @@ function b_system_user_show()
  * @param array $options The block options
  * @return array $block the block array
  */
-function b_system_info_show($options)
-{
+function b_system_info_show($options) {
 	global $icmsConfig;
-	$xoopsDB =& icms_db_Factory::instance();
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$block = array();
 	if (!empty($options[3])) {
 		$block['showgroups'] = true;
-		$result = $xoopsDB->query("SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM ".$xoopsDB->prefix("groups_users_link")." l LEFT JOIN ".$xoopsDB->prefix("users")." u ON l.uid=u.uid LEFT JOIN ".$xoopsDB->prefix("groups")." g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid");
-		if ($xoopsDB->getRowsNum($result) > 0) {
+		$result = icms::$xoopsDB->query("SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM ".icms::$xoopsDB->prefix("groups_users_link")." l LEFT JOIN ".icms::$xoopsDB->prefix("users")." u ON l.uid=u.uid LEFT JOIN ".icms::$xoopsDB->prefix("groups")." g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid");
+		if (icms::$xoopsDB->getRowsNum($result) > 0) {
 			$prev_caption = "";
 			$i = 0;
-			while  ($userinfo = $xoopsDB->fetchArray($result)) {
+			while  ($userinfo = icms::$xoopsDB->fetchArray($result)) {
 				if ($prev_caption != $userinfo['groupname']) {
 					$prev_caption = $userinfo['groupname'];
 					$block['groups'][$i]['name'] = $myts->htmlSpecialChars($userinfo['groupname']);
@@ -404,7 +402,7 @@ function b_system_notification_show()
 	if (empty(icms::$user) || !icms_data_notification_Handler::isEnabled('block')) {
 		return false; // do not display block
 	}
-	$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
+	$notification_handler = icms::handler('icms_data_notification');
 	// Now build the a nested associative array of info to pass
 	// to the block template.
 	$block = array();

@@ -1718,7 +1718,7 @@ function icms_escapeValue($value, $quotes = true)
 	if(is_string($value))
 	{
 		if(get_magic_quotes_gpc) {$value = stripslashes($value);}
-		$value = $GLOBALS['xoopsDB']->escape($value);
+		$value = icms::$xoopsDB->escape($value);
 		if($quotes) {$value = '"'.$value.'"';}
 	}
 	elseif($value === null) {$value = 'NULL';}
@@ -1727,7 +1727,7 @@ function icms_escapeValue($value, $quotes = true)
 	elseif(is_int($value)) {$value = (int) ($value);}
 	elseif(!is_numeric($value))
 	{
-		$value = $GLOBALS['xoopsDB']->escape($value);
+		$value = icms::$xoopsDB->escape($value);
 		if($quotes) {$value = '"'.$value.'"';}
 	}
 	return $value;
@@ -2127,7 +2127,7 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 	if (!isset($handlers[$module_dir][$name])) {
 		$class = 'mod_' . $module_dir . '_' . ucfirst($name) . 'Handler';
 		if (class_exists($class)) {
-			$handlers[$module_dir][$name] = new $class($GLOBALS['xoopsDB']);
+			$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
 		} else {
 			if($module_dir != 'system') {
 				$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
@@ -2137,7 +2137,7 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 			if (file_exists($hnd_file)) {include_once $hnd_file;}
 			$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
 			if (class_exists($class)) {
-				$handlers[$module_dir][$name] = new $class($GLOBALS['xoopsDB']);
+				$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
 			}
 		}
 	}

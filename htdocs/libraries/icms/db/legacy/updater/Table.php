@@ -93,11 +93,9 @@ class icms_db_legacy_updater_Table {
 	 *
 	 */
 	function __construct($name) {
-		global $xoopsDB;
-
-		$this->db = $xoopsDB;
+		$this->db = icms::$xoopsDB;
 		/** For backward compat */
-		$this->_db = $xoopsDB;
+		$this->_db = icms::$xoopsDB;
 
 		$this->_name = $name;
 		$this->_data = array ();

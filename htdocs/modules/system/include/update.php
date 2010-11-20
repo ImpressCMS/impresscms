@@ -23,16 +23,15 @@ icms_loadLanguageFile ( 'core', 'databaseupdater' );
 function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = null) {
 
 	global $icmsConfig, $xoTheme;
-	$icmsDB = $GLOBALS ['xoopsDB'];
 
 	$from_112 = $abortUpdate = false;
 
 	$oldversion = $module->getVar ( 'version' );
 	if ($oldversion < 120) {
-		$result = $icmsDB->query ( "SELECT t1.tpl_id FROM " . $icmsDB->prefix ( 'tplfile' ) . " t1, " . $icmsDB->prefix ( 'tplfile' ) . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id" );
+		$result = icms::$xoopsDB->query ( "SELECT t1.tpl_id FROM " . icms::$xoopsDB->prefix ( 'tplfile' ) . " t1, " . icms::$xoopsDB->prefix ( 'tplfile' ) . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id" );
 
 		$tplids = array ( );
-		while (list ( $tplid ) = $icmsDB->fetchRow ( $result )) {
+		while (list ( $tplid ) = icms::$xoopsDB->fetchRow ( $result )) {
 			$tplids [] = $tplid;
 		}
 

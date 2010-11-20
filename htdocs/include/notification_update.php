@@ -65,7 +65,7 @@ $user_id = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
 // FIXME: right now I just ignore database errors (e.g. if already
 //  subscribed)... deal with this more gracefully?
 
-$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
+$notification_handler = icms::handler('icms_data_notification');
 
 foreach ($update_list as $update_item) {
 

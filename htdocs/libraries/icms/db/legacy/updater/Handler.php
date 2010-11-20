@@ -53,11 +53,9 @@ class icms_db_legacy_updater_Handler {
 	var $_messages = array();
 
 	function __construct() {
-		global $xoopsDB;
-
 		// backward compat
-		$this->_db = $xoopsDB;
-		$this->db = $xoopsDB;
+		$this->_db = icms::$xoopsDB;
+		$this->db = icms::$xoopsDB;
 
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTBOX] = 'varchar(255)';
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTAREA] = 'text';

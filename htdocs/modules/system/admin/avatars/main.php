@@ -199,9 +199,9 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		$file = $avatar->getVar('avatar_file');
 		@unlink(ICMS_UPLOAD_PATH.'/'.$file);
 		if (isset($user_id) && $avatar->getVar('avatar_type') == 'C') {
-			$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET user_avatar='blank.gif' WHERE uid='". (int) ($user_id)."'");
+			icms::$xoopsDB->query("UPDATE ".icms::$xoopsDB->prefix('users')." SET user_avatar='blank.gif' WHERE uid='". (int) ($user_id)."'");
 		} else {
-			$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET user_avatar='blank.gif' WHERE user_avatar='".$file."'");
+			icms::$xoopsDB->query("UPDATE ".icms::$xoopsDB->prefix('users')." SET user_avatar='blank.gif' WHERE user_avatar='".$file."'");
 		}
 		redirect_header('admin.php?fct=avatars',2,_MD_AM_DBUPDATED);
 	}

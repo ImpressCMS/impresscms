@@ -25,8 +25,6 @@
  * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
 function b_system_admin_warnings_show(){
-
-	global $xoopsDB;
 	$block = array();
 	$block['msg'] = array();
 	// ###### Output warn messages for security  ######
@@ -34,7 +32,7 @@ function b_system_admin_warnings_show(){
 		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'), '', false));
 	}
 	/** @todo make this dynamic, so the value is updated automatically */
-	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE ){
+	if(getDbValue(icms::$xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE ){
 		array_push($block['msg'], icms_core_Message::error('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>'));
 	}
 	if(is_writable(ICMS_ROOT_PATH.'/mainfile.php')){
@@ -46,14 +44,14 @@ function b_system_admin_warnings_show(){
 	if(!is_dir(XOOPS_TRUST_PATH)){
 		array_push($block['msg'], icms_core_Message::error(_TRUST_PATH_HELP));
 	}
-	$sql1 = "SELECT conf_modid FROM `".$xoopsDB->prefix('config')."` WHERE conf_name = 'dos_skipmodules'";
-	if($result1 = $xoopsDB->query($sql1)){
-		list($modid) = $xoopsDB->FetchRow($result1);
+	$sql1 = "SELECT conf_modid FROM `".icms::$xoopsDB->prefix('config')."` WHERE conf_name = 'dos_skipmodules'";
+	if($result1 = icms::$xoopsDB->query($sql1)){
+		list($modid) = icms::$xoopsDB->FetchRow($result1);
 		$protector_is_active = '0';
 		if (!is_null($modid)){
-			$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
-			$result2 = $xoopsDB->query($sql2);
-			list($protector_is_active) = $xoopsDB->FetchRow($result2);
+			$sql2 = "SELECT isactive FROM `".icms::$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
+			$result2 = icms::$xoopsDB->query($sql2);
+			list($protector_is_active) = icms::$xoopsDB->FetchRow($result2);
 		}
 	}
 	if (file_exists(ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php')) {

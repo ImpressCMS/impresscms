@@ -41,8 +41,8 @@ if (icms::$user) {
 		if (!icms::$security->check()) {
 			$security_error = true;
 		}
-		$res = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("users")." WHERE uid='". (int) ($_POST['to_userid'])."'");
-		list($count) = $xoopsDB->fetchRow($res);
+		$res = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("users")." WHERE uid='". (int) ($_POST['to_userid'])."'");
+		list($count) = icms::$xoopsDB->fetchRow($res);
 		if ($count != 1) {
 			echo "<br /><br /><div><h4>"._PM_USERNOEXIST."<br />";
 			echo _PM_PLZTRYAGAIN."</h4><br />";

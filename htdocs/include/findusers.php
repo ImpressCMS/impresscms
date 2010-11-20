@@ -209,8 +209,8 @@ class XoUserHandler extends icms_core_ObjectHandler
 	}
 }
 
-$rank_handler = new icms_data_rank_Handler($xoopsDB);
-$user_handler = new XoUserHandler($xoopsDB);
+$rank_handler = icms::handler('icms_data_rank');
+$user_handler = new XoUserHandler(icms::$xoopsDB);
 
 $items_match = array(
 				"uname"		=> _MA_USER_UNAME,
@@ -470,28 +470,28 @@ if (empty($_POST["user_submit"])) {
 	} else {
 		$query = trim($_POST["query"]);
 		// Query with alias
-		if (preg_match("/select[\s]+.*[\s]+from[\s]+(".$xoopsDB->prefix("users")."[\s]+as[\s]+([^\s]+).*)/i", $query, $matches)) {
+		if (preg_match("/select[\s]+.*[\s]+from[\s]+(".icms::$xoopsDB->prefix("users")."[\s]+as[\s]+([^\s]+).*)/i", $query, $matches)) {
 			$alias = $matches[2];
 			$subquery = $matches[1];
 
 			// Query without alias
-		} elseif (preg_match("/select[\s]+.*[\s]+from[\s]+(".$xoopsDB->prefix("users")."\b.*)/i", $query, $matches)) {
+		} elseif (preg_match("/select[\s]+.*[\s]+from[\s]+(".icms::$xoopsDB->prefix("users")."\b.*)/i", $query, $matches)) {
 			$alias = "";
 			$subquery = $matches[1];
 
 			// Invalid query
 		} else {
-			$query = "SELECT * FROM ".$xoopsDB->prefix("users");
-			$subquery = $xoopsDB->prefix("users");
+			$query = "SELECT * FROM ".icms::$xoopsDB->prefix("users");
+			$subquery = icms::$xoopsDB->prefix("users");
 		}
 
 		$sql_count = "SELECT COUNT(DISTINCT ".(empty($alias) ? "" : $alias . "." )."uid) FROM ". $subquery;
-		$result = $xoopsDB->query($sql_count);
-		list($total) = $xoopsDB->FetchRow($result);
+		$result = icms::$xoopsDB->query($sql_count);
+		list($total) = icms::$xoopsDB->FetchRow($result);
 
-		$result = $xoopsDB->query($query, $limit, $start);
+		$result = icms::$xoopsDB->query($query, $limit, $start);
 		$foundusers = array();
-		while ($myrow = $xoopsDB->fetchArray($result)) {
+		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			$object =& $user_handler->create(false);
 			$object->assignVars($myrow);
 			$foundusers[$myrow["uid"]] = $object;

@@ -775,9 +775,7 @@ function check_sql_union( $sanitize = true )
 }
 
 
-function check_dos_attack( $uid = 0 , $can_ban = false )
-{
-	global $xoopsDB ;
+function check_dos_attack( $uid = 0 , $can_ban = false ) {
 
 	if( $this->_done_dos ) return true ;
 
@@ -788,7 +786,7 @@ function check_dos_attack( $uid = 0 , $can_ban = false )
 	if( empty( $ip ) || $ip == '' ) return true ;
 
 	// gargage collection
-	$result = $xoopsDB->queryF( "DELETE FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE expire < UNIX_TIMESTAMP()" ) ;
+	$result = icms::$xoopsDB->queryF( "DELETE FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE expire < UNIX_TIMESTAMP()" ) ;
 
 	// for older versions before updating this module 
 	if( $result === false ) {
@@ -797,27 +795,27 @@ function check_dos_attack( $uid = 0 , $can_ban = false )
 	}
 
 	// sql for recording access log (INSERT should be placed after SELECT)
-	$sql4insertlog = "INSERT INTO ".$xoopsDB->prefix($this->mydirname."_access")." SET ip='$ip4sql',request_uri='$uri4sql',expire=UNIX_TIMESTAMP()+'".intval($this->_conf['dos_expire'])."'" ;
+	$sql4insertlog = "INSERT INTO ".icms::$xoopsDB->prefix($this->mydirname."_access")." SET ip='$ip4sql',request_uri='$uri4sql',expire=UNIX_TIMESTAMP()+'".intval($this->_conf['dos_expire'])."'" ;
 
 	// bandwidth limitation
 	if( @$this->_conf['bwlimit_count'] >= 10 ) {
-		$result = $xoopsDB->query( "SELECT COUNT(*) FROM ".$xoopsDB->prefix($this->mydirname."_access") ) ;
-		list( $bw_count ) = $xoopsDB->fetchRow( $result ) ;
+		$result = icms::$xoopsDB->query( "SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix($this->mydirname."_access") ) ;
+		list( $bw_count ) = icms::$xoopsDB->fetchRow( $result ) ;
 		if( $bw_count > $this->_conf['bwlimit_count'] ) {
 			$this->write_file_bwlimit( time() + $this->_conf['dos_expire'] ) ;
 		}
 	}
 
 	// F5 attack check (High load & same URI)
-	$result = $xoopsDB->query( "SELECT COUNT(*) FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql' AND request_uri='$uri4sql'" ) ;
-	list( $f5_count ) = $xoopsDB->fetchRow( $result ) ;
+	$result = icms::$xoopsDB->query( "SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql' AND request_uri='$uri4sql'" ) ;
+	list( $f5_count ) = icms::$xoopsDB->fetchRow( $result ) ;
 	if( $f5_count > $this->_conf['dos_f5count'] ) {
 
 		// delayed insert
-		$xoopsDB->queryF( $sql4insertlog ) ;
+		icms::$xoopsDB->queryF( $sql4insertlog ) ;
 
 		// extends the expires of the IP with 5 minutes at least (pending)
-		// $result = $xoopsDB->queryF( "UPDATE ".$xoopsDB->prefix($this->mydirname."_access")." SET expire=UNIX_TIMESTAMP()+300 WHERE ip='$ip4sql' AND expire<UNIX_TIMESTAMP()+300" ) ;
+		// $result = icms::$xoopsDB->queryF( "UPDATE ".icms::$xoopsDB->prefix($this->mydirname."_access")." SET expire=UNIX_TIMESTAMP()+300 WHERE ip='$ip4sql' AND expire<UNIX_TIMESTAMP()+300" ) ;
 
 		// call the filter first
 		$ret = $this->call_filter( 'f5attack_overrun' ) ;
@@ -857,11 +855,11 @@ function check_dos_attack( $uid = 0 , $can_ban = false )
 	}
 
 	// Crawler check (High load & different URI)
-	$result = $xoopsDB->query( "SELECT COUNT(*) FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql'" ) ;
-	list( $crawler_count ) = $xoopsDB->fetchRow( $result ) ;
+	$result = icms::$xoopsDB->query( "SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql'" ) ;
+	list( $crawler_count ) = icms::$xoopsDB->fetchRow( $result ) ;
 
 	// delayed insert
-	$xoopsDB->queryF( $sql4insertlog ) ;
+	icms::$xoopsDB->queryF( $sql4insertlog ) ;
 
 	if( $crawler_count > $this->_conf['dos_crcount'] ) {
 
@@ -900,10 +898,7 @@ function check_dos_attack( $uid = 0 , $can_ban = false )
 
 
 // 
-function check_brute_force()
-{
-	global $xoopsDB ;
-
+function check_brute_force(){
 	$ip = @$_SERVER['REMOTE_ADDR'] ;
 	$uri = @$_SERVER['REQUEST_URI'] ;
 	$ip4sql = addslashes( $ip ) ;
@@ -916,14 +911,14 @@ function check_brute_force()
 	$mal4sql = addslashes( "BRUTE FORCE: $victim_uname" ) ;
 
 	// gargage collection
-	$result = $xoopsDB->queryF( "DELETE FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE expire < UNIX_TIMESTAMP()" ) ;
+	$result = icms::$xoopsDB->queryF( "DELETE FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE expire < UNIX_TIMESTAMP()" ) ;
 
 	// sql for recording access log (INSERT should be placed after SELECT)
-	$sql4insertlog = "INSERT INTO ".$xoopsDB->prefix($this->mydirname."_access")." SET ip='$ip4sql',request_uri='$uri4sql',malicious_actions='$mal4sql',expire=UNIX_TIMESTAMP()+600" ;
+	$sql4insertlog = "INSERT INTO ".icms::$xoopsDB->prefix($this->mydirname."_access")." SET ip='$ip4sql',request_uri='$uri4sql',malicious_actions='$mal4sql',expire=UNIX_TIMESTAMP()+600" ;
 
 	// count check
-	$result = $xoopsDB->query( "SELECT COUNT(*) FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql' AND malicious_actions like 'BRUTE FORCE:%'" ) ;
-	list( $bf_count ) = $xoopsDB->fetchRow( $result ) ;
+	$result = icms::$xoopsDB->query( "SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql' AND malicious_actions like 'BRUTE FORCE:%'" ) ;
+	list( $bf_count ) = icms::$xoopsDB->fetchRow( $result ) ;
 	if( $bf_count > $this->_conf['bf_count'] ) {
 		$this->register_bad_ips( time() + $this->_conf['banip_time0'] ) ;
 		$this->last_error_type = 'BruteForce' ;
@@ -933,7 +928,7 @@ function check_brute_force()
 		if( $ret == false ) exit ;
 	}
 	// delayed insert
-	$xoopsDB->queryF( $sql4insertlog ) ;
+	icms::$xoopsDB->queryF( $sql4insertlog ) ;
 }
 
 

@@ -22,9 +22,9 @@ echo "<html><head><title>". htmlspecialchars($icmsConfig['sitename'])."</title>
       </head>
       <body>";
 
-$sql = "SELECT storyid, title FROM ".$xoopsDB->prefix("stories")." WHERE published>'0' AND published<'".time()."' ORDER BY published DESC";
+$sql = "SELECT storyid, title FROM ".icms::$xoopsDB->prefix("stories")." WHERE published>'0' AND published<'".time()."' ORDER BY published DESC";
 
-$result = $xoopsDB->query($sql,10,0);
+$result = icms::$xoopsDB->query($sql,10,0);
 
 if (!$result) {
 	echo "An error occured";
@@ -32,7 +32,7 @@ if (!$result) {
 	echo "<img src='images/logo.gif' alt='".htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES)."' border='0' /><br />";
 	echo "<h2>".htmlspecialchars($icmsConfig['slogan'])."</h2>";
 	echo "<div>";
-	while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
+	while (list($storyid, $title) = icms::$xoopsDB->fetchRow($result)) {
 		echo "<a href='".ICMS_URL."/modules/news/print.php?storyid=$storyid'>".htmlspecialchars($title)."</a><br />";
 
 	}

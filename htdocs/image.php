@@ -29,9 +29,6 @@ include './mainfile.php';
 /** Include the core functions */
 include ICMS_ROOT_PATH.'/include/functions.php';
 
-/** Define XOOPS_DB_PROXY */
-define('XOOPS_DB_PROXY', 1);
-$xoopsDB = icms_db_Factory::instance();
 // ################# Include class manager file ##############
 $imagehandler = icms::handler('icms_image');
 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('i.image_display', 1));

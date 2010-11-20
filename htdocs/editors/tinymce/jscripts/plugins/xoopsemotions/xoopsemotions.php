@@ -26,10 +26,10 @@ xoops_header(false);
 echo '<table width="100%" class="outer">';
 echo '<tr><th colspan="3">'._MSC_SMILIES.'</th></tr>';
 echo '<tr class="head"><td>'._MSC_CODE.'</td><td>'._MSC_EMOTION.'</td><td>'._IMAGE.'</td></tr>';
-if ($getsmiles = $xoopsDB->query("SELECT * FROM ".$xoopsDB->prefix("smiles")))
+if ($getsmiles = icms::$xoopsDB->query("SELECT * FROM ".icms::$xoopsDB->prefix("smiles")))
 	{
 	$rcolor = 'even';
-	while ($smile = $xoopsDB->fetchArray($getsmiles) )
+	while ($smile = icms::$xoopsDB->fetchArray($getsmiles) )
 		{
 		$html = "<tr class='$rcolor'>";
 		$html.= "<td>".$smile['code']."</td>";

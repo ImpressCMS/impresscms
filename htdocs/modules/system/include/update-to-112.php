@@ -115,8 +115,8 @@
 		$table = new icms_db_legacy_updater_Table ( 'imagecategory' );
 		$icmsDatabaseUpdater->runQuery ( 'INSERT INTO ' . $table->name () . ' (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, "Logos", 350000, 350, 80, 1, 0, "C", "file")', 'Successfully created Logos imagecategory', 'Problems when try to create Logos imagecategory' );
 		unset ( $table );
-		$result = $icmsDB->query ( "SELECT imgcat_id FROM " . $icmsDB->prefix ( 'imagecategory' ) . " WHERE imgcat_name = 'Logos'" );
-		list ( $categ_id ) = $icmsDB->fetchRow ( $result );
+		$result = icms::$xoopsDB->query ( "SELECT imgcat_id FROM " . icms::$xoopsDB->prefix ( 'imagecategory' ) . " WHERE imgcat_name = 'Logos'" );
+		list ( $categ_id ) = icms::$xoopsDB->fetchRow ( $result );
 		$table = new icms_db_legacy_updater_Table ( 'image' );
 		$icmsDatabaseUpdater->runQuery ( 'INSERT INTO ' . $table->name () . ' (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (NULL, "img482278e29e81c.png", "ImpressCMS", "image/png", ' . time () . ', 1, 0, ' . $categ_id . ')', 'Successfully added default ImpressCMS admin logo', 'Problems when try to add ImpressCMS admin logo' );
 		unset ( $table );
@@ -231,7 +231,7 @@
 	if (!$abortUpdate) $newDbVersion = 6;
 
 	if ($dbVersion < $newDbVersion) {
-		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name='use_jsjalali'" );
+		icms::$xoopsDB->queryF ( "DELETE FROM `" . icms::$xoopsDB->prefix ( 'config' ) . "` WHERE conf_name='use_jsjalali'" );
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23 );
 		unset ( $table );
 		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
@@ -284,45 +284,45 @@
 	if (!$abortUpdate) $newDbVersion = 10;
 	if ($dbVersion < $newDbVersion) {
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"' ) == FALSE) {
-			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_social_bookmarks'";
-			$result = $icmsDB->query ( $sql );
-			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "block_module_link" ) . " VALUES (" . $new_block_id . ", 0, 1);" );
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
+		if (getDbValue ( icms::$xoopsDB, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"' ) == FALSE) {
+			$sql = "SELECT bid FROM `" . icms::$xoopsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_social_bookmarks'";
+			$result = icms::$xoopsDB->query ( $sql );
+			list ( $new_block_id ) = icms::$xoopsDB->FetchRow ( $result );
+			icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "block_module_link" ) . " VALUES (" . $new_block_id . ", 0, 1);" );
+			icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_show"' ) == FALSE) {
-			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_show'";
-			$result = $icmsDB->query ( $sql );
-			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "block_module_link" ) . " VALUES (" . $new_block_id . ", 0, 0);" );
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
+		if (getDbValue ( icms::$xoopsDB, 'newblocks', 'show_func', 'show_func="b_content_show"' ) == FALSE) {
+			$sql = "SELECT bid FROM `" . icms::$xoopsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_show'";
+			$result = icms::$xoopsDB->query ( $sql );
+			list ( $new_block_id ) = icms::$xoopsDB->FetchRow ( $result );
+			icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "block_module_link" ) . " VALUES (" . $new_block_id . ", 0, 0);" );
+			icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_menu_show"' ) == FALSE) {
-			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_menu_show'";
-			$result = $icmsDB->query ( $sql );
-			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "block_module_link" ) . " VALUES (" . $new_block_id . ", 0, 0);" );
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
+		if (getDbValue ( icms::$xoopsDB, 'newblocks', 'show_func', 'show_func="b_content_menu_show"' ) == FALSE) {
+			$sql = "SELECT bid FROM `" . icms::$xoopsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_menu_show'";
+			$result = icms::$xoopsDB->query ( $sql );
+			list ( $new_block_id ) = icms::$xoopsDB->FetchRow ( $result );
+			icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "block_module_link" ) . " VALUES (" . $new_block_id . ", 0, 0);" );
+			icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"' ) == FALSE) {
-			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_relmenu_show'";
-			$result = $icmsDB->query ( $sql );
-			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "block_module_link" ) . " VALUES (" . $new_block_id . ", 0, 0);" );
-			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
+		if (getDbValue ( icms::$xoopsDB, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"' ) == FALSE) {
+			$sql = "SELECT bid FROM `" . icms::$xoopsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_relmenu_show'";
+			$result = icms::$xoopsDB->query ( $sql );
+			list ( $new_block_id ) = icms::$xoopsDB->FetchRow ( $result );
+			icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "block_module_link" ) . " VALUES (" . $new_block_id . ", 0, 0);" );
+			icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 16, 1, 'system_admin');" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 17, 1, 'system_admin');" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 18, 1, 'system_admin');" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 19, 1, 'system_admin');" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 20, 1, 'system_admin');" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 1, 1, 'content_admin');" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 2, 1, 'group_manager');" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 3, 1, 'group_manager');" );
+		icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 16, 1, 'system_admin');" );
+		icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 17, 1, 'system_admin');" );
+		icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 18, 1, 'system_admin');" );
+		icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 19, 1, 'system_admin');" );
+		icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 20, 1, 'system_admin');" );
+		icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 1, 1, 'content_admin');" );
+		icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 2, 1, 'group_manager');" );
+		icms::$xoopsDB->queryF ( " INSERT INTO " . icms::$xoopsDB->prefix ( "group_permission" ) . " VALUES ('', 1, 3, 1, 'group_manager');" );
 
 		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';

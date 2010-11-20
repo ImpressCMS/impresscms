@@ -8,37 +8,35 @@
 #                                                                        #
 # Last modified on 25.04.2005                                            #
 /*************************************************************************/
-function b_waiting_wflinks()
-{
-	$xoopsDB =& icms_db_Factory::instance();
+function b_waiting_wflinks() {
 	$ret = array() ;
 
 	// wflinks waiting
 	$block = array();
-	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wflinks_links")." WHERE status=0");
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("wflinks_links")." WHERE status=0");
 	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/wflinks/admin/newlinks.php";
-		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
+		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS ;
 	}
 	$ret[] = $block ;
 
 	// wflinks broken
 	$block = array();
-	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wflinks_broken"));
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("wflinks_broken"));
 	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/wflinks/admin/brokenlink.php";
-		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
+		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_BROKENS ;
 	}
 	$ret[] = $block ;
 
 	// wflinks modreq
 	$block = array();
-	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wflinks_mod"));
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("wflinks_mod"));
 	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/wflinks/admin/modifications.php";
-		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
+		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_MODREQS ;
 	}
 	$ret[] = $block ;

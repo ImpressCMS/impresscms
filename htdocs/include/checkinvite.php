@@ -26,13 +26,12 @@ function load_invite_code($code) {
 		// redirect_header('invite.php', 0, _US_INVITENONE);
 		exit();
 	}
-	$xoopsDB =& icms_db_Factory::instance();
 	$sql = sprintf(
 		'SELECT invite_to, invite_date, register_id, extra_info FROM %s WHERE invite_code = %s AND register_id = 0',
-		$xoopsDB->prefix('invites'), $xoopsDB->quoteString(addslashes($code))
+		icms::$xoopsDB->prefix('invites'), icms::$xoopsDB->quoteString(addslashes($code))
 	);
-	$result = $xoopsDB->query($sql);
-	list($invite_to, $invite_date, $register_id, $extra_info) = $xoopsDB->fetchRow($result);
+	$result = icms::$xoopsDB->query($sql);
+	list($invite_to, $invite_date, $register_id, $extra_info) = icms::$xoopsDB->fetchRow($result);
 	if (empty($invite_to)) {
 		redirect_header('invite.php', 3, _US_INVITEINVALID);
 		exit();
@@ -53,10 +52,10 @@ function load_invite_code($code) {
 	}
 	// update view time
 	$sql = sprintf(
-		'UPDATE ' . $xoopsDB->prefix('invites') . ' SET view_date = %d WHERE invite_code = %s AND register_id = 0',
-		time(), $xoopsDB->quoteString(addslashes($code))
+		'UPDATE ' . icms::$xoopsDB->prefix('invites') . ' SET view_date = %d WHERE invite_code = %s AND register_id = 0',
+		time(), icms::$xoopsDB->quoteString(addslashes($code))
 	);
-	$result = $xoopsDB->queryF($sql);
+	$result = icms::$xoopsDB->queryF($sql);
 }
 
 /**
@@ -70,13 +69,12 @@ function check_invite_code($code) {
 	if (empty($code) || strlen($code) != 8) {
 		return false;
 	}
-	$xoopsDB =& icms_db_Factory::instance();
 	$sql = sprintf(
 		'SELECT invite_to, invite_date FROM %s WHERE invite_code = %s AND register_id = 0',
-		$xoopsDB->prefix('invites'), $xoopsDB->quoteString(addslashes($code))
+		icms::$xoopsDB->prefix('invites'), icms::$xoopsDB->quoteString(addslashes($code))
 	);
-	$result = $xoopsDB->query($sql);
-	list($invite_to, $invite_date) = $xoopsDB->fetchRow($result);
+	$result = icms::$xoopsDB->query($sql);
+	list($invite_to, $invite_date) = icms::$xoopsDB->fetchRow($result);
 	if (empty($invite_to) || !empty($register_id) || (int) ($invite_date) < time() - 3 * 86400) {
 		return false;
 	}
@@ -91,12 +89,11 @@ function check_invite_code($code) {
  * @return   true
  **/
 function update_invite_code($code, $new_id) {
-	$xoopsDB =& icms_db_Factory::instance();
 	// update register_id
 	$sql = sprintf(
-		'UPDATE ' . $xoopsDB->prefix('invites') . ' SET register_id = %d WHERE invite_code = %s AND register_id = 0',
-		$new_id, $xoopsDB->quoteString(addslashes($code))
+		'UPDATE ' . icms::$xoopsDB->prefix('invites') . ' SET register_id = %d WHERE invite_code = %s AND register_id = 0',
+		$new_id, icms::$xoopsDB->quoteString(addslashes($code))
 	);
-	$result = $xoopsDB->query($sql);
+	$result = icms::$xoopsDB->query($sql);
 	return true;
 }

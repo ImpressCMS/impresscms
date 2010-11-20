@@ -1,12 +1,11 @@
 <?php
 function b_waiting_myalbum_0( $mydirnumber = '') {
-	$xoopsDB =& icms_db_Factory::instance();
 	$block = array();
 
-	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("myalbum{$mydirnumber}_photos")." WHERE status=0");
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("myalbum{$mydirnumber}_photos")." WHERE status=0");
 	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/myalbum{$mydirnumber}/admin/admission.php";
-		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
+		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS . ( $mydirnumber === '' ? '' : "($mydirnumber)" ) ;
 	}
 

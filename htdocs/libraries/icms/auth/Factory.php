@@ -58,7 +58,7 @@ class icms_auth_Factory {
 			$class = 'icms_auth_' . ucfirst($auth_method);
 			switch ($auth_method) {
 				case 'xoops' :
-					$dao =& $GLOBALS['xoopsDB'];
+					$dao =& icms::$xoopsDB;
 					break;
 
 				case 'ldap'  :

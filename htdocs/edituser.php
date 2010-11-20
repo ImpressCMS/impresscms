@@ -72,9 +72,9 @@ if ($op == 'saveuser')
 		$count = 0;
 		if ($email) {
 			$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s',
-					$xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
-			$result = $xoopsDB->query($sql);
-			list($count) = $xoopsDB->fetchRow($result);
+					icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString(addslashes($email)));
+			$result = icms::$xoopsDB->query($sql);
+			list($count) = icms::$xoopsDB->fetchRow($result);
 			if ($count > 1) {
 				$errors[] .= _US_EMAILTAKEN."<br />";
 			}
@@ -110,9 +110,9 @@ if ($op == 'saveuser')
 
 		$count = 0;
 		if ($uname) {
-			$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
-			$result = $xoopsDB->query($sql);
-			list($count) = $xoopsDB->fetchRow($result);
+			$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString(addslashes($uname)));
+			$result = icms::$xoopsDB->query($sql);
+			list($count) = icms::$xoopsDB->fetchRow($result);
 			if ($count > 1) {
 				$errors[] .= _US_NICKNAMETAKEN."<br />";
 			}
@@ -534,8 +534,8 @@ if ($op == 'avatarupload')
 							}
 						}
 					}
-					$sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'", $xoopsDB->prefix('users'), $xoopsDB->quoteString($uploader->getSavedFileName()), (int) (icms::$user->getVar('uid')));
-					$xoopsDB->query($sql);
+					$sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'", icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uploader->getSavedFileName()), (int) (icms::$user->getVar('uid')));
+					icms::$xoopsDB->query($sql);
 					$avt_handler->addUser($avatar->getVar('avatar_id'), (int) (icms::$user->getVar('uid')));
 					redirect_header('userinfo.php?t='.time().'&amp;uid='. (int) (icms::$user->getVar('uid')),0, _US_PROFUPDATED);
 				}

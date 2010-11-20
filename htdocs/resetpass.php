@@ -64,8 +64,8 @@ if (empty($getuser)) {redirect_header('user.php',2,_US_SORRYNOTFOUND);} else {
 		$xoopsMailer->setSubject(sprintf(_US_PWDRESET,ICMS_URL));
 		if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 
-		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', pass_expired = '%u', enc_type = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, 0, (int) ($icmsConfigUser['enc_type']), (int) ($getuser[0]->getVar('uid')));
-		if (!$xoopsDB->queryF($sql))
+		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', pass_expired = '%u', enc_type = '%u' WHERE uid = '%u'", icms::$xoopsDB->prefix('users'), $pass, $salt, 0, (int) ($icmsConfigUser['enc_type']), (int) ($getuser[0]->getVar('uid')));
+		if (!icms::$xoopsDB->queryF($sql))
 		{
 			include 'header.php';
 			echo _US_RESETPWDNG;

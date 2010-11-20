@@ -1,13 +1,12 @@
 <?php
 function b_waiting_news() {
-	$xoopsDB =& icms_db_Factory::instance();
 	$block = array();
 
 	// news
-	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("stories")." WHERE published=0");
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("stories")." WHERE published=0");
 	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/news/admin/index.php?op=newarticle" ;
-		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
+		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_SUBMITTED ;
 	}
 

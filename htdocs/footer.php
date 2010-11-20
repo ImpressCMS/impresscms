@@ -64,11 +64,11 @@ if (!defined("XOOPS_FOOTER_INCLUDED"))
 			header('Pragma: no-cache');
 		}
 		/*
-		 global $xoopsDB, $icmsConfig;
+		 global $icmsConfig;
 		 if (!$icmsConfig['theme_fromfile'])
 		 {
 			session_write_close();
-			$xoopsDB->close();
+			icms::$xoopsDB->close();
 			}
 			*/
 		//@internal: using global $xoTheme dereferences the variable in old versions, this does not

@@ -498,7 +498,6 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @todo		Remove in version 1.4
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject = TRUE, $side = NULL, $visible = NULL, $orderby = "b.weight,b.bid", $isactive = 1) {
-		$db =& icms::$xoopsDB;
 		$ret = array();
 
 		if (!$asobject) {
@@ -506,8 +505,8 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		} else {
 			$sql = "SELECT b.* ";
 		}
-		$sql .= "FROM " . $db->prefix("newblocks")
-			. " b LEFT JOIN " . $db->prefix("group_permission")
+		$sql .= "FROM " . $this->db->prefix("newblocks")
+			. " b LEFT JOIN " . $this->db->prefix("group_permission")
 			. " l ON l.gperm_itemid=b.bid WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
 
 		if (is_array($groupid)) {
@@ -531,9 +530,9 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 				: ($side == -6) ? 'C' : '';
 			if ($tp != '') {
 				$side = "";
-				$s1 = "SELECT id FROM " . $db->prefix('block_positions') . " WHERE block_type='" . $tp . "' ORDER BY id ASC";
-				$res = $db->query($s1);
-				while ($myrow = $db->fetchArray($res)) {
+				$s1 = "SELECT id FROM " . $this->db->prefix('block_positions') . " WHERE block_type='" . $tp . "' ORDER BY id ASC";
+				$res = $this->db->query($s1);
+				while ($myrow = $this->db->fetchArray($res)) {
 					$side .= "side='" . (int) $myrow['id'] . "' OR ";
 				}
 				$side = "('" . substr($side, 0, strlen($side) - 4) . "')";
@@ -547,9 +546,9 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 			$sql .= " AND b.visible='" . (int) $visible . "'";
 		}
 		$sql .= " ORDER BY $orderby";
-		$result = $db->query($sql);
+		$result = $this->db->query($sql);
 		$added = array();
-		while ($myrow = $db->fetchArray($result)) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			if (!in_array($myrow['bid'], $added)) {
 				if (!$asobject) {
 					$ret[] = $myrow['bid'];

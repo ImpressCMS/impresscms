@@ -42,18 +42,17 @@ switch ( $op) {
 		}
 		if (empty($stop)) {
 			$invite_code = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
-			$xoopsDB =& icms_db_Factory::instance();
 			$myts =& icms_core_Textsanitizer::getInstance();
-			$sql = sprintf('INSERT INTO '.$xoopsDB->prefix('invites').' (invite_code, from_id, invite_to, invite_date, extra_info) VALUES (%s, %d, %s, %d, %s)',
-			$xoopsDB->quoteString(addslashes($invite_code)),
+			$sql = sprintf('INSERT INTO '.icms::$xoopsDB->prefix('invites').' (invite_code, from_id, invite_to, invite_date, extra_info) VALUES (%s, %d, %s, %d, %s)',
+			icms::$xoopsDB->quoteString(addslashes($invite_code)),
 			is_object(icms::$user)?icms::$user->getVar('uid'):0,
-			$xoopsDB->quoteString(addslashes($email)),
+			icms::$xoopsDB->quoteString(addslashes($email)),
 			time(),
-			$xoopsDB->quoteString(addslashes(serialize(array())))
+			icms::$xoopsDB->quoteString(addslashes(serialize(array())))
 			);
-			$xoopsDB->query($sql);
+			icms::$xoopsDB->query($sql);
 			// if query executed successful
-			if ($xoopsDB->getAffectedRows() == 1) {
+			if (icms::$xoopsDB->getAffectedRows() == 1) {
 				$xoopsMailer = new icms_messaging_Handler();
 				$xoopsMailer->useMail();
 				$xoopsMailer->setTemplate('invite.tpl');

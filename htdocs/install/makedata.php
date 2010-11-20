@@ -35,8 +35,6 @@ function make_groups(&$dbm) {
 }
 
 function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $adminsalt, $gruops) {
-
-	//$xoopsDB =& icms_db_Factory::instance();
 	//$dbm = new db_manager;
 
 	$tables = array();
@@ -121,7 +119,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	foreach ($modversion['templates'] as $tplfile) {
 		if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
 			$newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '".addslashes($tplfile['file'])."', '".addslashes($tplfile['description'])."', ".$time.", ".$time.", 'module')");
-			//$newtplid = $xoopsDB->getInsertId();
 			$tplsource = fread($fp, filesize('../modules/system/templates/'.$tplfile['file']));
 			fclose($fp);
 			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (".$newtplid.", '".addslashes($tplsource)."')");
@@ -160,9 +157,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			#$newbid = $dbm->insert('newblocks', " VALUES (0, 1, ".$func_num.", '".addslashes($options)."', '".addslashes($newblock['name'])."', '".addslashes($newblock['name'])."', '', 0, 0, ".$visible.", 'S', 'H', 1, 'system', '".addslashes($newblock['file'])."', '".addslashes($newblock['show_func'])."', '".addslashes($edit_func)."', '".addslashes($newblock['template'])."', 0, ".$time.")");
 			$newbid = $dbm->insert('newblocks', " VALUES (0, 1, ".$func_num.", '".addslashes($options)."', '".addslashes($newblock['name'])."', '".addslashes($newblock['name'])."', '', ".$canvaspos.", 0, ".$visible.", 'S', 'H', 1, 'system', '".addslashes($newblock['file'])."', '".addslashes($newblock['show_func'])."', '".addslashes($edit_func)."', '".addslashes($newblock['template'])."', 0, ".$time.")");
 
-			//$newbid = $xoopsDB->getInsertId();
 			$newtplid = $dbm->insert('tplfile', " VALUES (0, ".$newbid.", 'system', 'default', '".addslashes($newblock['template'])."', '".addslashes($newblock['description'])."', ".$time.", ".$time.", 'block')");
-			//$newtplid = $xoopsDB->getInsertId();
 			$tplsource = fread($fp, filesize('../modules/system/templates/blocks/'.$newblock['template']));
 			fclose($fp);
 			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (".$newtplid.", '".addslashes($tplsource)."')");

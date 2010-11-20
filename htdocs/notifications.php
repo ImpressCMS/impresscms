@@ -62,13 +62,12 @@ switch ($op) {
 
 		$criteria = new icms_db_criteria_Item('not_uid', $uid);
 		$criteria->setSort('not_modid,not_category,not_itemid');
-		$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
+		$notification_handler = icms::handler('icms_data_notification');
 		$notifications =& $notification_handler->getObjects($criteria);
 
 		// Generate the info for the template
 
-		$module_handler = new icms_module_Handler($GLOBALS['xoopsDB']);
-		//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
+		$module_handler = icms::handler('icms_module');
 
 		$modules = array();
 		$prev_modid = -1;
@@ -195,7 +194,7 @@ switch ($op) {
 		if (empty($_POST['del_not'])) {
 			redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
 		}
-		$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
+		$notification_handler = icms::handler('icms_data_notification');
 		foreach ($_POST['del_not'] as $n_array) {
 			foreach ($n_array as $n) {
 				$notification =& $notification_handler->get($n);
