@@ -150,7 +150,7 @@ function imanager_index($imgcat_id=null) {
 	$icmsAdminTpl->assign('lang_imanager_cat_addnewimg',_MD_ADDIMGBTN);
 	$icmsAdminTpl->assign('lang_imanager_viewsubs',_MD_IMAGE_VIEWSUBS);
 
-	$icmsAdminTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());
+	$icmsAdminTpl->assign('token',icms::$security->getTokenHTML());
 	$icmsAdminTpl->assign('catcount',count($imagecategorys));
 	$icmsAdminTpl->assign('writecatcount',count($imagecategorysWrite));
 	$icmsAdminTpl->assign('isAdmin',$admin);
@@ -458,8 +458,8 @@ function imanager_listimg($imgcat_id,$start=0) {
 		}
 		$arrimg[$i]['ed_selcat_options'] = $div;
 
-		$arrimg[$i]['ed_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
-		$arrimg[$i]['clone_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
+		$arrimg[$i]['ed_token'] = icms::$security->getTokenHTML();
+		$arrimg[$i]['clone_token'] = icms::$security->getTokenHTML();
 	}
 
 	$icmsAdminTpl->assign('images',$arrimg);
@@ -487,8 +487,8 @@ function imanager_addcat() {
 	}
 	$imgcat_foldername = preg_replace( '/[?".<>\|\s]/', '_', $imgcat_foldername);
 
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header('admin.php?fct=images', 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory =& $imgcat_handler->create();
@@ -602,8 +602,8 @@ function imanager_updatecat() {
 		}
 	}
 
-	if (!$GLOBALS['xoopsSecurity']->check() || $imgcat_id <= 0) {
-		redirect_header('admin.php?fct=images',1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check() || $imgcat_id <= 0) {
+		redirect_header('admin.php?fct=images',1, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory =& $imgcat_handler->get($imgcat_id);
@@ -661,8 +661,8 @@ function imanager_updatecat() {
 }
 
 function imanager_delcatok($imgcat_id) {
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header('admin.php?fct=images', 3, implode('<br />', icms::$security->getErrors()));
 	}
 
 	$imgcat_id = (int) ($imgcat_id);
@@ -726,8 +726,8 @@ function imanager_delcatok($imgcat_id) {
 }
 
 function imanager_reordercateg() {
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header('admin.php?fct=images',1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header('admin.php?fct=images',1, implode('<br />', icms::$security->getErrors()));
 	}
 	$count = count($_POST['imgcat_weight']);
 	$err = 0;
@@ -755,8 +755,8 @@ function imanager_addfile() {
 			${$k} = $v;
 		}
 	}
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header('admin.php?fct=images', 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory =& $imgcat_handler->get( (int) ($imgcat_id));
@@ -825,8 +825,8 @@ function imanager_updateimage() {
 			${$k} = $v;
 		}
 	}
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header('admin.php?fct=images', 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$count = count($image_id);
 	if ($count > 0) {
@@ -888,8 +888,8 @@ function imanager_updateimage() {
 }
 
 function imanager_delfileok($image_id,$redir=null) {
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header('admin.php?fct=images', 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$image_id = (int) ($image_id);
 	if ($image_id <= 0) {
@@ -943,8 +943,8 @@ function showAddImgForm($imgcat_id) {
 }
 
 function imanager_clone() {
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header('admin.php?fct=images', 3, implode('<br />', icms::$security->getErrors()));
 	}
 
 	$imgcat_id = (int) ($_POST['imgcat_id']);

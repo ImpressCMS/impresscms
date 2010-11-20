@@ -437,7 +437,7 @@ function b_system_notification_show()
 	$script_name = $script_url[count($script_url)-1];
 	$block['redirect_script'] = $script_name;
 	$block['submit_button'] = _NOT_UPDATENOW;
-	$block['notification_token'] = $GLOBALS['xoopsSecurity']->createToken();
+	$block['notification_token'] = icms::$security->createToken();
 	return $block;
 }
 

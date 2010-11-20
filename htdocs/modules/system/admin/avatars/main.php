@@ -83,7 +83,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				echo '<div style="text-align:'._GLOBAL_RIGHT.';">'.$nav->renderImageNav().'</div>';
 			}
 			if ($type == 'S') {
-				echo '<div style="text-align:center;"><input type="hidden" name="op" value="save" /><input type="hidden" name="fct" value="avatars" /><input type="submit" name="submit" value="'._SUBMIT.'" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'</div></form>';
+				echo '<div style="text-align:center;"><input type="hidden" name="op" value="save" /><input type="hidden" name="fct" value="avatars" /><input type="submit" name="submit" value="'._SUBMIT.'" />'.icms::$security->getTokenHTML().'</div></form>';
 			}
 		}
 		icms_cp_footer();
@@ -91,8 +91,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	}
 
 	if ($op == 'save') {
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header('admin.php?fct=avatars', 3, implode('<br />', icms::$security->getErrors()));
 			exit();
 		}
 		$count = count($avatar_id);
@@ -130,8 +130,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	}
 
 	if ($op == 'addfile') {
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header('admin.php?fct=avatars', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), 500000);
 		$uploader->setPrefix('savt');
@@ -178,8 +178,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	}
 
 	if ($op == 'delfileok') {
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header('admin.php?fct=avatars',1, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header('admin.php?fct=avatars',1, 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$avatar_id = (int) ($avatar_id);
 		if ($avatar_id <= 0) {

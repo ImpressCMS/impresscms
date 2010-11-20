@@ -98,7 +98,7 @@ if ($action == 'showpopups')
 	echo '</tr></table></form></div>';
 	break;
 case 'friend':
-	if (!$GLOBALS['xoopsSecurity']->check() || !isset($_POST['op']) || StopXSS($_POST['op']) == 'sendform') {
+	if (!icms::$security->check() || !isset($_POST['op']) || StopXSS($_POST['op']) == 'sendform') {
 		if ($icmsUser)
 		{
 			$yname = $icmsUser->getVar('uname', 'e');
@@ -113,7 +113,7 @@ case 'friend':
 		}
 		printCheckForm();
 		echo '</head><body>';
-		echo "<div class='errorMsg'>".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."</div>";
+		echo "<div class='errorMsg'>".implode('<br />', icms::$security->getErrors())."</div>";
 		echo '<form action="'.ICMS_URL.'/misc.php" method="post" onsubmit="return checkForm();"><table  width="100%" class="outer" cellspacing="1"><tr><th colspan="2">'._MSC_RECOMMENDSITE.'</th></tr>';
 		echo "<tr><td class='head'>
 					<input type='hidden' name='op' value='sendsite' />
@@ -123,7 +123,7 @@ case 'friend':
 					<tr><td class='head'>"._MSC_YOUREMAILC."</td><td class='odd'><input type='text' name='ymail' value='".$ymail."' id='ymail' /></td></tr>
 					<tr><td class='head'>"._MSC_FRIENDNAMEC."</td><td class='even'><input type='text' name='fname' value='$fname' id='fname' /></td></tr>
 					<tr><td class='head'>"._MSC_FRIENDEMAILC."</td><td class='odd'><input type='text' name='fmail' value='$fmail' id='fmail' /></td></tr>
-					<tr><td class='head'>&nbsp;</td><td class='even'><input type='submit' value='"._SEND."' />&nbsp;<input value='"._CLOSE."' type='button' onclick='javascript:window.close();' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr>
+					<tr><td class='head'>&nbsp;</td><td class='even'><input type='submit' value='"._SEND."' />&nbsp;<input value='"._CLOSE."' type='button' onclick='javascript:window.close();' />".icms::$security->getTokenHTML()."</td></tr>
 					</table></form>\n";
 		$closebutton = 0;
 	}

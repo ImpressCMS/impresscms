@@ -30,9 +30,9 @@ switch($op)
 		break;
 
 	case 'BannersAdd':
-		if (!$GLOBALS['xoopsSecurity']->check())
+		if (!icms::$security->check())
 		{
-			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$name = isset($_POST['name']) ? trim($_POST['name']) : '';
 		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
@@ -51,9 +51,9 @@ switch($op)
 		break;
 
 	case 'BannerAddClient':
-		if (!$GLOBALS['xoopsSecurity']->check())
+		if (!icms::$security->check())
 		{
-			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$name = isset($_POST['name']) ? trim($_POST['name']) : '';
 		$contact = isset($_POST['contact']) ? trim($_POST['contact']) : '';
@@ -77,9 +77,9 @@ switch($op)
 
 	case 'BannerFinishDelete2':
 		$bid = isset($_POST['bid']) ? (int) ($_POST['bid']) : 0;
-		if ($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
+		if ($bid <= 0 | !icms::$security->check())
 		{
-			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$db =& icms_db_Factory::instance();
 		$sql = sprintf('DELETE FROM %s WHERE bid = %u', $db->prefix('bannerfinish'), $bid);
@@ -94,9 +94,9 @@ switch($op)
 
 	case 'BannerDelete2':
 		$bid = isset($_POST['bid']) ? (int) ($_POST['bid']) : 0;
-		if ($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
+		if ($bid <= 0 | !icms::$security->check())
 		{
-			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$db =& icms_db_Factory::instance();
 		$sql = sprintf('DELETE FROM %s WHERE bid = %u', $db->prefix('banner'), $bid);
@@ -112,9 +112,9 @@ switch($op)
 	case 'BannerChange':
 		$bid = isset($_POST['bid']) ? (int) ($_POST['bid']) : 0;
 		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
-		if (($cid <= 0 || $bid <= 0) | !$GLOBALS['xoopsSecurity']->check())
+		if (($cid <= 0 || $bid <= 0) | !icms::$security->check())
 		{
-			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$imageurl = isset($_POST['imageurl']) ? trim($_POST['imageurl']) : '';
 		$clickurl = isset($_POST['clickurl']) ? trim($_POST['clickurl']) : '';
@@ -137,9 +137,9 @@ switch($op)
 	case 'BannerClientDelete2':
 		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
 		$db =& icms_db_Factory::instance();
-		if ($cid <= 0 | !$GLOBALS['xoopsSecurity']->check())
+		if ($cid <= 0 | !icms::$security->check())
 		{
-			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$sql = sprintf("DELETE FROM %s WHERE cid = '%u'", $db->prefix('banner'), $cid);
 		$db->query($sql);
@@ -155,9 +155,9 @@ switch($op)
 
 	case 'BannerClientChange':
 		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
-		if ($cid <= 0 | !$GLOBALS['xoopsSecurity']->check())
+		if ($cid <= 0 | !icms::$security->check())
 		{
-			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$name = isset($_POST['name']) ? trim($_POST['name']) : '';
 		$contact = isset($_POST['contact']) ? trim($_POST['contact']) : '';

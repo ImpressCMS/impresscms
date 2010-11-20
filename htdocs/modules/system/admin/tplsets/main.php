@@ -231,7 +231,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			}
 			echo '</table>';
 			if ($tplset != 'default') {
-				echo '<div style="text-align: '._GLOBAL_RIGHT.'; margin-top: 5px;"><input type="hidden" name="fct" value="tplsets" /><input type="hidden" name="op" value="update" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'<input type="hidden" name="moddir" value="'.$moddir.'" /><input type="hidden" name="tplset" value="'.$tplset.'" /><input type="submit" value="'._MD_UPLOAD.'" /></div></form>';
+				echo '<div style="text-align: '._GLOBAL_RIGHT.'; margin-top: 5px;"><input type="hidden" name="fct" value="tplsets" /><input type="hidden" name="op" value="update" />'.icms::$security->getTokenHTML().'<input type="hidden" name="moddir" value="'.$moddir.'" /><input type="hidden" name="tplset" value="'.$tplset.'" /><input type="submit" value="'._MD_UPLOAD.'" /></div></form>';
 			}
 			icms_cp_footer();
 			break;
@@ -261,8 +261,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'edittpl_go':
-			if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if ($id <= 0 | !icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 			}
 			$tpltpl_handler =& icms::handler('icms_view_template_file');
 			$tplfile =& $tpltpl_handler->get($id, true);
@@ -313,8 +313,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'deletetpl_go':
-			if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if ($id <= 0 | !icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', icms::$security->getErrors()));
 			}
 			$tpltpl_handler =& icms::handler('icms_view_template_file');
 			$tplfile =& $tpltpl_handler->get($id);
@@ -356,8 +356,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'delete_go':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', icms::$security->getErrors()));
 			}
 			$msgs = array();
 			if ($tplset != 'default' && $tplset != $xoopsConfig['template_set']) {
@@ -411,8 +411,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'clone_go':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', icms::$security->getErrors()));
 			}
 
 			$msgs = array();
@@ -554,8 +554,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'uploadtpl_go':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', icms::$security->getErrors()));
 			}
 			$tpltpl_handler =& icms::handler('icms_view_template_file');
 			$tpl =& $tpltpl_handler->get($tpl_id);
@@ -617,8 +617,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'uploadtpl2_go':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', icms::$security->getErrors()));
 			}
 			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
 			$uploader->setPrefix('tmp');
@@ -715,8 +715,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'generatetpl_go':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 			}
 			$tpltpl_handler =& icms::handler('icms_view_template_file');
 			$tplfile =& $tpltpl_handler->find('default', $type, null, $moddir, $file, true);
@@ -753,8 +753,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'generatemod_go':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 			}
 
 			$tpltpl_handler =& icms::handler('icms_view_template_file');
@@ -812,8 +812,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'uploadtar_go':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 			}
 			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('application/x-gzip', 'application/gzip', 'application/gzip-compressed', 'application/x-gzip-compressed', 'application/x-tar', 'application/x-tar-compressed', 'application/octet-stream'), 1000000);
 			$uploader->setPrefix('tmp');
@@ -919,8 +919,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'previewtpl':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 			}
 
 			require_once ICMS_ROOT_PATH.'/class/template.php';
@@ -990,8 +990,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'update':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 			}
 			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf'), 200000);
 			$uploader->setPrefix('tmp');
@@ -1064,8 +1064,8 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 
 		case 'importtpl_go':
-			if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			if (!icms::$security->check()) {
+				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 			}
 			$tpltpl_handler =& icms::handler('icms_view_template_file');
 			$tplfile = '';

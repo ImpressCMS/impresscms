@@ -59,7 +59,7 @@ function SmilesAdmin()
 				echo "</tr>\n";
 				$i++;
 			}
-			echo '<tr><td class="foot" colspan="5" align="center"><input type="hidden" name="op" value="SmilesUpdate" /><input type="hidden" name="fct" value="smilies" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'<input type="submit" value="'._SUBMIT.'" /></tr></table></form>';
+			echo '<tr><td class="foot" colspan="5" align="center"><input type="hidden" name="op" value="SmilesUpdate" /><input type="hidden" name="fct" value="smilies" />'.icms::$security->getTokenHTML().'<input type="submit" value="'._SUBMIT.'" /></tr></table></form>';
 		}
 	} else {
 		echo _AM_CNRFTSD;

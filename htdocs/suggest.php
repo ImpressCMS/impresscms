@@ -9,6 +9,7 @@
  * @version	$Id$
  **/
 include 'mainfile.php';
+icms::$logger->disableLogger();
 global $xoopsDB;
 if (isset($_POST['queryString'])) {
 	$queryString = $GLOBALS['xoopsDB']->escape($_POST['queryString']);

@@ -135,14 +135,14 @@ function modifyGroup($g_id)
 		echo '</select>';
 		echo "</td><td align='center' class='odd'>
 		<input type='hidden' name='op' value='addUser' />
-		".$GLOBALS['xoopsSecurity']->getTokenHTML()."
+		".icms::$security->getTokenHTML()."
 		<input type='hidden' name='fct' value='groups' />
 		<input type='hidden' name='groupid' value='".$thisgroup->getVar("groupid")."' />
 		<input type='submit' name='submit' value='"._AM_ADDBUTTON."' />
 		</form><br />
 		<form action='admin.php' method='post' />
 		<input type='hidden' name='op' value='delUser' />
-		".$GLOBALS['xoopsSecurity']->getTokenHTML()."
+		".icms::$security->getTokenHTML()."
 		<input type='hidden' name='fct' value='groups' />
 		<input type='hidden' name='groupid' value='".$thisgroup->getVar("groupid")."' />
 		<input type='submit' name='submit' value='"._AM_DELBUTTON."' />
@@ -176,7 +176,7 @@ function modifyGroup($g_id)
 		<input type='hidden' name='fct' value='groups' />
 		<input type='hidden' name='groupid' value='".$thisgroup->getVar("groupid")."' />
 		<input type='hidden' name='memstart' value='".$memstart."' />
-		".$GLOBALS['xoopsSecurity']->getTokenHTML()."
+		".icms::$security->getTokenHTML()."
 		<select name='uids[]' size='10' multiple='multiple'>";
 		foreach ($mlist as $m_id => $m_name) {
 			echo '<option value="'.$m_id.'">'.$m_name.'</option>'."\n";

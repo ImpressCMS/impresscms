@@ -34,7 +34,7 @@ switch ($op)
 		break;
 
 	case 'updateUser':
-		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!icms::$security->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));}
 		// RMV-NOTIFY
 		$user_avatar = $theme = null;
 		if (!isset($attachsig)) $attachsig = null;
@@ -73,7 +73,7 @@ switch ($op)
 				<form action='admin.php' method='post'>
 				<input type='hidden' name='fct' value='users' />
 				<input type='hidden' name='op' value='delete_many_ok' />
-				".$GLOBALS['xoopsSecurity']->getTokenHTML()."
+				".icms::$security->getTokenHTML()."
 				<input type='submit' value='"._YES."' />
 				<input type='button' value='"._NO."' onclick='javascript:location.href=\"admin.php?op=adminMain\"' />";
 			echo $hidden;
@@ -83,7 +83,7 @@ switch ($op)
 		break;
 
 	case 'delete_many_ok':
-		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!icms::$security->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));}
 		$count = count($memberslist_id);
 		$output = '';
 		$member_handler = icms::handler('icms_member');
@@ -107,7 +107,7 @@ switch ($op)
 		break;
 
 	case 'delUserConf':
-		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!icms::$security->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));}
 		$member_handler = icms::handler('icms_member');
 		$user =& $member_handler->getUser($del_uid);
 		$groups = $user->getGroups();
@@ -132,7 +132,7 @@ switch ($op)
 		break;
 
 	case 'addUser':
-		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!icms::$security->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));}
 		if (!$username || !$email || !$password || !$login_name)
 		{
 			$adduser_errormsg = _AM_YMCACF;
@@ -249,7 +249,7 @@ switch ($op)
 		break;
 
 	case 'synchronize':
-		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!icms::$security->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));}
 		synchronize($id, $type);
 		break;
 

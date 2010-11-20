@@ -35,9 +35,9 @@ define ('XOOPS_CPFUNC_LOADED', 1);
 function icms_cp_header(){
 	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule,
 		$xoopsModule, $icmsUser, $xoopsUser, $xoopsTpl, $xoopsOption, $xoTheme,
-		$icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
-	$xoopsLogger->stopTime('Module init');
-	$xoopsLogger->startTime('ImpressCMS CP Output Init');
+		$icmsConfigMultilang, $icmsAdminTpl, $icmsPreloadHandler;
+	icms::$logger->stopTime('Module init');
+	icms::$logger->startTime('ImpressCMS CP Output Init');
 
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -393,9 +393,9 @@ function xoops_cp_header() {
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer() {
-	global $icmsConfig, $xoopsConfig, $xoopsOption, $xoopsLogger,
+	global $icmsConfig, $xoopsConfig, $xoopsOption,
 	$icmsUser, $xoopsUser, $xoopsTpl, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule, $icmsModule;
-	$xoopsLogger->stopTime('Module display');
+	icms::$logger->stopTime('Module display');
 
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -412,12 +412,12 @@ function icms_cp_footer() {
 		}
 	}
 
-	$xoopsLogger->stopTime( 'XOOPS output init' );
-	$xoopsLogger->startTime( 'Module display' );
+	icms::$logger->stopTime( 'XOOPS output init' );
+	icms::$logger->startTime( 'Module display' );
 
 	$xoTheme->render();
 
-	$xoopsLogger->stopTime();
+	icms::$logger->stopTime();
 	return;
 }
 
@@ -477,7 +477,7 @@ function xoopsfwrite() {
 	} else {
 
 	}
-	if (! $GLOBALS['xoopsSecurity']->checkReferer ()) {
+	if (! icms::$security->checkReferer ()) {
 		return false;
 	} else {
 

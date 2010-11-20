@@ -72,8 +72,7 @@ class icms_feeds_Rss {
 	 * Render the feed and display it directly
 	 */
 	public function render() {
-		global $xoopsLogger;
-		$xoopsLogger->disableLogger();
+		icms::$logger->disableLogger();
 
 		//header ('Content-Type:text/xml; charset='._CHARSET);
 		$xoopsOption['template_main'] = "db:system_rss.html";

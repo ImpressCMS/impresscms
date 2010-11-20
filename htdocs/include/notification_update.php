@@ -44,8 +44,8 @@ if (!isset($_POST['not_submit'])) {
 	exit();
 }
 
-if (!$GLOBALS['xoopsSecurity']->check()) {
-	redirect_header($_POST['not_redirect'], 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+if (!icms::$security->check()) {
+	redirect_header($_POST['not_redirect'], 3, implode('<br />', icms::$security->getErrors()));
 	exit();
 }
 

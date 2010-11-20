@@ -144,7 +144,7 @@ function imanager_index($imgcat_id=null){
 	$icmsTpl->assign('lang_imanager_cat_addnewcat',_MD_ADDIMGCATBTN);
 	$icmsTpl->assign('lang_imanager_cat_addnewimg',_MD_ADDIMGBTN);
 
-	$icmsTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());
+	$icmsTpl->assign('token',icms::$security->getTokenHTML());
 	$icmsTpl->assign('catcount',count($imagecategorys));
 	$icmsTpl->assign('writecatcount',count($imagecategorysWrite));
 	$icmsTpl->assign('target',$target);
@@ -456,8 +456,8 @@ function imanager_listimg($imgcat_id,$start=0) {
 		}
 		$arrimg[$i]['ed_selcat_options'] = $div;
 
-		$arrimg[$i]['ed_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
-		$arrimg[$i]['clone_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
+		$arrimg[$i]['ed_token'] = icms::$security->getTokenHTML();
+		$arrimg[$i]['clone_token'] = icms::$security->getTokenHTML();
 	}
 
 	$icmsTpl->assign('images',$arrimg);
@@ -488,8 +488,8 @@ function imanager_listimg($imgcat_id,$start=0) {
  */
 function imanager_addcat() {
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory =& $imgcat_handler->create();
@@ -557,8 +557,8 @@ function imanager_addcat() {
  */
 function imanager_addfile() {
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory =& $imgcat_handler->get( (int) ($imgcat_id));
@@ -626,8 +626,8 @@ function imanager_addfile() {
  */
 function imanager_updateimage() {
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$count = count($image_id);
 	if ($count > 0) {
@@ -691,8 +691,8 @@ function imanager_updateimage() {
 function imanager_delfileok($image_id,$redir=null) {
 	global $target,$type;
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$image_id = (int) ($image_id);
 	if ($image_id <= 0) {
@@ -727,8 +727,8 @@ function imanager_delfileok($image_id,$redir=null) {
 function imanager_clone() {
 	global $target,$type;
 
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	if (!icms::$security->check()) {
+		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 
 	$imgcat_id = (int) ($_POST['imgcat_id']);

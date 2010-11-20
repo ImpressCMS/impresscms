@@ -31,7 +31,7 @@ include 'mainfile.php';
  */
 function clientlogin()
 {
-	global $xoopsDB, $xoopsLogger, $icmsConfig, $icmsConfigMetaFooter, $icmsConfigPlugins, $sess_handler;
+	global $xoopsDB, $icmsConfig, $icmsConfigMetaFooter, $icmsConfigPlugins, $sess_handler;
 	include 'header.php';
 	echo "<div id='login_window'>
 	<h2 class='content_title'>"._BANNERS_LOGIN_TITLE."</h2>
@@ -44,7 +44,7 @@ function clientlogin()
 	</div>
 	<div class='actions'><input type='hidden' name='op' value='Ok' /><button type='submit'>"._BANNERS_LOGIN_OK."</button></div>
 	<div class='login_info'>"._BANNERS_LOGIN_INFO."</div>".
-	$GLOBALS['xoopsSecurity']->getTokenHTML("BANNER_LOGIN")."
+	icms::$security->getTokenHTML("BANNER_LOGIN")."
 	</form></div>";
 	include 'footer.php';
 }
@@ -55,7 +55,7 @@ function clientlogin()
  **/
 function bannerstats()
 {
-	global $xoopsDB, $icmsConfig, $xoopsLogger, $icmsConfigMetaFooter, $icmsConfigPlugins, $sess_handler;
+	global $xoopsDB, $icmsConfig, $icmsConfigMetaFooter, $icmsConfigPlugins, $sess_handler;
 	if ($_SESSION['banner_login'] == '' || $_SESSION['banner_pass'] == '') {redirect_header('banners.php',2);}
 	$result = $xoopsDB->query(sprintf("SELECT cid, name, passwd FROM %s WHERE login=%s", $xoopsDB->prefix('bannerclient'), $xoopsDB->quoteString($_SESSION['banner_login'])));
 	list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
@@ -136,7 +136,7 @@ function bannerstats()
 				<input type='hidden' name='bid' value='$bid' />
 				<input type='hidden' name='cid' value='$cid' />
 				<input type='submit' name='op' value='"._BANNERS_CHANGE."' />" .
-				$GLOBALS['xoopsSecurity']->getTokenHTML("BANNER_EDIT")."</form>";
+				icms::$security->getTokenHTML("BANNER_EDIT")."</form>";
 			}
 		}
 
@@ -276,7 +276,7 @@ function clickbanner($bid)
 	$bid = (int) ($bid);
 	if ($bid > 0)
 	{
-		if ($GLOBALS['xoopsSecurity']->checkReferer())
+		if (icms::$security->checkReferer())
 		{
 			if ($bresult = $xoopsDB->query("select clickurl from ".$xoopsDB->prefix('banner')." where bid=$bid"))
 			{
@@ -306,9 +306,9 @@ switch($op)
 	case 'Ok':
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
-			if (!$GLOBALS['xoopsSecurity']->check(true,false,'BANNER_LOGIN'))
+			if (!icms::$security->check(true,false,'BANNER_LOGIN'))
 			{
-				redirect_header('banners.php', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+				redirect_header('banners.php', 3, implode('<br />', icms::$security->getErrors()));
 			}
 			$_SESSION['banner_login'] = $myts->stripslashesGPC(trim($_POST['login']));
 			$_SESSION['banner_pass'] = $myts->stripslashesGPC(trim($_POST['pass']));
@@ -317,9 +317,9 @@ switch($op)
 		break;
 
 	case _BANNERS_CHANGE:
-		if (!$GLOBALS['xoopsSecurity']->check(true,false,'BANNER_EDIT'))
+		if (!icms::$security->check(true,false,'BANNER_EDIT'))
 		{
-			redirect_header('banners.php', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			redirect_header('banners.php', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$bid = $cid = 0;
 		if (!empty($_POST['url'])) {$url = $myts->stripslashesGPC(trim($_POST['url']));}

@@ -100,7 +100,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 					}
 					</script>";
 
-		$token = $GLOBALS['xoopsSecurity']->createToken();
+		$token = icms::$security->createToken();
 		$action_tray = new icms_form_elements_Tray("", " | ");
 		$action_tray->addElement(new icms_form_elements_Label('', "<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name . ($multiple ? "[]" : "") . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>" . _MA_USER_REMOVE . "</a>"));
 		$action_tray->addElement(new icms_form_elements_Label('', "<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL . "/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >" . _MA_USER_MORE . "</a>" . $js_addusers));

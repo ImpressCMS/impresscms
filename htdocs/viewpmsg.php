@@ -28,9 +28,9 @@ if (!is_object($icmsUser))
 	$pm_handler = icms::handler('icms_data_privmessage');
 	if (isset($_POST['delete_messages']) && isset($_POST['msg_id']))
 	{
-		if (!$GLOBALS['xoopsSecurity']->check())
+		if (!icms::$security->check())
 		{
-			echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
+			echo implode('<br />', icms::$security->getErrors());
 			exit();
 		}
 		$size = count($_POST['msg_id']);
@@ -106,7 +106,7 @@ if (!is_object($icmsUser))
             <input type='button' class='formButton'
             onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);'
             value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages'
-            value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></table></form>";
+            value='"._PM_DELETE."' />".icms::$security->getTokenHTML()."</td></tr></table></form>";
 	} else {
 		echo "<tr class='bg2' align='"._GLOBAL_LEFT."'><td colspan='6' align='"._GLOBAL_LEFT."'>
             <input type='button' class='formButton'

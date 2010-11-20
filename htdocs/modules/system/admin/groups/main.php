@@ -41,8 +41,8 @@ switch ($op) {
 		break;
 
 	case "update":
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$system_catids = empty($system_catids) ? array() : $system_catids;
 		$admin_mids = empty($admin_mids) ? array() : $admin_mids;
@@ -157,8 +157,8 @@ switch ($op) {
 		break;
 
 	case "add":
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		if (!$name) {
 			icms_cp_header();
@@ -259,8 +259,8 @@ switch ($op) {
 		break;
 
 	case "delConf":
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		if ((int) ($g_id) > 0 && !in_array($g_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
 			$member_handler = icms::handler('icms_member');
@@ -273,8 +273,8 @@ switch ($op) {
 		break;
 
 	case "addUser":
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$member_handler = icms::handler('icms_member');
 		$size = count($uids);
@@ -285,8 +285,8 @@ switch ($op) {
 		break;
 
 	case "delUser":
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		if ((int) ($groupid) > 0) {
 			$member_handler = icms::handler('icms_member');

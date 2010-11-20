@@ -29,8 +29,6 @@ include './mainfile.php';
 /** Include the core functions */
 include ICMS_ROOT_PATH.'/include/functions.php';
 
-$xoopsLogger =& icms_core_Logger::instance();
-$xoopsLogger->startTime();
 /** Define XOOPS_DB_PROXY */
 define('XOOPS_DB_PROXY', 1);
 $xoopsDB = icms_db_Factory::instance();

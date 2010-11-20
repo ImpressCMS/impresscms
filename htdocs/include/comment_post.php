@@ -67,7 +67,7 @@ if (!empty($_POST)) {
 	}
 
 	if ($op == 'preview' || $op == 'post') {
-		if (!$GLOBALS['xoopsSecurity']->check()) {
+		if (!icms::$security->check()) {
 			$op = '';
 		}
 	}
@@ -407,6 +407,6 @@ switch ($op) {
 		break;
 
 	default:
-		redirect_header(ICMS_URL.'/',3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		redirect_header(ICMS_URL.'/',3, implode('<br />', icms::$security->getErrors()));
 		break;
 }

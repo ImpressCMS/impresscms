@@ -27,7 +27,7 @@ class icms_form_elements_Hiddentoken extends icms_form_elements_Hidden {
    * @param   int     $timeout    timeout variable for the createToken function
    */
   public function icms_form_elements_Hiddentoken($name = _CORE_TOKEN, $timeout = 0) {
-      parent::__construct($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
+      parent::__construct($name . '_REQUEST', icms::$security->createToken($timeout, $name));
   }
 }
 

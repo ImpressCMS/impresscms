@@ -16,8 +16,7 @@ error_reporting(0);
 include_once ICMS_LIBRARIES_PATH . '/xml/rpc/xmlrpctag.php';
 include_once ICMS_LIBRARIES_PATH . '/xml/rpc/xmlrpcparser.php';
 
-global $xoopsErrorHandler;
-$xoopsErrorHandler->activated = false;
+icms::$logger->disableLogger();
 
 $response = new XoopsXmlRpcResponse();
 $parser = new XoopsXmlRpcParser(rawurlencode($GLOBALS['HTTP_RAW_POST_DATA']));

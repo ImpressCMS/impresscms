@@ -21,8 +21,8 @@ if (!is_object($icmsUser)) {
 } else {
 	$pm_handler = icms::handler('icms_data_privmessage');
 	if (!empty($_POST['delete'])) {
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
+		if (!icms::$security->check()) {
+			echo implode('<br />', icms::$security->getErrors());
 			exit();
 		}
 		$pm =& $pm_handler->get( (int) ($_POST['msg_id']));
@@ -77,7 +77,7 @@ if (!is_object($icmsUser)) {
 			echo "<a href='#' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?reply=1&amp;msg_id=".$pm_arr[0]->getVar("msg_id")."\",\"pmlite\",800,680);'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/reply.gif' alt='"._PM_REPLY."' /></a>\n";
 		}
 		echo "<input type='hidden' name='delete' value='1' />";
-		echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+		echo icms::$security->getTokenHTML();
 		echo "<input type='hidden' name='msg_id' value='".$pm_arr[0]->getVar("msg_id")."' />";
 		echo "<a href='#".$pm_arr[0]->getVar("msg_id")."' onclick='javascript:document.delete".$pm_arr[0]->getVar("msg_id").".submit();'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/delete.gif' alt='"._PM_DELETE."' /></a>";
 		echo "</td></tr><tr><td colspan='2' align='"._GLOBAL_RIGHT."'>";

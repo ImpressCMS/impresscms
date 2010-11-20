@@ -24,7 +24,7 @@ if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
 
 if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
-	if (!$GLOBALS['xoopsSecurity']->check()) {
+	if (!icms::$security->check()) {
 		$op = 'list';
 	}
 }
@@ -106,7 +106,7 @@ if ($op == "confirm") {
 	}
 
 	echo "
-	<tr class='foot' align='center'><td colspan='3'><input type='submit' value='"._MD_AM_SUBMIT."' />&nbsp;<input type='button' value='"._MD_AM_CANCEL."' onclick='location=\"admin.php?fct=modulesadmin\"' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr>
+	<tr class='foot' align='center'><td colspan='3'><input type='submit' value='"._MD_AM_SUBMIT."' />&nbsp;<input type='button' value='"._MD_AM_CANCEL."' onclick='location=\"admin.php?fct=modulesadmin\"' />".icms::$security->getTokenHTML()."</td></tr>
 	</table>
 	</form>";
 	icms_cp_footer();

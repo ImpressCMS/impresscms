@@ -38,7 +38,7 @@ xoops_header();
 if ($icmsUser) {
 	$myts =& icms_core_Textsanitizer::getInstance();
 	if (isset($_POST['op']) && $_POST['op'] == "submit") {
-		if (!$GLOBALS['xoopsSecurity']->check()) {
+		if (!icms::$security->check()) {
 			$security_error = true;
 		}
 		$res = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("users")." WHERE uid='". (int) ($_POST['to_userid'])."'");
@@ -47,7 +47,7 @@ if ($icmsUser) {
 			echo "<br /><br /><div><h4>"._PM_USERNOEXIST."<br />";
 			echo _PM_PLZTRYAGAIN."</h4><br />";
 			if (isset($security_error) && $security_error == true) {
-				echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
+				echo implode('<br />', icms::$security->getErrors());
 			}
 			echo "[ <a href='javascript:history.go(-1)'>"._PM_GOBACK."</a> ]</div>";
 		} else {
@@ -152,7 +152,7 @@ if ($icmsUser) {
 		echo "</td>";
 		echo "</tr>";
 		echo "<tr><td class='head'>&nbsp;</td><td class='even'>
-        <input type='hidden' name='op' value='submit' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."
+        <input type='hidden' name='op' value='submit' />".icms::$security->getTokenHTML()."
         <input type='submit' class='formButton' name='submit' value='"._PM_SUBMIT."' />&nbsp;
         <input type='reset' class='formButton' value='"._PM_CLEAR."' />
         &nbsp;<input type='button' class='formButton' name='cancel' value='"._PM_CANCELSEND."' onclick='javascript:window.close();' />

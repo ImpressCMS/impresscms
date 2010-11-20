@@ -68,8 +68,8 @@ switch ( $op) {
 			});
 		');
 		$stop = '';
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
+		if (!icms::$security->check()) {
+			$stop .= implode('<br />', icms::$security->getErrors())."<br />";
 		}
 		if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] != '') {
 			if (empty($agree_disc)) {
@@ -101,7 +101,7 @@ switch ( $op) {
 				<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
 				<input type='hidden' name='enc_type' value='". (int) ($enc_type)."' />
 		<input type='hidden' name='agree_disc' value='" . (int) $agree_disc . "' />
-				<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
+				<br /><br /><input type='hidden' name='op' value='finish' />".icms::$security->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
 		} else {
 			echo "<span style='color:#ff0000;'>$stop</span>";
 			include 'include/registerform.php';
@@ -113,8 +113,8 @@ switch ( $op) {
 	case 'finish':
 		include 'header.php';
 		$stop = $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
+		if (!icms::$security->check()) {
+			$stop .= implode('<br />', icms::$security->getErrors())."<br />";
 		}
 		if ($icmsConfigUser['use_captcha'] == 1) {
 			$icmsCaptcha = icms_form_elements_captcha_Object::instance();

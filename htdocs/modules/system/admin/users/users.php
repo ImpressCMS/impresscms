@@ -183,7 +183,7 @@ function modifyUser($user)
 		echo "<input type=\"hidden\" name=\"type\" value=\"user\">\n";
 		echo "<input type=\"hidden\" name=\"fct\" value=\"users\">\n";
 		echo "<input type=\"hidden\" name=\"op\" value=\"synchronize\">\n";
-		echo $GLOBALS['xoopsSecurity']->getTokenHTML()."\n";
+		echo icms::$security->getTokenHTML()."\n";
 		echo "<input type=\"submit\" value=\""._AM_SYNCHRONIZE."\">\n";
 		echo "</form>\n";
 	} else {

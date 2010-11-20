@@ -33,7 +33,7 @@ class db_manager {
 	function db_manager() {
 		$this->db = icms_db_legacy_Factory::getDatabase();
 		$this->db->setPrefix(XOOPS_DB_PREFIX);
-		$this->db->setLogger(XoopsLogger::instance());
+		$this->db->setLogger(icms_core_Logger::instance());
 	}
 
 	function isConnectable() {

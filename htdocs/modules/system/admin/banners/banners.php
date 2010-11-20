@@ -158,7 +158,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			<br />
 			<input type='hidden' name='fct' value='banners' />
 			<input type='hidden' name='op' value='BannersAdd' />
-			".$GLOBALS['xoopsSecurity']->getTokenHTML()."
+			".icms::$security->getTokenHTML()."
 			<input type='submit' value='"._AM_ADDBNR."' />
 			</form>";
 			echo"</td></tr></table>";
@@ -176,7 +176,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		"._AM_CLIPASST."<input type='text' name='passwd' size='12' maxlength='10' /><br />
 		"._AM_EXTINFO."<br /><textarea name='extrainfo' cols='60' rows='10' /></textarea><br />
 		<input type='hidden' name='op' value='BannerAddClient' />
-		".$GLOBALS['xoopsSecurity']->getTokenHTML()."
+		".icms::$security->getTokenHTML()."
 		<input type='hidden' name='fct' value='banners' />
 		<input type='submit' value='"._AM_ADDCLI."' />
 		</form>";
@@ -302,7 +302,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		<input type='hidden' name='bid' value='$bid' />
 		<input type='hidden' name='imptotal' value='$imptotal' />
 		<input type='hidden' name='fct' value='banners' />
-		".$GLOBALS['xoopsSecurity']->getTokenHTML()."
+		".icms::$security->getTokenHTML()."
 		<input type='hidden' name='op' value='BannerChange' />
 		<input type='submit' value='"._AM_CHGBNR."' />
 		</form>";
@@ -388,7 +388,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		"._AM_EXTINFO."<br /><textarea name='extrainfo' cols='60' rows='10' />$extrainfo</textarea><br />
 		<input type='hidden' name='cid' value='$cid' />
 		<input type='hidden' name='op' value='BannerClientChange' />
-		".$GLOBALS['xoopsSecurity']->getTokenHTML()."
+		".icms::$security->getTokenHTML()."
 		<input type='hidden' name='fct' value='banners' />
 		<input type='submit' value='"._AM_CHGCLI."' />";
 		echo "</td></tr></table>";

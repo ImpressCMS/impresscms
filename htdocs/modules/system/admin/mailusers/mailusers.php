@@ -25,11 +25,11 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		$op =  $_POST['op'];
 	}
 
-	if (!$GLOBALS['xoopsSecurity']->check() || $op == "form") {
+	if (!icms::$security->check() || $op == "form") {
 		icms_cp_header();
 		//OpenTable();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/mailusers/images/mailusers_big.png)">'._MD_AM_MLUS.'</div><br />';
-		if ($op != "form" && $error_msg = $GLOBALS['xoopsSecurity']->getErrors(true)) {
+		if ($op != "form" && $error_msg = icms::$security->getErrors(true)) {
 			echo "<div class='errorMsg'>{$error_msg}</div>";
 		}
 		$display_criteria = 1;

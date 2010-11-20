@@ -18,7 +18,7 @@ xoops_header(false);
 
 $denied = true;
 if (!empty($_REQUEST['token'])) {
-	if ($GLOBALS['xoopsSecurity']->validateToken($_REQUEST['token'], false)) {
+	if (icms::$security->validateToken($_REQUEST['token'], false)) {
 		$denied = false;
 	}
 } elseif (is_object($icmsUser) && $icmsUser->isAdmin()) {
@@ -542,7 +542,7 @@ if (empty($_POST["user_submit"])) {
 		foreach ( $_POST as $k => $v) {
 			if ($k == 'XOOPS_TOKEN_REQUEST') {
 				// regenerate token value
-				$hiddenform .= $GLOBALS['xoopsSecurity']->getTokenHTML()."\n";
+				$hiddenform .= icms::$security->getTokenHTML()."\n";
 			} else {
 				$hiddenform .= "<input type='hidden' name='".htmlSpecialChars($k, ENT_QUOTES)."' value='".htmlSpecialChars($myts->stripSlashesGPC($v), ENT_QUOTES)."' />\n";
 			}
@@ -614,7 +614,7 @@ if (empty($_POST["user_submit"])) {
 			if (empty($_POST["target"])) {
 				echo "<select name='fct'><option value='users'>"._DELETE."</option><option value='mailusers'>"._MA_USER_SENDMAIL."</option>";
 				echo "</select>&nbsp;";
-				echo $GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='"._SUBMIT."' />";
+				echo icms::$security->getTokenHTML()."<input type='submit' value='"._SUBMIT."' />";
 
 				// Add selected users
 			} else {
@@ -628,7 +628,7 @@ if (empty($_POST["user_submit"])) {
 		foreach ( $_POST as $k => $v) {
 			if ($k == 'XOOPS_TOKEN_REQUEST') {
 				// regenerate token value
-				$hiddenform .= $GLOBALS['xoopsSecurity']->getTokenHTML()."\n";
+				$hiddenform .= icms::$security->getTokenHTML()."\n";
 			} else {
 				$hiddenform .= "<input type='hidden' name='".htmlSpecialChars($k, ENT_QUOTES)."' value='".htmlSpecialChars($myts->stripSlashesGPC($v), ENT_QUOTES)."' />\n";
 			}

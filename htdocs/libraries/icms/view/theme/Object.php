@@ -266,7 +266,7 @@ class icms_view_theme_Object {
 	 * @return  bool
 	 */
 	public function checkCache() {
-		global $xoopsModule, $icmsModule, $xoopsLogger;
+		global $xoopsModule, $icmsModule;
 
 		if ($_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime) {
 			$template = $this->contentTemplate ? $this->contentTemplate : 'db:system_dummy.html';
@@ -282,7 +282,7 @@ class icms_view_theme_Object {
 			$this->contentCacheId = $this->generateCacheId($dirname . '|' . $uri);
 
 			if ($this->template->is_cached($template, $this->contentCacheId)) {
-				$xoopsLogger->addExtra($template, sprintf(_REGENERATES, $this->contentCacheLifetime));
+				icms::$logger->addExtra($template, sprintf(_REGENERATES, $this->contentCacheLifetime));
 				$this->render(null, null, $template);
 				return true;
 			}
@@ -305,12 +305,12 @@ class icms_view_theme_Object {
 	 * @param array	 $vars			Template variables to send to the template engine
 	 */
 	public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = array()) {
-		global $xoops, $xoopsLogger, $xoopsOption;
+		global $xoops, $xoopsOption;
 
 		if ($this->renderCount) {
 			return false;
 		}
-		$xoopsLogger->startTime('Page rendering');
+		icms::$logger->startTime('Page rendering');
 
 		// @internal: Lame fix to ensure the metas specified in the xoops config page don't appear twice
 		$old = array('robots', 'keywords', 'description', 'rating', 'author', 'copyright');
@@ -354,7 +354,7 @@ class icms_view_theme_Object {
 		$this->template->display($this->path . '/' . $this->canvasTemplate);
 
 		$this->renderCount++;
-		$xoopsLogger->stopTime('Page rendering');
+		icms::$logger->stopTime('Page rendering');
 	}
 
 	/**#@+ @tasktype 20 Manipulating page meta-information*/

@@ -258,8 +258,6 @@ class icms_view_PageBuilder {
 		    'lastmod' => $xobject->getVar('last_modified')
 		);
 
-		$xoopsLogger =& icms_core_Logger::instance ();
-
 		$bcachetime = (int) ($xobject->getVar('bcachetime'));
 		//$template = new icms_view_Tpl();
 		if (empty($bcachetime)) {
@@ -276,14 +274,14 @@ class icms_view_PageBuilder {
 		);
 
 		if (! $bcachetime || ! $template->is_cached($tplName, $cacheid)) {
-			$xoopsLogger->addBlock($xobject->getVar('name'));
+			icms::$logger->addBlock($xobject->getVar('name'));
 			if (! ($bresult = $xobject->buildBlock())) {
 				return false;
 			}
 			$template->assign('block', $bresult);
 			$block['content'] = $template->fetch($tplName, $cacheid);
 		} else {
-			$xoopsLogger->addBlock($xobject->getVar('name'), true, $bcachetime);
+			icms::$logger->addBlock($xobject->getVar('name'), true, $bcachetime);
 			$block['content'] = $template->fetch($tplName, $cacheid);
 		}
 		return $block;

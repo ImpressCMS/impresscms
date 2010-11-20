@@ -149,7 +149,7 @@ switch ($op) {
 		$xoopsTpl->assign('lang_itemid', _NOT_ITEMID);
 		$xoopsTpl->assign('lang_itemname', _NOT_ITEMNAME);
 		$xoopsTpl->assign('lang_activenotifications', _NOT_ACTIVENOTIFICATIONS);
-		$xoopsTpl->assign('notification_token', $GLOBALS['xoopsSecurity']->createToken());
+		$xoopsTpl->assign('notification_token', icms::$security->createToken());
 		include ICMS_ROOT_PATH . '/footer.php';
 
 		// TODO: another display mode... instead of one notification per line,
@@ -189,8 +189,8 @@ switch ($op) {
 
 		//case 'delete_ok':
 	case 'delete':
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header('notifications.php', 2, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header('notifications.php', 2, implode('<br />', icms::$security->getErrors()));
 		}
 		if (empty($_POST['del_not'])) {
 			redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);

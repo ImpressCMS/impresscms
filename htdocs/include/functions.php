@@ -214,12 +214,12 @@ function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
 }
 
 /**
- * @deprecated, use {@link XoopsSecurity} class instead
+ * @deprecated, use {@link icms_core_Security} class instead
  * @todo Remove this in 1.4 - all occurrences have been replaced in the core
  **/
 function xoops_refcheck($docheck=1) {
 	icms_core_Debug::setDeprecated('icms_core_Security->checkReferer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return $GLOBALS['xoopsSecurity']->checkReferer($docheck);
+	return icms::$security->checkReferer($docheck);
 }
 
 /**
@@ -436,7 +436,7 @@ function xoops_getbanner() {
  */
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
-	global $icmsConfig, $xoopsLogger, $icmsConfigPersona, $icmsUserIsAdmin;
+	global $icmsConfig, $icmsConfigPersona, $icmsUserIsAdmin;
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{
 		if(preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {$url = ICMS_URL;}
@@ -460,7 +460,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	if($icmsConfig['debug_mode'] == 2 && $icmsUserIsAdmin)
 	{
 		$xoopsTpl->assign('time', 300);
-		$xoopsTpl->assign('xoops_logdump', $xoopsLogger->dump());
+		$xoopsTpl->assign('xoops_logdump', icms::$logger->dump());
 	}
 	else {$xoopsTpl->assign('time', (int) ($time));}
 	if(!empty($_SERVER['REQUEST_URI']) && $addredirect && strstr($url, 'user.php'))

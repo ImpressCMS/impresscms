@@ -61,48 +61,48 @@ class icms_BootstrapEventHandler {
 				if (!($_SERVER['REQUEST_URI'] = @$_SERVER['PHP_SELF'])) {
 					$_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
 				}
-				if (isset($_SERVER[ 'QUERY_STRING' ])) {
+				if (isset($_SERVER['QUERY_STRING'])) {
 					$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
 				}
 			}
 			$GLOBALS['xoopsRequestUri'] = $_SERVER['REQUEST_URI'];
 		} elseif ($event->name == 'loadService') {
 			switch ($params['name']) {
-			case "security":
-				$GLOBALS['xoopsSecurity'] = $GLOBALS['icmsSecurity'] = $params['service'];
-				break;
-			case "logger":
-				$GLOBALS['xoopsLogger'] = $GLOBALS['xoopsErrorHandler'] = $params['service'];
-				break;
-			case "xoopsDB":
-				$GLOBALS['xoopsDB'] = $params['service'];
-				break;
-			case "config":
-				$GLOBALS['config_handler'] = $params['service'];
-				$GLOBALS['icmsConfig']['xoops_url'] = ICMS_URL;
-				$GLOBALS['icmsConfig']['root_path'] = ICMS_ROOT_PATH . "/";
-				break;
-			case "session":
-				$GLOBALS['member_handler'] = icms::handler('icms_member');
-				$GLOBALS['sess_handler'] = $params['service'];
-				$GLOBALS['xoopsUser'] = $GLOBALS['icmsUser'] = icms::$user;
-				if (icms::$user && icms::$user->isAdmin()) {
-					$GLOBALS['xoopsUserIsAdmin'] = $GLOBALS['icmsUserIsAdmin'] = true;
-				} else {
-					$GLOBALS['xoopsUserIsAdmin'] = $GLOBALS['icmsUserIsAdmin'] = false;
-				}
-				$GLOBALS['UserGroups'] = icms::$user ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-				break;
-			case "module":
-				$GLOBALS['icmsModule'] = $GLOBALS['xoopsModule'] = icms::$module;
-				if (icms::$user) {
-					$GLOBALS['xoopsUserIsAdmin'] = $GLOBALS['icmsUserIsAdmin'] =
-						icms::$user->isAdmin(icms::$module ? icms::$module->getVar('mid') : 1);
-				}
-				if (icms::$module) {
-					$GLOBALS['icmsModuleConfig'] = $GLOBALS['xoopsModuleConfig'] = icms::$module->config;
-				}
-				break;
+				case "security":
+					$GLOBALS['xoopsSecurity'] = $GLOBALS['icmsSecurity'] = $params['service'];
+					break;
+				case "logger":
+					$GLOBALS['xoopsLogger'] = $GLOBALS['xoopsErrorHandler'] = $params['service'];
+					break;
+				case "xoopsDB":
+					$GLOBALS['xoopsDB'] = $params['service'];
+					break;
+				case "config":
+					$GLOBALS['config_handler'] = $params['service'];
+					$GLOBALS['icmsConfig']['xoops_url'] = ICMS_URL;
+					$GLOBALS['icmsConfig']['root_path'] = ICMS_ROOT_PATH . "/";
+					break;
+				case "session":
+					$GLOBALS['member_handler'] = icms::handler('icms_member');
+					$GLOBALS['sess_handler'] = $params['service'];
+					$GLOBALS['xoopsUser'] = $GLOBALS['icmsUser'] = icms::$user;
+					if (icms::$user && icms::$user->isAdmin()) {
+						$GLOBALS['xoopsUserIsAdmin'] = $GLOBALS['icmsUserIsAdmin'] = TRUE;
+					} else {
+						$GLOBALS['xoopsUserIsAdmin'] = $GLOBALS['icmsUserIsAdmin'] = FALSE;
+					}
+					$GLOBALS['UserGroups'] = icms::$user ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+					break;
+				case "module":
+					$GLOBALS['icmsModule'] = $GLOBALS['xoopsModule'] = icms::$module;
+					if (icms::$user) {
+						$GLOBALS['xoopsUserIsAdmin'] = $GLOBALS['icmsUserIsAdmin'] =
+							icms::$user->isAdmin(icms::$module ? icms::$module->getVar('mid') : 1);
+					}
+					if (icms::$module) {
+						$GLOBALS['icmsModuleConfig'] = $GLOBALS['xoopsModuleConfig'] = icms::$module->config;
+					}
+					break;
 			}
 		}
 

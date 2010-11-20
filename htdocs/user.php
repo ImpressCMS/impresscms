@@ -54,7 +54,7 @@ if ($op == 'main') {
             'lang_youoid' => _US_OPENID_URL,
             'lang_login_oid' => _US_OPENID_LOGIN,
             'lang_back2normoid' => _US_OPENID_NORMAL_LOGIN,
-            'mailpasswd_token' => $GLOBALS['xoopsSecurity']->createToken(),
+            'mailpasswd_token' => icms::$security->createToken(),
             'allow_registration' => $icmsConfigUser['allow_register'],
             'rememberme' => $icmsConfigUser['remember_me'],
             'auth_openid' => $icmsConfigAuth['auth_openid'],
@@ -111,7 +111,7 @@ if ($op == 'resetpass') {
             'lang_currentpass' => _US_CURRENTPASS,
             'lang_newpass' => _US_NEWPASSWORD,
             'lang_newpass2' => _US_VERIFYPASS,
-            'resetpassword_token' => $GLOBALS['xoopsSecurity']->createToken(),
+            'resetpassword_token' => icms::$security->createToken(),
             'icms_pagetitle' => _LOGIN
 		));
 		include 'footer.php';

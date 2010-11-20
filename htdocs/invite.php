@@ -29,8 +29,8 @@ switch ( $op) {
 	case 'finish':
 		include 'header.php';
 		$stop = '';
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
+		if (!icms::$security->check()) {
+			$stop .= implode('<br />', icms::$security->getErrors())."<br />";
 		}
 		$icmsCaptcha = icms_form_elements_captcha_Object::instance();
 		if (! $icmsCaptcha->verify()) {

@@ -25,8 +25,8 @@ $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?tri
 
 switch($op) {
 	case "SmilesUpdate":
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header('admin.php?fct=smilies', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$count = (!empty($_POST['smile_id']) && is_array($_POST['smile_id'])) ? count($_POST['smile_id']) : 0;
 		$db =& icms_db_Factory::instance();
@@ -44,8 +44,8 @@ switch($op) {
 		break;
 
 	case "SmilesAdd":
-		if (!$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if (!icms::$security->check()) {
+			redirect_header('admin.php?fct=smilies', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$db =& icms_db_Factory::instance();
 		$myts =& icms_core_Textsanitizer::getInstance();
@@ -87,8 +87,8 @@ switch($op) {
 
 	case "SmilesSave":
 		$id = isset($_POST['id']) ? (int) ($_POST['id']) : 0;
-		if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if ($id <= 0 | !icms::$security->check()) {
+			redirect_header('admin.php?fct=smilies', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$myts =& icms_core_Textsanitizer::getInstance();
 		$smile_code = $myts->stripSlashesGPC($_POST['smile_code']);
@@ -143,8 +143,8 @@ switch($op) {
 
 	case "SmilesDelOk":
 		$id = isset($_POST['id']) ? (int) ($_POST['id']) : 0;
-		if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
-			redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		if ($id <= 0 | !icms::$security->check()) {
+			redirect_header('admin.php?fct=smilies', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$db =& icms_db_Factory::instance();
 		$sql = sprintf("DELETE FROM %s WHERE id = '%u'", $db->prefix('smiles'), $id);

@@ -40,9 +40,9 @@ $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?tri
 
 if ($op == 'saveuser')
 {
-	if (!$GLOBALS['xoopsSecurity']->check())
+	if (!icms::$security->check())
 	{
-		redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', icms::$security->getErrors()));
 	}
 
 	$uid = 0;
@@ -481,9 +481,9 @@ if ($op == 'avatarform')
 
 if ($op == 'avatarupload')
 {
-	if (!$GLOBALS['xoopsSecurity']->check())
+	if (!icms::$security->check())
 	{
-		redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', icms::$security->getErrors()));
 	}
 	$xoops_upload_file = array();
 	$uid = 0;
@@ -551,9 +551,9 @@ if ($op == 'avatarupload')
 
 if ($op == 'avatarchoose')
 {
-	if (!$GLOBALS['xoopsSecurity']->check())
+	if (!icms::$security->check())
 	{
-		redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', icms::$security->getErrors()));
 	}
 
 	$uid = 0;

@@ -88,10 +88,9 @@ class icms_core_Security {
 	 * @return bool
 	 **/
 	public function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN) {
-		global $xoopsLogger;
 		$token = ($token !== false) ? $token : ( isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '' );
 		if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
-			$xoopsLogger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
+			icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
 			return false;
 		}
 		$validFound = false;
@@ -103,17 +102,17 @@ class icms_core_Security {
 						// token should be valid once, so clear it once validated
 						unset($token_data[$i]);
 					}
-					$xoopsLogger->addExtra(_CORE_TOKENVALID, _CORE_TOKENISVALID);
+					icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENISVALID);
 					$validFound = true;
 				} else {
 					$str = _CORE_TOKENEXPIRED;
 					$this->setErrors($str);
-					$xoopsLogger->addExtra(_CORE_TOKENVALID, $str);
+					icms::$logger->addExtra(_CORE_TOKENVALID, $str);
 				}
 			}
 		}
 		if (!$validFound) {
-			$xoopsLogger->addExtra(_CORE_TOKENVALID, _CORE_TOKENINVALID);
+			icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENINVALID);
 		}
 		$this->garbageCollection($name);
 		return $validFound;

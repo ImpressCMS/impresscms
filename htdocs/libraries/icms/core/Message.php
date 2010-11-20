@@ -129,7 +129,7 @@ class icms_core_Message {
 		}
 	}
 	if ($addtoken !== false) {
-		echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+		echo icms::$security->getTokenHTML();
 	}
 	echo '<input type="submit" name="confirm_submit" value="' . $submit
 		. '" /> <input type="button" name="confirm_back" value="' . _CANCEL

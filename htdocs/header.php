@@ -12,13 +12,11 @@
  */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-if (!isset( $xoopsLogger ) )
-$xoopsLogger =& $GLOBALS['xoopsLogger'];
 if (!isset($icmsPreloadHandler) )
 $icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
 
-$xoopsLogger->stopTime('Module init');
-$xoopsLogger->startTime('ICMS output init');
+icms::$logger->stopTime('Module init');
+icms::$logger->startTime('ICMS output init');
 
 global $xoopsOption, $icmsConfig, $icmsModule;
 $xoopsOption['theme_use_smarty'] = 1;
@@ -178,6 +176,6 @@ if (!isset($xoopsOption['template_main']) && $icmsModule) {
 // Assigning the selected language as a smarty var
 $xoopsTpl->assign('icmsLang', $icmsConfig['language']);
 
-$xoopsLogger->stopTime('ICMS output init');
-$xoopsLogger->startTime('Module display');
+icms::$logger->stopTime('ICMS output init');
+icms::$logger->startTime('Module display');
 ?>

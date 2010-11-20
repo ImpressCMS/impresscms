@@ -138,7 +138,7 @@ if ($op == "form") {
 	$form->display();
 }
 
-elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
+elseif ($op == "submit" & icms::$security->check()) {
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$criteria = new icms_db_criteria_Compo();
 	if (!empty($_POST['user_uname'])) {
@@ -410,7 +410,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		if ($group > 0) {
 			echo "<input type='hidden' name='groupid' value='".$group."' />";
 		}
-		echo "</td><td colspan='12'>".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='"._SUBMIT."' /></td></tr></table></form>\n";
+		echo "</td><td colspan='12'>".icms::$security->getTokenHTML()."<input type='submit' value='"._SUBMIT."' /></td></tr></table></form>\n";
 		$totalpages = ceil($total / $limit);
 		if ($totalpages > 1) {
 			$hiddenform = "<form name='findnext' action='admin.php' method='post'>";
@@ -422,7 +422,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 					}
 				} elseif ($k == 'XOOPS_TOKEN_REQUEST') {
 					// regenerate token value
-					$hiddenform .= $GLOBALS['xoopsSecurity']->getTokenHTML()."\n";
+					$hiddenform .= icms::$security->getTokenHTML()."\n";
 				} else {
 					$hiddenform .= "<input type='hidden' name='".$myts->htmlSpecialChars($k)."' value='".$myts->htmlSpecialChars($myts->stripSlashesGPC($v))."' />\n";
 				}
@@ -465,7 +465,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 	}
 }
 else {
-	redirect_header('admin.php?fct=findusers', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	redirect_header('admin.php?fct=findusers', 3, implode('<br />', icms::$security->getErrors()));
 }
 //CloseTable();
 icms_cp_footer();
