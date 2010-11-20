@@ -291,11 +291,10 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function subscribe($category, $item_id, $events, $mode=null, $module_id=null, $user_id=null) {
 		if (!isset($user_id)) {
-			global $icmsUser;
-			if (empty($icmsUser)) {
+			if (empty(icms::$user)) {
 				return false;  // anonymous cannot subscribe
 			} else {
-				$user_id = $icmsUser->getVar('uid');
+				$user_id = icms::$user->getVar('uid');
 			}
 		}
 
@@ -454,9 +453,8 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 		}
 
 		if (!isset($omit_user_id)) {
-			global $icmsUser;
-			if (!empty($icmsUser)) {
-				$omit_user_id = $icmsUser->getVar('uid');
+			if (!empty(icms::$user)) {
+				$omit_user_id = icms::$user->getVar('uid');
 			} else {
 				$omit_user_id = 0;
 			}
@@ -564,11 +562,10 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function unsubscribe($category, $item_id, $events, $module_id=null, $user_id=null) {
 		if (!isset($user_id)) {
-			global $icmsUser;
-			if (empty($icmsUser)) {
+			if (empty(icms::$user)) {
 				return false;  // anonymous cannot subscribe
 			} else {
-				$user_id = $icmsUser->getVar('uid');
+				$user_id = icms::$user->getVar('uid');
 			}
 		}
 

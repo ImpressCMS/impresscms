@@ -22,7 +22,7 @@ $op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_
 	  ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
 
 if ($op == 'main') {
-	if (!$icmsUser) {
+	if (!icms::$user) {
 		$xoopsOption['template_main'] = 'system_userform.html';
 		include 'header.php';
 		$redirect = false;
@@ -75,14 +75,14 @@ if ($op == 'main') {
 		header('Location: '.$redirect);
 		exit();
 	} else {
-		header('Location: '.ICMS_URL.'/userinfo.php?uid='. (int) ($icmsUser->getVar('uid')));
+		header('Location: '.ICMS_URL.'/userinfo.php?uid='. (int) (icms::$user->getVar('uid')));
 		exit();
 	}
 	exit();
 }
 
 if ($op == 'resetpass') {
-	if (!$icmsUser) {
+	if (!icms::$user) {
 		$xoopsOption['template_main'] = 'system_userform.html';
 		include 'header.php';
 		$redirect = false;
@@ -129,7 +129,7 @@ if ($op == 'resetpass') {
 		header('Location: '.$redirect);
 		exit();
 	} else {
-		header('Location: '.ICMS_URL.'/userinfo.php?uid='. (int) ($icmsUser->getVar('uid')));
+		header('Location: '.ICMS_URL.'/userinfo.php?uid='. (int) (icms::$user->getVar('uid')));
 		exit();
 	}
 	exit();
@@ -142,7 +142,7 @@ if ($op == 'login') {
 
 if ($op == 'logout') {
 	$sessHandler = icms::$session;
-	$sessHandler->sessionClose($icmsUser->getVar('uid'));
+	$sessHandler->sessionClose(icms::$user->getVar('uid'));
 	redirect_header(ICMS_URL.'/index.php', 3, _US_LOGGEDOUT.'<br />'._US_THANKYOUFORVISIT);
 }
 
@@ -196,10 +196,10 @@ if ($op == 'actv') {
 }
 
 if ($op == 'delete') {
-	if (!$icmsUser || $icmsConfigUser['self_delete'] != 1) {
+	if (!icms::$user || $icmsConfigUser['self_delete'] != 1) {
 		redirect_header('index.php',5,_US_NOPERMISS);
 	} else {
-		$groups = $icmsUser->getGroups();
+		$groups = icms::$user->getGroups();
 		if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
 			redirect_header('user.php', 5, _US_ADMINNO);
 		}
@@ -209,9 +209,9 @@ if ($op == 'delete') {
 			icms_core_Message::confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL.'<br/>'._US_REMOVEINFO);
 			include 'footer.php';
 		} else {
-			$del_uid = (int) ($icmsUser->getVar('uid'));
+			$del_uid = (int) (icms::$user->getVar('uid'));
 			$member_handler = icms::handler('icms_member');
-			if (false != $member_handler->deleteUser($icmsUser)) {
+			if (false != $member_handler->deleteUser(icms::$user)) {
 				$online_handler = icms::handler('icms_core_Online');
 				$online_handler->destroy($del_uid);
 				xoops_notification_deletebyuser($del_uid);

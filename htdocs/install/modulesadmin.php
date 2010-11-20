@@ -20,7 +20,7 @@
 icms_loadLanguageFile('system', 'modulesadmin', true);
 
 function xoops_module_install($dirname) {
-	global $icmsUser, $xoopsConfig;
+	global $xoopsConfig;
 	$dirname = trim($dirname);
 	$db =& icms_db_Factory::instance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
@@ -472,7 +472,7 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 }
 
 function icms_module_update($dirname) {
-	global $icmsUser, $xoopsConfig;
+	global $xoopsConfig;
 	$dirname = trim($dirname);
 	$db =& icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');
@@ -629,7 +629,7 @@ function icms_module_update($dirname) {
 							if (empty($newbid)) {
 								$newbid = $db->getInsertId();
 							}
-							$groups =& $icmsUser->getGroups();
+							$groups =& icms::$user->getGroups();
 							$gperm_handler = icms::handler('icms_member_groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm =& $gperm_handler->create();

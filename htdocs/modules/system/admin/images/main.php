@@ -12,7 +12,7 @@
  * @version		$Id$
  */
 
-if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit(_CT_ACCESS_DENIED);
 } else {
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
@@ -86,14 +86,14 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 }
 
 function imanager_index($imgcat_id=null) {
-	global $icmsAdminTpl,$icmsUser,$xoopsConfig,$limit;
+	global $icmsAdminTpl,$xoopsConfig,$limit;
 
-	if (!is_object($icmsUser)) {
+	if (!is_object(icms::$user)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $icmsUser->getGroups();
-		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
+		$groups =& icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1)) ? false : true;
 	}
 
 	if (!is_writable(ICMS_IMANAGER_FOLDER_PATH))
@@ -275,14 +275,14 @@ function imanager_index($imgcat_id=null) {
 }
 
 function imanager_listimg($imgcat_id,$start=0) {
-	global $icmsAdminTpl,$icmsUser;
+	global $icmsAdminTpl;
 
-	if (!is_object($icmsUser)) {
+	if (!is_object(icms::$user)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $icmsUser->getGroups();
-		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
+		$groups =& icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1)) ? false : true;
 	}
 
 	$query = isset($_POST['query']) ? $_POST['query'] : null;

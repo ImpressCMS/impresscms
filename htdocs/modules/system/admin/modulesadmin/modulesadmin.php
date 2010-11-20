@@ -11,12 +11,12 @@
  * @version		$Id$
  */
 
-if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
 
 function xoops_module_list() {
-	global $icmsAdminTpl,$icmsUser,$xoopsConfig;
+	global $icmsAdminTpl,$xoopsConfig;
 
 	$icmsAdminTpl->assign('lang_madmin',_MD_AM_MODADMIN);
 	$icmsAdminTpl->assign('lang_module',_MD_AM_MODULE);
@@ -96,7 +96,7 @@ function xoops_module_list() {
 }
 
 function xoops_module_install($dirname) {
-	global $icmsUser, $xoopsConfig, $icmsAdminTpl;
+	global $xoopsConfig, $icmsAdminTpl;
 	$dirname = trim($dirname);
 	$db =& icms_db_Factory::instance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
@@ -856,7 +856,7 @@ function xoops_module_change($mid, $weight, $name) {
 }
 
 function icms_module_update($dirname) {
-	global $icmsUser, $xoopsConfig, $xoopsDB, $icmsAdminTpl;
+	global $xoopsConfig, $xoopsDB, $icmsAdminTpl;
 
 	$msgs = array();
 
@@ -1029,7 +1029,7 @@ function icms_module_update($dirname) {
 							if (empty($newbid)) {
 								$newbid = $xoopsDB->getInsertId();
 							}
-							$groups =& $icmsUser->getGroups();
+							$groups =& icms::$user->getGroups();
 							$gperm_handler = icms::handler('icms_member_groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm =& $gperm_handler->create();

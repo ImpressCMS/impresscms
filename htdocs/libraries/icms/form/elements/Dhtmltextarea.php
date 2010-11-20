@@ -64,9 +64,9 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	{
 		parent::__construct($caption, $name, $value, $rows, $cols);
 		$this->_hiddenText = $hiddentext;
-		global $icmsConfig, $icmsUser,$icmsModule;
+		global $icmsConfig, $icmsModule;
 
-		$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
+		$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 		$moduleid = (is_object($icmsModule) && $name != 'com_text') ? $icmsModule->getVar('mid') : 1;
 
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $icmsConfig['editor_default']){

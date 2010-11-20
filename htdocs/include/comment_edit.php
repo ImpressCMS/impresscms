@@ -18,7 +18,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 if (('system' != $icmsModule->getVar('dirname')
 	&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
-	|| (!is_object($icmsUser) && !$icmsModuleConfig['com_anonpost'])
+	|| (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost'])
 	|| !is_object($icmsModule)) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
 }
@@ -29,15 +29,15 @@ $com_mode = isset($_GET['com_mode'])
 	? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES)
 	: '';
 if ($com_mode == '') {
-	if (is_object($icmsUser)) {
-		$com_mode = $icmsUser->getVar('umode');
+	if (is_object(icms::$user)) {
+		$com_mode = icms::$user->getVar('umode');
 	} else {
 		$com_mode = $icmsConfig['com_mode'];
 	}
 }
 if (!isset($_GET['com_order'])) {
-	if (is_object($icmsUser)) {
-		$com_order = $icmsUser->getVar('uorder');
+	if (is_object(icms::$user)) {
+		$com_order = icms::$user->getVar('uorder');
 	} else {
 		$com_order = $icmsConfig['com_order'];
 	}

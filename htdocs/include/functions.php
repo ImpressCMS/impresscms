@@ -232,10 +232,10 @@ function xoops_refcheck($docheck=1) {
  */
 function xoops_getUserTimestamp($time, $timeoffset="")
 {
-	global $icmsConfig, $icmsUser;
+	global $icmsConfig;
 	if($timeoffset == '')
 	{
-		if($icmsUser) {$timeoffset = $icmsUser->getVar('timezone_offset');}
+		if(icms::$user) {$timeoffset = icms::$user->getVar('timezone_offset');}
 		else {$timeoffset = $icmsConfig['default_TZ'];}
 	}
 	$usertimestamp = (int) ($time) + ((float)($timeoffset) - $icmsConfig['server_TZ'])*3600;
@@ -436,7 +436,7 @@ function xoops_getbanner() {
  */
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
-	global $icmsConfig, $icmsConfigPersona, $icmsUserIsAdmin;
+	global $icmsConfig, $icmsConfigPersona;
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{
 		if(preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {$url = ICMS_URL;}
@@ -457,7 +457,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
 	$xoopsTpl = $icmsTpl =& $xoTheme->template;
 
-	if($icmsConfig['debug_mode'] == 2 && $icmsUserIsAdmin)
+	if($icmsConfig['debug_mode'] == 2 && icms::$user->isAdmin())
 	{
 		$xoopsTpl->assign('time', 300);
 		$xoopsTpl->assign('xoops_logdump', icms::$logger->dump());
@@ -1027,7 +1027,6 @@ function icms_getCurrentModuleName()
  */
 function icms_userIsAdmin($module = false)
 {
-	global $icmsUser;
 	static $icms_isAdmin;
 	if(!$module)
 	{
@@ -1035,7 +1034,7 @@ function icms_userIsAdmin($module = false)
 		$module = $icmsModule->getVar('dirname');
 	}
 	if(isset ($icms_isAdmin[$module])) {return $icms_isAdmin[$module];}
-	if(!$icmsUser)
+	if(!icms::$user)
 	{
 		$icms_isAdmin[$module] = false;
 		return $icms_isAdmin[$module];
@@ -1044,7 +1043,7 @@ function icms_userIsAdmin($module = false)
 	$icmsModule = icms_getModuleInfo($module);
 	if(!is_object($icmsModule)) {return false;}
 	$module_id = $icmsModule->getVar('mid');
-	$icms_isAdmin[$module] = $icmsUser->isAdmin($module_id);
+	$icms_isAdmin[$module] = icms::$user->isAdmin($module_id);
 	return $icms_isAdmin[$module];
 }
 
@@ -1946,7 +1945,7 @@ function ext_date($time)
  */
 function formatTimestamp($time, $format = "l", $timeoffset = null)
 {
-	global $icmsConfig, $icmsUser;
+	global $icmsConfig;
 
 	$format_copy = $format;
 	$format = strtolower($format);
@@ -2825,7 +2824,7 @@ function icms_getUnameFromUserEmail($email = '')
  * @todo Move to a static class method - text area?
  */
 function icms_need_do_br($moduleName=false) {
-	global $icmsConfig, $icmsUser, $icmsModule;
+	global $icmsConfig, $icmsModule;
 
 	if (!$moduleName) {
 		global $icmsModule;
@@ -2835,7 +2834,7 @@ function icms_need_do_br($moduleName=false) {
 		$theModule = icms_getModuleInfo($moduleName);
 	}
 
-	$groups = $icmsUser->getGroups();
+	$groups = icms::$user->getGroups();
 
 	$editor_default = $icmsConfig['editor_default'];
 	$gperm_handler = icms::handler('icms_member_groupperm');

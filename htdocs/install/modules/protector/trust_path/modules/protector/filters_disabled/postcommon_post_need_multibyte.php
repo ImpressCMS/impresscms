@@ -7,12 +7,10 @@ class protector_postcommon_post_need_multibyte extends ProtectorFilterAbstract {
 
 	function execute()
 	{
-		global $xoopsUser ;
-	
 		if( ! function_exists( 'mb_strlen' ) ) return true ;
 	
 		// registered users always pass this plugin
-		if( is_object( $xoopsUser ) ) return true ;
+		if( is_object( icms::$user ) ) return true ;
 	
 		$lengths = array(
 			0 => 100 , // default value

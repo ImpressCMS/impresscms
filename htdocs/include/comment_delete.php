@@ -68,12 +68,12 @@ if ('system' == $icmsModule->getVar('dirname')) {
 }
 
 $accesserror = false;
-if (!is_object($icmsUser)) {
+if (!is_object(icms::$user)) {
 	$accesserror = true;
 } else {
-	if (!$icmsUser->isAdmin($com_modid)) {
+	if (!icms::$user->isAdmin($com_modid)) {
 		$sysperm_handler = icms::handler('icms_member_groupperm');
-		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
+		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 			$accesserror = true;
 		}
 	}

@@ -14,13 +14,13 @@ if (! defined ( "ICMS_ROOT_PATH" )) {
 	die ( "ImpressCMS root path not defined" );
 }
 
-global $icmsConfig, $icmsUser, $xoopsOption;
+global $icmsConfig, $xoopsOption;
 
 $allowed = false;
 if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_site']) {
 	$allowed = true;
-} elseif (is_object ( $icmsUser )) {
-	foreach ( $icmsUser->getGroups () as $group) {
+} elseif (is_object ( icms::$user )) {
+	foreach ( icms::$user->getGroups () as $group) {
 		if (in_array ( $group, $icmsConfig ['closesite_okgrp'] ) || ICMS_GROUP_ADMIN == $group) {
 			$allowed = true;
 			break;

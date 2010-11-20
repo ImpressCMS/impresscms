@@ -91,14 +91,14 @@ function b_system_admin_warnings_show(){
  * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
 function b_system_admin_cp_show(){
-	global $icmsTpl, $xoopsConfig, $icmsUser;
+	global $icmsTpl, $xoopsConfig;
 
 	$block['lang_cp']= _CPHOME;
 	$block['lang_insmodules'] = _AD_INSTALLEDMODULES;
 
 	// Loading System Configuration Links
-	if( is_object( $icmsUser ) )
-		$groups = $icmsUser->getGroups();
+	if( is_object( icms::$user ) )
+		$groups = icms::$user->getGroups();
 	else
 		$groups = array();
 	$all_ok = false;
@@ -148,7 +148,6 @@ function b_system_admin_cp_show(){
  * @todo Maybe it can be improved a little, is just a copy of the generate menu function.
  */
 function b_system_admin_modules_show(){
-	global $icmsUser;
 	$block['mods'] = array();
 	$module_handler = icms::handler('icms_module');
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
@@ -198,8 +197,8 @@ function b_system_admin_modules_show(){
 		if ($module->getVar('dirname') == 'system') {
 			$systemadm = true;
 		}
-		if( is_object( $icmsUser ) )
-			$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->getVar('mid'), $icmsUser->getGroups () );
+		if( is_object( icms::$user ) )
+			$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->getVar('mid'), icms::$user->getGroups () );
 		if ($admin_perm) {
 			if ($rtn ['dir'] != 'system') {
 				$block['mods'][] = $rtn;
@@ -221,13 +220,13 @@ function b_system_admin_modules_show(){
  *
  */
 function b_system_admin_cp_new_show() {
-	global $icmsTpl, $xoopsConfig, $icmsUser;
+	global $icmsTpl, $xoopsConfig;
 
 	$block['lang_cp']= _CPHOME;
 
 	// Loading System Configuration Links
-	if (is_object($icmsUser)) {
-		$groups = $icmsUser->getGroups();
+	if (is_object(icms::$user)) {
+		$groups = icms::$user->getGroups();
 	} else {
 		$groups = array();
 	}

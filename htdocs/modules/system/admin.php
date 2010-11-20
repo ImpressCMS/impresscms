@@ -34,10 +34,10 @@ $dirlist = icms_core_Filesystem::getDirList($admin_dir);
 if ($fct && !in_array($fct,$dirlist)) {redirect_header(ICMS_URL.'/',3,_INVALID_ADMIN_FUNCTION);}
 $admintest = 0;
 
-if (is_object($icmsUser))
+if (is_object(icms::$user))
 {
 	$icmsModule = icms::handler('icms_module')->getByDirname('system');
-	if (!$icmsUser->isAdmin($icmsModule->getVar('mid'))) {redirect_header(ICMS_URL.'/', 3, _NOPERM);}
+	if (!icms::$user->isAdmin($icmsModule->getVar('mid'))) {redirect_header(ICMS_URL.'/', 3, _NOPERM);}
 	$admintest=1;
 }
 else {redirect_header(ICMS_URL.'/',3,_NOPERM);}
@@ -58,7 +58,7 @@ if ($admintest != 0)
 			unset($modversion);
 			if ($category > 0)
 			{
-				$groups =& $icmsUser->getGroups();
+				$groups =& icms::$user->getGroups();
 				if (in_array(XOOPS_GROUP_ADMIN, $groups) || false != $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid')))
 				{
 					if (file_exists(ICMS_ROOT_PATH.'/modules/system/admin/'.$fct.'/main.php'))

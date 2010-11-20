@@ -17,7 +17,7 @@ if ( file_exists("../../mainfile.php") ) {
 } elseif (file_exists("../../../mainfile.php")) {
 	include_once "../../../mainfile.php" ;
 }
-if(!$GLOBALS["xoopsUser"]){
+if (!icms::$user){
 	redirect_header(ICMS_URL.'/index.php', 6, _NOPERM);
 }
 
@@ -86,14 +86,14 @@ switch ($op){
  * @return  string    the fetched and constructed template
  */
 function imanager_index($imgcat_id=null){
-	global $icmsTpl,$icmsUser,$icmsConfig,$target,$type;
+	global $icmsTpl,$icmsConfig,$target,$type;
 
-	if (!is_object($icmsUser)) {
+	if (!is_object(icms::$user)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $icmsUser->getGroups();
-		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
+		$groups =& icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1)) ? false : true;
 	}
 
 	$imgcat_handler = icms::handler('icms_image_category');
@@ -265,14 +265,14 @@ function imanager_index($imgcat_id=null){
  * @return  string            the fetched and construced template
  */
 function imanager_listimg($imgcat_id,$start=0) {
-	global $icmsTpl,$target,$type,$icmsUser;
+	global $icmsTpl,$target,$type;
 
-	if (!is_object($icmsUser)) {
+	if (!is_object(icms::$user)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $icmsUser->getGroups();
-		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
+		$groups =& icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1)) ? false : true;
 	}
 
 	$query = isset($_POST['query']) ? $_POST['query'] : null;

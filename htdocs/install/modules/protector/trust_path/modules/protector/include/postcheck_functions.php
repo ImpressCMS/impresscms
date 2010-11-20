@@ -2,7 +2,7 @@
 
 function protector_postcommon()
 {
-	global $xoopsUser , $xoopsModule ;
+	global $xoopsModule ;
 
 	// patch for 2.2.x from xoops.org (I know this is not so beautiful...)
 	if( substr( @XOOPS_VERSION , 6 , 3 ) > 2.0 && stristr( @$_SERVER['REQUEST_URI'] , 'modules/system/admin.php?fct=preferences' ) ) {
@@ -41,7 +41,7 @@ function protector_postcommon()
 	if( ! empty( $conf['global_disabled'] ) ) return true ;
 
 	// group1_ips (groupid=1)
-	if( is_object( $xoopsUser ) && in_array( 1 , $xoopsUser->getGroups() ) ) {
+	if( is_object( icms::$user ) && in_array( 1 , icms::$user->getGroups() ) ) {
 		$group1_ips = $protector->get_group1_ips( true ) ;
 		if( implode( '' , array_keys( $group1_ips ) ) ) {
 			$group1_allow = $protector->ip_match( $group1_ips ) ;
@@ -58,9 +58,9 @@ function protector_postcommon()
 	}
 
 	// user information (uid and can be banned)
-	if( is_object( @$xoopsUser ) ) {
-		$uid = $xoopsUser->getVar('uid') ;
-		$can_ban = count( @array_intersect( $xoopsUser->getGroups() , @unserialize( @$conf['bip_except'] ) ) ) ? false : true ;
+	if( is_object( @icms::$user ) ) {
+		$uid = icms::$user->getVar('uid') ;
+		$can_ban = count( @array_intersect( icms::$user->getGroups() , @unserialize( @$conf['bip_except'] ) ) ) ? false : true ;
 	} else {
 		// login failed check
 		if( ( ! empty( $_POST['uname'] ) && ! empty( $_POST['pass'] ) ) || ( ! empty( $_COOKIE['autologin_uname'] ) && ! empty( $_COOKIE['autologin_pass'] ) ) ) {
@@ -110,7 +110,7 @@ function protector_postcommon()
 	$remote_numip = @$ips[0] * 0x1000000 + @$ips[1] * 0x10000 + @$ips[2] * 0x100 + @$ips[3] ;
 	$shift = 32 - @$conf['session_fixed_topbit'] ;
 	if( $shift < 32 && $shift >= 0 && ! empty( $_SESSION['protector_last_ip'] ) && $protector_last_numip >> $shift != $remote_numip >> $shift ) {
-		if( is_object( $xoopsUser ) && count( array_intersect( $xoopsUser->getGroups() , unserialize( $conf['groups_denyipmove'] ) ) ) ) {
+		if( is_object( icms::$user ) && count( array_intersect( icms::$user->getGroups() , unserialize( $conf['groups_denyipmove'] ) ) ) ) {
 			$protector->purge( true ) ;
 		}
 	}
@@ -134,9 +134,9 @@ function protector_postcommon()
 
 	if( ! empty( $_POST ) ) {
 		// SPAM Check
-		if( is_object( $xoopsUser ) ) {
-			if( ! $xoopsUser->isAdmin() && $conf['spamcount_uri4user'] ) {
-				$protector->spam_check( intval( $conf['spamcount_uri4user'] ) , $xoopsUser->getVar('uid') ) ;
+		if( is_object( icms::$user ) ) {
+			if( ! icms::$user->isAdmin() && $conf['spamcount_uri4user'] ) {
+				$protector->spam_check( intval( $conf['spamcount_uri4user'] ) , icms::$user->getVar('uid') ) ;
 			}
 		} else if( $conf['spamcount_uri4guest'] ) {
 

@@ -23,9 +23,8 @@ include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 $admin_dir = ICMS_ROOT_PATH . '/modules/system/admin/';
 $dirlist = icms_core_Filesystem::getDirList($admin_dir);
 /* changes to only allow permission admins you already have */
-global $icmsUser;
 $gperm = icms::handler('icms_member_groupperm');
-$groups = $icmsUser->getGroups ();
+$groups = icms::$user->getGroups ();
 foreach ($dirlist as $file) {
 	include ICMS_ROOT_PATH.'/modules/system/admin/' . $file . '/xoops_version.php';
 	if (!empty($modversion['category']) && count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category'])))>0) {
@@ -85,14 +84,14 @@ $groups = $member_handler->getGroups();
 $gperm_handler = icms::handler('icms_member_groupperm');
 
 foreach ($groups as $group) {
-	if ($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $icmsUser->getGroups()))
+	if ($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), icms::$user->getGroups()))
 		$group_manager_checkbox->addOption($group->getVar('groupid'), $group->getVar('name'));
 }
 $icms_block_handler = icms::handler('icms_view_block');
 $posarr = $icms_block_handler->getBlockPositions(true);
 $block_checkbox = array();
 $i = 0;
-$groups = $icmsUser->getGroups();
+$groups = icms::$user->getGroups();
 foreach ($posarr as $k=>$v) {
 	$tit = (defined($posarr[$k]['title'])) ? constant($posarr[$k]['title']) : $posarr[$k]['title'];
 	$block_checkbox[$i] = new icms_form_elements_Checkbox('<strong>' . $tit . '</strong><br />', "read_bids[]", $r_block_value);

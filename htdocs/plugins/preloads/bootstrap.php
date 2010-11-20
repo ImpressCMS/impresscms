@@ -91,7 +91,7 @@ class icms_BootstrapEventHandler {
 					} else {
 						$GLOBALS['xoopsUserIsAdmin'] = $GLOBALS['icmsUserIsAdmin'] = FALSE;
 					}
-					$GLOBALS['UserGroups'] = icms::$user ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+					$_SESSION['xoopsUserGroups'] = icms::$user ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 					break;
 				case "module":
 					$GLOBALS['icmsModule'] = $GLOBALS['xoopsModule'] = icms::$module;

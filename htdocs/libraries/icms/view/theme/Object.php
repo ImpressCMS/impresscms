@@ -127,7 +127,7 @@ class icms_view_theme_Object {
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref('xoTheme', $this);
 
-		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule, $icmsUser;
+		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule;
 		$this->template->assign(
 			array(
 				'icms_style' => ICMS_URL . '/icms' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css',
@@ -159,16 +159,16 @@ class icms_view_theme_Object {
 			'xoops_banner' => $this->template->get_template_vars('icms_banner'),
 			'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
 		));
-		if (isset($icmsUser) && is_object($icmsUser)) {
+		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
 	        	'icms_isuser' => true,
-	        	'icms_userid' => $icmsUser->getVar('uid'),
-	        	'icms_uname' => $icmsUser->getVar('uname'),
-	        	'icms_isadmin' => $GLOBALS['xoopsUserIsAdmin'],
+	        	'icms_userid' => icms::$user->getVar('uid'),
+	        	'icms_uname' => icms::$user->getVar('uname'),
+	        	'icms_isadmin' => icms::$user->isAdmin(),
 	        	'xoops_isuser' => true,
-	        	'xoops_userid' => $icmsUser->getVar('uid'),
-	        	'xoops_uname' => $icmsUser->getVar('uname'),
-	        	'xoops_isadmin' => $GLOBALS['xoopsUserIsAdmin'],
+	        	'xoops_userid' => icms::$user->getVar('uid'),
+	        	'xoops_uname' => icms::$user->getVar('uname'),
+	        	'xoops_isadmin' => icms::$user->isAdmin(),
 				)
 			);
 		} else {
@@ -237,16 +237,16 @@ class icms_view_theme_Object {
 
 		if (empty($extraString)) {
 			if (empty($extra_string)) {
-				global $icmsUser, $icmsConfig;
+				global $icmsConfig;
 
 				// Generate language section
 				$extra_string = $icmsConfig['language'];
 
 				// Generate group section
-				if (!@is_object($icmsUser)) {
+				if (!@is_object(icms::$user)) {
 					$extra_string .= '|' . ICMS_GROUP_ANONYMOUS;
 				} else {
-					$groups = $icmsUser->getGroups();
+					$groups = icms::$user->getGroups();
 					sort($groups);
 					// Generate group string for non-anonymous groups,
 					// XOOPS_DB_PASS and XOOPS_DB_NAME (before we find better variables) are used to protect group sensitive contents

@@ -8,7 +8,7 @@
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
  */
-if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
+if (!is_object(icms::$user) || !is_object($xoopsModule) || !icms::$user->isAdmin($xoopsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
 

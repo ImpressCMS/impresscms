@@ -40,7 +40,7 @@ if (icms_get_module_status('profile'))
 
 include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 
-if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($icmsUser))
+if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object(icms::$user))
 {
 	redirect_header(ICMS_URL.'/user.php', 3, _NOPERM);
 }
@@ -50,13 +50,13 @@ if ($uid <= 0)
 }
 
 $gperm_handler = icms::handler('icms_member_groupperm');
-$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$groups = is_object(icms::$user) ? icms::$user->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
 
-if (is_object($icmsUser))
+if (is_object(icms::$user))
 {
-	if ($uid == (int) ($icmsUser->getVar('uid')))
+	if ($uid == (int) (icms::$user->getVar('uid')))
 	{
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH.'/header.php';
@@ -69,7 +69,7 @@ if (is_object($icmsUser))
             'lang_logout' => _US_LOGOUT,
             'user_candelete' => $icmsConfigUser['self_delete'] ? true : false,
             'lang_deleteaccount' => $icmsConfigUser['self_delete'] ? _US_DELACCOUNT : ''));
-		$thisUser = & $icmsUser;
+		$thisUser = & icms::$user;
 	} else {
 		$member_handler = icms::handler('icms_member');
 		$thisUser = & $member_handler->getUser($uid);
@@ -94,7 +94,7 @@ if (is_object($icmsUser))
 }
 
 $myts = icms_core_Textsanitizer::getInstance();
-if (is_object($icmsUser) && $isAdmin)
+if (is_object(icms::$user) && $isAdmin)
 {
 	icms_makeSmarty(array(
         'lang_editprofile' => _US_EDITPROFILE,
@@ -146,7 +146,7 @@ icms_makeSmarty(array(
     'user_posts' => icms_conv_nr2local($thisUser->getVar('posts')),
     'lang_lastlogin' => _US_LASTLOGIN,
     'lang_notregistered' => _US_NOTREGISTERED,
-    'user_pmlink' => is_object($icmsUser) ?
+    'user_pmlink' => is_object(icms::$user) ?
         "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/pmlite.php?send2=1&amp;to_userid="
         . (int) ($thisUser->getVar('uid'))."', 'pmlite', 800,680);\">
         <img src=\"".ICMS_URL."/images/icons/".$icmsConfig['language']."/pm.gif\" alt=\""
@@ -156,12 +156,12 @@ icms_makeSmarty(array(
     'user_ranktitle' => $userrank['title'],
     'user_lastlogin' => !empty($date) ? formatTimestamp($thisUser->getVar('last_login'), 'm') : '',
     'icms_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
-    'user_email' => ($thisUser->getVar('user_viewemail') == true || (is_object($icmsUser) &&
-        ($icmsUserIsAdmin || ($icmsUser->getVar('uid') == $thisUser->getVar('uid')))))
+    'user_email' => ($thisUser->getVar('user_viewemail') == true || (is_object(icms::$user) &&
+        (icms::$user->isAdmin() || (icms::$user->getVar('uid') == $thisUser->getVar('uid')))))
         ? $thisUser->getVar('email', 'E') : '&nbsp;',
     'user_openid' => ($icmsConfigAuth['auth_openid'] == true
-        && ($thisUser->getVar('user_viewoid') == true || (is_object($icmsUser) && ($icmsUserIsAdmin
-        || ($icmsUser->getVar('uid') == $thisUser->getVar('uid')))))) ? $thisUser->getVar('openid', 'E') : '&nbsp;'
+        && ($thisUser->getVar('user_viewoid') == true || (is_object(icms::$user) && (icms::$user->isAdmin()
+        || (icms::$user->getVar('uid') == $thisUser->getVar('uid')))))) ? $thisUser->getVar('openid', 'E') : '&nbsp;'
         ));
         if ($icmsConfigUser['allwshow_sig'] == true)
         {

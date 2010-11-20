@@ -34,7 +34,7 @@ $myts =& icms_core_Textsanitizer::getInstance();
 if ($icmsConfigUser['allow_register'] == 0 && $icmsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
 }
-if (is_object('xoopsUser')) {
+if (is_object(icms::$user)) {
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
 }
 $op = !isset($_POST['op']) ? 'register' : $_POST['op'];

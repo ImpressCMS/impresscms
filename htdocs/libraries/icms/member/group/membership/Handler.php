@@ -233,7 +233,7 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 * retrieve users belonging to a group
 	 *
 	 * @param int $groupid ID of the group
-	 * @param bool $asobject return users as {@link XoopsUser} objects?
+	 * @param bool $asobject return users as {@link icms_user_Object} objects?
 	 * FALSE will return arrays
 	 * @param int $limit number of entries to return
 	 * @param int $start offset of first entry to return

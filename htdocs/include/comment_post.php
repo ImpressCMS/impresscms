@@ -97,10 +97,10 @@ switch ($op) {
 		$doimage = 1;
 		$com_title = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_title']));
 		if ($dohtml != 0) {
-			if (is_object($icmsUser)) {
-				if (!$icmsUser->isAdmin($com_modid)) {
+			if (is_object(icms::$user)) {
+				if (!icms::$user->isAdmin($com_modid)) {
 					$sysperm_handler = icms::handler('icms_member_groupperm');
-					if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
+					if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 						$dohtml = 0;
 					}
 				}
@@ -144,10 +144,10 @@ switch ($op) {
 			$comment =& $comment_handler->get($com_id);
 			$accesserror = false;
 
-			if (is_object($icmsUser)) {
+			if (is_object(icms::$user)) {
 				$sysperm_handler = icms::handler('icms_member_groupperm');
-				if ($icmsUser->isAdmin($com_modid)
-				|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
+				if (icms::$user->isAdmin($com_modid)
+				|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 					if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
 						$old_com_status = $comment->getVar('com_status');
 						$comment->setVar('com_status', $com_status);
@@ -170,7 +170,7 @@ switch ($op) {
 					}
 				} else {
 					$dohtml = 0;
-					if ($comment->getVar('com_uid') != $icmsUser->getVar('uid')) {
+					if ($comment->getVar('com_uid') != icms::$user->getVar('uid')) {
 						$accesserror = true;
 					}
 				}
@@ -189,10 +189,10 @@ switch ($op) {
 			$comment->setVar('com_itemid', $com_itemid);
 			$comment->setVar('com_rootid', $com_rootid);
 			$comment->setVar('com_ip', xoops_getenv('REMOTE_ADDR'));
-			if (is_object($icmsUser)) {
+			if (is_object(icms::$user)) {
 				$sysperm_handler = icms::handler('icms_member_groupperm');
-				if ($icmsUser->isAdmin($com_modid)
-				|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
+				if (icms::$user->isAdmin($com_modid)
+				|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 					$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
 					$add_userpost = true;
 					$call_approvefunc = true;
@@ -222,7 +222,7 @@ switch ($op) {
 				if (!empty($icmsModuleConfig['com_anonpost']) && !empty($noname)) {
 					$uid = 0;
 				} else {
-					$uid = $icmsUser->getVar('uid');
+					$uid = icms::$user->getVar('uid');
 				}
 			} else {
 				$dohtml = 0;

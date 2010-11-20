@@ -21,7 +21,7 @@ if (!empty($_REQUEST['token'])) {
 	if (icms::$security->validateToken($_REQUEST['token'], false)) {
 		$denied = false;
 	}
-} elseif (is_object($icmsUser) && $icmsUser->isAdmin()) {
+} elseif (is_object(icms::$user) && icms::$user->isAdmin()) {
 	$denied = false;
 }
 if ($denied) {

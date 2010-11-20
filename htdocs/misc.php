@@ -99,10 +99,10 @@ if ($action == 'showpopups')
 	break;
 case 'friend':
 	if (!icms::$security->check() || !isset($_POST['op']) || StopXSS($_POST['op']) == 'sendform') {
-		if ($icmsUser)
+		if (icms::$user)
 		{
-			$yname = $icmsUser->getVar('uname', 'e');
-			$ymail = $icmsUser->getVar('email', 'e');
+			$yname = icms::$user->getVar('uname', 'e');
+			$ymail = icms::$user->getVar('email', 'e');
 			$fname = '';
 			$fmail = '';
 		} else {
@@ -130,7 +130,7 @@ case 'friend':
 	elseif (StopXSS($_POST['op']) == 'sendsite')
 	{
 		$myts =& icms_core_Textsanitizer::getInstance();
-		if ($icmsUser) {$ymail = $icmsUser->getVar('email');}
+		if (icms::$user) {$ymail = icms::$user->getVar('email');}
 		else {$ymail = isset($_POST['ymail']) ? $myts->stripSlashesGPC(trim($_POST['ymail'])) : '';}
 		if (!isset($_POST['yname']) || trim($_POST['yname']) == '' || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == ''  || !isset($_POST['fmail']) || trim($_POST['fmail']) == '')
 		{
@@ -162,7 +162,6 @@ case 'friend':
 	}
 	break;
 case 'online':
-	$isadmin = $icmsUserIsAdmin;
 	echo '<table  width="100%" cellspacing="1" class="outer"><tr><th colspan="3">'._WHOSONLINE.'</th></tr>';
 	$start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 	$online_handler = icms::handler('icms_core_Online');
@@ -194,7 +193,7 @@ case 'online':
 			echo '<td>'.$avatar."</td><td><a href=\"javascript:window.opener.location='".ICMS_URL."/userinfo.php?uid=".$onlineUsers[$i]['user']->getVar('uid')."';window.close();\">".$onlineUsers[$i]['user']->getVar('uname')."</a>";
 		}
 		else {echo '<td>&nbsp;</td><td>'.$icmsConfig['anonymous'];}
-		if ($isadmin == 1) {echo '<br />('.$onlineUsers[$i]['ip'].')';}
+		if (icms::$user->isAdmin()) {echo '<br />('.$onlineUsers[$i]['ip'].')';}
 		echo '</td><td>'.$onlineUsers[$i]['module'].'</td></tr>';
 	}
 	echo '</table><br />';
@@ -206,10 +205,10 @@ case 'online':
 	}
 	break;
 case 'ssllogin':
-	if ($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object($icmsUser))
+	if ($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object(icms::$user))
 	{
 		icms_loadLanguageFile('core', 'user');
-		echo sprintf(_US_LOGGINGU, $icmsUser->getVar('uname'));
+		echo sprintf(_US_LOGGINGU, icms::$user->getVar('uname'));
 		echo '<div style="text-align:center;"><input class="formButton" value="'._CLOSE.'" type="button" onclick="window.opener.location.reload();window.close();" /></div>';
 		$closebutton = false;
 	}

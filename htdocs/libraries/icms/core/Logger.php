@@ -226,10 +226,10 @@ class icms_core_Logger {
 	 * @return string  $output
 	 */
 	public function render($output) {
-		global $icmsUser, $icmsModule;
+		global $icmsModule;
 		$this->addExtra('Included files', count(get_included_files()) . ' files');
 		$this->addExtra(_CORE_MEMORYUSAGE, icms_conv_nr2local(icms_convert_size(memory_get_usage())) );
-		$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : XOOPS_GROUP_ANONYMOUS;
 		$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->getVar('mid') : 1;
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		if (!$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {

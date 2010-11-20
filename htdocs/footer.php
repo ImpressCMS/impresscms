@@ -15,17 +15,17 @@
 if (!defined('ICMS_ROOT_PATH')) {die('ICMS root path not defined');}
 if (!defined("XOOPS_FOOTER_INCLUDED"))
 {
-	global $sess_handler, $icmsPreloadHandler, $xoopsOption, $icmsConfigMetaFooter, $xoopsTpl, $icmsModule, $icmsUser;
+	global $icmsPreloadHandler, $xoopsOption, $icmsConfigMetaFooter, $xoopsTpl, $icmsModule;
 
 	/** Set the constant XOOPS_FOOTER_INCLUDED to 1 - this file has been included */
 	define("XOOPS_FOOTER_INCLUDED",1);
 
 	$_SESSION['ad_sess_regen'] = false;
 	if (isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
-		$sess_handler->sessionOpen(true);
+		icms::$session->sessionOpen(true);
 		$_SESSION['sess_regen'] = false;
 	} else {
-		$sess_handler->sessionOpen();
+		icms::$session->sessionOpen();
 	}
 
 	// ################# Preload Trigger beforeFooter ##############
@@ -48,7 +48,7 @@ if (!defined("XOOPS_FOOTER_INCLUDED"))
 		xoops_footer();
 	} else {
 		// RMV-NOTIFY
-		if (is_object($icmsModule) && $icmsModule->getVar('hasnotification') == 1 && is_object($icmsUser)) {
+		if (is_object($icmsModule) && $icmsModule->getVar('hasnotification') == 1 && is_object(icms::$user)) {
 			/** Require the notifications area */
 			require_once 'include/notification_select.php';
 		}

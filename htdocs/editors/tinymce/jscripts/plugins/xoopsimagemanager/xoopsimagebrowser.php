@@ -81,14 +81,14 @@ switch ($op) {
 }
 
 function imanager_index($imgcat_id=null) {
-	global $icmsTpl,$icmsUser,$icmsConfig,$target,$type;
+	global $icmsTpl,$icmsConfig,$target,$type;
 
-	if (!is_object($icmsUser)) {
+	if (!is_object(icms::$user)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $icmsUser->getGroups();
-		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
+		$groups =& icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1)) ? false : true;
 	}
 
 	$imgcat_handler = icms::handler('icms_image_category');
@@ -254,14 +254,14 @@ function imanager_index($imgcat_id=null) {
 }
 
 function imanager_listimg($imgcat_id,$start=0) {
-	global $icmsTpl,$target,$type,$icmsUser;
+	global $icmsTpl,$target,$type;
 
-	if (!is_object($icmsUser)) {
+	if (!is_object(icms::$user)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $icmsUser->getGroups();
-		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
+		$groups =& icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1)) ? false : true;
 	}
 
 	$query = isset($_POST['query']) ? $_POST['query'] : null;

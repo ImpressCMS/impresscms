@@ -20,16 +20,16 @@
  */
 function b_system_online_show()
 {
-	global $icmsUser, $icmsModule;
+	global $icmsModule;
 	$online_handler = icms::handler('icms_core_Online');
 	mt_srand((double)microtime()*1000000);
 	// set gc probabillity to 10% for now..
 	if (mt_rand(1, 100) < 11) {
 		$online_handler->gc(300);
 	}
-	if (is_object($icmsUser)) {
-		$uid = $icmsUser->getVar('uid');
-		$uname = $icmsUser->getVar('uname');
+	if (is_object(icms::$user)) {
+		$uid = icms::$user->getVar('uid');
+		$uname = icms::$user->getVar('uname');
 	} else {
 		$uid = 0;
 		$uname = '';
@@ -76,8 +76,8 @@ function b_system_online_show()
  */
 function b_system_login_show()
 {
-	global $icmsUser, $icmsConfig, $icmsConfigAuth, $icmsConfigUser;
-	if (!$icmsUser) {
+	global $icmsConfig, $icmsConfigAuth, $icmsConfigUser;
+	if (!icms::$user) {
 		$block = array();
 		$block['lang_username'] = _USERNAME;
 		$block['unamevalue'] = "";
@@ -119,7 +119,7 @@ function b_system_login_show()
  */
 function b_system_main_show()
 {
-	global $icmsUser, $icmsModule, $icmsConfigUser;
+	global $icmsModule, $icmsConfigUser;
 	$block = array();
 	$block['lang_home'] = _MB_SYSTEM_HOME;
 	if ($icmsConfigUser['priv_dpolicy'] == 1)
@@ -134,7 +134,7 @@ function b_system_main_show()
 	$criteria->add(new icms_db_criteria_Item('weight', 0, '>'));
 	$modules = $module_handler->getObjects($criteria, true);
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
-	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+	$groups = is_object(icms::$user) ? icms::$user->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	$read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
 	foreach (array_keys($modules) as $i) {
 		if (in_array($i, $read_allowed)) {
@@ -173,17 +173,16 @@ function b_system_search_show()
  */
 function b_system_user_show()
 {
-	global $icmsUser;
-	if (is_object($icmsUser)) {
+	if (is_object(icms::$user)) {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$block = array();
 		$block['lang_youraccount'] = _MB_SYSTEM_VACNT;
 		$block['lang_editaccount'] = _MB_SYSTEM_EACNT;
 		$block['lang_notifications'] = _MB_SYSTEM_NOTIF;
-		$block['uid'] = $icmsUser->getVar('uid');
+		$block['uid'] = icms::$user->getVar('uid');
 		$block['lang_logout'] = _MB_SYSTEM_LOUT;
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('read_msg', 0));
-		$criteria->add(new icms_db_criteria_Item('to_userid', $icmsUser->getVar('uid')));
+		$criteria->add(new icms_db_criteria_Item('to_userid', icms::$user->getVar('uid')));
 		$block['new_messages'] = $pm_handler->getCount($criteria);
 		$block['lang_inbox'] = _MB_SYSTEM_INBOX;
 		$block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
@@ -200,7 +199,7 @@ function b_system_user_show()
  */
 function b_system_info_show($options)
 {
-	global $icmsConfig, $icmsUser;
+	global $icmsConfig;
 	$xoopsDB =& icms_db_Factory::instance();
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$block = array();
@@ -215,7 +214,7 @@ function b_system_info_show($options)
 					$prev_caption = $userinfo['groupname'];
 					$block['groups'][$i]['name'] = $myts->htmlSpecialChars($userinfo['groupname']);
 				}
-				if (isset($icmsUser) && is_object($icmsUser)) {
+				if (isset(icms::$user) && is_object(icms::$user)) {
 					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".$userinfo['uid']."','pmlite',800,680);\"><img src=\"".ICMS_URL."/images/icons/".$GLOBALS["icmsConfig"]["language"]."/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => ICMS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
 				} else {
 					if ($userinfo['user_viewemail']) {
@@ -342,9 +341,8 @@ function b_system_comments_show($options)
 	$criteria->setOrder('DESC');
 
 	// Check modules permissions
-	global $icmsUser;
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
-	$gperm_groupid = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+	$gperm_groupid = is_object(icms::$user) ? icms::$user->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 	$criteria1 = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name','module_read','='));
 	$criteria1->add(new icms_db_criteria_Item('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));
 	$perms = $moduleperm_handler->getObjects($criteria1, true);
@@ -399,11 +397,11 @@ function b_system_comments_show($options)
  */
 function b_system_notification_show()
 {
-	global $icmsConfig, $icmsUser, $icmsModule;
+	global $icmsConfig, $icmsModule;
 	//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 	icms_loadLanguageFile('core', 'notification');
 	// Notification must be enabled, and user must be logged in
-	if (empty($icmsUser) || !icms_data_notification_Handler::isEnabled('block')) {
+	if (empty(icms::$user) || !icms_data_notification_Handler::isEnabled('block')) {
 		return false; // do not display block
 	}
 	$notification_handler = new icms_data_notification_Handler($GLOBALS['xoopsDB']);
@@ -420,9 +418,9 @@ function b_system_notification_show()
 		$section['description'] = $category['description'];
 		$section['itemid'] = $category['item_id'];
 		$section['events'] = array();
-		$subscribed_events = $notification_handler->getSubscribedEvents ($category['name'], $category['item_id'], $icmsModule->getVar('mid'), $icmsUser->getVar('uid'));
+		$subscribed_events = $notification_handler->getSubscribedEvents ($category['name'], $category['item_id'], $icmsModule->getVar('mid'), icms::$user->getVar('uid'));
 		foreach ( $notification_handler->categoryEvents($category['name'], true) as $event) {
-			if (!empty($event['admin_only']) && !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {
+			if (!empty($event['admin_only']) && !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 				continue;
 			}
 			$subscribed = in_array($event['name'], $subscribed_events) ? 1 : 0;
@@ -621,17 +619,17 @@ function b_system_themes_edit($options)
  */
 function b_system_bookmarks_show()
 {
-	global $icmsConfig, $icmsUser;
+	global $icmsConfig;
 	$block = array();
 	icms_loadLanguageFile('core', 'notification');
 	// User must be logged in
-	if (empty($icmsUser)) {
+	if (empty(icms::$user)) {
 		return false; // do not display block
 	}
 	// Get an array of all notifications for the selected user
 
 	$notification_handler = icms::handler('icms_data_notification');
-	$notifications =& $notification_handler->getByUser($icmsUser->getVar('uid'));
+	$notifications =& $notification_handler->getByUser(icms::$user->getVar('uid'));
 
 	// Generate the info for the template
 

@@ -72,9 +72,9 @@ class icms_view_PageBuilder {
 	 *
 	 */
 	public function retrieveBlocks() {
-		global $xoops, $icmsUser, $icmsModule, $icmsConfig;
+		global $xoops, $icmsModule, $icmsConfig;
 
-		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		self::getPage();
 		$modid = self::$modid['module'] . '-' . self::$modid['page'];
 		$isStart = self::$modid['isStart'];
@@ -94,7 +94,7 @@ class icms_view_PageBuilder {
 
 		/** moved here from buildBlocks to reduce redundant calls */
 		$gperm = icms::handler('icms_member_groupperm');
-		$ugroups = @is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$ugroups = @is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$agroups = $gperm->getGroupIds('system_admin',  5); //XOOPS_SYSTEM_BLOCK constant not available?
 		$this->uagroups = array_intersect($ugroups, $agroups);
 		/** End of snippet */
@@ -118,20 +118,19 @@ class icms_view_PageBuilder {
 	 * generate the modid (combination of current module and page) and store it in a static var
 	 * isStart is only needed for this class (used in function retrieveBlocks()).
 	 *
-	 * @global icms_member_User_Object $icmsUser current user
 	 * @global array $icmsConfig ImpressCMS configuration array
 	 * @global icms_module_Object $icmsModule current module
 	 * @return void
 	 */
 	static public function getPage() {
-		global $icmsUser, $icmsConfig, $icmsModule;
+		global $icmsConfig, $icmsModule;
 
 		if (is_array(self::$modid)) return self::$modid;
 
 		// getting the start module and page configured in the admin panel
 		if (is_array($icmsConfig['startpage'])) {
 			$member_handler = icms::handler('icms_member');
-			$group = $member_handler->getUserBestGroup((is_object($icmsUser) ? $icmsUser->getVar('uid') : 0));
+			$group = $member_handler->getUserBestGroup((is_object(icms::$user) ? icms::$user->getVar('uid') : 0));
 			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 		}
 
@@ -215,10 +214,10 @@ class icms_view_PageBuilder {
 	 * @return unknown
 	 */
 	public function buildBlock($xobject, &$template) {
-		global $icmsUser, $icmsConfigPersona;
+		global $icmsConfigPersona;
 
 		if ($icmsConfigPersona['editre_block'] == true) {
-			if ($icmsUser && count($this->uagroups) > 0) {
+			if (icms::$user && count($this->uagroups) > 0) {
 				$url = base64_encode(str_replace(ICMS_URL, '', "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) );
 				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
 				$titlebtns .= '<button style="display: none;"><div id="ed_block_' . $xobject->getVar ( 'bid' ) . '">';

@@ -49,14 +49,14 @@ $option_tray = new icms_form_elements_Tray(_OPTIONS,'<br />');
 
 $button_tray = new icms_form_elements_Tray('' ,'&nbsp;');
 
-if (is_object($icmsUser)) {
+if (is_object(icms::$user)) {
 	if ($icmsModuleConfig['com_anonpost'] == 1) {
 		$noname = !empty($noname) ? 1 : 0;
 		$noname_checkbox = new icms_form_elements_Checkbox('', 'noname', $noname);
 		$noname_checkbox->addOption(1, _POSTANON);
 		$option_tray->addElement($noname_checkbox);
 	}
-	if (false != $icmsUser->isAdmin($com_modid)) {
+	if (false != icms::$user->isAdmin($com_modid)) {
 		// show status change box when editing (comment id is not empty)
 		if (!empty($com_id)) {
 			include_once ICMS_ROOT_PATH . '/include/comment_constants.php';

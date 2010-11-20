@@ -12,11 +12,9 @@
  * @version		$Id$
  */
 
-global $icmsUser;
-
 // Loading System Configuration Links
-if (is_object($icmsUser)) {
-	$groups = $icmsUser->getGroups();
+if (is_object(icms::$user)) {
+	$groups = icms::$user->getGroups();
 } else {
 	$groups = array();
 }

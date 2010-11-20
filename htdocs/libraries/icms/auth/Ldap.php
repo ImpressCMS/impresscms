@@ -108,17 +108,16 @@ class icms_auth_Ldap extends icms_auth_Object {
 			if (!$userDN) return false;
 			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userDN, stripslashes($pwd));
-			$sess_handler = icms::$session;
 			if ($authenticated) {
-				$sess_handler->securityLevel = 3;
-				$sess_handler->check_ip_blocks = 2;
-				$sess_handler->salt_key = XOOPS_DB_SALT;
-				$sess_handler->enableRegenerateId = true;
-				$sess_handler->icms_sessionOpen();
+				icms::$session->securityLevel = 3;
+				icms::$session->check_ip_blocks = 2;
+				icms::$session->salt_key = XOOPS_DB_SALT;
+				icms::$sesseion->enableRegenerateId = true;
+				icms::$session->icms_sessionOpen();
 				// We load the User database
 				return $this->loadicms_member_user_Object($userDN, $uname, $pwd);
 			} else {
-				$sess_handler->destroy(session_id());
+				icms::$session->destroy(session_id());
 				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userDN . ')');
 			}
 		} else {

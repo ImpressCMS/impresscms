@@ -31,7 +31,7 @@ include 'mainfile.php';
  */
 function clientlogin()
 {
-	global $xoopsDB, $icmsConfig, $icmsConfigMetaFooter, $icmsConfigPlugins, $sess_handler;
+	global $xoopsDB, $icmsConfig, $icmsConfigMetaFooter, $icmsConfigPlugins;
 	include 'header.php';
 	echo "<div id='login_window'>
 	<h2 class='content_title'>"._BANNERS_LOGIN_TITLE."</h2>
@@ -55,7 +55,7 @@ function clientlogin()
  **/
 function bannerstats()
 {
-	global $xoopsDB, $icmsConfig, $icmsConfigMetaFooter, $icmsConfigPlugins, $sess_handler;
+	global $xoopsDB, $icmsConfig, $icmsConfigMetaFooter, $icmsConfigPlugins;
 	if ($_SESSION['banner_login'] == '' || $_SESSION['banner_pass'] == '') {redirect_header('banners.php',2);}
 	$result = $xoopsDB->query(sprintf("SELECT cid, name, passwd FROM %s WHERE login=%s", $xoopsDB->prefix('bannerclient'), $xoopsDB->quoteString($_SESSION['banner_login'])));
 	list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);

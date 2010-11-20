@@ -83,12 +83,11 @@ class MastopFormSelectImage extends icms_form_elements_Select
 	 */
 	function getImageList($cat = null)
 	{
-		global $icmsUser;
 		$ret = array();
-		if (!is_object($icmsUser)) {
+		if (!is_object(icms::$user)) {
 			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			$group =& $icmsUser->getGroups();
+			$group =& icms::$user->getGroups();
 		}
 		$imgcat_handler = icms::handler('icms_image_category');
 		$catlist =& $imgcat_handler->getList($group, 'imgcat_read', 1);
@@ -156,11 +155,10 @@ class MastopFormSelectImage extends icms_form_elements_Select
 	 * @return   string    $ret    the constructed select form attribute HTML
 	 */
 	function render(){
-		global $icmsUser;
-		if (!is_object($icmsUser)) {
+		if (!is_object(icms::$user)) {
 			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			$group =& $icmsUser->getGroups();
+			$group =& icms::$user->getGroups();
 		}
 		$imgcat_handler = icms::handler('icms_image_category');
 		$catlist =& $imgcat_handler->getList($group, 'imgcat_write', 1);

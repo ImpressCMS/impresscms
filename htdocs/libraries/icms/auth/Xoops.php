@@ -42,11 +42,10 @@ class icms_auth_Xoops extends icms_auth_Object {
 	public function authenticate($uname, $pwd = null) {
 		$member_handler = icms::handler('icms_member');
 		$user = $member_handler->loginUser($uname, $pwd);
-		$sess_handler = icms::$session;
-		$sess_handler->enableRegenerateId = true;
-		$sess_handler->sessionOpen();
+		icms::$session->enableRegenerateId = true;
+		icms::$session->sessionOpen();
 		if ($user == false) {
-			$sess_handler->destroy(session_id());
+			icms::$session->destroy(session_id());
 			$this->setErrors(1, _US_INCORRECTLOGIN);
 		}
 		return ($user);

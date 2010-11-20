@@ -91,9 +91,9 @@ if ($icmsConfig['closesite'] == 1) {
 icms::launchModule();
 
 if ($icmsConfigPersona['multi_login']) {
-	if (is_object($icmsUser)) {
+	if (is_object(icms::$user)) {
 		$online_handler = icms::handler('icms_core_Online');
-		$online_handler->write($icmsUser->getVar('uid'), $icmsUser->getVar('uname'),
+		$online_handler->write(icms::$user->getVar('uid'), icms::$user->getVar('uname'),
 							   time(), 0, $_SERVER['REMOTE_ADDR']);
 	}
 }

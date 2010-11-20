@@ -112,15 +112,14 @@ $mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', (int) 
 $language = new icms_form_elements_select_Lang(_US_SELECT_LANG,'language', $language_value);
 
 // Groups administration addition XOOPS 2.0.9: Mith
-global $icmsUser;
 $gperm_handler = icms::handler('icms_member_groupperm');
 //If user has admin rights on groups
-if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $icmsUser->getGroups(), 1)) {
+if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, icms::$user->getGroups(), 1)) {
 	//add group selection
-	if (in_array(XOOPS_GROUP_ADMIN, $icmsUser->getGroups())) {
+	if (in_array(XOOPS_GROUP_ADMIN, icms::$user->getGroups())) {
 		$group_select = array(new icms_form_elements_select_Group(_US_GROUPS, 'groups', false, $groups, 5, true));
 	} else {
-		$group_manager_value = array_intersect_key(icms::handler('icms_member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', $icmsUser->getGroups()))) ;
+		$group_manager_value = array_intersect_key(icms::handler('icms_member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', icms::$user->getGroups()))) ;
 		$group_array = new icms_form_elements_Select(_US_GROUPS, 'groups',$groups, 5, true);
 		$group_array->addOptionArray($group_manager_value);
 		$group_select = array ($group_array);

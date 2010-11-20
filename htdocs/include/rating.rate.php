@@ -32,8 +32,8 @@ if ($pluginObj) {
 		$icmsTpl->assign('icms_rating_stats_total', $stats['sum']);
 		$icmsTpl->assign('icms_rating_stats_average', $stats['average']);
 		$icmsTpl->assign('icms_rating_item', $rating_item);
-		if (is_object($icmsUser)) {
-			$ratingObj = $icms_rating_handler->already_rated($rating_item, $rating_itemid, $module_dirname, $icmsUser->getVar('uid'));
+		if (is_object(icms::$user)) {
+			$ratingObj = $icms_rating_handler->already_rated($rating_item, $rating_itemid, $module_dirname, icms::$user->getVar('uid'));
 			$icmsTpl->assign('icms_user_can_rate', true);
 		}
 		if (isset($ratingObj) && is_object($ratingObj)) {
@@ -62,7 +62,7 @@ if (isset($_POST['icms_rating_submit'])) {
 	$ratingObj->setVar('dirname', $module_dirname);
 	$ratingObj->setVar('item', $rating_item);
 	$ratingObj->setVar('itemid', $rating_itemid);
-	$ratingObj->setVar('uid', $icmsUser->getVar('uid'));
+	$ratingObj->setVar('uid', icms::$user->getVar('uid'));
 	$ratingObj->setVar('date', time());
 	$ratingObj->setVar('rate', $_POST['icms_rating_value']);
 	if (!$icms_rating_handler->insert($ratingObj)) {

@@ -35,7 +35,7 @@ if (empty($_GET['refresh'] ) && isset($_POST['op']) && $_POST['op'] != "submit")
 	exit();
 }
 xoops_header();
-if ($icmsUser) {
+if (icms::$user) {
 	$myts =& icms_core_Textsanitizer::getInstance();
 	if (isset($_POST['op']) && $_POST['op'] == "submit") {
 		if (!icms::$security->check()) {
@@ -56,7 +56,7 @@ if ($icmsUser) {
 			$pm->setVar("subject", $_POST['subject']);
 			$pm->setVar("msg_text", $_POST['message']);
 			$pm->setVar("to_userid", (int) ($_POST['to_userid']));
-			$pm->setVar("from_userid", (int) ($icmsUser->getVar("uid")));
+			$pm->setVar("from_userid", (int) (icms::$user->getVar("uid")));
 			if (!$pm_handler->insert($pm)) {
 				echo $pm->getHtmlErrors();
 				echo "<br /><a href='javascript:history.go(-1)'>"._PM_GOBACK."</a>";
@@ -69,9 +69,9 @@ if ($icmsUser) {
 					$xoopsMailer = new icms_messaging_Handler();
 					$xoopsMailer->useMail();
 					$xoopsMailer->setToEmails($toUser->getVar('email'));
-					if ($icmsUser->getVar('user_viewemail')) {
-						$xoopsMailer->setFromEmail($icmsUser->getVar('email'));
-						$xoopsMailer->setFromName($icmsUser->getVar('uname'));
+					if (icms::$user->getVar('user_viewemail')) {
+						$xoopsMailer->setFromEmail(icms::$user->getVar('email'));
+						$xoopsMailer->setFromName(icms::$user->getVar('uname'));
 					} else {
 						$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 						$xoopsMailer->setFromName($icmsConfig['sitename']);
@@ -81,7 +81,7 @@ if ($icmsUser) {
 					$xoopsMailer->assign('X_SITEURL', ICMS_URL."/");
 					$xoopsMailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
 					$xoopsMailer->assign('X_UNAME', $toUser->getVar('uname'));
-					$xoopsMailer->assign('X_FROMUNAME', $icmsUser->getVar('uname'));
+					$xoopsMailer->assign('X_FROMUNAME', icms::$user->getVar('uname'));
 					$xoopsMailer->assign('X_SUBJECT', $myts->stripSlashesGPC($_POST['subject']));
 					$xoopsMailer->assign('X_MESSAGE', $myts->stripSlashesGPC($_POST['message']));
 					$xoopsMailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
@@ -96,7 +96,7 @@ if ($icmsUser) {
 		if ($reply == 1) {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->get($msg_id);
-			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
+			if ($pm->getVar("to_userid") == (int) (icms::$user->getVar('uid'))) {
 				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
 				$message  = "[quote]\n";
 				$message .= sprintf(_PM_USERWROTE,$pm_uname);
@@ -135,7 +135,7 @@ if ($icmsUser) {
 		if ($reply == 1) {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->get($msg_id);
-			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
+			if ($pm->getVar("to_userid") == (int) (icms::$user->getVar('uid'))) {
 				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
 				$message  = "[quote]\n";
 				$message .= sprintf(_PM_USERWROTE,$pm_uname);

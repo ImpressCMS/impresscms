@@ -56,8 +56,7 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->setSort($sort);
 			$criteria->setOrder($order);
-			global $icmsUser;
-			$userIsAdmin = is_object($icmsUser) && $icmsUser->isAdmin();
+			$userIsAdmin = is_object(icms::$user) && icms::$user->isAdmin();
 
 			if ($perm_name && !$userIsAdmin) {
 				if (!$this->setGrantedObjectsCriteria($criteria, $perm_name)) {

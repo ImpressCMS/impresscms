@@ -34,7 +34,7 @@ define ('XOOPS_CPFUNC_LOADED', 1);
  */
 function icms_cp_header(){
 	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule,
-		$xoopsModule, $icmsUser, $xoopsUser, $xoopsTpl, $xoopsOption, $xoTheme,
+		$xoopsModule, $xoopsTpl, $xoopsOption, $xoTheme,
 		$icmsConfigMultilang, $icmsAdminTpl, $icmsPreloadHandler;
 	icms::$logger->stopTime('Module init');
 	icms::$logger->startTime('ImpressCMS CP Output Init');
@@ -197,7 +197,7 @@ if (! empty( $_SESSION['redirect_message'] )) {
 			$perm_itens = array();
 			foreach ( $navitem ['menu'] as $item ) {
 				$module = $module_handler->getByDirname($item['dir']);
-				$admin_perm = $moduleperm_handler->checkRight('module_admin', $module->getVar('mid'), $icmsUser->getGroups());
+				$admin_perm = $moduleperm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
 				if ($admin_perm) {
 					if ($item['dir'] != 'system') {
 						$perm_itens[] = $item;
@@ -208,7 +208,7 @@ if (! empty( $_SESSION['redirect_message'] )) {
 		}
 		//end
 		if ($navitem['id'] == 'opsystem') {
-			$groups = $icmsUser->getGroups();
+			$groups = icms::$user->getGroups();
 			$all_ok = false;
 			if (! in_array(ICMS_GROUP_ADMIN, $groups)) {
 				$sysperm_handler = icms::handler('icms_member_groupperm');
@@ -394,7 +394,7 @@ function xoops_cp_header() {
  */
 function icms_cp_footer() {
 	global $icmsConfig, $xoopsConfig, $xoopsOption,
-	$icmsUser, $xoopsUser, $xoopsTpl, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule, $icmsModule;
+	$xoopsTpl, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule, $icmsModule;
 	icms::$logger->stopTime('Module display');
 
 	if (!headers_sent()) {
@@ -495,8 +495,6 @@ function xoopsfwrite() {
  * @return array (content of admin panel dropdown menus)
  */
 function impresscms_get_adminmenu() {
-	global $icmsUser;
-
 	$admin_menu = array ( );
 	$modules_menu = array ( );
 	$systemadm = false;

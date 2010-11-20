@@ -20,7 +20,7 @@ if ($messenger_module && $messenger_module->getVar('isactive'))
 	exit();
 }
 
-if (!is_object($icmsUser))
+if (!is_object(icms::$user))
 {
 	$errormessage = _PM_SORRY.'<br />'._PM_PLZREG.'';
 	redirect_header('user.php', 2, $errormessage);
@@ -38,7 +38,7 @@ if (!is_object($icmsUser))
 		for ($i = 0; $i < $size; $i++)
 		{
 			$pm =& $pm_handler->get($msg[$i]);
-			if ($pm->getVar('to_userid') == $icmsUser->getVar('uid'))
+			if ($pm->getVar('to_userid') == icms::$user->getVar('uid'))
 			{
 				$pm_handler->delete($pm);
 			}
@@ -47,11 +47,11 @@ if (!is_object($icmsUser))
 		redirect_header('viewpmsg.php', 1, _PM_DELETED);
 	}
 	include ICMS_ROOT_PATH.'/header.php';
-	$criteria = new icms_db_criteria_Item('to_userid', (int) ($icmsUser->getVar('uid')));
+	$criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
 	$criteria->setOrder('DESC');
 	$pm_arr =& $pm_handler->getObjects($criteria);
 	echo "<h4 style='text-align:center;'>"._PM_PRIVATEMESSAGE."</h4><br />
-        <a href='userinfo.php?uid=". (int) ($icmsUser->getVar('uid'))."'>". _PM_PROFILE ."</a>&nbsp;
+        <a href='userinfo.php?uid=". (int) (icms::$user->getVar('uid'))."'>". _PM_PROFILE ."</a>&nbsp;
         <span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;"._PM_INBOX."<br /><br />";
 	echo "<form id='prvmsg' method='post' action='viewpmsg.php'>";
 	echo "<table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";

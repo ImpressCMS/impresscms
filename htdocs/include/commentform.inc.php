@@ -31,13 +31,13 @@ foreach ($subject_icons as $iconfile) {
 $cform->addElement($icons_radio);
 $cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'message', $message, 10, 50), true);
 $option_tray = new icms_form_elements_Tray(_OPTIONS,'<br />');
-if ($icmsUser) {
+if (icms::$user) {
 	if ($icmsConfig['anonpost'] == true) {
 		$noname_checkbox = new icms_form_elements_Checkbox('', 'noname', $noname);
 		$noname_checkbox->addOption(1, _POSTANON);
 		$option_tray->addElement($noname_checkbox);
 	}
-	if ($icmsUser->isAdmin($icmsModule->getVar('mid'))) {
+	if (icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 		$nohtml_checkbox = new icms_form_elements_Checkbox('', 'nohtml', $nohtml);
 		$nohtml_checkbox->addOption(1, _DISABLEHTML);
 		$option_tray->addElement($nohtml_checkbox);

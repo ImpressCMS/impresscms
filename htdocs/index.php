@@ -18,7 +18,7 @@
 include "mainfile.php";
 
 $member_handler = icms::handler('icms_member');
-$group = $member_handler->getUserBestGroup((@is_object($icmsUser)?$icmsUser->getVar('uid'):0));
+$group = $member_handler->getUserBestGroup((@is_object(icms::$user)?icms::$user->getVar('uid'):0));
 $icmsConfig ['startpage'] = $icmsConfig ['startpage'] [$group];
 
 if (isset ( $icmsConfig ['startpage'] ) && $icmsConfig ['startpage'] != "" && $icmsConfig ['startpage'] != "--") {

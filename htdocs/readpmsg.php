@@ -16,7 +16,7 @@ $xoopsOption['pagetype'] = "pmsg";
 include_once "mainfile.php";
 $myts =& icms_core_Textsanitizer::getInstance();
 
-if (!is_object($icmsUser)) {
+if (!is_object(icms::$user)) {
 	redirect_header("user.php",0);
 } else {
 	$pm_handler = icms::handler('icms_data_privmessage');
@@ -26,7 +26,7 @@ if (!is_object($icmsUser)) {
 			exit();
 		}
 		$pm =& $pm_handler->get( (int) ($_POST['msg_id']));
-		if (!is_object($pm) || $pm->getVar('to_userid') != $icmsUser->getVar('uid') || !$pm_handler->delete($pm)) {
+		if (!is_object($pm) || $pm->getVar('to_userid') != icms::$user->getVar('uid') || !$pm_handler->delete($pm)) {
 			exit();
 		} else {
 			redirect_header("viewpmsg.php",1,_PM_DELETED);
@@ -36,12 +36,12 @@ if (!is_object($icmsUser)) {
 	$start = !empty($_GET['start']) ? (int) ($_GET['start']) : 0;
 	$total_messages = !empty($_GET['total_messages']) ? (int) ($_GET['total_messages']) : 0;
 	include ICMS_ROOT_PATH.'/header.php';
-	$criteria = new icms_db_criteria_Item('to_userid', (int) ($icmsUser->getVar('uid')));
+	$criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
 	$criteria->setLimit(1);
 	$criteria->setStart($start);
 	$criteria->setSort('msg_time');
 	$pm_arr =& $pm_handler->getObjects($criteria);
-	echo "<div><h4>". _PM_PRIVATEMESSAGE."</h4></div><br /><a href='userinfo.php?uid=". (int) ($icmsUser->getVar("uid")) ."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php'>". _PM_INBOX ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;\n";
+	echo "<div><h4>". _PM_PRIVATEMESSAGE."</h4></div><br /><a href='userinfo.php?uid=". (int) (icms::$user->getVar("uid")) ."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php'>". _PM_INBOX ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;\n";
 	if (empty($pm_arr)) {
 		echo '<br /><br />'._PM_YOUDONTHAVE;
 	} else {

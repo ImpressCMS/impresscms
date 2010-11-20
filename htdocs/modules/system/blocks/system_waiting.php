@@ -21,7 +21,7 @@
  */
 function b_system_waiting_show($options)
 {
-	global $icmsUser, $xoopsConfig;
+	global $xoopsConfig;
 
 	$userlang = $xoopsConfig['language'] ;
 

@@ -17,7 +17,7 @@ include 'mainfile.php';
 $myts =& icms_core_Textsanitizer::getInstance();
 
 // If not a user and invite needs one, redirect
-if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register'] == 0 && !is_object($icmsUser)) {
+if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register'] == 0 && !is_object(icms::$user)) {
 	redirect_header('index.php', 6, _US_INVITEBYMEMBER);
 	exit();
 }
@@ -46,7 +46,7 @@ switch ( $op) {
 			$myts =& icms_core_Textsanitizer::getInstance();
 			$sql = sprintf('INSERT INTO '.$xoopsDB->prefix('invites').' (invite_code, from_id, invite_to, invite_date, extra_info) VALUES (%s, %d, %s, %d, %s)',
 			$xoopsDB->quoteString(addslashes($invite_code)),
-			is_object($icmsUser)?$icmsUser->getVar('uid'):0,
+			is_object(icms::$user)?icms::$user->getVar('uid'):0,
 			$xoopsDB->quoteString(addslashes($email)),
 			time(),
 			$xoopsDB->quoteString(addslashes(serialize(array())))

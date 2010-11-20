@@ -15,7 +15,7 @@
 */
 
 
-if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isAdmin ( $icmsModule->getVar('mid') )) {
+if (! is_object ( icms::$user ) || ! is_object ( $icmsModule ) || ! icms::$user->isAdmin ( $icmsModule->getVar('mid') )) {
 	exit ( "Access Denied" );
 } else {
 	if (isset ( $_POST )) {

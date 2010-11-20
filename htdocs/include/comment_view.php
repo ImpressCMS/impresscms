@@ -22,7 +22,7 @@ include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$groups = ( $icmsUser ) ? $icmsUser -> getGroups() : ICMS_GROUP_ANONYMOUS;
+	$groups = ( icms::$user ) ? icms::$user -> getGroups() : ICMS_GROUP_ANONYMOUS;
 	$xoopsTpl->assign( 'xoops_iscommentadmin', $gperm_handler->checkRight( 'system_admin', XOOPS_SYSTEM_COMMENT, $groups) );
 
 	icms_loadLanguageFile('core', 'comment');
@@ -32,16 +32,16 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 	if ($com_itemid > 0) {
 		$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
 		if ($com_mode == '') {
-			if (is_object($icmsUser)) {
-				$com_mode = $icmsUser->getVar('umode');
+			if (is_object(icms::$user)) {
+				$com_mode = icms::$user->getVar('umode');
 			} else {
 				$com_mode = $icmsConfig['com_mode'];
 			}
 		}
 		$xoopsTpl->assign('comment_mode', $com_mode);
 		if (!isset($_GET['com_order'])) {
-			if (is_object($icmsUser)) {
-				$com_order = $icmsUser->getVar('uorder');
+			if (is_object(icms::$user)) {
+				$com_order = icms::$user->getVar('uorder');
 			} else {
 				$com_order = $icmsConfig['com_order'];
 			}
@@ -56,7 +56,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$com_dborder = 'ASC';
 		}
 		// admins can view all comments and IPs, others can only view approved(active) comments
-		if (is_object($icmsUser) && $icmsUser->isAdmin($icmsModule->getVar('mid'))) {
+		if (is_object(icms::$user) && icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 			$admin_view = true;
 		} else {
 			$admin_view = false;
@@ -162,7 +162,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		}
 		unset($postcomment_link);
 		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="'.$comment_config['itemName'].'" value="'.$com_itemid.'" /> <input type="submit" value="'. _CM_REFRESH .'" class="formButton" />';
-		if (!empty($icmsModuleConfig['com_anonpost']) || is_object($icmsUser)) {
+		if (!empty($icmsModuleConfig['com_anonpost']) || is_object(icms::$user)) {
 			$postcomment_link = 'comment_new.php?com_itemid='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode;
 
 			$xoopsTpl->assign('anon_canpost', true);

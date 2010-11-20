@@ -12,7 +12,7 @@
 * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
 */
 
-if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isAdmin ( $icmsModule->mid () )) {
+if (! is_object ( icms::$user ) || ! is_object ( $icmsModule ) || ! icms::$user->isAdmin ( $icmsModule->mid () )) {
 	exit ( "Access Denied" );
 }
 

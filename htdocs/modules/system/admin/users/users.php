@@ -14,7 +14,7 @@
  * @version	$Id$
  */
 
-if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {exit('Access Denied');}
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {exit('Access Denied');}
 
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
@@ -274,10 +274,9 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		} else {
 			if ($groups != array())
 			{
-				global $icmsUser;
 				$oldgroups = $edituser->getGroups();
 				//If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-				if ($edituser->getVar('uid') == $icmsUser->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
+				if ($edituser->getVar('uid') == icms::$user->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
 				{
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
 					$groups[] = XOOPS_GROUP_ADMIN;

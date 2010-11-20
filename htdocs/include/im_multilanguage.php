@@ -112,10 +112,10 @@ if (! preg_match( '?'.preg_quote(ICMS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['S
  */
 function easiestml( $s )
 {
-	global $easiestml_lang , $icmsUser, $icmsConfigMultilang;
+	global $easiestml_lang, $icmsConfigMultilang;
 
 	// all mode for debug (allowed to system admin only)
-	if (is_object( $icmsUser ) && $icmsUser->isAdmin(1) && ! empty( $_GET['lang'] ) && $_GET['lang'] == 'all') {
+	if (is_object( icms::$user ) && icms::$user->isAdmin(1) && ! empty( $_GET['lang'] ) && $_GET['lang'] == 'all') {
 		return $s ;
 	}
 

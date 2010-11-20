@@ -22,9 +22,9 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 	 * @return	void
 	 */
 	function eventStartOutputInit() {
-		global $xoopsUser,$xoopsTpl;
-		if (is_object($xoopsUser)) {
-			foreach ($xoopsUser->vars as $key => $value) {
+		global $xoopsTpl;
+		if (is_object(icms::$user)) {
+			foreach (icms::$user->vars as $key => $value) {
 				$user[$key] = $value;
 			}
 			foreach ($user as $key => $value) {
@@ -44,7 +44,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 			}
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('read_msg', 0));
-			$criteria->add(new icms_db_criteria_Item('to_userid', $xoopsUser->getVar('uid')));
+			$criteria->add(new icms_db_criteria_Item('to_userid', icms::$user->getVar('uid')));
 			$user['new_messages'] = $pm_handler->getCount($criteria);
 
 			$xoopsTpl->assign('user', $user);
