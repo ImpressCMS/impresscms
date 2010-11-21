@@ -215,19 +215,27 @@ class icms_db_legacy_updater_Handler {
 	 * @return string default value
 	 */
 	function getFieldDefaultFromVar($var, $key = false) {
-		if ($var['data_type'] == XOBJ_DTYPE_TXTAREA || $var['data_type'] == XOBJ_DTYPE_SOURCE) {
+		if (in_array($var['data_type'], array(
+				XOBJ_DTYPE_TXTAREA,
+				XOBJ_DTYPE_SOURCE,
+				XOBJ_DTYPE_OTHER,
+				XOBJ_DTYPE_SIMPLE_ARRAY,
+				XOBJ_DTYPE_CURRENCY,
+				XOBJ_DTYPE_ARRAY,
+		))) {
 			return 'nodefault';
 		} elseif ($var['value']) {
 			return $var['value'];
 		} else {
 			if (in_array($var['data_type'], array(
-			XOBJ_DTYPE_INT,
-			XOBJ_DTYPE_STIME,
-			XOBJ_DTYPE_MTIME,
-			XOBJ_DTYPE_LTIME,
-			XOBJ_DTYPE_TIME_ONLY,
-			XOBJ_DTYPE_URLLINK,
-			XOBJ_DTYPE_FILE
+				XOBJ_DTYPE_INT,
+				XOBJ_DTYPE_STIME,
+				XOBJ_DTYPE_MTIME,
+				XOBJ_DTYPE_LTIME,
+				XOBJ_DTYPE_TIME_ONLY,
+				XOBJ_DTYPE_URLLINK,
+				XOBJ_DTYPE_FILE,
+				XOBJ_DTYPE_FLOAT,
 			))) {
 				return '0';
 			} else {
