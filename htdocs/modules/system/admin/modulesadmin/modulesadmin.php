@@ -643,7 +643,7 @@ function xoops_module_uninstall($dirname) {
 				$bcount = count($block_arr);
 				$msgs[] = 'Deleting block...';
 				for ($i = 0; $i < $bcount; $i++) {
-					if (!$block_arr[$i]->delete()) {
+					if (!$icms_block_handler->delete($block_arr[$i])) {
 						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block_arr[$i]->getVar('name').'</b> Block ID: <b>'.icms_conv_nr2local($block_arr[$i]->getVar('bid')).'</b></span>';
 					} else {
 						$msgs[] = '&nbsp;&nbsp;Block <b>'.$block_arr[$i]->getVar('name').'</b> deleted. Block ID: <b>'.icms_conv_nr2local($block_arr[$i]->getVar('bid')).'</b>';
@@ -792,7 +792,7 @@ function xoops_module_activate($mid) {
 	$bcount = count($blocks);
 	for ($i = 0; $i < $bcount; $i++) {
 		$blocks[$i]->setVar('isactive', 1);
-		$blocks[$i]->store();
+		$icms_block_handler->insert($blocks[$i]);
 	}
 	return "<p>".sprintf(_MD_AM_OKACT, "<b>".$module->getVar('name')."</b>")."</p>";
 }
@@ -835,7 +835,7 @@ function xoops_module_deactivate($mid) {
 		$bcount = count($blocks);
 		for ($i = 0; $i < $bcount; $i++) {
 			$blocks[$i]->setVar('isactive', false);
-			$blocks[$i]->store();
+			$icms_block_handler->insert($blocks[$i]);
 		}
 		return "<p>".sprintf(_MD_AM_OKDEACT, "<b>".$module->getVar('name')."</b>")."</p>";
 	}
@@ -960,7 +960,7 @@ function icms_module_update($dirname) {
 					$editfunc = isset($blocks[$i]['edit_func']) ? $blocks[$i]['edit_func'] : '';
 					$showfuncs[] = $blocks[$i]['show_func'];
 					$funcfiles[] = $blocks[$i]['file'];
-					$template = '';
+					$template = $content = '';
 					if ((isset($blocks[$i]['template']) && trim($blocks[$i]['template']) != '')) {
 						$content =& xoops_module_gettemplate($dirname, $blocks[$i]['template'], true);
 					}
