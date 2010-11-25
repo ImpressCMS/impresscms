@@ -53,7 +53,7 @@ class XoopsObject extends icms_core_Object
  * @deprecated	Use icms_core_ObjectHandler, instead
  * @todo		Remove in version 1.4
  */
-class XoopsObjectHandler extends icms_core_ObjectHandler
+abstract class XoopsObjectHandler extends icms_core_ObjectHandler
 {
 	private $_deprecated;
 	public function __construct(&$db) {
