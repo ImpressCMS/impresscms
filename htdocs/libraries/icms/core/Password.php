@@ -19,7 +19,6 @@
  */
 final class icms_core_Password {
 
-
 	private $pass, $salt, $mainSalt = XOOPS_DB_SALT, $uname;
 
 	/**
@@ -43,6 +42,7 @@ final class icms_core_Password {
 	}
 
 	// ***** Private Functions *****
+
 	/**
 	* This Private Function checks whether a users password has been expired
 	* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
@@ -57,8 +57,10 @@ final class icms_core_Password {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
-		$sql = $db->query("SELECT pass_expired FROM " . $db->prefix('users') . " WHERE
-                uname = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");
+		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
+
+		$sql = $db->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
+			$db->prefix('users'), $db->quoteString($uname)));
 		list($pass_expired) = $db->fetchRow($sql);
 
 		if ($pass_expired == 1) {
@@ -83,17 +85,19 @@ final class icms_core_Password {
 		}
 
 		$table = new icms_db_legacy_updater_Table('users');
+		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
+
 		if ($table->fieldExists('loginname')) {
-			$sql = $db->query("SELECT salt FROM " . $db->prefix('users') . " WHERE
-					loginname = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");
+			$sql = $db->query(sprintf("SELECT salt FROM %s WHERE loginname = %s",
+				$db->prefix('users'), $db->quoteString($uname)));
 			list($salt) = $db->fetchRow($sql);
 		} elseif ($table->fieldExists('login_name')) {
-			$sql = $db->query("SELECT salt FROM " . $db->prefix('users') . " WHERE
-                    login_name = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");
+			$sql = $db->query(sprintf("SELECT salt FROM %s WHERE login_name = %s",
+				$db->prefix('users'), $db->quoteString($uname)));
 			list($salt) = $db->fetchRow($sql);
 		} else {
-			$sql = $db->query("SELECT salt FROM " . $db->prefix('users') . " WHERE
-                    uname = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");
+			$sql = $db->query(sprintf("SELECT salt FROM %s WHERE uname = %s",
+				$db->prefix('users'), $db->quoteString($uname)));
 			list($salt) = $db->fetchRow($sql);
 		}
 
@@ -110,25 +114,28 @@ final class icms_core_Password {
     private function priv_getUserEncType($uname) {
         $db = icms_db_Factory::instance();
 
-        if($uname !== '') {
-			$table = new icms_db_legacy_updater_Table('users');
-            if($table->fieldExists('loginname')) {
-                $sql = $db->query("SELECT loginname, enc_type FROM ".$db->prefix('users')." WHERE
-                    loginname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-                list($loginname, $enc_type) = $db->fetchRow($sql);
-            } elseif($table->fieldExists('login_name')) {
-                $sql = $db->query("SELECT login_name, enc_type FROM ".$db->prefix('users')." WHERE
-                    login_name = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-                list($login_name, $enc_type) = $db->fetchRow($sql);
-            } else {
-                $sql = $db->query("SELECT uname, enc_type FROM ".$db->prefix('users')." WHERE
-                    uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-                list($uname, $enc_type) = $db->fetchRow($sql);
-            }
+		if (!isset($uname) || (isset($uname) && $uname == '')) {
+			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
+		}
+
+		$table = new icms_db_legacy_updater_Table('users');
+		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
+
+        if($table->fieldExists('loginname')) {
+			$sql = $db->query(sprintf("SELECT enc_type FROM %s WHERE loginname = %s",
+				$db->prefix('users'), $db->quoteString($uname)));
+            list($enc_type) = $db->fetchRow($sql);
+        } elseif($table->fieldExists('login_name')) {
+			$sql = $db->query(sprintf("SELECT enc_type FROM %s WHERE login_name = %s",
+				$db->prefix('users'), $db->quoteString($uname)));
+            list($enc_type) = $db->fetchRow($sql);
         } else {
-            redirect_header('user.php',2,_US_SORRYNOTFOUND);
+            $sql = $db->query(sprintf("SELECT enc_type FROM %s WHERE uname = %s",
+				$db->prefix('users'), $db->quoteString($uname)));
+            list($enc_type) = $db->fetchRow($sql);
         }
-        return (int) $enc_type;
+
+		return (int) $enc_type;
     }
 
 	/**
