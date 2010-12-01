@@ -138,17 +138,17 @@ function xoops_module_install($dirname) {
 						$tplfile->setVar('tpl_lastimported', 0);
 						$tplfile->setVar('tpl_type', 'module');
 						if (!$tplfile_handler->insert($tplfile)) {
-							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILINSTEMPFILE.'</span>', $tpl['file']);
+							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_INSERT_FAIL.'</span>', '<strong>' . $tpl['file'] . '</strong>');
 						} else {
 							$newtplid = $tplfile->getVar('tpl_id');
-							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_INSTEMPFILE, $tpl['file'], $newtplid);
+							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_TEMPLATE_INSERTED, '<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 
 							// generate compiled file
 							include_once ICMS_ROOT_PATH.'/class/template.php';
 							if (!icms_view_Tpl::template_touch($newtplid)) {
-								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILCOMPTEMPFILE.'</span>', $tpl['file']);
+								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_COMPILE_FAIL.'</span>', '<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 							} else {
-								$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COMPTEMPFILE, $tpl['file']);
+								$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_TEMPLATE_COMPILED, '<strong>' . $tpl['file'] . '</strong>');
 							}
 						}
 						unset($tpldata);
@@ -202,7 +202,7 @@ function xoops_module_install($dirname) {
 								$tplfile->setVar('tpl_lastimported', 0);
 								$tplfile->setVar('tpl_lastmodified', time());
 								if (!$tplfile_handler->insert($tplfile)) {
-									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILINSTEMP.'</span>', $block['template']);
+									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_INSERT_FAIL.'</span>', '<strong>' . $block['template'] . '</strong>');
 								} else {
 									$newtplid = $tplfile->getVar('tpl_id');
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.icms_conv_nr2local($newtplid).'</b>)';
@@ -403,9 +403,9 @@ function xoops_module_install($dirname) {
 				if (function_exists('xoops_module_install_'.$ModName)) {
 					$func = 'xoops_module_install_'.$ModName;
 					if (!( $lastmsg = $func($module) )) {
-						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
+						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
 					} else {
-						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
 						if (is_string( $lastmsg )) {
 							$msgs[] = $lastmsg;
 						}
@@ -413,9 +413,9 @@ function xoops_module_install($dirname) {
 				} elseif (function_exists('icms_module_install_'.$ModName)) {
 					$func = 'icms_module_install_'.$ModName;
 					if (!( $lastmsg = $func($module) )) {
-						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
+						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
 					} else {
-						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
 						if (is_string( $lastmsg )) {
 							$msgs[] = $lastmsg;
 						}
@@ -532,21 +532,21 @@ function icms_module_update($dirname) {
 					$tplfile->setVar('tpl_file', $tpl['file'], true);
 					$tplfile->setVar('tpl_desc', $tpl['description'], true);
 					if (!$tplfile_handler->insert($tplfile)) {
-						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILINSTEMPFILE.'</span>', $tpl['file']);
+						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_INSERT_FAIL.'</span>', '<strong>' . $tpl['file'] . '</strong>');
 					} else {
 						$newid = $tplfile->getVar('tpl_id');
-						$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_TEMPINS.'</span>', $tpl['file']);
+						$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_TEMPLATE_INSERTED.'</span>', '<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newid . '</strong>');
 						if ($xoopsConfig['template_set'] == 'default') {
 							if (!icms_view_Tpl::template_touch($newid)) {
-								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $tpl['file']);
+								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_RECOMPILE_FAIL.'</span>', '<strong>' . $tpl['file'] . '</strong>');
 							} else {
-								$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_RECOMPTEMPFILE.'</span>', $tpl['file']);
+								$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_TEMPLATE_RECOMPILED.'</span>', '<strong>' . $tpl['file'] . '</strong>');
 							}
 						}
 					}
 					unset($tpldata);
 				} else {
-					$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTDELTEMPFILE.'</span>', $tpl['file']);
+					$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_DELETE_FAIL.'</span>', $tpl['file']);
 				}
 			}
 		}
@@ -582,9 +582,11 @@ function icms_module_update($dirname) {
 						$sql = "UPDATE ".$db->prefix("newblocks")." SET name='".addslashes($blocks[$i]['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid='". (int) ($fblock['bid'])."'";
 						$result = $db->query($sql);
 						if (!$result) {
-							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COULDNOTUPDATE,$fblock['name']);
+							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_UPDATE_FAIL,$fblock['name']);
 						} else {
-							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_BLOCKUPDATED,$fblock['name'],icms_conv_nr2local($fblock['bid']));
+							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_BLOCK_UPDATED, 
+								'<strong>' . $fblock['name'] . '</strong>', 
+								'<strong>' . icms_conv_nr2local($fblock['bid']) . '</strong>');
 							if ($template != '') {
 								$tplfile =& $tplfile_handler->find('default', 'block', $fblock['bid']);
 								if (count($tplfile) == 0) {
@@ -603,14 +605,14 @@ function icms_module_update($dirname) {
 								$tplfile_new->setVar('tpl_lastmodified', time());
 								$tplfile_new->setVar('tpl_lastimported', 0);
 								if (!$tplfile_handler->insert($tplfile_new)) {
-									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILUPDTEMP.'</span>', $blocks[$i]['template']);
+									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_UPDATE_FAIL.'</span>', '<strong>' . $blocks[$i]['template'] . '</strong>');
 								} else {
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> updated.';
 									if ($xoopsConfig['template_set'] == 'default') {
 										if (!icms_view_Tpl::template_touch($tplfile_new->getVar('tpl_id'))) {
-											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $blocks[$i]['template']);
+											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_RECOMPILE_FAIL.'</span>', '<strong>' . $blocks[$i]['template'] . '</strong>');
 										} else {
-											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);
+											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_TEMPLATE_RECOMPILED, '<strong>' . $blocks[$i]['template'] . '</strong>');
 										}
 									}
 								}
@@ -662,9 +664,9 @@ function icms_module_update($dirname) {
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> added to the database.';
 									if ($xoopsConfig['template_set'] == 'default') {
 										if (!icms_view_Tpl::template_touch($newid)) {
-											$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Template <b>'.$blocks[$i]['template'].'</b> recompile failed.</span>';
+											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $blocks[$i]['template'] . '</strong>');
 										} else {
-											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);
+											$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_RECOMPILED, '<strong>' . $blocks[$i]['template'] . '</strong>');
 										}
 									}
 								}
@@ -880,16 +882,16 @@ function icms_module_update($dirname) {
 			if (function_exists('xoops_module_update_'.$ModName)) {
 				$func = 'xoops_module_update_'.$ModName;
 				if (!$func($module, $prev_version, $prev_dbversion)) {
-					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
+					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
 				} else {
-					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
 				}
 			} elseif (function_exists('icms_module_update_'.$ModName)) {
 				$func = 'icms_module_update_'.$ModName;
 				if (!$func($module, $prev_version, $prev_dbversion)) {
-					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
+					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
 				} else {
-					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
 				}
 			}
 		}
