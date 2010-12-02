@@ -16,7 +16,9 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
  * IcmsBreadcrumb
- *
+ * @deprecated	Use icms_view_Breadcrumb, instead
+ * @todo		Remove in 1.4
+ * 
  * Managing page breadcrumb
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
@@ -26,28 +28,15 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id:icmspersistabletable.php 1948 2008-05-01 19:01:10Z malanciault $
  */
-class IcmsBreadcrumb {
+class IcmsBreadcrumb extends icms_view_Breadcrumb {
 
-	private $_tpl;
-	private $items;
+	private $_deprecated;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct($items) {
-		$this->items = $items;
-	}
-
-	function render($fetchOnly=false)
-	{
-
-		$this->_tpl = new icms_view_Tpl();
-		$this->_tpl->assign('icms_breadcrumb_items', $this->items);
-
-		if ($fetchOnly) {
-			return $this->_tpl->fetch( 'db:system_breadcrumb.html');
-		} else {
-			$this->_tpl->display('db:system_breadcrumb.html');
-		}
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_view_Breadcrumb', sprintf(_CORE_REMOVE_IN_VERSION	, '1.4'));
+		parent::__construct($items);
 	}
 }

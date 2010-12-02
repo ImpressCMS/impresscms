@@ -2599,9 +2599,8 @@ function icms_buildCriteria($criterias) {
  * @todo Move to a static class method - Breadcrumb
  */
 function icms_getBreadcrumb($items) {
-	include_once ICMS_ROOT_PATH . '/class/icmsbreadcrumb.php' ;
-	$icmsBreadcrumb = new IcmsBreadcrumb($items);
-	return $icmsBreadcrumb->render(true);
+	$icmsBreadcrumb = new icms_view_Breadcrumb($items);
+	return $icmsBreadcrumb->render(TRUE);
 }
 /**
  * Build a template assignement
