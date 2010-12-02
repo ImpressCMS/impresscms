@@ -64,7 +64,7 @@ class icms_member_Handler {
 	 *
 	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the new group
 	 */
-	public function &createGroup() {
+	public function &createGroup(&$isNew = TRUE) {
 		$inst = & $this->_gHandler->create();
 		return $inst;
 	}
@@ -74,7 +74,7 @@ class icms_member_Handler {
 	 *
 	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the new user
 	 */
-	public function &createUser() {
+	public function &createUser(&$isNew = TRUE) {
 		$inst = & $this->_uHandler->create();
 		return $inst;
 	}
@@ -481,7 +481,7 @@ class icms_member_Handler {
 	 * Get count of users belonging to certain groups and matching criteria
 	 * Temporary solution
 	 *
-	 * @param int $groups IDs of groups
+	 * @param array $groups IDs of groups
 	 * @return int count of users
 	 */
 	public function getUserCountByGroupLink($groups, $criteria = null) {

@@ -66,8 +66,14 @@ class XoopsRankHandler extends icms_data_rank_Handler {
 	}
 }
 
+/**
+ * @deprecated	Use icms_member_user_Object, instead
+ * @todo		Remove in version 1.4
+ */
 class XoUser extends icms_member_user_Object
 {
+
+	private $_deprecated;
 	/**
 	 * Constructor for PHP5
 	 *
@@ -80,17 +86,23 @@ class XoUser extends icms_member_user_Object
 	 * Constructor for PHP4
 	 **/
 	function XoUser() {
-		$this->icms_member_user_Object();
+		parent::__construct();
 
 		$unsets = array("actkey", "pass", "theme", "umode", "uorder", "notify_mode");
 		foreach ($unsets as $var) {
 			unset($this->vars[$var]);
 		}
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_member_user_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		
 	}
 }
-
-class XoUserHandler extends icms_core_ObjectHandler
+/**
+ * @deprecated	Use icms_member_Handler, instead
+ * @todo		Remove in version 1.4
+ */
+class XoUserHandler extends icms_member_Handler
 {
+	private $_deprecated;	
 	/**
 	 * Constructor for PHP5
 	 *
@@ -107,110 +119,53 @@ class XoUserHandler extends icms_core_ObjectHandler
 	 **/
 	function XoUserHandler(&$db) {
 		parent::__construct($db);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_member_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 
 	/**
 	 * Create a new user
+	 * @deprecated	Use icms_member_Handler->createUser()
 	 *
 	 * @param   bool  $isNew is it a new user?
 	 * @return  object	reference to the (@link icms_member_user_Object) object
 	 **/
 	function &create($isNew = true) {
-		$obj = new XoUser();
-		if ($isNew === true) {
-			$obj->setNew();
-		}
-		return $obj;
+		return parent::createUser($isNew);
 	}
 
 	/**
 	 * Count how many users belong to certain criteria
+	 * @deprecated	Use icms_member_Handler->getUserCountByGroupLink(), instead
+	 * @todo		Remove in version 1.4
 	 *
 	 * @param   object $criteria reference to the Criteria object
 	 * @param   array  $groups array of usergroups
 	 * @return  int	how many users belong to certain criteria
 	 **/
 	function getCount($criteria = null, $groups = array()) {
-		if (!is_array($groups)) {
-			$groups = array($groups);
-		}
-
-		$groups = array_filter($groups);
-		if (empty($groups)) {
-			$sql = 	"	SELECT COUNT(DISTINCT u.uid) FROM ".$this->db->prefix('users'). " AS u".
-			"	WHERE 1='1'";
-		} else {
-			$sql = 	"	SELECT COUNT(DISTINCT u.uid) FROM ".$this->db->prefix('users'). " AS u".
-			"	LEFT JOIN ".$this->db->prefix('groups_users_link'). " AS g ON g.uid = u.uid".
-			"	WHERE g.groupid IN (".implode(', ', array_map( 'intval', $groups) ) . ")";
-		}
-
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			// Use the direct renderer, assuming no `uid` in criteria
-			if ($render = $criteria->render()) {
-				$sql .= " AND ".$render;
-			}
-		}
-		$result = $this->db->query($sql);
-		list($count) = $this->db->fetchRow($result);
-		return $count;
+		return parent::getUserCountByGroupLink($groups, $criteria);
 	}
 
 	/**
 	 * Get all users
+	 * @deprecated	Use icms_member_Handler->getUsersByGroupLink(), instead
+	 * @todo		Remove in version 1.4
 	 *
 	 * @param   object $criteria reference to the Criteria object
 	 * @param   array  $groups array of usergroups
 	 * @return  array	array of (@link icms_member_user_Object) objects
 	 **/
 	function getAll($criteria = null, $groups = array()) {
-		if (!is_array($groups)) {
-			$groups = array($groups);
-		}
-
-		$groups = array_filter($groups);
-		$limit = null;
-		$start = null;
-
-		if (empty($groups)) {
-			$sql = 	"	SELECT u.* FROM ".$this->db->prefix('users'). " AS u".
-			"	WHERE 1='1'";
-		} else {
-			$sql = 	"	SELECT u.* FROM ".$this->db->prefix('users'). " AS u".
-			"	LEFT JOIN ".$this->db->prefix('groups_users_link'). " AS g ON g.uid = u.uid".
-			"	WHERE g.groupid IN (".implode(', ', array_map( 'intval', $groups) ) . ")";
-		}
-
-		if (isset($criteria) && is_subclass_of($criteria, "icms_db_criteria_Element")) {
-
-			if ($render = $criteria->render()) {
-				$sql .= " AND ".$render;
-			}
-
-			if ($sort = $criteria->getSort()) {
-				$sql .= " ORDER BY ".$sort." ".$criteria->getOrder();
-				$orderSet = true;
-			}
-			$limit = $criteria->getLimit();
-			$start = $criteria->getStart();
-		}
-
-		if (empty($orderSet)) $sql .= " ORDER BY u.uid ASC";
-		$result = $this->db->query($sql, $limit, $start);
-		$ret = array();
-		while ($myrow = $this->db->fetchArray($result)) {
-			$object =& $this->create(false);
-			$object->assignVars($myrow);
-			$ret[$myrow["uid"]] = $object;
-			unset($object);
-		}
-
-		return $ret;
+		return parent::getUsersByGroupLink($groups, $criteria, TRUE);
 	}
 }
 
 $rank_handler = icms::handler('icms_data_rank');
-$user_handler = new XoUserHandler(icms::$xoopsDB);
+$user_handler = new icms_member_Handler(icms::$xoopsDB);
+$unsets = array("actkey", "pass", "theme", "umode", "uorder", "notify_mode");
+foreach ($unsets as $var) {
+	unset($user_handler->vars[$var]);
+}
 
 $items_match = array(
 				"uname"		=> _MA_USER_UNAME,
@@ -334,8 +289,8 @@ if (empty($_POST["user_submit"])) {
 	$form->addElement( new icms_form_elements_Hidden("token", $token) );
 	$form->addElement( new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit") );
 
-	$acttotal = $user_handler->getCount(new icms_db_criteria_Item('level', 0, '>'));
-	$inacttotal = $user_handler->getCount(new icms_db_criteria_Item('level', 0, '<='));
+	$acttotal = $user_handler->getUserCountByGroupLink(array(), new icms_db_criteria_Item('level', 0, '>'));
+	$inacttotal = $user_handler->getUserCountByGroupLink(array(), new icms_db_criteria_Item('level', 0, '<='));
 	echo "</html><body>";
 	echo "<h2 style='text-align:"._GLOBAL_LEFT.";'>"._MA_USER_FINDUS." - ".$modes[$mode]."</h2>";
 	$modes_switch = array();
@@ -452,7 +407,7 @@ if (empty($_POST["user_submit"])) {
 			}
 		}
 
-		$total = $user_handler->getCount($criteria, @$_POST["groups"]);
+		$total = $user_handler->getUserCountByGroupLink(@$_POST["groups"], $criteria);
 
 		$validsort = array("uname", "email", "last_login", "user_regdate", "posts");
 		$sort = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
@@ -465,7 +420,7 @@ if (empty($_POST["user_submit"])) {
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
 		$criteria->setStart($start);
-		$foundusers = $user_handler->getAll($criteria, @$_POST["groups"]);
+		$foundusers = $user_handler->getUsersByGroupLink(@$_POST["groups"] ,$criteria);
 
 	} else {
 		$query = trim($_POST["query"]);
@@ -492,7 +447,7 @@ if (empty($_POST["user_submit"])) {
 		$result = icms::$xoopsDB->query($query, $limit, $start);
 		$foundusers = array();
 		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
-			$object =& $user_handler->create(false);
+			$object =& $user_handler->createUser(false);
 			$object->assignVars($myrow);
 			$foundusers[$myrow["uid"]] = $object;
 			unset($object);
