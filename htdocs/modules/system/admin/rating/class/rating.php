@@ -13,8 +13,6 @@
 if (! defined ( "ICMS_ROOT_PATH" ))
 die ( "ImpressCMS root path not defined" );
 
-include_once ICMS_ROOT_PATH . "/class/plugins.php";
-
 class SystemRating extends icms_ipf_Object {
 
 	public $_modulePlugin=false;
