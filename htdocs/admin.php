@@ -22,7 +22,7 @@ define('ICMS_IN_ADMIN', 1);
 
 $xoopsOption['pagetype'] = 'admin';
 include 'mainfile.php';
-include ICMS_ROOT_PATH.'/include/cp_functions.php';
+include ICMS_ROOT_PATH . '/include/cp_functions.php';
 
 // test to see if the system module should be updated, added in 1.2
 if (icms_getModuleInfo('system')->getDBVersion() < ICMS_SYSTEM_DBVERSION) {
@@ -33,13 +33,11 @@ $op = isset($_GET['rssnews']) ? (int) ($_GET['rssnews']) : 0;
 if (!empty($_GET['op'])) {$op = (int) ($_GET['op']);}
 if (!empty($_POST['op'])) {$op = (int) ($_POST['op']);}
 
-if (!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$icmsConfig['language'].'.php'))
-{
+if (!file_exists(ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig['language'] . '.php')) {
 	xoops_module_write_admin_menu(impresscms_get_adminmenu());
 }
 
-switch($op)
-{
+switch ($op) {
 	case 1:
 		icms_cp_header();
 		showRSS();
@@ -54,17 +52,14 @@ switch($op)
 		break;
 }
 
-function showRSS()
-{
+function showRSS() {
 	global $icmsAdminTpl, $icmsConfigPersona;
 
 	$rssurl = $icmsConfigPersona['rss_local'];
-	$rssfile = ICMS_CACHE_PATH.'/adminnews_'._LANGCODE.'.xml';
-
-	include_once ICMS_ROOT_PATH . '/class/icmssimplerss.php' ;
+	$rssfile = ICMS_CACHE_PATH . '/adminnews_' . _LANGCODE . '.xml';
 
 	// Create a new instance of the SimplePie object
-	$feed = new IcmsSimpleRss();
+	$feed = new icms_feeds_Simplerss();
 	$feed->set_feed_url($rssurl);
 	$feed->set_cache_duration(3600);
 	$feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_NONE);
@@ -91,4 +86,3 @@ function showRSS()
 	$icmsAdminTpl->display('db:admin/system_adm_rss.html');
 }
 icms_cp_footer();
-?>
