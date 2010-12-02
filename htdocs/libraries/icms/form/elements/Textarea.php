@@ -25,19 +25,19 @@ class icms_form_elements_Textarea extends icms_form_Element {
 	 * number of columns
 	 * @var	int
 	 */
-	private $_cols;
+	protected $_cols;
 
 	/**
 	 * number of rows
 	 * @var	int
 	 */
-	private $_rows;
+	protected $_rows;
 
 	/**
 	 * initial content
 	 * @var	string
 	 */
-	private $_value;
+	protected $_value;
 
 	/**
 	 * Constuctor
