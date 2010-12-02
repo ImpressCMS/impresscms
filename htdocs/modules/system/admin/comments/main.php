@@ -117,8 +117,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			echo '</table>';
 			echo '<table style="width: 100%; border: 0; margin: 3px; padding: 3px;"><tr><td>'.sprintf(_MD_AM_COMFOUND, '<b>'.icms_conv_nr2local($total).'</b>');
 			if ($total > $limit) {
-				include_once ICMS_ROOT_PATH.'/class/pagenav.php';
-				$nav = new XoopsPageNav($total, $limit, $start, 'start', 'fct=comments&amp;op=list&amp;limit='.$limit.'&amp;sort='.$sort.'&amp;order='.$order.'&amp;module='.$module);
+				$nav = new icms_view_PageNav($total, $limit, $start, 'start', 'fct=comments&amp;op=list&amp;limit='.$limit.'&amp;sort='.$sort.'&amp;order='.$order.'&amp;module='.$module);
 				echo '</td><td align="'._GLOBAL_RIGHT.'">'.$nav->renderNav();
 			}
 			echo '</td></tr></table>';

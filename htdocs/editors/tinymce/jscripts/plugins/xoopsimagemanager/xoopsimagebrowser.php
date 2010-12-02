@@ -449,8 +449,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsTpl->assign('images',$arrimg);
 	if ($imgcount > 0) {
 		if ($imgcount > 15) {
-			include_once ICMS_ROOT_PATH.'/class/pagenav.php';
-			$nav = new XoopsPageNav($imgcount, 15, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id.'&type='.$type.'&target='.$target);
+			$nav = new icms_view_PageNav($imgcount, 15, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id.'&type='.$type.'&target='.$target);
 			$icmsTpl->assign('pag','<div class="img_list_info_panel" align="center">'.$nav->renderNav().'</div>');
 		} else {
 		    $icmsTpl->assign('pag','');

@@ -199,8 +199,7 @@ case 'online':
 	echo '</table><br />';
 	if ($online_total > 20)
 	{
-		include_once ICMS_ROOT_PATH.'/class/pagenav.php';
-		$nav = new XoopsPageNav($online_total, 20, $start, 'start', 'action=showpopups&amp;type=online');
+		$nav = new icms_view_PageNav($online_total, 20, $start, 'start', 'action=showpopups&amp;type=online');
 		echo '<div style="text-align: right;">'.$nav->renderNav().'</div>';
 	}
 	break;

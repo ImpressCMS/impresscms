@@ -78,8 +78,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		}
 		if ($avtcount > 0) {
 			if ($avtcount > 10) {
-				include_once ICMS_ROOT_PATH.'/class/pagenav.php';
-				$nav = new XoopsPageNav($avtcount, 10, $start, 'start', 'fct=avatars&amp;type='.$type.'&amp;op=listavt');
+				$nav = new icms_view_PageNav($avtcount, 10, $start, 'start', 'fct=avatars&amp;type='.$type.'&amp;op=listavt');
 				echo '<div style="text-align:'._GLOBAL_RIGHT.';">'.$nav->renderImageNav().'</div>';
 			}
 			if ($type == 'S') {

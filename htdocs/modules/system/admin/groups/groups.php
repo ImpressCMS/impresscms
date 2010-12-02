@@ -167,7 +167,7 @@ function modifyGroup($g_id)
 		echo '<form action="admin.php" method="post">
 		<table class="outer">
 		<tr><th align="center">'._AM_MEMBERS.'<br />';
-		$nav = new XoopsPageNav($membercount, 200, $memstart, "memstart", "fct=groups&amp;op=modify&amp;g_id=".$g_id);
+		$nav = new icms_view_PageNav($membercount, 200, $memstart, "memstart", "fct=groups&amp;op=modify&amp;g_id=".$g_id);
 		echo $nav->renderNav(4);
 		echo "</th></tr>
 		<tr><td class='even' align='center'>

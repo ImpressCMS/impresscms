@@ -261,7 +261,6 @@ switch ($op)
 
 	case 'mod_users':
 	default:
-		include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 		displayUsers();
 		break;
 }

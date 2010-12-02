@@ -1,6 +1,5 @@
 <?php
 
-require_once XOOPS_ROOT_PATH.'/class/pagenav.php' ;
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
 $myts =& icms_core_Textsanitizer::getInstance() ;
 $db =& icms_db_Factory::instance() ;
@@ -109,7 +108,7 @@ list( $numrows ) = $db->fetchRow( $rs ) ;
 $prs = $db->query( "SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN ".$db->prefix("users")." u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num" ) ;
 
 // Page Navigation
-$nav = new XoopsPageNav( $numrows , $num , $pos , 'pos' , "num=$num" ) ;
+$nav = new icms_view_PageNav( $numrows , $num , $pos , 'pos' , "num=$num" ) ;
 $nav_html = $nav->renderNav( 10 ) ;
 
 // Number selection

@@ -36,7 +36,6 @@ if (!empty($memberslist_id) && is_array($memberslist_id)) {
 
 switch ($op) {
 	case "modify":
-		include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 		modifyGroup($g_id);
 		break;
 

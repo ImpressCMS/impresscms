@@ -291,8 +291,7 @@ switch ($action) {
 			$search_url_get_params = htmlspecialchars($search_url_get_params);
 			$search_url = $search_url_base . $search_url_get_params;
 
-			include_once ICMS_ROOT_PATH . '/class/pagenav.php';
-			$pagenav = new XoopsPageNav($count, $max_results_per_page, $start, "start", $search_url_get_params);
+			$pagenav = new icms_view_PageNav($count, $max_results_per_page, $start, "start", $search_url_get_params);
 			$all_results[$modname] = array("results" =>array_slice($results, $start, $num_show_this_page),
 			"page_nav" => $pagenav->renderNav());
 		} else {

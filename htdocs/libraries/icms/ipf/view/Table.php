@@ -672,7 +672,6 @@ class icms_ipf_view_Table {
 
 		$this->_objects = $this->fetchObjects($debug);
 
-		include_once ICMS_ROOT_PATH . '/class/pagenav.php';
 		/**
 		 * $params_of_the_options_sel is an array with all the parameters of the page
 		 * but without the pagenave parameters. This array will be used in the
@@ -703,7 +702,7 @@ class icms_ipf_view_Table {
 			$new_get_array[] = "limitsel=" . $this->_limitsel;
 			$otherParams = implode('&', $new_get_array);
 
-			$pagenav = new XoopsPageNav($this->_objectHandler->getCount($this->_criteria), $this->_criteria->getLimit(), $this->_criteria->getStart(), 'start' . $this->_objectHandler->keyName, $otherParams);
+			$pagenav = new icms_view_PageNav($this->_objectHandler->getCount($this->_criteria), $this->_criteria->getLimit(), $this->_criteria->getStart(), 'start' . $this->_objectHandler->keyName, $otherParams);
 			$this->_tpl->assign('icms_pagenav', $pagenav->renderNav());
 		}
 		$this->renderOptionSelection($limitsArray, $params_of_the_options_sel);

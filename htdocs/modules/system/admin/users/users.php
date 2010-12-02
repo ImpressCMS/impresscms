@@ -26,7 +26,7 @@ function displayUsers() {
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler = icms::handler('icms_member');
 	$usercount = $member_handler->getUserCount(new icms_db_criteria_Item('level', '-1', '!='));
-	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
+	$nav = new icms_view_PageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
 	$editform = new icms_form_Theme(_AM_EDEUSER, 'edituser', 'admin.php');
 	$user_select = new icms_form_elements_Select('', 'uid');
 	$criteria = new icms_db_criteria_Compo();
@@ -52,7 +52,7 @@ function displayUsers() {
 
 	echo "<br />\n";
 	$usercount = $member_handler->getUserCount(new icms_db_criteria_Item('level', '-1'));
-	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
+	$nav = new icms_view_PageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
 	$editform = new icms_form_Theme(_AM_REMOVED_USERS, 'edituser', 'admin.php');
 	$user_select = new icms_form_elements_Select('', 'uid');
 	$criteria = new icms_db_criteria_Compo();
