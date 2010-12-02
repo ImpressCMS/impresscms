@@ -105,7 +105,7 @@ class SystemRatingHandler extends icms_ipf_Handler {
 		$this->_rateOptions[4] = 4;
 		$this->_rateOptions[5] = 5;
 
-		$this->pluginsObject = new IcmsPluginsHandler();
+		$this->pluginsObject = new icms_plugins_Handler();
 	}
 
 	function getModuleList() {

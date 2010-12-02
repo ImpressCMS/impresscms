@@ -12,86 +12,31 @@
  * @version		$Id$
  */
 
-class IcmsPlugins {
+/**
+ * @deprecated	Use icms_plugins_Object, instead
+ * @todo		Remove in 1.4
+ *
+ */
+class IcmsPlugins extends icms_plugins_Object {
 
-	public $_infoArray;
+	private $_deprecated;
 
-	function IcmsPlugins($array) {
-		$this->_infoArray = $array;
-	}
-
-	function getItemInfo($item) {
-		if (isset($this->_infoArray['items'][$item])) {
-			return $this->_infoArray['items'][$item];
-		} else {
-			return false;
-		}
-	}
-
-	function getItemList() {
-		$itemsArray = $this->_infoArray['items'];
-		foreach ($itemsArray as $k=>$v) {
-			$ret[$k] = $v['caption'];
-		}
-		return $ret;
-	}
-
-	function getItem() {
-		$ret = false;
-		foreach($this->_infoArray['items'] as $k => $v) {
-			$search_str = str_replace('%u', '', $v['url']);
-			if (strpos($_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'], $search_str) > 0) {
-				$ret = $k;
-				break;
-			}
-		}
-		return $ret;
-	}
-
-	function getItemIdForItem($item) {
-		return $_REQUEST[$this->_infoArray['items'][$item]['request']];
+	function IcmsPlugins(&$array) {
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_plugins_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		parent::__construct($array);
 	}
 }
 
-class IcmsPluginsHandler {
-
-	public $pluginPatterns = false;
-
-	function getPlugin($path, $dirname) {
-		$pluginName = ICMS_ROOT_PATH . '/plugins/'.$path.'/' . $dirname . '.php';
-		if (file_exists($pluginName)) {
-			include_once $pluginName ;
-			$function = 'icms_plugin_' . $dirname;
-			if (function_exists($function)) {
-				$array = $function();
-				$ret = new IcmsPlugins($array);
-				return $ret;
-			}
-		}
-		return false;
-	}
-
-	function getPluginsArray($path) {
-
-		$module_handler = icms::handler('icms_module');
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('isactive', 1));
-		$tempModulesObj = $module_handler->getObjects($criteria);
-		$modulesObj = array();
-		foreach ($tempModulesObj as $moduleObj) {
-			$modulesObj[$moduleObj->getVar('dirname')] = $moduleObj;
-		}
-
-		$aFiles = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/plugins/'.$path.'/', '', array('php')));
-		$ret = array();
-		foreach($aFiles as $pluginName) {
-			$module_xoops_version_file = ICMS_ROOT_PATH . "/modules/$pluginName/xoops_version.php";
-			$module_icms_version_file = ICMS_ROOT_PATH . "/modules/$pluginName/icms_version.php";
-			if ((file_exists($module_xoops_version_file) || file_exists($module_icms_version_file))&& isset($modulesObj[$pluginName])) {
-				$ret[$pluginName] = $modulesObj[$pluginName]->getVar('name');
-			}
-		}
-		return $ret;
+/**
+ * @deprecated	Use icms_plugins_Handler, instead
+ * @todo		Remove in 1.4
+ *
+ */
+class IcmsPluginsHandler extends icms_plugins_Handler {	
+	private $_deprecated;
+	
+	public function __construct() {
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_plugins_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return new parent; 
 	}
 }
-?>

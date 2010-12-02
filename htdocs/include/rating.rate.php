@@ -22,7 +22,7 @@ $module_dirname = $icmsModule->dirname();
 
 // Retreive the IcmsObject Rating plugin for the current module if it exists
 $icms_rating_handler = icms_getModuleHandler('rating', 'system');
-$icms_plugin_handler = new IcmsPluginsHandler();
+$icms_plugin_handler = new icms_plugins_Handler();
 $pluginObj = $icms_plugin_handler->getPlugin($module_dirname);
 if ($pluginObj) {
 	$rating_item = $pluginObj->getItem();
