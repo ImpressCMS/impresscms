@@ -22,8 +22,7 @@ if (!icms::$user){
 }
 
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
-//include_once ICMS_ROOT_PATH.'/class/template.php';
-//include_once ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.php";
+
 
 $icmsTpl = new icms_view_Tpl ( );
 

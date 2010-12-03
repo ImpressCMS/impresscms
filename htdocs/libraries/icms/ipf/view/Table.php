@@ -595,8 +595,6 @@ class icms_ipf_view_Table {
 	public function render($fetchOnly = false, $debug = false) {
 		global $impresscms;
 
-		//include_once ICMS_ROOT_PATH . '/class/template.php';
-
 		$this->_tpl = new icms_view_Tpl();
 
 		/**

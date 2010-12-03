@@ -513,7 +513,6 @@ if (! is_object ( icms::$user ) || ! is_object ( $icmsModule ) || ! icms::$user-
 		if (!icms::$security->check ()) {
 			redirect_header ( 'admin.php?fct=preferences', 3, implode ( '<br />', icms::$security->getErrors () ) );
 		}
-		//require_once ICMS_ROOT_PATH . '/class/template.php';
 		$xoopsTpl = new icms_view_Tpl ( );
 		$count = count ( $conf_ids );
 		$tpl_updated = false;

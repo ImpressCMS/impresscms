@@ -57,7 +57,6 @@ class icms_ipf_view_Single {
 	 * @param $debug
 	 */
 	public function render($fetchOnly = false, $debug = false) {
-		//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl = new icms_view_Tpl();
 		$vars = $this->_object->vars;

@@ -280,7 +280,7 @@ class icms_member_Handler {
 
 	public function icms_getLoginFromUserEmail($email = '') {
 		$db = icms_db_Factory::instance();
-		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
+		
 		$table = new icms_db_legacy_updater_Table('users');
 
 		if ($email !== '') {
@@ -319,7 +319,7 @@ class icms_member_Handler {
 		$salt = $icmspass->getUserSalt($uname);
 		$enc_type = $icmspass->getUserEncType($uname);
 		$pwd = $icmspass->encryptPass($pwd, $salt, $enc_type);
-		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
+		
 		$table = new icms_db_legacy_updater_Table('users');
 		if ($table->fieldExists('loginname')) {
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));

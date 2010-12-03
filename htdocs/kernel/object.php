@@ -20,8 +20,6 @@
  * @copyright copyright &copy; 2000 XOOPS.org
  */
 
-//include_once "xoopspluginloader.php";
-
 /**
  * Base class for all objects in the Xoops kernel (and beyond)
  *

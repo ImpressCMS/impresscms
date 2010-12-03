@@ -13,7 +13,6 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 // RMV-NOTIFY
 include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 
 /**
  * Notification handler class.

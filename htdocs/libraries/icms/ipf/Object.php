@@ -402,7 +402,6 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getSecureForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		//include_once ICMS_ROOT_PATH . "/class/icmsform/icmssecureform.php";
 		$form = new icms_form_Secure($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 
 		return $form;

@@ -396,7 +396,6 @@ function b_system_comments_show($options)
 function b_system_notification_show()
 {
 	global $icmsConfig, $icmsModule;
-	//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 	icms_loadLanguageFile('core', 'notification');
 	// Notification must be enabled, and user must be logged in
 	if (empty(icms::$user) || !icms_data_notification_Handler::isEnabled('block')) {

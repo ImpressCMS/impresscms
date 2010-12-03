@@ -116,8 +116,6 @@ class icms_ipf_About {
 
 		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));
 
-		//include_once ICMS_ROOT_PATH . '/class/template.php';
-
 		$this->_tpl = new icms_view_Tpl();
 
 		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $icmsModule->getVar('dirname') . "/");

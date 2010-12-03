@@ -19,7 +19,6 @@ if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
-//include_once ICMS_ROOT_PATH.'/include/notification_functions.php';
 $xoops_notification = array();
 $xoops_notification['show'] = isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline') ? 1 : 0;
 if ($xoops_notification['show']) {

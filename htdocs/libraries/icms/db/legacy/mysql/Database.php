@@ -232,7 +232,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 */
 	public function queryFromFile($file) {
 		if (false !== ($fp = fopen($file, 'r'))) {
-			include_once ICMS_ROOT_PATH . '/class/database/drivers/' . XOOPS_DB_TYPE . '/sqlutility.php';
+			
 			$sql_queries = trim(fread($fp, filesize($file)));
 			icms_db_legacy_mysql_Utility::splitMySqlFile($pieces, $sql_queries);
 			foreach ($pieces as $query) {

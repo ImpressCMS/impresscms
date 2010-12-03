@@ -18,7 +18,6 @@
  *
  */
 require_once 'common.inc.php';
-//require_once 'filter.php';
 
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
 

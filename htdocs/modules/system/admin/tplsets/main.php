@@ -330,7 +330,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 						if ($tplfile->getVar('tpl_tplset') == $xoopsConfig['template_set']) {
 							$defaulttpl =& $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), null, $tplfile->getVar('tpl_file'));
 							if (count($defaulttpl) > 0) {
-								include_once ICMS_ROOT_PATH.'/class/template.php';
+								
 								$icmsAdminTpl->template_touch($defaulttpl[0]->getVar('tpl_id'), true);
 							}
 						}
@@ -576,7 +576,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 							$err = 'Failed inserting data to database';
 						} else {
 							if ($tpl->getVar('tpl_tplset') == $xoopsConfig['template_set']) {
-								include_once ICMS_ROOT_PATH.'/class/template.php';
+								
 								$icmsAdminTpl->template_touch($tpl_id, true);
 							}
 						}
@@ -642,7 +642,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 							$err = 'Failed inserting data to database';
 						} else {
 							if ($tplset == $xoopsConfig['template_set']) {
-								include_once ICMS_ROOT_PATH.'/class/template.php';
+								
 								$icmsAdminTpl->template_touch($tpl->getVar('tpl_id'), true);
 							}
 						}
@@ -730,7 +730,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 					$err = 'ERROR: Could not insert template <b>'.$tplfile[0]->getVar('tpl_file').'</b> to the database.';
 				} else {
 					if ($tplset == $xoopsConfig['template_set']) {
-						include_once ICMS_ROOT_PATH.'/class/template.php';
+						
 						$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
 					}
 				}
@@ -774,7 +774,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 						echo '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$file.'</b> to the database.</span><br />';
 					} else {
 						if ($tplset == $xoopsConfig['template_set']) {
-							include_once ICMS_ROOT_PATH.'/class/template.php';
+							
 							$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
 						}
 						echo '&nbsp;&nbsp;Template <b>'.$tplfiles[$i]->getVar('tpl_file').'</b> added to the database.<br />';
@@ -798,7 +798,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 						echo '&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert block template <b>'.$tplfiles[$i]->getVar('tpl_file').'</b> to the database.</span><br />';echo $newtpl->getHtmlErrors();
 					} else {
 						if ($tplset == $xoopsConfig['template_set']) {
-							include_once ICMS_ROOT_PATH.'/class/template.php';
+							
 							$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
 						}
 						echo '&nbsp;&nbsp;&nbsp;&nbsp;Block template <b>'.$tplfiles[$i]->getVar('tpl_file').'</b> added to the database.<br />';
@@ -923,7 +923,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 			}
 
-			require_once ICMS_ROOT_PATH.'/class/template.php';
+			
 			$myts =& icms_core_Textsanitizer::getInstance();
 			$html = $myts->stripSlashesGPC($html);
 			$tpltpl_handler =& icms::handler('icms_view_template_file');
@@ -1028,7 +1028,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 						} else {
 							$msg[] = 'Template file <b>'.$upload_file.'</b> updated.';
 							if ($tplset == $xoopsConfig['template_set']) {
-								include_once ICMS_ROOT_PATH.'/class/template.php';
+								
 								if ($icmsAdminTpl->template_touch($tpl->getVar('tpl_id'), true)) {
 									$msg[] = 'Template file <b>'.$upload_file.'</b> compiled.';
 								}

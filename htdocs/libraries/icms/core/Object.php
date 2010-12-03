@@ -36,8 +36,6 @@ define('XOBJ_DTYPE_FORM_SECTION', 210);
 define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
 /**#@-*/
 
-//include_once "xoopspluginloader.php";
-
 /**
  * Base class for all objects in the kernel (and beyond)
  *
@@ -561,9 +559,9 @@ class icms_core_Object {
 	 * @access private
 	 */
 	private function _loadFilters() {
-		//include_once XOOPS_ROOT_PATH.'/class/filters/filter.php';
+		
 		//foreach ($this->_filters as $f) {
-		//    include_once XOOPS_ROOT_PATH.'/class/filters/'.strtolower($f).'php';
+		
 		//}
 	}
 
