@@ -67,8 +67,16 @@ class icms_form_elements_Hidden extends icms_form_Element {
 	 * @return	string	HTML
 	 */
 	public function render() {
-		$ele_name = $this->getName();
-		return "<input type='hidden' name='" . $ele_name . "' id='" . $ele_name . "' value='" . $this->getValue() . "' />";
+		if (is_array($this->getValue())) {
+			$ret = '';
+			foreach ($this->getValue() as $value){
+				$ret .= "<input type='hidden' name='" . $this->getName() . "[]' id='" . $this->getName() . "' value='" . $value . "' />\n";
+			}
+		} else {
+			$ret = "<input type='hidden' name='" . $this->getName() . "' id='" . $this->getName() . "' value='" . $this->getValue() . "' />";
+		}
+
+		return $ret;
 	}
 }
 
