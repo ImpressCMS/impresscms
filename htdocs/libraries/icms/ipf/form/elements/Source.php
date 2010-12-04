@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.2
  * @author		MekDrop <mekdrop@gmail.com>
- * @version		$Id:$
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
