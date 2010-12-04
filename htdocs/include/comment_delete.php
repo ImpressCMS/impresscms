@@ -141,7 +141,6 @@ switch ($op) {
 		// get all comments posted later within the same thread
 		$thread_comments =& $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
 
-		include_once ICMS_ROOT_PATH . '/class/tree.php';
 		$xot = new icms_ipf_Tree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 
 		$child_comments =& $xot->getFirstChild($com_id);
@@ -192,7 +191,6 @@ switch ($op) {
 		$thread_comments =& $comment_handler->getThread($com_rootid, $com_id);
 
 		// construct a comment tree
-		include_once ICMS_ROOT_PATH . '/class/tree.php';
 		$xot = new icms_ipf_Tree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 		$child_comments =& $xot->getAllChild($com_id);
 		// add itself here

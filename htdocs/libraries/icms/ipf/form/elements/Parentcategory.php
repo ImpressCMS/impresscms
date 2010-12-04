@@ -29,7 +29,6 @@ class icms_ipf_form_elements_Parentcategory extends icms_form_elements_Select {
 		$category_handler = icms_getModuleHandler('category', $object->handler->_moduleName);
 		$categories = $category_handler->getObjects($criteria);
 
-		include_once ICMS_ROOT_PATH . "/class/tree.php" ;
 		$mytree = new icms_ipf_Tree($categories, "category_id", "category_pid");
 		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e'));
 

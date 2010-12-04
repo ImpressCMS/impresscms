@@ -111,9 +111,8 @@ class icms_data_comment_Renderer {
 	 * @param boolean $show_nav
 	 */
 	public function renderThreadView($comment_id = 0, $admin_view = FALSE, $show_nav = TRUE) {
-		include_once ICMS_ROOT_PATH . '/class/tree.php';
 		// construct comment tree
-		$xot = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 
 		if (FALSE != $this->_useIcons) {
@@ -224,8 +223,7 @@ class icms_data_comment_Renderer {
 	 * @param boolean $admin_view
 	 */
 	public function renderNestView($comment_id = 0, $admin_view = FALSE) {
-		include_once ICMS_ROOT_PATH . '/class/tree.php';
-		$xot = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 		if (FALSE != $this->_useIcons) {
 			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
