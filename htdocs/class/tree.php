@@ -15,6 +15,8 @@
 
 /**
  * A tree structures with {@link XoopsObject}s as nodes
+ * @deprecated	Use icms_ipf_Tree, instead
+ * @todo		Remove in version 1.4
  *
  * @package		kernel
  * @subpackage	core
