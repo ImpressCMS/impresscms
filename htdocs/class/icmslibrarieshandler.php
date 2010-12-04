@@ -18,6 +18,8 @@ if (!defined('ICMS_ROOT_PATH')) {
 
 /**
  * IcmsLibrariesHandler
+ * @deprecated	This isn't found anywhere in the current core, but use icms_preload_LibrariesHandler, instead
+ * @todo		Remove in 1.4
  *
  * Class handling third party libraries within ImpressCMS
  *
@@ -28,97 +30,13 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @author		  marcan <marcan@impresscms.org>
  * @version		$Id$
  */
-class IcmsLibrariesHandler {
+class IcmsLibrariesHandler extends icms_preload_LibrariesHandler {
 
-	/**
-	 * @public array $_librariesArray array containing a list of all available third party libraries
-	 */
-	public $_librariesArray=array();
-
-	/**
-	 * Constructor
-	 *
-	 * @return	void
-	 */
-	function IcmsLibrariesHandler() {
-		$librariesArray = icms_core_Filesystem::getDirList(ICMS_LIBRARIES_PATH);
-		foreach ($librariesArray as $library) {
-			$library_boot_file = $this->getLibraryBootFilePath($library);
-			if (file_exists($library_boot_file)) {
-				include_once $library_boot_file;
-				$this->_librariesArray[] = $library;
-			}
-		}
+	private $_deprecated;
+	
+	public function __construct() {
+		parent::__construct();
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_preload_LibrariesHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
-
-	/**
-	 * Access the only instance of this class
-	 *
-	 * @static
-	 * @staticvar   object
-	 *
-	 * @return	object
-	 *
-	 */
-	function &getInstance()
-	{
-		static $instance;
-		if (!isset($instance)) {
-			$instance = new IcmsLibrariesHandler();
-		}
-		return $instance;
-	}
-
-	/**
-	 * Triggers a specific event on all the libraries
-	 *
-	 * Here are the currently supported events:
-	 * - finishCoreBoot : this event is triggered at the end of the core booting process (end of include/common.php)
-	 * - adminHeader : this event is triggered when calling icms_cp_header() and is used to output content in the head section of the admin side
-	 * - beforeFooter : this event is triggered when include/footer.php is called, at the begining of the file
-	 * - startOutputInit : this event is triggered when starting to output the content, in include/header.php after instantiation of $xoopsTpl
-	 *
-	 * @param $event string name of the event to trigger
-	 * @param $array mixed container to pass any arguments to be used by the library
-	 *
-	 * @return	TRUE if successful, FALSE if not
-	 */
-	function triggerEvent($event, $array=false) {
-		foreach($this->_librariesArray as $library) {
-			$functionName = $this->getFunctionName($event, $library);
-			if (function_exists($functionName)) {
-				$ret = $functionName($array);
-			}
-		}
-	}
-
-	/**
-	 * Construct the path of the boot file a specified library
-	 *
-	 * @param $library string name of the library
-	 *
-	 * @return	string path of the boot file of the specified library
-	 *
-	 */
-	function getLibraryBootFilePath($library) {
-		$ret = ICMS_LIBRARIES_PATH . '/' . $library . '/icms.library.' . $library . '.php';
-		return $ret;
-	}
-
-	/**
-	 * Construct the name of the function which would be call on a specific event for a specific library
-	 *
-	 * @param $event string name of the event
-	 * @param $library string name of the library
-	 *
-	 * @return	string name of the function
-	 *
-	 */
-	function getFunctionName($event, $library) {
-		$ret = 'icmsLibrary' . ucfirst($library) . '_' . $event;
-		return $ret;
-	}
-
 }
 
-?>
