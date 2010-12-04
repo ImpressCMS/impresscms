@@ -215,7 +215,7 @@ define('_IMPRESSCMS_DONATE','Donate!');
 define("_IMPRESSCMS_Support","Support the project !");
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
 define('_IMPRESSCMS_ADMIN','Administration of');
-/** The default separator used in XoopsTree::getNicePathFromId */
+/** The default separator used in icms_view_Tree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
 //Content Manager
 define('_CT_NAV','Home');

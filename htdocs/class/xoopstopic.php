@@ -16,7 +16,6 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-include_once ICMS_ROOT_PATH."/class/xoopstree.php";
 
 class XoopsTopic
 {
@@ -142,7 +141,7 @@ class XoopsTopic
 			if ( empty($this->topic_id) ) {
 				$this->topic_id = $this->db->getInsertId();
 			}
-			$xt = new XoopsTree($this->table, "topic_id", "topic_pid");
+			$xt = new icms_view_Tree($this->table, "topic_id", "topic_pid");
 			$parent_topics = $xt->getAllParentId($this->topic_id);
 			if ( !empty($this->m_groups) && is_array($this->m_groups) ){
 				foreach ( $this->m_groups as $m_g ) {
@@ -304,7 +303,7 @@ class XoopsTopic
 	function getFirstChildTopics()
 	{
 		$ret = array();
-		$xt = new XoopsTree($this->table, "topic_id", "topic_pid");
+		$xt = new icms_view_Tree($this->table, "topic_id", "topic_pid");
 		$topic_arr = $xt->getFirstChild($this->topic_id, "topic_title");
 		if ( is_array($topic_arr) && count($topic_arr) ) {
 			foreach($topic_arr as $topic){
@@ -321,7 +320,7 @@ class XoopsTopic
 	function getAllChildTopics()
 	{
 		$ret = array();
-		$xt = new XoopsTree($this->table, "topic_id", "topic_pid");
+		$xt = new icms_view_Tree($this->table, "topic_id", "topic_pid");
 		$topic_arr = $xt->getAllChild($this->topic_id, "topic_title");
 		if ( is_array($topic_arr) && count($topic_arr) ) {
 			foreach($topic_arr as $topic){
@@ -338,7 +337,7 @@ class XoopsTopic
 	function getChildTopicsTreeArray()
 	{
 		$ret = array();
-		$xt = new XoopsTree($this->table, "topic_id", "topic_pid");
+		$xt = new icms_view_Tree($this->table, "topic_id", "topic_pid");
 		$topic_arr = $xt->getChildTreeArray($this->topic_id, "topic_title");
 		if ( is_array($topic_arr) && count($topic_arr) ) {
 			foreach($topic_arr as $topic){
@@ -358,7 +357,7 @@ class XoopsTopic
 	 **/
 	function makeTopicSelBox($none=0, $seltopic=-1, $selname="", $onchange="")
 	{
-		$xt = new XoopsTree($this->table, "topic_id", "topic_pid");
+		$xt = new icms_view_Tree($this->table, "topic_id", "topic_pid");
 		if ( $seltopic != -1 ) {
 			$xt->makeMySelBox("topic_title", "topic_title", $seltopic, $none, $selname, $onchange);
 		} elseif ( !empty($this->topic_id) ) {
@@ -376,7 +375,7 @@ class XoopsTopic
 	 **/
 	function getNiceTopicPathFromId($funcURL)
 	{
-		$xt = new XoopsTree($this->table, "topic_id", "topic_pid");
+		$xt = new icms_view_Tree($this->table, "topic_id", "topic_pid");
 		$ret = $xt->getNicePathFromId($this->topic_id, "topic_title", $funcURL);
 		return $ret;
 	}
@@ -387,7 +386,7 @@ class XoopsTopic
 	 **/
 	function getAllChildTopicsId()
 	{
-		$xt = new XoopsTree($this->table, "topic_id", "topic_pid");
+		$xt = new icms_view_Tree($this->table, "topic_id", "topic_pid");
 		$ret = $xt->getAllChildId($this->topic_id, "topic_title");
 		return $ret;
 	}
