@@ -448,11 +448,10 @@ class IcmsForm extends icms_form_Theme {
 				return new IcmsFormRichFileElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getFileObj($key));
 				break;
 
-			case 'source':
 			case 'sourceeditor':
-				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsourceeditor.php" ;
-				return new IcmsFormSourceEditor($this->targetObject, $key);
-				break;
+				// leave as last element so that default is executed for sourceeditor as well
+				icms_core_Debug::setDeprecated('icms_ipf_form_elements_Source', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+				$controlName = "source";
 
 			default:
 				$classname = "icms_ipf_form_elements_" . ucfirst($controlName);

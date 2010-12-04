@@ -19,13 +19,6 @@
 	$compressor= new Compressor($param);
 	
 	class Compressor{
-	
-		
-		function compressor($param)
-		{
-			$this->__construct($param);
-		}
-		
 		function __construct($param)
 		{
 			$this->start_time= $this->get_microtime();
