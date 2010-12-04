@@ -28,7 +28,7 @@ class XoopsObjectTree {
 	
 	public function __construct(& $objectArr, $myId, $parentId, $rootId = null) {
 		$tree =  new icms_ipf_Tree($objectArr, $myId, $parentId, $rootId);
-		$tree->_deprecated = icms_core_Debug::setDeprecated();
+		$tree->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_Tree', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $tree;
 	}
 }
