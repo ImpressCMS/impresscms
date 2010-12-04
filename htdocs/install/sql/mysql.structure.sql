@@ -685,3 +685,16 @@ CREATE TABLE system_autotasks (
   KEY sat_lastruntime (sat_lastruntime),
   KEY sat_type (sat_type)
 );
+
+#
+# Table structure for table `icms_urllink`
+#
+
+CREATE TABLE icms_data_urllink (
+  urllinkid int(10) unsigned NOT NULL AUTO_INCREMENT,
+  caption varchar(255) NOT NULL,
+  description varchar(255) NOT NULL,
+  url varchar(255) NOT NULL,
+  target varchar(6) NOT NULL,
+  PRIMARY KEY (urllinkid)
+);

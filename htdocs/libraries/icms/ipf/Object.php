@@ -1265,22 +1265,22 @@ class icms_ipf_Object extends icms_core_Object {
 	/**
 	 * @todo to be implemented in ImpressCMS core
 	 */
-	/*
-	 function getUrlLinkObj($key) {
-		$smartobject_linkurl_handler = icms_getModuleHandler('urllink', 'smartobject');
+
+	public function getUrlLinkObj($key) {
+		$urllink_handler = icms::handler("icms_data_urllink");
 		$urllinkid = $this->getVar($key) != null ? $this->getVar($key) : 0;
 		if ($urllinkid != 0) {
-		return  $smartobject_linkurl_handler->get($urllinkid);
+			return  $urllink_handler->get($urllinkid);
 		} else {
-		return $smartobject_linkurl_handler->create();
+			return $urllink_handler->create();
 		}
-		}
+	}
 
-		function &storeUrlLinkObj($urlLinkObj) {
-		$smartobject_linkurl_handler = icms_getModuleHandler('urllink', 'smartobject');
-		return $smartobject_linkurl_handler->insert($urlLinkObj);
-		}
-
+	public function &storeUrlLinkObj($urllinkObj) {
+		$urllink_handler = icms::handler("icms_data_urllink");
+		return $urllink_handler->insert($urllinkObj);
+	}
+	/*
 		function getFileObj($key) {
 		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
 		$fileid = $this->getVar($key) != null ? $this->getVar($key) : 0;

@@ -172,7 +172,7 @@ define('_CO_ICMS_UPLOAD', "Select a file to upload: ");
 define('_CO_ICMS_CHANGE_FILE', "<hr/><strong>Change File</strong><br/>");
 define('_CO_ICMS_CAPTION', "Caption: ");
 define('_CO_ICMS_URLLINK_URL', "URL: ");
-define('_CO_ICMS_DESC', "Description");
+define('_CO_ICMS_DESC', "Description: ");
 define('_CO_ICMS_URLLINK_TARGET', "Open link in:");
 define('_CO_ICMS_URLLINK_SELF', "Same window");
 define('_CO_ICMS_URLLINK_BLANK', "new window");

@@ -275,11 +275,13 @@ class IcmsForm extends icms_form_Theme {
 							unset($form_source_editor);
 							break;
 						case XOBJ_DTYPE_FORM_SECTION:
+							include ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsection.php";
 							$section_control = new IcmsFormSection($key, $var['value']);
 							$this->addElement($section_control, $key, $var);
 							unset($section_control);
 							break;
 						case XOBJ_DTYPE_FORM_SECTION_CLOSE:
+							include ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsectionclose.php";
 							$section_control = new IcmsFormSectionClose($key, $var['value']);
 							$this->addElement($section_control, $key, $var);
 							unset($section_control);
@@ -439,8 +441,7 @@ class IcmsForm extends icms_form_Theme {
 				break;
 
 			case 'urllink':
-				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformurllinkelement.php" ;
-				return new IcmsFormUrlLinkElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getUrlLinkObj($key));
+				return new icms_ipf_form_elements_Urllink($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getUrlLinkObj($key));
 				break;
 
 			case 'richfile':
