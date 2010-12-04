@@ -28,9 +28,6 @@ include_once ICMS_ROOT_PATH . "/include/version.php";
 if (!isset($xoopsOption)) {
 	$xoopsOption = array();
 }
-if (!defined("XOOPS_USE_MULTIBYTES")) {
-	define("XOOPS_USE_MULTIBYTES", 0);
-}
 
 // ############################ Initialize kernel and launch bootstrap #############################
 require_once ICMS_ROOT_PATH . "/libraries/icms.php";
@@ -72,6 +69,8 @@ icms_loadLanguageFile('system', 'common');
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
 	icms_loadLanguageFile('core', $xoopsOption['pagetype']);
 }
+
+defined("XOOPS_USE_MULTIBYTES") or define("XOOPS_USE_MULTIBYTES", 0);
 
 if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $icmsConfig['theme_set_allowed'])) {
 	$icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
