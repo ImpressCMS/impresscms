@@ -316,7 +316,7 @@ if (! is_object ( icms::$user ) || ! is_object ( $icmsModule ) || ! icms::$user-
 				case 'select_image' :
 					include_once ICMS_ROOT_PATH . '/class/xoopsform/formimage.php';
 					$myts = & icms_core_Textsanitizer::getInstance ();
-					$ele = new MastopFormSelectImage ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_select_Image ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 				break;
 				case 'select_paginati' :
 					if (file_exists ( ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php' )) {
