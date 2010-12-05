@@ -420,7 +420,7 @@ class icms_core_Filesystem {
 			if (fwrite($fp, $contents) == FALSE) {
 				echo 'failed write file';
 				return FALSE;
-			} else { echo 'created file'; }
+			}
 			fclose($fp);
 		}
 	}
