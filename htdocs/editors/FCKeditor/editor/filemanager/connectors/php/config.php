@@ -23,7 +23,7 @@
  */
 
 global $Config ;
-$file = '../../../../../../class/xoopseditor.inc.php';
+$file = '../../../../../../mainfile.php';
 include_once $file;
 
 // SECURITY: You must explicitly enable this "connector". (Set it to "true").
