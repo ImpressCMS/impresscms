@@ -559,9 +559,9 @@ class icms_db_legacy_updater_Table {
 			}
 
 			if (!$ret) {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $dropedField, $this->name()) . " (" . $this->_db->error(). ")";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $str, $this->name()) . " (" . $this->_db->error(). ")";
 			} else {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $dropedField, $this->name());
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $str, $this->name());
 			}
 		return $ret;
 	}
