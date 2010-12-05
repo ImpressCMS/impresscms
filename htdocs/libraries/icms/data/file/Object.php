@@ -9,7 +9,7 @@
  * @subpackage	richfile
  * @since		1.3
  * @author		Phoenyx
- * @version		$Id:$
+ * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

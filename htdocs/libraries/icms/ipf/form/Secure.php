@@ -8,7 +8,7 @@
  * @package		Form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Secure.php 20362 2010-11-14 10:02:02Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
