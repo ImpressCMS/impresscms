@@ -411,6 +411,20 @@ class icms_core_Filesystem {
 		asort($fileList);
 		return $fileList;
 	}
+	
+	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_TRUST_PATH) {
+		if ($extension == '') $extension = 'php';
+		if (DIRECTORY_SEPARATOR !== "/") $location = str_replace(DIRECTORY_SEPARATOR, "/", $location);
+		$file = $location . '/' . $filename . '.' . $extension;
+		if ($fp = fopen($file, "wt")) {
+			if (fwrite($fp, $contents) == FALSE) {
+				echo 'failed write file';
+				return FALSE;
+			} else { echo 'created file'; }
+			fclose($fp);
+		}
+	}
+	
 /* These will not be in the final release, but are only placeholders while the refactoring
  * is being completed
  */

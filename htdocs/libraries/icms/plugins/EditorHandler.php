@@ -89,9 +89,8 @@ class icms_plugins_EditorHandler {
 			}
 
 			array_multisort($order, $list);
-			if (function_exists("mod_createCacheFile")) {
-				mod_createCacheFile($list, "list", "xoopseditor");
-			}
+			$contents = "<?php\n return " . var_export($list, TRUE) . "\n?>";
+			icms_core_Filesystem::writeFile($contents, 'xoopseditor_list', 'php', ICMS_CACHE_PATH);
 		}
 
 		$editors = array_keys($list);
