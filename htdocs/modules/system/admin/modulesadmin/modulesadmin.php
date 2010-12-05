@@ -526,7 +526,7 @@ function xoops_module_install($dirname) {
 				if (!empty($is_IPF)) {
 					$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 					$icmsDatabaseUpdater->moduleUpgrade($module, true);
-					array_push($msg, $icmsDatabaseUpdater->_messages);
+					array_merge($msgs, $icmsDatabaseUpdater->_messages);
 				}
 
 				if (function_exists('xoops_module_install_' . $ModName)) {
@@ -553,8 +553,7 @@ function xoops_module_install($dirname) {
 					}
 				}
 			}
-
-			$ret = '<p><code>' . implode('<br />',$msgs);
+			$ret = '<p><code>' . implode("<br />", $msgs);
 			unset($msgs);
 			unset($errs);
 			$ret .= '</code><br />' . sprintf(_MD_AM_OKINS, "<strong>" . $module->getVar('name') . "</strong>") . '</p>';
