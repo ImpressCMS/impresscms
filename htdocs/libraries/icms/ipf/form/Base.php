@@ -13,14 +13,14 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 class icms_ipf_form_Base extends icms_form_Theme {
-	var $targetObject = null;
-	var $form_fields = null;
-	var $_cancel_js_action=false;
-	var $_custom_button=false;
-	var $_captcha=false;
-	var $_form_name=false;
-	var $_form_caption=false;
-	var $_submit_button_caption=false;
+	public $targetObject = NULL;
+	public $form_fields = NULL;
+	private $_cancel_js_action = FALSE;
+	private $_custom_button = FALSE;
+	private $_captcha = FALSE;
+	private $_form_name = FALSE;
+	private $_form_caption = FALSE;
+	private $_submit_button_caption = FALSE;
 
 	/**
 	 * Constructor
@@ -34,30 +34,25 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param	bool      $cancel_js_action         whether to invoke a javascript action when cancel button is clicked
 	 * @param	bool      $captcha                  whether to add captcha
 	 */
-	public function __construct(&$target, $form_name, $form_caption, $form_action, $form_fields=null, $submit_button_caption = false, $cancel_js_action=false, $captcha=false) {
+	public function __construct(&$target, $form_name, $form_caption, $form_action, $form_fields = NULL, $submit_button_caption = FALSE, $cancel_js_action = FALSE, $captcha = FALSE) {
 		$this->targetObject =& $target;
 		$this->form_fields = $form_fields;
 		$this->_cancel_js_action = $cancel_js_action;
-		$this->_captcha= $captcha;
-		$this->_form_name= $form_name;
-		$this->_form_caption= $form_caption;
-		$this->_submit_button_caption= $submit_button_caption;
+		$this->_captcha = $captcha;
+		$this->_form_name = $form_name;
+		$this->_form_caption = $form_caption;
+		$this->_submit_button_caption = $submit_button_caption;
 
 		if (!isset($form_action)) {
 			$form_action = xoops_getenv('PHP_SELF');
 		}
 
 		parent::__construct( $form_caption , $form_name, $form_action);
+
 		$this->setExtra('enctype="multipart/form-data"');
-
 		$this->createElements();
-
-		if ($captcha) {
-			$this->addCaptcha();
-		}
-
+		//if ($captcha) $this->addCaptcha();
 		$this->createPermissionControls();
-
 		$this->createButtons($form_name, $form_caption, $submit_button_caption);
 	}
 
@@ -67,7 +62,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	/*
 	 function addCaptcha() {
 		include_once SMARTOBJECT_ROOT_PATH . 'include/captcha/formcaptcha.php' ;
-		$this->addElement(new XoopsFormCaptcha(), true);
+		$this->addElement(new XoopsFormCaptcha(), TRUE);
 		}
 		*/
 
@@ -78,7 +73,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param   string  $caption    load the config's options now?
 	 * @return	bool    $onclick    wheter to add onclick event
 	 */
-	function addCustomButton($name, $caption, $onclick=false) {
+	public function addCustomButton($name, $caption, $onclick = FALSE) {
 		$custom_button_array = array(
 						'name' => $name,
 						'caption' => $caption,
@@ -95,7 +90,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param	string  $var            some form variables?
 	 * @param	bool    $required       is this a "required" element?
 	 */
-	function addElement(&$formElement, $key=false, $var=false, $required='notset'){
+	public function addElement(&$formElement, $key = FALSE, $var = FALSE, $required = 'notset'){
 		if ($key) {
 			if ($this->targetObject->vars[$key]['readonly']) {
 				$formElement->setExtra('disabled="disabled"');
@@ -106,7 +101,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			}
 			$formElement->setDescription($var['form_dsc']);
 			if (isset($this->targetObject->controls[$key]['onSelect'])) {
-				$hidden = new icms_form_elements_Hidden('changedField', false);
+				$hidden = new icms_form_elements_Hidden('changedField', FALSE);
 				$this->addElement($hidden);
 				$otherExtra = isset($var['form_extra']) ? $var['form_extra'] : '';
 				$onchangedString = "this.form.elements.changedField.value='$key'; this.form.elements.op.value='changedField'; submit()";
@@ -120,9 +115,9 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			if(isset($controls[$key]['js'])){
 				$formElement->customValidationCode[] = $controls[$key]['js'];
 			}
-			parent::AddElement($formElement, $required == 'notset' ? $var['required'] : $required);
+			parent::addElement($formElement, $required == 'notset' ? $var['required'] : $required);
 		} else {
-			parent::AddElement($formElement, $required == 'notset' ? false : true);
+			parent::addElement($formElement, $required == 'notset' ? FALSE : TRUE);
 		}
 		unset($formElement);
 	}
@@ -135,16 +130,15 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * loops through all variables and determines what data type the key has
 	 * adds an element for each key based on the datatype
 	 */
-	function createElements() {
+	private function createElements() {
 		$controls = $this->targetObject->controls;
 		$vars = $this->targetObject->vars;
 		foreach ($vars as $key=>$var) {
-
-			// If $displayOnForm is false OR this is the primary key, it doesn't
+			// If $displayOnForm is FALSE OR this is the primary key, it doesn't
 			// need to be displayed, then we only create an hidden field
 			if ($key == $this->targetObject->handler->keyName || !$var['displayOnForm']) {
 				$elementToAdd = new icms_form_elements_Hidden($key, $var['value']);
-				$this->addElement($elementToAdd, $key, $var, false);
+				$this->addElement($elementToAdd, $key, $var, FALSE);
 				unset($elementToAdd);
 				// If not, the we need to create the proper form control for this fields
 			} else {
@@ -173,7 +167,6 @@ class icms_ipf_form_Base extends icms_form_Theme {
 					// If this field don't have a specific control, we will use the standard one, depending on its data type
 				} else {
 					switch ($var['data_type']) {
-
 						case XOBJ_DTYPE_TXTBOX:
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
@@ -181,20 +174,14 @@ class icms_ipf_form_Base extends icms_form_Theme {
 							break;
 
 						case XOBJ_DTYPE_INT:
-							$this->targetObject->setControl($key, array(
-																'name' => 'text',
-																'size' => '5'
-																));
+							$this->targetObject->setControl($key, array('name' => 'text', 'size' => '5'));
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
 							unset($form_text);
 							break;
 
 						case XOBJ_DTYPE_FLOAT:
-							$this->targetObject->setControl($key, array(
-																'name' => 'text',
-																'size' => '5'
-																));
+							$this->targetObject->setControl($key, array('name' => 'text', 'size' => '5'));
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
 							unset($form_text);
@@ -219,10 +206,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 							break;
 
 						case XOBJ_DTYPE_CURRENCY:
-							$this->targetObject->setControl($key, array(
-																'name' => 'text',
-																'size' => '15'
-																));
+							$this->targetObject->setControl($key, array('name' => 'text', 'size' => '15'));
 							$form_currency = $this->getControl("text", $key);
 							$this->addElement($form_currency, $key, $var);
 							unset($form_currency);
@@ -249,16 +233,19 @@ class icms_ipf_form_Base extends icms_form_Theme {
 						case XOBJ_DTYPE_ARRAY:
 							// TODO : To come...
 							break;
+
 						case XOBJ_DTYPE_SOURCE:
 							$form_source_editor = $this->getControl('source', $key);
 							$this->addElement($form_source_editor, $key, $var);
 							unset($form_source_editor);
 							break;
+
 						case XOBJ_DTYPE_FORM_SECTION:
 							$section_control = $this->getControl('section', $key);
 							$this->addElement($section_control, $key, $var);
 							unset($section_control);
 							break;
+
 						case XOBJ_DTYPE_FORM_SECTION_CLOSE:
 							$this->targetObject->setControl($key, array("close" => TRUE));
 							$section_control = $this->getControl('section', $key);
@@ -276,7 +263,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	/**
 	 * Creates Permission Controls
 	 */
-	function createPermissionControls() {
+	private function createPermissionControls() {
 		$icmsModuleConfig = $this->targetObject->handler->getModuleConfig();
 
 		$permissions = $this->targetObject->handler->getPermissions();
@@ -286,7 +273,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			$group_list = $member_handler->getGroupList();
 			asort($group_list);
 			foreach($permissions as $permission) {
-				$groups_value = false;
+				$groups_value = FALSE;
 				if ($this->targetObject->isNew()) {
 					if (isset($icmsModuleConfig['def_perm_' . $permission['perm_name']])) {
 						$groups_value = $icmsModuleConfig['def_perm_' . $permission['perm_name']];
@@ -294,7 +281,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				} else {
 					$groups_value = $this->targetObject->getGroupPerm($permission['perm_name']);
 				}
-				$groups_select = new icms_form_elements_Select($permission['caption'], $permission['perm_name'], $groups_value, 4, true);
+				$groups_select = new icms_form_elements_Select($permission['caption'], $permission['perm_name'], $groups_value, 4, TRUE);
 				$groups_select->setDescription($permission['description']);
 				$groups_select->addOptionArray($group_list);
 				$this->addElement($groups_select);
@@ -310,18 +297,16 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param	string  $form_caption           caption of the form
 	 * @param	string  $submit_button_caption  caption of the button
 	 */
-	function createButtons($form_name, $form_caption, $submit_button_caption = false) {
-
+	private function createButtons($form_name, $form_caption, $submit_button_caption = FALSE) {
 		$button_tray = new icms_form_elements_Tray('', '');
 		$button_tray->addElement(new icms_form_elements_Hidden('op', $form_name));
-		if(!$submit_button_caption){
+		if (!$submit_button_caption) {
 			if ($this->targetObject->isNew()) {
 				$butt_create = new icms_form_elements_Button('', 'create_button', _CO_ICMS_CREATE, 'submit');
 			} else {
 				$butt_create = new icms_form_elements_Button('', 'modify_button', _CO_ICMS_MODIFY, 'submit');
 			}
-		}
-		else {
+		} else {
 			$butt_create = new icms_form_elements_Button('', 'modify_button', $submit_button_caption , 'submit');
 		}
 		$butt_create->setExtra('onclick="this.form.elements.op.value=\'' . $form_name . '\'"');
@@ -347,7 +332,6 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			$butt_cancel->setExtra('onclick="history.go(-1)"');
 		}
 		$button_tray->addElement($butt_cancel);
-
 		$this->addElement($button_tray);
 	}
 
@@ -357,7 +341,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param	string  $controlName   name of the control element
 	 * @param	string  $key           key of the form variables in the targetobject
 	 */
-	function getControl($controlName, $key) {
+	private function getControl($controlName, $key) {
 		switch ($controlName) {
 			case 'color':
 				$control = $this->targetObject->getControl($key);
@@ -390,9 +374,10 @@ class icms_ipf_form_Base extends icms_form_Theme {
 
 			case 'theme':
 				return $this->getThemeSelect($key, $this->targetObject->vars[$key]);
+				break;
 
 			case 'theme_multi':
-				return $this->getThemeSelect($key, $this->targetObject->vars[$key], true);
+				return $this->getThemeSelect($key, $this->targetObject->vars[$key], TRUE);
 				break;
 
 			case 'timezone':
@@ -400,15 +385,15 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				break;
 
 			case 'group':
-				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 1, false);
+				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, FALSE, $this->targetObject->getVar($key, 'e'), 1, FALSE);
 				break;
 
 			case 'group_multi':
-				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
+				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
 				break;
 
 			case 'user_multi':
-				return new icms_form_elements_select_User($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
+				return new icms_form_elements_select_User($this->targetObject->vars[$key]['form_caption'], $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
 				break;
 
 			case 'password':
@@ -441,12 +426,12 @@ class icms_ipf_form_Base extends icms_form_Theme {
 								$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/admin/{$name}/class/form/elements/";
 							}
 							$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
-							$classFileName = strtolower($classname).".php";
+							$classFileName = strtolower($classname) . ".php";
 
 							if (file_exists($moduleFormElementsPath . $classFileName)) {
 								include_once $moduleFormElementsPath . $classFileName ;
 							} else {
-								trigger_error($classname." not found", E_USER_WARNING);
+								trigger_error($classname . " not found", E_USER_WARNING);
 								return new icms_form_elements_Label();
 							}
 						}
@@ -464,16 +449,15 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param	string  $var        key of the variables in the targetobject
 	 * @param	bool    $multiple   will you need a form element which shows multiple items
 	 */
-	function getThemeSelect($key, $var, $multiple=false) {
-
+	private function getThemeSelect($key, $var, $multiple=FALSE) {
 		$size = $multiple ? 5 : 1;
 		$theme_select = new icms_form_elements_Select($var['form_caption'], $key, $this->targetObject->getVar($key), $size, $multiple);
 
-		$handle = opendir(ICMS_THEME_PATH.'/');
+		$handle = opendir(ICMS_THEME_PATH . "/");
 		$dirlist = array();
-		while (false !== ($file = readdir($handle))) {
-			if (is_dir(ICMS_THEME_PATH.'/'.$file) && !preg_match("/^[.]{1,2}$/",$file) && strtolower($file) != 'cvs') {
-				$dirlist[$file]=$file;
+		while (FALSE !== ($file = readdir($handle))) {
+			if (is_dir(ICMS_THEME_PATH . "/" . $file) && !preg_match("/^[.]{1,2}$/",$file) && strtolower($file) != 'cvs') {
+				$dirlist[$file] = $file;
 			}
 		}
 		closedir($handle);
@@ -489,16 +473,16 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * Gets reference to the object for each key in the variables of the targetobject
 	 *
 	 * @param	string  $keyname  name of the key
-	 * @param	mixed   $ret      Object if the returned object is set, false if no object called (if getname is not equal to the passed keyname)
+	 * @param	mixed   $ret      Object if the returned object is set, FALSE if no object called (if getname is not equal to the passed keyname)
 	 */
-	function &getElementById($keyname) {
+	public function &getElementById($keyname) {
 		foreach ($this->_elements as $eleObj) {
 			if ($eleObj->getName() == $keyname) {
 				$ret =& $eleObj;
 				break;
 			}
 		}
-		return isset($ret) ? $ret : false;
+		return isset($ret) ? $ret : FALSE;
 	}
 
 	/**
@@ -506,7 +490,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 *
 	 * @return	string  $ret
 	 */
-	function render() {
+	public function render() {
 		$required =& $this->getRequired();
 		$ret = "
 			<form name='".$this->getName()."_dorga' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$this->getName()."(this);'".$this->getExtra().">
@@ -514,11 +498,11 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			<tr><th colspan='2'>".$this->getTitle()."</th></tr>
 		";
 		$hidden = '';
-		$class ='even';
-		foreach ( $this->getElements() as $ele ) {
+		$class = 'even';
+		foreach ($this->getElements() as $ele) {
 			if (!is_object($ele)) {
 				$ret .= $ele;
-			} elseif ( !$ele->isHidden() ) {
+			} elseif (!$ele->isHidden()) {
 				if (get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection()) {
 					$ret .= '<tr><th colspan="2">' . $ele->render() . '</th></tr>';
 				} elseif (get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection()) {
@@ -535,7 +519,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			}
 		}
 		$ret .= "</table>\n$hidden\n</form>\n";
-		$ret .= $this->renderValidationJS( true );
+		$ret .= $this->renderValidationJS(TRUE);
 		return $ret;
 	}
 
@@ -546,19 +530,19 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @see           Smarty
 	 * @param	mixed   $smartyName   if smartyName is passed, assign it to the smarty call else assign the name of the form element
 	 */
-	function assign(&$tpl, $smartyName=false){
+	public function assign(&$tpl, $smartyName = FALSE){
 		$i = 0;
 		$elements = array();
-		foreach ( $this->getElements() as $ele ) {
+		foreach ($this->getElements() as $ele) {
 			$n = ($ele->getName() != "") ? $ele->getName() : $i;
-			$elements[$n]['name']	  = $ele->getName();
-			$elements[$n]['caption']  = $ele->getCaption();
-			$elements[$n]['body']	  = $ele->render();
-			$elements[$n]['hidden']	  = $ele->isHidden();
-			$elements[$n]['required']	  = $ele->isRequired();
-			$elements[$n]['section']  = get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection();
-			$elements[$n]['section_close']  = get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection();
-			$elements[$n]['hide'] = isset($this->targetObject->vars[$n]['hide']) ? $this->targetObject->vars[$n]['hide'] : false;
+			$elements[$n]['name'] = $ele->getName();
+			$elements[$n]['caption'] = $ele->getCaption();
+			$elements[$n]['body'] = $ele->render();
+			$elements[$n]['hidden'] = $ele->isHidden();
+			$elements[$n]['required'] = $ele->isRequired();
+			$elements[$n]['section'] = get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection();
+			$elements[$n]['section_close'] = get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection();
+			$elements[$n]['hide'] = isset($this->targetObject->vars[$n]['hide']) ? $this->targetObject->vars[$n]['hide'] : FALSE;
 
 			if ($ele->getDescription() != '') {
 				$elements[$n]['description']  = $ele->getDescription();
@@ -579,9 +563,9 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param	  bool  $withtags   whether to add script HTML tag to the $js string
 	 * @return	bool  $js         the constructed javascript validation string
 	 */
-	function renderValidationJS( $withtags = true ) {
+	public function renderValidationJS($withtags = TRUE) {
 		$js = "";
-		if ( $withtags ) {
+		if ($withtags) {
 			$js .= "\n<!-- Start Form Validation JavaScript //-->\n<script type='text/javascript'>\n<!--//\n";
 		}
 		$myts =& icms_core_Textsanitizer::getInstance();
@@ -589,11 +573,11 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		$js .= "function xoopsFormValidate_{$formname}(myform) {";
 		// First, output code to check required elements
 		$elements = $this->getRequired();
-		foreach ( $elements as $elt ) {
-			$eltname    = $elt->getName();
-			$eltcaption = trim( $elt->getCaption() );
-			$eltmsg = empty($eltcaption) ? sprintf( _FORM_ENTER, $eltname ) : sprintf( _FORM_ENTER, $eltcaption );
-			$eltmsg = str_replace('"', '\"', stripslashes( $eltmsg ) );
+		foreach ($elements as $elt) {
+			$eltname = $elt->getName();
+			$eltcaption = trim($elt->getCaption());
+			$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+			$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
 			if (strtolower(get_class($elt)) == 'xoopsformradio') {
 				$js .= "var myOption = -1;";
 				$js .= "for (i=myform.{$eltname}.length-1; i > -1; i--) {
@@ -602,75 +586,81 @@ class icms_ipf_form_Base extends icms_form_Theme {
 					}
 				}
 				if (myOption == -1) {
-					window.alert(\"{$eltmsg}\"); myform.{$eltname}[0].focus(); return false; }\n";
+					window.alert(\"{$eltmsg}\"); myform.{$eltname}[0].focus(); return FALSE; }\n";
 
 			/**
 			 * @todo remove icmsformselect_multielement in 1.4
 			 */
-			}elseif (strtolower(get_class($elt)) == 'icms_ipf_form_elements_selectmulti' ||
+			} elseif (strtolower(get_class($elt)) == 'icms_ipf_form_elements_selectmulti' ||
 					 strtolower(get_class($elt)) == 'icmsformselect_multielement') {
-				$js .= "var hasSelections = false;";
+				$js .= "var hasSelections = FALSE;";
 				$js .= "for(var i = 0; i < myform['{$eltname}[]'].length; i++){
 					if (myform['{$eltname}[]'].options[i].selected) {
-						hasSelections = true;
+						hasSelections = TRUE;
 					}
 
 				}
-				if (hasSelections == false) {
-					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return false; }\n";
+				if (hasSelections == FALSE) {
+					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return FALSE; }\n";
 
-			}elseif (strtolower(get_class($elt)) == 'xoopsformcheckbox') {
-				$js .= "var hasSelections = false;";
+			} elseif (strtolower(get_class($elt)) == 'xoopsformcheckbox') {
+				$js .= "var hasSelections = FALSE;";
 				//sometimes, there is an implicit '[]', sometimes not
-				if(strpos($eltname, '[') === false){
+				if (strpos($eltname, '[') === FALSE) {
 					$js .= "for(var i = 0; i < myform['{$eltname}[]'].length; i++){
 						if (myform['{$eltname}[]'][i].checked) {
-							hasSelections = true;
+							hasSelections = TRUE;
 						}
 
 					}
-					if (hasSelections == false) {
-						window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'][0].focus(); return false; }\n";
-				}else{
+					if (hasSelections == FALSE) {
+						window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'][0].focus(); return FALSE; }\n";
+				} else {
 					$js .= "for(var i = 0; i < myform['{$eltname}'].length; i++){
 						if (myform['{$eltname}'][i].checked) {
-							hasSelections = true;
+							hasSelections = TRUE;
 						}
 
 					}
-					if (hasSelections == false) {
-						window.alert(\"{$eltmsg}\"); myform['{$eltname}'][0].focus(); return false; }\n";
+					if (hasSelections == FALSE) {
+						window.alert(\"{$eltmsg}\"); myform['{$eltname}'][0].focus(); return FALSE; }\n";
 				}
 
-			}else{
+			} else {
 				$js .= "if ( myform.{$eltname}.value == \"\" ) "
-				. "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }\n";
+				. "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return FALSE; }\n";
 			}
 		}
 		// Now, handle custom validation code
-		$elements = $this->getElements( true );
-		foreach ( $elements as $elt ) {
-			if ( method_exists( $elt, 'renderValidationJS') && strtolower(get_class($elt)) != 'xoopsformcheckbox') {
-				if ( $eltjs = $elt->renderValidationJS() ) {
+		$elements = $this->getElements(TRUE);
+		foreach ($elements as $elt) {
+			if (method_exists($elt, 'renderValidationJS') && strtolower(get_class($elt)) != 'xoopsformcheckbox') {
+				if ($eltjs = $elt->renderValidationJS()) {
 					$js .= $eltjs . "\n";
 				}
 			}
 		}
-		$js .= "return true;\n}\n";
-		if ( $withtags ) {
+		$js .= "return TRUE;\n}\n";
+		if ($withtags) {
 			$js .= "//--></script>\n<!-- End Form Vaidation JavaScript //-->\n";
 		}
 		return $js;
 	}
 
-	function renderValidationJS2( $withtags = true ) {
+	/**
+	 * @todo what should we do with this function?
+	 *
+	 * @global <type> $xoTheme
+	 * @param <type> $withtags
+	 */
+	public function renderValidationJS2($withtags = TRUE) {
 		global $xoTheme;
 		$rules = $titles = '';
 		$elements = $this->getRequired();
-		foreach ( $elements as $elt ) {
+		foreach ($elements as $elt) {
 			if(!empty($rules))
 			$rules .= ",";
-			$rules .= '\''.$elt->getName().'\': { required: true }';
+			$rules .= '\''.$elt->getName().'\': { required: TRUE }';
 			if(!empty($titles))
 			$titles .= ",";
 			$titles .= $elt->getName().': "'._REQUIRED.'"';
