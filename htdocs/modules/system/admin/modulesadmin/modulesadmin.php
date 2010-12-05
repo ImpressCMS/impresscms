@@ -1453,7 +1453,7 @@ function icms_module_update($dirname) {
 			$is_IPF = $module->getInfo('object_items');
 			if (!empty($is_IPF)) {
 				$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-				array_push($msgs, $icmsDatabaseUpdater->_messages);
+				array_merge($msgs, $icmsDatabaseUpdater->_messages);
 			}
 
 			if (function_exists('xoops_module_update_' . $ModName)) {
