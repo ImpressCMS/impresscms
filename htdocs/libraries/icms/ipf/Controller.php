@@ -91,6 +91,7 @@ class icms_ipf_Controller {
 				case XOBJ_DTYPE_FILE:
 					if (!isset($_FILES['upload_' . $key]['name']) || $_FILES['upload_' . $key]['name'] == '') {
 						$fileObj = $icmsObj->getFileObj($key);
+						$fileObj->setVar('mid', $_POST['mid_' . $key]);
 						$fileObj->setVar('caption', $_POST['caption_' . $key]);
 						$fileObj->setVar('description', $_POST['desc_' . $key]);
 						$fileObj->setVar('url', $_POST['url_' . $key]);
@@ -160,17 +161,16 @@ class icms_ipf_Controller {
 							// Find the related field in the icms_ipf_Object
 							$related_field = str_replace('upload_', '', $name);
 							$uploadedArray[] = $related_field;
-							//si c'est un fichier Rich
+							// if it's a richfile
 							if ($icmsObj->vars[$related_field]['data_type'] == XOBJ_DTYPE_FILE) {
 								$object_fileurl = $icmsObj->getUploadDir();
 								$fileObj = $icmsObj->getFileObj($related_field);
 								$fileObj->setVar('url', $object_fileurl . $uploaderObj->getSavedFileName());
+								$fileObj->setVar('mid', $_POST['mid_' . $related_field]);
 								$fileObj->setVar('caption', $_POST['caption_' . $related_field]);
 								$fileObj->setVar('description', $_POST['desc_' . $related_field]);
 								$icmsObj->storeFileObj($fileObj);
-								//todo : catch errors
 								$icmsObj->setVar($related_field, $fileObj->getVar('fileid'));
-
 							} else {
 								$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 								if (!$eventResult) {

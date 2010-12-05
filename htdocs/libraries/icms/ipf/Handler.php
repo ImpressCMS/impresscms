@@ -633,10 +633,15 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		}
 
 		foreach ($obj->vars as $key => $var) {
-			if ($var['data_type'] == XOBJ_DTYPE_URLLINK) {
+			if ($var["data_type"] == XOBJ_DTYPE_URLLINK) {
 				$urllinkObj = $obj->getUrlLinkObj($key);
 				$urllinkObj->delete($force);
 				unset($urllinkObj);
+			}
+			if ($var["data_type"] == XOBJ_DTYPE_FILE) {
+				$fileObj = $obj->getFileObj($key);
+				$fileObj->delete($force);
+				unset($fileObj);
 			}
 		}
 

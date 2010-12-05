@@ -190,7 +190,6 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param	str		$default
 	 */
 	public function initCommonVar($varname, $displayOnForm = true, $default = 'notdefined') {
-
 		switch ($varname) {
 			case "dohtml":
 				$value = $default != 'notdefined' ? $default : true;
@@ -1248,8 +1247,7 @@ class icms_ipf_Object extends icms_core_Object {
 
 	/**
 	 *
-	 *
-	 * @param $key
+	 * @param <type> $key
 	 */
 	public function setAdvancedFormFields($key) {
 		if (is_array($key)) {
@@ -1261,6 +1259,12 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
+	/**
+	 * get urllink object
+	 *
+	 * @param string $key field name
+	 * @return icms_data_urllink_Object
+	 */
 	public function getUrlLinkObj($key) {
 		$urllink_handler = icms::handler("icms_data_urllink");
 		$urllinkid = $this->getVar($key) != null ? $this->getVar($key) : 0;
@@ -1271,29 +1275,41 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
+	/**
+	 * store urllink object
+	 *
+	 * @param icms_data_urllink_Object $urllinkObj
+	 * @return bool
+	 */
 	public function storeUrlLinkObj($urllinkObj) {
 		$urllink_handler = icms::handler("icms_data_urllink");
 		return $urllink_handler->insert($urllinkObj);
 	}
 
 	/**
-	 * @todo to be implemented in ImpressCMS core
+	 * store file object
+	 *
+	 * @param string $key field name
+	 * @return icms_data_file_Object
 	 */
-	/*
 	function getFileObj($key) {
-		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
+		$file_handler = icms::handler("icms_data_file");
 		$fileid = $this->getVar($key) != null ? $this->getVar($key) : 0;
 		if ($fileid != 0) {
-		return  $smartobject_file_handler->get($fileid);
+			return  $file_handler->get($fileid);
 		} else {
-		return $smartobject_file_handler->create();
+			return $file_handler->create();
 		}
 	}
 
-	function &storeFileObj($fileObj) {
-		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
-		return $smartobject_file_handler->insert($fileObj);
+	/**
+	 * store file object
+	 *
+	 * @param icms_data_file_Object $fileObj
+	 * @return bool
+	 */
+	function storeFileObj($fileObj) {
+		$file_handler = icms::handler("icms_data_file");
+		return $file_handler->insert($fileObj);
 	}
-	*/
 }
-

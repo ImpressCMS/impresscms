@@ -17,8 +17,8 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 class icms_ipf_form_elements_Urllink extends icms_form_elements_Tray {
 	/**
 	 * Constructor
-	 * @param	icms_ipf_Object				$object			target object
-	 * @param	string						$key			the key
+	 * @param	icms_ipf_Object	$object	target object
+	 * @param	string			$key	the key
 	 */
 	public function __construct($object, $key) {
 		parent::__construct($object->vars[$key]['form_caption'], "&nbsp;");

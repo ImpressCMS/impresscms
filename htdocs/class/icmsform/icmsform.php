@@ -438,11 +438,6 @@ class IcmsForm extends icms_form_Theme {
 				return new icms_form_elements_select_Country($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
 				break;
 
-			case 'richfile':
-				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformrichfileelement.php" ;
-				return new IcmsFormRichFileElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getFileObj($key));
-				break;
-
 			case 'sourceeditor':
 				// leave as last element so that default is executed for sourceeditor as well
 				icms_core_Debug::setDeprecated('icms_ipf_form_elements_Source', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));

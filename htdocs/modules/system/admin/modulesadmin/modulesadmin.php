@@ -820,6 +820,10 @@ function xoops_module_uninstall($dirname) {
 			$urllink_handler = icms::handler('icms_data_urllink');
 			$urllink_handler->deleteAll(icms_buildCriteria(array("mid" => $module->getVar("mid"))));
 
+			// delete files
+			$file_handler = icms::handler('icms_data_file');
+			$file_handler->deleteAll(icms_buildCriteria(array("mid" => $module->getVar("mid"))));
+
 			// execute module specific install script if any
 			$uninstall_script = $module->getInfo('onUninstall');
 			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;

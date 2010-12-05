@@ -15,6 +15,11 @@
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 class icms_data_urllink_Handler extends icms_ipf_Handler {
+	/**
+	 * constrcutor
+	 *
+	 * @param object $db database connection
+	 */
 	public function __construct(&$db) {
 		parent::__construct($db, "data_urllink", "urllinkid", "caption", "desc", "icms");
 	}

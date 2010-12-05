@@ -22,7 +22,6 @@ defined('ICMS_ROOT_PATH')or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
 class icms_form_elements_File extends icms_form_Element {
-
 	/**
 	 * Maximum size for an uploaded file
 	 * @var	int
@@ -58,7 +57,9 @@ class icms_form_elements_File extends icms_form_Element {
 	 */
 	public function render() {
 		$ele_name = $this->getName();
-		return "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' /><input type='file' name='" . $ele_name . "' id='" . $ele_name . "'" . $this->getExtra() . " /><input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='" . $ele_name . "' />";
+		$ret  = "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />";
+		$ret .= "<input type='file' name='" . $ele_name . "' id='" . $ele_name . "'" . $this->getExtra() . " />";
+		$ret .= "<input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='" . $ele_name . "' />";
 	}
 }
 
