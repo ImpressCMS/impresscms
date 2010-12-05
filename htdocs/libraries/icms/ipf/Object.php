@@ -109,8 +109,8 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param int $maxlength maximum length of this variable, for XOBJ_DTYPE_TXTBOX type only
 	 * @param string $options does this data have any select options?
 	 * @param bool $multilingual is this field needs to support multilingual features (NOT YET IMPLEMENTED...)
-	 * @param string $form_caption caption of this variable in a {@link IcmsForm} and title of a column in a  {@link icms_ipf_ObjectTable}
-	 * @param string $form_dsc description of this variable in a {@link IcmsForm}
+	 * @param string $form_caption caption of this variable in a {@link icms_ipf_form_Base} and title of a column in a  {@link icms_ipf_ObjectTable}
+	 * @param string $form_dsc description of this variable in a {@link icms_ipf_form_Base}
 	 * @param bool $sortby set to TRUE to make this field used to sort objects in icms_ipf_ObjectTable
 	 * @param bool $persistent set to FALSE if this field is not to be saved in the database
 	 * @param bool $displayOnForm to be displayed on the form or not
@@ -173,8 +173,8 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param string $key key of this field. This needs to be the name of the field in the related database table
 	 * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
 	 * @param bool $required set to TRUE if this variable needs to have a value set before storing the object in the table
-	 * @param string $form_caption caption of this variable in a {@link IcmsForm} and title of a column in a  {@link icms_ipf_ObjectTable}
-	 * @param string $form_dsc description of this variable in a {@link IcmsForm}
+	 * @param string $form_caption caption of this variable in a {@link icms_ipf_form_Base} and title of a column in a  {@link icms_ipf_ObjectTable}
+	 * @param string $form_dsc description of this variable in a {@link icms_ipf_form_Base}
 	 * @param mixed $value default value of this variable
 	 */
 	public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
@@ -386,21 +386,18 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		include_once ICMS_ROOT_PATH . "/class/icmsform/icmsform.php";
-		$form = new IcmsForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
-
-		return $form;
+		return new icms_ipf_form_Base($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 	}
 
 	/**
 	 * Create the secure form for this object
 	 *
-	 * @return a {@link icms_form_Secure} object for this object
+	 * @return a {@link icms_ipf_form_Secure} object for this object
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getSecureForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		$form = new icms_form_Secure($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+		$form = new icms_ipf_form_Secure($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 
 		return $form;
 	}

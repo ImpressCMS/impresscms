@@ -176,8 +176,8 @@ class SystemBlocksadmin extends icms_view_block_Object {
 			$this->hideFieldFromForm('content');
 			$this->hideFieldFromForm('c_type');
 		}
-		include_once ICMS_ROOT_PATH . "/class/icmsform/icmsform.php";
-		$form = new IcmsForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+
+		$form = new icms_ipf_form_Base($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 		return $form;
 	}
 
