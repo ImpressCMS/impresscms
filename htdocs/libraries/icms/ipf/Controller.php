@@ -76,6 +76,7 @@ class icms_ipf_Controller {
 
 				case XOBJ_DTYPE_URLLINK:
 					$linkObj = $icmsObj->getUrlLinkObj($key);
+					$linkObj->setVar('mid', $_POST['mid_' . $key]);
 					$linkObj->setVar('caption', $_POST['caption_' . $key]);
 					$linkObj->setVar('description', $_POST['desc_' . $key]);
 					$linkObj->setVar('target', $_POST['target_' . $key]);

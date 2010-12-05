@@ -440,10 +440,6 @@ class IcmsForm extends icms_form_Theme {
 				return new icms_form_elements_select_Country($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
 				break;
 
-			case 'urllink':
-				return new icms_ipf_form_elements_Urllink($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getUrlLinkObj($key));
-				break;
-
 			case 'richfile':
 				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformrichfileelement.php" ;
 				return new IcmsFormRichFileElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getFileObj($key));

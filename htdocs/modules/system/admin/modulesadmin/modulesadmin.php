@@ -598,253 +598,257 @@ function &xoops_module_gettemplate($dirname, $template, $block = false) {
 
 function xoops_module_uninstall($dirname) {
 	global $xoopsConfig, $icmsAdminTpl;
+
 	$reservedTables = array(
 		'avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 
 		'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 
 		'imgset_tplset_link', 'imgsetimg', 'groups', 'groups_users_link', 'group_permission',
 		'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 
 		'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 
-		'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish'
-		);
-		$db =& icms_db_Factory::instance();
-		$module_handler = icms::handler('icms_module');
-		$module =& $module_handler->getByDirname($dirname);
+		'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
 
-		if ($module->getVar("dirname") != "system") {
-			$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
-			if ($module->getVar("ipf")) {
-				$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :
-				$module->getVar("dirname");
-				icms_Autoloader::register($class_path, "mod_" . $modname);
-			} else {
-				icms_Autoloader::register($class_path);
+	$db =& icms_db_Factory::instance();
+	$module_handler = icms::handler('icms_module');
+	$module =& $module_handler->getByDirname($dirname);
+
+	if ($module->getVar("dirname") != "system") {
+		$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
+		if ($module->getVar("ipf")) {
+			$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :
+			$module->getVar("dirname");
+			icms_Autoloader::register($class_path, "mod_" . $modname);
+		} else {
+			icms_Autoloader::register($class_path);
+		}
+	}
+
+	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+	if ($module->getVar('dirname') == 'system') {
+		return "<p>" . sprintf(_MD_AM_FAILUNINS, "<strong>" . $module->getVar('name') . "</strong>")
+			. "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_SYSNO . "</p>";
+	} elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
+		return "<p>" . sprintf(_MD_AM_FAILUNINS, "<strong>" . $module->getVar('name') . "</strong>")
+			. "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_STRTNO . "</p>";
+	} else {
+		$msgs = array();
+
+		$member_handler = icms::handler('icms_member');
+		$grps = $member_handler->getGroupList ();
+		foreach ($grps as $k => $v) {
+			$stararr = explode('-', $xoopsConfig['startpage'][$k]);
+			if (count($stararr) > 0) {
+				if ($module->getVar('mid') == $stararr[0]) {
+					return "<p>" . sprintf(_MD_AM_FAILDEACT, "<strong>" . $module->getVar('name')
+						. "</strong>") . "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_STRTNO
+						. "</p>";
+				}
+			}
+		}
+		if (in_array($module->getVar('dirname'), $xoopsConfig ['startpage'])) {
+			return "<p>" . sprintf(_MD_AM_FAILDEACT, "<strong>" . $module->getVar('name') . "</strong>")
+				. "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_STRTNO . "</p>";
+		}
+
+		$page_handler = icms::handler('icms_data_page');
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_moduleid', $module->getVar('mid')));
+		$pages = $page_handler->getCount($criteria);
+
+		if ($pages > 0) {
+			$pages = $page_handler->getObjects($criteria);
+			$msgs[] = _MD_AM_SYMLINKS_DELETE;
+			foreach ($pages as $page) {
+				if (!$page_handler->delete($page)) {
+					$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_SYMLINK_DELETE_FAIL . '</span>',
+						$page->getVar('page_title'),  '<strong>'. $page->getVar('page_id') . '</strong>');
+				} else {
+					$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_SYMLINK_DELETED,
+						'<strong>' . $page->getVar('page_title') . '</strong>', '<strong>' . $page->getVar('page_id') . '</strong>');
+				}
 			}
 		}
 
-		$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
-		if ($module->getVar('dirname') == 'system') {
-			return "<p>" . sprintf(_MD_AM_FAILUNINS, "<strong>" . $module->getVar('name') . "</strong>")
-				. "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_SYSNO . "</p>";
-		} elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
-			return "<p>" . sprintf(_MD_AM_FAILUNINS, "<strong>" . $module->getVar('name') . "</strong>")
-				. "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_STRTNO . "</p>";
+		if (!$module_handler->delete($module)) {
+			$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_DELETE_FAIL . '</span>', $module->getVar('name'));
 		} else {
-			$msgs = array();
-
-			$member_handler = icms::handler('icms_member');
-			$grps = $member_handler->getGroupList ();
-			foreach ($grps as $k => $v) {
-				$stararr = explode('-', $xoopsConfig['startpage'][$k]);
-				if (count($stararr) > 0) {
-					if ($module->getVar('mid') == $stararr[0]) {
-						return "<p>" . sprintf(_MD_AM_FAILDEACT, "<strong>" . $module->getVar('name')
-							. "</strong>") . "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_STRTNO
-							. "</p>";
-					}
-				}
-			}
-			if (in_array($module->getVar('dirname'), $xoopsConfig ['startpage'])) {
-				return "<p>" . sprintf(_MD_AM_FAILDEACT, "<strong>" . $module->getVar('name') . "</strong>")
-					. "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_STRTNO . "</p>";
-			}
-
-			$page_handler = icms::handler('icms_data_page');
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_moduleid', $module->getVar('mid')));
-			$pages = $page_handler->getCount($criteria);
-
-			if ($pages > 0) {
-				$pages = $page_handler->getObjects($criteria);
-				$msgs[] = _MD_AM_SYMLINKS_DELETE;
-				foreach ($pages as $page) {
-					if (!$page_handler->delete($page)) {
-						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_SYMLINK_DELETE_FAIL . '</span>', 
-							$page->getVar('page_title'),  '<strong>'. $page->getVar('page_id') . '</strong>');
+			// delete template files
+			$tplfile_handler = icms::handler('icms_view_template_file');
+			$templates =& $tplfile_handler->find(null, 'module', $module->getVar('mid'));
+			$tcount = count($templates);
+			if ($tcount > 0) {
+				$msgs[] = _MD_AM_TEMPLATES_DELETE;
+				for ($i = 0; $i < $tcount; $i++) {
+					if (!$tplfile_handler->delete($templates[$i])) {
+						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_DELETE_FAIL . '</span>',
+							$templates[$i]->getVar('tpl_file') , '<strong>' . icms_conv_nr2local($templates[$i]->getVar('tpl_id')) . '</strong>');
 					} else {
-						$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_SYMLINK_DELETED, 
-							'<strong>' . $page->getVar('page_title') . '</strong>', '<strong>' . $page->getVar('page_id') . '</strong>');
+						$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_DELETED,
+							'<strong>' . icms_conv_nr2local($templates[$i]->getVar('tpl_file')) . '</strong>',
+							'<strong>' . icms_conv_nr2local($templates[$i]->getVar('tpl_id')) . '</strong>'
+						);
 					}
 				}
 			}
+			unset($templates);
 
-			if (!$module_handler->delete($module)) {
-				$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_DELETE_FAIL . '</span>', $module->getVar('name'));
-			} else {
-
-				// delete template files
-				$tplfile_handler = icms::handler('icms_view_template_file');
-				$templates =& $tplfile_handler->find(null, 'module', $module->getVar('mid'));
-				$tcount = count($templates);
-				if ($tcount > 0) {
-					$msgs[] = _MD_AM_TEMPLATES_DELETE;
-					for ($i = 0; $i < $tcount; $i++) {
-						if (!$tplfile_handler->delete($templates[$i])) {
-							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_DELETE_FAIL . '</span>',
-								$templates[$i]->getVar('tpl_file') , '<strong>' . icms_conv_nr2local($templates[$i]->getVar('tpl_id')) . '</strong>');
-						} else {
-							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_DELETED,  
-								'<strong>' . icms_conv_nr2local($templates[$i]->getVar('tpl_file')) . '</strong>', 
-								'<strong>' . icms_conv_nr2local($templates[$i]->getVar('tpl_id')) . '</strong>'
-							);
-						}
+			// delete blocks and block template files
+			$icms_block_handler = icms::handler('icms_view_block');
+			$block_arr =& $icms_block_handler->getByModule($module->getVar('mid'));
+			if (is_array($block_arr)) {
+				$bcount = count($block_arr);
+				$msgs[] = _MD_AM_BLOCKS_DELETE;
+				for ($i = 0; $i < $bcount; $i++) {
+					if (!$icms_block_handler->delete($block_arr[$i])) {
+						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_BLOCK_DELETE_FAIL . '</span>',
+							'<strong>' . $block_arr[$i]->getVar('name') . '</strong>',
+							'<strong>' . icms_conv_nr2local($block_arr[$i]->getVar('bid')) . '</strong>'
+						);
+					} else {
+						$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_BLOCK_DELETED,
+							'<strong>' . $block_arr[$i]->getVar('name')	. '</strong>',
+							'<strong>' . icms_conv_nr2local($block_arr[$i]->getVar('bid')) . '</strong>'
+						);
 					}
-				}
-				unset($templates);
-
-				// delete blocks and block template files
-				$icms_block_handler = icms::handler('icms_view_block');
-				$block_arr =& $icms_block_handler->getByModule($module->getVar('mid'));
-				if (is_array($block_arr)) {
-					$bcount = count($block_arr);
-					$msgs[] = _MD_AM_BLOCKS_DELETE;
-					for ($i = 0; $i < $bcount; $i++) {
-						if (!$icms_block_handler->delete($block_arr[$i])) {
-							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_BLOCK_DELETE_FAIL . '</span>', 
-								'<strong>' . $block_arr[$i]->getVar('name') . '</strong>',
-								'<strong>' . icms_conv_nr2local($block_arr[$i]->getVar('bid')) . '</strong>'
-							);
-						} else {
-							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_BLOCK_DELETED,
-								'<strong>' . $block_arr[$i]->getVar('name')	. '</strong>', 
-								'<strong>' . icms_conv_nr2local($block_arr[$i]->getVar('bid')) . '</strong>'
-							);
-						}
-						if ($block_arr[$i]->getVar('template') != '') {
-							$templates =& $tplfile_handler->find(null, 'block', $block_arr[$i]->getVar('bid'));
-							$btcount = count($templates);
-							if ($btcount > 0) {
-								for ($j = 0; $j < $btcount; $j++) {
-									if (!$tplfile_handler->delete($templates[$j])) {
-										$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_BLOCK_TMPLT_DELETE_FAILED . '</span>',
-											$templates[$j]->getVar('tpl_file'),
-											'<strong>' . icms_conv_nr2local($templates[$j]->getVar('tpl_id')) . '</strong>'
-										);
-									} else {
-										$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_BLOCK_TMPLT_DELETED,
-											'<strong>' . $templates[$j]->getVar('tpl_file') . '</strong>', 
-											'<strong>' . icms_conv_nr2local($templates[$j]->getVar('tpl_id')) . '</strong>'
-										);
-									}
+					if ($block_arr[$i]->getVar('template') != '') {
+						$templates =& $tplfile_handler->find(null, 'block', $block_arr[$i]->getVar('bid'));
+						$btcount = count($templates);
+						if ($btcount > 0) {
+							for ($j = 0; $j < $btcount; $j++) {
+								if (!$tplfile_handler->delete($templates[$j])) {
+									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_BLOCK_TMPLT_DELETE_FAILED . '</span>',
+										$templates[$j]->getVar('tpl_file'),
+										'<strong>' . icms_conv_nr2local($templates[$j]->getVar('tpl_id')) . '</strong>'
+									);
+								} else {
+									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_BLOCK_TMPLT_DELETED,
+										'<strong>' . $templates[$j]->getVar('tpl_file') . '</strong>',
+										'<strong>' . icms_conv_nr2local($templates[$j]->getVar('tpl_id')) . '</strong>'
+									);
 								}
 							}
-							unset($templates);
 						}
+						unset($templates);
 					}
 				}
+			}
 
-				// delete tables used by this module
-				$modtables = $module->getInfo('tables');
-				if ($modtables != false && is_array($modtables)) {
-					$msgs[] = _MD_AM_MOD_TABLES_DELETE;
-					foreach ($modtables as $table) {
-						// prevent deletion of reserved core tables!
-						if (!in_array($table, $reservedTables)) {
-							$sql = 'DROP TABLE ' . $db->prefix($table);
-							if (!$db->query($sql)) {
-								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_MOD_TABLE_DELETE_FAIL . '</span>',
-									'<strong>'. $db->prefix($table) . '<strong>.'
-								);
-							} else {
-								$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_MOD_TABLE_DELETED,
-									'<strong>' . $db->prefix($table) . '</strong>'
-								);
-							}
+			// delete tables used by this module
+			$modtables = $module->getInfo('tables');
+			if ($modtables != false && is_array($modtables)) {
+				$msgs[] = _MD_AM_MOD_TABLES_DELETE;
+				foreach ($modtables as $table) {
+					// prevent deletion of reserved core tables!
+					if (!in_array($table, $reservedTables)) {
+						$sql = 'DROP TABLE ' . $db->prefix($table);
+						if (!$db->query($sql)) {
+							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_MOD_TABLE_DELETE_FAIL . '</span>',
+								'<strong>'. $db->prefix($table) . '<strong>.'
+							);
 						} else {
-							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_MOD_TABLE_DELETE_NOTALLOWED . '</span>',
+							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_MOD_TABLE_DELETED,
 								'<strong>' . $db->prefix($table) . '</strong>'
 							);
 						}
-					}
-				}
-
-				// delete comments if any
-				if ($module->getVar('hascomments') != 0) {
-					$msgs[] = _MD_AM_COMMENTS_DELETE;
-					$comment_handler = icms::handler('icms_data_comment');
-					if (!$comment_handler->deleteByModule($module->getVar('mid'))) {
-						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_COMMENT_DELETE_FAIL . '</span>';
 					} else {
-						$msgs[] = '&nbsp;&nbsp;' . _MD_AM_COMMENT_DELETED;
+						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_MOD_TABLE_DELETE_NOTALLOWED . '</span>',
+							'<strong>' . $db->prefix($table) . '</strong>'
+						);
 					}
 				}
-
-				// RMV-NOTIFY
-				// delete notifications if any
-				if ($module->getVar('hasnotification') != 0) {
-					$msgs[] = _MD_AM_NOTIFICATIONS_DELETE;
-					if (!xoops_notification_deletebymodule($module->getVar('mid'))) {
-						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_NOTIFICATION_DELETE_FAIL .'</span>';
-					} else {
-						$msgs[] = '&nbsp;&nbsp;' . _MD_AM_NOTIFICATION_DELETED;
-					}
-				}
-
-				// delete permissions if any
-				$gperm_handler = icms::handler('icms_member_groupperm');
-				if (!$gperm_handler->deleteByModule($module->getVar('mid'))) {
-					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_GROUPPERM_DELETE_FAIL . '</span>';
-				} else {
-					$msgs[] = '&nbsp;&nbsp;' . _MD_AM_GROUPPERM_DELETED;
-				}
-
-				// delete module config options if any
-				if ($module->getVar('hasconfig') != 0 || $module->getVar('hascomments') != 0) {
-					$config_handler = icms::handler('icms_config');
-					$configs =& $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
-					$confcount = count($configs);
-					if ($confcount > 0) {
-						$msgs[] = _MD_AM_CONFIGOPTIONS_DELETE;
-						for ($i = 0; $i < $confcount; $i++) {
-							if (!$config_handler->deleteConfig($configs[$i])) {
-								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIGOPTION_DELETE_FAIL .'</span>',
-									'<strong>' . icms_conv_nr2local($configs[$i]->getvar('conf_id')) . '</strong>');
-							} else {
-								$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_DELETED,
-									'<strong>' . icms_conv_nr2local($configs[$i]->getVar('conf_id')) . '</strong>');
-							}
-						}
-					}
-				}
-
-				$atasks = $module->getInfo('autotasks');
-				if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
-					$msgs[] = _MD_AM_AUTOTASKS_DELETE;
-					$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
-					$criteria = new icms_db_criteria_Compo();
-					$criteria->add(new icms_db_criteria_Item('sat_type', 'addon/' . $module->getInfo('dirname')));
-					$atasks_handler->deleteAll($criteria);
-					unset($atasks_handler, $criteria, $taskData);
-				}
-				unset($atasks);
-
-				// execute module specific install script if any
-				$uninstall_script = $module->getInfo('onUninstall');
-				$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
-				if (false != $uninstall_script && trim($uninstall_script) != '') {
-					include_once ICMS_ROOT_PATH . '/modules/' . $dirname . '/' . trim($uninstall_script);
-					if (function_exists('xoops_module_uninstall_' . $ModName)) {
-						$func = 'xoops_module_uninstall_' . $ModName;
-						if (!$func($module)) {
-							$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
-						} else {
-							$msgs[] = $module->messages;
-							$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
-						}
-					} elseif (function_exists('icms_module_uninstall_' . $ModName)) {
-						$func = 'icms_module_uninstall_' . $ModName;
-						if (!$func($module)) {
-							$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
-						} else {
-							$msgs[] = $module->messages;
-							$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
-						}
-					}
-				}
-
-				$msgs[] = '</code><p>' . sprintf(_MD_AM_OKUNINS, "<strong>" . $module->getVar('name') . "</strong>") . '</p>';
 			}
-			$ret = '<code>' . implode('<br />', $msgs);
-			return $ret;
+
+			// delete comments if any
+			if ($module->getVar('hascomments') != 0) {
+				$msgs[] = _MD_AM_COMMENTS_DELETE;
+				$comment_handler = icms::handler('icms_data_comment');
+				if (!$comment_handler->deleteByModule($module->getVar('mid'))) {
+					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_COMMENT_DELETE_FAIL . '</span>';
+				} else {
+					$msgs[] = '&nbsp;&nbsp;' . _MD_AM_COMMENT_DELETED;
+				}
+			}
+
+			// delete notifications if any
+			if ($module->getVar('hasnotification') != 0) {
+				$msgs[] = _MD_AM_NOTIFICATIONS_DELETE;
+				if (!xoops_notification_deletebymodule($module->getVar('mid'))) {
+					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_NOTIFICATION_DELETE_FAIL .'</span>';
+				} else {
+					$msgs[] = '&nbsp;&nbsp;' . _MD_AM_NOTIFICATION_DELETED;
+				}
+			}
+
+			// delete permissions if any
+			$gperm_handler = icms::handler('icms_member_groupperm');
+			if (!$gperm_handler->deleteByModule($module->getVar('mid'))) {
+				$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_GROUPPERM_DELETE_FAIL . '</span>';
+			} else {
+				$msgs[] = '&nbsp;&nbsp;' . _MD_AM_GROUPPERM_DELETED;
+			}
+
+			// delete module config options if any
+			if ($module->getVar('hasconfig') != 0 || $module->getVar('hascomments') != 0) {
+				$config_handler = icms::handler('icms_config');
+				$configs =& $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
+				$confcount = count($configs);
+				if ($confcount > 0) {
+					$msgs[] = _MD_AM_CONFIGOPTIONS_DELETE;
+					for ($i = 0; $i < $confcount; $i++) {
+						if (!$config_handler->deleteConfig($configs[$i])) {
+							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIGOPTION_DELETE_FAIL .'</span>',
+								'<strong>' . icms_conv_nr2local($configs[$i]->getvar('conf_id')) . '</strong>');
+						} else {
+							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_DELETED,
+								'<strong>' . icms_conv_nr2local($configs[$i]->getVar('conf_id')) . '</strong>');
+						}
+					}
+				}
+			}
+
+			// delete autotasks
+			$atasks = $module->getInfo('autotasks');
+			if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
+				$msgs[] = _MD_AM_AUTOTASKS_DELETE;
+				$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
+				$criteria = new icms_db_criteria_Compo();
+				$criteria->add(new icms_db_criteria_Item('sat_type', 'addon/' . $module->getInfo('dirname')));
+				$atasks_handler->deleteAll($criteria);
+				unset($atasks_handler, $criteria, $taskData);
+			}
+			unset($atasks);
+
+			// delete urllinks
+			$urllink_handler = icms::handler('icms_data_urllink');
+			$urllink_handler->deleteAll(icms_buildCriteria(array("mid" => $module->getVar("mid"))));
+
+			// execute module specific install script if any
+			$uninstall_script = $module->getInfo('onUninstall');
+			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
+			if (false != $uninstall_script && trim($uninstall_script) != '') {
+				include_once ICMS_ROOT_PATH . '/modules/' . $dirname . '/' . trim($uninstall_script);
+				if (function_exists('xoops_module_uninstall_' . $ModName)) {
+					$func = 'xoops_module_uninstall_' . $ModName;
+					if (!$func($module)) {
+						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
+					} else {
+						$msgs[] = $module->messages;
+						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
+					}
+				} elseif (function_exists('icms_module_uninstall_' . $ModName)) {
+					$func = 'icms_module_uninstall_' . $ModName;
+					if (!$func($module)) {
+						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
+					} else {
+						$msgs[] = $module->messages;
+						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
+					}
+				}
+			}
+
+			$msgs[] = '</code><p>' . sprintf(_MD_AM_OKUNINS, "<strong>" . $module->getVar('name') . "</strong>") . '</p>';
 		}
+		$ret = '<code>' . implode('<br />', $msgs);
+		return $ret;
+	}
 }
 
 function xoops_module_activate($mid) {

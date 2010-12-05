@@ -692,9 +692,11 @@ CREATE TABLE system_autotasks (
 
 CREATE TABLE icms_data_urllink (
   urllinkid int(10) unsigned NOT NULL AUTO_INCREMENT,
+  mid smallint(5) unsigned NOT NULL,
   caption varchar(255) NOT NULL,
   description varchar(255) NOT NULL,
   url varchar(255) NOT NULL,
   target varchar(6) NOT NULL,
-  PRIMARY KEY (urllinkid)
+  PRIMARY KEY (urllinkid),
+  KEY mid (mid)
 );

@@ -20,6 +20,7 @@ class icms_data_urllink_Object extends icms_ipf_Object {
 	 */
 	public function __construct() {
 		$this->quickInitVar("urllinkid", XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar("mid", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("caption", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("description", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("url", XOBJ_DTYPE_TXTBOX, FALSE);
@@ -39,6 +40,8 @@ class icms_data_urllink_Object extends icms_ipf_Object {
 	public function getVar($key, $format = "e"){
 		if (substr($key, 0, 4) == "url_") {
 			return parent::getVar("url", $format);
+		} elseif (substr($key, 0, 4) == "mid_") {
+			return parent::getVar("mid", $format);
 		} elseif(substr($key, 0, 8) == "caption_") {
 			return parent::getVar("caption", $format);
 		} elseif(substr($key, 0, 5) == "desc_") {

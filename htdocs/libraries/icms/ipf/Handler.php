@@ -632,6 +632,14 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			return false;
 		}
 
+		foreach ($obj->vars as $key => $var) {
+			if ($var['data_type'] == XOBJ_DTYPE_URLLINK) {
+				$urllinkObj = $obj->getUrlLinkObj($key);
+				$urllinkObj->delete($force);
+				unset($urllinkObj);
+			}
+		}
+
 		$eventResult = $this->executeEvent('afterDelete', $obj);
 		if (!$eventResult) {
 			$obj->setErrors("An error occured during the AfterDelete event");
@@ -889,17 +897,18 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @return bool
 	 */
 
-	public function deleteAll($criteria = null) {
+	public function deleteAll($criteria = NULL) {
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql = 'DELETE FROM ' . $this->table;
-			$sql .= ' ' . $criteria->renderWhere();
-			if (!$this->db->query($sql)) {
-				return false;
+			$rows = 0;
+			$objects = $this->getObjects($criteria);
+			foreach ($objects as $obj) {
+				if ($this->delete($obj, TRUE)) {
+					$rows++;
+				}
 			}
-			$rows = $this->db->getAffectedRows();
-			return $rows > 0 ? $rows : true;
+			return $rows > 0 ? $rows : TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**

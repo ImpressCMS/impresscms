@@ -17,23 +17,26 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 class icms_ipf_form_elements_Urllink extends icms_form_elements_Tray {
 	/**
 	 * Constructor
-	 * @param	string						$form_caption	the caption of the form
+	 * @param	icms_ipf_Object				$object			target object
 	 * @param	string						$key			the key
-	 * @param	icms_data_urllink_Object	$object			reference to targetobject
 	 */
-	public function __construct($form_caption, $key, $object) {
-		parent::__construct($form_caption, "&nbsp;");
+	public function __construct($object, $key) {
+		parent::__construct($object->vars[$key]['form_caption'], "&nbsp;");
+		$urllinkObj = $object->getUrlLinkObj($key);
+		$module_handler = icms::handler("icms_module");
+		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
 		$this->addElement(new icms_form_elements_Label("", _CO_ICMS_URLLINK_URL));
-		$this->addElement(new icms_ipf_form_elements_Text($object, "url_" . $key));
+		$this->addElement(new icms_ipf_form_elements_Text($urllinkObj, "url_" . $key));
 		$this->addElement(new icms_form_elements_Label("", "<br/>" . _CO_ICMS_CAPTION));
-		$this->addElement(new icms_ipf_form_elements_Text($object, "caption_" . $key));
+		$this->addElement(new icms_ipf_form_elements_Text($urllinkObj, "caption_" . $key));
 		$this->addElement(new icms_form_elements_Label("", "<br/>" . _CO_ICMS_DESC));
-		$this->addElement(new icms_ipf_form_elements_Text($object, "desc_" . $key));
-		$this->addElement( new icms_form_elements_Label("", "<br/>" . _CO_ICMS_URLLINK_TARGET));
-		$targ_val = $object->getVar("target");
+		$this->addElement(new icms_ipf_form_elements_Text($urllinkObj, "desc_" . $key));
+		$this->addElement(new icms_form_elements_Label("", "<br/>" . _CO_ICMS_URLLINK_TARGET));
+		$this->addElement(new icms_form_elements_Hidden("mid_" . $key, $module->getVar("mid")));
+		$targ_val = $urllinkObj->getVar("target");
 		$targetRadio = new icms_form_elements_Radio("", "target_" . $key, $targ_val != "" ? $targ_val : "_blank");
-		$control = $object->getControl("target");
+		$control = $urllinkObj->getControl("target");
 		$targetRadio->addOptionArray($control["options"]);
 		$this->addElement($targetRadio);
 	}

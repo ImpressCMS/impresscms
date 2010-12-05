@@ -1262,10 +1262,6 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	/**
-	 * @todo to be implemented in ImpressCMS core
-	 */
-
 	public function getUrlLinkObj($key) {
 		$urllink_handler = icms::handler("icms_data_urllink");
 		$urllinkid = $this->getVar($key) != null ? $this->getVar($key) : 0;
@@ -1276,12 +1272,16 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	public function &storeUrlLinkObj($urllinkObj) {
+	public function storeUrlLinkObj($urllinkObj) {
 		$urllink_handler = icms::handler("icms_data_urllink");
 		return $urllink_handler->insert($urllinkObj);
 	}
+
+	/**
+	 * @todo to be implemented in ImpressCMS core
+	 */
 	/*
-		function getFileObj($key) {
+	function getFileObj($key) {
 		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
 		$fileid = $this->getVar($key) != null ? $this->getVar($key) : 0;
 		if ($fileid != 0) {
@@ -1289,12 +1289,12 @@ class icms_ipf_Object extends icms_core_Object {
 		} else {
 		return $smartobject_file_handler->create();
 		}
-		}
+	}
 
-		function &storeFileObj($fileObj) {
+	function &storeFileObj($fileObj) {
 		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
 		return $smartobject_file_handler->insert($fileObj);
-		}
-		*/
+	}
+	*/
 }
 
