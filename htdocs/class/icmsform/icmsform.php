@@ -194,7 +194,6 @@ class IcmsForm extends icms_form_Theme {
 					switch ($var['data_type']) {
 
 						case XOBJ_DTYPE_TXTBOX:
-
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
 							unset($form_text);
@@ -275,14 +274,13 @@ class IcmsForm extends icms_form_Theme {
 							unset($form_source_editor);
 							break;
 						case XOBJ_DTYPE_FORM_SECTION:
-							include ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsection.php";
-							$section_control = new IcmsFormSection($key, $var['value']);
+							$section_control = $this->getControl('section', $key);
 							$this->addElement($section_control, $key, $var);
 							unset($section_control);
 							break;
 						case XOBJ_DTYPE_FORM_SECTION_CLOSE:
-							include ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsectionclose.php";
-							$section_control = new IcmsFormSectionClose($key, $var['value']);
+							$this->targetObject->setControl($key, array("close" => TRUE));
+							$section_control = $this->getControl('section', $key);
 							$this->addElement($section_control, $key, $var);
 							unset($section_control);
 							break;
@@ -545,12 +543,17 @@ class IcmsForm extends icms_form_Theme {
 			if (!is_object($ele)) {
 				$ret .= $ele;
 			} elseif ( !$ele->isHidden() ) {
-				//$class = ( $class == 'even' ) ? 'odd' : 'even';
-				$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='"._GLOBAL_LEFT."'><td class='head'>".$ele->getCaption();
-				if ($ele->getDescription() != '') {
-					$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele->getDescription().'</span>';
+				if (get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection()) {
+					$ret .= '<tr><th colspan="2">' . $ele->render() . '</th></tr>';
+				} elseif (get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection()) {
+					$ret .= '<tr><td class="even" colspan="2">&nbsp;</td></tr>';
+				} else {
+					$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='"._GLOBAL_LEFT."'><td class='head'>".$ele->getCaption();
+					if ($ele->getDescription() != '') {
+						$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele->getDescription().'</span>';
+					}
+					$ret .= "</td><td class='$class'>".$ele->render()."</td></tr>\n";
 				}
-				$ret .= "</td><td class='$class'>".$ele->render()."</td></tr>\n";
 			} else {
 				$hidden .= $ele->render();
 			}
@@ -577,8 +580,8 @@ class IcmsForm extends icms_form_Theme {
 			$elements[$n]['body']	  = $ele->render();
 			$elements[$n]['hidden']	  = $ele->isHidden();
 			$elements[$n]['required']	  = $ele->isRequired();
-			$elements[$n]['section']  = strToLower(get_class($ele)) == strToLower('IcmsFormSection');
-			$elements[$n]['section_close']  = get_class($ele) == 'IcmsFormSectionClose';
+			$elements[$n]['section']  = get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection();
+			$elements[$n]['section_close']  = get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection();
 			$elements[$n]['hide'] = isset($this->targetObject->vars[$n]['hide']) ? $this->targetObject->vars[$n]['hide'] : false;
 
 			if ($ele->getDescription() != '') {

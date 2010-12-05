@@ -82,23 +82,22 @@ class icms_ipf_Object extends icms_core_Object {
 		return $icmspermissions_handler->accessGranted($perm_name, $this->id());
 	}
 	/**
-	 *
+	 * open a new form section to seperate form elements
 	 *
 	 * @param	str		$section_name
 	 * @param	bool	$value
-	 * @param	bool	$hide
 	 */
-	public function addFormSection($section_name, $value = false, $hide = false) {
-		$this->initVar($section_name, XOBJ_DTYPE_FORM_SECTION, $value, false, null, '', false, '', '', false, false, true);
-		$this->vars[$section_name]['hide'] = $hide;
+	public function openFormSection($section_name, $value = FALSE) {
+		$this->initVar($section_name, XOBJ_DTYPE_FORM_SECTION, $value, FALSE, NULL, '', FALSE, '', '', FALSE, FALSE, TRUE);
 	}
+
 	/**
-	 *
+	 * close a form section
 	 *
 	 * @param	str		$section_name
 	 */
-	public function closeSection($section_name) {
-		$this->initVar('close_section_' . $section_name, XOBJ_DTYPE_FORM_SECTION_CLOSE, '', false, null, '', false, '', '', false, false, true);
+	public function closeFormSection($section_name) {
+		$this->initVar('close_section_' . $section_name, XOBJ_DTYPE_FORM_SECTION_CLOSE, '', FALSE, NULL, '', FALSE, '', '', FALSE, FALSE, TRUE);
 	}
 
 	/**
