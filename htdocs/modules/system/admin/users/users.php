@@ -16,7 +16,6 @@
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {exit('Access Denied');}
 
-include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
 function displayUsers() {
 	global $xoopsConfig, $icmsModule, $icmsConfigUser;

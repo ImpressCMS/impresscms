@@ -92,7 +92,6 @@ if (icms::$user) {
 			}
 		}
 	} elseif ($reply == 1 || $send == 1 || $send2 == 1) {
-		include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 		if ($reply == 1) {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->get($msg_id);

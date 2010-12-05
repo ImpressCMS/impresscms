@@ -182,7 +182,6 @@ class SystemBlocksadmin extends icms_view_block_Object {
 	}
 
 	function getSideControl() {
-		include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 		$control = new icms_form_elements_Select('','block_side[]',$this->getVar( 'side', 'e'));
 		$positions = $this->handler->getBlockPositions( true );
 		$block_positions = array();
@@ -195,7 +194,6 @@ class SystemBlocksadmin extends icms_view_block_Object {
 	}
 
 	function getWeightControl() {
-		include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 		$control = new icms_form_elements_Text('','block_weight[]',5,10,$this->getVar( 'weight', 'e'));
 		$control->setExtra('style="text-align:center;"');
 		return $control->render();

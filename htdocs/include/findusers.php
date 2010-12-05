@@ -195,8 +195,6 @@ FINDUSERS_MODE_QUERY	=> _MA_USER_MODE_QUERY,
 
 if (empty($_POST["user_submit"])) {
 
-	include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
-
 	$form = new icms_form_Theme(_MA_USER_FINDUS, "uesr_findform", "findusers.php", 'post', true);
 
 	$mode = (int) ( @$_REQUEST["mode"] );

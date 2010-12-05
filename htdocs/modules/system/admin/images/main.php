@@ -211,7 +211,6 @@ function imanager_index($imgcat_id=null) {
 	$icmsAdminTpl->assign('subs',$subs);
 	$icmsAdminTpl->assign('scount',$scount);
 
-	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	if (!empty($catcount)) {
 		$form = new icms_form_Theme(_ADDIMAGE, 'image_form', 'admin.php', 'post', true);
 		$form->setExtra('enctype="multipart/form-data"');
@@ -572,7 +571,6 @@ function imanager_editcat($imgcat_id) {
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images',1);
 	}
-	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	$imagecategoryperm_handler = icms::handler('icms_member_groupperm');
 	$form = new icms_form_Theme(_MD_EDITIMGCAT, 'imagecat_form', 'admin.php', 'post', true);
 	$form->addElement(new icms_form_elements_Text(_MD_IMGCATNAME, 'imgcat_name', 50, 255, $imagecategory->getVar('imgcat_name')), true);
@@ -918,7 +916,6 @@ function imanager_delfileok($image_id,$redir=null) {
 }
 
 function showAddImgForm($imgcat_id) {
-	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	$imgcat_handler = icms::handler('icms_image_category');
 	$form = new icms_form_Theme(_ADDIMAGE, 'image_form', 'admin.php', 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');

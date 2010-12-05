@@ -211,7 +211,6 @@ class icms_core_Security {
 	 * @return string
 	 **/
 	public function getTokenHTML($name = _CORE_TOKEN) {
-		require_once ICMS_ROOT_PATH."/class/xoopsformloader.php" ;
 		$token = new icms_form_elements_Hiddentoken($name);
 		return $token->render();
 	}

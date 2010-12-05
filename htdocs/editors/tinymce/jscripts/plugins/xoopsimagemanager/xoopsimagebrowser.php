@@ -20,8 +20,6 @@ if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
-
 $icmsTpl = new icms_view_Tpl ( );
 
 $op = (isset($_GET['op']))?$_GET['op']:((isset($_POST['op']))?$_POST['op']:'list');
@@ -790,7 +788,6 @@ function icmsPopupFooter() {
 
 function showAddImgForm($imgcat_id) {
 	global $target,$type;
-	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	$imgcat_handler = icms::handler('icms_image_category');
 	$form = new icms_form_Theme(_ADDIMAGE, 'image_form', $_SERVER['PHP_SELF'], 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');

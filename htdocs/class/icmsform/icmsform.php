@@ -13,11 +13,6 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * Including the XoopsFormLoader classes
- */
-include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
-
-/**
  * IcmsForm base class
  *
  * Base class representing a single form for a specific icms_ipf_Object

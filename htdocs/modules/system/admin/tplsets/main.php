@@ -82,7 +82,6 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			}
 			echo '</table><br />';
 
-			include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new icms_form_Theme(_MD_UPLOADTAR, 'tplupload_form', 'admin.php', 'post', true);
 			$form->setExtra('enctype="multipart/form-data"');
 			$form->addElement(new icms_form_elements_File(_MD_CHOOSETAR.'<br /><span style="color:#ff0000;">'._MD_ONLYTAR.'</span>', 'tpl_upload', 1000000));
@@ -396,7 +395,6 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			break;
 
 		case 'clone':
-			include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new icms_form_Theme(_MD_CLONETHEME, 'template_form', 'admin.php', 'post', true);
 			$form->addElement(new icms_form_elements_Label(_MD_THEMENAME, $tplset));
 			$form->addElement(new icms_form_elements_Text(_MD_NEWNAME, 'newtheme', 30, 50), true);
@@ -499,7 +497,6 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 					}
 					$lastimported_date = formatTimestamp($last_imported, 'l');
 				}
-				include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 				$form = new icms_form_Theme(_MD_VIEWDEFAULT, 'template_form', 'admin.php');
 				$form->addElement(new icms_form_elements_Textarea(_MD_FILEHTML, 'html', $default[0]->getVar('tpl_source'), 25));
 				$form->display();
@@ -535,7 +532,6 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			icms_cp_header();
 			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tpl->getVar('tpl_module').'&amp;tplset='.$tpl->getVar('tpl_tplset').'">'.$tpl->getVar('tpl_tplset').'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';
 			if (is_object($tpl)) {
-				include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 				$form = new icms_form_Theme(_MD_UPLOAD, 'tplupload_form', 'admin.php', 'post', true);
 				$form->setExtra('enctype="multipart/form-data"');
 				$form->addElement(new icms_form_elements_Label(_MD_FILENAME, $tpl->getVar('tpl_file').' ('.$tpl->getVar('tpl_tplset').')'));
@@ -600,7 +596,6 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			$tplset = htmlspecialchars($tplset);
 			$moddir = htmlspecialchars($moddir);
 			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'">'.$tplset.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';
-			include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new icms_form_Theme(_MD_UPLOAD, 'tplupload_form', 'admin.php', 'post', true);
 			$form->setExtra('enctype="multipart/form-data"');
 			$form->addElement(new icms_form_elements_Label(_MD_FILENAME, $file));

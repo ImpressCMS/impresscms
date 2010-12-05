@@ -13,7 +13,6 @@
  * @version	$Id$
  */
 
-include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 if ($tform['tpl_tplset'] != 'default') {
 	$form = new icms_form_Theme(_MD_EDITTEMPLATE, 'template_form', 'admin.php', 'post', true);
 } else {

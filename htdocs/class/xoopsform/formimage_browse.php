@@ -21,9 +21,6 @@ if (!icms::$user){
 	redirect_header(ICMS_URL.'/index.php', 6, _NOPERM);
 }
 
-include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
-
-
 $icmsTpl = new icms_view_Tpl ( );
 
 $op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : 'list');
@@ -837,7 +834,6 @@ function icmsPopupFooter(){
  */
 function showAddImgForm($imgcat_id){
 	global $target,$type;
-	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	$imgcat_handler = icms::handler('icms_image_category');
 	$form = new icms_form_Theme(_ADDIMAGE, 'image_form', $_SERVER['PHP_SELF'], 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');

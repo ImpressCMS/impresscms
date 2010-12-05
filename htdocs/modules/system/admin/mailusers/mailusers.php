@@ -17,7 +17,6 @@
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 } else {
-	include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 	$op = "form";
 	$limit = 100;
 

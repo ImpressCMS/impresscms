@@ -24,9 +24,6 @@ if (icms_get_module_status('profile') && file_exists(ICMS_ROOT_PATH.'/modules/pr
 	exit();
 }
 
-/** Include the form class */
-include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
-
 // If not a user, redirect
 if (!is_object(icms::$user))
 {
