@@ -21,6 +21,7 @@ class icms_plugins_EditorHandler {
 	private $root_path = "";
 	public $nohtml = FALSE;
 	public $allowed_editors = array();
+	private $_type = "";
 
 	/**
 	 * Constructor
@@ -29,6 +30,7 @@ class icms_plugins_EditorHandler {
 	 */
 	public function __construct($type = '') {
 		$this->root_path = self::_getRootPath($type);
+		$this->_type = $type;
 	}
 
 	/**
@@ -71,8 +73,8 @@ class icms_plugins_EditorHandler {
 	 * @param   bool    $noHtml   is this an editor with no html options?
 	 * @return  array   $_list    list of available editors that are allowed (through admin config)
 	 */
-	static public function &getList($noHtml = FALSE) {
-		$list = @include_once ICMS_CACHE_PATH . 'xoopseditor_list.php';
+	public function &getList($noHtml = FALSE) {
+		$list = @include_once ICMS_CACHE_PATH . $this->_type . 'editor_list.php';
 		
 		if (empty($list)) {
 
@@ -90,7 +92,7 @@ class icms_plugins_EditorHandler {
 
 			array_multisort($order, $list);
 			$contents = "<?php\n return " . var_export($list, TRUE) . "\n?>";
-			icms_core_Filesystem::writeFile($contents, 'xoopseditor_list', 'php', ICMS_CACHE_PATH);
+			icms_core_Filesystem::writeFile($contents, $this->_type . 'editor_list', 'php', ICMS_CACHE_PATH);
 		}
 
 		$editors = array_keys($list);
@@ -158,11 +160,26 @@ class icms_plugins_EditorHandler {
 		return $editor;
 	}
 
+	/**
+	 * Determines the root path of the editor type
+	 * @param string $type
+	 * @return string
+	 */
 	private function _getRootPath($type = '') {
 		if ($type == '') {
 			return ICMS_EDITOR_PATH;
 		} else {
 			return ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
 		}
+	}
+	
+	/**
+	 * Retrieve a list of the available editors, by type
+	 * @param	string	$type
+	 * @return	array	Available editors
+	 */
+	static public function getListByType($type = '') {
+		$editor = self::getInstance($type);
+		return $editor->getList();
 	}
 }

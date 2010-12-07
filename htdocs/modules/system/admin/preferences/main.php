@@ -171,12 +171,8 @@ if (! is_object(icms::$user)
 					$type = explode('_', $config [$i]->getVar('conf_formtype'));
 					$ele = new icms_form_elements_Select($title, $config [$i]->getVar('conf_name'), $config [$i]->getConfValueForOutput());
 					$type = array_pop($type);
-					if ($type == 'editor') {
-						$dirlist = IcmsLists::getEditorsList();
-					} else {
-						$path = ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
-						$dirlist = icms_core_Filesystem::getDirList($path);
-					}
+					if ($type == 'editor') $type = '';
+					$dirlist = icms_plugins_EditorHandler::getListByType($type);
 					if (! empty($dirlist)) {
 						asort($dirlist);
 						$ele->addOptionArray($dirlist);
@@ -186,8 +182,7 @@ if (! is_object(icms::$user)
 
 				case 'editor_multi' :
 					$ele = new icms_form_elements_Select($title, $config [$i]->getVar('conf_name'), $config [$i]->getConfValueForOutput(), 5, true);
-					$path = ICMS_EDITOR_PATH;
-					$dirlist = icms_core_Filesystem::getDirList($path);
+					$dirlist = icms_plugins_EditorHandler::getListByType();
 					if (! empty($dirlist)) {
 						asort($dirlist);
 						$ele->addOptionArray($dirlist);

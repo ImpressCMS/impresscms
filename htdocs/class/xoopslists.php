@@ -233,14 +233,8 @@ class IcmsLists {
 	 * @return  array	 $editor_list   list of files in the directory
 	 */
 	static public function getEditorsList($type='') {
-		$editor_list = array();
-		if ($type == '') {
-			$path = ICMS_EDITOR_PATH;
-		} else {
-			$path = ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
-		}
-		$editor_list = icms_core_Filesystem::getDirList($path);
-		return $editor_list;
+		icms_core_Debug::setDeprecated('icms_plugins_EditorHandler::getListByType', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return icms_plugins_EditorHandler::getListByType($type);
 	}
 
 	/**
