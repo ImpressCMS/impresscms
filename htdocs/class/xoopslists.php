@@ -154,44 +154,24 @@ class IcmsLists {
 
 	/**
 	 * Gets list of administration themes folder from themes directory, excluding any directories that do not have theme_admin.html
-	 * @todo	This should be a method of the theme handler
+	 * @deprecated	Use icms_view_theme_Factory::getAdminThemesList()
+	 * @todo	Remove in 1.4
 	 * @return	array
 	 */
 	static public function getAdminThemesList(){
-		$dirtyList1 = $cleanList1 = array();
-		$dirtyList2 = $cleanList2 = array();
-		$dirtyList1 = icms_core_Filesystem::getDirList(ICMS_THEME_PATH . '/');
-		$dirtyList2 = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/system/themes/');
-		foreach ($dirtyList1 as $item1) {
-			if (file_exists(ICMS_THEME_PATH . '/' . $item1 . '/theme_admin.html')) {
-				$cleanList1[$item1] = $item1;
-			}
-		}
-		foreach ($dirtyList2 as $item2) {
-			if (file_exists(ICMS_MODULES_PATH . '/system/themes/' . $item2 . '/theme.html')
-				|| file_exists(ICMS_MODULES_PATH . '/system/themes/' . $item2 . '/theme_admin.html')
-			) {
-				$cleanList2[$item2] = $item2;
-			}
-		}
-		$cleanList = array_merge($cleanList1, $cleanList2);
-		return $cleanList;
+	    icms_core_Debug::setDeprecated('icms_module_Handler::getAvailable', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return icms_view_theme_Factory::getAdminThemesList();
 	}
 
 	/**
 	 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
-	 * @todo	This should be a method of the theme handler
+	 * @deprecated	Use icms_view_theme_Factory::getThemesList()
+	 * @todo	Remove in 1.4
 	 * @return	array
 	 */
 	static public function getThemesList(){
-		$dirtyList = $cleanList = array();
-		$dirtyList = icms_core_Filesystem::getDirList(ICMS_THEME_PATH . '/');
-		foreach ($dirtyList as $item) {
-			if (file_exists(ICMS_THEME_PATH . '/' . $item . '/theme.html')) {
-				$cleanList[$item] = $item;
-			}
-		}
-		return $cleanList;
+	    icms_core_Debug::setDeprecated('icms_module_Handler::getAvailable', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return icms_view_theme_Factory::getThemesList();
 	}
 
 	/**
@@ -273,6 +253,8 @@ class IcmsLists {
 
 	/**
 	 * Gets list of editors folders inside editors directory
+	 * @deprecated	Use icms_core_Filesystem::getDirList or icms_plugins_EditorHandler::getList
+	 * @todo		Remove in 1.4
 	 *
 	 * @param	string	 $type			type of editor
 	 * @return  array	 $editor_list   list of files in the directory
@@ -290,10 +272,12 @@ class IcmsLists {
 
 	/**
 	 * Gets list of enabled editors folders inside editors directory
-	 *
+	 * @todo	Remove in 1.4, this isn't used anywhere in the core and we don't really need a function just to return a global value
+	 * @deprecated
 	 * @return array
 	 */
 	static public function getEnabledEditorsList() {
+		icms_core_Debug::setDeprecated('', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		global $icmsConfig;
 		return $icmsConfig['editor_enabled'];
 	}

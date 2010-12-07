@@ -71,7 +71,7 @@ class icms_plugins_EditorHandler {
 	 * @param   bool    $noHtml   is this an editor with no html options?
 	 * @return  array   $_list    list of available editors that are allowed (through admin config)
 	 */
-	public function &getList($noHtml = FALSE) {
+	static public function &getList($noHtml = FALSE) {
 		$list = @include_once ICMS_CACHE_PATH . 'xoopseditor_list.php';
 		
 		if (empty($list)) {

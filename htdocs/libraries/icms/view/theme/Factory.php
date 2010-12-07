@@ -81,5 +81,45 @@ class icms_view_theme_Factory {
 	public function isThemeAllowed($name) {
 		return (empty($this->allowedThemes) || in_array($name, $this->allowedThemes));
 	}
+	
+	/**
+	 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
+	 * @return	array
+	 */
+	static public function getThemesList() {
+		$dirtyList = $cleanList = array();
+		$dirtyList = icms_core_Filesystem::getDirList(ICMS_THEME_PATH . '/');
+		foreach ($dirtyList as $item) {
+			if (file_exists(ICMS_THEME_PATH . '/' . $item . '/theme.html')) {
+				$cleanList[$item] = $item;
+			}
+		}
+		return $cleanList;
+	}
+	
+	/**
+	 * Gets list of administration themes folder from themes directory, excluding any directories that do not have theme_admin.html
+	 * @return	array
+	 */
+	static public function getAdminThemesList() {
+		$dirtyList1 = $cleanList1 = array();
+		$dirtyList2 = $cleanList2 = array();
+		$dirtyList1 = icms_core_Filesystem::getDirList(ICMS_THEME_PATH . '/');
+		$dirtyList2 = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/system/themes/');
+		foreach ($dirtyList1 as $item1) {
+			if (file_exists(ICMS_THEME_PATH . '/' . $item1 . '/theme_admin.html')) {
+				$cleanList1[$item1] = $item1;
+			}
+		}
+		foreach ($dirtyList2 as $item2) {
+			if (file_exists(ICMS_MODULES_PATH . '/system/themes/' . $item2 . '/theme.html')
+				|| file_exists(ICMS_MODULES_PATH . '/system/themes/' . $item2 . '/theme_admin.html')
+			) {
+				$cleanList2[$item2] = $item2;
+			}
+		}
+		$cleanList = array_merge($cleanList1, $cleanList2);
+		return $cleanList;
+	}
 }
 

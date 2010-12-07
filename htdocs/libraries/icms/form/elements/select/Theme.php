@@ -36,7 +36,7 @@ class icms_form_elements_select_Theme extends icms_form_elements_Select {
 	 */
 	public function __construct($caption, $name, $value = null, $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(IcmsLists::getThemesList());
+		$this->addOptionArray(icms_view_theme_Factory::getThemesList());
 	}
 }
 
