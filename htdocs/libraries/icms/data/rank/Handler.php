@@ -95,4 +95,12 @@ class icms_data_rank_Handler extends icms_core_ObjectHandler {
 		}
 		return $ret;
 	}
+	
+	public function insert(&$object) {
+		
+	}
+
+	public function delete(&$object) {
+		
+	}
 }
