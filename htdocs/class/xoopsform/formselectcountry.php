@@ -26,11 +26,6 @@ if (!defined('ICMS_ROOT_PATH')) {
  */
 
 /**
- * lists of values
- */
-include_once ICMS_ROOT_PATH."/class/xoopslists.php";
-
-/**
  * A select field with countries
  *
  * @package     kernel

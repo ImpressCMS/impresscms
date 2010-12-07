@@ -13,11 +13,6 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * lists of values - this will go away after the refactoring is complete
- */
-include_once ICMS_ROOT_PATH."/class/xoopslists.php";
-
-/**
  * A select box with available themes
  *
  * @category	ICMS

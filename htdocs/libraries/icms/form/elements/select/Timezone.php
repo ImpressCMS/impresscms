@@ -3,7 +3,7 @@
  * Creates a form with selectable timezone
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @license		LICENSE.txt
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
@@ -11,19 +11,6 @@
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
-/**
- *
- * @category	ICMS
- * @package     Form
- * @subpackage  Elements
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- */
-
-/**
- * lists of values - this will not be needed when the refactoring is complete
- */
-include_once ICMS_ROOT_PATH."/class/xoopslists.php";
 
 /**
  * A select box with timezones

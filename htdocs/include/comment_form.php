@@ -17,7 +17,6 @@ if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
 }
 $com_modid = $icmsModule->getVar('mid');
-include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 $cform = new icms_form_Theme(_CM_POSTCOMMENT, 'commentform', 'comment_post.php', 'post', true);
 if (isset($icmsModuleConfig['com_rule'])) {
 	include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
@@ -38,7 +37,7 @@ if (isset($icmsModuleConfig['com_rule'])) {
 
 $cform->addElement(new icms_form_elements_Text(_CM_TITLE, 'com_title', 50, 255, $com_title), true);
 $icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'com_icon', $com_icon);
-$subject_icons = IcmsLists::getSubjectsList();
+$subject_icons = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/subject/", '', array('gif', 'jpg', 'png'));
 foreach ($subject_icons as $iconfile) {
 	$icons_radio->addOption($iconfile, '<img src="' . ICMS_URL . '/images/subject/' . $iconfile . '" alt="" />');
 }

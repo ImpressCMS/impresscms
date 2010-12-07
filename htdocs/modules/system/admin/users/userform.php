@@ -97,7 +97,8 @@ $notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mod
 $notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
 $bio_tarea = new icms_form_elements_Textarea(_US_EXTRAINFO, "bio", $bio_value);
 $rank_select = new icms_form_elements_Select(_AM_RANK, "rank", $rank_value);
-$ranklist = IcmsLists::getUserRankList();
+$rankHandler = new icms_data_rank_Handler(icms::$xoopsDB);
+$ranklist = $rankHandler->getList(new icms_db_criteria_Compo(new icms_db_criteria_Item('rank_special', '1')));
 if (count($ranklist) > 0) {
 	$rank_select->addOption(0, "--------------");
 	$rank_select->addOptionArray($ranklist);

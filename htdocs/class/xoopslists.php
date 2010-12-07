@@ -199,6 +199,8 @@ class IcmsLists {
 
 	/**
 	 * Gets list of subject icon image file names in a certain directory
+	 * @deprecated	Use icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/subject/", '', array('gif', 'jpg', 'png'));
+	 * @todo		Remove in 1.4
 	 *
 	 * If directory is not specified, default directory will be searched.
 	 *
@@ -327,20 +329,16 @@ class IcmsLists {
 
 	/**
 	 * Gets list of all user ranks in the database
-	 * @todo	this should be a method of the user rank handler
+	 * @deprecated	Use $rankHandler->getList
+	 * @todo		Remove in version 1.4
 	 *
 	 * @return  array	 $ret   list of user ranks
 	 */
 	static public function getUserRankList() {
-		$db = icms_db_Factory::instance();
-		$myts = icms_core_Textsanitizer::getInstance();
-		$sql = "SELECT rank_id, rank_title FROM " . $db->prefix("ranks") . " WHERE rank_special = '1'";
-		$ret = array();
-		$result = $db->query($sql);
-		while ($myrow = $db->fetchArray($result)) {
-			$ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
-		}
-		return $ret;
+		icms_core_Debug::setDeprecated();
+		$rankHandler = new icms_data_rank_Handler(icms::$xoopsDB);
+		$ranklist = $rankHandler->getList(new icms_db_criteria_Compo(new icms_db_criteria_Item('rank_special', '1')));
+		return $ranklist;
 	}
 }
 

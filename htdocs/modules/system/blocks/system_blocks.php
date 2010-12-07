@@ -470,7 +470,6 @@ function b_system_comments_edit($options)
  */
 function b_system_topposters_edit($options)
 {
-	include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 	$inputtag = "<input type='text' name='options[]' value='". (int) ($options[0])."' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
 	$form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
@@ -483,7 +482,8 @@ function b_system_topposters_edit($options)
 	}
 	$form .= " />&nbsp;"._NO."";
 	$form .= "<br />"._MB_SYSTEM_NODISPGR."<br /><select id='options[]' name='options[]' multiple='multiple'>";
-	$ranks =& IcmsLists::getUserRankList();
+	$rankHandler = new icms_data_rank_Handler(icms::$xoopsDB);
+	$ranklist = $rankHandler->getList(new icms_db_criteria_Compo(new icms_db_criteria_Item('rank_special', '1')));
 	$size = count($options);
 	foreach ($ranks as $k => $v) {
 		$sel = "";
