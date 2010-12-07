@@ -42,7 +42,7 @@ class icms_form_elements_select_Editor extends icms_form_elements_Tray {
 		}
 
 		parent::__construct(_SELECT);
-		$edtlist = icms_plugins_EditorHandler::getList();
+		$edtlist = IcmsLists::getEditorsList();
 		$option_select = new icms_form_elements_Select("", $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){

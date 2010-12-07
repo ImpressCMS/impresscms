@@ -172,7 +172,7 @@ if (! is_object(icms::$user)
 					$ele = new icms_form_elements_Select($title, $config [$i]->getVar('conf_name'), $config [$i]->getConfValueForOutput());
 					$type = array_pop($type);
 					if ($type == 'editor') {
-						$dirlist = icms_plugins_EditorHandler::getList();
+						$dirlist = IcmsLists::getEditorsList();
 					} else {
 						$path = ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
 						$dirlist = icms_core_Filesystem::getDirList($path);
