@@ -32,7 +32,6 @@ class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
 
 		$control = $object->getControl($key);
 
-		require_once ICMS_ROOT_PATH . '/class/xoopseditor.php';
 		$editor_handler = icms_plugins_EditorHandler::getInstance('source');
 		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
 			array('name' => $key,

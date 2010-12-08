@@ -41,7 +41,6 @@ class icms_form_elements_Editor extends icms_form_elements_Textarea {
 	function icms_form_elements_Editor($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
 	{
 		parent::__construct($caption, $editor_configs["name"]);
-		require_once ICMS_ROOT_PATH."/class/xoopseditor.php";
 		$editor_handler = icms_plugins_EditorHandler::getInstance();
 		$this->editor =& $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
 	}
