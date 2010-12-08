@@ -1,14 +1,6 @@
 <?php
 
-if( file_exists( XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php' ) ) {
-	require_once XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php';
-} else {
-	require_once XOOPS_ROOT_PATH.'/class/database/'.XOOPS_DB_TYPE.'database.php';
-}
-
-require_once XOOPS_ROOT_PATH.'/class/database/database.php' ;
-
-class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
+class ProtectorMySQLDatabase extends icms_db_legacy_mysql_Proxy
 {
 
 var $doubtful_requests = array() ;

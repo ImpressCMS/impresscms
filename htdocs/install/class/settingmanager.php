@@ -12,7 +12,6 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  * @version	$Id$
  */
-include_once './class/textsanitizer.php';
 
 /**
  * setting manager for XOOPS installer
@@ -37,7 +36,7 @@ class setting_manager {
 
 	function setting_manager($post=false) {
 
-		$this->sanitizer =& TextSanitizer::getInstance();
+		$this->sanitizer =& icms_core_Textsanitizer::getInstance();
 		if ($post) {
 			$this->readPost();
 		} else {

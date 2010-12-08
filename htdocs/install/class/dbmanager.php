@@ -13,10 +13,6 @@
  * @version	$Id$
  */
 
-include_once ICMS_ROOT_PATH.'/class/logger.php';
-include_once ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php';
-include_once ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
-
 /**
  * database manager for XOOPS installer
  *

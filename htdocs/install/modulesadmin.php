@@ -51,7 +51,6 @@ function xoops_module_install($dirname) {
 				$error = true;
 			} else {
 				$msgs[] = "SQL file found at <b>$sql_file_path</b>.<br  /> Creating tables...";
-				include_once ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
 				$sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
 				$sql_query = trim($sql_query);
 				icms_db_legacy_mysql_Utility::splitSqlFile($pieces, $sql_query);
@@ -144,7 +143,6 @@ function xoops_module_install($dirname) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_TEMPLATE_INSERTED, '<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 
 							// generate compiled file
-							include_once ICMS_ROOT_PATH.'/class/template.php';
 							if (!icms_view_Tpl::template_touch($newtplid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_COMPILE_FAIL.'</span>', '<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 							} else {
@@ -154,8 +152,7 @@ function xoops_module_install($dirname) {
 						unset($tpldata);
 					}
 				}
-				include_once ICMS_ROOT_PATH.'/class/template.php';
-				xoops_template_clear_module_cache($newmid);
+				icms_view_Tpl::template_clear_module_cache($newmid);
 				$blocks = $module->getInfo('blocks');
 				if ($blocks != false) {
 					$msgs[] = 'Adding blocks...';
@@ -207,7 +204,6 @@ function xoops_module_install($dirname) {
 									$newtplid = $tplfile->getVar('tpl_id');
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.icms_conv_nr2local($newtplid).'</b>)';
 									// generate compiled file
-									include_once ICMS_ROOT_PATH.'/class/template.php';
 									if (!icms_view_Tpl::template_touch($newtplid)) {
 										$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.$block['template'].'</b>.</span>';
 									} else {
@@ -481,7 +477,6 @@ function icms_module_update($dirname) {
 	// Save current version for use in the update function
 	$prev_version = $module->getVar('version');
 	$prev_dbversion = $module->getVar('dbversion');
-	include_once ICMS_ROOT_PATH.'/class/template.php';
 	xoops_template_clear_module_cache($module->getVar('mid'));
 	// we dont want to change the module name set by admin
 	$temp_name = $module->getVar('name');

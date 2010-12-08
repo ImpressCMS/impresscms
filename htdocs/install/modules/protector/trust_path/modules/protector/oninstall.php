@@ -29,14 +29,7 @@ function protector_oninstall_base( $module , $mydirname )
 	if( file_exists( $sql_file_path ) ) {
 		$ret[] = "SQL file found at <b>".htmlspecialchars($sql_file_path)."</b>.<br /> Creating tables...";
 
-		if( file_exists( XOOPS_ROOT_PATH.'/class/database/oldsqlutility.php' ) ) {
-			include_once XOOPS_ROOT_PATH.'/class/database/oldsqlutility.php' ;
-			$sqlutil =& new OldSqlUtility ;
-		} else {
-			include_once XOOPS_ROOT_PATH.'/class/database/sqlutility.php' ;
-			$sqlutil =& new SqlUtility ;
-		}
-
+		$sqlutil = new icms_db_legacy_mysql_Utility();
 		$sql_query = trim( file_get_contents( $sql_file_path ) ) ;
 		$sqlutil->splitMySqlFile( $pieces , $sql_query ) ;
 		$created_tables = array() ;
@@ -62,7 +55,7 @@ function protector_oninstall_base( $module , $mydirname )
 	}
 
 	// TEMPLATES
-	$tplfile_handler =& xoops_gethandler('tplfile') ;
+	$tplfile_handler =& new icms_view_template_file_Handler(icms::$xoopsDB);
 	$tpl_path = dirname(__FILE__).'/templates' ;
 	if( $handler = @opendir( $tpl_path . '/' ) ) {
 		while( ( $file = readdir( $handler ) ) !== false ) {
@@ -86,9 +79,7 @@ function protector_oninstall_base( $module , $mydirname )
 					$tplid = $tplfile->getVar( 'tpl_id' ) ;
 					$ret[] = 'Template <b>'.htmlspecialchars($mydirname.'_'.$file).'</b> added to the database. (ID: <b>'.$tplid.'</b>)<br />';
 					// generate compiled file
-					include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php' ;
-					include_once XOOPS_ROOT_PATH.'/class/template.php' ;
-					if( ! xoops_template_touch( $tplid ) ) {
+					if( !icms_view_Tpl::template_touch( $tplid ) ) {
 						$ret[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.htmlspecialchars($mydirname.'_'.$file).'</b>.</span><br />';
 					} else {
 						$ret[] = 'Template <b>'.htmlspecialchars($mydirname.'_'.$file).'</b> compiled.</span><br />';
@@ -103,12 +94,10 @@ function protector_oninstall_base( $module , $mydirname )
 	Fixes Bug #619 : parse Error
 	*/
 	if((defined(ICMS_PRELOAD_PATH) && !file_exists(ICMS_PRELOAD_PATH.'/protector.php')) && (! defined( 'PROTECTOR_POSTCHECK_INCLUDED' )||! defined( 'PROTECTOR_PRECHECK_INCLUDED' )) && function_exists('icms_copyr')){
-		icms_copyr(ICMS_TRUST_PATH.'/modules/protector/patches/ImpressCMS1.1/preload_protector.php',ICMS_PRELOAD_PATH.'/protector.php');
+		icms_core_Filesystem::copyRecursive(ICMS_TRUST_PATH.'/modules/protector/patches/ImpressCMS1.1/preload_protector.php',ICMS_PRELOAD_PATH.'/protector.php');
 	}
 
-	include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php' ;
-	include_once XOOPS_ROOT_PATH.'/class/template.php' ;
-	xoops_template_clear_module_cache( $mid ) ;
+	icms_view_Tpl::template_clear_module_cache( $mid ) ;
 
 	return true ;
 }
