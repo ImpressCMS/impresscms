@@ -42,13 +42,13 @@ abstract class icms_form_Element {
 	 * "name" attribute of the element
 	 * @var string
 	 */
-	private $_name;
+	protected $_name;
 
 	/**
 	 * caption of the element
 	 * @var	string
 	 */
-	private $_caption;
+	protected $_caption;
 
 	/**
 	 * Accesskey for this element
