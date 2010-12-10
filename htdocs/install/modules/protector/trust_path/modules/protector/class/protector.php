@@ -123,6 +123,15 @@ function &getInstance()
 }
 
 
+function updateConfIntoDb( $name , $value )
+{
+	$constpref = '_MI_' . strtoupper( $this->mydirname ) ;
+
+	icms::$xoopsDB->queryF( "UPDATE `".icms::$xoopsDB->prefix("config")."` SET `conf_value`='".addslashes($value)."' WHERE `conf_title` like '".$constpref."%' AND `conf_name`='".addslashes($name)."' LIMIT 1" ) ;
+	$this->updateConfFromDB() ;
+}
+
+
 function updateConfFromDb()
 {
 	$constpref = '_MI_' . strtoupper( $this->mydirname ) ;
@@ -679,6 +688,7 @@ function check_uploaded_files()
 			$ext = strtolower( substr( strrchr( $_file['name'] , '.' ) , 1 ) ) ;
 			if( $ext == 'jpeg' ) $ext = 'jpg' ;
 			else if( $ext == 'tiff' ) $ext = 'tif' ;
+			else if( $ext == 'swc' ) $ext = 'swf' ;
 
 			// anti multiple dot file (Apache mod_mime.c)
 			if( count( explode( '.' , str_replace( '.tar.gz' , '.tgz' , $_file['name'] ) ) ) > 2 ) {
@@ -705,7 +715,9 @@ function check_uploaded_files()
 					@unlink( $temp_file ) ;
 				}
 
-				if( $image_attributes === false || $image_extensions[ intval( $image_attributes[2] ) ] != $ext ) {
+				$imagetype = intval( $image_attributes[2] ) ;
+				if( $imagetype == IMAGETYPE_SWC ) $imagetype = IMAGETYPE_SWF ;
+				if( $image_attributes === false || $image_extensions[ $imagetype ] != $ext ) {
 					$this->message .= "Attempt to upload camouflaged image file {$_file['name']}.\n" ;
 					$this->_safe_badext = false ;
 					$this->last_error_type = 'UPLOAD' ;
@@ -969,6 +981,25 @@ function spam_check( $points4deny , $uid )
 		$ret = $this->call_filter( 'spamcheck_overrun' ) ;
 		if( $ret == false ) exit ;
 	}
+}
+
+
+function check_manipulation()
+{
+	if( $_SERVER['SCRIPT_FILENAME'] == XOOPS_ROOT_PATH.'/index.php' ) {
+		$root_stat = stat( XOOPS_ROOT_PATH ) ;
+		$index_stat = stat( XOOPS_ROOT_PATH.'/index.php' ) ;
+		$finger_print = $root_stat['mtime'] .':'. $index_stat['mtime'] .':'. $index_stat['ino'] ;
+		if( empty( $this->_conf['manip_value'] ) ) {
+			$this->updateConfIntoDb( 'manip_value' , $finger_print ) ;
+		} else if( $finger_print != $this->_conf['manip_value'] ) {
+			// Notify if finger_print is ident from old one
+			$ret = $this->call_filter( 'postcommon_manipu' ) ;
+			if( $ret == false ) die( 'Protector detects site manipulation.' ) ;
+			$this->updateConfIntoDb( 'manip_value' , $finger_print ) ;
+		}
+	}
+
 }
 
 

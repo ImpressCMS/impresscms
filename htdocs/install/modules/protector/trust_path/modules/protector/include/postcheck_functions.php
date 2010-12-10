@@ -152,6 +152,11 @@ function protector_postcommon()
 		$protector->call_filter( 'postcommon_register' ) ;
 	}
 
+	// Simple check for manupilations by FTP worm etc.
+	if( ! empty( $conf['enable_manip_check'] ) ) {
+		$protector->check_manipulation() ;
+	}
+
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-class protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract {
+class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstract {
 	var $purifier ;
 	var $method ;
 
@@ -8,22 +8,13 @@ class protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract
 	{
 		// HTMLPurifier runs with PHP5 only
 		if( version_compare( PHP_VERSION , '5.0.0' ) < 0 ) {
-			die( 'Turn postcommon_post_htmlpurify4guest.php off because this filter cannot run with PHP4' ) ;
+			die( 'Turn postcommon_post_htmlpurify4everyone.php off because this filter cannot run with PHP4' ) ;
 		}
 
-		if( is_object( icms::$user ) ) {
-			return true ;
-		}
-
-		if( file_exists( XOOPS_ROOT_PATH.'/class/icms_HTMLPurifier.php' ) ) {
-			// use HTMLPurifier inside ImpressCMS
-			if( ! class_exists( 'icms_HTMLPurifier' ) ) {
-				require_once ICMS_ROOT_PATH.'/class/icms_HTMLPurifier.php' ;
-			}
-//			$pure =& icms_HTMLPurifier::getPurifierInstance() ;
-//			$_POST = $pure->icms_html_purifier( $_POST , 'protector' ) ;
-			$this->purifier =& icms_HTMLPurifier::getPurifierInstance() ;
-			$this->method = 'icms_html_purifier' ;
+		// use HTMLPurifier inside ImpressCMS
+		if(!class_exists('icms_core_HTMLFilter')) {
+			$this->purifier =& icms_core_HTMLFilter::getInstance();
+			$this->method = 'htmlpurify';
 
 		} else {
 			// use HTMLPurifier inside Protector

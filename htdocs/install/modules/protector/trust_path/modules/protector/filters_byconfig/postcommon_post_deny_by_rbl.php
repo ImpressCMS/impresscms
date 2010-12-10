@@ -16,13 +16,15 @@ class protector_postcommon_post_deny_by_rbl extends ProtectorFilterAbstract {
 #			'bsb.spamlookup.net' ,
 		) ;
 	
+		global $xoopsUser ;
+	
 		$rev_ip = implode( '.' , array_reverse( explode( '.' , @$_SERVER['REMOTE_ADDR'] ) ) ) ;
 	
 		foreach( $rbls as $rbl ) {
 			$host = $rev_ip . '.' . $rbl ;
 			if( gethostbyname( $host ) != $host ) {
 				$this->protector->message .= "DENY by $rbl\n" ;
-				$uid = is_object( icms::$user ) ? icms::$user->getVar('uid') : 0 ;
+				$uid = is_object( $xoopsUser ) ? $xoopsUser->getVar('uid') : 0 ;
 				$this->protector->output_log( 'RBL SPAM' , $uid , false , 128 ) ;
 				die( _MD_PROTECTOR_DENYBYRBL ) ;
 			}

@@ -34,11 +34,13 @@ class ProtectorFilterAbstract {
 class ProtectorFilterHandler {
 	var $protector = null ;
 	var $filters_base = '' ;
+	var $filters_byconfig = '' ;
 
 	function ProtectorFilterHandler()
 	{
 		$this->protector =& Protector::getInstance() ;
 		$this->filters_base = dirname(dirname(__FILE__)).'/filters_enabled' ;
+		$this->filters_byconfig = dirname(dirname(__FILE__)).'/filters_byconfig' ;
 	}
 
 	function &getInstance()
@@ -55,23 +57,39 @@ class ProtectorFilterHandler {
 	{
 		$ret = 0 ;
 
+		$filters = array() ;
+
+		// parse $protector->_conf['filters']
+		foreach( preg_split( '/[\s\n,]+/' , $this->protector->_conf['filters'] ) as $file ) {
+			if( substr( $file , -4 ) != '.php' ) $file .= '.php' ;
+			if( strncmp( $file , $type.'_' , strlen( $type ) + 1 ) === 0 ) {
+				$filters[] = array( 'file' => $file , 'base' => $this->filters_byconfig ) ;
+			}
+		}
+
+		// search from filters_enabled/
 		$dh = opendir( $this->filters_base ) ;
 		while( ( $file = readdir( $dh ) ) !== false ) {
 			if( strncmp( $file , $type.'_' , strlen( $type ) + 1 ) === 0 ) {
-				include_once $this->filters_base.'/'.$file ;
-				$plugin_name = 'protector_'.substr($file,0,-4) ;
-				if( function_exists( $plugin_name ) ) {
-					// old way
-					$ret |= call_user_func( $plugin_name ) ;
-				} else if( class_exists( $plugin_name ) ) {
-					// newer way
-					$plugin_obj =& new $plugin_name() ;
-					$ret |= $plugin_obj->execute() ;
-				}
+				$filters[] = array( 'file' => $file , 'base' => $this->filters_base ) ;
 			}
 		}
 		closedir( $dh ) ;
-		
+
+		// execute the filters
+		foreach( $filters as $filter ) {
+			include_once $filter['base'].'/'.$filter['file'] ;
+			$plugin_name = 'protector_'.substr($filter['file'],0,-4) ;
+			if( function_exists( $plugin_name ) ) {
+				// old way
+				$ret |= call_user_func( $plugin_name ) ;
+			} else if( class_exists( $plugin_name ) ) {
+				// newer way
+				$plugin_obj =& new $plugin_name() ;
+				$ret |= $plugin_obj->execute() ;
+			}
+		}
+
 		return $ret ;
 	}
 }
