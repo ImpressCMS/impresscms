@@ -391,8 +391,7 @@ function xoops_cp_header() {
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer() {
-	global $icmsConfig, $xoopsConfig, $xoopsOption,
-	$xoopsTpl, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule, $icmsModule;
+	global $xoopsOption, $xoTheme;
 	icms::$logger->stopTime('Module display');
 
 	if (!headers_sent()) {

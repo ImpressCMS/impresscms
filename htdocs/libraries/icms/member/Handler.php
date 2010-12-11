@@ -345,7 +345,6 @@ class icms_member_Handler {
 	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
 	 */
 	/*	function &loginUserMd5($uname, $md5pwd) {
-	 include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 	 $table = new icms_db_legacy_updater_Table('users');
 	 if ($table->fieldExists('loginname')) {
 	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));

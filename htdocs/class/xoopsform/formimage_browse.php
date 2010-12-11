@@ -395,7 +395,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 		$arrimg[$i]['weight'] = $images[$i]->getVar('image_weight');
 		$arrimg[$i]['display'] = $images[$i]->getVar('image_display');
 		$arrimg[$i]['categ_id'] = $images[$i]->getVar('imgcat_id');
-		$arrimg[$i]['display_nicename'] = icms_substr($images[$i]->getVar('image_nicename'),0,20);
+		$arrimg[$i]['display_nicename'] = icms_core_DataFilter::icms_substr($images[$i]->getVar('image_nicename'),0,20);
 
 		$uniq = icms_random_str(5);
 

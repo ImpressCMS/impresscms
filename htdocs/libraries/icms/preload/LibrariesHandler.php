@@ -29,7 +29,6 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		marcan <marcan@impresscms.org>
  */
 class icms_preload_LibrariesHandler {
-
 	/**
 	 * @public array $_librariesArray array containing a list of all available third party libraries
 	 */
@@ -60,7 +59,7 @@ class icms_preload_LibrariesHandler {
 	static public function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new IcmsLibrariesHandler();
+			$instance = new self();
 		}
 		return $instance;
 	}

@@ -23,7 +23,6 @@
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
 class XoopsCommentRenderer extends icms_data_comment_Renderer {
-
 	private $_deprecated;
 
 	/**

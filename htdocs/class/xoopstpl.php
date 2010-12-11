@@ -13,7 +13,6 @@
  * @version		$Id$
  */
 
-if (!defined("ICMS_ROOT_PATH")) die("ImpressCMS root path not defined");
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 icms_core_Debug::setDeprecated( '', 'class/xoopstpl.php will be removed in ImpressCMS 1.4 - use class/theme_blocks.php' );
-include_once(ICMS_ROOT_PATH . '/class/theme_blocks.php');
-?>
+include_once ICMS_ROOT_PATH . '/class/theme_blocks.php';

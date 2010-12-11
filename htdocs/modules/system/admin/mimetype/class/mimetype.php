@@ -27,7 +27,7 @@ class SystemMimetype extends icms_ipf_Object {
 		$this->quickInitVar ( 'types', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC );
 		$this->quickInitVar ( 'name', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC );
 		$this->quickInitVar ( 'dirname', XOBJ_DTYPE_SIMPLE_ARRAY, true, _CO_ICMS_MIMETYPE_DIRNAME );
-		$this->setControl ( 'dirname', array('name' => 'select_multi', 'handler' => 'mimetype', 'method' => 'getModuleList'));
+		$this->setControl ( 'dirname', array('name' => 'selectmulti', 'handler' => 'mimetype', 'method' => 'getModuleList'));
 
 	}
 

@@ -23,22 +23,17 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * Usage
  *
  * For form creation:
- * 1 Add [include_once ICMS_ROOT_PATH."/class/captcha/formcaptcha.php";] to class/xoopsformloader.php, OR add to the file that uses CAPTCHA before calling icms_form_elements_Captcha
- * 2 Add form element where proper: $xoopsform->addElement(new icms_form_elements_Captcha($caption, $name, $skipmember, ...);
+ * Add form element where proper: $form->addElement(new icms_form_elements_Captcha($caption, $name, $skipmember, ...);
  *
  * For verification:
- *   if (@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
- *	    $icmsCaptcha = icms_form_elements_captcha_Object::instance();
- *	    if (! $icmsCaptcha->verify()) {
- *		    echo $icmsCaptcha->getMessage();
- *		    ...
- *	    }
- *  }
- *
+ * $icmsCaptcha = icms_form_elements_captcha_Object::instance();
+ * if (!$icmsCaptcha->verify()) {
+ *   echo $icmsCaptcha->getMessage();
+ *   ...
+ * }
  */
 /**
  * CAPTCHA form element
- *
  *
  * @category	ICMS
  * @package		Form
@@ -46,7 +41,6 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  */
 class icms_form_elements_Captcha extends icms_form_Element {
-
 	private $_captchaHandler;
 
 	/**

@@ -21,7 +21,6 @@
  * @author Kazumi Ono (AKA onokazu)
  */
 class XoopsTree {
-	
 	private $_deprecated;
 	
 	public function __construct($table_name, $id_name, $pid_name) {

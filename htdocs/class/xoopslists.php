@@ -336,8 +336,8 @@ class IcmsLists {
 	 */
 	static public function getUserRankList() {
 		icms_core_Debug::setDeprecated();
-		$rankHandler = new icms_data_rank_Handler(icms::$xoopsDB);
-		$ranklist = $rankHandler->getList(new icms_db_criteria_Compo(new icms_db_criteria_Item('rank_special', '1')));
+		$rankHandler = icms::handler("icms_data_rank");
+		$ranklist = $rankHandler->getList(icms_buildCriteria(array("rank_special" => 1)));
 		return $ranklist;
 	}
 }

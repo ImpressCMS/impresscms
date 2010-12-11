@@ -18,7 +18,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 }
 $cform = new icms_form_Theme(_CM_POSTCOMMENT, "commentform", "postcomment.php", "post", true);
 if (!preg_match("/^re:/i", $subject)) {
-	$subject = "Re: " . icms_substr($subject,0,56);
+	$subject = "Re: " . icms_core_DataFilter::icms_substr($subject,0,56);
 }
 $cform->addElement(new icms_form_elements_Text(_CM_TITLE, 'subject', 50, 255, $subject), true);
 $icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'icon', $icon);

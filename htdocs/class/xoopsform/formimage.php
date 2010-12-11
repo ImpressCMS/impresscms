@@ -23,18 +23,14 @@
  * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("Oooops!!");
-}
+defined('ICMS_ROOT_PATH') or die("Oooops!!");
 
 /**
  * Image select control for a form
  * @deprecated	Use icms_form_elements_select_Image, instead
  * @todo		Remove in 1.4
  */
-class MastopFormSelectImage extends icms_form_elements_select_Image
-{
-
+class MastopFormSelectImage extends icms_form_elements_select_Image {
 	private $_deprecated;
 	
 	/**
@@ -45,12 +41,8 @@ class MastopFormSelectImage extends icms_form_elements_select_Image
 	 * @param	mixed	  $value	Value for the Select attribute
 	 * @param	string	$cat    Name of the Category
 	 */
-	function __construct($caption, $name, $value=null, $cat = null)
-	{
+	function __construct($caption, $name, $value = null, $cat = null) {
 		parent::__construct($caption, $name, $value, $cat);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Image', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
-
 }
-
-?>
