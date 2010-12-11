@@ -20,12 +20,11 @@
  * @since XOOPS
  * @author Kazumi Ono (AKA onokazu)
  */
-class XoopsTree {
+class XoopsTree extends icms_view_Tree {
 	private $_deprecated;
-	
+
 	public function __construct($table_name, $id_name, $pid_name) {
-		$tree = new icms_view_Tree($table_name, $id_name, $pid_name);
-		$tree->_deprecated = icms_core_Debug::setDeprecated('icms_view_Tree', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $tree;
+		parent::__construct($table_name, $id_name, $pid_name);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_view_Tree', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }

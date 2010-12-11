@@ -25,6 +25,8 @@
 class XoopsCommentRenderer extends icms_data_comment_Renderer {
 	private $_deprecated;
 
+	public function __construct() {}
+
 	/**
 	 * Access the only instance of this class
 	 *
