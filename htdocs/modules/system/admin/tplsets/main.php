@@ -525,139 +525,6 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			}
 			break;
 
-		case 'uploadtpl':
-			$tpltpl_handler =& icms::handler('icms_view_template_file');
-			$id = (int) ($_GET['id']);
-			$tpl =& $tpltpl_handler->get($id);
-			icms_cp_header();
-			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tpl->getVar('tpl_module').'&amp;tplset='.$tpl->getVar('tpl_tplset').'">'.$tpl->getVar('tpl_tplset').'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';
-			if (is_object($tpl)) {
-				$form = new icms_form_Theme(_MD_UPLOAD, 'tplupload_form', 'admin.php', 'post', true);
-				$form->setExtra('enctype="multipart/form-data"');
-				$form->addElement(new icms_form_elements_Label(_MD_FILENAME, $tpl->getVar('tpl_file').' ('.$tpl->getVar('tpl_tplset').')'));
-				$form->addElement(new icms_form_elements_File(_MD_CHOOSEFILE.'<br /><span style="color:#ff0000;">'._MD_UPWILLREPLACE.'</span>', 'tpl_upload', 200000), true);
-				$form->addElement(new icms_form_elements_Hidden('tpl_id', $id));
-				$form->addElement(new icms_form_elements_Hidden('op', 'uploadtpl_go'));
-				$form->addElement(new icms_form_elements_Hidden('fct', 'tplsets'));
-				$form->addElement(new icms_form_elements_Button('', 'upload_button', _MD_UPLOAD, 'submit'));
-				$form->display();
-				icms_cp_footer();
-				exit();
-			} else {
-				echo 'Selected template does not exist';
-			}
-			icms_cp_footer();
-			break;
-
-		case 'uploadtpl_go':
-			if (!icms::$security->check()) {
-				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', icms::$security->getErrors()));
-			}
-			$tpltpl_handler =& icms::handler('icms_view_template_file');
-			$tpl =& $tpltpl_handler->get($tpl_id);
-			if (is_object($tpl)) {
-				$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
-				$uploader->setPrefix('tmp');
-				if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
-					if (!$uploader->upload()) {
-						$err = $uploader->getErrors();
-					} else {
-						$tpl->setVar('tpl_lastmodified', time());
-						$fp = @fopen($uploader->getSavedDestination(), 'r');
-						$fsource = @fread($fp, filesize($uploader->getSavedDestination()));
-						@fclose($fp);
-						$tpl->setVar('tpl_source', $fsource, true);
-						@unlink($uploader->getSavedDestination());
-						if (!$tpltpl_handler->insert($tpl)) {
-							$err = 'Failed inserting data to database';
-						} else {
-							if ($tpl->getVar('tpl_tplset') == $xoopsConfig['template_set']) {
-								
-								$icmsAdminTpl->template_touch($tpl_id, true);
-							}
-						}
-					}
-				} else {
-					$err = implode('<br />', $uploader->getErrors(false));
-				}
-				if (isset($err)) {
-					icms_cp_header(false);
-					icms_core_Message::error($err);
-					icms_cp_footer();
-					exit();
-				}
-				redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tpl->getVar('tpl_module').'&amp;tplset='.urlencode($tpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
-			}
-			break;
-
-			// upload new file
-		case 'uploadtpl2':
-			icms_cp_header();
-			$tplset = htmlspecialchars($tplset);
-			$moddir = htmlspecialchars($moddir);
-			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'">'.$tplset.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';
-			$form = new icms_form_Theme(_MD_UPLOAD, 'tplupload_form', 'admin.php', 'post', true);
-			$form->setExtra('enctype="multipart/form-data"');
-			$form->addElement(new icms_form_elements_Label(_MD_FILENAME, $file));
-			$form->addElement(new icms_form_elements_File(_MD_CHOOSEFILE.'<br /><span style="color:#ff0000;">'._MD_UPWILLREPLACE.'</span>', 'tpl_upload', 200000), true);
-			$form->addElement(new icms_form_elements_Hidden('moddir', $moddir));
-			$form->addElement(new icms_form_elements_Hidden('tplset', $tplset));
-			$form->addElement(new icms_form_elements_Hidden('file', $file));
-			$form->addElement(new icms_form_elements_Hidden('type', $type));
-			$form->addElement(new icms_form_elements_Hidden('op', 'uploadtpl2_go'));
-			$form->addElement(new icms_form_elements_Hidden('fct', 'tplsets'));
-			$form->addElement(new icms_form_elements_Button('', 'ploadtarupload_button', _MD_UPLOAD, 'submit'));
-			$form->display();
-			icms_cp_footer();
-			break;
-
-		case 'uploadtpl2_go':
-			if (!icms::$security->check()) {
-				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', icms::$security->getErrors()));
-			}
-			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
-			$uploader->setPrefix('tmp');
-			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
-				if (!$uploader->upload()) {
-					$err = $uploader->getErrors();
-				} else {
-					$tpltpl_handler =& icms::handler('icms_view_template_file');
-					$tplfile =& $tpltpl_handler->find('default', $type, null, $moddir, $file);
-					if (is_array($tplfile)) {
-						$tpl =& $tplfile[0]->xoopsClone();
-						$tpl->setVar('tpl_id', 0);
-						$tpl->setVar('tpl_tplset', $tplset);
-						$tpl->setVar('tpl_lastmodified', time());
-						$fp = @fopen($uploader->getSavedDestination(), 'r');
-						$fsource = @fread($fp, filesize($uploader->getSavedDestination()));
-						@fclose($fp);
-						$tpl->setVar('tpl_source', $fsource, true);
-						@unlink($uploader->getSavedDestination());
-						if (!$tpltpl_handler->insert($tpl)) {
-							$err = 'Failed inserting data to database';
-						} else {
-							if ($tplset == $xoopsConfig['template_set']) {
-								
-								$icmsAdminTpl->template_touch($tpl->getVar('tpl_id'), true);
-							}
-						}
-					} else {
-						$err = 'This template file does not need to be installed (PHP files using this template file does not exist)';
-					}
-				}
-			} else {
-				$err = implode('<br />', $uploader->getErrors(false));
-			}
-
-			if (isset($err)) {
-				icms_cp_header(false);
-				icms_core_Message::error($err);
-				icms_cp_footer();
-				exit();
-			}
-			redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$moddir.'&amp;tplset='.urlencode($tplset), 2, _MD_AM_DBUPDATED);
-			break;
-
 		case 'download':
 			if (isset($tplset)) {
 				if (false != extension_loaded('zlib')) {
@@ -730,7 +597,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 					}
 				}
 			} else {
-				$err = 'Selected file does not exist)';
+				$err = 'Selected file does not exist';
 			}
 			if (!isset($err)) {
 				redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$newtpl->getVar('tpl_module').'&amp;tplset='.urlencode($newtpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
@@ -862,6 +729,13 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 										$default =& $tpltpl_handler->find('default', 'block', null, trim($infoarr[2]), trim($infoarr[4]));
 									} elseif ((!isset($infoarr[4]) || trim($infoarr[4]) == '') && $infoarr[1] == 'templates') {
 										$default =& $tpltpl_handler->find('default', 'module', null, trim($infoarr[2]), trim($infoarr[3]));
+									} elseif ($infoarr[1] == "templates" && $infoarr[2] == "system" && $infoarr[3] == "admin") {
+										$file = $infoarr[3];
+										for ($i = 4; $i < count($infoarr); $i++) {
+											$file .= "/" . $infoarr[$i];
+										}
+										$default =& $tpltpl_handler->find('default', 'module', null, trim($infoarr[2]), $file);
+										unset($file);
 									} elseif (isset($infoarr[3]) && trim($infoarr[3]) == 'images') {
 										$infoarr[2] = trim($infoarr[2]);
 										if (preg_match("/(.*)\.(gif|jpg|jpeg|png)$/i", $infoarr[2], $match)) {
@@ -881,6 +755,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 											echo '&nbsp;&nbsp;<b>'.$info['name'].'</b> inserted to the database.<br />';
 										}
 										unset($default);
+									} else {
+										if (strrpos($info["name"], "tplset.xml") === FALSE) {
+											echo '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not find <b>'.$info['name'].'</b> in the default template set.</span><br />';
+										}
 									}
 									unset($info);
 								}

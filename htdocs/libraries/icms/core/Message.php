@@ -56,7 +56,7 @@ class icms_core_Message {
 	 * @param boolean $render
 	 * @return mixed
 	 */
-	static public function error($msg, $title, $render = true) {
+	static public function error($msg, $title = '', $render = true) {
 		$ret = '<div class="errorMsg">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';

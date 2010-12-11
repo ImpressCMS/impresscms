@@ -280,7 +280,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * The $options parameter can be a string or an array. Using a string
 	 * is the quickest way :
 	 *
-	 * $this->setControl('date', 'date_time');
+	 * $this->setControl('date', 'datetime');
 	 *
 	 * This will create a date and time selectbox for the 'date' var on the
 	 * form to edit or create this item.
@@ -289,7 +289,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 *
 	 * 		- color
 	 * 		- country
-	 * 		- date_time
+	 * 		- datetime
 	 * 		- date
 	 * 		- email
 	 * 		- group
@@ -300,7 +300,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * 		- language
 	 * 		- parentcategory
 	 * 		- password
-	 * 		- select_multi
+	 * 		- selectmulti
 	 * 		- select
 	 * 		- text
 	 * 		- textarea

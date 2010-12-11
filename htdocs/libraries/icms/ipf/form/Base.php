@@ -188,15 +188,15 @@ class icms_ipf_form_Base extends icms_form_Theme {
 							break;
 
 						case XOBJ_DTYPE_LTIME:
-							$form_date_time = $this->getControl('date_time', $key);
-							$this->addElement($form_date_time, $key, $var);
-							unset($form_date_time);
+							$form_datetime = $this->getControl('datetime', $key);
+							$this->addElement($form_datetime, $key, $var);
+							unset($form_datetime);
 							break;
 
 						case XOBJ_DTYPE_STIME:
-							$form_date_time = $this->getControl('date', $key);
-							$this->addElement($form_date_time, $key, $var);
-							unset($form_date_time);
+							$form_date = $this->getControl('date', $key);
+							$this->addElement($form_date, $key, $var);
+							unset($form_date);
 							break;
 
 						case XOBJ_DTYPE_TIME_ONLY:

@@ -123,7 +123,7 @@ class SystemMimetypeHandler extends icms_ipf_Handler {
 					$dirname_allowed = true;
 				}
 			}
-		} else {
+		} elseif (count($rows) == 1) {
 			$mimetypeid= $rows[0]['mimetypeid'];
 			$dirname= explode('|', $rows[0]['dirname']);
 			$types= $rows[0]['types'];
