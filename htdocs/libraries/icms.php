@@ -148,7 +148,29 @@ abstract class icms {
 			icms_Event::trigger('icms', 'loadService-' . $name, null, array('name' => $name, 'service' => self::$$name));
 	}
 
+	/**
+	 * Register module class repositories and load module service
+	 *
+	 * The system module is not excluded from getObjects to make sure it's already cached for later
+	 * use throughout the system. This function is one of the first functions called in the boot
+	 * process so it's the best place to cache the modules.
+	 * IPF based modules are definied in their own namespace.
+	 */
 	static public function launchModule() {
+		$module_handler = icms::handler("icms_module");
+		$modules = $module_handler->getObjects();
+		foreach ($modules as $module) {
+			if ($module->getVar("dirname") == "system" || $module->getVar("isactive") == 0) continue;
+			$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
+			if ($module->getVar("ipf")) {
+				$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :
+																$module->getVar("dirname");
+				icms_Autoloader::register($class_path, "mod_" . $modname);
+			} else {
+				icms_Autoloader::register($class_path);
+			}
+		}
+
 		$isAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
 		self::loadService('module', array('icms_module_Handler', 'service'), array($isAdmin));
 	}

@@ -329,7 +329,7 @@ function xoops_module_install($dirname) {
 				} else {
 					if ($module->getVar('hascomments') != 0) {
 						include_once ICMS_ROOT_PATH . '/include/comment_constants.php' ;
-						$configs = array(
+						$configs[] = array(
 							'name' => 'com_rule', 
 							'title' => '_CM_COMRULES', 
 							'description' => '', 

@@ -25,17 +25,12 @@ include_once ICMS_ROOT_PATH . "/include/functions.php";
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
 include_once ICMS_ROOT_PATH . "/include/version.php";
 
-if (!isset($xoopsOption)) {
-	$xoopsOption = array();
-}
+if (!isset($xoopsOption)) $xoopsOption = array();
 
 // ############################ Initialize kernel and launch bootstrap #############################
 require_once ICMS_ROOT_PATH . "/libraries/icms.php";
 icms::setup();
 icms::boot();
-
-// ############################## register module class repositories ###############################
-icms_Autoloader::registerModules();
 
 // ###################################### Easiest ML by Gijoe ######################################
 

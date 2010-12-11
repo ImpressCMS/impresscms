@@ -103,7 +103,7 @@ class icms_ipf_registry_Handler {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->dirname();
+				$modulename = $icmsModule->getVar("dirname");
 			}
 		}
 		$object_handler = icms_getModuleHandler($item, $modulename);
@@ -126,7 +126,7 @@ class icms_ipf_registry_Handler {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->dirname();
+				$modulename = $icmsModule->getVar("dirname");
 			}
 		}
 		$object_handler = icms_getModuleHandler($item, $modulename);
@@ -148,7 +148,7 @@ class icms_ipf_registry_Handler {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->dirname();
+				$modulename = $icmsModule->getVar("dirname");
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname])) {
@@ -178,7 +178,7 @@ class icms_ipf_registry_Handler {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->dirname();
+				$modulename = $icmsModule->getVar("dirname");
 			}
 		}
 		if (isset($this->_registryArray['list'][$modulename][$itemname])) {
@@ -208,7 +208,7 @@ class icms_ipf_registry_Handler {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->dirname();
+				$modulename = $icmsModule->getVar("dirname");
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname][$key])) {

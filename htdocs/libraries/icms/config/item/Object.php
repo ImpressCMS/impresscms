@@ -78,7 +78,7 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @param	mixed   &$value Value
 	 * @param	bool    $force_slash
 	 */
-	public function setConfValueForInput(&$value, $force_slash = false) {
+	public function setConfValueForInput($value, $force_slash = false) {
 		if ($this->getVar('conf_formtype') == 'textarea') {
 			$myts =& icms_core_Textsanitizer::getInstance();
 			$value = $myts->displayTarea($value, 1);

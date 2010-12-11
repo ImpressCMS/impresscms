@@ -106,7 +106,7 @@ class icms_module_Object extends icms_core_Object {
 		$this->setVar('hascomments', $hascomments);
 		// RMV-NOTIFY
 		$this->setVar('hasnotification', $hasnotification);
-		$this->setVar('modname', $this->modinfo['modname'], true);
+		$this->setVar('modname', isset($this->modinfo['modname']) ? $this->modinfo['modname'] : "", true);
 		$ipf = (isset($this->modinfo['object_items']) && is_array($this->modinfo['object_items'])) ? 1 : 0;
 		$this->setVar('ipf', $ipf);
 	}
