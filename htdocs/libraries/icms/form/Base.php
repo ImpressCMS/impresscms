@@ -146,7 +146,7 @@ abstract class icms_form_Base {
 			$this->_elements[] =& $formElement;
 			if (!$formElement->isContainer()) {
 				if ($required) {
-					$formElement->_required = true;
+					$formElement->setRequired();
 					$this->_required[] =& $formElement;
 				}
 			} else {

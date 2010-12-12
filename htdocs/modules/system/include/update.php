@@ -257,6 +257,19 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		}
 		unset($module_handler, $modules);
 
+		/* add slot for adsense */
+		$table = new icms_db_legacy_updater_Table('system_adsense');
+		if (!$table->fieldExists("slot")) {
+			$table->addNewField("slot", "varchar(12) NOT NULL default ''");
+			$table->addNewFields();
+		}
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE border_color color_border varchar(6) NOT NULL default ''");
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE background_color color_background varchar(6) NOT NULL default ''");
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE link_color color_link varchar(6) NOT NULL default ''");
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE url_color color_url varchar(6) NOT NULL default ''");
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE text_color color_text varchar(6) NOT NULL default ''");
+		unset($table);
+
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion( $newDbVersion, 'system' );

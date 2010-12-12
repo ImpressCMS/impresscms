@@ -7,14 +7,9 @@
  * @package		libraries
  * @since		1.3
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: adsense.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @version		$Id:$
  */
 
-/**
- * Preload items and events for AdSense
- * @since 1.2
- *
- */
 class icms_BootstrapEventHandler {
 	static public function setup() {
 		icms_Event::attach('icms', 'loadService', array(__CLASS__, 'loadService'));

@@ -18,12 +18,23 @@
  */
 class IcmsPreloadAdsense extends icms_preload_Item {
 	/**
-	 * Function to be triggered at the end of the core boot process
+	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
+	 *
+	 * The $array var is structured like this:
+	 * $array[0] = $text
+	 * $array[1] = $html
+	 * $array[2] = $smiley
+	 * $array[3] = $xcode
+	 * $array[4] = $image
+	 * $array[5] = $br
+	 *
+	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */
-	function eventFinishCoreBoot() {
-		include_once ICMS_ROOT_PATH . '/include/adsense.php' ;
+	public function eventBeforePreviewTarea($array) {
+		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
+			'icms_sanitizeAdsenses_callback', $array[0]);
 	}
 
 	/**
@@ -41,27 +52,9 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 	 *
 	 * @return	void
 	 */
-	function eventBeforePreviewTarea($array) {
-		$array[0] = icms_sanitizeAdsenses($array[0]);
-	}
-
-	/**
-	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
-	 *
-	 * The $array var is structured like this:
-	 * $array[0] = $text
-	 * $array[1] = $html
-	 * $array[2] = $smiley
-	 * $array[3] = $xcode
-	 * $array[4] = $image
-	 * $array[5] = $br
-	 *
-	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
-	 *
-	 * @return	void
-	 */
-	function eventBeforeDisplayTarea($array) {
-		$array[0] = icms_sanitizeAdsenses($array[0]);
+	public function eventBeforeDisplayTarea($array) {
+		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
+			'icms_sanitizeAdsenses_callback', $array[0]);
 	}
 
 	/**
@@ -69,14 +62,17 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 	 *
 	 * @return	void
 	 */
-	function eventStartOutputInit() {
-		global $xoopsTpl, $icms_adsense_handler;
+	public function eventStartOutputInit() {
+		icms_loadLanguageFile('system', 'adsense', TRUE);
+		$icms_adsense_handler = icms_getModuleHandler("adsense", "system");
+		$icms_adsensesObj = $icms_adsense_handler->getAdsensesByTag();
+		global $icmsTpl;
 		$adsenses_array = array();
-		if (is_object($xoopsTpl)) {
-			foreach ($icms_adsense_handler->objects as $k=>$v) {
+		if (is_object($icmsTpl)) {
+			foreach ($icms_adsensesObj as $k => $v) {
 				$adsenses_array[$k] = $v->render();
 			}
-			$xoopsTpl->assign('icmsAdsenses', $adsenses_array);
+			$icmsTpl->assign('icmsAdsenses', $adsenses_array);
 		}
 	}
 }

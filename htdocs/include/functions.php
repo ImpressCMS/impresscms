@@ -1315,13 +1315,9 @@ function icms_sanitizeCustomtags_callback($matches)
  * @return string	$text The purified text
  * @todo Move to a static class method - Customtag
  */
-function icms_sanitizeCustomtags($text)
-{
+function icms_sanitizeCustomtags($text) {
 	$patterns = array();
-	$replacements = array();
-
 	global $icms_customtag_handler;
-
 	$patterns[] = '/\[customtag](.*)\[\/customtag\]/sU';
 	$text = preg_replace_callback($patterns, 'icms_sanitizeCustomtags_callback', $text);
 	return $text;
@@ -1335,31 +1331,10 @@ function icms_sanitizeCustomtags($text)
  * @todo Move to a static class method - Adsense
  */
 function icms_sanitizeAdsenses_callback($matches) {
-	global $icms_adsense_handler;
-	if (isset($icms_adsense_handler->objects[$matches[1]])){
-		$adsenseObj = $icms_adsense_handler->objects[$matches[1]];
-		$ret = $adsenseObj->render();
-		return $ret;
-	} else {
-		return '';
-	}
-}
-
-/**
- * Sanitizes Adsense
- *
- * @param string $text	Purifies passed text
- * @return string	$text The purified text
- * @todo Move to a static class method - Adsense
- */
-function icms_sanitizeAdsenses($text) {
-
-	$patterns = array ();
-	$replacements = array ();
-
-	$patterns[] = "/\[adsense](.*)\[\/adsense\]/sU";
-	$text = preg_replace_callback($patterns, 'icms_sanitizeAdsenses_callback', $text);
-	return $text;
+	$icms_adsense_handler = icms_getModuleHandler("adsense", "system");
+	$icms_adsensesObj = $icms_adsense_handler->getAdsensesByTag();
+	if (!isset($icms_adsensesObj[$matches[1]])) return '';
+	return $icms_adsensesObj[$matches[1]]->render();
 }
 
 /**

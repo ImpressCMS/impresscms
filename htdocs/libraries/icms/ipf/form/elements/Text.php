@@ -35,5 +35,7 @@ class icms_ipf_form_elements_Text extends icms_form_elements_Text {
 
 		parent::__construct(isset($var['form_caption']) ? $var['form_caption'] : "", $key,
 			$form_size, $form_maxlength, $object->getVar($key, 'e'));
+
+		//if ($var["required"])
 	}
 }

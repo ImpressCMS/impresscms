@@ -78,7 +78,7 @@ abstract class icms_form_Element {
 	 * required field?
 	 * @var	bool
 	 */
-	private $_required = false;
+	private $_required = FALSE;
 
 	/**
 	 * description of the field
@@ -251,6 +251,10 @@ abstract class icms_form_Element {
 	 */
 	public function isRequired() {
 		return $this->_required;
+	}
+
+	public function setRequired() {
+		$this->_required = TRUE;
 	}
 
 	/**

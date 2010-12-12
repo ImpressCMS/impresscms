@@ -81,7 +81,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 		$this->_elements[] =& $formElement;
 		if (!$formElement->isContainer()) {
 			if ($required) {
-				$formElement->_required = true;
+				$formElement->setRequired();
 				$this->_required[] =& $formElement;
 			}
 		} else {

@@ -586,7 +586,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 					}
 				}
 				if (myOption == -1) {
-					window.alert(\"{$eltmsg}\"); myform.{$eltname}[0].focus(); return FALSE; }\n";
+					window.alert(\"{$eltmsg}\"); myform.{$eltname}[0].focus(); return false; }\n";
 
 			/**
 			 * @todo remove icmsformselect_multielement in 1.4
@@ -601,7 +601,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 
 				}
 				if (hasSelections == FALSE) {
-					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return FALSE; }\n";
+					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return false; }\n";
 
 			} elseif (strtolower(get_class($elt)) == 'xoopsformcheckbox') {
 				$js .= "var hasSelections = FALSE;";
@@ -614,7 +614,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 
 					}
 					if (hasSelections == FALSE) {
-						window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'][0].focus(); return FALSE; }\n";
+						window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'][0].focus(); return false; }\n";
 				} else {
 					$js .= "for(var i = 0; i < myform['{$eltname}'].length; i++){
 						if (myform['{$eltname}'][i].checked) {
@@ -623,12 +623,12 @@ class icms_ipf_form_Base extends icms_form_Theme {
 
 					}
 					if (hasSelections == FALSE) {
-						window.alert(\"{$eltmsg}\"); myform['{$eltname}'][0].focus(); return FALSE; }\n";
+						window.alert(\"{$eltmsg}\"); myform['{$eltname}'][0].focus(); return false; }\n";
 				}
 
 			} else {
 				$js .= "if ( myform.{$eltname}.value == \"\" ) "
-				. "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return FALSE; }\n";
+				. "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }\n";
 			}
 		}
 		// Now, handle custom validation code
@@ -640,7 +640,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				}
 			}
 		}
-		$js .= "return TRUE;\n}\n";
+		$js .= "return true;\n}\n";
 		if ($withtags) {
 			$js .= "//--></script>\n<!-- End Form Vaidation JavaScript //-->\n";
 		}
