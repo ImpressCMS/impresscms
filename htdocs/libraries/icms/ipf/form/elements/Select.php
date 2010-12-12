@@ -60,8 +60,9 @@ class icms_ipf_form_elements_Select extends icms_form_elements_Select {
 
 				// Checking if the specified method exists
 				if (method_exists($control_handler, $control['method'])) {
-					// TODO : How could I pass the parameters in the following call ...
-					if ($option_array = $control_handler->$control['method']()) {
+					$option_array = call_user_func_array(array($control_handler, $control['method']),
+						isset($control['params']) ? $control['params'] : array());
+					if (is_array($option_array) && count($option_array) > 0) {
 						// Adding the options array to the select element
 						$this->addOptionArray($option_array);
 					}
