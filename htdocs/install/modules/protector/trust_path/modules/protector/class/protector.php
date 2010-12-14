@@ -113,7 +113,7 @@ function _initial_recursive( $val , $key )
 }
 
 
-function &getInstance()
+static function &getInstance()
 {
 	static $instance ;
 	if( ! isset( $instance ) ) {
@@ -254,7 +254,7 @@ function write_file_bwlimit( $expire )
 
 function get_bwlimit()
 {
-	list( $expire ) = @file( Protector::get_filepath4bwlimit() ) ;
+	list( $expire ) = @file( self::get_filepath4bwlimit() ) ;
 	$expire = min( intval( $expire ) , time() + 300 ) ;
 
 	return $expire ;
@@ -298,7 +298,7 @@ function register_bad_ips( $jailed_time = 0 , $ip = null )
 
 function get_bad_ips( $with_jailed_time = false )
 {
-	list( $bad_ips_serialized ) = @file( Protector::get_filepath4badips() ) ;
+	list( $bad_ips_serialized ) = @file( self::get_filepath4badips() ) ;
 	$bad_ips = empty( $bad_ips_serialized ) ? array() : @unserialize( $bad_ips_serialized ) ;
 	if( ! is_array( $bad_ips ) || isset( $bad_ips[0] ) ) $bad_ips = array() ;
 
@@ -326,7 +326,7 @@ function get_filepath4badips()
 
 function get_group1_ips( $with_info = false )
 {
-	list( $group1_ips_serialized ) = @file( Protector::get_filepath4group1ips() ) ;
+	list( $group1_ips_serialized ) = @file( self::get_filepath4group1ips() ) ;
 	$group1_ips = empty( $group1_ips_serialized ) ? array() : @unserialize( $group1_ips_serialized ) ;
 	if( ! is_array( $group1_ips ) ) $group1_ips = array() ;
 
@@ -800,7 +800,7 @@ function check_dos_attack( $uid = 0 , $can_ban = false ) {
 	// gargage collection
 	$result = icms::$xoopsDB->queryF( "DELETE FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE expire < UNIX_TIMESTAMP()" ) ;
 
-	// for older versions before updating this module 
+	// for older versions before updating this module
 	if( $result === false ) {
 		$this->_done_dos = true ;
 		return true ;
@@ -909,7 +909,7 @@ function check_dos_attack( $uid = 0 , $can_ban = false ) {
 }
 
 
-// 
+//
 function check_brute_force(){
 	$ip = @$_SERVER['REMOTE_ADDR'] ;
 	$uri = @$_SERVER['REQUEST_URI'] ;
@@ -1043,20 +1043,20 @@ function disable_features()
 				$this->output_log( 'misc debug' ) ;
 				exit ;
 			}
-		
+
 			// zx 2004/12/13 misc.php smilies
 			if( substr( @$_SERVER['SCRIPT_NAME'] , -8 ) == 'misc.php' && ( $_GET['type'] == 'smilies' || $_POST['type'] == 'smilies' ) && ! preg_match( '/^[0-9a-z_]*$/i' , $_GET['target'] ) ) {
 				$this->output_log( 'misc smilies' ) ;
 				exit ;
 			}
-		
+
 			// zx 2005/1/5 edituser.php avatarchoose
 			if( substr( @$_SERVER['SCRIPT_NAME'] , -12 ) == 'edituser.php' && $_POST['op'] == 'avatarchoose' && strstr( $_POST['user_avatar'] , '..' ) ) {
 				$this->output_log( 'edituser avatarchoose' ) ;
 				exit ;
 			}
 		}
-	
+
 		// zx 2005/1/4 findusers
 		if( substr( @$_SERVER['SCRIPT_NAME'] , -24 ) == 'modules/system/admin.php' && ( $_GET['fct'] == 'findusers' || $_POST['fct'] == 'findusers' ) ) {
 			foreach( $_POST as $key => $val ) {
@@ -1066,8 +1066,8 @@ function disable_features()
 				}
 			}
 		}
-	
-		// preview CSRF zx 2004/12/14 
+
+		// preview CSRF zx 2004/12/14
 		// news submit.php
 		if( substr( @$_SERVER['SCRIPT_NAME'] , -23 ) == 'modules/news/submit.php' && isset( $_POST['preview'] ) && strpos( @$_SERVER['HTTP_REFERER'] , XOOPS_URL.'/modules/news/submit.php' ) !== 0 ) {
 			$HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1 ;

@@ -139,7 +139,7 @@ function checkSql( $sql )
 }
 
 
-function &query( $sql , $limit = 0 , $start = 0 )
+function query( $sql , $limit = 0 , $start = 0 )
 {
 	$sql4check = substr( $sql , 7 ) ;
 	foreach( $this->doubtful_needles as $needle ) {
