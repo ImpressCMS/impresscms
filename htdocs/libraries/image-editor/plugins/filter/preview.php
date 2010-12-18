@@ -4,7 +4,7 @@ if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 $file = $_GET['file'];
-$resize = isset($_GET['resize']) ? $_GET['resize'] : 1;
+$resize = isset($_GET['resize']) ? (int) $_GET['resize'] : 1;
 $filter = isset($_GET['filter']) ? $_GET['filter'] : null;
 $args = array();
 if (isset($_GET['arg1'])) {

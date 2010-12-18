@@ -7,13 +7,13 @@ include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 if (isset($_GET['image_path']) && isset($_GET['image_url'])) {
 	$x = $_GET['x'];
 	$y = $_GET['y'];
-	$width = $_GET['width'];
-	$height = $_GET['height'];
-	$image_path = $_GET['image_path'];
-	$image_url = $_GET['image_url'];
-	$percentSize = $_GET['percentSize'];
-	$save = isset($_GET['save']) ? $_GET['save'] : 0;
-	$del  = isset($_GET['delprev']) ? $_GET['delprev'] : 0;
+	$width = (int) $_GET['width'];
+	$height = (int) $_GET['height'];
+	$image_path = filter_input(INPUT_GET, 'image_path');
+	$image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
+	$percentSize = (int) $_GET['percentSize'];
+	$save = isset($_GET['save']) ? (int) $_GET['save'] : 0;
+	$del  = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
 
 	$x = preg_replace("/[^0-9]/si", "", $x);
 	$y = preg_replace("/[^0-9]/si", "", $y);
@@ -21,8 +21,9 @@ if (isset($_GET['image_path']) && isset($_GET['image_url'])) {
 	$height = preg_replace("/[^0-9]/si", "", $height);
 	$percentSize = preg_replace("/[^0-9]/si", "", $percentSize);
 
-	if($percentSize>200)$percentSize = 200;
-
+	if($percentSize > 200) {
+		$percentSize = 200;
+	}
 
 	$img = WideImage::load($image_path);
 	$arr = explode('/', $image_path);
@@ -38,8 +39,7 @@ if (isset($_GET['image_path']) && isset($_GET['image_url'])) {
 	}
 
 	if (strlen($x) && strlen($y) && $width && $height && $percentSize) {
-
-		if ($percentSize!="100") {
+		if ($percentSize !== "100") {
 			$x = $x * ($percentSize/100);
 			$y = $y * ($percentSize/100);
 			$width = $width * ($percentSize/100);

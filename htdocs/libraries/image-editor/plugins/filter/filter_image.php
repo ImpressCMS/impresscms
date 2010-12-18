@@ -5,8 +5,8 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 
 if (isset($_GET['image_path']) && isset($_GET['image_url'])) {
-	$image_path = isset($_GET['image_path']) ? $_GET['image_path'] : null;
-	$image_url = isset($_GET['image_url']) ? $_GET['image_url'] : null;
+	$image_path = isset($_GET['image_path']) ? filter_input(INPUT_GET, 'image_path') : null;
+	$image_url = isset($_GET['image_url']) ? filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL) : null;
 	$filter = isset($_GET['filter']) ? $_GET['filter'] : null;
 
 	$args = array();
@@ -19,8 +19,8 @@ if (isset($_GET['image_path']) && isset($_GET['image_url'])) {
 	if (isset($_GET['arg3'])) {
 		$args[] = $_GET['arg3'];
 	}
-	$save = isset($_GET['save']) ? $_GET['save'] : 0;
-	$del  = isset($_GET['delprev']) ? $_GET['delprev'] : 0;
+	$save = isset($_GET['save']) ? (int) $_GET['save'] : 0;
+	$del  = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
 
 	if (is_null($filter) || $filter == '') {
 		exit;
