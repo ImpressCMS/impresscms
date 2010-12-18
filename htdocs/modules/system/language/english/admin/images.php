@@ -75,4 +75,6 @@ define('IMANAGER_SIZE', 'Size');
 define('IMANAGER_ORIGINAL', 'Original Image');
 define('IMANAGER_EDITED', 'Edited Image');
 define('IMANAGER_FOLDER_NOT_WRITABLE', 'Folder is not writeable by the server.');
-?>
+
+// added in 1.3
+define('IMANAGER_NOPERM', 'You are not authorised to access this area!');

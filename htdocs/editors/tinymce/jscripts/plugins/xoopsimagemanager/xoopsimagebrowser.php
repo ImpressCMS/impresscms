@@ -22,15 +22,15 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 $icmsTpl = new icms_view_Tpl ( );
 
-$op = (isset($_GET['op']))?$_GET['op']:((isset($_POST['op']))?$_POST['op']:'list');
-$imgcat_id = (isset($_GET['imgcat_id']))? (int) ($_GET['imgcat_id']):((isset($_POST['imgcat_id']))? (int) ($_POST['imgcat_id']):null);
-$image_id = (isset($_GET['image_id']))? (int) ($_GET['image_id']):((isset($_POST['image_id']))? (int) ($_POST['image_id']):null);
-$target = (isset($_GET['target']))?$_GET['target']:((isset($_POST['target']))?$_POST['target']:null);
-$limit = (isset($_GET['limit']))? (int) ($_GET['limit']):((isset($_POST['limit']))? (int) ($_POST['limit']):15);
-$start = (isset($_GET['start']))? (int) ($_GET['start']):((isset($_POST['start']))? (int) ($_POST['start']):0);
-$type = (isset($_GET['type']))?$_GET['type']:((isset($_POST['type']))?$_POST['type']:'ibrow');
+$op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : 'list');
+$imgcat_id = (isset($_GET['imgcat_id'])) ? (int) ($_GET['imgcat_id']) : ((isset($_POST['imgcat_id'])) ? (int) ($_POST['imgcat_id']) : null);
+$image_id = (isset($_GET['image_id'])) ? (int) ($_GET['image_id']) : ((isset($_POST['image_id'])) ? (int) ($_POST['image_id']) : null);
+$target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target') : ((isset($_POST['target'])) ? filter_input(INPUT_POST, 'target') : null);
+$limit = (isset($_GET['limit'])) ? (int) ($_GET['limit']) : ((isset($_POST['limit'])) ? (int) ($_POST['limit']) : 15);
+$start = (isset($_GET['start'])) ? (int) ($_GET['start']) : ((isset($_POST['start'])) ? (int) ($_POST['start']) : 0);
+$type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type') : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type') : 'ibrow');
 
-global $icmsConfig;
+global $icmsConfig, $icmsUser;
 #Adding language files
 if (file_exists(ICMS_ROOT_PATH."/modules/system/language/".$icmsConfig['language']."/admin/images.php")) {
 	include ICMS_ROOT_PATH."/modules/system/language/".$icmsConfig['language']."/admin/images.php";
@@ -38,44 +38,55 @@ if (file_exists(ICMS_ROOT_PATH."/modules/system/language/".$icmsConfig['language
 	include ICMS_ROOT_PATH."/modules/system/language/english/admin/images.php";
 }
 
-switch ($op) {
-	case 'list':
-		icmsPopupHeader();
-		echo imanager_index($imgcat_id);
-		icmsPopupFooter();
-		break;
-	case 'listimg':
-		icmsPopupHeader();
-		echo imanager_listimg($imgcat_id,$start);
-		icmsPopupFooter();
-		break;
-	case 'addfile':
-		imanager_addfile();
-		break;
-	case 'save':
-		imanager_updateimage();
-		break;
-	case 'delfile':
-		icmsPopupHeader();
-		$image_handler = icms::handler('icms_image');
-		$image =& $image_handler->get($image_id);
-		$imgcat_handler = icms::handler('icms_image_category');
-		$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
-		$src = '<img src="'.ICMS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
-		echo '<div style="margin:5px;" align="center">'.$src.'</div>';
-		icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'formimage_browse.php', _MD_RUDELIMG);
-		icmsPopupFooter();
-		break;
-	case 'delfileok':
-		imanager_delfileok($image_id,$imgcat_id);
-		break;
-	case 'cloneimg':
-		imanager_clone();
-		break;
-	case 'save_edit_ok':
-		$msg = isset($_GET['msg'])?urldecode($_GET['msg']):null;
-		redir($imgcat_id,$msg);
-		break;
+if (!is_object(icms::$user)) {
+	$groups = array(XOOPS_GROUP_ANONYMOUS);
+	$admin = false;
+} else {
+	$groups =& icms::$user->getGroups();
+	$admin = (!icms::$user->isAdmin(1)) ? false : true;
+}
+if (!$admin) {
+	exit(IMANAGER_NOPERM);
+} else { // if ($admin) - start
+	switch ($op) {
+		case 'list':
+			icmsPopupHeader();
+			echo imanager_index($imgcat_id);
+			icmsPopupFooter();
+			break;
+		case 'listimg':
+			icmsPopupHeader();
+			echo imanager_listimg($imgcat_id,$start);
+			icmsPopupFooter();
+			break;
+		case 'addfile':
+			imanager_addfile();
+			break;
+		case 'save':
+			imanager_updateimage();
+			break;
+		case 'delfile':
+			icmsPopupHeader();
+			$image_handler = icms::handler('icms_image');
+			$image =& $image_handler->get($image_id);
+			$imgcat_handler = icms::handler('icms_image_category');
+			$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
+			$src = '<img src="'.ICMS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
+			echo '<div style="margin:5px;" align="center">'.$src.'</div>';
+			icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'formimage_browse.php', _MD_RUDELIMG);
+			icmsPopupFooter();
+			break;
+		case 'delfileok':
+			imanager_delfileok($image_id,$imgcat_id);
+			break;
+		case 'cloneimg':
+			imanager_clone();
+			break;
+		case 'save_edit_ok':
+			$msg = isset($_GET['msg'])?urldecode($_GET['msg']):null;
+			redir($imgcat_id,$msg);
+			break;
+	}
 }
 
 function imanager_index($imgcat_id=null) {
@@ -820,7 +831,7 @@ function adminNav($id = null, $separador = "/", $list = false, $style="style='fo
 	} else {
 		if ($id > 0) {
 			$imgcat_handler = icms::handler('icms_image_category');
-			$imagecategory =& $imgcat_handler->get( (int) ($id));
+			$imagecategory =& $imgcat_handler->get((int) $id);
 			if ($imagecategory->getVar('imgcat_id') > 0) {
 				if ($list) {
 					$ret = $imagecategory->getVar('imgcat_name');
@@ -843,6 +854,5 @@ function adminNav($id = null, $separador = "/", $list = false, $style="style='fo
 function redir($imgcat_id,$msg=null) {
 	global $target,$type;
 
-	redirect_header($_SERVER['PHP_SELF'].'?op=listimg&imgcat_id='.$imgcat_id.'&target='.$target.'&type='.$type,2,$msg);
+	redirect_header($_SERVER['PHP_SELF'].'?op=listimg&imgcat_id='.(int) $imgcat_id.'&target='.$target.'&type='.$type,2,$msg);
 }
-?>

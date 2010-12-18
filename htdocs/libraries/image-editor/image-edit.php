@@ -21,38 +21,38 @@ include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 global $xoopsConfig;
 icms_loadLanguageFile('system', 'images', true);
 
-$icmsTpl = new icms_view_Tpl ( );
+$icmsTpl = new icms_view_Tpl();
 
-$icmsTpl->assign ( 'icms_url', ICMS_URL );
-$icmsTpl->assign ( 'icms_root_path', ICMS_ROOT_PATH );
-$icmsTpl->assign ( 'icms_lib_path', ICMS_LIBRARIES_PATH );
-$icmsTpl->assign ( 'icms_lib_url', ICMS_LIBRARIES_URL );
-$icmsTpl->assign ( 'icms_imanager_temp_path', ICMS_IMANAGER_FOLDER_PATH . '/temp' );
-$icmsTpl->assign ( 'icms_imanager_temp_url', ICMS_IMANAGER_FOLDER_URL . '/temp' );
+$icmsTpl->assign('icms_url', ICMS_URL);
+$icmsTpl->assign('icms_root_path', ICMS_ROOT_PATH);
+$icmsTpl->assign('icms_lib_path', ICMS_LIBRARIES_PATH);
+$icmsTpl->assign('icms_lib_url', ICMS_LIBRARIES_URL);
+$icmsTpl->assign('icms_imanager_temp_path', ICMS_IMANAGER_FOLDER_PATH . '/temp');
+$icmsTpl->assign('icms_imanager_temp_url', ICMS_IMANAGER_FOLDER_URL . '/temp');
 
-$image_id = (isset ( $_GET ['image_id'] )) ? $_GET ['image_id'] : ((isset ( $_POST ['image_id'] )) ? $_POST ['image_id'] : null);
-$uniq = (isset ( $_GET ['uniq'] )) ? $_GET ['uniq'] : ((isset ( $_POST ['uniq'] )) ? $_POST ['uniq'] : null);
-$type = (isset ( $_GET ['type'] )) ? $_GET ['type'] : ((isset ( $_POST ['type'] )) ? $_POST ['type'] : null);
-$target = (isset ( $_GET ['target'] )) ? $_GET ['target'] : ((isset ( $_POST ['target'] )) ? $_POST ['target'] : null);
-$op = (isset ( $_GET ['op'] )) ? $_GET ['op'] : ((isset ( $_POST ['op'] )) ? $_POST ['op'] : null);
+$image_id = (isset($_GET['image_id'])) ? (int) $_GET['image_id'] : ((isset($_POST['image_id'])) ? (int) $_POST['image_id'] : null);
+$uniq = (isset($_GET ['uniq'])) ? $_GET['uniq'] : ((isset($_POST['uniq'])) ? $_POST['uniq'] : null);
+$type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type') : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type') : null);
+$target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target') : ((isset($_POST['target'])) ? filter_input(INPUT_POST, 'target') : null);
+$op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : null);
 
-if (! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' )) {
-	if (! @mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/temp', 0777 )) {
-		echo '<script>alert("Temporary folder dont exist and cannot be created. Create it mannualy and try again. Folder: ' . ICMS_IMANAGER_FOLDER_PATH . '/temp/' . '");window.close();</script>';
-		exit ();
+if (!file_exists(ICMS_IMANAGER_FOLDER_PATH . '/temp/')) {
+	if(!@mkdir(ICMS_IMANAGER_FOLDER_PATH . '/temp', 0777)) {
+		echo '<script>alert("Temporary folder doesn\'t exist and cannot be created. Create it manually and try again. Folder: ' . ICMS_IMANAGER_FOLDER_PATH . '/temp/' . '");window.close();</script>';
+		exit();
 	}
 }
 
-if (! is_null ( $target ) && ! is_null ( $type )) {
-	if (! isset ( $_SESSION ['icms_imanager'] )) {
-		session_start ();
-		$_SESSION ['icms_imanager'] = array ( );
+if (!is_null($target) && !is_null($type)) {
+	if (!isset($_SESSION['icms_imanager'])) {
+		session_start();
+		$_SESSION['icms_imanager'] = array();
 	}
-	if (! isset ( $_SESSION ['icms_imanager'] ['imedit_target'] )) {
-		$_SESSION ['icms_imanager'] ['imedit_target'] = $target;
+	if (!isset($_SESSION['icms_imanager'] ['imedit_target'])) {
+		$_SESSION['icms_imanager'] ['imedit_target'] = $target;
 	}
-	if (! isset ( $_SESSION ['icms_imanager'] ['imedit_type'] )) {
-		$_SESSION ['icms_imanager'] ['imedit_type'] = $type;
+	if (!isset($_SESSION['icms_imanager'] ['imedit_type'])) {
+		$_SESSION['icms_imanager'] ['imedit_type'] = $type;
 	}
 }
 
@@ -86,16 +86,16 @@ if (! is_null ( $op ) && $op == 'cancel') {
 	echo 'window.close();';
 	exit ();
 }
-if (! is_null ( $op ) && $op == 'save') {
-	$simage_id = isset ( $_GET ['image_id'] ) ? $_GET ['image_id'] : null;
-	$simage_name = isset ( $_GET ['image_name'] ) ? $_GET ['image_name'] : null;
-	$simage_weight = isset ( $_GET ['image_weight'] ) ? $_GET ['image_weight'] : null;
-	$simage_display = isset ( $_GET ['image_display'] ) ? $_GET ['image_display'] : null;
-	$simage_temp = isset ( $_GET ['image_temp'] ) ? $_GET ['image_temp'] : null;
-	$soverwrite = isset ( $_GET ['overwrite'] ) ? $_GET ['overwrite'] : 1;
+if (!is_null($op) && $op == 'save') {
+	$simage_id = isset($_GET['image_id']) ? (int) $_GET['image_id'] : null;
+	$simage_name = isset($_GET['image_name']) ? filter_input(INPUT_GET, 'image_name') : null;
+	$simage_weight = isset($_GET['image_weight']) ? (int) $_GET['image_weight'] : null;
+	$simage_display = isset($_GET['image_display']) ? (int) $_GET['image_display'] : null;
+	$simage_temp = isset($_GET['image_temp']) ? filter_input(INPUT_GET, 'image_temp') : null;
+	$soverwrite = isset($_GET['overwrite']) ? (int) $_GET['overwrite'] : 1;
 
 	$image_handler = icms::handler('icms_image');
-	$simage = & $image_handler->get ( $simage_id );
+	$simage = & $image_handler->get($simage_id);
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory = & $imgcat_handler->get ( $simage->getVar ( 'imgcat_id' ) );
 
@@ -159,7 +159,7 @@ if (! is_null ( $op ) && $op == 'save') {
 	}
 
 	if (isset ( $_SESSION ['icms_imanager'] )) { //Image Editor open by some editor
-		$params = '?op=save_edit_ok&amp;imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&amp;msg=' . urlencode ( $msg );
+		$params = '?op=save_edit_ok&amp;imgcat_id=' . (int) $simage->getVar('imgcat_id') . '&amp;msg=' . urlencode($msg);
 		if (isset ( $_SESSION ['icms_imanager'] ['imedit_target'] )) {
 			$params .= '&target=' . $_SESSION ['icms_imanager'] ['imedit_target'];
 		}
@@ -168,7 +168,7 @@ if (! is_null ( $op ) && $op == 'save') {
 		}
 		unset ( $_SESSION ['icms_imanager'] );
 	} else { //Image Editor used inside the Image Manager
-		$params = '?fct=images&op=save_edit_ok&amp;imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&amp;msg=' . urlencode ( $msg );
+		$params = '?fct=images&op=save_edit_ok&amp;imgcat_id=' . (int) $simage->getVar('imgcat_id') . '&amp;msg=' . urlencode($msg);
 	}
 	echo 'cancel_edit();';
 	echo 'var url = getOpenerUrl()+"' . $params . '";';
