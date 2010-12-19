@@ -1,11 +1,5 @@
 <?php
-if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
 if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -26,7 +20,7 @@ echo ($html);
 </head>
 
 <body id="xoopsimagemanager" style="display: none">
-    <form onsubmit="XoopsimagemanagerDialog.insert();return false;" action="#"> 
+    <form onsubmit="XoopsimagemanagerDialog.insert();return false;" action="#">
 		<div class="tabs">
 			<ul>
 				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{#xoopsimagemanager_dlg.tab_general}</a></span></li>
@@ -66,7 +60,7 @@ $html = "<img
 //	onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/imagemanager.php?target=".$this->getName()."\",\"imgmanager\",400,430);'
 echo ($html);
 ?>
-										</td> 
+										</td>
 										<td id="srcbrowsercontainer">&nbsp;</td>
 									</tr>
 								  </table></td>
@@ -75,13 +69,13 @@ echo ($html);
 								<td><label for="src_list">{#xoopsimagemanager_dlg.image_list}</label></td>
 								<td><select id="src_list" name="src_list" onchange="document.getElementById('src').value=this.options[this.selectedIndex].value;document.getElementById('alt').value=this.options[this.selectedIndex].text;document.getElementById('title').value=this.options[this.selectedIndex].text;XoopsimagemanagerDialog.showPreviewImage(this.options[this.selectedIndex].value);"></select></td>
 							</tr>
-							<tr> 
-								<td class="column1"><label id="altlabel" for="alt">{#xoopsimagemanager_dlg.alt}</label></td> 
-								<td colspan="2"><input id="alt" name="alt" type="text" value="" /></td> 
-							</tr> 
-							<tr> 
-								<td class="column1"><label id="titlelabel" for="title">{#xoopsimagemanager_dlg.title}</label></td> 
-								<td colspan="2"><input id="title" name="title" type="text" value="" /></td> 
+							<tr>
+								<td class="column1"><label id="altlabel" for="alt">{#xoopsimagemanager_dlg.alt}</label></td>
+								<td colspan="2"><input id="alt" name="alt" type="text" value="" /></td>
+							</tr>
+							<tr>
+								<td class="column1"><label id="titlelabel" for="title">{#xoopsimagemanager_dlg.title}</label></td>
+								<td colspan="2"><input id="title" name="title" type="text" value="" /></td>
 							</tr>
 						</table>
 				</fieldset>
@@ -97,10 +91,10 @@ echo ($html);
 					<legend>{#xoopsimagemanager_dlg.tab_appearance}</legend>
 
 					<table border="0" cellpadding="4" cellspacing="0">
-						<tr> 
-							<td class="column1"><label id="alignlabel" for="align">{#xoopsimagemanager_dlg.align}</label></td> 
-							<td><select id="align" name="align" onchange="XoopsimagemanagerDialog.updateStyle('align');XoopsimagemanagerDialog.changeAppearance();"> 
-									<option value="">{#not_set}</option> 
+						<tr>
+							<td class="column1"><label id="alignlabel" for="align">{#xoopsimagemanager_dlg.align}</label></td>
+							<td><select id="align" name="align" onchange="XoopsimagemanagerDialog.updateStyle('align');XoopsimagemanagerDialog.changeAppearance();">
+									<option value="">{#not_set}</option>
 									<option value="baseline">{#xoopsimagemanager_dlg.align_baseline}</option>
 									<option value="top">{#xoopsimagemanager_dlg.align_top}</option>
 									<option value="middle">{#xoopsimagemanager_dlg.align_middle}</option>
@@ -109,7 +103,7 @@ echo ($html);
 									<option value="text-bottom">{#xoopsimagemanager_dlg.align_textbottom}</option>
 									<option value="left">{#xoopsimagemanager_dlg.align_left}</option>
 									<option value="right">{#xoopsimagemanager_dlg.align_right}</option>
-								</select> 
+								</select>
 							</td>
 							<td rowspan="6" valign="top">
 								<div class="alignPreview">
@@ -125,7 +119,7 @@ echo ($html);
 						<tr>
 							<td class="column1"><label id="widthlabel" for="width">{#xoopsimagemanager_dlg.dimensions}</label></td>
 							<td nowrap="nowrap">
-								<input name="width" type="text" id="width" value="" size="5" maxlength="5" class="size" onchange="XoopsimagemanagerDialog.changeHeight();" /> x 
+								<input name="width" type="text" id="width" value="" size="5" maxlength="5" class="size" onchange="XoopsimagemanagerDialog.changeHeight();" /> x
 								<input name="height" type="text" id="height" value="" size="5" maxlength="5" class="size" onchange="XoopsimagemanagerDialog.changeWidth();" /> px
 							</td>
 						</tr>
@@ -141,19 +135,19 @@ echo ($html);
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="vspacelabel" for="vspace">{#xoopsimagemanager_dlg.vspace}</label></td> 
+							<td class="column1"><label id="vspacelabel" for="vspace">{#xoopsimagemanager_dlg.vspace}</label></td>
 							<td><input name="vspace" type="text" id="vspace" value="" size="3" maxlength="3" class="number" onchange="XoopsimagemanagerDialog.updateStyle('vspace');XoopsimagemanagerDialog.changeAppearance();" onblur="XoopsimagemanagerDialog.updateStyle('vspace');XoopsimagemanagerDialog.changeAppearance();" />
 							</td>
 						</tr>
 
-						<tr> 
-							<td class="column1"><label id="hspacelabel" for="hspace">{#xoopsimagemanager_dlg.hspace}</label></td> 
-							<td><input name="hspace" type="text" id="hspace" value="" size="3" maxlength="3" class="number" onchange="XoopsimagemanagerDialog.updateStyle('hspace');XoopsimagemanagerDialog.changeAppearance();" onblur="XoopsimagemanagerDialog.updateStyle('hspace');XoopsimagemanagerDialog.changeAppearance();" /></td> 
+						<tr>
+							<td class="column1"><label id="hspacelabel" for="hspace">{#xoopsimagemanager_dlg.hspace}</label></td>
+							<td><input name="hspace" type="text" id="hspace" value="" size="3" maxlength="3" class="number" onchange="XoopsimagemanagerDialog.updateStyle('hspace');XoopsimagemanagerDialog.changeAppearance();" onblur="XoopsimagemanagerDialog.updateStyle('hspace');XoopsimagemanagerDialog.changeAppearance();" /></td>
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="borderlabel" for="border">{#xoopsimagemanager_dlg.border}</label></td> 
-							<td><input id="border" name="border" type="text" value="" size="3" maxlength="3" class="number" onchange="XoopsimagemanagerDialog.updateStyle('border');XoopsimagemanagerDialog.changeAppearance();" onblur="XoopsimagemanagerDialog.updateStyle('border');XoopsimagemanagerDialog.changeAppearance();" /></td> 
+							<td class="column1"><label id="borderlabel" for="border">{#xoopsimagemanager_dlg.border}</label></td>
+							<td><input id="border" name="border" type="text" value="" size="3" maxlength="3" class="number" onchange="XoopsimagemanagerDialog.updateStyle('border');XoopsimagemanagerDialog.changeAppearance();" onblur="XoopsimagemanagerDialog.updateStyle('border');XoopsimagemanagerDialog.changeAppearance();" /></td>
 						</tr>
 
 						<tr>
@@ -162,13 +156,13 @@ echo ($html);
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="stylelabel" for="style">{#xoopsimagemanager_dlg.style}</label></td> 
-							<td colspan="2"><input id="style" name="style" type="text" value="" onchange="XoopsimagemanagerDialog.changeAppearance();" /></td> 
+							<td class="column1"><label id="stylelabel" for="style">{#xoopsimagemanager_dlg.style}</label></td>
+							<td colspan="2"><input id="style" name="style" type="text" value="" onchange="XoopsimagemanagerDialog.changeAppearance();" /></td>
 						</tr>
 
 						<!-- <tr>
-							<td class="column1"><label id="classeslabel" for="classes">{#xoopsimagemanager_dlg.classes}</label></td> 
-							<td colspan="2"><input id="classes" name="classes" type="text" value="" onchange="selectByValue(this.form,'classlist',this.value,true);" /></td> 
+							<td class="column1"><label id="classeslabel" for="classes">{#xoopsimagemanager_dlg.classes}</label></td>
+							<td colspan="2"><input id="classes" name="classes" type="text" value="" onchange="selectByValue(this.form,'classlist',this.value,true);" /></td>
 						</tr> -->
 					</table>
 				</fieldset>
@@ -183,16 +177,16 @@ echo ($html);
 
 					<table border="0" cellpadding="4" cellspacing="0" width="100%">
 							<tr>
-								<td class="column1"><label id="onmouseoversrclabel" for="onmouseoversrc">{#xoopsimagemanager_dlg.mouseover}</label></td> 
-								<td><table border="0" cellspacing="0" cellpadding="0"> 
-									<tr> 
+								<td class="column1"><label id="onmouseoversrclabel" for="onmouseoversrc">{#xoopsimagemanager_dlg.mouseover}</label></td>
+								<td><table border="0" cellspacing="0" cellpadding="0">
+									<tr>
 									  <td>
 										<input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" />
 <?php
 $html = "<img alt=\"image\" src=\"".ICMS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoversrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
 echo ($html);
 ?>
-										</td> 
+										</td>
 									  <td id="onmouseoversrccontainer">&nbsp;</td>
 									</tr>
 								  </table></td>
@@ -201,20 +195,20 @@ echo ($html);
 								<td><label for="over_list">{#xoopsimagemanager_dlg.image_list}</label></td>
 								<td><select id="over_list" name="over_list" onchange="document.getElementById('onmouseoversrc').value=this.options[this.selectedIndex].value;"></select></td>
 							</tr>
-							<tr> 
-								<td class="column1"><label id="onmouseoutsrclabel" for="onmouseoutsrc">{#xoopsimagemanager_dlg.mouseout}</label></td> 
-								<td class="column2"><table border="0" cellspacing="0" cellpadding="0"> 
-									<tr> 
+							<tr>
+								<td class="column1"><label id="onmouseoutsrclabel" for="onmouseoutsrc">{#xoopsimagemanager_dlg.mouseout}</label></td>
+								<td class="column2"><table border="0" cellspacing="0" cellpadding="0">
+									<tr>
 									  <td>
 										<input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value="" />
 <?php
 $html = "<img alt=\"image\" src=\"".ICMS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoutsrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
 echo ($html);
 ?>
-										</td> 
+										</td>
 									  <td id="onmouseoutsrccontainer">&nbsp;</td>
-									</tr> 
-								  </table></td> 
+									</tr>
+								  </table></td>
 							</tr>
 							<tr>
 								<td><label for="out_list">{#xoopsimagemanager_dlg.image_list}</label></td>
@@ -228,33 +222,33 @@ echo ($html);
 
 					<table border="0" cellpadding="4" cellspacing="0">
 						<tr>
-							<td class="column1"><label id="idlabel" for="id">{#xoopsimagemanager_dlg.id}</label></td> 
-							<td><input id="id" name="id" type="text" value="" /></td> 
+							<td class="column1"><label id="idlabel" for="id">{#xoopsimagemanager_dlg.id}</label></td>
+							<td><input id="id" name="id" type="text" value="" /></td>
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="dirlabel" for="dir">{#xoopsimagemanager_dlg.langdir}</label></td> 
+							<td class="column1"><label id="dirlabel" for="dir">{#xoopsimagemanager_dlg.langdir}</label></td>
 							<td>
-								<select id="dir" name="dir" onchange="XoopsimagemanagerDialog.changeAppearance();"> 
-										<option value="">{#not_set}</option> 
-										<option value="ltr">{#xoopsimagemanager_dlg.ltr}</option> 
-										<option value="rtl">{#xoopsimagemanager_dlg.rtl}</option> 
+								<select id="dir" name="dir" onchange="XoopsimagemanagerDialog.changeAppearance();">
+										<option value="">{#not_set}</option>
+										<option value="ltr">{#xoopsimagemanager_dlg.ltr}</option>
+										<option value="rtl">{#xoopsimagemanager_dlg.rtl}</option>
 								</select>
-							</td> 
+							</td>
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="langlabel" for="lang">{#xoopsimagemanager_dlg.langcode}</label></td> 
+							<td class="column1"><label id="langlabel" for="lang">{#xoopsimagemanager_dlg.langcode}</label></td>
 							<td>
 								<input id="lang" name="lang" type="text" value="" />
-							</td> 
+							</td>
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="usemaplabel" for="usemap">{#xoopsimagemanager_dlg.map}</label></td> 
+							<td class="column1"><label id="usemaplabel" for="usemap">{#xoopsimagemanager_dlg.map}</label></td>
 							<td>
 								<input id="usemap" name="usemap" type="text" value="" />
-							</td> 
+							</td>
 						</tr>
 
 						<tr>
@@ -264,7 +258,7 @@ echo ($html);
 									  <td><input id="longdesc" name="longdesc" type="text" value="" /></td>
 									  <td id="longdesccontainer">&nbsp;</td>
 									</tr>
-								</table></td> 
+								</table></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -281,5 +275,5 @@ echo ($html);
 			</div>
 		</div>
     </form>
-</body> 
-</html> 
+</body>
+</html>

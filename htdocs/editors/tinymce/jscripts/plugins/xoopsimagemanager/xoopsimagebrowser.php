@@ -12,12 +12,7 @@
 * @version		$Id: formimage_browse.php 1244 2008-03-18 17:09:11Z real_therplima $
 */
 
-if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
 if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 $icmsTpl = new icms_view_Tpl ( );
@@ -242,7 +237,7 @@ function imanager_index($imgcat_id=null) {
 	$form->addElement(new icms_form_elements_Radioyn(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
 	$storetype = new icms_form_elements_Radio(_MD_IMGCATSTRTYPE, 'imgcat_storetype', 'file');
 	$storetype->setDescription('<span style="color:#ff0000;">'._MD_STRTYOPENG.'</span>');
-	$storetype->addOptionArray(array('file' => sprintf(_MD_ASFILE,ICMS_IMANAGER_FOLDER_PATH.'/foldername'), 'db' => _MD_INDB));
+	$storetype->addOptionArray(array('file' => sprintf(_MD_ASFILE,str_ireplace(ICMS_ROOT_PATH, '', ICMS_IMANAGER_FOLDER_PATH).'/foldername'), 'db' => _MD_INDB));
 	$storetype->setExtra('onchange="actField(this.value,\'imgcat_foldername\');"');
 	$form->addElement($storetype);
 	$fname = new icms_form_elements_Text(_MD_IMGCATFOLDERNAME, 'imgcat_foldername', 50, 255, '');

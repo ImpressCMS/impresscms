@@ -1,11 +1,5 @@
 <?php
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
 if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 include_once ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/misc.php';
