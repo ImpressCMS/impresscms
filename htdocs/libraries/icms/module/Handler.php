@@ -124,7 +124,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		icms_loadLanguageFile($module->getVar("dirname"), "main");
 		if ($module->getVar("hasconfig") == 1
 			|| $module->getVar("hascomments") == 1
-			|| $module->getVar("hasnotification") == 1) {
+			|| $module->getVar("hasnotification") == 1
+		) {
 			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
 		}
 		return TRUE;
