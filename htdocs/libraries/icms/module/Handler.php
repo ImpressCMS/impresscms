@@ -57,7 +57,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 **/
 	public function &get($id, $loadConfig = FALSE) {
-		$id = (int)$id;
+		$id = (int) $id;
 		$module = FALSE;
 		if ($id > 0) {
 			if (!empty($this->_cachedModule[$this->_cachedModule_lookup[$id]])) {
@@ -149,7 +149,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		foreach ($module->cleanVars as $k => $v) {
 			if ($k == 'last_update') { $v = time(); }
 			if ($module->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
-				$cleanvars[$k] = (int)$v;
+				$cleanvars[$k] = (int) $v;
 			} elseif (is_array($v)) {
 				$cleanvars[$k] = $this->db->quoteString(implode(',', $v));
 			} else {
@@ -195,26 +195,26 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 
 		$sql = sprintf(
 			"DELETE FROM %s WHERE mid = '%u'",
-			$this->db->prefix('modules'), (int)$module->getVar('mid')
+			$this->db->prefix('modules'), (int) $module->getVar('mid')
 		);
 		if (!$result = $this->db->query($sql)) return FALSE;
 
 		// delete admin permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar ('mid')
+			$this->db->prefix('group_permission'), (int) $module->getVar ('mid')
 		);
 		$this->db->query($sql);
 		// delete read permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar ('mid')
+			$this->db->prefix('group_permission'), (int) $module->getVar ('mid')
 		);
 		$this->db->query($sql);
 
 		$sql = sprintf(
 			"SELECT block_id FROM %s WHERE module_id = '%u'",
-			$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+			$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
 		);
 		if ($result = $this->db->query($sql)) {
 			$block_id_arr = array();
@@ -228,26 +228,26 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			foreach ($block_id_arr as $i) {
 				$sql = sprintf(
 					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
-					$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+					$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
 				);
 				if ($result2 = $this->db->query($sql)) {
 					if (0 < $this->db->getRowsNum($result2)) {
 						// this block has other entries, so delete the entry for this module
 						$sql = sprintf(
 							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+							$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
 						);
 						$this->db->query($sql);
 					} else {
 						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
 						$sql = sprintf(
 							"UPDATE %s SET visible = '0' WHERE bid = '%u'",
-							$this->db->prefix('newblocks'), (int)$i
+							$this->db->prefix('newblocks'), (int) $i
 						);
 						$this->db->query($sql);
 						$sql = sprintf(
 							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+							$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
 						);
 						$this->db->query($sql);
 					}
