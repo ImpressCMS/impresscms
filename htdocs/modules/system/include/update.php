@@ -257,18 +257,36 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		}
 		unset($module_handler, $modules);
 
-		/* add slot for adsense */
+		/* add slot for adsense and rename fields */
 		$table = new icms_db_legacy_updater_Table('system_adsense');
 		if (!$table->fieldExists("slot")) {
 			$table->addNewField("slot", "varchar(12) NOT NULL default ''");
 			$table->addNewFields();
 		}
-		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE border_color color_border varchar(6) NOT NULL default ''");
-		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE background_color color_background varchar(6) NOT NULL default ''");
-		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE link_color color_link varchar(6) NOT NULL default ''");
-		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE url_color color_url varchar(6) NOT NULL default ''");
-		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE text_color color_text varchar(6) NOT NULL default ''");
+		if ($table->fieldExists("border_color")) $icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE border_color color_border varchar(6) NOT NULL default ''");
+		if ($table->fieldExists("background_color")) $icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE background_color color_background varchar(6) NOT NULL default ''");
+		if ($table->fieldExists("link_color")) $icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE link_color color_link varchar(6) NOT NULL default ''");
+		if ($table->fieldExists("url_color")) $icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE url_color color_url varchar(6) NOT NULL default ''");
+		if ($table->fieldExists("text_color")) $icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE text_color color_text varchar(6) NOT NULL default ''");
 		unset($table);
+
+		/* rename content field for customtag */
+		$table = new icms_db_legacy_updater_Table("system_customtag");
+		if ($table->fieldExists("content")) $icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` CHANGE content customtag_content text NOT NULL");
+		unset($table);
+
+		/* rename gperm_name from view to view_customtag for system module */
+		$table = new icms_db_legacy_updater_Table("group_permission");
+		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET gperm_name = 'view_customtag' WHERE gperm_name = 'view' AND gperm_modid = 1");
+		unset($table);
+
+		/* reset default source editor if jsvi is used */
+		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "sourceeditor_default")));
+		if (count($configs) == 1 && $configs[0]->getVar("conf_value") == "jsvi") {
+			$configs[0]->setVar("conf_value", "editarea");
+			icms::$config->insertConfig($configs[0]);
+		}
+		unset($configs);
 
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {

@@ -169,10 +169,8 @@ class icms_ipf_permission_Handler {
 
 		// First, if the permissions are already there, delete them
 		$gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
-		//echo "itemid : $itemid - perm : $perm_name - modid : $module_id";
-		//exit;
-		// Save the new permissions
 
+		// Save the new permissions
 		if (count($groups) > 0) {
 			foreach ($groups as $group_id) {
 				$gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);

@@ -14,19 +14,16 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	exit("Access Denied");
 }
 
-function editmimetype($showmenu = false, $mimetypeid = 0, $clone=false)
-{
+function editmimetype($showmenu = false, $mimetypeid = 0) {
 	global $icms_mimetype_handler, $icmsAdminTpl;
 
 	icms_cp_header();
-
 	$mimetypeObj = $icms_mimetype_handler->get($mimetypeid);
 
-	if (!$clone && !$mimetypeObj->isNew()) {
-
+	if (!$mimetypeObj->isNew()) {
 		$sform = $mimetypeObj->getForm(_CO_ICMS_MIMETYPE_EDIT, 'addmimetype');
-
 		$sform->assign($icmsAdminTpl);
+
 		$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPE_EDIT_INFO);
 		$icmsAdminTpl->display('db:admin/mimetype/system_adm_mimetype.html');
 	} else {
@@ -50,19 +47,9 @@ $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?tr
 
 switch ($op) {
 	case "mod":
-
 		$mimetypeid = isset($_GET['mimetypeid']) ? (int) ($_GET['mimetypeid']) : 0 ;
-
 		editmimetype(true, $mimetypeid);
-
 		break;
-
-		/*case "clone":
-
-		$mimetypeid = isset($_GET['mimetypeid']) ? (int) ($_GET['mimetypeid']) : 0 ;
-
-		editmimetype(true, $mimetypeid, true);
-		break;*/
 
 	case "addmimetype":
 		$controller = new icms_ipf_Controller($icms_mimetype_handler);
@@ -72,32 +59,23 @@ switch ($op) {
 	case "del":
 		$controller = new icms_ipf_Controller($icms_mimetype_handler);
 		$controller->handleObjectDeletion();
-
 		break;
 
 	default:
-
 		icms_cp_header();
 
 		$objectTable = new icms_ipf_view_Table($icms_mimetype_handler);
 		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, 150));
 		$objectTable->addColumn(new icms_ipf_view_Column('extension', _GLOBAL_LEFT, 150));
 		$objectTable->addColumn(new icms_ipf_view_Column('types', _GLOBAL_LEFT));
-
 		$objectTable->addIntroButton('addmimetype', 'admin.php?fct=mimetype&amp;op=mod', _CO_ICMS_MIMETYPE_CREATE);
-
 		$objectTable->addQuickSearch(array('name', 'extension', 'types'));
 
 		$icmsAdminTpl->assign('icms_mimetype_table', $objectTable->fetch());
-
 		$icmsAdminTpl->assign('icms_mimetype_explain', true);
 		$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPES_DSC);
-
 		$icmsAdminTpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/mimetype/system_adm_mimetype.html');
-
 		break;
 }
 
 icms_cp_footer();
-
-?>

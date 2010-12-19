@@ -18,6 +18,13 @@
  */
 class IcmsPreloadAdsense extends icms_preload_Item {
 	/**
+	 * Function to be triggered at the end of the core boot process
+	 */
+	function eventFinishCoreBoot() {
+		icms_loadLanguageFile('system', 'adsense', TRUE);
+	}
+
+	/**
 	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
 	 *
 	 * The $array var is structured like this:
@@ -63,10 +70,9 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 	 * @return	void
 	 */
 	public function eventStartOutputInit() {
-		icms_loadLanguageFile('system', 'adsense', TRUE);
+		global $icmsTpl;
 		$icms_adsense_handler = icms_getModuleHandler("adsense", "system");
 		$icms_adsensesObj = $icms_adsense_handler->getAdsensesByTag();
-		global $icmsTpl;
 		$adsenses_array = array();
 		if (is_object($icmsTpl)) {
 			foreach ($icms_adsensesObj as $k => $v) {

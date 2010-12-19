@@ -613,7 +613,7 @@ CREATE TABLE system_customtag (
   customtagid int(11) unsigned NOT NULL auto_increment,
   name varchar(255) NOT NULL default '',
   description text NOT NULL,
-  content text NOT NULL,
+  customtag_content text NOT NULL,
   language varchar(100) NOT NULL default '',
   customtag_type tinyint(1) NOT NULL default 0,
   PRIMARY KEY (customtagid)

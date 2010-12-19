@@ -387,6 +387,7 @@ class icms_core_Filesystem {
 	 * @return	array	$fileList	A list of files in a directory
 	 */
 	static public function getFileList($dirname, $prefix = '', array $extension = array(), $hideDot = FALSE) {
+		if (!is_dir($dirname)) return array();
 		$fileList = array();
 		if (empty($extension)) {
 			$extList = '';

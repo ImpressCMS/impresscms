@@ -645,12 +645,33 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			}
 		}
 
+		$this->deleteGrantedPermissions($obj);
+
 		$eventResult = $this->executeEvent('afterDelete', $obj);
 		if (!$eventResult) {
 			$obj->setErrors("An error occured during the AfterDelete event");
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * delete granted permssions for an object
+	 *
+	 * @param	object	$obj	optional
+	 * @return	bool	TRUE
+	 */
+	private function deleteGrantedPermissions($obj = NULL) {
+		$gperm_handler = icms::handler("icms_member_groupperm");
+		$module = icms::handler("icms_module")->getByDirname($this->_moduleName);
+		foreach ($this->getPermissions() as $permission) {
+			if ($obj != NULL) {
+				$gperm_handler->deleteByModule($module->getVar("mid"), $permission["perm_name"], $obj->id());
+			} else {
+				$gperm_handler->deleteByModule($module->getVar("mid"), $permission["perm_name"]);
+			}
+		}
+		return TRUE;
 	}
 
 	/**

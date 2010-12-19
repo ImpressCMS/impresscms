@@ -21,10 +21,16 @@ if ($tform['tpl_tplset'] != 'default') {
 $form->addElement(new icms_form_elements_Label(_MD_FILENAME, $tform['tpl_file']));
 $form->addElement(new icms_form_elements_Label(_MD_FILEDESC, $tform['tpl_desc']));
 $form->addElement(new icms_form_elements_Label(_MD_LASTMOD, formatTimestamp($tform['tpl_lastmodified'], 'l')));
-$tpl_src = new icms_form_elements_Textarea(_MD_FILEHTML, 'html', $tform['tpl_source'], 25, 70);
-if ($tform['tpl_tplset'] == 'default') {
-	$tpl_src->setExtra('readonly');
-}
+$config = array(
+	'name' => 'html',
+	'value' => $tform['tpl_source'],
+	'language' => _LANGCODE,
+	'width' => '100%',
+	'height' => '400px',
+	'syntax' => 'html');
+if ($tform['tpl_tplset'] == 'default') $config["is_editable"] = FALSE;
+$tpl_src = icms_plugins_EditorHandler::getInstance('source')->get($icmsConfig['sourceeditor_default'], $config);
+$tpl_src->setCaption(_MD_FILEHTML);
 $form->addElement($tpl_src);
 $form->addElement(new icms_form_elements_Hidden('id', $tform['tpl_id']));
 $form->addElement(new icms_form_elements_Hidden('op', 'edittpl_go'));

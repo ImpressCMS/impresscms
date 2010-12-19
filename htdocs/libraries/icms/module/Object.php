@@ -24,7 +24,7 @@ class icms_module_Object extends icms_core_Object {
 	 * Module configuration
 	 * @var array
 	 */
-	public $config;
+	public $config = NULL;
 	/**
 	 * @var string
 	 */

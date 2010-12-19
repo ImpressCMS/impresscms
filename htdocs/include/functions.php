@@ -1296,31 +1296,11 @@ function icms_get_page_before_form()
  * @return mixed The sanitized tag or empty string
  * @todo Move to a static class method - Customtag
  */
-function icms_sanitizeCustomtags_callback($matches)
-{
-	global $icms_customtag_handler;
-	if(isset($icms_customtag_handler->objects[$matches[1]]))
-	{
-		$customObj = $icms_customtag_handler->objects[$matches[1]];
-		$ret = $customObj->renderWithPhp();
-		return $ret;
-	}
-	else {return '';}
-}
-
-/**
- * Sanitizes custom tags
- *
- * @param string $text	Purifies passed text
- * @return string	$text The purified text
- * @todo Move to a static class method - Customtag
- */
-function icms_sanitizeCustomtags($text) {
-	$patterns = array();
-	global $icms_customtag_handler;
-	$patterns[] = '/\[customtag](.*)\[\/customtag\]/sU';
-	$text = preg_replace_callback($patterns, 'icms_sanitizeCustomtags_callback', $text);
-	return $text;
+function icms_sanitizeCustomtags_callback($matches) {
+	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
+	$icms_customTagsObj = $icms_customtag_handler->getCustomtagsByName();
+	if (!isset($icms_customTagsObj[$matches[1]])) return "";
+	return $icms_customTagsObj[$matches[1]]->renderWithPhp();
 }
 
 /**

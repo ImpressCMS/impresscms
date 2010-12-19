@@ -18,11 +18,9 @@
 class IcmsPreloadCustomtag extends icms_preload_Item {
 	/**
 	 * Function to be triggered at the end of the core boot process
-	 *
-	 * @return	void
 	 */
 	function eventFinishCoreBoot() {
-		include_once ICMS_ROOT_PATH . '/include/customtag.php' ;
+		icms_loadLanguageFile("system", "customtag", TRUE);
 	}
 
 	/**
@@ -41,7 +39,8 @@ class IcmsPreloadCustomtag extends icms_preload_Item {
 	 * @return	void
 	 */
 	function eventBeforePreviewTarea($array) {
-		$array[0] = icms_sanitizeCustomtags($array[0]);
+		$array[0] = preg_replace_callback(array('/\[customtag](.*)\[\/customtag\]/sU'),
+			"icms_sanitizeCustomtags_callback", $array[0]);
 	}
 
 	/**
@@ -60,7 +59,8 @@ class IcmsPreloadCustomtag extends icms_preload_Item {
 	 * @return	void
 	 */
 	function eventBeforeDisplayTarea($array) {
-		$array[0] = icms_sanitizeCustomtags($array[0]);
+		$array[0] = preg_replace_callback(array('/\[customtag](.*)\[\/customtag\]/sU'),
+			"icms_sanitizeCustomtags_callback", $array[0]);
 	}
 
 	/**
@@ -69,13 +69,15 @@ class IcmsPreloadCustomtag extends icms_preload_Item {
 	 * @return	void
 	 */
 	function eventStartOutputInit() {
-		global $xoopsTpl, $icms_customtag_handler;
+		global $icmsTpl;
+		$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
+		$icms_customTagsObj = $icms_customtag_handler->getCustomtagsByName();
 		$customtags_array = array();
-		if (is_object($xoopsTpl)) {
-			foreach ($icms_customtag_handler->objects as $k=>$v) {
+		if (is_object($icmsTpl)) {
+			foreach ($icms_customTagsObj as $k => $v) {
 				$customtags_array[$k] = $v->render();
 			}
-			$xoopsTpl->assign('icmsCustomtags', $customtags_array);
+			$icmsTpl->assign("icmsCustomtags", $customtags_array);
 		}
 	}
 }
