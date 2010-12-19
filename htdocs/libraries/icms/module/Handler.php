@@ -19,7 +19,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
  * @category	ICMS
  * @package		Module
  * @author	Kazumi Ono 	<onokazu@xoops.org>
- **/
+ */
 class icms_module_Handler extends icms_core_ObjectHandler {
 	/**
 	 * holds an array of cached module references, indexed by module dirname
@@ -34,7 +34,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @var    array
 	 * @access private
-	 **/
+	 */
 	private $_cachedModule_lookup = array();
 
 	/**
@@ -42,7 +42,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   boolean     $isNew   Flag the new object as "new"
 	 * @return  object      {@link icms_module_Object}
-	 **/
+	 */
 	public function &create($isNew = TRUE) {
 		$module = new icms_module_Object();
 		if ($isNew) $module->setNew();
@@ -55,7 +55,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param  	int     $id			ID of the module
 	 * @param	bool	$loadConfig	set to TRUE in case you want to load the module config in addition
 	 * @return	object  {@link icms_module_Object} FALSE on fail
-	 **/
+	 */
 	public function &get($id, $loadConfig = FALSE) {
 		$id = (int) $id;
 		$module = FALSE;
@@ -89,7 +89,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param	string	$dirname
 	 * @param	bool	$loadConfig	set to TRUE in case you want to load the module config in addition
 	 * @return	object  {@link icms_module_Object} FALSE on fail
-	 **/
+	 */
 	public function getByDirname($dirname, $loadConfig = FALSE) {
 		if (!empty($this->_cachedModule[$dirname]) && $this->_cachedModule[$dirname]->getVar('dirname') == $dirname) {
 			if ($loadConfig) $this->loadConfig($this->_cachedModule[$dirname]);
@@ -135,7 +135,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   object  &$module reference to a {@link icms_module_Object}
 	 * @return  bool
-	 **/
+	 */
 	public function insert(&$module) {
 		if (get_class($module) != 'icms_module_Object') return FALSE;
 		if (!$module->isDirty()) return TRUE;
@@ -144,7 +144,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		/**
 		 * Editing the insert and update methods
 		 * this is temporaray as will soon be based on a persistableObjectHandler
-		 **/
+		 */
 		$fieldsToStoreInDB = array();
 		foreach ($module->cleanVars as $k => $v) {
 			if ($k == 'last_update') { $v = time(); }
@@ -189,7 +189,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   object  &$module {@link icms_module_Object}
 	 * @return  bool
-	 **/
+	 */
 	public function delete(&$module) {
 		if (get_class($module) != 'icms_module_Object') return FALSE;
 
@@ -270,7 +270,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
 	 * @return  array
-	 **/
+	 */
 	public function getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array();
 		$limit = $start = 0;
@@ -303,7 +303,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @return  int
-	 **/
+	 */
 	public function getCount($criteria = NULL) {
 		$sql = "SELECT COUNT(*) FROM " . $this->db->prefix('modules');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
