@@ -38,7 +38,7 @@ define('_MD_IMAGESTOT', '<b>Total Images:</b> %s');
 define('_MD_IMAGECATID', 'ID');
 define('_MD_IMAGECATNAME', 'Title');
 define('_MD_IMGCATFOLDERNAME', 'Folder Name');
-define('_MD_IMGCATFOLDERNAME_DESC', 'Do not use spaces or especial chars!');
+define('_MD_IMGCATFOLDERNAME_DESC', 'Do not use spaces or special chars!');
 define('_MD_IMAGECATMSIZE', 'Max Size');
 define('_MD_IMAGECATMWIDTH', 'Max Width');
 define('_MD_IMAGECATMHEIGHT', 'Max Height');
