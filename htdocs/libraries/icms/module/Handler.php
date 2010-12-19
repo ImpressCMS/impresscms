@@ -120,7 +120,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return	bool				TRUE
 	 */
 	private function loadConfig($module) {
-		if ($module->config != NULL) return TRUE;
+		if ($module->config !== NULL) return TRUE;
 		icms_loadLanguageFile($module->getVar("dirname"), "main");
 		if ($module->getVar("hasconfig") == 1
 			|| $module->getVar("hascomments") == 1
