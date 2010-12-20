@@ -28,6 +28,7 @@ function xoops_module_install($dirname) {
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
+		$module->registerClassPath();		
 		$module->setVar('weight', 1);
 		$error = false;
 		$errs = array();

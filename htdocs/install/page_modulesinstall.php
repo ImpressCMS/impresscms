@@ -62,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (isset($_POST['install_mods'])) {
 			for ($i = 0; $i <= count($install_mods)-1;$i++) {
 				$content .= xoops_module_install($install_mods[$i]);
-				//$content .= icms_module_update($install_mods[$i]);
 				impresscms_get_adminmenu();
 			}
 		} else {

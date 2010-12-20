@@ -159,17 +159,7 @@ abstract class icms {
 	static public function launchModule() {
 		$module_handler = icms::handler("icms_module");
 		$modules = $module_handler->getObjects();
-		foreach ($modules as $module) {
-			if ($module->getVar("dirname") == "system" || $module->getVar("isactive") == 0) continue;
-			$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
-			if ($module->getVar("ipf")) {
-				$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :
-																$module->getVar("dirname");
-				icms_Autoloader::register($class_path, "mod_" . $modname);
-			} else {
-				icms_Autoloader::register($class_path);
-			}
-		}
+		foreach ($modules as $module) $module->registerClassPath(TRUE);
 
 		$isAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
 		self::loadService('module', array('icms_module_Handler', 'service'), array($isAdmin));

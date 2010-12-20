@@ -195,17 +195,7 @@ if ($op == 'install_ok') {
 if ($op == 'uninstall') {
 	$module_handler = icms::handler('icms_module');
 	$mod =& $module_handler->getByDirname($module);
-
-	if ($mod->getVar("dirname") != "system") {
-		$class_path = ICMS_ROOT_PATH . "/modules/" . $mod->getVar("dirname") . "/class";
-		if ($mod->getVar("ipf")) {
-			$modname = ($mod->getVar("modname") != "") ? $mod->getVar("modname") :
-															$mod->getVar("dirname");
-			icms_Autoloader::register($class_path, "mod_" . $modname);
-		} else {
-			icms_Autoloader::register($class_path);
-		}
-	}
+	$mod->registerClassPath();
 
 	if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
 		$msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';

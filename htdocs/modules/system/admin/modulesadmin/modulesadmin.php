@@ -42,17 +42,7 @@ function xoops_module_list() {
 	$installed_mods =& $module_handler->getObjects();
 	$listed_mods = array();
 	foreach ($installed_mods as $module) {
-		if ($module->getVar("dirname") != "system" && $module->getVar("isactive") == "0") {
-			$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
-			if ($module->getVar("ipf")) {
-				$modname = ($module->getVar("modname") != "")
-					? $module->getVar("modname")
-					: $module->getVar("dirname");
-				icms_Autoloader::register($class_path, "mod_" . $modname);
-			} else {
-				icms_Autoloader::register($class_path);
-			}
-		}
+		$module->registerClassPath(FALSE);
 		$module->getInfo();
 		$mod = array(
 			'mid' => $module->getVar('mid'),
@@ -115,19 +105,7 @@ function xoops_module_install($dirname) {
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
-
-		if ($module->getVar("dirname") != "system") {
-			$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
-			if ($module->getVar("ipf")) {
-				$modname = ($module->getVar("modname") != "")
-					? $module->getVar("modname")
-					: $module->getVar("dirname");
-				icms_Autoloader::register($class_path, "mod_" . $modname);
-			} else {
-				icms_Autoloader::register($class_path);
-			}
-		}
-
+		$module->registerClassPath();
 		$module->setVar('weight', 1);
 		$error = false;
 		$errs = array();
@@ -610,18 +588,7 @@ function xoops_module_uninstall($dirname) {
 	$db =& icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->getByDirname($dirname);
-
-	if ($module->getVar("dirname") != "system") {
-		$class_path = ICMS_ROOT_PATH . "/modules/" . $module->getVar("dirname") . "/class";
-		if ($module->getVar("ipf")) {
-			$modname = ($module->getVar("modname") != "") ? $module->getVar("modname") :
-			$module->getVar("dirname");
-			icms_Autoloader::register($class_path, "mod_" . $modname);
-		} else {
-			icms_Autoloader::register($class_path);
-		}
-	}
-
+	$module->registerClassPath();
 	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
 	if ($module->getVar('dirname') == 'system') {
 		return "<p>" . sprintf(_MD_AM_FAILUNINS, "<strong>" . $module->getVar('name') . "</strong>")
@@ -1462,6 +1429,7 @@ function icms_module_update($dirname) {
 			$is_IPF = $module->getInfo('object_items');
 			if (!empty($is_IPF)) {
 				$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+				$icmsDatabaseUpdater->moduleUpgrade($module, true);
 				array_merge($msgs, $icmsDatabaseUpdater->_messages);
 			}
 
