@@ -60,7 +60,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		$id = (int) $id;
 		$module = FALSE;
 		if ($id > 0) {
-			if (!empty($this->_cachedModule[$this->_cachedModule_lookup[$id]])) {
+			if (!empty($this->_cachedModule_lookup[$id]) &&
+				!empty($this->_cachedModule[$this->_cachedModule_lookup[$id]])
+			) {
 				if ($loadConfig) $this->loadConfig($this->_cachedModule[$this->_cachedModule_lookup[$id]]);
 				return $this->_cachedModule[$this->_cachedModule_lookup[$id]];
 			} else {
@@ -91,7 +93,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 */
 	public function getByDirname($dirname, $loadConfig = FALSE) {
-		if (!empty($this->_cachedModule[$dirname]) && $this->_cachedModule[$dirname]->getVar('dirname') == $dirname) {
+		if (!empty($this->_cachedModule[$dirname]) &&
+			$this->_cachedModule[$dirname]->getVar('dirname') == $dirname
+		) {
 			if ($loadConfig) $this->loadConfig($this->_cachedModule[$dirname]);
 			return $this->_cachedModule[$dirname];
 		} else {
@@ -203,13 +207,13 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		// delete admin permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int) $module->getVar ('mid')
+			$this->db->prefix('group_permission'), (int) $module->getVar('mid')
 		);
 		$this->db->query($sql);
 		// delete read permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int) $module->getVar ('mid')
+			$this->db->prefix('group_permission'), (int) $module->getVar('mid')
 		);
 		$this->db->query($sql);
 

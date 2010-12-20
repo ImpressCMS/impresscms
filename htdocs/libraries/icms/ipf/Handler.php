@@ -664,7 +664,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	private function deleteGrantedPermissions($obj = NULL) {
 		$gperm_handler = icms::handler("icms_member_groupperm");
 		$module = icms::handler("icms_module")->getByDirname($this->_moduleName);
-		foreach ($this->getPermissions() as $permission) {
+		$permissions = $this->getPermissions();
+		if ($permissions === FALSE) return TRUE;
+		foreach ($permissions as $permission) {
 			if ($obj != NULL) {
 				$gperm_handler->deleteByModule($module->getVar("mid"), $permission["perm_name"], $obj->id());
 			} else {

@@ -778,6 +778,7 @@ function xoops_module_uninstall($dirname) {
 			}
 
 			// delete permissions if any
+			$msgs[] = _MD_AM_GROUPPERM_DELETE;
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			if (!$gperm_handler->deleteByModule($module->getVar('mid'))) {
 				$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_GROUPPERM_DELETE_FAIL . '</span>';

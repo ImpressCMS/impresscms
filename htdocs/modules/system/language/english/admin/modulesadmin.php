@@ -152,6 +152,7 @@ define('_MD_AM_NOTIFICATIONS_DELETE', 'Deleting notifications...');
 define('_MD_AM_NOTIFICATION_DELETE_FAIL', 'ERROR: Could not delete notifications');
 define('_MD_AM_NOTIFICATION_DELETED', 'Notifications deleted');
 
+define('_MD_AM_GROUPPERM_DELETE', 'Deleting group permissions...');
 define('_MD_AM_GROUPPERM_DELETE_FAIL', 'ERROR: Could not delete group permissions');
 define('_MD_AM_GROUPPERM_DELETED', 'Group permissions deleted');
 
