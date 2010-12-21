@@ -618,36 +618,21 @@ function &xoops_gethandler($name, $optional = false) {
  * @param	int  $rank_id  The Rank ID to get
  * @param 	int	 $posts		The number of posts to match for the rank
  * @return	array	$rank		The fetched rank array
- * @todo Move to a static class method - Rank
+ * @deprecated Use SystemUserrankHandler->getRank
+ * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-function xoops_getrank($rank_id =0, $posts = 0)
-{
-	$db =& icms_db_Factory::instance();
-	$myts =& icms_core_Textsanitizer::getInstance();
-	$rank_id = (int) ($rank_id);
-	$posts = (int) ($posts);
-	if($rank_id != 0)
-	{
-		$sql = "SELECT rank_title AS title, rank_image AS image FROM ".$db->prefix('ranks')." WHERE rank_id = '".$rank_id."'";
-	}
-	else
-	{
-		$sql = "SELECT rank_title AS title, rank_image AS image FROM ".$db->prefix('ranks')." WHERE rank_min <= '".$posts."' AND rank_max >= '".$posts."' AND rank_special = '0'";
-	}
-	$rank = $db->fetchArray($db->query($sql));
-	$rank['title'] = $myts->htmlSpecialChars($rank['title']);
-	$rank['id'] = $rank_id;
-	return $rank;
+function xoops_getrank($rank_id =0, $posts = 0) {
+	icms_core_Debug::setDeprecated('SystemUserrankHandler->getRank', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_getModuleHandler("userrank", "system")->getRank($rank_id, $posts);
 }
 
 /**
  * Function maintained only for compatibility
- * @deprecated Use icms_substr
+ * @deprecated Use icms_core_DataFilter::icms_substr
  * @todo Remove in version 1.4 - all instances have been removed from the core
  *
  */
-function xoops_substr($str, $start, $length, $trimmarker = '...')
-{
+function xoops_substr($str, $start, $length, $trimmarker = '...') {
 	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_substr', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_core_DataFilter::icms_substr($str, $start, $length, $trimmarker);
 }

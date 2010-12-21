@@ -280,7 +280,7 @@ class icms_member_user_Object extends icms_core_Object {
 	 */
 	public function rank() {
 		if (!isset($this->_rank)) {
-			$this->_rank = xoops_getrank($this->getVar('rank'), $this->getVar('posts'));
+			$this->_rank = icms_getModuleHandler("userrank", "system")->getRank($this->getVar('rank'), $this->getVar('posts'));
 		}
 		return $this->_rank;
 	}

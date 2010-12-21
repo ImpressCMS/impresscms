@@ -329,16 +329,14 @@ class IcmsLists {
 
 	/**
 	 * Gets list of all user ranks in the database
-	 * @deprecated	Use $rankHandler->getList
+	 * @deprecated	Use SystemUserrankHandler->getList
 	 * @todo		Remove in version 1.4
 	 *
 	 * @return  array	 $ret   list of user ranks
 	 */
 	static public function getUserRankList() {
-		icms_core_Debug::setDeprecated();
-		$rankHandler = icms::handler("icms_data_rank");
-		$ranklist = $rankHandler->getList(icms_buildCriteria(array("rank_special" => 1)));
-		return $ranklist;
+		icms_core_Debug::setDeprecated('SystemUserrankHandler->getList', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return icms_getModuleHandler("userrank", "system")->getList(icms_buildCriteria(array("rank_special" => 1)));
 	}
 }
 

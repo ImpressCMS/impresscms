@@ -482,8 +482,7 @@ function b_system_topposters_edit($options)
 	}
 	$form .= " />&nbsp;"._NO."";
 	$form .= "<br />"._MB_SYSTEM_NODISPGR."<br /><select id='options[]' name='options[]' multiple='multiple'>";
-	$rankHandler = new icms_data_rank_Handler(icms::$xoopsDB);
-	$ranklist = $rankHandler->getList(new icms_db_criteria_Compo(new icms_db_criteria_Item('rank_special', '1')));
+	$ranks = icms_getModuleHandler("userrank", "system")->getList(icms_buildCriteria(array('rank_special' => '1')));
 	$size = count($options);
 	foreach ($ranks as $k => $v) {
 		$sel = "";

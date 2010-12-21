@@ -350,9 +350,9 @@ class icms_data_comment_Renderer {
 			if (is_object($com_poster)) {
 				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';
 				$poster_rank = $com_poster->rank();
-				$poster['rank_image'] = ($poster_rank['image'] != '') ? $poster_rank['image'] : 'blank.gif';
+				$poster['rank_image'] = $poster_rank['image'];
 				$poster['rank_title'] = $poster_rank['title'];
-				$poster['avatar'] = $com_poster->getVar('user_avatar');
+				$poster['avatar'] = $com_poster->gravatar();
 				$poster['regdate'] = formatTimestamp($com_poster->getVar('user_regdate'), 's');
 				$poster['from'] = $com_poster->getVar('user_from');
 				$poster['postnum'] = $com_poster->getVar('posts');
@@ -363,7 +363,7 @@ class icms_data_comment_Renderer {
 		$poster['id'] = 0; // to cope with deleted user accounts
 		$poster['uname'] = $GLOBALS['xoopsConfig']['anonymous'];
 		$poster['rank_title'] = '';
-		$poster['avatar'] = 'blank.gif';
+		$poster['avatar'] = ICMS_UPLOAD_URL . '/blank.gif';
 		$poster['regdate'] = '';
 		$poster['from'] = '';
 		$poster['postnum'] = 0;
