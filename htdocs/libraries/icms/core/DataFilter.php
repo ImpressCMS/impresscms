@@ -944,6 +944,7 @@ class icms_core_DataFilter {
 			break;
 
 			case "email":
+				global $icmsConfigUser;
 
 				$icmsStopSpammers = new icms_core_StopSpammer();
 

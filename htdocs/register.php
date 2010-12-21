@@ -29,27 +29,25 @@ if (icms_get_module_status('profile') && file_exists(ICMS_ROOT_PATH.'/modules/pr
 	exit();
 }
 
-$myts =& icms_core_Textsanitizer::getInstance();
-
 if ($icmsConfigUser['allow_register'] == 0 && $icmsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
 }
 if (is_object(icms::$user)) {
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
 }
-$op = !isset($_POST['op']) ? 'register' : $_POST['op'];
-$login_name = isset($_POST['login_name']) ? $myts->stripSlashesGPC($_POST['login_name']) : '';
-$uname = isset($_POST['uname']) ? $myts->stripSlashesGPC($_POST['uname']) : '';
-$email = isset($_POST['email']) ? trim($myts->stripSlashesGPC($_POST['email'])) : '';
-$url = isset($_POST['url']) ? trim($myts->stripSlashesGPC($_POST['url'])) : '';
-$pass = isset($_POST['pass']) ? $myts->stripSlashesGPC($_POST['pass']) : '';
-$vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC($_POST['vpass']) : '';
+$op = !isset($_POST['op']) ? 'register' : filter_input(INPUT_POST, 'op');
+$login_name = isset($_POST['login_name']) ? icms_core_DataFilter::stripSlashesGPC($_POST['login_name']) : '';
+$uname = isset($_POST['uname']) ? icms_core_DataFilter::stripSlashesGPC($_POST['uname']) : '';
+$email = isset($_POST['email']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])) : '';
+$url = isset($_POST['url']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['url'])) : '';
+$pass = isset($_POST['pass']) ? icms_core_DataFilter::stripSlashesGPC($_POST['pass']) : '';
+$vpass = isset($_POST['vpass']) ? icms_core_DataFilter::stripSlashesGPC($_POST['vpass']) : '';
 $timezone_offset = isset($_POST['timezone_offset']) ? (float)($_POST['timezone_offset']) : $icmsConfig['default_TZ'];
 $user_viewemail = (isset($_POST['user_viewemail']) && (int) ($_POST['user_viewemail'])) ? 1 : 0;
 $user_mailok = (isset($_POST['user_mailok']) && (int) ($_POST['user_mailok'])) ? 1 : 0;
 $agree_disc = (isset($_POST['agree_disc']) && (int) ($_POST['agree_disc'])) ? 1 : 0;
-$actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey'])) : '';
-$salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
+$actkey = isset($_POST['actkey']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['actkey'])) : '';
+$salt = isset($_POST['salt']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['salt'])) : '';
 $enc_type = $icmsConfigUser['enc_type'];
 
 $thisuser = icms::handler('icms_member_user');
@@ -78,27 +76,27 @@ switch ($op) {
 		}
 		$stop .= $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
 		if (empty($stop)) {
-			echo _US_LOGINNAME.": ".$myts->htmlSpecialChars($login_name)."<br />";
-			echo _US_NICKNAME.": ".$myts->htmlSpecialChars($uname)."<br />";
-			echo _US_EMAIL.": ".$myts->htmlSpecialChars($email)."<br />";
+			echo _US_LOGINNAME.": ".icms_core_DataFilter::htmlSpecialChars($login_name)."<br />";
+			echo _US_NICKNAME.": ".icms_core_DataFilter::htmlSpecialChars($uname)."<br />";
+			echo _US_EMAIL.": ".icms_core_DataFilter::htmlSpecialChars($email)."<br />";
 			if ($url != '') {
 				$url = formatURL($url);
-				echo _US_WEBSITE.': '.$myts->htmlSpecialChars($url).'<br />';
+				echo _US_WEBSITE.': '.icms_core_DataFilter::htmlSpecialChars($url).'<br />';
 			}
 			$f_timezone = ($timezone_offset < 0) ? 'GMT '.$timezone_offset : 'GMT +'.$timezone_offset;
 			echo _US_TIMEZONE.": $f_timezone<br />";
 			echo "<form action='register.php' method='post'>
-				<input type='hidden' name='login_name' value='".$myts->htmlSpecialChars($login_name)."' />
-				<input type='hidden' name='uname' value='".$myts->htmlSpecialChars($uname)."' />
-				<input type='hidden' name='email' value='".$myts->htmlSpecialChars($email)."' />";
-			echo "<input type='hidden' name='user_viewemail' value='".$user_viewemail."' />
+				<input type='hidden' name='login_name' value='".icms_core_DataFilter::htmlSpecialChars($login_name)."' />
+				<input type='hidden' name='uname' value='".icms_core_DataFilter::htmlSpecialChars($uname)."' />
+				<input type='hidden' name='email' value='".icms_core_DataFilter::htmlSpecialChars($email)."' />";
+			echo "<input type='hidden' name='user_viewemail' value='".(int) $user_viewemail."' />
 				<input type='hidden' name='timezone_offset' value='".$timezone_offset."' />
-				<input type='hidden' name='url' value='".$myts->htmlSpecialChars($url)."' />
-				<input type='hidden' name='pass' value='".$myts->htmlSpecialChars($pass)."' />
-				<input type='hidden' name='vpass' value='".$myts->htmlSpecialChars($vpass)."' />
-				<input type='hidden' name='user_mailok' value='".$user_mailok."' />
-				<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
-				<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
+				<input type='hidden' name='url' value='".icms_core_DataFilter::htmlSpecialChars($url)."' />
+				<input type='hidden' name='pass' value='".icms_core_DataFilter::htmlSpecialChars($pass)."' />
+				<input type='hidden' name='vpass' value='".icms_core_DataFilter::htmlSpecialChars($vpass)."' />
+				<input type='hidden' name='user_mailok' value='".(int) $user_mailok."' />
+				<input type='hidden' name='actkey' value='".icms_core_DataFilter::htmlSpecialChars($actkey)."' />
+				<input type='hidden' name='salt' value='".icms_core_DataFilter::htmlSpecialChars($salt)."' />
 				<input type='hidden' name='enc_type' value='". (int) ($enc_type)."' />
 		<input type='hidden' name='agree_disc' value='" . (int) $agree_disc . "' />
 				<br /><br /><input type='hidden' name='op' value='finish' />".icms::$security->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
@@ -233,7 +231,7 @@ switch ($op) {
 		break;
 	case 'register':
 	default:
-		$invite_code = isset($_GET['code'])?$_GET['code']:null;
+		$invite_code = isset($_GET['code']) ? filter_input(INPUT_GET, 'code') : null;
 		if ($icmsConfigUser['activation_type'] == 3 || !empty($invite_code)) {
 			include 'include/checkinvite.php';
 			load_invite_code($invite_code);
@@ -246,4 +244,3 @@ switch ($op) {
 		include 'footer.php';
 		break;
 }
-?>

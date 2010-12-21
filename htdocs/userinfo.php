@@ -86,7 +86,6 @@ if (is_object(icms::$user)) {
 	$xoopsTpl->assign('user_ownpage', false);
 }
 
-$myts = icms_core_Textsanitizer::getInstance();
 if (is_object(icms::$user) && $isAdmin) {
 	icms_makeSmarty(array(
         'lang_editprofile' => _US_EDITPROFILE,
@@ -94,6 +93,7 @@ if (is_object(icms::$user) && $isAdmin) {
         'user_uid' => (int) ($thisUser->getVar('uid'))
 	));
 }
+$filter = & icms_core_DataFilter::getInstance();
 $userrank = & $thisUser->rank();
 $date = $thisUser->getVar('last_login');
 icms_makeSmarty(array(
@@ -126,7 +126,7 @@ icms_makeSmarty(array(
 		'lang_interest' => _US_INTEREST,
 		'user_interest' => $thisUser->getVar('user_intrest'),
 		'lang_extrainfo' => _US_EXTRAINFO,
-		'user_extrainfo' => $myts->displayTarea($thisUser->getVar('bio', 'N'), 0, 1, 1),
+		'user_extrainfo' => $filter->filterTextareaDisplay($thisUser->getVar('bio', 'N'), 1, 1),
 		'lang_statistics' => _US_STATISTICS,
 		'lang_membersince' => _US_MEMBERSINCE,
 		'user_joindate' => formatTimestamp($thisUser->getVar('user_regdate'), 's'),
@@ -160,7 +160,7 @@ if ($icmsConfigUser['allwshow_sig'] == true) {
    	icms_makeSmarty(array(
         'user_showsignature' => true,
         'lang_signature' => _US_SIGNATURE,
-        'user_signature' => $myts->displayTarea(one_wordwrap($thisUser->getVar('user_sig', 'N')), 1, 1)
+        'user_signature' => $filter->filterHTMLdisplay(one_wordwrap($thisUser->getVar('user_sig', 'N')), 1, 1, 1)
         	));
 }
 
@@ -186,7 +186,7 @@ foreach ($mids as $mid) {
    						$results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
    					}
    				}
-   				$results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
+   				$results[$i]['title'] = icms_core_DataFilter::htmlSpecialChars($results[$i]['title']);
    				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
    			}
    			if ($count == 5) {
