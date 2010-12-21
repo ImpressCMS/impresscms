@@ -30,16 +30,6 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * Constructor
 	 */
 	public function __construct() {
-		parent::__construct();
-
-		$config_handler = icms::handler('icms_config');
-		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
-
-		require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.standalone.php';
-		require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.autoload.php';
-		if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
-			require_once ICMS_ROOT_PATH . '/plugins/csstidy/class.csstidy.php';
-		}
 	}
 
 	/**
@@ -67,8 +57,13 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 **/
 	public function filterHTML($html) {
 		$config_handler = icms::handler('icms_config');
-		$HTMLFilter = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
-		if($HTMLFilter['enable_purifier'] !== 0) {
+		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
+		if($icmsConfigPurifier['enable_purifier'] !== 0) {
+			require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.standalone.php';
+			require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.autoload.php';
+			if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
+				require_once ICMS_ROOT_PATH . '/plugins/csstidy/class.csstidy.php';
+			}
 			// get the Config Data
 			$icmsPurifyConf = self::getHTMLFilterConfig();
 			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
