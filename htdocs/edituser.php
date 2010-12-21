@@ -195,7 +195,7 @@ if ($op == 'saveuser')
 				$signature = strip_tags($myts->xoopsCodeDecode($_POST['user_sig'], 1));
 				$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 			} else {
-				$signature = $myts->displayTarea($_POST['user_sig'], 1, 1, 1, 1, 1, 'display');
+				$signature = $myts->displayTarea($_POST['user_sig'], 1, 1, 1, 1, 1);
 				$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 			}
 		}
