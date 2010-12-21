@@ -38,7 +38,7 @@ $op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'
 
 if (!file_exists(ICMS_IMANAGER_FOLDER_PATH . '/temp/')) {
 	if(!@mkdir(ICMS_IMANAGER_FOLDER_PATH . '/temp', 0777)) {
-		echo '<script>alert("Temporary folder doesn\'t exist and cannot be created. Create it manually and try again. Folder: ' . ICMS_IMANAGER_FOLDER_PATH . '/temp/' . '");window.close();</script>';
+		echo '<script>alert("Temporary folder doesn\'t exist and cannot be created. Create it manually and try again. Folder: ' . str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH) . '/temp/' . '");window.close();</script>';
 		exit();
 	}
 }

@@ -98,7 +98,7 @@ function imanager_index($imgcat_id=null) {
 
 	if (!is_writable(ICMS_IMANAGER_FOLDER_PATH))
 	{
-		icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE,ICMS_IMANAGER_FOLDER_PATH));
+		icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, str_ireplace(ICMS_ROOT_PATH, "", CMS_IMANAGER_FOLDER_PATH)));
 		echo '<br />';
 	}
 

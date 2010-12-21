@@ -159,7 +159,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();
 		$ret = "<select onchange='if(this.options[this.selectedIndex].value != \"\"){ document.getElementById(\""
-			. $this->getName() . "_img\").src=\"" . ICMS_URL . "\"+this.options[this.selectedIndex].value;}else{document.getElementById(\"" . $this->getName() . "_img\").src=\"" 
+			. $this->getName() . "_img\").src=\"" . ICMS_URL . "\"+this.options[this.selectedIndex].value;}else{document.getElementById(\"" . $this->getName() . "_img\").src=\""
 			. ICMS_URL . "/images/blank.gif\";}'  size='" . $this->getSize() . "'" . $this->getExtra() . "";
 		if ($this->isMultiple() != false) {
 			$ret .= " name='" . $this->getName() . "[]' id='" . $this->getName() . "[]' multiple='multiple'>\n";
@@ -181,7 +181,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 			}
 			$ret .= '</optgroup>\n';
 		}
-		$browse_url = ICMS_URL."/class/xoopsform/formimage_browse.php";
+		$browse_url = ICMS_URL."/modules/system/admin/images/browser.php";
 		$ret .= "</select>";
 		$ret .= ($catlist_total > 0)
 			? " <input type='button' value='" . _ADDIMAGE . "' onclick=\"window.open('$browse_url?target=" . $this->getName() . "','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">"

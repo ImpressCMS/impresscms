@@ -122,7 +122,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 				"<img onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/url.gif' alt='url' onclick='xoopsCodeUrl(\"".$ele_name."\", \"".htmlspecialchars(_ENTERURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES)."\");' />&nbsp;".
 				"<img onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/email.gif' alt='email' onclick='javascript:xoopsCodeEmail(\"".$ele_name."\", \"".htmlspecialchars(_ENTEREMAIL, ENT_QUOTES)."\");' />&nbsp;".
 				"<img onclick='javascript:xoopsCodeImg(\"".$ele_name."\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' />&nbsp;".
-				"<img onmouseover='style.cursor=\"pointer\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/class/xoopsform/formimage_browse.php?target=".$ele_name."&type=iman\",\"imgmanager\",985,470);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;";
+				"<img onmouseover='style.cursor=\"pointer\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/modules/system/admin/images/browser.php?target=".$ele_name."&type=iman\",\"imgmanager\",985,470);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;";
 		$jscript = '';
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 			$extension = $myts->icmsloadExtension($key);

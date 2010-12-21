@@ -9,7 +9,7 @@
 * @package		core
 * @since		1.2
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		$Id: formimage_browse.php 1244 2008-03-18 17:09:11Z real_therplima $
+* @version		$Id$
 */
 
 if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
@@ -68,7 +68,7 @@ if (!$admin) {
 			$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
 			$src = '<img src="'.ICMS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
 			echo '<div style="margin:5px;" align="center">'.$src.'</div>';
-			icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'formimage_browse.php', _MD_RUDELIMG);
+			icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'xoopsimagebrowser.php', _MD_RUDELIMG);
 			icmsPopupFooter();
 			break;
 		case 'delfileok':
@@ -80,6 +80,10 @@ if (!$admin) {
 		case 'save_edit_ok':
 			$msg = isset($_GET['msg'])?urldecode($_GET['msg']):null;
 			redir($imgcat_id,$msg);
+			break;
+
+		case "addcat":
+			imanager_addcat();
 			break;
 	}
 }
@@ -237,7 +241,7 @@ function imanager_index($imgcat_id=null) {
 	$form->addElement(new icms_form_elements_Radioyn(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
 	$storetype = new icms_form_elements_Radio(_MD_IMGCATSTRTYPE, 'imgcat_storetype', 'file');
 	$storetype->setDescription('<span style="color:#ff0000;">'._MD_STRTYOPENG.'</span>');
-	$storetype->addOptionArray(array('file' => sprintf(_MD_ASFILE,str_ireplace(ICMS_ROOT_PATH, '', ICMS_IMANAGER_FOLDER_PATH).'/foldername'), 'db' => _MD_INDB));
+	$storetype->addOptionArray(array('file' => sprintf(_MD_ASFILE, str_ireplace(ICMS_ROOT_PATH, '', ICMS_IMANAGER_FOLDER_PATH).'/foldername'), 'db' => _MD_INDB));
 	$storetype->setExtra('onchange="actField(this.value,\'imgcat_foldername\');"');
 	$form->addElement($storetype);
 	$fname = new icms_form_elements_Text(_MD_IMGCATFOLDERNAME, 'imgcat_foldername', 50, 255, '');
@@ -585,9 +589,9 @@ function imanager_addfile() {
 		}
 	}
 	if (count($err) > 0) {
-		icms_cp_header();
+		icmsPopupHeader();
 		icms_core_Message::error($err);
-		icms_cp_footer();
+		icmsPopupHeader();
 		exit();
 	}
 	if (isset($imgcat_id)) {
@@ -643,11 +647,11 @@ function imanager_updateimage() {
 			}
 		}
 		if (count($error) > 0) {
-			icms_cp_header();
+			icmsPopupHeader();
 			foreach ($error as $err) {
 				echo $err.'<br />';
 			}
-			icms_cp_footer();
+			icmsPopupHeader();
 			exit();
 		}
 	}
@@ -678,9 +682,9 @@ function imanager_delfileok($image_id,$redir=null) {
 	$imagecategory  =& $imgcat_handler->get( (int) ($image->getVar('imgcat_id')));
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
-		icms_cp_header();
+		icmsPopupHeader();
 		icms_core_Message::error(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
-		icms_cp_footer();
+		icmsPopupHeader();
 		exit();
 	}
 	@unlink($categ_path.'/'.$image->getVar('image_name'));
