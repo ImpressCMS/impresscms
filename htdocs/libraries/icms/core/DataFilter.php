@@ -170,27 +170,6 @@ class icms_core_DataFilter {
 	}
 
 	/**
-	* Starts HTML Filter
-	* @TODO		Allow ability to choose what html filter you want.
-	 *			ex. HTMLPurifier, HTMLawed
-	*
-	* @param	string	$html	Text to purify
-	* @return	string	$html	the purified text
-	*/
-	public function html_filter($html) {
-		global $icmsConfigPurifier;
-		
-		if ($icmsConfigPurifier['enable_purifier'] !== 0) {
-			$htmlfilter = &icms_core_HTMLFilter::getInstance();
-			$html = $htmlfilter->htmlpurify($html);
-
-			return $html;
-		} else {
-			return $html;
-		}
-	}
-
-	/**
 	* Filters Multidimensional Array Recursively removing keys with empty values
 	* @param       array     $array       Array to be filtered
 	* @return      array     $array
@@ -345,6 +324,61 @@ class icms_core_DataFilter {
 			}
 		}
 		return self::priv_checkVar($data, $type, $options1, $options2);
+	}
+
+	/**
+	 * Filters textarea form data for INPUt to DB (text only!!)
+	 * For HTML please use icms_core_HTMLFilter::filterHTMLinput()
+	 *
+	 * @param   string  $text
+	 * @return  string
+	 **/
+	public function filterTextareaInput($text) {
+		icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
+
+		$text = self::htmlSpecialChars($text);
+
+		$text = self::stripSlashesGPC($text);
+
+		icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
+		return $text;
+	}
+
+	/**
+	 * Filters textarea for DISPLAY purposes (text only!!)
+	 * For HTML please use icms_core_HTMLFilter::filterHTMLdisplay()
+	 *
+	 * @param   string  $text
+	 * @param   bool	$smiley allow smileys?
+	 * @param   bool	$icode  allow icmscode?
+	 * @param   bool	$image  allow inline images?
+	 * @param   bool	$br	 convert linebreaks?
+	 * @return  string
+	 **/
+	public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
+		icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
+
+		$text = self::htmlSpecialChars($text);
+
+		$text = self::codePreConv($text, $icode);
+		$text = self::makeClickable($text);
+		if ($smiley != 0) {
+			$text = self::smiley($text);
+		}
+		if ($icode != 0) {
+			if ($image != 0) {
+				$text = self::codeDecode($text);
+			} else {
+				$text = self::codeDecode($text, 0);
+			}
+		}
+		if ($br !== 0) {
+			$text = self::nl2Br($text);
+		}
+		$text = self::codeConv($text, $icode, $image);
+
+		icms::$preload->triggerEvent('afterFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
+		return $text;
 	}
 
 	/**
@@ -938,7 +972,7 @@ class icms_core_DataFilter {
 
 			case "html":
 				$data = self::stripSlashesGPC($data);
-				return self::html_filter($data);
+				return icms_core_HTMLFilter::filterHTML($data);
 			break;
 		}
 

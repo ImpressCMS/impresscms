@@ -59,18 +59,89 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 // ----- Public Functions -----
 
 	/**
-	 * Allows HTML Purifier library to be called when required
+	 * Gets the selected HTML Filter & filters the content
 	 * @param    string  $html    input to be cleaned
+	 * @TODO	allow the webmasters to select which HTML Filter they want to use such as
+	 *			HTMLPurifier, HTMLLawed etc, for now we just have HTMLPurifier.
 	 * @return   string
 	 **/
-	public function htmlpurify($html) {
-		// get the Config Data
-		$icmsPurifyConf = self::getPurifierConfig();
-		//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
+	public function filterHTML($html) {
+		$config_handler = icms::handler('icms_config');
+		$HTMLFilter = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
+		if($HTMLFilter['enable_purifier'] !== 0) {
+			// get the Config Data
+			$icmsPurifyConf = self::getHTMLFilterConfig();
+			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
 
-		$this->purifier = new HTMLPurifier($icmsPurifyConf);
-		$html = $this->purifier->purify($html);
+			$this->purifier = new HTMLPurifier($icmsPurifyConf);
+			$html = $this->purifier->purify($html);
+		}
+		return $html;
+	}
 
+	/**
+	 * Filters HTML form data for INPUT to DB
+	 *
+	 * @param   string  $html
+	 * @param   bool	$smiley allow smileys?
+	 * @param   bool	$icode  allow icmscode?
+	 * @param   bool	$image  allow inline images?
+	 * @return  string
+	 **/
+	public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1) {
+		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, $smiley, $icode, $image));
+
+		$html = parent::codePreConv($html, $icode);
+		$html = parent::makeClickable($html);
+		if ($smiley != 0) {
+			$html = parent::smiley($html);
+		}
+		if ($icode != 0) {
+			if ($image != 0) {
+				$html = parent::codeDecode($html);
+			} else {
+				$html = parent::codeDecode($html, 0);
+			}
+		}
+
+		$html = parent::codeConv($html, $icode, $image);
+
+		$html = self::filterHTML($html);
+
+		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, $smiley, $icode, $image));
+		return $html;
+	}
+
+	/**
+	 * Filters HTML form data for Display Only
+	 * we don't really require the icmscode stuff, but we need to for content already in the DB before
+	 * we start filtering on INPUT instead of OUTPUT!!
+	 *
+	 * @param   string  $html
+	 * @param   bool	$smiley allow smileys?
+	 * @param   bool	$icode  allow icmscode?
+	 * @param   bool	$image  allow inline images?
+	 * @return  string
+	 **/
+	public function filterHTMLdisplay($html, $smiley = 1, $icode = 1, $image = 1) {
+		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $smiley, $icode, $image));
+
+		$html = parent::codePreConv($html, $icode);
+		$html = parent::makeClickable($html);
+		if ($smiley != 0) {
+			$html = parent::smiley($html);
+		}
+		if ($icode != 0) {
+			if ($image != 0) {
+				$html = parent::codeDecode($html);
+			} else {
+				$html = parent::codeDecode($html, 0);
+			}
+		}
+
+		$html = parent::codeConv($html, $icode, $image);
+
+		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, $smiley, $icode, $image));
 		return $html;
 	}
 
@@ -80,7 +151,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * Gets Custom Purifier configurations ** this function will improve in time **
 	 * @return  array    $icmsPurifierConf
 	 **/
-	protected function getPurifierConfig() {
+	protected function getHTMLFilterConfig() {
 		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
@@ -152,4 +223,3 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 		return parent::cleanArray($icmsPurifierConf);
 	}
 }
-
