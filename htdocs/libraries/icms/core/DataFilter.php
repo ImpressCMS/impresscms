@@ -382,6 +382,72 @@ class icms_core_DataFilter {
 	}
 
 	/**
+	 * Filters HTML form data for INPUT to DB
+	 *
+	 * @param   string  $html
+	 * @param   bool	$smiley allow smileys?
+	 * @param   bool	$icode  allow icmscode?
+	 * @param   bool	$image  allow inline images?
+	 * @return  string
+	 **/
+	public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1) {
+		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, $smiley, $icode, $image));
+
+		$html = self::codePreConv($html, $icode);
+		$html = self::makeClickable($html);
+		if ($smiley != 0) {
+			$html = self::smiley($html);
+		}
+		if ($icode != 0) {
+			if ($image != 0) {
+				$html = self::codeDecode($html);
+			} else {
+				$html = self::codeDecode($html, 0);
+			}
+		}
+
+		$html = self::codeConv($html, $icode, $image);
+
+		$html = icms_core_HTMLFilter::filterHTML($html);
+
+		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, $smiley, $icode, $image));
+		return $html;
+	}
+
+	/**
+	 * Filters HTML form data for Display Only
+	 * we don't really require the icmscode stuff, but we need to for content already in the DB before
+	 * we start filtering on INPUT instead of OUTPUT!!
+	 *
+	 * @param   string  $html
+	 * @param   bool	$smiley allow smileys?
+	 * @param   bool	$icode  allow icmscode?
+	 * @param   bool	$image  allow inline images?
+	 * @return  string
+	 **/
+	public function filterHTMLdisplay($html, $smiley = 1, $icode = 1, $image = 1) {
+		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $smiley, $icode, $image));
+
+		$html = self::codePreConv($html, $icode);
+		$html = self::makeClickable($html);
+		if ($smiley != 0) {
+			$html = self::smiley($html);
+		}
+		if ($icode != 0) {
+			if ($image != 0) {
+				$html = self::codeDecode($html);
+			} else {
+				$html = self::codeDecode($html, 0);
+			}
+		}
+
+		$html = self::codeConv($html, $icode, $image);
+
+		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, $smiley, $icode, $image));
+		return $html;
+	}
+
+	/**
 	 * Replace icmsCodes with their equivalent HTML formatting
 	 *
 	 * @param   string  $text

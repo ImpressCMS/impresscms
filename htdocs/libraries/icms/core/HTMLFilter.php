@@ -30,6 +30,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * Constructor
 	 */
 	public function __construct() {
+		parent::__construct();
 	}
 
 	/**
@@ -71,72 +72,6 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			$this->purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $this->purifier->purify($html);
 		}
-		return $html;
-	}
-
-	/**
-	 * Filters HTML form data for INPUT to DB
-	 *
-	 * @param   string  $html
-	 * @param   bool	$smiley allow smileys?
-	 * @param   bool	$icode  allow icmscode?
-	 * @param   bool	$image  allow inline images?
-	 * @return  string
-	 **/
-	public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1) {
-		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, $smiley, $icode, $image));
-
-		$html = parent::codePreConv($html, $icode);
-		$html = parent::makeClickable($html);
-		if ($smiley != 0) {
-			$html = parent::smiley($html);
-		}
-		if ($icode != 0) {
-			if ($image != 0) {
-				$html = parent::codeDecode($html);
-			} else {
-				$html = parent::codeDecode($html, 0);
-			}
-		}
-
-		$html = parent::codeConv($html, $icode, $image);
-
-		$html = self::filterHTML($html);
-
-		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, $smiley, $icode, $image));
-		return $html;
-	}
-
-	/**
-	 * Filters HTML form data for Display Only
-	 * we don't really require the icmscode stuff, but we need to for content already in the DB before
-	 * we start filtering on INPUT instead of OUTPUT!!
-	 *
-	 * @param   string  $html
-	 * @param   bool	$smiley allow smileys?
-	 * @param   bool	$icode  allow icmscode?
-	 * @param   bool	$image  allow inline images?
-	 * @return  string
-	 **/
-	public function filterHTMLdisplay($html, $smiley = 1, $icode = 1, $image = 1) {
-		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $smiley, $icode, $image));
-
-		$html = parent::codePreConv($html, $icode);
-		$html = parent::makeClickable($html);
-		if ($smiley != 0) {
-			$html = parent::smiley($html);
-		}
-		if ($icode != 0) {
-			if ($image != 0) {
-				$html = parent::codeDecode($html);
-			} else {
-				$html = parent::codeDecode($html, 0);
-			}
-		}
-
-		$html = parent::codeConv($html, $icode, $image);
-
-		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, $smiley, $icode, $image));
 		return $html;
 	}
 
