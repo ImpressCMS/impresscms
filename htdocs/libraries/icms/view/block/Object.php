@@ -33,16 +33,30 @@ class icms_view_block_Object extends icms_ipf_Object {
 		parent::__construct($handler);
 
 		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('bid', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('mid', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('bid', XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar('mid', XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar('func_num', XOBJ_DTYPE_INT);
 		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('content', XOBJ_DTYPE_TXTAREA);
-		$this->quickInitVar('side', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('weight', XOBJ_DTYPE_INT, true, false, false, 0);
-		$this->quickInitVar('visible', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('side', XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar('weight', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 0);
+		$this->quickInitVar('visible', XOBJ_DTYPE_INT, TRUE);
+		/**
+		 * @var string $block_type Holds the type of block
+		 * 	S - System block
+		 * 	M - block from a Module (other than system)
+		 * 	C - Custom block (legacy type 'E')
+		 * 	K - block cloned from another block (legacy type 'D')
+		 */
 		$this->quickInitVar('block_type', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX, true);
+		/**
+		 * @var	string	$c_type	The type of content in the block
+		 * 	H - HTML
+		 * 	P - PHP
+		 * 	S - Auto Format (smilies and HTML enabled)
+		 *  T - Auto Format (smilies and HTML disabled)
+		 */
+		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar('isactive', XOBJ_DTYPE_INT);
 		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('func_file', XOBJ_DTYPE_TXTBOX);
@@ -91,24 +105,24 @@ class icms_view_block_Object extends icms_ipf_Object {
 	/**
 	 * (HTML-) form for setting the options of the block
 	 *
-	 * @return string|false $edit_form is HTML for the form, FALSE if no options defined for this block
+	 * @return string|FALSE $edit_form is HTML for the form, FALSE if no options defined for this block
 	 */
 	public function getOptions() {
 		if ($this->getVar('block_type') != 'C') {
 			$edit_func = $this->getVar('edit_func');
 			if (!$edit_func) {
-				return false;
+				return FALSE;
 			}
 			icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
 			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file');
 			$options = explode('|', $this->getVar('options'));
 			$edit_form = $edit_func($options);
 			if (!$edit_form) {
-				return false;
+				return FALSE;
 			}
 			return $edit_form;
 		} else {
-			return false;
+			return FALSE;
 		}
 	}
 
@@ -120,9 +134,9 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 */
 	public function isCustom() {
 		if ($this->getVar("block_type") == "C" || $this->getVar("block_type") == "E") {
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -140,28 +154,28 @@ class icms_view_block_Object extends icms_ipf_Object {
 			// it is a custom block, so just return the contents
 			$block['content'] = $this->getContent("S", $this->getVar("c_type"));
 			if (empty($block['content'])) {
-				return false;
+				return FALSE;
 			}
 		} else {
 			// get block display function
 			$show_func = $this->getVar('show_func');
 			if (!$show_func) {
-				return false;
+				return FALSE;
 			}
 			// Must get lang files before execution of the function.
 			if (!file_exists(ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file'))) {
-				return false;
+				return FALSE;
 			} else {
 				icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
 				include_once ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file');
 				$options = explode("|", $this->getVar("options"));
 				if (!function_exists($show_func)) {
-					return false;
+					return FALSE;
 				} else {
 					// execute the function
 					$block = $show_func($options);
 					if (!$block) {
-						return false;
+						return FALSE;
 					}
 				}
 			}
@@ -214,7 +228,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 * @todo	Remove in version 1.4
 	 */
-	public function getBlockPositions($full = false) {
+	public function getBlockPositions($full = FALSE) {
 		icms_core_Debug::setDeprecated('icms_view_block_Handler->getBlockPositions', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getBlockPositions($full);
 	}
@@ -277,7 +291,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @deprecated use icms_view_block_Handler->getObjects, instead
 	 * @todo	Remove in version 1.4
 	 */
-	public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = "b.weight, b.bid", $isactive = 1) {
+	public function getAllBlocksByGroup($groupid, $asobject = TRUE, $side = NULL, $visible = NULL, $orderby = "b.weight, b.bid", $isactive = 1) {
 		icms_core_Debug::setDeprecated('icms_view_block_Handler->getObjects', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getAllBlocksByGroup($groupid, $asobject, $side, $visible, $orderby, $isactive);
 	}
@@ -297,7 +311,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 * @todo	Remove in version 1.4
 	 */
-	public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side, weight, bid", $isactive = 1) {
+	public function getAllBlocks($rettype = "object", $side = NULL, $visible = NULL, $orderby = "side, weight, bid", $isactive = 1) {
 		icms_core_Debug::setDeprecated('icms_view_block_Handler->getAllBlocks', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getAllBlocks($rettype, $side, $visible, $orderby, $isactive);
 	}
@@ -314,7 +328,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 * @todo	Remove in version 1.4
 	 */
-	public function getByModule($moduleid, $asobject = true) {
+	public function getByModule($moduleid, $asobject = TRUE) {
 		icms_core_Debug::setDeprecated('icms_view_block_Handler->getByModule', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getByModule($moduleid, $asobject);
 	}
@@ -335,7 +349,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 * @todo	Remove in version 1.4
 	 */
-	public function getAllByGroupModule($groupid, $module_id = '0-0', $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
+	public function getAllByGroupModule($groupid, $module_id = '0-0', $toponlyblock = FALSE, $visible = NULL, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		icms_core_Debug::setDeprecated('icms_view_block_Handler->getAllByGroupModule', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getAllByGroupModule($groupid, $module_id, $toponlyblock, $visible, $orderby, $isactive);
 	}
@@ -353,7 +367,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 * @todo	Remove in version 1.4
 	 */
-	public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
+	public function getNonGroupedBlocks($module_id = 0, $toponlyblock = FALSE, $visible = NULL, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		icms_core_Debug::setDeprecated('icms_view_block_Handler->getNonGroupedBlocks', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getNonGroupedBlocks($module_id, $toponlyblock, $visible, $orderby, $isactive);
 	}
@@ -374,7 +388,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 * @todo	Remove in version 1.4
 	 */
-	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
+	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = NULL) {
 		icms_core_Debug::setDeprecated('icms_view_block_Handler->getCountSimilarBlocks', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->handler->getCountSimilarBlocks($moduleId, $funcNum, $showFunc);
 	}
