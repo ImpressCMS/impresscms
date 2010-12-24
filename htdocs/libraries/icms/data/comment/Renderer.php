@@ -77,7 +77,7 @@ class icms_data_comment_Renderer {
 	 * Render the comments in flat view
 	 *
 	 * @param bool  $admin_view
-	 /
+	 */
 	public function renderFlatView($admin_view = FALSE) {
 		$count = count($this->_comments);
 		for ($i = 0; $i < $count; $i++) {
