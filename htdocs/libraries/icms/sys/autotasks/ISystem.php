@@ -30,7 +30,7 @@ interface icms_sys_autotasks_ISystem {
 	 * @param  int	$interval	interval of checking for new tasks
 	 * @return bool				returns true if start was succesfull
 	 */
-	public function start(int $interval);
+	public function start((int) $interval);
 
 	/**
 	 * Stops automated tasks system
