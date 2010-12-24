@@ -3,14 +3,9 @@
  * All common information used in the core goes from here.
  * Be careful while editing this file!
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id$
  */
 
@@ -19,7 +14,7 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 @set_magic_quotes_runtime(0);
 
-// ########################## Include common functions and constants file ##########################
+// -- Include common functions and constants file
 require_once ICMS_ROOT_PATH . "/include/constants.php";
 include_once ICMS_ROOT_PATH . "/include/functions.php";
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
@@ -27,12 +22,12 @@ include_once ICMS_ROOT_PATH . "/include/version.php";
 
 if (!isset($xoopsOption)) $xoopsOption = array();
 
-// ############################ Initialize kernel and launch bootstrap #############################
+// -- Initialize kernel and launch bootstrap
 require_once ICMS_ROOT_PATH . "/libraries/icms.php";
 icms::setup();
 icms::boot();
 
-// ###################################### Easiest ML by Gijoe ######################################
+// -- Easiest ML by Gijoe (no longer needed here)
 
 // Disable gzip compression if PHP is run under CLI mode
 // To be refactored
@@ -52,7 +47,7 @@ if (defined('ICMS_INCLUDE_OPENID')) {
 	require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
 }
 
-// ################################## Include site-wide lang file ##################################
+// -- Include site-wide lang file
 icms_loadLanguageFile('core', 'global');
 icms_loadLanguageFile('core', 'theme');
 icms_loadLanguageFile('core', 'core');
@@ -60,8 +55,8 @@ icms_loadLanguageFile('system', 'common');
 @define('_GLOBAL_LEFT', @_ADM_USE_RTL == 1 ? 'right' : 'left');
 @define('_GLOBAL_RIGHT', @_ADM_USE_RTL == 1 ? 'left' : 'right');
 
-// ################################ Include page-specific lang file ################################
-if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
+// -- Include page-specific lang file
+if (isset($xoopsOption['pagetype']) && FALSE === strpos($xoopsOption['pagetype'], '.')) {
 	icms_loadLanguageFile('core', $xoopsOption['pagetype']);
 }
 
@@ -92,5 +87,5 @@ if ($icmsConfigPersona['multi_login']) {
 	}
 }
 
-// ##################################### finalize boot process #####################################
+// -- finalize boot process
 icms::$preload->triggerEvent('finishCoreBoot');
