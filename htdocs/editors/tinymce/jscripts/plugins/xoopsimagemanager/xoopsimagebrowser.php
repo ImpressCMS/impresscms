@@ -591,7 +591,7 @@ function imanager_addfile() {
 	if (count($err) > 0) {
 		icmsPopupHeader();
 		icms_core_Message::error($err);
-		icmsPopupHeader();
+		icmsPopupFooter();
 		exit();
 	}
 	if (isset($imgcat_id)) {
@@ -651,7 +651,7 @@ function imanager_updateimage() {
 			foreach ($error as $err) {
 				echo $err.'<br />';
 			}
-			icmsPopupHeader();
+			icmsPopupFooter();
 			exit();
 		}
 	}
@@ -684,7 +684,7 @@ function imanager_delfileok($image_id,$redir=null) {
 	if (!$image_handler->delete($image)) {
 		icmsPopupHeader();
 		icms_core_Message::error(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
-		icmsPopupHeader();
+		icmsPopupFooter();
 		exit();
 	}
 	@unlink($categ_path.'/'.$image->getVar('image_name'));
