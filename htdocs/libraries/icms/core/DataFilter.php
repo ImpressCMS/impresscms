@@ -23,37 +23,17 @@ class icms_core_DataFilter {
 	/**
 	* @public	array
 	*/
-	public $displaySmileys = array();
+	static public $displaySmileys = array();
 
 	/**
 	* @public	array
 	*/
-	public $allSmileys = array();
-
-	/**
-	 *
-	 * @var unknown_type
-	 */
-	public $censorConf;
+	static public $allSmileys = array();
 
 	/**
 	 *
 	 */
 	public function __construct() {
-	}
-
-	/**
-	* Access the only instance of this class
-	* @return       object
-	* @static       $DataFilter_instance
-	* @staticvar    object
-	**/
-	static public function getInstance() {
-		static $instance;
-		if (!isset($instance)) {
-			$instance = new icms_core_DataFilter();
-		}
-		return $instance;
 	}
 
 // -------- Public Functions --------
@@ -63,7 +43,7 @@ class icms_core_DataFilter {
 	 * @param $text
 	 * @param $msg
 	 */
-	public function filterDebugInfo($text, $msg) {
+	static public function filterDebugInfo($text, $msg) {
 		echo "<div style='padding: 5px; color: red; font-weight: bold'>$text</div>";
 		echo "<div><pre>";
 		print_r($msg);
@@ -76,7 +56,7 @@ class icms_core_DataFilter {
 	* @param   array  $matches
 	* @return  string
 	*/
-	public function _filterImgUrl($matches) {
+	static public function _filterImgUrl($matches) {
 		if (self::checkUrlString($matches[2])) {
 			return $matches[0];
 		} else {
@@ -90,7 +70,7 @@ class icms_core_DataFilter {
 	* @param   string  $text
 	* @return  bool
 	*/
-	public function checkUrlString($text) {
+	static public function checkUrlString($text) {
 		// Check control code
 		if (preg_match("/[\0-\31]/", $text)) {
 			return false;
@@ -105,7 +85,7 @@ class icms_core_DataFilter {
 	* @param	string  $text
 	* @return   string
 	*/
-	public function nl2Br($text) {
+	static public function nl2Br($text) {
 		return preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $text);
 	}
 
@@ -115,9 +95,9 @@ class icms_core_DataFilter {
 	* @param	string  $text
 	* @return   string
 	*/
-	public function htmlSpecialChars($text) {
+	static public function htmlSpecialChars($text) {
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
-				@htmlspecialchars($text, ENT_QUOTES, _CHARSET));
+			@htmlspecialchars($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
@@ -134,7 +114,7 @@ class icms_core_DataFilter {
 	 *
 	 * @param unknown_type $text
 	 */
-	public function htmlEntities($text) {
+	static public function htmlEntities($text) {
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
 				@htmlentities($text, ENT_QUOTES, _CHARSET));
 	}
@@ -174,7 +154,7 @@ class icms_core_DataFilter {
 	* @param       array     $array       Array to be filtered
 	* @return      array     $array
 	*/
-	public function cleanArray($arr) {
+	static public function cleanArray($arr) {
 		$rtn = array();
 
 		foreach ($arr as $key => $a) {
@@ -255,7 +235,7 @@ class icms_core_DataFilter {
 	 * @param $options1
 	 * @param $options2
 	 */
-	public function checkVar($data, $type, $options1 = '', $options2 = '') {
+	static public function checkVar($data, $type, $options1 = '', $options2 = '') {
 		if (!$data || !$type) return false;
 
 		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html');
@@ -333,7 +313,7 @@ class icms_core_DataFilter {
 	 * @param   string  $text
 	 * @return  string
 	 **/
-	public function filterTextareaInput($text) {
+	static public function filterTextareaInput($text) {
 		icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
 		$text = self::htmlSpecialChars($text);
@@ -355,11 +335,10 @@ class icms_core_DataFilter {
 	 * @param   bool	$br	 convert linebreaks?
 	 * @return  string
 	 **/
-	public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
+	static public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
 		icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
 		$text = self::htmlSpecialChars($text);
-
 		$text = self::codePreConv($text, $icode);
 		$text = self::makeClickable($text);
 		if ($smiley != 0) {
@@ -390,7 +369,7 @@ class icms_core_DataFilter {
 	 * @param   bool	$image  allow inline images?
 	 * @return  string
 	 **/
-	public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1) {
+	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1) {
 		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, $smiley, $icode, $image));
 
 		$html = self::codePreConv($html, $icode);
@@ -425,7 +404,7 @@ class icms_core_DataFilter {
 	 * @param   bool	$image  allow inline images?
 	 * @return  string
 	 **/
-	public function filterHTMLdisplay($html, $smiley = 1, $icode = 1, $image = 1) {
+	static public function filterHTMLdisplay($html, $smiley = 1, $icode = 1, $image = 1) {
 		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $smiley, $icode, $image));
 
 		$html = self::codePreConv($html, $icode);
@@ -455,7 +434,7 @@ class icms_core_DataFilter {
 	 *				  On FALSE, uses links to images.
 	 * @return  string
 	 */
-	public function codeDecode(&$text, $allowimage = 1) {
+	static public function codeDecode(&$text, $allowimage = 1) {
 		$patterns = array();
 		$replacements = array();
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
@@ -530,7 +509,7 @@ class icms_core_DataFilter {
 	 * @param   string  $text
 	 * @return  string
 	 */
-	public function makeClickable(&$text) {
+	static public function makeClickable($text) {
 		global $icmsConfigPersona;
 		$text = ' ' . $text;
 		$patterns = array(
@@ -574,7 +553,7 @@ class icms_core_DataFilter {
 	 *
 	 * @param $message
 	 */
-	public function smiley($message) {
+	static public function smiley($message) {
 		return self::priv_smiley($message);
 	}
 
@@ -585,9 +564,8 @@ class icms_core_DataFilter {
 	 * @return  string
 	 *
 	 */
-	public function censorString(&$text) {
-		$config_handler = icms::handler('icms_config');
-		$icmsConfigCensor =& $config_handler->getConfigsByCat(ICMS_CONF_CENSOR);
+	static public function censorString(&$text) {
+		$icmsConfigCensor = icms::$config->getConfigsByCat(ICMS_CONF_CENSOR);
 		if ($icmsConfigCensor['censor_enable'] == true) {
 			$replacement = $icmsConfigCensor['censor_replace'];
 			if (!empty($icmsConfigCensor['censor_words'])) {
@@ -613,7 +591,7 @@ class icms_core_DataFilter {
 	/**#@+
 	 * Sanitizing of [code] tag
 	 */
-	public function codePreConv($text, $imcode = 1) {
+	static public function codePreConv($text, $imcode = 1) {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			$replacements = "'[code]' . base64_encode('$1') . '[/code]'";
@@ -630,7 +608,7 @@ class icms_core_DataFilter {
 	 * @param	 int	   $image	configuration for the purifier
 	 * @return	string	$text	 the converted text
 	 */
-	public function codeConv($text, $imcode = 1, $image = 1) {
+	static public function codeConv($text, $imcode = 1, $image = 1) {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if ($image != 0) {
@@ -654,7 +632,7 @@ class icms_core_DataFilter {
 	 * @param   string	$image	Is the string an image
 	 * @return  string	$str	  The sanitized decoded string
 	 */
-	public function codeSanitizer($str, $image = 1) {
+	static public function codeSanitizer($str, $image = 1) {
 		$str = self::htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
 		$str = self::codeDecode($str, $image);
 		return $str;
@@ -666,7 +644,7 @@ class icms_core_DataFilter {
 	 * @param	bool	$withoptions	load the config's options now?
 	 * @return	object  reference to the {@link IcmsConfig}
 	 */
-	public function codeDecode_extended($text, $allowimage = 1) {
+	static public function codeDecode_extended($text, $allowimage = 1) {
 		global $icmsConfigPlugins;
 		if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 			foreach ($icmsConfigPlugins['sanitizer_plugins'] as $item) {
@@ -682,8 +660,8 @@ class icms_core_DataFilter {
 	 * @param	 string	$name	 Name of the extension to load
 	 * @return	bool
 	 */
-	public function loadExtension($name) {
-		if (empty($name) || !include_once ICMS_ROOT_PATH . "/plugins/textsanitizer/{$name}/{$name}.php") {
+	static public function loadExtension($name) {
+		if (empty($name) || !include_once ICMS_PLUGINS_PATH . "/textsanitizer/{$name}/{$name}.php") {
 			return false;
 		}
 	}
@@ -695,7 +673,7 @@ class icms_core_DataFilter {
 	 * @param	 string	$text	 Text to show if the function doesn't exist
 	 * @return	array	 the return of the called function
 	 */
-	public function executeExtension($name, $text) {
+	static public function executeExtension($name, $text) {
 		self::loadExtension($name);
 		$func = "textsanitizer_{$name}";
 		if (!function_exists($func)) {
@@ -711,7 +689,7 @@ class icms_core_DataFilter {
 	 * @param	 string	$text	 purifies (lightly) and then syntax highlights the text
 	 * @return	string	$text	 the syntax highlighted text
 	 */
-	public function textsanitizer_syntaxhighlight(&$text) {
+	static public function textsanitizer_syntaxhighlight(&$text) {
 		global $icmsConfigPlugins;
 		if ($icmsConfigPlugins['code_sanitizer'] == 'php') {
 			$text = self::undoHtmlSpecialChars($text);
@@ -731,7 +709,7 @@ class icms_core_DataFilter {
 	 * @param	 string	$text	 Text to highlight
 	 * @return	string	$buffer   the highlighted text
 	 */
-	public function textsanitizer_php_highlight($text) {
+	static public function textsanitizer_php_highlight($text) {
 		$text = trim($text);
 		$addedtag_open = 0;
 		if (!strpos($text, '<?php') and (substr($text, 0, 5) != '<?php')) {
@@ -771,7 +749,7 @@ class icms_core_DataFilter {
 	 * @param	 string	$text	 The text to highlight
 	 * @return	string	$code	 the highlighted text
 	 */
-	public function textsanitizer_geshi_highlight($text) {
+	static public function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
 
 		if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') return false;
@@ -910,7 +888,7 @@ class icms_core_DataFilter {
 	*
 	* @return
 	*/
-	private function priv_checkVar($data, $type, $options1, $options2) {
+	static private function priv_checkVar($data, $type, $options1, $options2) {
 		switch ($type) {
 			case "url":
 
@@ -1052,7 +1030,7 @@ class icms_core_DataFilter {
 	 * @param	string  $message
 	 * @return   string
 	 */
-	private function priv_smiley($message) {
+	static private function priv_smiley($message) {
 		$smileys = self::priv_getSmileys(true);
 		foreach ($smileys as $smile) {
 			$message = str_replace(
@@ -1071,17 +1049,17 @@ class icms_core_DataFilter {
 	 * @param	bool	$all
 	 * @return   array
 	 */
-	private function priv_getSmileys($all = false) {
-		if (count($this->allSmileys) == 0) {
+	static private function priv_getSmileys($all = false) {
+		if (count(self::$allSmileys) == 0) {
 			if ($result = icms::$xoopsDB->query("SELECT * FROM " . icms::$xoopsDB->prefix('smiles'))) {
 				while ($smiley = icms::$xoopsDB->fetchArray($result)) {
 					if ($smiley['display']) {
-						array_push($this->displaySmileys, $smiley);
+						array_push(self::$displaySmileys, $smiley);
 					}
-					array_push($this->allSmileys, $smiley);
+					array_push(self::$allSmileys, $smiley);
 				}
 			}
 		}
-		return $all ? $this->allSmileys : $this->displaySmileys;
+		return $all ? self::$allSmileys : self::$displaySmileys;
 	}
 }

@@ -15,17 +15,18 @@
  * @package kernel
  * @subpackage users
  */
+
 $xoopsOption['pagetype'] = 'user';
-/** Include mainfile - required */
 include 'mainfile.php';
+
 if (icms_get_module_status('profile') && file_exists(ICMS_ROOT_PATH.'/modules/profile/edituser.php')) {
-	header('Location: '.ICMS_URL.'/modules/profile/edituser.php');
+	header('Location: ' . ICMS_URL . '/modules/profile/edituser.php');
 	exit();
 }
 
 // If not a user, redirect
 if (!is_object(icms::$user)) {
-	redirect_header('index.php',3,_US_NOEDITRIGHT);
+	redirect_header('index.php', 3, _US_NOEDITRIGHT);
 }
 
 $allowedHTML = array('htmlcode');
@@ -165,13 +166,12 @@ if ($op == 'saveuser') {
 		$edituser->setVar('user_from', $_POST['user_from']);
 		$edituser->setVar('openid', isset($_POST['openid']) ? trim($_POST['openid']) : '');
 		if ($icmsConfigUser['allwshow_sig'] == 1) {
-			$filter = & icms_core_DataFilter::getInstance();
 			if ($icmsConfigUser['allow_htsig'] == 0) {
-				$signature = strip_tags($filter->codeDecode($_POST['user_sig'], 1));
-				$edituser->setVar('user_sig', $filter->icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
+				$signature = strip_tags(icms_core_DataFilter::codeDecode($_POST['user_sig'], 1));
+				$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 			} else {
-				$signature = $filter->filterHTMLinput($_POST['user_sig'], 1, 1, 1);
-				$edituser->setVar('user_sig', $filter->icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
+				$signature = icms_core_DataFilter::filterHTMLinput($_POST['user_sig'], 1, 1, 1);
+				$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 			}
 		}
 
