@@ -70,8 +70,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			// uncomment for specific config debug info
 			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
 
-			$this->purifier = new HTMLPurifier($icmsPurifyConf);
-			$html = $this->purifier->purify($html);
+			$purifier = new HTMLPurifier($icmsPurifyConf);
+			$html = $purifier->purify($html);
 		}
 		return $html;
 	}
