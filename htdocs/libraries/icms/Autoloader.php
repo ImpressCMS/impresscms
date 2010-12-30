@@ -227,6 +227,7 @@ class icms_Autoloader {
 			"CriteriaCompo"                 => "/class/criteria.php",
 			"Criteria"                      => "/class/criteria.php",
 			"CriteriaElement"               => "/class/criteria.php",
+			"IcmsPersistableObjectHandler"	=> "/kernel/icmspersistableobjecthandler.php"
 		);
 		if (in_array($class, array_keys($legacyClassPath))) {
 			include_once ICMS_ROOT_PATH . $legacyClassPath[$class];
