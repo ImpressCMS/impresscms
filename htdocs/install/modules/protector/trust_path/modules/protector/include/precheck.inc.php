@@ -1,12 +1,12 @@
 <?php
 
 require_once dirname(__FILE__).'/precheck_functions.php' ;
-
+/*
 if( class_exists( 'Database' ) ) {
 	require dirname(__FILE__).'/postcheck.inc.php' ;
 	return ;
 }
-
+*/
 define( 'PROTECTOR_PRECHECK_INCLUDED' , 1 ) ;
 define( 'PROTECTOR_VERSION' , file_get_contents( dirname(__FILE__).'/version.txt' ) ) ;
 
