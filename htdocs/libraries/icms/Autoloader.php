@@ -41,6 +41,7 @@ class icms_Autoloader {
 		if (!self::$initialized) {
 			self::register(dirname(dirname(__FILE__)));
 			spl_autoload_register(array('icms_Autoloader', 'autoload'));
+			spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));
 			self::$initialized = true;
 		}
 	}
@@ -161,5 +162,74 @@ class icms_Autoloader {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 *  This function maps the legacy classes that were included in common.php and xoopsformloader.php
+	 *  Rather than including all the legacy files, this defines where PHP should look to use these classes
+	 *  It's ugly, but so was the code we're getting rid of
+	 */
+	static public function registerLegacy($class) {
+		$legacyClassPath = array(
+		    "Database" 						=> "/class/database/database.php",
+		    "IcmsDatabase" 					=> "/class/database/database.php",
+		    "XoopsDatabase" 				=> "/class/database/database.php",
+			"MyTextSanitizer" 				=> "/class/module.textsanitizer.php",
+			"IcmsPreloadHandler"			=> "/kernel/icmspreloadhandler.php", 
+			"XoopsModule" 					=> "/kernel/module.php",
+			"XoopsModuleHandler"			=> "/kernel/module.php",
+			"XoopsMemberHandler"			=> "/kernel/member.php",
+			"IcmsPreloadHandler"			=> "/kernel/icmspreloadhandler.php",
+			"IcmsPreloadItem" 				=> "/kernel/icmspreloadhandler.php",
+			"IcmsKernel" 					=> "/kernel/icmskernel.php", 		
+			"IcmsSecurity" 					=> "/class/xoopssecurity.php", 		
+			"XoopsSecurity" 				=> "/class/xoopssecurity.php", 		
+			"XoopsLogger" 					=> "/class/logger.php", 			
+			"XoopsDatabaseFactory" 			=> "/class/database/databasefactory.php",
+			"IcmsDatabaseFactory" 			=> "/class/database/databasefactory.php",
+			"XoopsObject" 					=> "/kernel/object.php", 				
+			"XoopsObjectHandler" 			=> "/kernel/object.php", 				
+			"XoopsLists" 					=> "/class/xoopslists.php", 			
+			"IcmsLists" 					=> "/class/xoopslists.php", 			
+			"XoopsThemeForm"				=> "/class/xoopsform/themeform.php",
+			"XoopsFormHidden"		 		=> "/class/xoopsform/formhidden.php",
+			"XoopsFormText" 		 	 	=> "/class/xoopsform/formtext.php",
+			"XoopsFormElement"				=> "/class/xoopsform/formelement.php",
+			"XoopsForm"						=> "/class/xoopsform/form.php",
+			"XoopsFormElementLabel"			=> "/class/xoopsform/formlabel.php",
+			"XoopsFormSelect"				=> "/class/xoopsform/formselect.php",
+			"XoopsFormPassword"				=> "/class/xoopsform/formpassword.php",
+			"XoopsFormButton"				=> "/class/xoopsform/formbutton.php",
+			"XoopsFormCheckBox"				=> "/class/xoopsform/formcheckbox.php",
+			"XoopsFormFile"					=> "/class/xoopsform/formfile.php",
+			"XoopsFormRadio"				=> "/class/xoopsform/formradio.php",
+			"XoopsFormRadioYN"				=> "/class/xoopsform/formradioyn.php",
+			"XoopsFormSelectCountry"		=> "/class/xoopsform/formselectcountry.php",
+			"XoopsFormSelectTimezone"		=> "/class/xoopsform/formselecttimezone.php",
+			"XoopsFormSelectLang"			=> "/class/xoopsform/formselectlang.php",
+			"XoopsFormSelectGroup"			=> "/class/xoopsform/formselectgroup.php",
+			"XoopsFormSelectUser"			=> "/class/xoopsform/formselectuser.php",
+			"XoopsFormSelectTheme"			=> "/class/xoopsform/formselecttheme.php",
+			"XoopsFormSelectMatchOption"	=> "/class/xoopsform/formselectmatchoption.php",
+			"XoopsFormText"					=> "/class/xoopsform/formtext.php",
+			"XoopsFormTextArea"				=> "/class/xoopsform/formtextarea.php",
+			"XoopsFormDhtmlTextArea"		=> "/class/xoopsform/formdhtmltextarea.php",
+			"XoopsFormElementTray"			=> "/class/xoopsform/formelementtray.php",
+			"XoopsThemeForm"				=> "/class/xoopsform/themeform.php",
+			"XoopsSimpleForm"				=> "/class/xoopsform/simpleform.php",
+			"XoopsFormTextDateSelect"		=> "/class/xoopsform/formtextdateselect.php",
+			"XoopsFormDateTime"				=> "/class/xoopsform/formdatetime.php",
+			"XoopsFormHiddenToken"			=> "/class/xoopsform/formhiddentoken.php",
+			"XoopsFormColorPicker"			=> "/class/xoopsform/formcolorpicker.php",
+			"XoopsFormSelectEditor"			=> "/class/xoopsform/formselecteditor.php",
+			"XoopsFormCaptcha"				=> "/class/xoopsform/formcaptcha.php",
+			"IcmsFormCaptcha"				=> "/class/xoopsform/formcaptcha.php",
+			"CriteriaCompo"                 => "/class/criteria.php",
+			"Criteria"                      => "/class/criteria.php",
+			"CriteriaElement"               => "/class/criteria.php",
+		);
+		if (in_array($class, array_keys($legacyClassPath))) {
+			include_once ICMS_ROOT_PATH . $legacyClassPath[$class];
+		}
 	}
 }
