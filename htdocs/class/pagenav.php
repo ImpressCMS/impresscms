@@ -26,6 +26,10 @@
  */
 class XoopsPageNav extends icms_view_PageNav {
 	private $_deprecated;
+
+	public function XoopsPageNav($total_items, $items_perpage, $current_start, $start_name = "start", $extra_arg = "") {
+		self::__construct($total_items, $items_perpage, $current_start, $start_name, $extra_arg);
+	}
 	
 	public function __construct($total_items, $items_perpage, $current_start, $start_name = "start", $extra_arg = "") {
 		parent::__construct($total_items, $items_perpage, $current_start, $start_name, $extra_arg);
