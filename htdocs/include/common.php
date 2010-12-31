@@ -23,7 +23,7 @@ include_once ICMS_ROOT_PATH . "/include/version.php";
 if (!isset($xoopsOption)) $xoopsOption = array();
 
 // -- Initialize kernel and launch bootstrap
-require_once ICMS_ROOT_PATH . "/libraries/icms.php";
+require_once ICMS_LIBRARIES_PATH . "/icms.php";
 icms::setup();
 icms::boot();
 

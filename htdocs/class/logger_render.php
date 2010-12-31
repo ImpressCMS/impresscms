@@ -14,5 +14,5 @@
  */
 
 icms_core_Debug::setDeprecated('/libraries/icms/core/Logger_render.php', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-include_once ICMS_ROOT_PATH . '/libraries/icms/core/Logger_render.php';
+include_once ICMS_LIBRARIES_PATH . '/icms/core/Logger_render.php';
 
