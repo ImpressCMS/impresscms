@@ -84,7 +84,7 @@ class icms_core_Filesystem {
 	 * @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
 	 * @author	modified by Vaughan <vaughan@impresscms.org>
 	 * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-	 * @param	string	$dir	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH . "/templates_c/");
+	 * @param	string	$dir	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_COMPILE_PATH . "/");
 	 * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
 	 */
 	static public function cleanFolders($dir, $remove_admin_cache = FALSE) {
@@ -115,7 +115,7 @@ class icms_core_Filesystem {
 	static public function cleanWriteFolders() {
 		return self::cleanFolders(
 			array(
-				'templates_c' => ICMS_ROOT_PATH . '/templates_c/',
+				'templates_c' => ICMS_COMPILE_PATH . '/',
 				'cache' => ICMS_CACHE_PATH . '/',
 			)
 		);

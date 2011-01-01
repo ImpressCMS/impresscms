@@ -16,7 +16,7 @@ class upgrade_impcms05 {
 	}
 	function cleaning_write_folders() {
 		$dir = array();
-		$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
+		$dir['templates_c'] = ICMS_COMPILE_PATH . "/";
 		$dir['cache'] = ICMS_CACHE_PATH . "/";
 
 		foreach ($dir as $d)

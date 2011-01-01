@@ -2451,7 +2451,7 @@ function one_wordwrap($string,$width=false){
  * @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
  * @author	modified by Vaughan <vaughan@impresscms.org>
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @param	string	$path	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
+ * @param	string	$path	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_COMPILE_PATH . "/");
  * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
  * @deprecated	Use icms_core_Filesystem::cleanFolders
  * @todo Move to static class Filesystem
@@ -2469,7 +2469,7 @@ function icms_clean_folders($dir, $remove_admin_cache=false) {
  */
 function icms_cleaning_write_folders() {
 	icms_core_Debug::setDeprecated('icms_core_Filesystem::cleanFolders', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_CACHE_PATH . "/"));
+	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"));
 }
 
 /**
