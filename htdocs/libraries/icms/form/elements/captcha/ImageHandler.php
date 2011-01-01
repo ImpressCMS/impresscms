@@ -179,7 +179,7 @@ class icms_form_elements_captcha_ImageHandler {
 			header("Content-type: image/jpeg");
 			imagejpeg($this->oImage);
 		} else {
-			imagejpeg($this->oImage, ICMS_ROOT_PATH . "/cache/captcha/" . $file . ".jpg");
+			imagejpeg($this->oImage, ICMS_CACHE_PATH . "/captcha/" . $file . ".jpg");
 		}
 		imagedestroy($this->oImage);
 	}

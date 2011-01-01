@@ -2469,7 +2469,7 @@ function icms_clean_folders($dir, $remove_admin_cache=false) {
  */
 function icms_cleaning_write_folders() {
 	icms_core_Debug::setDeprecated('icms_core_Filesystem::cleanFolders', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/"));
+	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_CACHE_PATH . "/"));
 }
 
 /**

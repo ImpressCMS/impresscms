@@ -41,11 +41,11 @@
 function smarty_function_resized_image($params, &$smarty)
 {
     require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
-    
+
 	// Preparing arrays that will store original and resized image data
 	$original = array ();
 	$resized = array ();
-	
+
 	// Get parameters from the tag
     $alt = '';
     $file = '';
@@ -113,15 +113,15 @@ function smarty_function_resized_image($params, &$smarty)
 	$to   = explode(' ', 'A a E e e e E E I i O o U u N n C c');
 	$clean_file = str_replace($from, $to, strtolower($clean_file)); // removing special characters, convert to lowercase, encoding in URL the remaining for safe
 	$clean_file = str_replace('%2F', '/', urlencode($clean_file)); // URLencode the remaining, but taking into consideration the / char.
-		
+
 	// Preparing paths
 	if (substr($file,0,1) == '/') {
 		$original['path'] = $basedir . $file;
-		$resized['path'] = ICMS_ROOT_PATH.'/cache'.$clean_file;
+		$resized['path'] = ICMS_CACHE_PATH . $clean_file;
 		$resized['url'] = ICMS_URL.'/cache'.$clean_file;
 	} else {
 		$original['path'] = $file;
-		$resized['path'] = ICMS_ROOT_PATH.'/cache/'.$clean_file;
+		$resized['path'] = ICMS_CACHE_PATH . '/'.$clean_file;
 		$resized['url'] = ICMS_URL.'/cache/'.$clean_file;
 	}
     // Check if original image exists
@@ -144,7 +144,7 @@ function smarty_function_resized_image($params, &$smarty)
 		(!smarty_core_is_secure($_params, $smarty)) ) {
 		$smarty->trigger_error("resized_image: (secure) '".$original['path']."' not in secure directory", E_USER_NOTICE);
 	}
-	
+
 	// Original and resized dimensions
 	if(!isset($params['width'])) {
 		$original['width'] = $_image_data[0];
@@ -152,29 +152,29 @@ function smarty_function_resized_image($params, &$smarty)
 	if(!isset($params['height'])) {
 		$original['height'] = $_image_data[1];
 	}
-	
+
 	$resized['width'] = $width;
 	$resized['height'] = $height;
 
 	// build resized file name
 	$resized['dir'] = substr($resized['path'], 0, strrpos($resized['path'], "/")); // extract path
 	$resized['path'] = substr($resized['path'], 0, strrpos($resized['path'], ".") )
-		. "-" . $resized['width']. "x" . $resized['height']  
+		. "-" . $resized['width']. "x" . $resized['height']
 		. substr($resized['path'], strrpos($resized['path'], ".") ); // build path + file name
 	$resized['url'] = substr($resized['url'], 0, strrpos($resized['url'], ".") )
-		. "-" . $resized['width']. "x" . $resized['height'] 
+		. "-" . $resized['width']. "x" . $resized['height']
 		. substr($resized['url'], strrpos($resized['url'], ".") ); // build file URL
-	
+
 	// If file does not exist
 	// or it's outdated, create:
-	if (!file_exists($resized['path']) or ( filemtime ($original['path']) > filemtime ($resized['path']) ) ) { 
+	if (!file_exists($resized['path']) or ( filemtime ($original['path']) > filemtime ($resized['path']) ) ) {
 		if (!is_dir($resized['dir'])) { // If dir does not exist, create
 			mkdir ($resized['dir'], 0755, true);
 		}
 		// Resize image using WideImage library
 		include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 		$resized_img = WideImage::load($original['path'], 'jpg');
-		
+
 		$resized_img->resize($resized['width'], $resized['height'], $fit)->saveToFile($resized['path']);
 	}
 

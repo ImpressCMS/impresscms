@@ -252,7 +252,7 @@ extends icms_sys_autotasks_System {
 	 * Writes crontab files back to where it belongs
 	 */
 	function writeCronTab() {
-		$filename = tempnam(ICMS_ROOT_PATH.'/cache', 'cron');
+		$filename = tempnam(ICMS_CACHE_PATH, 'cron');
 		$file = fopen( $filename, "w" );
 		foreach ($this->_lines as $current_line) {
 			switch ( $current_line[1]) {

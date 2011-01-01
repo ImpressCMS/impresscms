@@ -116,7 +116,7 @@ class icms_core_Filesystem {
 		return self::cleanFolders(
 			array(
 				'templates_c' => ICMS_ROOT_PATH . '/templates_c/',
-				'cache' => ICMS_ROOT_PATH . '/cache/',
+				'cache' => ICMS_CACHE_PATH . '/',
 			)
 		);
 	}
