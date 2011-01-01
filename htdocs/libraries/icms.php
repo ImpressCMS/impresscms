@@ -110,7 +110,7 @@ abstract class icms {
 	static public function setup() {
 		self::$paths['www']		= array(ICMS_ROOT_PATH, ICMS_URL);
 		self::$paths['modules']	= array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
-		self::$paths['themes']	= array(ICMS_ROOT_PATH . '/themes', ICMS_URL . '/themes');
+		self::$paths['themes']	= array(ICMS_THEME_PATH, ICMS_THEME_URL);
 		self::buildRelevantUrls();
 		// Initialize the autoloader
 		require_once dirname(__FILE__ ) . '/icms/Autoloader.php';
