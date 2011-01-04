@@ -15,4 +15,4 @@
 include_once '../../mainfile.php';
 icms_core_Debug::setDeprecated('modules/system/admin/images/browser.php', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 
-include 'modules/system/admin/images/browser.php';
+include ICMS_ROOT_PATH . '/modules/system/admin/images/browser.php';
