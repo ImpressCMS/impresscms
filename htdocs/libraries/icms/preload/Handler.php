@@ -47,7 +47,7 @@ class icms_preload_Handler {
 		$preloadFilesArray = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_PRELOAD_PATH, '', array('php')));
 		foreach ($preloadFilesArray as $filename) {
 			// exclude index.html
-			if (!class_exists($this->getClassName($filename))) {
+			if (!in_array($this->getClassName($filename), get_declared_classes())) {
 				$this->_preloadFilesArray[] = $filename;
 				$this->addPreloadEvents($filename);
 			}
@@ -78,7 +78,7 @@ class icms_preload_Handler {
 
 		$classname = $this->getClassName($filename);
 
-		if (class_exists($classname)) {
+		if (in_array($classname, get_declared_classes())) {
 			$preloadItem = new $classname();
 
 			$class_methods = get_class_methods($classname);
