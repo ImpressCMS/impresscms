@@ -31,7 +31,7 @@ class icms_Autoloader {
 	 * Whether setup has already been called or not
 	 * @var bool
 	 */
-	static protected $initialized = false;
+	static protected $initialized = FALSE;
 
 	/**
 	 * Initialize the autoloader, and register its autoload method
@@ -42,7 +42,7 @@ class icms_Autoloader {
 			self::register(dirname(dirname(__FILE__)));
 			spl_autoload_register(array('icms_Autoloader', 'autoload'));
 			spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));
-			self::$initialized = true;
+			self::$initialized = TRUE;
 		}
 	}
 
@@ -55,7 +55,7 @@ class icms_Autoloader {
 	 * @return array
 	 */
 	static public function split($class) {
-		if (false === ($pos = strrpos($class, "\\"))) {
+		if (FALSE === ($pos = strrpos($class, "\\"))) {
 			$pos = strrpos($class, "_");
 		}
 		if ($pos) {
@@ -95,14 +95,14 @@ class icms_Autoloader {
 	 * @param bool $required Whether to throw an exception or not if the namespace file is not found
 	 * @return bool
 	 */
-	static public function import($namespace, $required = true) {
+	static public function import($namespace, $required = TRUE) {
 		if (!isset(self::$imported[ $namespace ])) {
-			$nspath = self::classPath($namespace, true, DIRECTORY_SEPARATOR . "namespace.php");
+			$nspath = self::classPath($namespace, TRUE, DIRECTORY_SEPARATOR . "namespace.php");
 			if ($nspath) {
 				include_once($nspath . DIRECTORY_SEPARATOR . "namespace.php");
-				return self::$imported[$namespace] = true;
+				return self::$imported[$namespace] = TRUE;
 			}
-			self::$imported[$namespace] = false;
+			self::$imported[$namespace] = FALSE;
 		}
 		if (!self::$imported[$namespace] && $required) {
 			throw new RuntimeException("No namespace file for namespace '$namespace'.");
@@ -120,9 +120,9 @@ class icms_Autoloader {
 		if ($path = self::classPath($class)) {
 			list($ns, $local) = self::split($class);
 			include_once "$path.php";
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -131,7 +131,7 @@ class icms_Autoloader {
 	 * @param string $class Name of the class to find
 	 * @param bool $useIncludePath If to search include paths too
 	 */
-	static public function classPath($class, $useIncludePath = true, $ext = ".php") {
+	static public function classPath($class, $useIncludePath = FALSE, $ext = ".php") {
 		$classPath = str_replace(array("\\", "_"), DIRECTORY_SEPARATOR, $class);
 		// First, try local repositories
 		if (strpos($class, "\\") || strpos($class, "_")) {
@@ -161,9 +161,9 @@ class icms_Autoloader {
 				}
 			}
 		}
-		return false;
+		return FALSE;
 	}
-	
+
 	/**
 	 *  This function maps the legacy classes that were included in common.php and xoopsformloader.php
 	 *  Rather than including all the legacy files, this defines where PHP should look to use these classes
