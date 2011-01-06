@@ -150,7 +150,7 @@ if ($icmsConfigUser['allwshow_sig'] == TRUE && strlen(trim($thisUser->getVar('us
    	icms_makeSmarty(array(
 		'user_showsignature' => TRUE,
 		'lang_signature' => _US_SIGNATURE,
-		'user_signature' => icms_core_DataFilter::filterHTMLdisplay(one_wordwrap($thisUser->getVar('user_sig', 'N')), 1, 1, 1)
+		'user_signature' => icms_core_DataFilter::filterHTMLdisplay($thisUser->getVar('user_sig', 'N'), 1, 1, 1)
 	));
 }
 
