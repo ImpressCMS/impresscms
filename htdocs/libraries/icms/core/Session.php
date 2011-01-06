@@ -179,9 +179,9 @@ class icms_core_Session {
 	 **/
 	public function gc_force() {
 		if (rand(1, 100) < 11) {
-			$expiration = empty($GLOBALS['xoopsConfig']['session_expire'])
+			$expiration = empty($GLOBALS['icmsConfig']['session_expire'])
 						? @ini_get('session.gc_maxlifetime')
-						: $GLOBALS['xoopsConfig']['session_expire'] * 60;
+						: $GLOBALS['icmsConfig']['session_expire'] * 60;
 			$this->gc($expiration);
 		}
 	}
