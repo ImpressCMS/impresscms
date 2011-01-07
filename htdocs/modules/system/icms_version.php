@@ -68,7 +68,7 @@ $modversion['autotasks'][] = array(
 /** Manual */
 $modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Extended_Profile/"._LANGCODE."' target='_blank'>"._LANGNAME."</a>";
 
-$modversion['warning'] = _CO_ICMS_WARNING_FINAL;
+$modversion['warning'] = _CO_ICMS_WARNING_ALPHA;
 
 /** Administrative information */
 $modversion['hasAdmin'] = true;
