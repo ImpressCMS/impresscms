@@ -149,6 +149,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
             'Filter.ExtractStyleBlocks.Scope' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks_Scope'],
             'Filter.ExtractStyleBlocks' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'],
             'Filter.YouTube' => $icmsConfigPurifier['purifier_Filter_YouTube'],
+            'Filter.Custom' => unserialize(array($icmsConfigPurifier['purifier_Filter_Custom'])),
 		);
 		return parent::cleanArray($icmsPurifierConf);
 	}

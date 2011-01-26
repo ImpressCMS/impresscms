@@ -9,6 +9,18 @@ Legend :
   -  a constant was removed OR a whole file was removed
   #  Directory / Folders guide
 
+ImpressCMS 1.3
+===================================================
+
+===================================================
+# Directory: modules/system/language/english/admin/
+===================================================
+preferences.php
+---------------------------
++- define("_MD_AM_PURIFIER_FILTER_CUSTOM","Enter Custom Filters");
++- define("_MD_AM_PURIFIER_FILTER_CUSTOMDSC","Enter the name of the custom filters to enable. (seperate with |)<br />Custom Filter files must be located in the 'libraries/htmlpurifier/standalone/HTMLPurifier/Filter' directory & the filename must be the same as the classname (see existing filters for example)<br />you must also precede the filter name with 'new'. example new HTMLPurifier_Filter_Vimeo()");
+
+
 ImpressCMS 1.2 (changes from ImpressCMS 1.1.1)
 ==============================================
 
