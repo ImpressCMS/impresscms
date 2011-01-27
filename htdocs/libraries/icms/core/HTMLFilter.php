@@ -68,7 +68,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			// get the Config Data
 			$icmsPurifyConf = self::getHTMLFilterConfig();
 			// uncomment for specific config debug info
-			parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
+			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
 
 			$purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
@@ -89,7 +89,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	private function getCustomFilterList() {
 		$dirPath = ICMS_ROOT_PATH . '/libraries/htmlpurifier/standalone/HTMLPurifier/Filter/';
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
-		if ($icmsConfigPurifier['allow_customFilters'] !== 0) {
+		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
 			$filterList = array();
 
 			$fileList = icms_core_Filesystem::getFileList($dirPath, '', array('php'), true);
@@ -114,8 +114,6 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 **/
 	protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
-
-		$filterCustom = self::getCustomFilterList();
 
 		$icmsPurifierConf = array(
             'HTML.DefinitionID' => $icmsConfigPurifier['purifier_HTML_DefinitionID'],
