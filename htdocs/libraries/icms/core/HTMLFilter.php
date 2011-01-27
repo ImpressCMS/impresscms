@@ -42,7 +42,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	public static function getInstance() {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_core_HTMLFilter();
+			$instance = new self();
 		}
 		return $instance;
 	}
