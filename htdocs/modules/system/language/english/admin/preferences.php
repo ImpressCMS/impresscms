@@ -554,8 +554,6 @@ define("_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE","Allowed Embedding YouTube Video")
 define("_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC","This directive enables YouTube video embedding in HTML Purifier. Check <a href='http://htmlpurifier.org/docs/enduser-youtube.html'>this</a> document on embedding videos for more information on what this filter does.");
 define("_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK","Extract Style Blocks?");
 define("_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC","Requires CSSTidy Plugin to be installed).<br /><br />This directive turns on the style block extraction filter, which removes style blocks from input HTML, cleans them up with CSSTidy, and places them in the StyleBlocks context variable, for further use by you, usually to be placed in an external stylesheet, or a style block in the head of your document.<br /><br />Warning: It is possible for a user to mount an imagecrash attack using this CSS. Counter-measures are difficult; it is not simply enough to limit the range of CSS lengths (using relative lengths with many nesting levels allows for large values to be attained without actually specifying them in the stylesheet), and the flexible nature of selectors makes it difficult to selectively disable lengths on image tags (HTML Purifier, however, does disable CSS width and height in inline styling). There are probably two effective counter measures: an explicit width and height set to auto in all images in your document (unlikely) or the disabling of width and height (somewhat reasonable). Whether or not these measures should be used is left to the reader.");
-define("_MD_AM_PURIFIER_FILTER_CUSTOM","Enter Custom Filters");
-define("_MD_AM_PURIFIER_FILTER_CUSTOMDSC","Enter the name of the custom filters to enable. (seperate with |)<br />Custom Filter files must be located in the 'libraries/htmlpurifier/standalone/HTMLPurifier/Filter' directory & the filename must be the same as the classname (see existing filters for example)<br />you must also precede the filter name with 'new'. example new HTMLPurifier_Filter_Vimeo()");
 // Core Section
 define("_MD_AM_PURIFIER_CORE_ESCINVALIDTAGS","Escape Invalid Tags");
 define("_MD_AM_PURIFIER_CORE_ESCINVALIDTAGSDSC","When enabled, invalid tags will be written back to the document as plain text. Otherwise, they are silently dropped.");
@@ -685,4 +683,7 @@ define('_MD_AM_PLUGINS_DSC', 'Select which plugins are used and available to be 
 define('_MD_AM_SEARCH_DSC', 'Manage how the search function operates for your users.');
 define('_MD_AM_USERSETTINGS_DSC', 'Manage how users register for your site. ser names length, formatting and password options.');
 define('_MD_AM_CENSOR_DSC', 'Manage the language that is not permitted on your site.');
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM","Allow Custom Filters");
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","Allow Custom Filters?<br /><br />if enabled this will allow you to use custom filters located in;<br />'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
+
 ?>

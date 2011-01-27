@@ -68,7 +68,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			// get the Config Data
 			$icmsPurifyConf = self::getHTMLFilterConfig();
 			// uncomment for specific config debug info
-			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
+			parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
 
 			$purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
@@ -78,12 +78,44 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 
 // ----- Private Functions -----
 
+	/*
+	 * Get list of current custom Filters & return them as objects in array
+	 * Custom Filters are located in libraries/htmlpurifier/standalone/HTMLPurifier/Filter/
+	 * Class name must be same as filename & be of the format
+	 * HTMLPurifier_Filter_<name of filter>.php
+	 *
+	 * @return	object	array of filters
+	 */
+	private function getCustomFilterList() {
+		$dirPath = ICMS_ROOT_PATH . '/libraries/htmlpurifier/standalone/HTMLPurifier/Filter/';
+		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+		if ($icmsConfigPurifier['allow_customFilters'] !== 0) {
+			$filterList = array();
+
+			$fileList = icms_core_Filesystem::getFileList($dirPath, '', array('php'), true);
+			unset($fileList['ExtractStyleBlocks.php'], $fileList['YouTube.php']);
+			$fileList = array_values($fileList);
+
+			foreach ($fileList as &$val) {
+				$val = "HTMLPurifier_Filter_".substr($val, 0,strrpos($val,'.'));
+				$newObject = new $val;
+				$filterList[] = $newObject;
+			}
+		} else {
+			$filterList = '';
+		}
+
+		return $filterList;
+	}
+	
 	/**
 	 * Gets Custom Purifier configurations ** this function will improve in time **
 	 * @return  array    $icmsPurifierConf
 	 **/
 	protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+
+		$filterCustom = self::getCustomFilterList();
 
 		$icmsPurifierConf = array(
             'HTML.DefinitionID' => $icmsConfigPurifier['purifier_HTML_DefinitionID'],
@@ -149,7 +181,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
             'Filter.ExtractStyleBlocks.Scope' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks_Scope'],
             'Filter.ExtractStyleBlocks' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'],
             'Filter.YouTube' => $icmsConfigPurifier['purifier_Filter_YouTube'],
-            'Filter.Custom' => unserialize(array($icmsConfigPurifier['purifier_Filter_Custom'])),
+            'Filter.Custom' => self::getCustomFilterList(),
 		);
 		return parent::cleanArray($icmsPurifierConf);
 	}
