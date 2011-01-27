@@ -81,13 +81,11 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	/*
 	 * Get list of current custom Filters & return them as objects in array
 	 * Custom Filters are located in libraries/htmlpurifier/standalone/HTMLPurifier/Filter/
-	 * Class name must be same as filename & be of the format
-	 * HTMLPurifier_Filter_<name of filter>.php
 	 *
-	 * @return	object	array of filters
+	 * @return	object	array list of filter objects
 	 */
 	private function getCustomFilterList() {
-		$dirPath = ICMS_ROOT_PATH . '/libraries/htmlpurifier/standalone/HTMLPurifier/Filter/';
+		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
 			$filterList = array();
