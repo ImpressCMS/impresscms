@@ -187,6 +187,7 @@ class icms_core_DataFilter {
 	*					'str' = Checks & Sanitizes String Values
 	*					'int' = Validates Integer Values
 	*					'html' = Validates HTML
+	*					'text' = Validates plain textareas (Non HTML)
 	*
 	* @param	mixed		$options1	Options to use with specified filter
 	*			Valid Filter Options:
@@ -212,6 +213,14 @@ class icms_core_DataFilter {
 	*					'encodeamp' = Encode the & character to &amp;
 	*				INT:
 	*					minimum integer range value
+	*				HTML:
+	*					'input' = Filters HTML for input to DB
+	*					'output' = Filters HTML for rendering output
+	*					'print' = Filters HTML for output to Printer
+	*				TEXT:
+	*					'input' = Filters plain text for input to DB
+	*					'output' = Filters plain text for rendering output
+	*					'print' = Filters plain text for output to printer
 	*
 	* @param	mixed		$options2	Options to use with specified filter options1
 	*				URL:
@@ -238,7 +247,7 @@ class icms_core_DataFilter {
 	static public function checkVar($data, $type, $options1 = '', $options2 = '') {
 		if (!$data || !$type) return false;
 
-		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html');
+		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html', 'text');
 		if (!in_array($type, $valid_types)) {
 			return false;
 		} else {
@@ -298,8 +307,19 @@ class icms_core_DataFilter {
 				break;
 
 				case 'html':
-					$options1 = '';
+					$valid_options1 = array('input', 'output', 'print');
 					$options2 = '';
+					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
+						$options1 = 'input';
+					}
+				break;
+
+				case 'text':
+					$valid_options1 = array('input', 'output', 'print');
+					$options2 = '';
+					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
+						$options1 = 'input';
+					}
 				break;
 			}
 		}
@@ -399,30 +419,21 @@ class icms_core_DataFilter {
 	 * we start filtering on INPUT instead of OUTPUT!!
 	 *
 	 * @param   string  $html
-	 * @param   bool	$smiley allow smileys?
 	 * @param   bool	$icode  allow icmscode?
-	 * @param   bool	$image  allow inline images?
 	 * @return  string
 	 **/
-	static public function filterHTMLdisplay($html, $smiley = 1, $icode = 1, $image = 1) {
-		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $smiley, $icode, $image));
+	static public function filterHTMLdisplay($html, $icode = 1) {
+		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $icode));
 
-		$html = self::codePreConv($html, $icode);
-		$html = self::makeClickable($html);
-		if ($smiley != 0) {
+		if ($icode !== 0) {
+			$html = self::codePreConv($html, $icode);
+			$html = self::makeClickable($html);
 			$html = self::smiley($html);
-		}
-		if ($icode != 0) {
-			if ($image != 0) {
-				$html = self::codeDecode($html);
-			} else {
-				$html = self::codeDecode($html, 0);
-			}
+			$html = self::codeDecode($html);
+			$html = self::codeConv($html, 1, 1);
 		}
 
-		$html = self::codeConv($html, $icode, $image);
-
-		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, $smiley, $icode, $image));
+		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, $icode));
 		return $html;
 	}
 
@@ -1016,11 +1027,43 @@ class icms_core_DataFilter {
 			break;
 
 			case "html":
-				$data = self::stripSlashesGPC($data);
-				return icms_core_HTMLFilter::filterHTML($data);
-			break;
-		}
+				switch($options1) {
+					case 'input':
+						default:
+						$data = self::stripSlashesGPC($data);
+						return self::filterHTMLinput($data);
+					break;
 
+					case 'output':
+						return self::filterHTMLdisplay($data);
+					break;
+
+					case 'print':
+						// do nothing yet
+					break;
+				}
+			break;
+
+			case "text":
+				switch($options1) {
+					case 'input':
+						default:
+						$data = self::stripSlashesGPC($data);
+						return self::filterTextareaInput($data);
+					break;
+
+					case 'output':
+						$data = self::stripSlashesGPC($data);
+						return self::filterTextareaDisplay($data);
+					break;
+
+					case 'print':
+						// do nothing yet
+					break;
+				}
+			break;
+
+		}
 		return $data;
 	}
 
