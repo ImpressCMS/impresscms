@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-icms_loadLanguageFile ( 'core', 'databaseupdater' );
+icms_loadLanguageFile('core', 'databaseupdater');
 
 /**
  * Automatic update of the system module
@@ -20,42 +20,44 @@ icms_loadLanguageFile ( 'core', 'databaseupdater' );
  * @param int $dbVersion The database version
  * @return mixed
  */
-function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = null) {
+function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = NULL) {
 
 	global $icmsConfig, $xoTheme;
 
-	$from_112 = $abortUpdate = false;
+	$from_112 = $abortUpdate = FALSE;
 
-	$oldversion = $module->getVar ( 'version' );
+	$oldversion = $module->getVar('version');
 	if ($oldversion < 120) {
-		$result = icms::$xoopsDB->query ( "SELECT t1.tpl_id FROM " . icms::$xoopsDB->prefix ( 'tplfile' ) . " t1, " . icms::$xoopsDB->prefix ( 'tplfile' ) . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id" );
+		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM " 
+				. icms::$xoopsDB->prefix('tplfile') . " t1, " 
+				. icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
-		$tplids = array ( );
-		while (list ( $tplid ) = icms::$xoopsDB->fetchRow ( $result )) {
-			$tplids [] = $tplid;
+		$tplids = array();
+		while (list($tplid) = icms::$xoopsDB->fetchRow($result)) {
+			$tplids[] = $tplid;
 		}
 
-		if (count ( $tplids ) > 0) {
+		if (count($tplids) > 0) {
 			$tplfile_handler = icms::handler('icms_view_template_file');
-			$duplicate_files = $tplfile_handler->getObjects ( new icms_db_criteria_Item ( 'tpl_id', "(" . implode ( ',', $tplids ) . ")", "IN" ) );
+			$duplicate_files = $tplfile_handler->getObjects(new icms_db_criteria_Item('tpl_id', "(" . implode(',', $tplids) . ")", "IN"));
 
-			if (count ( $duplicate_files ) > 0) {
-				foreach ( array_keys ( $duplicate_files ) as $i) {
-					$tplfile_handler->delete ( $duplicate_files [$i] );
+			if (count($duplicate_files) > 0) {
+				foreach (array_keys($duplicate_files) as $i) {
+					$tplfile_handler->delete($duplicate_files[$i]);
 				}
 			}
 		}
 	}
 
-	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater ();
+	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 	//$dbVersion  = $module->getDBVersion();
 	//$oldversion  = $module->getVar('version');
 
-	ob_start ();
+	ob_start();
 
-	$dbVersion = $module->getDBVersion ();
-	echo sprintf ( _DATABASEUPDATER_CURRENTVER, icms_conv_nr2local ( $dbVersion ) ) . '<br />';
-	echo "<code>" . sprintf ( _DATABASEUPDATER_UPDATE_TO, icms_conv_nr2local( ICMS_SYSTEM_DBVERSION ) ). "<br />";
+	$dbVersion = $module->getDBVersion();
+	echo sprintf(_DATABASEUPDATER_CURRENTVER, icms_conv_nr2local($dbVersion)) . '<br />';
+	echo "<code>" . sprintf(_DATABASEUPDATER_UPDATE_TO, icms_conv_nr2local(ICMS_SYSTEM_DBVERSION)) . "<br />";
 
 	/*
 	 * DEVELOPER, PLEASE NOTE !!!
@@ -68,16 +70,16 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 * a separate file, to minimize file size and memory usage
 	 */
 
-	$CleanWritingFolders = false;
+	$CleanWritingFolders = FALSE;
 
-	if ($dbVersion < 40 ) include 'update-112-to-122.php';
+	if ($dbVersion < 40) include 'update-112-to-122.php';
 
 /*  Begin upgrade to version 1.3 */
-	if (!$abortUpdate ) $newDbVersion = 41;
+	if (!$abortUpdate) $newDbVersion = 41;
 
 	if ($dbVersion < $newDbVersion) {
 	/* Add new tables and data for the help suggestions and quick search */
-		$table = new icms_db_legacy_updater_Table( 'autosearch_cat' ) ;
+		$table = new icms_db_legacy_updater_Table('autosearch_cat');
 		if (!$table->exists()) {
 			$table->setStructure(
 				"`cid` int(11) NOT NULL auto_increment,
@@ -115,14 +117,14 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 					"NULL, '" . _MD_AM_RANK . "', '/modules/system/admin.php?fct=userrank'",
 					"NULL, '" . _MD_AM_VERSION . "', '/modules/system/admin.php?fct=version'");
 				foreach ($search_cats as $cat) {
-					$table->setData( $cat );
+					$table->setData($cat);
 				}
 				$table->addData();
 			}
-			unset( $table );
+			unset($table);
 		}
 
-		$table = new icms_db_legacy_updater_Table( 'autosearch_list' ) ;
+		$table = new icms_db_legacy_updater_Table('autosearch_list');
 		if (!$table->exists() && !$abortUpdate) {
 			$table->setStructure(
 				"`id` int(11) NOT NULL auto_increment,
@@ -177,50 +179,50 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 					"NULL, 22, '" . _MD_AM_VRSN . "', '/modules/system/admin/version/images/version_small.png', '" . _MD_AM_VRSN_DSC . "', '/modules/system/admin.php?fct=version'"
 				);
 				foreach ($search_items as $item) {
-					$table->setData( $item );
+					$table->setData($item);
 				}
 				$table->addData();
 			}
-			unset( $table );
+			unset($table);
 		}
 
 		/* Optimize old tables and fix data structures */
-		$table = new icms_db_legacy_updater_Table( 'config' );
-		$icmsDatabaseUpdater->runQuery( "ALTER TABLE `" . $table->name() . "` DROP INDEX conf_mod_cat_id, ADD INDEX mod_cat_order(conf_modid, conf_catid, conf_order)", 'Successfully altered the indexes on table config', '' );
-		unset( $table );
+		$table = new icms_db_legacy_updater_Table('config');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX conf_mod_cat_id, ADD INDEX mod_cat_order(conf_modid, conf_catid, conf_order)", 'Successfully altered the indexes on table config', '');
+		unset($table);
 
-		$table = new icms_db_legacy_updater_Table( 'group_permission' );
-		$table->addAlteredField( 'gperm_modid', "SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0'", 'gperm_modid' );
+		$table = new icms_db_legacy_updater_Table('group_permission');
+		$table->addAlteredField('gperm_modid', "SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0'", 'gperm_modid');
 		$table->alterTable();
-		$icmsDatabaseUpdater->runQuery( "ALTER TABLE `" . $table->name() . "` DROP INDEX itemid, DROP INDEX groupid, DROP INDEX gperm_modid", 'Successfully dropped the indexes on table group_permission', '' );
-		$icmsDatabaseUpdater->runQuery( "ALTER TABLE `" . $table->name() . "` ADD INDEX name_mod_group (gperm_name(10), gperm_modid, gperm_groupid)", 'Successfully added the indexes on table group_permission', '' );
-		unset( $table );
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX itemid, DROP INDEX groupid, DROP INDEX gperm_modid", 'Successfully dropped the indexes on table group_permission', '');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` ADD INDEX name_mod_group (gperm_name(10), gperm_modid, gperm_groupid)", 'Successfully added the indexes on table group_permission', '');
+		unset($table);
 
-		$table = new icms_db_legacy_updater_Table( 'modules' );
-		$icmsDatabaseUpdater->runQuery( "ALTER TABLE `" . $table->name() . "` DROP INDEX hasmain, DROP INDEX hasadmin, DROP INDEX hassearch, DROP INDEX hasnotification, DROP INDEX name, DROP INDEX dirname", 'Successfully dropped the indexes on table modules', '' );
-		$icmsDatabaseUpdater->runQuery( "ALTER TABLE `" . $table->name() . "` ADD INDEX dirname (dirname(5)), ADD INDEX active_main_weight (isactive, hasmain, weight)", 'Successfully added the indexes on table modules', '' );
-		unset( $table );
+		$table = new icms_db_legacy_updater_Table('modules');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX hasmain, DROP INDEX hasadmin, DROP INDEX hassearch, DROP INDEX hasnotification, DROP INDEX name, DROP INDEX dirname", 'Successfully dropped the indexes on table modules', '');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` ADD INDEX dirname (dirname(5)), ADD INDEX active_main_weight (isactive, hasmain, weight)", 'Successfully added the indexes on table modules', '');
+		unset($table);
 
-		$table = new icms_db_legacy_updater_Table( 'users' );
-		$icmsDatabaseUpdater->runQuery( "ALTER TABLE `" . $table->name() . "` DROP INDEX email, DROP INDEX uiduname, DROP INDEX unamepass", 'Successfully dropped the indexes on table users', '' );
-		$icmsDatabaseUpdater->runQuery( "ALTER TABLE `" . $table->name() . "` DROP INDEX login_name, ADD UNIQUE INDEX login_name (login_name)", 'Successfully added the indexes on table users', '' );
-		unset( $table );
+		$table = new icms_db_legacy_updater_Table('users');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX email, DROP INDEX uiduname, DROP INDEX unamepass", 'Successfully dropped the indexes on table users', '');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX login_name, ADD UNIQUE INDEX login_name (login_name)", 'Successfully added the indexes on table users', '');
+		unset($table);
 
-		$table = new icms_db_legacy_updater_Table( 'priv_msgs' );
-		$icmsDatabaseUpdater->runQuery( "ALTER TABLE `" . $table->name() . "` DROP INDEX to_userid", 'Successfully dropped the indexes on table priv_msgs', '' );
-		unset( $table );
+		$table = new icms_db_legacy_updater_Table('priv_msgs');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX to_userid", 'Successfully dropped the indexes on table priv_msgs', '');
+		unset($table);
 
-		$table = new icms_db_legacy_updater_Table( 'ranks' );
-		$icmsDatabaseUpdater->runQuery( "ALTER TABLE `" . $table->name() . "` DROP INDEX rank_min", 'Successfully dropped the indexes on table ranks', '' );
-		unset( $table );
+		$table = new icms_db_legacy_updater_Table('ranks');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX rank_min", 'Successfully dropped the indexes on table ranks', '');
+		unset($table);
 
 		/* Corrects an error from db version 4 */
-		$table = new icms_db_legacy_updater_Table( 'users' );
-		if ($table->fieldExists( 'pass' )) {
-			$table->addAlteredField( 'pass', "varchar(255) NOT NULL default ''", 'pass' );
+		$table = new icms_db_legacy_updater_Table('users');
+		if ($table->fieldExists('pass')) {
+			$table->addAlteredField('pass', "varchar(255) NOT NULL default ''", 'pass');
 			$table->alterTable();
 		}
-		unset ( $table );
+		unset($table);
 
 		/* change IP address to varchar(64) in session to accomodate IPv6 addresses */
 		$table = new icms_db_legacy_updater_Table('session');
@@ -232,14 +234,14 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 		/* add modname and ipf to modules table */
 		$table = new icms_db_legacy_updater_Table("modules");
-		$alter = false;
+		$alter = FALSE;
 		if (!$table->fieldExists("modname")) {
 			$table->addNewField("modname", "varchar(25) NOT NULL default ''");
-			$alter = true;
+			$alter = TRUE;
 		}
 		if (!$table->fieldExists("ipf")) {
 			$table->addNewField("ipf", "tinyint(1) unsigned NOT NULL default '0'");
-			$alter = true;
+			$alter = TRUE;
 		}
 		if ($alter) $table->addNewFields();
 		unset($table, $alter);
@@ -247,10 +249,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$module_handler = icms::handler('icms_module');
 		$modules = $module_handler->getObjects();
 		foreach ($modules as $module) {
-			if ($module->getInfo("modname") !== false) {
+			if ($module->getInfo("modname") !== FALSE) {
 				$module->setVar("modname", $module->getInfo("modname"));
 			}
-			if ($module->getInfo("object_items") !== false) {
+			if ($module->getInfo("object_items") !== FALSE) {
 				$module->setVar("ipf", 1);
 			}
 			$module_handler->insert($module);
@@ -290,8 +292,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
-			$icmsDatabaseUpdater->updateModuleDBVersion( $newDbVersion, 'system' );
-			echo sprintf( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local( $newDbVersion ) ) . '<br />';
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}
 /*  1.3 beta|rc|final release  */
@@ -302,7 +304,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 */
 	echo "</code>";
     if ($abortUpdate) {
-        icms_core_Message::error( sprintf( _DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local( $newDbVersion ) ), _DATABASEUPDATER_UPDATE_DB, TRUE);
+        icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
     }
 	if ($from_112 && ! $abortUpdate) {
 		/**
@@ -312,14 +314,13 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		echo '<script>setTimeout("window.location.href=\'' . ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
 	}
 
-	$feedback = ob_get_clean ();
-	if (method_exists ( $module, "setMessage" )) {
-		$module->messages = $module->setMessage ( $feedback );
+	$feedback = ob_get_clean();
+	if (method_exists($module, "setMessage")) {
+		$module->messages = $module->setMessage($feedback);
 	} else {
 		echo $feedback;
 	}
 
-	$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/" ), $CleanWritingFolders);
+	$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }
-?>
