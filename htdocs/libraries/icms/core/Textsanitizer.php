@@ -302,11 +302,10 @@ class icms_core_Textsanitizer {
 	 **/
 	public function htmlSpecialChars($text) {
 		return preg_replace(
-			array(
-				"/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
-				@htmlspecialchars($text, ENT_QUOTES, _CHARSET
-				)
-			);
+			array("/&amp;/i", "/&nbsp;/i"), 
+			array('&', '&amp;nbsp;'),
+			@htmlspecialchars($text, ENT_QUOTES, _CHARSET)
+		);
 	}
 
 	/**
