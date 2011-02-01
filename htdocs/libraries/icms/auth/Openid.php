@@ -15,7 +15,7 @@
  * @since		1.1
  * @author		malanciault <marcan@impresscms.org)
  * @credits		Sakimura <http://www.sakimura.org/> Evan Prodromou <http://evan.prodromou.name/>
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		SVN: $Id$
  */
 
@@ -66,8 +66,21 @@ class icms_auth_Openid extends icms_auth_Object {
 	 * Authentication Service constructor
 	 */
 	public function __construct(&$dao) {
-		$this->_dao = $dao;
+		parent::__construct($dao);
 		$this->auth_method = 'openid';
+	}
+	
+	/**
+	 * Overloading method to allow access to private properties outside the class
+	 * 
+	 * Instead of creating separate methods for each private property, this allows you to 
+	 * access (read) the properties and still keep them from being written from the public
+	 * scope
+	 * 
+	 * @param string $name
+	 */
+	public function __get($name) {
+		return $this->$name;
 	}
 
 	/**
@@ -76,7 +89,7 @@ class icms_auth_Openid extends icms_auth_Object {
 	 * @param bool $debug Turn debug on or not
 	 * @return bool successful?
 	 */
-	public function authenticate($debug = false) {
+	public function authenticate($debug = FALSE) {
 		// check to see if we alredy have an OpenID response in SESSION
 		if (isset($_SESSION['openid_response'])) {
 			if ($debug) icms_core_Debug::message(_CORE_OID_INSESSIONS);
@@ -88,7 +101,7 @@ class icms_auth_Openid extends icms_auth_Object {
 			$return_to = getReturnTo();//1123
 			//$this->response = $consumer->complete($_GET);
 			$this->response = $consumer->complete($return_to);//1123
-			$_SESSION['openid_response']=$this->response;
+			$_SESSION['openid_response'] = $this->response;
 		}
 
 		if ($this->response->status == Auth_OpenID_CANCEL) {
@@ -109,8 +122,8 @@ class icms_auth_Openid extends icms_auth_Object {
 				icms_core_Debug::vardump($_REQUEST);
 			}
 
-			//$this->setErrors('102', "REQUEST info: <pre>" . var_export($_REQUEST, true) . "</pre>");
-			return false;
+			//$this->setErrors('102', "REQUEST info: <pre>" . var_export($_REQUEST, TRUE) . "</pre>");
+			return FALSE;
 		} else if ($this->response->status == Auth_OpenID_SUCCESS) {
 			// This means the authentication succeeded.
 			$this->displayid = $this->response->getDisplayIdentifier();
@@ -173,7 +186,7 @@ class icms_auth_Openid extends icms_auth_Object {
 					 */
 					if ($debug) icms_core_Debug::message(_CORE_OID_NOTFOUNDSTEPIS);
 					$this->step = OPENID_STEP_NO_USER_FOUND;
-					return false;
+					return FALSE;
 				}
 			}
 		}
@@ -182,10 +195,10 @@ class icms_auth_Openid extends icms_auth_Object {
 	/**
 	 * Has an error occurred or not
 	 *
-	 * @return bool true if number of errors are greater than 0
+	 * @return bool TRUE if number of errors are greater than 0
 	 */
 	public function errorOccured() {
-		return count($this->_errors) > 0;
+		return count($this->getErrors()) > 0;
 	}
 }
 
