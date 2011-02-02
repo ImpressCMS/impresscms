@@ -907,29 +907,32 @@ class icms_core_DataFilter {
 
 				switch ($options1) {
 					case "scheme":
-						$data = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
+						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
 					break;
 
 					case "host":
-						$data = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
+						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
 					break;
 
 					case "path":
-						$data = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED);
+						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED);
 					break;
 
 					case "query":
-						$data = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_QUERY_REQUIRED);
+						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_QUERY_REQUIRED);
 					break;
 
 					default:
-						$data = filter_var($data, FILTER_VALIDATE_URL);
+						$valid = filter_var($data, FILTER_VALIDATE_URL);
 					break;
 				}
-				if (isset($options2) && $options2 == 1) {
-					$data = filter_var($data, FILTER_SANITIZE_ENCODED);
+				if ($valid) {
+					if (isset($options2) && $options2 == 1) {
+						$data = filter_var($data, FILTER_SANITIZE_ENCODED);
+					}
+					return $data;
 				}
-				return $data;
+				return false;
 			break;
 
 			case "email":
