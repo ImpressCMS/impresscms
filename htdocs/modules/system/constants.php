@@ -2,15 +2,12 @@
 /**
  * Admin constants
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @package	Administration
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id$
+ * @package		Administration
+ * @version		SVN: $Id$
  */
+
 /**
  * Separating page level doc block from elements
  */
@@ -37,4 +34,3 @@ define('XOOPS_SYSTEM_ADSENSES', 21);
 define('XOOPS_SYSTEM_RATINGS', 22);
 define('XOOPS_SYSTEM_MIMETYPES', 23);
 define('XOOPS_SYSTEM_AUTOTASKS', 24);
-?>

@@ -9,11 +9,10 @@
  * @license		GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @package		core
  * @since		1.2
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		SVN: $Id$
  */
 
-if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
+defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 
 /**  General Information  */
 $modversion = array(
@@ -24,7 +23,7 @@ $modversion = array(
 	'credits'=> "The ImpressCMS Project",
 	'help'=> "",
 	'license'=> "GNU General Public License (GPL)",
-	'official'=> true,
+	'official'=> TRUE,
 	'dirname'=> basename(dirname(__FILE__ )),
 	'modname' => 'system',
 
@@ -34,8 +33,8 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Alpha",
-	'status'=> "Alpha",
+	'status_version'=> "Beta",
+	'status'=> "Beta",
 	'date'=> "",
 	'author_word'=> "",
 
@@ -59,7 +58,7 @@ $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/u
 
 // Autotasks
 $modversion['autotasks'][] = array(
-	'enabled' => true,
+	'enabled' => TRUE,
 	'name' => _MI_SYSTEM_REMOVEUSERS,
 	'code' => 'autotask.php',
 	'interval' => 1
@@ -68,10 +67,10 @@ $modversion['autotasks'][] = array(
 /** Manual */
 $modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Extended_Profile/"._LANGCODE."' target='_blank'>"._LANGNAME."</a>";
 
-$modversion['warning'] = _CO_ICMS_WARNING_ALPHA;
+$modversion['warning'] = _CO_ICMS_WARNING_BETA;
 
 /** Administrative information */
-$modversion['hasAdmin'] = true;
+$modversion['hasAdmin'] = TRUE;
 $modversion['adminindex'] = "admin.php";
 $modversion['adminmenu'] = "menu.php";
 
@@ -79,10 +78,10 @@ $modversion['adminmenu'] = "menu.php";
 $modversion['onUpdate'] = "include/update.php";
 
 /** Search information */
-$modversion['hasSearch'] = false;
+$modversion['hasSearch'] = FALSE;
 
 /** Menu information */
-$modversion['hasMain'] = false;
+$modversion['hasMain'] = FALSE;
 
 /** Blocks information */
 $modversion['blocks'][1] = array(
