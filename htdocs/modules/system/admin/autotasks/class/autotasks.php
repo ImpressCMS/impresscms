@@ -327,7 +327,7 @@ class SystemAutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @param bool
 	 */
-	public public function needExit() {
+	public function needExit() {
 		return $this->getCurrentSystemHandler()->needExit();
 	}
 
