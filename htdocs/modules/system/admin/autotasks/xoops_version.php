@@ -4,15 +4,17 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
+ * @package		Administration
+ * @subpackage	Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
+ * @version		SVN: $Id$
  */
 
 $modversion = array(
 	'name' => _MD_AM_AUTOTASKS,
 	'version' => "1.0",
-	'description' => "AutoTasks Administration",
+	'description' => "_MD_AM_AUTOTASKS_DSC",
 	'author' => "mekdrop <mekdrop@gmail.com>",
 	'credits' => "The ImpressCMS Project <br />Crystal Icons",
 	'help' => "",

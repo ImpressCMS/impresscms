@@ -1,10 +1,11 @@
 <?php
 /**
- * ImpressCMS AUTOTASKSs
+ * ImpressCMS AUTOTASKS
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
+ * @package		Administration
+ * @subpackage	Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
  */
@@ -12,8 +13,14 @@ if (!is_object(icms::$user) || !is_object($xoopsModule) || !icms::$user->isAdmin
 	exit("Access Denied");
 }
 
-function editautotasks($showmenu = false, $autotasksid = 0, $clone=false)
-{
+/**
+ * Method for editing autotask entries
+ * 
+ * @param boolean	$showmenu		This parameter is not used - why is it here?
+ * @param int		$autotasksid	The unique identifier for the autotask
+ * @param boolean	$clone			Indicator if an autotask is being created from another
+ */
+function editautotasks($showmenu = FALSE, $autotasksid = 0, $clone = FALSE) {
 	global $icms_autotasks_handler, $icmsAdminTpl;
 
 	icms_cp_header();
@@ -46,17 +53,17 @@ if (isset($_POST['op'])) $op = $_POST['op'];
 switch ($op) {
 	case "mod":
 
-		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0 ;
+		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0;
 
-		editautotasks(true, $autotasksid);
+		editautotasks(TRUE, $autotasksid);
 
 		break;
 
 	case "clone":
 
-		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0 ;
+		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0;
 
-		editautotasks(true, $autotasksid, true);
+		editautotasks(TRUE, $autotasksid, TRUE);
 		break;
 
 	case "addautotasks":
@@ -74,8 +81,8 @@ switch ($op) {
 
 		icms_cp_header();
 
-		$objectTable = new icms_ipf_view_Table($icms_autotasks_handler, false, array('edit'));
-		$objectTable->addColumn(new icms_ipf_view_Column('sat_name', 'left', false, 'getNameForDisplay'));
+		$objectTable = new icms_ipf_view_Table($icms_autotasks_handler, FALSE, array('edit'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_name', 'left', FALSE, 'getNameForDisplay'));
 		$objectTable->addColumn(new icms_ipf_view_Column('sat_repeat', 'center', 80, 'getRepeatForDisplay'));
 		$objectTable->addColumn(new icms_ipf_view_Column('sat_interval', 'center', 80, 'getIntervalForDisplay'));
 		$objectTable->addColumn(new icms_ipf_view_Column('sat_enabled', 'center', 80, 'getEnableForDisplay'));
@@ -100,4 +107,3 @@ switch ($op) {
 
 icms_cp_footer();
 
-?>
