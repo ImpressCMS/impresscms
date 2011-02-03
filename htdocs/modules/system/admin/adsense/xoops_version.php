@@ -13,7 +13,7 @@
 $modversion = array(
 	'name' => _MD_AM_ADSENSES,
 	'version' => "1.0",
-	'description' => "Adsense Administration",
+	'description' => _MD_AM_ADSENSES_DSC,
 	'author' => "Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>",
 	'credits' => "The ImpressCMS Projects",
 	'help' => "",

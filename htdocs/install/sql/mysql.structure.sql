@@ -648,6 +648,7 @@ CREATE TABLE system_adsense (
   color_text varchar(6) NOT NULL default '',
   client_id varchar(100) NOT NULL default '',
   tag varchar(50) NOT NULL default '',
+  slot varchar(12) NOT NULL default '',
   PRIMARY KEY  (`adsenseid`)
 ) TYPE=MyISAM;
 
