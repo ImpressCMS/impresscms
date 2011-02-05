@@ -18,7 +18,7 @@ if (!is_object(icms::$user)
 include_once ICMS_ROOT_PATH . '/modules/system/admin/banners/banners.php';
 $allowedHTML = array('htmlcode');
 /*
- * POST variables
+ * valid POST variables
  * name
  * cid
  * imageurl
@@ -35,8 +35,11 @@ $allowedHTML = array('htmlcode');
  * op
  * impadded
  * 
- * GET variables
- * op
+ * valid GET variables
+ * op:	BannersAdmin, BannersAdd, BannerAddClient, BannerFinishDelete, 
+ * 		BannerFinishDelete2, BannerEdit, BannerChange, BannerClientDelete, 
+ * 		BannerClientDelete2, BannerDelete, BannerDelete2, BannerClientEdit,
+ * 		BannerClientChange
  * bid
  * cid
  */
