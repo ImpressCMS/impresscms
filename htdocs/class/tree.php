@@ -24,14 +24,12 @@
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class XoopsObjectTree {
+class XoopsObjectTree extends icms_ipf_Tree {
 	
 	private $_deprecated;
 	
 	public function __construct(& $objectArr, $myId, $parentId, $rootId = null) {
-		$tree =  new icms_ipf_Tree($objectArr, $myId, $parentId, $rootId);
-		$tree->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_Tree', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $tree;
+		parent::__construct($objectArr, $myId, $parentId, $rootId);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_Tree', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
-?>
