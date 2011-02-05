@@ -2,23 +2,26 @@
 /**
  * Blocks position admin classes
  *
- * @copyright	  	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		 LICENSE.txt
- * @package			Administration
- * @since			ImpressCMS 1.2
- * @author			Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
- * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @author			modified by UnderDog <underdog@impresscms.org>
- * @version			$Id$
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		LICENSE.txt
+ * @package		Administration
+ * @subpackage	Block Positions
+ * @since		ImpressCMS 1.2
+ * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @version		SVN: $Id$
  */
 
 /**
  * System Blockspadmin Class
  *
- * @copyright	  	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		 LICENSE.txt
- * @since 			ImpressCMS 1.2
- * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		LICENSE.txt
+ * @package		Administration
+ * @subpackage	Block Positions
+ * @since 		ImpressCMS 1.2
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class SystemBlockspadmin extends icms_view_block_position_Object {
 
@@ -56,8 +59,7 @@ class SystemBlockspadmin extends icms_view_block_position_Object {
 	 * @return string
 	 */
 	public function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
-		if ($this->getVar('block_default') == 1)
-		return "";
+		if ($this->getVar('block_default') == 1) return "";
 		return parent::getEditItemLink($onlyUrl, $withimage, $userSide);
 	}
 
@@ -72,8 +74,7 @@ class SystemBlockspadmin extends icms_view_block_position_Object {
 	 * @return string
 	 */
 	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
-		if ($this->getVar('block_default') == 1)
-		return "";
+		if ($this->getVar('block_default') == 1) return "";
 		return parent::getDeleteItemLink($onlyUrl, $withimage, $userSide);
 	}
 
@@ -82,10 +83,12 @@ class SystemBlockspadmin extends icms_view_block_position_Object {
 /**
  * System Blockspadmin Class
  *
- * @copyright	  	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		 LICENSE.txt
- * @since 			ImpressCMS 1.2
- * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		LICENSE.txt
+ * @package		Administration
+ * @subpackage	Block Positions
+ * @since		ImpressCMS 1.2
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class SystemBlockspadminHandler extends icms_view_block_position_Handler {
 
@@ -100,4 +103,3 @@ class SystemBlockspadminHandler extends icms_view_block_position_Handler {
 	}
 }
 
-?>
