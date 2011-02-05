@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Admin ImpressCMS Blocks
  *
@@ -8,22 +7,23 @@
  * @copyright	The ImpressCMS Project <http://www.impresscms.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
  * @since		ImpressCMS 1.2
- * @package Administration
+ * @package		Administration
+ * @subpackage	Blocks
  * @version		$Id$
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-	exit ("Access Denied");
+	exit("Access Denied");
 }
 
 /**
  * Edit a block
  *
  * @param int $bid ID of block to be edited
- * @param bool $clone Set to 'true' if the block is being cloned
+ * @param bool $clone Set to 'TRUE' if the block is being cloned
  */
-function editblock($bid = 0, $clone = false) {
+function editblock($bid = 0, $clone = FALSE) {
 	global $icms_block_handler, $icmsAdminTpl;
 
 	$blockObj = $icms_block_handler->get($bid);
@@ -57,7 +57,7 @@ $clean_op = '';
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
-$valid_op = array (
+$valid_op = array(
 	'mod',
 	'changedField',
 	'addblock',
@@ -70,14 +70,14 @@ $valid_op = array (
 	''
 );
 
-if (isset ($_GET['op']))
+if (isset($_GET['op']))
 $clean_op = htmlentities($_GET['op']);
-if (isset ($_POST['op']))
+if (isset($_POST['op']))
 $clean_op = htmlentities($_POST['op']);
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
-$clean_bid = isset ($_GET['bid']) ? ( int ) $_GET['bid'] : 0;
-$clean_bid = isset ($_POST['bid']) ? ( int ) $_POST['bid'] : $clean_bid;
+$clean_bid = isset($_GET['bid']) ? (int) $_GET['bid'] : 0;
+$clean_bid = isset($_POST['bid']) ? (int) $_POST['bid'] : $clean_bid;
 
 /**
  * in_array() is a native PHP function that will determine if the value of the
@@ -85,44 +85,50 @@ $clean_bid = isset ($_POST['bid']) ? ( int ) $_POST['bid'] : $clean_bid;
  * are case sensitive and the 3rd argument determines whether type matching is
  * required
  */
-if (in_array($clean_op, $valid_op, true)) {
-	switch ($clean_op) {
+if (in_array($clean_op, $valid_op, TRUE)) {
+	switch($clean_op) {
 		case 'visible' :
 			$icms_block_handler->changeVisible($bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
-			if (isset ($_GET['sortsel']))
-			$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
-			if (isset ($_GET['rtn']))
-			redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
-			else
-			redirect_header(ICMS_URL . $rtn);
+			if (isset($_GET['sortsel'])) {
+				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+			}
+			if (isset($_GET['rtn'])) {
+				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
+			} else {
+				redirect_header(ICMS_URL . $rtn);
+			}
 			break;
 
 		case "up" :
 			$icms_block_handler->upWeight($bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
-			if (isset ($_GET['sortsel']))
-			$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
-			if (isset ($_GET['rtn']))
-			redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
-			else
-			redirect_header(ICMS_URL . $rtn);
+			if (isset($_GET['sortsel'])) {
+				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+			}
+			if (isset($_GET['rtn'])) {
+				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
+			} else {
+				redirect_header(ICMS_URL . $rtn);
+			}
 			break;
 
 		case "down" :
 			$icms_block_handler->downWeight($bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
-			if (isset ($_GET['sortsel']))
-			$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
-			if (isset ($_GET['rtn']))
-			redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
-			else
-			redirect_header(ICMS_URL . $rtn);
+			if (isset($_GET['sortsel'])) {
+				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+			}
+			if (isset($_GET['rtn'])) {
+				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
+			} else {
+				redirect_header(ICMS_URL . $rtn);
+			}
 			break;
 
 		case "clone" :
 			icms_cp_header();
-			editblock($clean_bid, true);
+			editblock($clean_bid, TRUE);
 			break;
 
 		case "mod" :
@@ -144,16 +150,16 @@ if (in_array($clean_op, $valid_op, true)) {
 
 		case "change_blocks" :
 			foreach ($_POST['SystemBlocksadmin_objects'] as $k => $v) {
-				$changed = false;
+				$changed = FALSE;
 				$obj = $icms_block_handler->get($v);
 
 				if ($obj->getVar('side', 'e') != $_POST['block_side'][$k]) {
-					$obj->setVar('side', (int) ($_POST['block_side'][$k]));
-					$changed = true;
+					$obj->setVar('side', (int) $_POST['block_side'][$k]);
+					$changed = TRUE;
 				}
 				if ($obj->getVar('weight', 'e') != $_POST['block_weight'][$k]) {
-					$obj->setVar('weight', (int) ($_POST['block_weight'][$k]));
-					$changed = true;
+					$obj->setVar('weight', (int) $_POST['block_weight'][$k]);
+					$changed = TRUE;
 				}
 				if ($changed) {
 					$icms_block_handler->insert($obj);
@@ -161,47 +167,47 @@ if (in_array($clean_op, $valid_op, true)) {
 			}
 
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
-			if (isset ($_GET['sortsel']))
-			$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
-			if (isset ($_GET['rtn']))
-			redirect_header(ICMS_URL . base64_decode($_GET['rtn']), 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
-			else
-			redirect_header(ICMS_URL . $rtn, 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
-
+			if (isset($_GET['sortsel'])) {
+				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+			}
+			if (isset($_GET['rtn'])) {
+				redirect_header(ICMS_URL . base64_decode($_GET['rtn']), 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
+			} else {
+				redirect_header(ICMS_URL . $rtn, 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
+			}
 			break;
 
 		default :
-
 			icms_cp_header();
 			$objectTable = new icms_ipf_view_Table($icms_block_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column('visible', 'center'));
 			$objectTable->addColumn(new icms_ipf_view_Column('name'));
-			$objectTable->addColumn(new icms_ipf_view_Column('title', _GLOBAL_LEFT, false, 'getAdminViewItemLink'));
+			$objectTable->addColumn(new icms_ipf_view_Column('title', _GLOBAL_LEFT, FALSE, 'getAdminViewItemLink'));
 			$objectTable->addColumn(new icms_ipf_view_Column('mid'));
-			$objectTable->addColumn(new icms_ipf_view_Column('side', 'center', false, 'getSideControl'));
-			$objectTable->addColumn(new icms_ipf_view_Column('weight', 'center', false, 'getWeightControl'));
+			$objectTable->addColumn(new icms_ipf_view_Column('side', 'center', FALSE, 'getSideControl'));
+			$objectTable->addColumn(new icms_ipf_view_Column('weight', 'center', FALSE, 'getWeightControl'));
 
 			$objectTable->addIntroButton('addpost', 'admin.php?fct=blocksadmin&amp;op=mod', _AM_SYSTEM_BLOCKSADMIN_CREATE);
-			$objectTable->addQuickSearch(array (
+			$objectTable->addQuickSearch(array(
 				'title',
 				'name'
 				));
 
-				$objectTable->addFilter('mid', 'getModulesArray');
-				$objectTable->addFilter('visible', 'getVisibleStatusArray');
-				$objectTable->addFilter('side', 'getBlockPositionArray');
+			$objectTable->addFilter('mid', 'getModulesArray');
+			$objectTable->addFilter('visible', 'getVisibleStatusArray');
+			$objectTable->addFilter('side', 'getBlockPositionArray');
 
-				$objectTable->addCustomAction('getBlankLink');
-				$objectTable->addCustomAction('getUpActionLink');
-				$objectTable->addCustomAction('getDownActionLink');
-				$objectTable->addCustomAction('getCloneActionLink');
+			$objectTable->addCustomAction('getBlankLink');
+			$objectTable->addCustomAction('getUpActionLink');
+			$objectTable->addCustomAction('getDownActionLink');
+			$objectTable->addCustomAction('getCloneActionLink');
 
-				$objectTable->addActionButton('change_blocks', false, _SUBMIT);
+			$objectTable->addActionButton('change_blocks', FALSE, _SUBMIT);
 
-				$icmsAdminTpl->assign('icms_block_table', $objectTable->fetch());
+			$icmsAdminTpl->assign('icms_block_table', $objectTable->fetch());
 
-				$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
-				break;
+			$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
+			break;
 	}
 	icms_cp_footer();
 }
@@ -209,4 +215,3 @@ if (in_array($clean_op, $valid_op, true)) {
  * If you want to have a specific action taken because the user input was invalid,
  * place it at this point. Otherwise, a blank page will be displayed
  */
-?>
