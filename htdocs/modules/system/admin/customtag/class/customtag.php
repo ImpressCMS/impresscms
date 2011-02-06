@@ -5,9 +5,10 @@
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
+ * @subpackage	Custom Tags
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -16,10 +17,19 @@ define('ICMS_CUSTOMTAG_TYPE_XCODES', 1);
 define('ICMS_CUSTOMTAG_TYPE_HTML', 2);
 define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
 
+/**
+ * Custom tags
+ * @package		Administration
+ * @subpackage	Custom Tags
+ */
 class SystemCustomtag extends icms_ipf_Object {
 	public $content = FALSE;
 	public $evaluated = FALSE;
 
+	/**
+	 * Constructor
+	 * @param object $handler
+	 */
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
@@ -39,6 +49,10 @@ class SystemCustomtag extends icms_ipf_Object {
 		$this->setControl('customtag_type', array('itemHandler' => 'customtag', 'method' => 'getCustomtag_types', 'module' => 'system', "onSelect" => "submit"));
 	}
 
+	/**
+	 * Override accessors for properties
+	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
+	 */
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array())) {
 			return call_user_func(array($this, $key));
@@ -46,6 +60,9 @@ class SystemCustomtag extends icms_ipf_Object {
 		return parent::getVar($key, $format);
 	}
 
+	/**
+	 * Render and output the custom tag
+	 */
 	public function render() {
 		$myts = icms_core_Textsanitizer::getInstance();
 		if (!$this->content) {
@@ -54,6 +71,7 @@ class SystemCustomtag extends icms_ipf_Object {
 					$ret = $this->getVar('customtag_content', 'N');
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 1);
 					break;
+					
 				case ICMS_CUSTOMTAG_TYPE_HTML:
 					$ret = $this->getVar('customtag_content', 'N');
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 0);
@@ -62,12 +80,18 @@ class SystemCustomtag extends icms_ipf_Object {
 				case ICMS_CUSTOMTAG_TYPE_PHP:
 					$ret = $this->renderWithPhp();
 					break;
+					
+				default:
+					break;
 			}
 			$this->content = $ret;
 		}
 		return $this->content;
 	}
 
+	/**
+	 * Rendering a custom tag that contains PHP
+	 */
 	public function renderWithPhp() {
 		if (!$this->content && !$this->evaluated) {
 			$ret = $this->getVar('customtag_content', 'N');
@@ -86,39 +110,66 @@ class SystemCustomtag extends icms_ipf_Object {
 		return $this->content;
 	}
 
+
+	/**
+	 * Generate a bbcode for the custom tag
+	 */
 	public function getXoopsCode() {
 		$ret = '[customtag]' . $this->getVar('name', 'n') . '[/customtag]';
 		return $ret;
 	}
 
+	/**
+	 * Generate link and graphic for cloning a custom tag
+	 */
 	public function getCloneLink() {
 		$ret = '<a href="' . ICMS_URL . '/modules/system/admin.php?fct=customtag&amp;op=clone&amp;customtagid=' . $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' . _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
 		return $ret;
 	}
 
+
+	/**
+	 * Determine if the string is empty
+	 */
 	public function emptyString($var) {
 		return strlen($var) > 0;
 	}
 
+	/**
+	 * Accessor for the name property
+	 */
 	public function getCustomtagName() {
 		$ret = $this->getVar('name');
 		return $ret;
 	}
 }
 
+/**
+ * Handler for the custom tag object
+ */
 class SystemCustomtagHandler extends icms_ipf_Handler {
 	private $_objects = FALSE;
 
+	/**
+	 * Constructor
+	 * @param object $db
+	 */
 	public function __construct($db) {
 		parent::__construct($db, 'customtag', 'customtagid', 'name', 'description', 'system');
 		$this->addPermission('view_customtag', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC);
 	}
 
+	/**
+	 * Return an array of custom tag types
+	 */
 	public function getCustomtag_types() {
 		$ret = array(ICMS_CUSTOMTAG_TYPE_XCODES => 'BB-Codes', ICMS_CUSTOMTAG_TYPE_HTML => 'HTML', ICMS_CUSTOMTAG_TYPE_PHP => 'PHP');
 		return $ret;
 	}
 
+	/**
+	 * Return an array of custom tags, indexed by name
+	 */
 	public function getCustomtagsByName() {
 		if (!$this->_objects) {
 			global $icmsConfig;

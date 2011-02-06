@@ -13,7 +13,7 @@
 $modversion = array(
 	'name' => _MD_AM_CUSTOMTAGS,
 	'version' => "1.0",
-	'description' => "Custom Tags Administration",
+	'description' => _MD_AM_CUSTOMTAGS_DSC,
 	'author' => "marcan <marcan@impresscms.org",
 	'credits' => "The ImpressCMS Projects",
 	'help' => "",
