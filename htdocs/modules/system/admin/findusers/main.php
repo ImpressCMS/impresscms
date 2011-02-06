@@ -1,17 +1,12 @@
 <?php
-// $Id$
 /**
  * Administration of finding users, main file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	Administration
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @license		LICENSE.txt
+ * @package		Administration
+ * @subpackage	Users
+ * @version		SVN: $Id$
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
@@ -19,16 +14,19 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 }
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'form');
+$op = (isset($_GET['op'])) 
+	? trim(StopXSS($_GET['op'])) 
+	: ((isset($_POST['op'])) 
+		? trim(StopXSS($_POST['op'])) 
+		: 'form');
 
 icms_cp_header();
-//OpenTable();
 
 if ($op == "form") {
 	$member_handler = icms::handler('icms_member');
 	$acttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_db_criteria_Item('level', 0, '>')));
 	$inacttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_db_criteria_Item('level', 0)));
-	$group_select = new icms_form_elements_select_Group(_AM_GROUPS, "selgroups", null, false, 5, true);
+	$group_select = new icms_form_elements_select_Group(_AM_GROUPS, "selgroups", NULL, FALSE, 5, TRUE);
 	$uname_text = new icms_form_elements_Text("", "user_uname", 30, 60);
 	$uname_match = new icms_form_elements_select_Matchoption("", "user_uname_match");
 	$uname_tray = new icms_form_elements_Tray(_AM_UNAME, "&nbsp;");
@@ -88,15 +86,15 @@ if ($op == "form") {
 	$type_radio = new icms_form_elements_Radio(_AM_SHOWTYPE, "user_type", "actv");
 	$type_radio->addOptionArray(array("actv"=>_AM_ACTIVE, "inactv"=>_AM_INACTIVE, "both"=>_AM_BOTH));
 	$sort_select = new icms_form_elements_Select(_AM_SORT, "user_sort");
-	$sort_select->addOptionArray(array("uname"=>_AM_UNAME,"login_name"=>_AM_LOGINNAME,"email"=>_AM_EMAIL,"last_login"=>_AM_LASTLOGIN,"user_regdate"=>_AM_REGDATE,"posts"=>_AM_POSTS));
+	$sort_select->addOptionArray(array("uname"=>_AM_UNAME, "login_name"=>_AM_LOGINNAME, "email"=>_AM_EMAIL, "last_login"=>_AM_LASTLOGIN, "user_regdate"=>_AM_REGDATE, "posts"=>_AM_POSTS));
 	$order_select = new icms_form_elements_Select(_AM_ORDER, "user_order");
-	$order_select->addOptionArray(array("ASC"=>_AM_ASC,"DESC"=>_AM_DESC));
+	$order_select->addOptionArray(array("ASC"=>_AM_ASC, "DESC"=>_AM_DESC));
 	$limit_text = new icms_form_elements_Text(_AM_LIMIT, "limit", 6, 2);
 	$fct_hidden = new icms_form_elements_Hidden("fct", "findusers");
 	$op_hidden = new icms_form_elements_Hidden("op", "submit");
 	$submit_button = new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit");
 
-	$form = new icms_form_Theme(_AM_FINDUS, "uesr_findform", "admin.php", 'post', true);
+	$form = new icms_form_Theme(_AM_FINDUS, "uesr_findform", "admin.php", 'post', TRUE);
 	$form->addElement($uname_tray);
 	$form->addElement($name_tray);
 	$form->addElement($login_name_tray);
@@ -132,28 +130,32 @@ if ($op == "form") {
 		$form->addElement($group_hidden);
 	}
 	$form->addElement($submit_button);
-	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/findusers/images/findusers_big.png)">'._AM_FINDUS.'</div><br />';
-	echo "(".sprintf(_AM_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>")." ".sprintf(_AM_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>").")<br /><br />";
+	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/findusers/images/findusers_big.png)">' . _AM_FINDUS . '</div><br />';
+	echo "(" . sprintf(_AM_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . " " . sprintf(_AM_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ")<br /><br />";
 	$form->display();
-}
-
-elseif ($op == "submit" & icms::$security->check()) {
+} elseif ($op == "submit" & icms::$security->check()) {
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$criteria = new icms_db_criteria_Compo();
 	if (!empty($_POST['user_uname'])) {
 		$match = (!empty($_POST['user_uname_match'])) ? (int) ($_POST['user_uname_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('uname', $myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('uname', $myts->addSlashes(trim($_POST['user_uname'])) . '%', 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('uname', '%' . $myts->addSlashes(trim($_POST['user_uname'])), 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('uname', $myts->addSlashes(trim($_POST['user_uname']))));
 				break;
+				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('uname', '%' . $myts->addSlashes(trim($_POST['user_uname'])) . '%', 'LIKE'));
+				break;
+				
+			default:
 				break;
 		}
 	}
@@ -161,16 +163,22 @@ elseif ($op == "submit" & icms::$security->check()) {
 		$match = (!empty($_POST['user_name_match'])) ? (int) ($_POST['user_name_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('name', $myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('name', $myts->addSlashes(trim($_POST['user_name'])) . '%', 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('name', '%'.$myts->addSlashes(trim($_POST['user_name'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('name', '%' . $myts->addSlashes(trim($_POST['user_name'])), 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('name', $myts->addSlashes(trim($_POST['user_name']))));
 				break;
+				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('name', '%'.$myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('name', '%' . $myts->addSlashes(trim($_POST['user_name'])) . '%', 'LIKE'));
+				break;
+				
+			default:
 				break;
 		}
 	}
@@ -178,16 +186,22 @@ elseif ($op == "submit" & icms::$security->check()) {
 		$match = (!empty($_POST['user_login_name_match'])) ? (int) ($_POST['user_login_name_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('login_name', $myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('login_name', $myts->addSlashes(trim($_POST['user_login_name'])) . '%', 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('login_name', '%' . $myts->addSlashes(trim($_POST['user_login_name'])), 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('login_name', $myts->addSlashes(trim($_POST['user_login_name']))));
 				break;
+				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('login_name', '%' . $myts->addSlashes(trim($_POST['user_login_name'])) . '%', 'LIKE'));
+				break;
+				
+			default:
 				break;
 		}
 	}
@@ -195,37 +209,49 @@ elseif ($op == "submit" & icms::$security->check()) {
 		$match = (!empty($_POST['user_email_match'])) ? (int) ($_POST['user_email_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('email', $myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('email', $myts->addSlashes(trim($_POST['user_email'])) . '%', 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('email', '%'.$myts->addSlashes(trim($_POST['user_email'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('email', '%' . $myts->addSlashes(trim($_POST['user_email'])), 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('email', $myts->addSlashes(trim($_POST['user_email']))));
 				break;
+				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('email', '%'.$myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('email', '%' . $myts->addSlashes(trim($_POST['user_email'])) . '%', 'LIKE'));
+				break;
+				
+			default:
 				break;
 		}
 	}
 	if (!empty($_POST['user_url'])) {
 		$url = formatURL(trim($_POST['user_url']));
-		$criteria->add(new icms_db_criteria_Item('url', $url.'%', 'LIKE'));
+		$criteria->add(new icms_db_criteria_Item('url', $url . '%', 'LIKE'));
 	}
 	if (!empty($_POST['user_icq'])) {
 		$match = (!empty($_POST['user_icq_match'])) ? (int) ($_POST['user_icq_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_icq', $myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_icq', $myts->addSlashes(trim($_POST['user_icq'])) . '%', 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . $myts->addSlashes(trim($_POST['user_icq'])), 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq']))));
+				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . $myts->addSlashes(trim($_POST['user_icq']))));
 				break;
+				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . $myts->addSlashes(trim($_POST['user_icq'])) . '%', 'LIKE'));
+				break;
+				
+			default:
 				break;
 		}
 	}
@@ -233,16 +259,22 @@ elseif ($op == "submit" & icms::$security->check()) {
 		$match = (!empty($_POST['user_aim_match'])) ? (int) ($_POST['user_aim_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_aim', $myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_aim', $myts->addSlashes(trim($_POST['user_aim'])) . '%', 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . $myts->addSlashes(trim($_POST['user_aim'])), 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('user_aim', $myts->addSlashes(trim($_POST['user_aim']))));
 				break;
+				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . $myts->addSlashes(trim($_POST['user_aim'])) . '%', 'LIKE'));
+				break;
+				
+			default:
 				break;
 		}
 	}
@@ -250,16 +282,22 @@ elseif ($op == "submit" & icms::$security->check()) {
 		$match = (!empty($_POST['user_yim_match'])) ? (int) ($_POST['user_yim_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_yim', $myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_yim', $myts->addSlashes(trim($_POST['user_yim'])) . '%', 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . $myts->addSlashes(trim($_POST['user_yim'])), 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('user_yim', $myts->addSlashes(trim($_POST['user_yim']))));
 				break;
+				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . $myts->addSlashes(trim($_POST['user_yim'])) . '%', 'LIKE'));
+				break;
+				
+			default:
 				break;
 		}
 	}
@@ -267,27 +305,33 @@ elseif ($op == "submit" & icms::$security->check()) {
 		$match = (!empty($_POST['user_msnm_match'])) ? (int) ($_POST['user_msnm_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', $myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_msnm', $myts->addSlashes(trim($_POST['user_msnm'])) . '%', 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . $myts->addSlashes(trim($_POST['user_msnm'])), 'LIKE'));
 				break;
+				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm']))));
+				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . $myts->addSlashes(trim($_POST['user_msnm']))));
 				break;
+				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . $myts->addSlashes(trim($_POST['user_msnm'])) . '%', 'LIKE'));
+				break;
+				
+			default:
 				break;
 		}
 	}
 	if (!empty($_POST['user_from'])) {
-		$criteria->add(new icms_db_criteria_Item('user_from', '%'.$myts->addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
+		$criteria->add(new icms_db_criteria_Item('user_from', '%' . $myts->addSlashes(trim($_POST['user_from'])) . '%', 'LIKE'));
 	}
 	if (!empty($_POST['user_intrest'])) {
-		$criteria->add(new icms_db_criteria_Item('user_intrest', '%'.$myts->addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
+		$criteria->add(new icms_db_criteria_Item('user_intrest', '%' . $myts->addSlashes(trim($_POST['user_intrest'])) . '%', 'LIKE'));
 	}
 	if (!empty($_POST['user_occ'])) {
-		$criteria->add(new icms_db_criteria_Item('user_occ', '%'.$myts->addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
+		$criteria->add(new icms_db_criteria_Item('user_occ', '%' . $myts->addSlashes(trim($_POST['user_occ'])) . '%', 'LIKE'));
 	}
 
 	if (!empty($_POST['user_lastlog_more']) && is_numeric($_POST['user_lastlog_more'])) {
@@ -342,32 +386,32 @@ elseif ($op == "submit" & icms::$security->check()) {
 			$criteria->add(new icms_db_criteria_Item('level', 0, '>='));
 		}
 	}
-	$groups = empty($_POST['selgroups']) ? array() : array_map( 'intval', $_POST['selgroups']);
+	$groups = empty($_POST['selgroups']) ? array() : array_map('intval', $_POST['selgroups']);
 	$validsort = array("uname", "login_name", "email", "last_login", "user_regdate", "posts");
 	$sort = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
 	$order = "ASC";
 	if (isset($_POST['user_order']) && $_POST['user_order'] == "DESC") {
 		$order = "DESC";
 	}
-	$limit = (!empty($_POST['limit'])) ? (int) ($_POST['limit']) : 50;
+	$limit = (!empty($_POST['limit'])) ? (int) $_POST['limit'] : 50;
 	if ($limit == 0 || $limit > 50) {
 		$limit = 50;
 	}
-	$start = (!empty($_POST['start'])) ? (int) ($_POST['start']) : 0;
+	$start = (!empty($_POST['start'])) ? (int) $_POST['start'] : 0;
 	$member_handler = icms::handler('icms_member');
 	$total = $member_handler->getUserCountByGroupLink($groups, $criteria);
-	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/findusers/images/findusers_big.png)">'._AM_FINDUS.'</div><br />';
+	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/findusers/images/findusers_big.png)">' . _AM_FINDUS . '</div><br />';
 	if ($total == 0) {
-		echo "<h4>"._AM_NOFOUND,"</h4>";
+		echo "<h4>" . _AM_NOFOUND, "</h4>";
 	} elseif ($start < $total) {
-		echo sprintf(_AM_USERSFOUND, icms_conv_nr2local($total))."<br />";
+		echo sprintf(_AM_USERSFOUND, icms_conv_nr2local($total)) . "<br />";
 		echo "<form action='admin.php' method='post' name='memberslist' id='memberslist'><input type='hidden' name='op' value='delete_many' />
-		<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr><th align='center'><input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"memberslist\", \"memberslist_checkall\");' /></th><th align='center'>"._AM_AVATAR."</th><th align='center'>"._AM_UNAME."</th><th align='center'>"._AM_LOGINNAME."</th><th align='center'>"._AM_REALNAME."</th><th align='center'>"._AM_EMAIL."</th><th align='center'>"._AM_PM."</th><th align='center'>"._AM_URL."</th><th align='center'>"._AM_REGDATE."</th><th align='center'>"._AM_LASTLOGIN."</th><th align='center'>"._AM_POSTS."</th><th align='center'>&nbsp;</th></tr>";
+		<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr><th align='center'><input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"memberslist\", \"memberslist_checkall\");' /></th><th align='center'>" . _AM_AVATAR . "</th><th align='center'>" . _AM_UNAME . "</th><th align='center'>" . _AM_LOGINNAME . "</th><th align='center'>" . _AM_REALNAME . "</th><th align='center'>" . _AM_EMAIL . "</th><th align='center'>" . _AM_PM . "</th><th align='center'>" . _AM_URL . "</th><th align='center'>" . _AM_REGDATE . "</th><th align='center'>" . _AM_LASTLOGIN . "</th><th align='center'>" . _AM_POSTS . "</th><th align='center'>&nbsp;</th></tr>";
 		$criteria->setSort($sort);
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
 		$criteria->setStart($start);
-		$foundusers =& $member_handler->getUsersByGroupLink($groups, $criteria, true);
+		$foundusers =& $member_handler->getUsersByGroupLink($groups, $criteria, TRUE);
 		$ucount = 0;
 		foreach (array_keys($foundusers) as $j) {
 			if ($ucount % 2 == 0) {
@@ -376,76 +420,90 @@ elseif ($op == "submit" & icms::$security->check()) {
 				$class = 'odd';
 			}
 			$ucount++;
-			$fuser_avatar = $foundusers[$j]->getVar("user_avatar") ? "<img src='".ICMS_UPLOAD_URL."/".$foundusers[$j]->getVar("user_avatar")."' alt='' />" : "&nbsp;";
+			$fuser_avatar = $foundusers[$j]->getVar("user_avatar") ? "<img src='" . ICMS_UPLOAD_URL . "/" 
+				. $foundusers[$j]->getVar("user_avatar") . "' alt='' />" : "&nbsp;";
 			$fuser_name = $foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
-			echo "<tr class='$class'><td align='center'><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]' value='".$foundusers[$j]->getVar("uid")."' /><input type='hidden' name='memberslist_uname[".$foundusers[$j]->getVar("uid")."]' id='memberslist_uname[]' value='".$foundusers[$j]->getVar("uname")."' /></td>";
-			echo "<td>$fuser_avatar</td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$foundusers[$j]->getVar("uid")."'>".$foundusers[$j]->getVar("uname")."</a></td><td>".$foundusers[$j]->getVar("login_name")."</td><td>".$fuser_name."</td><td align='center'><a href='mailto:".$foundusers[$j]->getVar("email")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/email.gif' border='0' alt='";
-			printf(_SENDEMAILTO,$foundusers[$j]->getVar("uname", "E"));
-			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$foundusers[$j]->getVar("uid")."\",\"pmlite\",800,680);'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/pm.gif' border='0' alt='";
-			printf(_SENDPMTO,$foundusers[$j]->getVar("uname", "E"));
+			echo "<tr class='$class'><td align='center'><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]' value='" 
+				. $foundusers[$j]->getVar("uid") . "' /><input type='hidden' name='memberslist_uname[" . $foundusers[$j]->getVar("uid") 
+				. "]' id='memberslist_uname[]' value='" . $foundusers[$j]->getVar("uname") . "' /></td>";
+			echo "<td>$fuser_avatar</td><td><a href='" . ICMS_URL . "/userinfo.php?uid=" 
+				. $foundusers[$j]->getVar("uid") . "'>" . $foundusers[$j]->getVar("uname") 
+				. "</a></td><td>" . $foundusers[$j]->getVar("login_name") . "</td><td>" 
+				. $fuser_name . "</td><td align='center'><a href='mailto:" 
+				. $foundusers[$j]->getVar("email") . "'><img src='" . ICMS_URL . "/images/icons/" 
+				. $GLOBALS["xoopsConfig"]["language"] . "/email.gif' border='0' alt='";
+			printf(_SENDEMAILTO, $foundusers[$j]->getVar("uname", "E"));
+			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\"" 
+				. ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $foundusers[$j]->getVar("uid") 
+				. "\",\"pmlite\",800,680);'><img src='" . ICMS_URL . "/images/icons/" 
+				. $GLOBALS["xoopsConfig"]["language"] . "/pm.gif' border='0' alt='";
+			printf(_SENDPMTO, $foundusers[$j]->getVar("uname", "E"));
 			echo "' /></a></td><td align='center'>";
-			if ($foundusers[$j]->getVar("url","E") != "") {
-				echo "<a href='".$foundusers[$j]->getVar("url","E")."' target='_blank'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/www.gif' border='0' alt='"._VISITWEBSITE."' /></a>";
+			if ($foundusers[$j]->getVar("url", "E") != "") {
+				echo "<a href='" . $foundusers[$j]->getVar("url", "E") . "' target='_blank'><img src='" 
+					. ICMS_URL . "/images/icons/" . $GLOBALS["xoopsConfig"]["language"] 
+					. "/www.gif' border='0' alt='" . _VISITWEBSITE . "' /></a>";
 			} else {
 				echo "&nbsp;";
 			}
-			echo "</td><td align='center'>".formatTimeStamp($foundusers[$j]->getVar("user_regdate"),"s")."</td><td align='center'>";
+			echo "</td><td align='center'>" . formatTimeStamp($foundusers[$j]->getVar("user_regdate"), "s") . "</td><td align='center'>";
 			if ($foundusers[$j]->getVar("last_login") != 0) {
-				echo formatTimeStamp($foundusers[$j]->getVar("last_login"),"m");
+				echo formatTimeStamp($foundusers[$j]->getVar("last_login"), "m");
 			} else {
 				echo "&nbsp;";
 			}
-			echo "</td><td align='center'>".icms_conv_nr2local($foundusers[$j]->getVar("posts"))."</td>";
-			echo "<td align='center'><a href='".XOOPS_URL."/modules/system/admin.php?fct=users&amp;uid=".$foundusers[$j]->getVar("uid")."&amp;op=modifyUser'>"._EDIT."</a></td></tr>\n";
+			echo "</td><td align='center'>" . icms_conv_nr2local($foundusers[$j]->getVar("posts")) . "</td>";
+			echo "<td align='center'><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=users&amp;uid=" 
+				. $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'>" . _EDIT . "</a></td></tr>\n";
 		}
-		echo "<tr class='foot'><td><select name='fct'><option value='users'>"._DELETE."</option><option value='mailusers'>"._AM_SENDMAIL."</option>";
+		echo "<tr class='foot'><td><select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _AM_SENDMAIL . "</option>";
 		$group = !empty($_POST['group']) ? (int) ($_POST['group']) : 0;
 		if ($group > 0) {
 			$member_handler = icms::handler('icms_member');
 			$add2group =& $member_handler->getGroup($group);
-			echo "<option value='groups' selected='selected'>".sprintf(_AM_ADD2GROUP, $add2group->getVar('name'))."</option>";
+			echo "<option value='groups' selected='selected'>" . sprintf(_AM_ADD2GROUP, $add2group->getVar('name')) . "</option>";
 		}
 		echo "</select>&nbsp;";
 		if ($group > 0) {
-			echo "<input type='hidden' name='groupid' value='".$group."' />";
+			echo "<input type='hidden' name='groupid' value='" . $group . "' />";
 		}
-		echo "</td><td colspan='12'>".icms::$security->getTokenHTML()."<input type='submit' value='"._SUBMIT."' /></td></tr></table></form>\n";
+		echo "</td><td colspan='12'>" . icms::$security->getTokenHTML() . "<input type='submit' value='" . _SUBMIT . "' /></td></tr></table></form>\n";
 		$totalpages = ceil($total / $limit);
 		if ($totalpages > 1) {
 			$hiddenform = "<form name='findnext' action='admin.php' method='post'>";
 			$skip_vars = array('selgroups');
-			foreach ( $_POST as $k => $v) {
+			foreach ($_POST as $k => $v) {
 				if ($k == 'selgroups') {
 					foreach ($_POST['selgroups'] as $_group) {
-						$hiddenform .= "<input type='hidden' name='selgroups[]' value='".$_group."' />\n";
+						$hiddenform .= "<input type='hidden' name='selgroups[]' value='" . $_group . "' />\n";
 					}
 				} elseif ($k == 'XOOPS_TOKEN_REQUEST') {
 					// regenerate token value
-					$hiddenform .= icms::$security->getTokenHTML()."\n";
+					$hiddenform .= icms::$security->getTokenHTML() . "\n";
 				} else {
-					$hiddenform .= "<input type='hidden' name='".$myts->htmlSpecialChars($k)."' value='".$myts->htmlSpecialChars($myts->stripSlashesGPC($v))."' />\n";
+					$hiddenform .= "<input type='hidden' name='" . $myts->htmlSpecialChars($k) . "' value='" . $myts->htmlSpecialChars($myts->stripSlashesGPC($v)) . "' />\n";
 				}
 			}
 			if (!isset($_POST['limit'])) {
-				$hiddenform .= "<input type='hidden' name='limit' value='".$limit."' />\n";
+				$hiddenform .= "<input type='hidden' name='limit' value='" . $limit . "' />\n";
 			}
 			if (!isset($_POST['start'])) {
-				$hiddenform .= "<input type='hidden' name='start' value='".$start."' />\n";
+				$hiddenform .= "<input type='hidden' name='start' value='" . $start . "' />\n";
 			}
 			$prev = $start - $limit;
 			if ($start - $limit >= 0) {
-				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=".$prev.";document.findnext.submit();'>"._AM_PREVIOUS."</a>&nbsp;\n";
+				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _AM_PREVIOUS . "</a>&nbsp;\n";
 			}
 			$counter = 1;
 			$currentpage = ($start+$limit) / $limit;
 			while ($counter <= $totalpages) {
 				if ($counter == $currentpage) {
-					$hiddenform .= "<b>".$counter."</b> ";
+					$hiddenform .= "<strong>" . $counter . "</strong> ";
 				} elseif (($counter > $currentpage-4 && $counter < $currentpage+4) || $counter == 1 || $counter == $totalpages) {
 					if ($counter == $totalpages && $currentpage < $totalpages-4) {
 						$hiddenform .= "... ";
 					}
-					$hiddenform .= "<a href='#".$counter."' onclick='javascript:document.findnext.start.value=".($counter-1)*$limit.";document.findnext.submit();'>".$counter."</a> ";
+					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter-1)*$limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 					if ($counter == 1 && $currentpage > 5) {
 						$hiddenform .= "... ";
 					}
@@ -454,19 +512,16 @@ elseif ($op == "submit" & icms::$security->check()) {
 			}
 			$next = $start+$limit;
 			if ($total > $next) {
-				$hiddenform .= "&nbsp;<a href='#".$total."' onclick='javascript:document.findnext.start.value=".$next.";document.findnext.submit();'>"._AM_NEXT."</a>\n";
+				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _AM_NEXT . "</a>\n";
 			}
 			$hiddenform .= "</form>";
-			echo "<div style='text-align:center'>".$hiddenform."<br />";
+			echo "<div style='text-align:center'>" . $hiddenform . "<br />";
 			printf(_AM_USERSFOUND, $total);
 			echo "</div>";
 		}
 	}
-}
-else {
+} else {
 	redirect_header('admin.php?fct=findusers', 3, implode('<br />', icms::$security->getErrors()));
 }
-//CloseTable();
 icms_cp_footer();
 
-?>
