@@ -6,23 +6,23 @@
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @package	core
+ * @package		Administration
+ * @subpackage	Comments
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
-include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
+defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
+
+include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 if (('system' != $icmsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule']) || (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost']) || !is_object($icmsModule)) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
 }
 
 icms_loadLanguageFile('core', 'comment');
-$com_itemid = isset($_GET['com_itemid']) ? (int) ($_GET['com_itemid']) : 0;
+$com_itemid = isset($_GET['com_itemid']) ? (int) $_GET['com_itemid'] : 0;
 
 if ($com_itemid > 0) {
 	include ICMS_ROOT_PATH . '/header.php';
@@ -54,7 +54,7 @@ if ($com_itemid > 0) {
 			$com_order = $icmsConfig['com_order'];
 		}
 	} else {
-		$com_order = (int) ($_GET['com_order']);
+		$com_order = (int) $_GET['com_order'];
 	}
 	$com_id = 0;
 	$noname = 0;

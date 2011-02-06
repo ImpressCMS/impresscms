@@ -16,18 +16,18 @@
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
 }
-include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
-include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
+include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
+include_once ICMS_MODULES_PATH . '/system/constants.php';
 
 if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$groups = ( icms::$user ) ? icms::$user -> getGroups() : ICMS_GROUP_ANONYMOUS;
-	$xoopsTpl->assign( 'xoops_iscommentadmin', $gperm_handler->checkRight( 'system_admin', XOOPS_SYSTEM_COMMENT, $groups) );
+	$groups = (icms::$user) ? icms::$user -> getGroups() : ICMS_GROUP_ANONYMOUS;
+	$xoopsTpl->assign('xoops_iscommentadmin', $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $groups));
 
 	icms_loadLanguageFile('core', 'comment');
 	$comment_config = $icmsModule->getInfo('comments');
-	$com_itemid = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? (int) ($_GET[$comment_config['itemName']]) : 0;
+	$com_itemid = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? (int) $_GET[$comment_config['itemName']] : 0;
 
 	if ($com_itemid > 0) {
 		$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
@@ -46,7 +46,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				$com_order = $icmsConfig['com_order'];
 			}
 		} else {
-			$com_order = (int) ($_GET['com_order']);
+			$com_order = (int) $_GET['com_order'];
 		}
 		if ($com_order != XOOPS_COMMENT_OLD1ST) {
 			$xoopsTpl->assign(array('comment_order' => XOOPS_COMMENT_NEW1ST, 'order_other' => XOOPS_COMMENT_OLD1ST));
@@ -57,13 +57,13 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		}
 		// admins can view all comments and IPs, others can only view approved(active) comments
 		if (is_object(icms::$user) && icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-			$admin_view = true;
+			$admin_view = TRUE;
 		} else {
-			$admin_view = false;
+			$admin_view = FALSE;
 		}
 
-		$com_id = isset($_GET['com_id']) ? (int) ($_GET['com_id']) : 0;
-		$com_rootid = isset($_GET['com_rootid']) ? (int) ($_GET['com_rootid']) : 0;
+		$com_id = isset($_GET['com_id']) ? (int) $_GET['com_id'] : 0;
+		$com_rootid = isset($_GET['com_rootid']) ? (int) $_GET['com_rootid'] : 0;
 		$comment_handler = icms::handler('icms_data_comment');
 		if ($com_mode == 'flat') {
 			$comments =& $comment_handler->getByItemId($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
@@ -90,11 +90,11 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				}
 				$comment_url .= $extra_params;
 			}
-			$xoopsTpl->assign('comment_url', $comment_url.$comment_config['itemName'].'='.$com_itemid.'&amp;com_mode=thread&amp;com_order='.$com_order);
+			$xoopsTpl->assign('comment_url', $comment_url . $comment_config['itemName'] . '=' . $com_itemid . '&amp;com_mode=thread&amp;com_order=' . $com_order);
 			if (!empty($com_id) && !empty($com_rootid) && ($com_id != $com_rootid)) {
 				// Show specific thread tree
 				$comments =& $comment_handler->getThread($com_rootid, $com_id);
-				if (false != $comments) {
+				if (FALSE != $comments) {
 					$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 					$renderer->setComments($comments);
 					$renderer->renderThreadView($com_id, $admin_view);
@@ -110,7 +110,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 						$comments =& $comment_handler->getThread(
 							$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
 						);
-						if (false != $comments) {
+						if (FALSE != $comments) {
 							$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 							$renderer->setComments($comments);
 							$renderer->renderThreadView($top_comments[$i]->getVar('com_id'), $admin_view);
@@ -136,15 +136,13 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		}
 
 		// assign comment nav bar
-		$navbar = '
-<form method="get" action="'.$comment_config['pageName'].'">
-<table width="95%" class="outer" cellspacing="1">
-  <tr>
-	<td class="even" align="center"><select name="com_mode"><option value="flat"';
+		$navbar = '<form method="get" action="'
+		. $comment_config['pageName']
+		. '"><table width="95%" class="outer" cellspacing="1"><tr><td class="even" align="center"><select name="com_mode"><option value="flat"';
 		if ($com_mode == 'flat') {
 			$navbar .= ' selected="selected"';
 		}
-		$navbar .= '>'._FLAT.'</option><option value="thread"';
+		$navbar .= '>' . _FLAT . '</option><option value="thread"';
 		if ($com_mode == 'thread' || $com_mode == '') {
 			$navbar .= ' selected="selected"';
 		}
@@ -152,20 +150,20 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		if ($com_mode == 'nest') {
 			$navbar .= ' selected="selected"';
 		}
-		$navbar .= '>'. _NESTED .'</option></select> <select name="com_order"><option value="'.XOOPS_COMMENT_OLD1ST.'"';
+		$navbar .= '>'. _NESTED .'</option></select> <select name="com_order"><option value="' . XOOPS_COMMENT_OLD1ST . '"';
 		if ($com_order == XOOPS_COMMENT_OLD1ST) {
 			$navbar .= ' selected="selected"';
 		}
-		$navbar .= '>'. _OLDESTFIRST .'</option><option value="'.XOOPS_COMMENT_NEW1ST.'"';
+		$navbar .= '>'. _OLDESTFIRST .'</option><option value="' . XOOPS_COMMENT_NEW1ST . '"';
 		if ($com_order == XOOPS_COMMENT_NEW1ST) {
 			$navbar .= ' selected="selected"';
 		}
 		unset($postcomment_link);
-		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="'.$comment_config['itemName'].'" value="'.$com_itemid.'" /> <input type="submit" value="'. _CM_REFRESH .'" class="formButton" />';
+		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="'. _CM_REFRESH .'" class="formButton" />';
 		if (!empty($icmsModuleConfig['com_anonpost']) || is_object(icms::$user)) {
-			$postcomment_link = 'comment_new.php?com_itemid='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode;
+			$postcomment_link = 'comment_new.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode;
 
-			$xoopsTpl->assign('anon_canpost', true);
+			$xoopsTpl->assign('anon_canpost', TRUE);
 		}
 		$link_extra = '';
 		if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
@@ -190,16 +188,12 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$navbar .= '&nbsp;<input type="button" onclick="self.location.href=\'' . $postcomment_link . ''
 				. $link_extra . '\'" class="formButton" value="' . _CM_POSTCOMMENT . '" />';
 		}
-		$navbar .= '
-	</td>
-  </tr>
-</table>
-</form>';
+		$navbar .= '</td></tr></table></form>';
 		$xoopsTpl->assign(
 			array(
 				'commentsnav' => $navbar, 'editcomment_link' => 'comment_edit.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra,
 				'deletecomment_link' => 'comment_delete.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra,
-				'replycomment_link' => 'comment_reply.php?com_itemid='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode.''.$link_extra
+				'replycomment_link' => 'comment_reply.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra
 			)
 		);
 

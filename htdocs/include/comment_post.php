@@ -17,9 +17,9 @@ if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
 }
 icms_loadLanguageFile('core', 'comment');
-include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
+include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 if ('system' == $icmsModule->getVar('dirname')) {
-	$com_id = isset($_POST['com_id']) ? (int) ($_POST['com_id']) : 0;
+	$com_id = isset($_POST['com_id']) ? (int) $_POST['com_id'] : 0;
 	if (empty($com_id)) {
 		exit();
 	}
@@ -34,7 +34,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	$moddir = $module->getVar('dirname');
 	unset($comment);
 } else {
-	$com_id = isset($_POST['com_id']) ? (int) ($_POST['com_id']) : 0;
+	$com_id = isset($_POST['com_id']) ? (int) $_POST['com_id'] : 0;
 	if (XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule']) {
 		exit();
 	}
@@ -73,16 +73,16 @@ if (!empty($_POST)) {
 	}
 
 	$com_mode = isset($_POST['com_mode']) ? htmlspecialchars(trim($_POST['com_mode']), ENT_QUOTES) : 'flat';
-	$com_order = isset($_POST['com_order']) ? (int) ($_POST['com_order']) : XOOPS_COMMENT_OLD1ST;
-	$com_itemid = isset($_POST['com_itemid']) ? (int) ($_POST['com_itemid']) : 0;
-	$com_pid = isset($_POST['com_pid']) ? (int) ($_POST['com_pid']) : 0;
-	$com_rootid = isset($_POST['com_rootid']) ? (int) ($_POST['com_rootid']) : 0;
-	$com_status = isset($_POST['com_status']) ? (int) ($_POST['com_status']) : 0;
-	$dosmiley = (isset($_POST['dosmiley']) && (int) ($_POST['dosmiley']) > 0) ? 1 : 0;
-	$doxcode = (isset($_POST['doxcode']) && (int) ($_POST['doxcode']) > 0) ? 1 : 0;
-	$dobr = (isset($_POST['dobr']) && (int) ($_POST['dobr']) > 0) ? 1 : 0;
-	$dohtml = (isset($_POST['dohtml']) && (int) ($_POST['dohtml']) > 0) ? 1 : 0;
-	$doimage = (isset($_POST['doimage']) && (int) ($_POST['doimage']) > 0) ? 1 : 0;
+	$com_order = isset($_POST['com_order']) ? (int) $_POST['com_order'] : XOOPS_COMMENT_OLD1ST;
+	$com_itemid = isset($_POST['com_itemid']) ? (int) $_POST['com_itemid'] : 0;
+	$com_pid = isset($_POST['com_pid']) ? (int) $_POST['com_pid'] : 0;
+	$com_rootid = isset($_POST['com_rootid']) ? (int) $_POST['com_rootid'] : 0;
+	$com_status = isset($_POST['com_status']) ? (int) $_POST['com_status'] : 0;
+	$dosmiley = (isset($_POST['dosmiley']) && (int) $_POST['dosmiley'] > 0) ? 1 : 0;
+	$doxcode = (isset($_POST['doxcode']) && (int) $_POST['doxcode'] > 0) ? 1 : 0;
+	$dobr = (isset($_POST['dobr']) && (int) $_POST['dobr'] > 0) ? 1 : 0;
+	$dohtml = (isset($_POST['dohtml']) && (int) $_POST['dohtml'] > 0) ? 1 : 0;
+	$doimage = (isset($_POST['doimage']) && (int) $_POST['doimage'] > 0) ? 1 : 0;
 	$com_icon = isset($_POST['com_icon']) ? trim($_POST['com_icon']) : '';
 } else {
 	exit();
@@ -90,7 +90,7 @@ if (!empty($_POST)) {
 
 switch ($op) {
 	case "delete":
-		include ICMS_ROOT_PATH . '/include/comment_delete.php';
+		include ICMS_INCLUDE_PATH . '/comment_delete.php';
 		break;
 	case "preview":
 		$myts =& icms_core_Textsanitizer::getInstance();
@@ -109,25 +109,25 @@ switch ($op) {
 			}
 		}
 		$p_comment =& $myts->previewTarea($_POST['com_text'], $dohtml, $dosmiley, $doxcode, $doimage, $dobr);
-		$noname = isset($noname) ? (int) ($noname) : 0;
+		$noname = isset($noname) ? (int) $noname : 0;
 		$com_text = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_text']));
 		if ($icmsModule->getVar('dirname') != 'system') {
 			include ICMS_ROOT_PATH . '/header.php';
 			themecenterposts($com_title, $p_comment);
-			include ICMS_ROOT_PATH . '/include/comment_form.php';
+			include ICMS_INCLUDE_PATH . '/comment_form.php';
 			include ICMS_ROOT_PATH . '/footer.php';
 		} else {
 			icms_cp_header();
 			themecenterposts($com_title, $p_comment);
-			include ICMS_ROOT_PATH . '/include/comment_form.php';
+			include ICMS_INCLUDE_PATH . '/comment_form.php';
 			icms_cp_footer();
 		}
 		break;
 
 	case "post":
-		if ($icmsConfig['use_captchaf'] == true) {
+		if ($icmsConfig['use_captchaf'] == TRUE) {
 			$icmsCaptcha = icms_form_elements_captcha_Object::instance();
-			if (!$icmsCaptcha->verify(true)) {
+			if (!$icmsCaptcha->verify(TRUE)) {
 				redirect_header($redirect_page . '=' . $com_itemid . '&com_id=' . $com_id . '&com_mode=' . $com_mode . '&com_order=' . $com_order,
 				2, $icmsCaptcha->getMessage());
 			}
@@ -135,14 +135,14 @@ switch ($op) {
 
 		$doimage = 1;
 		$comment_handler = icms::handler('icms_data_comment');
-		$add_userpost = false;
-		$call_approvefunc = false;
-		$call_updatefunc = false;
+		$add_userpost = FALSE;
+		$call_approvefunc = FALSE;
+		$call_updatefunc = FALSE;
 		// RMV-NOTIFY - this can be set to 'comment' or 'comment_submit'
-		$notify_event = false;
+		$notify_event = FALSE;
 		if (!empty($com_id)) {
 			$comment =& $comment_handler->get($com_id);
-			$accesserror = false;
+			$accesserror = FALSE;
 
 			if (is_object(icms::$user)) {
 				$sysperm_handler = icms::handler('icms_member_groupperm');
@@ -153,32 +153,32 @@ switch ($op) {
 						$comment->setVar('com_status', $com_status);
 						// if changing status from pending state, increment user post
 						if (XOOPS_COMMENT_PENDING == $old_com_status) {
-							$add_userpost = true;
+							$add_userpost = TRUE;
 							if (XOOPS_COMMENT_ACTIVE == $com_status) {
-								$call_updatefunc = true;
-								$call_approvefunc = true;
+								$call_updatefunc = TRUE;
+								$call_approvefunc = TRUE;
 								// RMV-NOTIFY
 								$notify_event = 'comment';
 							}
 						} elseif (XOOPS_COMMENT_HIDDEN == $old_com_status && XOOPS_COMMENT_ACTIVE == $com_status) {
-							$call_updatefunc = true;
+							$call_updatefunc = TRUE;
 							// Comments can not be directly posted hidden,
 							// no need to send notification here
 						} elseif (XOOPS_COMMENT_ACTIVE == $old_com_status && XOOPS_COMMENT_HIDDEN == $com_status) {
-							$call_updatefunc = true;
+							$call_updatefunc = TRUE;
 						}
 					}
 				} else {
 					$dohtml = 0;
 					if ($comment->getVar('com_uid') != icms::$user->getVar('uid')) {
-						$accesserror = true;
+						$accesserror = TRUE;
 					}
 				}
 			} else {
 				$dohtml = 0;
-				$accesserror = true;
+				$accesserror = TRUE;
 			}
-			if (false != $accesserror) {
+			if (FALSE != $accesserror) {
 				redirect_header($redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order,
 				2, _NOPERM);
 			}
@@ -194,9 +194,9 @@ switch ($op) {
 				if (icms::$user->isAdmin($com_modid)
 				|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 					$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
-					$add_userpost = true;
-					$call_approvefunc = true;
-					$call_updatefunc = true;
+					$add_userpost = TRUE;
+					$call_approvefunc = TRUE;
+					$call_updatefunc = TRUE;
 					// RMV-NOTIFY
 					$notify_event = 'comment';
 				} else {
@@ -205,9 +205,9 @@ switch ($op) {
 						case XOOPS_COMMENT_APPROVEALL:
 						case XOOPS_COMMENT_APPROVEUSER:
 							$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
-							$add_userpost = true;
-							$call_approvefunc = true;
-							$call_updatefunc = true;
+							$add_userpost = TRUE;
+							$call_approvefunc = TRUE;
+							$call_updatefunc = TRUE;
 							// RMV-NOTIFY
 							$notify_event = 'comment';
 							break;
@@ -237,9 +237,9 @@ switch ($op) {
 				switch ($icmsModuleConfig['com_rule']) {
 					case XOOPS_COMMENT_APPROVEALL:
 						$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
-						$add_userpost = true;
-						$call_approvefunc = true;
-						$call_updatefunc = true;
+						$add_userpost = TRUE;
+						$call_approvefunc = TRUE;
+						$call_updatefunc = TRUE;
 						// RMV-NOTIFY
 						$notify_event = 'comment';
 						break;
@@ -271,7 +271,7 @@ switch ($op) {
 		if (isset($extra_params)) {
 			$comment->setVar('com_exparams', $extra_params);
 		}
-		if (false != $comment_handler->insert($comment)) {
+		if (FALSE != $comment_handler->insert($comment)) {
 			$newcid = $comment->getVar('com_id');
 
 			// set own id as root id if this is a top comment
@@ -286,19 +286,19 @@ switch ($op) {
 			}
 
 			// call custom approve function if any
-			if (false != $call_approvefunc && isset($comment_config['callback']['approve']) && trim($comment_config['callback']['approve']) != '') {
-				$skip = false;
+			if (FALSE != $call_approvefunc && isset($comment_config['callback']['approve']) && trim($comment_config['callback']['approve']) != '') {
+				$skip = FALSE;
 				if (!function_exists($comment_config['callback']['approve'])) {
 					if (isset($comment_config['callbackFile'])) {
 						$callbackfile = trim($comment_config['callbackFile']);
-						if ($callbackfile != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile)) {
-							include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile;
+						if ($callbackfile != '' && file_exists(ICMS_MODULES_PATH . '/' . $moddir . '/' . $callbackfile)) {
+							include_once ICMS_MODULES_PATH . '/' . $moddir . '/' . $callbackfile;
 						}
 						if (!function_exists($comment_config['callback']['approve'])) {
-							$skip = true;
+							$skip = TRUE;
 						}
 					} else {
-						$skip = true;
+						$skip = TRUE;
 					}
 				}
 				if (!$skip) {
@@ -307,19 +307,19 @@ switch ($op) {
 			}
 
 			// call custom update function if any
-			if (false != $call_updatefunc && isset($comment_config['callback']['update']) && trim($comment_config['callback']['update']) != '') {
-				$skip = false;
+			if (FALSE != $call_updatefunc && isset($comment_config['callback']['update']) && trim($comment_config['callback']['update']) != '') {
+				$skip = FALSE;
 				if (!function_exists($comment_config['callback']['update'])) {
 					if (isset($comment_config['callbackFile'])) {
 						$callbackfile = trim($comment_config['callbackFile']);
-						if ($callbackfile != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile)) {
-							include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile;
+						if ($callbackfile != '' && file_exists(ICMS_MODULES_PATH . '/' . $moddir . '/' . $callbackfile)) {
+							include_once ICMS_MODULES_PATH . '/' . $moddir . '/' . $callbackfile;
 						}
 						if (!function_exists($comment_config['callback']['update'])) {
-							$skip = true;
+							$skip = TRUE;
 						}
 					} else {
-						$skip = true;
+						$skip = TRUE;
 					}
 				}
 				if (!$skip) {
@@ -334,7 +334,7 @@ switch ($op) {
 
 			// increment user post if needed
 			$uid = $comment->getVar('com_uid');
-			if ($uid > 0 && false != $add_userpost) {
+			if ($uid > 0 && FALSE != $add_userpost) {
 				$member_handler = icms::handler('icms_member');
 				$poster =& $member_handler->getUser($uid);
 				if (is_object($poster)) {
@@ -380,7 +380,7 @@ switch ($op) {
 				ICMS_URL . '/modules/' . $not_module->getVar('dirname') . '/' .$comment_url . '=' . $com_itemid
 				. '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode
 				. '&amp;com_order=' . $com_order . '#comment' . $newcid;
-				$notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
+				$notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, FALSE, $not_modid);
 			}
 
 			if (!isset($comment_post_results)) {

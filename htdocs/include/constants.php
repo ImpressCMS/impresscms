@@ -7,7 +7,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @since		1.3
- * @version		$Id: common.php 19835 2010-07-14 17:05:16Z arcandier $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) {

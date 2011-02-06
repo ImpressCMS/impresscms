@@ -6,7 +6,8 @@
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @package	core
+ * @package		Administration
+ * @subpackage	Comments
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>

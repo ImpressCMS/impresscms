@@ -17,16 +17,18 @@ if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
 }
 $com_modid = $icmsModule->getVar('mid');
-$cform = new icms_form_Theme(_CM_POSTCOMMENT, 'commentform', 'comment_post.php', 'post', true);
+$cform = new icms_form_Theme(_CM_POSTCOMMENT, 'commentform', 'comment_post.php', 'post', TRUE);
 if (isset($icmsModuleConfig['com_rule'])) {
 	include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 	switch ($icmsModuleConfig['com_rule']) {
 		case XOOPS_COMMENT_APPROVEALL:
 			$rule_text = _CM_COMAPPROVEALL;
 			break;
+
 		case XOOPS_COMMENT_APPROVEUSER:
 			$rule_text = _CM_COMAPPROVEUSER;
 			break;
+
 		case XOOPS_COMMENT_APPROVEADMIN:
 		default:
 			$rule_text = _CM_COMAPPROVEADMIN;
@@ -35,17 +37,17 @@ if (isset($icmsModuleConfig['com_rule'])) {
 	$cform->addElement(new icms_form_elements_Label(_CM_COMRULES, $rule_text));
 }
 
-$cform->addElement(new icms_form_elements_Text(_CM_TITLE, 'com_title', 50, 255, $com_title), true);
+$cform->addElement(new icms_form_elements_Text(_CM_TITLE, 'com_title', 50, 255, $com_title), TRUE);
 $icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'com_icon', $com_icon);
 $subject_icons = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/subject/", '', array('gif', 'jpg', 'png'));
 foreach ($subject_icons as $iconfile) {
 	$icons_radio->addOption($iconfile, '<img src="' . ICMS_URL . '/images/subject/' . $iconfile . '" alt="" />');
 }
 $cform->addElement($icons_radio);
-$cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), true);
-$option_tray = new icms_form_elements_Tray(_OPTIONS,'<br />');
+$cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), TRUE);
+$option_tray = new icms_form_elements_Tray(_OPTIONS, '<br />');
 
-$button_tray = new icms_form_elements_Tray('' ,'&nbsp;');
+$button_tray = new icms_form_elements_Tray('' , '&nbsp;');
 
 if (is_object(icms::$user)) {
 	if ($icmsModuleConfig['com_anonpost'] == 1) {
@@ -54,15 +56,16 @@ if (is_object(icms::$user)) {
 		$noname_checkbox->addOption(1, _POSTANON);
 		$option_tray->addElement($noname_checkbox);
 	}
-	if (false != icms::$user->isAdmin($com_modid)) {
+	if (FALSE != icms::$user->isAdmin($com_modid)) {
 		// show status change box when editing (comment id is not empty)
 		if (!empty($com_id)) {
 			include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 			$status_select = new icms_form_elements_Select(_CM_STATUS, 'com_status', $com_status);
 			$status_select->addOptionArray(
 				array(
-					XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE,
-					XOOPS_COMMENT_HIDDEN => _CM_HIDDEN
+					XOOPS_COMMENT_PENDING => _CM_PENDING,
+					XOOPS_COMMENT_ACTIVE => _CM_ACTIVE,
+					XOOPS_COMMENT_HIDDEN => _CM_HIDDEN,
 				)
 			);
 			$cform->addElement($status_select);
@@ -86,8 +89,8 @@ $br_checkbox->addOption(1, _CM_DOAUTOWRAP);
 $option_tray->addElement($br_checkbox);
 
 $cform->addElement($option_tray);
-$cform->addElement(new icms_form_elements_Hidden('com_pid', (int) ($com_pid)));
-$cform->addElement(new icms_form_elements_Hidden('com_rootid', (int) ($com_rootid)));
+$cform->addElement(new icms_form_elements_Hidden('com_pid', (int) $com_pid));
+$cform->addElement(new icms_form_elements_Hidden('com_rootid', (int) $com_rootid));
 $cform->addElement(new icms_form_elements_Hidden('com_id', $com_id));
 $cform->addElement(new icms_form_elements_Hidden('com_itemid', $com_itemid));
 $cform->addElement(new icms_form_elements_Hidden('com_order', $com_order));
@@ -113,7 +116,7 @@ if ('system' != $icmsModule->getVar('dirname')) {
 	}
 }
 // Captcha Hack
-if ($icmsConfig['use_captchaf'] == true) {
+if ($icmsConfig['use_captchaf'] == TRUE) {
 	$cform->addElement(new icms_form_elements_Captcha());
 }
 // Captcha Hack

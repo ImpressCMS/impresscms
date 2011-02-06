@@ -13,9 +13,9 @@
  * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
 
-include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
+include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 if (('system' != $icmsModule->getVar('dirname')
 	&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
 	|| (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost'])
@@ -24,7 +24,7 @@ if (('system' != $icmsModule->getVar('dirname')
 }
 
 icms_loadLanguageFile('core', 'comment');
-$com_id = isset($_GET['com_id']) ? (int) ($_GET['com_id']) : 0;
+$com_id = isset($_GET['com_id']) ? (int) $_GET['com_id'] : 0;
 $com_mode = isset($_GET['com_mode'])
 	? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES)
 	: '';
@@ -42,7 +42,7 @@ if (!isset($_GET['com_order'])) {
 		$com_order = $icmsConfig['com_order'];
 	}
 } else {
-	$com_order = (int) ($_GET['com_order']);
+	$com_order = (int) $_GET['com_order'];
 }
 $comment_handler = icms::handler('icms_data_comment');
 $comment =& $comment_handler->get($com_id);
