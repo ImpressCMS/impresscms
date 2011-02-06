@@ -125,8 +125,8 @@ if ($op == "form") {
 	$form->addElement($limit_text);
 	$form->addElement($op_hidden);
 	// if this is to find users for a specific group
-	if (!empty($_GET['group']) && (int) ($_GET['group']) > 0) {
-		$group_hidden = new icms_form_elements_Hidden("group", (int) ($_GET['group']));
+	if (!empty($_GET['group']) && (int) $_GET['group'] > 0) {
+		$group_hidden = new icms_form_elements_Hidden("group", (int) $_GET['group']);
 		$form->addElement($group_hidden);
 	}
 	$form->addElement($submit_button);
@@ -137,7 +137,7 @@ if ($op == "form") {
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$criteria = new icms_db_criteria_Compo();
 	if (!empty($_POST['user_uname'])) {
-		$match = (!empty($_POST['user_uname_match'])) ? (int) ($_POST['user_uname_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_uname_match'])) ? (int) $_POST['user_uname_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('uname', $myts->addSlashes(trim($_POST['user_uname'])) . '%', 'LIKE'));
@@ -160,7 +160,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($_POST['user_name'])) {
-		$match = (!empty($_POST['user_name_match'])) ? (int) ($_POST['user_name_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_name_match'])) ? (int) $_POST['user_name_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('name', $myts->addSlashes(trim($_POST['user_name'])) . '%', 'LIKE'));
@@ -183,7 +183,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($_POST['user_login_name'])) {
-		$match = (!empty($_POST['user_login_name_match'])) ? (int) ($_POST['user_login_name_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_login_name_match'])) ? (int) $_POST['user_login_name_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('login_name', $myts->addSlashes(trim($_POST['user_login_name'])) . '%', 'LIKE'));
@@ -206,7 +206,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($_POST['user_email'])) {
-		$match = (!empty($_POST['user_email_match'])) ? (int) ($_POST['user_email_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_email_match'])) ? (int) $_POST['user_email_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('email', $myts->addSlashes(trim($_POST['user_email'])) . '%', 'LIKE'));
@@ -233,7 +233,7 @@ if ($op == "form") {
 		$criteria->add(new icms_db_criteria_Item('url', $url . '%', 'LIKE'));
 	}
 	if (!empty($_POST['user_icq'])) {
-		$match = (!empty($_POST['user_icq_match'])) ? (int) ($_POST['user_icq_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_icq_match'])) ? (int) $_POST['user_icq_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_icq', $myts->addSlashes(trim($_POST['user_icq'])) . '%', 'LIKE'));
@@ -256,7 +256,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($_POST['user_aim'])) {
-		$match = (!empty($_POST['user_aim_match'])) ? (int) ($_POST['user_aim_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_aim_match'])) ? (int) $_POST['user_aim_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_aim', $myts->addSlashes(trim($_POST['user_aim'])) . '%', 'LIKE'));
@@ -279,7 +279,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($_POST['user_yim'])) {
-		$match = (!empty($_POST['user_yim_match'])) ? (int) ($_POST['user_yim_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_yim_match'])) ? (int) $_POST['user_yim_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_yim', $myts->addSlashes(trim($_POST['user_yim'])) . '%', 'LIKE'));
@@ -302,7 +302,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($_POST['user_msnm'])) {
-		$match = (!empty($_POST['user_msnm_match'])) ? (int) ($_POST['user_msnm_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_msnm_match'])) ? (int) $_POST['user_msnm_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_msnm', $myts->addSlashes(trim($_POST['user_msnm'])) . '%', 'LIKE'));
@@ -335,38 +335,38 @@ if ($op == "form") {
 	}
 
 	if (!empty($_POST['user_lastlog_more']) && is_numeric($_POST['user_lastlog_more'])) {
-		$f_user_lastlog_more = (int) (trim($_POST['user_lastlog_more']));
+		$f_user_lastlog_more = (int) trim($_POST['user_lastlog_more']);
 		$time = time() - (60 * 60 * 24 * $f_user_lastlog_more);
 		if ($time > 0) {
 			$criteria->add(new icms_db_criteria_Item('last_login', $time, '<'));
 		}
 	}
 	if (!empty($_POST['user_lastlog_less']) && is_numeric($_POST['user_lastlog_less'])) {
-		$f_user_lastlog_less = (int) (trim($_POST['user_lastlog_less']));
+		$f_user_lastlog_less = (int) trim($_POST['user_lastlog_less']);
 		$time = time() - (60 * 60 * 24 * $f_user_lastlog_less);
 		if ($time > 0) {
 			$criteria->add(new icms_db_criteria_Item('last_login', $time, '>'));
 		}
 	}
 	if (!empty($_POST['user_reg_more']) && is_numeric($_POST['user_reg_more'])) {
-		$f_user_reg_more = (int) (trim($_POST['user_reg_more']));
+		$f_user_reg_more = (int) trim($_POST['user_reg_more']);
 		$time = time() - (60 * 60 * 24 * $f_user_reg_more);
 		if ($time > 0) {
 			$criteria->add(new icms_db_criteria_Item('user_regdate', $time, '<'));
 		}
 	}
 	if (!empty($_POST['user_reg_less']) && is_numeric($_POST['user_reg_less'])) {
-		$f_user_reg_less = (int) ($_POST['user_reg_less']);
+		$f_user_reg_less = (int) $_POST['user_reg_less'];
 		$time = time() - (60 * 60 * 24 * $f_user_reg_less);
 		if ($time > 0) {
 			$criteria->add(new icms_db_criteria_Item('user_regdate', $time, '>'));
 		}
 	}
 	if (!empty($_POST['user_posts_more']) && is_numeric($_POST['user_posts_more'])) {
-		$criteria->add(new icms_db_criteria_Item('posts', (int) ($_POST['user_posts_more']), '>'));
+		$criteria->add(new icms_db_criteria_Item('posts', (int) $_POST['user_posts_more'], '>'));
 	}
 	if (!empty($_POST['user_posts_less']) && is_numeric($_POST['user_posts_less'])) {
-		$criteria->add(new icms_db_criteria_Item('posts', (int) ($_POST['user_posts_less']), '<'));
+		$criteria->add(new icms_db_criteria_Item('posts', (int) $_POST['user_posts_less'], '<'));
 	}
 	if (isset($_POST['user_mailok'])) {
 		if ($_POST['user_mailok'] == "mailng") {
@@ -457,7 +457,7 @@ if ($op == "form") {
 				. $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'>" . _EDIT . "</a></td></tr>\n";
 		}
 		echo "<tr class='foot'><td><select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _AM_SENDMAIL . "</option>";
-		$group = !empty($_POST['group']) ? (int) ($_POST['group']) : 0;
+		$group = !empty($_POST['group']) ? (int) $_POST['group'] : 0;
 		if ($group > 0) {
 			$member_handler = icms::handler('icms_member');
 			$add2group =& $member_handler->getGroup($group);
