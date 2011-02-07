@@ -71,10 +71,10 @@ $backlink = xoops_getenv("HTTP_REFERER");
 if ($module->getVar('hasadmin')) {
 	$adminindex = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : $module->getInfo('adminindex');
 	if ($adminindex) {
-		$backlink = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $adminindex;
+		$backlink = ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $adminindex;
 	}
 }
-$backlink = ($backlink) ? $backlink : ICMS_URL . '/admin.php';
+$backlink = $backlink ? $backlink : ICMS_URL . '/admin.php';
 
 redirect_header($backlink, 2, implode("<br />", $msg));
 

@@ -1,29 +1,27 @@
 <?php
-// $Id$
 /**
  * Administration of usergroups, main file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	Administration
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @license		LICENSE.txt
+ * @package		Administration
+ * @subpackage	Groups
+ * @version		SVN: $Id$
  */
 
 $gperm_handler = icms::handler('icms_member_groupperm');
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid')) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], icms::$user->getGroups() ) )) {
+if (!is_object(icms::$user) 
+	|| !is_object($icmsModule) 
+	|| !icms::$user->isAdmin($icmsModule->getVar('mid')) 
+	|| (isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], icms::$user->getGroups()))
+	) {
 	exit("Access Denied");
 } else {
-	include_once ICMS_ROOT_PATH."/modules/system/admin/groups/groups.php";
+	include_once ICMS_MODULES_PATH . "/system/admin/groups/groups.php";
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'display');
-	if ($op == 'modify' || $op == 'del')
-	{
+	$op = (isset($_GET['op'])) ? trim(StopXSS($_GET['op'])) : ((isset($_POST['op'])) ? trim(StopXSS($_POST['op'])):'display');
+	if ($op == 'modify' || $op == 'del') {
 		$g_id = $_GET['g_id'];
 	}
 }
@@ -151,7 +149,7 @@ switch ($op) {
 				$blockperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($blockperm);
 			}
-			redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 1, _AM_DBUPDATED);
 		}
 		break;
 
@@ -247,7 +245,7 @@ switch ($op) {
 				$blockperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($blockperm);
 			}
-			redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 1, _AM_DBUPDATED);
 		}
 		break;
 
@@ -268,7 +266,7 @@ switch ($op) {
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			$gperm_handler->deleteByGroup($g_id);
 		}
-		redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
+		redirect_header("admin.php?fct=groups&amp;op=adminMain", 1, _AM_DBUPDATED);
 		break;
 
 	case "addUser":
@@ -277,19 +275,19 @@ switch ($op) {
 		}
 		$member_handler = icms::handler('icms_member');
 		$size = count($uids);
-		for ( $i = 0; $i < $size; $i++) {
+		for ($i = 0; $i < $size; $i++) {
 			$member_handler->addUserToGroup($groupid, $uids[$i]);
 		}
-		redirect_header("admin.php?fct=groups&amp;op=modify&amp;g_id=".$groupid."",0,_AM_DBUPDATED);
+		redirect_header("admin.php?fct=groups&amp;op=modify&amp;g_id=" . $groupid . "", 0, _AM_DBUPDATED);
 		break;
 
 	case "delUser":
 		if (!icms::$security->check()) {
 			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
 		}
-		if ((int) ($groupid) > 0) {
+		if ((int) $groupid > 0) {
 			$member_handler = icms::handler('icms_member');
-			$memstart = isset($memstart) ? (int) ($memstart) : 0;
+			$memstart = isset($memstart) ? (int) $memstart : 0;
 			if ($groupid == XOOPS_GROUP_ADMIN) {
 				if ($member_handler->getUserCountByGroup($groupid) > count($uids)) {
 					$member_handler->removeUsersFromGroup($groupid, $uids);
@@ -297,12 +295,12 @@ switch ($op) {
 			} else {
 				$member_handler->removeUsersFromGroup($groupid, $uids);
 			}
-			redirect_header('admin.php?fct=groups&amp;op=modify&amp;g_id='.$groupid.'&amp;memstart='.$memstart,0,_AM_DBUPDATED);
+			redirect_header('admin.php?fct=groups&amp;op=modify&amp;g_id=' . $groupid . '&amp;memstart=' . $memstart, 0, _AM_DBUPDATED);
 		}
 		break;
+		
 	case "display":
 	default:
 		displayGroups();
 		break;
 }
-?>

@@ -2,16 +2,12 @@
 /**
  * Form for setting group options
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	Administration
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
+ * @license		LICENSE.txt
+ * @package		Administration
  * @author		Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @version		SVN: $Id$
  */
 
 $name_text = new icms_form_elements_Text(_AM_NAME, "name", 30, 50, $name_value);
@@ -19,14 +15,14 @@ $desc_text = new icms_form_elements_Textarea(_AM_DESCRIPTION, "desc", $desc_valu
 
 $s_cat_checkbox = new icms_form_elements_Checkbox(_AM_SYSTEMRIGHTS, "system_catids[]", $s_cat_value);
 
-include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
-$admin_dir = ICMS_ROOT_PATH . '/modules/system/admin/';
+include_once ICMS_MODULES_PATH . '/system/constants.php';
+$admin_dir = ICMS_MODULES_PATH . '/system/admin/';
 $dirlist = icms_core_Filesystem::getDirList($admin_dir);
 /* changes to only allow permission admins you already have */
 $gperm = icms::handler('icms_member_groupperm');
 $groups = icms::$user->getGroups ();
 foreach ($dirlist as $file) {
-	include ICMS_ROOT_PATH.'/modules/system/admin/' . $file . '/xoops_version.php';
+	include ICMS_MODULES_PATH . '/system/admin/' . $file . '/xoops_version.php';
 	if (!empty($modversion['category']) && count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category'])))>0) {
 		$s_cat_checkbox->addOption($modversion['category'], $modversion['name']);
 	}
@@ -85,7 +81,7 @@ $gperm_handler = icms::handler('icms_member_groupperm');
 
 foreach ($groups as $group) {
 	if ($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), icms::$user->getGroups()))
-		$group_manager_checkbox->addOption($group->getVar('groupid'), $group->getVar('name'));
+	$group_manager_checkbox->addOption($group->getVar('groupid'), $group->getVar('name'));
 }
 $icms_block_handler = icms::handler('icms_view_block');
 $posarr = $icms_block_handler->getBlockPositions(true);
@@ -106,7 +102,7 @@ foreach ($posarr as $k=>$v) {
 		$n_blocks_array = $blocks_array;
 	}
 	foreach ($n_blocks_array as $key=>$value) {
-		$new_blocks_array[$key] = "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=" . $key . "'>" . $value . " (ID: " . $key . ")</a>";
+		$new_blocks_array[$key] = "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=" . $key . "'>" . $value . " (ID: " . $key . ")</a>";
 	}
 	$block_checkbox[$i]->addOptionArray($new_blocks_array);
 	$i++;
