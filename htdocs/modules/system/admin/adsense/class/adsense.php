@@ -42,7 +42,7 @@ class SystemAdsense extends icms_ipf_Object {
 		$this->quickInitVar('color_text', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_TEXT, _CO_ICMS_ADSENSE_COLOR_TEXT_DSC);
 		$this->quickInitVar('style', XOBJ_DTYPE_TXTAREA, FALSE, _CO_ICMS_ADSENSE_STYLE, _CO_ICMS_ADSENSE_STYLE_DSC);
 
-		$this->setControl('format', array('handler' => 'adsense','method' => 'getFormats'));
+		$this->setControl('format', array('method' => 'getFormats'));
 		$this->setControl('color_border', 'color');
 		$this->setControl('color_background', 'color');
 		$this->setControl('color_link', 'color');
