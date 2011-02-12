@@ -5,16 +5,23 @@
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
+ * @subpackage	Mimetypes
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		SVN: $Id$
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
 
-function editmimetype($showmenu = false, $mimetypeid = 0) {
+/**
+ * Logic and rendering for mimetypes management
+ * 
+ * @param bool	$showmenu	Doesn't appear to have any current functionality
+ * @param int	$mimetypeid	Unique ID for mimetype entry
+ */
+function editmimetype($showmenu = FALSE, $mimetypeid = 0) {
 	global $icms_mimetype_handler, $icmsAdminTpl;
 
 	icms_cp_header();
@@ -43,12 +50,12 @@ $icms_mimetype_handler = icms_getModuleHandler('mimetype');
 
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?trim(StopXSS($_GET['op'])):'');
+$op = (isset($_POST['op'])) ? trim(StopXSS($_POST['op'])) : ((isset($_GET['op'])) ? trim(StopXSS($_GET['op'])) : '');
 
 switch ($op) {
 	case "mod":
-		$mimetypeid = isset($_GET['mimetypeid']) ? (int) ($_GET['mimetypeid']) : 0 ;
-		editmimetype(true, $mimetypeid);
+		$mimetypeid = isset($_GET['mimetypeid']) ? (int) $_GET['mimetypeid'] : 0;
+		editmimetype(TRUE, $mimetypeid);
 		break;
 
 	case "addmimetype":
@@ -72,9 +79,9 @@ switch ($op) {
 		$objectTable->addQuickSearch(array('name', 'extension', 'types'));
 
 		$icmsAdminTpl->assign('icms_mimetype_table', $objectTable->fetch());
-		$icmsAdminTpl->assign('icms_mimetype_explain', true);
+		$icmsAdminTpl->assign('icms_mimetype_explain', TRUE);
 		$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPES_DSC);
-		$icmsAdminTpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/mimetype/system_adm_mimetype.html');
+		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/mimetype/system_adm_mimetype.html');
 		break;
 }
 
