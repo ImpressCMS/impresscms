@@ -29,10 +29,10 @@ class SystemRating extends icms_ipf_Object {
 		$this->quickInitVar('rate', XOBJ_DTYPE_INT, true, _CO_ICMS_RATING_RATE);
 
 		$this->initNonPersistableVar('name', XOBJ_DTYPE_TXTBOX, 'user', _CO_ICMS_RATING_NAME);
-		$this->setControl('dirname', array( 'handler' => 'rating', 'method' => 'getModuleList', 'onSelect' => 'submit'));
+		$this->setControl('dirname', array('method' => 'getModuleList', 'onSelect' => 'submit'));
 		$this->setControl('item', array( 'object' => &$this, 'method' => 'getItemList'));
 		$this->setControl('uid', 'user');
-		$this->setControl('rate', array( 'handler' => 'rating', 'method' => 'getRateList'));
+		$this->setControl('rate', array('method' => 'getRateList'));
 	}
 
 	function getVar($key, $format = 's') {
