@@ -56,7 +56,7 @@ switch ($op) {
 		}
 
 		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><ul>';
+		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><ul>';
 		foreach ($ccats as $confcat) {
 			echo '<li>' . $confcat['name'] . '[<a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id=' . $confcat['id'] . '">' . _EDIT . '</a>]</li>';
 		}
@@ -198,7 +198,7 @@ switch ($op) {
 						
 				case 'select_plugin' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 8, true);
-					$dirlist = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH.'/plugins/textsanitizer/');
+					$dirlist = icms_core_Filesystem::getDirList(ICMS_PLUGINS_PATH . '/textsanitizer/');
 					if (! empty($dirlist)) {
 						asort($dirlist);
 						$ele->addOptionArray($dirlist);
@@ -322,14 +322,7 @@ switch ($op) {
 						
 				case 'select_pages' :
 					$myts = & icms_core_Textsanitizer::getInstance();
-					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')) {
-						$content_handler = & icms_getModuleHandler('content', 'content');
-					} else {
-						/**
-						 * @todo remove this section because this handler will never exist again
-						 */
-						$content_handler = & xoops_gethandler('content');
-					}
+					$content_handler = & icms_getModuleHandler('content', 'content');
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					$ele->addOptionArray($content_handler->getContentList());
 					break;
@@ -355,7 +348,7 @@ switch ($op) {
 						
 				case 'select_geshi' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-					$dirlist = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH.'/geshi/geshi/', '', array('php')));
+					$dirlist = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH . '/geshi/geshi/', '', array('php')));
 					if (! empty($dirlist)) {
 						asort($dirlist);
 						$ele->addOptionArray($dirlist);
@@ -376,7 +369,7 @@ switch ($op) {
 		$form->addElement(new icms_form_elements_Hidden('op', 'save'));
 		$form->addElement(new icms_form_elements_Button('', 'button', _GO, 'submit'));
 		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/preferences/images/preferences_big.png)"><a href="admin.php?fct=preferences">' . _MD_AM_PREFMAIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . constant($confcat->getVar('confcat_name')) . '<br /><br /></div><br />';
+		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/preferences/images/preferences_big.png)"><a href="admin.php?fct=preferences">' . _MD_AM_PREFMAIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . constant($confcat->getVar('confcat_name')) . '<br /><br /></div><br />';
 		$form->display();
 		icms_cp_footer();
 		break;
@@ -408,7 +401,7 @@ switch ($op) {
 
 		$modname = $module->getVar('name');
 		if ($module->getInfo('adminindex')) {
-			$form->addElement(new icms_form_elements_Hidden('redirect', ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex')));
+			$form->addElement(new icms_form_elements_Hidden('redirect', ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex')));
 		}
 		for ($i = 0; $i < $count; $i ++) {
 			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
@@ -513,17 +506,17 @@ switch ($op) {
 		$form->addElement(new icms_form_elements_Button('', 'button', _GO, 'submit'));
 		icms_cp_header();
 		if ($module->getInfo('hasAdmin') == true) {
-			$modlink = '<a href="'.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$module->getInfo('adminindex').'">'.$modname.'</a>';
+			$modlink = '<a href="' . ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex') . '">' . $modname . '</a>';
 		} else {
 			$modlink = $modname;
 		}
 		$iconbig = $module->getInfo('iconbig');
 		if (isset($iconbig) && $iconbig == false) {
-			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/preferences/images/preferences_big.png);">'.$modlink.' &raquo; '._PREFERENCES.'</div>';
+			echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/preferences/images/preferences_big.png);">' . $modlink . ' &raquo; ' . _PREFERENCES . '</div>';
 
 		}
 		if (isset($iconbig) && $iconbig == true) {
-			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$iconbig.')">'.$modlink.' &raquo; '._PREFERENCES.'</div>';
+			echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $iconbig . ')">' . $modlink . ' &raquo; ' . _PREFERENCES . '</div>';
 		}
 		$form->display();
 		icms_cp_footer();
@@ -577,7 +570,7 @@ switch ($op) {
 					&& $config->getVar('conf_name') == 'purifier_Filter_ExtractStyleBlocks'
 					) {
 						if ($config->getVar('purifier_Filter_ExtractStyleBlocks') == 1) {
-							if (!file_exists(ICMS_ROOT_PATH . '/plugins/csstidy/class.csstidy.php')) {
+							if (!file_exists(ICMS_PLUGINS_PATH . '/csstidy/class.csstidy.php')) {
 								redirect_header('admin.php?fct=preferences', 5, _MD_AM_UNABLECSSTIDY);
 							}
 							$purifier_style_updated = true;
