@@ -661,7 +661,7 @@ class icms_core_Textsanitizer {
 	/**
 	 * @deprecated	Use previewTarea, instead
 	 * @todo		Remove this in version 1.4 - no other occurrences in the core
-	 * Enter description here ...
+	 *
 	 * @param unknown_type $text
 	 * @param unknown_type $html
 	 * @param unknown_type $smiley
@@ -675,13 +675,14 @@ class icms_core_Textsanitizer {
 
 	/**
 	 *
-	 * @deprecated
-	 * Enter description here ...
-	 * @param $text
+	 * @deprecated	icms_core_DataFilter::checkVar - type = text
+	 * @todo		Remove this in version 1.4
+	 * 
+	 * @param str	$text
 	 */
 	function makeTareaData4PreviewInForm($text)
 	{
-		icms_core_Debug::setDeprecated('icms_core_Textsanitizer->stripSlashesGPC(icms_core_Textsanitizer->htmlSpecialChars)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		icms_core_Debug::setDeprecated('icms_core_DataFilter::checkVar - type = text', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$text = $this->stripSlashesGPC($text);
 		return $this->htmlSpecialChars($text);
 	}
@@ -689,8 +690,7 @@ class icms_core_Textsanitizer {
 	/**
 	 * @deprecated	Use htmlSpecialChars, instead
 	 * @todo		Remove this in version 1.4 - no other occurrences in the core
-	 * Enter description here ...
-	 * @param $text
+	 * @param 		$text
 	 */
 	function makeTareaData4InsideQuotes($text)
 	{
