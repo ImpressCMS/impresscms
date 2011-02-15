@@ -193,7 +193,7 @@ if ($op == 'uninstall') {
 	$mod->registerClassPath();
 
 	if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
-		$msgs ='<img src="' . CISM_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+		$msgs ='<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREUNINS;
 	icms_cp_header();
