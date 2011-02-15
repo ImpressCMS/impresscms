@@ -4,16 +4,17 @@
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
+* @package		System
+* @subpackage	Symlinks
 * @since		1.1
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		$Id$
+* @version		SVN: $Id$
 */
 
 $modversion = array(
 	'name' => _MD_AM_PAGES,
 	'version' => "1",
-	'description' => "ImpressCMS Content Manager",
+	'description' => _MD_AM_PAGES_DSC,
 	'author' => "Rodrigo Pereira Lima aka TheRplima",
 	'credits' => "The ImpressCMS Project",
 	'help' => "pages.html",

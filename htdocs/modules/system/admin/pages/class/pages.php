@@ -1,73 +1,116 @@
 <?php
 /**
-* Administration of content pages, class file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of Symlinks
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package		System
+ * @subpackage	Symlinks
+ * @version		SVN: $Id$
+ */
 
+/**
+ * Symlinks object
+ * 
+ * @package		System
+ * @subpackage	Symlinks
+ */ 
 class SystemPages extends icms_data_page_Object {
 
-	public function __construct( & $handler) {
-		parent::__construct( $handler );
+	/**
+	 * Constructor
+	 */
+	public function __construct(& $handler) {
+		parent::__construct($handler);
 
 		$this->setControl('page_status', 'yesno');
-		$this->setControl('page_moduleid', array (
+		$this->setControl('page_moduleid', array(
 			'itemHandler' => 'pages',
 			'method' => 'getModulesArray',
 			'module' => 'system'
-		));
+			));
 	}
 
+	/**
+	 * Custom button for updating the status of a symlink
+	 * @return	string
+	 */
 	public function getCustomPageStatus() {
-		if ($this->getVar('page_status') == 1)
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&amp;op=status&amp;page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
-		else
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&amp;op=status&amp;page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
+		if ($this->getVar('page_status') == 1) {
+			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->getVar('page_id') 
+				. '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="' . _VISIBLE . '"/></a>';
+		} else {
+			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->getVar('page_id') 
+				. '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL . '/actions/button_cancel.png" alt="' . _VISIBLE . '"/></a>';
+		}
 		return $rtn;
 	}
 
+	/**
+	 * Custom control to retrieve parent module for the symlink
+	 * @return	array 	Parent module for the symlink
+	 */ 
 	public function getCustomPageModuleid() {
 		$modules = $this->handler->getModulesArray();
 		return $modules[$this->getVar('page_moduleid')];
 	}
 
+	/**
+	 * Retrieve title of the symlink
+	 * @return	string
+	 */
 	public function getAdminViewItemLink() {
 		$rtn = $this->getVar('page_title');
 		return $rtn;
 	}
 
-
+	/**
+	 * Build a link to the page represented by the symlink, if available
+	 * @return	string
+	 */
 	public function getViewItemLink() {
-		if (preg_match('/\*/',$this->getVar('page_url','e'))) {
+		if (preg_match('/\*/', $this->getVar('page_url', 'e'))) {
 			$ret = '';
 		} else {
-			$url = (substr($this->getVar('page_url','e'),0,7) == 'http://')?$this->getVar('page_url','e'):ICMS_URL.'/'.$this->getVar('page_url','e');
-			$ret = '<a href="'.$url.'" alt="'._PREVIEW.'" title="'._PREVIEW.'" targe="_blank"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
+			$url = (substr($this->getVar('page_url', 'e'), 0, 7) == 'http://') 
+				? $this->getVar('page_url', 'e') 
+				: ICMS_URL . '/' . $this->getVar('page_url', 'e');
+			$ret = '<a href="' . $url . '" alt="' . _PREVIEW . '" title="' . _PREVIEW 
+				. '" target="_blank"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
 		}
 
 		return $ret;
 	}
 }
 
-
+/**
+ * Symlinks handler
+ * 
+ * @package		System
+ * @subpackage	Symlinks
+ */
 class SystemPagesHandler extends icms_data_page_Handler {
 
+	/** */
 	private $modules_name;
 
-	public function __construct( & $db) {
+	/**
+	 * Constructor
+	 * 
+	 * @param $db
+	 */
+	public function __construct(& $db) {
 		icms_ipf_Handler::__construct($db, 'pages', 'page_id', 'page_title', '' , 'system');
 		$this->table = $db->prefix('icmspage');
 	}
 
-	public function getModulesArray($full = false) {
+	/**
+	 * Get an array of installed modules
+	 * 
+	 * @param boolean $full
+	 * @return	array
+	 */
+	public function getModulesArray($full = FALSE) {
 		if (!count($this->modules_name)) {
 			$icms_module_handler = icms::handler('icms_module');
 			$installed_modules =& $icms_module_handler->getObjects();
@@ -78,18 +121,24 @@ class SystemPagesHandler extends icms_data_page_Handler {
 		}
 		$rtn = $this->modules_name;
 
-		if (!$full)
-			foreach ($this->modules_name as $key => $module)
+		if (!$full) {
+			foreach ($this->modules_name as $key => $module) {
 				$rtn[$key] = $module['name'];
+			}
+		}
 
 		return $rtn;
 	}
 
-	function changeStatus( $page_id) {
-		$page = $this->get( $page_id );
-		$page->setVar( 'page_status', !$page->getVar('page_status') );
-		return $this->insert($page, true);
+	/**
+	 * Change the status of the symlink in the db
+	 * 
+	 * @param $page_id
+	 * @return	boolean	FALSE if failed, TRUE if successful
+	 */
+	public function changeStatus($page_id) {
+		$page = $this->get($page_id);
+		$page->setVar('page_status', !$page->getVar('page_status'));
+		return $this->insert($page, TRUE);
 	}
-
 }
-?>
