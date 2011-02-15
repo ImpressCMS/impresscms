@@ -270,11 +270,11 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Load some modules
+	 * Retrieve list of installed modules from the database
 	 *
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
-	 * @return  array
+	 * @return  array	Array of objects - installed module 
 	 */
 	public function getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array();
@@ -352,11 +352,11 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	static public function getAvailable() {
 		$dirtyList = $cleanList = array();
-		$dirtyList = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . '/modules/');
+		$dirtyList = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/');
 		foreach ($dirtyList as $item) {
-			if (file_exists(ICMS_ROOT_PATH . '/modules/' . $item . '/icms_version.php')) {
+			if (file_exists(ICMS_MODULES_PATH . '/' . $item . '/icms_version.php')) {
 				$cleanList[$item] = $item;
-			} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $item . '/xoops_version.php')) {
+			} elseif (file_exists(ICMS_MODULES_PATH . '/' . $item . '/xoops_version.php')) {
 				$cleanList[$item] = $item;
 			}
 		}
