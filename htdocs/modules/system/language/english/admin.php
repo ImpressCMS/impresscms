@@ -65,4 +65,4 @@ define('_MD_AM_PAGES_DSC', 'Symlink allows you to create a unique link based on 
 define('_MD_AM_TPLSETS_DSC', 'Templates are sets of html/css files that render the screen layout of modules.');
 define('_MD_AM_RANK_DSC', 'User ranks are picture, used to make difference between users in different levels of your website!');
 define('_MD_AM_VRSN_DSC', 'Use this tool to check your system for updates.');
-?>
+define('_MD_AM_PREF_DSC',"ImpressCMS Site Preferences");
