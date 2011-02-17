@@ -4,18 +4,18 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
+ * @package		System
+ * @subpackage	Ratings
  * @since		1.2
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @todo		Complete this feature? You cannot add a rating and there are no ratings to modify
+ * @version		SVN: $Id$
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
 
-function editrating($showmenu = false, $ratingid = 0)
-{
+function editrating($showmenu = FALSE, $ratingid = 0) {
 	global $icms_rating_handler, $icmsAdminTpl;
 
 	icms_cp_header();
@@ -58,7 +58,12 @@ $icms_rating_handler = icms_getmodulehandler('rating');
 
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?trim(StopXSS($_GET['op'])):'');
+$op = (isset($_POST['op'])) 
+	? trim(StopXSS($_POST['op'])) 
+	: ((isset($_GET['op']))
+		? 
+		trim(StopXSS($_GET['op']))
+		: '');
 
 switch ($op) {
 	/*	case "mod":
@@ -104,14 +109,13 @@ switch ($op) {
 
 		$icmsAdminTpl->assign('icms_rating_table', $objectTable->fetch());
 
-		$icmsAdminTpl->assign('icms_rating_explain', true);
+		$icmsAdminTpl->assign('icms_rating_explain', TRUE);
 		$icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_DSC);
 
-		$icmsAdminTpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/rating/system_adm_rating.html');
+		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/rating/system_adm_rating.html');
 
 		break;
 }
 
 icms_cp_footer();
 
-?>
