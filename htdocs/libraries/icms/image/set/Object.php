@@ -1,6 +1,7 @@
 <?php
 /**
 * Manage of imagesets baseclass
+* Image sets - the image directory within a module - are part of templates 
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
