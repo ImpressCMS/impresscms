@@ -4,16 +4,24 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
+ * @package		System
+ * @subpackage	Users
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		SVN: $Id$
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar("mid"))) {
 	exit("Access Denied");
 }
 
+/**
+ * Logic and rendering for editing user ranks
+ * 
+ * @param bool	$showmenu	Unnecessary? Not in any other location
+ * @param int	$rank_id	Unique ID for the rank entry
+ * @param bool	$clone		Are you cloning an existing rank?
+ */
 function edituserrank($showmenu = FALSE, $rank_id = 0, $clone = FALSE) {
 	global $icms_userrank_handler, $icmsAdminTpl;
 
@@ -42,12 +50,12 @@ $op = (isset($_POST["op"])) ? trim(StopXSS($_POST["op"])) : ((isset($_GET["op"])
 
 switch ($op) {
 	case "mod" :
-		$rank_id = isset($_GET["rank_id"]) ? (int) $_GET["rank_id"] : 0 ;
+		$rank_id = isset($_GET["rank_id"]) ? (int) $_GET["rank_id"] : 0;
 		edituserrank(TRUE, $rank_id);
 		break;
 
 	case "clone" :
-		$rank_id = isset($_GET["rank_id"]) ? (int) $_GET["rank_id"] : 0 ;
+		$rank_id = isset($_GET["rank_id"]) ? (int) $_GET["rank_id"] : 0;
 		edituserrank(TRUE, $rank_id, TRUE);
 		break;
 
@@ -74,7 +82,7 @@ switch ($op) {
 		$icmsAdminTpl->assign("icms_userrank_table", $objectTable->fetch());
 		$icmsAdminTpl->assign("icms_userrank_explain", TRUE);
 		$icmsAdminTpl->assign("icms_userrank_title", _CO_ICMS_USERRANKS_DSC);
-		$icmsAdminTpl->display(ICMS_ROOT_PATH . "/modules/system/templates/admin/userrank/system_adm_userrank.html");
+		$icmsAdminTpl->display(ICMS_MODULES_PATH . "/system/templates/admin/userrank/system_adm_userrank.html");
 		break;
 }
 
