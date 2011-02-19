@@ -94,3 +94,4 @@ define("_MD_TPLSET_IMPORT_FAILED", "Could not import file ");
 define("_MD_TPLSET_DELETING_DATA". 'Deleting template set data...');
 define("_MD_TPLSET_COPYING", "Copying template files...");
 define("_MD_TPLSET_INSTALLING", "Installing module template files for template set %s");
+?>
