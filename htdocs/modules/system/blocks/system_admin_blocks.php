@@ -112,7 +112,7 @@ function b_system_admin_cp_show() {
 		if ($modversion['hasAdmin']) {
 			$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
 			if (FALSE != $all_ok || in_array($modversion['category'], $ok_syscats)) {
-				$sysmod = array('title' => $modversion['name'], 'link' => ICMS_MODULES_URL . '/system/admin . php?fct=' . $file, 'image' => ICMS_MODULES_URL . '/system/admin/' . $file . '/images/' . $file . '_big.png');
+				$sysmod = array('title' => $modversion['name'], 'link' => ICMS_MODULES_URL . '/system/admin.php?fct=' . $file, 'image' => ICMS_MODULES_URL . '/system/admin/' . $file . '/images/' . $file . '_big.png');
 				array_push($block['sysmod'], $sysmod);
 			}
 		}
