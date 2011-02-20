@@ -289,7 +289,38 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			icms::$config->insertConfig($configs[0]);
 		}
 		unset($configs);
+		
+		/* New HTML Purifier options -
+		 * purifier_HTML_FlashAllowFullScreen, after purifier_HTML_AttrNameUseCDATA
+		 * purifier_Filter_AllowCustom, after purifier_Filter_YouTube
+		 * purifier_Core_NormalizeNewlines, after purifier_Core_RemoveInvalidImg
+		 */
+		
+		$table = new icms_db_legacy_updater_Table("config");
 
+		// retrieve the value of the position before the config to be inserted. 
+		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_HTML_AttrNameUseCDATA")));
+		$p = $configs[0]->getVar('conf_order') + 1;
+		//move all the other options down
+		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 1 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_FlashAllowFullScreen', '_MD_AM_PURIFIER_HTML_FLASHFULLSCRN', '0', '_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC', 'yesno', 'int', $p);
+		
+		// retrieve the value of the position before the config to be inserted. 
+		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_Filter_YouTube")));
+		$p = $configs[0]->getVar('conf_order') + 1;
+		//move all the other options down
+		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 1 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_AllowCustom', '_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM', '0', '_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC', 'yesno', 'int', $p);
+
+		// retrieve the value of the position before the config to be inserted. 
+		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_Core_RemoveInvalidImg")));
+		$p = $configs[0]->getVar('conf_order') + 1;
+		//move all the other options down
+		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 1 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_NormalizeNewlines', '_MD_AM_PURIFIER_CORE_NORMALNEWLINES', '1', '_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC', 'yesno', 'int', $p);
+		
+		unset($table);
+		
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
@@ -298,10 +329,10 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	}
 /*  1.3 beta|rc|final release  */
 
-	/*
-	 * This portion of the upgrade must remain as the last section of code to execute
-	 * Place all release upgrade steps above this point
-	 */
+/*
+ * This portion of the upgrade must remain as the last section of code to execute
+ * Place all release upgrade steps above this point
+ */
 	echo "</code>";
     if ($abortUpdate) {
         icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
@@ -310,8 +341,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		/**
 		 * @todo create a language constant for this text
 		 */
-		echo "<code><h3>You have updated your site from ImpressCMS 1.1.x to ImpressCMS 1.2 so you <strong>must install the new Content module</strong> to update the core content manager. You will be redirected to the installation process in 20 seconds. If this does not happen click <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1'>here</a>.</h3></code>";
-		echo '<script>setTimeout("window.location.href=\'' . ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
+		echo "<code><h3>You have updated your site from ImpressCMS 1.1.x to ImpressCMS 1.2 so you <strong>must install the new Content module</strong> to update the core content manager. You will be redirected to the installation process in 20 seconds. If this does not happen click <a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1'>here</a>.</h3></code>";
+		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
 	}
 
 	$feedback = ob_get_clean();
