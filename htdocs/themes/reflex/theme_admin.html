@@ -8,7 +8,7 @@
 	<{includeq file="$theme_name/theme_functions.php"}>
 <!-- Title and Meta -->
 	<title><{if $page_title !=''}><{$page_title}> : <{/if}><{$site_name}></title>
-	<meta http-equiv="content-type" content="text/html; charset=<{$charset}>" />	
+	<meta http-equiv="content-type" content="text/html; charset=<{$charset}>" />
 	<meta name="robots" content="<{$meta_robots}>" />
 	<meta name="keywords" content="<{$meta_keywords}>" />
 	<meta name="description" content="<{$meta_description}>" />
@@ -40,10 +40,10 @@
 <script type="text/javascript">
 var suggestpath = "<{$icms_url}>/suggest.php";
 var helpfile = "<{$icms_url}>/help.html";
- jQuery(document).ready(function(){ 
-  jQuery("ul.sf-menu").supersubs({ 
-   minWidth:    12, 
-   maxWidth:    27, 
+ jQuery(document).ready(function(){
+  jQuery("ul.sf-menu").supersubs({
+   minWidth:    12,
+   maxWidth:    27,
    extraWidth:  1
   }).superfish({
    animation: {opacity:'show',height:'show'},
@@ -67,12 +67,20 @@ var helpfile = "<{$icms_url}>/help.html";
 <body>
 <div id="outer_header">
 	<div id="header">
-		<div id="logo"><img src="<{$image_url}>img/logo.jpg" alt="<{$site_name}>" /></div>
+		<div id="logo">
+		 <{if  $adm_left_logo_url != ''}>
+			    <a href="<{$adm_left_logo_url}>" title="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>">
+			<{/if}>
+			<img src="<{$image_url}>img/logo.jpg" alt="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>"/>
+		    <{if  $adm_left_logo_url != ''}>
+			    </a>
+			<{/if}>
+		</div>
 		<div id="quicksearch">
 		 <form id="searchform">
 		  <div><input type="text" size="30" value="Quick Search..." id="inputString" onkeyup="lookup(this.value);" /></div>
 		  <div id="suggestions"></div>
-        	 </form>		  
+        	 </form>
 		 <div id="needhelp"><a href="javascript: void(0);">Need Help?</a></div>
                 </div>
 	</div>
