@@ -3,9 +3,9 @@
  * All functions for Registering users by invitation are going through here.
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	1.1
+ * @license		LICENSE.txt
+ * @package		Member
+ * @subpackage	Users
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id$
@@ -25,30 +25,30 @@ if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register']
 $op = !isset($_POST['op']) ? 'invite' : $_POST['op'];
 $email = isset($_POST['email']) ? trim($myts->stripSlashesGPC($_POST['email'])) : '';
 
-switch ( $op) {
+switch ($op) {
 	case 'finish':
 		include 'header.php';
 		$stop = '';
 		if (!icms::$security->check()) {
-			$stop .= implode('<br />', icms::$security->getErrors())."<br />";
+			$stop .= implode('<br />', icms::$security->getErrors()) . "<br />";
 		}
 		$icmsCaptcha = icms_form_elements_captcha_Object::instance();
 		if (! $icmsCaptcha->verify()) {
-			$stop .= $icmsCaptcha->getMessage().'<br />';
+			$stop .= $icmsCaptcha->getMessage() . '<br />';
 
 		}
 		if (!checkEmail($email)) {
-			$stop .= _US_INVALIDMAIL.'<br />';
+			$stop .= _US_INVALIDMAIL . '<br />';
 		}
 		if (empty($stop)) {
 			$invite_code = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
 			$myts =& icms_core_Textsanitizer::getInstance();
-			$sql = sprintf('INSERT INTO '.icms::$xoopsDB->prefix('invites').' (invite_code, from_id, invite_to, invite_date, extra_info) VALUES (%s, %d, %s, %d, %s)',
-			icms::$xoopsDB->quoteString(addslashes($invite_code)),
-			is_object(icms::$user)?icms::$user->getVar('uid'):0,
-			icms::$xoopsDB->quoteString(addslashes($email)),
-			time(),
-			icms::$xoopsDB->quoteString(addslashes(serialize(array())))
+			$sql = sprintf('INSERT INTO ' . icms::$xoopsDB->prefix('invites') . ' (invite_code, from_id, invite_to, invite_date, extra_info) VALUES (%s, %d, %s, %d, %s)',
+				icms::$xoopsDB->quoteString(addslashes($invite_code)),
+				is_object(icms::$user)?icms::$user->getVar('uid'):0,
+				icms::$xoopsDB->quoteString(addslashes($email)),
+				time(),
+				icms::$xoopsDB->quoteString(addslashes(serialize(array())))
 			);
 			icms::$xoopsDB->query($sql);
 			// if query executed successful
@@ -58,13 +58,13 @@ switch ( $op) {
 				$xoopsMailer->setTemplate('invite.tpl');
 				$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
 				$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-				$xoopsMailer->assign('SITEURL', ICMS_URL."/");
+				$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
 				$xoopsMailer->assign('USEREMAIL', $email);
-				$xoopsMailer->assign('REGISTERLINK', ICMS_URL.'/register.php?code='.$invite_code);
+				$xoopsMailer->assign('REGISTERLINK', ICMS_URL . '/register.php?code=' . $invite_code);
 				$xoopsMailer->setToEmails($email);
 				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 				$xoopsMailer->setFromName($icmsConfig['sitename']);
-				$xoopsMailer->setSubject(sprintf(_US_INVITEREGLINK,ICMS_URL));
+				$xoopsMailer->setSubject(sprintf(_US_INVITEREGLINK, ICMS_URL));
 				if (!$xoopsMailer->send()) {
 					$stop .= _US_INVITEMAILERR;
 				} else {
@@ -81,6 +81,7 @@ switch ( $op) {
 		}
 		include 'footer.php';
 		break;
+		
 	case 'invite':
 	default:
 		include 'header.php';
@@ -89,4 +90,3 @@ switch ( $op) {
 		include 'footer.php';
 		break;
 }
-?>
