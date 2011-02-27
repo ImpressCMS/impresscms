@@ -79,7 +79,7 @@ class icms_auth_Openid extends icms_auth_Object {
 	 * 
 	 * @param string $name
 	 */
-	public function __get($name) {
+	public function &__get($name) {
 		return $this->$name;
 	}
 

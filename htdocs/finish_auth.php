@@ -27,7 +27,7 @@ $member_handler = icms::handler('icms_member');
 /** Including the language files for the authentication pages */
 icms_loadLanguageFile('core', 'auth');
 
-$xoopsAuth = & icms_auth_Factory :: getAuthConnection();
+$xoopsAuth = & icms_auth_Factory::getAuthConnection();
 $user = $xoopsAuth->authenticate($openid_debug);
 
 if ($xoopsAuth->errorOccured()) {
