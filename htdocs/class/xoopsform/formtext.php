@@ -49,7 +49,7 @@ class XoopsFormText extends icms_form_elements_Text
 	function XoopsFormText($caption, $name, $size, $maxlength, $value = '', $autocomplete = false)
 	{
 		parent::__construct($caption, $name, $size, $maxlength, $value, $autocomplete);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Tray', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Text', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
