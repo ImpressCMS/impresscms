@@ -78,3 +78,9 @@ define('_CORE_DEPRECATED_MSG', '%s in %s, line %u <br />');
 define('_CORE_DEPRECATED_CALLEDBY', 'Called by: ');
 define('_CORE_REMOVE_IN_VERSION', 'This will be removed in version %s');
 define('_CORE_DEBUG', 'Debug');
+
+define('_CORE_OID_URL_EXPECTED', 'Expected an OpenID URL.');
+define("_CORE_OID_URL_INVALID", 'Authentication error; not a valid OpenID.');
+define("_CORE_OID_REDIRECT_FAILED", 'Could not redirect to server: %s');
+define("_CORE_OID_INPROGRESS", "OpenID transaction in progress");
+

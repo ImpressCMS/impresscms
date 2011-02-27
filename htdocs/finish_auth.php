@@ -1,23 +1,21 @@
 <?php
 /**
- * Short summary of the purpose of this file
- *
- * Longer description about this page
+ * Complete the OpenID authentication
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package     kernel
- * @subpackage  auth
- * @since	 1.1
- * @author malanciault <marcan@impresscms.org>
- * @version	$Id$
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Auth
+ * @subpackage  Openid
+ * @since		1.1
+ * @author		malanciault <marcan@impresscms.org>
+ * @version		SVN: $Id$
  */
 /**
- * Set this to true to troubleshoot OpenID login
+ * Set this to TRUE to troubleshoot OpenID login
  */
-$openid_debug = false;
+$openid_debug = FALSE;
 
-define('ICMS_INCLUDE_OPENID', true);
+define('ICMS_INCLUDE_OPENID', TRUE);
 $xoopsOption['pagetype'] = 'user';
 /** Including mainfile.php is required */
 include_once 'mainfile.php';
@@ -84,7 +82,7 @@ switch ($xoopsAuth->step) {
 		// checking if this uname is available
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
 		$user_handler = icms::handler('icms_member_user');
-		$users = & $user_handler->getObjects($criteria, false);
+		$users = & $user_handler->getObjects($criteria, FALSE);
 
 		if (is_array($users) && count($users) > 0) {
 			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
@@ -197,4 +195,3 @@ switch ($xoopsAuth->step) {
 		break;
 
 }
-?>

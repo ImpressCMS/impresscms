@@ -1,15 +1,24 @@
 <?php
 /**
  * Beginning of authorizing using openID
- * @copyright    http://www.impresscms.org/ The ImpressCMS Project
- * @license      LICENSE.txt
- * @package      Users
- * @since        1.1
- * @author       marcan <marcan@impresscms.org>
- * @author       Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version      $Id$
+ * 
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package		Auth
+ * @subpackage	Openid
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		SVN: $Id$
+ */
+/**
+ * Has this file been included?
+ * @var boolean
  */
 define('ICMS_INCLUDE_OPENID', TRUE);
+/**
+ * mainfile.php starts the boot process
+ */
 include_once 'mainfile.php';
 
 $_SESSION['frompage'] = isset($_SERVER['HTTP_REFERER']) 
@@ -22,10 +31,9 @@ $_SESSION['frompage'] = isset($_SERVER['HTTP_REFERER'])
 unset($_SESSION['openid_response']);
 
 function getOpenIDURL() {
-	// Render a default page if we got a submission without an openid
-	// value.
+	// Render a default page if we got a submission without an openid value.
 	if (empty($_GET['openid_identifier'])) 	{
-		echo $error = 'Expected an OpenID URL.';
+		echo $error = _CORE_OID_URL_EXPECTED;
 		//header("Location: /modules/openid/");
 		exit(0);
 	}
@@ -41,7 +49,7 @@ function run() {
 
 	// No auth request means we can't begin OpenID.
 	if (!$auth_request) {
-		displayError('Authentication error; not a valid OpenID.');
+		displayError(_CORE_OID_URL_INVALID);
 	}
 
 	$sreg_request = Auth_OpenID_SRegRequest::build(
@@ -88,11 +96,11 @@ function run() {
 		// Display an error if the form markup couldn't be generated;
 		// otherwise, render the HTML.
 		if (Auth_OpenID::isFailure($form_html)) {
-			displayError('Could not redirect to server: ' . $form_html->message);
+			displayError(sprintf(_CORE_OID_REDIRECT_FAILED, $form_html->message);
 		} else {
 			$page_contents = array(
 				"<html><head><title>",
-				"OpenID transaction in progress",
+				_CORE_OID_INPROGRESS,
 				"</title></head>",
 				"<body onload='document.getElementById(\"" . $form_id . "\").submit()'>",
 				$form_html,
