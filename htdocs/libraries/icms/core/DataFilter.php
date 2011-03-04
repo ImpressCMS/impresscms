@@ -188,6 +188,7 @@ class icms_core_DataFilter {
 	*					'int' = Validates Integer Values
 	*					'html' = Validates HTML
 	*					'text' = Validates plain textareas (Non HTML)
+	*					'special' htmlspecialchars filter options
 	*
 	* @param	mixed		$options1	Options to use with specified filter
 	*			Valid Filter Options:
@@ -206,11 +207,15 @@ class icms_core_DataFilter {
 	*					'res' = Requires that the value is not within the reserved IP range. both IPV4 and IPV6 values
 	*				STR:
 	*					'noencode' = Do NOT encode quotes
-	*					'strlow' = Strip characters with ASCII value below 32
-	*					'strhigh' = Strip characters with ASCII value above 127
+	*					'striplow' = Strip characters with ASCII value below 32
+	*					'striphigh' = Strip characters with ASCII value above 127
 	*					'encodelow' = Encode characters with ASCII value below 32
 	*					'encodehigh' = Encode characters with ASCII value above 127
 	*					'encodeamp' = Encode the & character to &amp;
+	*				SPECIAL:
+	*					'striplow' = Strip characters with ASCII value below 32
+	*					'striphigh' = Strip characters with ASCII value above 32
+	*					'encodehigh' = Encode characters with ASCII value above 32
 	*				INT:
 	*					minimum integer range value
 	*				HTML:
@@ -247,7 +252,7 @@ class icms_core_DataFilter {
 	static public function checkVar($data, $type, $options1 = '', $options2 = '') {
 		if (!$data || !$type) return false;
 
-		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html', 'text');
+		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'special', 'html', 'text');
 		if (!in_array($type, $valid_types)) {
 			return false;
 		} else {
@@ -291,6 +296,16 @@ class icms_core_DataFilter {
 				case 'str':
 					$valid_options1 = array('noencode', 'striplow', 'striphigh', 'encodelow', 'encodehigh', 'encodeamp');
 					$options2 = '';
+
+					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
+						$options1 = '';
+					}
+				break;
+
+				case 'special':
+					$valid_options1 = array('striplow', 'striphigh', 'encodehigh');
+					$options2 = '';
+
 					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 						$options1 = '';
 					}
@@ -901,8 +916,7 @@ class icms_core_DataFilter {
 	*/
 	static private function priv_checkVar($data, $type, $options1, $options2) {
 		switch ($type) {
-			case "url":
-
+			case "url": // returns False if URL invalid, returns $string if Valid
 				$data = filter_var($data, FILTER_SANITIZE_URL);
 
 				switch ($options1) {
@@ -935,7 +949,7 @@ class icms_core_DataFilter {
 				return false;
 			break;
 
-			case "email":
+			case "email": // returns False if email is invalid, returns $string if valid
 				global $icmsConfigUser;
 
 				$icmsStopSpammers = new icms_core_StopSpammer();
@@ -961,7 +975,7 @@ class icms_core_DataFilter {
 				return $data;
 			break;
 
-			case "ip":
+			case "ip": // returns False if IP is invalid, returns TRUE if valid
 				switch ($options1) {
 					case "ipv4":
 						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
@@ -985,7 +999,7 @@ class icms_core_DataFilter {
 				}
 			break;
 
-			case 'str':
+			case 'str': // returns $string
 				switch ($options1) {
 					case "noencode":
 						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -1017,7 +1031,7 @@ class icms_core_DataFilter {
 				}
 			break;
 
-			case "int":
+			case "int": // returns $int, returns FALSE if $opt1 & 2 set & $data is not inbetween values of $opt1 & 2
 				if ((isset($options1) && is_int($options1)) && (isset($options2) && is_int($options2))) {
 					$option = array('options' => array('min_range' => $options1,
 														'max_range' => $options2
@@ -1029,7 +1043,27 @@ class icms_core_DataFilter {
 				}
 			break;
 
-			case "html":
+			case "special": // returns $string
+				switch ($options1) {
+					case "striplow":
+						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW);
+					break;
+
+					case "striphigh":
+						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
+					break;
+
+					case "encodehigh":
+						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_ENCODE_HIGH);
+					break;
+
+					default:
+						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS);
+					break;
+				}
+			break;
+
+			case "html": // returns $string
 				switch($options1) {
 					case 'input':
 						default:
@@ -1047,7 +1081,7 @@ class icms_core_DataFilter {
 				}
 			break;
 
-			case "text":
+			case "text": // returns $string
 				switch($options1) {
 					case 'input':
 						default:
@@ -1065,9 +1099,7 @@ class icms_core_DataFilter {
 					break;
 				}
 			break;
-
 		}
-		return $data;
 	}
 
 	/**
