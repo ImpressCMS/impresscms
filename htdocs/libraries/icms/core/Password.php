@@ -51,17 +51,15 @@ final class icms_core_Password {
 	* @return   bool     returns true if password is expired, false if password is not expired.
 	*/
 	private function priv_passExpired($uname) {
-		$db = icms_db_Factory::instance();
-
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
-		$sql = $db->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
-			$db->prefix('users'), $db->quoteString($uname)));
-		list($pass_expired) = $db->fetchRow($sql);
+		$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
+			icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+		list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
 
 		if ($pass_expired == 1) {
 			return true;
@@ -78,8 +76,6 @@ final class icms_core_Password {
 	 * @return   string  returns the Salt key of the user.
 	 */
 	private function priv_getUserSalt($uname) {
-		$db = icms_db_Factory::instance();
-
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
@@ -88,17 +84,17 @@ final class icms_core_Password {
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if ($table->fieldExists('loginname')) {
-			$sql = $db->query(sprintf("SELECT salt FROM %s WHERE loginname = %s",
-				$db->prefix('users'), $db->quoteString($uname)));
-			list($salt) = $db->fetchRow($sql);
+			$sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE loginname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($salt) = icms::$xoopsDB->fetchRow($sql);
 		} elseif ($table->fieldExists('login_name')) {
-			$sql = $db->query(sprintf("SELECT salt FROM %s WHERE login_name = %s",
-				$db->prefix('users'), $db->quoteString($uname)));
-			list($salt) = $db->fetchRow($sql);
+			$sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE login_name = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($salt) = icms::$xoopsDB->fetchRow($sql);
 		} else {
-			$sql = $db->query(sprintf("SELECT salt FROM %s WHERE uname = %s",
-				$db->prefix('users'), $db->quoteString($uname)));
-			list($salt) = $db->fetchRow($sql);
+			$sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE uname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($salt) = icms::$xoopsDB->fetchRow($sql);
 		}
 
 		return $salt;
@@ -112,8 +108,6 @@ final class icms_core_Password {
     * @return   string  returns the Encryption type of the user.
     */
     private function priv_getUserEncType($uname) {
-        $db = icms_db_Factory::instance();
-
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
@@ -122,17 +116,17 @@ final class icms_core_Password {
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
         if($table->fieldExists('loginname')) {
-			$sql = $db->query(sprintf("SELECT enc_type FROM %s WHERE loginname = %s",
-				$db->prefix('users'), $db->quoteString($uname)));
-            list($enc_type) = $db->fetchRow($sql);
+			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE loginname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+            list($enc_type) = icms::$xoopsDB->fetchRow($sql);
         } elseif($table->fieldExists('login_name')) {
-			$sql = $db->query(sprintf("SELECT enc_type FROM %s WHERE login_name = %s",
-				$db->prefix('users'), $db->quoteString($uname)));
-            list($enc_type) = $db->fetchRow($sql);
+			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE login_name = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+            list($enc_type) = icms::$xoopsDB->fetchRow($sql);
         } else {
-            $sql = $db->query(sprintf("SELECT enc_type FROM %s WHERE uname = %s",
-				$db->prefix('users'), $db->quoteString($uname)));
-            list($enc_type) = $db->fetchRow($sql);
+            $sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE uname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+            list($enc_type) = icms::$xoopsDB->fetchRow($sql);
         }
 
 		return (int) $enc_type;
