@@ -84,7 +84,7 @@ define("_MD_TPLSET_TEMPLATE_ADDED",	'Module template files for template set %s g
 define("_MD_TPLSET_NAME_NOT_BLANK", "Template name cannot be blank");
 define("_MD_TPLSET_INVALID_NAME", "Template name contained invalid characters");
 define("_MD_TPLSET_NOT_FOUND", 'Could not find %s in the default template set.');
-define("MD_TPLSET_IMGSET_CREATE_FAILED", "Could not create image set.");
+define("_MD_TPLSET_IMGSET_CREATE_FAILED", "Could not create image set.");
 define("_MD_TPLSET_IMGSET_CREATED", "Image set %s created.");
 define("_MD_TPLSET_IMGSET_LINK_FAILED", "Failed linking image set to template set");
 define("_MD_TPLSET_FILE_UNNECESSARY", 'Template file %s does not need to be installed (PHP files using this template file does not exist');
@@ -94,4 +94,3 @@ define("_MD_TPLSET_IMPORT_FAILED", "Could not import file ");
 define("_MD_TPLSET_DELETING_DATA". 'Deleting template set data...');
 define("_MD_TPLSET_COPYING", "Copying template files...");
 define("_MD_TPLSET_INSTALLING", "Installing module template files for template set %s");
-?>
