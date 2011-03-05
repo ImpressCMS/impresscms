@@ -16,7 +16,8 @@ if (! is_object(icms::$user)
 	exit("Access Denied");
 }
 if (isset($_POST)) {
-	extract(filter_input(INPUT_POST, $_POST));
+	$post_vars = filter_input_array(INPUT_POST);
+	if (is_array($post_vars)) extract($post_vars);
 }
 $icmsAdminTpl = new icms_view_Tpl();
 $op = (isset($_GET['op'])) 
@@ -376,7 +377,7 @@ switch ($op) {
 
 	case 'showmod':
 		$config_handler = icms::handler('icms_config');
-		$mod = isset($_GET['mod']) ?(int) $_GET['mod'] : 0;
+		$mod = isset($_GET['mod']) ? (int) $_GET['mod'] : 0;
 		if (empty($mod)) {
 			header('Location: admin.php?fct=preferences');
 			exit();
