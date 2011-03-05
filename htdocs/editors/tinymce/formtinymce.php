@@ -57,7 +57,7 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
   * Initializes tinyMCE
   **/
 	function initTinymce() {
-		$this->config ["elements"] = $this->getName ();
+		$this->config ["elements"] = $this->getName() . '_tarea';
 		$this->config ["language"] = $this->getLanguage ();
 		$this->config ["rootpath"] = $this->rootpath;
 		$this->config ["area_width"] = $this->_width;

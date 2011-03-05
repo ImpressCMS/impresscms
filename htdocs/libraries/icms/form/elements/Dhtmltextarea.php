@@ -160,7 +160,43 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		}
 		$ret .= "</select><span id='" . $this->_hiddenText . "'>" . _EXAMPLE . "</span>\n";
 		$ret .= "<br />\n";
-		$ret .= "<img onclick='javascript:xoopsmake" . _GLOBAL_LEFT . "(\"" . $ele_name . "\", \"" . htmlspecialchars(((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?_ALRIGHTCON:_ALLEFTCON), ENT_QUOTES) . "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/align" . _GLOBAL_LEFT . ".gif' alt='align" . _GLOBAL_LEFT . "' />&nbsp;"."<img onclick='javascript:xoopsmakecenter(\"" . $ele_name . "\", \"" . htmlspecialchars(_ALCENTERCON, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/aligncenter.gif' alt='aligncenter' />&nbsp;"."<img onclick='javascript:xoopsmake" . _GLOBAL_RIGHT . "(\"" . $ele_name . "\", \"" . htmlspecialchars(((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?_ALLEFTCON:_ALRIGHTCON), ENT_QUOTES) . "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/align" . _GLOBAL_RIGHT . ".gif' alt='align" . _GLOBAL_RIGHT . "' />&nbsp;" . "<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeBold(\"" . $this->_hiddenText . "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/bold.gif' alt='bold' />&nbsp;<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeItalic(\"" . $this->_hiddenText . "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/italic.gif' alt='italic' />&nbsp;<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeUnderline(\"" . $this->_hiddenText . "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/underline.gif' alt='underline' />&nbsp;<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeLineThrough(\"" . $this->_hiddenText . "\");' src='" . ICMS_URL . "/images/linethrough.gif' alt='linethrough' onmouseover='style.cursor=\"pointer\"' />&nbsp;&nbsp;<input type='text' id='" . $ele_name . "Addtext' size='20' />&nbsp;<input type='button' onclick='xoopsCodeText(\"" . $ele_name . "\", \"" . $this->_hiddenText . "\", \"" . htmlspecialchars(_ENTERTEXTBOX, ENT_QUOTES) . "\")' class='formButton' value='" . _ADD . "' /><br /><br /><textarea id='" . $ele_name . "' name='" . $ele_name . "' onselect=\"xoopsSavePosition('" . $ele_name . "');\" onclick=\"xoopsSavePosition('" . $ele_name . "');\" onkeyup=\"xoopsSavePosition('" . $ele_name . "');\" cols='" . $this->getCols() . "' rows='" . $this->getRows() . "'" . $this->getExtra() . ">" . $this->getValue() . "</textarea><br />\n";
+		$ret .= "<img onclick='javascript:xoopsmake" . _GLOBAL_LEFT . "(\"" . $ele_name 
+			. "\", \"" 
+			. htmlspecialchars(((defined('_ADM_USE_RTL') && _ADM_USE_RTL)
+				? _ALRIGHTCON
+				: _ALLEFTCON), ENT_QUOTES) 
+			. "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL 
+			. "/images/align" . _GLOBAL_LEFT . ".gif' alt='align" . _GLOBAL_LEFT . "' />&nbsp;"
+			. "<img onclick='javascript:xoopsmakecenter(\"" . $ele_name . "\", \"" 
+			. htmlspecialchars(_ALCENTERCON, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL 
+			. "/images/aligncenter.gif' alt='aligncenter' />&nbsp;"
+			. "<img onclick='javascript:xoopsmake" . _GLOBAL_RIGHT . "(\"" . $ele_name . "\", \"" 
+			. htmlspecialchars(((defined('_ADM_USE_RTL') && _ADM_USE_RTL)
+				? _ALLEFTCON
+				: _ALRIGHTCON), ENT_QUOTES) 
+			. "\");' onmouseover='style.cursor=\"pointer\"' src='" 
+			. ICMS_URL . "/images/align" . _GLOBAL_RIGHT . ".gif' alt='align" . _GLOBAL_RIGHT . "' />&nbsp;" 
+			. "<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeBold(\"" . $this->_hiddenText . "\");' onmouseover='style.cursor=\"pointer\"' src='" 
+			. ICMS_URL . "/images/bold.gif' alt='bold' />&nbsp;<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeItalic(\"" . $this->_hiddenText 
+			. "\");' onmouseover='style.cursor=\"pointer\"' src='" 
+			. ICMS_URL . "/images/italic.gif' alt='italic' />&nbsp;<img onclick='javascript:setVisible(\"" 
+			. $this->_hiddenText . "\");makeUnderline(\"" . $this->_hiddenText . "\");' onmouseover='style.cursor=\"pointer\"' src='" 
+			. ICMS_URL . "/images/underline.gif' alt='underline' />&nbsp;<img onclick='javascript:setVisible(\"" . $this->_hiddenText 
+			. "\");makeLineThrough(\"" . $this->_hiddenText . "\");' src='" 
+			. ICMS_URL . "/images/linethrough.gif' alt='linethrough' onmouseover='style.cursor=\"pointer\"' />&nbsp;&nbsp;<input type='text' id='" . $ele_name 
+			. "Addtext' size='20' />&nbsp;<input type='button' onclick='xoopsCodeText(\"" . $ele_name . "\", \"" 
+			. $this->_hiddenText . "\", \"" . htmlspecialchars(_ENTERTEXTBOX, ENT_QUOTES) 
+			. "\")' class='formButton' value='" . _ADD . "' /><br /><br />"
+			. "<textarea id='" . $ele_name  . "_tarea"
+					. "' name='" . $ele_name 
+					. "' onselect=\"xoopsSavePosition('" . $ele_name . "');\""
+					. "' onclick=\"xoopsSavePosition('" . $ele_name . "');\""
+					. "' onkeyup=\"xoopsSavePosition('" . $ele_name . "');\""
+					. "' cols='" . $this->getCols() 
+					. "' rows='" . $this->getRows() 
+					. "'" . $this->getExtra() . ">" 
+				. $this->getValue() 
+			. "</textarea><br />\n";
 		$ret .= $this->_renderSmileys();
 		return $ret;
 	}
