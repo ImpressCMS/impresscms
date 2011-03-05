@@ -31,7 +31,7 @@ class icms_core_TextFilter extends icms_core_DataFilter {
 	 * @static       $TextFilter_instance
 	 * @staticvar    object
 	 **/
-	public static function getInstance() {
+	static public function getInstance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new icms_core_TextFilter();
@@ -48,7 +48,7 @@ class icms_core_TextFilter extends icms_core_DataFilter {
 	 * @param string $option1
 	 * @param string $option2
 	 */
-	public function checkVar($data, $type, $option1 = '', $option2 = '') {
+	static public function checkVar($data, $type, $option1 = '', $option2 = '') {
 		return parent::checkVar($data, $type, $option1, $option2);
 	}
 
