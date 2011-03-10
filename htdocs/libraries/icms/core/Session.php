@@ -112,6 +112,7 @@ class icms_core_Session {
 	/**
 	 * Constructor
 	 * @param object $db reference to the {@link XoopsDatabase} object
+	 * Do we need this $db reference now we're using icms::$xoopsDB?????
 	 *
 	 */
 	public function __construct(&$db) {
@@ -341,7 +342,7 @@ class icms_core_Session {
 
 		$fingerprint = $this->mainSaltKey;
 
-		if (isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+		if (isset($ip) && icms_core_DataFilter::checkVar($ip, 'ip', 'ipv4')) {
 			if ($securityLevel >= 1) {
 				$fingerprint .= $userAgent;
 			}
@@ -355,7 +356,7 @@ class icms_core_Session {
 					$fingerprint .= $blocks[$i] . '.';
 				}
 			}
-		} elseif (isset($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+		} elseif (isset($ip) && icms_core_DataFilter::checkVar($ip, 'ip', 'ipv6')) {
 			if ($securityLevel >= 1) {
 				$fingerprint .= $userAgent;
 			}
@@ -385,10 +386,10 @@ class icms_core_Session {
 	 */
 	private function readSession($sess_id) {
 		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
-		$this->db->prefix('session'), $this->db->quoteString($sess_id));
-		if (false != $result = $this->db->query($sql)) {
-			if (list($sess_data, $sess_ip) = $this->db->fetchRow($result)) {
-				if ($this->ipv6securityLevel > 1 && filter_var($sess_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+			icms::$xoopsDB->prefix('session'), icms::$xoopsDB->quoteString($sess_id));
+		if (false != $result = icms::$xoopsDB->query($sql)) {
+			if (list($sess_data, $sess_ip) = icms::$xoopsDB->fetchRow($result)) {
+				if ($this->ipv6securityLevel > 1 && icms_core_DataFilter::checkVar($sess_ip, 'ip', 'ipv6')) {
 					/**
 					 * also cover IPv6 localhost string
 					 */
@@ -401,7 +402,7 @@ class icms_core_Session {
 					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
 						$sess_data = '';
 					}
-				} elseif ($this->securityLevel > 1 && filter_var($sess_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+				} elseif ($this->securityLevel > 1 && icms_core_DataFilter::checkVar($sess_ip, 'ip', 'ipv4')) {
 					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
 
 					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
@@ -421,24 +422,24 @@ class icms_core_Session {
 	 * @return  bool
 	 **/
 	private function writeSession($sess_id, $sess_data) {
-		$sess_id = $this->db->quoteString($sess_id);
-		$sess_data = $this->db->quoteString($sess_data);
+		$sess_id = icms::$xoopsDB->quoteString($sess_id);
+		$sess_data = icms::$xoopsDB->quoteString($sess_data);
 
 		$sql = sprintf(
 			"UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s",
-			$this->db->prefix('session'), time(), $sess_data, $sess_id
+			icms::$xoopsDB->prefix('session'), time(), $sess_data, $sess_id
 			);
-		$this->db->queryF($sql);
-		if (!$this->db->getAffectedRows()) {
+		icms::$xoopsDB->queryF($sql);
+		if (!icms::$xoopsDB->getAffectedRows()) {
 			$sql = sprintf(
 				"INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)"
 				. " VALUES (%s, '%u', %s, %s)",
-				$this->db->prefix('session'),
+				icms::$xoopsDB->prefix('session'),
 				$sess_id, time(),
-				$this->db->quoteString($_SERVER['REMOTE_ADDR']),
+				icms::$xoopsDB->quoteString($_SERVER['REMOTE_ADDR']),
 				$sess_data
 			);
-			return $this->db->queryF($sql);
+			return icms::$xoopsDB->queryF($sql);
 		}
 		return true;
 	}
@@ -451,9 +452,9 @@ class icms_core_Session {
 	private function destroySession($sess_id) {
 		$sql = sprintf(
 			'DELETE FROM %s WHERE sess_id = %s',
-			$this->db->prefix('session'), $this->db->quoteString($sess_id)
+			icms::$xoopsDB->prefix('session'), icms::$xoopsDB->quoteString($sess_id)
 		);
-		if (!$result = $this->db->queryF($sql)) {
+		if (!$result = icms::$xoopsDB->queryF($sql)) {
 			return false;
 		}
 		return true;
@@ -469,8 +470,7 @@ class icms_core_Session {
 			return true;
 		}
 		$mintime = time() - (int) $expire;
-		$sql = sprintf("DELETE FROM %s WHERE sess_updated < '%u'", $this->db->prefix('session'), $mintime);
-		return $this->db->queryF($sql);
+		$sql = sprintf("DELETE FROM %s WHERE sess_updated < '%u'", icms::$xoopsDB->prefix('session'), $mintime);
+		return icms::$xoopsDB->queryF($sql);
 	}
-
 }
