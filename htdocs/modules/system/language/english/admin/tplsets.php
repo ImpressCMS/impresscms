@@ -91,6 +91,6 @@ define("_MD_TPLSET_FILE_UNNECESSARY", 'Template file %s does not need to be inst
 define("_MD_TPLSET_UPDATED", "Template file %s updated");
 define("_MD_TPLSET_COMPILED", "Template file %s compiled");
 define("_MD_TPLSET_IMPORT_FAILED", "Could not import file ");
-define("_MD_TPLSET_DELETING_DATA". 'Deleting template set data...');
+define("_MD_TPLSET_DELETING_DATA", 'Deleting template set data...');
 define("_MD_TPLSET_COPYING", "Copying template files...");
 define("_MD_TPLSET_INSTALLING", "Installing module template files for template set %s");
