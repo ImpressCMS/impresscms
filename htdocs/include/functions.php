@@ -344,7 +344,7 @@ function checkEmail($email, $antispam = false, $blacklist = false)
 {
 	icms_core_Debug::setDeprecated('icms_core_DataFilter->checkVar - type = email, $options1 = true/false ($antispam),
 		$options2 = true/false ($blacklist)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::checkVar($email, 'email', $antispam);
+	return icms_core_DataFilter::checkVar($email, 'email', $antispam, $blacklist);
 }
 
 /**
