@@ -216,3 +216,6 @@ h6 {font-size: .8em;}
 #xo-logger-output {
 	font-size:			80%;
 }
+
+/* ---------- Image Manager / Folder not writeable ------------ */
+tr.blocked td {background-color: #FF0000;}
