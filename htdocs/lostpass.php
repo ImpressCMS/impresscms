@@ -18,15 +18,16 @@ include 'mainfile.php';
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $email = (isset($_GET['email']))
-	? trim(StopXSS($_GET['email']))
-	: ((isset($_POST['email'])) ? trim(StopXSS($_POST['email'])) : $email);
+	? trim(filter_input(INPUT_GET, 'email'))
+	: ((isset($_POST['email'])) ? trim(filter_input(INPUT_POST, 'email')) : $email);
 
-if ($email == '') {redirect_header('user.php', 2, _US_SORRYNOTFOUND);}
+if ($email == '') {
+	redirect_header('user.php', 2, _US_SORRYNOTFOUND);
+}
 
-$myts =& icms_core_Textsanitizer::getInstance();
 $member_handler = icms::handler('icms_member');
 $criteria = new icms_db_criteria_Compo();
-$criteria->add(new icms_db_criteria_Item('email', $myts->addSlashes($email)));
+$criteria->add(new icms_db_criteria_Item('email', icms_core_DataFilter::addSlashes($email)));
 $criteria->add(new icms_db_criteria_Item('level', '-1', '!='));
 $getuser =& $member_handler->getUsers($criteria);
 
@@ -36,7 +37,7 @@ if (empty($getuser)) {
 } else {
 	$icmspass = new icms_core_Password();
 
-	$code = isset($_GET['code']) ? trim(StopXSS($_GET['code'])) : '';
+	$code = isset($_GET['code']) ? trim(filter_input(INPUT_GET, 'code')) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
 	$enc_type = (int) $icmsConfigUser['enc_type'];
 	if ($code != '' && $areyou == $code) {
@@ -55,10 +56,13 @@ if (empty($getuser)) {
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
 		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, ICMS_URL));
-		if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
+		if (!$xoopsMailer->send()) {
+			echo $xoopsMailer->getErrors();
+		}
 
 		// Next step: add the new password to the database
-		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'", icms::$xoopsDB->prefix('users'), $pass, $salt, $enc_type, 0, (int) $getuser[0]->getVar('uid'));
+		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'",
+						icms::$xoopsDB->prefix('users'), $pass, $salt, $enc_type, 0, (int) $getuser[0]->getVar('uid'));
 		if (!icms::$xoopsDB->queryF($sql)) {
 			/** Include header.php to start page rendering */
 			include 'header.php';
@@ -84,7 +88,9 @@ if (empty($getuser)) {
 		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename']));
 		/** Include header.php to start page rendering */
 		include 'header.php';
-		if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
+		if (!$xoopsMailer->send()) {
+			echo $xoopsMailer->getErrors();
+		}
 		echo '<h4>';
 		printf(_US_CONFMAIL, $getuser[0]->getVar('uname'));
 		echo '</h4>';

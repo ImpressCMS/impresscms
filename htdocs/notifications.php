@@ -21,7 +21,7 @@ if (empty(icms::$user)) {
 	exit();
 }
 
-$uid = icms::$user->getVar('uid');
+$uid = (int) icms::$user->getVar('uid');
 $valid_op = array('cancel', 'list', 'delete', 'delete_ok');
 $op = 'list';
 
@@ -43,15 +43,12 @@ if (isset($_POST['delete_cancel'])) {
 }
 
 switch ($op) {
-
 	case 'cancel':
-
 		// FIXME: does this always go back to correct location??
 		redirect_header('index.php');
 		break;
 
 	case 'list':
-
 		// Do we allow other users to see our notifications?  Nope, but maybe
 		// see who else is monitoring a particular item (or at least how many)?
 		// Well, maybe admin can see all...
@@ -118,7 +115,11 @@ switch ($op) {
 				} else {
 					$item_info = array('name'=>'[' . _NOT_NAMENOTAVAILABLE . ']', 'url'=>'');
 				}
-				$modules[$modid]['categories'][$category]['items'][$item] = array('id'=>$item, 'name'=>$item_info['name'], 'url'=>$item_info['url'], 'notifications'=>array());
+				$modules[$modid]['categories'][$category]['items'][$item] = array('id' => $item,
+																					'name' => $item_info['name'],
+																					'url' => $item_info['url'],
+																					'notifications' => array()
+																				);
 			}
 			$event_info =& $notification_handler->eventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
 			$modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array(
@@ -170,7 +171,6 @@ switch ($op) {
 
 		//case 'delete':
 	case 'delete_ok':
-
 		if (empty($_POST['del_not'])) {
 			redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
 		}
@@ -209,4 +209,3 @@ switch ($op) {
 	default:
 		break;
 }
-

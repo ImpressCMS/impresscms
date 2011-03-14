@@ -239,6 +239,7 @@ class TinyMCE
         }
     }
     $ret .= '
+				convert_urls : false,
                   relative_urls : false,
                   remove_script_host : false,
                   force_br_newlines : false,

@@ -186,10 +186,10 @@ switch ($op) {
 			$edituser->setVar('openid', isset($_POST['openid']) ? trim($_POST['openid']) : '');
 			if ($icmsConfigUser['allwshow_sig'] == 1) {
 				if ($icmsConfigUser['allow_htsig'] == 0) {
-					$signature = strip_tags(icms_core_DataFilter::codeDecode($_POST['user_sig'], 1));
+					$signature = strip_tags(icms_core_DataFilter::checkVar($_POST['user_sig'], 'text', 'input'));
 					$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 				} else {
-					$signature = icms_core_DataFilter::filterHTMLinput($_POST['user_sig'], 1, 1, 1);
+					$signature = icms_core_DataFilter::checkVar($_POST['user_sig'], 'html', 'input');
 					$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 				}
 			}
@@ -257,7 +257,8 @@ switch ($op) {
 			icms_PasswordMeter();
 		}
 	
-		echo '<a href="userinfo.php?uid='. (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br /><br />';
+		echo '<a href="userinfo.php?uid='. (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;
+			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br /><br />';
 		$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', TRUE);
 		$login_name_label = new icms_form_elements_Label(_US_LOGINNAME, icms::$user->getVar('login_name'));
 		$form->addElement($login_name_label);
@@ -409,7 +410,8 @@ switch ($op) {
 	case 'avatarform':
 		/** Include the header that starts page rendering */
 		include ICMS_ROOT_PATH . '/header.php';
-		echo '<a href="userinfo.php?uid='. (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '<br /><br />';
+		echo '<a href="userinfo.php?uid='. (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;
+			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '<br /><br />';
 		$oldavatar = icms::$user->getVar('user_avatar');
 		if (!empty($oldavatar) && $oldavatar != 'blank.gif') {
 			echo '<div style="text-align:center;"><h4 style="color:#ff0000; font-weight:bold;">' . _US_OLDDELETED . '</h4>';

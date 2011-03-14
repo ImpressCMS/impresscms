@@ -98,7 +98,7 @@ abstract class icms_form_Base {
 	 * @return	string
 	 */
 	public function getTitle($encode = false) {
-		return $encode ? htmlspecialchars($this->_title, ENT_QUOTES) : $this->_title;
+		return $encode ? htmlspecialchars($this->_title, ENT_QUOTES, _CHARSET) : $this->_title;
 	}
 
 	/**
@@ -111,7 +111,7 @@ abstract class icms_form_Base {
 	 * @deprecated The "name" attribute is not strict HTML
 	 */
 	public function getName($encode = true) {
-		return $encode ? htmlspecialchars($this->_name, ENT_QUOTES) : $this->_name;
+		return $encode ? htmlspecialchars($this->_name, ENT_QUOTES, _CHARSET) : $this->_name;
 	}
 
 	/**
@@ -121,7 +121,7 @@ abstract class icms_form_Base {
 	 * @return	string
 	 */
 	public function getAction($encode = true) {
-		return $encode ? htmlspecialchars($this->_action, ENT_QUOTES) : $this->_action;
+		return $encode ? htmlspecialchars($this->_action, ENT_QUOTES, _CHARSET) : $this->_action;
 	}
 
 	/**

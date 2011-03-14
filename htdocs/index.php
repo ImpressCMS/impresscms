@@ -23,7 +23,8 @@ if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != "" && $icmsCo
 		$page_handler = icms::handler('icms_data_page');
 		$page = $page_handler->get($arr[1]);
 		if (is_object($page)) {
-			$url =(substr($page->getVar('page_url'), 0, 7) == 'http://') ? $page->getVar('page_url') : ICMS_URL . '/' . $page->getVar('page_url');
+			$url =(substr($page->getVar('page_url'), 0, 7) == 'http://')
+				? $page->getVar('page_url') : ICMS_URL . '/' . $page->getVar('page_url');
 			header('Location: ' . $url);
 		} else {
 			$icmsConfig['startpage'] = '--';

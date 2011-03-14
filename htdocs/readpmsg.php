@@ -14,7 +14,6 @@
 
 $xoopsOption['pagetype'] = "pmsg";
 include_once "mainfile.php";
-$myts =& icms_core_Textsanitizer::getInstance();
 
 if (!is_object(icms::$user)) {
 	redirect_header("user.php",0);
@@ -41,15 +40,22 @@ if (!is_object(icms::$user)) {
 	$criteria->setStart($start);
 	$criteria->setSort('msg_time');
 	$pm_arr =& $pm_handler->getObjects($criteria);
-	echo "<div><h4>". _PM_PRIVATEMESSAGE."</h4></div><br /><a href='userinfo.php?uid=". (int) (icms::$user->getVar("uid")) ."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php'>". _PM_INBOX ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;\n";
+	echo "<div><h4>". _PM_PRIVATEMESSAGE."</h4></div><br /><a href='userinfo.php?uid="
+		. (int) (icms::$user->getVar("uid")) ."'>". _PM_PROFILE ."</a>&nbsp;
+		<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;
+		<a href='viewpmsg.php'>". _PM_INBOX ."</a>&nbsp;
+		<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;\n";
 	if (empty($pm_arr)) {
 		echo '<br /><br />'._PM_YOUDONTHAVE;
 	} else {
 		if (!$pm_handler->setRead($pm_arr[0])) {
 			//echo "failed";
 		}
-		echo $pm_arr[0]->getVar("subject")."<br /><form action='readpmsg.php' method='post' name='delete".$pm_arr[0]->getVar("msg_id")."'><table border='0' cellpadding='4' cellspacing='1' class='outer' width='100%'><tr><th colspan='2'>". _PM_FROM ."</th></tr><tr class='even'>\n";
-		$poster = new icms_member_user_Object( (int) ($pm_arr[0]->getVar("from_userid")));
+		echo $pm_arr[0]->getVar("subject")."<br />
+			<form action='readpmsg.php' method='post' name='delete".$pm_arr[0]->getVar("msg_id")."'>
+			<table border='0' cellpadding='4' cellspacing='1' class='outer' width='100%'>
+			<tr><th colspan='2'>". _PM_FROM ."</th></tr><tr class='even'>\n";
+		$poster = new icms_member_user_Object((int) $pm_arr[0]->getVar("from_userid"));
 		if (!$poster->isActive()) {
 			$poster = false;
 		}
@@ -68,18 +74,24 @@ if (!is_object(icms::$user)) {
 		} else {
 			echo $icmsConfig['anonymous']; // we need to do this for deleted users
 		}
-		echo "</td><td><img src='images/subject/".$pm_arr[0]->getVar("msg_image", "E")."' alt='' />&nbsp;"._PM_SENTC."".formatTimestamp($pm_arr[0]->getVar("msg_time"));
+		echo "</td><td><img src='images/subject/".$pm_arr[0]->getVar("msg_image", "E")."' alt='' />&nbsp;
+			"._PM_SENTC."".formatTimestamp($pm_arr[0]->getVar("msg_time"));
 		echo "<hr /><b>".$pm_arr[0]->getVar("subject")."</b><br /><br />\n";
 		$var = $pm_arr[0]->getVar('msg_text', 'N');
-		echo $myts->displayTarea( $var, 1, 1, 1 ) . "<br /><br /></td></tr><tr class='foot'><td width='20%' colspan='2' align='"._GLOBAL_LEFT."'>";
+		echo icms_core_DataFilter::checkVar($var, 'html', 'output') . "<br /><br /></td></tr>
+			<tr class='foot'><td width='20%' colspan='2' align='"._GLOBAL_LEFT."'>";
 		// we dont want to reply to a deleted user!
 		if ($poster != false) {
-			echo "<a href='#' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?reply=1&amp;msg_id=".$pm_arr[0]->getVar("msg_id")."\",\"pmlite\",800,680);'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/reply.gif' alt='"._PM_REPLY."' /></a>\n";
+			echo "<a href='#' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?reply=1&amp;msg_id="
+				. $pm_arr[0]->getVar("msg_id")."\",\"pmlite\",800,680);'>
+				<img src='".ICMS_URL."/images/icons/".$GLOBALS["icmsConfig"]["language"]."/reply.gif' alt='"._PM_REPLY."' /></a>\n";
 		}
 		echo "<input type='hidden' name='delete' value='1' />";
 		echo icms::$security->getTokenHTML();
 		echo "<input type='hidden' name='msg_id' value='".$pm_arr[0]->getVar("msg_id")."' />";
-		echo "<a href='#".$pm_arr[0]->getVar("msg_id")."' onclick='javascript:document.delete".$pm_arr[0]->getVar("msg_id").".submit();'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/delete.gif' alt='"._PM_DELETE."' /></a>";
+		echo "<a href='#".$pm_arr[0]->getVar("msg_id")."' onclick='javascript:document.delete"
+			.$pm_arr[0]->getVar("msg_id").".submit();'>
+			<img src='".ICMS_URL."/images/icons/".$GLOBALS["icmsConfig"]["language"]."/delete.gif' alt='"._PM_DELETE."' /></a>";
 		echo "</td></tr><tr><td colspan='2' align='"._GLOBAL_RIGHT."'>";
 		$previous = $start - 1;
 		$next = $start + 1;
@@ -97,4 +109,3 @@ if (!is_object(icms::$user)) {
 	}
 	include "footer.php";
 }
-?>

@@ -15,14 +15,19 @@ if (isset($_POST['queryString'])) {
 
 	// Is the string length greater than 2?
 	if (strlen($queryString) > 2) {
-		$sql = "SELECT * FROM ".icms::$xoopsDB->prefix("autosearch_list")." s INNER JOIN ".icms::$xoopsDB->prefix("autosearch_cat")." c ON s.cat_id = c.cid WHERE name LIKE '%" . $queryString . "%' ORDER BY cat_id LIMIT 8";
+		$sql = "SELECT * FROM ".icms::$xoopsDB->prefix("autosearch_list")." s INNER JOIN "
+			. icms::$xoopsDB->prefix("autosearch_cat") . " c ON s.cat_id = c.cid WHERE name LIKE '%"
+			. $queryString . "%' ORDER BY cat_id LIMIT 8";
 		$query = icms::$xoopsDB->query($sql);
 		$num_results = mysql_num_rows($query);
 
 		echo "<ul id='searchresults'>";
 		if ($query) {
 			if ($num_results < 1) {
-				echo "<li><a href='javascript:void(0);'><img src='".ICMS_URL."/images/crystal/actions/exit.png' alt='no results found' /><span class='searchheading'>Sorry</span><span class='searchdesc'>No results were found that matched your query. Please try again.</span></a></li>";
+				echo "<li><a href='javascript:void(0);'>
+					<img src='".ICMS_URL."/images/crystal/actions/exit.png' alt='no results found' />
+					<span class='searchheading'>Sorry</span>
+					<span class='searchdesc'>No results were found that matched your query. Please try again.</span></a></li>";
 			} else {
 				$catid = 0;
 				while ($result = icms::$xoopsDB->fetchArray($query)) {
@@ -53,4 +58,3 @@ if (isset($_POST['queryString'])) {
 } else {
 	echo 'There should be no direct access to this script!';
 }
-?>

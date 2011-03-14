@@ -80,7 +80,6 @@ if ($andor == 'exact') $label_andor = _SR_EXACT;
 $xoopsTpl->assign("label_search_type", _SR_TYPE . ':');
 $xoopsTpl->assign("search_type", $label_andor);
 
-$myts =& icms_core_Textsanitizer::getInstance();
 if ($action != 'showallbyuser') {
 	if ($andor != "exact") {
 		$ignored_queries = array(); // holds kewords that are shorter than allowed minimum length
@@ -117,9 +116,9 @@ if ($action != 'showallbyuser') {
 		foreach ($temp_queries as $q) {
 			$q = trim($q);
 			if (strlen($q) >= $icmsConfigSearch['keyword_min']) {
-				$queries[] = $myts->addSlashes($q);
+				$queries[] = icms_core_DataFilter::addSlashes($q);
 			} else {
-				$ignored_queries[] = $myts->addSlashes($q);
+				$ignored_queries[] = icms_core_DataFilter::addSlashes($q);
 			}
 		}
 
@@ -133,7 +132,7 @@ if ($action != 'showallbyuser') {
 			redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, icms_conv_nr2local($icmsConfigSearch['keyword_min'])));
 			exit();
 		}
-		$queries = array($myts->addSlashes($query));
+		$queries = array(icms_core_DataFilter::addSlashes($query));
 	}
 }
 $xoopsTpl->assign("label_search_results", _SR_SEARCHRESULTS);
@@ -189,7 +188,7 @@ switch ($action) {
 				} else {
 					(($count - $start) > $max_results_per_page)? $num_show_this_page = $max_results_per_page: $num_show_this_page = $count - $start;
 					for ($i = 0; $i < $num_show_this_page; $i++) {
-						$results[$i]['processed_image_alt_text'] = $myts->displayTarea($modname) . ": ";
+						$results[$i]['processed_image_alt_text'] = icms_core_DataFilter::checkVar($modname, 'text', 'output') . ": ";
 
 						if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
 							$results[$i]['processed_image_url'] = "modules/" . $moddir . "/" . $results[$i]['image'];
@@ -201,7 +200,7 @@ switch ($action) {
 							if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
 								$results[$i]['link'] = "modules/" . $moddir . "/" . $results[$i]['link'];
 							}
-							$results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
+							$results[$i]['processed_title'] = icms_core_DataFilter::checkVar($results[$i]['title'], 'text', 'output');
 						}
 						/*UnderDog Mark*/
 						if ($icmsConfigSearch['search_user_date']) {
@@ -258,7 +257,7 @@ switch ($action) {
 				? $num_show_this_page = $max_results_per_page
 				: $num_show_this_page = $count - $start;
 			for ($i = $start; $i < $start + $num_show_this_page; $i++) {
-				$results[$i]['processed_image_alt_text'] = $myts->displayTarea($modname) . ": ";
+				$results[$i]['processed_image_alt_text'] = icms_core_DataFilter::checkVar($modname, 'text', 'output') . ": ";
 				if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
 					$results[$i]['processed_image_url'] = "modules/" . $moddir . "/" . $results[$i]['image'];
 				} else {
@@ -267,7 +266,7 @@ switch ($action) {
 				if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
 					$results[$i]['link'] = "modules/" . $moddir . "/" . $results[$i]['link'];
 				}
-				$results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
+				$results[$i]['processed_title'] = icms_core_DataFilter::checkVar($results[$i]['title'], 'text', 'output');
 				if ($icmsConfigSearch['search_user_date']) {
 					$results[$i]['uid'] = @ (int) $results[$i]['uid'];
 					if (!empty($results[$i]['uid'])) {
@@ -311,4 +310,3 @@ $search_form = include 'include/searchform.php';
 $xoopsTpl->assign('search_form', $search_form);
 
 include ICMS_ROOT_PATH . "/footer.php";
-

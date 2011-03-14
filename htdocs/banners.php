@@ -50,7 +50,10 @@ function clientlogin() {
 function bannerstats() {
 	global $icmsConfig, $icmsConfigMetaFooter, $icmsConfigPlugins;
 	if ($_SESSION['banner_login'] == '' || $_SESSION['banner_pass'] == '') {redirect_header('banners.php', 2);}
-	$result = icms::$xoopsDB->query(sprintf("SELECT cid, name, passwd FROM %s WHERE login=%s", icms::$xoopsDB->prefix('bannerclient'), icms::$xoopsDB->quoteString($_SESSION['banner_login'])));
+	$result = icms::$xoopsDB->query(sprintf("SELECT cid, name, passwd FROM %s WHERE login=%s",
+											icms::$xoopsDB->prefix('bannerclient'),
+											icms::$xoopsDB->quoteString($_SESSION['banner_login'])
+										));
 	list($cid, $name, $passwd) = icms::$xoopsDB->fetchRow($result);
 	if ($_SESSION['banner_pass'] == $passwd) {
 		include 'header.php';
@@ -68,7 +71,9 @@ function bannerstats() {
 			. "<td>" . _BANNERS_FUNCTIONS . "</td></tr></thead>"
 			. "<tfoot><tr><td colspan='7'></td></tr></tfoot>";
 
-		$result = icms::$xoopsDB->query("select bid, imptotal, impmade, clicks, date from " . icms::$xoopsDB->prefix('banner') . " where cid='". (int) ($cid) . "'");
+		$result = icms::$xoopsDB->query("select bid, imptotal, impmade, clicks, date from 
+										" . icms::$xoopsDB->prefix('banner') . " where cid='". (int) ($cid) . "'"
+									);
 		$i = 0;
 		while (list($bid, $imptotal, $impmade, $clicks, $date) = icms::$xoopsDB->fetchRow($result)) {
 			if ($impmade == 0) {
@@ -96,12 +101,14 @@ function bannerstats() {
 		echo "</table><br /><br /><h4 class='content_title'>"
 			. _BANNERS_FOW_IN . htmlspecialchars( $icmsConfig['sitename'] ). "</h4><hr />";
 
-		$result = icms::$xoopsDB->query("select bid, imageurl, clickurl, htmlbanner, htmlcode from " . icms::$xoopsDB->prefix('banner') . " where cid='". (int) ($cid) . "'");
+		$result = icms::$xoopsDB->query("select bid, imageurl, clickurl, htmlbanner, htmlcode from 
+										" . icms::$xoopsDB->prefix('banner') . " where cid='". (int) ($cid) . "'"
+									);
 		while (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = icms::$xoopsDB->fetchRow($result)) {
 			$numrows = icms::$xoopsDB->getRowsNum($result);
 			if ($numrows>1) {echo "<br />";}
 			if (!empty($htmlbanner) && !empty($htmlcode)) {
-				echo $myts->displayTarea($htmlcode);
+				echo icms_core_DataFilter::checkVar($htmlcode, 'text', 'output');
 			} else {
 				if (strtolower(substr($imageurl, strrpos($imageurl, ".")))==".swf") {
 					echo '<object type="application/x-shockwave-flash" data="' . $imageurl . '" width="468" height="60">'
@@ -127,7 +134,8 @@ function bannerstats() {
 
 		/* Finished Banners */
 		echo "<br />";
-		if ($result = icms::$xoopsDB->query("select bid, impressions, clicks, datestart, dateend from " . icms::$xoopsDB->prefix('bannerfinish') . " where cid='". (int) ($cid) . "'")) {
+		if ($result = icms::$xoopsDB->query("select bid, impressions, clicks, datestart, dateend from
+			" . icms::$xoopsDB->prefix('bannerfinish') . " where cid='". (int) ($cid) . "'")) {
 			echo "<h4 class='content_title'>" . sprintf(_BANNERS_FINISHED, $name) 
 				. "</h4><hr /><table summary=''><caption>" 
 				. sprintf(_BANNERS_FINISHED, $name) . "</caption><thead><tr><td>ID</td><td>" 
@@ -170,13 +178,15 @@ function EmailStats($cid, $bid) {
 	if ($_SESSION['banner_login'] != "" && $_SESSION['banner_pass'] != "") {
 		$cid = (int) ($cid);
 		$bid = (int) ($bid);
-		if ($result2 = icms::$xoopsDB->query(sprintf("SELECT name, email, passwd FROM %s WHERE cid='%u' AND login=%s", icms::$xoopsDB->prefix('bannerclient'), $cid, icms::$xoopsDB->quoteString($_SESSION['banner_login'])))) {
+		if ($result2 = icms::$xoopsDB->query(sprintf("SELECT name, email, passwd FROM %s WHERE cid='%u' AND login=%s",
+			icms::$xoopsDB->prefix('bannerclient'), $cid, icms::$xoopsDB->quoteString($_SESSION['banner_login'])))) {
 			list($name, $email, $passwd) = icms::$xoopsDB->fetchRow($result2);
 			if ($_SESSION['banner_pass'] == $passwd) {
 				if ($email == "") {
 					redirect_header('banners.php', 3, sprintf(_BANNERS_MAIL_ERROR, $name));
 				} else {
-					if ($result = icms::$xoopsDB->query("SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM " . icms::$xoopsDB->prefix('banner') . " WHERE bid='" . $bid . "' AND cid='" . $cid . "'")) {
+					if ($result = icms::$xoopsDB->query("SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM
+						" . icms::$xoopsDB->prefix('banner') . " WHERE bid='" . $bid . "' AND cid='" . $cid . "'")) {
 						list($bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date) = icms::$xoopsDB->fetchRow($result);
 						if ($impmade == 0) {
 							$percent = 0;
@@ -191,7 +201,8 @@ function EmailStats($cid, $bid) {
 						}
 						$fecha = date(_LONGDATESTRING);
 						$subject = sprintf(_BANNERS_MAIL_SUBJECT, $icmsConfig['sitename']);
-						$message = sprintf(_BANNERS_MAIL_MESSAGE, $icmsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
+						$message = sprintf(_BANNERS_MAIL_MESSAGE, $icmsConfig['sitename'], $name, $bid, $imageurl,
+											$clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
 						$xoopsMailer = new icms_messaging_Handler();
 						$xoopsMailer->useMail();
 						$xoopsMailer->setToEmails($email);
@@ -221,12 +232,19 @@ function change_banner_url_by_client($cid, $bid, $url) {
 	if ($_SESSION['banner_login'] != "" && $_SESSION['banner_pass'] != "" && $url != "") {
 		$cid = (int) $cid;
 		$bid = (int) $bid;
-		$sql = sprintf("SELECT passwd FROM %s WHERE cid='%u' AND login=%s", icms::$xoopsDB->prefix('bannerclient'), $cid, icms::$xoopsDB->quoteString($_SESSION['banner_login']));
+		$sql = sprintf("SELECT passwd FROM %s WHERE cid='%u' AND login=%s",
+						icms::$xoopsDB->prefix('bannerclient'),
+						$cid,
+						icms::$xoopsDB->quoteString($_SESSION['banner_login'])
+					);
 		if ($result = icms::$xoopsDB->query($sql)) {
 			list($passwd) = icms::$xoopsDB->fetchRow($result);
 			if ($_SESSION['banner_pass'] == $passwd) {
-				$sql = sprintf("UPDATE %s SET clickurl=%s WHERE bid='%u' AND cid='%u'", icms::$xoopsDB->prefix('banner'), icms::$xoopsDB->quoteString($url), $bid, $cid);
-				if (icms::$xoopsDB->query($sql)) {redirect_header('banners.php?op=Ok', 3, 'URL has been changed.');}
+				$sql = sprintf("UPDATE %s SET clickurl=%s WHERE bid='%u' AND cid='%u'",
+								icms::$xoopsDB->prefix('banner'), icms::$xoopsDB->quoteString($url), $bid, $cid);
+				if (icms::$xoopsDB->query($sql)) {
+					redirect_header('banners.php?op=Ok', 3, 'URL has been changed.');
+				}
 			}
 		}
 	}
@@ -254,14 +272,15 @@ function clickbanner($bid) {
 }
 
 $op = '';
-if (!empty($_POST['op'])) $op = $_POST['op'];
-elseif (!empty($_GET['op'])) $op = $_GET['op'];
+if (!empty($_POST['op'])) $op = filter_input(INPUT_POST, 'op');
+elseif (!empty($_GET['op'])) $op = filter_input(INPUT_GET, 'op');
 
-$myts =& icms_core_Textsanitizer::getInstance();
 switch($op) {
 	case 'click':
 		$bid = 0;
-		if (!empty($_GET['bid'])) {$bid = (int) $_GET['bid'];}
+		if (!empty($_GET['bid'])) {
+			$bid = (int) $_GET['bid'];
+		}
 		clickbanner($bid);
 		break;
 
@@ -270,8 +289,8 @@ switch($op) {
 			if (!icms::$security->check(TRUE, FALSE, 'BANNER_LOGIN')) {
 				redirect_header('banners.php', 3, implode('<br />', icms::$security->getErrors()));
 			}
-			$_SESSION['banner_login'] = $myts->stripslashesGPC(trim($_POST['login']));
-			$_SESSION['banner_pass'] = $myts->stripslashesGPC(trim($_POST['pass']));
+			$_SESSION['banner_login'] = icms_core_DataFilter::stripslashesGPC(trim($_POST['login']));
+			$_SESSION['banner_pass'] = icms_core_DataFilter::stripslashesGPC(trim($_POST['pass']));
 		}
 		bannerstats();
 		break;
@@ -281,7 +300,7 @@ switch($op) {
 			redirect_header('banners.php', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$bid = $cid = 0;
-		if (!empty($_POST['url'])) {$url = $myts->stripslashesGPC(trim($_POST['url']));}
+		if (!empty($_POST['url'])) {$url = icms_core_DataFilter::stripslashesGPC(trim($_POST['url']));}
 		if (!empty($_POST['bid'])) {$bid = (int) $_POST['bid'];}
 		if (!empty($_POST['cid'])) {$cid = (int) $_POST['cid'];}
 		change_banner_url_by_client($cid, $bid, $url);

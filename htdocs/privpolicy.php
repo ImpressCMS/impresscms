@@ -14,19 +14,18 @@
 
 $xoopsOption['pagetype'] = 'privpolicy';
 include 'mainfile.php';
-if ($icmsConfigUser['priv_dpolicy'] == false) {redirect_header('index.php', 2, _US_NOPERMISS);}
+if ($icmsConfigUser['priv_dpolicy'] == false) {
+	redirect_header('index.php', 2, _US_NOPERMISS);
+}
 
 $xoopsOption['template_main'] = 'system_privpolicy.html';
 include ICMS_ROOT_PATH.'/header.php';
 
-$myts =& icms_core_Textsanitizer::getInstance();
-
 $xoopsTpl->assign('priv_poltype', 'page');
 $priv = str_replace('{X_SITEURL}', ICMS_URL.'/', $icmsConfigUser['priv_policy']);
 $priv = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $priv);
-$priv = $myts->displayTarea($priv, 1, 1, 1, 1, 1);
+$priv = icms_core_DataFilter::checkVar($priv, 'html', 'output');
 $xoopsTpl->assign('priv_policy', $priv);
 $xoopsTpl->assign('lang_privacy_policy', _PRV_PRIVACY_POLICY);
 
 include ICMS_ROOT_PATH.'/footer.php';
-?>

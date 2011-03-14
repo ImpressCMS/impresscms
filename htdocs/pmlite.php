@@ -36,7 +36,6 @@ if (empty($_GET['refresh'] ) && isset($_POST['op']) && $_POST['op'] != "submit")
 }
 xoops_header();
 if (icms::$user) {
-	$myts =& icms_core_Textsanitizer::getInstance();
 	if (isset($_POST['op']) && $_POST['op'] == "submit") {
 		if (!icms::$security->check()) {
 			$security_error = true;
@@ -82,13 +81,15 @@ if (icms::$user) {
 					$xoopsMailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
 					$xoopsMailer->assign('X_UNAME', $toUser->getVar('uname'));
 					$xoopsMailer->assign('X_FROMUNAME', icms::$user->getVar('uname'));
-					$xoopsMailer->assign('X_SUBJECT', $myts->stripSlashesGPC($_POST['subject']));
-					$xoopsMailer->assign('X_MESSAGE', $myts->stripSlashesGPC($_POST['message']));
+					$xoopsMailer->assign('X_SUBJECT', icms_core_DataFilter::stripSlashesGPC($_POST['subject']));
+					$xoopsMailer->assign('X_MESSAGE', icms_core_DataFilter::stripSlashesGPC($_POST['message']));
 					$xoopsMailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
 					$xoopsMailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $icmsConfig['sitename']));
 					$xoopsMailer->send();
 				}
-				echo "<br /><br /><div style='text-align:center;'><h4>"._PM_MESSAGEPOSTED."</h4><br /><a href=\"javascript:window.opener.location='".ICMS_URL."/viewpmsg.php';window.close();\">"._PM_CLICKHERE."</a><br /><br /><a href=\"javascript:window.close();\">"._PM_ORCLOSEWINDOW."</a></div>";
+				echo "<br /><br /><div style='text-align:center;'><h4>"._PM_MESSAGEPOSTED."</h4><br />
+					<a href=\"javascript:window.opener.location='".ICMS_URL."/viewpmsg.php';window.close();\">"._PM_CLICKHERE."</a><br /><br />
+					<a href=\"javascript:window.close();\">"._PM_ORCLOSEWINDOW."</a></div>";
 			}
 		}
 	} elseif ($reply == 1 || $send == 1 || $send2 == 1) {
@@ -163,5 +164,3 @@ if (icms::$user) {
 }
 
 xoops_footer();
-
-?>

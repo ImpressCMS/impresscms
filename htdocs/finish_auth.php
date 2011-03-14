@@ -21,7 +21,6 @@ $xoopsOption['pagetype'] = 'user';
 include_once 'mainfile.php';
 
 $redirect_url = $_SESSION['frompage'];
-$myts = icms_core_Textsanitizer :: getInstance();
 $member_handler = icms::handler('icms_member');
 
 /** Including the language files for the authentication pages */
@@ -88,9 +87,9 @@ switch ($xoopsAuth->step) {
 			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
 		}
 
-		$name = addslashes($myts->stripSlashesGPC(utf8_decode($sreg['fullname'])));
+		$name = addslashes(icms_core_DataFilter::stripSlashesGPC(utf8_decode($sreg['fullname'])));
 		//$tz = quote_smart($tzoffset[$sreg['timezone']]);
-		$country = addslashes($myts->stripSlashesGPC(utf8_decode($sreg['country'])));
+		$country = addslashes(icms_core_DataFilter::stripSlashesGPC(utf8_decode($sreg['country'])));
 
 		/**
 		 * @todo use proper core class, manage activation_type and send notifications
@@ -156,8 +155,8 @@ switch ($xoopsAuth->step) {
 		/** Including header.php to start page rendering */
 		include_once ICMS_ROOT_PATH . '/header.php' ;
 
-		$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname']));
-		$pass4sql = addslashes($myts->stripSlashesGPC($_POST['pass']));
+		$uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($_POST['uname']));
+		$pass4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($_POST['pass']));
 
 		$thisUser = $member_handler->loginUser($uname4sql, $pass4sql);
 

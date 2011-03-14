@@ -44,5 +44,3 @@ $xoopsTpl->assign('lang_search_our_site', _ERR_SEARCH_OUR_SITE);
 
 /** require footer.php to complete page rendering */
 require_once ICMS_ROOT_PATH.'/footer.php';
-
-?>

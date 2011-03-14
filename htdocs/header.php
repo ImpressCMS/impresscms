@@ -15,7 +15,9 @@ global $xoopsOption, $icmsConfig, $icmsModule;
 $xoopsOption['theme_use_smarty'] = 1;
 
 if (@$xoopsOption['template_main']) {
-	if (FALSE === strpos($xoopsOption['template_main'], ':')) {$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];}
+	if (FALSE === strpos($xoopsOption['template_main'], ':')) {
+		$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];
+	}
 }
 $xoopsThemeFactory = new icms_view_theme_Factory();
 $xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
@@ -26,7 +28,8 @@ $xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
  */
 $icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
 $xoopsTpl = $icmsTpl =& $xoTheme->template;
-if ($icmsConfigMetaFooter['use_google_analytics'] === TRUE && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
+if ($icmsConfigMetaFooter['use_google_analytics'] === TRUE
+	&& isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
 	/* Legacy GA urchin code */
 	//$xoTheme->addScript('http://www.google-analytics.com/urchin.js',array('type' => 'text/javascript'),'_uacct = "UA-' . $icmsConfigMetaFooter['google_analytics'] . '";urchinTracker();');
 	$scheme = parse_url(ICMS_URL, PHP_URL_SCHEME);
@@ -79,12 +82,14 @@ if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/jquery.js', array('type' => 'text/javascript'));
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js', array('type' => 'text/javascript'));
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css', array('media' => 'screen'));
-$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/jgrowl' . (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'') . '.css', array('media' => 'screen'));
+$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/jgrowl'
+	. (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'') . '.css', array('media' => 'screen'));
 if (! empty( $_SESSION['redirect_message'])) {
 	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/jgrowl.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript('', array('type' => 'text/javascript'), '
 	if (!window.console || !console.firebug) {
-		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd",
+					"time", "timeEnd", "count", "trace", "profile", "profileEnd"];
 		window.console = {};
 
 		for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
@@ -115,7 +120,10 @@ if (@is_object($xoTheme->plugins['icms_view_PageBuilder'])) {
 
 	$xoopsTpl->assign('xoops_showlblock', !empty($aggreg->blocks['canvas_left']));
 	$xoopsTpl->assign('xoops_showrblock', !empty($aggreg->blocks['canvas_right']));
-	$xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft']) || !empty($aggreg->blocks['page_topright']));
+	$xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter'])
+												|| !empty($aggreg->blocks['page_topleft'])
+												|| !empty($aggreg->blocks['page_topright'])
+											);
 }
 
 if ($icmsModule )

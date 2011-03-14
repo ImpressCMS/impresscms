@@ -14,7 +14,6 @@
 $xoopsOption['pagetype'] = 'user';
 
 include 'mainfile.php';
-$myts =& icms_core_Textsanitizer::getInstance();
 
 // If not a user and invite needs one, redirect
 if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register'] == 0 && !is_object(icms::$user)) {
@@ -23,7 +22,7 @@ if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register']
 }
 
 $op = !isset($_POST['op']) ? 'invite' : $_POST['op'];
-$email = isset($_POST['email']) ? trim($myts->stripSlashesGPC($_POST['email'])) : '';
+$email = isset($_POST['email']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])) : '';
 
 switch ($op) {
 	case 'finish':
@@ -42,14 +41,15 @@ switch ($op) {
 		}
 		if (empty($stop)) {
 			$invite_code = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
-			$myts =& icms_core_Textsanitizer::getInstance();
-			$sql = sprintf('INSERT INTO ' . icms::$xoopsDB->prefix('invites') . ' (invite_code, from_id, invite_to, invite_date, extra_info) VALUES (%s, %d, %s, %d, %s)',
-				icms::$xoopsDB->quoteString(addslashes($invite_code)),
-				is_object(icms::$user)?icms::$user->getVar('uid'):0,
-				icms::$xoopsDB->quoteString(addslashes($email)),
-				time(),
-				icms::$xoopsDB->quoteString(addslashes(serialize(array())))
-			);
+			$sql = sprintf('INSERT INTO ' . icms::$xoopsDB->prefix('invites') . '
+							(invite_code, from_id, invite_to, invite_date, extra_info) VALUES
+							(%s, %d, %s, %d, %s)',
+							icms::$xoopsDB->quoteString(addslashes($invite_code)),
+							is_object(icms::$user) ? icms::$user->getVar('uid') : 0,
+							icms::$xoopsDB->quoteString(addslashes($email)),
+							time(),
+							icms::$xoopsDB->quoteString(addslashes(serialize(array())))
+						);
 			icms::$xoopsDB->query($sql);
 			// if query executed successful
 			if (icms::$xoopsDB->getAffectedRows() == 1) {
