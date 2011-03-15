@@ -30,6 +30,7 @@ class icms_core_Logger {
 	public $logstart = array();
 	public $logend = array();
 	public $errors = array();
+	public $deprecated = array();
 
 	public $usePopup = false;
 	public $activated = true;
@@ -162,6 +163,11 @@ class icms_core_Logger {
 		}
 	}
 
+	public function addDeprecated($msg) {
+		if ($this->activated) {
+			$this->deprecated[] = $msg;
+		}
+	}
 	/**
 	 * Error handling callback (called by the zend engine)
 	 * @param  string  $errno

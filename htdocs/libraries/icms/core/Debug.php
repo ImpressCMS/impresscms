@@ -63,8 +63,12 @@ class icms_core_Debug {
 		$trace = debug_backtrace();
 		array_shift($trace);
 		$level = $msg = $message = '';
-		$pre = _CORE_DEPRECATED;
-		if ($trace[0]['function'] != 'include' && $trace[0]['function'] != 'include_once' && $trace[0]['function'] != 'require' && $trace[0]['function'] != 'require_once') {
+		$pre =  '<strong><em>(' . _CORE_DEPRECATED . ')</em></strong> - ';
+		if ($trace[0]['function'] != 'include' 
+			&& $trace[0]['function'] != 'include_once' 
+			&& $trace[0]['function'] != 'require' 
+			&& $trace[0]['function'] != 'require_once'
+		) {
 			$pre .= $trace[0]['function'] . ': ';
 		}
 
@@ -79,11 +83,11 @@ class icms_core_Debug {
 			$msg = _CORE_DEPRECATED_CALLEDBY;
 		}
 
-		trigger_error(
-			$pre . ( $replacement ? sprintf(_CORE_DEPRECATED_REPLACEMENT, $replacement) : '' )
-			. ( $extra ? sprintf(_CORE_DEPRECATED_EXTRA, $extra) : '' )
+		$logger = icms_core_Logger::instance();
+		$logger->addDeprecated(
+			$pre . ($replacement ? ' <strong><em>' . sprintf(_CORE_DEPRECATED_REPLACEMENT, $replacement) . '</em></strong>.' : '')
+			. ($extra ? ' <strong><em>' . $extra . '</em></strong>' : '')
 			. _CORE_DEPRECATED_CALLSTACK . $message
-		, E_USER_NOTICE
 		);
  	}
  }

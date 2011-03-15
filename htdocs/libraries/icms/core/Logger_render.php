@@ -60,6 +60,8 @@ if (empty( $mode )) {
 	$ret .= "<a href='javascript:xoSetLoggerView(\"extra\")'>" . _EXTRA . " (" . icms_conv_nr2local($count) . ")</a>\n";
 	$count = count( $this->logstart );
 	$ret .= "<a href='javascript:xoSetLoggerView(\"timers\")'>" . _TIMERS . " (" . icms_conv_nr2local($count) . ")</a>\n";
+	$count = count($this->deprecated);
+	$ret .= "<a href='javascript:xoSetLoggerView(\"deprecated\")'>" . _CORE_DEPRECATED . " (" . icms_conv_nr2local($count) . ")</a>\n";
 	$ret .= "</div>\n";
 }
 
@@ -128,6 +130,16 @@ if (empty($mode) || $mode == 'timers') {
 	$ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">' . _TIMERS . '</th></tr>';
 	foreach ( $this->logstart as $k => $v) {
 		$ret .= '<tr><td class="' . $class.'"><strong>' . htmlspecialchars($k) . '</strong> ' . sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>') . '</td></tr>';
+		$class = ($class == 'odd') ? 'even' : 'odd';
+	}
+	$ret .= '</table>';
+}
+
+if (empty($mode) || $mode == 'deprecated') {
+	$class = 'even';
+	$ret .= '<table id="xo-logger-deprecated" class="outer"><tr><th colspan="2">' . _CORE_DEPRECATED . '</th></tr>';
+	foreach ( $this->deprecated as $dep) {
+		$ret .= '<tr><td class="' . $class.'">' . $dep . '</td></tr>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
 	$ret .= '</table>';
