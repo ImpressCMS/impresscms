@@ -584,6 +584,14 @@ class icms_core_DataFilter {
 	}
 
 	/**
+	 *
+	 * @param $message
+	 */
+	static public function getSmileys($all = false) {
+		return self::priv_getSmileys($all);
+	}
+
+	/**
 	 * Replaces banned words in a string with their replacements
 	 *
 	 * @param   string $text
