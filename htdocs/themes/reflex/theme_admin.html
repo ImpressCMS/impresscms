@@ -68,13 +68,15 @@ var helpfile = "<{$icms_url}>/help.html";
 <div id="outer_header">
 	<div id="header">
 		<div id="logo">
-		 <{if  $adm_left_logo_url != ''}>
+		<{if $adm_left_logo == ''}>&nbsp;<{else}>
+		    <{if  $adm_left_logo_url != ''}>
 			    <a href="<{$adm_left_logo_url}>" title="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>">
 			<{/if}>
 			<img src="<{$image_url}>img/logo.jpg" alt="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>"/>
 		    <{if  $adm_left_logo_url != ''}>
 			    </a>
 			<{/if}>
+		<{/if}>
 		</div>
 		<div id="quicksearch">
 		 <form id="searchform">
