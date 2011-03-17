@@ -208,6 +208,7 @@ class IcmsLists {
 	 * @return  array	 $subjects   list of subject files in the directory
 	 */
 	static public function getSubjectsList($sub_dir="") {
+		icms_core_Debug::setDeprecated('icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/subject/" , array("gif", "jpg", "png"))', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$subjects = array();
 		if ($sub_dir != "") {
 			$subjects = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/subject/" . $sub_dir, $sub_dir . "/", array('gif', 'jpg', 'png'));
@@ -219,10 +220,12 @@ class IcmsLists {
 
 	/**
 	 * Gets list of language folders inside default language directory - can't find anywhere in the core
-	 *
+	 * @deprecated	Use icms_core_Filesystem::getDirList, instead
+	 * @todo		Remove in 1.4
 	 * @return  array	 $lang_list   list of language files in the directory
 	 */
 	static public function getLangList() {
+		icms_core_Debug::setDeprecated('icms_core_Filesystem::getDirList{ICMS_ROOT_PATH . "/language/")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/");
 	}
 
