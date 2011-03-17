@@ -25,7 +25,6 @@ if (!defined('ICMS_ROOT_PATH')) {
  */
 function Generate_PDF ($content, $doc_title, $doc_keywords) {
 	global $icmsConfig;
-	$myts =& icms_core_Textsanitizer::getInstance();
 	require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 	icms_loadLanguageFile('core', 'pdf');
 	$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);
@@ -37,7 +36,7 @@ function Generate_PDF ($content, $doc_title, $doc_keywords) {
 	$pdf->SetKeywords($doc_keywords);
 	$sitename = $icmsConfig['sitename'];
 	$siteslogan = $icmsConfig['slogan'];
-	$pdfheader = $myts->undoHtmlSpecialChars($sitename.' - '.$siteslogan);
+	$pdfheader = icms_core_DataFilter::undoHtmlSpecialChars($sitename.' - '.$siteslogan);
 	$pdf->SetHeaderData("logo.gif", PDF_HEADER_LOGO_WIDTH, $pdfheader, ICMS_URL);
 
 	//set margins
@@ -62,5 +61,3 @@ function Generate_PDF ($content, $doc_title, $doc_keywords) {
 	$pdf->writeHTML($content, true, 0);
 	return $pdf->Output();
 }
-
-?>

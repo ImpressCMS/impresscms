@@ -64,12 +64,10 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
  */
 function xoopsSmilies($textarea_id)
 {
-	$myts =& icms_core_Textsanitizer::getInstance();
-	$smiles =& $myts->getSmileys();
+	$smiles =& icms_core_DataFilter::getSmileys();
 	if (empty($smileys)) {
-		$db =& icms_db_Factory::instance();
-		if ($result = $db->query("SELECT * FROM ".$db->prefix('smiles')." WHERE display='1'")) {
-			while ($smiles = $db->fetchArray($result)) {
+		if ($result = icms::$xoopsDB->query("SELECT * FROM ".$db->prefix('smiles')." WHERE display='1'")) {
+			while ($smiles = icms::$xoopsDB->fetchArray($result)) {
 				//hack smilies move for the smilies !!
 				echo "<img src='".ICMS_UPLOAD_URL."/".htmlspecialchars($smiles['smile_url'])."' border='0' onmouseover='style.cursor=\"hand\"' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles['code']." \");' />";
 				//fin du hack
@@ -80,7 +78,7 @@ function xoopsSmilies($textarea_id)
 		for ($i = 0; $i < $count; $i++) {
 			if ($smiles[$i]['display'] == 1) {
 				//hack bis
-				echo "<img src='".ICMS_UPLOAD_URL."/".$myts->htmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
+				echo "<img src='".ICMS_UPLOAD_URL."/".icms_core_DataFilter::htmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
 				//fin du hack
 			}
 		}
@@ -88,4 +86,3 @@ function xoopsSmilies($textarea_id)
 	//hack for more
 	echo "&nbsp;[<a href='#moresmiley' onmouseover='style.cursor=\"hand\"' alt='' onclick='openWithSelfMain(\"".ICMS_URL."/misc.php?action=showpopups&amp;type=smilies&amp;target=".$textarea_id."\",\"smilies\",300,475);'>"._MORE."</a>]";
 }  //fin du hack
-?>

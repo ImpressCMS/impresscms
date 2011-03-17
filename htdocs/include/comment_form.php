@@ -101,13 +101,12 @@ $cform->addElement(new icms_form_elements_Hidden('com_mode', $com_mode));
 if ('system' != $icmsModule->getVar('dirname')) {
 	$comment_config = $icmsModule->getInfo('comments');
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
-		$myts =& icms_core_Textsanitizer::getInstance();
 		foreach ($comment_config['extraParams'] as $extra_param) {
 			// This routine is included from forms accessed via both GET and POST
 			if (isset($_POST[$extra_param])) {
-				$hidden_value = $myts->stripSlashesGPC($_POST[$extra_param]);
+				$hidden_value = icms_core_DataFilter::stripSlashesGPC($_POST[$extra_param]);
 			} elseif (isset($_GET[$extra_param])) {
-				$hidden_value = $myts->stripSlashesGPC($_GET[$extra_param]);
+				$hidden_value = icms_core_DataFilter::stripSlashesGPC($_GET[$extra_param]);
 			} else {
 				$hidden_value = '';
 			}

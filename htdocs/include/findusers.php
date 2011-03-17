@@ -179,9 +179,6 @@ if (empty($_POST["user_submit"])) {
 	$form->display();
 
 } else {
-
-	$myts =& icms_core_Textsanitizer::getInstance();
-
 	$limit = empty($_POST['limit']) ? 50 : (int) ( $_POST['limit'] );
 	$start = (int) ( @$_POST['start'] );
 
@@ -190,7 +187,7 @@ if (empty($_POST["user_submit"])) {
 		foreach (array_keys($items_match) as $var) {
 			if (!empty($_POST[$var])) {
 				$match = (!empty($_POST["{$var}_match"])) ? (int) ($_POST["{$var}_match"]) : XOOPS_MATCH_START;
-				$value = str_replace("_", "\\\_", $myts->addSlashes(trim($_POST[$var])));
+				$value = str_replace("_", "\\\_", icms_core_DataFilter::addSlashes(trim($_POST[$var])));
 				switch ($match) {
 					case XOOPS_MATCH_START:
 						$criteria->add(new icms_db_criteria_Item($var, $value.'%', 'LIKE'));
@@ -214,14 +211,14 @@ if (empty($_POST["user_submit"])) {
 		}
 
 		if (!empty($_POST['user_from'])) {
-			$criteria->add(new icms_db_criteria_Item('user_from', '%'.$myts->addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_from', '%'.icms_core_DataFilter::addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
 		}
 
 		if (!empty($_POST['user_intrest'])) {
-			$criteria->add(new icms_db_criteria_Item('user_intrest', '%'.$myts->addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_intrest', '%'.icms_core_DataFilter::addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
 		}
 		if (!empty($_POST['user_occ'])) {
-			$criteria->add(new icms_db_criteria_Item('user_occ', '%'.$myts->addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_occ', '%'.icms_core_DataFilter::addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
 		}
 
 		foreach (array("last_login", "user_regdate") as $var) {
@@ -373,7 +370,7 @@ if (empty($_POST["user_submit"])) {
 				// regenerate token value
 				$hiddenform .= icms::$security->getTokenHTML()."\n";
 			} else {
-				$hiddenform .= "<input type='hidden' name='".htmlSpecialChars($k, ENT_QUOTES)."' value='".htmlSpecialChars($myts->stripSlashesGPC($v), ENT_QUOTES)."' />\n";
+				$hiddenform .= "<input type='hidden' name='".htmlSpecialChars($k, ENT_QUOTES)."' value='".htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v), ENT_QUOTES)."' />\n";
 			}
 		}
 
@@ -459,7 +456,7 @@ if (empty($_POST["user_submit"])) {
 				// regenerate token value
 				$hiddenform .= icms::$security->getTokenHTML()."\n";
 			} else {
-				$hiddenform .= "<input type='hidden' name='".htmlSpecialChars($k, ENT_QUOTES)."' value='".htmlSpecialChars($myts->stripSlashesGPC($v), ENT_QUOTES)."' />\n";
+				$hiddenform .= "<input type='hidden' name='".htmlSpecialChars($k, ENT_QUOTES)."' value='".htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v), ENT_QUOTES)."' />\n";
 			}
 		}
 
@@ -527,4 +524,3 @@ if (empty($_POST["user_submit"])) {
 }
 
 xoops_footer();
-?>

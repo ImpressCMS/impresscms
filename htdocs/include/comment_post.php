@@ -93,9 +93,8 @@ switch ($op) {
 		include ICMS_INCLUDE_PATH . '/comment_delete.php';
 		break;
 	case "preview":
-		$myts =& icms_core_Textsanitizer::getInstance();
 		$doimage = 1;
-		$com_title = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_title']));
+		$com_title = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_title']));
 		if ($dohtml != 0) {
 			if (is_object(icms::$user)) {
 				if (!icms::$user->isAdmin($com_modid)) {
@@ -108,9 +107,9 @@ switch ($op) {
 				$dohtml = 0;
 			}
 		}
-		$p_comment =& $myts->previewTarea($_POST['com_text'], $dohtml, $dosmiley, $doxcode, $doimage, $dobr);
+		$p_comment =& icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input');
 		$noname = isset($noname) ? (int) $noname : 0;
-		$com_text = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_text']));
+		$com_text = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_text']));
 		if ($icmsModule->getVar('dirname') != 'system') {
 			include ICMS_ROOT_PATH . '/header.php';
 			themecenterposts($com_title, $p_comment);

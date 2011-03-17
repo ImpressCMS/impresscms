@@ -30,8 +30,7 @@ if ($com_itemid > 0) {
 		if (isset($com_replytext)) {
 			themecenterposts($com_replytitle, $com_replytext);
 		}
-		$myts =& icms_core_Textsanitizer::getInstance();
-		$com_title = $myts->htmlSpecialChars($com_replytitle);
+		$com_title = icms_core_DataFilter::htmlSpecialChars($com_replytitle);
 		if (!preg_match("/^(Re|"._CM_RE."):/i", $com_title)) {
 			$com_title = _CM_RE.": ".icms_core_DataFilter::icms_substr($com_title, 0, 56);
 		}
