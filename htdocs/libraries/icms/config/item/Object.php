@@ -80,12 +80,11 @@ class icms_config_Item_Object extends icms_core_Object {
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
 		if ($this->getVar('conf_formtype') == 'textarea') {
-			$myts =& icms_core_Textsanitizer::getInstance();
-			$value = $myts->displayTarea($value, 1);
+			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'password') {
-			$value = filter_var($value, FILTER_SANITIZE_URL);
+			$value = icms_core_DataFilter::checkVar($value, 'str');
 		} else {
-			$value = StopXSS($value);
+			$value = icms_core_DataFilter::checkVar($value, 'str');
 		}
 		switch($this->getVar('conf_valuetype')) {
 			case 'array':
