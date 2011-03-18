@@ -234,6 +234,7 @@ class icms_Autoloader {
 			"icmspersistablecolumn"			=> "/kernel/icmspersistabletable.php",
 			"icmspersistabletable"			=> "/kernel/icmspersistabletable.php",
 			"errorhandler"					=> "/class/module.errorhandler.php",
+			"icmsmetagen"					=> "/kernel/icmsmetagen.php",
 		);
 		if (in_array($class, array_keys($legacyClassPath))) {
 			include_once ICMS_ROOT_PATH . $legacyClassPath[$class];
