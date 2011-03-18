@@ -67,12 +67,12 @@ if (empty( $mode )) {
 
 if (empty($mode) || $mode == 'errors') {
 	$types = array(
-	E_USER_NOTICE => _NOTICE,
-	E_USER_WARNING => _WARNING,
-	E_USER_ERROR => _ERROR,
-	E_NOTICE => _NOTICE,
-	E_WARNING => _WARNING,
-	E_STRICT => _STRICT,
+		E_USER_NOTICE => _NOTICE,
+		E_USER_WARNING => _WARNING,
+		E_USER_ERROR => _ERROR,
+		E_NOTICE => _NOTICE,
+		E_WARNING => _WARNING,
+		E_STRICT => _STRICT,
 	);
 	$class = 'even';
 	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>' . _ERRORS . '</th></tr>';
@@ -86,19 +86,20 @@ if (empty($mode) || $mode == 'errors') {
 	$ret .= "\n</table>\n";
 }
 
-if (empty($mode) || $mode == 'queries') {
+if (empty($mode) || $mode == 'queries') {	
 	$class = 'even';
 	$ret .= '<table id="xo-logger-queries" class="outer"><tr><th>' . _QUERIES . '</th></tr>';
+	$sqlmessages ='';
 	foreach ($this->queries as $q) {
 		if (isset($q['error'])) {
-			$ret .= '<tr class="' . $class . '"><td><span style="color:#ff0000;">' . htmlentities($q['sql']) . '<br /><strong>' . _ERR_NR . '</strong> ' . $q['errno'] . '<br /><strong>' . _ERR_MSG . '</strong> ' . $q['error'] . '</span></td></tr>';
+			$sqlmessages .= '<tr class="' . $class . '"><td><span style="color:#ff0000;">' . htmlentities($q['sql']) . '<br /><strong>' . _ERR_NR . '</strong> ' . $q['errno'] . '<br /><strong>' . _ERR_MSG . '</strong> ' . $q['error'] . '</span></td></tr>';
 		} else {
-			$ret .= '<tr class="' . $class . '"><td>' . htmlentities($q['sql']) . '</td></tr>';
+			$sqlmessages .= '<tr class="' . $class . '"><td>' . htmlentities($q['sql']) . '</td></tr>';
 		}
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
+	$ret .= str_replace(XOOPS_DB_PREFIX . '_', '', $sqlmessages);
 	$ret .= '<tr class="foot"><td>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->queries)) . '</span> ' . _QUERIES . '</td></tr></table>';
-	$ret = str_replace(XOOPS_DB_PREFIX . '_', '', $ret);
 }
 
 if (empty($mode) || $mode == 'blocks') {
