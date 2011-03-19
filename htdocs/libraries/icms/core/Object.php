@@ -287,16 +287,14 @@ class icms_core_Object {
 					case 'show':
 					case 'e':
 					case 'edit':
-						$ts =& icms_core_Textsanitizer::getInstance();
-						return $ts->htmlSpecialChars($ret);
+						return icms_core_DataFilter::htmlSpecialchars($ret);
 						break 1;
 
 					case 'p':
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ts =& icms_core_Textsanitizer::getInstance();
-						return $ts->htmlSpecialChars($ts->stripSlashesGPC($ret));
+						return icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::stripSlashesGPC($ret));
 						break 1;
 
 					case 'n':
@@ -337,8 +335,7 @@ class icms_core_Object {
 
 					case 'f':
 					case 'formpreview':
-						$ts =& icms_core_Textsanitizer::getInstance();
-						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -365,14 +362,12 @@ class icms_core_Object {
 
 					case 'p':
 					case 'preview':
-						$ts =& icms_core_Textsanitizer::getInstance();
-						return $ts->stripSlashesGPC($ret);
+						return icms_core_DataFilter::stripSlashesGPC($ret);
 						break 1;
 
 					case 'f':
 					case 'formpreview':
-						$ts =& icms_core_Textsanitizer::getInstance();
-						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -425,7 +420,6 @@ class icms_core_Object {
 	 * @access public
 	 */
 	public function cleanVars() {
-		$ts =& icms_core_Textsanitizer::getInstance();
 		$existing_errors = $this->getErrors();
 		$this->_errors = array();
 		foreach ($this->vars as $k => $v) {
@@ -444,9 +438,9 @@ class icms_core_Object {
 							continue;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+							$cleanv = icms_core_DataFilter::stripSlashesGPC(icms_core_DataFilter::censorString($cleanv));
 						} else {
-							$cleanv = $ts->censorString($cleanv);
+							$cleanv = icms_core_DataFilter::censorString($cleanv);
 						}
 						break;
 
@@ -456,15 +450,15 @@ class icms_core_Object {
 							continue;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+							$cleanv = icms_core_DataFilter::stripSlashesGPC(icms_core_DataFilter::censorString($cleanv));
 						} else {
-							$cleanv = $ts->censorString($cleanv);
+							$cleanv = icms_core_DataFilter::censorString($cleanv);
 						}
 						break;
 
 					case XOBJ_DTYPE_SOURCE:
 						if (!$v['not_gpc']) {
-							$cleanv = $ts->stripSlashesGPC($cleanv);
+							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
 						} else {
 							$cleanv = $cleanv;
 						}
@@ -493,7 +487,7 @@ class icms_core_Object {
 							continue;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = $ts->stripSlashesGPC($cleanv);
+							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
 						}
 						break;
 
@@ -506,7 +500,7 @@ class icms_core_Object {
 							$cleanv = 'http://' . $cleanv;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv =& $ts->stripSlashesGPC($cleanv);
+							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
 						}
 						break;
 

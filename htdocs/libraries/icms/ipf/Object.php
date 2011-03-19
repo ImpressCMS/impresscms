@@ -792,8 +792,7 @@ class icms_ipf_Object extends icms_core_Object {
 					case 's':
 					case 'show':
 						// ML Hack by marcan
-						$ts =& icms_core_Textsanitizer::getInstance();
-						$ret = $ts->htmlSpecialChars($ret);
+						$ret = icms_core_DataFilter::htmlSpecialChars($ret);
 
 						if (method_exists($myts, 'formatForML')) {
 							return $ts->formatForML($ret);
@@ -805,8 +804,6 @@ class icms_ipf_Object extends icms_core_Object {
 						// End of ML Hack by marcan
 
 					case 'clean':
-						$ts =& icms_core_Textsanitizer::getInstance();
-
 						$ret = icms_html2text($ret);
 						$ret = icms_purifyText($ret);
 
@@ -816,16 +813,14 @@ class icms_ipf_Object extends icms_core_Object {
 
 					case 'e':
 					case 'edit':
-						$ts =& icms_core_Textsanitizer::getInstance();
-						return $ts->htmlSpecialChars($ret);
+						return icms_core_DataFilter::htmlSpecialChars($ret);
 						break 1;
 
 					case 'p':
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ts =& icms_core_Textsanitizer::getInstance();
-						return $ts->htmlSpecialChars($ts->stripSlashesGPC($ret));
+						return icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($ret));
 						break 1;
 
 					case 'n':
@@ -925,25 +920,11 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'show':
 						$ts = icms_core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-
 						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
-
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-
-						/**
-						 * Hack by marcan <INBOX> for SCSPRO
-						 * Setting mastop as the main editor
-						 */
-						if (defined('XOOPS_EDITOR_IS_HTML')) {
-							$br = false;
-						}
-						/**
-						 * Hack by marcan <INBOX> for SCSPRO
-						 * Setting mastop as the main editor
-						 */
-
+						if (defined('XOOPS_EDITOR_IS_HTML')) $br = false;
 						return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
 						break 1;
 
@@ -965,8 +946,7 @@ class icms_ipf_Object extends icms_core_Object {
 
 					case 'f':
 					case 'formpreview':
-						$ts = icms_core_Textsanitizer::getInstance();
-						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -997,14 +977,12 @@ class icms_ipf_Object extends icms_core_Object {
 
 					case 'p':
 					case 'preview':
-						$ts = icms_core_Textsanitizer::getInstance();
-						return $ts->stripSlashesGPC($ret);
+						return icms_core_DataFilter::stripSlashesGPC($ret);
 						break 1;
 
 					case 'f':
 					case 'formpreview':
-						$ts = icms_core_Textsanitizer::getInstance();
-						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
