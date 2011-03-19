@@ -122,20 +122,19 @@ class icms_member_user_Object extends icms_core_Object {
 			$member_handler = icms::handler('icms_member');
 			$user =& $member_handler->getUser($userid);
 			if (is_object($user)) {
-				$ts =& icms_core_Textsanitizer::getInstance();
 				if ($usereal) {
 					$name = $user->getVar('name');
 					if ($name != '') {
-						return $ts->htmlSpecialChars($name);
+						return icms_core_DataFilter::htmlSpecialChars($name);
 					} else {
-						return $ts->htmlSpecialChars($user->getVar('uname'));
+						return icms_core_DataFilter::htmlSpecialChars($user->getVar('uname'));
 					}
 				} else {
-					return $ts->htmlSpecialChars($user->getVar('uname'));
+					return icms_core_DataFilter::htmlSpecialChars($user->getVar('uname'));
 				}
 			}
 		}
-		return $GLOBALS['xoopsConfig']['anonymous'];
+		return $GLOBALS['icmsConfig']['anonymous'];
 	}
 
 	/**
@@ -169,9 +168,7 @@ class icms_member_user_Object extends icms_core_Object {
 	public function sendWelcomeMessage() {
 		global $icmsConfig, $icmsConfigUser;
 
-		$myts =& icms_core_Textsanitizer::getInstance();
-
-		if (!$icmsConfigUser['welcome_msg']) {return true;}
+		if (!$icmsConfigUser['welcome_msg']) return true;
 
 		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
@@ -182,7 +179,7 @@ class icms_member_user_Object extends icms_core_Object {
 		$xoopsMailer->setToEmails($user_email);
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, $myts->stripSlashesGPC($icmsConfig['sitename'])));
+		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, icms_core_DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
 		if (!$xoopsMailer->send(true)) {
 			$this->setErrors(_US_WELCOMEMSGFAILED);
 			return false;

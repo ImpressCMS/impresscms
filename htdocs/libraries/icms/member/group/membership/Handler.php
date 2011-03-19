@@ -51,15 +51,15 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 		$id = (int) $id;
 		$mship = false;
 		if ($id > 0) {
-			$sql = "SELECT * FROM " . $this->db->prefix('groups_users_link')
+			$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('groups_users_link')
 				. " WHERE linkid='" . $id . "'";
-			if (!$result = $this->db->query($sql)) {
+			if (!$result = icms::$xoopsDB->query($sql)) {
 				return $mship;
 			}
-			$numrows = $this->db->getRowsNum($result);
+			$numrows = icms::$xoopsDB->getRowsNum($result);
 			if ($numrows == 1) {
 				$mship = new icms_member_group_membership_Object();
-				$mship->assignVars($this->db->fetchArray($result));
+				$mship->assignVars(icms::$xoopsDB->fetchArray($result));
 			}
 		}
 		return $mship;
@@ -87,10 +87,10 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 			${$k} = $v;
 		}
 		if ($mship->isNew()) {
-			$linkid = $this->db->genId('groups_users_link_linkid_seq');
+			$linkid = icms::$xoopsDB->genId('groups_users_link_linkid_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (linkid, groupid, uid) VALUES ('%u', '%u', '%u')",
-				$this->db->prefix('groups_users_link'),
+				icms::$xoopsDB->prefix('groups_users_link'),
 				(int) $linkid,
 				(int) $groupid,
 				(int) $uid
@@ -98,17 +98,17 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 		} else {
 			$sql = sprintf(
 				"UPDATE %s SET groupid = '%u', uid = '%u' WHERE linkid = '%u'",
-				$this->db->prefix('groups_users_link'),
+				icms::$xoopsDB->prefix('groups_users_link'),
 				(int) $groupid,
 				(int) $uid,
 				(int) $linkid
 			);
 		}
-		if (!$result = $this->db->query($sql)) {
+		if (!$result = icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		if (empty($linkid)) {
-			$linkid = $this->db->getInsertId();
+			$linkid = icms::$xoopsDB->getInsertId();
 		}
 		$mship->assignVar('linkid', $linkid);
 		return true;
@@ -129,10 +129,10 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 
 		$sql = sprintf(
 			"DELETE FROM %s WHERE linkid = '%u'",
-			$this->db->prefix('groups_users_link'),
+			icms::$xoopsDB->prefix('groups_users_link'),
 			(int) $groupm->getVar('linkid')
 		);
-		if (!$result = $this->db->query($sql)) {
+		if (!$result = icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		return true;
@@ -148,17 +148,17 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = "SELECT * FROM " . $this->db->prefix('groups_users_link');
+		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('groups_users_link');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
-		$result = $this->db->query($sql, $limit, $start);
+		$result = icms::$xoopsDB->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = $this->db->fetchArray($result)) {
+		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			$mship = new icms_member_group_membership_Object();
 			$mship->assignVars($myrow);
 			if (!$id_as_key) {
@@ -178,15 +178,15 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 * @return int
 	 */
 	public function getCount($criteria = null) {
-		$sql = "SELECT COUNT(*) FROM " . $this->db->prefix('groups_users_link');
+		$sql = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('groups_users_link');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 		}
-		$result = $this->db->query($sql);
+		$result = icms::$xoopsDB->query($sql);
 		if (!$result) {
 			return 0;
 		}
-		list($count) = $this->db->fetchRow($result);
+		list($count) = icms::$xoopsDB->fetchRow($result);
 		return $count;
 	}
 
@@ -197,11 +197,11 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 * @return bool
 	 */
 	public function deleteAll($criteria = null) {
-		$sql = "DELETE FROM " . $this->db->prefix('groups_users_link');
+		$sql = "DELETE FROM " . icms::$xoopsDB->prefix('groups_users_link');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 		}
-		if (!$result = $this->db->query($sql)) {
+		if (!$result = icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		return true;
@@ -217,13 +217,13 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getGroupsByUser($uid) {
 		$ret = array();
-		$sql = "SELECT groupid FROM " . $this->db->prefix('groups_users_link')
+		$sql = "SELECT groupid FROM " . icms::$xoopsDB->prefix('groups_users_link')
 			. " WHERE uid='" . (int) $uid . "'";
-		$result = $this->db->query($sql);
+		$result = icms::$xoopsDB->query($sql);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = $this->db->fetchArray($result)) {
+		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			$ret[] = $myrow['groupid'];
 		}
 		return $ret;
@@ -241,13 +241,13 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getUsersByGroup($groupid, $limit=0, $start=0) {
 		$ret = array();
-		$sql = "SELECT uid FROM " . $this->db->prefix('groups_users_link')
+		$sql = "SELECT uid FROM " . icms::$xoopsDB->prefix('groups_users_link')
 			. " WHERE groupid='" . (int) $groupid . "'";
-		$result = $this->db->query($sql, $limit, $start);
+		$result = icms::$xoopsDB->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = $this->db->fetchArray($result)) {
+		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			$ret[] = $myrow['uid'];
 		}
 		return $ret;

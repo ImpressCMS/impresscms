@@ -51,14 +51,14 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 		$id = (int) $id;
 		$group = false;
 		if ($id > 0) {
-			$sql = "SELECT * FROM " . $this->db->prefix('groups') . " WHERE groupid='" . $id . "'";
-			if (!$result = $this->db->query($sql)) {
+			$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('groups') . " WHERE groupid='" . $id . "'";
+			if (!$result = icms::$xoopsDB->query($sql)) {
 				return $group;
 			}
-			$numrows = $this->db->getRowsNum($result);
+			$numrows = icms::$xoopsDB->getRowsNum($result);
 			if ($numrows == 1) {
 				$group = new icms_member_group_Object();
-				$group->assignVars($this->db->fetchArray($result));
+				$group->assignVars(icms::$xoopsDB->fetchArray($result));
 			}
 		}
 		return $group;
@@ -86,30 +86,30 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 			${$k} = $v;
 		}
 		if ($group->isNew()) {
-			$groupid = $this->db->genId('group_groupid_seq');
+			$groupid = icms::$xoopsDB->genId('group_groupid_seq');
 			$sql = sprintf("INSERT INTO %s (groupid, name, description, group_type)
 				VALUES ('%u', %s, %s, %s)",
-				$this->db->prefix('groups'),
+				icms::$xoopsDB->prefix('groups'),
 				(int) $groupid,
-				$this->db->quoteString($name),
-				$this->db->quoteString($description),
-				$this->db->quoteString($group_type)
+				icms::$xoopsDB->quoteString($name),
+				icms::$xoopsDB->quoteString($description),
+				icms::$xoopsDB->quoteString($group_type)
 			);
 		} else {
 			$sql = sprintf(
 				"UPDATE %s SET name = %s, description = %s, group_type = %s WHERE groupid = '%u'",
-				$this->db->prefix('groups'),
-				$this->db->quoteString($name),
-				$this->db->quoteString($description),
-				$this->db->quoteString($group_type),
+				icms::$xoopsDB->prefix('groups'),
+				icms::$xoopsDB->quoteString($name),
+				icms::$xoopsDB->quoteString($description),
+				icms::$xoopsDB->quoteString($group_type),
 				(int) $groupid
 			);
 		}
-		if (!$result = $this->db->query($sql)) {
+		if (!$result = icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		if (empty($groupid)) {
-			$groupid = $this->db->getInsertId();
+			$groupid = icms::$xoopsDB->getInsertId();
 		}
 		$group->assignVar('groupid', $groupid);
 		return true;
@@ -129,10 +129,10 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 		}
 		$sql = sprintf(
 			"DELETE FROM %s WHERE groupid = '%u'",
-			$this->db->prefix('groups'),
+			icms::$xoopsDB->prefix('groups'),
 			(int) $group->getVar('groupid')
 		);
-		if (!$result = $this->db->query($sql)) {
+		if (!$result = icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		return true;
@@ -148,17 +148,17 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = "SELECT * FROM " . $this->db->prefix('groups');
+		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('groups');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
-		$result = $this->db->query($sql, $limit, $start);
+		$result = icms::$xoopsDB->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = $this->db->fetchArray($result)) {
+		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			$group = new icms_member_group_Object();
 			$group->assignVars($myrow);
 			if (!$id_as_key) {

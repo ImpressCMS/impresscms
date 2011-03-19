@@ -279,19 +279,17 @@ class icms_member_Handler {
 	}
 
 	public function icms_getLoginFromUserEmail($email = '') {
-		$db = icms_db_Factory::instance();
-		
 		$table = new icms_db_legacy_updater_Table('users');
 
 		if ($email !== '') {
 			if ($table->fieldExists('loginname')) {
-				$sql = $db->query("SELECT loginname, email FROM " . $db->prefix('users')
+				$sql = icms::$xoopsDB->query("SELECT loginname, email FROM " . icms::$xoopsDB->prefix('users')
 					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
 			} elseif ($table->fieldExists('login_name')) {
-				$sql = $db->query("SELECT login_name, email FROM " . $db->prefix('users')
+				$sql = icms::$xoopsDB->query("SELECT login_name, email FROM " . icms::$xoopsDB->prefix('users')
 					 . " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
 			}
-			list($uname, $email) = $db->fetchRow($sql);
+			list($uname, $email) = icms::$xoopsDB->fetchRow($sql);
 		} else {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
@@ -437,8 +435,8 @@ class icms_member_Handler {
 
 		$select = $asobject ? "u.*" : "u.uid";
 		$sql[] = "	SELECT DISTINCT {$select} "
-				. "	FROM " . $this->db->prefix("users") . " AS u"
-				. " LEFT JOIN " . $this->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
+				. "	FROM " . icms::$xoopsDB->prefix("users") . " AS u"
+				. " LEFT JOIN " . icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
 		if (! empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
@@ -456,10 +454,10 @@ class icms_member_Handler {
 			}
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if (! $result = $this->db->query($sql_string, $limit, $start)) {
+		if (! $result =icms::$xoopsDB->query($sql_string, $limit, $start)) {
 			return $ret;
 		}
-		while ($myrow = $this->db->fetchArray($result)) {
+		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			if ($asobject) {
 				$user = new icms_member_user_Object();
 				$user->assignVars($myrow);
@@ -487,8 +485,8 @@ class icms_member_Handler {
 		$ret = 0;
 
 		$sql[] = "	SELECT COUNT(DISTINCT u.uid) "
-				. "	FROM " . $this->db->prefix("users") . " AS u"
-				. " LEFT JOIN " . $this->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
+				. "	FROM " . icms::$xoopsDB->prefix("users") . " AS u"
+				. " LEFT JOIN " . icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
 		if (! empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
@@ -497,10 +495,10 @@ class icms_member_Handler {
 			$sql[] = $criteria->render();
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if (! $result = $this->db->query($sql_string)) {
+		if (! $result = icms::$xoopsDB->query($sql_string)) {
 			return $ret;
 		}
-		list($ret) = $this->db->fetchRow($result);
+		list($ret) = icms::$xoopsDB->fetchRow($result);
 		return $ret;
 	}
 
@@ -525,12 +523,12 @@ class icms_member_Handler {
 		} else {
 			foreach ($groups as $group) {
 				$sql = 'SELECT COUNT(gperm_id) as total FROM '
-					. $this->db->prefix("group_permission")
+					. icms::$xoopsDB->prefix("group_permission")
 					. ' WHERE gperm_groupid=' . $group;
-				if (! $result = $this->db->query($sql)) {
+				if (! $result = icms::$xoopsDB->query($sql)) {
 					return $ret;
 				}
-				list($t) = $this->db->fetchRow($result);
+				list($t) = icms::$xoopsDB->fetchRow($result);
 				$gperms[$group] = $t;
 			}
 			foreach ($gperms as $key => $val) {
