@@ -21,7 +21,7 @@ if (!is_object(icms::$user)
  * 
  */
 function displayUsers() {
-	global $xoopsConfig, $icmsModule, $icmsConfigUser;
+	global $icmsConfig, $icmsModule, $icmsConfigUser;
 	$userstart = isset($_GET['userstart']) ? (int) $_GET['userstart'] : 0;
 
 	icms_cp_header();
@@ -89,8 +89,8 @@ function displayUsers() {
 	$openid_cbox_value = 0;
 	$url_value = '';
 	//  $avatar_value = 'blank.gif';
-	//  $theme_value = $xoopsConfig['default_theme'];
-	$timezone_value = $xoopsConfig['default_TZ'];
+	//  $theme_value = $icmsConfig['default_theme'];
+	$timezone_value = $icmsConfig['default_TZ'];
 	$icq_value = '';
 	$aim_value = '';
 	$yim_value = '';
@@ -100,8 +100,8 @@ function displayUsers() {
 	$interest_value = '';
 	$sig_value = '';
 	$sig_cbox_value = 0;
-	$umode_value = $xoopsConfig['com_mode'];
-	$uorder_value = $xoopsConfig['com_order'];
+	$umode_value = $icmsConfig['com_mode'];
+	$uorder_value = $icmsConfig['com_order'];
 
 	include_once ICMS_INCLUDE_PATH .'/notification_constants.php';
 	$notify_method_value = XOOPS_NOTIFICATION_METHOD_PM;
@@ -114,7 +114,7 @@ function displayUsers() {
 	$op_value = 'addUser';
 	$form_title = _AM_ADDUSER;
 	$form_isedit = FALSE;
-	$language_value = $xoopsConfig['language'];
+	$language_value = $icmsConfig['language'];
 	$groups = array(XOOPS_GROUP_USERS);
 	include ICMS_MODULES_PATH . '/system/admin/users/userform.php';
 	icms_cp_footer();
@@ -126,7 +126,7 @@ function displayUsers() {
  * @param object $user
  */
 function modifyUser($user) {
-	global $xoopsConfig, $icmsModule;
+	global $icmsConfig, $icmsModule;
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/users/images/users_big.png)">' . _MD_AM_USER . '</div><br />';
 	$member_handler = icms::handler('icms_member');
@@ -149,7 +149,7 @@ function modifyUser($user) {
 		$url_value = $user->getVar('url', 'E');
 		//	  $avatar_value = $user->getVar('user_avatar');
 		$temp = $user->getVar('theme');
-		//$theme_value = empty($temp) ? $xoopsConfig['default_theme'] : $temp;
+		//$theme_value = empty($temp) ? $icmsConfig['default_theme'] : $temp;
 		$timezone_value = $user->getVar('timezone_offset');
 		$icq_value = $user->getVar('user_icq', 'E');
 		$aim_value = $user->getVar('user_aim', "E");
@@ -233,8 +233,13 @@ function modifyUser($user) {
  * @param $enc_type
  * @param $groups
  */
-function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array()) {
-	global $xoopsConfig, $icmsModule, $icmsConfigUser;
+function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim,
+					$user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar,
+					$user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method,
+					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid,
+					$pass_expired, $enc_type, $groups = array()
+					) {
+	global $icmsConfig, $icmsModule, $icmsConfigUser;
 	$member_handler = icms::handler('icms_member');
 	$edituser =& $member_handler->getUser($uid);
 	if ($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new icms_db_criteria_Item('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new icms_db_criteria_Item('login_name', $login_name)) > 0) {
@@ -243,8 +248,6 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		echo _AM_UNAME . ' ' . $uname . ' ' . _AM_ALREADY_EXISTS;
 		icms_cp_footer();
 	} else {
-		$myts =& icms_core_Textsanitizer::getInstance();
-
 		$edituser->setVar('name', $name);
 		$edituser->setVar('uname', $uname);
 		$edituser->setVar('login_name', $login_name);
@@ -258,11 +261,11 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		$edituser->setVar('user_icq', $user_icq);
 		$edituser->setVar('user_from', $user_from);
 		if ($icmsConfigUser['allow_htsig'] == 0) {
-			$signature = strip_tags($myts->xoopsCodeDecode($user_sig, 1));
-			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
+			$signature = strip_tags(icms_core_DataFilter::codeDecode($user_sig, 1));
+			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 		} else {
-			$signature = $myts->displayTarea($user_sig, 1, 1, 1, 1, 1, 'display');
-			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
+			$signature = icms_core_DataFilter::checkVar($user_sig, 'html', 'input');
+			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 		}
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1) ? 1 : 0;
 		$edituser->setVar('user_viewemail', $user_viewemail);
