@@ -196,9 +196,9 @@ switch ($op) {
 						icms_cp_footer();
 						exit();
 					}
-					if ($password == $username || $password == icms_utf8_strrev($username, true)
+					if ($password == $username || $password == icms_core_DataFilter::utf8_strrev($username, true)
 						|| strripos($password, $username) === true || $password == $login_name
-						|| $password == icms_utf8_strrev($login_name, true)
+						|| $password == icms_core_Datafilter::utf8_strrev($login_name, true)
 						|| strripos($password, $login_name) === true) {
 						icms_cp_header();
 						echo '<b>'._AM_BADPWD.'</b>';
