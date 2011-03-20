@@ -17,16 +17,16 @@ if(!defined('ICMS_ROOT_PATH')) {exit();}
 
 class XoopsUser extends icms_member_user_Object {
 	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
+	public function __construct(&$id) {
+		parent::__construct($id);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_member_user_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
 class XoopsGuestUser extends XoopsUser {
 	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
+	public function __construct(&$id) {
+		parent::__construct($id);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_member_user_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
