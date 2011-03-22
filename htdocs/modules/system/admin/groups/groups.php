@@ -119,9 +119,9 @@ function modifyGroup($g_id) {
 		echo '<table class="outer"><tr><th align="center">' . _AM_NONMEMBERS . '<br />';
 
 		echo '</th><th></th><th align="center">' . _AM_MEMBERS . '<br />';
-		echo '</th></tr><tr><td class="even">"
-		. "<form action="admin.php" method="post">"
-		. "<select name="uids[]" size="10" multiple="multiple">' . "\n";
+		echo '</th></tr><tr><td class="even">'
+		. '<form action="admin.php" method="post">'
+		. '<select name="uids[]" size="10" multiple="multiple">' . "\n";
 		foreach ($users as $u_id => $u_name) {
 			echo '<option value="' . $u_id . '">' . $u_name . '</option>' . "\n";
 		}
