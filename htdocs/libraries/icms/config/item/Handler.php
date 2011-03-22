@@ -73,13 +73,13 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		$config = false;
 		$id = (int) $id;
 		if ($id > 0) {
-			$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('config') . " WHERE conf_id='" . $id . "'";
-			if (!$result = icms::$xoopsDB->query($sql)) {
+			$sql = "SELECT * FROM " . $this->db->prefix('config') . " WHERE conf_id='" . $id . "'";
+			if (!$result = $this->db->query($sql)) {
 				return $config;
 			}
-			$numrows = icms::$xoopsDB->getRowsNum($result);
+			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$myrow = icms::$xoopsDB->fetchArray($result);
+				$myrow = $this->db->fetchArray($result);
 				$config = new icms_config_Item_Object();
 				$config->assignVars($myrow);
 			}
@@ -108,7 +108,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 			${$k} = $v;
 		}
 		if ($config->isNew()) {
-			$conf_id = icms::$xoopsDB->genId('config_conf_id_seq');
+			$conf_id = $this->db->genId('config_conf_id_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (
 				conf_id,
@@ -122,16 +122,16 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 				conf_valuetype,
 				conf_order)
 				 VALUES ('%u', '%u', '%u', %s, %s, %s, %s, %s, %s, '%u')",
-				icms::$xoopsDB->prefix('config'),
+				$this->db->prefix('config'),
 				(int) $conf_id,
 				(int) $conf_modid,
 				(int) $conf_catid,
-				icms::$xoopsDB->quoteString($conf_name),
-				icms::$xoopsDB->quoteString($conf_title),
-				icms::$xoopsDB->quoteString($conf_value),
-				icms::$xoopsDB->quoteString($conf_desc),
-				icms::$xoopsDB->quoteString($conf_formtype),
-				icms::$xoopsDB->quoteString($conf_valuetype),
+				$this->db->quoteString($conf_name),
+				$this->db->quoteString($conf_title),
+				$this->db->quoteString($conf_value),
+				$this->db->quoteString($conf_desc),
+				$this->db->quoteString($conf_formtype),
+				$this->db->quoteString($conf_valuetype),
 				(int) $conf_order
 			);
 		} else {
@@ -146,24 +146,24 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 				conf_valuetype = %s,
 				conf_order = '%u'
 				WHERE conf_id = '%u'",
-				icms::$xoopsDB->prefix('config'),
+				$this->db->prefix('config'),
 				(int) $conf_modid,
 				(int) $conf_catid,
-				icms::$xoopsDB->quoteString($conf_name),
-				icms::$xoopsDB->quoteString($conf_title),
-				icms::$xoopsDB->quoteString($conf_value),
-				icms::$xoopsDB->quoteString($conf_desc),
-				icms::$xoopsDB->quoteString($conf_formtype),
-				icms::$xoopsDB->quoteString($conf_valuetype),
+				$this->db->quoteString($conf_name),
+				$this->db->quoteString($conf_title),
+				$this->db->quoteString($conf_value),
+				$this->db->quoteString($conf_desc),
+				$this->db->quoteString($conf_formtype),
+				$this->db->quoteString($conf_valuetype),
 				(int) $conf_order,
 				(int) $conf_id
 			);
 		}
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		if (empty($conf_id)) {
-			$conf_id = icms::$xoopsDB->getInsertId();
+			$conf_id = $this->db->getInsertId();
 		}
 		$config->assignVar('conf_id', $conf_id);
 		return true;
@@ -182,9 +182,9 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		}
 		$sql = sprintf(
 			"DELETE FROM %s WHERE conf_id = '%u'",
-			icms::$xoopsDB->prefix('config'), (int) $config->getVar('conf_id')
+			$this->db->prefix('config'), (int) $config->getVar('conf_id')
 		);
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		return true;
@@ -200,18 +200,18 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM ' . icms::$xoopsDB->prefix('config');
+		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$sql .= ' ORDER BY conf_order ASC';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
-		$result = icms::$xoopsDB->query($sql, $limit, $start);
+		$result = $this->db->query($sql, $limit, $start);
 		if (!$result) {
 			return false;
 		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$config = new icms_config_item_Object();
 			$config->assignVars($myrow);
 			if (!$id_as_key) {
@@ -233,15 +233,15 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	public function getCount($criteria = null) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM ' . icms::$xoopsDB->prefix('config');
+		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
-		$result =& icms::$xoopsDB->query($sql);
+		$result =& $this->db->query($sql);
 		if (!$result) {
 			return false;
 		}
-		list($count) = icms::$xoopsDB->fetchRow($result);
+		list($count) = $this->db->fetchRow($result);
 		return $count;
 	}
 }

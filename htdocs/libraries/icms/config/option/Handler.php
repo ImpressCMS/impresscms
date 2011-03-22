@@ -52,14 +52,14 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 		$confoption = false;
 		$id = (int) $id;
 		if ($id > 0) {
-			$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('configoption') . " WHERE confop_id='" . $id . "'";
-			if (!$result = icms::$xoopsDB->query($sql)) {
+			$sql = "SELECT * FROM " . $this->db->prefix('configoption') . " WHERE confop_id='" . $id . "'";
+			if (!$result = $this->db->query($sql)) {
 				return $confoption;
 			}
-			$numrows = icms::$xoopsDB->getRowsNum($result);
+			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
 				$confoption = new icms_config_option_Object();
-				$confoption->assignVars(icms::$xoopsDB->fetchArray($result));
+				$confoption->assignVars($this->db->fetchArray($result));
 			}
 		}
 		return $confoption;
@@ -86,31 +86,31 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 			${$k} = $v;
 		}
 		if ($confoption->isNew()) {
-			$confop_id = icms::$xoopsDB->genId('configoption_confop_id_seq');
+			$confop_id = $this->db->genId('configoption_confop_id_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (confop_id, confop_name, confop_value, conf_id)
 				VALUES ('%u', %s, %s, '%u')",
-				icms::$xoopsDB->prefix('configoption'),
+				$this->db->prefix('configoption'),
 				(int) $confop_id,
-				icms::$xoopsDB->quoteString($confop_name),
-				icms::$xoopsDB->quoteString($confop_value),
+				$this->db->quoteString($confop_name),
+				$this->db->quoteString($confop_value),
 				(int) $conf_id
 				);
 		} else {
 			$sql = sprintf(
 			"UPDATE %s SET confop_name = %s, confop_value = %s
 			WHERE confop_id = '%u'",
-			icms::$xoopsDB->prefix('configoption'),
-			icms::$xoopsDB->quoteString($confop_name),
-			icms::$xoopsDB->quoteString($confop_value),
+			$this->db->prefix('configoption'),
+			$this->db->quoteString($confop_name),
+			$this->db->quoteString($confop_value),
 			(int) ($confop_id)
 			);
 		}
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		if (empty($confop_id)) {
-			$confop_id = icms::$xoopsDB->getInsertId();
+			$confop_id = $this->db->getInsertId();
 		}
 		$confoption->assignVar('confop_id', $confop_id);
 		return $confop_id;
@@ -129,10 +129,10 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 		}
 		$sql = sprintf(
 			"DELETE FROM %s WHERE confop_id = '%u'",
-			icms::$xoopsDB->prefix('configoption'),
+			$this->db->prefix('configoption'),
 			(int) ($confoption->getVar('confop_id'))
 			);
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		return true;
@@ -149,17 +149,17 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM ' . icms::$xoopsDB->prefix('configoption');
+		$sql = 'SELECT * FROM ' . $this->db->prefix('configoption');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere() . ' ORDER BY confop_id ' . $criteria->getOrder();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
-		$result = icms::$xoopsDB->query($sql, $limit, $start);
+		$result = $this->db->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$confoption = new icms_config_option_Object();
 			$confoption->assignVars($myrow);
 			if (!$id_as_key) {

@@ -54,14 +54,14 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 		$confcat = false;
 		$id = (int) $id;
 		if ($id > 0) {
-			$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('configcategory') . " WHERE confcat_id='" . $id . "'";
-			if (!$result = icms::$xoopsDB->query($sql)) {
+			$sql = "SELECT * FROM " . $this->db->prefix('configcategory') . " WHERE confcat_id='" . $id . "'";
+			if (!$result = $this->db->query($sql)) {
 				return $confcat;
 			}
-			$numrows = icms::$xoopsDB->getRowsNum($result);
+			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
 				$confcat = new icms_config_category_Object();
-				$confcat->assignVars(icms::$xoopsDB->fetchArray($result), false);
+				$confcat->assignVars($this->db->fetchArray($result), false);
 			}
 		}
 		return $confcat;
@@ -92,23 +92,23 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 			${$k} = $v;
 		}
 		if ($confcat->isNew()) {
-			$confcat_id = icms::$xoopsDB->genId('configcategory_confcat_id_seq');
+			$confcat_id = $this->db->genId('configcategory_confcat_id_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (confcat_id, confcat_name, confcat_order)
 				VALUES ('%u', %s, '%u')",
-				icms::$xoopsDB->prefix('configcategory'), (int) ($confcat_id), icms::$xoopsDB->quoteString($confcat_name), (int) ($confcat_order)
+				$this->db->prefix('configcategory'), (int) ($confcat_id), $this->db->quoteString($confcat_name), (int) ($confcat_order)
 				);
 		} else {
 			$sql = sprintf(
 				"UPDATE %s SET confcat_name = %s, confcat_order = '%u'
 				WHERE confcat_id = '%u'",
-				icms::$xoopsDB->prefix('configcategory'), icms::$xoopsDB->quoteString($confcat_name), (int) ($confcat_order), (int) ($confcat_id));
+				$this->db->prefix('configcategory'), $this->db->quoteString($confcat_name), (int) ($confcat_order), (int) ($confcat_id));
 		}
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		if (empty($confcat_id)) {
-			$confcat_id = icms::$xoopsDB->getInsertId();
+			$confcat_id = $this->db->getInsertId();
 		}
 		$confcat->assignVar('confcat_id', $confcat_id);
 		return $confcat_id;
@@ -132,9 +132,9 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 
 		$sql = sprintf(
 			"DELETE FROM %s WHERE confcat_id = '%u'",
-			icms::$xoopsDB->prefix('configcategory'), (int) ($configcategory->getVar('confcat_id'))
+			$this->db->prefix('configcategory'), (int) ($configcategory->getVar('confcat_id'))
 			);
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		return true;
@@ -151,7 +151,7 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM ' . icms::$xoopsDB->prefix('configcategory');
+		$sql = 'SELECT * FROM ' . $this->db->prefix('configcategory');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('confcat_id', 'confcat_name', 'confcat_order'))
@@ -161,11 +161,11 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
-		$result = icms::$xoopsDB->query($sql, $limit, $start);
+		$result = $this->db->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$confcat = new icms_config_category_Object();
 			$confcat->assignVars($myrow, false);
 			if (!$id_as_key) {

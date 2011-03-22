@@ -84,7 +84,7 @@ class icms_config_Item_Object extends icms_core_Object {
 		} elseif ($this->getVar('conf_formtype') == 'password') {
 			$value = icms_core_DataFilter::checkVar($value, 'str');
 		} else {
-			$value = icms_core_DataFilter::checkVar($value, 'str');
+			$value = StopXSS($value);
 		}
 		switch($this->getVar('conf_valuetype')) {
 			case 'array':
@@ -112,7 +112,7 @@ class icms_config_Item_Object extends icms_core_Object {
 	public function setConfOptions($option) {
 		if (is_array($option)) {
 			$count = count($option);
-			for ( $i = 0; $i < $count; $i++) {
+			for ($i = 0; $i < $count; $i++) {
 				$this->setConfOptions($option[$i]);
 			}
 		} else {
