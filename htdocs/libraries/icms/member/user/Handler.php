@@ -47,12 +47,12 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		$id = (int) $id;
 		$user = false;
 		if ($id > 0) {
-			$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('users') . " WHERE uid = '" . $id . "'";
-			if (!$result = icms::$xoopsDB->query($sql)) {return $user;}
-			$numrows = icms::$xoopsDB->getRowsNum($result);
+			$sql = "SELECT * FROM " . $this->db->prefix('users') . " WHERE uid = '" . $id . "'";
+			if (!$result = $this->db->query($sql)) {return $user;}
+			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
 				$user = new icms_member_user_Object();
-				$user->assignVars(icms::$xoopsDB->fetchArray($result));
+				$user->assignVars($this->db->fetchArray($result));
 			}
 		}
 		return $user;
@@ -74,91 +74,112 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 
 		// RMV-NOTIFY
 		if ($user->isNew()) {
-			$uid = icms::$xoopsDB->genId(icms::$xoopsDB->prefix('users') . '_uid_seq');
-			$sql = sprintf("INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq,
-							user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts,
-							attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method,
-							notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt,
-							user_viewoid, pass_expired, enc_type, login_name) VALUES ('%u', %s, %s, %s, %s, %s, '%u',
-							%s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u',
-							'%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s)",
-							icms::$xoopsDB->prefix('users'),
-							(int) $uid,
-							icms::$xoopsDB->quoteString($uname),
-							icms::$xoopsDB->quoteString($name),
-							icms::$xoopsDB->quoteString($email),
-							icms::$xoopsDB->quoteString($url),
-							icms::$xoopsDB->quoteString($user_avatar),
-							time(),
-							icms::$xoopsDB->quoteString($user_icq),
-							icms::$xoopsDB->quoteString($user_from),
-							icms::$xoopsDB->quoteString($user_sig),
-							(int) $user_viewemail,
-							icms::$xoopsDB->quoteString($actkey),
-							icms::$xoopsDB->quoteString($user_aim),
-							icms::$xoopsDB->quoteString($user_yim),
-							icms::$xoopsDB->quoteString($user_msnm),
-							icms::$xoopsDB->quoteString($pass),
-							(int) $posts,
-							(int) $attachsig,
-							(int) $rank,
-							(int) $level,
-							icms::$xoopsDB->quoteString($theme),
-							icms::$xoopsDB->quoteString((float)($timezone_offset)),
-							0,
-							icms::$xoopsDB->quoteString($umode),
-							(int) $uorder,
-							(int) $notify_method,
-							(int) $notify_mode,
-							icms::$xoopsDB->quoteString($user_occ),
-							icms::$xoopsDB->quoteString($bio),
-							icms::$xoopsDB->quoteString($user_intrest),
-							(int) $user_mailok,
-							icms::$xoopsDB->quoteString($language),
-							icms::$xoopsDB->quoteString($openid),
-							icms::$xoopsDB->quoteString($salt),
-							(int) $user_viewoid,
-							(int) $pass_expired,
-							(int) $enc_type,
-							icms::$xoopsDB->quoteString($login_name)
-						);
+			$uid = $this->db->genId($this->db->prefix('users') . '_uid_seq');
+			$sql = sprintf(
+				"INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq,
+				user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts,
+				attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method,
+				notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt,
+				user_viewoid, pass_expired, enc_type, login_name) 
+				VALUES ('%u', %s, %s, %s, %s, %s, '%u',
+				%s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u',
+				'%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s)",
+				$this->db->prefix('users'), 
+				(int) ($uid), 
+				$this->db->quoteString($uname), 
+				$this->db->quoteString($name), 
+				$this->db->quoteString($email), 
+				$this->db->quoteString($url), 
+				$this->db->quoteString($user_avatar), 
+				time(), 
+				$this->db->quoteString($user_icq), 
+				$this->db->quoteString($user_from), 
+				$this->db->quoteString($user_sig), 
+				(int) ($user_viewemail), 
+				$this->db->quoteString($actkey), 
+				$this->db->quoteString($user_aim), 
+				$this->db->quoteString($user_yim), 
+				$this->db->quoteString($user_msnm), 
+				$this->db->quoteString($pass), 
+				(int) ($posts), 
+				(int) ($attachsig), 
+				(int) ($rank), 
+				(int) ($level), 
+				$this->db->quoteString($theme), 
+				$this->db->quoteString((float)($timezone_offset)), 
+				0, 
+				$this->db->quoteString($umode), 
+				(int) ($uorder), 
+				(int) ($notify_method), 
+				(int) ($notify_mode), 
+				$this->db->quoteString($user_occ), 
+				$this->db->quoteString($bio), 
+				$this->db->quoteString($user_intrest), 
+				(int) ($user_mailok), 
+				$this->db->quoteString($language), 
+				$this->db->quoteString($openid), 
+				$this->db->quoteString($salt), 
+				(int) ($user_viewoid), 
+				(int) ($pass_expired), 
+				(int) ($enc_type), 
+				$this->db->quoteString($login_name)
+			);
 		} else {
-			$sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s,
-							user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s,
-							user_yim = %s, user_msnm = %s, posts = %d, pass = %s, attachsig = '%u', rank = '%u',
-							level= '%s', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u',
-							uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s,
-							user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s,
-							user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'",
-							icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname),
-							icms::$xoopsDB->quoteString($name), icms::$xoopsDB->quoteString($email),
-							icms::$xoopsDB->quoteString($url), icms::$xoopsDB->quoteString($user_avatar),
-							icms::$xoopsDB->quoteString($user_icq), icms::$xoopsDB->quoteString($user_from),
-							icms::$xoopsDB->quoteString($user_sig), $user_viewemail,
-							icms::$xoopsDB->quoteString($user_aim), icms::$xoopsDB->quoteString($user_yim),
-							icms::$xoopsDB->quoteString($user_msnm), (int) $posts,
-							icms::$xoopsDB->quoteString($pass), (int) $attachsig,
-							(int) $rank, (int) $level,
-							icms::$xoopsDB->quoteString($theme), icms::$xoopsDB->quoteString((float)($timezone_offset)),
-							icms::$xoopsDB->quoteString($umode), (int) $last_login,
-							(int) $uorder, (int) $notify_method,
-							(int) $notify_mode, icms::$xoopsDB->quoteString($user_occ),
-							icms::$xoopsDB->quoteString($bio), icms::$xoopsDB->quoteString($user_intrest),
-							(int) $user_mailok, icms::$xoopsDB->quoteString($language),
-							icms::$xoopsDB->quoteString($openid), icms::$xoopsDB->quoteString($salt),
-							(int) $user_viewoid, (int) $pass_expired,
-							(int) $enc_type, icms::$xoopsDB->quoteString($login_name),
-							(int) $uid
-						);
+			$sql = sprintf(
+				"UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s,
+				user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s,
+				user_yim = %s, user_msnm = %s, posts = %d, pass = %s, attachsig = '%u', rank = '%u',
+				level= '%s', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u',
+				uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s,
+				user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s,
+				user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'",
+				$this->db->prefix('users'), 
+				$this->db->quoteString($uname), 
+				$this->db->quoteString($name), 
+				$this->db->quoteString($email), 
+				$this->db->quoteString($url), 
+				$this->db->quoteString($user_avatar), 
+				$this->db->quoteString($user_icq), 
+				$this->db->quoteString($user_from), 
+				$this->db->quoteString($user_sig), 
+				$user_viewemail, 
+				$this->db->quoteString($user_aim), 
+				$this->db->quoteString($user_yim), 
+				$this->db->quoteString($user_msnm), 
+				(int) ($posts), 
+				$this->db->quoteString($pass), 
+				(int) ($attachsig), 
+				(int) ($rank), 
+				(int) ($level), 
+				$this->db->quoteString($theme), 
+				$this->db->quoteString((float)($timezone_offset)), 
+				$this->db->quoteString($umode), 
+				(int) ($last_login), 
+				(int) ($uorder), 
+				(int) ($notify_method), 
+				(int) ($notify_mode), 
+				$this->db->quoteString($user_occ), 
+				$this->db->quoteString($bio), 
+				$this->db->quoteString($user_intrest), 
+				(int) ($user_mailok), 
+				$this->db->quoteString($language), 
+				$this->db->quoteString($openid), 
+				$this->db->quoteString($salt), 
+				(int) ($user_viewoid), 
+				(int) ($pass_expired), 
+				(int) ($enc_type), 
+				$this->db->quoteString($login_name), 
+				(int) ($uid)
+			);
 		}
 		if (false != $force) {
-			$result = icms::$xoopsDB->queryF($sql);
+			$result = $this->db->queryF($sql);
 		} else {
-			$result = icms::$xoopsDB->query($sql);
+			$result = $this->db->query($sql);
 		}
 		if (!$result) {return false;}
 		if ($user->isNew()) {
-			$uid = icms::$xoopsDB->getInsertId();
+			$uid = $this->db->getInsertId();
 			$user->assignVar('uid', $uid);
 		}
 		return true;
@@ -177,16 +198,14 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		if (!is_a($user, 'icms_member_user_Object')) {return false;}
 		$pass = substr(md5(time()), 0, 8);
 		$salt = substr(md5(time() * 2), 0, 12);
-		$sql = sprintf("UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'",
-						icms::$xoopsDB->prefix('users'),
-						$pass,
-						$salt,
-						(int) $user->getVar('uid')
-					);
+		$sql = sprintf(
+			"UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'", 
+			$this->db->prefix('users'), $pass, $salt, (int) ($user->getVar('uid'))
+		);
 		if (false != $force) {
-			$result = icms::$xoopsDB->queryF($sql);
+			$result = $this->db->queryF($sql);
 		} else {
-			$result = icms::$xoopsDB->query($sql);
+			$result = $this->db->query($sql);
 		}
 		if (!$result) {
 			return false;
@@ -204,7 +223,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('users');
+		$sql = "SELECT * FROM " . $this->db->prefix('users');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
@@ -213,9 +232,9 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
-		$result = icms::$xoopsDB->query($sql, $limit, $start);
+		$result = $this->db->query($sql, $limit, $start);
 		if (!$result) {return $ret;}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$user = new icms_member_user_Object();
 			$user->assignVars($myrow);
 			if (!$id_as_key) {
@@ -235,11 +254,11 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @return int count of users
 	 */
 	public function getCount($criteria = null) {
-		$sql = 'SELECT COUNT(*) FROM ' . icms::$xoopsDB->prefix('users');
+		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('users');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
-		$result = icms::$xoopsDB->query($sql);
+		$result = $this->db->query($sql);
 		if (!$result) {return 0;}
-		list($count) = icms::$xoopsDB->fetchRow($result);
+		list($count) = $this->db->fetchRow($result);
 		return $count;
 	}
 
@@ -253,9 +272,9 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	public function deleteAll($criteria = null) {
 		$pass = substr(md5(time()), 0, 8);
 		$salt = substr(md5(time() * 2), 0, 12);
-		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s", icms::$xoopsDB->prefix('users'), $pass, $salt);
+		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s", $this->db->prefix('users'), $pass, $salt);
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= " " . $criteria->renderWhere();}
-		if (!$result = icms::$xoopsDB->query($sql)) {return false;}
+		if (!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}
 
@@ -269,10 +288,10 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @return  bool
 	 **/
 	public function updateAll($fieldname, $fieldvalue, $criteria = null) {
-		$set_clause = is_numeric($fieldvalue) ? $fieldname . ' = ' . $fieldvalue : $fieldname . ' = ' . icms::$xoopsDB->quoteString($fieldvalue);
-		$sql = 'UPDATE ' . icms::$xoopsDB->prefix('users') . ' SET ' . $set_clause;
+		$set_clause = is_numeric($fieldvalue) ? $fieldname . ' = ' . $fieldvalue : $fieldname . ' = ' . $this->db->quoteString($fieldvalue);
+		$sql = 'UPDATE ' . $this->db->prefix('users') . ' SET ' . $set_clause;
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
-		if (!$result = icms::$xoopsDB->query($sql)) {return false;}
+		if (!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}
 
@@ -291,8 +310,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 *  @global array $icmsConfigUser user configuration
 	 *  @return string of errors encountered while validating the user information, will be blank if successful
 	 */
-	function userCheck($login_name, $uname, $email, $pass, $vpass, $uid = 0)
-	{
+	public function userCheck($login_name, $uname, $email, $pass, $vpass, $uid = 0) {
 		global $icmsConfigUser;
 
 		// initializations
@@ -366,17 +384,16 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @param string $email Email address for a user
 	 */
 	static public function getUnameFromEmail($email = '') {
+		$db = icms_db_Factory::instance();
 		if ($email !== '') {
-			$sql = icms::$xoopsDB->query("SELECT uname, email FROM " . icms::$xoopsDB->prefix('users')
+			$sql = $db->query("SELECT uname, email FROM " . $db->prefix('users')
 				. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET)
 				. "'");
-			list($uname, $email) = icms::$xoopsDB->fetchRow($sql);
+			list($uname, $email) = $db->fetchRow($sql);
 		} else {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 		return $uname;
 	}
-
-
 }
 
