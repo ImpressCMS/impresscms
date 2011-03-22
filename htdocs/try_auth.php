@@ -96,7 +96,7 @@ function run() {
 		// Display an error if the form markup couldn't be generated;
 		// otherwise, render the HTML.
 		if (Auth_OpenID::isFailure($form_html)) {
-			displayError(sprintf(_CORE_OID_REDIRECT_FAILED, $form_html->message);
+			displayError(sprintf(_CORE_OID_REDIRECT_FAILED, $form_html->message));
 		} else {
 			$page_contents = array(
 				"<html><head><title>",
