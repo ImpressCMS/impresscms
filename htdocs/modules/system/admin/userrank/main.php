@@ -37,7 +37,7 @@ function edituserrank($showmenu = FALSE, $rank_id = 0, $clone = FALSE) {
 		$userrankObj->setVar("rank_id", 0);
 		$sform = $userrankObj->getForm(_CO_ICMS_USERRANKS_CREATE, "adduserrank");
 		$sform->assign($icmsAdminTpl);
-		$icmsAdninTpl->assign("icms_userrank_title", _CO_ICMS_USERRANKS_CREATE_INFO);
+		$icmsAdminTpl->assign("icms_userrank_title", _CO_ICMS_USERRANKS_CREATE_INFO);
 		$icmsAdminTpl->display("db:admin/userrank/system_adm_userrank.html");
 	}
 }
