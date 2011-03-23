@@ -160,5 +160,3 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 
 	}
 }
-
-?>

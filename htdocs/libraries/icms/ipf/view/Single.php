@@ -94,9 +94,6 @@ class icms_ipf_view_Single {
 		$this->_tpl->assign('icms_header_as_row', $this->_headerAsRow);
 		$this->_tpl->assign('icms_object_array', $icms_object_array);
 
-		/**
-		 * @todo when ICMS 1.2 is out, change this for system_persistable_singleview.html
-		 */
 		if ($fetchOnly) {
 			return $this->_tpl->fetch('db:system_persistable_singleview.html');
 		} else {
