@@ -41,6 +41,8 @@ ul.menusummary {margin-left: 20px;}
 /* codes and quotes */
 .xoopsCode { background-color: #ccc; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto;}
 .xoopsQuote { background-color: #ccc; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px;}
+.icmsCode { background-color: #ccc; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto;}
+.icmsQuote { background-color: #ccc; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px;}
 code {font-family: "Courier New",Courier,monospace; padding: 6px; font-size: .9em;}
 div.modupdpoutput {max-height: 350px; overflow: auto;}
 div.successMsg {background: #cffbce; border: 1px solid #92f58f; padding: 3px; text-align: center;}

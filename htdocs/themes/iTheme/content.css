@@ -38,6 +38,8 @@ th {border-bottom: 4px solid #F3AC03;}
 /* codes and quotes */
 .xoopsCode { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto;}
 .xoopsQuote { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px;}
+.icmsCode { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto;}
+.icmsQuote { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px;}
 
 /* Admin Help Nav */
 #helpbar a {float: left; width: 14px; height: 14px; padding: 2px 0 4px 5px; background: #F3AC03; color: #333333; border: 1px dotted #dddddd;}
