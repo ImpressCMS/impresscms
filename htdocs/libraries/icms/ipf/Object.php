@@ -764,7 +764,11 @@ class icms_ipf_Object extends icms_core_Object {
 		if (method_exists($myts, 'formatForML')) {
 			return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br, $formatML);
 		} else {
-			return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
+			if ($html) {
+				return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
+			} else {
+				return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+			}
 		}
 	}
 
@@ -924,8 +928,14 @@ class icms_ipf_Object extends icms_core_Object {
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-						if (defined('XOOPS_EDITOR_IS_HTML')) $br = false;
-						return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
+						if (defined('XOOPS_EDITOR_IS_HTML')) {
+							$br = false;
+						}
+						if ($html) {
+							return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
+						} else {
+							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+						}
 						break 1;
 
 					case 'e':
@@ -941,7 +951,11 @@ class icms_ipf_Object extends icms_core_Object {
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-						return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
+						if ($html) {
+							return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
+						} else {
+							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+						}
 						break 1;
 
 					case 'f':

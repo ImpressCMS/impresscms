@@ -92,8 +92,7 @@ class icms_ipf_About {
 	 * @return string sanitized value
 	 */
 	public function sanitize($value) {
-		$myts = icms_core_Textsanitizer::getInstance();
-		return $myts->displayTarea($value, 1);
+		return icms_core_DataFilter::checkVar($value, 'html', 'input'); // using input
 	}
 
 	/**
@@ -101,12 +100,6 @@ class icms_ipf_About {
 	 *
 	 */
 	public function render() {
-		/**
-		 * @todo make the output XHTML compliant
-		 */
-
-		$myts = &icms_core_Textsanitizer::getInstance();
-
 		global $icmsModule, $icmsConfig;
 
 		icms_cp_header();
@@ -186,7 +179,7 @@ class icms_ipf_About {
 		}
 
 		// Warning
-		$this->_tpl->assign('module_warning', $this->sanitize($versioninfo->getInfo('warning')));
+		$this->_tpl->assign('module_warning', icms_core_DataFilter::checkVar($versioninfo->getInfo('warning'), 'html', 'input'));
 
 		// Author's note
 		$this->_tpl->assign('module_author_word', $versioninfo->getInfo('author_word'));
@@ -198,7 +191,7 @@ class icms_ipf_About {
 
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
-			$this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
+			$this->_tpl->assign('module_version_history', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'html', 'input'));
 			fclose($handle);
 		}
 
@@ -207,7 +200,7 @@ class icms_ipf_About {
 
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
-			$this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
+			$this->_tpl->assign('module_version_history', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'html', 'input'));
 			fclose($handle);
 		}
 
@@ -226,7 +219,7 @@ class icms_ipf_About {
 		if (is_file($filename)) {
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
-			$this->_tpl->assign('module_license_txt', $myts->displayTarea(fread($handle, $filesize), 0, 0, 1, 1, 1, true));
+			$this->_tpl->assign('module_license_txt', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'input'));
 			fclose($handle);
 		}
 
