@@ -154,8 +154,7 @@ class icms_view_Tree {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
-		$myts =& icms_core_Textsanitizer::getInstance();
-		$name = $myts->htmlSpecialChars($name);
+		$name = icms_core_DataFilter::htmlSpecialChars($name);
 		$path = '/' . $name . $path . '';
 		if ($parentid == 0) {
 			return $path;
@@ -177,7 +176,6 @@ class icms_view_Tree {
 		if ($sel_name == "") {
 			$sel_name = $this->id;
 		}
-		$myts =& icms_core_Textsanitizer::getInstance();
 		echo "<select name = '" . $sel_name . "'";
 		if ($onchange != "") {
 			echo " onchange='" . $onchange . "'";
@@ -201,7 +199,7 @@ class icms_view_Tree {
 			$arr = $this->getChildTreeArray($catid, $order);
 			foreach ($arr as $option) {
 				$option['prefix'] = str_replace(".", "--", $option['prefix']);
-				$catpath = $option['prefix'] . "&nbsp;" . $myts->htmlSpecialChars($option[$title]);
+				$catpath = $option['prefix'] . "&nbsp;" . icms_core_DataFilter::htmlSpecialChars($option[$title]);
 				if ($option[$this->id] == $preset_id) {
 					$sel = " selected='selected'";
 				}
@@ -230,8 +228,7 @@ class icms_view_Tree {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
-		$myts =& icms_core_Textsanitizer::getInstance();
-		$name = $myts->htmlSpecialChars($name);
+		$name = icms_core_DataFilter::htmlSpecialChars($name);
 		$path = '<a href="' . $funcURL . '&amp;' . $this->id . '=' . $sel_id . '">' . $name . '</a>' . $path . "";
 		if ($parentid == 0) {
 			return $path;
