@@ -42,8 +42,7 @@ class icms_core_Debug {
  	 */
  	static public function vardump($var) {
  		if (class_exists('icms_core_Textsanitizer')) {
-			$myts = icms_core_Textsanitizer::getInstance();
-			self::message($myts->displayTarea(var_export($var, true)));
+			self::message(icms_core_DataFilter::checkVar(var_export($var, true), 'text', 'output'));
  		} else {
 			$var = var_export($var, true);
 			$var = preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $var);
