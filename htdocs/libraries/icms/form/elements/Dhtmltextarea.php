@@ -91,7 +91,6 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 */
 	public function render() {
 		global $icmsConfigPlugins, $icmsConfigMultilang;
-		$myts =& icms_core_Textsanitizer::getInstance();
 		$editor = FALSE;
 		if ($this->htmlEditor && is_object($this->htmlEditor)) {
 			if (!isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
@@ -109,7 +108,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 			. "<img onmouseover='style.cursor=\"pointer\"' onclick='javascript:openWithSelfMain(\"" . ICMS_URL . "/modules/system/admin/images/browser . php?target=" . $ele_name . "&type=iman\",\"imgmanager\",985,470);' src='" . ICMS_URL . "/images/image.gif' alt='image' />&nbsp;";
 		$jscript = '';
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-			$extension = $myts->icmsloadExtension($key);
+			$extension = icms_core_DataFilter::loadExtension($key);
 			$func = "render_ {$key}";
 			if (function_exists($func)) {
 				@list($encode, $js) = $func($ele_name);
@@ -221,8 +220,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 * @return	string HTML
 	 */
 	private function _renderSmileys() {
-		$myts =& icms_core_Textsanitizer::getInstance();
-		$smiles =& $myts->getSmileys();
+		$smiles =& icms_core_DataFilter::getSmileys();
 		$ret = '';
 		$count = count($smiles);
 		$ele_name = $this->getName();

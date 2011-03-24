@@ -178,7 +178,7 @@ class icms_core_Object {
 	 */
 	public function assignVars($var_arr) {
 		foreach ($var_arr as $key => $value) {
-			$this->assignVar($key, $value);
+			self::assignVar($key, $value);
 		}
 	}
 
@@ -195,7 +195,7 @@ class icms_core_Object {
 			$this->vars[$key]['value'] =& $value;
 			$this->vars[$key]['not_gpc'] = $not_gpc;
 			$this->vars[$key]['changed'] = true;
-			$this->setDirty();
+			self::setDirty();
 		}
 	}
 
@@ -208,7 +208,7 @@ class icms_core_Object {
 	 */
 	private function _setVars($var_arr, $not_gpc = false) {
 		foreach ($var_arr as $key => $value) {
-			$this->setVar($key, $value, $not_gpc);
+			self::setVar($key, $value, $not_gpc);
 		}
 	}
 
@@ -227,7 +227,7 @@ class icms_core_Object {
 		$len = strlen($pref);
 		foreach ($var_arr as $key => $value) {
 			if ($pref == substr($key, 0, $len)) {
-				$this->setVar(substr($key, $len), $value, $not_gpc);
+				self::setVar(substr($key, $len), $value, $not_gpc);
 			}
 		}
 	}
@@ -262,7 +262,7 @@ class icms_core_Object {
 						$vars[$key] = $this->vars[$key]->getValues(null, $format, $maxDepth - 1);
 					}
 				} else {
-					$vars[$key] = $this->getVar($key, $format);
+					$vars[$key] = self::getVar($key, $format);
 				}
 			}
 		}
@@ -428,7 +428,7 @@ class icms_core_Object {
 	 * @access public
 	 */
 	public function cleanVars() {
-		$existing_errors = $this->getErrors();
+		$existing_errors = self::getErrors();
 		$this->_errors = array();
 		foreach ($this->vars as $k => $v) {
 			$cleanv = $v['value'];
@@ -438,11 +438,11 @@ class icms_core_Object {
 				switch ($v['data_type']) {
 					case XOBJ_DTYPE_TXTBOX:
 						if ($v['required'] && $cleanv != '0' && $cleanv == '') {
-							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
+							self::setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
 						if (isset($v['maxlength']) && strlen($cleanv) > (int) ($v['maxlength'])) {
-							$this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) $v['maxlength']));
+							self::setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) $v['maxlength']));
 							continue;
 						}
 						if (!$v['not_gpc']) {
@@ -454,7 +454,7 @@ class icms_core_Object {
 
 					case XOBJ_DTYPE_TXTAREA:
 						if ($v['required'] && $cleanv != '0' && $cleanv == '') {
-							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
+							self::setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
 						if (!$v['not_gpc']) {
@@ -487,11 +487,11 @@ class icms_core_Object {
 
 					case XOBJ_DTYPE_EMAIL:
 						if ($v['required'] && $cleanv == '') {
-							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
+							self::setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
 						if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
-							$this->setErrors(_CORE_DB_INVALIDEMAIL);
+							self::setErrors(_CORE_DB_INVALIDEMAIL);
 							continue;
 						}
 						if (!$v['not_gpc']) {
@@ -501,7 +501,7 @@ class icms_core_Object {
 
 					case XOBJ_DTYPE_URL:
 						if ($v['required'] && $cleanv == '') {
-							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
+							self::setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
 						if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
@@ -541,7 +541,7 @@ class icms_core_Object {
 			return false;
 		}
 		$this->_errors = array_merge($existing_errors, $this->_errors);
-		$this->unsetDirty();
+		self::unsetDirty();
 		return true;
 	}
 

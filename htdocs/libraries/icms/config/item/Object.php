@@ -64,8 +64,12 @@ class icms_config_Item_Object extends icms_core_Object {
 				return (float) $value;
 				break;
 
+			case 'textsarea':
+				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'text', 'output');
+				break;
+
 			case 'textarea':
-				return $this->getVar('conf_value');
+				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'html', 'output');
 			default:
 				return $this->getVar('conf_value', 'N');
 				break;
@@ -81,8 +85,10 @@ class icms_config_Item_Object extends icms_core_Object {
 	public function setConfValueForInput($value, $force_slash = false) {
 		if ($this->getVar('conf_formtype') == 'textarea') {
 			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
+		} elseif ($this->getVar('conf_formtype') == 'textsarea') {
+			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'password') {
-			$value = icms_core_DataFilter::checkVar($value, 'str');
+			$value = filter_var($value, FILTER_SANITIZE_URL);
 		} else {
 			$value = StopXSS($value);
 		}
