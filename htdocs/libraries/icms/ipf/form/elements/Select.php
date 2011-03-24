@@ -48,7 +48,7 @@ class icms_ipf_form_elements_Select extends icms_form_elements_Select {
 			} else {
 				// finding the itemHandler; if none, let's take the itemHandler of the $object
 				if (isset($control['itemHandler'])) {
-					if (!$control['module']) {
+					if (!isset($control['module'])) {
 						// Creating the specified core object handler
 						$control_handler = icms::handler($control['itemHandler']);
 					} else {
