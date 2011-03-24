@@ -63,7 +63,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			if (!empty($this->_cachedModule_lookup[$id]) &&
 				!empty($this->_cachedModule[$this->_cachedModule_lookup[$id]])
 			) {
-				if ($loadConfig) self::loadConfig($this->_cachedModule[$this->_cachedModule_lookup[$id]]);
+				if ($loadConfig) $this->loadConfig($this->_cachedModule[$this->_cachedModule_lookup[$id]]);
 				return $this->_cachedModule[$this->_cachedModule_lookup[$id]];
 			} else {
 				$sql = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE mid = '" . $id . "'";
@@ -74,7 +74,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 					$myrow = $this->db->fetchArray($result);
 					$module->assignVars($myrow);
 					// load module config
-					if ($loadConfig) self::loadConfig($module);
+					if ($loadConfig) $this->loadConfig($module);
 					// cache module
 					$this->_cachedModule_lookup[$id] = $module->getVar("dirname");
 					$this->_cachedModule[$module->getVar('dirname')] = $module;
@@ -96,7 +96,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		if (!empty($this->_cachedModule[$dirname]) &&
 			$this->_cachedModule[$dirname]->getVar('dirname') == $dirname
 		) {
-			if ($loadConfig) self::loadConfig($this->_cachedModule[$dirname]);
+			if ($loadConfig) $this->loadConfig($this->_cachedModule[$dirname]);
 			return $this->_cachedModule[$dirname];
 		} else {
 			$module = FALSE;
@@ -108,7 +108,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 				$myrow = $this->db->fetchArray($result);
 				$module->assignVars($myrow);
 				// load module config
-				if ($loadConfig) self::loadConfig($module);
+				if ($loadConfig) $this->loadConfig($module);
 				// cache module
 				$this->_cachedModule[$dirname] = $module;
 				$this->_cachedModule_lookup[$module->getVar('mid')] = $module->getVar("dirname");
@@ -330,7 +330,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getList($criteria = NULL, $dirname_as_key = FALSE) {
 		$ret = array();
-		$modules = self::getObjects($criteria, TRUE);
+		$modules = $this->getObjects($criteria, TRUE);
 		foreach (array_keys($modules) as $i) {
 			if (!$dirname_as_key) {
 				$ret[$i] = $modules[$i]->getVar('name');
@@ -396,7 +396,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 				}
 			}
 		}
-		if (!self::checkModuleAccess($module, $inAdmin)) {
+		if (!$this->checkModuleAccess($module, $inAdmin)) {
 			redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
 		}
 		if ($module) $module->launch();
