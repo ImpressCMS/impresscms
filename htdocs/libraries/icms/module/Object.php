@@ -53,23 +53,23 @@ class icms_module_Object extends icms_core_Object {
 	 */
 	public function __construct() {
 		parent::__construct();
-		parent::initVar('mid', XOBJ_DTYPE_INT, null, false);
-		parent::initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
-		parent::initVar('version', XOBJ_DTYPE_INT, 100, false);
-		parent::initVar('last_update', XOBJ_DTYPE_INT, null, false);
-		parent::initVar('weight', XOBJ_DTYPE_INT, 0, false);
-		parent::initVar('isactive', XOBJ_DTYPE_INT, 1, false);
-		parent::initVar('dirname', XOBJ_DTYPE_OTHER, null, true);
-		parent::initVar('hasmain', XOBJ_DTYPE_INT, 0, false);
-		parent::initVar('hasadmin', XOBJ_DTYPE_INT, 0, false);
-		parent::initVar('hassearch', XOBJ_DTYPE_INT, 0, false);
-		parent::initVar('hasconfig', XOBJ_DTYPE_INT, 0, false);
-		parent::initVar('hascomments', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('mid', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
+		$this->initVar('version', XOBJ_DTYPE_INT, 100, false);
+		$this->initVar('last_update', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('weight', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('isactive', XOBJ_DTYPE_INT, 1, false);
+		$this->initVar('dirname', XOBJ_DTYPE_OTHER, null, true);
+		$this->initVar('hasmain', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('hasadmin', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('hassearch', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('hasconfig', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('hascomments', XOBJ_DTYPE_INT, 0, false);
 		// RMV-NOTIFY
-		parent::initVar('hasnotification', XOBJ_DTYPE_INT, 0, false);
-		parent::initVar('dbversion', XOBJ_DTYPE_INT, 0, false);
-		parent::initVar('modname', XOBJ_DTYPE_OTHER, null, true);
-		parent::initVar('ipf', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('hasnotification', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('dbversion', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('modname', XOBJ_DTYPE_OTHER, null, true);
+		$this->initVar('ipf', XOBJ_DTYPE_INT, 0, false);
 	}
 
 	/**
@@ -90,19 +90,19 @@ class icms_module_Object extends icms_core_Object {
 	 * @return void
 	 */
 	public function registerClassPath($isactive = NULL) {
-		if (parent::getVar("dirname") == "system") return;
-		$class_path = ICMS_ROOT_PATH . "/modules/" . parent::getVar("dirname") . "/class";
+		if ($this->getVar("dirname") == "system") return;
+		$class_path = ICMS_ROOT_PATH . "/modules/" . $this->getVar("dirname") . "/class";
 
 		// check if class path exists
 		if (!is_dir($class_path)) return;
 
 		// check if module is active (only if applicable)
-		if ($isactive !== NULL && parent::getVar("isactive") != (int) $isactive) return;
+		if ($isactive !== NULL && $this->getVar("isactive") != (int) $isactive) return;
 
 		// register class path
-		if (parent::getVar("ipf")) {
-			$modname = (parent::getVar("modname") != "") ?
-				parent::getVar("modname") : parent::getVar("dirname");
+		if ($this->getVar("ipf")) {
+			$modname = ($this->getVar("modname") != "") ?
+				$this->getVar("modname") : $this->getVar("dirname");
 			icms_Autoloader::register($class_path, "mod_" . $modname);
 		} else {
 			icms_Autoloader::register($class_path);
@@ -116,10 +116,10 @@ class icms_module_Object extends icms_core_Object {
 	 * @param   boolean $verbose
 	 **/
 	public function loadInfoAsVar($dirname, $verbose = true) {
-		if (!isset($this->modinfo)) {self::loadInfo($dirname, $verbose);}
-		parent::setVar('name', $this->modinfo['name'], true);
-		parent::setVar('version', (int) (100 * ($this->modinfo['version'] + 0.001)), true);
-		parent::setVar('dirname', $this->modinfo['dirname'], true);
+		if (!isset($this->modinfo)) {$this->loadInfo($dirname, $verbose);}
+		$this->setVar('name', $this->modinfo['name'], true);
+		$this->setVar('version', (int) (100 * ($this->modinfo['version'] + 0.001)), true);
+		$this->setVar('dirname', $this->modinfo['dirname'], true);
 		$hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
 		$hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;
 		$hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1) ? 1 : 0;
@@ -127,16 +127,16 @@ class icms_module_Object extends icms_core_Object {
 		$hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1) ? 1 : 0;
 		// RMV-NOTIFY
 		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
-		parent::setVar('hasmain', $hasmain);
-		parent::setVar('hasadmin', $hasadmin);
-		parent::setVar('hassearch', $hassearch);
-		parent::setVar('hasconfig', $hasconfig);
-		parent::setVar('hascomments', $hascomments);
+		$this->setVar('hasmain', $hasmain);
+		$this->setVar('hasadmin', $hasadmin);
+		$this->setVar('hassearch', $hassearch);
+		$this->setVar('hasconfig', $hasconfig);
+		$this->setVar('hascomments', $hascomments);
 		// RMV-NOTIFY
-		parent::setVar('hasnotification', $hasnotification);
-		parent::setVar('modname', isset($this->modinfo['modname']) ? $this->modinfo['modname'] : "", true);
+		$this->setVar('hasnotification', $hasnotification);
+		$this->setVar('modname', isset($this->modinfo['modname']) ? $this->modinfo['modname'] : "", true);
 		$ipf = (isset($this->modinfo['object_items']) && is_array($this->modinfo['object_items'])) ? 1 : 0;
-		parent::setVar('ipf', $ipf);
+		$this->setVar('ipf', $ipf);
 	}
 
 	/**
@@ -147,7 +147,7 @@ class icms_module_Object extends icms_core_Object {
 	 * If {@link $name} is set, returns a single module information item as string.
 	 **/
 	public function &getInfo($name = null) {
-		if (!isset($this->modinfo)) {self::loadInfo(parent::getVar('dirname'));}
+		if (!isset($this->modinfo)) {$this->loadInfo($this->getVar('dirname'));}
 		if (isset($name)) {
 			if (isset($this->modinfo[$name])) {return $this->modinfo[$name];}
 			$return = false;
@@ -162,7 +162,7 @@ class icms_module_Object extends icms_core_Object {
 	 * @return int dbversion
 	 **/
 	public function getDBVersion() {
-		$ret = parent::getVar('dbversion');
+		$ret = $this->getVar('dbversion');
 		return $ret;
 	}
 
@@ -172,8 +172,8 @@ class icms_module_Object extends icms_core_Object {
 	 * @return	string $ret or FALSE on fail
 	 */
 	public function mainLink() {
-		if (parent::getVar('hasmain') == 1) {
-			$ret = '<a href="' . ICMS_URL . '/modules/' . parent::getVar('dirname') . '/">' . parent::getVar('name') . '</a>';
+		if ($this->getVar('hasmain') == 1) {
+			$ret = '<a href="' . ICMS_URL . '/modules/' . $this->getVar('dirname') . '/">' . $this->getVar('name') . '</a>';
 			return $ret;
 		}
 		return false;
@@ -186,8 +186,8 @@ class icms_module_Object extends icms_core_Object {
 	 */
 	public function subLink() {
 		$ret = array();
-		if (self::getInfo('sub') && is_array(self::getInfo('sub'))) {
-			foreach (self::getInfo('sub') as $submenu) {
+		if ($this->getInfo('sub') && is_array($this->getInfo('sub'))) {
+			foreach ($this->getInfo('sub') as $submenu) {
 				$ret[] = array('name' => $submenu['name'], 'url' => $submenu['url']);
 			}
 		}
@@ -198,8 +198,8 @@ class icms_module_Object extends icms_core_Object {
 	 * Load the admin menu for the module
 	 */
 	public function loadAdminMenu() {
-		if (self::getInfo('adminmenu') && self::getInfo('adminmenu') != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . parent::getVar('dirname') . '/' . self::getInfo('adminmenu'))) {
-			include_once ICMS_ROOT_PATH . '/modules/' . parent::getVar('dirname') . '/' . self::getInfo('adminmenu');
+		if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
 			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu;}
 		}
@@ -211,7 +211,7 @@ class icms_module_Object extends icms_core_Object {
 	 * @return	string $this->adminmenu
 	 */
 	public function &getAdminMenu() {
-		if (!isset($this->adminmenu)) {self::loadAdminMenu();}
+		if (!isset($this->adminmenu)) {$this->loadAdminMenu();}
 		return $this->adminmenu;
 	}
 
@@ -221,7 +221,7 @@ class icms_module_Object extends icms_core_Object {
 	 * @return	string $this->adminmenu
 	 */
 	public function &getAdminHeaderMenu() {
-		if (!isset($this->adminheadermenu)) {self::loadAdminMenu();}
+		if (!isset($this->adminheadermenu)) {$this->loadAdminMenu();}
 		return $this->adminheadermenu;
 	}
 
@@ -258,13 +258,13 @@ class icms_module_Object extends icms_core_Object {
 	 * @return  mixed   Search result or False if fail.
 	 **/
 	public function search($term = '', $andor = 'AND', $limit = 0, $offset = 0, $userid = 0) {
-		if (parent::getVar('hassearch') != 1) {return false;}
-		$search = & self::getInfo('search');
-		if (parent::getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
+		if ($this->getVar('hassearch') != 1) {return false;}
+		$search = & $this->getInfo('search');
+		if ($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
 			return false;
 		}
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . parent::getVar('dirname') . '/' . $search['file'])) {
-			include_once ICMS_ROOT_PATH . '/modules/' . parent::getVar('dirname') . '/' . $search['file'];
+		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file'])) {
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file'];
 		} else {
 			return false;
 		}
@@ -307,12 +307,12 @@ class icms_module_Object extends icms_core_Object {
 
 	/**#@+
 	 * For backward compatibility only!
-	 * @deprecated Use parent::getVar('mid') instead
+	 * @deprecated Use $this->getVar('mid') instead
 	 * @todo		Remove in version 1.4
 	 */
 	public function mid() {
 		icms_core_Debug::setDeprecated('getVar("mid")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return parent::getVar('mid');
+		return $this->getVar('mid');
 	}
 	/**
 	 *
@@ -321,7 +321,7 @@ class icms_module_Object extends icms_core_Object {
 	 */
 	public function dirname() {
 		icms_core_Debug::setDeprecated('getVar("dirname")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return parent::getVar('dirname');
+		return $this->getVar('dirname');
 	}
 	/**
 	 *
@@ -330,7 +330,7 @@ class icms_module_Object extends icms_core_Object {
 	 */
 	public function name() {
 		icms_core_Debug::setDeprecated('getVar("name")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return parent::getVar('name');
+		return $this->getVar('name');
 	}
 	/**
 	 *
