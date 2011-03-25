@@ -32,7 +32,7 @@ if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_sit
 }
 
 if (! $allowed) {
-	include_once ICMS_ROOT_PATH . "/include/customtag.php";
+	include_once ICMS_ROOT_PATH . "/plugins/preloads/customtag.php";
 
 	$xoopsThemeFactory = new icms_view_theme_Factory ( );
 	$xoopsThemeFactory->allowedThemes = $icmsConfig ['theme_set_allowed'];
