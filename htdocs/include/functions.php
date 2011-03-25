@@ -340,7 +340,7 @@ function CloseWaitBox()
  * @todo Move to a static class method - text validation/formatting
  * new filter can use icms_core_DataFilter::checkVar($email, 'email', $antispam, $blacklist)
  */
-function checkEmail($email, $antispam = false, $blacklist = false)
+function checkEmail($email, $antispam = 0, $blacklist = 0)
 {
 	icms_core_Debug::setDeprecated('icms_core_DataFilter->checkVar - type = email, $options1 = true/false ($antispam),
 		$options2 = true/false ($blacklist)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
