@@ -100,7 +100,8 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		if ($editor) {
 			return $this->htmlEditor->render();
 		}
-		$ele_name = $this->getName();
+		$name = $this->getName();
+		$ele_name = $name . '_tarea';
 		$ret = "<a name='moresmiley'></a>"
 			. "<img onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/url.gif' alt='url' onclick='xoopsCodeUrl(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES) . "\");' />&nbsp;"
 			. "<img onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/email.gif' alt='email' onclick='javascript:xoopsCodeEmail(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTEREMAIL, ENT_QUOTES) . "\");' />&nbsp;"
@@ -186,8 +187,8 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 			. "Addtext' size='20' />&nbsp;<input type='button' onclick='xoopsCodeText(\"" . $ele_name . "\", \"" 
 			. $this->_hiddenText . "\", \"" . htmlspecialchars(_ENTERTEXTBOX, ENT_QUOTES) 
 			. "\")' class='formButton' value='" . _ADD . "' /><br /><br />"
-			. "<textarea id='" . $ele_name  . "_tarea"
-					. "' name='" . $ele_name 
+			. "<textarea id='" . $ele_name  . ""
+					. "' name='" . $name 
 					. "' onselect=\"xoopsSavePosition('" . $ele_name . "');\""
 					. "' onclick=\"xoopsSavePosition('" . $ele_name . "');\""
 					. "' onkeyup=\"xoopsSavePosition('" . $ele_name . "');\""
