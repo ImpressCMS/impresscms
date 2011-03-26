@@ -110,7 +110,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		$jscript = '';
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 			$extension = icms_core_DataFilter::loadExtension($key);
-			$func = "render_ {$key}";
+			$func = "render_{$key}";
 			if (function_exists($func)) {
 				@list($encode, $js) = $func($ele_name);
 				if (empty($encode)) continue;
