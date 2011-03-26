@@ -402,13 +402,13 @@ function xoopsCodeCode(id, enterCodePhrase, enterCodeLangPhrase, CodeLangTypePhr
 			text2 = prompt(errorCodeLangPhrase + "\n" + CodeLangTypePhrase,"");
 		}
 		if ( text2 == "p" || text2 == "P" ) {
-			text2 = "php";
+			text2 = "_php";
 		} else if ( text2 == "c" || text2 == "C" ) {
-			text2 = "css";
+			text2 = "_css";
 		} else if ( text2 == "j" || text2 == "J" ) {
-			text2 = "js";
+			text2 = "_js";
 		} else if ( text2 == "h" || text2 == "H" ) {
-			text2 = "html";
+			text2 = "_html";
 		} else {
 			text2 = "";
 		}
