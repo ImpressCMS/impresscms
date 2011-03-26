@@ -370,7 +370,7 @@ class icms_db_legacy_updater_Table {
 	 */
 	function createTable() {
 		$query = $this->getStructure();
-		$query = "CREATE TABLE `" . $this->name() . "` (" . $query . ") TYPE=MyISAM";
+		$query = "CREATE TABLE `" . $this->name() . "` (" . $query . ")";
 
 		if ($this->force) {
 			$ret = $this->_db->queryF($query);

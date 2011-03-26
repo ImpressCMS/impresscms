@@ -315,7 +315,7 @@ class upgrade_220
               KEY visible (visible),
               KEY isactive_visible_mid (isactive,visible,mid),
               KEY mid_funcnum (mid,func_num)
-            ) TYPE=MyISAM;
+            );
             ";
 		$xoopsDB->queryF($sql);
 

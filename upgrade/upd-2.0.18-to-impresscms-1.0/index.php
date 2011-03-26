@@ -66,7 +66,7 @@ class upgrade_impcms05 {
 				  block_default int(1) NOT NULL default '0',
 				  block_type varchar(1) NOT NULL default 'L',
 				  PRIMARY KEY  (`id`)
-				  ) TYPE=MyISAM;";
+				  );";
 			$this->query($query);
 			$pos = array ();
 			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (1,'canvas_left','_AM_SBLEFT',NULL,1,'L');";
