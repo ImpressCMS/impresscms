@@ -143,7 +143,7 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
 		$ret = $this->tinymce->render ();
 		$ret .= parent::render ();
 
-		$ret .= '<a href="#" id="switchtinymce" title="'._TOGGLETINY.'" onclick="showMCE(\''.$this->_name.'\'); return false;" style="float:'._GLOBAL_RIGHT.'; display:box; background:#F0F0EE; padding:3px; margin-right:2px; border: 1px solid #ccc; border-top: none;">'._TOGGLETINY.'</a>';
+		$ret .= '<a href="#" id="switchtinymce" title="'._TOGGLETINY.'" onclick="showMCE(\''.$this->_name.'_tarea\'); return false;" style="float:'._GLOBAL_RIGHT.'; display:box; background:#F0F0EE; padding:3px; margin-right:2px; border: 1px solid #ccc; border-top: none;">'._TOGGLETINY.'</a>';
 		$ret .= '<br clear="'._GLOBAL_RIGHT.'" />';
 
 		return $ret;
