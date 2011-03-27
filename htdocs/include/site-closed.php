@@ -6,85 +6,85 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		phppp (infomax@gmail.com)
  * @since		Xoops 2.0.17
- * @package core
- * @version		$Id$
+ * @package 	core
+ * @version		SVN: $Id$
  */
 
-if (! defined ( "ICMS_ROOT_PATH" )) {
-	die ( "ImpressCMS root path not defined" );
-}
+defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
 
 global $icmsConfig, $xoopsOption;
 
-$allowed = false;
+$allowed = FALSE;
 if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_site']) {
-	$allowed = true;
-} elseif (is_object ( icms::$user )) {
-	foreach ( icms::$user->getGroups () as $group) {
-		if (in_array ( $group, $icmsConfig ['closesite_okgrp'] ) || ICMS_GROUP_ADMIN == $group) {
-			$allowed = true;
+	$allowed = TRUE;
+} elseif (is_object(icms::$user)) {
+	foreach (icms::$user->getGroups() as $group) {
+		if (in_array($group, $icmsConfig['closesite_okgrp']) || ICMS_GROUP_ADMIN == $group) {
+			$allowed = TRUE;
 			break;
 		}
 	}
-} elseif (! empty ( $_POST ['xoops_login'] )) {
-	include_once ICMS_ROOT_PATH . '/include/checklogin.php';
-	exit ();
+} elseif (! empty($_POST['xoops_login'])) {
+	include_once ICMS_INCLUDE_PATH . '/checklogin.php';
+	exit();
 }
 
 if (! $allowed) {
-	include_once ICMS_ROOT_PATH . "/plugins/preloads/customtag.php";
+	include_once ICMS_PLUGINS_PATH . "/preloads/customtag.php";
 
-	$xoopsThemeFactory = new icms_view_theme_Factory ( );
-	$xoopsThemeFactory->allowedThemes = $icmsConfig ['theme_set_allowed'];
-	$xoopsThemeFactory->defaultTheme = $icmsConfig ['theme_set'];
-	$xoTheme = & $xoopsThemeFactory->createInstance ( array ("plugins" => array ( ) ) );
-	$xoTheme->addScript ( '/include/xoops.js', array ('type' => 'text/javascript' ) );
-	$xoTheme->addStylesheet(ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
-	$xoopsTpl = & $xoTheme->template;
+	$xoopsThemeFactory = new icms_view_theme_Factory();
+	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
+	$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
+	$xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
+	$xoTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
+	$xoTheme->addStylesheet(ICMS_URL . "/icms" 
+		. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? "_rtl" : "") . ".css", array("media" => "screen"));
+	$xoopsTpl =& $xoTheme->template;
 
 	$xoopsTpl->assign(array(
-		'icms_theme' => $icmsConfig ['theme_set'],
-		'icms_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig ['theme_set'] . '/',
-		'icms_themecss' => xoops_getcss ( $icmsConfig ['theme_set'] ),
-		'icms_requesturi' => htmlspecialchars ( $_SERVER ['REQUEST_URI'], ENT_QUOTES ),
-		'icms_sitename' => htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ),
-		'icms_slogan' => htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ),
-		'icms_dirname' => @$icmsModule ? $icmsModule->getVar ( 'dirname' ) : 'system',
-		'icms_banner' => $icmsConfig ['banners'] ? xoops_getbanner () : '&nbsp;',
-		'icms_pagetitle' => isset ( $icmsModule ) && is_object ( $icmsModule ) ? $icmsModule->getVar ( 'name' ) : htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ),
+		'icms_theme' => $icmsConfig['theme_set'],
+		'icms_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig['theme_set'] . '/',
+		'icms_themecss' => xoops_getcss($icmsConfig['theme_set']),
+		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
+		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
+		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
+		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
+		'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) 
+			? $icmsModule->getVar('name') 
+			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'lang_login' => _LOGIN,
 		'lang_username' => _USERNAME,
 		'lang_password' => _PASSWORD,
-		'lang_siteclosemsg' => $icmsConfig ['closesite_text'] )
+		'lang_siteclosemsg' => $icmsConfig['closesite_text'])
 	);
 
-	foreach ( $icmsConfigMetaFooter as $name => $value) {
-		if (substr ( $name, 0, 5 ) == 'meta_') {
-			$xoopsTpl->assign ( "xoops_$name", htmlspecialchars ( $value, ENT_QUOTES ) );
+	foreach ($icmsConfigMetaFooter as $name => $value) {
+		if (substr($name, 0, 5) == 'meta_') {
+			$xoopsTpl->assign("xoops_$name", htmlspecialchars($value, ENT_QUOTES));
 		} else {
 			// prefix each tag with 'xoops_'
-			$xoopsTpl->assign ( "xoops_$name", $value );
+			$xoopsTpl->assign("xoops_$name", $value);
 		}
 	}
-	$xoopsTpl->debugging = false;
+	$xoopsTpl->debugging = FALSE;
 	$xoopsTpl->debugging_ctrl = 'NONE';
 
 	$xoopsTpl->caching = 0;
 
 	global $icms_customtag_handler;
-	$customtags_array = array ( );
-	if (is_object ( $xoopsTpl )) {
-		foreach ( $icms_customtag_handler->getCustomtagsByName() as $k => $v) {
-			$customtags_array [$k] = $v->render ();
+	$customtags_array = array();
+	if (is_object($xoopsTpl)) {
+		foreach ($icms_customtag_handler->getCustomtagsByName() as $k => $v) {
+			$customtags_array[$k] = $v->render();
 		}
-		$xoopsTpl->assign ( 'icmsCustomtags', $customtags_array );
+		$xoopsTpl->assign('icmsCustomtags', $customtags_array);
 	}
 
-	$xoopsTpl->display ( 'db:system_siteclosed.html' );
-	exit ();
+	$xoopsTpl->display('db:system_siteclosed.html');
+	exit();
 }
-unset ( $allowed, $group );
+unset($allowed, $group);
 
-return true;
+return TRUE;
 
-?>
