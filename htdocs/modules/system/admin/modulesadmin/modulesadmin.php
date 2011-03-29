@@ -1255,10 +1255,12 @@ function icms_module_update($dirname) {
 								for ($k = 0; $k < $btcount; $k++) {
 									if (!$tplfile_handler->delete($tplfiles[$k])) {
 										$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_BLOCK_TMPLT_DELETE_FAILED . '</span>',
+											'<strong>' . $tplfiles[$k]->getVar('tpl_file') . '</strong>',
 											'<strong>' . $tplfiles[$k]->getVar('tpl_id') . '</strong>');
 									} else {
 										$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_BLOCK_TMPLT_DELETED,
-											'<strong>' . $tplfiles[$k]->getVar('tpl_file') . '</strong>');
+											'<strong>' . $tplfiles[$k]->getVar('tpl_file') . '</strong>',
+											'<strong>' . $tplfiles[$k]->getVar('tpl_id') . '</strong>');
 									}
 								}
 							}

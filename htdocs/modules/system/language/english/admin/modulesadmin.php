@@ -99,7 +99,7 @@ define('_MD_AM_BLOCK_DELETE_FAIL', 'ERROR: Could not delete block %1$s. Block ID
 define('_MD_AM_BLOCK_DELETED', 'Block %1$s deleted. Block ID: %2$s');
 define('_MD_AM_BLOCK_TMPLT_DELETE_FAILED', 'ERROR: Could not delete block template %1$s  from the database. Template ID: %2$s');
 define('_MD_AM_BLOCK_TMPLT_DELETED', 'Block template %1$s  deleted from the database. Template ID: %2$s');
-define('_MD_AM_BLOCK_ACCESS_FAIL', 'ERROR: Could not add block access right. Block ID: %1$s  Group ID: %2$S');
+define('_MD_AM_BLOCK_ACCESS_FAIL', 'ERROR: Could not add block access right. Block ID: %1$s  Group ID: %2$s');
 define('_MD_AM_BLOCK_ACCESS_ADDED', 'Added block access right. Block ID: %1$s, Group ID: %2$s');
 
 define('_MD_AM_CONFIG_ADDING', 'Adding module config data...');
