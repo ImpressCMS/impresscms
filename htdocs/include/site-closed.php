@@ -30,7 +30,6 @@ if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_sit
 }
 
 if (! $allowed) {
-	include_once ICMS_PLUGINS_PATH . "/preloads/customtag.php";
 
 	$xoopsThemeFactory = new icms_view_theme_Factory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
@@ -72,7 +71,7 @@ if (! $allowed) {
 
 	$xoopsTpl->caching = 0;
 
-	global $icms_customtag_handler;
+	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 	$customtags_array = array();
 	if (is_object($xoopsTpl)) {
 		foreach ($icms_customtag_handler->getCustomtagsByName() as $k => $v) {
