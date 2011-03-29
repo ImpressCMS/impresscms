@@ -19,7 +19,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	 /* Banners Administration Functions
 	 */
 	function BannersAdmin() {
-		global $xoopsConfig, $icmsModule;
+		global $icmsConfig, $icmsModule;
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/banners/images/banners_big.png)">' . _MD_AM_BANS . '</div><br />';
 		// Banners List
@@ -35,11 +35,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		. "<td align='center'>" . _AM_CLINAME . "</td>"
 		. "<td align='center'>" . _AM_FUNCTION . "</td></tr><tr align='center'>";
 		$result = icms::$xoopsDB->query("SELECT bid, cid, imptotal, impmade, clicks, date FROM " . icms::$xoopsDB->prefix("banner") . " ORDER BY bid");
-		$myts =& icms_core_Textsanitizer::getInstance();
 		while (list($bid, $cid, $imptotal, $impmade, $clicks, $date) = icms::$xoopsDB->fetchRow($result)) {
 			$result2 = icms::$xoopsDB->query("SELECT cid, name FROM " . icms::$xoopsDB->prefix("bannerclient") . " WHERE cid='" . (int) $cid . "'");
 			list($cid, $name) = icms::$xoopsDB->fetchRow($result2);
-			$name = $myts->htmlSpecialChars($name);
+			$name = icms_core_DataFilter::htmlSpecialChars($name);
 			if ($impmade == 0) {
 				$percent = 0;
 			} else {
@@ -79,7 +78,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		while (list($bid, $cid, $impressions, $clicks, $datestart, $dateend) = icms::$xoopsDB->fetchRow($result)) {
 			$result2 = icms::$xoopsDB->query("SELECT cid, name FROM " . icms::$xoopsDB->prefix("bannerclient") . " WHERE cid='". (int) $cid . "'");
 			list($cid, $name) = icms::$xoopsDB->fetchRow($result2);
-			$name = $myts->htmlSpecialChars($name);
+			$name = icms_core_DataFilter::htmlSpecialChars($name);
 			$percent = substr(100 * $clicks / $impressions, 0, 5);
 			echo "<td align='center'>" . icms_conv_nr2local($bid)
 			. "</td><td align='center'>" . icms_conv_nr2local($impressions)
@@ -133,7 +132,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			. _AM_CLINAMET . "<select name='cid'>";
 			$result = icms::$xoopsDB->query("SELECT cid, name FROM " . icms::$xoopsDB->prefix("bannerclient"));
 			while (list($cid, $name) = icms::$xoopsDB->fetchRow($result)) {
-				$name = $myts->htmlSpecialChars($name);
+				$name = icms_core_DataFilter::htmlSpecialChars($name);
 				echo "<option value='$cid'>$name</option>";
 			}
 			echo "</select><br />"
@@ -173,8 +172,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	 * @param int $bid banner id
 	 */
 	function BannerDelete($bid) {
-		global $xoopsConfig, $icmsModule;
-		$myts =& icms_core_Textsanitizer::getInstance();
+		global $icmsConfig, $icmsModule;
 		icms_cp_header();
 		$result=icms::$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM " . icms::$xoopsDB->prefix("banner") . " where bid='". (int) $bid . "'");
 		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = icms::$xoopsDB->fetchRow($result);
@@ -183,7 +181,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo "<h4>" . _AM_DELEBNR . "</h4>";
 		if ($htmlbanner) {
-			echo $myts->displayTarea($htmlcode, 1);
+			echo icms_core_DataFilter::checkVar($htmlcode, 'html', 'output');
 		} else {
 			if (strtolower(substr($imageurl, strrpos($imageurl, ".")))==".swf") {
 				echo '<object type="application/x-shockwave-flash" data="' . $imageurl . '" width="468" height="60">';
@@ -197,7 +195,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		echo "<a href='$clickurl'>$clickurl</a><br /><br /><table width='100%' border='0'><tr align='center'><td align='center'>" . _AM_BANNERID . "</td><td align='center'>" . _AM_IMPRESION . "</td><td align='center'>" . _AM_IMPLEFT . "</td><td align='center'>" . _AM_CLICKS . "</td><td align='center'>" . _AM_NCLICKS . "</td><td align='center'>" . _AM_CLINAME . "</td></tr><tr align='center'>";
 		$result2 = icms::$xoopsDB->query("SELECT cid, name FROM " . icms::$xoopsDB->prefix("bannerclient") . " WHERE cid='". (int) $cid . "'");
 		list($cid, $name) = icms::$xoopsDB->fetchRow($result2);
-		$name = $myts->htmlSpecialChars($name);
+		$name = icms_core_DataFilter::htmlSpecialChars($name);
 		$percent = substr(100 * $clicks / $impmade, 0, 5);
 		if ($imptotal == 0) {
 			$left = 'unlimited';
@@ -220,16 +218,15 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	 * @param int $bid banner id
 	 */
 	function BannerEdit($bid) {
-		global $xoopsConfig, $icmsModule;
+		global $icmsConfig, $icmsModule;
 		$bid = (int) $bid;
 		icms_cp_header();
-		$myts =& icms_core_Textsanitizer::getInstance();
 		$result=icms::$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM " . icms::$xoopsDB->prefix("banner") . " where bid='". (int) $bid . "'");
 		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = icms::$xoopsDB->fetchRow($result);
 		echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo"<h4>" . _AM_EDITBNR . "</h4>";
 		if ($htmlbanner) {
-			echo $myts->displayTarea($htmlcode, 1, 0, 0, 0, 0);
+			echo icms_core_DataFilter::checkVar($htmlcode, 'html', 'input');
 		} else {
 			if (strtolower(substr($imageurl, strrpos($imageurl, ".")))==".swf") {
 				echo '<object type="application/x-shockwave-flash" data="' . $imageurl . '" width="468" height="60">';
@@ -244,11 +241,11 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			. _AM_CLINAMET . "<select name='cid'>\n";
 		$result = icms::$xoopsDB->query("SELECT cid, name FROM " . icms::$xoopsDB->prefix("bannerclient") . " where cid='". (int) $cid . "'");
 		list($cid, $name) = icms::$xoopsDB->fetchRow($result);
-		$name = $myts->htmlSpecialChars($name);
+		$name = icms_core_DataFilter::htmlSpecialChars($name);
 		echo "<option value='$cid' selected='selected'>$name</option>";
 		$result = icms::$xoopsDB->query("SELECT cid, name FROM " . icms::$xoopsDB->prefix("bannerclient"));
 		while (list($ccid, $name) = icms::$xoopsDB->fetchRow($result)) {
-			$name = $myts->htmlSpecialChars($name);
+			$name = icms_core_DataFilter::htmlSpecialChars($name);
 			if ($cid != $ccid) {
 				echo "<option value='$ccid'>$name</option>";
 			}
@@ -265,17 +262,25 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		. _AM_USEHTML;
 		if ($htmlbanner) {
 			echo " <input type='checkbox' name='htmlbanner' value='1' checked='checked' />";
+			echo "<br />" . _AM_CODEHTML
+			. "<br /><textarea name='htmlcode' rows='6' cols='60'>" . icms_core_DataFilter::checkVar($htmlcode, 'html', 'input')
+			. "</textarea><br /><input type='hidden' name='bid' value='$bid' />"
+			. "<input type='hidden' name='imptotal' value='$imptotal' />"
+			. "<input type='hidden' name='fct' value='banners' />"
+			. icms::$security->getTokenHTML()
+			. "<input type='hidden' name='op' value='BannerChange' />"
+			. "<input type='submit' value='" . _AM_CHGBNR . "' /></form>";
 		} else {
 			echo " <input type='checkbox' name='htmlbanner' value='1' />";
+			echo "<br />" . _AM_CODEHTML
+			. "<br /><textarea name='htmlcode' rows='6' cols='60'>" . icms_core_DataFilter::checkVar($htmlcode, 'text', 'input')
+			. "</textarea><br /><input type='hidden' name='bid' value='$bid' />"
+			. "<input type='hidden' name='imptotal' value='$imptotal' />"
+			. "<input type='hidden' name='fct' value='banners' />"
+			. icms::$security->getTokenHTML()
+			. "<input type='hidden' name='op' value='BannerChange' />"
+			. "<input type='submit' value='" . _AM_CHGBNR . "' /></form>";
 		}
-		echo "<br />" . _AM_CODEHTML
-		. "<br /><textarea name='htmlcode' rows='6' cols='60'>" . $myts->displayTarea($htmlcode, $htmlbanner, 0, 0, 0, 0)
-		. "</textarea><br /><input type='hidden' name='bid' value='$bid' />"
-		. "<input type='hidden' name='imptotal' value='$imptotal' />"
-		. "<input type='hidden' name='fct' value='banners' />"
-		. icms::$security->getTokenHTML()
-		. "<input type='hidden' name='op' value='BannerChange' />"
-		. "<input type='submit' value='" . _AM_CHGBNR . "' /></form>";
 		echo "</td></tr></table>";
 		icms_cp_footer();
 	}
@@ -285,12 +290,11 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	 * @param int $cid client id
 	 */
 	function BannerClientDelete($cid) {
-		global $xoopsConfig, $icmsModule;
-		$myts =& icms_core_Textsanitizer::getInstance();
+		global $icmsConfig, $icmsModule;
 		icms_cp_header();
 		$result = icms::$xoopsDB->query("SELECT cid, name FROM " . icms::$xoopsDB->prefix("bannerclient") . " WHERE cid='". (int) $cid . "'");
 		list($cid, $name) = icms::$xoopsDB->fetchRow($result);
-		$name = $myts->htmlSpecialChars($name);
+		$name = icms_core_DataFilter::htmlSpecialChars($name);
 		echo "<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo "<h4>" . _AM_DELEADC . "</h4>" . sprintf(_AM_SUREDELCLI, $name) . "<br /><br />";
 		$result2 = icms::$xoopsDB->query("SELECT imageurl, clickurl, htmlbanner, htmlcode FROM " . icms::$xoopsDB->prefix("banner") . " WHERE cid='". (int) $cid . "'");
@@ -305,7 +309,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			$clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
 			$bannerobject = "";
 			if ($htmlbanner) {
-				$bannerobject = $myts->displayTarea($htmlcode, 1);
+				$bannerobject = icms_core_DataFilter::checkVar($htmlcode, 'html', 'output');
 			} else {
 				$bannerobject = '<div><a href="' . $clickurl . '" rel="external">';
 				if (strtolower(substr($imageurl, strrpos($imageurl, ".")))==".swf") {
@@ -331,17 +335,16 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	 * @param int $cid client id
 	 */
 	function BannerClientEdit($cid) {
-		global $xoopsConfig, $icmsModule;
-		$myts =& icms_core_Textsanitizer::getInstance();
+		global $icmsConfig, $icmsModule;
 		icms_cp_header();
 		$result = icms::$xoopsDB->query("SELECT name, contact, email, login, passwd, extrainfo FROM " . icms::$xoopsDB->prefix("bannerclient") . " WHERE cid='". (int) $cid . "'");
 		list($name, $contact, $email, $login, $passwd, $extrainfo) = icms::$xoopsDB->fetchRow($result);
-		$name = $myts->htmlSpecialChars($name);
-		$contact = $myts->htmlSpecialChars($contact);
-		$email = $myts->htmlSpecialChars($email);
-		$login = $myts->htmlSpecialChars($login);
-		$passwd = $myts->htmlSpecialChars($passwd);
-		$extrainfo = $myts->htmlSpecialChars($extrainfo);
+		$name = icms_core_DataFilter::htmlSpecialChars($name);
+		$contact = icms_core_DataFilter::htmlSpecialChars($contact);
+		$email = icms_core_DataFilter::htmlSpecialChars($email);
+		$login = icms_core_DataFilter::htmlSpecialChars($login);
+		$passwd = icms_core_DataFilter::htmlSpecialChars($passwd);
+		$extrainfo = icms_core_DataFilter::htmlSpecialChars($extrainfo);
 		echo "<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo "<h4>" . _AM_EDITADVCLI . "</h4><form action='admin.php' method='post'>"
 		. _AM_CLINAMET . "<input type='text' name='name' value='$name' size='30' maxlength='60' /><br />"
