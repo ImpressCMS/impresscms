@@ -12,12 +12,12 @@
 
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
 
-if ((int) $_GET['mid']) {
+if (is_int($_GET['mid'])) {
 	$module_handler = icms::handler('icms_module');
-	$versioninfo =& $module_handler->get((int) $_GET['mid']);
+	$versioninfo =& $module_handler->get($_GET['mid']);
 } else {
 	$mid = str_replace('..', '', trim($_GET['mid']));
-	if (file_exists(ICMS_MODULES_PATH . '/' . $mid . '/xoops_version.php') || file_exists(ICMS_MODULES_PATH . '/' . $mid . '/icms_version.php')) {
+	if (file_exists(ICMS_MODULES_PATH . '/' . $mid . '/icms_version.php') || file_exists(ICMS_MODULES_PATH . '/' . $mid . '/xoops_version.php')) {
 		$module_handler = icms::handler('icms_module');
 		$versioninfo =& $module_handler->create();
 		$versioninfo->loadInfo($mid);
@@ -30,7 +30,7 @@ if (!isset($versioninfo) || !is_object($versioninfo)) {
 //$css = getCss($theme);
 echo "<html>\n<head>\n"
 	. "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" . _CHARSET . "\"></meta>\n"
-	. "<title>" . htmlspecialchars($xoopsConfig['sitename']) . "</title>\n";
+	. "<title>" . htmlspecialchars($icmsConfig['sitename']) . "</title>\n";
 
 ?>
 	<script type="text/javascript">
