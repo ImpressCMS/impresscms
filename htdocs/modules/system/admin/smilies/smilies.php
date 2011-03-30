@@ -21,7 +21,6 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 function SmilesAdmin() {
 	$db =& icms_db_Factory::instance();
 	$url_smiles = ICMS_UPLOAD_URL;
-	$myts =& icms_core_Textsanitizer::getInstance();
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/smilies/images/smilies_big.png)">' . _AM_SMILESCONTROL . '</div><br />';
 
@@ -43,9 +42,9 @@ function SmilesAdmin() {
 				} else {
 					$class= 'odd';
 				}
-				$smiles['code'] = $myts->htmlSpecialChars($smiles['code']);
-				$smiles['smile_url'] = $myts->htmlSpecialChars($smiles['smile_url']);
-				$smiles['smile_emotion'] = $myts->htmlSpecialChars($smiles['emotion']);
+				$smiles['code'] = icms_core_DataFilter::htmlSpecialChars($smiles['code']);
+				$smiles['smile_url'] = icms_core_DataFilter::htmlSpecialChars($smiles['smile_url']);
+				$smiles['smile_emotion'] = icms_core_DataFilter::htmlSpecialChars($smiles['emotion']);
 				echo "<tr align='center' class='$class'>"
 					. "<td align='" . _GLOBAL_LEFT . "'>" . $smiles['code'] . "</td>"
 					. "<td><img src='" . $url_smiles . "/" . $smiles['smile_url'] . "' alt='' /></td>"
@@ -87,7 +86,6 @@ function SmilesAdmin() {
  */
 function SmilesEdit($id) {
 	$db =& icms_db_Factory::instance();
-	$myts =& icms_core_Textsanitizer::getInstance();
 	icms_cp_header();
 	echo '<a href="admin.php?fct=smilies">' . _AM_SMILESCONTROL .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_EDITSMILE . '<br /><br />';
 	if ($getsmiles = $db->query("SELECT * FROM " . $db->prefix("smiles") . " WHERE id = '". (int) $id . "'")) {
@@ -96,9 +94,9 @@ function SmilesEdit($id) {
 			//EMPTY
 		} else {
 			if ($smiles = $db->fetchArray($getsmiles)) {
-				$smiles['smile_code'] = $myts->htmlSpecialChars($smiles['code']);
-				$smiles['smile_url'] = $myts->htmlSpecialChars($smiles['smile_url']);
-				$smiles['smile_desc'] = $myts->htmlSpecialChars($smiles['emotion']);
+				$smiles['smile_code'] = icms_core_DataFilter::htmlSpecialChars($smiles['code']);
+				$smiles['smile_url'] = icms_core_DataFilter::htmlSpecialChars($smiles['smile_url']);
+				$smiles['smile_desc'] = icms_core_DataFilter::htmlSpecialChars($smiles['emotion']);
 				$smiles['smile_display'] = $smiles['display'];
 				$smiles['smile_form'] = _AM_EDITSMILE;
 				$smiles['op'] = 'SmilesSave';

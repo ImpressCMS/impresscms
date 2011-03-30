@@ -32,9 +32,9 @@ include_once ICMS_MODULES_PATH . "/system/admin/smilies/smilies.php";
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op']))
-	? trim(StopXSS($_GET['op']))
+	? trim(filter_input(INPUT_GET, 'op'))
 	: ((isset($_POST['op']))
-		? trim(StopXSS($_POST['op']))
+		? trim(filter_input(INPUT_POST, 'op'))
 		: 'SmilesAdmin');
 
 switch($op) {
@@ -51,7 +51,7 @@ switch($op) {
 			}
 			$smile_display = empty($_POST['smile_display'][$i]) ? 0 : 1;
 			if (isset($_POST['old_display'][$i]) && $_POST['old_display'][$i] != $smile_display[$i]) {
-				$db->query("UPDATE " . $db->prefix('smiles') . " SET display='" . $smile_display . "' WHERE id ='" . $smile_id . "'");
+				$db->query("UPDATE " . $db->prefix('smiles') . " SET display='" . (int) $smile_display . "' WHERE id ='" . $smile_id . "'");
 			}
 		}
 		redirect_header('admin.php?fct=smilies', 2, _AM_DBUPDATED);
@@ -62,7 +62,6 @@ switch($op) {
 			redirect_header('admin.php?fct=smilies', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$db =& icms_db_Factory::instance();
-		$myts =& icms_core_Textsanitizer::getInstance();
 		$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 		$uploader->setPrefix('smil');
 		if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
@@ -70,8 +69,8 @@ switch($op) {
 				$err = $uploader->getErrors();
 			} else {
 				$smile_url = $uploader->getSavedFileName();
-				$smile_code = $myts->stripSlashesGPC($_POST['smile_code']);
-				$smile_desc = $myts->stripSlashesGPC($_POST['smile_desc']);
+				$smile_code = icms_core_DataFilter::stripSlashesGPC($_POST['smile_code']);
+				$smile_desc = icms_core_DataFilter::stripSlashesGPC($_POST['smile_desc']);
 				$smile_display = (int) $_POST['smile_display'] > 0 ? 1 : 0;
 				$newid = $db->genId($db->prefix('smilies') . "_id_seq");
 				$sql = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES ('%d', %s, %s, %s, '%d')", $db->prefix('smiles'), (int) $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
@@ -104,9 +103,8 @@ switch($op) {
 		if ($id <= 0 | !icms::$security->check()) {
 			redirect_header('admin.php?fct=smilies', 3, implode('<br />', icms::$security->getErrors()));
 		}
-		$myts =& icms_core_Textsanitizer::getInstance();
-		$smile_code = $myts->stripSlashesGPC($_POST['smile_code']);
-		$smile_desc = $myts->stripSlashesGPC($_POST['smile_desc']);
+		$smile_code = icms_core_DataFilter::stripSlashesGPC($_POST['smile_code']);
+		$smile_desc = icms_core_DataFilter::stripSlashesGPC($_POST['smile_desc']);
 		$smile_display = (int) $_POST['smile_display'] > 0 ? 1 : 0;
 		$db =& icms_db_Factory::instance();
 		if ($_FILES['smile_url']['name'] != "") {
