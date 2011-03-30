@@ -28,9 +28,9 @@ if (!empty($_GET)) {
 	}
 }
 $op = (isset($_GET['op']))
-	? trim(StopXSS($_GET['op']))
+	? trim(filter_input(INPUT_GET, 'op'))
 	: ((isset($_POST['op']))
-		? trim(StopXSS($_POST['op']))
+		? trim(filter_input(INPUT_POST, 'op'))
 		: 'list');
 
 if ($op == 'edittpl_go') {
@@ -97,12 +97,12 @@ switch ($op) {
 				. '[<a href="admin.php?fct=tplsets&amp;op=download&amp;method=tar&amp;tplset=' . $tplsetname 
 				. '">' . _MD_DOWNLOAD . '</a>]<br />[<a href="admin.php?fct=tplsets&amp;op=clone&amp;tplset=' . $tplsetname 
 				. '">' . _CLONE . '</a>]';
-			if ($tplsetname != 'default' && $tplsetname != $xoopsConfig['template_set']) {
+			if ($tplsetname != 'default' && $tplsetname != $icmsConfig['template_set']) {
 				echo '<br />[<a href="admin.php?fct=tplsets&amp;op=delete&amp;tplset=' . $tplsetname 
 					. '">' . _DELETE . '</a>]';
 			}
 			echo '</td>';
-			if ($tplsetname == $xoopsConfig['template_set']) {
+			if ($tplsetname == $icmsConfig['template_set']) {
 				echo '<td><img src="'. ICMS_MODULES_URL . '/system/images/check.gif" alt="' . _MD_DEFAULTTHEME . '" /></td>';
 			} else {
 				echo '<td>&nbsp;</td>';
@@ -372,7 +372,7 @@ switch ($op) {
 						if (!$xoopsTpl->clear_cache('db:' . $tplfile->getVar('tpl_file'))) {
 						}
 					}
-					if ($tplfile->getVar('tpl_tplset') == $xoopsConfig['template_set']) {
+					if ($tplfile->getVar('tpl_tplset') == $icmsConfig['template_set']) {
 						$icmsAdminTpl->template_touch($id);
 					}
 				}
@@ -417,7 +417,7 @@ switch ($op) {
 					$err[] = sprintf(_MD_TPLSET_DELETE_FAIL, $tplfile->getVar('tpl_file'));
 				} else {
 					// need to compile default xoops template
-					if ($tplfile->getVar('tpl_tplset') == $xoopsConfig['template_set']) {
+					if ($tplfile->getVar('tpl_tplset') == $icmsConfig['template_set']) {
 						$defaulttpl =& $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), NULL, $tplfile->getVar('tpl_file'));
 						if (count($defaulttpl) > 0) {
 
@@ -452,7 +452,7 @@ switch ($op) {
 			redirect_header('admin.php?fct=tplsets', 1, implode('<br />', icms::$security->getErrors()));
 		}
 		$msgs = array();
-		if ($tplset != 'default' && $tplset != $xoopsConfig['template_set']) {
+		if ($tplset != 'default' && $tplset != $icmsConfig['template_set']) {
 			$tpltpl_handler =& icms::handler('icms_view_template_file');
 			$templates =& $tpltpl_handler->getObjects(new icms_db_criteria_Item('tpl_tplset', $tplset));
 			$tcount = count($templates);
@@ -574,7 +574,7 @@ switch ($op) {
 		echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE 
 			. '"><head><meta http-equiv="content-type" content="text/html; charset=' . _CHARSET 
 			. '" /><meta http-equiv="content-language" content="' . _LANGCODE 
-			. '" /><title>' . htmlspecialchars($xoopsConfig['sitename']) . ' Administration' . '</title>' 
+			. '" /><title>' . htmlspecialchars($icmsConfig['sitename']) . ' Administration' . '</title>'
 			. '<link rel="stylesheet" type="text/css" media="all" href="'
 			. ICMS_URL . '/icms' . (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'') . '.css" />' 
 			. '<link rel="stylesheet" type="text/css" media="all" href="'
@@ -696,7 +696,7 @@ switch ($op) {
 			if (!$tpltpl_handler->insert($newtpl)) {
 				$err = _ERROR . ': ' . sprintf(_MD_TPLSET_INSERT_FAILED, '<strong>' . $tplfile[0]->getVar('tpl_file') . '</strong>');
 			} else {
-				if ($tplset == $xoopsConfig['template_set']) {
+				if ($tplset == $icmsConfig['template_set']) {
 
 					$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
 				}
@@ -741,7 +741,7 @@ switch ($op) {
 					echo '&nbsp;&nbsp;<span style="color:#ff0000;">' 
 					. _ERROR . ': ' . sprintf(_MD_TPLSET_INSERT_FAILED, '<strong>' . $file . '</strong>') . '</span><br />';
 				} else {
-					if ($tplset == $xoopsConfig['template_set']) {
+					if ($tplset == $icmsConfig['template_set']) {
 							
 						$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
 					}
@@ -768,7 +768,7 @@ switch ($op) {
 						. '</span><br />';
 					echo $newtpl->getHtmlErrors();
 				} else {
-					if ($tplset == $xoopsConfig['template_set']) {
+					if ($tplset == $icmsConfig['template_set']) {
 							
 						$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
 					}
@@ -918,8 +918,7 @@ switch ($op) {
 		}
 
 			
-		$myts =& icms_core_Textsanitizer::getInstance();
-		$html = $myts->stripSlashesGPC($html);
+		$html = icms_core_DataFilter::stripSlashesGPC($html);
 		$tpltpl_handler =& icms::handler('icms_view_template_file');
 		$tplfile =& $tpltpl_handler->get($id, TRUE);
 		$xoopsTpl = new icms_view_Tpl();
@@ -928,15 +927,15 @@ switch ($op) {
 			$dummylayout = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
 			. '<html><head><meta http-equiv="content-type" content="text/html; charset=' . _CHARSET 
 			. '" /><meta http-equiv="content-language" content="' . _LANGCODE 
-			. '" /><title>' . $xoopsConfig['sitename'] . '</title>'
+			. '" /><title>' . $icmsConfig['sitename'] . '</title>'
 			. '<link rel="stylesheet" type="text/css" media="screen" href="' . ICMS_URL . '/icms' 
 				. (( defined('_ADM_USE_RTL') && _ADM_USE_RTL ) 
 					? '_rtl'
 					:'') 
 				. '.css" /><link rel="stylesheet" type="text/css" media="screen" href="' 
-				. xoops_getcss($xoopsConfig['theme_set']) . '" />';
+				. xoops_getcss($icmsConfig['theme_set']) . '" />';
 
-			$css =& $tpltpl_handler->find($xoopsConfig['template_set'], 'css', 0, NULL, NULL, TRUE);
+			$css =& $tpltpl_handler->find($icmsConfig['template_set'], 'css', 0, NULL, NULL, TRUE);
 			$csscount = count($css);
 
 			for ($i = 0; $i < $csscount; $i++) {
@@ -1030,7 +1029,7 @@ switch ($op) {
 						$msg[] = sprintf(_MD_TPLSET_INSERT_FAILED, $upload_file);
 					} else {
 						$msg[] = sprintf(_MD_TPLSET_UPDATED, '<strong>' . $upload_file . '</strong>');
-						if ($tplset == $xoopsConfig['template_set']) {
+						if ($tplset == $icmsConfig['template_set']) {
 
 							if ($icmsAdminTpl->template_touch($tpl->getVar('tpl_id'), TRUE)) {
 								$msg[] = sprintf(_MD_TPLSET_COMPILED, '<strong>' . $upload_file . '</strong>');
