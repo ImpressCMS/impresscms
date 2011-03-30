@@ -79,6 +79,12 @@ $clean_op = htmlentities($_POST['op']);
 $clean_bid = isset($_GET['bid']) ? (int) $_GET['bid'] : 0;
 $clean_bid = isset($_POST['bid']) ? (int) $_POST['bid'] : $clean_bid;
 
+if (isset($_GET['sortsel'])) {
+	$startbid = (int) $_GET['startbid'];
+	$limitsel = (int) $_GET['limitsel'];
+	$ordersel = filter_input(INPUT_GET, 'ordersel');
+	$sortsel = filter_input(INPUT_GET, 'sortsel');
+}
 /**
  * in_array() is a native PHP function that will determine if the value of the
  * first argument is found in the array listed in the second argument. Strings
@@ -91,7 +97,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icms_block_handler->changeVisible($bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
-				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+				$rtn .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
 			}
 			if (isset($_GET['rtn'])) {
 				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
@@ -104,7 +110,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icms_block_handler->upWeight($bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
-				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+				$rtn .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
 			}
 			if (isset($_GET['rtn'])) {
 				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
@@ -117,7 +123,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icms_block_handler->downWeight($bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
-				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+				$rtn .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
 			}
 			if (isset($_GET['rtn'])) {
 				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
@@ -168,7 +174,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
-				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+				$rtn .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
 			}
 			if (isset($_GET['rtn'])) {
 				redirect_header(ICMS_URL . base64_decode($_GET['rtn']), 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
