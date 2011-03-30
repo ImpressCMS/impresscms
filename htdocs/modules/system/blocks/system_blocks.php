@@ -194,7 +194,6 @@ function b_system_user_show() {
  */
 function b_system_info_show($options) {
 	global $icmsConfig;
-	$myts =& icms_core_Textsanitizer::getInstance();
 	$block = array();
 	if (!empty($options[3])) {
 		$block['showgroups'] = TRUE;
@@ -208,15 +207,15 @@ function b_system_info_show($options) {
 			while  ($userinfo = icms::$xoopsDB->fetchArray($result)) {
 				if ($prev_caption != $userinfo['groupname']) {
 					$prev_caption = $userinfo['groupname'];
-					$block['groups'][$i]['name'] = $myts->htmlSpecialChars($userinfo['groupname']);
+					$block['groups'][$i]['name'] = icms_core_DataFilter::htmlSpecialChars($userinfo['groupname']);
 				}
 				if (isset(icms::$user) && is_object(icms::$user)) {
-					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $userinfo['uid'] . "','pmlite',800,680);\"><img src=\"" . ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] . "/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $userinfo['uid'] . "','pmlite',800,680);\"><img src=\"" . ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] . "/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
 				} else {
 					if ($userinfo['user_viewemail']) {
-						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '<a href="mailto:' . $userinfo['email'] . '"><img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/em_small.gif" width="16px" height="14px" alt="" /></a>', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => '<a href="mailto:' . $userinfo['email'] . '"><img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/em_small.gif" width="16px" height="14px" alt="" /></a>', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
 					} else {
-						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '&nbsp;', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => '&nbsp;', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
 					}
 				}
 				$i++;

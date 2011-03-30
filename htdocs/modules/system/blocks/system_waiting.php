@@ -16,9 +16,9 @@
  * @return mixed $block The generated waiting block or empty array
  */
 function b_system_waiting_show($options) {
-	global $xoopsConfig;
+	global $icmsConfig;
 
-	$userlang = $xoopsConfig['language'] ;
+	$userlang = $icmsConfig['language'] ;
 
 	$sql_cache_min = empty($options[1]) ? 0 : (int) $options[1] ;
 	$sql_cache_file = ICMS_CACHE_PATH . '/waiting_touch' ;
@@ -43,7 +43,7 @@ function b_system_waiting_show($options) {
 	$mod_lists = $module_handler->getList(new icms_db_criteria_Item(1,1),true);
 	foreach ($mod_lists as $dirname => $name) {
 
-		$plugin_info = system_get_plugin_info($dirname , $xoopsConfig['language']) ;
+		$plugin_info = system_get_plugin_info($dirname , $icmsConfig['language']) ;
 		if (empty($plugin_info) || empty($plugin_info['plugin_path'])) continue ;
 
 		if (! empty($plugin_info['langfile_path'])) {

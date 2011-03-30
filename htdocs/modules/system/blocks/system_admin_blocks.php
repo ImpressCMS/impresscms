@@ -78,7 +78,7 @@ function b_system_admin_warnings_show() {
  * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
 function b_system_admin_cp_show() {
-	global $icmsTpl, $xoopsConfig;
+	global $icmsTpl, $icmsConfig;
 
 	$block['lang_cp']= _CPHOME;
 	$block['lang_insmodules'] = _AD_INSTALLEDMODULES;
@@ -200,7 +200,7 @@ function b_system_admin_modules_show() {
  * @return array
  */
 function b_system_admin_cp_new_show() {
-	global $icmsTpl, $xoopsConfig;
+	global $icmsTpl, $icmsConfig;
 
 	$block['lang_cp']= _CPHOME;
 
