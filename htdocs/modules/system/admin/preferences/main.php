@@ -21,9 +21,9 @@ if (isset($_POST)) {
 }
 $icmsAdminTpl = new icms_view_Tpl();
 $op = (isset($_GET['op'])) 
-	? trim(StopXSS($_GET['op'])) 
+	? trim(filter_input(INPUT_GET, 'op'))
 	: ((isset($_POST['op'])) 
-		? trim(StopXSS($_POST['op'])) 
+		? trim(filter_input(INPUT_POST, 'op'))
 		: 'list');
 
 if (isset($_GET['confcat_id'])) {
@@ -86,26 +86,24 @@ switch ($op) {
 			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
 			switch ($config[$i]->getVar('conf_formtype')) {
 				case 'textsarea' :
-					$myts = & icms_core_Textsanitizer::getInstance();
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
 						// this is exceptional.. only when value type is array, need a smarter way for this
 						$ele =($config[$i]->getVar('conf_value') != '')
-							? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
+							? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
 							: new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
 					} else {
-						$ele = new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					}
 					break;
 						
 				case 'textarea' :
-					$myts = & icms_core_Textsanitizer::getInstance();
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
 						// this is exceptional.. only when value type is array, need a smarter way for this
 						$ele =($config[$i]->getVar('conf_value') != '')
-							? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
+							? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
 							: new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
 					} else {
-						$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					}
 					break;
 						
@@ -307,22 +305,18 @@ switch ($op) {
 					break;
 						
 				case 'password' :
-					$myts = & icms_core_Textsanitizer::getInstance();
-					$ele = new icms_form_elements_Password($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()), FALSE, ($icmsConfigUser['pass_level']?'password_adv':''));
+					$ele = new icms_form_elements_Password($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), FALSE, ($icmsConfigUser['pass_level']?'password_adv':''));
 					break;
 						
 				case 'color' :
-					$myts = & icms_core_Textsanitizer::getInstance();
-					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 						
 				case 'hidden' :
-					$myts = & icms_core_Textsanitizer::getInstance();
-					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 						
 				case 'select_pages' :
-					$myts = & icms_core_Textsanitizer::getInstance();
 					$content_handler = & icms_getModuleHandler('content', 'content');
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					$ele->addOptionArray($content_handler->getContentList());
@@ -330,7 +324,6 @@ switch ($op) {
 						
 				# Added by Fábio Egas in XTXM version
 				case 'select_image' :
-					$myts = & icms_core_Textsanitizer::getInstance();
 					$ele = new icms_form_elements_select_Image($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					break;
 						
@@ -358,8 +351,7 @@ switch ($op) {
 						
 				case 'textbox' :
 				default :
-					$myts = & icms_core_Textsanitizer::getInstance();
-					$ele = new icms_form_elements_Text($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlspecialchars($config[$i]->getConfValueForOutput()));
+					$ele = new icms_form_elements_Text($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 			}
 			$hidden = new icms_form_elements_Hidden('conf_ids[]', $config[$i]->getVar('conf_id'));
@@ -408,22 +400,20 @@ switch ($op) {
 			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
 			switch ($config[$i]->getVar('conf_formtype')) {
 				case 'textsarea' :
-					$myts = & icms_core_Textsanitizer::getInstance();
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
 						// this is exceptional.. only when value type is arrayneed a smarter way for this
-						$ele =($config[$i]->getVar('conf_value') != '') ? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
+						$ele =($config[$i]->getVar('conf_value') != '') ? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
 					} else {
-						$ele = new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
+						$ele = new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 					}
 					break;
 						
 				case 'textarea' :
-					$myts = & icms_core_Textsanitizer::getInstance();
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
 						// this is exceptional.. only when value type is array need a smarter way for this
-						$ele =($config[$i]->getVar('conf_value') != '') ? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
+						$ele =($config[$i]->getVar('conf_value') != '') ? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
 					} else {
-						$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
+						$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 					}
 					break;
 						
@@ -471,22 +461,18 @@ switch ($op) {
 					break;
 						
 				case 'password' :
-					$myts = & icms_core_Textsanitizer::getInstance();
-					$ele = new icms_form_elements_Password($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					$ele = new icms_form_elements_Password($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 						
 				case 'color' :
-					$myts = & icms_core_Textsanitizer::getInstance();
-					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 						
 				case 'hidden' :
-					$myts = & icms_core_Textsanitizer::getInstance();
-					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 						
 				case 'select_pages' :
-					$myts = & icms_core_Textsanitizer::getInstance();
 					$content_handler = & icms_getModuleHandler('content', 'content');
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					$ele->addOptionArray($content_handler->getContentList());
@@ -494,8 +480,7 @@ switch ($op) {
 						
 				case 'textbox' :
 				default :
-					$myts = & icms_core_Textsanitizer::getInstance();
-					$ele = new icms_form_elements_Text($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					$ele = new icms_form_elements_Text($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 			}
 			$hidden = new icms_form_elements_Hidden('conf_ids[]', $config[$i]->getVar('conf_id'));
@@ -546,7 +531,7 @@ switch ($op) {
 				if (is_array($new_value) || $new_value != $config->getVar('conf_value')) {
 					// if language has been changed
 					if (!$lang_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'language') {
-						$xoopsConfig['language'] = ${$config->getVar('conf_name')};
+						$icmsConfig['language'] = ${$config->getVar('conf_name')};
 						$lang_updated = TRUE;
 					}
 					// if default theme has been changed
@@ -581,7 +566,7 @@ switch ($op) {
 					// if default template set has been changed
 					if (! $tpl_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'template_set') {
 						// clear cached/compiled files and regenerate them if default theme has been changed
-						if ($xoopsConfig['template_set'] != ${$config->getVar('conf_name')}) {
+						if ($icmsConfig['template_set'] != ${$config->getVar('conf_name')}) {
 							$newtplset = ${$config->getVar('conf_name')};
 							// clear all compiled and cachedfiles
 							$xoopsTpl->clear_compiled_tpl();
@@ -651,7 +636,7 @@ switch ($op) {
 		icms::$preload->triggerEvent('afterSaveSystemAdminPreferencesItems', $saved_config_items);
 		unset($saved_config_items);
 
-		if (! empty($use_mysession) && $xoopsConfig['use_mysession'] == 0 && $session_name != '') {
+		if (! empty($use_mysession) && $icmsConfig['use_mysession'] == 0 && $session_name != '') {
 			setcookie($session_name, session_id(), time() +(60 *(int) $session_expire), '/', '', 0);
 		}
 
