@@ -68,7 +68,7 @@ $clean_page_id = isset($_POST['page_id']) ? (int) $_POST['page_id'] : $clean_pag
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'status' :
-			$icms_page_handler->changeStatus( $page_id );
+			$icms_page_handler->changeStatus( $clean_page_id );
 			$rtn = '/modules/system/admin.php?fct=pages';
 			if (isset($_GET['rtn'])) {
 				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
