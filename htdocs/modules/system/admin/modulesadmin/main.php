@@ -18,7 +18,7 @@ include_once ICMS_MODULES_PATH . "/system/admin/modulesadmin/modulesadmin.php";
 icms_loadLanguageFile('system', 'blocksadmin', TRUE);
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_GET['op'])) ? trim(StopXSS($_GET['op'])) : ((isset($_POST['op'])) ? trim(StopXSS($_POST['op'])) : 'list');
+$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op')) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op')) : 'list');
 
 if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
 	if (!icms::$security->check()) {
@@ -57,15 +57,14 @@ if ($op == "confirm") {
 	. "<table width='100%' border='0' cellspacing='1' class='outer'>"
 	. "<tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
 	$mcount = 0;
-	$myts =& icms_core_Textsanitizer::getInstance();
 	foreach ($module as $mid) {
 		if ($mcount % 2 != 0) {
 			$class = 'odd';
 		} else {
 			$class = 'even';
 		}
-		echo '<tr class="' . $class . '"><td align="center">' . $myts->stripSlashesGPC($oldname[$mid]);
-		$newname[$mid] = trim($myts->stripslashesGPC($newname[$mid]));
+		echo '<tr class="' . $class . '"><td align="center">' . icms_core_DataFilter::stripSlashesGPC($oldname[$mid]);
+		$newname[$mid] = trim(icms_core_DataFilter::stripslashesGPC($newname[$mid]));
 		if ($newname[$mid] != $oldname[$mid]) {
 			echo '&nbsp;&raquo;&raquo;&nbsp;<span style="color:#ff0000;font-weight:bold;">' . $newname[$mid] . '</span>';
 		}
