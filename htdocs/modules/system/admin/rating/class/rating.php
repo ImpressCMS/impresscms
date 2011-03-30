@@ -191,6 +191,7 @@ class SystemRatingHandler extends icms_ipf_Handler {
 	 * @return	int|array	0 if there is no rating; an array containing the average and the total ratings for the item
 	 */
 	public function getRatingAverageByItemId($itemid, $dirname, $item) {
+		$itemid = (int) $itemid;
 		$sql = "SELECT AVG(rate), COUNT(ratingid) FROM " . $this->table . " WHERE itemid=$itemid AND dirname='$dirname' AND item='$item' GROUP BY itemid";
 		$result = $this->db->query($sql);
 		if (!$result) {
@@ -215,9 +216,9 @@ class SystemRatingHandler extends icms_ipf_Handler {
 
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('item', $item));
-		$criteria->add(new icms_db_criteria_Item('itemid', $itemid));
+		$criteria->add(new icms_db_criteria_Item('itemid', (int) $itemid));
 		$criteria->add(new icms_db_criteria_Item('dirname', $dirname));
-		$criteria->add(new icms_db_criteria_Item('user.uid', $uid));
+		$criteria->add(new icms_db_criteria_Item('user.uid', (int) $uid));
 
 		$ret = $this->getObjects($criteria);
 
