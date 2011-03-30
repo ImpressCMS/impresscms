@@ -15,9 +15,9 @@ include_once '../../include/functions.php';
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $fct = (isset($_GET['fct']))
-	? trim(StopXSS($_GET['fct']))
+	? trim(filter_input(INPUT_GET, 'fct'))
 	: ((isset($_POST['fct']))
-		? trim(StopXSS($_POST['fct']))
+		? trim(filter_input(INPUT_POST, 'fct'))
 		: '');
 
 if (isset($fct) && $fct == 'users') {$xoopsOption['pagetype'] = 'user';}
@@ -45,11 +45,16 @@ include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 $error = FALSE;
 if ($admintest != 0) {
 	if (isset($fct) && $fct != '') {
-		if (file_exists(ICMS_ROOT_PATH . '/modules/system/admin/' . $fct . '/xoops_version.php')) {
+		if (file_exists(ICMS_ROOT_PATH . '/modules/system/admin/' . $fct . '/icms_version.php')) {
+			$icms_version = 'icms_version';
+		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/system/admin/' . $fct . '/xoops_version.php')) {
+			$icms_version = 'xoops_version';
+		}
+		if (isset($icms_version) && $icms_version !== '') {
 			icms_loadLanguageFile('system', $fct, TRUE);
-			include ICMS_ROOT_PATH . '/modules/system/admin/' . $fct . '/xoops_version.php';
+			include ICMS_ROOT_PATH . '/modules/system/admin/' . $fct . '/' . $icms_version . '.php';
 			$sysperm_handler = icms::handler('icms_member_groupperm');
-			$category = !empty($modversion['category']) ? (int) ($modversion['category']) : 0;
+			$category = !empty($modversion['category']) ? (int) $modversion['category'] : 0;
 			unset($modversion);
 			if ($category > 0) {
 				$groups =& icms::$user->getGroups();
