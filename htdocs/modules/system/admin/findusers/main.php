@@ -15,9 +15,9 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op'])) 
-	? trim(StopXSS($_GET['op'])) 
+	? trim(filter_input(INPUT_GET, 'op'))
 	: ((isset($_POST['op'])) 
-		? trim(StopXSS($_POST['op'])) 
+		? trim(filter_input(INPUT_POST, 'op'))
 		: 'form');
 
 icms_cp_header();
@@ -134,25 +134,24 @@ if ($op == "form") {
 	echo "(" . sprintf(_AM_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . " " . sprintf(_AM_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ")<br /><br />";
 	$form->display();
 } elseif ($op == "submit" & icms::$security->check()) {
-	$myts =& icms_core_Textsanitizer::getInstance();
 	$criteria = new icms_db_criteria_Compo();
 	if (!empty($_POST['user_uname'])) {
 		$match = (!empty($_POST['user_uname_match'])) ? (int) $_POST['user_uname_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('uname', $myts->addSlashes(trim($_POST['user_uname'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('uname', icms_core_DataFilter::addSlashes(trim($_POST['user_uname'])) . '%', 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('uname', '%' . $myts->addSlashes(trim($_POST['user_uname'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('uname', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_uname'])), 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('uname', $myts->addSlashes(trim($_POST['user_uname']))));
+				$criteria->add(new icms_db_criteria_Item('uname', icms_core_DataFilter::addSlashes(trim($_POST['user_uname']))));
 				break;
 				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('uname', '%' . $myts->addSlashes(trim($_POST['user_uname'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('uname', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_uname'])) . '%', 'LIKE'));
 				break;
 				
 			default:
@@ -163,19 +162,19 @@ if ($op == "form") {
 		$match = (!empty($_POST['user_name_match'])) ? (int) $_POST['user_name_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('name', $myts->addSlashes(trim($_POST['user_name'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('name', icms_core_DataFilter::addSlashes(trim($_POST['user_name'])) . '%', 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('name', '%' . $myts->addSlashes(trim($_POST['user_name'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('name', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_name'])), 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('name', $myts->addSlashes(trim($_POST['user_name']))));
+				$criteria->add(new icms_db_criteria_Item('name', icms_core_DataFilter::addSlashes(trim($_POST['user_name']))));
 				break;
 				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('name', '%' . $myts->addSlashes(trim($_POST['user_name'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('name', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_name'])) . '%', 'LIKE'));
 				break;
 				
 			default:
@@ -186,19 +185,19 @@ if ($op == "form") {
 		$match = (!empty($_POST['user_login_name_match'])) ? (int) $_POST['user_login_name_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('login_name', $myts->addSlashes(trim($_POST['user_login_name'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('login_name', icms_core_DataFilter::addSlashes(trim($_POST['user_login_name'])) . '%', 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('login_name', '%' . $myts->addSlashes(trim($_POST['user_login_name'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('login_name', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_login_name'])), 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('login_name', $myts->addSlashes(trim($_POST['user_login_name']))));
+				$criteria->add(new icms_db_criteria_Item('login_name', icms_core_DataFilter::addSlashes(trim($_POST['user_login_name']))));
 				break;
 				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('login_name', '%' . $myts->addSlashes(trim($_POST['user_login_name'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('login_name', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_login_name'])) . '%', 'LIKE'));
 				break;
 				
 			default:
@@ -209,19 +208,19 @@ if ($op == "form") {
 		$match = (!empty($_POST['user_email_match'])) ? (int) $_POST['user_email_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('email', $myts->addSlashes(trim($_POST['user_email'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('email', icms_core_DataFilter::addSlashes(trim($_POST['user_email'])) . '%', 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('email', '%' . $myts->addSlashes(trim($_POST['user_email'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('email', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_email'])), 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('email', $myts->addSlashes(trim($_POST['user_email']))));
+				$criteria->add(new icms_db_criteria_Item('email', icms_core_DataFilter::addSlashes(trim($_POST['user_email']))));
 				break;
 				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('email', '%' . $myts->addSlashes(trim($_POST['user_email'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('email', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_email'])) . '%', 'LIKE'));
 				break;
 				
 			default:
@@ -236,19 +235,19 @@ if ($op == "form") {
 		$match = (!empty($_POST['user_icq_match'])) ? (int) $_POST['user_icq_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_icq', $myts->addSlashes(trim($_POST['user_icq'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_icq', icms_core_DataFilter::addSlashes(trim($_POST['user_icq'])) . '%', 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . $myts->addSlashes(trim($_POST['user_icq'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_icq'])), 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . $myts->addSlashes(trim($_POST['user_icq']))));
+				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_icq']))));
 				break;
 				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . $myts->addSlashes(trim($_POST['user_icq'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_icq'])) . '%', 'LIKE'));
 				break;
 				
 			default:
@@ -259,19 +258,19 @@ if ($op == "form") {
 		$match = (!empty($_POST['user_aim_match'])) ? (int) $_POST['user_aim_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_aim', $myts->addSlashes(trim($_POST['user_aim'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_aim', icms_core_DataFilter::addSlashes(trim($_POST['user_aim'])) . '%', 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . $myts->addSlashes(trim($_POST['user_aim'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_aim'])), 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_aim', $myts->addSlashes(trim($_POST['user_aim']))));
+				$criteria->add(new icms_db_criteria_Item('user_aim', icms_core_DataFilter::addSlashes(trim($_POST['user_aim']))));
 				break;
 				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . $myts->addSlashes(trim($_POST['user_aim'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_aim'])) . '%', 'LIKE'));
 				break;
 				
 			default:
@@ -282,19 +281,19 @@ if ($op == "form") {
 		$match = (!empty($_POST['user_yim_match'])) ? (int) $_POST['user_yim_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_yim', $myts->addSlashes(trim($_POST['user_yim'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_yim', icms_core_DataFilter::addSlashes(trim($_POST['user_yim'])) . '%', 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . $myts->addSlashes(trim($_POST['user_yim'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_yim'])), 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_yim', $myts->addSlashes(trim($_POST['user_yim']))));
+				$criteria->add(new icms_db_criteria_Item('user_yim', icms_core_DataFilter::addSlashes(trim($_POST['user_yim']))));
 				break;
 				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . $myts->addSlashes(trim($_POST['user_yim'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_yim'])) . '%', 'LIKE'));
 				break;
 				
 			default:
@@ -305,19 +304,19 @@ if ($op == "form") {
 		$match = (!empty($_POST['user_msnm_match'])) ? (int) $_POST['user_msnm_match'] : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', $myts->addSlashes(trim($_POST['user_msnm'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_msnm', icms_core_DataFilter::addSlashes(trim($_POST['user_msnm'])) . '%', 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . $myts->addSlashes(trim($_POST['user_msnm'])), 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_msnm'])), 'LIKE'));
 				break;
 				
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . $myts->addSlashes(trim($_POST['user_msnm']))));
+				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_msnm']))));
 				break;
 				
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . $myts->addSlashes(trim($_POST['user_msnm'])) . '%', 'LIKE'));
+				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_msnm'])) . '%', 'LIKE'));
 				break;
 				
 			default:
@@ -325,13 +324,13 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($_POST['user_from'])) {
-		$criteria->add(new icms_db_criteria_Item('user_from', '%' . $myts->addSlashes(trim($_POST['user_from'])) . '%', 'LIKE'));
+		$criteria->add(new icms_db_criteria_Item('user_from', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_from'])) . '%', 'LIKE'));
 	}
 	if (!empty($_POST['user_intrest'])) {
-		$criteria->add(new icms_db_criteria_Item('user_intrest', '%' . $myts->addSlashes(trim($_POST['user_intrest'])) . '%', 'LIKE'));
+		$criteria->add(new icms_db_criteria_Item('user_intrest', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_intrest'])) . '%', 'LIKE'));
 	}
 	if (!empty($_POST['user_occ'])) {
-		$criteria->add(new icms_db_criteria_Item('user_occ', '%' . $myts->addSlashes(trim($_POST['user_occ'])) . '%', 'LIKE'));
+		$criteria->add(new icms_db_criteria_Item('user_occ', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_occ'])) . '%', 'LIKE'));
 	}
 
 	if (!empty($_POST['user_lastlog_more']) && is_numeric($_POST['user_lastlog_more'])) {
@@ -481,7 +480,7 @@ if ($op == "form") {
 					// regenerate token value
 					$hiddenform .= icms::$security->getTokenHTML() . "\n";
 				} else {
-					$hiddenform .= "<input type='hidden' name='" . $myts->htmlSpecialChars($k) . "' value='" . $myts->htmlSpecialChars($myts->stripSlashesGPC($v)) . "' />\n";
+					$hiddenform .= "<input type='hidden' name='" . icms_core_DataFilter::htmlSpecialChars($k) . "' value='" . icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v)) . "' />\n";
 				}
 			}
 			if (!isset($_POST['limit'])) {
