@@ -59,7 +59,7 @@ $filter_post = array(
 	'htmlbanner' 	=> 'int',
 	'htmlcode' 		=> 'html',
 	'contact' 		=> 'str',
-	'email' 		=> array('email', 'options' => array(0,1)),
+	'email' 		=> array('email', 'options' => array(0, 1)),
 	'login'			=> 'str',
 	'passwd' 		=> 'str',
 	'extrainfo' 	=> 'str',
