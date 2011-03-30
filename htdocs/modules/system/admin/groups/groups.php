@@ -29,11 +29,11 @@ function displayGroups() {
 		$id = $groups[$i]->getVar('groupid');
 		if ($gperm_handler->checkRight('group_manager', $id, $ugroups)) {
 			echo '<tr><td class="head">' . $groups[$i]->getVar('name') . '</td>';
-			echo '<td class="even"><a href="admin.php?fct=groups&amp;op=modify&amp;g_id=' . $id . '">' . _AM_MODIFY . '</a>';
+			echo '<td class="even"><a href="admin.php?fct=groups&amp;op=modify&amp;g_id=' . (int) $id . '">' . _AM_MODIFY . '</a>';
 			if (XOOPS_GROUP_ADMIN == $id || XOOPS_GROUP_USERS == $id || XOOPS_GROUP_ANONYMOUS == $id) {
 				echo '</td></tr>';
 			} else {
-				echo '&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id=' . $id . '">' . _AM_DELETE . '</a></td></tr>';
+				echo '&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id=' . (int) $id . '">' . _AM_DELETE . '</a></td></tr>';
 			}
 		}
 	}
@@ -123,7 +123,7 @@ function modifyGroup($g_id) {
 		. '<form action="admin.php" method="post">'
 		. '<select name="uids[]" size="10" multiple="multiple">' . "\n";
 		foreach ($users as $u_id => $u_name) {
-			echo '<option value="' . $u_id . '">' . $u_name . '</option>' . "\n";
+			echo '<option value="' . (int) $u_id . '">' . $u_name . '</option>' . "\n";
 		}
 		echo '</select>';
 		echo "</td><td align='center' class='odd'><input type='hidden' name='op' value='addUser' />" 
@@ -140,7 +140,7 @@ function modifyGroup($g_id) {
 		. _AM_DELBUTTON . "' /></td><td class='even'>";
 		echo "<select name='uids[]' size='10' multiple='multiple'>";
 		foreach ($mlist as $m_id => $m_name) {
-			echo '<option value="' . $m_id . '">' . $m_name . '</option>' . "\n";
+			echo '<option value="' . (int) $m_id . '">' . $m_name . '</option>' . "\n";
 		}
 		echo "</select>";
 		echo '</td></tr></form></table>';
@@ -152,9 +152,9 @@ function modifyGroup($g_id) {
 			$member_criteria->setSort('uname');
 			$mlist = $member_handler->getUserList($member_criteria);
 		}
-		echo '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=findusers&amp;group=' . $g_id . '">' . _AM_FINDU4GROUP . '</a><br />';
+		echo '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=findusers&amp;group=' . (int) $g_id . '">' . _AM_FINDU4GROUP . '</a><br />';
 		echo '<form action="admin.php" method="post"><table class="outer"><tr><th align="center">' . _AM_MEMBERS . '<br />';
-		$nav = new icms_view_PageNav($membercount, 200, $memstart, "memstart", "fct=groups&amp;op=modify&amp;g_id=" . $g_id);
+		$nav = new icms_view_PageNav($membercount, 200, $memstart, "memstart", "fct=groups&amp;op=modify&amp;g_id=" . (int) $g_id);
 		echo $nav->renderNav(4);
 		echo "</th></tr><tr><td class='even' align='center'>"
 		. "<input type='hidden' name='op' value='delUser' />"
@@ -164,7 +164,7 @@ function modifyGroup($g_id) {
 		. "' />" . icms::$security->getTokenHTML() 
 		. "<select name='uids[]' size='10' multiple='multiple'>";
 		foreach ($mlist as $m_id => $m_name) {
-			echo '<option value="' . $m_id . '">' . $m_name . '</option>' . "\n";
+			echo '<option value="' . (int) $m_id . '">' . $m_name . '</option>' . "\n";
 		}
 		echo "</select><br /><input type='submit' name='submit' value='" . _DELETE 
 		. "' /></td></tr></table></form>";

@@ -20,9 +20,11 @@ if (!is_object(icms::$user)
 	include_once ICMS_MODULES_PATH . "/system/admin/groups/groups.php";
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-	$op = (isset($_GET['op'])) ? trim(StopXSS($_GET['op'])) : ((isset($_POST['op'])) ? trim(StopXSS($_POST['op'])):'display');
+	$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op'))
+		: ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op'))
+		:'display');
 	if ($op == 'modify' || $op == 'del') {
-		$g_id = $_GET['g_id'];
+		$g_id = (int) $_GET['g_id'];
 	}
 }
 
