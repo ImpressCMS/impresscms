@@ -342,6 +342,44 @@ class icms_core_DataFilter {
 	}
 
 	/**
+	 * Filter an array of variables, such as $_GET or $_POST, using a set of filters.
+	 * 
+	 * Any items in the input array not found in the filter array will be filtered as 
+	 * a string. 
+	 * 
+	 * @param 	array	$input		items to be filtered
+	 * @param 	array	$filters 	the keys of this array should match the keys in
+	 * 								the input array and the values should be valid types
+	 * 								for the checkVar method
+	 * @param	bool	$strict		when TRUE (default), items not in the filter array will be discarded
+	 * 								when FALSE, items not in the filter array will be filtered as strings and included
+	 * @return	array
+	 */
+	static public function checkVarArray(array $input, array $filters, $strict = TRUE) {
+		foreach (array_intersect_key($input, $filters) as $key => $value) {
+			$options[0] = $options[1] = '';
+			if (isset($filters[$key]['options'][0])) {
+				$options[0] = $filters[$key]['options'][0];
+			}
+			if (isset($filters[$key]['options'][1])) {
+				$options[1] = $filters[$key]['options'][1];
+			}
+			if (is_array($filters[$key])) {
+				$filter = $filters[$key][0];
+			} else {
+				$filter = $filters[$key];
+			}
+			$output[$key] = self::checkVar($input[$key], $filter, $options[0], $options[1]);
+		}
+		
+		if (!$strict) {
+			foreach ($diff = array_diff_key($input, $filters) as $key => $value) {
+				$output[$key] = self::checkVar($diff[$key], 'str');
+			} 
+		}
+		return $output;
+	}
+	/**
 	 * Filters textarea form data for INPUt to DB (text only!!)
 	 * For HTML please use icms_core_HTMLFilter::filterHTMLinput()
 	 *
@@ -965,7 +1003,7 @@ class icms_core_DataFilter {
 				$data = filter_var($data, FILTER_SANITIZE_EMAIL);
 
 				if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
-					if (isset($options2) && is_array($icmsConfigUser['bad_emails'])) {
+					if ($options2 == 1 && is_array($icmsConfigUser['bad_emails'])) {
 						foreach ($icmsConfigUser['bad_emails'] as $be) {
 							if ((!empty($be) && preg_match('/' . $be . '/i', $data))
 								|| $icmsStopSpammers->badEmail($data)) {
@@ -976,7 +1014,7 @@ class icms_core_DataFilter {
 				} else {
 					return false;
 				}
-				if (isset($options1) && $options1 == 1) {
+				if ($options1 == 1) {
 					$data = str_replace('@', ' at ', $data);
 					$data = str_replace('.', ' dot ', $data);
 				}
