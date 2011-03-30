@@ -39,7 +39,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 } else {
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-	$op = (isset($_GET['op'])) ? trim(StopXSS($_GET['op'])) : ((isset($_POST['op'])) ? trim(StopXSS($_POST['op'])) : 'list');
+	$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op')) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op')) : 'list');
 	$image_id = (isset($_GET['image_id'])) ? (int) $_GET['image_id'] : ((isset($_POST['image_id'])) ? (int) $_POST['image_id'] : NULL);
 	$imgcat_id = (isset($_GET['imgcat_id'])) ? (int) $_GET['imgcat_id'] : ((isset($_POST['imgcat_id'])) ? (int) $_POST['imgcat_id'] : NULL);
 	$limit = (isset($_GET['limit'])) ? (int) $_GET['limit'] : ((isset($_POST['limit'])) ? (int) $_POST['limit'] : 15);
@@ -128,7 +128,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
  * @param $imgcat_id
  */
 function imanager_index($imgcat_id = NULL) {
-	global $icmsAdminTpl, $xoopsConfig, $limit;
+	global $icmsAdminTpl, $icmsConfig, $limit;
 
 	if (!is_object(icms::$user)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
@@ -1030,7 +1030,7 @@ function imanager_clone() {
 	$image_id = (int) $_POST['image_id'];
 
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get((int) $imgcat_id);
+	$imagecategory =& $imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1);
 	}
@@ -1094,8 +1094,9 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
 		return FALSE;
 	} else {
 		if ($id > 0) {
+			$id = (int) $id;
 			$imgcat_handler = icms::handler('icms_image_category');
-			$imagecategory =& $imgcat_handler->get((int) $id);
+			$imagecategory =& $imgcat_handler->get($id);
 			if ($imagecategory->getVar('imgcat_id') > 0) {
 				if ($list) {
 					$ret = $imagecategory->getVar('imgcat_name');
@@ -1121,6 +1122,6 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
  * @param str $msg			Message to display in the redirect page/message box
  */
 function redir($imgcat_id, $msg = NULL) {
-	redirect_header('admin.php?fct=images&op=listimg&imgcat_id=' . $imgcat_id, 2, $msg);
+	redirect_header('admin.php?fct=images&op=listimg&imgcat_id=' . (int) $imgcat_id, 2, $msg);
 }
 

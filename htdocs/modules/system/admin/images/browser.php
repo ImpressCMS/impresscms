@@ -585,7 +585,7 @@ function imanager_addfile() {
 		redirect_header($_SERVER['PHP_SELF'] . '?op=list&target=' . $target . '&type=' . $type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get((int) $imgcat_id);
+	$imagecategory =& $imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header($_SERVER['PHP_SELF'] . '?op=list&target=' . $target . '&type=' . $type, 1);
 	}
@@ -669,7 +669,7 @@ function imanager_updateimage() {
 			$image->setVar('image_nicename', $image_nicename[$i]);
 			if ($image->getVar('imgcat_id') != $imgcat_id[$i]) {
 				$changedCat = TRUE;
-				$oldcat = $image->getVar('imgcat_id');
+				$oldcat = (int) $image->getVar('imgcat_id');
 			} else {
 				$changedCat = FALSE;
 			}
@@ -679,10 +679,10 @@ function imanager_updateimage() {
 			}
 			if ($changedCat) {
 				$imgcat_handler = icms::handler('icms_image_category');
-				$imagecategory  =& $imgcat_handler->get((int) $imgcat_id[$i]);
+				$imagecategory  =& $imgcat_handler->get($imgcat_id[$i]);
 				$dest_categ_path = $imgcat_handler->getCategFolder($imagecategory);
 				if ($imagecategory->getVar('imgcat_storetype') != 'db') {
-					$oldimgcategory =& $imgcat_handler->get((int) $oldcat);
+					$oldimgcategory =& $imgcat_handler->get($oldcat);
 					$src_categ_path = $imgcat_handler->getCategFolder($oldimgcategory);
 					$src = $src_categ_path . '/' . $image->getVar('image_name');
 					$dest = $dest_categ_path . '/' . $image->getVar('image_name');
@@ -726,7 +726,7 @@ function imanager_delfileok($image_id, $redir = NULL) {
 		redirect_header($_SERVER['PHP_SELF'] . '?op=list&target=' . $target . '&type=' . $type, 1);
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory  =& $imgcat_handler->get((int) $image->getVar('imgcat_id'));
+	$imagecategory  =& $imgcat_handler->get($image->getVar('imgcat_id'));
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
 		icmsPopupHeader();
@@ -757,7 +757,7 @@ function imanager_clone() {
 	$image_id = (int) $_POST['image_id'];
 
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get((int) $imgcat_id);
+	$imagecategory =& $imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header($_SERVER['PHP_SELF'] . '?op=list&target=' . $target . '&type=' . $type, 1);
 	}
@@ -897,8 +897,9 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
 		return FALSE;
 	} else {
 		if ($id > 0) {
+			$id = (int) $id;
 			$imgcat_handler = icms::handler('icms_image_category');
-			$imagecategory =& $imgcat_handler->get((int) $id);
+			$imagecategory =& $imgcat_handler->get($id);
 			if ($imagecategory->getVar('imgcat_id') > 0) {
 				if ($list) {
 					$ret = $imagecategory->getVar('imgcat_name');
@@ -927,6 +928,6 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
 function redir($imgcat_id, $msg = NULL) {
 	global $target, $type;
 
-	redirect_header($_SERVER['PHP_SELF'] . '?op=listimg&imgcat_id=' . $imgcat_id . '&target=' . $target . '&type=' . $type, 2, $msg);
+	redirect_header($_SERVER['PHP_SELF'] . '?op=listimg&imgcat_id=' . (int) $imgcat_id . '&target=' . $target . '&type=' . $type, 2, $msg);
 }
 
