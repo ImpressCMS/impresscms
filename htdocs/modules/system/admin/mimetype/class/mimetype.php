@@ -88,7 +88,7 @@ class SystemMimetype extends icms_ipf_Object {
 	 * @return	int
 	 */
 	public function getMimetypeId() {
-		$ret = $this->getVar('mimetypeid');
+		$ret = (int) $this->getVar('mimetypeid');
 		return $ret;
 	}
 }
