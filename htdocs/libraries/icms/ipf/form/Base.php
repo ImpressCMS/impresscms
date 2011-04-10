@@ -420,7 +420,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 						} else {
 							// perhaps this is a control created by the module
 							$moduleName = $this->targetObject->handler->_moduleName;
-							if ($module_dir != 'system') {
+							if ($moduleName != 'system') {
 								$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/class/form/elements/";
 							} else {
 								$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/admin/{$name}/class/form/elements/";
