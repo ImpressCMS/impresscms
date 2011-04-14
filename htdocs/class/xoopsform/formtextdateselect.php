@@ -38,7 +38,7 @@ class XoopsFormTextDateSelect extends icms_form_elements_Date
 	function XoopsFormTextDateSelect($caption, $name, $size = 15, $value= 0)
 	{
 		$value = !is_numeric($value) ? time() : (int) ($value);
-		parent::__construct($caption, $name, $size, 25, $value);
+		parent::__construct($caption, $name, $size, $value);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Date', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
