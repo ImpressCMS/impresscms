@@ -139,7 +139,7 @@ class icms_view_PageBuilder {
 		// setting the full and relative url of the actual page
 		$icmsurl_parsed = parse_url(ICMS_URL);
 		$fullurl = urldecode($icmsurl_parsed['scheme'] . "://" . $icmsurl_parsed['host'] . $_SERVER ['REQUEST_URI']);
-		$url = urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1));
+		$url = filter_var(urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1)), FILTER_SANITIZE_URL);
 
 		$icms_page_handler = icms::handler('icms_data_page');
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_url', $fullurl));
@@ -150,8 +150,8 @@ class icms_view_PageBuilder {
 			// we have a sym-link defined for this page
 			$pages = $icms_page_handler->getObjects($criteria);
 			$page = $pages[0];
-			$purl = $page->getVar('page_url');
-			$mid = $page->getVar('page_moduleid');
+			$purl = filter_var($page->getVar('page_url'), FILTER_SANITIZE_URL);
+			$mid = (int) $page->getVar('page_moduleid');
 			$pid = $page->getVar('page_id');
 			$module_handler = icms::handler('icms_module');
 			$module = $module_handler->get($mid);
@@ -160,7 +160,7 @@ class icms_view_PageBuilder {
 		} else {
 			// we don't have a sym-link for this page
 			if (is_object($icmsModule)) {
-				$mid = $icmsModule->getVar('mid');
+				$mid = (int) $icmsModule->getVar('mid');
 				$dirname = $icmsModule->getVar('dirname');
 				$isStart = (substr($_SERVER['PHP_SELF'], -9) == 'index.php' && $startMod == $dirname);
 			} else {
@@ -178,7 +178,7 @@ class icms_view_PageBuilder {
 			$pages = $icms_page_handler->getObjects($criteria);
 			$pid = 0;
 			foreach ($pages as $page) {
-				$purl = $page->getVar('page_url');
+				$purl = filter_var($page->getVar('page_url'), FILTER_SANITIZE_URL);
 				if (substr($purl, -1) == '*') {
 					$purl = substr($purl, 0, -1);
 					if (substr($url, 0, strlen($purl)) == $purl || substr($fullurl, 0, strlen($purl)) == $purl) {
