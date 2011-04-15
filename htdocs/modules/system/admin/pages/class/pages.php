@@ -69,14 +69,16 @@ class SystemPages extends icms_data_page_Object {
 	 * @return	string
 	 */
 	public function getViewItemLink() {
-		if (preg_match('/\*/', $this->getVar('page_url', 'e'))) {
+		$url = (substr($this->getVar('page_url', 'e'), 0, 7) == 'http://')
+			? $this->getVar('page_url', 'e')
+			: ICMS_URL . '/' . $this->getVar('page_url', 'e');
+		$url = icms_core_DataFilter::checkVar($url, 'url', 'host');
+
+		if (!$url) {
 			$ret = '';
 		} else {
-			$url = (substr($this->getVar('page_url', 'e'), 0, 7) == 'http://') 
-				? $this->getVar('page_url', 'e') 
-				: ICMS_URL . '/' . $this->getVar('page_url', 'e');
 			$ret = '<a href="' . $url . '" alt="' . _PREVIEW . '" title="' . _PREVIEW 
-				. '" target="_blank"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
+				. '" rel="external"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
 		}
 
 		return $ret;
