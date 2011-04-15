@@ -988,7 +988,7 @@ class icms_core_DataFilter {
 				}
 				if ($valid) {
 					if (isset($options2) && $options2 == 1) {
-						$data = filter_var($data, FILTER_SANITIZE_ENCODED);
+						return filter_var($data, FILTER_SANITIZE_ENCODED);
 					}
 					return $data;
 				}
