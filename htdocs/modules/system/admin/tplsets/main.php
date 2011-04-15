@@ -478,7 +478,7 @@ switch ($op) {
 						. _ERROR . ': ' . sprintf(_MD_TPLSET_DELETE_FAIL, $tplset)
 						. '</span>';
 				} else {
-					$msgs[] = '&nbsp;&nbsp;' . _MD_TPLSET_DELETE_OK;
+					$msgs[] = '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_DELETE_OK, $tplset);
 				}
 			}
 		} else {
@@ -547,12 +547,12 @@ switch ($op) {
 								. 'ID: <strong>' . $templates[$i]->getVar('tpl_id') . '</strong>' . '</span>';
 						} else {
 							$msgs[] = '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_COPY_OK, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>')
-							. 'ID: <strong>' . $newtpl->getVar('tpl_id') . '</strong>';
+							. ' ID: <strong>' . $newtpl->getVar('tpl_id') . '</strong>';
 						}
 						unset($newtpl);
 					}
 					$msgs[] = sprintf(_MD_TPLSET_CREATE_OK, '<strong>' . htmlspecialchars($newtheme, ENT_QUOTES) . '</strong>')
-					. '(ID: <strong>' . $tplsetid . '</strong>)<br />';
+					. ' (ID: <strong>' . $tplsetid . '</strong>)<br />';
 				} else {
 					$msgs[] = '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_FILE_NOTEXIST, $theme) . '</span>';
 				}
