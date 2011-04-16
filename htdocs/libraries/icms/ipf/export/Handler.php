@@ -49,7 +49,7 @@ class icms_ipf_export_Handler {
 		$this->filename = $filename;
 		$this->format = $format;
 		$this->options = $options;
-		$this->notDisplayFields = false;
+		$this->notDisplayFields = array();
 	}
 
 	/**
