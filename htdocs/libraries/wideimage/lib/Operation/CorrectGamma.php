@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -40,8 +40,9 @@
 		function execute($image, $input_gamma, $output_gamma)
 		{
 			$new = $image->copy();
-			imagegammacorrect($new->getHandle(), $input_gamma, $output_gamma);
+			if (!imagegammacorrect($new->getHandle(), $input_gamma, $output_gamma))
+				throw new WideImage_GDFunctionResultException("imagegammacorrect() returned false");
+			
 			return $new;
 		}
 	}
-?>

@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -65,4 +65,3 @@
 			return $mask;
 		}
 	}
-?>

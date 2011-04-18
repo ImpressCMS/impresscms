@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -37,23 +37,13 @@
 		 */
 		function execute($image)
 		{
-			$palette = $image instanceof WideImage_PaletteImage;
-			$transparent = $image->isTransparent();
-			
-			if ($palette && $transparent)
-				$tci = $image->getTransparentColor();
-			
 			$new = $image->asTrueColor();
-			imagefilter($new->getHandle(), IMG_FILTER_GRAYSCALE);
+			if (!imagefilter($new->getHandle(), IMG_FILTER_GRAYSCALE))
+				throw new WideImage_GDFunctionResultException("imagefilter() returned false");
 			
-			if ($palette)
-			{
+			if (!$image->isTrueColor())
 				$new = $new->asPalette();
-				if ($transparent)
-					$new->setTransparentColor($tci);
-			}
 			
 			return $new;
 		}
 	}
-?>

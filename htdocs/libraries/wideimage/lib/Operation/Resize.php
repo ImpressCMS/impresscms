@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -53,7 +53,24 @@
 		 */
 		protected function prepareDimensions($img, $width, $height, $fit)
 		{
-			list($width, $height) = WideImage_Coordinate::fixForResize($img, $width, $height);
+			if ($width === null && $height === null)
+			{
+				$width = $img->getWidth();
+				$height = $img->getHeight();
+			}
+			
+			if ($width !== null)
+				$width = WideImage_Coordinate::fix($width, $img->getWidth());
+			
+			if ($height !== null)
+				$height = WideImage_Coordinate::fix($height, $img->getHeight());
+			
+			if ($width === null)
+				$width = floor($img->getWidth() * $height / $img->getHeight());
+			
+			if ($height === null)
+				$height = floor($img->getHeight() * $width / $img->getWidth());
+			
 			if ($width === 0 || $height === 0)
 				return array('width' => 0, 'height' => 0);
 			
@@ -95,7 +112,7 @@
 		 * @param string $scale
 		 * @return WideImage_Image
 		 */
-		function execute($img, $width, $height, $fit, $scale = 'any')
+		function execute($img, $width, $height, $fit, $scale)
 		{
 			$dim = $this->prepareDimensions($img, $width, $height, $fit);
 			if (($scale === 'down' && ($dim['width'] >= $img->getWidth() && $dim['height'] >= $img->getHeight())) ||
@@ -105,37 +122,36 @@
 			if ($dim['width'] <= 0 || $dim['height'] <= 0)
 				throw new WideImage_Operation_InvalidResizeDimensionException("Both dimensions must be larger than 0.");
 			
-			$new = WideImage_TrueColorImage::create($dim['width'], $dim['height']);
-			
-			if ($img->isTransparent())
+			if ($img->isTransparent() || $img instanceof WideImage_PaletteImage)
 			{
+				$new = WideImage_PaletteImage::create($dim['width'], $dim['height']);
 				$new->copyTransparencyFrom($img);
-				imagecopyresized(
+				if (!imagecopyresized(
 						$new->getHandle(), 
 						$img->getHandle(), 
 						0, 0, 0, 0, 
 						$new->getWidth(), 
 						$new->getHeight(), 
 						$img->getWidth(), 
-						$img->getHeight()
-					);
+						$img->getHeight()))
+					throw new WideImage_GDFunctionResultException("imagecopyresized() returned false");
 			}
 			else
 			{
+				$new = WideImage_TrueColorImage::create($dim['width'], $dim['height']);
 				$new->alphaBlending(false);
 				$new->saveAlpha(true);
-				imagecopyresampled(
+				if (!imagecopyresampled(
 						$new->getHandle(), 
 						$img->getHandle(), 
 						0, 0, 0, 0, 
 						$new->getWidth(), 
 						$new->getHeight(), 
 						$img->getWidth(), 
-						$img->getHeight()
-					);
+						$img->getHeight()))
+					throw new WideImage_GDFunctionResultException("imagecopyresampled() returned false");
 				$new->alphaBlending(true);
 			}
 			return $new;
 		}
 	}
-?>

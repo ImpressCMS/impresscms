@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -31,15 +31,14 @@
 	{
 		function load($uri)
 		{
-			return imagecreatefromgd($uri);
+			return @imagecreatefromgd($uri);
 		}
 		
 		function save($handle, $uri = null)
 		{
 			if ($uri == null)
-				imagegd($handle);
+				return imagegd($handle);
 			else
-				imagegd($handle, $uri);
+				return imagegd($handle, $uri);
 		}
 	}
-?>

@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -31,7 +31,7 @@
 	{
 		function load($uri)
 		{
-			return imagecreatefromgif($uri);
+			return @imagecreatefromgif($uri);
 		}
 		
 		function save($handle, $uri = null)
@@ -43,9 +43,8 @@
 			// error, of course). And the same thing works fine for imagepng() and 
 			// imagejpeg(). It's a bug! ;)
 			if ($uri)
-				imagegif($handle, $uri);
+				return imagegif($handle, $uri);
 			else
-				imagegif($handle);
+				return imagegif($handle);
 		}
 	}
-?>

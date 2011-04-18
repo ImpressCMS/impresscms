@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -51,15 +51,17 @@
 			$new = $image->asTrueColor();
 			
 			if (in_array($filter, self::$one_arg_filters))
-				imagefilter($new->getHandle(), $filter, $arg1);
+				$res = imagefilter($new->getHandle(), $filter, $arg1);
 			elseif (defined('IMG_FILTER_PIXELATE') && $filter == IMG_FILTER_PIXELATE)
-				imagefilter($new->getHandle(), $filter, $arg1, $arg2);
+				$res = imagefilter($new->getHandle(), $filter, $arg1, $arg2);
 			elseif ($filter == IMG_FILTER_COLORIZE)
-				imagefilter($new->getHandle(), $filter, $arg1, $arg2, $arg3, $arg4);
+				$res = imagefilter($new->getHandle(), $filter, $arg1, $arg2, $arg3, $arg4);
 			else
-				imagefilter($new->getHandle(), $filter);
+				$res = imagefilter($new->getHandle(), $filter);
+			
+			if (!$res)
+				throw new WideImage_GDFunctionResultException("imagefilter() returned false");
 			
 			return $new;
 		}
 	}
-?>

@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -32,10 +32,10 @@
 		/**
 		 * Executes the auto-crop operation on the $img
 		 * 
-		 * @var WideImage_Image $img 
-		 * @var int $rgb_threshold The difference in RGB from $base_color
-		 * @var int $pixel_cutoff The number of pixels on each border that must be over $rgb_threshold
-		 * @var int $base_color The color that will get cropped
+		 * @param WideImage_Image $img 
+		 * @param int $rgb_threshold The difference in RGB from $base_color
+		 * @param int $pixel_cutoff The number of pixels on each border that must be over $rgb_threshold
+		 * @param int $base_color The color that will get cropped
 		 * @return WideImage_Image resulting auto-cropped image
 		 */
 		function execute($img, $margin, $rgb_threshold, $pixel_cutoff, $base_color)

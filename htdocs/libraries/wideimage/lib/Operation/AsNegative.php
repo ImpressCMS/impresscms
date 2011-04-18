@@ -23,32 +23,41 @@
   **/
 	
 	/**
-	 * Flip operation class
+	 * AsNegative operation class
 	 * 
 	 * @package Internal/Operations
 	 */
-	class WideImage_Operation_Flip
+	class WideImage_Operation_AsNegative
 	{
 		/**
-		 * Returns a flipped image
+		 * Returns a greyscale copy of an image
 		 *
 		 * @param WideImage_Image $image
 		 * @return WideImage_Image
 		 */
 		function execute($image)
 		{
-			$new = $image->copy();
+			$palette = !$image->isTrueColor();
+			$transparent = $image->isTransparent();
 			
-			$width = $image->getWidth();
-			$height = $image->getHeight();
+			if ($palette && $transparent)
+				$tcrgb = $image->getTransparentColorRGB();
 			
-			if ($new->isTransparent())
-				imagefilledrectangle($new->getHandle(), 0, 0, $width, $height, $new->getTransparentColor());
+			$new = $image->asTrueColor();
+			if (!imagefilter($new->getHandle(), IMG_FILTER_NEGATE))
+				throw new WideImage_GDFunctionResultException("imagefilter() returned false");
 			
-			for ($y = 0; $y < $height; $y++)
-				if (!imagecopy($new->getHandle(), $image->getHandle(), 0, $y, 0, $height - $y - 1, $width, 1))
-					throw new WideImage_GDFunctionResultException("imagecopy() returned false");
-			
+			if ($palette)
+			{
+				$new = $new->asPalette();
+				if ($transparent)
+				{
+					$irgb = array('red' => 255 - $tcrgb['red'], 'green' => 255 - $tcrgb['green'], 'blue' => 255 - $tcrgb['blue'], 'alpha' => 127);
+					// needs imagecolorexactalpha instead of imagecolorexact, otherwise doesn't work on some transparent GIF images
+					$new_tci = imagecolorexactalpha($new->getHandle(), $irgb['red'], $irgb['green'], $irgb['blue'], 127);
+					$new->setTransparentColor($new_tci);
+				}
+			}
 			return $new;
 		}
 	}

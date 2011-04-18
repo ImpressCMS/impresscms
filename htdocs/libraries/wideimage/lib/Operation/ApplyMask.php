@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -40,47 +40,53 @@
 		 */
 		function execute($image, $mask, $left = 0, $top = 0)
 		{
-			$left = WideImage_Coordinate::fix($image->getWidth(), $left);
-			$top = WideImage_Coordinate::fix($image->getHeight(), $top);
+			$left = WideImage_Coordinate::fix($left, $image->getWidth(), $mask->getWidth());
+			$top = WideImage_Coordinate::fix($top, $image->getHeight(), $mask->getHeight());
 			
 			$width = $image->getWidth();
-			if ($width > $mask->getWidth())
-				$width = $mask->getWidth();
+			$mask_width = $mask->getWidth();
 			
 			$height = $image->getHeight();
-			if ($height > $mask->getHeight())
-				$height = $mask->getHeight();
+			$mask_height = $mask->getHeight();
 			
 			$result = $image->asTrueColor();
+			
 			$result->alphaBlending(false);
 			$result->saveAlpha(true);
 			
-			$srcTransparentColor = $image->getTransparentColor();
+			$srcTransparentColor = $result->getTransparentColor();
 			if ($srcTransparentColor >= 0)
 			{
-				$trgb = $image->getColorRGB($srcTransparentColor);
-				$trgb['alpha'] = 127;
-				$destTransparentColor = $result->allocateColorAlpha($trgb);
-				$result->setTransparentColor($destTransparentColor);
+				# this was here. works without.
+				#$trgb = $image->getColorRGB($srcTransparentColor);
+				#$trgb['alpha'] = 127;
+				#$destTransparentColor = $result->allocateColorAlpha($trgb);
+				#$result->setTransparentColor($destTransparentColor);
+				$destTransparentColor = $srcTransparentColor;
 			}
 			else
+			{
 				$destTransparentColor = $result->allocateColorAlpha(255, 255, 255, 127);
+			}
 			
 			for ($x = 0; $x < $width; $x++)
 				for ($y = 0; $y < $height; $y++)
-					if ($left + $x < $image->getWidth() && $top + $y < $image->getHeight())
+				{
+					$mx = $x - $left;
+					$my = $y - $top;
+					if ($mx >= 0 && $mx < $mask_width && $my >= 0 && $my < $mask_height)
 					{
-						$srcColor = $image->getColorAt($left + $x, $top + $y);
+						$srcColor = $image->getColorAt($x, $y);
 						if ($srcColor == $srcTransparentColor)
 							$destColor = $destTransparentColor;
 						else
 						{
-							$maskRGB = $mask->getRGBAt($x, $y);
+							$maskRGB = $mask->getRGBAt($mx, $my);
 							if ($maskRGB['red'] == 0)
 								$destColor = $destTransparentColor;
 							elseif ($srcColor >= 0)
 							{
-								$imageRGB = $image->getRGBAt($left + $x, $top + $y);
+								$imageRGB = $image->getRGBAt($x, $y);
 								$level = ($maskRGB['red'] / 255) * (1 - $imageRGB['alpha'] / 127);
 								$imageRGB['alpha'] = 127 - round($level * 127);
 								if ($imageRGB['alpha'] == 127)
@@ -91,10 +97,9 @@
 							else
 								$destColor = $destTransparentColor;
 						}
-						$result->setColorAt($left + $x, $top + $y, $destColor);
+						$result->setColorAt($x, $y, $destColor);
 					}
-			
+				}
 			return $result;
 		}
 	}
-?>

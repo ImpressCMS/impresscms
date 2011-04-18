@@ -22,30 +22,27 @@
     * @package Internal/Mappers
   **/
 	
-	include_once WideImage::path() . '/vendor/de77/BMP.php';
+	include_once WideImage::path() . '/vendor/de77/TGA.php';
 	
 	/**
-	 * Mapper support for BMP
+	 * Mapper support for TGA
 	 * 
 	 * @package Internal/Mappers
 	 */
-	class WideImage_Mapper_BMP
+	class WideImage_Mapper_TGA
 	{
 		function load($uri)
 		{
-			return WideImage_vendor_de77_BMP::imagecreatefrombmp($uri);
+			return WideImage_vendor_de77_TGA::imagecreatefromtga($uri);
 		}
 		
 		function loadFromString($data)
 		{
-			return WideImage_vendor_de77_BMP::imagecreatefromstring($data);
+			return WideImage_vendor_de77_TGA::imagecreatefromstring($data);
 		}
 		
 		function save($handle, $uri = null)
 		{
-			if ($uri == null)
-				return WideImage_vendor_de77_BMP::imagebmp($handle);
-			else
-				return WideImage_vendor_de77_BMP::imagebmp($handle, $uri);
+			throw new WideImage_Exception("Saving to TGA isn't supported.");
 		}
 	}

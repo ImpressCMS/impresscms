@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -41,8 +41,8 @@
 		function execute($image, $matrix, $div, $offset)
 		{
 			$new = $image->asTrueColor();
-			imageconvolution($new->getHandle(), $matrix, $div, $offset);
+			if (!imageconvolution($new->getHandle(), $matrix, $div, $offset))
+				throw new WideImage_GDFunctionResultException("imageconvolution() returned false");
 			return $new;
 		}
 	}
-?>
