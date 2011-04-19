@@ -11,6 +11,7 @@
  */
 
 defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
+icms::$preload->triggerEvent('finishCoreBoot');
 
 global $icmsConfig, $xoopsOption;
 
