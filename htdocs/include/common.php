@@ -16,9 +16,9 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 // -- Include common functions and constants file
 require_once ICMS_ROOT_PATH . "/include/constants.php";
-include_once ICMS_ROOT_PATH . "/include/functions.php";
-include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
-include_once ICMS_ROOT_PATH . "/include/version.php";
+include_once ICMS_INCLUDE_PATH . "/functions.php";
+include_once ICMS_INCLUDE_PATH . "/debug_functions.php";
+include_once ICMS_INCLUDE_PATH . "/version.php";
 
 if (!isset($xoopsOption)) $xoopsOption = array();
 
@@ -74,7 +74,7 @@ if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'
 }
 
 if ($icmsConfig['closesite'] == 1) {
-	include ICMS_ROOT_PATH . '/include/site-closed.php';
+	include ICMS_INCLUDE_PATH . '/site-closed.php';
 }
 
 icms::launchModule();
