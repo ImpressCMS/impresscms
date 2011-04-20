@@ -439,6 +439,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	private function &getMultiple($blockids) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+		$criteria->setSort('weight');
 		$ret = $this->getObjects($criteria, true, true);
 		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link')
 			. " WHERE block_id IN (" . implode(',', array_keys($ret)) . ") ORDER BY block_id";
