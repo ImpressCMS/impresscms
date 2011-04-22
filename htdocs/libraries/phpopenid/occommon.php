@@ -16,9 +16,7 @@ $path = $path_extra2 . PATH_SEPARATOR . $path_extra . PATH_SEPARATOR . $path;
 ini_set('include_path', $path);
 
 function displayError($message) {
-    $error = $message;
-    include 'index.php';
-    exit(0);
+	icms_core_Message::warning($message, '', TRUE);
 }
 
 function doIncludes() {
@@ -71,7 +69,8 @@ function &getStore() {
         exit(0);
     }
 
-    return new Auth_OpenID_FileStore($store_path);
+    $return = new Auth_OpenID_FileStore($store_path);
+    return $return;
 }
 
 function &getConsumer() {
@@ -80,7 +79,8 @@ function &getConsumer() {
      * earlier.
      */
     $store = getStore();
-    return new Auth_OpenID_Consumer($store);
+    $return = new Auth_OpenID_Consumer($store);
+    return $return;
 }
 
 function getScheme() {
@@ -92,7 +92,7 @@ function getScheme() {
 }
 
 function getReturnTo() {
-    return sprintf("%s://%s:%s%s/finish_auth.php",
+    return sprintf("%s://%s:%s%sfinish_auth.php",
                    getScheme(), $_SERVER['SERVER_NAME'],
                    $_SERVER['SERVER_PORT'],
                    dirname($_SERVER['PHP_SELF']));
@@ -131,8 +131,7 @@ $consumer = new Auth_OpenID_Consumer($store);
 /**
  * Sanitization Functions
  */
-function quote_smart($value)
-{
+function quote_smart($value) {
     // Stripslashes
     if (get_magic_quotes_gpc()) {
         $value = stripslashes($value);
@@ -145,11 +144,8 @@ function quote_smart($value)
 }
 
 
-function alphaonly($str)
-{
+function alphaonly($str) {
 	$str2 = preg_replace("/[^a-zA-Z0-9=@\/\.]/",'_',$str);
 	return $str2;
 }
 
-
-?>
