@@ -60,12 +60,13 @@ function &getStore() {
      * script, you'll have to remove this directory manually.
      */
     //$store_path = "/tmp/_php_consumer_test";
-    $store_path = XOOPS_TRUST_PATH . "/_php_consumer";
+    $store_path = ICMS_TRUST_PATH . "/_php_consumer";
 
-    if (!file_exists($store_path) &&
-        !mkdir($store_path)) {
-        print "Could not create the FileStore directory - ".
-            " Please check the effective permissions.";
+    if (!file_exists($store_path) 
+    	&& !mkdir($store_path)
+    ) {
+        print "Could not create the FileStore directory."
+        	. " Please check the effective permissions.";
         exit(0);
     }
 
@@ -90,19 +91,27 @@ function getScheme() {
     }
     return $scheme;
 }
-
+/** @todo dirname($_SERVER['PHP_SELF']) returns an extra '/' when logging in from the
+ * webroot
+ */
 function getReturnTo() {
-    return sprintf("%s://%s:%s%sfinish_auth.php",
+	$directory = dirname($_SERVER['PHP_SELF']); 
+	$directory = "/" ? "" : $directory;
+    return sprintf("%s://%s:%s%s/finish_auth.php",
                    getScheme(), $_SERVER['SERVER_NAME'],
                    $_SERVER['SERVER_PORT'],
-                   dirname($_SERVER['PHP_SELF']));
+                   $directory
+                   );
 }
 
 function getTrustRoot() {
-    return sprintf("%s://%s:%s%s/",
+	$directory = dirname($_SERVER['PHP_SELF']); 
+	$directory = "/" ? "" : $directory;
+	return sprintf("%s://%s:%s%s/",
                    getScheme(), $_SERVER['SERVER_NAME'],
                    $_SERVER['SERVER_PORT'],
-                   dirname($_SERVER['PHP_SELF']));
+                   $directory
+                   );
 }
 
 
@@ -113,11 +122,12 @@ function getTrustRoot() {
  * you'll have to remove this directory manually.
  */
 
-$store_path = XOOPS_TRUST_PATH . "/_php_consumer";
-if (!file_exists($store_path) &&
-    !mkdir($store_path)) {
-    print "Could not create the FileStore directory '$store_path'. ".
-        " Please check the effective permissions.";
+$store_path = ICMS_TRUST_PATH . "/_php_consumer";
+if (!file_exists($store_path) 
+	&& !mkdir($store_path)
+) {
+    print "Could not create the FileStore directory." 
+    	. " Please check the effective permissions.";
     exit(0);
 }
 
