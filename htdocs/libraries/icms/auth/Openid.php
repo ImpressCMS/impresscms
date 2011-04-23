@@ -90,7 +90,7 @@ class icms_auth_Openid extends icms_auth_Object {
 	 * @return bool successful?
 	 */
 	public function authenticate($debug = FALSE) {
-		// check to see if we alredy have an OpenID response in SESSION
+		// check to see if we already have an OpenID response in SESSION
 		if (isset($_SESSION['openid_response'])) {
 			if ($debug) icms_core_Debug::message(_CORE_OID_INSESSIONS);
 			$this->response = $_SESSION['openid_response'];
@@ -101,7 +101,7 @@ class icms_auth_Openid extends icms_auth_Object {
 			$return_to = getReturnTo();//1123
 			//$this->response = $consumer->complete($_GET);
 			$this->response = $consumer->complete($return_to);//1123
-			$_SESSION['openid_response'] = $this->response;
+			$_SESSION['openid_response'] = serialize($this->response);
 		}
 
 		if ($this->response->status == Auth_OpenID_CANCEL) {
@@ -109,7 +109,7 @@ class icms_auth_Openid extends icms_auth_Object {
 
 			// This means the authentication was cancelled.
 			$this->setErrors('100', _CORE_OID_VERIFCANCEL);
-		} else if ($this->response->status == Auth_OpenID_FAILURE) {
+		} elseif ($this->response->status == Auth_OpenID_FAILURE) {
 			if ($debug) icms_core_Debug::message(_CORE_OID_SERVERFAILED);
 
 			$this->setErrors('101', _CORE_OID_FAILED . $this->response->message);
@@ -124,7 +124,7 @@ class icms_auth_Openid extends icms_auth_Object {
 
 			//$this->setErrors('102', "REQUEST info: <pre>" . var_export($_REQUEST, TRUE) . "</pre>");
 			return FALSE;
-		} else if ($this->response->status == Auth_OpenID_SUCCESS) {
+		} elseif ($this->response->status == Auth_OpenID_SUCCESS) {
 			// This means the authentication succeeded.
 			$this->displayid = $this->response->getDisplayIdentifier();
 			$this->openid = $this->response->identity_url;
