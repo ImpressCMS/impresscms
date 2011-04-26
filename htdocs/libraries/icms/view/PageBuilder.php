@@ -138,7 +138,8 @@ class icms_view_PageBuilder {
 
 		// setting the full and relative url of the actual page
 		$icmsurl_parsed = parse_url(ICMS_URL);
-		$fullurl = urldecode($icmsurl_parsed['scheme'] . "://" . $icmsurl_parsed['host'] . $_SERVER ['REQUEST_URI']);
+		$fullurl = htmlspecialchars(
+			urldecode($icmsurl_parsed['scheme'] . "://" . $icmsurl_parsed['host'] . $_SERVER['REQUEST_URI']), ENT_QUOTES, _CHARSET);
 		$url = filter_var(urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1)), FILTER_SANITIZE_URL);
 
 		$icms_page_handler = icms::handler('icms_data_page');
