@@ -93,14 +93,14 @@ class icms_auth_Openid extends icms_auth_Object {
 		// check to see if we already have an OpenID response in SESSION
 		if (isset($_SESSION['openid_response'])) {
 			if ($debug) icms_core_Debug::message(_CORE_OID_INSESSIONS);
-			$this->response = $_SESSION['openid_response'];
+			$this->response = unserialize($_SESSION['openid_response']);
 		} else {
 			if ($debug) icms_core_Debug::message(_CORE_OID_FETCHING);
 			// Complete the authentication process using the server's response.
-			$consumer = getConsumer();//1123
-			$return_to = getReturnTo();//1123
+			$consumer = getConsumer();
+			$return_to = getReturnTo();
 			//$this->response = $consumer->complete($_GET);
-			$this->response = $consumer->complete($return_to);//1123
+			$this->response = $consumer->complete($return_to);
 			$_SESSION['openid_response'] = serialize($this->response);
 		}
 
@@ -113,16 +113,11 @@ class icms_auth_Openid extends icms_auth_Object {
 			if ($debug) icms_core_Debug::message(_CORE_OID_SERVERFAILED);
 
 			$this->setErrors('101', _CORE_OID_FAILED . $this->response->message);
-			/**
-			 * This can be uncommented to display the $_REQUEST array. This is usefull for
-			 * troubleshooting purposes
-			 */
 			if ($debug) {
 				icms_core_Debug::message(_CORE_OID_DUMPREQ);
 				icms_core_Debug::vardump($_REQUEST);
 			}
 
-			//$this->setErrors('102', "REQUEST info: <pre>" . var_export($_REQUEST, TRUE) . "</pre>");
 			return FALSE;
 		} elseif ($this->response->status == Auth_OpenID_SUCCESS) {
 			// This means the authentication succeeded.
@@ -130,7 +125,7 @@ class icms_auth_Openid extends icms_auth_Object {
 			$this->openid = $this->response->identity_url;
 			$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($this->response);
 			$sreg = $sreg_resp->contents();
-			$_SESSION['openid_sreg']=$sreg;
+			$_SESSION['openid_sreg'] = $sreg;
 
 			if ($debug) {
 				icms_core_Debug::message(_CORE_OID_SERVERSUCCESS);
@@ -140,7 +135,6 @@ class icms_auth_Openid extends icms_auth_Object {
 				icms_core_Debug::vardump($sreg);
 			}
 
-			// $openid = $this->response->identity_url;
 			$esc_identity = htmlspecialchars($this->openid, ENT_QUOTES);
 
 			$success = sprintf(_CORE_OID_SUCESSFULLYIDENTIFIED, $esc_identity, $this->displayid);
@@ -148,11 +142,6 @@ class icms_auth_Openid extends icms_auth_Object {
 			if ($this->response->endpoint->canonicalID) {
 				$success .= sprintf(_CORE_OID_CANONID, $this->response->endpoint->canonicalID);
 			}
-
-			/**
-			 * This can be uncommented to display the $success info for troubleshooting purposes
-			 */
-			//$this->setErrors('103', $success);
 
 			/**
 			 * Now, where are we in the process, just back from OpenID server or trying to register or
@@ -184,7 +173,7 @@ class icms_auth_Openid extends icms_auth_Object {
 					 * to create a new user account on the site or else login with his already registered
 					 * account
 					 */
-					if ($debug) icms_core_Debug::message(_CORE_OID_NOTFOUNDSTEPIS);
+					if ($debug) icms_core_Debug::message(_CORE_OID_NOTFOUNDSTEPIS . 'OPENID_STEP_NO_USER_FOUND');
 					$this->step = OPENID_STEP_NO_USER_FOUND;
 					return FALSE;
 				}
@@ -201,4 +190,3 @@ class icms_auth_Openid extends icms_auth_Object {
 		return count($this->getErrors()) > 0;
 	}
 }
-
