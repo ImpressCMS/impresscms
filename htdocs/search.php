@@ -142,18 +142,18 @@ $xoopsTpl->assign("label_keywords", _SR_KEYWORDS . ':');
 $keywords = array();
 $ignored_keywords = array();
 foreach ($queries as $q) {
-	$keywords[] = htmlspecialchars(stripslashes($q));
+	$keywords[] = htmlspecialchars(stripslashes($q), ENT_COMPAT, _CHARSET);
 }
 
 if (!empty($ignored_queries)) {
 	$xoopsTpl->assign("label_ignored_keywords", sprintf(_SR_IGNOREDWORDS, $icmsConfigSearch['keyword_min']));
 	foreach ($ignored_queries as $q) {
-		$ignored_keywords[] = htmlspecialchars(stripslashes($q));
+		$ignored_keywords[] = htmlspecialchars(stripslashes($q), ENT_COMPAT, _CHARSET);
 	}
 	$xoopsTpl->assign("ignored_keywords", $ignored_keywords);
 }
 $xoopsTpl->assign("searched_keywords", $keywords);
-$xoopsTpl->assign('icms_pagetitle', _SR_SEARCHRESULTS . ' - ' . htmlspecialchars(implode(' ',$keywords)));
+$xoopsTpl->assign('icms_pagetitle', _SR_SEARCHRESULTS . ' - ' . htmlspecialchars(implode(' ',$keywords), ENT_COMPAT, _CHARSET));
 
 $all_results = array();
 $all_results_counts = array();
@@ -231,7 +231,7 @@ switch ($action) {
 					}
 
 					$all_results[$modname] = array("search_more_title" => _SR_SHOWALLR,
-						"search_more_url" => htmlspecialchars($search_url),
+						"search_more_url" => htmlspecialchars($search_url, ENT_COMPAT, _CHARSET),
 						"results" => array_slice($results, 0, $num_show_this_page)
 					);
 				}
@@ -287,7 +287,7 @@ switch ($action) {
 			if ($action == 'showallbyuser') {
 				$search_url_get_params .= "&uid=$uid";
 			}
-			$search_url_get_params = htmlspecialchars($search_url_get_params);
+			$search_url_get_params = htmlspecialchars($search_url_get_params, ENT_COMPAT, _CHARSET);
 			$search_url = $search_url_base . $search_url_get_params;
 
 			$pagenav = new icms_view_PageNav($count, $max_results_per_page, $start, "start", $search_url_get_params);
