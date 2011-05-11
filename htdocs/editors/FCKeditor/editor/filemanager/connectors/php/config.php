@@ -30,7 +30,8 @@ icms::$logger->disableLogger();
 // SECURITY: You must explicitly enable this "connector". (Set it to "true").
 // WARNING: don't just set "$Config['Enabled'] = true ;", you must be sure that only
 //		authenticated users can access this file or use some kind of session checking.
-$Config['Enabled'] = FALSE;
+$Config['Enabled'] = false;
+
 
 // Path to user files relative to the document root.
 $Config['UserFilesPath'] = ICMS_UPLOAD_URL . '/' ;
