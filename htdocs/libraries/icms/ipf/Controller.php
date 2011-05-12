@@ -43,8 +43,8 @@ class icms_ipf_Controller {
 	 * @param	obj		$icmsObj
 	 */
 	public function postDataToObject(&$icmsObj) {
-		foreach ( array_keys($icmsObj->vars) as $key) {
-			switch ( $icmsObj->vars[$key]['data_type']) {
+		foreach (array_keys($icmsObj->vars) as $key) {
+			switch ($icmsObj->vars[$key]['data_type']) {
 				case XOBJ_DTYPE_IMAGE:
 					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] !='') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
@@ -120,6 +120,12 @@ class icms_ipf_Controller {
 						$value = strtotime($_POST[$key]);
 					}
 					$icmsObj->setVar($key, $value);
+					break;
+					
+				case XOBJ_DTYPE_URL:
+					if (isset($_POST[$key])) {
+						$icmsObj->setVar($key, filter_var($_POST[$key], FILTER_SANITIZE_URL));
+					}
 					break;
 
 				default:
