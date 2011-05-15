@@ -25,7 +25,7 @@ if (isset($_POST['queryString'])) {
 		if ($query) {
 			if ($num_results < 1) {
 				echo "<li><a href='javascript:void(0);'>
-					<img src='".ICMS_URL."/images/crystal/actions/exit.png' alt='no results found' />
+					<img src='" . ICMS_IMAGES_SET_URL . "/actions/exit.png' alt='no results found' />
 					<span class='searchheading'>Sorry</span>
 					<span class='searchdesc'>No results were found that matched your query. Please try again.</span></a></li>";
 			} else {
