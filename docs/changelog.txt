@@ -1,9 +1,9 @@
 ImpressCMS ChangeLog
 === ImpressCMS 1.3 Beta 2 ===
-Release date: 
-Revision: 
+Release date: 3 May 2011
+Revision: 21585
 DB Version: 41
-Build Version: 44
+Build Version: 42 (should have been 45)
 
 A complete list of changes to this release series can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
 
@@ -16,7 +16,7 @@ Updated external libraries
 Release date: 6 March 2011
 Revision: 
 DB Version: 41
-Build Version: 43
+Build Version: 42 (should have been 43)
 
 List of changes to this release series can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
 
@@ -44,6 +44,14 @@ Improvements:
 Additions:
 * reflex admin theme
 * Control Panel block
+
+=== ImpressCMS 1.2.5 Final ===
+Release date: 03 May 2011
+Revision: 21606
+DB Version: 40
+Build Version: 42 (should have been 44)
+
+Security Fix: File Upload/Remote File inclusion possiblity related to upload function of FCKEditor. http://www.exploit-id.com/web-applications/impresscms-1-2-4_final-furfi-multiple-vulnerability
 
 === ImpressCMS 1.2.4 Final ===
 Release date: 12 Dec 2010
