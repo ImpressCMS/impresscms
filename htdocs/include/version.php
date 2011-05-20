@@ -11,14 +11,6 @@
  */
 
 define('ICMS_VERSION_NAME','ImpressCMS 1.3 Beta2');
-/**
- * To developers:
- * if you want to get the version number of the core, please use something like:
- * substr(ICMS_VERSION_NAME, 11, -6)
- * OR
- * substr(XOOPS_VERSION, 11, -6)
- * Please note: This code works only on FINAL versions
- */
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
@@ -44,7 +36,7 @@ define('ICMS_VERSION_BUILD', 45);
 /**
  * Latest dbversion of the System Module
  *
- * When installing ImpressCMS, the Systeme Module's dbversion needs to be the latest dbversion found
+ * When installing ImpressCMS, the System Module's dbversion needs to be the latest dbversion found
  * in system/include/update.php
  *
  * So, developers, everytime you add an upgrade block in system/include/update.php to upgrade something in the DB,
