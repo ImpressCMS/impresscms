@@ -1,165 +1,165 @@
 <?php
 
 /**
- * This module documents the main interface with the OpenID consumer
- * library.  The only part of the library which has to be used and
- * isn't documented in full here is the store required to create an
- * Auth_OpenID_Consumer instance.  More on the abstract store type and
- * concrete implementations of it that are provided in the
- * documentation for the Auth_OpenID_Consumer constructor.
- *
- * OVERVIEW
- *
- * The OpenID identity verification process most commonly uses the
- * following steps, as visible to the user of this library:
- *
- *   1. The user enters their OpenID into a field on the consumer's
- *      site, and hits a login button.
- *   2. The consumer site discovers the user's OpenID server using the
- *      YADIS protocol.
- *   3. The consumer site sends the browser a redirect to the identity
- *      server.  This is the authentication request as described in
- *      the OpenID specification.
- *   4. The identity server's site sends the browser a redirect back
- *      to the consumer site.  This redirect contains the server's
- *      response to the authentication request.
- *
- * The most important part of the flow to note is the consumer's site
- * must handle two separate HTTP requests in order to perform the full
- * identity check.
- *
- * LIBRARY DESIGN
- * 
- * This consumer library is designed with that flow in mind.  The goal
- * is to make it as easy as possible to perform the above steps
- * securely.
- *
- * At a high level, there are two important parts in the consumer
- * library.  The first important part is this module, which contains
- * the interface to actually use this library.  The second is the
- * Auth_OpenID_Interface class, which describes the interface to use
- * if you need to create a custom method for storing the state this
- * library needs to maintain between requests.
- *
- * In general, the second part is less important for users of the
- * library to know about, as several implementations are provided
- * which cover a wide variety of situations in which consumers may use
- * the library.
- *
- * This module contains a class, Auth_OpenID_Consumer, with methods
- * corresponding to the actions necessary in each of steps 2, 3, and 4
- * described in the overview.  Use of this library should be as easy
- * as creating an Auth_OpenID_Consumer instance and calling the
- * methods appropriate for the action the site wants to take.
- *
- * STORES AND DUMB MODE
- *
- * OpenID is a protocol that works best when the consumer site is able
- * to store some state.  This is the normal mode of operation for the
- * protocol, and is sometimes referred to as smart mode.  There is
- * also a fallback mode, known as dumb mode, which is available when
- * the consumer site is not able to store state.  This mode should be
- * avoided when possible, as it leaves the implementation more
- * vulnerable to replay attacks.
- *
- * The mode the library works in for normal operation is determined by
- * the store that it is given.  The store is an abstraction that
- * handles the data that the consumer needs to manage between http
- * requests in order to operate efficiently and securely.
- *
- * Several store implementation are provided, and the interface is
- * fully documented so that custom stores can be used as well.  See
- * the documentation for the Auth_OpenID_Consumer class for more
- * information on the interface for stores.  The implementations that
- * are provided allow the consumer site to store the necessary data in
- * several different ways, including several SQL databases and normal
- * files on disk.
- *
- * There is an additional concrete store provided that puts the system
- * in dumb mode.  This is not recommended, as it removes the library's
- * ability to stop replay attacks reliably.  It still uses time-based
- * checking to make replay attacks only possible within a small
- * window, but they remain possible within that window.  This store
- * should only be used if the consumer site has no way to retain data
- * between requests at all.
- *
- * IMMEDIATE MODE
- *
- * In the flow described above, the user may need to confirm to the
- * lidentity server that it's ok to authorize his or her identity.
- * The server may draw pages asking for information from the user
- * before it redirects the browser back to the consumer's site.  This
- * is generally transparent to the consumer site, so it is typically
- * ignored as an implementation detail.
- *
- * There can be times, however, where the consumer site wants to get a
- * response immediately.  When this is the case, the consumer can put
- * the library in immediate mode.  In immediate mode, there is an
- * extra response possible from the server, which is essentially the
- * server reporting that it doesn't have enough information to answer
- * the question yet.
- *
- * USING THIS LIBRARY
- *
- * Integrating this library into an application is usually a
- * relatively straightforward process.  The process should basically
- * follow this plan:
- *
- * Add an OpenID login field somewhere on your site.  When an OpenID
- * is entered in that field and the form is submitted, it should make
- * a request to the your site which includes that OpenID URL.
- *
- * First, the application should instantiate the Auth_OpenID_Consumer
- * class using the store of choice (Auth_OpenID_FileStore or one of
- * the SQL-based stores).  If the application has a custom
- * session-management implementation, an object implementing the
- * {@link Auth_Yadis_PHPSession} interface should be passed as the
- * second parameter.  Otherwise, the default uses $_SESSION.
- *
- * Next, the application should call the Auth_OpenID_Consumer object's
- * 'begin' method.  This method takes the OpenID URL.  The 'begin'
- * method returns an Auth_OpenID_AuthRequest object.
- *
- * Next, the application should call the 'redirectURL' method of the
- * Auth_OpenID_AuthRequest object.  The 'return_to' URL parameter is
- * the URL that the OpenID server will send the user back to after
- * attempting to verify his or her identity.  The 'trust_root' is the
- * URL (or URL pattern) that identifies your web site to the user when
- * he or she is authorizing it.  Send a redirect to the resulting URL
- * to the user's browser.
- *
- * That's the first half of the authentication process.  The second
- * half of the process is done after the user's ID server sends the
- * user's browser a redirect back to your site to complete their
- * login.
- *
- * When that happens, the user will contact your site at the URL given
- * as the 'return_to' URL to the Auth_OpenID_AuthRequest::redirectURL
- * call made above.  The request will have several query parameters
- * added to the URL by the identity server as the information
- * necessary to finish the request.
- *
- * Lastly, instantiate an Auth_OpenID_Consumer instance as above and
- * call its 'complete' method, passing in all the received query
- * arguments.
- *
- * There are multiple possible return types possible from that
- * method. These indicate the whether or not the login was successful,
- * and include any additional information appropriate for their type.
- *
- * PHP versions 4 and 5
- *
- * LICENSE: See the COPYING file included in this distribution.
- *
- * @package OpenID
- * @author JanRain, Inc. <openid@janrain.com>
- * @copyright 2005-2008 Janrain, Inc.
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
- */
+* This module documents the main interface with the OpenID consumer
+* library. The only part of the library which has to be used and
+* isn't documented in full here is the store required to create an
+* Auth_OpenID_Consumer instance. More on the abstract store type and
+* concrete implementations of it that are provided in the
+* documentation for the Auth_OpenID_Consumer constructor.
+*
+* OVERVIEW
+*
+* The OpenID identity verification process most commonly uses the
+* following steps, as visible to the user of this library:
+*
+* 1. The user enters their OpenID into a field on the consumer's
+* site, and hits a login button.
+* 2. The consumer site discovers the user's OpenID server using the
+* YADIS protocol.
+* 3. The consumer site sends the browser a redirect to the identity
+* server. This is the authentication request as described in
+* the OpenID specification.
+* 4. The identity server's site sends the browser a redirect back
+* to the consumer site. This redirect contains the server's
+* response to the authentication request.
+*
+* The most important part of the flow to note is the consumer's site
+* must handle two separate HTTP requests in order to perform the full
+* identity check.
+*
+* LIBRARY DESIGN
+*
+* This consumer library is designed with that flow in mind. The goal
+* is to make it as easy as possible to perform the above steps
+* securely.
+*
+* At a high level, there are two important parts in the consumer
+* library. The first important part is this module, which contains
+* the interface to actually use this library. The second is the
+* Auth_OpenID_Interface class, which describes the interface to use
+* if you need to create a custom method for storing the state this
+* library needs to maintain between requests.
+*
+* In general, the second part is less important for users of the
+* library to know about, as several implementations are provided
+* which cover a wide variety of situations in which consumers may use
+* the library.
+*
+* This module contains a class, Auth_OpenID_Consumer, with methods
+* corresponding to the actions necessary in each of steps 2, 3, and 4
+* described in the overview. Use of this library should be as easy
+* as creating an Auth_OpenID_Consumer instance and calling the
+* methods appropriate for the action the site wants to take.
+*
+* STORES AND DUMB MODE
+*
+* OpenID is a protocol that works best when the consumer site is able
+* to store some state. This is the normal mode of operation for the
+* protocol, and is sometimes referred to as smart mode. There is
+* also a fallback mode, known as dumb mode, which is available when
+* the consumer site is not able to store state. This mode should be
+* avoided when possible, as it leaves the implementation more
+* vulnerable to replay attacks.
+*
+* The mode the library works in for normal operation is determined by
+* the store that it is given. The store is an abstraction that
+* handles the data that the consumer needs to manage between http
+* requests in order to operate efficiently and securely.
+*
+* Several store implementation are provided, and the interface is
+* fully documented so that custom stores can be used as well. See
+* the documentation for the Auth_OpenID_Consumer class for more
+* information on the interface for stores. The implementations that
+* are provided allow the consumer site to store the necessary data in
+* several different ways, including several SQL databases and normal
+* files on disk.
+*
+* There is an additional concrete store provided that puts the system
+* in dumb mode. This is not recommended, as it removes the library's
+* ability to stop replay attacks reliably. It still uses time-based
+* checking to make replay attacks only possible within a small
+* window, but they remain possible within that window. This store
+* should only be used if the consumer site has no way to retain data
+* between requests at all.
+*
+* IMMEDIATE MODE
+*
+* In the flow described above, the user may need to confirm to the
+* lidentity server that it's ok to authorize his or her identity.
+* The server may draw pages asking for information from the user
+* before it redirects the browser back to the consumer's site. This
+* is generally transparent to the consumer site, so it is typically
+* ignored as an implementation detail.
+*
+* There can be times, however, where the consumer site wants to get a
+* response immediately. When this is the case, the consumer can put
+* the library in immediate mode. In immediate mode, there is an
+* extra response possible from the server, which is essentially the
+* server reporting that it doesn't have enough information to answer
+* the question yet.
+*
+* USING THIS LIBRARY
+*
+* Integrating this library into an application is usually a
+* relatively straightforward process. The process should basically
+* follow this plan:
+*
+* Add an OpenID login field somewhere on your site. When an OpenID
+* is entered in that field and the form is submitted, it should make
+* a request to the your site which includes that OpenID URL.
+*
+* First, the application should instantiate the Auth_OpenID_Consumer
+* class using the store of choice (Auth_OpenID_FileStore or one of
+* the SQL-based stores). If the application has a custom
+* session-management implementation, an object implementing the
+* {@link Auth_Yadis_PHPSession} interface should be passed as the
+* second parameter. Otherwise, the default uses $_SESSION.
+*
+* Next, the application should call the Auth_OpenID_Consumer object's
+* 'begin' method. This method takes the OpenID URL. The 'begin'
+* method returns an Auth_OpenID_AuthRequest object.
+*
+* Next, the application should call the 'redirectURL' method of the
+* Auth_OpenID_AuthRequest object. The 'return_to' URL parameter is
+* the URL that the OpenID server will send the user back to after
+* attempting to verify his or her identity. The 'trust_root' is the
+* URL (or URL pattern) that identifies your web site to the user when
+* he or she is authorizing it. Send a redirect to the resulting URL
+* to the user's browser.
+*
+* That's the first half of the authentication process. The second
+* half of the process is done after the user's ID server sends the
+* user's browser a redirect back to your site to complete their
+* login.
+*
+* When that happens, the user will contact your site at the URL given
+* as the 'return_to' URL to the Auth_OpenID_AuthRequest::redirectURL
+* call made above. The request will have several query parameters
+* added to the URL by the identity server as the information
+* necessary to finish the request.
+*
+* Lastly, instantiate an Auth_OpenID_Consumer instance as above and
+* call its 'complete' method, passing in all the received query
+* arguments.
+*
+* There are multiple possible return types possible from that
+* method. These indicate the whether or not the login was successful,
+* and include any additional information appropriate for their type.
+*
+* PHP versions 4 and 5
+*
+* LICENSE: See the COPYING file included in this distribution.
+*
+* @package OpenID
+* @author JanRain, Inc. <openid@janrain.com>
+* @copyright 2005-2008 Janrain, Inc.
+* @license http://www.apache.org/licenses/LICENSE-2.0 Apache
+*/
 
 /**
- * Require utility classes and functions for the consumer.
- */
+* Require utility classes and functions for the consumer.
+*/
 require_once "Auth/OpenID.php";
 require_once "Auth/OpenID/Message.php";
 require_once "Auth/OpenID/HMAC.php";
@@ -174,90 +174,90 @@ require_once "Auth/Yadis/Manager.php";
 require_once "Auth/Yadis/XRI.php";
 
 /**
- * This is the status code returned when the complete method returns
- * successfully.
- */
+* This is the status code returned when the complete method returns
+* successfully.
+*/
 define('Auth_OpenID_SUCCESS', 'success');
 
 /**
- * Status to indicate cancellation of OpenID authentication.
- */
+* Status to indicate cancellation of OpenID authentication.
+*/
 define('Auth_OpenID_CANCEL', 'cancel');
 
 /**
- * This is the status code completeAuth returns when the value it
- * received indicated an invalid login.
- */
+* This is the status code completeAuth returns when the value it
+* received indicated an invalid login.
+*/
 define('Auth_OpenID_FAILURE', 'failure');
 
 /**
- * This is the status code completeAuth returns when the
- * {@link Auth_OpenID_Consumer} instance is in immediate mode, and the
- * identity server sends back a URL to send the user to to complete his
- * or her login.
- */
+* This is the status code completeAuth returns when the
+* {@link Auth_OpenID_Consumer} instance is in immediate mode, and the
+* identity server sends back a URL to send the user to to complete his
+* or her login.
+*/
 define('Auth_OpenID_SETUP_NEEDED', 'setup needed');
 
 /**
- * This is the status code beginAuth returns when the page fetched
- * from the entered OpenID URL doesn't contain the necessary link tags
- * to function as an identity page.
- */
+* This is the status code beginAuth returns when the page fetched
+* from the entered OpenID URL doesn't contain the necessary link tags
+* to function as an identity page.
+*/
 define('Auth_OpenID_PARSE_ERROR', 'parse error');
 
 /**
- * An OpenID consumer implementation that performs discovery and does
- * session management.  See the Consumer.php file documentation for
- * more information.
- *
- * @package OpenID
- */
+* An OpenID consumer implementation that performs discovery and does
+* session management. See the Consumer.php file documentation for
+* more information.
+*
+* @package OpenID
+*/
 class Auth_OpenID_Consumer {
 
     /**
-     * @access private
-     */
+* @access private
+*/
     var $discoverMethod = 'Auth_OpenID_discover';
 
     /**
-     * @access private
-     */
+* @access private
+*/
     var $session_key_prefix = "_openid_consumer_";
 
     /**
-     * @access private
-     */
+* @access private
+*/
     var $_token_suffix = "last_token";
 
     /**
-     * Initialize a Consumer instance.
-     *
-     * You should create a new instance of the Consumer object with
-     * every HTTP request that handles OpenID transactions.
-     *
-     * @param Auth_OpenID_OpenIDStore $store This must be an object
-     * that implements the interface in {@link
-     * Auth_OpenID_OpenIDStore}.  Several concrete implementations are
-     * provided, to cover most common use cases.  For stores backed by
-     * MySQL, PostgreSQL, or SQLite, see the {@link
-     * Auth_OpenID_SQLStore} class and its sublcasses.  For a
-     * filesystem-backed store, see the {@link Auth_OpenID_FileStore}
-     * module.  As a last resort, if it isn't possible for the server
-     * to store state at all, an instance of {@link
-     * Auth_OpenID_DumbStore} can be used.
-     *
-     * @param mixed $session An object which implements the interface
-     * of the {@link Auth_Yadis_PHPSession} class.  Particularly, this
-     * object is expected to have these methods: get($key), set($key),
-     * $value), and del($key).  This defaults to a session object
-     * which wraps PHP's native session machinery.  You should only
-     * need to pass something here if you have your own sessioning
-     * implementation.
-     *
-     * @param str $consumer_cls The name of the class to instantiate
-     * when creating the internal consumer object.  This is used for
-     * testing.
-     */
+* Initialize a Consumer instance.
+*
+* You should create a new instance of the Consumer object with
+* every HTTP request that handles OpenID transactions.
+*
+* @param Auth_OpenID_OpenIDStore $store This must be an object
+* that implements the interface in {@link
+* Auth_OpenID_OpenIDStore}. Several concrete implementations are
+* provided, to cover most common use cases. For stores backed by
+* MySQL, PostgreSQL, or SQLite, see the {@link
+* Auth_OpenID_SQLStore} class and its sublcasses. For a
+* filesystem-backed store, see the {@link Auth_OpenID_FileStore}
+* module. As a last resort, if it isn't possible for the server
+* to store state at all, an instance of {@link
+* Auth_OpenID_DumbStore} can be used.
+*
+* @param mixed $session An object which implements the interface
+* of the {@link Auth_Yadis_PHPSession} class. Particularly, this
+* object is expected to have these methods: get($key), set($key),
+* $value), and del($key). This defaults to a session object
+* which wraps PHP's native session machinery. You should only
+* need to pass something here if you have your own sessioning
+* implementation.
+*
+* @param str $consumer_cls The name of the class to instantiate
+* when creating the internal consumer object. This is used for
+* testing.
+*/
     function Auth_OpenID_Consumer($store, $session = null,
                                   $consumer_cls = null)
     {
@@ -277,10 +277,10 @@ class Auth_OpenID_Consumer {
     }
 
     /**
-     * Used in testing to define the discovery mechanism.
-     *
-     * @access private
-     */
+* Used in testing to define the discovery mechanism.
+*
+* @access private
+*/
     function getDiscoveryObject($session, $openid_url,
                                 $session_key_prefix)
     {
@@ -289,27 +289,27 @@ class Auth_OpenID_Consumer {
     }
 
     /**
-     * Start the OpenID authentication process. See steps 1-2 in the
-     * overview at the top of this file.
-     *
-     * @param string $user_url Identity URL given by the user. This
-     * method performs a textual transformation of the URL to try and
-     * make sure it is normalized. For example, a user_url of
-     * example.com will be normalized to http://example.com/
-     * normalizing and resolving any redirects the server might issue.
-     *
-     * @param bool $anonymous True if the OpenID request is to be sent
-     * to the server without any identifier information.  Use this
-     * when you want to transport data but don't want to do OpenID
-     * authentication with identifiers.
-     *
-     * @return Auth_OpenID_AuthRequest $auth_request An object
-     * containing the discovered information will be returned, with a
-     * method for building a redirect URL to the server, as described
-     * in step 3 of the overview. This object may also be used to add
-     * extension arguments to the request, using its 'addExtensionArg'
-     * method.
-     */
+* Start the OpenID authentication process. See steps 1-2 in the
+* overview at the top of this file.
+*
+* @param string $user_url Identity URL given by the user. This
+* method performs a textual transformation of the URL to try and
+* make sure it is normalized. For example, a user_url of
+* example.com will be normalized to http://example.com/
+* normalizing and resolving any redirects the server might issue.
+*
+* @param bool $anonymous True if the OpenID request is to be sent
+* to the server without any identifier information. Use this
+* when you want to transport data but don't want to do OpenID
+* authentication with identifiers.
+*
+* @return Auth_OpenID_AuthRequest $auth_request An object
+* containing the discovered information will be returned, with a
+* method for building a redirect URL to the server, as described
+* in step 3 of the overview. This object may also be used to add
+* extension arguments to the request, using its 'addExtensionArg'
+* method.
+*/
     function begin($user_url, $anonymous=false)
     {
         $openid_url = $user_url;
@@ -318,7 +318,7 @@ class Auth_OpenID_Consumer {
                                            $openid_url,
                                            $this->session_key_prefix);
 
-        // Set the 'stale' attribute of the manager.  If discovery
+        // Set the 'stale' attribute of the manager. If discovery
         // fails in a fatal way, the stale flag will cause the manager
         // to be cleaned up next time discovery is attempted.
 
@@ -355,21 +355,21 @@ class Auth_OpenID_Consumer {
     }
 
     /**
-     * Start OpenID verification without doing OpenID server
-     * discovery. This method is used internally by Consumer.begin
-     * after discovery is performed, and exists to provide an
-     * interface for library users needing to perform their own
-     * discovery.
-     *
-     * @param Auth_OpenID_ServiceEndpoint $endpoint an OpenID service
-     * endpoint descriptor.
-     *
-     * @param bool anonymous Set to true if you want to perform OpenID
-     * without identifiers.
-     *
-     * @return Auth_OpenID_AuthRequest $auth_request An OpenID
-     * authentication request object.
-     */
+* Start OpenID verification without doing OpenID server
+* discovery. This method is used internally by Consumer.begin
+* after discovery is performed, and exists to provide an
+* interface for library users needing to perform their own
+* discovery.
+*
+* @param Auth_OpenID_ServiceEndpoint $endpoint an OpenID service
+* endpoint descriptor.
+*
+* @param bool anonymous Set to true if you want to perform OpenID
+* without identifiers.
+*
+* @return Auth_OpenID_AuthRequest $auth_request An OpenID
+* authentication request object.
+*/
     function beginWithoutDiscovery($endpoint, $anonymous=false)
     {
         $loader = new Auth_OpenID_ServiceEndpointLoader();
@@ -385,28 +385,28 @@ class Auth_OpenID_Consumer {
     }
 
     /**
-     * Called to interpret the server's response to an OpenID
-     * request. It is called in step 4 of the flow described in the
-     * consumer overview.
-     *
-     * @param string $current_url The URL used to invoke the application.
-     * Extract the URL from your application's web
-     * request framework and specify it here to have it checked
-     * against the openid.current_url value in the response.  If
-     * the current_url URL check fails, the status of the
-     * completion will be FAILURE.
-     *
-     * @param array $query An array of the query parameters (key =>
-     * value pairs) for this HTTP request.  Defaults to null.  If
-     * null, the GET or POST data are automatically gotten from the
-     * PHP environment.  It is only useful to override $query for
-     * testing.
-     *
-     * @return Auth_OpenID_ConsumerResponse $response A instance of an
-     * Auth_OpenID_ConsumerResponse subclass. The type of response is
-     * indicated by the status attribute, which will be one of
-     * SUCCESS, CANCEL, FAILURE, or SETUP_NEEDED.
-     */
+* Called to interpret the server's response to an OpenID
+* request. It is called in step 4 of the flow described in the
+* consumer overview.
+*
+* @param string $current_url The URL used to invoke the application.
+* Extract the URL from your application's web
+* request framework and specify it here to have it checked
+* against the openid.current_url value in the response. If
+* the current_url URL check fails, the status of the
+* completion will be FAILURE.
+*
+* @param array $query An array of the query parameters (key =>
+* value pairs) for this HTTP request. Defaults to null. If
+* null, the GET or POST data are automatically gotten from the
+* PHP environment. It is only useful to override $query for
+* testing.
+*
+* @return Auth_OpenID_ConsumerResponse $response A instance of an
+* Auth_OpenID_ConsumerResponse subclass. The type of response is
+* indicated by the status attribute, which will be one of
+* SUCCESS, CANCEL, FAILURE, or SETUP_NEEDED.
+*/
     function complete($current_url, $query=null)
     {
         if ($current_url && !is_string($current_url)) {
@@ -427,7 +427,7 @@ class Auth_OpenID_Consumer {
             $loader->fromSession($endpoint_data);
 
         $message = Auth_OpenID_Message::fromPostArgs($query);
-        $response = $this->consumer->complete($message, $endpoint, 
+        $response = $this->consumer->complete($message, $endpoint,
                                               $current_url);
         $this->session->del($this->_token_key);
 
@@ -446,10 +446,10 @@ class Auth_OpenID_Consumer {
 }
 
 /**
- * A class implementing HMAC/DH-SHA1 consumer sessions.
- *
- * @package OpenID
- */
+* A class implementing HMAC/DH-SHA1 consumer sessions.
+*
+* @package OpenID
+*/
 class Auth_OpenID_DiffieHellmanSHA1ConsumerSession {
     var $session_type = 'DH-SHA1';
     var $hash_func = 'Auth_OpenID_SHA1';
@@ -508,10 +508,10 @@ class Auth_OpenID_DiffieHellmanSHA1ConsumerSession {
 }
 
 /**
- * A class implementing HMAC/DH-SHA256 consumer sessions.
- *
- * @package OpenID
- */
+* A class implementing HMAC/DH-SHA256 consumer sessions.
+*
+* @package OpenID
+*/
 class Auth_OpenID_DiffieHellmanSHA256ConsumerSession extends
       Auth_OpenID_DiffieHellmanSHA1ConsumerSession {
     var $session_type = 'DH-SHA256';
@@ -521,13 +521,13 @@ class Auth_OpenID_DiffieHellmanSHA256ConsumerSession extends
 }
 
 /**
- * A class implementing plaintext consumer sessions.
- *
- * @package OpenID
- */
+* A class implementing plaintext consumer sessions.
+*
+* @package OpenID
+*/
 class Auth_OpenID_PlainTextConsumerSession {
     var $session_type = 'no-encryption';
-    var $allowed_assoc_types =  array('HMAC-SHA1', 'HMAC-SHA256');
+    var $allowed_assoc_types = array('HMAC-SHA1', 'HMAC-SHA256');
 
     function getRequest()
     {
@@ -546,8 +546,8 @@ class Auth_OpenID_PlainTextConsumerSession {
 }
 
 /**
- * Returns available session types.
- */
+* Returns available session types.
+*/
 function Auth_OpenID_getAvailableSessionTypes()
 {
     $types = array(
@@ -559,58 +559,58 @@ function Auth_OpenID_getAvailableSessionTypes()
 }
 
 /**
- * This class is the interface to the OpenID consumer logic.
- * Instances of it maintain no per-request state, so they can be
- * reused (or even used by multiple threads concurrently) as needed.
- *
- * @package OpenID
- */
+* This class is the interface to the OpenID consumer logic.
+* Instances of it maintain no per-request state, so they can be
+* reused (or even used by multiple threads concurrently) as needed.
+*
+* @package OpenID
+*/
 class Auth_OpenID_GenericConsumer {
     /**
-     * @access private
-     */
+* @access private
+*/
     var $discoverMethod = 'Auth_OpenID_discover';
 
     /**
-     * This consumer's store object.
-     */
+* This consumer's store object.
+*/
     var $store;
 
     /**
-     * @access private
-     */
+* @access private
+*/
     var $_use_assocs;
 
     /**
-     * @access private
-     */
+* @access private
+*/
     var $openid1_nonce_query_arg_name = 'janrain_nonce';
 
     /**
-     * Another query parameter that gets added to the return_to for
-     * OpenID 1; if the user's session state is lost, use this claimed
-     * identifier to do discovery when verifying the response.
-     */
+* Another query parameter that gets added to the return_to for
+* OpenID 1; if the user's session state is lost, use this claimed
+* identifier to do discovery when verifying the response.
+*/
     var $openid1_return_to_identifier_name = 'openid1_claimed_id';
 
     /**
-     * This method initializes a new {@link Auth_OpenID_Consumer}
-     * instance to access the library.
-     *
-     * @param Auth_OpenID_OpenIDStore $store This must be an object
-     * that implements the interface in {@link Auth_OpenID_OpenIDStore}.
-     * Several concrete implementations are provided, to cover most common use
-     * cases.  For stores backed by MySQL, PostgreSQL, or SQLite, see
-     * the {@link Auth_OpenID_SQLStore} class and its sublcasses.  For a
-     * filesystem-backed store, see the {@link Auth_OpenID_FileStore} module.
-     * As a last resort, if it isn't possible for the server to store
-     * state at all, an instance of {@link Auth_OpenID_DumbStore} can be used.
-     *
-     * @param bool $immediate This is an optional boolean value.  It
-     * controls whether the library uses immediate mode, as explained
-     * in the module description.  The default value is False, which
-     * disables immediate mode.
-     */
+* This method initializes a new {@link Auth_OpenID_Consumer}
+* instance to access the library.
+*
+* @param Auth_OpenID_OpenIDStore $store This must be an object
+* that implements the interface in {@link Auth_OpenID_OpenIDStore}.
+* Several concrete implementations are provided, to cover most common use
+* cases. For stores backed by MySQL, PostgreSQL, or SQLite, see
+* the {@link Auth_OpenID_SQLStore} class and its sublcasses. For a
+* filesystem-backed store, see the {@link Auth_OpenID_FileStore} module.
+* As a last resort, if it isn't possible for the server to store
+* state at all, an instance of {@link Auth_OpenID_DumbStore} can be used.
+*
+* @param bool $immediate This is an optional boolean value. It
+* controls whether the library uses immediate mode, as explained
+* in the module description. The default value is False, which
+* disables immediate mode.
+*/
     function Auth_OpenID_GenericConsumer($store)
     {
         $this->store = $store;
@@ -623,11 +623,11 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * Called to begin OpenID authentication using the specified
-     * {@link Auth_OpenID_ServiceEndpoint}.
-     *
-     * @access private
-     */
+* Called to begin OpenID authentication using the specified
+* {@link Auth_OpenID_ServiceEndpoint}.
+*
+* @access private
+*/
     function begin($service_endpoint)
     {
         $assoc = $this->_getAssociation($service_endpoint);
@@ -644,12 +644,12 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * Given an {@link Auth_OpenID_Message}, {@link
-     * Auth_OpenID_ServiceEndpoint} and optional return_to URL,
-     * complete OpenID authentication.
-     *
-     * @access private
-     */
+* Given an {@link Auth_OpenID_Message}, {@link
+* Auth_OpenID_ServiceEndpoint} and optional return_to URL,
+* complete OpenID authentication.
+*
+* @access private
+*/
     function complete($message, $endpoint, $return_to)
     {
         $mode = $message->getArg(Auth_OpenID_OPENID_NS, 'mode',
@@ -666,12 +666,12 @@ class Auth_OpenID_GenericConsumer {
                                         '_completeInvalid');
 
         return call_user_func_array(array($this, $method),
-                                    array($message, &$endpoint, $return_to));
+                                    array($message, $endpoint, $return_to));
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _completeInvalid($message, $endpoint, $unused)
     {
         $mode = $message->getArg(Auth_OpenID_OPENID_NS, 'mode',
@@ -682,16 +682,16 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _complete_cancel($message, $endpoint, $unused)
     {
         return new Auth_OpenID_CancelResponse($endpoint);
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _complete_error($message, $endpoint, $unused)
     {
         $error = $message->getArg(Auth_OpenID_OPENID_NS, 'error');
@@ -703,8 +703,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _complete_setup_needed($message, $endpoint, $unused)
     {
         if (!$message->isOpenID2()) {
@@ -717,8 +717,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _complete_id_res($message, $endpoint, $return_to)
     {
         $user_setup_url = $message->getArg(Auth_OpenID_OPENID1_NS,
@@ -733,8 +733,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _checkSetupNeeded($message)
     {
         // In OpenID 1, we check to see if this is a cancel from
@@ -752,8 +752,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _doIdRes($message, $endpoint, $return_to)
     {
         // Checks for presence of appropriate fields (and checks
@@ -808,12 +808,12 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _checkReturnTo($message, $return_to)
     {
         // Check an OpenID message and its openid.return_to value
-        // against a return_to URL from an application.  Return True
+        // against a return_to URL from an application. Return True
         // on success, False on failure.
 
         // Check the openid.return_to args against args in the
@@ -875,8 +875,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _verifyReturnToArgs($query)
     {
         // Verify that the arguments in the return_to URL are present in this
@@ -932,8 +932,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _idResCheckSignature($message, $server_url)
     {
         $assoc_handle = $message->getArg(Auth_OpenID_OPENID_NS,
@@ -957,12 +957,16 @@ class Auth_OpenID_GenericConsumer {
             }
 
             if (!$assoc->checkMessageSignature($message)) {
+                // If we get a "bad signature" here, it means that the association
+                // is unrecoverabley corrupted in some way. Any futher attempts
+                // to login with this association is likely to fail. Drop it.
+                $this->store->removeAssociation($server_url, $assoc_handle);
                 return new Auth_OpenID_FailureResponse(null,
                                                        "Bad signature");
             }
         } else {
-            // It's not an association we know about.  Stateless mode
-            // is our only possible path for recovery.  XXX - async
+            // It's not an association we know about. Stateless mode
+            // is our only possible path for recovery. XXX - async
             // framework will not want to block on this call to
             // _checkAuth.
             if (!$this->_checkAuth($message, $server_url)) {
@@ -975,8 +979,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _verifyDiscoveryResults($message, $endpoint=null)
     {
         if ($message->getOpenIDNamespace() == Auth_OpenID_OPENID2_NS) {
@@ -989,8 +993,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _verifyDiscoveryResultsOpenID1($message, $endpoint)
     {
         $claimed_id = $message->getArg(Auth_OpenID_BARE_NS,
@@ -1032,9 +1036,9 @@ class Auth_OpenID_GenericConsumer {
 
             if (Auth_OpenID::isFailure($result)) {
                 // oidutil.log("Error attempting to use stored
-                //             discovery information: " + str(e))
-                //             oidutil.log("Attempting discovery to
-                //             verify endpoint")
+                // discovery information: " + str(e))
+                // oidutil.log("Attempting discovery to
+                // verify endpoint")
             } else {
                 return $endpoint;
             }
@@ -1046,8 +1050,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _verifyDiscoverySingle($endpoint, $to_match)
     {
         // Every type URI that's in the to_match endpoint has to be
@@ -1098,8 +1102,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _verifyDiscoveryResultsOpenID2($message, $endpoint)
     {
         $to_match = new Auth_OpenID_ServiceEndpoint();
@@ -1174,14 +1178,14 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _discoverAndVerify($claimed_id, $to_match_endpoints)
     {
         // oidutil.log('Performing discovery on %s' % (claimed_id,))
         list($unused, $services) = call_user_func($this->discoverMethod,
                                                   $claimed_id,
-												  &$this->fetcher);
+                                                  $this->fetcher);
 
         if (!$services) {
             return new Auth_OpenID_FailureResponse(null,
@@ -1194,9 +1198,9 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
-    function _verifyDiscoveryServices($claimed_id, 
+* @access private
+*/
+    function _verifyDiscoveryServices($claimed_id,
                                       $services, $to_match_endpoints)
     {
         // Search the services resulting from discovery to find one
@@ -1204,7 +1208,7 @@ class Auth_OpenID_GenericConsumer {
 
         foreach ($services as $endpoint) {
             foreach ($to_match_endpoints as $to_match_endpoint) {
-                $result = $this->_verifyDiscoverySingle($endpoint, 
+                $result = $this->_verifyDiscoverySingle($endpoint,
                                                         $to_match_endpoint);
 
                 if (!Auth_OpenID::isFailure($result)) {
@@ -1221,16 +1225,16 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * Extract the nonce from an OpenID 1 response.  Return the nonce
-     * from the BARE_NS since we independently check the return_to
-     * arguments are the same as those in the response message.
-     *
-     * See the openid1_nonce_query_arg_name class variable
-     *
-     * @returns $nonce The nonce as a string or null
-     *
-     * @access private
-     */
+* Extract the nonce from an OpenID 1 response. Return the nonce
+* from the BARE_NS since we independently check the return_to
+* arguments are the same as those in the response message.
+*
+* See the openid1_nonce_query_arg_name class variable
+*
+* @returns $nonce The nonce as a string or null
+*
+* @access private
+*/
     function _idResGetNonceOpenID1($message, $endpoint)
     {
         return $message->getArg(Auth_OpenID_BARE_NS,
@@ -1238,8 +1242,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _idResCheckNonce($message, $endpoint)
     {
         if ($message->isOpenID1()) {
@@ -1276,8 +1280,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _idResCheckForFields($message)
     {
         $basic_fields = array('return_to', 'assoc_handle', 'sig', 'signed');
@@ -1329,8 +1333,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _checkAuth($message, $server_url)
     {
         $request = $this->_createCheckAuthRequest($message);
@@ -1348,8 +1352,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _createCheckAuthRequest($message)
     {
         $signed = $message->getArg(Auth_OpenID_OPENID_NS, 'signed');
@@ -1362,14 +1366,14 @@ class Auth_OpenID_GenericConsumer {
             }
         }
         $ca_message = $message->copy();
-        $ca_message->setArg(Auth_OpenID_OPENID_NS, 'mode', 
+        $ca_message->setArg(Auth_OpenID_OPENID_NS, 'mode',
                             'check_authentication');
         return $ca_message;
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _processCheckAuthResponse($response, $server_url)
     {
         $is_valid = $response->getArg(Auth_OpenID_OPENID_NS, 'is_valid',
@@ -1391,12 +1395,12 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * Adapt a POST response to a Message.
-     *
-     * @param $response Result of a POST to an OpenID endpoint.
-     *
-     * @access private
-     */
+* Adapt a POST response to a Message.
+*
+* @param $response Result of a POST to an OpenID endpoint.
+*
+* @access private
+*/
     static function _httpResponseToMessage($response, $server_url)
     {
         // Should this function be named Message.fromHTTPResponse instead?
@@ -1413,8 +1417,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _makeKVPost($message, $server_url)
     {
         $body = $message->toURLEncoded();
@@ -1428,8 +1432,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _getAssociation($endpoint)
     {
         if (!$this->_use_assocs) {
@@ -1453,14 +1457,14 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * Handle ServerErrors resulting from association requests.
-     *
-     * @return $result If server replied with an C{unsupported-type}
-     * error, return a tuple of supported C{association_type},
-     * C{session_type}.  Otherwise logs the error and returns null.
-     *
-     * @access private
-     */
+* Handle ServerErrors resulting from association requests.
+*
+* @return $result If server replied with an C{unsupported-type}
+* error, return a tuple of supported C{association_type},
+* C{session_type}. Otherwise logs the error and returns null.
+*
+* @access private
+*/
     function _extractSupportedAssociationType($server_error, $endpoint,
                                               $assoc_type)
     {
@@ -1494,8 +1498,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _negotiateAssociation($endpoint)
     {
         // Get our preferred session/association type from the negotiatior.
@@ -1527,9 +1531,9 @@ class Auth_OpenID_GenericConsumer {
                     // Do not keep trying, since it rejected the
                     // association type that it told us to use.
                     // oidutil.log('Server %s refused its suggested association
-                    //             'type: session_type=%s, assoc_type=%s'
-                    //             % (endpoint.server_url, session_type,
-                    //                assoc_type))
+                    // 'type: session_type=%s, assoc_type=%s'
+                    // % (endpoint.server_url, session_type,
+                    // assoc_type))
                     return null;
                 } else {
                     return $assoc;
@@ -1543,8 +1547,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _requestAssociation($endpoint, $assoc_type, $session_type)
     {
         list($assoc_session, $args) = $this->_createAssociateRequest(
@@ -1564,8 +1568,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _extractAssociation($assoc_response, $assoc_session)
     {
         // Extract the common fields from the response, raising an
@@ -1656,8 +1660,8 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _createAssociateRequest($endpoint, $assoc_type, $session_type)
     {
         if (array_key_exists($session_type, $this->session_types)) {
@@ -1693,18 +1697,18 @@ class Auth_OpenID_GenericConsumer {
     }
 
     /**
-     * Given an association response message, extract the OpenID 1.X
-     * session type.
-     *
-     * This function mostly takes care of the 'no-encryption' default
-     * behavior in OpenID 1.
-     *
-     * If the association type is plain-text, this function will
-     * return 'no-encryption'
-     *
-     * @access private
-     * @return $typ The association type for this message
-     */
+* Given an association response message, extract the OpenID 1.X
+* session type.
+*
+* This function mostly takes care of the 'no-encryption' default
+* behavior in OpenID 1.
+*
+* If the association type is plain-text, this function will
+* return 'no-encryption'
+*
+* @access private
+* @return $typ The association type for this message
+*/
     function _getOpenID1SessionType($assoc_response)
     {
         // If it's an OpenID 1 message, allow session_type to default
@@ -1719,7 +1723,7 @@ class Auth_OpenID_GenericConsumer {
         // 1, but we'll accept it anyway, while issuing a warning.
         if ($session_type == 'no-encryption') {
             // oidutil.log('WARNING: OpenID server sent "no-encryption"'
-            //             'for OpenID 1.X')
+            // 'for OpenID 1.X')
         } else if (($session_type == '') || ($session_type === null)) {
             // Missing or empty session type is the way to flag a
             // 'no-encryption' response. Change the session type to
@@ -1733,21 +1737,21 @@ class Auth_OpenID_GenericConsumer {
 }
 
 /**
- * This class represents an authentication request from a consumer to
- * an OpenID server.
- *
- * @package OpenID
- */
+* This class represents an authentication request from a consumer to
+* an OpenID server.
+*
+* @package OpenID
+*/
 class Auth_OpenID_AuthRequest {
 
     /**
-     * Initialize an authentication request with the specified token,
-     * association, and endpoint.
-     *
-     * Users of this library should not create instances of this
-     * class.  Instances of this class are created by the library when
-     * needed.
-     */
+* Initialize an authentication request with the specified token,
+* association, and endpoint.
+*
+* Users of this library should not create instances of this
+* class. Instances of this class are created by the library when
+* needed.
+*/
     function Auth_OpenID_AuthRequest($endpoint, $assoc)
     {
         $this->assoc = $assoc;
@@ -1759,49 +1763,49 @@ class Auth_OpenID_AuthRequest {
     }
 
     /**
-     * Add an extension to this checkid request.
-     *
-     * $extension_request: An object that implements the extension
-     * request interface for adding arguments to an OpenID message.
-     */
+* Add an extension to this checkid request.
+*
+* $extension_request: An object that implements the extension
+* request interface for adding arguments to an OpenID message.
+*/
     function addExtension($extension_request)
     {
         $extension_request->toMessage($this->message);
     }
 
     /**
-     * Add an extension argument to this OpenID authentication
-     * request.
-     *
-     * Use caution when adding arguments, because they will be
-     * URL-escaped and appended to the redirect URL, which can easily
-     * get quite long.
-     *
-     * @param string $namespace The namespace for the extension. For
-     * example, the simple registration extension uses the namespace
-     * 'sreg'.
-     *
-     * @param string $key The key within the extension namespace. For
-     * example, the nickname field in the simple registration
-     * extension's key is 'nickname'.
-     *
-     * @param string $value The value to provide to the server for
-     * this argument.
-     */
+* Add an extension argument to this OpenID authentication
+* request.
+*
+* Use caution when adding arguments, because they will be
+* URL-escaped and appended to the redirect URL, which can easily
+* get quite long.
+*
+* @param string $namespace The namespace for the extension. For
+* example, the simple registration extension uses the namespace
+* 'sreg'.
+*
+* @param string $key The key within the extension namespace. For
+* example, the nickname field in the simple registration
+* extension's key is 'nickname'.
+*
+* @param string $value The value to provide to the server for
+* this argument.
+*/
     function addExtensionArg($namespace, $key, $value)
     {
         return $this->message->setArg($namespace, $key, $value);
     }
 
     /**
-     * Set whether this request should be made anonymously. If a
-     * request is anonymous, the identifier will not be sent in the
-     * request. This is only useful if you are making another kind of
-     * request with an extension in this request.
-     *
-     * Anonymous requests are not allowed when the request is made
-     * with OpenID 1.
-     */
+* Set whether this request should be made anonymously. If a
+* request is anonymous, the identifier will not be sent in the
+* request. This is only useful if you are making another kind of
+* request with an extension in this request.
+*
+* Anonymous requests are not allowed when the request is made
+* with OpenID 1.
+*/
     function setAnonymous($is_anonymous)
     {
         if ($is_anonymous && $this->message->isOpenID1()) {
@@ -1813,25 +1817,25 @@ class Auth_OpenID_AuthRequest {
     }
 
     /**
-     * Produce a {@link Auth_OpenID_Message} representing this
-     * request.
-     *
-     * @param string $realm The URL (or URL pattern) that identifies
-     * your web site to the user when she is authorizing it.
-     *
-     * @param string $return_to The URL that the OpenID provider will
-     * send the user back to after attempting to verify her identity.
-     *
-     * Not specifying a return_to URL means that the user will not be
-     * returned to the site issuing the request upon its completion.
-     *
-     * @param bool $immediate If true, the OpenID provider is to send
-     * back a response immediately, useful for behind-the-scenes
-     * authentication attempts.  Otherwise the OpenID provider may
-     * engage the user before providing a response.  This is the
-     * default case, as the user may need to provide credentials or
-     * approve the request before a positive response can be sent.
-     */
+* Produce a {@link Auth_OpenID_Message} representing this
+* request.
+*
+* @param string $realm The URL (or URL pattern) that identifies
+* your web site to the user when she is authorizing it.
+*
+* @param string $return_to The URL that the OpenID provider will
+* send the user back to after attempting to verify her identity.
+*
+* Not specifying a return_to URL means that the user will not be
+* returned to the site issuing the request upon its completion.
+*
+* @param bool $immediate If true, the OpenID provider is to send
+* back a response immediately, useful for behind-the-scenes
+* authentication attempts. Otherwise the OpenID provider may
+* engage the user before providing a response. This is the
+* default case, as the user may need to provide credentials or
+* approve the request before a positive response can be sent.
+*/
     function getMessage($realm, $return_to=null, $immediate=false)
     {
         if ($return_to) {
@@ -1839,7 +1843,7 @@ class Auth_OpenID_AuthRequest {
                                                  $this->return_to_args);
         } else if ($immediate) {
             // raise ValueError(
-            //     '"return_to" is mandatory when
+            // '"return_to" is mandatory when
             //using "checkid_immediate"')
             return new Auth_OpenID_FailureResponse(null,
               "'return_to' is mandatory when using checkid_immediate");
@@ -1918,13 +1922,13 @@ class Auth_OpenID_AuthRequest {
     }
 
     /**
-     * Get html for a form to submit this request to the IDP.
-     *
-     * form_tag_attrs: An array of attributes to be added to the form
-     * tag. 'accept-charset' and 'enctype' have defaults that can be
-     * overridden. If a value is supplied for 'action' or 'method', it
-     * will be replaced.
-     */
+* Get html for a form to submit this request to the IDP.
+*
+* form_tag_attrs: An array of attributes to be added to the form
+* tag. 'accept-charset' and 'enctype' have defaults that can be
+* overridden. If a value is supplied for 'action' or 'method', it
+* will be replaced.
+*/
     function formMarkup($realm, $return_to=null, $immediate=false,
                         $form_tag_attrs=null)
     {
@@ -1939,15 +1943,15 @@ class Auth_OpenID_AuthRequest {
     }
 
     /**
-     * Get a complete html document that will autosubmit the request
-     * to the IDP.
-     *
-     * Wraps formMarkup.  See the documentation for that function.
-     */
+* Get a complete html document that will autosubmit the request
+* to the IDP.
+*
+* Wraps formMarkup. See the documentation for that function.
+*/
     function htmlMarkup($realm, $return_to=null, $immediate=false,
                         $form_tag_attrs=null)
     {
-        $form = $this->formMarkup($realm, $return_to, $immediate, 
+        $form = $this->formMarkup($realm, $return_to, $immediate,
                                   $form_tag_attrs);
 
         if (Auth_OpenID::isFailure($form)) {
@@ -1963,10 +1967,10 @@ class Auth_OpenID_AuthRequest {
 }
 
 /**
- * The base class for responses from the Auth_OpenID_Consumer.
- *
- * @package OpenID
- */
+* The base class for responses from the Auth_OpenID_Consumer.
+*
+* @package OpenID
+*/
 class Auth_OpenID_ConsumerResponse {
     var $status = null;
 
@@ -1981,22 +1985,22 @@ class Auth_OpenID_ConsumerResponse {
     }
 
     /**
-     * Return the display identifier for this response.
-     *
-     * The display identifier is related to the Claimed Identifier, but the
-     * two are not always identical.  The display identifier is something the
-     * user should recognize as what they entered, whereas the response's
-     * claimed identifier (in the identity_url attribute) may have extra
-     * information for better persistence.
-     *
-     * URLs will be stripped of their fragments for display.  XRIs will
-     * display the human-readable identifier (i-name) instead of the
-     * persistent identifier (i-number).
-     *
-     * Use the display identifier in your user interface.  Use
-     * identity_url for querying your database or authorization server.
-     *
-     */
+* Return the display identifier for this response.
+*
+* The display identifier is related to the Claimed Identifier, but the
+* two are not always identical. The display identifier is something the
+* user should recognize as what they entered, whereas the response's
+* claimed identifier (in the identity_url attribute) may have extra
+* information for better persistence.
+*
+* URLs will be stripped of their fragments for display. XRIs will
+* display the human-readable identifier (i-name) instead of the
+* persistent identifier (i-number).
+*
+* Use the display identifier in your user interface. Use
+* identity_url for querying your database or authorization server.
+*
+*/
     function getDisplayIdentifier()
     {
         if ($this->endpoint !== null) {
@@ -2007,26 +2011,26 @@ class Auth_OpenID_ConsumerResponse {
 }
 
 /**
- * A response with a status of Auth_OpenID_SUCCESS. Indicates that
- * this request is a successful acknowledgement from the OpenID server
- * that the supplied URL is, indeed controlled by the requesting
- * agent.  This has three relevant attributes:
- *
- * claimed_id - The identity URL that has been authenticated
- *
- * signed_args - The arguments in the server's response that were
- * signed and verified.
- *
- * status - Auth_OpenID_SUCCESS.
- *
- * @package OpenID
- */
+* A response with a status of Auth_OpenID_SUCCESS. Indicates that
+* this request is a successful acknowledgement from the OpenID server
+* that the supplied URL is, indeed controlled by the requesting
+* agent. This has three relevant attributes:
+*
+* claimed_id - The identity URL that has been authenticated
+*
+* signed_args - The arguments in the server's response that were
+* signed and verified.
+*
+* status - Auth_OpenID_SUCCESS.
+*
+* @package OpenID
+*/
 class Auth_OpenID_SuccessResponse extends Auth_OpenID_ConsumerResponse {
     var $status = Auth_OpenID_SUCCESS;
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function Auth_OpenID_SuccessResponse($endpoint, $message, $signed_args=null)
     {
         $this->endpoint = $endpoint;
@@ -2040,11 +2044,11 @@ class Auth_OpenID_SuccessResponse extends Auth_OpenID_ConsumerResponse {
     }
 
     /**
-     * Extract signed extension data from the server's response.
-     *
-     * @param string $prefix The extension namespace from which to
-     * extract the extension data.
-     */
+* Extract signed extension data from the server's response.
+*
+* @param string $prefix The extension namespace from which to
+* extract the extension data.
+*/
     function extensionResponse($namespace_uri, $require_signed)
     {
         if ($require_signed) {
@@ -2097,15 +2101,15 @@ class Auth_OpenID_SuccessResponse extends Auth_OpenID_ConsumerResponse {
     }
 
     /**
-     * Get the openid.return_to argument from this response.
-     *
-     * This is useful for verifying that this request was initiated by
-     * this consumer.
-     *
-     * @return string $return_to The return_to URL supplied to the
-     * server on the initial request, or null if the response did not
-     * contain an 'openid.return_to' argument.
-    */
+* Get the openid.return_to argument from this response.
+*
+* This is useful for verifying that this request was initiated by
+* this consumer.
+*
+* @return string $return_to The return_to URL supplied to the
+* server on the initial request, or null if the response did not
+* contain an 'openid.return_to' argument.
+*/
     function getReturnTo()
     {
         return $this->getSigned(Auth_OpenID_OPENID_NS, 'return_to');
@@ -2113,20 +2117,20 @@ class Auth_OpenID_SuccessResponse extends Auth_OpenID_ConsumerResponse {
 }
 
 /**
- * A response with a status of Auth_OpenID_FAILURE. Indicates that the
- * OpenID protocol has failed. This could be locally or remotely
- * triggered.  This has three relevant attributes:
- *
- * claimed_id - The identity URL for which authentication was
- * attempted, if it can be determined.  Otherwise, null.
- *
- * message - A message indicating why the request failed, if one is
- * supplied.  Otherwise, null.
- *
- * status - Auth_OpenID_FAILURE.
- *
- * @package OpenID
- */
+* A response with a status of Auth_OpenID_FAILURE. Indicates that the
+* OpenID protocol has failed. This could be locally or remotely
+* triggered. This has three relevant attributes:
+*
+* claimed_id - The identity URL for which authentication was
+* attempted, if it can be determined. Otherwise, null.
+*
+* message - A message indicating why the request failed, if one is
+* supplied. Otherwise, null.
+*
+* status - Auth_OpenID_FAILURE.
+*
+* @package OpenID
+*/
 class Auth_OpenID_FailureResponse extends Auth_OpenID_ConsumerResponse {
     var $status = Auth_OpenID_FAILURE;
 
@@ -2141,19 +2145,19 @@ class Auth_OpenID_FailureResponse extends Auth_OpenID_ConsumerResponse {
 }
 
 /**
- * A specific, internal failure used to detect type URI mismatch.
- *
- * @package OpenID
- */
+* A specific, internal failure used to detect type URI mismatch.
+*
+* @package OpenID
+*/
 class Auth_OpenID_TypeURIMismatch extends Auth_OpenID_FailureResponse {
 }
 
 /**
- * Exception that is raised when the server returns a 400 response
- * code to a direct request.
- *
- * @package OpenID
- */
+* Exception that is raised when the server returns a 400 response
+* code to a direct request.
+*
+* @package OpenID
+*/
 class Auth_OpenID_ServerErrorContainer {
     function Auth_OpenID_ServerErrorContainer($error_text,
                                               $error_code,
@@ -2165,8 +2169,8 @@ class Auth_OpenID_ServerErrorContainer {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     static function fromMessage($message)
     {
         $error_text = $message->getArg(
@@ -2179,17 +2183,17 @@ class Auth_OpenID_ServerErrorContainer {
 }
 
 /**
- * A response with a status of Auth_OpenID_CANCEL. Indicates that the
- * user cancelled the OpenID authentication request.  This has two
- * relevant attributes:
- *
- * claimed_id - The identity URL for which authentication was
- * attempted, if it can be determined.  Otherwise, null.
- *
- * status - Auth_OpenID_SUCCESS.
- *
- * @package OpenID
- */
+* A response with a status of Auth_OpenID_CANCEL. Indicates that the
+* user cancelled the OpenID authentication request. This has two
+* relevant attributes:
+*
+* claimed_id - The identity URL for which authentication was
+* attempted, if it can be determined. Otherwise, null.
+*
+* status - Auth_OpenID_SUCCESS.
+*
+* @package OpenID
+*/
 class Auth_OpenID_CancelResponse extends Auth_OpenID_ConsumerResponse {
     var $status = Auth_OpenID_CANCEL;
 
@@ -2200,22 +2204,22 @@ class Auth_OpenID_CancelResponse extends Auth_OpenID_ConsumerResponse {
 }
 
 /**
- * A response with a status of Auth_OpenID_SETUP_NEEDED. Indicates
- * that the request was in immediate mode, and the server is unable to
- * authenticate the user without further interaction.
- *
- * claimed_id - The identity URL for which authentication was
- * attempted.
- *
- * setup_url - A URL that can be used to send the user to the server
- * to set up for authentication. The user should be redirected in to
- * the setup_url, either in the current window or in a new browser
- * window.  Null in OpenID 2.
- *
- * status - Auth_OpenID_SETUP_NEEDED.
- *
- * @package OpenID
- */
+* A response with a status of Auth_OpenID_SETUP_NEEDED. Indicates
+* that the request was in immediate mode, and the server is unable to
+* authenticate the user without further interaction.
+*
+* claimed_id - The identity URL for which authentication was
+* attempted.
+*
+* setup_url - A URL that can be used to send the user to the server
+* to set up for authentication. The user should be redirected in to
+* the setup_url, either in the current window or in a new browser
+* window. Null in OpenID 2.
+*
+* status - Auth_OpenID_SETUP_NEEDED.
+*
+* @package OpenID
+*/
 class Auth_OpenID_SetupNeededResponse extends Auth_OpenID_ConsumerResponse {
     var $status = Auth_OpenID_SETUP_NEEDED;
 
@@ -2226,5 +2230,4 @@ class Auth_OpenID_SetupNeededResponse extends Auth_OpenID_ConsumerResponse {
         $this->setup_url = $setup_url;
     }
 }
-
 

@@ -1,49 +1,49 @@
 <?php
 
 /**
- * This module contains the XRDS parsing code.
- *
- * PHP versions 4 and 5
- *
- * LICENSE: See the COPYING file included in this distribution.
- *
- * @package OpenID
- * @author JanRain, Inc. <openid@janrain.com>
- * @copyright 2005-2008 Janrain, Inc.
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
- */
+* This module contains the XRDS parsing code.
+*
+* PHP versions 4 and 5
+*
+* LICENSE: See the COPYING file included in this distribution.
+*
+* @package OpenID
+* @author JanRain, Inc. <openid@janrain.com>
+* @copyright 2005-2008 Janrain, Inc.
+* @license http://www.apache.org/licenses/LICENSE-2.0 Apache
+*/
 
 /**
- * Require the XPath implementation.
- */
+* Require the XPath implementation.
+*/
 require_once 'Auth/Yadis/XML.php';
 
 /**
- * This match mode means a given service must match ALL filters passed
- * to the Auth_Yadis_XRDS::services() call.
- */
+* This match mode means a given service must match ALL filters passed
+* to the Auth_Yadis_XRDS::services() call.
+*/
 define('SERVICES_YADIS_MATCH_ALL', 101);
 
 /**
- * This match mode means a given service must match ANY filters (at
- * least one) passed to the Auth_Yadis_XRDS::services() call.
- */
+* This match mode means a given service must match ANY filters (at
+* least one) passed to the Auth_Yadis_XRDS::services() call.
+*/
 define('SERVICES_YADIS_MATCH_ANY', 102);
 
 /**
- * The priority value used for service elements with no priority
- * specified.
- */
+* The priority value used for service elements with no priority
+* specified.
+*/
 define('SERVICES_YADIS_MAX_PRIORITY', pow(2, 30));
 
 /**
- * XRD XML namespace
- */
+* XRD XML namespace
+*/
 define('Auth_Yadis_XMLNS_XRD_2_0', 'xri://$xrd*($v*2.0)');
 
 /**
- * XRDS XML namespace
- */
+* XRDS XML namespace
+*/
 define('Auth_Yadis_XMLNS_XRDS', 'xri://$xrds');
 
 function Auth_Yadis_getNSMap()
@@ -53,8 +53,8 @@ function Auth_Yadis_getNSMap()
 }
 
 /**
- * @access private
- */
+* @access private
+*/
 function Auth_Yadis_array_scramble($arr)
 {
     $result = array();
@@ -69,22 +69,22 @@ function Auth_Yadis_array_scramble($arr)
 }
 
 /**
- * This class represents a <Service> element in an XRDS document.
- * Objects of this type are returned by
- * Auth_Yadis_XRDS::services() and
- * Auth_Yadis_Yadis::services().  Each object corresponds directly
- * to a <Service> element in the XRDS and supplies a
- * getElements($name) method which you should use to inspect the
- * element's contents.  See {@link Auth_Yadis_Yadis} for more
- * information on the role this class plays in Yadis discovery.
- *
- * @package OpenID
- */
+* This class represents a <Service> element in an XRDS document.
+* Objects of this type are returned by
+* Auth_Yadis_XRDS::services() and
+* Auth_Yadis_Yadis::services(). Each object corresponds directly
+* to a <Service> element in the XRDS and supplies a
+* getElements($name) method which you should use to inspect the
+* element's contents. See {@link Auth_Yadis_Yadis} for more
+* information on the role this class plays in Yadis discovery.
+*
+* @package OpenID
+*/
 class Auth_Yadis_Service {
 
     /**
-     * Creates an empty service object.
-     */
+* Creates an empty service object.
+*/
     function Auth_Yadis_Service()
     {
         $this->element = null;
@@ -92,11 +92,11 @@ class Auth_Yadis_Service {
     }
 
     /**
-     * Return the URIs in the "Type" elements, if any, of this Service
-     * element.
-     *
-     * @return array $type_uris An array of Type URI strings.
-     */
+* Return the URIs in the "Type" elements, if any, of this Service
+* element.
+*
+* @return array $type_uris An array of Type URI strings.
+*/
     function getTypes()
     {
         $t = array();
@@ -123,11 +123,11 @@ class Auth_Yadis_Service {
     }
 
     /**
-     * Return the URIs in the "URI" elements, if any, of this Service
-     * element.  The URIs are returned sorted in priority order.
-     *
-     * @return array $uris An array of URI strings.
-     */
+* Return the URIs in the "URI" elements, if any, of this Service
+* element. The URIs are returned sorted in priority order.
+*
+* @return array $uris An array of URI strings.
+*/
     function getURIs()
     {
         $uris = array();
@@ -166,12 +166,12 @@ class Auth_Yadis_Service {
     }
 
     /**
-     * Returns the "priority" attribute value of this <Service>
-     * element, if the attribute is present.  Returns null if not.
-     *
-     * @return mixed $result Null or integer, depending on whether
-     * this Service element has a 'priority' attribute.
-     */
+* Returns the "priority" attribute value of this <Service>
+* element, if the attribute is present. Returns null if not.
+*
+* @return mixed $result Null or integer, depending on whether
+* this Service element has a 'priority' attribute.
+*/
     function getPriority()
     {
         $attributes = $this->parser->attributes($this->element);
@@ -184,20 +184,20 @@ class Auth_Yadis_Service {
     }
 
     /**
-     * Used to get XML elements from this object's <Service> element.
-     *
-     * This is what you should use to get all custom information out
-     * of this element. This is used by service filter functions to
-     * determine whether a service element contains specific tags,
-     * etc.  NOTE: this only considers elements which are direct
-     * children of the <Service> element for this object.
-     *
-     * @param string $name The name of the element to look for
-     * @return array $list An array of elements with the specified
-     * name which are direct children of the <Service> element.  The
-     * nodes returned by this function can be passed to $this->parser
-     * methods (see {@link Auth_Yadis_XMLParser}).
-     */
+* Used to get XML elements from this object's <Service> element.
+*
+* This is what you should use to get all custom information out
+* of this element. This is used by service filter functions to
+* determine whether a service element contains specific tags,
+* etc. NOTE: this only considers elements which are direct
+* children of the <Service> element for this object.
+*
+* @param string $name The name of the element to look for
+* @return array $list An array of elements with the specified
+* name which are direct children of the <Service> element. The
+* nodes returned by this function can be passed to $this->parser
+* methods (see {@link Auth_Yadis_XMLParser}).
+*/
     function getElements($name)
     {
         return $this->parser->evalXPath($name, $this->element);
@@ -205,12 +205,12 @@ class Auth_Yadis_Service {
 }
 
 /*
- * Return the expiration date of this XRD element, or None if no
- * expiration was specified.
- *
- * @param $default The value to use as the expiration if no expiration
- * was specified in the XRD.
- */
+* Return the expiration date of this XRD element, or None if no
+* expiration was specified.
+*
+* @param $default The value to use as the expiration if no expiration
+* was specified in the XRD.
+*/
 function Auth_Yadis_getXRDExpiration($xrd_element, $default=null)
 {
     $expires_element = $xrd_element->$parser->evalXPath('/xrd:Expires');
@@ -228,33 +228,33 @@ function Auth_Yadis_getXRDExpiration($xrd_element, $default=null)
         }
 
         // [int $hour [, int $minute [, int $second [,
-        //  int $month [, int $day [, int $year ]]]]]]
+        // int $month [, int $day [, int $year ]]]]]]
         return mktime($t['tm_hour'], $t['tm_min'], $t['tm_sec'],
                       $t['tm_mon'], $t['tm_day'], $t['tm_year']);
     }
 }
 
 /**
- * This class performs parsing of XRDS documents.
- *
- * You should not instantiate this class directly; rather, call
- * parseXRDS statically:
- *
- * <pre>  $xrds = Auth_Yadis_XRDS::parseXRDS($xml_string);</pre>
- *
- * If the XRDS can be parsed and is valid, an instance of
- * Auth_Yadis_XRDS will be returned.  Otherwise, null will be
- * returned.  This class is used by the Auth_Yadis_Yadis::discover
- * method.
- *
- * @package OpenID
- */
+* This class performs parsing of XRDS documents.
+*
+* You should not instantiate this class directly; rather, call
+* parseXRDS statically:
+*
+* <pre> $xrds = Auth_Yadis_XRDS::parseXRDS($xml_string);</pre>
+*
+* If the XRDS can be parsed and is valid, an instance of
+* Auth_Yadis_XRDS will be returned. Otherwise, null will be
+* returned. This class is used by the Auth_Yadis_Yadis::discover
+* method.
+*
+* @package OpenID
+*/
 class Auth_Yadis_XRDS {
 
     /**
-     * Instantiate a Auth_Yadis_XRDS object.  Requires an XPath
-     * instance which has been used to parse a valid XRDS document.
-     */
+* Instantiate a Auth_Yadis_XRDS object. Requires an XPath
+* instance which has been used to parse a valid XRDS document.
+*/
     function Auth_Yadis_XRDS($xmlParser, $xrdNodes)
     {
         $this->parser = $xmlParser;
@@ -265,14 +265,14 @@ class Auth_Yadis_XRDS {
     }
 
     /**
-     * Parse an XML string (XRDS document) and return either a
-     * Auth_Yadis_XRDS object or null, depending on whether the
-     * XRDS XML is valid.
-     *
-     * @param string $xml_string An XRDS XML string.
-     * @return mixed $xrds An instance of Auth_Yadis_XRDS or null,
-     * depending on the validity of $xml_string
-     */
+* Parse an XML string (XRDS document) and return either a
+* Auth_Yadis_XRDS object or null, depending on whether the
+* XRDS XML is valid.
+*
+* @param string $xml_string An XRDS XML string.
+* @return mixed $xrds An instance of Auth_Yadis_XRDS or null,
+* depending on the validity of $xml_string
+*/
     static function parseXRDS($xml_string, $extra_ns_map = null)
     {
         $_null = null;
@@ -326,8 +326,8 @@ class Auth_Yadis_XRDS {
     }
 
     /**
-     * @access private
-     */
+* @access private
+*/
     function _addService($priority, $service)
     {
         $priority = intval($priority);
@@ -340,11 +340,11 @@ class Auth_Yadis_XRDS {
     }
 
     /**
-     * Creates the service list using nodes from the XRDS XML
-     * document.
-     *
-     * @access private
-     */
+* Creates the service list using nodes from the XRDS XML
+* document.
+*
+* @access private
+*/
     function _parse()
     {
         $this->serviceList = array();
@@ -367,29 +367,29 @@ class Auth_Yadis_XRDS {
     }
 
     /**
-     * Returns a list of service objects which correspond to <Service>
-     * elements in the XRDS XML document for this object.
-     *
-     * Optionally, an array of filter callbacks may be given to limit
-     * the list of returned service objects.  Furthermore, the default
-     * mode is to return all service objects which match ANY of the
-     * specified filters, but $filter_mode may be
-     * SERVICES_YADIS_MATCH_ALL if you want to be sure that the
-     * returned services match all the given filters.  See {@link
-     * Auth_Yadis_Yadis} for detailed usage information on filter
-     * functions.
-     *
-     * @param mixed $filters An array of callbacks to filter the
-     * returned services, or null if all services are to be returned.
-     * @param integer $filter_mode SERVICES_YADIS_MATCH_ALL or
-     * SERVICES_YADIS_MATCH_ANY, depending on whether the returned
-     * services should match ALL or ANY of the specified filters,
-     * respectively.
-     * @return mixed $services An array of {@link
-     * Auth_Yadis_Service} objects if $filter_mode is a valid
-     * mode; null if $filter_mode is an invalid mode (i.e., not
-     * SERVICES_YADIS_MATCH_ANY or SERVICES_YADIS_MATCH_ALL).
-     */
+* Returns a list of service objects which correspond to <Service>
+* elements in the XRDS XML document for this object.
+*
+* Optionally, an array of filter callbacks may be given to limit
+* the list of returned service objects. Furthermore, the default
+* mode is to return all service objects which match ANY of the
+* specified filters, but $filter_mode may be
+* SERVICES_YADIS_MATCH_ALL if you want to be sure that the
+* returned services match all the given filters. See {@link
+* Auth_Yadis_Yadis} for detailed usage information on filter
+* functions.
+*
+* @param mixed $filters An array of callbacks to filter the
+* returned services, or null if all services are to be returned.
+* @param integer $filter_mode SERVICES_YADIS_MATCH_ALL or
+* SERVICES_YADIS_MATCH_ANY, depending on whether the returned
+* services should match ALL or ANY of the specified filters,
+* respectively.
+* @return mixed $services An array of {@link
+* Auth_Yadis_Service} objects if $filter_mode is a valid
+* mode; null if $filter_mode is an invalid mode (i.e., not
+* SERVICES_YADIS_MATCH_ANY or SERVICES_YADIS_MATCH_ALL).
+*/
     function services($filters = null,
                       $filter_mode = SERVICES_YADIS_MATCH_ANY)
     {
@@ -429,7 +429,7 @@ class Auth_Yadis_XRDS {
 
                 foreach ($filters as $filter) {
 
-                    if (call_user_func_array($filter, array(&$service))) {
+                    if (call_user_func_array($filter, array($service))) {
                         $matches++;
 
                         if ($filter_mode == SERVICES_YADIS_MATCH_ANY) {
@@ -475,4 +475,5 @@ class Auth_Yadis_XRDS {
         return $result;
     }
 }
+
 
