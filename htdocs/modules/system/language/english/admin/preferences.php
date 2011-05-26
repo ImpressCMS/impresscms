@@ -8,7 +8,9 @@ define("_MD_AM_SITEPREF","Site Preferences");
 define("_MD_AM_SITENAME","Site name");
 define("_MD_AM_SLOGAN","Slogan for your site");
 define("_MD_AM_ADMINML","Admin mail address");
+define('_MD_AM_ADMINMLDSC','All informations will be send by this E-mail address. We recomend an address from your Web-Domain.');
 define("_MD_AM_LANGUAGE","Default language");
+define("_MD_AM_LANGUAGEDSC","Select your main language. If you activated the multilanguage, you can choice a language. And if you set in the multilanguage the language of your browser, than ImpressCMS will ignore this option.");
 define("_MD_AM_STARTPAGE","Module or Page for your start page");
 define("_MD_AM_NONE","None");
 define("_MD_CONTENTMAN","Content Manager");
@@ -20,6 +22,7 @@ define("_MD_AM_ANONNAME","Username for anonymous users");
 define("_MD_AM_MINPASS","Minimum length of password required");
 define("_MD_AM_NEWUNOTIFY","Notify by mail when a new user is registered?");
 define("_MD_AM_SELFDELETE","Allow users to delete own account?");
+define("_MD_AM_SELFDELETEDSC","If you select YES, your users can find out a new button in the account with which the account can be deleted.");
 define("_MD_AM_LOADINGIMG","Display loading... image?");
 define("_MD_AM_USEGZIP","Use gzip compression?");
 define("_MD_AM_UNAMELVL","Select the level of strictness for username filtering");
@@ -55,6 +58,7 @@ define("_MD_AM_ALLOWHTML","Allow HTML tags in user comments?");
 define("_MD_AM_DEBUGMODE","Debug mode");
 define("_MD_AM_DEBUGMODEDSC","Several debug options. A running website should have this turned off.");
 define("_MD_AM_AVATARALLOW","Allow custom avatar upload?");
+define("_MD_AM_AVATARALLOWDSC","If zou allow this option, you can set more option for the avatars (with, height, size).");
 define('_MD_AM_AVATARMP','Minimum posts required');
 define('_MD_AM_AVATARMPDSC','Enter the minimum number of posts required to upload a custom avatar');
 define("_MD_AM_AVATARW","Avatar image max width (pixel)");
@@ -74,6 +78,7 @@ define("_MD_AM_ACTVTYPE","Select activation type of newly registered users");
 define("_MD_AM_ACTVGROUP","Select group to which activation mail will be sent");
 define("_MD_AM_ACTVGROUPDSC","Valid only when 'Activation by administrators' is selected");
 define('_MD_AM_USESSL', 'Use SSL for login?');
+define('_MD_AM_USESSLDSC', 'Select YES only if you have a SSL certificate. If you like to use this option, please copy the right files from your downloaded ImpressCMS EXTRA folder in your root-path.');
 define('_MD_AM_SSLPOST', 'SSL Post variable name');
 define('_MD_AM_SSLPOSTDSC', 'The name of variable used to transfer session value via POST. If you are unsure, set any name that is hard to guess.');
 define('_MD_AM_DEBUGMODE0','Off');
@@ -153,6 +158,7 @@ define('_MD_AM_MODCACHE', 'Module-wide Cache');
 define('_MD_AM_MODCACHEDSC', 'Caches module contents for a specified amount of time to enhance performance. Setting module-wide cache will override module item level cache if any.');
 define('_MD_AM_NOMODULE', 'There is no module that can be cached.');
 define('_MD_AM_DTPLSET', 'Default template set');
+define('_MD_AM_DTPLSETDSC', 'If you like to select an other Template-Set as a default, you must create first a new clone in your system. After them you can set this clone as default.');
 define('_MD_AM_SSLLINK', 'URL where SSL login page is located');
 
 // added for mailer
@@ -302,6 +308,7 @@ define("_MD_AM_EDITOR_ENABLED_LIST_DESC","Select the selectable editors by the m
 define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depending the browser configuration");
 
 define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow anonymous users to see user profiles.");
+define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC","If you select YES, all visitors can see the profiles from your homepage. This is very usefull for a community, but maybe for the privacy not the best option.");
 
 define("_MD_AM_ENC_TYPE","Change Password Encryption (default is SHA256)");
 define("_MD_AM_ENC_TYPEDSC","Changes the Algorithm used for encrypting user passwords.<br />Changing this will render all passwords invalid! all users will need to reset their passwords after changing this preference");
