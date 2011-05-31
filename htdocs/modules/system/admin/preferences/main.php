@@ -83,7 +83,7 @@ switch ($op) {
 		$config = $config_handler->getConfigs($criteria);
 		$confcount = count($config);
 		for ($i = 0; $i < $confcount; $i++) {
-			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
+			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="./images/view_off.png" alt="View help text" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
 			switch ($config[$i]->getVar('conf_formtype')) {
 				case 'textsarea' :
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
@@ -397,7 +397,7 @@ switch ($op) {
 			$form->addElement(new icms_form_elements_Hidden('redirect', ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex')));
 		}
 		for ($i = 0; $i < $count; $i++) {
-			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
+			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="./images/view_off.png" alt="View help text" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
 			switch ($config[$i]->getVar('conf_formtype')) {
 				case 'textsarea' :
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
