@@ -171,7 +171,7 @@ class icms_view_PageBuilder {
 			}
 			$pid = 0;
 		}
-
+/* determine the visitor's start page and update the request based on that? */
 		if ($isStart) {
 			self::$modid = array('module' => 0, 'page' => 1, 'isStart' => $isStart);
 		} else {
@@ -219,21 +219,21 @@ class icms_view_PageBuilder {
 
 		if ($icmsConfigPersona['editre_block'] == true) {
 			if (icms::$user && count($this->uagroups) > 0) {
-				$url = base64_encode(str_replace(ICMS_URL, '', "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) );
-				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
-				$titlebtns .= '<button style="display: none;"><div id="ed_block_' . $xobject->getVar ( 'bid' ) . '">';
-				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png' alt='" . _INVISIBLE . "'  /> " . _INVISIBLE . "</a><br />";
-				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png' alt='" . _CLONE . "'  /> " . _CLONE . "</a><br />";
-				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' alt='" . _EDIT . "'  /> " . _EDIT . "</a><br />";
-				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/up.png' alt='" . _UP . "'  /> " . _UP . "</a><br />";
-				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/down.png' alt='" . _DOWN . "'  /> " . _DOWN . "</a>";
+				$url = base64_encode(str_replace(ICMS_URL, '', "http://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) );
+				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>'
+					. '<button style="display: none;"><div id="ed_block_' . $xobject->getVar ( 'bid' ) . '">'
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png' alt='" . _INVISIBLE . "'  /> " . _INVISIBLE . "</a><br />"
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png' alt='" . _CLONE . "'  /> " . _CLONE . "</a><br />"
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' alt='" . _EDIT . "'  /> " . _EDIT . "</a><br />"
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/up.png' alt='" . _UP . "'  /> " . _UP . "</a><br />"
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/down.png' alt='" . _DOWN . "'  /> " . _DOWN . "</a>";
 				if ($xobject->getVar('dirname') == '') {
-					$titlebtns .= "<br /><a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=del&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt='" . _DELETE . "'  /> " . _DELETE . "</a>";
+					$titlebtns .= "<br /><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=del&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt='" . _DELETE . "'  /> " . _DELETE . "</a>";
 				}
 				$titlebtns .= '</div></button>';
 				$titlebtns .= '<script type="text/javascript">
 					$(function() {
-						$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog({
+						$(\'#ed_block_' . $xobject->getVar('bid') . '\').dialog({
 							bgiframe: true,
 							//height: 140,
 							autoOpen: false,
