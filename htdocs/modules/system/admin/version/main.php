@@ -22,7 +22,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
  * System Admin > Modules, so we need to display the module information pop up
  *
  * @todo this has nothing to do in the version checker system module, but it is there as a
- * reminiscence of XOOPS. It needs tp be moved elsewhere in 1.1
+ * reminiscence of XOOPS. It needs to be moved elsewhere in 1.1
  */
 if (isset($_GET['mid'])) {
 	include_once ICMS_MODULES_PATH . '/system/admin/version/module_info.php';
@@ -41,11 +41,10 @@ if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
 	$icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);
 	if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest_status < 10) {
-		// I'm runing a final release so make sure to notify the user that the update is not a final
+		// I'm running a final release so make sure to notify the user that the update is not a final
 		$icmsAdminTpl->assign('not_a_final_comment', TRUE);
 	}
-}
-else {
+} else {
 	$checkerErrors = $icmsVersionChecker->getErrors(TRUE);
 	if ($checkerErrors) {
 		$icmsAdminTpl->assign('errors', $checkerErrors);
