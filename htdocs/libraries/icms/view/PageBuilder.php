@@ -30,7 +30,7 @@ defined('ICMS_ROOT_PATH') or exit();
 class icms_view_PageBuilder {
 
 	/** */
-	public $theme = false;
+	public $theme = FALSE;
 
 	/** */
 	public $blocks = array();
@@ -50,7 +50,7 @@ class icms_view_PageBuilder {
 		if ($this->theme) {
 			$this->theme->template->assign_by_ref('xoBlocks', $this->blocks);
 		}
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -137,9 +137,8 @@ class icms_view_PageBuilder {
 		$startMod = ($icmsConfig['startpage'] == '--') ? 'system' : $icmsConfig['startpage'];
 
 		// setting the full and relative url of the actual page
-		$icmsurl_parsed = parse_url(ICMS_URL);
 		$clean_request = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
-		$fullurl = $icmsurl_parsed['scheme'] . "://" . $icmsurl_parsed['host'] . $clean_request;
+		$fullurl = icms::$urls['http'] . icms::$urls['httphost'] . $clean_request;
 		$url = substr(str_replace(ICMS_URL, '', $fullurl), 1);
 
 		$icms_page_handler = icms::handler('icms_data_page');
@@ -210,30 +209,30 @@ class icms_view_PageBuilder {
 	 * The lame type workaround will change
 	 * bid is added temporarily as workaround for specific block manipulation
 	 *
-	 * @param unknown_type $xobject
-	 * @param unknown_type $template
-	 * @return unknown
+	 * @param object $xobject
+	 * @param object $template
+	 * @return array
 	 */
 	public function buildBlock($xobject, &$template) {
 		global $icmsConfigPersona;
-
-		if ($icmsConfigPersona['editre_block'] == true) {
+		$bid = $xobject->getVar('bid');
+		if ($icmsConfigPersona['editre_block'] == TRUE) {
 			if (icms::$user && count($this->uagroups) > 0) {
-				$url = base64_encode(str_replace(ICMS_URL, '', "http://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) );
-				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>'
-					. '<button style="display: none;"><div id="ed_block_' . $xobject->getVar ( 'bid' ) . '">'
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png' alt='" . _INVISIBLE . "'  /> " . _INVISIBLE . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png' alt='" . _CLONE . "'  /> " . _CLONE . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' alt='" . _EDIT . "'  /> " . _EDIT . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/up.png' alt='" . _UP . "'  /> " . _UP . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/down.png' alt='" . _DOWN . "'  /> " . _DOWN . "</a>";
+				$url = base64_encode(str_replace(ICMS_URL, '', icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
+				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $bid . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>'
+					. '<button style="display: none;"><div id="ed_block_' . $bid . '">'
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png' alt='" . _INVISIBLE . "'  /> " . _INVISIBLE . "</a><br />"
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png' alt='" . _CLONE . "'  /> " . _CLONE . "</a><br />"
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' alt='" . _EDIT . "'  /> " . _EDIT . "</a><br />"
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/up.png' alt='" . _UP . "'  /> " . _UP . "</a><br />"
+					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/down.png' alt='" . _DOWN . "'  /> " . _DOWN . "</a>";
 				if ($xobject->getVar('dirname') == '') {
-					$titlebtns .= "<br /><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=del&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt='" . _DELETE . "'  /> " . _DELETE . "</a>";
+					$titlebtns .= "<br /><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=del&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt='" . _DELETE . "'  /> " . _DELETE . "</a>";
 				}
 				$titlebtns .= '</div></button>';
 				$titlebtns .= '<script type="text/javascript">
 					$(function() {
-						$(\'#ed_block_' . $xobject->getVar('bid') . '\').dialog({
+						$(\'#ed_block_' . $bid . '\').dialog({
 							bgiframe: true,
 							//height: 140,
 							autoOpen: false,
@@ -250,10 +249,9 @@ class icms_view_PageBuilder {
 		}
 
 		$block = array(
-		    'id' => $xobject->getVar('bid'),
+		    'id' => $bid,
 		    'module' => $xobject->getVar('dirname'),
 		    'title' => $xobject->getVar('title') . $titlebtns,
-			//'name' => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
 		    'weight' => $xobject->getVar('weight'),
 		    'lastmod' => $xobject->getVar('last_modified')
 		);
@@ -269,19 +267,18 @@ class icms_view_PageBuilder {
 		$tplName = ($tplName = $xobject->getVar('template')) ? "db:$tplName" : "db:system_block_dummy.html";
 		$cacheid = $this->generateCacheId(
 			'blk_' . $xobject->getVar('dirname', 'n') . '_'
-			. $xobject->getVar('bid')
-			/*, $xobject->getVar( 'show_func', 'n' )*/
+			. $bid
 		);
 
 		if (! $bcachetime || ! $template->is_cached($tplName, $cacheid)) {
 			icms::$logger->addBlock($xobject->getVar('name'));
 			if (! ($bresult = $xobject->buildBlock())) {
-				return false;
+				return FALSE;
 			}
 			$template->assign('block', $bresult);
 			$block['content'] = $template->fetch($tplName, $cacheid);
 		} else {
-			icms::$logger->addBlock($xobject->getVar('name'), true, $bcachetime);
+			icms::$logger->addBlock($xobject->getVar('name'), TRUE, $bcachetime);
 			$block['content'] = $template->fetch($tplName, $cacheid);
 		}
 		return $block;
