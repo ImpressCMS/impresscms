@@ -1,7 +1,7 @@
 <?php
 /**
  * Beginning of authorizing using openID
- * 
+ *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		Auth
@@ -21,23 +21,21 @@ define('ICMS_INCLUDE_OPENID', TRUE);
  */
 include_once 'mainfile.php';
 
-$_SESSION['frompage'] = isset($_SERVER['HTTP_REFERER']) 
+$_SESSION['frompage'] = isset($_SERVER['HTTP_REFERER'])
 	? $_SERVER['HTTP_REFERER']
 	: (isset($_ENV['HTTP_REFERER']) ? $_ENV['HTTP_REFERER'] : '');
-//SESSION is started automatically by Xoops. -- Natsuhiko
-//session_start();
 
-// since we are trying to authenticate with OpenID, let' get rid of any data in $_SESSION['openid_response']
+// since we are trying to authenticate with OpenID, let's get rid of any data in $_SESSION['openid_response']
 unset($_SESSION['openid_response']);
 
 function getOpenIDURL() {
 	// Render a default page if we got a submission without an openid value.
-	if (empty($_GET['openid_identifier'])) 	{
+	if (empty($_GET['openid_identifier'])) {
 		echo $error = _CORE_OID_URL_EXPECTED;
-		//header("Location: /modules/openid/");
 		exit(0);
 	}
-	return $_GET['openid_identifier'];
+	$oid_uri = filter_var($_GET['openid_identifier'], FILTER_SANITIZE_URL);
+	return $oid_uri;
 }
 
 function run() {
