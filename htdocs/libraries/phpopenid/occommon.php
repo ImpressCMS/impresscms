@@ -91,17 +91,12 @@ function getScheme() {
     }
     return $scheme;
 }
-/** @todo dirname($_SERVER['PHP_SELF']) returns an extra '/' when logging in from the
- * webroot
+
+/**
+ * OpenID needs a target URI to return its response
  */
 function getReturnTo() {
-	$directory = dirname($_SERVER['PHP_SELF']); 
-	$directory = "/" ? "" : $directory;
-    return sprintf("%s://%s:%s%s/finish_auth.php",
-                   getScheme(), $_SERVER['SERVER_NAME'],
-                   $_SERVER['SERVER_PORT'],
-                   $directory
-                   );
+	return ICMS_URL . "/finish_auth.php";
 }
 
 function getTrustRoot() {

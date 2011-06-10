@@ -63,7 +63,7 @@ function run() {
 		$auth_request->addExtension($sreg_request);
 	}
 
-	$policy_uris = $_GET['policies'];
+	$policy_uris = isset($_GET['policies']) ? filter_var($_GET['policies'], FILTER_SANITIZE_URL) : NULL;
 
 	$pape_request = new Auth_OpenID_PAPE_Request($policy_uris);
 	if ($pape_request) {
