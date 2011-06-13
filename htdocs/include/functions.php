@@ -1325,8 +1325,8 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 			$fullname = '';
 			$fullname2 = $user->getVar('name');
 			if(($name) && !empty($fullname2)) {$fullname = $user->getVar('name');}
-			if(!empty ($fullname)) {$linkeduser = "$fullname [<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".$ts->htmlSpecialChars($username)."</a>]";}
-			else {$linkeduser = "<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".$ts->htmlSpecialChars($username)."</a>";}
+			if(!empty ($fullname)) {$linkeduser = "$fullname [<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".icms_core_DataFilter::htmlSpecialChars($username)."</a>]";}
+			else {$linkeduser = "<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".icms_core_DataFilter::htmlSpecialChars($username)."</a>";}
 			// add contact info : email + PM
 			if($withContact)
 			{
