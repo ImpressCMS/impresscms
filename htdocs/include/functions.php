@@ -1320,7 +1320,6 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 		}
 		if(is_object($user))
 		{
-			$ts = & icms_core_Textsanitizer::getInstance();
 			$username = $user->getVar('uname');
 			$fullname = '';
 			$fullname2 = $user->getVar('name');
