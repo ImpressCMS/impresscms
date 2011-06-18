@@ -67,7 +67,7 @@ class IcmsSourceEditorEditArea extends icms_form_elements_Textarea {
 <script language="javascript" type="text/javascript" src="' . ICMS_URL . $this->rootpath . '/editor/edit_area_compressor.php?plugins"></script>
 <script language="javascript" type="text/javascript">
 editAreaLoader.init({
-	id: "' . $this->getName() . '",
+	id: "' . $this->getName() . '_tarea",
 	syntax: "' . (!isset($this->config['syntax']) ? 'php' : $this->config['syntax']) . '",
 	language: "' . (!isset($this->config['language']) ? 'en' : $this->config['language']) . '",
 	start_highlight: ' . (!isset($this->config['start_highlight']) ? 'true' : ($this->config['start_highlight'] ? 'true' : 'false')) . ',
