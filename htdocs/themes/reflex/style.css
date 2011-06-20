@@ -1,6 +1,6 @@
 @import url(content.css);
 
-html, body {color: #999; margin: 0; padding: 0; font-family: sans-serif; font-size: .85em; background: #fff; overflow-x: hidden;}
+html, body {color: #999; margin: 0; padding: 0; font-family: sans-serif; font-size: .85em; background: #fff;}
 a {text-decoration: none; font-style: italic; color: #999;}
 a:hover {color: #000;}
 a:link, a:visited, a:active, a:focus {text-decoration: none; border: 0; outline: none;}
