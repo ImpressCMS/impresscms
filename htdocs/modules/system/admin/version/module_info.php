@@ -12,7 +12,7 @@
 
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
 
-if (is_int($_GET['mid'])) {
+if ((int) $_GET['mid']) {
 	$module_handler = icms::handler('icms_module');
 	$versioninfo =& $module_handler->get($_GET['mid']);
 } else {
