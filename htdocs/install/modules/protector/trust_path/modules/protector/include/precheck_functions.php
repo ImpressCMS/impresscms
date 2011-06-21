@@ -3,7 +3,7 @@
 function protector_prepare()
 {
 	// check the access is from install/index.php
-	if( defined( '_INSTALL_CHARSET' ) && ! is_writable( XOOPS_ROOT_PATH.'/mainfile.php' ) ) die( 'To use installer, remove protector\'s lines from mainfile.php first.' ) ;
+	if( defined( '_INSTALL_CHARSET' ) && ! is_writable( XOOPS_ROOT_PATH.'/mainfile.php' ) ) die( 'To use installer, remove the follow plugin first: /plugins/preload/protector.php' ) ;
 
 	// Protector class
 	require_once dirname(dirname(__FILE__)).'/class/protector.php' ;
