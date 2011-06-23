@@ -19,4 +19,8 @@ define("_ER_UP_INVALIDIMAGEFILE", "Invalid image file");
 define("_ER_UP_SUSPICIOUSREFUSED", "Suspicious image upload refused");
 define("_ER_UP_INVALIDFILENAME", "Invalid file name");
 define("_ER_UP_FAILEDSAVEFILE", "Failed to save file to %s");
+// added in 1.3
+define("_ER_UP_PARTIALLY", "The uploaded file was only partially uploaded.");
+define("_ER_UP_NO_TMP_DIR", "Missing a temporary folder. Please contact the administrator.");
+define("_ER_UP_CANT_WRITE", "Failed to write file to disk. Please contact the administrator.");
 ?>

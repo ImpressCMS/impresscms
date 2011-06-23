@@ -21,6 +21,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			: 'list'
 		);
 	if ($op == 'list') {
+		icms_loadLanguageFile('system', 'preferences', TRUE);
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url(' 
 			. ICMS_URL . '/modules/system/admin/avatars/images/avatars_big.png)">' 
@@ -37,9 +38,13 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		$form = new icms_form_Theme(_MD_ADDAVT, 'avatar_form', 'admin.php', "post", TRUE);
 		$form->setExtra('enctype="multipart/form-data"');
 		$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'avatar_name', 50, 255), TRUE);
-		$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'avatar_file', 500000));
+		$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'avatar_file', $icmsConfigUser['avatar_maxsize']));
 		$form->addElement(new icms_form_elements_Text(_IMGWEIGHT, 'avatar_weight', 3, 4, 0));
 		$form->addElement(new icms_form_elements_Radioyn(_IMGDISPLAY, 'avatar_display', 1, _YES, _NO));
+		$restrictions  = _MD_AM_AVATARMAX . ": " . $icmsConfigUser['avatar_maxsize'] . "<br />";
+		$restrictions .= _MD_AM_AVATARW . ": " . $icmsConfigUser['avatar_width'] . "px<br />";
+		$restrictions .= _MD_AM_AVATARH . ": ". $icmsConfigUser['avatar_height']. "px";
+		$form->addElement(new icms_form_elements_Label(_MD_RESTRICTIONS, $restrictions));
 		$form->addElement(new icms_form_elements_Hidden('op', 'addfile'));
 		$form->addElement(new icms_form_elements_Hidden('fct', 'avatars'));
 		$form->addElement(new icms_form_elements_Button('', 'avt_button', _SUBMIT, 'submit'));
@@ -165,32 +170,28 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		if (!icms::$security->check()) {
 			redirect_header('admin.php?fct=avatars', 3, implode('<br />', icms::$security->getErrors()));
 		}
-		$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), 500000);
+		$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $icmsConfigUser['avatar_maxsize'], $icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height']);
 		$uploader->setPrefix('savt');
 		$err = array();
-		$ucount = count($_POST['xoops_upload_file']);
-		for ($i = 0; $i < $ucount; $i++) {
-			if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
-				if (!$uploader->upload()) {
-					$err[] = $uploader->getErrors();
-				} else {
-					$avt_handler = icms::handler('icms_data_avatar');
-					$avatar =& $avt_handler->create();
-					$avatar->setVar('avatar_file', $uploader->getSavedFileName());
-					$avatar->setVar('avatar_name', $avatar_name);
-					$avatar->setVar('avatar_mimetype', $uploader->getMediaType());
-					$avatar_display = empty($avatar_display) ? 0 : 1;
-					$avatar->setVar('avatar_display', $avatar_display);
-					$avatar->setVar('avatar_weight', $avatar_weight);
-					$avatar->setVar('avatar_type', 'S');
-					if (!$avt_handler->insert($avatar)) {
-						$err[] = sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'));
-					}
-				}
+		if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+			if (!$uploader->upload()) {
+				$err[] = $uploader->getErrors();
 			} else {
-				$err[] = sprintf(_FAILFETCHIMG, $i);
-				$err = array_merge($err, $uploader->getErrors(FALSE));
+				$avt_handler = icms::handler('icms_data_avatar');
+				$avatar =& $avt_handler->create();
+				$avatar->setVar('avatar_file', $uploader->getSavedFileName());
+				$avatar->setVar('avatar_name', $avatar_name);
+				$avatar->setVar('avatar_mimetype', $uploader->getMediaType());
+				$avatar_display = empty($avatar_display) ? 0 : 1;
+				$avatar->setVar('avatar_display', $avatar_display);
+				$avatar->setVar('avatar_weight', $avatar_weight);
+				$avatar->setVar('avatar_type', 'S');
+				if (!$avt_handler->insert($avatar)) {
+					$err[] = sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'));
+				}
 			}
+		} else {
+			$err = array_merge($err, $uploader->getErrors(FALSE));
 		}
 		if (count($err) > 0) {
 			icms_cp_header();

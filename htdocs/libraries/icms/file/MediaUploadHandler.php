@@ -231,7 +231,7 @@ class icms_file_MediaUploadHandler {
 			return false;
 		}
 		if ($this->mediaTmpName == 'none' || !is_uploaded_file($this->mediaTmpName)) {
-			self::setErrors(_ER_UP_NOFILEUPLOADED);
+			self::setErrors($this->getUploadErrorText($media_name['error']));
 			return false;
 		}
 		if ($this->mediaError > 0) {
@@ -239,6 +239,37 @@ class icms_file_MediaUploadHandler {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Get Text messages for POST upload errors
+	 *
+	 * @param int $err error number
+	 * @return string error message
+	 */
+	private function getUploadErrorText($err) {
+		switch ($err) {
+			case UPLOAD_ERR_INI_SIZE:
+			case UPLOAD_ERR_FORM_SIZE:
+				$err = _ER_UP_INVALIDFILESIZE;
+				break;
+			case UPLOAD_ERR_PARTIAL:
+				$err = _ER_UP_PARTIALLY;
+				break;
+			case UPLOAD_ERR_NO_FILE:
+				$err = _ER_UP_NOFILEUPLOADED;
+				break;
+			case UPLOAD_ERR_NO_TMP_DIR:
+				$err = _ER_UP_NO_TMP_DIR;
+				break;
+			case UPLOAD_ERR_CANT_WRITE:
+				$err = _ER_UP_CANT_WRITE;
+				break;
+			case UPLOAD_ERR_EXTENSION:
+				$err = _ER_UP_NOFILEUPLOADED;
+				break;
+		}
+		return $err;
 	}
 
 	/**

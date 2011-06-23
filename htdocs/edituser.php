@@ -421,11 +421,6 @@ switch ($op) {
 		if ($icmsConfigUser['avatar_allow_upload'] == 1 && icms::$user->getVar('posts') >= $icmsConfigUser['avatar_minposts']) {
 			$form = new icms_form_Theme(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', TRUE);
 			$form->setExtra('enctype="multipart/form-data"');
-			/* the avatar resizer shall later be included
-			 if ($icmsConfigUser['avatar_auto_resize'])) {
-			 $form->addElement(new icms_form_elements_Label(_US_AUTORESIZE_ATV, sprintf(_US_AUTORESIZE_ATV_DESC, $icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height'])));
-			 }
-			 */
 			$form->addElement(new icms_form_elements_Label(_US_MAXPIXEL, icms_conv_nr2local($icmsConfigUser['avatar_width']) . ' x ' . icms_conv_nr2local($icmsConfigUser['avatar_height'])));
 			$form->addElement(new icms_form_elements_Label(_US_MAXIMGSZ, icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])));
 			$form->addElement(new icms_form_elements_File(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), TRUE);
