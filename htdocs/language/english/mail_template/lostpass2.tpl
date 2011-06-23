@@ -3,7 +3,7 @@ Hello {X_UNAME},
 A web user from {IP} has just requested that password be sent.
 Here are your login details at {SITENAME}.
 
-Username: {X_UNAME}
+Username: {X_USERLOGINNAME}
 New Password: {NEWPWD}
 
 You can change it after you login at {SITEURL}/user.php.
