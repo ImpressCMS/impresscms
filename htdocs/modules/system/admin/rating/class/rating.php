@@ -62,9 +62,7 @@ class SystemRating extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function name() {
-		$ret = icms_getLinkedUnameFromId($this->getVar('uid', 'e'), TRUE, array());
-
-		return $ret;
+		return icms_member_user_Handler::getUserLink($this->getVar('uid', 'e'), TRUE, array());
 	}
 
 	/**
@@ -113,10 +111,10 @@ class SystemRating extends icms_ipf_Object {
 	 * Create a link to the user profile associated with the rating
 	 * 
 	 * @return	string
-	 * @see	icms_getLinkedUnameFromId
+	 * @see	icms_member_user_Handler::getUserLink
 	 */
 	public function getUnameValue() {
-		return icms_getLinkedUnameFromId($this->getVar('uid'));
+		return icms_member_user_Handler::getUserLink($this->getVar('uid'));
 	}
 
 	/**

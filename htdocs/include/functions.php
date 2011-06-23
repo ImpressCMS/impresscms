@@ -1292,51 +1292,12 @@ function icms_sanitizeAdsenses_callback($matches) {
 }
 
 /**
- * Return a linked username or full name for a specific $userid
- *
- * @param integer $userid uid of the related user
- * @param bool $name true to return the fullname, false to use the username; if true and the user does not have fullname, username will be used instead
- * @param array $users array already containing icms_member_user_Object objects in which case we will save a query
- * @param bool $withContact true if we want contact details to be added in the value returned (PM and email links)
- * @return string name of user with a link on his profile
- * @todo Move to a static class method - User
+ * @deprecated Use icms_member_user_Handler instead
+ * @todo Remove this function in version 1.4
  */
-function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $withContact = false)
-{
-	if(!is_numeric($userid)) {return $userid;}
-	$userid = (int) ($userid);
-	if($userid > 0)
-	{
-		if($users == array())
-		{
-			//fetching users
-			$member_handler = icms::handler('icms_member');
-			$user = & $member_handler->getUser($userid);
-		}
-		else
-		{
-			if(!isset($users[$userid])) {return $GLOBALS['xoopsConfig']['anonymous'];}
-			$user = & $users[$userid];
-		}
-		if(is_object($user))
-		{
-			$username = $user->getVar('uname');
-			$fullname = '';
-			$fullname2 = $user->getVar('name');
-			if(($name) && !empty($fullname2)) {$fullname = $user->getVar('name');}
-			if(!empty ($fullname)) {$linkeduser = "$fullname [<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".icms_core_DataFilter::htmlSpecialChars($username)."</a>]";}
-			else {$linkeduser = "<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".icms_core_DataFilter::htmlSpecialChars($username)."</a>";}
-			// add contact info : email + PM
-			if($withContact)
-			{
-				$linkeduser .= '<a href="mailto:'.$user->getVar('email').'"><img style="vertical-align: middle;" src="'.ICMS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/email.gif'.'" alt="'._US_SEND_MAIL.'" title="'._US_SEND_MAIL.'"/></a>';
-				$js = "javascript:openWithSelfMain('".ICMS_URL.'/pmlite.php?send2=1&to_userid='.$userid."', 'pmlite',450,370);";
-				$linkeduser .= '<a href="'.$js.'"><img style="vertical-align: middle;" src="'.ICMS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/pm.gif'.'" alt="'._US_SEND_PM.'" title="'._US_SEND_PM.'"/></a>';
-			}
-			return $linkeduser;
-		}
-	}
-	return $GLOBALS['xoopsConfig']['anonymous'];
+function icms_getLinkedUnameFromId($userid, $name = FALSE, $users = array (), $withContact = FALSE) {
+	icms_core_Debug::setDeprecated('icms_member_user_Handler::getUserLink', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact);
 }
 
 /**
@@ -1601,7 +1562,6 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
  * @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
  *				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
  * @return string
- * @todo Move to a static class method - String
  */
 function icms_utf8_strrev($str, $reverse = false)
 {
