@@ -31,7 +31,6 @@ class SystemBlocksadmin extends icms_view_block_Object {
 	 * @param SystemBlocksadminHandler $handler
 	 */
 	public function __construct(& $handler) {
-
 		parent::__construct($handler);
 
 		$this->initNonPersistableVar('visiblein', XOBJ_DTYPE_OTHER, 'visiblein', FALSE, FALSE, FALSE, TRUE);
@@ -52,7 +51,8 @@ class SystemBlocksadmin extends icms_view_block_Object {
 		$this->setControl('name', 'label');
 		$this->setControl('visible', 'yesno');
 		$this->setControl('bcachetime', array(
-			'itemHandler' => 'blocksadmin',			'method' => 'getBlockCacheTimeArray',
+			'itemHandler' => 'blocksadmin',
+			'method' => 'getBlockCacheTimeArray',
 			'module' => 'system'
 			));
 		$this->setControl('side', array(
@@ -63,11 +63,11 @@ class SystemBlocksadmin extends icms_view_block_Object {
 		$this->setControl('c_type', array(
 			'itemHandler' => 'blocksadmin',
 			'method' => 'getContentTypeArray',
-			'module' => 'system'
+			'module' => 'system',
+			'onSelect' => 'submit'
 			));
 
 		$this->setControl('visiblein', 'page');
-		$this->setControl('content', 'dhtmltextarea');
 		$this->setControl('options', 'blockoptions');
 	}
 

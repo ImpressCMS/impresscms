@@ -28,6 +28,19 @@ function editblock($bid = 0, $clone = FALSE) {
 
 	$blockObj = $icms_block_handler->get($bid);
 
+	if (isset($_POST['op']) && $_POST['op'] == 'changedField' && in_array($_POST['changedField'], array('c_type'))) {
+		$controller = new icms_ipf_Controller($icms_block_handler);
+		$controller->postDataToObject($blockObj);
+	}
+	
+	if ($blockObj->getVar("c_type") == "H") {
+		$blockObj->setControl("content", array("name" => "source", "syntax" => "html"));
+	} elseif ($blockObj->getVar("c_type") == "P") {
+		$blockObj->setControl("content", array("name" => "source", "syntax" => "php"));
+	} else {
+		$blockObj->setControl("content", "dhtmltextarea");
+	}
+
 	if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') $blockObj->showFieldOnForm('options');
 	if (!$clone && !$blockObj->isNew()) {
 		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSADMIN_EDIT, 'addblock');
@@ -47,6 +60,7 @@ function editblock($bid = 0, $clone = FALSE) {
 		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSADMIN_CREATE, 'addblock');
 		$sform->assign($icmsAdminTpl);
 	}
+
 	$icmsAdminTpl->assign('bid', $bid);
 	$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
 }
