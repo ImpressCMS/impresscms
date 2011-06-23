@@ -11,9 +11,6 @@
  */
 
 defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
-icms::$preload->triggerEvent('finishCoreBoot');
-
-global $icmsConfig, $xoopsOption;
 
 $allowed = FALSE;
 if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_site']) {
@@ -25,23 +22,22 @@ if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_sit
 			break;
 		}
 	}
-} elseif (! empty($_POST['xoops_login'])) {
+} elseif (!empty($_POST['xoops_login'])) {
 	include_once ICMS_INCLUDE_PATH . '/checklogin.php';
 	exit();
 }
 
-if (! $allowed) {
-
-	$xoopsThemeFactory = new icms_view_theme_Factory();
-	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
-	$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
-	$xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
-	$xoTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
-	$xoTheme->addStylesheet(ICMS_URL . "/icms" 
+if (!$allowed) {
+	$themeFactory = new icms_view_theme_Factory();
+	$themeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
+	$themeFactory->defaultTheme = $icmsConfig['theme_set'];
+	$icmsTheme =& $themeFactory->createInstance(array("plugins" => array()));
+	$icmsTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
+	$icmsTheme->addStylesheet(ICMS_URL . "/icms" 
 		. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? "_rtl" : "") . ".css", array("media" => "screen"));
-	$xoopsTpl =& $xoTheme->template;
+	$icmsTpl =& $icmsTheme->template;
 
-	$xoopsTpl->assign(array(
+	$icmsTpl->assign(array(
 		'icms_theme' => $icmsConfig['theme_set'],
 		'icms_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig['theme_set'] . '/',
 		'icms_themecss' => xoops_getcss($icmsConfig['theme_set']),
@@ -61,30 +57,28 @@ if (! $allowed) {
 
 	foreach ($icmsConfigMetaFooter as $name => $value) {
 		if (substr($name, 0, 5) == 'meta_') {
-			$xoopsTpl->assign("xoops_$name", htmlspecialchars($value, ENT_QUOTES));
+			$icmsTpl->assign("xoops_$name", htmlspecialchars($value, ENT_QUOTES));
 		} else {
-			// prefix each tag with 'xoops_'
-			$xoopsTpl->assign("xoops_$name", $value);
+			$icmsTpl->assign("xoops_$name", $value);
 		}
 	}
-	$xoopsTpl->debugging = FALSE;
-	$xoopsTpl->debugging_ctrl = 'NONE';
+	$icmsTpl->debugging = FALSE;
+	$icmsTpl->debugging_ctrl = 'NONE';
+	$icmsTpl->caching = 0;
 
-	$xoopsTpl->caching = 0;
-
+	icms_loadLanguageFile("system", "customtag", TRUE);
 	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 	$customtags_array = array();
-	if (is_object($xoopsTpl)) {
+	if (is_object($icmsTpl)) {
 		foreach ($icms_customtag_handler->getCustomtagsByName() as $k => $v) {
 			$customtags_array[$k] = $v->render();
 		}
-		$xoopsTpl->assign('icmsCustomtags', $customtags_array);
+		$icmsTpl->assign('icmsCustomtags', $customtags_array);
 	}
 
-	$xoopsTpl->display('db:system_siteclosed.html');
+	$icmsTpl->display('db:system_siteclosed.html');
 	exit();
 }
 unset($allowed, $group);
 
 return TRUE;
-
