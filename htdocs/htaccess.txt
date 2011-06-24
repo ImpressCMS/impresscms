@@ -1,5 +1,8 @@
 Options Multiviews
 
+# if you install in a subdirectory, be sure to include the entire path, relative to DocumentRoot
+# for example, ErrorDocument 404 /icms/error.php?e=404
+
 ErrorDocument 400 /error.php?e=400
 ErrorDocument 401 /error.php?e=401
 ErrorDocument 402 /error.php?e=402
