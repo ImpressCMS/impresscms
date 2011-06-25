@@ -542,7 +542,7 @@ switch ($op) {
 					}
 					// if password encryption has been changed
 					if (!$encryption_updated && $config->getVar('conf_catid') == ICMS_CONF_USER && $config->getVar('conf_name') == 'enc_type') {
-						if ($config->getVar('closesite') !== 1) {
+						if ($icmsConfig['closesite'] !== 1) {
 							$member_handler = icms::handler('icms_member');
 							$member_handler->updateUsersByField('pass_expired', 1);
 							$encryption_updated = TRUE;
