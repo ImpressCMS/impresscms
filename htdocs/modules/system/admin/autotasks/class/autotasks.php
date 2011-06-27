@@ -163,12 +163,17 @@ class SystemAutoTasks extends icms_ipf_Object {
 		$code = $this->getVar('sat_code');
 		ignore_user_abort(TRUE);
 		if (substr($this->getVar('sat_type'), 0, 6) == 'addon/') {
-			$module = substr($this->getVar('sat_type'), 6);
-			if ($module == '') return FALSE;
-			$module = ICMS_MODULES_PATH . '/' . $module;
-			$module = $module . '/' . $code;
-			$code = ' require "' . $module . '";';
-			$is_bug = !(@highlight_string(file_get_contents($module), TRUE));
+			$dirname = substr($this->getVar('sat_type'), 6);
+			if ($dirname == '') return FALSE;
+			
+			// only execute autotasks for active modules
+			$module = icms::handler("icms_module")->getByDirname($dirname);
+			if ($module->getVar("isactive") != 1) return FALSE;
+			
+			$dirname = ICMS_MODULES_PATH . '/' . $dirname;
+			$dirname = $dirname . '/' . $code;
+			$code = ' require "' . $dirname . '";';
+			$is_bug = !(@highlight_string(file_get_contents($dirname), TRUE));
 		} else {
 			$is_bug = !(@highlight_string('<?' . 'php '. $code . ' return TRUE; ?' . '>', TRUE));
 		}
