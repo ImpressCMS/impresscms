@@ -55,7 +55,7 @@ define("_MD_AM_IFUCANT","If you can't change the permissions you can edit the re
 define("_MD_AM_COMMODE","Default Comment Display Mode");
 define("_MD_AM_COMORDER","Default Comments Display Order");
 define("_MD_AM_ALLOWHTML","Allow HTML tags in user comments?");
-define("_MD_AM_DEBUGMODE","Debug mode");
+define("_MD_AM_DEBUGMODE","Developer Dashboard");
 define("_MD_AM_DEBUGMODEDSC","Several debug options. A running website should have this turned off.");
 define("_MD_AM_AVATARALLOW","Allow custom avatar upload?");
 define("_MD_AM_AVATARALLOWDSC","If zou allow this option, you can set more option for the avatars (with, height, size).");
