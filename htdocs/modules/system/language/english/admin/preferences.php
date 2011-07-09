@@ -58,7 +58,7 @@ define("_MD_AM_ALLOWHTML","Allow HTML tags in user comments?");
 define("_MD_AM_DEBUGMODE","Developer Dashboard");
 define("_MD_AM_DEBUGMODEDSC","Several debug options. A running website should have this turned off.");
 define("_MD_AM_AVATARALLOW","Allow custom avatar upload?");
-define("_MD_AM_AVATARALLOWDSC","If zou allow this option, you can set more option for the avatars (with, height, size).");
+define("_MD_AM_AVATARALLOWDSC","If you allow this option, you can set more option for the avatars (with, height, size).");
 define('_MD_AM_AVATARMP','Minimum posts required');
 define('_MD_AM_AVATARMPDSC','Enter the minimum number of posts required to upload a custom avatar');
 define("_MD_AM_AVATARW","Avatar image max width (pixel)");
