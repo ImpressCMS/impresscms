@@ -13,7 +13,9 @@
  * @version	$Id$
  */
 
-!defined('ICMS_ROOT_PATH') ||	die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
+	exit();
+}
 
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 if (('system' != $icmsModule->getVar('dirname')
