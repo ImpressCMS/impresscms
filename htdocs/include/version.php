@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-define('ICMS_VERSION_NAME','ImpressCMS 1.3 Beta2');
+define('ICMS_VERSION_NAME','ImpressCMS 1.3 RC');
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
@@ -23,15 +23,15 @@ define('XOOPS_VERSION', ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define('ICMS_VERSION_STATUS', 2);
+define('ICMS_VERSION_STATUS', 3);
 
 /**
  * Build number
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-// previous release - 1.3 Beta = 44
-define('ICMS_VERSION_BUILD', 45);
+// impresscms_1.2.6 Final = 47
+define('ICMS_VERSION_BUILD', 48);
 
 /**
  * Latest dbversion of the System Module
