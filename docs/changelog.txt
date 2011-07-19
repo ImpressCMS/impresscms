@@ -1,4 +1,12 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 1.3 Release Candidate ===
+Release date: 19 July 2011
+Revision: 22079
+DB Version: 41
+Build Version: 48
+
+A complete list of changes to this release series can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
+
 === ImpressCMS 1.3 Beta 2 ===
 Release date: 3 May 2011
 Revision: 21585
