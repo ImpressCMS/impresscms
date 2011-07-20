@@ -191,7 +191,7 @@ class icms_ipf_About {
 
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
-			$this->_tpl->assign('module_version_history', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'html', 'input'));
+			$this->_tpl->assign('module_version_history', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
 			fclose($handle);
 		}
 
@@ -200,7 +200,7 @@ class icms_ipf_About {
 
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
-			$this->_tpl->assign('module_version_history', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'html', 'input'));
+			$this->_tpl->assign('module_version_history', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
 			fclose($handle);
 		}
 
@@ -219,7 +219,7 @@ class icms_ipf_About {
 		if (is_file($filename)) {
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
-			$this->_tpl->assign('module_license_txt', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'input'));
+			$this->_tpl->assign('module_license_txt', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
 			fclose($handle);
 		}
 
