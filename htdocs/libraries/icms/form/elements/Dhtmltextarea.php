@@ -226,9 +226,9 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		$count = count($smiles);
 		$ele_name = $this->getName();
 		for ($i = 0; $i < $count; $i++) {
-			$ret .= "<img onclick='xoopsCodeSmilie(\"" . $ele_name . "\", \" " . $smiles[$i]['code'] . " \");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_UPLOAD_URL . "/" . htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES) . "' border='0' alt='' />";
+			$ret .= "<img onclick='xoopsCodeSmilie(\"" . $ele_name . "_tarea\", \" " . $smiles[$i]['code'] . " \");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_UPLOAD_URL . "/" . htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES) . "' border='0' alt='' />";
 		}
-		$ret .= "&nbsp;[<a href='#moresmiley' onclick='javascript:openWithSelfMain(\"" . ICMS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target=" . $ele_name . "\",\"smilies\",300,475);'>" . _MORE . "</a>]";
+		$ret .= "&nbsp;[<a href='#moresmiley' onclick='javascript:openWithSelfMain(\"" . ICMS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target=tarea_" . $ele_name . "\",\"smilies\",300,475);'>" . _MORE . "</a>]";
 		return $ret;
 	}
 }

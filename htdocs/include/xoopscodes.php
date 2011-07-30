@@ -69,7 +69,7 @@ function xoopsSmilies($textarea_id)
 		if ($result = icms::$xoopsDB->query("SELECT * FROM ".$db->prefix('smiles')." WHERE display='1'")) {
 			while ($smiles = icms::$xoopsDB->fetchArray($result)) {
 				//hack smilies move for the smilies !!
-				echo "<img src='".ICMS_UPLOAD_URL."/".htmlspecialchars($smiles['smile_url'])."' border='0' onmouseover='style.cursor=\"hand\"' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles['code']." \");' />";
+				echo "<img src='".ICMS_UPLOAD_URL."/".htmlspecialchars($smiles['smile_url'])."' border='0' onmouseover='style.cursor=\"hand\"' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."_tarea\", \" ".$smiles['code']." \");' />";
 				//fin du hack
 			}
 		}
@@ -78,11 +78,11 @@ function xoopsSmilies($textarea_id)
 		for ($i = 0; $i < $count; $i++) {
 			if ($smiles[$i]['display'] == 1) {
 				//hack bis
-				echo "<img src='".ICMS_UPLOAD_URL."/".icms_core_DataFilter::htmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
+				echo "<img src='".ICMS_UPLOAD_URL."/".icms_core_DataFilter::htmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."_tarea\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
 				//fin du hack
 			}
 		}
 	}
 	//hack for more
-	echo "&nbsp;[<a href='#moresmiley' onmouseover='style.cursor=\"hand\"' alt='' onclick='openWithSelfMain(\"".ICMS_URL."/misc.php?action=showpopups&amp;type=smilies&amp;target=".$textarea_id."\",\"smilies\",300,475);'>"._MORE."</a>]";
+	echo "&nbsp;[<a href='#moresmiley' onmouseover='style.cursor=\"hand\"' alt='' onclick='openWithSelfMain(\"".ICMS_URL."/misc.php?action=showpopups&amp;type=smilies&amp;target=".$textarea_id."_tarea\",\"smilies\",300,475);'>"._MORE."</a>]";
 }  //fin du hack
