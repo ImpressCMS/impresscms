@@ -14,9 +14,9 @@
  * @version		$Id$
  */
 
-if (defined("XOOPS_LISTS_INCLUDED") ) exit();
+if (defined("ICMS_LISTS_INCLUDED") ) exit();
 /** Make sure this file is only included once */
-define("XOOPS_LISTS_INCLUDED",1);
+define("ICMS_LISTS_INCLUDED",1);
 
 /**
  * Handles all list functions within ImpressCMS

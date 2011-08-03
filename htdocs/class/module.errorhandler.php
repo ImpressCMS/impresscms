@@ -13,8 +13,8 @@
 * @version	$Id$
 */
 
-if ( !defined("XOOPS_C_ERRORHANDLER_INCLUDED") ) {
-	define("XOOPS_C_ERRORHANDLER_INCLUDED",1);
+if ( !defined("ICMS_C_ERRORHANDLER_INCLUDED") ) {
+	define("ICMS_C_ERRORHANDLER_INCLUDED",1);
 
 	/**
 	 * Error Handler class
