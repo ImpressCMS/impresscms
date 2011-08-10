@@ -39,7 +39,7 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 	 *
 	 * @return	void
 	 */
-	public function eventBeforePreviewTarea($array) {
+	public function eventAfterPreviewTarea($array) {
 		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
 			'icms_sanitizeAdsenses_callback', $array[0]);
 	}
@@ -59,7 +59,7 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 	 *
 	 * @return	void
 	 */
-	public function eventBeforeDisplayTarea($array) {
+	public function eventAfterDisplayTarea($array) {
 		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
 			'icms_sanitizeAdsenses_callback', $array[0]);
 	}
