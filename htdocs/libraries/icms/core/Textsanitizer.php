@@ -215,7 +215,8 @@ class icms_core_Textsanitizer {
 	 * @return  string
 	 **/
 	public function displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
-		icms_core_Debug::setDeprecated('icms_core_DataFilter::checkVar - type = text or html, $options1 = input or output', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		// Before this can be deprecated, the events for dispalyTarea need to be added, first
+		//icms_core_Debug::setDeprecated('icms_core_DataFilter::checkVar - type = text or html, $options1 = input or output', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		if ($html != 1) {
@@ -251,8 +252,6 @@ class icms_core_Textsanitizer {
 	}
 
 	/**
-	 * @deprecated Use icms_core_DataFilter::checkVar, instead
-	 *
 	 * Filters textarea form data submitted for preview
 	 *
 	 * @param   string  $text
@@ -264,7 +263,8 @@ class icms_core_Textsanitizer {
 	 * @return  string
 	 **/
 	public function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
-		icms_core_Debug::setDeprecated('icms_core_DataFilter::checkVar - type = text or html, $options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		 /* @deprecated Use icms_core_DataFilter::checkVar, instead - the events for previewTarea need to be added, first */
+		//icms_core_Debug::setDeprecated('icms_core_DataFilter::checkVar - type = text or html, $options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		$text = icms_core_DataFilter::stripSlashesGPC($text);
