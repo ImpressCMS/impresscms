@@ -26,6 +26,17 @@ include ICMS_ROOT_PATH . '/include/cp_functions.php';
 icms_loadLanguageFile('system', 'admin');
 icms_loadLanguageFile('core', 'moduleabout');
 
+// hook for profile module
+if (isset($fct) && $fct == 'users' && icms_get_module_status('profile')) {
+	$op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+	$uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid') : 0;
+	if ($op == 'modifyUser' && $uid != 0) {
+		header("Location:" . ICMS_MODULES_URL . "/profile/admin/user.php?op=edit&id=" . $uid);
+	} else {
+		header("Location:" . ICMS_MODULES_URL . "/profile/admin/user.php");
+	}
+}
+
 // Check if function call does exist (security)
 $admin_dir = ICMS_ROOT_PATH . '/modules/system/admin';
 $dirlist = icms_core_Filesystem::getDirList($admin_dir);
@@ -72,10 +83,6 @@ if ($admintest != 0) {
 			} else {$error = TRUE;}
 		} else {$error = TRUE;}
 	} else {$error = TRUE;}
-}
-if (isset($fct) && $fct == 'users' && icms_get_module_status('profile')) {
-	header("Location:" . ICMS_MODULES_URL . "/profile/admin/user.php");
-
 }
 if ($error) {
 	header("Location:" . ICMS_URL . "/admin.php");
