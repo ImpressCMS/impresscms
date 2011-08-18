@@ -37,7 +37,7 @@ class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
 		$rows = isset($rows)? $rows : 5;
 		$cols = isset($cols)? $cols : 50;
 		$hiddentext = empty($hiddentext)? "xoopsHiddenText" : $hiddentext;
-		$this->icms_form_elements_Dhtmltextarea(@$caption, $name, $value, $rows, $cols, $hiddentext,$configs);
+		parent::__construct(@$caption, $name, $value, $rows, $cols, $hiddentext,$configs);
 	}
 }
 ?>
