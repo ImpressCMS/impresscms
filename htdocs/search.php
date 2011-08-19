@@ -176,7 +176,6 @@ switch ($action) {
 			if (in_array($mid, $available_modules)) {
 				$module =& $modules[$mid];
 				$results =& $module->search($queries, $andor, $search_limiter, 0);
-				if (!$results) continue;
 				$xoopsTpl->assign("showing", sprintf(_SR_SHOWING, 1, $max_results_per_page));
 				$count = count($results);
 				$modname = $module->getVar('name');
