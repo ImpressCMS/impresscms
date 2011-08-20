@@ -24,8 +24,7 @@ include_once 'jalali.php';
  *
  * @param bool  $closehead  close the <head> tag
  */
-function xoops_header($closehead=true)
-{
+function xoops_header($closehead=true) {
 	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
 	$myts =& icms_core_Textsanitizer::getInstance();
 
@@ -54,29 +53,7 @@ function xoops_header($closehead=true)
 	<script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
-	/*	$jscript = '';
-	 if(class_exists('icms_form_elements_Dhtmltextarea')){
-		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-		if(empty($key)) continue;
-		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
-		echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
-		}else{
-		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-		$func = 'render_'.$key;
-		if ( function_exists($func) ) {
-		@list($encode, $jscript) = $func($ele_name);
-		if (!empty($jscript)) {
-		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
-		echo '<script type="text/javascript">'.$jscript.'</script>';
-		}else{
-		echo '<script type="text/javascript" src="'.$jscript.'"></script>';
-		}
-		}
-		}
-		}
-		}
-		}
-		*/
+
 	$style_info = '';
 	if(!empty($icmsConfigPlugins['sanitizer_plugins'])){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
@@ -106,7 +83,6 @@ function xoops_header($closehead=true)
 	$themecss = xoops_getcss($icmsConfig['theme_set']);
 	if ($themecss) {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
-		//echo '<style type="text/css" media="all"><!-- @import url('.$themecss.'); --></style>';
 	}
 	if ($closehead) {
 		echo '</head><body>';
@@ -118,8 +94,7 @@ function xoops_header($closehead=true)
  *
  * Implements all functions that are executed in the footer
  */
-function xoops_footer()
-{
+function xoops_footer() {
 	global $icmsConfigMetaFooter;
 	echo htmlspecialchars($icmsConfigMetaFooter['google_analytics']).'</body></html>';
 	ob_end_flush();
@@ -1123,16 +1098,14 @@ function icms_float($var) {return icms_currency($var);}
  * @return string	$text The purified text
  * @todo Remove this and use HTML Purifier
  */
-function icms_purifyText($text, $keyword = false)
-{
-	$myts = icms_core_Textsanitizer::getInstance();
+function icms_purifyText($text, $keyword = false) {
 	$text = str_replace('&nbsp;', ' ', $text);
 	$text = str_replace('<br />', ' ', $text);
 	$text = str_replace('<br/>', ' ', $text);
 	$text = str_replace('<br', ' ', $text);
 	$text = strip_tags($text);
 	$text = html_entity_decode($text);
-	$text = $myts->undoHtmlSpecialChars($text);
+	$text = icms_core_DataFilter::undoHtmlSpecialChars($text);
 	$text = str_replace(')', ' ', $text);
 	$text = str_replace('(', ' ', $text);
 	$text = str_replace(':', ' ', $text);
@@ -1146,8 +1119,7 @@ function icms_purifyText($text, $keyword = false)
 	$text = str_replace('\n', ' ', $text);
 	$text = str_replace('&#8213;', ' ', $text);
 
-	if($keyword)
-	{
+	if($keyword) {
 		$text = str_replace('.', ' ', $text);
 		$text = str_replace(',', ' ', $text);
 		$text = str_replace('\'', ' ', $text);
