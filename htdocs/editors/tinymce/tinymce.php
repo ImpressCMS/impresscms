@@ -1,6 +1,6 @@
 <?php
 /**
- * TinyMCE adapter for XOOPS
+ * TinyMCE adapter
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -9,40 +9,29 @@
  * @version		$Id$
  * @package		xoopseditor
  */
-class TinyMCE
-{
+class TinyMCE {
 	var $rootpath;
 	var $config = array();
 	var $setting = array();
 
 
-  /**
-  * PHP 5 Constructor
-  *
-  * @param    string    $config   The configuration
-  **/
-	function __construct($config)
- 	{
+	/**
+	 * PHP 5 Constructor
+	 *
+	 * @param    string    $config   The configuration
+	 **/
+	function __construct($config) {
 		$this->setConfig($config);
 		$this->rootpath = $this->config["rootpath"] . "/jscripts";
 	}
 
-
-	// PHP 4 Contructor
-	function TinyMCE( $config )
-	{
-		$this->__construct( $config ) ;
-	}
-
-
-  /**
-  * Creates one instance of the tinyMCE object
-  *
-  * @param    array     $config     The configuration
-  * @return   object    $instance   The instance of tinyMCE object
-  **/
-	function &instance( $config )
-	{
+	/**
+	 * Creates one instance of the tinyMCE object
+	 *
+	 * @param    array     $config     The configuration
+	 * @return   object    $instance   The instance of tinyMCE object
+	 **/
+	function &instance($config) {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new TinyMCE($config);
@@ -53,14 +42,13 @@ class TinyMCE
 		return $instance;
 	}
 
-  /**
-  * Gets configuration Elements
-  *
-  * @param    string  $element    The configuration element
-  * @return   array   $elements   The array of configuration elements
-  **/
-	function getElements($element = null)
-	{
+	/**
+	 * Gets configuration Elements
+	 *
+	 * @param    string  $element    The configuration element
+	 * @return   array   $elements   The array of configuration elements
+	 **/
+	function getElements($element = null) {
 		static $elements = array();
 		if (!empty($element)) {
 			$elements[] = $element;
@@ -69,27 +57,25 @@ class TinyMCE
 		return $elements;
 	}
 
-  /**
-  * Gets configuration Elements
-  *
-  * @param    string  $element    The configuration element
-  * @return   array   $elements   The array of configuration elements
-  **/
-	function setConfig( $config )
-	{
+	/**
+	 * Gets configuration Elements
+	 *
+	 * @param    string  $element    The configuration element
+	 * @return   array   $elements   The array of configuration elements
+	 **/
+	function setConfig($config) {
 		$config["elements"] = implode(",", $this->getElements($config["elements"]));
 		foreach ($config as $key => $val) {
 			$this->config[$key] = $val;
 		}
 	}
 
-  /**
-  * Initializes the tinyMCE
-  * @return   true
-  **/
-	function init()
-	{
-        global $icmsConfigMultilang, $icmsConfigPersona;
+	/**
+	 * Initializes the tinyMCE
+	 * @return   true
+	 **/
+	function init() {
+		global $icmsConfigMultilang, $icmsConfigPersona;
 		$configured = array();
 		if (is_readable(ICMS_ROOT_PATH . $this->rootpath. '/langs/'.$this->config["language"].'.js')) {
 			$this->setting["language"] = $this->config["language"];
@@ -124,15 +110,15 @@ class TinyMCE
 				$this->config["buttons"][] = array(
 					"before"	=> "",
 					"add"		=> "",
-					);
+				);
 				$this->config["buttons"][] = array(
 					"before"	=> "",
 					"add"		=> "",
-					);
+				);
 				$this->config["buttons"][] = array(
 					"before"	=> "",
 					"add"		=> "",
-					);
+				);
 			}
 			$i = 0;
 			foreach ($this->config["buttons"] as $button) {
@@ -205,46 +191,46 @@ class TinyMCE
 		return true;
 	}
 
-  /**
-  * Renders the tinyMCE
-  * @return   string  $ret      The rendered HTML string
-  **/
-  function render()
-  {
-    static $rendered;
-    if ($rendered) return null;
+	/**
+	 * Renders the tinyMCE
+	 * @return   string  $ret      The rendered HTML string
+	 **/
+	function render() {
+		static $rendered;
+		if ($rendered) return null;
 
-    $rendered = true;
+		$rendered = true;
 
-    $this->init();
+		$this->init();
 
-    if (!empty($this->setting["callback"])) {
-        $callback = $this->setting["callback"];
-        unset($this->setting["callback"]);
-    } else {
-        $callback = "";
-    }
+		if (!empty($this->setting["callback"])) {
+			$callback = $this->setting["callback"];
+			unset($this->setting["callback"]);
+		} else {
+			$callback = "";
+		}
 
-    $ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tiny_mce.js"></script>';
-    $ret .= '
+		$ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tiny_mce.js"></script>';
+		$ret .= '
             <script language="javascript" type="text/javascript">
                 tinyMCE.init({
             ';
-    foreach ($this->setting as $key => $val) {
-        $ret .= $key . ' : ';
-        if ($val === true || $val === false) {
-            $ret .= $val.','."\r\n";
-        } else {
-            $ret .= '"'. $val . '",'."\r\n";
-        }
-    }
-    $ret .= '
-				convert_urls : false,
-                  relative_urls : false,
-                  remove_script_host : false,
-                  force_br_newlines : false,
-                  tinymceload : "1"});
-              '.$callback.'
+		foreach ($this->setting as $key => $val) {
+			$ret .= $key . ' : ';
+			if ($val === true || $val === false) {
+				$ret .= $val.','."\r\n";
+			} else {
+				$ret .= '"'. $val . '",'."\r\n";
+			}
+		}
+		$ret .= '
+verify_html : false,				
+convert_urls : false,
+relative_urls : false,
+remove_script_host : false,
+force_br_newlines : false,
+tinymceload : "1"});
+'.$callback.'
 function showMCE(id) {
   if (tinyMCE.getInstanceById(id) == null) {
       tinyMCE.execCommand(\'mceAddControl\', false, id);
@@ -252,10 +238,8 @@ function showMCE(id) {
       tinyMCE.execCommand(\'mceRemoveControl\', false, id);
   }
 }
-              </script>
+            </script>
       ';
-    return $ret ;
-  }
+		return $ret ;
+	}
 }
-
-?>
