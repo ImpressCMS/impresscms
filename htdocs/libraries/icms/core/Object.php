@@ -202,11 +202,11 @@ class icms_core_Object {
 	/**
 	 * assign values to multiple variables in a batch
 	 *
-	 * @access private
+	 * @access public
 	 * @param array $var_arr associative array of values to assign
 	 * @param bool $not_gpc
 	 */
-	private function _setVars($var_arr, $not_gpc = false) {
+	public function setVars($var_arr, $not_gpc = false) {
 		foreach ($var_arr as $key => $value) {
 			$this->setVar($key, $value, $not_gpc);
 		}
@@ -219,11 +219,11 @@ class icms_core_Object {
 	 * - prefixed CGI args are considered safe
 	 * - avoids polluting of namespace with CGI args
 	 *
-	 * @access private
+	 * @access public
 	 * @param array $var_arr associative array of values to assign
 	 * @param string $pref prefix (only keys starting with the prefix will be set)
 	 */
-	private function _setFormVars($var_arr=null, $pref='xo_', $not_gpc=false) {
+	public function setFormVars($var_arr=null, $pref='xo_', $not_gpc=false) {
 		$len = strlen($pref);
 		foreach ($var_arr as $key => $value) {
 			if ($pref == substr($key, 0, $len)) {
@@ -560,12 +560,7 @@ class icms_core_Object {
 	 *
 	 * @access private
 	 */
-	private function _loadFilters() {
-		
-		//foreach ($this->_filters as $f) {
-		
-		//}
-	}
+	private function _loadFilters() {}
 
 	/**
 	 * create a clone(copy) of the current object
@@ -622,4 +617,3 @@ class icms_core_Object {
 		return $ret;
 	}
 }
-
