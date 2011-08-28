@@ -560,8 +560,8 @@ function impresscms_get_adminmenu() {
 	$criteria = new icms_db_criteria_Compo();
 	$criteria->add(new icms_db_criteria_Item('hasadmin', 1));
 	$criteria->add(new icms_db_criteria_Item('isactive', 1));
-	$criteria->setSort('mid');
 	$modules = $module_handler->getObjects($criteria);
+	usort($modules, 'impresscms_sort_adminmenu_modules');
 	foreach ( $modules as $module ) {
 		$rtn = array();
 		$inf = & $module->getInfo();
@@ -694,6 +694,12 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 
 	return $admin_menu;
+}
+
+function impresscms_sort_adminmenu_modules($a, $b) {
+	$a = strtolower($a->getVar("name"));
+	$b = strtolower($b->getVar("name"));
+	return ($a == $b) ? 0 : ($a < $b) ? -1 : +1;
 }
 
 /**
