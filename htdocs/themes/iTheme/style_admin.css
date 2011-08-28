@@ -219,9 +219,3 @@ h6 {font-size: .8em;}
 
 /* ---------- Image Manager / Folder not writeable ------------ */
 tr.blocked td {background-color: #FF0000;}
-
-.icms_checkboxoption {width: 99%; float: left; padding: 2px;} 
-.icms_checkboxoption:hover {background: #f1f2f3;} 
-.icms_checkboxoption input[type=checkbox] {float: left; outline: none; background: transparent; border: 0;} 
-.icms_checkboxoption label {float: left; overflow: hidden; vertical-align: middle;} 
-.icms_checkboxoption label a {float: left; overflow: hidden;} 

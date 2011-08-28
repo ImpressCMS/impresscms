@@ -87,9 +87,10 @@ th {border-bottom: 4px solid #F3AC03;}
 .Userrow_right {}
 .transfer a {padding-left: 5px;}
 
-#groupform .icms_checkboxoption {width: 48.9%; float: left; padding: 2px;}
-#groupform .icms_checkboxoption:hover {background: #f1f2f3;}
-#groupform .icms_checkboxoption input[type=checkbox] {float: left; outline: none; background: transparent; border: 0;}
-#groupform .icms_checkboxoption label {float: left; overflow: hidden; vertical-align: middle;}
-#groupform .icms_checkboxoption label a {float: left; overflow: hidden;}
+#groupform .icms_checkboxoption {width: 48.9%;padding: 2px;}
+.icms_checkboxoption {float: left;}
+.icms_checkboxoption:hover {background: #f1f2f3;}
+.icms_checkboxoption input[type=checkbox] {float: left; outline: none; background: transparent; border: 0;}
+.icms_checkboxoption label {float: left; overflow: hidden; vertical-align: middle;}
+.icms_checkboxoption label a {float: left; overflow: hidden;}
 #groupform .even b {clear: both; margin: 5px 0px; float: left; width: 99%; background: #dcdee0; padding: 3px; border-bottom: 1px solid #ccc;}
