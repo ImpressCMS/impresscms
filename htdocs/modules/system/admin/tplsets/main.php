@@ -51,6 +51,7 @@ switch ($op) {
 		$tpltpl_handler =& icms::handler('icms_view_template_file');
 		$installed_mods = $tpltpl_handler->getModuleTplCount('default');
 		$tcount = count($tplsets);
+		if ($tcount == 1) icms_core_Message::warning(_MD_FILEGENER, "", TRUE);
 		echo '<table width="100%" cellspacing="1" class="outer"><tr align="center"><th width="25%">' 
 			. _MD_THMSETNAME . '</th><th>' . _MD_CREATED . '</th><th>' . _MD_TEMPLATES 
 			. '</th><th>' . _MD_ACTION . '</th><th>&nbsp;</th></tr>';
