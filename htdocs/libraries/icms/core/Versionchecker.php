@@ -131,8 +131,8 @@ class icms_core_Versionchecker {
 			$versionInfo['image_url'] = $feed->get_image_url();
 			$versionInfo['image_title'] = $feed->get_image_title();
 			$versionInfo['image_link'] = $feed->get_image_link();
-			$versionInfo['description'] = $feed->get_description();
 			$feed_item = $feed->get_item(0);
+			$versionInfo['description'] = $feed_item->get_description();
 			$versionInfo['permalink'] = $feed_item->get_permalink();
 			$versionInfo['title'] = $feed_item->get_title();
 			$versionInfo['content'] = $feed_item->get_content();

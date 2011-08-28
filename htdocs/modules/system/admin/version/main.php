@@ -37,7 +37,7 @@ $icmsVersionChecker = icms_core_Versionchecker::getInstance();
 icms_cp_header();
 if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('update_available', TRUE);
-	$icmsAdminTpl->assign('latest_changelog', $icmsVersionChecker->latest_changelog);
+	$icmsAdminTpl->assign('latest_changelog', icms_core_DataFilter::makeClickable($icmsVersionChecker->latest_changelog));
 	$icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
 	$icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);
 	if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest_status < 10) {
