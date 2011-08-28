@@ -44,6 +44,10 @@ class icms_ipf_Controller {
 	 */
 	public function postDataToObject(&$icmsObj) {
 		foreach (array_keys($icmsObj->vars) as $key) {
+			// do not post data if control is a label
+			$control = $icmsObj->getControl($key);
+			if (is_array($control) && isset($control['name']) && $control['name'] == "label") continue;
+
 			switch ($icmsObj->vars[$key]['data_type']) {
 				case XOBJ_DTYPE_IMAGE:
 					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] !='') {
