@@ -56,7 +56,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	S - Auto Format (smilies and HTML enabled)
 		 *  T - Auto Format (smilies and HTML disabled)
 		 */
-		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX, TRUE, FALSE, FALSE, "H");
+		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX, TRUE, FALSE, FALSE, "S");
 		$this->quickInitVar('isactive', XOBJ_DTYPE_INT);
 		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('func_file', XOBJ_DTYPE_TXTBOX);
