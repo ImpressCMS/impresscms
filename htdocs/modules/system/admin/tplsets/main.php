@@ -208,8 +208,9 @@ switch ($op) {
 			// get difference between already installed files and the files under modules directory. which will be recognized as files that are not installed
 			$notinst_files = array_diff(icms_core_Filesystem::getFileList(ICMS_MODULES_PATH . '/' . $moddir . '/templates/'), $inst_files);
 			foreach ($notinst_files as $nfile) {
+				$class = ($class == "even") ? "odd" : "even";
 				if ($nfile != 'index.html') {
-					echo  '<tr><td style="background-color:#FFFF99; padding: 5px;">' . $nfile 
+					echo  '<tr class="' . $class . '"><td style="background-color:#FFFF99; padding: 5px;">' . $nfile . '<br />' . _MD_FILEGENER
 						. '</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
 					$physical_file = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $moddir . '/' . $nfile;
 					if (file_exists($physical_file)) {
@@ -217,7 +218,7 @@ switch ($op) {
 					} else {
 						echo '&nbsp;';
 					}
-					echo '</td><td style="background-color:#FFFF99; padding: 5px;">' 
+					echo '</td><td style="background-color:#FFFF99;">' 
 						. '[<a href="admin.php?fct=tplsets&amp;moddir=' . $moddir . '&amp;tplset=' . $tplset 
 						. '&amp;op=generatetpl&amp;type=module&amp;file=' . urlencode($nfile) . '">' . _MD_GENERATE 
 						. '</a>]</td><td style="background-color:#FFFF99; padding: 5px; text-align:' . _GLOBAL_RIGHT 
