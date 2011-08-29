@@ -39,7 +39,7 @@
 
 @media all and (min-width: 0px) {
 head~body #xo-canvas-rightcolumn {
-	margin-right:	-190px;
+	margin-right:	-180px;
 }
 }
 
