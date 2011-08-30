@@ -54,7 +54,7 @@ switch ($op) {
 		if ($tcount == 1) icms_core_Message::warning(_MD_TPLSET_CREATE_OWN, "", TRUE);
 		echo '<table width="100%" cellspacing="1" class="outer"><tr align="center"><th width="25%">' 
 			. _MD_THMSETNAME . '</th><th>' . _MD_CREATED . '</th><th>' . _MD_TEMPLATES 
-			. '</th><th>' . _MD_ACTION . '</th><th>' . _MD_VIEW . '</th></tr>';
+			. '</th><th>' . _MD_ACTION . '</th><th>' . _MD_TPLSET_STATUS . '</th></tr>';
 		$class = 'even';
 		for ($i = 0; $i < $tcount; $i++) {
 			$tplsetname = $tplsets[$i]->getVar('tplset_name');

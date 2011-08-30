@@ -95,3 +95,4 @@ define("_MD_TPLSET_DELETING_DATA", 'Deleting template set data...');
 define("_MD_TPLSET_COPYING", "Copying template files...");
 define("_MD_TPLSET_INSTALLING", "Installing module template files for template set %s");
 define("_MD_TPLSET_CREATE_OWN", "In order to modify templates online, please create a clone of the <strong>default</strong> template set or upload your own template set package.");
+define("_MD_TPLSET_STATUS", "Status");
