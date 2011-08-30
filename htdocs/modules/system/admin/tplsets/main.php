@@ -517,7 +517,6 @@ switch ($op) {
 		$tplset = trim($tplset);
 		$newtheme = trim($newtheme);
 		$tpltpl_handler =& icms::handler('icms_view_template_file');
-		icms_cp_header();
 		if ($tplset == $newtheme) {
 			icms_core_Message::error(_MD_TPLSET_UNIQUE_NAME);
 		} elseif ($tpltpl_handler->getCount(new icms_db_criteria_Item('tpl_tplset', $newtheme)) > 0) {
@@ -542,10 +541,10 @@ switch ($op) {
 						$newtpl->setVar('tpl_lastimported', 0);
 						$newtpl->setVar('tpl_lastmodified', time());
 						if (!$tpltpl_handler->insert($newtpl)) {
-							$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_COPY_FAILED, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>')
+							$msgs[] = '&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_COPY_FAILED, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>')
 								. 'ID: <strong>' . $templates[$i]->getVar('tpl_id') . '</strong>' . '</span>';
 						} else {
-							$msgs[] = '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_COPY_OK, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>')
+							$msgs[] = '&nbsp;' . sprintf(_MD_TPLSET_COPY_OK, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>')
 							. ' ID: <strong>' . $newtpl->getVar('tpl_id') . '</strong>';
 						}
 						unset($newtpl);
@@ -557,10 +556,8 @@ switch ($op) {
 				}
 			}
 		}
-
-		foreach ($msgs as $msg) {
-			echo '<code>' . $msg . '</code><br />';
-		}
+		icms_cp_header();
+		echo '<code>' . implode("<br />", $msgs) . '</code><br />';
 		echo '<br /><a href="admin.php?fct=tplsets">' . _MD_AM_BTOTADMIN . '</a>';
 		icms_cp_footer();
 		break;
