@@ -54,7 +54,7 @@ function SmilesAdmin() {
 					echo ' checked="checked"';
 				}
 				echo " /></td><td><a href='admin.php?fct=smilies&amp;op=SmilesEdit&amp;id=" . $smiles['id'] . "'>" ._AM_EDIT . "</a>&nbsp;"
-					. "<a href='admin . php?fct=smilies&amp;op=SmilesDel&amp;id=" . $smiles['id'] . "'>" ._AM_DEL . "</a></td>"
+					. "<a href='admin.php?fct=smilies&amp;op=SmilesDel&amp;id=" . $smiles['id'] . "'>" ._AM_DEL . "</a></td>"
 					. "</tr>\n";
 				$i++;
 			}
