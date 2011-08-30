@@ -24,6 +24,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/banners/images/banners_big.png)">' . _MD_AM_BANS . '</div><br />';
 		// Banners List
 		echo "<a name='top'></a>";
+		icms_core_Message::warning(_AM_BANNERS_DEPRECATED, "", TRUE);
+		echo "<br />";
 		echo "<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo "<div style='text-align:center'><strong>" . _AM_CURACTBNR . "</strong></div><br />"
 		. "<table width='100%' border='0'><tr>"

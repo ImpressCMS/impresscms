@@ -54,4 +54,6 @@ define("_AM_EXTINFO","Extra Info:");
 define("_AM_CHGCLI","Change Client");
 define("_AM_USEHTML","Use Html?");
 define("_AM_CODEHTML","Code Html:");
-?>
+
+// added in 1.3
+define("_AM_BANNERS_DEPRECATED", "This feature is deprecated and will be removed with ImpressCMS 1.4!<br />Please consider installing the banners module.");
