@@ -105,7 +105,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				. _MD_AM_COMMMAN . '</div><br />';
 			echo $form . "<br />";
 			echo '<table width="100%" class="outer" cellspacing="1"><tr><th colspan="8">'
-				. _MD_AM_LISTCOMM . '</th></tr><tr align="center"><td class="head">&nbsp;</td><td class="head" align="'
+				. _MD_AM_LISTCOMM . '</th></tr><tr align="center"><td class="head">' . _MD_AM_MESSAGE_ICON . '</td><td class="head" align="'
 				. _GLOBAL_LEFT . '"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_title&amp;order=' . $otherorder
 				. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CM_TITLE
 				. '</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_created&amp;order=' . $otherorder
@@ -118,7 +118,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _MD_AM_MODULE
 				. '</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_status&amp;order=' . $otherorder
 				. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CM_STATUS
-				. '</a></td><td class="head">&nbsp;</td></tr>';
+				. '</a></td><td class="head">' . _MD_AM_ACTION . '</td></tr>';
 			$class = 'even';
 			foreach (array_keys($comments) as $i) {
 				$class = ($class == 'odd') ? 'even' : 'odd';
@@ -144,9 +144,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 					. icms_conv_nr2local($comments[$i]->getVar('com_ip')) . '</td><td class="' . $class . '">'
 					. $module_array[$comments[$i]->getVar('com_modid')] . '</td><td class="' . $class . '">'
 					. $status_array2[$comments[$i]->getVar('com_status')] . '</td><td class="' . $class
-					. '" align="' . _GLOBAL_RIGHT . '"><a href="admin/comments/comment_edit.php?com_id=' . $i . '">'
-					. _EDIT . '</a> <a href="admin/comments/comment_delete.php?com_id=' . $i . '">' . _DELETE
-					. '</a></td></tr>';
+					. '" align="' . _GLOBAL_RIGHT . '"><a href="admin/comments/comment_edit.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a> 
+					<a href="admin/comments/comment_delete.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a></td></tr>';
 			}
 			echo '</table>';
 			echo '<table style="width: 100%; border: 0; margin: 3px; padding: 3px;"><tr><td>'
