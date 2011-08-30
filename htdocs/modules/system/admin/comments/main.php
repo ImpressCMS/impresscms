@@ -144,8 +144,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 					. icms_conv_nr2local($comments[$i]->getVar('com_ip')) . '</td><td class="' . $class . '">'
 					. $module_array[$comments[$i]->getVar('com_modid')] . '</td><td class="' . $class . '">'
 					. $status_array2[$comments[$i]->getVar('com_status')] . '</td><td class="' . $class
-					. '" align="' . _CENTER . '"><a href="admin/comments/comment_edit.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a> 
-					<a href="admin/comments/comment_delete.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a></td></tr>';
+					. '" align="' . _CENTER . '"><a href="admin/comments/comment_edit.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a> 
+					<a href="admin/comments/comment_delete.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a></td></tr>';
 			}
 			echo '</table>';
 			echo '<table style="width: 100%; border: 0; margin: 3px; padding: 3px;"><tr><td>'

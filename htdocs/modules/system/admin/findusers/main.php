@@ -453,7 +453,7 @@ if ($op == "form") {
 			}
 			echo "</td><td align='center'>" . icms_conv_nr2local($foundusers[$j]->getVar("posts")) . "</td>";
 			echo "<td align='center'><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=users&amp;uid=" 
-				. $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'><img src='". ICMS_IMAGES_URL . "/" . $icms_images_setname . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a></td></tr>\n";
+				. $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'><img src='". ICMS_IMAGES_SET_URL . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a></td></tr>\n";
 		}
 		echo "<tr class='foot'><td><select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _AM_SENDMAIL . "</option>";
 		$group = !empty($_POST['group']) ? (int) $_POST['group'] : 0;
