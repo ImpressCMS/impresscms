@@ -54,7 +54,7 @@ switch ($op) {
 		if ($tcount == 1) icms_core_Message::warning(_MD_TPLSET_CREATE_OWN, "", TRUE);
 		echo '<table width="100%" cellspacing="1" class="outer"><tr align="center"><th width="25%">' 
 			. _MD_THMSETNAME . '</th><th>' . _MD_CREATED . '</th><th>' . _MD_TEMPLATES 
-			. '</th><th>' . _MD_ACTION . '</th><th>' . _MD_TPLSET_STATUS . '</th></tr>';
+			. '</th><th>' . _MD_TPLSET_ACTIONS . '</th><th>' . _MD_TPLSET_STATUS . '</th></tr>';
 		$class = 'even';
 		for ($i = 0; $i < $tcount; $i++) {
 			$tplsetname = $tplsets[$i]->getVar('tplset_name');
@@ -92,7 +92,7 @@ switch ($op) {
 					. ' <a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset=' . $tplsetname 
 					. '&amp;moddir=' . $ni . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/view_choose.png" alt="' . _LIST . '" title="' . _LIST . '" /></a> (<span style="color:#ff0000; font-weight: bold;">0</span>)' 
 					. ' <a href="admin.php?fct=tplsets&amp;op=generatemod&amp;tplset=' . $tplsetname 
-					. '&amp;moddir=' . $ni . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/compfile.png" alt="' . _MD_GENERATE . '" title="' . _MD_GENERATE . '" /></a></li>';
+					. '&amp;moddir=' . $ni . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/filenew2.png" alt="' . _MD_GENERATE . '" title="' . _MD_GENERATE . '" /></a></li>';
 			}
 			echo '</ul></td><td style="vertical-align: middle;">'
 				. '<a href="admin.php?fct=tplsets&amp;op=download&amp;method=tar&amp;tplset=' . $tplsetname 
@@ -146,9 +146,9 @@ switch ($op) {
 			. '<table width="100%" class="outer" cellspacing="1">' 
 			. '<tr><th width="40%">' . _MD_FILENAME . '</th><th>' . _MD_LASTMOD . '</th>';
 		if ($tplset != 'default') {
-			echo '<th>' . _MD_LASTIMP . '</th><th colspan="2">' . _MD_ACTION . '</th></tr>';
+			echo '<th>' . _MD_LASTIMP . '</th><th colspan="2">' . _MD_TPLSET_ACTIONS . '</th></tr>';
 		} else {
-			echo '<th>' . _MD_ACTION . '</th></tr>';
+			echo '<th>' . _MD_TPLSET_ACTIONS . '</th></tr>';
 		}
 		$tpltpl_handler =& icms::handler('icms_view_template_file');
 		// get files that are already installed
@@ -208,8 +208,8 @@ switch ($op) {
 			foreach ($notinst_files as $nfile) {
 				$class = ($class == "even") ? "odd" : "even";
 				if ($nfile != 'index.html') {
-					echo  '<tr class="' . $class . '"><td style="background-color:#FFFF99; padding: 5px;">' . $nfile . '<br />' . _MD_FILEGENER
-						. '</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
+					echo  '<tr class="' . $class . '"><td style="background-color:#FFFF99;">' . $nfile . '<br />' . _MD_FILEGENER
+						. '</td><td style="background-color:#FFFF99;">&nbsp;</td><td style="background-color:#FFFF99;">';
 					$physical_file = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $moddir . '/' . $nfile;
 					if (file_exists($physical_file)) {
 						echo '[<a href="admin.php?fct=tplsets&amp;moddir=' . $moddir . '&amp;tplset=' . $tplset . '&amp;op=importtpl&amp;file=' . urlencode($nfile) . '">' . _MD_IMPORT . '</a>]';
@@ -218,8 +218,8 @@ switch ($op) {
 					}
 					echo '</td><td style="background-color:#FFFF99;vertical-align: middle;">' 
 						. '<a href="admin.php?fct=tplsets&amp;moddir=' . $moddir . '&amp;tplset=' . $tplset 
-						. '&amp;op=generatetpl&amp;type=module&amp;file=' . urlencode($nfile) . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/compfile.png" alt="' . _MD_GENERATE . '" title="' . _MD_GENERATE . '" /></a></td>
-						<td style="background-color:#FFFF99;vertical-align: middle; padding: 5px; text-align:' . _GLOBAL_RIGHT 
+						. '&amp;op=generatetpl&amp;type=module&amp;file=' . urlencode($nfile) . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/filenew2.png" alt="' . _MD_GENERATE . '" title="' . _MD_GENERATE . '" /></a></td>
+						<td style="background-color:#FFFF99;vertical-align: middle; text-align:' . _GLOBAL_RIGHT 
 						. ';"><input type="file" name="' . $nfile . '" id="' . $nfile 
 						. '" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $nfile 
 						. '" /></td></tr>' . "\n";
@@ -228,9 +228,9 @@ switch ($op) {
 		}
 		echo '</table><br /><table width="100%" class="outer" cellspacing="1"><tr><th width="40%">' . _MD_FILENAME . '</th><th>' . _MD_LASTMOD . '</th>';
 		if ($tplset != 'default') {
-			echo '<th>' . _MD_LASTIMP . '</th><th colspan="2">' . _MD_ACTION . '</th></tr>';
+			echo '<th>' . _MD_LASTIMP . '</th><th colspan="2">' . _MD_TPLSET_ACTIONS . '</th></tr>';
 		} else {
-			echo '<th>' . _MD_ACTION . '</th></tr>';
+			echo '<th>' . _MD_TPLSET_ACTIONS . '</th></tr>';
 		}
 		$btemplates =& $tpltpl_handler->find($tplset, 'block', NULL, $moddir);
 		$binst_files = array();
@@ -283,17 +283,17 @@ switch ($op) {
 			$bnotinst_files = array_diff(icms_core_Filesystem::getFileList(ICMS_MODULES_PATH . '/' . $moddir . '/templates/blocks/'), $binst_files);
 			foreach ($bnotinst_files as $nfile) {
 				if ($nfile != 'index.html') {
-					echo  '<tr style="background-color:#FFFF99;"><td style="background-color:#FFFF99; padding: 5px;">' . $nfile 
-						. '</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
+					echo  '<tr style="background-color:#FFFF99;"><td style="background-color:#FFFF99;">' . $nfile 
+						. '</td><td style="background-color:#FFFF99;">&nbsp;</td><td style="background-color:#FFFF99;">';
 					$physical_file = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $moddir . '/blocks/' . $nfile;
 					if (file_exists($physical_file)) {
 						echo '[<a href="admin.php?fct=tplsets&amp;moddir=' . $moddir . '&amp;tplset=' . $tplset . '&amp;op=importtpl&amp;file=' . urlencode($nfile) . '">' . _MD_IMPORT . '</a>]';
 					} else {
 						echo '&nbsp;';
 					}
-					echo '</td><td style="background-color:#FFFF99; padding: 5px;"><a href="admin.php?fct=tplsets&amp;moddir=' 
-						. $moddir . '&amp;tplset=' . $tplset . '&amp;op=generatetpl&amp;type=block&amp;file=' . urlencode($nfile) . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/compfile.png" alt="' . _MD_GENERATE . '" title="' . _MD_GENERATE . '" /></a></td>
-						<td style="background-color:#FFFF99; vertical-align: middle; padding: 5px; text-align: ' . _GLOBAL_RIGHT . '">' 
+					echo '</td><td style="background-color:#FFFF99;"><a href="admin.php?fct=tplsets&amp;moddir=' 
+						. $moddir . '&amp;tplset=' . $tplset . '&amp;op=generatetpl&amp;type=block&amp;file=' . urlencode($nfile) . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/filenew2.png" alt="' . _MD_GENERATE . '" title="' . _MD_GENERATE . '" /></a></td>
+						<td style="background-color:#FFFF99; vertical-align: middle; text-align: ' . _GLOBAL_RIGHT . '">' 
 						. '<input type="file" name="' . $nfile . '" id="' . $nfile . '" />' 
 						. '<input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $nfile . '" />' 
 						. '</td></tr>' . "\n";

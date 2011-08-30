@@ -144,7 +144,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 					. icms_conv_nr2local($comments[$i]->getVar('com_ip')) . '</td><td class="' . $class . '">'
 					. $module_array[$comments[$i]->getVar('com_modid')] . '</td><td class="' . $class . '">'
 					. $status_array2[$comments[$i]->getVar('com_status')] . '</td><td class="' . $class
-					. '" align="' . _GLOBAL_RIGHT . '"><a href="admin/comments/comment_edit.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a> 
+					. '" align="' . _CENTER . '"><a href="admin/comments/comment_edit.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a> 
 					<a href="admin/comments/comment_delete.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_URL . '/' . $icms_images_setname . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a></td></tr>';
 			}
 			echo '</table>';
@@ -152,7 +152,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				. sprintf(_MD_AM_COMFOUND, '<b>' . icms_conv_nr2local($total) . '</b>');
 			if ($total > $limit) {
 				$nav = new icms_view_PageNav($total, $limit, $start, 'start', 'fct=comments&amp;op=list&amp;limit=' . $limit . '&amp;sort=' . $sort . '&amp;order=' . $order . '&amp;module=' . $module);
-				echo '</td><td align="' . _GLOBAL_RIGHT . '">' . $nav->renderNav();
+				echo '</td><td align="center">' . $nav->renderNav();
 			}
 			echo '</td></tr></table>';
 			icms_cp_footer();

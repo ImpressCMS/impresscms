@@ -55,4 +55,3 @@ define("_AM_LOGINNAME","Login Name");
 
 ######################## Added in 1.3 ###################################
 define("_AM_ACTIONS","Actions");
-?>

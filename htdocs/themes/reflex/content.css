@@ -13,7 +13,7 @@ td.visible img {height: 14px; width: 14px;}
 #moduleadmin .outer td a img, .outer td a img {width: 20px; height: 20px; text-align: left; vertical-align: middle; padding: 2px;}
 #moduleadmin .outer td div#modlogo a img, div#modlogo img{width: 37px; height: 35px;}
 #pick div {color: #444;}
-#memberslist a img {width: auto;}
+#memberslist a img {width: auto;height: auto;}
 .foot {}
 tr.even td {;}
 tr.odd td {}
