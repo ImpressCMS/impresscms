@@ -405,7 +405,7 @@ if ($op == "form") {
 	} elseif ($start < $total) {
 		echo sprintf(_AM_USERSFOUND, icms_conv_nr2local($total)) . "<br />";
 		echo "<form action='admin.php' method='post' name='memberslist' id='memberslist'><input type='hidden' name='op' value='delete_many' />
-		<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr><th align='center'><input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"memberslist\", \"memberslist_checkall\");' /></th><th align='center'>" . _AM_AVATAR . "</th><th align='center'>" . _AM_UNAME . "</th><th align='center'>" . _AM_LOGINNAME . "</th><th align='center'>" . _AM_REALNAME . "</th><th align='center'>" . _AM_EMAIL . "</th><th align='center'>" . _AM_PM . "</th><th align='center'>" . _AM_URL . "</th><th align='center'>" . _AM_REGDATE . "</th><th align='center'>" . _AM_LASTLOGIN . "</th><th align='center'>" . _AM_POSTS . "</th><th align='center'>&nbsp;</th></tr>";
+		<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr><th align='center'><input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"memberslist\", \"memberslist_checkall\");' /></th><th align='center'>" . _AM_AVATAR . "</th><th align='center'>" . _AM_UNAME . "</th><th align='center'>" . _AM_LOGINNAME . "</th><th align='center'>" . _AM_REALNAME . "</th><th align='center'>" . _AM_EMAIL . "</th><th align='center'>" . _AM_PM . "</th><th align='center'>" . _AM_URL . "</th><th align='center'>" . _AM_REGDATE . "</th><th align='center'>" . _AM_LASTLOGIN . "</th><th align='center'>" . _AM_POSTS . "</th><th align='center'>" . _AM_ACTIONS . "</th></tr>";
 		$criteria->setSort($sort);
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
@@ -453,7 +453,7 @@ if ($op == "form") {
 			}
 			echo "</td><td align='center'>" . icms_conv_nr2local($foundusers[$j]->getVar("posts")) . "</td>";
 			echo "<td align='center'><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=users&amp;uid=" 
-				. $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'>" . _EDIT . "</a></td></tr>\n";
+				. $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'><img src='". ICMS_IMAGES_URL . "/" . $icms_images_setname . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a></td></tr>\n";
 		}
 		echo "<tr class='foot'><td><select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _AM_SENDMAIL . "</option>";
 		$group = !empty($_POST['group']) ? (int) $_POST['group'] : 0;
