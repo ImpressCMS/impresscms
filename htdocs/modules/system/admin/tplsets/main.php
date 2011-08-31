@@ -246,7 +246,7 @@ switch ($op) {
 			}
 			echo  '<tr class="' . $class . '"><td class="head"><span style="font-weight:bold;">' 
 				. $btemplates[$j]->getVar('tpl_file') . '</span><br /><br /><span style="font-weight:normal;">' 
-				. $btemplates[$j]->getVar('tpl_desc') . '</span></td><td>' . formatTimestamp($last_modified, 'l') . '</td>';
+				. $btemplates[$j]->getVar('tpl_desc') . '</span></td><td style="vertical-align: middle;">' . formatTimestamp($last_modified, 'l') . '</td>';
 			$filename = $btemplates[$j]->getVar('tpl_file');
 			$physical_file = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $moddir . '/blocks/' . $filename;
 			if ($tplset != 'default') {
@@ -265,7 +265,7 @@ switch ($op) {
 				} else {
 					echo '<td>' . $last_imported_f;
 				}
-				echo '</td><td>'
+				echo '</td><td style="vertical-align: middle;">'
 					. '<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplates[$j]->getVar('tpl_id') . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a>'
 					. ' <a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id=' . $btemplates[$j]->getVar('tpl_id') . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a>' 
 					. ' <a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id=' . $btemplates[$j]->getVar('tpl_id') . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a>' 
