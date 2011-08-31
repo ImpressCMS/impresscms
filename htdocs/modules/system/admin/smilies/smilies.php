@@ -53,8 +53,8 @@ function SmilesAdmin() {
 				if ($smiles['display'] == 1) {
 					echo ' checked="checked"';
 				}
-				echo " /></td><td><a href='admin.php?fct=smilies&amp;op=SmilesEdit&amp;id=" . $smiles['id'] . "'>" ._AM_EDIT . "</a>&nbsp;"
-					. "<a href='admin.php?fct=smilies&amp;op=SmilesDel&amp;id=" . $smiles['id'] . "'>" ._AM_DEL . "</a></td>"
+				echo " /></td><td><a href='admin.php?fct=smilies&amp;op=SmilesEdit&amp;id=" . $smiles['id'] . "'><img src='". ICMS_IMAGES_SET_URL . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a>&nbsp;"
+					. "<a href='admin.php?fct=smilies&amp;op=SmilesDel&amp;id=" . $smiles['id'] . "'><img src='". ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt=" . _DELETE . " title=" . _DELETE . " /></a></td>"
 					. "</tr>\n";
 				$i++;
 			}
