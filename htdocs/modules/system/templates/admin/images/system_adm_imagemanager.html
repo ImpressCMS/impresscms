@@ -24,12 +24,12 @@
         <td><{$msize[i]}></td>
         <td><{$imagecategorys[i]->getVar('imgcat_maxwidth')}>px</td>
         <td><{$imagecategorys[i]->getVar('imgcat_maxheight')}>px</td>
-        <td><img src="images/<{$imagecategorys[i]->getVar('imgcat_storetype')}>.png" title="<{$imagecategorys[i]->getVar('imgcat_storetype')}>" /></td>
-        <td><img src="images/<{$imagecategorys[i]->getVar('imgcat_display')}>.png" /></td>
+        <td><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/<{$imagecategorys[i]->getVar('imgcat_storetype')}>.png" title="<{$imagecategorys[i]->getVar('imgcat_storetype')}>" /></td>
+        <td><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/<{$imagecategorys[i]->getVar('imgcat_display')}>.png" /></td>
         <td><input style="text-align:center;" type="text" name="imgcat_weight[<{$imagecategorys[i]->getVar('imgcat_id')}>]" value="<{$imagecategorys[i]->getVar('imgcat_weight')}>" size="3" maxlength="4" /></td>
         <td>
           <{if $subs[i] > 0}>
-            <{$subs[i]}> <a href="admin.php?fct=images&imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_viewsubs}>"><img src="images/viewsubs.gif" align="absmiddle" /></a>
+            <{$subs[i]}> <a href="admin.php?fct=images&imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$smarty.const._MD_IMAGE_VIEWSUBS}>"><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/filefind.png" align="absmiddle" alt="<{$smarty.const._MD_IMAGE_VIEWSUBS}>" /></a>
           <{else}>
             <{$subs[i]}>
           <{/if}>
@@ -37,15 +37,15 @@
         <td><{$count[i]}><{if $scount[i] > 0}> (+<{$scount[i]}>)<{/if}></td>
         <td>
           <{if $count[i] > 0}>
-            <a href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_listimg}>"><img src="images/view_big.png" /></a>
+            <a href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_listimg}>"><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/viewmag.png" alt="<{$lang_imanager_cat_listimg}>" /></a>
           <{else}>
-            <img src="images/view_big_off.png" />
+            <img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/encrypted.png" alt="" />
           <{/if}>
-          <a href="admin.php?fct=images&amp;op=editcat&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_edit}>"><img src="images/edit_big.png" /></a>
+          <a href="admin.php?fct=images&amp;op=editcat&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_edit}>"><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/edit.png" alt="<{$lang_imanager_cat_edit}>" /></a>
           <{if ($imagecategorys[i]->getVar('imgcat_type') == 'C')}>
-            <a href="admin.php?fct=images&amp;op=delcat&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_del}>"><img src="images/delete_big.png" /></a>
+            <a href="admin.php?fct=images&amp;op=delcat&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_del}>"><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/editdelete.png" alt="<{$lang_imanager_cat_del}>" /></a>
           <{else}>
-            <img src="images/delete_big_off.png" />
+            <img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/encrypted.png" alt="" />
           <{/if}>
         </td>
       </tr>

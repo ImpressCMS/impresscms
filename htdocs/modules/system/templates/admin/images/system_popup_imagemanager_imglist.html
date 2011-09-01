@@ -35,14 +35,14 @@
     <td align="center"><{$cat_maxheight}>px</td>
     <td align="center">
     <{if $cat_subs > 0}>
-      <{$cat_subs}> <a href="?op=list&imgcat_id=<{$cat_id}>&target=<{$target}>&type=<{$type}>" title="View Sub-categories"><img src="<{$xoops_url}>/modules/system/images/viewsubs.gif" align="absmiddle" /></a>
+      <{$cat_subs}> <a href="?op=list&imgcat_id=<{$cat_id}>&target=<{$target}>&type=<{$type}>" title="<{$smarty.const._MD_IMAGE_VIEWSUBS}>"><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/filefind.png" align="absmiddle" alt="<{$smarty.const._MD_IMAGE_VIEWSUBS}>" /></a>
     <{else}>
       <{$cat_subs}>
     <{/if}>
     </td>
     <td align="center"><{$imgcount}><{if $simgcount > 0}> (+<{$simgcount}>)<{/if}></td>
     <td align="center">
-      <a href="#" onclick="showDiv('addimgform',''); document.anchors.item('addimgform').scrollIntoView(); return false;" title="<{$lang_imanager_cat_addimg}>"><img src="<{$xoops_url}>/modules/system/images/add.png" /></a>
+      <a href="#" onclick="showDiv('addimgform',''); document.anchors.item('addimgform').scrollIntoView(); return false;" title="<{$lang_imanager_cat_addimg}>"><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/filenew2.png" alt="<{$lang_imanager_cat_addimg}>" /></a>
     </td>
   </tr>
 </table>
