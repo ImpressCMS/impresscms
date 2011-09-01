@@ -36,7 +36,7 @@ wget http://www.impresscms.org/download/
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-https://svn.impresscms.org/core/releases/impresscms_1.3_beta/
+https://svn.impresscms.org/core/releases/impresscms_1.3_rc2/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
@@ -110,7 +110,6 @@ Sourceforge Project: http://www.sourceforge.net/projects/impresscms
 * Community driven documentation: http://wiki.impresscms.org
 * ImpressCMS Blogs: http://community.impresscms.org/modules/imblogging/
 * ImpressCMS Core development updates on Twitter: http://twitter.com/impresscms_svn
-* ImpressCMS IRC Channel: #impresscms on freenode.net
 
 ===ImpressCMS Mailing Lists===
 
