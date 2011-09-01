@@ -59,6 +59,14 @@ modinfo.php
 ---------------------------
 +	define('_MI_SYSTEM_BLOCK_CP_NEW', 'New Control Panel');
 
+uploader.php
+---------------------------
++	define("_ER_UP_PARTIALLY", "The uploaded file was only partially uploaded.");
++	define("_ER_UP_NO_TMP_DIR", "Missing a temporary folder. Please contact the administrator.");
++	define("_ER_UP_CANT_WRITE", "Failed to write file to disk. Please contact the administrator.");
+
+
+
 ===================================================
 # Directory: modules/system/language/english/admin/
 ===================================================
@@ -253,4 +261,28 @@ tplsets.php
 +	define("_MD_TPLSET_COPYING", "Copying template files...");
 +	define("_MD_TPLSET_INSTALLING", "Installing module template files for template set %s");
 
+finusersphp.php
+---------------------------
++	define("_AM_ACTIONS","Actions");
 
+comments.php
+---------------------------
++	define('_MD_AM_ACTION', 'Actions');
++	define('_MD_AM_MESSAGE_ICON', 'Icon');
+
+banners.php
+---------------------------
++	define("_AM_BANNERS_DEPRECATED", "This feature is deprecated and will be removed with ImpressCMS 1.4!<br />Please consider installing the banners module.");
+
+avatars.php
+---------------------------
++	define('_MD_RESTRICTIONS', 'Restrictions');
+
+
+===================================================
+# Directory: install/language/english
+===================================================
+
+welcome.php
+---------------------------
++-	<li><a href="http://www.php.net/" rel="external">PHP</a> 5.2 or higher (5.2.8 or higher recommended, <strong>5.3 is now supported</strong>) and 16mb minimum memory allocation</li>
