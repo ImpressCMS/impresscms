@@ -577,7 +577,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			$eltcaption = trim($elt->getCaption());
 			$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
 			$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
-			if (strtolower(get_class($elt)) == 'xoopsformradio') {
+			if (strtolower(get_class($elt)) == 'icms_form_elements_Radio') {
 				$js .= "var myOption = -1;";
 				$js .= "for (i=myform.{$eltname}.length-1; i > -1; i--) {
 					if (myform.{$eltname}[i].checked) {
@@ -602,7 +602,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				if (hasSelections == FALSE) {
 					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return false; }\n";
 
-			} elseif (strtolower(get_class($elt)) == 'xoopsformcheckbox') {
+			} elseif (strtolower(get_class($elt)) == 'icms_form_elements_Checkbox') {
 				$js .= "var hasSelections = FALSE;";
 				//sometimes, there is an implicit '[]', sometimes not
 				if (strpos($eltname, '[') === FALSE) {
@@ -633,7 +633,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		// Now, handle custom validation code
 		$elements = $this->getElements(TRUE);
 		foreach ($elements as $elt) {
-			if (method_exists($elt, 'renderValidationJS') && strtolower(get_class($elt)) != 'xoopsformcheckbox') {
+			if (method_exists($elt, 'renderValidationJS') && strtolower(get_class($elt)) != 'icms_form_elements_Checkbox') {
 				if ($eltjs = $elt->renderValidationJS()) {
 					$js .= $eltjs . "\n";
 				}

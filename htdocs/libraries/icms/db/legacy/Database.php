@@ -14,7 +14,7 @@
  * @version		SVN: $Id$
  */
 
-defined( 'XOOPS_ROOT_PATH' ) or die();
+defined( 'ICMS_ROOT_PATH' ) or die();
 /**
  * Abstract base class for Database access classes
  *

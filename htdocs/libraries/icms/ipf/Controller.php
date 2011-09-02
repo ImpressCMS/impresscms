@@ -380,7 +380,7 @@ class icms_ipf_Controller {
 	 * @param	string	$op
 	 */
 	public function handleObjectDeletionFromUserSide($confirm_msg = false, $op='del') {
-		global $xoopsTpl, $impresscms;
+		global $icmsTpl, $impresscms;
 
 		$objectid = ( isset($_REQUEST[$this->handler->keyName]) ) ? (int) ($_REQUEST[$this->handler->keyName]) : 0;
 		$icmsObj = $this->handler->get($objectid);
@@ -417,7 +417,7 @@ class icms_ipf_Controller {
 				_CO_ICMS_DELETE
 			);
 			$icmspersistable_delete_confirm = ob_get_clean();
-			$xoopsTpl->assign('icmspersistable_delete_confirm', $icmspersistable_delete_confirm);
+			$icmsTpl->assign('icmspersistable_delete_confirm', $icmspersistable_delete_confirm);
 		}
 	}
 
