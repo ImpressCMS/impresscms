@@ -122,7 +122,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			$class = 'even';
 			foreach (array_keys($comments) as $i) {
 				$class = ($class == 'odd') ? 'even' : 'odd';
-				$poster_uname = $xoopsConfig['anonymous'];
+				$poster_uname = $icmsConfig['anonymous'];
 				if ($comments[$i]->getVar('com_uid') > 0) {
 					$poster =& $member_handler->getUser($comments[$i]->getVar('com_uid'));
 					if (is_object($poster)) {
@@ -131,7 +131,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				}
 				$icon = $comments[$i]->getVar('com_icon');
 				$icon = empty($icon )
-					? '/images/icons/' . $GLOBALS["xoopsConfig"]["language"] . '/no_posticon.gif'
+					? '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/no_posticon.gif'
 					: ( '/images/subject/' . htmlspecialchars($icon, ENT_QUOTES ) );
 				$icon = '<img src="' . ICMS_URL . $icon  . '" alt="" />';
 

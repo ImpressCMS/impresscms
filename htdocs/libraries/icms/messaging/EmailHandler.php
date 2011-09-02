@@ -132,7 +132,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 			$this->Mailer = "smtp";
 			$this->SMTPAuth = true;
 			$this->SMTPSecure = $icmsConfigMailer['smtpsecure'];
-			// TODO: change value type of xoopsConfig "smtphost" from array to text
+			// TODO: change value type of icmsConfigMailer "smtphost" from array to text
 			$this->Host = implode(';',$icmsConfigMailer['smtphost']);
 			$this->Username = $icmsConfigMailer['smtpuser'];
 			$this->Password = $icmsConfigMailer['smtppass'];

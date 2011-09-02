@@ -77,7 +77,7 @@ class icms_view_Tpl extends Smarty {
 			'modules_url' => ICMS_MODULES_URL,
 			'modules_rootpath' => ICMS_MODULES_PATH,
 			'icms_langcode' => _LANGCODE,
-			'icms_langname' => $GLOBALS["xoopsConfig"]["language"],
+			'icms_langname' => $GLOBALS["icmsConfig"]["language"],
 			'icms_charset' => _CHARSET,
 			'icms_version' => ICMS_VERSION_NAME,
 			'icms_upload_url' => ICMS_UPLOAD_URL,

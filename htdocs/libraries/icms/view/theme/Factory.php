@@ -59,7 +59,7 @@ class icms_view_theme_Factory {
 			} elseif (@empty($options['folderName'] ) || ! $this->isThemeAllowed($options ['folderName'])) {
 				$options['folderName'] = $this->defaultTheme;
 			}
-			$GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
+			$GLOBALS['icmsConfig']['theme_set'] = $options['folderName'];
 		}
 		$options['path'] =
 			(is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName']))

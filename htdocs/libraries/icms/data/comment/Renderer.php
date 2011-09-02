@@ -333,7 +333,7 @@ class icms_data_comment_Renderer {
 			}
 		}
 		$poster['id'] = 0; // to cope with deleted user accounts
-		$poster['uname'] = $GLOBALS['xoopsConfig']['anonymous'];
+		$poster['uname'] = $GLOBALS['icmsConfig']['anonymous'];
 		return $poster;
 	}
 
@@ -361,7 +361,7 @@ class icms_data_comment_Renderer {
 			}
 		}
 		$poster['id'] = 0; // to cope with deleted user accounts
-		$poster['uname'] = $GLOBALS['xoopsConfig']['anonymous'];
+		$poster['uname'] = $GLOBALS['icmsConfig']['anonymous'];
 		$poster['rank_title'] = '';
 		$poster['avatar'] = ICMS_UPLOAD_URL . '/blank.gif';
 		$poster['regdate'] = '';
@@ -382,7 +382,7 @@ class icms_data_comment_Renderer {
 		if ($icon_image != '') {
 			if (FALSE != $this->_doIconCheck) {
 				if (!file_exists(ICMS_URL . '/images/subject/' . $icon_image)) {
-					return '<img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["xoopsConfig"]["language"] . '/no_posticon.gif" alt="" />';
+					return '<img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/no_posticon.gif" alt="" />';
 				} else {
 					return '<img src="' . ICMS_URL . '/images/subject/' . $icon_image . '" alt="" />';
 				}
@@ -390,6 +390,6 @@ class icms_data_comment_Renderer {
 				return '<img src="' . ICMS_URL . '/images/subject/' . $icon_image . '" alt="" />';
 			}
 		}
-		return '<img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["xoopsConfig"]["language"] . '/no_posticon.gif" alt="" />';
+		return '<img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/no_posticon.gif" alt="" />';
 	}
 }

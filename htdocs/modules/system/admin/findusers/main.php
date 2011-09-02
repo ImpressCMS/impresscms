@@ -430,17 +430,17 @@ if ($op == "form") {
 				. "</a></td><td>" . $foundusers[$j]->getVar("login_name") . "</td><td>" 
 				. $fuser_name . "</td><td align='center'><a href='mailto:" 
 				. $foundusers[$j]->getVar("email") . "'><img src='" . ICMS_URL . "/images/icons/" 
-				. $GLOBALS["xoopsConfig"]["language"] . "/email.gif' border='0' alt='";
+				. $GLOBALS["icmsConfig"]["language"] . "/email.gif' border='0' alt='";
 			printf(_SENDEMAILTO, $foundusers[$j]->getVar("uname", "E"));
 			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\"" 
 				. ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $foundusers[$j]->getVar("uid") 
 				. "\",\"pmlite\",800,680);'><img src='" . ICMS_URL . "/images/icons/" 
-				. $GLOBALS["xoopsConfig"]["language"] . "/pm.gif' border='0' alt='";
+				. $GLOBALS["icmsConfig"]["language"] . "/pm.gif' border='0' alt='";
 			printf(_SENDPMTO, $foundusers[$j]->getVar("uname", "E"));
 			echo "' /></a></td><td align='center'>";
 			if ($foundusers[$j]->getVar("url", "E") != "") {
 				echo "<a href='" . $foundusers[$j]->getVar("url", "E") . "' target='_blank'><img src='" 
-					. ICMS_URL . "/images/icons/" . $GLOBALS["xoopsConfig"]["language"] 
+					. ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] 
 					. "/www.gif' border='0' alt='" . _VISITWEBSITE . "' /></a>";
 			} else {
 				echo "&nbsp;";

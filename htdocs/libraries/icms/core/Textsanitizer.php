@@ -602,7 +602,7 @@ class icms_core_Textsanitizer {
 	 * This function gets allowed plugins from DB and loads them in the sanitizer
 	 * @param	int	 $id			 ID of the config
 	 * @param	bool	$withoptions	load the config's options now?
-	 * @return	object  reference to the {@link XoopsConfig}
+	 * @return	object  reference to the {@link icms_config_Item_Object}
 	 */
 	public function icmsCodeDecode_extended($text, $allowimage = 1) {
 		icms_core_Debug::setDeprecated('icms_core_DataFilter::codeDecode_extended', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));

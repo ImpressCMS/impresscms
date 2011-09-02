@@ -7,7 +7,7 @@ $mytrustdirpath = dirname( __FILE__ ) ;
 // (already checked by common.php)
 
 // language files
-$language = empty( $xoopsConfig['language'] ) ? 'english' : $xoopsConfig['language'] ;
+$language = empty( $icmsConfig['language'] ) ? 'english' : $icmsConfig['language'] ;
 if( file_exists( "$mydirpath/language/$language/main.php" ) ) {
 	// user customized language file (already read by common.php)
 	// include_once "$mydirpath/language/$language/main.php" ;

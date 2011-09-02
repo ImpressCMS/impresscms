@@ -577,7 +577,7 @@ switch ($op) {
 							$dcount = count($dtemplates);
 
 							// need to do this to pass to $icmsAdminTpl->template_touch function
-							$GLOBALS['xoopsConfig']['template_set'] = $newtplset;
+							$GLOBALS['icmsConfig']['template_set'] = $newtplset;
 
 							for ($i = 0; $i < $dcount; $i++) {
 								$found = & $tplfile_handler->find($newtplset, 'block', $dtemplates[$i]->getVar('tpl_refid'), NULL);

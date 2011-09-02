@@ -115,9 +115,6 @@ class TextSanitizer
 		if ($allowhtml == 0) {
 			$text = $this->htmlSpecialChars($text);
 		} else {
-			//$config =& $GLOBALS['xoopsConfig'];
-			//$allowed = $config['allowed_html'];
-			//$text = strip_tags($text, $allowed);
 			$text = $this->makeClickable($text);
 		}
 		if ($smiley == 1) {
@@ -136,9 +133,6 @@ class TextSanitizer
 		if ($allowhtml == 0) {
 			$text = $this->htmlSpecialChars($text);
 		} else {
-			//$config =& $GLOBALS['xoopsConfig'];
-			//$allowed = $config['allowed_html'];
-			//$text = strip_tags($text, $allowed);
 			$text = $this->makeClickable($text);
 		}
 		if ($smiley == 1) {

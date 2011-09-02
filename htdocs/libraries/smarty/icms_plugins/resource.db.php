@@ -47,13 +47,12 @@ function smarty_resource_db_trusted($tpl_name, &$smarty)
 
 function smarty_resource_db_tplinfo( $tpl_name ) {
 	static $cache = array();
-	global $xoopsConfig;
 
 	if ( isset( $cache[$tpl_name] ) ) {
 		return $cache[$tpl_name];
 	}
-	$tplset = $xoopsConfig['template_set'];
-	$theme = isset( $xoopsConfig['theme_set'] ) ? $xoopsConfig['theme_set'] : 'default';
+	$tplset = $icmsConfig['template_set'];
+	$theme = isset( $icmsConfig['theme_set'] ) ? $icmsConfig['theme_set'] : 'default';
 
 	$tplfile_handler = icms::handler('icms_view_template_file');
 	// If we're not using the "default" template set, then get the templates from the DB

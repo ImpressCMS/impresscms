@@ -33,7 +33,7 @@ define ('XOOPS_CPFUNC_LOADED', 1);
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header(){
-	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule,
+	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule,
 		$xoopsModule, $xoopsTpl, $xoopsOption, $xoTheme,
 		$icmsConfigMultilang, $icmsAdminTpl;
 

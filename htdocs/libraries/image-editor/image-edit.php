@@ -18,7 +18,6 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 
-global $xoopsConfig;
 icms_loadLanguageFile('system', 'images', true);
 
 $icmsTpl = new icms_view_Tpl();
@@ -230,12 +229,11 @@ $img ['ori_size'] = icms_convert_size ( filesize ( ICMS_IMANAGER_FOLDER_PATH . '
 $icmsTpl->assign ( 'image', $img );
 
 #Getting the plugins for the editor
-global $xoopsConfig;
 $plugins_arr = icms_core_Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 foreach ( $plugins_arr as $plugin_folder ) {
 	if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
-		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/language/' . $xoopsConfig ['language'] . '/main.php' )) {
-			include_once ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/language/' . $xoopsConfig ['language'] . '/main.php';
+		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/language/' . $icmsConfig ['language'] . '/main.php' )) {
+			include_once ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/language/' . $icmsConfig ['language'] . '/main.php';
 		}
 		include_once ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php';
 		$icmsTpl->append ( 'plugins', $plugversion );

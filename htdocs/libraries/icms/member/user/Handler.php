@@ -388,7 +388,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @return string name of user with a link on his profile
 	 */
 	static public function getUserLink($uid, $name = FALSE, $users = array(), $withContact = FALSE) {
-		global $xoopsConfig;
+		global $icmsConfig;
 
 		if (!is_numeric($uid)) return $uid;
 		$uid = (int)$uid;
@@ -397,7 +397,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				$member_handler = icms::handler("icms_member");
 				$user = $member_handler->getUser($uid);
 			} else {
-				if (!isset($users[$uid])) return $xoopsConfig["anonymous"];
+				if (!isset($users[$uid])) return $icmsConfig["anonymous"];
 				$user = $users[$uid];
 			}
 
@@ -416,19 +416,19 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				if ($withContact) {
 					$linkeduser .= '<a href="mailto:'.$user->getVar('email').'">';
 					$linkeduser .= '<img style="vertical-align: middle;" src="' . ICMS_URL
-						. '/images/icons/' . $xoopsConfig["language"] . '/email.gif'.'" alt="'
+						. '/images/icons/' . $icmsConfig["language"] . '/email.gif'.'" alt="'
 						. _US_SEND_MAIL . '" title="' . _US_SEND_MAIL . '"/></a>';
 					$js = "javascript:openWithSelfMain('" . ICMS_URL . '/pmlite.php?send2=1&to_userid='
 						. $uid . "', 'pmlite', 450, 370);";
 					$linkeduser .= '<a href="' . $js . '"><img style="vertical-align: middle;" src="'
-						. ICMS_URL . '/images/icons/' . $xoopsConfig["language"] . '/pm.gif'
+						. ICMS_URL . '/images/icons/' . $icmsConfig["language"] . '/pm.gif'
 						. '" alt="' . _US_SEND_PM . '" title="' . _US_SEND_PM . '"/></a>';
 				}
 
 				return $linkeduser;
 			}
 		}
-		return $xoopsConfig["anonymous"];
+		return $icmsConfig["anonymous"];
 	}
 
 	/**

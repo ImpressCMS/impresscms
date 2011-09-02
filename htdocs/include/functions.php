@@ -482,12 +482,12 @@ function xoops_getenv($key)
 }
 
 /**
- * @deprecated get the theme from the global $xoopsConfig instead
+ * @deprecated get the theme from the global $icmsConfig instead
  * @todo Remove in version 1.4 - all occurrences have been removed from the core
  */
 function getTheme() {
-	icms_core_Debug::setDeprecated( 'get the theme from the global $xoopsConfig' );
-	return $GLOBALS['xoopsConfig']['theme_set'];}
+	icms_core_Debug::setDeprecated( 'get the theme from the global $icmsConfig' );
+	return $GLOBALS['icmsConfig']['theme_set'];}
 
 /**
  * Function to get css file for a certain theme
@@ -506,7 +506,7 @@ function getcss($theme = '') {
  */
 function xoops_getcss($theme = '')
 {
-	if($theme == '') {$theme = $GLOBALS['xoopsConfig']['theme_set'];}
+	if($theme == '') {$theme = $GLOBALS['icmsConfig']['theme_set'];}
 	$uagent = xoops_getenv('HTTP_USER_AGENT');
 	if(stristr($uagent, 'mac')) {$str_css = 'styleMAC.css';}
 	elseif(preg_match("/MSIE ([0-9]\.[0-9]{1,2})/i", $uagent)) {$str_css = 'style.css';}
@@ -783,7 +783,7 @@ function xoops_getLinkedUnameFromId($userid)
 			return $linkeduser;
 		}
 	}
-	return $GLOBALS['xoopsConfig']['anonymous'];
+	return $GLOBALS['icmsConfig']['anonymous'];
 }
 
 /**
@@ -1812,9 +1812,9 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 
 	if ($format == "rss" || $format == "r"){
 		$TIME_ZONE = "";
-		if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
-			$server_TZ = abs( (int) ($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
-			$prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ?  " -" : " +";
+		if (!empty($GLOBALS['icmsConfig']['server_TZ'])){
+			$server_TZ = abs( (int) ($GLOBALS['icmsConfig']['server_TZ'] * 3600.0));
+			$prefix = ($GLOBALS['icmsConfig']['server_TZ'] < 0) ?  " -" : " +";
 			$TIME_ZONE = $prefix.date("Hi", $server_TZ);
 		}
 		$date = gmdate("D, d M Y H:i:s", (int) ($time)) . $TIME_ZONE;

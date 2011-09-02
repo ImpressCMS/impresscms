@@ -20,7 +20,6 @@
 icms_loadLanguageFile('system', 'modulesadmin', true);
 
 function xoops_module_install($dirname) {
-	global $xoopsConfig;
 	$dirname = trim($dirname);
 	$db =& icms_db_Factory::instance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
@@ -446,7 +445,6 @@ function xoops_module_install($dirname) {
 }
 
 function &xoops_module_gettemplate($dirname, $template, $block=false) {
-	global $xoopsConfig;
 	$ret = '';
 	if ($block) {
 		$path = ICMS_ROOT_PATH.'/modules/'.$dirname.'/templates/blocks/'.$template;
@@ -469,7 +467,6 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 }
 
 function icms_module_update($dirname) {
-	global $xoopsConfig;
 	$dirname = trim($dirname);
 	$db =& icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');
@@ -532,7 +529,7 @@ function icms_module_update($dirname) {
 					} else {
 						$newid = $tplfile->getVar('tpl_id');
 						$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_TEMPLATE_INSERTED.'</span>', '<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newid . '</strong>');
-						if ($xoopsConfig['template_set'] == 'default') {
+						if ($icmsConfig['template_set'] == 'default') {
 							if (!icms_view_Tpl::template_touch($newid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_RECOMPILE_FAIL.'</span>', '<strong>' . $tpl['file'] . '</strong>');
 							} else {
@@ -604,7 +601,7 @@ function icms_module_update($dirname) {
 									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_UPDATE_FAIL.'</span>', '<strong>' . $blocks[$i]['template'] . '</strong>');
 								} else {
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> updated.';
-									if ($xoopsConfig['template_set'] == 'default') {
+									if ($icmsConfig['template_set'] == 'default') {
 										if (!icms_view_Tpl::template_touch($tplfile_new->getVar('tpl_id'))) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_TEMPLATE_RECOMPILE_FAIL.'</span>', '<strong>' . $blocks[$i]['template'] . '</strong>');
 										} else {
@@ -658,7 +655,7 @@ function icms_module_update($dirname) {
 								} else {
 									$newid = $tplfile->getVar('tpl_id');
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> added to the database.';
-									if ($xoopsConfig['template_set'] == 'default') {
+									if ($icmsConfig['template_set'] == 'default') {
 										if (!icms_view_Tpl::template_touch($newid)) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $blocks[$i]['template'] . '</strong>');
 										} else {

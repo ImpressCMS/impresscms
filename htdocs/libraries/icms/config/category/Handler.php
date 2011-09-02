@@ -79,7 +79,7 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($confcat, 'xoopsconfigcategory')) {
+		if (!is_a($confcat, 'icms_config_category_Object')) {
 			return false;
 		}
 		if (!$confcat->isDirty()) {
@@ -126,7 +126,7 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($confcat, 'xoopsconfigcategory')) {
+		if (!is_a($confcat, 'icms_config_category_Object')) {
 			return false;
 		}
 

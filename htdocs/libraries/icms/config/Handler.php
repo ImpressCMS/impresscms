@@ -40,8 +40,8 @@ class icms_config_Handler {
 				ICMS_CONF_CAPTCHA, ICMS_CONF_SEARCH
 			)
 		);
-		$GLOBALS['xoopsConfig']			 = $configs[ICMS_CONF];
 		$GLOBALS['icmsConfig']			 = $configs[ICMS_CONF];
+		$GLOBALS['xoopsConfig']			 =& $GLOBALS['icmsConfig'];
 		$GLOBALS['icmsConfigUser']       = $configs[ICMS_CONF_USER];
 		$GLOBALS['icmsConfigMetaFooter'] = $configs[ICMS_CONF_METAFOOTER];
 		$GLOBALS['icmsConfigMailer']     = $configs[ICMS_CONF_MAILER];
@@ -105,7 +105,7 @@ class icms_config_Handler {
 	 *
 	 * @param	int     $id             ID of the config
 	 * @param	bool    $withoptions    load the config's options now?
-	 * @return	object  reference to the {@link XoopsConfig}
+	 * @return	object  reference to the {@link icms_config_Item_Object}
 	 */
 	public function &getConfig($id, $withoptions = false) {
 		$config =& $this->_cHandler->get($id);
@@ -199,11 +199,9 @@ class icms_config_Handler {
 	 * @param	int $category   ID of a category
 	 * @param	int $module     ID of a module
 	 *
-	 * @return	array   array of {@link XoopsConfig}s
+	 * @return	array   array of {@link icms_config_Item_Object}s
 	 */
 	public function &getConfigsByCat($category, $module = 0) {
-		static $_cachedConfigs;
-
 		if (is_array($category)) {
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
 			$criteria->add(new icms_db_criteria_Item('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
@@ -213,12 +211,12 @@ class icms_config_Handler {
 					$ret[$configs[$i]->getVar('conf_catid')][$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
 				}
 				foreach ( $ret as $key => $value) {
-					$_cachedConfigs[$module][$key] = $value;
+					$this->_cachedConfigs[$module][$key] = $value;
 				}
 				return $ret;
 			}
 		} else {
-			if (!empty($_cachedConfigs[$module][$category]) ) return $_cachedConfigs[$module][$category];
+			if (!empty($this->_cachedConfigs[$module][$category]) ) return $this->_cachedConfigs[$module][$category];
 
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
 			if (!empty($category)) {
@@ -231,8 +229,8 @@ class icms_config_Handler {
 					$ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
 				}
 			}
-			$_cachedConfigs[$module][$category] = $ret;
-			return $_cachedConfigs[$module][$category];
+			$this->_cachedConfigs[$module][$category] = $ret;
+			return $this->_cachedConfigs[$module][$category];
 		}
 	}
 
