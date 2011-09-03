@@ -46,6 +46,8 @@ function smarty_resource_db_trusted($tpl_name, &$smarty)
 }
 
 function smarty_resource_db_tplinfo( $tpl_name ) {
+	global $icmsConfig;
+
 	static $cache = array();
 
 	if ( isset( $cache[$tpl_name] ) ) {
