@@ -19,8 +19,7 @@
 #xo-canvas-leftcolumn {
 	float:			right;
 	width:			170px;
-	padding-left:	5px;
-	margin-right:	-180px;
+	margin-right:	-170px;
 }
 
 * html #xo-canvas-leftcolumn {
@@ -39,14 +38,14 @@
 
 @media all and (min-width: 0px) {
 head~body #xo-canvas-rightcolumn {
-	margin-right:	-190px;
+	margin-right:	-170px;
 }
 }
 
 /* ----------Canvas rules (when columns are visible) ---------- */
 
 #xo-canvas.leftcolumn-layout #xo-canvas-columns, #xo-canvas.threecolumns-layout #xo-canvas-columns { padding-right: 170px; }
-#xo-canvas.rightcolumn-layout #xo-canvas-columns, #xo-canvas.threecolumns-layout #xo-canvas-columns {	padding-left: 190px; }
+#xo-canvas.rightcolumn-layout #xo-canvas-columns, #xo-canvas.threecolumns-layout #xo-canvas-columns {	padding-left: 170px; }
  #xo-footer { clear: both;}
 
 /* ----------Page [center column] rules ---------- */

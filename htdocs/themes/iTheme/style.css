@@ -42,7 +42,7 @@ h6 {font-size:.8em;}
 /* lists */
 #xo-canvas-content ul {margin:5px;padding:2px;list-style:decimal inside;text-align:left;}
 #xo-canvas-content li {margin-left:5px;color:#000;background-color:inherit;line-height:1.4em;list-style:circle;}
-#xo-page {padding:0.5em;}
+#xo-page {}
 
 /* ---------- Module display rules ---------- */
 #xo-content {padding:15px 1%;}
