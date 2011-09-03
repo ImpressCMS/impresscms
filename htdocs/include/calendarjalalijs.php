@@ -12,6 +12,7 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
+global $icmsConfig;
 icms_loadLanguageFile('core', 'calendar');
 echo'<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/libraries/jalalijscalendar/aqua/style.css" />
 <script type="text/javascript" src="' . ICMS_URL . '/libraries/jalalijscalendar/calendar.js"></script>
