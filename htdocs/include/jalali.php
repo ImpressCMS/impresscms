@@ -52,8 +52,7 @@ function div($a,$b) {
  * @param int $g_d	The gregorian day
  * @return array The jalali date array
  */
-function gregorian_to_jalali ($g_y, $g_m, $g_d)
-{
+function gregorian_to_jalali($g_y, $g_m, $g_d) {
 	$g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 	$j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
 
@@ -100,8 +99,7 @@ function gregorian_to_jalali ($g_y, $g_m, $g_d)
  * @param int $j_d	The jalali day
  * @return array The gregorian date array
  */
-function jalali_to_gregorian($j_y, $j_m, $j_d)
-{
+function jalali_to_gregorian($j_y, $j_m, $j_d) {
 	$g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 	$j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
 
@@ -160,8 +158,7 @@ function jalali_to_gregorian($j_y, $j_m, $j_d)
  * @param int $year	The year
  * @return string The beginning day of the month
  */
-function mstart($month,$day,$year)
-{
+function mstart($month,$day,$year) {
 	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 	list( $year, $month, $day ) = jalali_to_gregorian($jyear, $jmonth, '1');
 	$timestamp=mktime(0,0,0,$month,$day,$year);
@@ -177,8 +174,7 @@ function mstart($month,$day,$year)
  * @param int $year	The year
  * @return string The last day of the month
  */
-function lastday ($month,$day,$year)
-{
+function lastday ($month,$day,$year) {
 	$lastdayen=date('d',mktime(0,0,0,$month+1,0,$year));
 	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 	$lastdatep=$jday;
@@ -215,8 +211,7 @@ function lastday ($month,$day,$year)
  * @param int $jyear	The jalali year
  * @return string The mktime string
  */
-function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
-{
+function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear) {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
 	if ($basecheck) {
 		$hour = icms_conv_local2nr($hour);
@@ -237,8 +232,7 @@ function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
  * @param string $maket	The date string type
  * @return mixed The mktime string
  */
-function jdate($type,$maket='now')
-{
+function jdate($type,$maket='now') {
 	global $icmsConfig;
 	icms_loadLanguageFile('core', 'calendar');
 	$result='';
@@ -369,5 +363,3 @@ function jdate($type,$maket='now')
 	}
 	return $result;
 }
-
-?>

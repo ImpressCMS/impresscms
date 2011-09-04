@@ -12,9 +12,6 @@
  * @author		modified by marcan <marcan@impresscms.org>
  * @version	$Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
  */
-/** @todo only do this if the extended calendar option is selected */
-// ############## Include jalali functions file ##############
-include_once 'jalali.php';
 /**
  * The header
  *
@@ -1954,6 +1951,7 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $icmsConfig['language'] != 'english'){
 		return ucfirst(icms_conv_nr2local(ext_date(date($datestring,$usertimestamp))));
 	}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
+		include_once 'jalali.php';
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
 	}else{
 		return ucfirst(date($datestring,$usertimestamp));

@@ -13,19 +13,16 @@
  * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	exit();
-}
+defined('ICMS_ROOT_PATH') or exit();
+
+global $icmsTheme;
 icms_loadLanguageFile('core', 'calendar');
-?>
-<link
-	rel="stylesheet" type="text/css" media="all"
-	href="<?php echo ICMS_URL;?>/libraries/jscalendar/calendar-blue.css" />
-<script
-	type="text/javascript"
-	src="<?php echo ICMS_URL . '/libraries/jscalendar/calendar.js';?>"></script>
-<script type="text/javascript">
-<!--
+
+$icmsTheme->addLink("stylesheet", ICMS_URL . "/libraries/jscalendar/calendar-blue.css", array("type" => "text/css", "media" => "all"));
+$icmsTheme->addScript(ICMS_URL . "/libraries/jscalendar/calendar.js", array("type" => "text/javascript"));
+
+$time = isset($jstime) ? $jstime : "null";
+$src = '<!--
 var calendar = null;
 
 function selected(cal, date) {
@@ -50,7 +47,7 @@ function showCalendar(id) {
   if (calendar != null) {
 	calendar.hide();
   } else {
-	var cal = new Calendar(true, "<?php if (isset($jstime)) { echo $jstime; } else { echo 'null';}?>", selected, closeHandler);
+	var cal = new Calendar(true, "' . $time . '", selected, closeHandler);
 	calendar = cal;
 	cal.setRange(2000, 2015);
 	calendar.create();
@@ -63,47 +60,48 @@ function showCalendar(id) {
 }
 
 Calendar._DN = new Array
-("<?php echo _CAL_SUNDAY;?>",
- "<?php echo _CAL_MONDAY;?>",
- "<?php echo _CAL_TUESDAY;?>",
- "<?php echo _CAL_WEDNESDAY;?>",
- "<?php echo _CAL_THURSDAY;?>",
- "<?php echo _CAL_FRIDAY;?>",
- "<?php echo _CAL_SATURDAY;?>",
- "<?php echo _CAL_SUNDAY;?>");
+("' . _CAL_SUNDAY . '",
+ "' . _CAL_MONDAY . '",
+ "' . _CAL_TUESDAY . '",
+ "' . _CAL_WEDNESDAY . '",
+ "' . _CAL_THURSDAY . '",
+ "' . _CAL_FRIDAY . '",
+ "' . _CAL_SATURDAY . '",
+ "' . _CAL_SUNDAY . '");
 Calendar._MN = new Array
-("<?php echo _CAL_JANUARY;?>",
- "<?php echo _CAL_FEBRUARY;?>",
- "<?php echo _CAL_MARCH;?>",
- "<?php echo _CAL_APRIL;?>",
- "<?php echo _CAL_MAY;?>",
- "<?php echo _CAL_JUNE;?>",
- "<?php echo _CAL_JULY;?>",
- "<?php echo _CAL_AUGUST;?>",
- "<?php echo _CAL_SEPTEMBER;?>",
- "<?php echo _CAL_OCTOBER;?>",
- "<?php echo _CAL_NOVEMBER;?>",
- "<?php echo _CAL_DECEMBER;?>");
+("' . _CAL_JANUARY . '",
+ "' . _CAL_FEBRUARY . '",
+ "' . _CAL_MARCH . '",
+ "' . _CAL_APRIL . '",
+ "' . _CAL_MAY . '",
+ "' . _CAL_JUNE . '",
+ "' . _CAL_JULY . '",
+ "' . _CAL_AUGUST . '",
+ "' . _CAL_SEPTEMBER . '",
+ "' . _CAL_OCTOBER . '",
+ "' . _CAL_NOVEMBER . '",
+ "' . _CAL_DECEMBER . '");
 
 Calendar._TT = {};
-Calendar._TT["TOGGLE"] = "<?php echo _CAL_TGL1STD;?>";
-Calendar._TT["PREV_YEAR"] = "<?php echo _CAL_PREVYR;?>";
-Calendar._TT["PREV_MONTH"] = "<?php echo _CAL_PREVMNTH;?>";
-Calendar._TT["GO_TODAY"] = "<?php echo _CAL_GOTODAY;?>";
-Calendar._TT["NEXT_MONTH"] = "<?php echo _CAL_NXTMNTH;?>";
-Calendar._TT["NEXT_YEAR"] = "<?php echo _CAL_NEXTYR;?>";
-Calendar._TT["SEL_DATE"] = "<?php echo _CAL_SELDATE;?>";
-Calendar._TT["DRAG_TO_MOVE"] = "<?php echo _CAL_DRAGMOVE;?>";
-Calendar._TT["PART_TODAY"] = "(<?php echo _CAL_TODAY;?>)";
-Calendar._TT["MON_FIRST"] = "<?php echo _CAL_DISPM1ST;?>";
-Calendar._TT["SUN_FIRST"] = "<?php echo _CAL_DISPS1ST;?>";
-Calendar._TT["CLOSE"] = "<?php echo _CLOSE;?>";
-Calendar._TT["TODAY"] = "<?php echo _CAL_TODAY;?>";
+Calendar._TT["TOGGLE"] = "' . _CAL_TGL1STD . '";
+Calendar._TT["PREV_YEAR"] = "' . _CAL_PREVYR . '";
+Calendar._TT["PREV_MONTH"] = "' . _CAL_PREVMNTH . '";
+Calendar._TT["GO_TODAY"] = "' . _CAL_GOTODAY . '";
+Calendar._TT["NEXT_MONTH"] = "' . _CAL_NXTMNTH . '";
+Calendar._TT["NEXT_YEAR"] = "' . _CAL_NEXTYR . '";
+Calendar._TT["SEL_DATE"] = "' . _CAL_SELDATE . '";
+Calendar._TT["DRAG_TO_MOVE"] = "' . _CAL_DRAGMOVE . '";
+Calendar._TT["PART_TODAY"] = "(' . _CAL_TODAY . ')";
+Calendar._TT["MON_FIRST"] = "' . _CAL_DISPM1ST . '";
+Calendar._TT["SUN_FIRST"] = "' . _CAL_DISPS1ST . '";
+Calendar._TT["CLOSE"] = "' . _CLOSE . '";
+Calendar._TT["TODAY"] = "' . _CAL_TODAY . '";
 
 // date formats
 Calendar._TT["DEF_DATE_FORMAT"] = "y-mm-dd";
 Calendar._TT["TT_DATE_FORMAT"] = "y-mm-dd";
 
 Calendar._TT["WK"] = "";
-//-->
-</script>
+//-->';
+
+$icmsTheme->addScript("", array("type" => "text/javascript"), $src);
