@@ -228,4 +228,6 @@ define('_CORE_PASSLEVEL3','Good');
 define('_CORE_PASSLEVEL4','Strong');
 define('DB_PCONNECT_HELP', "Persistent connections are useful with slower internet connections. They are not generally required for most installations. Default is 'NO'. Choose 'NO' if you are unsure"); // L69
 define( "DB_PCONNECT_HELPS",  "Persistent connections are useful with slower internet connections. They are not generally required for most installations."); // L69
-?>
+
+// Added in 1.3
+define("FILE_PERMISSIONS", "File Permissions");
