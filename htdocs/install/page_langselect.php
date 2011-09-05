@@ -43,7 +43,7 @@ $content = "";
 $languages = icms_core_Filesystem::getDirList( "./language/" );
 foreach ( $languages as $lang) {
 	$sel = ( $lang == $wizard->language ) ? ' checked="checked"' : '';
-	$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../images/flags/$lang.gif\" alt=\"$lang\" /><br />$lang<br /> <input type=\"checkbox\" name=\"lang\" value=\"$lang\"$sel /></a></div><br /><br />\n";
+	$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../images/flags/$lang.gif\" alt=\"$lang\" /><br />$lang<br /> <input type=\"radio\" name=\"lang\" value=\"$lang\"$sel /></a></div>";
 }
 $content .= '<fieldset style="text-align: center;">';
 $content .= '<legend>Select an Alternative Language Pack to Download</legend>';
