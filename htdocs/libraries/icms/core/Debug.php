@@ -77,7 +77,10 @@ class icms_core_Debug {
 			    	$message .= $level . $msg
 						. (isset( $step['class'] ) ? $step['class'] : '')
 						. (isset( $step['type'] ) ? $step['type'] : '' )
-						. sprintf(_CORE_DEPRECATED_MSG, $step['function'], $step['file'], $step['line']);
+						. sprintf(_CORE_DEPRECATED_MSG, $step['function'], 
+							str_replace(array(ICMS_TRUST_PATH, ICMS_ROOT_PATH), array("TRUSTPATH", "ROOTPATH"), $step['file']), 
+							$step['line']
+						);
 			}
 			$msg = _CORE_DEPRECATED_CALLEDBY;
 		}
