@@ -212,6 +212,7 @@ define('_COUNTRY_SM', 'San Marino');
 define('_COUNTRY_SN', 'Senegal');
 define('_COUNTRY_SO', 'Somalia');
 define('_COUNTRY_SR', 'Suriname');
+define('_COUNTRY_SS', 'South Sudan');
 define('_COUNTRY_ST', 'Sao Tome and Principe');
 define('_COUNTRY_SU', 'USSR (former)');	//  Not listed in ISO 3166
 define('_COUNTRY_SV', 'El Salvador');

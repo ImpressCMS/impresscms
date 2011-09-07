@@ -253,6 +253,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"SN" => _COUNTRY_SN,
 			"SO" => _COUNTRY_SO,
 			"SR" => _COUNTRY_SR,
+			"SS" => _COUNTRY_SS,
 			"ST" => _COUNTRY_ST,
 			"SU" => _COUNTRY_SU,	//  Not listed in ISO 3166
 			"SV" => _COUNTRY_SV,
