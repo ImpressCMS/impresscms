@@ -34,6 +34,7 @@ define('_COUNTRY_BL', 'Saint Barthélemy');
 define('_COUNTRY_BM', 'Bermuda');
 define('_COUNTRY_BN', 'Brunei Darussalam');
 define('_COUNTRY_BO', 'Bolivia');
+define('_COUNTRY_BQ', 'Bonaire, St. Eustatius and Saba');
 define('_COUNTRY_BR', 'Brazil');
 define('_COUNTRY_BS', 'Bahamas');
 define('_COUNTRY_BT', 'Bhutan');

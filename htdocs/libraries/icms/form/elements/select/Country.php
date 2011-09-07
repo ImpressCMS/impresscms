@@ -75,6 +75,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"BM" => _COUNTRY_BM,
 			"BN" => _COUNTRY_BN,
 			"BO" => _COUNTRY_BO,
+			"BQ" => _COUNTRY_BQ,
 			"BR" => _COUNTRY_BR,
 			"BS" => _COUNTRY_BS,
 			"BT" => _COUNTRY_BT,
