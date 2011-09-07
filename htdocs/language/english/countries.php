@@ -55,7 +55,7 @@ define('_COUNTRY_CM', 'Cameroon');
 define('_COUNTRY_CN', 'China');
 define('_COUNTRY_CO', 'Colombia');
 define('_COUNTRY_CR', 'Costa Rica');
-define('_COUNTRY_CS', 'Czechoslovakia (former)');	//  Not listed in ISO 3166
+//define('_COUNTRY_CS', 'Czechoslovakia (former)');transitionally reserved
 define('_COUNTRY_CU', 'Cuba');
 define('_COUNTRY_CV', 'Cape Verde');
 define('_COUNTRY_CX', 'Christmas Island');
@@ -116,6 +116,7 @@ define('_COUNTRY_IQ', 'Iraq');
 define('_COUNTRY_IR', 'Iran');
 define('_COUNTRY_IS', 'Iceland');
 define('_COUNTRY_IT', 'Italy');
+define('_COUNTRY_JE', 'Jersey');
 define('_COUNTRY_JM', 'Jamaica');
 define('_COUNTRY_JO', 'Jordan');
 define('_COUNTRY_JP', 'Japan');
