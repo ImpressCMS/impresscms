@@ -175,7 +175,7 @@ define('_COUNTRY_NL', 'Netherlands');
 define('_COUNTRY_NO', 'Norway');
 define('_COUNTRY_NP', 'Nepal');
 define('_COUNTRY_NR', 'Nauru');
-define('_COUNTRY_NT', 'Neutral Zone');
+// define('_COUNTRY_NT', 'Neutral Zone');	transitionally reserved
 define('_COUNTRY_NU', 'Niue');
 define('_COUNTRY_NZ', 'New Zealand');
 define('_COUNTRY_OM', 'Oman');
@@ -216,7 +216,8 @@ define('_COUNTRY_SO', 'Somalia');
 define('_COUNTRY_SR', 'Suriname');
 define('_COUNTRY_SS', 'South Sudan');
 define('_COUNTRY_ST', 'Sao Tome and Principe');
-define('_COUNTRY_SU', 'USSR (former)');	//  Not listed in ISO 3166
+// define('_COUNTRY_SU', 'USSR (former)');	exceptionally reserved
+define('_COUNTRY_SX', 'Sint Maarten');
 define('_COUNTRY_SV', 'El Salvador');
 define('_COUNTRY_SY', 'Syria');
 define('_COUNTRY_SZ', 'Swaziland');

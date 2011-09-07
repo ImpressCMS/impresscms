@@ -96,7 +96,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"CN" => _COUNTRY_CN,
 			"CO" => _COUNTRY_CO,
 			"CR" => _COUNTRY_CR,
-			"CS" => _COUNTRY_CS,	//  Not listed in ISO 3166
+		//	"CS" => _COUNTRY_CS,	transitionally reserved
 			"CU" => _COUNTRY_CU,
 			"CV" => _COUNTRY_CV,
 			"CX" => _COUNTRY_CX,
@@ -157,6 +157,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"IR" => _COUNTRY_IR,
 			"IS" => _COUNTRY_IS,
 			"IT" => _COUNTRY_IT,
+			"JE" => _COUNTRY_JE,
 			"JM" => _COUNTRY_JM,
 			"JO" => _COUNTRY_JO,
 			"JP" => _COUNTRY_JP,
@@ -215,7 +216,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"NO" => _COUNTRY_NO,
 			"NP" => _COUNTRY_NP,
 			"NR" => _COUNTRY_NR,
-			"NT" => _COUNTRY_NT,	//  Not listed in ISO 3166
+		//	"NT" => _COUNTRY_NT,	transitionally reserved
 			"NU" => _COUNTRY_NU,
 			"NZ" => _COUNTRY_NZ,
 			"OM" => _COUNTRY_OM,
@@ -256,7 +257,8 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"SR" => _COUNTRY_SR,
 			"SS" => _COUNTRY_SS,
 			"ST" => _COUNTRY_ST,
-			"SU" => _COUNTRY_SU,	//  Not listed in ISO 3166
+		//	"SU" => _COUNTRY_SU,	exceptionally reserved
+			"SX" => _COUNTRY_SX,
 			"SV" => _COUNTRY_SV,
 			"SY" => _COUNTRY_SY,
 			"SZ" => _COUNTRY_SZ,
