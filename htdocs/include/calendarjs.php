@@ -17,7 +17,7 @@ defined('ICMS_ROOT_PATH') or exit();
 
 global $icmsTheme;
 icms_loadLanguageFile('core', 'calendar');
-$icmsTheme=new icms_view_theme_Object();
+
 $icmsTheme->addLink("stylesheet", ICMS_URL . "/libraries/jscalendar/calendar-blue.css", array("type" => "text/css", "media" => "all"));
 $icmsTheme->addScript(ICMS_URL . "/libraries/jscalendar/calendar.js", array("type" => "text/javascript"));
 
