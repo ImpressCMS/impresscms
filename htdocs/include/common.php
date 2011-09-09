@@ -12,6 +12,7 @@
 /** make sure mainfile is included, for security and functionality */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
+/** @todo This funtion has been deprecated in PHP 5.3.0 - need to adjust in 1.4 ~skenow */
 @set_magic_quotes_runtime(0);
 
 // -- Include common functions and constants file
@@ -46,6 +47,10 @@ if ($icmsConfig['gzip_compression'] == 1
 if (defined('ICMS_INCLUDE_OPENID')) {
 	require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
 }
+/** @todo in 1.4: set default timezone for time/date functions for strict PHP 5 compliance
+ * Use date_default_timezone_set(), but our method of handling timezone offsets will need
+ * to be adjusted to match timezone designations in PHP ~skenow
+ */
 
 // -- Include site-wide lang file
 icms_loadLanguageFile('core', 'global');
