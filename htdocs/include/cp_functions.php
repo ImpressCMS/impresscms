@@ -34,7 +34,7 @@ define ('XOOPS_CPFUNC_LOADED', 1);
  */
 function icms_cp_header(){
 	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule,
-		$xoopsModule, $xoopsTpl, $xoopsOption, $xoTheme,
+		$xoopsModule, $xoopsTpl, $xoopsOption, $icmsTheme, $xoTheme,
 		$icmsConfigMultilang, $icmsAdminTpl;
 
 	icms::$logger->stopTime('Module init');
@@ -65,15 +65,16 @@ function icms_cp_header(){
 
 	// The next 2 lines are for compatibility only... to implement the admin theme ;)
 	// TODO: Remove all this after a few versions!!
-	if(isset($icmsConfig['theme_admin_set']))
-	$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_admin_set'];
-	$xoTheme =& $xoopsThemeFactory->createInstance( array(
+	if (isset($icmsConfig['theme_admin_set']))
+		$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_admin_set'];
+
+	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array(
 		'contentTemplate'	=> @$xoopsOption['template_main'],
 		'canvasTemplate'	=> 'theme' . (( file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')
 			|| file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') ) ?'_admin':'') . '.html',
 		'plugins' 			=> array('icms_view_PageBuilder'),
 		'folderName'		=> $icmsConfig['theme_admin_set']
-	) );
+	));
 	$icmsAdminTpl = $xoTheme->template;
 
 	// ################# Preload Trigger startOutputInit ##############
