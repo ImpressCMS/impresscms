@@ -80,7 +80,7 @@ th {border-bottom: 4px solid #F3AC03;}
 #online {color:green; font-weight:700; font-size:1em;}
 #offline {color:red; font-weight:700; font-size:1em;}
 
-.forum_controls {background-color: #EEE; border-left: 1px solid #999; border-right: 1px solid #999; border-top: 1px solid #999;}
+.forum_controls {background-color: #EEE; border-left: 1px solid #999; border-right: 1px solid #999; border-top: 1px solid #999;width: 100%;}
 .userrow {padding: 0;}
 .Userrow_left {}
 .Userrow_center {}
