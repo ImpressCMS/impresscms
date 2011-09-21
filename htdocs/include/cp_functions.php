@@ -368,22 +368,6 @@ if (! empty( $_SESSION['redirect_message'] )) {
 }
 
 /**
- * Backwards compatibility function.
- *
- * @since XOOPS
- * @version $Id$
- * @deprecated use icms_cp_header instead
- * @todo		Remove in version 1.4 -  - all occurrences in the core have been removed
- *
- * @author The Xoops Project <http://www.xoops.org>
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- */
-function xoops_cp_header() {
-	icms_core_Debug::setDeprecated('icms_cp_header', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	icms_cp_header();
-}
-
-/**
  * Function icms_cp_footer
  *
  * @since ImpressCMS 1.2
@@ -419,70 +403,9 @@ function icms_cp_footer() {
 	return;
 }
 
-/**
- * Backwards compatibility function
- *
- * @version $Id$
- * @deprecated use icms_cp_footer instead
- * @todo remove in 1.4 - all occurrences in the core have been removed
- *
- * @author The XOOPS Project <http://www.xoops.org>
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- */
-function xoops_cp_footer() {
-	icms_core_Debug::setDeprecated('icms_cp_footer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	icms_cp_footer();
-}
-
-/**
- * Do we need this? Only occurrences in the core are commented out
- * @todo remove this by 1.4
- * @deprecated used for old modules that don't use smarty templates
- */
-function OpenTable() {
-	icms_core_Debug::setDeprecated('the smarty template system', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #2F5376;'><tr class='bg4'><td valign='top'>\n";
-}
-/**
- * Do we need this? Only occurrences in the core are commented out
- * @todo remove this by 1.4
- * @deprecated used for old modules that don't use smarty templates
- */
-function CloseTable() {
-	icms_core_Debug::setDeprecated('the smarty template system', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	echo '</td></tr></table>';
-}
-
 function themecenterposts($title, $content) {
 	echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $title . '</td></tr><tr><td><br />' . $content . '<br /></td></tr></table>';
 }
-/**
- * Do we need this? No occurrences in the core
- * @todo remove this by 1.4
- */
-function myTextForm($url, $value) {
-	return '<form action="' . $url . '" method="post"><input type="submit" value="' . $value . '" /></form>';
-}
-
-/**
- *
- * Is this needed? There are no occurrences in the core
- * @todo remove by version 1.4
- */
-function xoopsfwrite() {
-	if ($_SERVER ['REQUEST_METHOD'] != 'POST') {
-		return false;
-	} else {
-
-	}
-	if (! icms::$security->checkReferer ()) {
-		return false;
-	} else {
-
-	}
-	return true;
-}
-
 /**
  * Creates a multidimensional array with items of the dropdown menus of the admin panel.
  * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file
@@ -704,17 +627,6 @@ function impresscms_sort_adminmenu_modules($a, $b) {
 }
 
 /**
- * Function maintained only for compatibility
- *
- * @todo remove this in 1.4  - all occurrences in the core have been removed
- * @deprecated use impresscms_get_adminmenu instead
- */
-function xoops_module_get_admin_menu() {
-	icms_core_Debug::setDeprecated('impresscms_get_adminmenu', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return impresscms_get_adminmenu ();
-}
-
-/**
  * Writes entire admin menu into cache
  * @param string  $content  content to write to the admin menu file
  * @return true
@@ -737,16 +649,4 @@ function xoops_module_write_admin_menu($content) {
 	// file is delete after clear_cache (smarty)
 	icms_core_Filesystem::writeIndexFile(ICMS_CACHE_PATH);
 	return true;
-}
-
-/**
- * Writes index file
- * @param string  $path  path to the file to write
- * @return bool
- * @todo use language constants for error messages
- * @todo Move to static class Filesystem
- */
-function xoops_write_index_file($path = '') {
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::writeIndexFile', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::writeIndexFile($path);
 }
