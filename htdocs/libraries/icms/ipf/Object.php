@@ -434,7 +434,7 @@ class icms_ipf_Object extends icms_core_Object {
 		 if ($highlight && isset($_GET['keywords']))
 		 {
 			$myts =& icms_core_Textsanitizer::getInstance();
-			$keywords=$myts->htmlSpecialChars(trim(urldecode($_GET['keywords'])));
+			$keywords= icms_core_DataFilter::htmlSpecialChars(trim(urldecode($_GET['keywords'])));
 			$h= new SmartHighlighter ($keywords, true , 'smart_highlighter');
 			foreach ($this->handler->highlightFields as $field) {
 			$ret[$field] = $h->highlight($ret[$field]);
