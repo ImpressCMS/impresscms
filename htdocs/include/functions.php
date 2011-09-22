@@ -1850,7 +1850,7 @@ function icms_random_str($numchar){
  */
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
 	global $icmsModule;
-	$icmsModule->displayAdminMenu( $currentoption, $icmsModule -> name() . ' | ' . $breadcrumb );
+	$icmsModule->displayAdminMenu( $currentoption, $icmsModule->getVar('name') . ' | ' . $breadcrumb );
 }
 
 /**

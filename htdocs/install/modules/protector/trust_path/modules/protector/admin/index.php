@@ -127,7 +127,7 @@ xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 
 // title
-echo "<h3 style='text-align:"._GLOBAL_LEFT.";'>".$xoopsModule->name()."</h3>\n" ;
+echo "<h3 style='text-align:"._GLOBAL_LEFT.";'>".$xoopsModule->getVar('name')."</h3>\n" ;
 
 // configs writable check
 if( ! is_writable( dirname(dirname(__FILE__)).'/configs' ) ) {

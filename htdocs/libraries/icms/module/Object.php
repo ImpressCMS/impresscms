@@ -305,46 +305,6 @@ class icms_module_Object extends icms_core_Object {
 		$tpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/system_adm_modulemenu.html');
 	}
 
-	/**#@+
-	 * For backward compatibility only!
-	 * @deprecated Use $this->getVar('mid') instead
-	 * @todo		Remove in version 1.4
-	 */
-	public function mid() {
-		icms_core_Debug::setDeprecated('getVar("mid")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('mid');
-	}
-	/**
-	 *
-	 * @deprecated	Use getVar('dirname') instead
-	 * @todo 		Remove in version 1.4
-	 */
-	public function dirname() {
-		icms_core_Debug::setDeprecated('getVar("dirname")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('dirname');
-	}
-	/**
-	 *
-	 * @deprecated	Use getVar('name') instead
-	 * @todo		Remove in version 1.4
-	 */
-	public function name() {
-		icms_core_Debug::setDeprecated('getVar("name")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('name');
-	}
-	/**
-	 *
-	 * @deprecated	Use the handler method instead
-	 * @todo		Remove in version 1.4
-	 * @param unknown_type $dirname
-	 */
-	public function &getByDirName($dirname) {
-		icms_core_Debug::setDeprecated('Module Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		$modhandler = icms::handler('icms_module');
-		$inst = & $modhandler->getByDirname($dirname);
-		return $inst;
-	}
-
 	/**
 	 * Modules Message Function
 	 *
@@ -357,7 +317,7 @@ class icms_module_Object extends icms_core_Object {
 	 *
 	 * @todo Make this work with templates ;)
 	 */
-	function setMessage($msg, $title = '', $render = false) {
+	public function setMessage($msg, $title = '', $render = false) {
 		$ret = '<div class="moduleMsg">';
 		if ($title != '') {$ret .= '<h4>' . $title . '</h4>';}
 		if (is_array($msg)) {

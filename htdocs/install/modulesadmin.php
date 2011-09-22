@@ -105,7 +105,7 @@ function xoops_module_install($dirname) {
 				foreach ($created_tables as $ct) {
 					$db->query("DROP TABLE ".$db->prefix($ct));
 				}
-				$ret = "<p>".sprintf(_MD_AM_FAILINS, "<b>".$module->name()."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />";
+				$ret = "<p>".sprintf(_MD_AM_FAILINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />";
 				foreach ( $errs as $err) {
 					$ret .= " - ".$err."<br />";
 				}

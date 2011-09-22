@@ -18,7 +18,7 @@ include_once ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php" ;
 
 icms_loadLanguageFile('system', 'rating', true);
 
-$module_dirname = $icmsModule->dirname();
+$module_dirname = $icmsModule->getVar('dirname');
 
 // Retreive the IcmsObject Rating plugin for the current module if it exists
 $icms_rating_handler = icms_getModuleHandler('rating', 'system');

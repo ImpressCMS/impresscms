@@ -195,7 +195,7 @@ function xoops_module_install($dirname) {
 					$db->query("DROP TABLE " . $db->prefix($ct));
 				}
 				$ret = "<p>" . sprintf(_MD_AM_FAILINS, 
-					"<strong>" . $module->name() . "</strong>") . "&nbsp;" . _MD_AM_ERRORSC . "<br />";
+					"<strong>" . $module->getVar('name') . "</strong>") . "&nbsp;" . _MD_AM_ERRORSC . "<br />";
 				$ret .= " - " . implode("<br /> - ", $errs) . "<br /></p>";
 				unset($module, $created_tables, $errs, $msgs);
 				return $ret;
