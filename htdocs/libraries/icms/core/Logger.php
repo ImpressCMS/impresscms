@@ -32,10 +32,10 @@ class icms_core_Logger {
 	public $errors = array();
 	public $deprecated = array();
 
-	public $usePopup = false;
-	public $activated = true;
+	public $usePopup = FALSE;
+	public $activated = TRUE;
 
-	private $renderingEnabled = false;
+	private $renderingEnabled = FALSE;
 
 	/**
 	 * Constructor
@@ -50,25 +50,12 @@ class icms_core_Logger {
 	 */
 	static public function &instance() {
 		static $instance;
-		if (!isset( $instance )) {
+		if (!isset($instance)) {
 			$instance = new icms_core_Logger();
 			// Always catch errors, for security reasons
-			set_error_handler( array( $instance, "handleError" ) );
+			set_error_handler(array($instance, "handleError"));
 		}
 		return $instance;
-	}
-
-	/**
-	 * This was added in 1.3 because there was a separate class - XoopsErrorHandler -
-	 * having the additional class is unnecessary and the methods existed in other forms.
-	 *
-	 * @param bool $showErrors
-	 * @deprecated	Use $activated = TRUE/FALSE, instead
-	 * @todo		Remove in version 1.4 - no occurrences in the core
-	 */
-	public function activate($showErrors = false) {
-		icms_core_Debug::setDeprecated('$this->activated = ', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		$this->activated = $showErrors;
 	}
 
 	/**
@@ -80,7 +67,7 @@ class icms_core_Logger {
 	public function enableRendering() {
 		if (!$this->renderingEnabled) {
 			ob_start(array(&$this, 'render'));
-			$this->renderingEnabled = true;
+			$this->renderingEnabled = TRUE;
 		}
 	}
 
@@ -89,7 +76,7 @@ class icms_core_Logger {
 	 */
 	public function disableRendering() {
 		if ($this->renderingEnabled) {
-			$this->renderingEnabled = false;
+			$this->renderingEnabled = FALSE;
 		}
 	}
 
@@ -100,7 +87,7 @@ class icms_core_Logger {
 	 * and whether user has permission or not to view it
 	 */
 	public function disableLogger() {
-		$this->activated = false;
+		$this->activated = FALSE;
 	}
 
 	/**
@@ -135,7 +122,7 @@ class icms_core_Logger {
 	 * @param   int     $errno  error number (if any)
 	 */
 	public function addQuery($sql, $error=null, $errno=null) {
-		if ($this->activated )		$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
+		if ($this->activated ) $this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
 		if (defined('ICMS_LOGGING_HOOK') and ICMS_LOGGING_HOOK != '') {
 			include ICMS_LOGGING_HOOK;
 		}
@@ -148,7 +135,7 @@ class icms_core_Logger {
 	 * @param   int     $cachetime  cachetime of the block
 	 */
 	public function addBlock($name, $cached = false, $cachetime = 0) {
-		if ($this->activated )
+		if ($this->activated)
 		$this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
 	}
 
@@ -178,15 +165,15 @@ class icms_core_Logger {
 	public function handleError($errno, $errstr, $errfile, $errline) {
 		$errstr = $this->sanitizePath($errstr);
 		$errfile = $this->sanitizePath($errfile);
-		if ($this->activated && ( $errno & error_reporting() )) {
+		if ($this->activated && ($errno & error_reporting())) {
 			// NOTE: we only store relative pathnames
 			$this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
 		}
 
 		if ($errno == E_USER_ERROR) {
-			$trace = true;
+			$trace = TRUE;
 			if (substr($errstr, 0, '8') == 'notrace:') {
-				$trace = false;
+				$trace = FALSE;
 				$errstr = substr($errstr, 8);
 			}
 
@@ -197,8 +184,8 @@ class icms_core_Logger {
 			if ($trace && function_exists('debug_backtrace')) {
 				echo "<div style='color:#ffffff;background-color:#ffffff'>Backtrace:<br />";
 				$trace = debug_backtrace();
-				array_shift( $trace );
-				foreach ( $trace as $step) {
+				array_shift($trace);
+				foreach ($trace as $step) {
 					if (isset($step['file'])) {
 						echo $this->sanitizePath($step['file']);
 						echo ' (' . $step['line'] . ")\n<br />";
@@ -235,17 +222,17 @@ class icms_core_Logger {
 		global $icmsModule;
 		$this->addExtra('Included files', count(get_included_files()) . ' files');
 		$this->addExtra(_CORE_MEMORYUSAGE, icms_conv_nr2local(icms_convert_size(memory_get_usage())) );
-		$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 		$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->getVar('mid') : 1;
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		if (!$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 			return $output;
 		}
-		$this->renderingEnabled = $this->activated = false;
+		$this->renderingEnabled = $this->activated = FALSE;
 		$log = $this->dump( $this->usePopup ? 'popup' : '' );
 		$pattern = '<!--{xo-logger-output}-->';
 		$pos = strpos( $output, $pattern );
-		if ($pos !== false) {
+		if ($pos !== FALSE) {
 			return substr($output, 0, $pos) . $log . substr($output, $pos + strlen($pattern));
 		} else {
 			return $output . $log;
@@ -276,68 +263,6 @@ class icms_core_Logger {
 		}
 		$stop = isset($this->logend[$name]) ? $this->logend[$name] : $this->microtime();
 		return $stop - $this->logstart[$name];
-	}
-
-	/**
-	 * dumpAll
-	 *
-	 * @return string
-	 * @deprecated	Use dump('') instead
-	 * @todo	Remove in version 1.4
-	 */
-	public function dumpAll() {
-		icms_core_Debug::setDeprecated('$this->dump("")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->dump( '' );
-	}
-
-	/**
-	 * dumpBlocks
-	 *
-	 * @return unknown
-	 * @deprecated	Use dump('blocks'), instead
-	 * @todo	Remove in version 1.4
-	 */
-	public function dumpBlocks() {
-		icms_core_Debug::setDeprecated('$this->dump("blocks")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->dump('blocks');
-	}
-
-	/**
-	 * dumpExtra
-	 *
-	 * @return unknown
-	 * @deprecated	Use dump('extra'), instead
-	 * @todo	Remove in version 1.4
-	 */
-	public function dumpExtra() {
-		icms_core_Debug::setDeprecated('$this->dump("extra")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->dump('extra');
-	}
-
-	/**
-	 * dumpQueries
-	 *
-	 * @return unknown
-	 * @deprecated	Use dump('queries'), instead
-	 * @todo	Remove in version 1.4
-	 */
-	public function dumpQueries() {
-		icms_core_Debug::setDeprecated('$this->dump("queries")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->dump('queries');
-	}
-
-	/**
-	 * Render the list of errors
-	 * This was added in 1.3 because there was a separate class - XoopsErrorHandler -
-	 * having the additional class is unnecessary and the methods existed in other forms.
-	 *
-	 * @return   string  $list of errors
-	 * @deprecated	use dump('errors'), instead
-	 * @todo		Remove in version 1.4 - no occurrences in the core
-	 */
-	public function renderErrors() {
-		icms_core_Debug::setDeprecated('$this->dump("errors")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->dump( 'errors' );
 	}
 
 }
