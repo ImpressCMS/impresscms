@@ -150,17 +150,6 @@ class SystemMimetypeHandler extends icms_ipf_Handler {
 	}
 
 	/**
-	 * Returns a list of modules
-	 * @return	array 
-	 * @deprecated	Use icms_module_Handler::getActive, instead
-	 * @todo		Remove in version 1.4
-	 */
-	public function getModuleList() {
-		icms_core_Debug::setDeprecated('icms_module_Handler::getActive', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return icms_module_Handler::getActive();
-	}
-
-	/**
 	 * 
 	 * 
 	 * @param string $mimetype
