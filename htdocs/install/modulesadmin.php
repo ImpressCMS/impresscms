@@ -239,7 +239,6 @@ function xoops_module_install($dirname) {
 					}
 					// Main notification options
 					include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-					include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 					$options = array();
 					$options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
 					$options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
@@ -744,7 +743,6 @@ function icms_module_update($dirname) {
 			}
 			// Main notification options
 			include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-			include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 			$options = array();
 			$options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
 			$options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
