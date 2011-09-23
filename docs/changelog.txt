@@ -1,4 +1,10 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 2.0 Alpha ===
+Release date:
+Revision:
+DB Version:
+Build Version: 51
+
 === ImpressCMS 1.3 Final ===
 Release date: 18 September 2011
 Revision: 22698

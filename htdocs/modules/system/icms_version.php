@@ -17,7 +17,7 @@ defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
-	'version'=> 1.3,
+	'version'=> 2.0,
 	'description'=> _MI_SYSTEM_DESC,
 	'author'=> "",
 	'credits'=> "The ImpressCMS Project",
@@ -33,11 +33,11 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Final",
-	'status'=> "Final",
+	'status_version'=> "Alpha",
+	'status'=> "Alpha",
 	'date'=> "",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_FINAL,
+	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
 /** Contributors */
 	'developer_website_url' => "http://www.impresscms.org",
@@ -458,4 +458,3 @@ $modversion['templates'][] = array(
 	'file' => 'admin/autotasks/system_adm_autotasks.html',
 	'description' => ''
 	);
-

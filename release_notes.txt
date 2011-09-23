@@ -1,8 +1,8 @@
-ImpressCMS 1.3 Final release notes
+ImpressCMS 2.0 Alpha release notes
 ================================================
 
-The ImpressCMS Project is very proud to announce the Final version of its 1.3 release! 
-ImpressCMS 1.3 Final is a major refactoring of the core and is not intended for production sites.
+The ImpressCMS Project is very proud to announce the first Alpha version of its 2.0 release! 
+ImpressCMS 2.0 Alpha is a major refactoring of the core and is not intended for production sites.
 
 Please see the full [[Change Log]] for details in docs/changelog.txt.
 
@@ -32,7 +32,7 @@ wget http://www.impresscms.org/download/
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-https://svn.impresscms.org/core/releases/impresscms_1.3_final/
+https://svn.impresscms.org/core/releases/impresscms_2.0_alpha/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
