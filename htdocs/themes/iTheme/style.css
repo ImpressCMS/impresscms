@@ -20,7 +20,6 @@ h6 {font-size:.8em;}
 /* ------ Header rules ------ */
 #xo-header {clear:both;height:78px;position:relative;background:url(img/header_bg.jpg) repeat-x;margin-left:35px;margin-right:35px;}
 #xo-headerlogo {float:left;}
-#xo-headerbanner {position:relative;top:10px;right:20px;float:right;}
 
 /* ------ Header top menu navigation rules ------ */
 #xo-globalnav {clear:both;padding-left:11px;margin-top:40px;padding-bottom:7px;}

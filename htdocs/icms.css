@@ -79,56 +79,6 @@ acronym, abbr, dfn {
 
 #xo-logger-output{ font-size: .8em;} /* only needed until logger.php and logger_render.php are modified */
 
-/* For banners.php */
-#bannerstats {}
-#login_window  {
-	max-width:						480px;
-	margin:							1em auto;
-	background-color:				#f8f8f8;
-	color: 							inherit;
-	border:							1px solid #000;
-}
-#login_window  h2 {
-	margin:							.5em;
-	padding:							130px 0 0;
-	background:						url( images/password.png) no-repeat center top;
-	text-align:						center;
-}
-.login_form  .credentials {
-	margin:							.5em 1em;
-	padding:							1em;
-	background-color:				#ccc;
-	color:							inherit;
-}
-.login_form  .credentials label {
-	display:						block;
-	width:							33%;
-	margin:							1px;
-}
-.login_form  .credentials input {
-	width:							50%;
-	margin:							1px;
-	padding:							1px;
-	border:							1px solid #000;
-}
-.login_form  .credentials input:focus {
-	border:							1px solid #2266cc;
-}
-.login_form  .actions {
-	padding:							1.5em .5em .5em;
-	text-align:						center;
-}
-.login_info {
-	margin:							.5em 1em;
-	text-align: 					center;
-}
-.content_title {
-	font-size: 						1.2em;
-}
-#bannerstats td {
-	text-align: 					center;
-}
-
 .CPbigTitle{
 	font-size: 20px;
 	color: #1E90FF;

@@ -140,7 +140,6 @@ class icms_view_theme_Object {
 				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 				'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 				'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
-				'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
 				'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
 						? $icmsModule->getVar('name')
 						: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES)
@@ -156,7 +155,6 @@ class icms_view_theme_Object {
 			'xoops_sitename' => $this->template->get_template_vars('icms_sitename'),
 			'xoops_slogan' => $this->template->get_template_vars('icms_slogan'),
 			'xoops_dirname' => $this->template->get_template_vars('icms_dirname'),
-			'xoops_banner' => $this->template->get_template_vars('icms_banner'),
 			'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
 		));
 		if (isset(icms::$user) && is_object(icms::$user)) {

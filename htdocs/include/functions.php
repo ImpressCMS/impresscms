@@ -149,47 +149,6 @@ function formatURL($url)
 }
 
 /**
- * Gets banner HTML for use in templates
- *
- * @return object  $bannerobject  The generated banner HTML string
- * @todo Move to a static class method - Banner
- */
-function xoops_getbanner() {
-	global $icmsConfig;
-
-	$db = icms_db_Factory::instance();
-	$bresult = $db->query("SELECT * FROM ".$db->prefix('banner')." ORDER BY RAND()", 1);
-	if ($db->getRowsNum($bresult) > 0) {
-		list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
-		if ($icmsConfig['my_ip'] != $_SERVER['REMOTE_ADDR'])
-			$db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = '%u'", $db->prefix('banner'), (int)($bid)));
-		/* Check if this impression is the last one and print the banner */
-		if ($imptotal == $impmade && $imptotal != 0) {
-			$newid = $db->genId($db->prefix('bannerfinish').'_bid_seq');
-			$sql = sprintf("INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES ('%u', '%u', '%u', '%u', '%u', '%u')", $db->prefix('bannerfinish'), (int) ($newid), (int) ($cid), (int) ($impmade), (int) ($clicks), (int) ($date), time());
-			$db->queryF($sql);
-			$db->queryF(sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('banner'), (int)($bid)));
-		}
-		if ($htmlbanner) {
-			$bannerobject = $htmlcode;
-		} else {
-			$bannerobject = '<div><a href="'.ICMS_URL.'/banners.php?op=click&amp;bid='.$bid.'" rel="external">';
-			if (stristr($imageurl, '.swf')) {
-				$bannerobject = $bannerobject
-				.'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
-				.'<param name="movie" value="'.$imageurl.'"></param>'
-				.'<param name="quality" value="high"></param>'
-				.'</object>';
-			} else {
-				$bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';
-			}
-			$bannerobject = $bannerobject.'</a></div>';
-		}
-		return $bannerobject;
-	}
-}
-
-/**
  * Function to redirect a user to certain pages
  *
  * @param string  $url  The URL to redirect to

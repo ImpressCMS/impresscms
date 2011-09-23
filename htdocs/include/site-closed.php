@@ -45,7 +45,6 @@ if (!$allowed) {
 		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
-		'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
 		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) 
 			? $icmsModule->getVar('name') 
 			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),

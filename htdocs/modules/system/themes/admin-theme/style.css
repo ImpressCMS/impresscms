@@ -65,13 +65,6 @@ h6 {font-size: .8em;}
 	float: left;
 }
 
-#icms-headerbanner {
-	position:relative;
-	top:10px;
-	right:20px;
-	float: right;
-}
-
 /* ------ Header top menu navigation rules ------ */
 
 #icms-globalnav {

@@ -97,7 +97,6 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 					"NULL, '" . _MD_AM_ADSENSES . "', '/modules/system/admin.php?fct=adsense'",
 					"NULL, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin.php?fct=autotasks'",
 					"NULL, '" . _MD_AM_AVATARS . "', '/modules/system/admin.php?fct=avatars'",
-					"NULL, '" . _MD_AM_BANS . "', '/modules/system/admin.php?fct=banners'",
 					"NULL, '" . _MD_AM_BKPOSAD . "', '/modules/system/admin.php?fct=blockspadmin'",
 					"NULL, '" . _MD_AM_BKAD . "', '/modules/system/admin.php?fct=blocksadmin'",
 					"NULL, '" . _MD_AM_COMMENTS . "', '/modules/system/admin.php?fct=comments'",
@@ -146,7 +145,6 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 					"NULL, 1, '" . _MD_AM_ADSENSES . "', '/modules/system/admin/adsense/images/adsense_small.png', '" . _MD_AM_ADSENSES_DSC . "', '/modules/system/admin.php?fct=adsense'",
 					"NULL, 2, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin/autotasks/images/autotasks_small.png', '" . _MD_AM_AUTOTASKS_DSC . "', '/modules/system/admin.php?fct=autotasks'",
 					"NULL, 3, '" . _MD_AM_AVATARS . "', '/modules/system/admin/avatars/images/avatars_small.png', '" . _MD_AM_AVATARS_DSC . "', '/modules/system/admin.php?fct=avatars'",
-					"NULL, 4, '" . _MD_AM_BANS . "', '/modules/system/admin/banners/images/banners_small.png', '" . _MD_AM_BANS_DSC . "', '/modules/system/admin.php?fct=banners'",
 					"NULL, 5, '" . _MD_AM_BKPOSAD . "', '/modules/system/admin/blockspadmin/images/blockspadmin_small.png', '" . _MD_AM_BKPOSAD_DSC . "', '/modules/system/admin.php?fct=blockspadmin'",
 					"NULL, 6, '" . _MD_AM_BKAD . "', '/modules/system/admin/blocksadmin/images/blocksadmin_small.png', '" . _MD_AM_BKAD_DSC . "', '/modules/system/admin.php?fct=blocksadmin'",
 					"NULL, 7, '" . _MD_AM_COMMENTS . "', '/modules/system/admin/comments/images/comments_small.png', '" . _MD_AM_COMMENTS_DSC . "', '/modules/system/admin.php?fct=comments'",
@@ -329,7 +327,36 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}
-/*  1.3 beta|rc|final release  */
+
+	/*  Begin upgrade to version 2.0 */
+	if (!$abortUpdate) $newDbVersion = 42;
+
+	if ($dbVersion < $newDbVersion) {
+		/* remove banner remainings */
+		$table = new icms_db_legacy_updater_Table('banner');
+		if ($table->exists()) $table->dropTable();
+		unset($table);
+		$table = new icms_db_legacy_updater_Table('bannerclient');
+		if ($table->exists()) $table->dropTable();
+		unset($table);
+		$table = new icms_db_legacy_updater_Table('bannerfinish');
+		if ($table->exists()) $table->dropTable();
+		unset($table);
+		
+		$table = new icms_db_legacy_updater_Table('config');
+		$icmsDatabaseUpdater->runQuery("DELETE FROM `" . $table->name() . "` WHERE conf_modid = 0 AND conf_name IN ('banners', 'my_ip')");
+		unset($table);
+		
+		$table = new icms_db_legacy_updater_Table('config');
+		$icmsDatabaseUpdater->runQuery("DELETE FROM `" . $table->name() . "` WHERE page_url = 'modules/system/admin.php?fct=banners*'");
+		unset($table);
+
+		/* Finish up this portion of the db update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+		}
+	}
 
 /*
  * This portion of the upgrade must remain as the last section of code to execute
