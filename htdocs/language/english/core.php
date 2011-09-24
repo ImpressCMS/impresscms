@@ -1,16 +1,16 @@
 <?php
 /**
-* Core constants
-*
-* This file has all core errors and warning constants.
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		languages
-* @since		1.2
-* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id
-*/
+ * Core constants
+ *
+ * This file has all core errors and warning constants.
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		languages
+ * @since		1.2
+ * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id
+ */
 
 define('_CORE_MEMORYUSAGE', 'Memory usage');
 define('_CORE_BYTES', 'bytes');
@@ -57,4 +57,29 @@ define('_CORE_PASSLEVEL2','Weak');
 define('_CORE_PASSLEVEL3','Good');
 define('_CORE_PASSLEVEL4','Strong');
 define('_CORE_UNAMEPASS_IDENTIC','Username and Password identical.');
-?>
+
+/* Added in 1.3 */
+
+define('_CORE_CHECKSUM_FILES_ADDED',' files have been added');
+define('_CORE_CHECKSUM_FILES_REMOVED',' files have been removed');
+define('_CORE_CHECKSUM_ALTERED_REMOVED',' files have been altered or removed');
+define('_CORE_CHECKSUM_CHECKFILE','Checking against the file ');
+define('_CORE_CHECKSUM_PERMISSIONS_ALTERED',' files have had their permissions altered');
+define('_CORE_CHECKSUM_CHECKFILE_UNREADABLE', 'The file containing the checksums is unavailable or unreadable. Validation cannot be completed');
+define('_CORE_CHECKSUM_ADDING',' Adding');
+define('_CORE_CHECKSUM_CHECKSUM',' Checksum');
+define('_CORE_CHECKSUM_PERMISSIONS',' Permissions');
+
+define('_CORE_DEPRECATED', 'Deprecated');
+define('_CORE_DEPRECATED_REPLACEMENT', 'use %s instead');
+define('_CORE_DEPRECATED_CALLSTACK', '<br />Call Stack: <br />');
+define('_CORE_DEPRECATED_MSG', '%s in %s, line %u <br />');
+define('_CORE_DEPRECATED_CALLEDBY', 'Called by: ');
+define('_CORE_REMOVE_IN_VERSION', 'This will be removed in version %s');
+define('_CORE_DEBUG', 'Debug');
+
+define('_CORE_OID_URL_EXPECTED', 'Expected an OpenID URL.');
+define("_CORE_OID_URL_INVALID", 'Authentication error; not a valid OpenID.');
+define("_CORE_OID_REDIRECT_FAILED", 'Could not redirect to server: %s');
+define("_CORE_OID_INPROGRESS", "OpenID transaction in progress");
+

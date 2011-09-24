@@ -1,37 +1,32 @@
 <?php
 /**
-* Short summary of the purpose of this file
-*
-* Longer description about this page
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project 
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package     kernel
-* @subpackage  auth
-* @since	 1.1
-* @author malanciault <marcan@impresscms.org>
-* @version	$Id$
-*/
-/**
- * Set this to true to troubleshoot OpenID login
+ * Complete the OpenID authentication
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Auth
+ * @subpackage  Openid
+ * @since		1.1
+ * @author		malanciault <marcan@impresscms.org>
+ * @version		SVN: $Id$
  */
-$openid_debug = false;
+/**
+ * Set this to TRUE to troubleshoot OpenID login
+ */
+$openid_debug = FALSE;
 
-define('ICMS_INCLUDE_OPENID', true);
+define('ICMS_INCLUDE_OPENID', TRUE);
 $xoopsOption['pagetype'] = 'user';
 /** Including mainfile.php is required */
 include_once 'mainfile.php';
 
 $redirect_url = $_SESSION['frompage'];
-$myts = MyTextSanitizer :: getInstance();
-$member_handler = xoops_gethandler('member');
+$member_handler = icms::handler('icms_member');
 
-/** Including the authentication class */
-include_once ICMS_ROOT_PATH . '/class/auth/authfactory.php';
 /** Including the language files for the authentication pages */
 icms_loadLanguageFile('core', 'auth');
 
-$xoopsAuth = & XoopsAuthFactory :: getAuthConnection();
+$xoopsAuth = & icms_auth_Factory::getAuthConnection(NULL);
 $user = $xoopsAuth->authenticate($openid_debug);
 
 if ($xoopsAuth->errorOccured()) {
@@ -42,7 +37,7 @@ switch ($xoopsAuth->step) {
 	case OPENID_STEP_NO_USER_FOUND :
 		$xoopsOption['template_main'] = 'system_openid.html';
 		/** Including header.php to start page rendering */
-		include_once (ICMS_ROOT_PATH . "/header.php");
+		include_once ICMS_ROOT_PATH . "/header.php" ;
 
 		$sreg = $_SESSION['openid_sreg'];
 
@@ -50,7 +45,7 @@ switch ($xoopsAuth->step) {
 		$xoopsTpl->assign('cid', $xoopsAuth->openid);
 		$xoopsTpl->assign('uname', isset ($sreg['nickname']) ? $sreg['nickname'] : '');
 		$xoopsTpl->assign('email', isset ($sreg['email']) ? $sreg['email'] : '');
-    /** Including footer.php to complete page rendering */
+		/** Including footer.php to complete page rendering */
 		include_once ICMS_ROOT_PATH . '/footer.php';
 		break;
 
@@ -64,7 +59,7 @@ switch ($xoopsAuth->step) {
 
 		$sreg = $_SESSION['openid_sreg'];
 		/** Including header.php to start page rendering */
-		include_once (ICMS_ROOT_PATH . '/header.php');
+		include_once ICMS_ROOT_PATH . '/header.php' ;
 
 		/**
 		 * @todo this is only temporary and it needs to be included in the template as a javascript check
@@ -84,17 +79,17 @@ switch ($xoopsAuth->step) {
 		}
 
 		// checking if this uname is available
-		$criteria = new CriteriaCompo(new Criteria('uname', $uname));
-		$user_handler = & xoops_gethandler('user');
-		$users = & $user_handler->getObjects($criteria, false);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
+		$user_handler = icms::handler('icms_member_user');
+		$users = & $user_handler->getObjects($criteria, FALSE);
 
 		if (is_array($users) && count($users) > 0) {
 			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
 		}
 
-		$name = addslashes($myts->stripSlashesGPC(utf8_decode($sreg['fullname'])));
+		$name = addslashes(icms_core_DataFilter::stripSlashesGPC(utf8_decode($sreg['fullname'])));
 		//$tz = quote_smart($tzoffset[$sreg['timezone']]);
-		$country = addslashes($myts->stripSlashesGPC(utf8_decode($sreg['country'])));
+		$country = addslashes(icms_core_DataFilter::stripSlashesGPC(utf8_decode($sreg['country'])));
 
 		/**
 		 * @todo use proper core class, manage activation_type and send notifications
@@ -116,7 +111,7 @@ switch ($xoopsAuth->step) {
 
 		// Now, add the user to the group.
 		$newid = $newUser->getVar('uid');
-		$mship_handler = xoops_getHandler('membership');
+		$mship_handler = icms::handler('icms_member_group_membership');
 		$mship = & $mship_handler->create();
 		$mship->setVar('groupid', XOOPS_GROUP_USERS);
 		$mship->setVar('uid', $newid);
@@ -151,17 +146,17 @@ switch ($xoopsAuth->step) {
 
 	case OPENID_STEP_USER_FOUND :
 		/** Including the login authentication page */
-    include_once 'include/checklogin.php';
+		include_once 'include/checklogin.php';
 		exit;
 		break;
 
 	case OPENID_STEP_LINK :
 		// Linking an existing user with this openid
 		/** Including header.php to start page rendering */
-		include_once (ICMS_ROOT_PATH . '/header.php');
+		include_once ICMS_ROOT_PATH . '/header.php' ;
 
-		$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname']));
-		$pass4sql = addslashes($myts->stripSlashesGPC($_POST['pass']));
+		$uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($_POST['uname']));
+		$pass4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($_POST['pass']));
 
 		$thisUser = $member_handler->loginUser($uname4sql, $pass4sql);
 
@@ -199,4 +194,3 @@ switch ($xoopsAuth->step) {
 		break;
 
 }
-?>

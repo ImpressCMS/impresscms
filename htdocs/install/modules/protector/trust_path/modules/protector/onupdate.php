@@ -20,7 +20,7 @@ function protector_onupdate_base( $module , $mydirname )
 		if( ! is_array( $msgs ) ) $msgs = array() ;
 	}
 
-	$db =& Database::getInstance() ;
+	$db =& icms_db_Factory::instance() ;
 	$mid = $module->getVar('mid') ;
 
 	// TABLES (write here ALTER TABLE etc. if necessary)
@@ -46,7 +46,7 @@ function protector_onupdate_base( $module , $mydirname )
 
 
 	// TEMPLATES (all templates have been already removed by modulesadmin)
-	$tplfile_handler =& xoops_gethandler( 'tplfile' ) ;
+	$tplfile_handler =& icms::handler('icms_view_template_file') ;
 	$tpl_path = dirname(__FILE__).'/templates' ;
 	if( $handler = @opendir( $tpl_path . '/' ) ) {
 		while( ( $file = readdir( $handler ) ) !== false ) {
@@ -70,9 +70,7 @@ function protector_onupdate_base( $module , $mydirname )
 					$tplid = $tplfile->getVar( 'tpl_id' ) ;
 					$msgs[] = 'Template <b>'.htmlspecialchars($mydirname.'_'.$file).'</b> added to the database. (ID: <b>'.$tplid.'</b>)';
 					// generate compiled file
-					include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php' ;
-					include_once XOOPS_ROOT_PATH.'/class/template.php' ;
-					if( ! xoops_template_touch( $tplid ) ) {
+					if( ! icms_view_Tpl::template_touch( $tplid ) ) {
 						$msgs[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.htmlspecialchars($mydirname.'_'.$file).'</b>.</span>';
 					} else {
 						$msgs[] = 'Template <b>'.htmlspecialchars($mydirname.'_'.$file).'</b> compiled.</span>';
@@ -83,11 +81,9 @@ function protector_onupdate_base( $module , $mydirname )
 		closedir( $handler ) ;
 	}
 if((defined(ICMS_PRELOAD_PATH) && !file_exists(ICMS_PRELOAD_PATH.'/protector.php')) && (! defined( 'PROTECTOR_POSTCHECK_INCLUDED' )||! defined( 'PROTECTOR_PRECHECK_INCLUDED' )) && function_exists('icms_copyr')){
-	icms_copyr(ICMS_TRUST_PATH.'/modules/protector/patches/ImpressCMS1.1/preload_protector.php',ICMS_PRELOAD_PATH.'/protector.php');
+	icms_core_Filesystem::copyRecursive(ICMS_TRUST_PATH.'/modules/protector/patches/ImpressCMS1.1/preload_protector.php',ICMS_PRELOAD_PATH.'/protector.php');
 }
-	include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php' ;
-	include_once XOOPS_ROOT_PATH.'/class/template.php' ;
-	xoops_template_clear_module_cache( $mid ) ;
+	icms_view_Tpl::template_clear_module_cache( $mid ) ;
 
 	return true ;
 }

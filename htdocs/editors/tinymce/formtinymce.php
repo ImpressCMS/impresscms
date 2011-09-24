@@ -9,13 +9,9 @@
  * @version		$Id$
  * @package		xoopseditor
  */
-if (! defined ( "XOOPS_ROOT_PATH" )) {
-	die ( "ImpressCMS root path not defined" );
-}
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-require_once XOOPS_ROOT_PATH . "/class/xoopsform/formtextarea.php";
-
-class XoopsFormTinymce extends XoopsFormTextArea {
+class XoopsFormTinymce extends icms_form_elements_Textarea {
 	var $rootpath = "";
 	var $_language = _LANGCODE;
 	var $_width = "100%";
@@ -34,11 +30,11 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$current_path = __FILE__;
 		if (DIRECTORY_SEPARATOR != "/")
 			$current_path = str_replace ( strpos ( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path );
-		$this->rootpath = substr(strstr(dirname($current_path), XOOPS_ROOT_PATH), strlen(XOOPS_ROOT_PATH));
+		$this->rootpath = substr(strstr(dirname($current_path), ICMS_ROOT_PATH), strlen(ICMS_ROOT_PATH));
 
 		if (is_array ( $configs )) {
 			$vars = array_keys ( get_object_vars ( $this ) );
-			foreach ( $configs as $key => $val ) {
+			foreach ( $configs as $key => $val) {
 				if (in_array ( "_" . $key, $vars )) {
 					$this->{"_" . $key} = $val;
 				} else {
@@ -51,7 +47,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 			return false;
 		}
 
-		$this->XoopsFormTextArea ( @$this->_caption, @$this->_name, @$this->_value );
+		parent::__construct( @$this->_caption, @$this->_name, @$this->_value );
 		parent::setExtra ( "style='width: " . $this->_width . "; height: " . $this->_height . ";'" );
 
 		$this->initTinymce ();
@@ -61,7 +57,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
   * Initializes tinyMCE
   **/
 	function initTinymce() {
-		$this->config ["elements"] = $this->getName ();
+		$this->config ["elements"] = $this->getName() . '_tarea';
 		$this->config ["language"] = $this->getLanguage ();
 		$this->config ["rootpath"] = $this->rootpath;
 		$this->config ["area_width"] = $this->_width;
@@ -147,7 +143,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$ret = $this->tinymce->render ();
 		$ret .= parent::render ();
 
-		$ret .= '<a href="#" id="switchtinymce" title="'._TOGGLETINY.'" onclick="showMCE(\''.$this->_name.'\'); return false;" style="float:'._GLOBAL_RIGHT.'; display:box; background:#F0F0EE; padding:3px; margin-right:2px; border: 1px solid #ccc; border-top: none;">'._TOGGLETINY.'</a>';
+		$ret .= '<a href="#" id="switchtinymce" title="'._TOGGLETINY.'" onclick="showMCE(\''.$this->_name.'_tarea\'); return false;" style="float:'._GLOBAL_RIGHT.'; display:box; background:#F0F0EE; padding:3px; margin-right:2px; border: 1px solid #ccc; border-top: none;">'._TOGGLETINY.'</a>';
 		$ret .= '<br clear="'._GLOBAL_RIGHT.'" />';
 
 		return $ret;
@@ -159,7 +155,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 	 * @return  bool
 	 */
 	function isCompatible() {
-		return is_readable( XOOPS_ROOT_PATH . $this->rootpath . "/tinymce.php" );
+		return is_readable( ICMS_ROOT_PATH . $this->rootpath . "/tinymce.php" );
 	}
 }
 ?>

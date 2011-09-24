@@ -1,5 +1,5 @@
 <?php
-	defined( 'XOOPS_ROOT_PATH' ) or die();
+	defined( 'ICMS_ROOT_PATH' ) or die();
 ?>
 <h2><?php echo _USER_LOGIN; ?></h2>
 

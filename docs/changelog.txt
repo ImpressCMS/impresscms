@@ -1,9 +1,156 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 2.0 Alpha ===
+Release date:
+Revision:
+DB Version:
+Build Version: 51
+
+=== ImpressCMS 1.3 Final ===
+Release date: 18 September 2011
+Revision: 22698
+DB Version: 41
+Build Version: 50
+
+A complete list of changes to this release series can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
+
+=== ImpressCMS 1.3 Release Candidate 2 ===
+Release date: 1 September 2011
+Revision: 22516
+DB Version: 41
+Build Version: 49
+
+A complete list of changes to this release series can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
+
+=== ImpressCMS 1.3 Release Candidate ===
+Release date: 19 July 2011
+Revision: 22079
+DB Version: 41
+Build Version: 48
+
+A complete list of changes to this release series can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
+
+=== ImpressCMS 1.3 Beta 2 ===
+Release date: 3 May 2011
+Revision: 21585
+DB Version: 41
+Build Version: 42 (should have been 45)
+
+A complete list of changes to this release series can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
+
+Updated external libraries
+* FCKeditor 2.6.6
+* Wideimage 11.02.19
+* HTML Purifier 4.3.0
+
+=== ImpressCMS 1.3 Beta ===
+Release date: 6 March 2011
+Revision: 
+DB Version: 41
+Build Version: 42 (should have been 43)
+
+List of changes to this release series can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
+
+* added preference setting to allow custom filters for HTMLPurifier preferences (forgot to add these in previous versions)
+
+=== ImpressCMS 1.3 Alpha ===
+Release date: 8 January 2011
+Revision: 20660
+DB Version: 41
+Build Version: 42
+
+Updated external libraries:
+* jQuery 1.4.4
+
+List of changes to this release can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
+
+Improvements:
+* Code style standardized, excess whitespace removed
+* PHP 5.3.x strict compliance
+* Optimized database for performance
+* Reduced number of queries
+* Introduction of the icms library and class autoloading
+* System menu hierarchy
+
+Additions:
+* reflex admin theme
+* Control Panel block
+
+=== ImpressCMS 1.2.5 Final ===
+Release date: 03 May 2011
+Revision: 21606
+DB Version: 40
+Build Version: 42 (should have been 44)
+
+Security Fix: File Upload/Remote File inclusion possiblity related to upload function of FCKEditor. http://www.exploit-id.com/web-applications/impresscms-1-2-4_final-furfi-multiple-vulnerability
+
+=== ImpressCMS 1.2.4 Final ===
+Release date: 12 Dec 2010
+Revision: 20606
+DB Version: 40
+Build Version: 41
+
+=== ImpressCMS 1.2.3 Final ===
+Release date: 15 Nov 2010
+Revision: 20381
+DB Version: 40
+Build Version: 40
+
+=== ImpressCMS 1.2.3 RC2 ===
+Release date: 7 Nov 2010
+Revision: 20306
+DB Version: 40
+Build Version: 39
+
+=== ImpressCMS 1.2.3 RC ===
+Release date: 24 Sep 2010
+Revision: 20198
+DB Version: 40
+Build Version: 38
+
+=== ImpressCMS 1.2.3 Beta ===
+Release date: 17 Sep 2010
+Revision: 20154
+DB Version: 40
+Build Version: 37
+
+Maintenance release, addresses #462, #480 and #482, #493
+Security Fix: Blind SQLi & Path disclosure in search.php & settingmanager (if install folder left on server)
+
+=== ImpressCMS 1.2.2 Final ===
+Release date: 17 July 2010
+Revision: 19868
+DB Version: 40
+Build Version: 36
+
+Addresses http://secunia.com/advisories/40522
+
+=== ImpressCMS 1.2.1 Final ===
+Release date: 14 Mar 2010
+Revision: 19094
+DB Version: 39
+Build Version: 35
+
+http://trac.impresscms.org/core/query?status=closed&group=resolution&milestone=ImpressCMS+1.2.1
+
+=== ImpressCMS 1.2.1 RC ===
+Release date: 1 Mar 2010
+Revision: 9881
+DB Version: 39
+Build Version: 34
+
+http://trac.impresscms.org/core/query?status=closed&group=resolution&milestone=ImpressCMS+1.2.1
+
+Note: 	From this release forward, the detailed changelog will not be included with the 
+		release package. The tickets are all in Trac and can easily be found and retrieved
+		from there.
+		
+		The release notes will contain a summary of new features introduced, items that were 
+		improved and any bugs from previous versions that were fixed. 
 
 === ImpressCMS 1.2.1 Beta ===
-Release date: Not Released
-Revision:
-DB Version: 
+Release date: 11 Feb 2010
+Revision: 9841
+DB Version: 39
 Build Version: 33
 
 * #913: Fixing isue with Code / Pre tag (thomas)
@@ -144,7 +291,7 @@ Revision: 9336
 '''Improved'''
 * #714: Updated Smarty library to 2.6.26 (MrTheme)
 * #751: cleanup admin preference pages, use tooltip boxes for form field descriptions. (vaughan/MrTheme)
-* Modified IcmsPersistableObjectHandler: if no module specified system think it's not a module (mekdrop)
+* Modified icms_ipf_Handler: if no module specified system think it's not a module (mekdrop)
 * #666: Update HTMLPurifier Library to 4.0.0. (vaughan)
 * #652: icmsStopSpammer causes blank page when the stopforumspam.org site is unavailable. (vaughan)
 * #562 as part of 562, created new class icms.class.password.php, removed old password functions from functions.php (vaughan)
@@ -225,7 +372,7 @@ Revision: 9336
 * #284: pictures, tribe pictures and audio files are now deleted together with the record | ticket from addons (Phoenyx)
 * #291: Only fields set to editable can be edited in profile module | ticket from addons (wtravel)
 * #309: imProfile: all tabs are highlighted according to the current page again | ticket from addons (Phoenyx)
-* #737: $sortable for IcmsPersistableColumn is working now (Phoenyx)
+* #737: $sortable for icms_ipf_view_Column is working now (Phoenyx)
 * #310: imProfile: removed sort option from audio file, picture, tribe picture and youtube video | ticket from addons (Phoenyx)
 * #311: imProfile: added some field descriptions for pictures and videos | ticket from addons (Phoenyx)
 * #312: imProfile: tribeusers can now be added and deleted in the control panel | ticket from addons (Phoenyx)
@@ -249,7 +396,7 @@ Revision: 9336
 * #302: imProfile: redirecting from userinfo.php to index.php if social_mode is on | ticket from addons (Phoenyx)
 * #752: SQL syntax error when upgrading to 1.1 (skenow)
 * #337: imProfile: setting umode and uorder for new users according to system settings | ticket from addons (Phoenyx)
-* #755: fixed wrong parameter handling in IcmsSecureForm (Phoenyx)
+* #755: fixed wrong parameter handling in icms_form_Secure (Phoenyx)
 * #727: Incorrect URL for tags in content manager (skenow)
 * #758: IPF improvements to userrank admin
 * #707: installer ... selection box on the right (MrTheme)
@@ -260,7 +407,7 @@ Revision: 9336
 * #664: installer error - stage 12 (stranger)
 * #607: Fatal error - function declaration problem if Frameworks is present (stranger)
 * #710: IPF issue: icmsformtextelement.php, icmsformtextelement.php, icmsformcheckelement.php (stranger)
-* #733: Fatal error: Class 'IcmsPersistableObject' not found in G:\xampp\htdocs\trunk\modules\system\admin\autotasks\class\autotasks.php on line 21 (stranger)
+* #733: Fatal error: Class 'icms_ipf_Object' not found in G:\xampp\htdocs\trunk\modules\system\admin\autotasks\class\autotasks.php on line 21 (stranger)
 * #761: exiting redirect_header properly now (Phoenyx)
 * #647: fixed module menu is not displayed on the admin page (mekdrop)
 * #746: After the installation you dont have an autotask (stranger)
@@ -331,8 +478,8 @@ Revision: 9336
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
 * choice of xoopsFormTextArea or xoopsFormDHTMLTextArea to edit user form (signature) depends on whether HTML sig is allowed or not. (vaughan)
 * Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS. (malanciault)
-* Implementing IcmsPersistableSingleView which provides an easy way to quickly display a single object information. (malanciault)
-* Implementing IcmsPersistableTreeTable extending IcmsPersistableTable with the concept of nested objects. (malanciault)
+* Implementing icms_ipf_view_Single which provides an easy way to quickly display a single object information. (malanciault)
+* Implementing icms_ipf_view_Tree extending icms_ipf_view_Table with the concept of nested objects. (malanciault)
 * Implementing SimplePie as admin RSS. (stranger)
 * Implementing icmsstopspammer to stop spammers. (stranger)
 * smarty to change a theme&template between RTL and LTR. (stranger)
@@ -410,7 +557,7 @@ Revision: 9336
 * #274: Smarty image resizer tag plugin. It inserts -and caches- resized copies of images as requested by the template (nachenko)
 * #532: new function icms_buildCriteria() (malanciault)
 * #533: new IcmsBreadcrumb class (malanciault)
-* #535: IcmsPersistableObject store and delete methods (malanciault)
+* #535: icms_ipf_Object store and delete methods (malanciault)
 
 '''Changed'''
 * Identicon for Gravatar added (sato-san)
@@ -485,8 +632,8 @@ Revision: 9336
 * #28: New Image Manager (realtherplima)
 * #235: Login is not possible after upgrading from any elder version to 1.2 (stranger)
 * #171: SimplePie and IcmsSimpleRss (malanciault)
-* #172: IcmsPersistableSingleView (malanciault)
-* #173: IcmsPersistableTreeTable (malanciault)
+* #172: icms_ipf_view_Single (malanciault)
+* #173: icms_ipf_view_Tree (malanciault)
 * #175: comments to functions (vaughan)
 * #260: default fields in profile module are too much. (stranger)
 * #261: PDF not being generated with latest tcpdf. (stranger)
@@ -606,7 +753,7 @@ Revision: 9336
 * #196: Content page edit button shown on user side for wrong groups (real_therplima)
 * #190: Debugger stops icmsfeed (malanciault)
 * #201: HTML editor for the disclaimer (felix)
-* #202: IcmsDatabaseUpdater->_db change for IcmsDatabaseUpdater->db (malanciault)
+* #202: icms_db_icms_updater_Handler->_db change for icms_db_icms_updater_Handler->db (malanciault)
 * #211: Call to undefined method XoopsLists::getfontlistasarray() in modules/system/admin/preferences/main.php on line 191 (vaughan)
 * #169: captcha was being bypassed because it had been moved from libraries to class folder. (skenow)
 * #199: Admin Side > Preferences Main > Personalization > Edit and Remove blocks from user side? settings not work. (algalochkin)
@@ -714,7 +861,7 @@ Revision: 9336
 '''Added'''
 * Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
 * Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
-* Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
+* Adding icms_form_Secure to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
 * Added option to select calendar type for forms. (stranger)
 * Updated system to version 1.05. (stranger)
 
@@ -725,8 +872,8 @@ Revision: 9336
 * Warning: Value for HTML. Trusted is of invalid type, should be bool in file /libraries/htmlpurifier/HTMLPurifier.standalone.php line 1447 (vaughan)
 * In HTMLPurifier $is_admin wasn't defined if $xoopsUser wasn't an existing object.(vaughan)
 * In HTMPPurifier $xoopsUser undefined variable on line 130 (vaughan)
-* Wrong smarty variable name in IcmsPersistableController::handleObjectDeletionFromUserSide() (malanciault)
-* In IcmsDatabaseUpdater::upgradeObjectItem() when a TEXT field was created, a default value was set which is wrong. TEXT field can't have default value (malanciault)
+* Wrong smarty variable name in icms_ipf_Controller::handleObjectDeletionFromUserSide() (malanciault)
+* In icms_db_icms_updater_Handler::upgradeObjectItem() when a TEXT field was created, a default value was set which is wrong. TEXT field can't have default value (malanciault)
 * Closed comment tag in include/calendarjs.php that created a problem with IE (skenow)
 * Undefined variable: ret in file /kernel/icmspersistablecontroller.php line 462 (malanciault)
 * #2115835: Typo when checking if openid field existed in database update version 3 (malanciault)
@@ -746,7 +893,7 @@ Revision: 9336
 * new function to list all fonts (stranger)
 * new function to generate pdfs (stranger)
 * implementing beforePreviewTarea and afterPreviewTarea preload events (malanciault)
-* implementing IcmsPersistableSeoObject to manage SEO-enabled object within the IcmsPersistable Framework (malanciault)
+* implementing icms_ipf_seo_Object to manage SEO-enabled object within the IcmsPersistable Framework (malanciault)
 
 '''Improved'''
 * Improved how we use rtl in system. (stranger/real_therplima)
@@ -772,7 +919,7 @@ Revision: 9336
 * #2037989: Registration notification sent twice (real_therplima)
 * bug with modules when calling editors. (stranger)
 * bug "Cannot redeclare class XoopsFormCaptcha". (stranger)
-* Language constants in IcmsModuleAbout feature (malanciault)
+* Language constants in icms_ipf_About feature (malanciault)
 * bug with pdf generator. (stranger)
 * bug Hidencontent doesn`t work with TinyMCE. (stranger)
 * # 2090834: Customtag works not with TinyMCE and Custom HTML Blocks (malanciault)
@@ -786,7 +933,7 @@ Revision: 9336
 * Notice: Undefined variable: openid in file /modules/system/admin/users/main.php line 61. (stranger/malanciault)
 * Fixed issues with inserting google meta tag. (stranger)
 * Bug fixed in IcmsForm::render(): the id of the row was the same as the control. Now, the id of the row is <keyname>_row (malanciault)
-* Bug fixed in IcmsPersistableController::postDataToObject where date was not saved properly (malanciault)
+* Bug fixed in icms_ipf_Controller::postDataToObject where date was not saved properly (malanciault)
 * #2118948: Email Protection does not work (real_therplima)
 
 ===2008-08-08 : 1.1 Beta 1===
@@ -872,7 +1019,7 @@ Revision: 9336
 * Themes block to be shown as default. (stranger)
 * 3 new plugins for tinymce. Xoopsimagemanager, XoopsEmotions, XoopsCodeQuote (luciorota/real_therplima)
 * OpenID relying party now integrated in the core (malanciault)
-* Implementation of the IcmsPersistableRegistry allowing caching when fetching IcmsPersistableObjects from the database (malanciault)
+* Implementation of the icms_ipf_registry_Handler allowing caching when fetching icms_ipf_Objects from the database (malanciault)
 * new theme "iTheme" is now included (MrTheme)
 
 '''Improved'''
@@ -970,8 +1117,8 @@ Revision: 9336
 * Autoselection of system language depending the browser language configuration. (if multilanguage enabled). (nekro)
 * New User Info config option to enable the mailing of a welcome message to new activated user (malanciault)
 * New User Info config option to customize the welcome message to be send to new activated user (malanciault)
-* IcmsDatabaseUpdater object to easily perform database upgrade procedure (malanciault)
-* New field in the XoopsModule object, dbversion, which will track the version of the tables related to a module (malanciault)
+* icms_db_icms_updater_Handler object to easily perform database upgrade procedure (malanciault)
+* New field in the icms_module_Object object, dbversion, which will track the version of the tables related to a module (malanciault)
 * Implementation of the onUpdate event for the System module to allow easy database upgrades performed automatically while updating the System module (malanciault)
 * Upgrade script from ImpressCMS 1.0 to ImpressCMS 1.1 which only adds the dbversion field to the modules table; after this upgrade has been performed, all database upgrades will be done automatically when updating the System module (malanciault/stranger)
 * Addition of assigning language's css & Javascripts files to the template. (stranger)
@@ -1101,7 +1248,7 @@ Revision: 9336
 * w3c validation in impresstheme and impresstheme_light (sato-san)
 * #1870346 System blocks not visible to added group (skenow/dave_l)
 * #1867922 No nice path from getNicePathFromId (MacDonald/malanciault)
-* #1876797 the $tpl XoopsTpl object used in htdocs/cp_functions.php and htdocs/admin.php had a too generic name which was creating conflict (with AltSys for example). The variable name was renamed for $icsmAdminTpl (malanciault)
+* #1876797 the $tpl icms_view_Tpl object used in htdocs/cp_functions.php and htdocs/admin.php had a too generic name which was creating conflict (with AltSys for example). The variable name was renamed for $icsmAdminTpl (malanciault)
 * #1875382 error in xoops.css (display: inline-block) (MacDonald/malanciault)
 * #1881367 Problems in the queries executed when editing User Ranks (malanciault/vaughan)
 * Adding a few @ in install/page_pathsettings.php to prevent the display of some errors that would confuse users (rplima/malanciault)
@@ -1224,7 +1371,7 @@ Revision: 9336
 * cannot herit methods from kernel's class (Garrath/dugris)
 * Corrected a line hardcoded (young-pee)
 * Making sure params used in queries are properly sanitized with intval() when they are integer (herve/malanciault)
-* In XoopsUser::getUnameFromId, if usereal, then making sure the real name is not just an empty space (herve/malanciault)
+* In icms_member_user_Object::getUnameFromId, if usereal, then making sure the real name is not just an empty space (herve/malanciault)
 * XoopsTree::getNicePathFromId Add separator only if necessary (dugris)
 * Check if $_SERVER[$key] AND $_ENV[$key] exists before turning over the value (xoops_getenv) (dugris)
 

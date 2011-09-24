@@ -4,7 +4,11 @@
     <{if $form.title}><tr><th colspan="2"><{$form.title}></th></tr><{/if}>
     <!-- start of form elements loop -->
     <{foreach item=element from=$form.elements}>
-      <{if $element.hidden != true}>
+      <{if $element.section == true}>
+      <tr><th colspan="2"><{$element.body}></th></tr>
+      <{elseif $element.section_close == true}>
+      <tr><td class="even" colspan="2">&nbsp;</td></tr>
+      <{elseif $element.hidden != true}>
       <tr id="<{$element.name}>_row">
         <td class="head"><label for='<{$element.name}>'><{$element.caption}> <{if $element.required}> <span style='color:#f00'>*</span><{/if}></label>
         <{if $element.description}>

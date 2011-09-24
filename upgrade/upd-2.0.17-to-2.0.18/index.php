@@ -17,9 +17,9 @@ class upgrade_2018 {
 		$sql = "SHOW COLUMNS FROM " . $db->prefix("config") . " LIKE 'conf_title'";
 		$result = $db->queryF( $sql );
 		while ($row = $db->fetchArray($result)) {
-    		if (strtolower( trim($row["Type"]) ) == "varchar(255)") {
-        		return true;
-    		}
+			if (strtolower( trim($row["Type"]) ) == "varchar(255)") {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -40,15 +40,15 @@ class upgrade_2018 {
             			                "conf_desc"  => "varchar(255) NOT NULL default ''"
             			                ),
             			"configcategory" => array( "confcat_name"  => "varchar(255) NOT NULL default ''" ),
-            			);
+            			                );
 
-		foreach( $this->fields as $table => $data ) {
-			foreach ($data as $field => $property) {
-				$sql = "ALTER TABLE " . $db->prefix($table) . " CHANGE `$field` `$field` $property";
-				$this->query( $sql );
-			}
-		}
-		return true;
+            			                foreach ($this->fields as $table => $data) {
+            			                	foreach ($data as $field => $property) {
+            			                		$sql = "ALTER TABLE " . $db->prefix($table) . " CHANGE `$field` `$field` $property";
+            			                		$this->query( $sql );
+            			                	}
+            			                }
+            			                return true;
 	}
 }
 

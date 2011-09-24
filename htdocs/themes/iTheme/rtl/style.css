@@ -69,13 +69,6 @@ h6 {font-size: .8em;}
 	float: right;
 }
 
-#xo-headerbanner {
-	position:relative;
-	top:10px;
-	left:120px;
-	float: left;
-}
-
 /* ------ Header top menu navigation rules ------ */
 
 #xo-globalnav {
@@ -130,9 +123,7 @@ h6 {font-size: .8em;}
 #xo-canvas-content ul {margin: 5px; padding: 2px; list-style: decimal inside; text-align: left;}
 #xo-canvas-content li {margin-left: 5px; color: #000; background-color: inherit; line-height: 1.4em; list-style: circle;}
 
-#xo-page {
-	padding: 0 .5em;
-}
+#xo-page {}
 
 /* ---------- Module display rules ---------- */
 

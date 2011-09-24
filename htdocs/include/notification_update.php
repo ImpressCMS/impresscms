@@ -1,17 +1,19 @@
 <?php
 /**
-* Handles all notification update functions within ImpressCMS
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Handles all notification update functions within ImpressCMS
+ *
+ * @todo		This should be a method of the icms_data_notification_Handler class
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 // RMV-NOTIFY
 
@@ -35,15 +37,14 @@ if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 }
 
 include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
-include_once ICMS_ROOT_PATH.'/include/notification_functions.php';
 icms_loadLanguageFile('core', 'notification');
 
 if (!isset($_POST['not_submit'])) {
 	exit();
 }
 
-if (!$GLOBALS['xoopsSecurity']->check()) {
-	redirect_header($_POST['not_redirect'], 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+if (!icms::$security->check()) {
+	redirect_header($_POST['not_redirect'], 3, implode('<br />', icms::$security->getErrors()));
 	exit();
 }
 
@@ -55,7 +56,7 @@ if (!$GLOBALS['xoopsSecurity']->check()) {
 $update_list = $_POST['not_list'];
 
 $module_id = $icmsModule->getVar('mid');
-$user_id = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
+$user_id = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
 
 // For each event, update the notification depending on the status.
 // If status=1, subscribe to the event; otherwise, unsubscribe.
@@ -63,13 +64,13 @@ $user_id = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 // FIXME: right now I just ignore database errors (e.g. if already
 //  subscribed)... deal with this more gracefully?
 
-$notification_handler =& xoops_gethandler('notification');
+$notification_handler = icms::handler('icms_data_notification');
 
 foreach ($update_list as $update_item) {
 
-	list($category, $item_id, $event) = split (',', $update_item['params']);
+	list($category, $item_id, $event) = explode( ',', $update_item['params'] );
 	$status = !empty($update_item['status']) ? 1 : 0;
-	
+
 	if (!$status) {
 		$notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
 	} else {
@@ -86,12 +87,10 @@ foreach ($update_list as $update_item) {
 // notifyUsers at appropriate places... (need to figure out where
 // comment submit occurs and where comment approval occurs)...
 
-include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
-
 $redirect_args = array();
 foreach ($update_list as $update_item) {
-	list($category,$item_id,$event) = split(',',$update_item['params']);
-	$category_info =& notificationCategoryInfo($category);
+	list($category,$item_id,$event) = explode( ',',$update_item['params'] );
+	$category_info =& icms_data_notification_Handler::categoryInfo($category);
 	if (!empty($category_info['item_name'])) {
 		$redirect_args[$category_info['item_name']] = $item_id;
 	}
@@ -113,4 +112,3 @@ foreach (array_keys($redirect_args) as $arg) {
 redirect_header ($_POST['not_redirect'].$argstring, 3, _NOT_UPDATEOK);
 exit();
 
-?>

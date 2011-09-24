@@ -1,6 +1,6 @@
 Upgrade script instructions
 --------------------------------------------
-See below the procedures to migrate your XOOPS site for the newest version of ImpressCMS.
+See below the procedures to migrate your XOOPS or ImpressCMS site for the newest version of ImpressCMS.
 We strongly recommend that you follow all the steps faithfully for your site is updated with security.
 
 1. Get the xoops-or-impresscms_1.0-to-impresscms-1.1 package from the sourceforge file repository.

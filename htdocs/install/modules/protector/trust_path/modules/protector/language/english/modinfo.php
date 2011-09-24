@@ -112,5 +112,14 @@ define($constpref.'_SPAMURI4U','anti-SPAM: URLs for normal users');
 define($constpref.'_SPAMURI4UDSC','If this number of URLs are found in POST data from users other than admin, the POST is considered as SPAM. 0 means disabling this feature.');
 define($constpref.'_SPAMURI4G','anti-SPAM: URLs for guests');
 define($constpref.'_SPAMURI4GDSC','If this number of URLs are found in POST data from guests, the POST is considered as SPAM. 0 means disabling this feature.');
+
+define($constpref.'_FILTERS','filters enabled in this site');
+define($constpref.'_FILTERSDSC','specify each file names inside of filters_byconfig/ per a paragraph. (eg. postcommon_post_deny_by_httpbl.php)');
+
+define($constpref.'_MANIPUCHECK','enable manipulation checking');
+define($constpref.'_MANIPUCHECKDSC','notify to admin if your root folder or index.php is modified.');
+define($constpref.'_MANIPUVALUE','value for manipulation checking');
+define($constpref.'_MANIPUVALUEDSC','do not edit this field');
+
 }
 ?>

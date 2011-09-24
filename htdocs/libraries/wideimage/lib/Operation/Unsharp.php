@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -68,8 +68,8 @@
 			if($threshold > 0) {
 				// Calculate the difference between the blurred pixels and the original
 				// and set the pixels
-				for ($x = 0; $x < $image->getWidth(); $x++)    { // each row
-					for ($y = 0; $y < $image->getHeight(); $y++)    { // each pixel
+				for ($x = 0; $x < $image->getWidth(); $x++) {
+					for ($y = 0; $y < $image->getHeight(); $y++) {
 						$rgbOrig = $image->getRGBAt($x, $y);
 						$rOrig = $rgbOrig["red"];
 						$gOrig = $rgbOrig["green"];
@@ -102,8 +102,8 @@
 			else {
 				$w = $image->getWidth();
 				$h = $image->getHeight();
-				for ($x = 0; $x < $w; $x++)    { // each row
-					for ($y = 0; $y < $h; $y++)    { // each pixel
+				for ($x = 0; $x < $w; $x++) {
+					for ($y = 0; $y < $h; $y++) {
 						$rgbOrig = $image->getRGBAt($x, $y);
 						$rOrig = $rgbOrig["red"];
 						$gOrig = $rgbOrig["green"];
@@ -133,4 +133,3 @@
 			return $image;
 		}
 	}
-?>

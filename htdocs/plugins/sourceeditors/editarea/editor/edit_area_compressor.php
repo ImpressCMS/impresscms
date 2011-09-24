@@ -19,13 +19,6 @@
 	$compressor= new Compressor($param);
 	
 	class Compressor{
-	
-		
-		function compressor($param)
-		{
-			$this->__construct($param);
-		}
-		
 		function __construct($param)
 		{
 			$this->start_time= $this->get_microtime();
@@ -156,7 +149,7 @@
 			
 			// load other scripts needed for the loader
 			preg_match_all('/"([^"]*)"/', $this->script_list, $match);
-			foreach($match[1] as $key => $value)
+			foreach ($match[1] as $key => $value)
 			{
 				$content= $this->get_content(preg_replace("/\\|\//i", "", $value).".js");
 				$this->compress_javascript($content);
@@ -174,7 +167,7 @@
 			$sub_scripts="";
 			$sub_scripts_list= array();
 			preg_match_all('/"([^"]*)"/', $this->sub_script_list, $match);
-			foreach($match[1] as $value){
+			foreach ($match[1] as $value){
 				$sub_scripts_list[]= preg_replace("/\\|\//i", "", $value).".js";
 			}
 		
@@ -195,7 +188,7 @@
 				}
 			}
 							
-			foreach($sub_scripts_list as $value){
+			foreach ($sub_scripts_list as $value){
 				$sub_scripts.= $this->get_javascript_content($value);
 			}
 			// improved compression step 2/2	
@@ -234,7 +227,7 @@
 			}
 			
 			$js_replace= '';
-			foreach( $last_comp as $key => $val )
+			foreach ($last_comp as $key => $val )
 				$js_replace .= ".replace(/". $key ."/g,'". str_replace( array("\n", "\r"), array('\n','\r'), $val ) ."')";
 			
 			$this->datas.= sprintf("editAreaLoader.iframe_script= \"<script type='text/javascript'>%s</script>\"%s;\n",

@@ -48,7 +48,6 @@ define('_US_IAGREE','I agree to the above');
 define('_US_UNEEDAGREE', 'Sorry, you have to agree to our disclaimer to get registered.');
 define('_US_NOREGISTER','Sorry, we are currently closed for new user registrations');
 
-
 // %s is username. This is a subject for email
 define('_US_USERKEYFOR','User activation key for %s');
 
@@ -62,8 +61,7 @@ define('_US_NEWUSERREGAT','New user registration at %s');
 define('_US_HASJUSTREG','%s has just registered!');
 
 define('_US_INVALIDMAIL','ERROR: Invalid email');
-define('_US_EMAILNOSPACES','ERROR: Email addresses do not contain spaces.');
-define('_US_INVALIDNICKNAME','ERROR: Invalid Username');
+define('_US_INVALIDNICKNAME','ERROR: Invalid Loginname, please try an other Loginname.');
 define('_US_NICKNAMETOOLONG','Username is too long. It must be less than %s characters.');
 define('_US_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');
 define('_US_NAMERESERVED','ERROR: Name is reserved.');
@@ -73,7 +71,6 @@ define('_US_NICKNAMETAKEN','ERROR: Display Name taken.');
 define('_US_EMAILTAKEN','ERROR: Email address already registered.');
 define('_US_ENTERPWD','ERROR: You must provide a password.');
 define('_US_SORRYNOTFOUND','Sorry, no corresponding user info was found.');
-
 
 define('_US_USERINVITE', 'Membership invitation');
 define('_US_INVITENONE','ERROR: Registration is by invitation only.');
@@ -86,7 +83,6 @@ define('_US_INVITEDBERR','We were unable to process your registration request du
 define('_US_INVITESENT','An email containing registration link has been sent to the email account you provided. Please follow the instructions in the mail to register your account. This could take few minutes so please be patient.');
 // %s is your site name
 define('_US_INVITEREGLINK','Registration invitation from %s');
-
 
 // %s is your site name
 define('_US_NEWPWDREQ','New Password Request at %s');

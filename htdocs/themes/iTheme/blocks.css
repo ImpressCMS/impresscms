@@ -28,11 +28,7 @@
 }
 
 #xo-canvas-leftcolumn .xo-blockcontent, #xo-canvas-rightcolumn .xo-blockcontent {
-	padding: 0.5em;
-}
-
-#xo-canvas-leftcolumn .xo-block.system .xo-blockcontent {
-	padding: 0;
+	padding: 3px;
 }
 
 #xo-canvas-leftcolumn th, #xo-canvas-rightcolumn th {

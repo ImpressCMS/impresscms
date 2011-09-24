@@ -113,13 +113,22 @@ function _initial_recursive( $val , $key )
 }
 
 
-function &getInstance()
+static function &getInstance()
 {
 	static $instance ;
 	if( ! isset( $instance ) ) {
 		$instance = new Protector() ;
 	}
 	return $instance ;
+}
+
+
+function updateConfIntoDb( $name , $value )
+{
+	$constpref = '_MI_' . strtoupper( $this->mydirname ) ;
+
+	icms::$xoopsDB->queryF( "UPDATE `".icms::$xoopsDB->prefix("config")."` SET `conf_value`='".addslashes($value)."' WHERE `conf_title` like '".$constpref."%' AND `conf_name`='".addslashes($name)."' LIMIT 1" ) ;
+	$this->updateConfFromDB() ;
 }
 
 
@@ -245,7 +254,7 @@ function write_file_bwlimit( $expire )
 
 function get_bwlimit()
 {
-	list( $expire ) = @file( Protector::get_filepath4bwlimit() ) ;
+	list( $expire ) = @file( self::get_filepath4bwlimit() ) ;
 	$expire = min( intval( $expire ) , time() + 300 ) ;
 
 	return $expire ;
@@ -289,7 +298,7 @@ function register_bad_ips( $jailed_time = 0 , $ip = null )
 
 function get_bad_ips( $with_jailed_time = false )
 {
-	list( $bad_ips_serialized ) = @file( Protector::get_filepath4badips() ) ;
+	list( $bad_ips_serialized ) = @file( self::get_filepath4badips() ) ;
 	$bad_ips = empty( $bad_ips_serialized ) ? array() : @unserialize( $bad_ips_serialized ) ;
 	if( ! is_array( $bad_ips ) || isset( $bad_ips[0] ) ) $bad_ips = array() ;
 
@@ -317,7 +326,7 @@ function get_filepath4badips()
 
 function get_group1_ips( $with_info = false )
 {
-	list( $group1_ips_serialized ) = @file( Protector::get_filepath4group1ips() ) ;
+	list( $group1_ips_serialized ) = @file( self::get_filepath4group1ips() ) ;
 	$group1_ips = empty( $group1_ips_serialized ) ? array() : @unserialize( $group1_ips_serialized ) ;
 	if( ! is_array( $group1_ips ) ) $group1_ips = array() ;
 
@@ -679,6 +688,7 @@ function check_uploaded_files()
 			$ext = strtolower( substr( strrchr( $_file['name'] , '.' ) , 1 ) ) ;
 			if( $ext == 'jpeg' ) $ext = 'jpg' ;
 			else if( $ext == 'tiff' ) $ext = 'tif' ;
+			else if( $ext == 'swc' ) $ext = 'swf' ;
 
 			// anti multiple dot file (Apache mod_mime.c)
 			if( count( explode( '.' , str_replace( '.tar.gz' , '.tgz' , $_file['name'] ) ) ) > 2 ) {
@@ -705,7 +715,9 @@ function check_uploaded_files()
 					@unlink( $temp_file ) ;
 				}
 
-				if( $image_attributes === false || $image_extensions[ intval( $image_attributes[2] ) ] != $ext ) {
+				$imagetype = intval( $image_attributes[2] ) ;
+				if( $imagetype == IMAGETYPE_SWC ) $imagetype = IMAGETYPE_SWF ;
+				if( $image_attributes === false || $image_extensions[ $imagetype ] != $ext ) {
 					$this->message .= "Attempt to upload camouflaged image file {$_file['name']}.\n" ;
 					$this->_safe_badext = false ;
 					$this->last_error_type = 'UPLOAD' ;
@@ -775,9 +787,7 @@ function check_sql_union( $sanitize = true )
 }
 
 
-function check_dos_attack( $uid = 0 , $can_ban = false )
-{
-	global $xoopsDB ;
+function check_dos_attack( $uid = 0 , $can_ban = false ) {
 
 	if( $this->_done_dos ) return true ;
 
@@ -788,36 +798,36 @@ function check_dos_attack( $uid = 0 , $can_ban = false )
 	if( empty( $ip ) || $ip == '' ) return true ;
 
 	// gargage collection
-	$result = $xoopsDB->queryF( "DELETE FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE expire < UNIX_TIMESTAMP()" ) ;
+	$result = icms::$xoopsDB->queryF( "DELETE FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE expire < UNIX_TIMESTAMP()" ) ;
 
-	// for older versions before updating this module 
+	// for older versions before updating this module
 	if( $result === false ) {
 		$this->_done_dos = true ;
 		return true ;
 	}
 
 	// sql for recording access log (INSERT should be placed after SELECT)
-	$sql4insertlog = "INSERT INTO ".$xoopsDB->prefix($this->mydirname."_access")." SET ip='$ip4sql',request_uri='$uri4sql',expire=UNIX_TIMESTAMP()+'".intval($this->_conf['dos_expire'])."'" ;
+	$sql4insertlog = "INSERT INTO ".icms::$xoopsDB->prefix($this->mydirname."_access")." SET ip='$ip4sql',request_uri='$uri4sql',expire=UNIX_TIMESTAMP()+'".intval($this->_conf['dos_expire'])."'" ;
 
 	// bandwidth limitation
 	if( @$this->_conf['bwlimit_count'] >= 10 ) {
-		$result = $xoopsDB->query( "SELECT COUNT(*) FROM ".$xoopsDB->prefix($this->mydirname."_access") ) ;
-		list( $bw_count ) = $xoopsDB->fetchRow( $result ) ;
+		$result = icms::$xoopsDB->query( "SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix($this->mydirname."_access") ) ;
+		list( $bw_count ) = icms::$xoopsDB->fetchRow( $result ) ;
 		if( $bw_count > $this->_conf['bwlimit_count'] ) {
 			$this->write_file_bwlimit( time() + $this->_conf['dos_expire'] ) ;
 		}
 	}
 
 	// F5 attack check (High load & same URI)
-	$result = $xoopsDB->query( "SELECT COUNT(*) FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql' AND request_uri='$uri4sql'" ) ;
-	list( $f5_count ) = $xoopsDB->fetchRow( $result ) ;
+	$result = icms::$xoopsDB->query( "SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql' AND request_uri='$uri4sql'" ) ;
+	list( $f5_count ) = icms::$xoopsDB->fetchRow( $result ) ;
 	if( $f5_count > $this->_conf['dos_f5count'] ) {
 
 		// delayed insert
-		$xoopsDB->queryF( $sql4insertlog ) ;
+		icms::$xoopsDB->queryF( $sql4insertlog ) ;
 
 		// extends the expires of the IP with 5 minutes at least (pending)
-		// $result = $xoopsDB->queryF( "UPDATE ".$xoopsDB->prefix($this->mydirname."_access")." SET expire=UNIX_TIMESTAMP()+300 WHERE ip='$ip4sql' AND expire<UNIX_TIMESTAMP()+300" ) ;
+		// $result = icms::$xoopsDB->queryF( "UPDATE ".icms::$xoopsDB->prefix($this->mydirname."_access")." SET expire=UNIX_TIMESTAMP()+300 WHERE ip='$ip4sql' AND expire<UNIX_TIMESTAMP()+300" ) ;
 
 		// call the filter first
 		$ret = $this->call_filter( 'f5attack_overrun' ) ;
@@ -857,11 +867,11 @@ function check_dos_attack( $uid = 0 , $can_ban = false )
 	}
 
 	// Crawler check (High load & different URI)
-	$result = $xoopsDB->query( "SELECT COUNT(*) FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql'" ) ;
-	list( $crawler_count ) = $xoopsDB->fetchRow( $result ) ;
+	$result = icms::$xoopsDB->query( "SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql'" ) ;
+	list( $crawler_count ) = icms::$xoopsDB->fetchRow( $result ) ;
 
 	// delayed insert
-	$xoopsDB->queryF( $sql4insertlog ) ;
+	icms::$xoopsDB->queryF( $sql4insertlog ) ;
 
 	if( $crawler_count > $this->_conf['dos_crcount'] ) {
 
@@ -899,11 +909,8 @@ function check_dos_attack( $uid = 0 , $can_ban = false )
 }
 
 
-// 
-function check_brute_force()
-{
-	global $xoopsDB ;
-
+//
+function check_brute_force(){
 	$ip = @$_SERVER['REMOTE_ADDR'] ;
 	$uri = @$_SERVER['REQUEST_URI'] ;
 	$ip4sql = addslashes( $ip ) ;
@@ -916,14 +923,14 @@ function check_brute_force()
 	$mal4sql = addslashes( "BRUTE FORCE: $victim_uname" ) ;
 
 	// gargage collection
-	$result = $xoopsDB->queryF( "DELETE FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE expire < UNIX_TIMESTAMP()" ) ;
+	$result = icms::$xoopsDB->queryF( "DELETE FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE expire < UNIX_TIMESTAMP()" ) ;
 
 	// sql for recording access log (INSERT should be placed after SELECT)
-	$sql4insertlog = "INSERT INTO ".$xoopsDB->prefix($this->mydirname."_access")." SET ip='$ip4sql',request_uri='$uri4sql',malicious_actions='$mal4sql',expire=UNIX_TIMESTAMP()+600" ;
+	$sql4insertlog = "INSERT INTO ".icms::$xoopsDB->prefix($this->mydirname."_access")." SET ip='$ip4sql',request_uri='$uri4sql',malicious_actions='$mal4sql',expire=UNIX_TIMESTAMP()+600" ;
 
 	// count check
-	$result = $xoopsDB->query( "SELECT COUNT(*) FROM ".$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql' AND malicious_actions like 'BRUTE FORCE:%'" ) ;
-	list( $bf_count ) = $xoopsDB->fetchRow( $result ) ;
+	$result = icms::$xoopsDB->query( "SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix($this->mydirname."_access")." WHERE ip='$ip4sql' AND malicious_actions like 'BRUTE FORCE:%'" ) ;
+	list( $bf_count ) = icms::$xoopsDB->fetchRow( $result ) ;
 	if( $bf_count > $this->_conf['bf_count'] ) {
 		$this->register_bad_ips( time() + $this->_conf['banip_time0'] ) ;
 		$this->last_error_type = 'BruteForce' ;
@@ -933,7 +940,7 @@ function check_brute_force()
 		if( $ret == false ) exit ;
 	}
 	// delayed insert
-	$xoopsDB->queryF( $sql4insertlog ) ;
+	icms::$xoopsDB->queryF( $sql4insertlog ) ;
 }
 
 
@@ -977,6 +984,25 @@ function spam_check( $points4deny , $uid )
 }
 
 
+function check_manipulation()
+{
+	if( $_SERVER['SCRIPT_FILENAME'] == XOOPS_ROOT_PATH.'/index.php' ) {
+		$root_stat = stat( XOOPS_ROOT_PATH ) ;
+		$index_stat = stat( XOOPS_ROOT_PATH.'/index.php' ) ;
+		$finger_print = $root_stat['mtime'] .':'. $index_stat['mtime'] .':'. $index_stat['ino'] ;
+		if( empty( $this->_conf['manip_value'] ) ) {
+			$this->updateConfIntoDb( 'manip_value' , $finger_print ) ;
+		} else if( $finger_print != $this->_conf['manip_value'] ) {
+			// Notify if finger_print is ident from old one
+			$ret = $this->call_filter( 'postcommon_manipu' ) ;
+			if( $ret == false ) die( 'Protector detects site manipulation.' ) ;
+			$this->updateConfIntoDb( 'manip_value' , $finger_print ) ;
+		}
+	}
+
+}
+
+
 function disable_features()
 {
 	global $HTTP_POST_VARS , $HTTP_GET_VARS , $HTTP_COOKIE_VARS ;
@@ -1017,20 +1043,20 @@ function disable_features()
 				$this->output_log( 'misc debug' ) ;
 				exit ;
 			}
-		
+
 			// zx 2004/12/13 misc.php smilies
 			if( substr( @$_SERVER['SCRIPT_NAME'] , -8 ) == 'misc.php' && ( $_GET['type'] == 'smilies' || $_POST['type'] == 'smilies' ) && ! preg_match( '/^[0-9a-z_]*$/i' , $_GET['target'] ) ) {
 				$this->output_log( 'misc smilies' ) ;
 				exit ;
 			}
-		
+
 			// zx 2005/1/5 edituser.php avatarchoose
 			if( substr( @$_SERVER['SCRIPT_NAME'] , -12 ) == 'edituser.php' && $_POST['op'] == 'avatarchoose' && strstr( $_POST['user_avatar'] , '..' ) ) {
 				$this->output_log( 'edituser avatarchoose' ) ;
 				exit ;
 			}
 		}
-	
+
 		// zx 2005/1/4 findusers
 		if( substr( @$_SERVER['SCRIPT_NAME'] , -24 ) == 'modules/system/admin.php' && ( $_GET['fct'] == 'findusers' || $_POST['fct'] == 'findusers' ) ) {
 			foreach( $_POST as $key => $val ) {
@@ -1040,8 +1066,8 @@ function disable_features()
 				}
 			}
 		}
-	
-		// preview CSRF zx 2004/12/14 
+
+		// preview CSRF zx 2004/12/14
 		// news submit.php
 		if( substr( @$_SERVER['SCRIPT_NAME'] , -23 ) == 'modules/news/submit.php' && isset( $_POST['preview'] ) && strpos( @$_SERVER['HTTP_REFERER'] , XOOPS_URL.'/modules/news/submit.php' ) !== 0 ) {
 			$HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1 ;

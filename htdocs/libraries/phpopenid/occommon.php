@@ -16,9 +16,7 @@ $path = $path_extra2 . PATH_SEPARATOR . $path_extra . PATH_SEPARATOR . $path;
 ini_set('include_path', $path);
 
 function displayError($message) {
-    $error = $message;
-    include 'index.php';
-    exit(0);
+	icms_core_Message::warning($message, '', TRUE);
 }
 
 function doIncludes() {
@@ -62,16 +60,18 @@ function &getStore() {
      * script, you'll have to remove this directory manually.
      */
     //$store_path = "/tmp/_php_consumer_test";
-    $store_path = XOOPS_TRUST_PATH . "/_php_consumer";
+    $store_path = ICMS_TRUST_PATH . "/_php_consumer";
 
-    if (!file_exists($store_path) &&
-        !mkdir($store_path)) {
-        print "Could not create the FileStore directory - ".
-            " Please check the effective permissions.";
+    if (!file_exists($store_path) 
+    	&& !mkdir($store_path)
+    ) {
+        print "Could not create the FileStore directory."
+        	. " Please check the effective permissions.";
         exit(0);
     }
 
-    return new Auth_OpenID_FileStore($store_path);
+    $return = new Auth_OpenID_FileStore($store_path);
+    return $return;
 }
 
 function &getConsumer() {
@@ -80,7 +80,8 @@ function &getConsumer() {
      * earlier.
      */
     $store = getStore();
-    return new Auth_OpenID_Consumer($store);
+    $return = new Auth_OpenID_Consumer($store);
+    return $return;
 }
 
 function getScheme() {
@@ -91,18 +92,21 @@ function getScheme() {
     return $scheme;
 }
 
+/**
+ * OpenID needs a target URI to return its response
+ */
 function getReturnTo() {
-    return sprintf("%s://%s:%s%s/finish_auth.php",
-                   getScheme(), $_SERVER['SERVER_NAME'],
-                   $_SERVER['SERVER_PORT'],
-                   dirname($_SERVER['PHP_SELF']));
+	return ICMS_URL . "/finish_auth.php";
 }
 
 function getTrustRoot() {
-    return sprintf("%s://%s:%s%s/",
+	$directory = dirname($_SERVER['PHP_SELF']); 
+	$directory = "/" ? "" : $directory;
+	return sprintf("%s://%s:%s%s/",
                    getScheme(), $_SERVER['SERVER_NAME'],
                    $_SERVER['SERVER_PORT'],
-                   dirname($_SERVER['PHP_SELF']));
+                   $directory
+                   );
 }
 
 
@@ -113,11 +117,12 @@ function getTrustRoot() {
  * you'll have to remove this directory manually.
  */
 
-$store_path = XOOPS_TRUST_PATH . "/_php_consumer";
-if (!file_exists($store_path) &&
-    !mkdir($store_path)) {
-    print "Could not create the FileStore directory '$store_path'. ".
-        " Please check the effective permissions.";
+$store_path = ICMS_TRUST_PATH . "/_php_consumer";
+if (!file_exists($store_path) 
+	&& !mkdir($store_path)
+) {
+    print "Could not create the FileStore directory." 
+    	. " Please check the effective permissions.";
     exit(0);
 }
 
@@ -131,25 +136,21 @@ $consumer = new Auth_OpenID_Consumer($store);
 /**
  * Sanitization Functions
  */
-function quote_smart($value)
-{
+function quote_smart($value) {
     // Stripslashes
     if (get_magic_quotes_gpc()) {
         $value = stripslashes($value);
     }
     // Escape non-numeric string
     if (!is_numeric($value)) {
-        $value = "'" . mysql_real_escape_string($value) . "'";
+        $value = "'" . icms::$xoopsDB->escape($value) . "'";
     }
     return $value;
 }
 
 
-function alphaonly($str)
-{
+function alphaonly($str) {
 	$str2 = preg_replace("/[^a-zA-Z0-9=@\/\.]/",'_',$str);
 	return $str2;
 }
 
-
-?>

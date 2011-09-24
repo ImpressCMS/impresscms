@@ -39,25 +39,6 @@
 	<link rel="stylesheet" type="text/css" media="all" href="<{$icms_url}>/modules/system/style<{if $icms_rtl}>_rtl<{/if}>.css" />
 	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$icms_imageurl}><{if $icms_rtl}>rtl/<{/if}>style_admin.css" />
 
-<!-- If You want to have messages and errors in the admin menu, you should add this part to each admin them. -->
-<{if $site_msg}>
-<script type="text/javascript" src="<{$icms_url}>/libraries/jquery/jgrowl.js">
-</script>
-<link rel="stylesheet" media="screen" href="<{$icms_url}>/libraries/jquery/jgrowl.css" type="text/css" />
-<script type="text/javascript">
-if (!window.console || !console.firebug) {
-	var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
-	window.console = {};
-	for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
-}
-(function($){
-	$(document).ready(function(){
-		$.jGrowl("<{$site_msg}>", {  life:5000 , position: "center", speed: "slow" });
-	});
-})(jQuery);
-</script>
-<{/if}>
-
 </head>
 
 <body id="<{$icms_dirname}>" class="<{$icms_langcode}>">
@@ -107,15 +88,23 @@ if (!window.console || !console.firebug) {
                 <{if $item.id == 'cphome'}>
 		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$icms_url}>/modules/system/images/imagesarrow1.gif<{/if}>);"><{$sub.title}></a></li>
                 <{elseif $item.id == 'opsystem'}>
-		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$icms_url}>/modules/system/<{$sub.small}><{/if}>);"><{$sub.title}></a>
-    		      <{if $sub.hassubs}>
-	    	        <ul>
-		              <{foreach item=subitem from=$sub.subs}>
-		                <li><a href="<{$subitem.link}>"><{$subitem.title}></a></li>
-		              <{/foreach}>
-		            </ul>
-		          <{/if}>
-		          </li>
+                  <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>"><{$sub.title}></a>
+                    <{if $sub.hassubs}>
+                      <ul>
+                        <{foreach item=subitem from=$sub.subs}>
+                          <li><a href="<{$subitem.link}>" style="background-image: url(<{if $subitem.small!=''}><{$icms_url}>/modules/system/<{$subitem.small}><{else}><{$icms_url}>/modules/system/images/imagesarrow1.gif<{/if}>);"><{$subitem.title}></a>
+                            <{if $subitem.hassubs}>
+                              <ul>
+                                <{foreach item=subsubitem from=$subitem.subs}>
+                                  <li><a href="<{$subsubitem.link}>"><{$subsubitem.title}></a></li>
+                                <{/foreach}>
+                              </ul>
+                            <{/if}>
+                          </li>
+                        <{/foreach}>
+                      </ul>
+                    <{/if}>
+                  </li>
                 <{elseif $item.id == 'modules'}>
 		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$icms_url}>/modules/system/images/modulesitem.png<{/if}>);"><{$sub.title}></a>
     		      <{if $sub.hassubs}>
@@ -169,6 +158,8 @@ if (!window.console || !console.firebug) {
 <!--<{/if}>-->
 <!-- to be enabled at later date -->
 	<!-- Content -->
+	<div style="width: 100%; height: 11px; background: transparent; clear: both;">&nbsp;</div>
+	<div style="width: 100%; height: 10px; background: transparent; clear: both;">&nbsp;</div>
 	<div id="xo-canvas-content">
 		<div id="xo-canvas-columns">
 			<!-- Left column -->
@@ -227,10 +218,7 @@ if (!window.console || !console.firebug) {
 </div>
 	<!-- Footer -->
 	<div id="xo-footer">
-	<div id="banner" style="margin-left: auto; margin-right: auto;"><{$icms_banner}>
-	<br />
-	<{$icms_footadm}>
-	</div>
+	<div style="margin-left: auto; margin-right: auto;"><{$icms_footadm}></div>
 	</div>
 </body>
 </html>

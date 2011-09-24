@@ -20,7 +20,7 @@
  <td style="background-image: url(images/search/bodyHeader.background.gif);">
  	<div style="padding-top: 5px; padding-bottom: 5px;"><b><{$sort_key}></b>: (<{$sort_value}> <{$smarty.const._SR_HITSRETURNED}>)</div>
 <{if $search_results[$sort_key].search_more_url != ''}>
-	  <span style="margin: 10px; padding: 2px 0.5em 3px 0.5em; background-image: url(images/search/backgnd.png); background-repeat: repeat-x; height:30px;border: outset 1px #ccc;">
+	  <span style="margin: 10px; padding: 2px 0.5em 3px 0.5em; height:30px;">
 	  <a href="<{$search_results[$sort_key].search_more_url}>">
 	  <img style="vertical-align: middle;" src="images/search/blue_view.png" alt="<{$search_results[$sort_key].search_more_title}>" /> <{$smarty.const._SR_SHOWALLR}>
 	  </a>
@@ -40,7 +40,7 @@
 		<{section name=cur_result loop=$search_results[$sort_key].results}>
 		<tr>
 			<td class="head"><{math equation="x + y" x=$smarty.section.cur_result.index y=$start}></td>
-			<td style="width: 100%; float: <{$smarty.const._GLOBAL_LEFT}>;" class="<{cycle values="even,odd"}>">
+			<td style="width: 100%;" class="<{cycle values="even,odd"}>">
 				<img alt="<{$search_results[$sort_key].results[cur_result].processed_image_alt_text}>" src="<{$search_results[$sort_key].results[cur_result].processed_image_url}>" />
 				<{$search_results[$sort_key].results[cur_result].processed_image_tag}>&nbsp;
 				<b><a href="<{$search_results[$sort_key].results[cur_result].link}>"><{$search_results[$sort_key].results[cur_result].processed_title}></a>						</b>

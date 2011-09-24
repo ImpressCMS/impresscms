@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
-$db =& Database::getInstance() ;
+$db =& icms_db_Factory::instance() ;
 
 	// for RTL users
 	@define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
@@ -54,7 +54,7 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 
 	}
 
-	$_SESSION['protector_logger'] = $xoopsLogger->dumpQueries() ;
+	$_SESSION['protector_logger'] = icms::$logger->dumpQueries() ;
 
 	redirect_header( 'index.php?page=prefix_manager' , 1 , _AM_MSG_DBUPDATED ) ;
 	exit ;
@@ -167,7 +167,7 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 		$drs = $db->queryF( "DROP TABLE `$table`" ) ;
 	}
 
-	$_SESSION['protector_logger'] = $xoopsLogger->dumpQueries() ;
+	$_SESSION['protector_logger'] = icms::$logger->dumpQueries() ;
 
 	redirect_header( 'index.php?page=prefix_manager' , 1 , _AM_MSG_DBUPDATED ) ;
 	exit ;

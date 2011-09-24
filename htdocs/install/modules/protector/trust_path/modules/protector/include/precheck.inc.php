@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/precheck_functions.php' ;
 
-if( class_exists( 'Database' ) ) {
+if(in_array('Database', get_declared_classes()) ) {
 	require dirname(__FILE__).'/postcheck.inc.php' ;
 	return ;
 }

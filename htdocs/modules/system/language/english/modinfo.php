@@ -35,7 +35,6 @@ define('_MI_SYSTEM_BNAME17', "Related Content");
 define('_MI_SYSTEM_BNAME18', "Share this page!");
 
 // Names of admin menu items
-define("_MI_SYSTEM_ADMENU1","Banners");
 define("_MI_SYSTEM_ADMENU2","Blocks");
 define("_MI_SYSTEM_ADMENU3","Groups");
 define("_MI_SYSTEM_ADMENU5","Modules");
@@ -68,4 +67,6 @@ define('_MI_SYSTEM_BLOCK_BOOKMARKS_DESC','Things I have bookmarked');
 
 define("_MI_SYSTEM_ADMENU25", "Autotasks");
 define('_MI_SYSTEM_REMOVEUSERS','Inactivating users');
-?>
+
+// Added in 1.3
+define('_MI_SYSTEM_BLOCK_CP_NEW', 'New Control Panel');

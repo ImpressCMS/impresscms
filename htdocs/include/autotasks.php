@@ -8,6 +8,7 @@
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
  * @internal	This file is used for executing sheduled tasks
+ * @version		$Id$
  */
 
 ob_start();
@@ -20,5 +21,3 @@ chdir(dirname(__FILE__));
 require_once '../mainfile.php';
 
 ob_end_clean();
-
-?>

@@ -11,7 +11,7 @@
  *
  * Type:     function
  * Name:     resized_image
- * Date:     Feb 24, 2003
+ * Date:     December 22, 2010
  * Purpose:  resizes an image to the specified size and returns a formatted HTML tag for the image
  * Input:
  *         - file = file (and path) of image (required)
@@ -20,7 +20,8 @@
  *         - basedir = base directory for absolute paths, default
  *                     is environment variable DOCUMENT_ROOT
  *         - path_prefix = prefix for path output (optional, default empty)
- *		   - fit = The way the image is resized. Possible values:
+ *         - return = return an IMG tag or just and URL (defaults to IMG tag)
+ *		     - fit = The way the image is resized. Possible values:
 			� inside (the image will fit inside the new dimensions while maintaining the aspect ratio)
 			� fill (the image will completely fit inside the new dimensions)
 			� outside (the image will be resized to completely fill the specified rectangle, while still maintaining aspect ratio)
@@ -30,7 +31,7 @@
  * {resized_image file="/images/image.jpg" height=70 width=120 fit="inside" class="resized"}
  * @author Ignacio Segura <nacho at pensamientosdivergentes.net>
  * Based on work by Monte Ohrt <monte at ohrt dot com> and Duda <duda@big.hu>
- * @version  1.0
+ * @version  1.11
  * @param array
  * @param Smarty
  * @return string
@@ -53,7 +54,8 @@ function smarty_function_resized_image($params, &$smarty)
     $extra = '';
     $prefix = '';
     $suffix = '';
-	$fit = 'inside';
+		$fit = 'inside';
+		$return = 'img';
     $path_prefix = '';
     $server_vars = ($smarty->request_use_auto_globals) ? $_SERVER : $GLOBALS['HTTP_SERVER_VARS'];
     $basedir = isset($server_vars['DOCUMENT_ROOT']) ? $server_vars['DOCUMENT_ROOT'] : '';
@@ -62,7 +64,8 @@ function smarty_function_resized_image($params, &$smarty)
             case 'file':
             case 'height':
             case 'width':
-			case 'fit':
+						case 'fit':
+						case 'return':
             case 'path_prefix':
             case 'basedir':
                 $$_key = $_val;
@@ -104,16 +107,28 @@ function smarty_function_resized_image($params, &$smarty)
 	if ($fit == 'fill' && (empty($width) || empty($height) ) ) {
 		$smarty->trigger_error("resized_image:  When you choose 'fill' fit, you have to specify both width and height", E_USER_ERROR);
 	}
+	// Transliteration - prepare a clean name for file
+	$clean_file = str_replace(' ', '_', $file); // remove spaces
+	$from = explode(' ', 'Á á É é è ê È Ê Í í Ó ó Ú ú Ñ ñ Ç ç');
+	$to   = explode(' ', 'A a E e e e E E I i O o U u N n C c');
+	$clean_file = str_replace($from, $to, strtolower($clean_file)); // removing special characters, convert to lowercase, encoding in URL the remaining for safe
+	$clean_file = str_replace('%2F', '/', urlencode($clean_file)); // URLencode the remaining, but taking into consideration the / char.
+		
 	// Preparing paths
-    if (substr($file,0,1) == '/') {
-        $original['path'] = $basedir . $file;
-		$resized['path'] = ICMS_ROOT_PATH.'/cache'.$file;
-		$resized['url'] = ICMS_URL.'/cache'.$file;
-    } else {
-        $original['path'] = $file;
-		$resized['path'] = ICMS_ROOT_PATH.'/cache/'.$file;
-		$resized['url'] = ICMS_URL.'/cache/'.$file;
-    }
+	if (substr($file,0,1) == '/') {
+		$original['path'] = $basedir . $file;
+		$resized['path'] = ICMS_ROOT_PATH.'/cache'.$clean_file;
+		$resized['url'] = ICMS_URL.'/cache'.$clean_file;
+	} elseif (strpos($file, ICMS_URL) === 0) {	// In case of full URL
+		$original['path'] = ICMS_ROOT_PATH. str_replace(ICMS_URL, '', $file);
+		$clean_file = str_replace(ICMS_URL, '', urldecode($clean_file)); // Clean file shouuld not have Full URL
+		$resized['path'] = ICMS_ROOT_PATH.'/cache'.$clean_file;
+		$resized['url'] = ICMS_URL.'/cache'.$clean_file;
+	} else {
+		$original['path'] = $file;
+		$resized['path'] = ICMS_ROOT_PATH.'/cache/'.$clean_file;
+		$resized['url'] = ICMS_URL.'/cache/'.$clean_file;
+	}
     // Check if original image exists
 	if(!$_image_data = @getimagesize($original['path'])) {
 		if(!file_exists($original['path'])) {
@@ -157,17 +172,22 @@ function smarty_function_resized_image($params, &$smarty)
 	
 	// If file does not exist
 	// or it's outdated, create:
-	if (!file_exists($resized['path']) or ( filemtime ($original['path']) !== filemtime ($resized['path']) ) ) { 
+	if (!file_exists($resized['path']) or ( filemtime ($original['path']) > filemtime ($resized['path']) ) ) { 
 		if (!is_dir($resized['dir'])) { // If dir does not exist, create
 			mkdir ($resized['dir'], 0755, true);
 		}
 		// Resize image using WideImage library
 		include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 		$resized_img = WideImage::load($original['path'], 'jpg');
+		
 		$resized_img->resize($resized['width'], $resized['height'], $fit)->saveToFile($resized['path']);
 	}
 
-    return $prefix . '<img src="'.$resized['url'].'" alt="'.$alt.'" '.$extra.' />' . $suffix;
+	if ($return == 'url') {
+  	return $resized['url'];
+	} else {
+		return $prefix . '<img src="'.$resized['url'].'" alt="'.$alt.'" '.$extra.' />' . $suffix;
+	}
 }
 
 ?>

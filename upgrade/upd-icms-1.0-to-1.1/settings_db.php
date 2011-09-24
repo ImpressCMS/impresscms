@@ -16,7 +16,7 @@
  * @version		$Id: setting_db.php 1747 2008-04-20 19:42:15Z pesian_stranger $
  */
 
-if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
+if (!defined( 'ICMS_ROOT_PATH' )) {
     die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
 }
 
@@ -28,8 +28,8 @@ function getDbCharsets()
     
     $charsets["utf8"] = array();
     $ut8_available = false;
-    if ( $result = $GLOBALS["xoopsDB"]->queryF("SHOW CHARSET") ) {
-	    while ( $row = $GLOBALS["xoopsDB"]->fetchArray($result) ) {
+    if ($result = $GLOBALS["xoopsDB"]->queryF("SHOW CHARSET")) {
+	    while ($row = $GLOBALS["xoopsDB"]->fetchArray($result)) {
             $charsets[$row["Charset"]]["desc"] = $row["Description"];
     	    if ($row["Charset"] == "utf8") {
                 $ut8_available = true;
@@ -48,8 +48,8 @@ function getDbCollations()
     $collations = array();
     $charsets = getDbCharsets();
     
-    if ( $result = $GLOBALS["xoopsDB"]->queryF("SHOW COLLATION") ) {
-	    while ( $row = $GLOBALS["xoopsDB"]->fetchArray($result) ) {
+    if ($result = $GLOBALS["xoopsDB"]->queryF("SHOW COLLATION")) {
+	    while ($row = $GLOBALS["xoopsDB"]->fetchArray($result)) {
     	    $charsets[$row["Charset"]]["collation"][] = $row["Collation"];
 	    }
     }
@@ -66,7 +66,7 @@ function xoFormFieldCollation( $name, $value, $label, $help = '' )
 	$value = htmlspecialchars( $value, ENT_QUOTES );
 	
 	$field = "<label for='$name'>$label</label>\n";
-	if ( $help ) {
+	if ($help) {
 		$field .= '<div class="xoform-help1">' . $help . "</div>\n";
 	}
 	$field .= "<select name='$name' id='$name'\">";
@@ -86,22 +86,22 @@ function xoFormFieldCollation( $name, $value, $label, $help = '' )
 	return $field;
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'db' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'db') {
 	$params = array( 'DB_COLLATION' );
-	foreach ( $params as $name ) {
+	foreach ( $params as $name) {
 		$vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";
 	}
 	
 	return $vars;
 }
 
-if ( !isset( $vars['DB_COLLATION'] ) ) {
+if (!isset( $vars['DB_COLLATION'] )) {
     $vars['DB_COLLATION'] = '';
 }
 
 
 ?>
-<?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
 <fieldset>

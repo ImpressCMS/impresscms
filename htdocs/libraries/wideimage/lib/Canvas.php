@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -30,6 +30,11 @@
 	/**
 	 * @package Exceptions
 	 */
+	class WideImage_InvalidFontFileException extends WideImage_Exception {}
+	
+	/**
+	 * @package Exceptions
+	 */
 	class WideImage_InvalidCanvasMethodException extends WideImage_Exception {}
 	
 	/**
@@ -41,21 +46,82 @@
 		protected $image = null;
 		protected $font = null;
 		
+		/**
+		 * Creates a canvas object that writes to the image passed as a parameter
+		 *
+		 * Shouldn't be used directly, use WideImage_Image::getCanvas() instead.
+		 *
+		 * @param WideImage_Image $img Image object
+		 */
 		function __construct($img)
 		{
 			$this->handle = $img->getHandle();
 			$this->image = $img;
 		}
 		
+		/**
+		 * Sets the active font. Can be an instance of 
+		 * WideImage_Font_TTF, WideImage_Font_PS, or WideImage_Font_GDF.
+		 *
+		 *
+		 *
+		 *
+		 * @param object $font Font object to set for writeText()
+		 */
 		function setFont($font)
 		{
 			$this->font = $font;
 		}
 		
 		/**
+		 * Creates and sets the current font
+		 * 
+		 * The supported font types are: TTF/OTF, PS, and GDF.
+		 * Font type is detected from the extension. If the $file parameter doesn't have an extension, TTF font is presumed.
+		 * 
+		 * Note: not all parameters are supported by all fonts.
+		 * 
+		 * @param string $file Font file name (string)
+		 * @param int $size Font size (supported for TTF/OTF and PS fonts, ignored for GDF)
+		 * @param int $color Text color
+		 * @param int $bgcolor Background color (supported only for PS font, ignored for TTF and PS)
+		 * @return mixed One of the WideImage_Font_* objects
+		 */
+		function useFont($file, $size = 12, $color = 0, $bgcolor = null)
+		{
+			$p = strrpos($file, '.');
+			if ($p === false || $p < strlen($file) - 4)
+				$ext = 'ttf';
+			else
+				$ext = strtolower(substr($file, $p + 1));
+			
+			if ($ext == 'ttf' || $ext == 'otf')
+				$font = new WideImage_Font_TTF($file, $size, $color);
+			elseif ($ext == 'ps')
+				$font = new WideImage_Font_PS($file, $size, $color, $bgcolor);
+			elseif ($ext == 'gdf')
+				$font = new WideImage_Font_GDF($file, $color);
+			else
+				throw new WideImage_InvalidFontFileException("'$file' appears to be an invalid font file.");
+			
+			$this->setFont($font);
+			return $font;
+		}
+		
+		/**
 		 * Write text on the image at specified position
 		 * 
-		 * You must set a font with a call to wiCanvas::setFont() prior to writing text to the image.
+		 * You must set a font with a call to WideImage_Canvas::setFont() prior to writing text to the image.
+		 * 
+		 * Smart coordinates are supported for $x and $y arguments, but currently only for TTF/OTF fonts.
+		 * 
+		 * Example:
+		 * <code>
+		 * $img = WideImage::load('pic.jpg');
+		 * $canvas = $img->getCanvas();
+		 * $canvas->useFont('Verdana.ttf', 16, $img->allocateColor(255, 0, 0));
+		 * $canvas->writeText('right', 'bottom', 'www.website.com');
+		 * </code>
 		 * 
 		 * @param int $x Left
 		 * @param int $y Top
@@ -99,4 +165,3 @@
 				throw new WideImage_InvalidCanvasMethodException("Function doesn't exist: image{$method}.");
 		}
 	}
-?>

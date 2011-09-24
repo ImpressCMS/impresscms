@@ -1,7 +1,7 @@
 <?php
 // $Id$
 //%%%%%%	Admin Module Name  Users 	%%%%%
-if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}
+if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_AM_AYSYWTDU","Are you sure you want to delete user %s?");
 define("_AM_BYTHIS","By doing this all the info for this user will be removed permanently.");
@@ -68,6 +68,5 @@ define("_AM_REMOVED_USERS","Removed Users");
 define("_AM_ADMIN_CAN_NOT_BE_DELETEED","Admin user cannot be deleted");
 define("_AM_USERS_DELETEED","deleted");
 define("_AM_COULD_NOT_DELETE","Could not delete");
-define("_AM_A_USER_WITH_THIS_EMAIL_ADDRESS","A user with ehis email address");
+define("_AM_A_USER_WITH_THIS_EMAIL_ADDRESS","A user with this email address");
 define("_AM_ALREADY_EXISTS","already exists");
-?>

@@ -10,7 +10,7 @@
  * @version		$Id: setting_salt.php 1747 2008-04-20 19:42:15Z pesian_stranger $
  */
 
-if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
+if (!defined( 'ICMS_ROOT_PATH' )) {
     die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
 }
 
@@ -21,10 +21,10 @@ function xoFormField( $name, $value, $label, $maxlength, $help = '' )
     $label = htmlspecialchars( $label );
     $name = htmlspecialchars( $name, ENT_QUOTES );
     $value = htmlspecialchars( $value, ENT_QUOTES );
-    $maxlength = intval($maxlength);
+    $maxlength = (int) $maxlength;
 
     $field = "<label for='$name'>$label</label>\n";
-    if ( $help ) {
+    if ($help) {
         $field .= '<div class="xoform-help1">' . $help . "</div>\n";
     }
     $field .= "<input type='text' name='$name' id='$name' value='$value' />";
@@ -33,16 +33,16 @@ function xoFormField( $name, $value, $label, $maxlength, $help = '' )
 }
 
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'salt' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'salt') {
 	$params = array( 'DB_SALT' );
-	foreach ( $params as $name ) {
+	foreach ( $params as $name) {
 		$vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";
 	}
 
 	return $vars;
 }
 
-if(!isset($vars['DB_SALT']))
+if (!isset($vars['DB_SALT']))
 {
     require_once ICMS_ROOT_PATH.'/class/icms_Password.php' ;
     $icmspass = new icms_Password();
@@ -51,7 +51,7 @@ if(!isset($vars['DB_SALT']))
 
 
 ?>
-<?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
 <fieldset>

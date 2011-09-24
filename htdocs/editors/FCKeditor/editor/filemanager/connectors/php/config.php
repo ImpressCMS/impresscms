@@ -1,7 +1,7 @@
 <?php
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -23,14 +23,21 @@
  */
 
 global $Config ;
-$file = '../../../../../../class/xoopseditor.inc.php';
+$file = '../../../../../../mainfile.php';
 include_once $file;
+icms::$logger->disableLogger();
 
 // SECURITY: You must explicitly enable this "connector". (Set it to "true").
 // WARNING: don't just set "$Config['Enabled'] = true ;", you must be sure that only
 //		authenticated users can access this file or use some kind of session checking.
-$Config['Enabled'] = true ;
-
+$Config['Enabled'] = false;
+global $icmsUser;
+$groups = is_object($icmsUser) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
+$gperm = icms::handler('icms_member_groupperm');
+$agroups = $gperm->getItemIds('use_wysiwygeditor', $groups);
+if (count($agroups) > 0) {
+	$Config['Enabled'] = true;
+}
 
 // Path to user files relative to the document root.
 $Config['UserFilesPath'] = ICMS_UPLOAD_URL . '/' ;
@@ -49,8 +56,8 @@ $Config['ForceSingleExtension'] = true ;
 // If set to true, validate image size (using getimagesize).
 $Config['SecureImageUploads'] = true;
 
-// What the user can do with this connector.
-$Config['ConfigAllowedCommands'] = array('QuickUpload', 'FileUpload', 'GetFolders', 'GetFoldersAndFiles', 'CreateFolder') ;
+// What the user can do with this connector. 'QuickUpload', 'FileUpload', 'GetFolders', 'GetFoldersAndFiles'
+$Config['ConfigAllowedCommands'] = array('QuickUpload', 'GetFolders', 'GetFoldersAndFiles') ;
 
 // Allowed Resource Types.
 $Config['ConfigAllowedTypes'] = array('File', 'Image', 'Flash', 'Media') ;
@@ -126,28 +133,27 @@ $Config['AllowedExtensions']['File']	= array('7z', 'aiff', 'asf', 'avi', 'bmp', 
 $Config['DeniedExtensions']['File']		= array() ;
 $Config['FileTypesPath']['File']		= $Config['UserFilesPath'] . 'file/' ;
 $Config['FileTypesAbsolutePath']['File']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'file/' ;
-$Config['QuickUploadPath']['File']		= $Config['UserFilesPath'] ;
-$Config['QuickUploadAbsolutePath']['File']= $Config['UserFilesAbsolutePath'] ;
+$Config['QuickUploadPath']['File']		= $Config['UserFilesPath'] . 'file/' ;
+$Config['QuickUploadAbsolutePath']['File']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'file/' ;
 
 $Config['AllowedExtensions']['Image']	= array('bmp','gif','jpeg','jpg','png') ;
 $Config['DeniedExtensions']['Image']	= array() ;
 $Config['FileTypesPath']['Image']		= $Config['UserFilesPath'] . 'imagemanager/' ;
 $Config['FileTypesAbsolutePath']['Image']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'imagemanager/' ;
-$Config['QuickUploadPath']['Image']		= $Config['UserFilesPath'] ;
-$Config['QuickUploadAbsolutePath']['Image']= $Config['UserFilesAbsolutePath'] ;
+$Config['QuickUploadPath']['Image']		= $Config['UserFilesPath'] . 'imagemanager/' ;
+$Config['QuickUploadAbsolutePath']['Image']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'imagemanager/' ;
 
 $Config['AllowedExtensions']['Flash']	= array('swf','flv') ;
 $Config['DeniedExtensions']['Flash']	= array() ;
 $Config['FileTypesPath']['Flash']		= $Config['UserFilesPath'] . 'flash/' ;
 $Config['FileTypesAbsolutePath']['Flash']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'flash/' ;
-$Config['QuickUploadPath']['Flash']		= $Config['UserFilesPath'] ;
-$Config['QuickUploadAbsolutePath']['Flash']= $Config['UserFilesAbsolutePath'] ;
+$Config['QuickUploadPath']['Flash']		= $Config['UserFilesPath'] . 'flash/' ;
+$Config['QuickUploadAbsolutePath']['Flash']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'flash/' ;
 
 $Config['AllowedExtensions']['Media']	= array('aiff', 'asf', 'avi', 'bmp', 'fla', 'flv', 'gif', 'jpeg', 'jpg', 'mid', 'mov', 'mp3', 'mp4', 'mpc', 'mpeg', 'mpg', 'png', 'qt', 'ram', 'rm', 'rmi', 'rmvb', 'swf', 'tif', 'tiff', 'wav', 'wma', 'wmv') ;
 $Config['DeniedExtensions']['Media']	= array() ;
 $Config['FileTypesPath']['Media']		= $Config['UserFilesPath'] . 'media/' ;
 $Config['FileTypesAbsolutePath']['Media']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'media/' ;
-$Config['QuickUploadPath']['Media']		= $Config['UserFilesPath'] ;
-$Config['QuickUploadAbsolutePath']['Media']= $Config['UserFilesAbsolutePath'] ;
+$Config['QuickUploadPath']['Media']		= $Config['UserFilesPath'] . 'media/' ;
+$Config['QuickUploadAbsolutePath']['Media']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'media/' ;
 
-?>

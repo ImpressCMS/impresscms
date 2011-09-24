@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -31,12 +31,11 @@
 	{
 		function load($uri)
 		{
-			return imagecreatefromjpeg($uri);
+			return @imagecreatefromjpeg($uri);
 		}
 		
 		function save($handle, $uri = null, $quality = 100)
 		{
-			imagejpeg($handle, $uri, $quality);
+			return imagejpeg($handle, $uri, $quality);
 		}
 	}
-?>

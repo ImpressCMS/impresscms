@@ -1,26 +1,33 @@
 <?php
 /**
- * ImpressCMS AUTOTASKSs
+ * ImpressCMS AUTOTASKS
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
+ * @package		Administration
+ * @subpackage	Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
  */
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
-    exit("Access Denied");
+if (!is_object(icms::$user) || !is_object($xoopsModule) || !icms::$user->isAdmin($xoopsModule->getVar('mid'))) {
+	exit("Access Denied");
 }
 
-function editautotasks($showmenu = false, $autotasksid = 0, $clone=false)
-{
+/**
+ * Method for editing autotask entries
+ * 
+ * @param boolean	$showmenu		This parameter is not used - why is it here?
+ * @param int		$autotasksid	The unique identifier for the autotask
+ * @param boolean	$clone			Indicator if an autotask is being created from another
+ */
+function editautotasks($showmenu = FALSE, $autotasksid = 0, $clone = FALSE) {
 	global $icms_autotasks_handler, $icmsAdminTpl;
 
-	xoops_cp_header();
+	icms_cp_header();
 
 	$autotasksObj = $icms_autotasks_handler->get($autotasksid);
 
-	if (!$clone && !$autotasksObj->isNew()){
+	if (!$clone && !$autotasksObj->isNew()) {
 
 		$sform = $autotasksObj->getForm(_CO_ICMS_AUTOTASKS_EDIT, 'addautotasks');
 		$sform->assign($icmsAdminTpl);
@@ -36,56 +43,52 @@ function editautotasks($showmenu = false, $autotasksid = 0, $clone=false)
 }
 icms_loadLanguageFile('system', 'common');
 
-$icms_autotasks_handler = xoops_getmodulehandler('autotasks', 'system');
+$icms_autotasks_handler = icms_getModuleHandler('autotasks', 'system');
 
 $op = '';
 
-if (isset($_GET['op'])) $op = $_GET['op'];
-if (isset($_POST['op'])) $op = $_POST['op'];
+if (isset($_GET['op'])) $op = filter_input(INPUT_GET, 'op');
+if (isset($_POST['op'])) $op = filter_input(INPUT_POST, 'op');
 
 switch ($op) {
 	case "mod":
 
-		$autotasksid = isset($_GET['sat_id']) ? intval($_GET['sat_id']) : 0 ;
+		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0;
 
-		editautotasks(true, $autotasksid);
+		editautotasks(TRUE, $autotasksid);
 
 		break;
 
 	case "clone":
 
-		$autotasksid = isset($_GET['sat_id']) ? intval($_GET['sat_id']) : 0 ;
+		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0;
 
-		editautotasks(true, $autotasksid, true);
+		editautotasks(TRUE, $autotasksid, TRUE);
 		break;
 
 	case "addautotasks":
-        include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($icms_autotasks_handler);
+		$controller = new icms_ipf_Controller($icms_autotasks_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_AUTOTASKS_CREATED, _CO_ICMS_AUTOTASKS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=autotasks');
 		break;
 
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-	    $controller = new IcmsPersistableController($icms_autotasks_handler);
+		$controller = new icms_ipf_Controller($icms_autotasks_handler);
 		$controller->handleObjectDeletion();
 
 		break;
 
 	default:
 
-		xoops_cp_header();
+		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
-		$objectTable = new IcmsPersistableTable($icms_autotasks_handler, false, array('edit'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_name', 'left', false, 'getNameForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_repeat', 'center', 80, 'getRepeatForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_interval', 'center', 80, 'getIntervalForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_enabled', 'center', 80, 'getEnableForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_onfinish', 'center', 120, 'getOnFinishForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_type', 'center', 120, 'getTypeForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_lastruntime', 'center', 180, 'getLastRunTimeForDisplay'));
+		$objectTable = new icms_ipf_view_Table($icms_autotasks_handler, FALSE, array('edit'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_name', 'left', FALSE, 'getNameForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_repeat', 'center', 80, 'getRepeatForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_interval', 'center', 80, 'getIntervalForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_enabled', 'center', 80, 'getEnableForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_onfinish', 'center', 120, 'getOnFinishForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_type', 'center', 120, 'getTypeForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_lastruntime', 'center', 180, 'getLastRunTimeForDisplay'));
 
 		$objectTable->addIntroButton('addautotasks', 'admin.php?fct=autotasks&amp;op=mod', _CO_ICMS_AUTOTASKS_CREATE);
 
@@ -102,6 +105,5 @@ switch ($op) {
 		break;
 }
 
-xoops_cp_footer();
+icms_cp_footer();
 
-?>

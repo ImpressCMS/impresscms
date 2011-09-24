@@ -1,24 +1,3 @@
-# phpMyAdmin MySQL-Dump
-# version 2.3.2
-# http://www.phpmyadmin.net/ (download page)
-#
-# Host: localhost
-# Generation Time: Jan 09, 2003 at 12:37 AM
-# Server version: 3.23.54
-# PHP Version: 4.2.2
-# Database : `xoops2`
-
-
-#
-# Dumping data for table `bannerclient`
-#
-
-INSERT INTO bannerclient VALUES (0, 'ImpressCMS', 'ImpressCMS Dev Team', 'info@impresscms.org', '', '', '');
-
-#
-# Dumping data for table `bannerfinish`
-#
-
 # Adding dynamic block area/position system - TheRpLima - 2007-10-21
 #
 # Dumping data for table `block_positions`

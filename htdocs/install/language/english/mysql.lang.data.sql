@@ -38,7 +38,6 @@ INSERT INTO smiles VALUES (17, ':idea:', 'smil3dbd4e7853679.gif', 'I have an ide
 
 INSERT INTO icmspage VALUES (2, 1, 'Admin Control Panel', 'admin.php', 1);
 INSERT INTO icmspage VALUES (3, 1, 'Avatars', 'modules/system/admin.php?fct=avatars*', 1);
-INSERT INTO icmspage VALUES (4, 1, 'Banners', 'modules/system/admin.php?fct=banners*', 1);
 INSERT INTO icmspage VALUES (5, 1, 'Blocks Admin', 'modules/system/admin.php?fct=blocksadmin*', 1);
 INSERT INTO icmspage VALUES (6, 1, 'Block Positions', 'modules/system/admin.php?fct=blockspadmin*', 1);
 INSERT INTO icmspage VALUES (7, 1, 'Comments', 'modules/system/admin.php?fct=comments*', 1);

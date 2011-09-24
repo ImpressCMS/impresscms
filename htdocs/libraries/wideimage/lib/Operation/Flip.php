@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -41,14 +41,14 @@
 			
 			$width = $image->getWidth();
 			$height = $image->getHeight();
+			
+			if ($new->isTransparent())
+				imagefilledrectangle($new->getHandle(), 0, 0, $width, $height, $new->getTransparentColor());
+			
 			for ($y = 0; $y < $height; $y++)
-				imagecopy(
-					$new->getHandle(), 
-					$image->getHandle(), 
-					0, $y, 0, $height - $y - 1, 
-					$width, 1 
-				);
+				if (!imagecopy($new->getHandle(), $image->getHandle(), 0, $y, 0, $height - $y - 1, $width, 1))
+					throw new WideImage_GDFunctionResultException("imagecopy() returned false");
+			
 			return $new;
 		}
 	}
-?>

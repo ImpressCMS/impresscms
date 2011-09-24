@@ -26,7 +26,7 @@ define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Pleas
 define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
 define('_WARNINNOTWRITEABLE','WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)');
 
-// Error messages issued by XoopsObject::cleanVars()
+// Error messages issued by icms_core_Object::cleanVars()
 define( '_XOBJ_ERR_REQUIRED', '%s is required' );
 define( '_XOBJ_ERR_SHORTERTHAN', '%s must be shorter than %d characters.' );
 
@@ -164,35 +164,34 @@ define("_DATESTRING","Y/n/j G:i:s");
 define("_MEDIUMDATESTRING","Y/n/j G:i");
 define("_SHORTDATESTRING","Y/n/j");
 /*
-The following characters are recognized in the format string:
-a - "am" or "pm"
-A - "AM" or "PM"
-d - day of the month, 2 digits with leading zeros; i.e. "01" to "31"
-D - day of the week, textual, 3 letters; i.e. "Fri"
-F - month, textual, long; i.e. "January"
-h - hour, 12-hour format; i.e. "01" to "12"
-H - hour, 24-hour format; i.e. "00" to "23"
-g - hour, 12-hour format without leading zeros; i.e. "1" to "12"
-G - hour, 24-hour format without leading zeros; i.e. "0" to "23"
-i - minutes; i.e. "00" to "59"
-j - day of the month without leading zeros; i.e. "1" to "31"
-l (lowercase 'L') - day of the week, textual, long; i.e. "Friday"
-L - boolean for whether it is a leap year; i.e. "0" or "1"
-m - month; i.e. "01" to "12"
-n - month without leading zeros; i.e. "1" to "12"
-M - month, textual, 3 letters; i.e. "Jan"
-s - seconds; i.e. "00" to "59"
-S - English ordinal suffix, textual, 2 characters; i.e. "th", "nd"
-t - number of days in the given month; i.e. "28" to "31"
-T - Timezone setting of this machine; i.e. "MDT"
-U - seconds since the epoch
-w - day of the week, numeric, i.e. "0" (Sunday) to "6" (Saturday)
-Y - year, 4 digits; i.e. "1999"
-y - year, 2 digits; i.e. "99"
-z - day of the year; i.e. "0" to "365"
-Z - timezone offset in seconds (i.e. "-43200" to "43200")
-*/
-
+ The following characters are recognized in the format string:
+ a - "am" or "pm"
+ A - "AM" or "PM"
+ d - day of the month, 2 digits with leading zeros; i.e. "01" to "31"
+ D - day of the week, textual, 3 letters; i.e. "Fri"
+ F - month, textual, long; i.e. "January"
+ h - hour, 12-hour format; i.e. "01" to "12"
+ H - hour, 24-hour format; i.e. "00" to "23"
+ g - hour, 12-hour format without leading zeros; i.e. "1" to "12"
+ G - hour, 24-hour format without leading zeros; i.e. "0" to "23"
+ i - minutes; i.e. "00" to "59"
+ j - day of the month without leading zeros; i.e. "1" to "31"
+ l (lowercase 'L') - day of the week, textual, long; i.e. "Friday"
+ L - boolean for whether it is a leap year; i.e. "0" or "1"
+ m - month; i.e. "01" to "12"
+ n - month without leading zeros; i.e. "1" to "12"
+ M - month, textual, 3 letters; i.e. "Jan"
+ s - seconds; i.e. "00" to "59"
+ S - English ordinal suffix, textual, 2 characters; i.e. "th", "nd"
+ t - number of days in the given month; i.e. "28" to "31"
+ T - Timezone setting of this machine; i.e. "MDT"
+ U - seconds since the epoch
+ w - day of the week, numeric, i.e. "0" (Sunday) to "6" (Saturday)
+ Y - year, 4 digits; i.e. "1999"
+ y - year, 2 digits; i.e. "99"
+ z - day of the year; i.e. "0" to "365"
+ Z - timezone offset in seconds (i.e. "-43200" to "43200")
+ */
 
 //%%%%%		LANGUAGE SPECIFIC SETTINGS   %%%%%
 define('_CHARSET', 'utf-8');
@@ -216,7 +215,7 @@ define('_IMPRESSCMS_DONATE','Donate!');
 define("_IMPRESSCMS_Support","Support the project !");
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
 define('_IMPRESSCMS_ADMIN','Administration of');
-/** The default separator used in XoopsTree::getNicePathFromId */
+/** The default separator used in icms_view_Tree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
 //Content Manager
 define('_CT_NAV','Home');
@@ -287,7 +286,7 @@ define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
 define('_ENTERHEIGHT', 'Enter frame\'s height');
 define('_ENTERWIDTH', 'Enter frame\'s width');
 define('_ENTERMEDIAURL', 'Enter media url:');
-// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
+// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"
 // insert double '\' before 't', 'r', 'n'
 define("_TODAY", "\T\o\d\a\y G:i");
 define("_YESTERDAY", "\Y\e\s\\t\e\\r\d\a\y G:i");
@@ -298,4 +297,17 @@ define('_VISIBLE', 'Visible');
 define('_UP', 'Up');
 define('_DOWN', 'Down');
 define('_CONFIGURE', 'Configure');
-?>
+
+// Added in 1.2.2
+define('_CSSTIDY_VULN', 'WARNING: File %s exists on your server. <br />Please remove this file manually');
+define('_FILE_DELETED', 'File %s was deleted successfully');
+
+// added in 1.3
+define('_CHECKALL', 'Check all');
+define('_COPYRIGHT', 'Copyright');
+define("_LONGDATESTRING", "F jS Y, h:iA");
+define('_AUTHOR', 'Author');
+define("_CREDITS", "Credits");
+define("_LICENSE", "License");
+define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>');
+

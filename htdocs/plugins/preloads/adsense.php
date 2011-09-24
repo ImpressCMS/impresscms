@@ -1,28 +1,31 @@
 <?php
 /**
-* ImpressCMS Custom Tag features
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		libraries
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * ImpressCMS Custom Tag features
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		libraries
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
-class IcmsPreloadAdsense extends IcmsPreloadItem
-{
+/**
+ *
+ * Preload items and events for AdSense
+ * @since 1.2
+ *
+ */
+class IcmsPreloadAdsense extends icms_preload_Item {
 	/**
 	 * Function to be triggered at the end of the core boot process
-	 *
-	 * @return	void
 	 */
 	function eventFinishCoreBoot() {
-		include_once(ICMS_ROOT_PATH . "/include/adsense.php");
+		icms_loadLanguageFile('system', 'adsense', TRUE);
 	}
 
 	/**
-	 * Function to be triggered when entering in MyTextSanitizer::displayTarea() function
+	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text
@@ -32,16 +35,17 @@ class IcmsPreloadAdsense extends IcmsPreloadItem
 	 * $array[4] = $image
 	 * $array[5] = $br
 	 *
-	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */
-	function eventBeforePreviewTarea($array) {
-		$array[0] = icms_sanitizeAdsenses($array[0]);
+	public function eventAfterPreviewTarea($array) {
+		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
+			'icms_sanitizeAdsenses_callback', $array[0]);
 	}
 
 	/**
-	 * Function to be triggered when entering in MyTextSanitizer::displayTarea() function
+	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text
@@ -51,29 +55,30 @@ class IcmsPreloadAdsense extends IcmsPreloadItem
 	 * $array[4] = $image
 	 * $array[5] = $br
 	 *
-	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */
-	function eventBeforeDisplayTarea($array) {
-		$array[0] = icms_sanitizeAdsenses($array[0]);
+	public function eventAfterDisplayTarea($array) {
+		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
+			'icms_sanitizeAdsenses_callback', $array[0]);
 	}
-
 
 	/**
 	 * Function to be triggered at the end of the output init process
 	 *
 	 * @return	void
 	 */
-	function eventStartOutputInit() {
-		global $xoopsTpl, $icms_adsense_handler;
+	public function eventStartOutputInit() {
+		global $icmsTpl;
+		$icms_adsense_handler = icms_getModuleHandler("adsense", "system");
+		$icms_adsensesObj = $icms_adsense_handler->getAdsensesByTag();
 		$adsenses_array = array();
-		if (is_object($xoopsTpl)) {
-			foreach($icms_adsense_handler->objects as $k=>$v) {
+		if (is_object($icmsTpl)) {
+			foreach ($icms_adsensesObj as $k => $v) {
 				$adsenses_array[$k] = $v->render();
 			}
-			$xoopsTpl->assign('icmsAdsenses', $adsenses_array);
+			$icmsTpl->assign('icmsAdsenses', $adsenses_array);
 		}
 	}
 }
-?>

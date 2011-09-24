@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -41,10 +41,10 @@
 		 */
 		function execute($img, $left, $top, $width, $height)
 		{
-			$left = WideImage_Coordinate::fix($img->getWidth(), $left);
-			$top = WideImage_Coordinate::fix($img->getHeight(), $top);
-			$width = WideImage_Coordinate::fix($img->getWidth(), $width);
-			$height = WideImage_Coordinate::fix($img->getHeight(), $height);
+			$width = WideImage_Coordinate::fix($width, $img->getWidth(), $width);
+			$height = WideImage_Coordinate::fix($height, $img->getHeight(), $height);
+			$left = WideImage_Coordinate::fix($left, $img->getWidth(), $width);
+			$top = WideImage_Coordinate::fix($top, $img->getHeight(), $height);
 			if ($left < 0)
 			{
 				$width = $left + $width;
@@ -63,24 +63,24 @@
 			if ($height > $img->getHeight() - $top)
 				$height = $img->getHeight() - $top;
 			
+			if ($width <= 0 || $height <= 0)
+				throw new WideImage_Exception("Can't crop outside of an image.");
+			
 			$new = $img->doCreate($width, $height);
 			
 			if ($img->isTransparent() || $img instanceof WideImage_PaletteImage)
 			{
 				$new->copyTransparencyFrom($img);
-				imagecopyresized(
-					$new->getHandle(), $img->getHandle(), 0, 0, $left, $top, $width, $height, $width, $height
-					);
+				if (!imagecopyresized($new->getHandle(), $img->getHandle(), 0, 0, $left, $top, $width, $height, $width, $height))
+					throw new WideImage_GDFunctionResultException("imagecopyresized() returned false");
 			}
 			else
 			{
 				$new->alphaBlending(false);
 				$new->saveAlpha(true);
-				imagecopyresampled(
-					$new->getHandle(), $img->getHandle(), 0, 0, $left, $top, $width, $height, $width, $height
-					);
+				if (!imagecopyresampled($new->getHandle(), $img->getHandle(), 0, 0, $left, $top, $width, $height, $width, $height))
+					throw new WideImage_GDFunctionResultException("imagecopyresampled() returned false");
 			}
 			return $new;
 		}
 	}
-?>

@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -41,35 +41,38 @@
 		 */
 		function execute($base, $overlay, $left, $top, $pct)
 		{
-			$x = WideImage_Coordinate::fix($base->getWidth(), $left);
-			$y = WideImage_Coordinate::fix($base->getHeight(), $top);
+			$x = WideImage_Coordinate::fix($left, $base->getWidth(), $overlay->getWidth());
+			$y = WideImage_Coordinate::fix($top, $base->getHeight(), $overlay->getHeight());
 			
 			$result = $base->asTrueColor();
 			$result->alphaBlending(true);
 			$result->saveAlpha(true);
 			
-			if ($pct == 0)
+			if ($pct <= 0)
 				return $result;
 			
 			if ($pct < 100)
-				imagecopymerge(
+			{
+				if (!imagecopymerge(
 					$result->getHandle(), 
 					$overlay->getHandle(), 
 					$x, $y, 0, 0, 
 					$overlay->getWidth(), 
 					$overlay->getHeight(), 
-					$pct
-				);
+					$pct))
+				throw new WideImage_GDFunctionResultException("imagecopymerge() returned false");
+			}
 			else
-				imagecopy(
+			{
+				if (!imagecopy(
 					$result->getHandle(), 
 					$overlay->getHandle(), 
 					$x, $y, 0, 0, 
 					$overlay->getWidth(), 
-					$overlay->getHeight() 
-				);
+					$overlay->getHeight()))
+				throw new WideImage_GDFunctionResultException("imagecopy() returned false");
+			}
 			
 			return $result;
 		}
 	}
-?>

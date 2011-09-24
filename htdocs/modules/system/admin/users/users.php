@@ -1,83 +1,83 @@
 <?php
-// $Id$
 /**
-* Administration of users, main functions file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of users, main functions file
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package		System
+ * @subpackage	Users
+ * @version		SVN: $Id$
+ */
 
-if(!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {exit('Access Denied');}
+if (!is_object(icms::$user) 
+	|| !is_object($icmsModule) 
+	|| !icms::$user->isAdmin($icmsModule->getVar('mid'))
+	) {
+		exit('Access Denied');
+	}
 
-include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
-include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
+/**
+ * Displays user information form
+ * 
+ */
+function displayUsers() {
+	global $icmsConfig, $icmsModule, $icmsConfigUser;
+	$userstart = isset($_GET['userstart']) ? (int) $_GET['userstart'] : 0;
 
-function displayUsers()
-{
-	global $xoopsDB, $xoopsConfig, $icmsModule, $icmsConfigUser;
-	$userstart = isset($_GET['userstart']) ? intval($_GET['userstart']) : 0;
-
-	xoops_cp_header();
-	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
-	$member_handler =& xoops_gethandler('member');
-	$usercount = $member_handler->getUserCount(new Criteria('level', '-1', '!='));
-	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
-	$editform = new XoopsThemeForm(_AM_EDEUSER, 'edituser', 'admin.php');
-	$user_select = new XoopsFormSelect('', 'uid');
-	$criteria = new CriteriaCompo();
-	$criteria->add(new Criteria('level', '-1', '!='));
+	icms_cp_header();
+	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/users/images/users_big.png)">' . _MD_AM_USER . '</div><br />';
+	$member_handler = icms::handler('icms_member');
+	$usercount = $member_handler->getUserCount(new icms_db_criteria_Item('level', '-1', '!='));
+	$nav = new icms_view_PageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
+	$editform = new icms_form_Theme(_AM_EDEUSER, 'edituser', 'admin.php');
+	$user_select = new icms_form_elements_Select('', 'uid');
+	$criteria = new icms_db_criteria_Compo();
+	$criteria->add(new icms_db_criteria_Item('level', '-1', '!='));
 	$criteria->setSort('uname');
 	$criteria->setOrder('ASC');
 	$criteria->setLimit(200);
 	$criteria->setStart($userstart);
 	$user_select->addOptionArray($member_handler->getUserList($criteria));
-	$user_select_tray = new XoopsFormElementTray(_AM_NICKNAME, '<br />');
+	$user_select_tray = new icms_form_elements_Tray(_AM_NICKNAME, '<br />');
 	$user_select_tray->addElement($user_select);
-	$user_select_nav = new XoopsFormLabel('', $nav->renderNav(4));
+	$user_select_nav = new icms_form_elements_Label('', $nav->renderNav(4));
 	$user_select_tray->addElement($user_select_nav);
-	$op_select = new XoopsFormSelect('', 'op');
+	$op_select = new icms_form_elements_Select('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER, 'delUser'=>_AM_DELUSER));
-	$submit_button = new XoopsFormButton('', 'submit', _AM_GO, 'submit');
-	$fct_hidden = new XoopsFormHidden('fct', 'users');
+	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
+	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');
 	$editform->addElement($user_select_tray);
 	$editform->addElement($op_select);
 	$editform->addElement($submit_button);
 	$editform->addElement($fct_hidden);
 	$editform->display();
-	
+
 	echo "<br />\n";
-	$usercount = $member_handler->getUserCount(new Criteria('level', '-1'));
-	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
-	$editform = new XoopsThemeForm(_AM_REMOVED_USERS, 'edituser', 'admin.php');
-	$user_select = new XoopsFormSelect('', 'uid');
-	$criteria = new CriteriaCompo();
-	$criteria->add(new Criteria('level', '-1'));
+	$usercount = $member_handler->getUserCount(new icms_db_criteria_Item('level', '-1'));
+	$nav = new icms_view_PageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
+	$editform = new icms_form_Theme(_AM_REMOVED_USERS, 'edituser', 'admin.php');
+	$user_select = new icms_form_elements_Select('', 'uid');
+	$criteria = new icms_db_criteria_Compo();
+	$criteria->add(new icms_db_criteria_Item('level', '-1'));
 	$criteria->setSort('uname');
 	$criteria->setOrder('ASC');
 	$criteria->setLimit(200);
 	$criteria->setStart($userstart);
 	$user_select->addOptionArray($member_handler->getUserList($criteria));
-	$user_select_tray = new XoopsFormElementTray(_AM_NICKNAME, '<br />');
+	$user_select_tray = new icms_form_elements_Tray(_AM_NICKNAME, '<br />');
 	$user_select_tray->addElement($user_select);
-	$user_select_nav = new XoopsFormLabel('', $nav->renderNav(4));
+	$user_select_nav = new icms_form_elements_Label('', $nav->renderNav(4));
 	$user_select_tray->addElement($user_select_nav);
-	$op_select = new XoopsFormSelect('', 'op');
+	$op_select = new icms_form_elements_Select('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER));
-	$submit_button = new XoopsFormButton('', 'submit', _AM_GO, 'submit');
-	$fct_hidden = new XoopsFormHidden('fct', 'users');
+	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
+	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');
 	$editform->addElement($user_select_tray);
 	$editform->addElement($op_select);
 	$editform->addElement($submit_button);
 	$editform->addElement($fct_hidden);
 	$editform->display();
-	
+
 	echo "<br />\n";
 	$uid_value = '';
 	$uname_value = '';
@@ -89,8 +89,8 @@ function displayUsers()
 	$openid_cbox_value = 0;
 	$url_value = '';
 	//  $avatar_value = 'blank.gif';
-	//  $theme_value = $xoopsConfig['default_theme'];
-	$timezone_value = $xoopsConfig['default_TZ'];
+	//  $theme_value = $icmsConfig['default_theme'];
+	$timezone_value = $icmsConfig['default_TZ'];
 	$icq_value = '';
 	$aim_value = '';
 	$yim_value = '';
@@ -100,10 +100,10 @@ function displayUsers()
 	$interest_value = '';
 	$sig_value = '';
 	$sig_cbox_value = 0;
-	$umode_value = $xoopsConfig['com_mode'];
-	$uorder_value = $xoopsConfig['com_order'];
-	// RMV-NOTIFY
-	include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
+	$umode_value = $icmsConfig['com_mode'];
+	$uorder_value = $icmsConfig['com_order'];
+
+	include_once ICMS_INCLUDE_PATH .'/notification_constants.php';
 	$notify_method_value = XOOPS_NOTIFICATION_METHOD_PM;
 	$notify_mode_value = XOOPS_NOTIFICATION_MODE_SENDALWAYS;
 	$bio_value = '';
@@ -113,26 +113,28 @@ function displayUsers()
 	$enc_type_value = $icmsConfigUser['enc_type'];
 	$op_value = 'addUser';
 	$form_title = _AM_ADDUSER;
-	$form_isedit = false;
-	$language_value = $xoopsConfig['language'];
+	$form_isedit = FALSE;
+	$language_value = $icmsConfig['language'];
 	$groups = array(XOOPS_GROUP_USERS);
-	include ICMS_ROOT_PATH.'/modules/system/admin/users/userform.php';
-	xoops_cp_footer();
+	include ICMS_MODULES_PATH . '/system/admin/users/userform.php';
+	icms_cp_footer();
 }
 
-function modifyUser($user)
-{
-	global $xoopsDB, $xoopsConfig, $icmsModule;
-	xoops_cp_header();
-	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
-	$member_handler =& xoops_gethandler('member');
+/**
+ * Logic and rendering for modifying a member profile
+ *
+ * @param object $user
+ */
+function modifyUser($user) {
+	global $icmsConfig, $icmsModule;
+	icms_cp_header();
+	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/users/images/users_big.png)">' . _MD_AM_USER . '</div><br />';
+	$member_handler = icms::handler('icms_member');
 	$user =& $member_handler->getUser($user);
-	if(is_object($user))
-	{
-		if(!$user->isActive())
-		{
-			xoops_confirm(array('fct' => 'users', 'op' => 'reactivate', 'uid' => $user->getVar('uid')), 'admin.php', _AM_NOTACTIVE);
-			xoops_cp_footer();
+	if (is_object($user)) {
+		if (!$user->isActive()) {
+			icms_core_Message::confirm(array('fct' => 'users', 'op' => 'reactivate', 'uid' => $user->getVar('uid')), 'admin.php', _AM_NOTACTIVE);
+			icms_cp_footer();
 			exit();
 		}
 
@@ -147,7 +149,7 @@ function modifyUser($user)
 		$url_value = $user->getVar('url', 'E');
 		//	  $avatar_value = $user->getVar('user_avatar');
 		$temp = $user->getVar('theme');
-		//$theme_value = empty($temp) ? $xoopsConfig['default_theme'] : $temp;
+		//$theme_value = empty($temp) ? $icmsConfig['default_theme'] : $temp;
 		$timezone_value = $user->getVar('timezone_offset');
 		$icq_value = $user->getVar('user_icq', 'E');
 		$aim_value = $user->getVar('user_aim', "E");
@@ -160,60 +162,92 @@ function modifyUser($user)
 		$sig_cbox_value = ($user->getVar('attachsig') == 1) ? 1 : 0;
 		$umode_value = $user->getVar('umode');
 		$uorder_value = $user->getVar('uorder');
-		// RMV-NOTIFY
 		$notify_method_value = $user->getVar('notify_method');
 		$notify_mode_value = $user->getVar('notify_mode');
 		$bio_value = $user->getVar('bio', 'E');
-		$rank_value = $user->rank(false);
+		$rank_value = $user->rank(FALSE);
 		$mailok_value = $user->getVar('user_mailok', 'E');
 		$pass_expired_value = $user->getVar('pass_expired') ? 1 : 0;
 		$enc_type_value = $user->getVar('enc_type', 'E');
 		$op_value = 'updateUser';
-		$form_title = _AM_UPDATEUSER.': '.$user->getVar('uname');
+		$form_title = _AM_UPDATEUSER . ': ' . $user->getVar('uname');
 		$language_value = $user->getVar('language');
-		$form_isedit = true;
+		$form_isedit = TRUE;
 		$groups = array_values($user->getGroups());
-		include ICMS_ROOT_PATH.'/modules/system/admin/users/userform.php';
-		echo "<br /><b>"._AM_USERPOST."</b><br /><br />\n";
-		echo "<table>\n";
-		echo "<tr><td>"._AM_COMMENTS."</td><td>".icms_conv_nr2local($user->getVar('posts'))."</td></tr>\n";
-		echo "</table>\n";
-		echo "<br />"._AM_PTBBTSDIYT."<br />\n";
-		echo "<form action=\"admin.php\" method=\"post\">\n";
-		echo "<input type=\"hidden\" name=\"id\" value=\"".$user->getVar('uid')."\">";
-		echo "<input type=\"hidden\" name=\"type\" value=\"user\">\n";
-		echo "<input type=\"hidden\" name=\"fct\" value=\"users\">\n";
-		echo "<input type=\"hidden\" name=\"op\" value=\"synchronize\">\n";
-		echo $GLOBALS['xoopsSecurity']->getTokenHTML()."\n";
-		echo "<input type=\"submit\" value=\""._AM_SYNCHRONIZE."\">\n";
-		echo "</form>\n";
+		include ICMS_MODULES_PATH . '/system/admin/users/userform.php';
+		echo "<br /><strong>" . _AM_USERPOST . "</strong><br /><br />\n"
+			. "<table>\n"
+			. "<tr><td>" . _AM_COMMENTS . "</td><td>" . icms_conv_nr2local($user->getVar('posts')) . "</td></tr>\n"
+			. "</table>\n"
+			. "<br />" . _AM_PTBBTSDIYT . "<br />\n"
+			. "<form action=\"admin.php\" method=\"post\">\n"
+			. "<input type=\"hidden\" name=\"id\" value=\"" . $user->getVar('uid') . "\">"
+			. "<input type=\"hidden\" name=\"type\" value=\"user\">\n"
+			. "<input type=\"hidden\" name=\"fct\" value=\"users\">\n"
+			. "<input type=\"hidden\" name=\"op\" value=\"synchronize\">\n"
+			. icms::$security->getTokenHTML() . "\n"
+			. "<input type=\"submit\" value=\"" . _AM_SYNCHRONIZE . "\">\n"
+			. "</form>\n";
+	} else {
+		echo "<h4 style='text-align:" . _GLOBAL_LEFT . ";'>" . _AM_USERDONEXIT . "</h4>";
 	}
-	else
-	{
-		echo "<h4 style='text-align:"._GLOBAL_LEFT.";'>";
-		echo _AM_USERDONEXIT;
-		echo "</h4>";
-	}
-	xoops_cp_footer();
+	icms_cp_footer();
 }
 
-// RMV-NOTIFY
-function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
-{
-	global $xoopsConfig, $xoopsDB, $icmsModule, $icmsConfigUser;
-	$member_handler =& xoops_gethandler('member');
+/**
+ * Updates the member profile, saving the changes to the database
+ *
+ * @param $uid
+ * @param $uname
+ * @param $login_name
+ * @param $name
+ * @param $url
+ * @param $email
+ * @param $user_icq
+ * @param $user_aim
+ * @param $user_yim
+ * @param $user_msnm
+ * @param $user_from
+ * @param $user_occ
+ * @param $user_intrest
+ * @param $user_viewemail
+ * @param $user_avatar
+ * @param $user_sig
+ * @param $attachsig
+ * @param $theme
+ * @param $pass
+ * @param $pass2
+ * @param $rank
+ * @param $bio
+ * @param $uorder
+ * @param $umode
+ * @param $notify_method
+ * @param $notify_mode
+ * @param $timezone_offset
+ * @param $user_mailok
+ * @param $language
+ * @param $openid
+ * @param $salt
+ * @param $user_viewoid
+ * @param $pass_expired
+ * @param $enc_type
+ * @param $groups
+ */
+function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim,
+					$user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar,
+					$user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method,
+					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid,
+					$pass_expired, $enc_type, $groups = array()
+					) {
+	global $icmsConfig, $icmsModule, $icmsConfigUser;
+	$member_handler = icms::handler('icms_member');
 	$edituser =& $member_handler->getUser($uid);
-	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0)
-	{
-		xoops_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
-		echo 'User name '.$uname.' already exists';
-		xoops_cp_footer();
-	}
-	else
-	{
-		$myts =& MyTextSanitizer::getInstance();
-
+	if ($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new icms_db_criteria_Item('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new icms_db_criteria_Item('login_name', $login_name)) > 0) {
+		icms_cp_header();
+		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/users/images/users_big.png)">' . _MD_AM_USER . '</div><br />';
+		echo _AM_UNAME . ' ' . $uname . ' ' . _AM_ALREADY_EXISTS;
+		icms_cp_footer();
+	} else {
 		$edituser->setVar('name', $name);
 		$edituser->setVar('uname', $uname);
 		$edituser->setVar('login_name', $login_name);
@@ -221,20 +255,17 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		$edituser->setVar('openid', $openid);
 		$user_viewoid = (isset($user_viewoid) && $user_viewoid == 1) ? 1 : 0;
 		$edituser->setVar('user_viewoid', $user_viewoid);
-		$url = isset( $url ) ? formatURL( $url ) : '';
+		$url = isset($url) ? formatURL($url) : '';
 		$edituser->setVar('url', $url);
 		//$edituser->setVar('user_avatar', $user_avatar);
 		$edituser->setVar('user_icq', $user_icq);
 		$edituser->setVar('user_from', $user_from);
-		if($icmsConfigUser['allow_htsig'] == 0)
-		{
-			$signature = strip_tags($myts->xoopsCodeDecode($user_sig, 1));
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
-		}
-		else
-		{
-			$signature = $myts->displayTarea($user_sig, 1, 1, 1, 1, 1, 'display');
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
+		if ($icmsConfigUser['allow_htsig'] == 0) {
+			$signature = strip_tags(icms_core_DataFilter::codeDecode($user_sig, 1));
+			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
+		} else {
+			$signature = icms_core_DataFilter::checkVar($user_sig, 'html', 'input');
+			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 		}
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1) ? 1 : 0;
 		$edituser->setVar('user_viewemail', $user_viewemail);
@@ -256,95 +287,90 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		$edituser->setVar('user_intrest', $user_intrest);
 		$edituser->setVar('user_mailok', $user_mailok);
 		$edituser->setVar('language', $language);
-		if($pass2 != '')
-		{
-			if($pass != $pass2)
-			{
-				xoops_cp_header();
-				echo "<b>"._AM_STNPDNM."</b>";
-				xoops_cp_footer();
+		if ($pass2 != '') {
+			if ($pass != $pass2) {
+				icms_cp_header();
+				echo "<strong>" . _AM_STNPDNM . "</strong>";
+				icms_cp_footer();
 				exit();
 			}
-			   include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-			   $icmspass = new icms_Password();
+
+			$icmspass = new icms_core_Password();
 			$edituser->setVar('salt', $salt);
 			$edituser->setVar('enc_type', $enc_type);
 			$edituser->setVar('pass_expired', $pass_expired);
-			$pass = $icmspass->icms_encryptPass($pass, $salt);
+			$pass = $icmspass->encryptPass($pass, $salt, $enc_type);
 			$edituser->setVar('pass', $pass);
 		}
-		if(!$member_handler->insertUser($edituser))
-		{
-			xoops_cp_header();
+		if (!$member_handler->insertUser($edituser)) {
+			icms_cp_header();
 			echo $edituser->getHtmlErrors();
-			xoops_cp_footer();
-		}
-		else
-		{
-			if($groups != array())
-			{
-				global $icmsUser;
+			icms_cp_footer();
+		} else {
+			if ($groups != array()) {
 				$oldgroups = $edituser->getGroups();
 				//If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-				if($edituser->getVar('uid') == $icmsUser->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
-				{
+				if ($edituser->getVar('uid') == icms::$user->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups))) {
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
 					$groups[] = XOOPS_GROUP_ADMIN;
 				}
-				$member_handler =& xoops_gethandler('member');
-				foreach($oldgroups as $groupid) {$member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));}
-				foreach($groups as $groupid) {$member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));}
+				$member_handler = icms::handler('icms_member');
+				foreach ($oldgroups as $groupid) {
+					$member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));
+				}
+				foreach (
+					$groups as $groupid) {$member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));
+				}
 			}
-			redirect_header('admin.php?fct=users',1,_AM_DBUPDATED);
+			redirect_header('admin.php?fct=users', 1, _AM_DBUPDATED);
 		}
 	}
 	exit();
 }
 
-function synchronize($id, $type)
-{
-	global $xoopsDB;
-	switch($type)
-	{
+/**
+ * Update count of posts in comments and bb_posts (old forums)
+ *
+ * @param int $id	Unique ID of the member to synchronize
+ * @param str $type	'user' or 'all users'
+ */
+function synchronize($id, $type) {
+	switch($type) {
 		case 'user':
 			// Array of tables from which to count 'posts'
 			$tables = array();
 			// Count comments (approved only: com_status == XOOPS_COMMENT_ACTIVE)
-			include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-			$tables[] = array ('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
+			include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
+			$tables[] = array ('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new icms_db_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 			// Count forum posts
 			$tables[] = array ('table_name' => 'bb_posts', 'uid_column' => 'uid');
 			$total_posts = 0;
-			foreach($tables as $table)
-			{
-				$criteria = new CriteriaCompo();
-				$criteria->add (new Criteria($table['uid_column'], $id));
-				if(!empty($table['criteria'])) {$criteria->add ($table['criteria']);}
-				$sql = "SELECT COUNT(*) AS total FROM ".$xoopsDB->prefix($table['table_name']).' '.$criteria->renderWhere();
-				if($result = $xoopsDB->query($sql))
-				{
-					if($row = $xoopsDB->fetchArray($result)) {$total_posts = $total_posts + $row['total'];}
+			foreach ($tables as $table) {
+				$criteria = new icms_db_criteria_Compo();
+				$criteria->add (new icms_db_criteria_Item($table['uid_column'], $id));
+				if (!empty($table['criteria'])) {$criteria->add ($table['criteria']);}
+				$sql = "SELECT COUNT(*) AS total FROM " . icms::$xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
+				if ($result = icms::$xoopsDB->query($sql)) {
+					if ($row = icms::$xoopsDB->fetchArray($result)) {$total_posts = $total_posts + $row['total'];}
 				}
 			}
-			$sql = "UPDATE ".$xoopsDB->prefix("users")." SET posts = '".intval($total_posts)."' WHERE uid = '".intval($id)."'";
-			if(!$result = $xoopsDB->query($sql)) {exit(sprintf(_AM_CNUUSER %s ,$id));}
-		break;
+			$sql = "UPDATE " . icms::$xoopsDB->prefix("users") . " SET posts = '". (int) $total_posts . "' WHERE uid = '". (int) $id . "'";
+			if (!$result = icms::$xoopsDB->query($sql)) {exit(sprintf(_AM_CNUUSER %s , $id));}
+			break;
 
 		case 'all users':
-			$sql = "SELECT uid FROM ".$xoopsDB->prefix('users')."";
-			if(!$result = $xoopsDB->query($sql)) {exit(_AM_CNGUSERID);}
-			while($row = $xoopsDB->fetchArray($result))
-			{
+			$sql = "SELECT uid FROM " . icms::$xoopsDB->prefix('users') . "";
+			if (!$result = icms::$xoopsDB->query($sql)) {exit(_AM_CNGUSERID);}
+			while ($row = icms::$xoopsDB->fetchArray($result)) {
 				$id = $row['uid'];
 				synchronize($id, "user");
 			}
-		break;
+			break;
 
 		default:
-		break;
+			break;
 	}
-	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='.$id,1,_AM_DBUPDATED);
+	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . $id, 1, _AM_DBUPDATED);
 	exit();
 }
 
-?>

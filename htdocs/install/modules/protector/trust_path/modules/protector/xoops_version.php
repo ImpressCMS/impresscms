@@ -319,7 +319,33 @@ $modversion['config'][] = array(
 	'default'		=> 5 ,
 	'options'		=> array()
 ) ;
-
+$modversion['config'][] = array(
+	'name'			=> 'filters' ,
+	'title'			=> $constpref.'_FILTERS' ,
+	'description'	=> $constpref.'_FILTERSDSC' ,
+	'formtype'		=> 'textarea' ,
+	'valuetype'		=> 'text' ,
+	'default'		=> "" ,
+	'options'		=> array()
+) ;
+$modversion['config'][] = array(
+	'name'			=> 'enable_manip_check' ,
+	'title'			=> $constpref.'_MANIPUCHECK' ,
+	'description'	=> $constpref.'_MANIPUCHECKDSC' ,
+	'formtype'		=> 'yesno' ,
+	'valuetype'		=> 'int' ,
+	'default'		=> 1 ,
+	'options'		=> array()
+) ;
+$modversion['config'][] = array(
+	'name'			=> 'manip_value' ,
+	'title'			=> $constpref.'_MANIPUVALUE' ,
+	'description'	=> $constpref.'_MANIPUVALUEDSC' ,
+	'formtype'		=> 'textbox' ,
+	'valuetype'		=> 'text' ,
+	'default'		=> '' ,
+	'options'		=> array()
+) ;
 
 
 // Search

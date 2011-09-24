@@ -1,22 +1,22 @@
 <?php
 /**
-* The functions that take care of BB Codes
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The functions that take care of BB Codes
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 /*
-* displayes xoopsCode buttons and target textarea to which xoopscodes are inserted
-* $textarea_id is a unique id of the target textarea
-*/
+ * displayes xoopsCode buttons and target textarea to which xoopscodes are inserted
+ * $textarea_id is a unique id of the target textarea
+ */
 function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 {
 	$hiddentext = isset($suffix) ? 'xoopsHiddenText'.trim($suffix) : 'xoopsHiddenText';
@@ -26,7 +26,7 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 	$sizearray = array("xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large");
 	echo "<select id='".$textarea_id."Size' onchange='setVisible(\"xoopsHiddenText\");setElementSize(\"".$hiddentext."\",this.options[this.selectedIndex].value);'>\n";
 	echo "<option value='SIZE'>"._SIZE."</option>\n";
-	foreach ( $sizearray as $size ) {
+	foreach ( $sizearray as $size) {
 		echo "<option value='$size'>$size</option>\n";
 	}
 	echo "</select>\n";
@@ -34,7 +34,7 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 	$fontarray = array("Arial", "Courier", "Georgia", "Helvetica", "Impact", "Verdana");
 	echo "<select id='".$textarea_id."Font' onchange='setVisible(\"xoopsHiddenText\");setElementFont(\"".$hiddentext."\",this.options[this.selectedIndex].value);'>\n";
 	echo "<option value='FONT'>"._FONT."</option>\n";
-	foreach ( $fontarray as $font ) {
+	foreach ( $fontarray as $font) {
 		echo "<option value='$font'>$font</option>\n";
 	}
 	echo "</select>\n";
@@ -42,9 +42,9 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 	$colorarray = array("00", "33", "66", "99", "CC", "FF");
 	echo "<select id='".$textarea_id."Color' onchange='setVisible(\"xoopsHiddenText\");setElementColor(\"".$hiddentext."\",this.options[this.selectedIndex].value);'>\n";
 	echo "<option value='COLOR'>"._COLOR."</option>\n";
-	foreach ( $colorarray as $color1 ) {
-		foreach ( $colorarray as $color2 ) {
-			foreach ( $colorarray as $color3 ) {
+	foreach ( $colorarray as $color1) {
+		foreach ( $colorarray as $color2) {
+			foreach ( $colorarray as $color3) {
 				echo "<option value='".$color1.$color2.$color3."' style='background-color:#".$color1.$color2.$color3.";color:#".$color1.$color2.$color3.";'>#".$color1.$color2.$color3."</option>\n";
 			}
 		}
@@ -59,33 +59,30 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 }
 
 /*
-* Displays smilie image buttons used to insert smilie codes to a target textarea in a form
-* $textarea_id is a unique of the target textarea
-*/
+ * Displays smilie image buttons used to insert smilie codes to a target textarea in a form
+ * $textarea_id is a unique of the target textarea
+ */
 function xoopsSmilies($textarea_id)
 {
-	$myts =& MyTextSanitizer::getInstance();
-	$smiles =& $myts->getSmileys();
+	$smiles =& icms_core_DataFilter::getSmileys();
 	if (empty($smileys)) {
-		$db =& Database::getInstance();
-		if ($result = $db->query("SELECT * FROM ".$db->prefix('smiles')." WHERE display='1'")) {
-			while ($smiles = $db->fetchArray($result)) {
-			//hack smilies move for the smilies !!
-				echo "<img src='".ICMS_UPLOAD_URL."/".htmlspecialchars($smiles['smile_url'])."' border='0' onmouseover='style.cursor=\"hand\"' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles['code']." \");' />";
-			//fin du hack
+		if ($result = icms::$xoopsDB->query("SELECT * FROM ".$db->prefix('smiles')." WHERE display='1'")) {
+			while ($smiles = icms::$xoopsDB->fetchArray($result)) {
+				//hack smilies move for the smilies !!
+				echo "<img src='".ICMS_UPLOAD_URL."/".htmlspecialchars($smiles['smile_url'])."' border='0' onmouseover='style.cursor=\"hand\"' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."_tarea\", \" ".$smiles['code']." \");' />";
+				//fin du hack
 			}
 		}
 	} else {
 		$count = count($smiles);
 		for ($i = 0; $i < $count; $i++) {
 			if ($smiles[$i]['display'] == 1) {
-			//hack bis
-				echo "<img src='".ICMS_UPLOAD_URL."/".$myts->oopsHtmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
-			//fin du hack
+				//hack bis
+				echo "<img src='".ICMS_UPLOAD_URL."/".icms_core_DataFilter::htmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."_tarea\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
+				//fin du hack
 			}
 		}
 	}
 	//hack for more
-	echo "&nbsp;[<a href='#moresmiley' onmouseover='style.cursor=\"hand\"' alt='' onclick='openWithSelfMain(\"".ICMS_URL."/misc.php?action=showpopups&amp;type=smilies&amp;target=".$textarea_id."\",\"smilies\",300,475);'>"._MORE."</a>]";
+	echo "&nbsp;[<a href='#moresmiley' onmouseover='style.cursor=\"hand\"' alt='' onclick='openWithSelfMain(\"".ICMS_URL."/misc.php?action=showpopups&amp;type=smilies&amp;target=".$textarea_id."_tarea\",\"smilies\",300,475);'>"._MORE."</a>]";
 }  //fin du hack
-?>

@@ -2,56 +2,55 @@
 /**
  * Blocks position admin classes
  *
- * @copyright	  	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		 LICENSE.txt
- * @package			Administration
- * @since			ImpressCMS 1.2
- * @author			Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
- * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @author			modified by UnderDog <underdog@impresscms.org>
- * @version			$Id$
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		LICENSE.txt
+ * @package		Administration
+ * @subpackage	Block Positions
+ * @since		ImpressCMS 1.2
+ * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @version		SVN: $Id$
  */
-
-
-require_once(ICMS_ROOT_PATH.'/kernel/blockposition.php');
 
 /**
  * System Blockspadmin Class
- * 
- * @copyright	  	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		 LICENSE.txt
- * @since 			ImpressCMS 1.2
- * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org> 
+ *
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		LICENSE.txt
+ * @package		Administration
+ * @subpackage	Block Positions
+ * @since 		ImpressCMS 1.2
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlockspadmin extends IcmsBlockposition {
+class SystemBlockspadmin extends icms_view_block_position_Object {
 
 	/**
 	 * Constructor
 	 *
-	 * @param IcmsBlockpositionHandler $handler
+	 * @param icms_view_block_position_Handler $handler
 	 */
 	public function __construct(& $handler) {
 		parent::__construct( $handler );
-		
+
 		$this->hideFieldFromForm('id');
 		$this->hideFieldFromForm('block_default');
 		$this->hideFieldFromForm('block_type');
 	}
-	
+
 	/**
 	 * Get Custom Title
 	 *
 	 * @return string
 	 */
-	public function getCustomTitle(){
+	public function getCustomTitle() {
 		$rtn = defined($this->getVar('title')) ? constant($this->getVar('title')) : $this->getVar('title');
 		return $rtn;
 	}
 
-
 	/**
 	 * getDeleteItemLink
-	 * 
+	 *
 	 * Overwrited Method
 	 *
 	 * @param string $onlyUrl
@@ -59,16 +58,14 @@ class SystemBlockspadmin extends IcmsBlockposition {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false){ 
-		if($this->getVar('block_default') == 1)
-			return "";
+	public function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
+		if ($this->getVar('block_default') == 1) return "";
 		return parent::getEditItemLink($onlyUrl, $withimage, $userSide);
 	}
 
-
 	/**
 	 * getDeleteItemLink
-	 * 
+	 *
 	 * Overwrited Method
 	 *
 	 * @param string $onlyUrl
@@ -76,9 +73,8 @@ class SystemBlockspadmin extends IcmsBlockposition {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false){ 
-		if($this->getVar('block_default') == 1)
-			return "";
+	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
+		if ($this->getVar('block_default') == 1) return "";
 		return parent::getDeleteItemLink($onlyUrl, $withimage, $userSide);
 	}
 
@@ -86,23 +82,24 @@ class SystemBlockspadmin extends IcmsBlockposition {
 
 /**
  * System Blockspadmin Class
- * 
- * @copyright	  	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		 LICENSE.txt
- * @since 			ImpressCMS 1.2
- * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org> 
+ *
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		LICENSE.txt
+ * @package		Administration
+ * @subpackage	Block Positions
+ * @since		ImpressCMS 1.2
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlockspadminHandler extends IcmsBlockpositionHandler {
-	
+class SystemBlockspadminHandler extends icms_view_block_position_Handler {
+
 	/**
 	 * Constructor
 	 *
 	 * @param IcmsDatabase $db
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'blockspadmin', 'id', 'title', 'description', 'system');
-		$this->table = $this->db->prefix('block_positions');		
+		icms_ipf_Handler::__construct($db, 'blockspadmin', 'id', 'title', 'description', 'system');
+		$this->table = $this->db->prefix('block_positions');
 	}
 }
 
-?>

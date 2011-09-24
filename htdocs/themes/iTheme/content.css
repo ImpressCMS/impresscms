@@ -38,6 +38,8 @@ th {border-bottom: 4px solid #F3AC03;}
 /* codes and quotes */
 .xoopsCode { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto;}
 .xoopsQuote { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px;}
+.icmsCode { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto;}
+.icmsQuote { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px;}
 
 /* Admin Help Nav */
 #helpbar a {float: left; width: 14px; height: 14px; padding: 2px 0 4px 5px; background: #F3AC03; color: #333333; border: 1px dotted #dddddd;}
@@ -78,9 +80,17 @@ th {border-bottom: 4px solid #F3AC03;}
 #online {color:green; font-weight:700; font-size:1em;}
 #offline {color:red; font-weight:700; font-size:1em;}
 
-.forum_controls {background-color: #EEE; border-left: 1px solid #999; border-right: 1px solid #999; border-top: 1px solid #999;}
+.forum_controls {background-color: #EEE; border-left: 1px solid #999; border-right: 1px solid #999; border-top: 1px solid #999;width: 100%;}
 .userrow {padding: 0;}
 .Userrow_left {}
 .Userrow_center {}
 .Userrow_right {}
 .transfer a {padding-left: 5px;}
+
+#groupform .icms_checkboxoption {width: 48.9%;padding: 2px;}
+.icms_checkboxoption {float: left;}
+.icms_checkboxoption:hover {background: #f1f2f3;}
+.icms_checkboxoption input[type=checkbox] {float: left; outline: none; background: transparent; border: 0;}
+.icms_checkboxoption label {float: left; overflow: hidden; vertical-align: middle;}
+.icms_checkboxoption label a {float: left; overflow: hidden;}
+#groupform .even b {clear: both; margin: 5px 0px; float: left; width: 99%; background: #dcdee0; padding: 3px; border-bottom: 1px solid #ccc;}

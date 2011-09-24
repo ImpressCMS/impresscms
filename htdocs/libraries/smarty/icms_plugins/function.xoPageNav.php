@@ -16,14 +16,14 @@ function smarty_function_xoPageNav( $params, &$smarty ) {
 	if ( $pageSize < 1 ) {
 		$pageSize = 10;
 	}
-	$pagesCount = intval( $itemsCount / $pageSize );
+	$pagesCount = (int)( $itemsCount / $pageSize );
 	if ( $itemsCount <= $pageSize || $pagesCount < 2 ) {
 		return '';
 	}
 	$str = '';
-	$currentPage = intval( $offset / $pageSize ) + 1;
-	$lastPage = intval( $itemsCount / $pageSize ) + 1;
-	
+	$currentPage = (int)( $offset / $pageSize ) + 1;
+	$lastPage = (int)( $itemsCount / $pageSize ) + 1;
+
 	$minPage = min( 1, ceil( $currentPage - $linksCount/2 ) );
 	$maxPage = max( $lastPage, floor( $currentPage + $linksCount/2 ) );
 
@@ -38,7 +38,7 @@ function smarty_function_xoPageNav( $params, &$smarty ) {
 		$str .= '<a href="' . $xoops->url( str_replace( '%s', $offset+$pageSize, $url ) ) . '">Next</a>';
 	}
 	$class = @!empty($class) ? htmlspecialchars( $class, ENT_QUOTES ) : 'pagenav';
-	
+
 	$str = "<div class='$class'>$str</div>";
 	return $str;
 

@@ -6,13 +6,13 @@ if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.
 if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
 if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 if (file_exists('../mainfile.php')) include_once '../mainfile.php';
-if (!defined('XOOPS_ROOT_PATH')) exit();
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 
 //only site users can access this file or if multilanguage is enabled
         //$easiestml_exist = false;
         $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
-if (is_object($icmsUser) && $easiestml_exist) {
+if (is_object(icms::$user) && $easiestml_exist) {
     function langDropdown()
     {
         // check THE EASIEST MULTILANGUAGE HACK
@@ -27,7 +27,7 @@ if (is_object($icmsUser) && $easiestml_exist) {
     
             $lang_options = '' ;
     
-            foreach( $easiestml_langs as $l => $lang )
+            foreach ($easiestml_langs as $l => $lang )
                 $lang_options .= '<option value="'.$lang.'">'.$langnames[$l].'</option>' ;
 
             $javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";

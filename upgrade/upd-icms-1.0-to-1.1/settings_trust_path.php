@@ -10,7 +10,7 @@
  * @version		$Id: setting_trust_path.php 5547 2008-10-09 19:42:15Z pesian_stranger $
  */
 
-if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
+if (!defined( 'ICMS_ROOT_PATH' )) {
     die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
 }
 
@@ -21,55 +21,55 @@ function icmsFormField( $name, $value, $label, $maxlength, $help = '' )
     $label = htmlspecialchars( $label );
     $name = htmlspecialchars( $name, ENT_QUOTES );
     $value = htmlspecialchars( $value, ENT_QUOTES );
-    $maxlength = intval($maxlength);
-   
+    $maxlength = (int) $maxlength;
+
     $field = "<label for='$name'>$label</label>\n";
-    if ( $help ) {
+    if ($help) {
         $field .= '<div class="xoform-help1">' . $help . "</div>\n";
     }
     $field .= "<input type='text' name='$name' id='$name' value='$value' />";
-    
+
     return $field;
 }
 
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'trust_path' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'trust_path') {
 	$vars['TRUST_PATH'] = $_POST['TRUST_PATH'];
 	$error = '';
-	if ( @empty( $vars['TRUST_PATH'] ) )
+	if (@empty( $vars['TRUST_PATH'] ) )
 	{
     	$error = ERR_NO_TRUST_PATH;
-	} elseif ( $vars['TRUST_PATH'] == XOOPS_ROOT_PATH ) {
+	} elseif ($vars['TRUST_PATH'] == ICMS_ROOT_PATH) {
     	$error = ERR_INVALID_TRUST_PATH;
-	} elseif ( !is_dir( $vars['TRUST_PATH'] ) ) {
+	} elseif (!is_dir( $vars['TRUST_PATH'] )) {
     	$error = ERR_WRONG_TRUST_PATH;
 	}
-	if ( $error ) {
+	if ($error) {
 		echo '<div class="x2-note error">' . $error . "</div>\n";
     	return false;
-	} elseif ( substr( $vars, -1 ) == '/' OR substr( $vars, -1 ) == '\'' ) {
+	} elseif (substr( $vars, -1 ) == '/' OR substr( $vars, -1 ) == '\'') {
 					return str_replace( "//", "/", str_replace( "\\", "/", substr( $vars, 0, -1 ) ) );
-	}else{
+	} else {
 					return str_replace( "//", "/", str_replace( "\\", "/", $vars ) );
 	}
 }
-if ( !isset( $vars['TRUST_PATH'] ) ) {
+if (!isset( $vars['TRUST_PATH'] )) {
     $vars['TRUST_PATH'] = '';
 }
 
 
 ?>
-<?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
 <fieldset>
 	<legend><?php echo TRUST_PATH_LABEL; ?></legend>
 	<?php echo icmsFormField( 'TRUST_PATH',	$vars['TRUST_PATH'],	TRUST_PATH_LABEL, 255, TRUST_PATH_HELP ); ?>
-	
+
 </fieldset>
 <input type="hidden" name="action" value="next" />
 <input type="hidden" name="task" value="trust_path" />
-    
+
 <div class="xo-formbuttons">
     <button type="submit"><?php echo _SUBMIT; ?></button>
 </div>

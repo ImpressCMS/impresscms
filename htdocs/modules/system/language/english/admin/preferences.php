@@ -2,13 +2,15 @@
 // $Id$
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
-if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}
+if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_MD_AM_SITEPREF","Site Preferences");
 define("_MD_AM_SITENAME","Site name");
 define("_MD_AM_SLOGAN","Slogan for your site");
 define("_MD_AM_ADMINML","Admin mail address");
+define('_MD_AM_ADMINMLDSC','All informations will be send by this E-mail address. We recomend an address from your Web-Domain.');
 define("_MD_AM_LANGUAGE","Default language");
+define("_MD_AM_LANGUAGEDSC","Select your main language. If you activated the multilanguage, you can choice a language. And if you set in the multilanguage the language of your browser, than ImpressCMS will ignore this option.");
 define("_MD_AM_STARTPAGE","Module or Page for your start page");
 define("_MD_AM_NONE","None");
 define("_MD_CONTENTMAN","Content Manager");
@@ -20,6 +22,7 @@ define("_MD_AM_ANONNAME","Username for anonymous users");
 define("_MD_AM_MINPASS","Minimum length of password required");
 define("_MD_AM_NEWUNOTIFY","Notify by mail when a new user is registered?");
 define("_MD_AM_SELFDELETE","Allow users to delete own account?");
+define("_MD_AM_SELFDELETEDSC","If you select YES, your users can find out a new button in the account with which the account can be deleted.");
 define("_MD_AM_LOADINGIMG","Display loading... image?");
 define("_MD_AM_USEGZIP","Use gzip compression?");
 define("_MD_AM_UNAMELVL","Select the level of strictness for username filtering");
@@ -34,9 +37,6 @@ define("_MD_AM_SESSNAME","Session name");
 define("_MD_AM_SESSNAMEDSC","The name of session (Valid only when 'use custom session' is enabled)");
 define("_MD_AM_SESSEXPIRE","Session expiration");
 define("_MD_AM_SESSEXPIREDSC","Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled. Works only when you are using PHP4.2.0 or later.)");
-define("_MD_AM_BANNERS","Activate banner ads?");
-define("_MD_AM_MYIP","Your IP address");
-define("_MD_AM_MYIPDSC","This IP will not count as an impression for banners");
 define("_MD_AM_ALWDHTML","HTML tags allowed in all posts.");
 define("_MD_AM_INVLDMINPASS","Invalid value for minimum length of password.");
 define("_MD_AM_INVLDUCOOK","Invalid value for usercookie name.");
@@ -49,13 +49,13 @@ define("_MD_AM_DONTCHNG","Don't change!");
 define("_MD_AM_REMEMBER","Remember to chmod 666 this file in order to let the system write to it properly.");
 define("_MD_AM_IFUCANT","If you can't change the permissions you can edit the rest of this file by hand.");
 
-
 define("_MD_AM_COMMODE","Default Comment Display Mode");
 define("_MD_AM_COMORDER","Default Comments Display Order");
 define("_MD_AM_ALLOWHTML","Allow HTML tags in user comments?");
-define("_MD_AM_DEBUGMODE","Debug mode");
+define("_MD_AM_DEBUGMODE","Developer Dashboard");
 define("_MD_AM_DEBUGMODEDSC","Several debug options. A running website should have this turned off.");
 define("_MD_AM_AVATARALLOW","Allow custom avatar upload?");
+define("_MD_AM_AVATARALLOWDSC","If you allow this option, you can set more option for the avatars (with, height, size).");
 define('_MD_AM_AVATARMP','Minimum posts required');
 define('_MD_AM_AVATARMPDSC','Enter the minimum number of posts required to upload a custom avatar');
 define("_MD_AM_AVATARW","Avatar image max width (pixel)");
@@ -75,6 +75,7 @@ define("_MD_AM_ACTVTYPE","Select activation type of newly registered users");
 define("_MD_AM_ACTVGROUP","Select group to which activation mail will be sent");
 define("_MD_AM_ACTVGROUPDSC","Valid only when 'Activation by administrators' is selected");
 define('_MD_AM_USESSL', 'Use SSL for login?');
+define('_MD_AM_USESSLDSC', 'Select YES only if you have a SSL certificate. If you like to use this option, please copy the right files from your downloaded ImpressCMS EXTRA folder in your root-path.');
 define('_MD_AM_SSLPOST', 'SSL Post variable name');
 define('_MD_AM_SSLPOSTDSC', 'The name of variable used to transfer session value via POST. If you are unsure, set any name that is hard to guess.');
 define('_MD_AM_DEBUGMODE0','Off');
@@ -154,6 +155,7 @@ define('_MD_AM_MODCACHE', 'Module-wide Cache');
 define('_MD_AM_MODCACHEDSC', 'Caches module contents for a specified amount of time to enhance performance. Setting module-wide cache will override module item level cache if any.');
 define('_MD_AM_NOMODULE', 'There is no module that can be cached.');
 define('_MD_AM_DTPLSET', 'Default template set');
+define('_MD_AM_DTPLSETDSC', 'If you like to select an other Template-Set as a default, you must create first a new clone in your system. After them you can set this clone as default.');
 define('_MD_AM_SSLLINK', 'URL where SSL login page is located');
 
 // added for mailer
@@ -180,7 +182,6 @@ define("_MD_AM_SENDMAILPATH","Path to sendmail");
 define("_MD_AM_SENDMAILPATHDESC","Path to the sendmail program (or substitute) on the webserver.");
 define("_MD_AM_THEMEOK","Selectable themes");
 define("_MD_AM_THEMEOKDSC","Choose themes that users can select as the default theme");
-
 
 // Xoops Authentication constants
 define("_MD_AM_AUTH_CONFOPTION_XOOPS", "ImpressCMS Database");
@@ -304,6 +305,7 @@ define("_MD_AM_EDITOR_ENABLED_LIST_DESC","Select the selectable editors by the m
 define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depending the browser configuration");
 
 define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow anonymous users to see user profiles.");
+define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC","If you select YES, all visitors can see the profiles from your homepage. This is very usefull for a community, but maybe for the privacy not the best option.");
 
 define("_MD_AM_ENC_TYPE","Change Password Encryption (default is SHA256)");
 define("_MD_AM_ENC_TYPEDSC","Changes the Algorithm used for encrypting user passwords.<br />Changing this will render all passwords invalid! all users will need to reset their passwords after changing this preference");
@@ -556,8 +558,6 @@ define("_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE","Allowed Embedding YouTube Video")
 define("_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC","This directive enables YouTube video embedding in HTML Purifier. Check <a href='http://htmlpurifier.org/docs/enduser-youtube.html'>this</a> document on embedding videos for more information on what this filter does.");
 define("_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK","Extract Style Blocks?");
 define("_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC","Requires CSSTidy Plugin to be installed).<br /><br />This directive turns on the style block extraction filter, which removes style blocks from input HTML, cleans them up with CSSTidy, and places them in the StyleBlocks context variable, for further use by you, usually to be placed in an external stylesheet, or a style block in the head of your document.<br /><br />Warning: It is possible for a user to mount an imagecrash attack using this CSS. Counter-measures are difficult; it is not simply enough to limit the range of CSS lengths (using relative lengths with many nesting levels allows for large values to be attained without actually specifying them in the stylesheet), and the flexible nature of selectors makes it difficult to selectively disable lengths on image tags (HTML Purifier, however, does disable CSS width and height in inline styling). There are probably two effective counter measures: an explicit width and height set to auto in all images in your document (unlikely) or the disabling of width and height (somewhat reasonable). Whether or not these measures should be used is left to the reader.");
-define("_MD_AM_PURIFIER_FILTER_CUSTOM","Select Custom Filters");
-define("_MD_AM_PURIFIER_FILTER_CUSTOMDSC","Select Custom Movie filters From the list");
 // Core Section
 define("_MD_AM_PURIFIER_CORE_ESCINVALIDTAGS","Escape Invalid Tags");
 define("_MD_AM_PURIFIER_CORE_ESCINVALIDTAGSDSC","When enabled, invalid tags will be written back to the document as plain text. Otherwise, they are silently dropped.");
@@ -646,7 +646,7 @@ define("_MD_AM_PURIFIER_LIVELEAK","LiveLeak Movies");
 define("_MD_AM_UNABLECSSTIDY", "CSSTidy Plugin is not found, Please copy the make sure you have CSSTidy located in your plugins folder.");
 
 // Autotasks
-if(!defined('_MD_AM_AUTOTASKS')){define('_MD_AM_AUTOTASKS', 'Auto Tasks');}
+if (!defined('_MD_AM_AUTOTASKS')) {define('_MD_AM_AUTOTASKS', 'Auto Tasks');}
 define("_MD_AM_AUTOTASKS_SYSTEM", "Processing system");
 define("_MD_AM_AUTOTASKS_HELPER", "Helper application");
 define("_MD_AM_AUTOTASKS_HELPER_PATH", "Path for helper application");
@@ -666,5 +666,28 @@ define("_MD_AM_SMTPSECURE","SMTP Secure Method");
 define("_MD_AM_SMTPSECUREDESC","Authentication Method used for SMTPAuthentication. (default is ssl)");
 define("_MD_AM_SMTPAUTHPORT","SMTP Port");
 define("_MD_AM_SMTPAUTHPORTDESC","The Port use by your SMTP Mail server (default is 465)");
+
+// added in 1.3
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT","Enable IE Flash Compatibility");
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC","If true, HTML Purifier will generate Internet Explorer compatibility code for all object code. This is highly recommended if you enable HTML.SafeObject.");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRN","Allow FullScreen in Flash objects");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC","If true, HTML Purifier will allow use of 'allowFullScreen' in embedded flash content when using HTML.SafeObject.");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINES","Normalize Newlines");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC","Whether or not to normalize newlines to the operating system default. When false, HTML Purifier will attempt to preserve mixed newline files.");
+define('_MD_AM_AUTHENTICATION_DSC', 'Manage security settings related to accessibility. Settings that will effect how users accounts are handled.');
+define('_MD_AM_AUTOTASKS_PREF_DSC', 'Preferences for the Auto Tasks system.');
+define('_MD_AM_CAPTCHA_DSC', 'Manage the settings used by captcha throughout your site.');
+define('_MD_AM_GENERAL_DSC', 'The primary settings page for basic information needed by the system.');
+define('_MD_AM_PURIFIER_DSC', 'HTMLPurifier is used to protect your site against common attack methods.');
+define('_MD_AM_MAILER_DSC', 'Configure how your site will handle mail.');
+define('_MD_AM_METAFOOTER_DSC', 'Manage your meta information and site footer as well as your crawler options.');
+define('_MD_AM_MULTILANGUAGE_DSC', 'Manage your sites Multi-language settings. Enable, and configure what languages are available and how they are triggered.');
+define('_MD_AM_PERSON_DSC', 'Personalize the system with custom logos and other settings.');
+define('_MD_AM_PLUGINS_DSC', 'Select which plugins are used and available to be used throughout your site.');
+define('_MD_AM_SEARCH_DSC', 'Manage how the search function operates for your users.');
+define('_MD_AM_USERSETTINGS_DSC', 'Manage how users register for your site. ser names length, formatting and password options.');
+define('_MD_AM_CENSOR_DSC', 'Manage the language that is not permitted on your site.');
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM","Allow Custom Filters");
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","Allow Custom Filters?<br /><br />if enabled this will allow you to use custom filters located in;<br />'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
 
 ?>

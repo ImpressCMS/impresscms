@@ -1,7 +1,7 @@
 <?php
 // $Id$
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
-if(!defined('_AM_DBUPDATED')){if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}}
+if (!defined('_AM_DBUPDATED')) {if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}}
 
 //%%%%%%	blocks.php 	%%%%%
 define("_AM_BADMIN","Blocks Administration");
@@ -79,7 +79,7 @@ define('_AM_BLOCKS_PERMGROUPS','Groups allowed to view this block');
 
 /**
  * The next Language definitions are included since 2.0 of blockadmin module, because now is based on IPF.
- * TODO: Add the rest of the fields, are added only the ones wich are shown.
+ * TODO: Add the rest of the fields, are added only the ones which are shown.
  */
 // Texts
 
@@ -88,7 +88,6 @@ define("_AM_SYSTEM_BLOCKSADMIN_CREATE", "Create a New Block");
 define("_AM_SYSTEM_BLOCKSADMIN_EDIT", "Edit a Block");
 define("_AM_SYSTEM_BLOCKSADMIN_MODIFIED", "Block Modified Succesfully!");
 define("_AM_SYSTEM_BLOCKSADMIN_CREATED", "Block Created Succesfully!");
-
 
 // Fields
 define("_CO_SYSTEM_BLOCKSADMIN_NAME", "Name");
@@ -115,7 +114,7 @@ define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME", "Block Cache Time");
 define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME_DSC", "");
 
 define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS", "Block View permission");
-define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC", "Select wich groups will have view permission for this block. This means that a user belonging to one of these groups will be able to view the block when it is activated in the site.");
+define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC", "");
 
 define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
 define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");

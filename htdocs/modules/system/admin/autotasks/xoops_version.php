@@ -4,25 +4,24 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
+ * @package		Administration
+ * @subpackage	Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
+ * @version		SVN: $Id$
  */
 
-
-
-
-$modversion['name'] = _MD_AM_AUTOTASKS;
-$modversion['version'] = "1.0";
-$modversion['description'] = "AutoTasks Administration";
-$modversion['author'] = "mekdrop <mekdrop@gmail.com>";
-$modversion['credits'] = "The ImpressCMS Project <br />Crystal Icons";
-$modversion['help'] = "";
-$modversion['license'] = "GPL see LICENSE";
-$modversion['official'] = 1;
-$modversion['image'] = "images/autotasks.png";
-$modversion['hasAdmin'] = 1;
-$modversion['adminpath'] = "admin.php?fct=autotasks";
-$modversion['category'] = XOOPS_SYSTEM_AUTOTASKS;
-
-?>
+$modversion = array(
+	'name' => _MD_AM_AUTOTASKS,
+	'version' => "1.0",
+	'description' => "_MD_AM_AUTOTASKS_DSC",
+	'author' => "mekdrop <mekdrop@gmail.com>",
+	'credits' => "The ImpressCMS Project <br />Crystal Icons",
+	'help' => "",
+	'license' => "GPL see LICENSE",
+	'official' => 1,
+	'image' => "images/autotasks.png",
+	'hasAdmin' => 1,
+	'adminpath' => "admin.php?fct=autotasks",
+	'category' => XOOPS_SYSTEM_AUTOTASKS,
+	'group' => _MD_AM_GROUPS_SYSTEMTOOLS);

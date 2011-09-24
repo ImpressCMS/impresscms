@@ -1,9 +1,8 @@
 <?php
 
-require_once XOOPS_ROOT_PATH.'/class/pagenav.php' ;
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
-$myts =& MyTextSanitizer::getInstance() ;
-$db =& Database::getInstance() ;
+$myts =& icms_core_Textsanitizer::getInstance() ;
+$db =& icms_db_Factory::instance() ;
 
 // GET vars
 $pos = empty( $_GET[ 'pos' ] ) ? 0 : intval( $_GET[ 'pos' ] ) ;
@@ -18,7 +17,7 @@ $log_table = $db->prefix( $mydirname."_log" ) ;
 
 // Protector object
 require_once dirname(dirname(__FILE__)).'/class/protector.php' ;
-$db =& Database::getInstance() ;
+$db =& icms_db_Factory::instance() ;
 $protector =& Protector::getInstance( $db->conn ) ;
 $conf = $protector->getConf() ;
 
@@ -109,7 +108,7 @@ list( $numrows ) = $db->fetchRow( $rs ) ;
 $prs = $db->query( "SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN ".$db->prefix("users")." u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num" ) ;
 
 // Page Navigation
-$nav = new XoopsPageNav( $numrows , $num , $pos , 'pos' , "num=$num" ) ;
+$nav = new icms_view_PageNav( $numrows , $num , $pos , 'pos' , "num=$num" ) ;
 $nav_html = $nav->renderNav( 10 ) ;
 
 // Number selection
@@ -128,7 +127,7 @@ xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 
 // title
-echo "<h3 style='text-align:"._GLOBAL_LEFT.";'>".$xoopsModule->name()."</h3>\n" ;
+echo "<h3 style='text-align:"._GLOBAL_LEFT.";'>".$xoopsModule->getVar('name')."</h3>\n" ;
 
 // configs writable check
 if( ! is_writable( dirname(dirname(__FILE__)).'/configs' ) ) {

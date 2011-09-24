@@ -93,9 +93,9 @@ function smarty_function_xoops_link($params, $smarty) {
 	}
 	// Now, return entire link URL :-)
 	if ( empty($module) ) {
-		echo XOOPS_URL . "/$page" . $urlstr;
+		echo ICMS_URL . "/$page" . $urlstr;
 	} else {
-		echo XOOPS_URL . "/modules/$module/$page" . $urlstr;
+		echo ICMS_URL . "/modules/$module/$page" . $urlstr;
 	}
 }
 

@@ -1,24 +1,24 @@
 <?php
-function b_waiting_yomi(){
+function b_waiting_yomi() {
 	////////////////////////////////////
-	//²¾ÅÐÏ¿¥í¥°¥Õ¥¡¥¤¥ë¤Î¥Ç¥£¥ì¥¯¥È¥êÌ¾
-	$log_path = XOOPS_ROOT_PATH."/modules/yomi/log/";
+	//ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½?ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½Ì¾
+	$log_path = ICMS_ROOT_PATH."/modules/yomi/log/";
 	////////////////////////////////////
-	//²¾ÅÐÏ¿¥í¥°¥Õ¥¡¥¤¥ë¤Î¥Õ¥¡¥¤¥ëÌ¾
+	//ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½?ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î¥Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾
 	$log_file = "ys4_temp.cgi";
 	////////////////////////////////////
-	//ÀßÄê¤³¤³¤Þ¤Ç
+	//ï¿½ï¿½ï¿½ê¤³ï¿½ï¿½ï¿½Þ¤ï¿½
 	
-	$lang_linkname = "¾µÇ§ÂÔ¤Á¥ê¥ó¥¯(Yomi)";
+	$lang_linkname = "ï¿½ï¿½Ç§ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½(Yomi)";
 	$block = array();
 	$Ctemp=0;
 	$fp=fopen($log_path.$log_file, "r");
-	while($tmp=fgets($fp, 4096)){
+	while ($tmp=fgets($fp, 4096)) {
 		$Ctemp++;
 	}
 	fclose($fp);
 
-	$block['adminlink'] = XOOPS_URL."/modules/yomi/admin.php";
+	$block['adminlink'] = ICMS_ROOT_PATH."/modules/yomi/admin.php";
 	$block['pendingnum'] = $Ctemp;
 	$block['lang_linkname'] = _PI_WAITING_WAITINGS;
 

@@ -5,7 +5,7 @@
 
 // Text for various templates...
 
-define ('_NOT_NOTIFICATIONOPTIONS', 'Notification Options');
+define ('_NOT_NOTIFICATIONOPTIONS', 'Options');
 define ('_NOT_UPDATENOW', 'Update Now');
 define ('_NOT_UPDATEOPTIONS', 'Update Notification Options');
 
@@ -17,7 +17,7 @@ define ('_NOT_ITEMID', 'ID');
 define ('_NOT_ITEMNAME', 'Name');
 define ('_NOT_EVENT', 'Event');
 define ('_NOT_EVENTS', 'Events');
-define ('_NOT_ACTIVENOTIFICATIONS', 'Active Notifications');
+define ('_NOT_ACTIVENOTIFICATIONS', 'Notifications and Bookmarks');
 define ('_NOT_NAMENOTAVAILABLE', 'Name Not Available');
 // RMV-NEW : TODO: remove NAMENOTAVAILBLE above
 define ('_NOT_ITEMNAMENOTAVAILABLE', 'Item Name Not Available');

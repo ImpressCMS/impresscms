@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -123,16 +123,19 @@
 			
 			$temp = $this->copy();
 			imagetruecolortopalette($temp->handle, $dither, $nColors);
-			
-			if ($matchPalette == true)
+			if ($matchPalette == true && function_exists('imagecolormatch'))
 				imagecolormatch($this->handle, $temp->handle);
 			
+			// The code below isn't working properly; it corrupts transparency on some palette->tc->palette conversions.
+			// Why is this code here?
+			/*
 			if ($this->isTransparent())
 			{
 				$trgb = $this->getTransparentColorRGB();
 				$tci = $temp->getClosestColor($trgb);
 				$temp->setTransparentColor($tci);
 			}
+			/**/
 			
 			$temp->releaseHandle();
 			return new WideImage_PaletteImage($temp->handle);
@@ -213,4 +216,3 @@
 			return $this->copy();
 		}
 	}
-?>

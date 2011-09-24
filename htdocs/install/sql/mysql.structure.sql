@@ -1,14 +1,3 @@
-# phpMyAdmin MySQL-Dump
-# version 2.3.2
-# http://www.phpmyadmin.net/ (download page)
-#
-# Host: localhost
-# Generation Time: Jan 09, 2003 at 12:35 AM
-# Server version: 3.23.54
-# PHP Version: 4.2.2
-# Database : `xoops2`
-# --------------------------------------------------------
-
 #
 # Table structure for table `avatar`
 #
@@ -24,7 +13,7 @@ CREATE TABLE avatar (
   avatar_type char(1) NOT NULL default '',
   PRIMARY KEY  (avatar_id),
   KEY avatar_type (avatar_type,avatar_display)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -35,61 +24,7 @@ CREATE TABLE avatar_user_link (
   avatar_id mediumint(8) unsigned NOT NULL default '0',
   user_id mediumint(8) unsigned NOT NULL default '0',
   KEY avatar_user_id (avatar_id,user_id)
-) TYPE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table `banner`
-#
-
-CREATE TABLE banner (
-  bid smallint(5) unsigned NOT NULL auto_increment,
-  cid tinyint(3) unsigned NOT NULL default '0',
-  imptotal mediumint(8) unsigned NOT NULL default '0',
-  impmade mediumint(8) unsigned NOT NULL default '0',
-  clicks mediumint(8) unsigned NOT NULL default '0',
-  imageurl varchar(255) NOT NULL default '',
-  clickurl varchar(255) NOT NULL default '',
-  date int(10) NOT NULL default '0',
-  htmlbanner tinyint(1) NOT NULL default '0',
-  htmlcode text NOT NULL,
-  PRIMARY KEY  (bid),
-  KEY idxbannercid (cid),
-  KEY idxbannerbidcid (bid,cid)
-) TYPE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table `bannerclient`
-#
-
-CREATE TABLE bannerclient (
-  cid smallint(5) unsigned NOT NULL auto_increment,
-  name varchar(60) NOT NULL default '',
-  contact varchar(60) NOT NULL default '',
-  email varchar(60) NOT NULL default '',
-  login varchar(10) NOT NULL default '',
-  passwd varchar(10) NOT NULL default '',
-  extrainfo text NOT NULL,
-  PRIMARY KEY  (cid),
-  KEY login (login)
-) TYPE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table `bannerfinish`
-#
-
-CREATE TABLE bannerfinish (
-  bid smallint(5) unsigned NOT NULL auto_increment,
-  cid smallint(5) unsigned NOT NULL default '0',
-  impressions mediumint(8) unsigned NOT NULL default '0',
-  clicks mediumint(8) unsigned NOT NULL default '0',
-  datestart int(10) unsigned NOT NULL default '0',
-  dateend int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY  (bid),
-  KEY cid (cid)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 # Adding dynamic block area/position system - TheRpLima - 2007-10-21
@@ -105,7 +40,7 @@ CREATE TABLE `block_positions` (
   block_default int(1) NOT NULL default '0',
   block_type varchar(1) NOT NULL default 'L',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+);
 
 #
 # Table structure for table `block_module_link`
@@ -117,7 +52,7 @@ CREATE TABLE block_module_link (
   page_id smallint(5) NOT NULL default '0',
   KEY module_id (module_id),
   KEY block_id (block_id)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -150,7 +85,7 @@ CREATE TABLE xoopscomments (
   KEY com_itemid (com_itemid),
   KEY com_uid (com_uid),
   KEY com_title (com_title(40))
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -163,7 +98,7 @@ CREATE TABLE icmspage (
   page_url varchar(255) NOT NULL default '',
   page_status tinyint(1) unsigned NOT NULL default '1',
   PRIMARY KEY  (page_id)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 # RMV-NOTIFY
@@ -184,7 +119,7 @@ CREATE TABLE xoopsnotifications (
   KEY not_class (not_category),
   KEY not_uid (not_uid),
   KEY not_event (not_event)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -203,8 +138,8 @@ CREATE TABLE config (
   conf_valuetype varchar(10) NOT NULL default '',
   conf_order smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (conf_id),
-  KEY conf_mod_cat_id (conf_modid,conf_catid)
-) TYPE=MyISAM;
+  KEY mod_cat_order(conf_modid, conf_catid, conf_order)
+);
 # --------------------------------------------------------
 
 #
@@ -216,7 +151,7 @@ CREATE TABLE configcategory (
   confcat_name varchar(255) NOT NULL default '',
   confcat_order smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (confcat_id)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -230,7 +165,7 @@ CREATE TABLE configoption (
   conf_id smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (confop_id),
   KEY conf_id (conf_id)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -244,7 +179,7 @@ CREATE TABLE groups (
   group_type varchar(10) NOT NULL default '',
   PRIMARY KEY  (groupid),
   KEY group_type (group_type)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -255,13 +190,11 @@ CREATE TABLE group_permission (
   gperm_id int(10) unsigned NOT NULL auto_increment,
   gperm_groupid smallint(5) unsigned NOT NULL default '0',
   gperm_itemid mediumint(8) unsigned NOT NULL default '0',
-  gperm_modid mediumint(5) unsigned NOT NULL default '0',
+  gperm_modid smallint(5) unsigned NOT NULL default '0',
   gperm_name varchar(50) NOT NULL default '',
   PRIMARY KEY  (gperm_id),
-  KEY groupid (gperm_groupid),
-  KEY itemid (gperm_itemid),
-  KEY gperm_modid (gperm_modid,gperm_name(10))
-) TYPE=MyISAM;
+  KEY name_mod_group (gperm_name(10), gperm_modid, gperm_groupid)
+);
 # --------------------------------------------------------
 
 
@@ -275,7 +208,7 @@ CREATE TABLE groups_users_link (
   uid mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (linkid),
   KEY groupid_uid (groupid,uid)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -294,7 +227,7 @@ CREATE TABLE image (
   PRIMARY KEY  (image_id),
   KEY imgcat_id (imgcat_id),
   KEY image_display (image_display)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -305,7 +238,7 @@ CREATE TABLE imagebody (
   image_id mediumint(8) unsigned NOT NULL default '0',
   image_body mediumblob,
   KEY image_id (image_id)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -326,7 +259,7 @@ CREATE TABLE imagecategory (
   imgcat_foldername varchar(100) default '',
   PRIMARY KEY  (imgcat_id),
   KEY imgcat_display (imgcat_display)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 
@@ -340,7 +273,7 @@ CREATE TABLE imgset (
   imgset_refid mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (imgset_id),
   KEY imgset_refid (imgset_refid)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -351,7 +284,7 @@ CREATE TABLE imgset_tplset_link (
   imgset_id smallint(5) unsigned NOT NULL default '0',
   tplset_name varchar(50) NOT NULL default '',
   KEY tplset_name (tplset_name(10))
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -365,7 +298,7 @@ CREATE TABLE imgsetimg (
   imgsetimg_imgset smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (imgsetimg_id),
   KEY imgsetimg_imgset (imgsetimg_imgset)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -387,14 +320,12 @@ CREATE TABLE modules (
   hascomments tinyint(1) unsigned NOT NULL default '0',
   hasnotification tinyint(1) unsigned NOT NULL default '0',
   dbversion int(11) unsigned NOT NULL default '1',
+  modname varchar(25) NOT NULL default '',
+  ipf tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (mid),
-  KEY hasmain (hasmain),
-  KEY hasadmin (hasadmin),
-  KEY hassearch (hassearch),
-  KEY hasnotification (hasnotification),
-  KEY dirname (dirname),
-  KEY name (name(15))
-) TYPE=MyISAM;
+  KEY dirname (dirname(5)),
+  KEY active_main_weight (isactive, hasmain, weight)
+);
 # --------------------------------------------------------
 
 #
@@ -427,7 +358,7 @@ CREATE TABLE newblocks (
   KEY visible (visible),
   KEY isactive_visible_mid (isactive,visible,mid),
   KEY mid_funcnum (mid,func_num)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -441,7 +372,7 @@ CREATE TABLE online (
   online_module smallint(5) unsigned NOT NULL default '0',
   online_ip varchar(15) NOT NULL default '',
   KEY online_module (online_module)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -458,10 +389,9 @@ CREATE TABLE priv_msgs (
   msg_text text NOT NULL,
   read_msg tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (msg_id),
-  KEY to_userid (to_userid),
   KEY touseridreadmsg (to_userid,read_msg),
   KEY msgidfromuserid (msg_id,from_userid)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -476,11 +406,10 @@ CREATE TABLE ranks (
   rank_special tinyint(1) unsigned NOT NULL default '0',
   rank_image varchar(255) default NULL,
   PRIMARY KEY  (rank_id),
-  KEY rank_min (rank_min),
   KEY rank_max (rank_max),
   KEY rankminrankmaxranspecial (rank_min,rank_max,rank_special),
   KEY rankspecial (rank_special)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -490,11 +419,11 @@ CREATE TABLE ranks (
 CREATE TABLE session (
   sess_id varchar(32) NOT NULL default '',
   sess_updated int(10) unsigned NOT NULL default '0',
-  sess_ip varchar(15) NOT NULL default '',
+  sess_ip varchar(64) NOT NULL default '',
   sess_data text NOT NULL,
   PRIMARY KEY  (sess_id),
   KEY updated (sess_updated)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -508,7 +437,7 @@ CREATE TABLE smiles (
   emotion varchar(75) NOT NULL default '',
   display tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -522,7 +451,7 @@ CREATE TABLE tplset (
   tplset_credits text NOT NULL,
   tplset_created int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (tplset_id)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -542,7 +471,7 @@ CREATE TABLE tplfile (
   PRIMARY KEY  (tpl_id),
   KEY tpl_refid (tpl_refid,tpl_type),
   KEY tpl_tplset (tpl_tplset,tpl_file(10))
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 #
@@ -553,7 +482,7 @@ CREATE TABLE tplsource (
   tpl_id mediumint(7) unsigned NOT NULL default '0',
   tpl_source mediumtext NOT NULL,
   KEY tpl_id (tpl_id)
-) TYPE=MyISAM;
+);
 # --------------------------------------------------------
 
 # RMV-NOTIFY (added two columns)
@@ -601,11 +530,8 @@ CREATE TABLE users (
   login_name varchar(255) NOT NULL default '',
   PRIMARY KEY  (uid),
   KEY uname (uname),
-  KEY login_name (login_name),
-  KEY email (email),
-  KEY uiduname (uid,uname),
-  KEY unamepass (uname(10),pass(10))
-) TYPE=MyISAM;
+  UNIQUE KEY login_name (login_name)
+);
 
 #
 # Table structure for table `invites`
@@ -623,7 +549,7 @@ CREATE TABLE invites (
   PRIMARY KEY (invite_id),
   KEY invite_code (invite_code),
   KEY register_id (register_id)
-) TYPE=MyISAM;
+);
 
 #
 # Table structure for table `system_customtag`
@@ -633,11 +559,11 @@ CREATE TABLE system_customtag (
   customtagid int(11) unsigned NOT NULL auto_increment,
   name varchar(255) NOT NULL default '',
   description text NOT NULL,
-  content text NOT NULL,
+  customtag_content text NOT NULL,
   language varchar(100) NOT NULL default '',
   customtag_type tinyint(1) NOT NULL default 0,
   PRIMARY KEY (customtagid)
-) TYPE=MyISAM;
+);
 
 #
 # Table structure for table `system_mimetype`
@@ -650,7 +576,7 @@ CREATE TABLE system_mimetype (
   name varchar(255) NOT NULL default '',
   dirname VARCHAR(255) NOT NULL,
   KEY mimetypeid (mimetypeid)
-) TYPE=MyISAM;
+);
 
 #
 # Table structure for table `system_adsense`
@@ -661,15 +587,16 @@ CREATE TABLE system_adsense (
   format VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
   style TEXT NOT NULL,
-  border_color varchar(6) NOT NULL default '',
-  background_color varchar(6) NOT NULL default '',
-  link_color varchar(6) NOT NULL default '',
-  url_color varchar(6) NOT NULL default '',
-  text_color varchar(6) NOT NULL default '',
+  color_border varchar(6) NOT NULL default '',
+  color_background varchar(6) NOT NULL default '',
+  color_link varchar(6) NOT NULL default '',
+  color_url varchar(6) NOT NULL default '',
+  color_text varchar(6) NOT NULL default '',
   client_id varchar(100) NOT NULL default '',
   tag varchar(50) NOT NULL default '',
+  slot varchar(12) NOT NULL default '',
   PRIMARY KEY  (`adsenseid`)
-) TYPE=MyISAM;
+);
 
 #
 # Table structure for table `system_rating`
@@ -684,7 +611,7 @@ CREATE TABLE system_rating (
   rate int(1) NOT NULL,
   date int(11) NOT NULL,
   PRIMARY KEY  (`ratingid`)
-) TYPE=MyISAM;
+);
 
 #
 # Table structure for table `system_autotasks`
@@ -704,4 +631,33 @@ CREATE TABLE system_autotasks (
   KEY sat_interval (sat_interval),
   KEY sat_lastruntime (sat_lastruntime),
   KEY sat_type (sat_type)
+);
+
+#
+# Table structure for table `icms_urllink`
+#
+
+CREATE TABLE icms_data_urllink (
+  urllinkid int(10) unsigned NOT NULL AUTO_INCREMENT,
+  mid smallint(5) unsigned NOT NULL,
+  caption varchar(255) NOT NULL,
+  description varchar(255) NOT NULL,
+  url varchar(255) NOT NULL,
+  target varchar(6) NOT NULL,
+  PRIMARY KEY (urllinkid),
+  KEY mid (mid)
+);
+
+#
+# Table structure for table `icms_file`
+#
+
+CREATE TABLE icms_data_file (
+  fileid int(10) unsigned NOT NULL AUTO_INCREMENT,
+  mid smallint(5) unsigned NOT NULL,
+  caption varchar(255) NOT NULL,
+  description varchar(255) NOT NULL,
+  url varchar(255) NOT NULL,
+  PRIMARY KEY (fileid),
+  KEY mid (mid)
 );

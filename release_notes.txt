@@ -1,55 +1,25 @@
-ImpressCMS 1.2.1 Beta release notes
-==================================
+ImpressCMS 2.0 Alpha release notes
+================================================
 
-The ImpressCMS Project is very proud to announce a Beta version of its 1.2.1 release! ImpressCMS 1.2.1 Beta is a bugfix release and is not intended for production sites.
+The ImpressCMS Project is very proud to announce the first Alpha version of its 2.0 release! 
+ImpressCMS 2.0 Alpha is a major refactoring of the core and is not intended for production sites.
 
 Please see the full [[Change Log]] for details in docs/changelog.txt.
 
 ==System requirements==
 
 *PHP
-    ** PHP 5.1 or higher (5.2 or higher recommended, 5.3 will be supported in ImpressCMS 1.3)
+    ** PHP 5.2.5 or higher (5.1 may work, but is not officially supported, 5.3 is supported in ImpressCMS 1.3)
     ** 16MB memory
 *MySQL
     ** MySQL 4.1.0 or higher
 *Web server
     ** Any server supporting the required PHP version (Apache highly recommended)
 
-==Changes in this release==
-
-* #865: Registration disclaimer value type set to array instead of text (skenow)
-* #874: Bug on Admin Installed Modules Block (nekro)
-* #875: Bug on Admin CP Block (nekro)
-* #876: Weight default value is missing in block creation (nekro)
-* #879: Rank images are in 2 folders (skenow/nekro)
-* #867: Installer - fails to check for 5.3.0 (davidimpress/phoenyx)
-* #878: Welcome email template has incorrect variable (skenow/phoenyx)
-* #662: function: themefooter + $xoopsOption['theme_use_smarty'] undefined (phoenyx)
-* #895: expired password accts don't get redirected to resetpass (profile) (m0nty)
-* #905: wrong handling for XOBJ_DTYPE_[S|M|L]TIME (phoenyx)
-* #907: Image editor does not work when there is an install also in a subfolder (skenow/fiammybe)
-* #893: Registration disclaimer will not be accepted if captcha is off (skenow/malanciault)
-* #921: captcha options for skipped characters and skipped groups not added during an upgrade (skenow)
-* #869: Database password screwed up during installation (phoenyx/skenow/malanciault)
-* #911: Step 7 - script can not find the tmp-path (sato/malanciault)
-* #881: SQL syntax error in update (skenow/fiammybe)
-* #892: Enabling IP bans in Preferences > General settings causes CAPTCHA validation to fail (skenow/malanciault)
-* #923: fatal error (xoops_cp_header) in image manager (formimage_browse.php) (phoenyx/skenow)
-* #922: double slashes in iTheme admin theme (aphex)
-* #914: uploader.php works not with module (sato/skenow/malanciault)
-* #819: Login block needs formating in Site Close template (malanciault/fiammybe)
-* #894: Several config items are not inserted during an upgrade to 1.2 (skenow/malanciault)
-* #880: abortUpdate is not being honored (skenow/fiammybe)
-* #929: Trust path generated folder name needs to be totally random (malanciault)
-* #864: Ranks: PNG Not allowed? (davidimpress/skenow/malanciault)
-* #917: Tag [img] with command "center" works not (sato/fiammybe)
-* #931: Undefined index: language in file /class/mail/xoopsmultimailer.php line 171 (malanciault)
-* #932: XoopsMultiMailer is using xoopsConfigPersona instead of xoopsConfig (malanciault)
-* #871: XoopsMultiMailer class broken for SMTP and SMTPAuth (phoenyx/m0nty)
 
 ==Downloading ImpressCMS==
 
-This release can be downloaded from the [https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Official%20Releases/ImpressCMS%201.2%20Final/ ImpressCMS SourceForge project page].
+This release can be downloaded from the [https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Official%20Releases/ ImpressCMS SourceForge project page].
 
 ==Using wget command to download the .tar.gz full package==
 
@@ -62,11 +32,11 @@ wget http://www.impresscms.org/download/
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-https://svn.impresscms.org/core/releases/impresscms_1.2_final/
+https://svn.impresscms.org/core/releases/impresscms_2.0_alpha/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
-https://svn.impresscms.org/core/trunk/
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/trunk
 
 The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is, of course, not to be used on production sites.
 
@@ -82,9 +52,10 @@ For complete installation documentation, please refer to the Installation Guide 
 
 If you are upgrading from a previous version of ImpressCMS or XOOPS, please follow these instructions:
 
-* Download an upgrade package (tar.gz or zip formats are available) http://www.impresscms.org/modules/mastop_publish/?tac=Download
+* Download an upgrade package (tar.gz or zip formats are available) http://www.impresscms.org/modules/content/content.php?page=ImpressCMS-1_3_x
 * Extract the package to your local computer
 * Login to your site
+* If you are using a custom set of templates, please change back to the default template set
 * Upload the contents of the htdocs/ folder to your webserver, overwriting your existing files
 * Clear the contents of your cache/ and templates_c/ folders
 * If you are upgrading from XOOPS or ImpressCMS 1.0, access <your.site.url>/upgrade/ with your browser
@@ -135,7 +106,6 @@ Sourceforge Project: http://www.sourceforge.net/projects/impresscms
 * Community driven documentation: http://wiki.impresscms.org
 * ImpressCMS Blogs: http://community.impresscms.org/modules/imblogging/
 * ImpressCMS Core development updates on Twitter: http://twitter.com/impresscms_svn
-* ImpressCMS IRC Channel: #impresscms on freenode.net
 
 ===ImpressCMS Mailing Lists===
 

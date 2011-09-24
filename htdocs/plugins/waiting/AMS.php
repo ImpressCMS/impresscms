@@ -1,14 +1,12 @@
 <?php
-function b_waiting_AMS()
-{
-	$xoopsDB =& Database::getInstance();
+function b_waiting_AMS() {
 	$block = array();
 
 	// AMS articles
-	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("ams_article")." WHERE published=0");
-	if ( $result ) {
-		$block['adminlink'] = XOOPS_URL."/modules/AMS/admin/index.php?op=newarticle";
-		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("ams_article")." WHERE published=0");
+	if ($result) {
+		$block['adminlink'] = ICMS_URL."/modules/AMS/admin/index.php?op=newarticle";
+		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS ;
 	}
 

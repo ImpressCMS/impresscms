@@ -3,6 +3,7 @@ Disallow: /cgi-bin/
 Disallow: /tmp/
 Disallow: /cache/
 Disallow: /class/
+Disallow: /editors/
 Disallow: /images/
 Disallow: /include/
 Disallow: /install/

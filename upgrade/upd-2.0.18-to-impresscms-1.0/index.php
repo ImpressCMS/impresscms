@@ -16,31 +16,31 @@ class upgrade_impcms05 {
 	}
 	function cleaning_write_folders() {
 		$dir = array();
-		$dir['templates_c'] = XOOPS_ROOT_PATH."/templates_c/";
-		$dir['cache'] = XOOPS_ROOT_PATH."/cache/";
+		$dir['templates_c'] = ICMS_COMPILE_PATH . "/";
+		$dir['cache'] = ICMS_CACHE_PATH . "/";
 
 		foreach ($dir as $d)
 		{
 			$dd = opendir($d);
-			while($file = readdir($dd))
+			while ($file = readdir($dd))
 			{
-		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'))
+				if (is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'))
 				{
-		  			unlink($d.$file);
+					unlink($d.$file);
 				}
 			}
 			closedir($dd);
 		}
-			return true;
+		return true;
 	}
 	function apply_conf_configcategory() {
 		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_MULTILANGUAGE"') != 0){return true;}
+		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_MULTILANGUAGE"') != 0) {return true;}
 		return $this->query(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('','_MD_AM_MULTILANGUAGE')");
 	}
 	function apply_new_blocks() {
 		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db,'newblocks','bid',' show_func="b_system_multilanguage_show"') != 0){return true;}
+		if (getDbValue($db,'newblocks','bid',' show_func="b_system_multilanguage_show"') != 0) {return true;}
 		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Language Selection', 'Language Selection', '', 1, 0, 0, 'S', 'H', 1, 'system', 'system_blocks.php', 'b_system_multilanguage_show', '', 'system_block_multilanguage.html', 0, " . time() . ")");
 		$new_block_id = $db->getInsertId();
 		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
@@ -66,7 +66,7 @@ class upgrade_impcms05 {
 				  block_default int(1) NOT NULL default '0',
 				  block_type varchar(1) NOT NULL default 'L',
 				  PRIMARY KEY  (`id`)
-				  ) TYPE=MyISAM;";
+				  );";
 			$this->query($query);
 			$pos = array ();
 			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (1,'canvas_left','_AM_SBLEFT',NULL,1,'L');";
@@ -121,7 +121,7 @@ class upgrade_impcms05 {
 	 * @package News
 	 * @author Herv� Thouzard (www.herve-thouzard.com)
 	 * @copyright (c) The Xoops Project - www.xoops.org
-	*/
+	 */
 	function table_exists($tablename) {
 		global $xoopsDB;
 		$query = "SHOW TABLES LIKE '" . $xoopsDB->prefix($tablename) . "'";
@@ -130,13 +130,13 @@ class upgrade_impcms05 {
 	}
 	function check_file_patch() {
 		/* $path = XOOPS_ROOT_PATH . '/class/auth';
-		$lines = file( "$path/auth_provisionning.php");
-		foreach ( $lines as $line ) {
-			if ( strpos( $line, "ldap_provisionning_upd" ) !== false ) {
-				// Patch found: do not apply again
-				return true;
+		 $lines = file( "$path/auth_provisionning.php");
+		 foreach ( $lines as $line) {
+			if (strpos( $line, "ldap_provisionning_upd" ) !== false) {
+			// Patch found: do not apply again
+			return true;
 			}
-		} */
+			} */
 		return true;
 	}
 	function check_conf_config() {
@@ -156,16 +156,16 @@ class upgrade_impcms05 {
 		$this->fields = array (
 			"config" => array (
 				"conf_desc" => "varchar(100)"
-			),
+				),
 
-		);
-		foreach ($this->fields as $table => $data) {
-			foreach ($data as $field => $property) {
-				$sql = "ALTER TABLE " . $db->prefix($table) . " CHANGE `$field` `$field` $property";
-				$this->query($sql);
-			}
-		}
-		return true;
+				);
+				foreach ($this->fields as $table => $data) {
+					foreach ($data as $field => $property) {
+						$sql = "ALTER TABLE " . $db->prefix($table) . " CHANGE `$field` `$field` $property";
+						$this->query($sql);
+					}
+				}
+				return true;
 	}
 	function apply_ml_config() {
 		$db = $GLOBALS['xoopsDB'];
@@ -177,7 +177,7 @@ class upgrade_impcms05 {
 			'ml_names' => "'_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMESDSC', 'textbox', 'text', 10",
 			'ml_captions' => "'_MD_AM_ML_CAPTIONS', 'English,Francais', '_MD_AM_ML_CAPTIONSDSC', 'textbox', 'text', 15",
 			'ml_charset' => "'_MD_AM_ML_CHARSET', 'UTF-8,ISO-8859-15', '_MD_AM_ML_CHARSETDSC', 'textbox', 'text', 16",
-			);
+		);
 		reset($data);
 		foreach ($data as $name => $values) {
 			if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=8 AND `conf_name`='$name'")) {
@@ -207,26 +207,26 @@ class upgrade_impcms05 {
 		return true;
 	}
 
-	function apply_templates(){
+	function apply_templates() {
 		$db = $GLOBALS['xoopsDB'];
 		$table = $db->prefix('tplfile');
 		$table1 = $db->prefix('tplsource');
 		$tpl_files = array(
 			'system_error.html'=>'Template for handling HTTP errors',
 			'system_privpolicy.html'=>'Template for displaying site Privacy Policy'
-		);
-		foreach ($tpl_files as $tpl_file=>$desc) {
-			if (!getDbValue($db,'tplfile','tpl_id',' tpl_file="'.$tpl_file.'"')) {
-				if ($fp = fopen('../modules/system/templates/'.$tpl_file, 'r')) {
-					$new_tpl_source = fread($fp, filesize('../modules/system/templates/'.$tpl_file));
-					fclose($fp);
-					$this->query(" INSERT INTO " . $table . " VALUES ('', 1, 'system', 'default', '".$tpl_file."', '".$desc."', ".time().", 0, 'module')");
-					$new_tplfile_id = $db->getInsertId();
-					$this->query(" INSERT INTO " . $table1 . " VALUES (" . $new_tplfile_id . ", '" . addslashes($new_tpl_source) . "');");
+			);
+			foreach ($tpl_files as $tpl_file=>$desc) {
+				if (!getDbValue($db,'tplfile','tpl_id',' tpl_file="'.$tpl_file.'"')) {
+					if ($fp = fopen('../modules/system/templates/'.$tpl_file, 'r')) {
+						$new_tpl_source = fread($fp, filesize('../modules/system/templates/'.$tpl_file));
+						fclose($fp);
+						$this->query(" INSERT INTO " . $table . " VALUES ('', 1, 'system', 'default', '".$tpl_file."', '".$desc."', ".time().", 0, 'module')");
+						$new_tplfile_id = $db->getInsertId();
+						$this->query(" INSERT INTO " . $table1 . " VALUES (" . $new_tplfile_id . ", '" . addslashes($new_tpl_source) . "');");
+					}
 				}
 			}
-		}
-		return true;
+			return true;
 	}
 }
 $upg = new upgrade_impcms05();

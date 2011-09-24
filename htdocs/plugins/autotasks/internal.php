@@ -9,41 +9,39 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-require_once ICMS_ROOT_PATH.'/class/autotasks/icmsautotaskssystem.php';
-
 class IcmsAutoTasksInternal
-	extends IcmsAutoTasksSystem {
+extends icms_sys_autotasks_System {
 
-   /**
-    * check if can run
-    * @return bool
-    */
-    function canRun() {
-	   return true;
-    }
+	/**
+	 * check if can run
+	 * @return bool
+	 */
+	function canRun() {
+		return true;
+	}
 
-   /**
-    * Set Checking Interval (if not enabled enables automated tasks system
-	* @param  int	$interval	interval of checking for new tasks
-	* @return bool				returns true if start was succesfull
-	*/
-    public function start(int $interval) {
-	   return true;
-    }
+	/**
+	 * Set Checking Interval (if not enabled enables automated tasks system
+	 * @param  int	$interval	interval of checking for new tasks
+	 * @return bool				returns true if start was succesfull
+	 */
+	public function start(int $interval) {
+		return true;
+	}
 
-   /**
-	* Stops automated tasks system
-	* @return bool returns true if was succesfull
-	*/
-    function stop() {
-	    return false;
-    }
+	/**
+	 * Stops automated tasks system
+	 * @return bool returns true if was succesfull
+	 */
+	function stop() {
+		return false;
+	}
 
-   /**
-    *  checks if core is enabled
-	*
-    * @return bool
-	*/
+	/**
+	 *  checks if core is enabled
+	 *
+	 * @return bool
+	 */
 	function isEnabled() {
 		return true;
 	}
@@ -64,7 +62,6 @@ class IcmsAutoTasksInternal
 	public function needExit() {
 		return false;
 	}
-
 
 }
 

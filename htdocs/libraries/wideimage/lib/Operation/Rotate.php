@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2011
 
     This file is part of WideImage.
 		
@@ -48,30 +48,17 @@
 			if ($angle == 0)
 				return $image->copy();
 			
+			$image = $image->asTrueColor();
+			
 			if ($bgColor === null)
 			{
-				if ($image->isTransparent())
-					$bgColor = $image->getTransparentColor();
-				else
+				$bgColor = $image->getTransparentColor();
+				if ($bgColor == -1)
 				{
-					$tc = array('red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 127);
-					
-					if ($image->isTrueColor())
-					{
-						$bgColor = $image->getExactColorAlpha($tc);
-						if ($bgColor == -1)
-							$bgColor = $image->allocateColorAlpha($tc);
-					}
-					else
-					{
-						$bgColor = $image->getExactColor($tc);
-						if ($bgColor == -1)
-							$bgColor = $image->allocateColor($tc);
-					}
+					$bgColor = $image->allocateColorAlpha(255, 255, 255, 127);
+					imagecolortransparent($image->getHandle(), $bgColor);
 				}
 			}
-			
 			return new WideImage_TrueColorImage(imagerotate($image->getHandle(), $angle, $bgColor, $ignoreTransparent));
 		}
 	}
-?>

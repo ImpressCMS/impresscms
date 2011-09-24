@@ -20,7 +20,7 @@ function protector_onuninstall_base( $module , $mydirname )
 		if( ! is_array( $ret ) ) $ret = array() ;
 	}
 
-	$db =& Database::getInstance() ;
+	$db =& icms_db_Factory::instance() ;
 	$mid = $module->getVar('mid') ;
 
 	// TABLES (loading mysql.sql)
@@ -42,7 +42,7 @@ function protector_onuninstall_base( $module , $mydirname )
 	}
 
 	// TEMPLATES (Not necessary because modulesadmin removes all templates)
-	/* $tplfile_handler =& xoops_gethandler( 'tplfile' ) ;
+	/* $tplfile_handler =& icms::handler('icms_view_template_file') ;
 	$templates =& $tplfile_handler->find( null , 'module' , $mid ) ;
 	$tcount = count( $templates ) ;
 	if( $tcount > 0 ) {

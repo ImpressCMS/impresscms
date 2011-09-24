@@ -1,14 +1,14 @@
 <?php
 /**
-* Installer main english strings declaration file.
-* @copyright	The ImpressCMS project http://www.impresscms.org/
-* @license      http://www.fsf.org/copyleft/gpl.html GNU public license
-* @author       Skalpa Keo <skalpa@xoops.org>
-* @author       Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
-* @since        1.0
-* @version		$Id$
-* @package 		installer
-*/
+ * Installer main english strings declaration file.
+ * @copyright	The ImpressCMS project http://www.impresscms.org/
+ * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author       Skalpa Keo <skalpa@xoops.org>
+ * @author       Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
+ * @since        1.0
+ * @version		$Id$
+ * @package 		installer
+ */
 
 define( "SHOW_HIDE_HELP", "Show/hide help text" );
 
@@ -31,8 +31,6 @@ define( "NONE", "None" );
 define( "SUCCESS", "Success" );
 define( "WARNING", "Warning" );
 define( "FAILED", "Failed" );
-
-
 
 // Titles (main and pages)
 define( "XOOPS_INSTALL_WIZARD", " %s - Installation Wizard" );
@@ -129,7 +127,6 @@ define( "READY_INSERT_DATA", "The installer is now ready to insert initial data 
 define( "READY_SAVE_MAINFILE", "The installer is now ready to save the specified settings to <em>mainfile.php</em>.<br />Press <em>next</em> to proceed." );
 define( "DATA_ALREADY_INSERTED", "ImpressCMS data is stored in your database already. No further data will be stored by this action.<br />Press <em>next</em> to go to the next step." );
 
-
 // %s is database name
 define( "DATABASE_CREATED", "Database %s created!" ); // L43
 // %s is table name
@@ -162,7 +159,6 @@ define( "ERR_READ_SDATA", "Could not open sdata.php for reading" );
 define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
 define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
 define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
-
 
 //
 define("_INSTALL_SELECT_MODS_INTRO", 'From the list below, please select the modules that you wish to install on this site. <br /><br />
@@ -219,9 +215,9 @@ define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support si
 define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
 define("_LOCAL_SENSORTXT",'#OOPS#'); //Add local translation
 define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
-define("_DEF_LANG_TAGS",'en,fr'); //Add local translation
-define("_DEF_LANG_NAMES",'english,french'); //Add local translation
-define("_LOCAL_LANG_NAMES",'English,Français'); //Add local translation
+define("_DEF_LANG_TAGS",'en,de'); //Add local translation
+define("_DEF_LANG_NAMES",'english,german'); //Add local translation
+define("_LOCAL_LANG_NAMES",'English,Deutsch'); //Add local translation
 define("_EXT_DATE_FUNC","0"); // change 0 to 1 if this language has an extended date function
 
 ######################## Added in 1.2 ###################################
@@ -232,4 +228,6 @@ define('_CORE_PASSLEVEL3','Good');
 define('_CORE_PASSLEVEL4','Strong');
 define('DB_PCONNECT_HELP', "Persistent connections are useful with slower internet connections. They are not generally required for most installations. Default is 'NO'. Choose 'NO' if you are unsure"); // L69
 define( "DB_PCONNECT_HELPS",  "Persistent connections are useful with slower internet connections. They are not generally required for most installations."); // L69
-?>
+
+// Added in 1.3
+define("FILE_PERMISSIONS", "File Permissions");
