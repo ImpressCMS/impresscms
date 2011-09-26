@@ -32,11 +32,11 @@ wget http://www.impresscms.org/download/
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-https://svn.impresscms.org/core/releases/impresscms_2.0_alpha/
+http://subversion.assembla.com/svn/impresscms/releases/impresscms_2.0_alpha/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/trunk
+http://subversion.assembla.com/svn/impresscms/trunk
 
 The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is, of course, not to be used on production sites.
 
@@ -100,6 +100,7 @@ The Protector module is installed by default with a new installation of ImpressC
 ===The ImpressCMS Network===
 
 Sourceforge Project: http://www.sourceforge.net/projects/impresscms
+Assembla Project: https://www.assembla.com/spaces/impresscms/
 * Home of ImpressCMS: http://www.impresscms.org
 * Community support: http://community.impresscms.org
 * Addons, modules, themes and languages: http://addons.impresscms.org
@@ -115,7 +116,7 @@ To get on the developer mailing list, complete this short form to join the team 
 
 * Ohloh project: http://www.ohloh.net/projects/10042?p=ImpressCMS
 * Facebook group: http://www.facebook.com/group.php?gid=7395938599
-* Facebook fans page: http://www.facebook.com/pages/The-ImpressCMS-Project/22332836800
+* Facebook fans page: http://www.facebook.com/ImpressCMS
 * LinkedIn group: http://www.linkedin.com/e/gis/45459/3A9B02585174
 * Delicious: http://del.icio.us/tag/impresscms
 * Flickr: http://www.flickr.com/photos/tags/impresscms/
