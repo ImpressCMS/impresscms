@@ -94,7 +94,7 @@ $i = 0;
 $groups = icms::$user->getGroups();
 foreach ($posarr as $k=>$v) {
 	$tit = (defined($posarr[$k]['title'])) ? constant($posarr[$k]['title']) : $posarr[$k]['title'];
-	$block_checkbox[$i] = new icms_form_elements_Checkbox('<strong">' . $tit . '</strong><br />', "read_bids[]", $r_block_value);
+	$block_checkbox[$i] = new icms_form_elements_Checkbox('<strong>' . $tit . '</strong><br />', "read_bids[]", $r_block_value);
 	$new_blocks_array = array();
 	$blocks_array = $icms_block_handler->getAllBlocks("list", $k);
 
