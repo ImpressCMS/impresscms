@@ -16,7 +16,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * connection to a mysql database
  *
  * @category	ICMS
- * @package     Catabase
+ * @package     Database
  * @subpackage	Legacy
  * @author      Kazumi Ono  <onokazu@xoops.org>
  */
