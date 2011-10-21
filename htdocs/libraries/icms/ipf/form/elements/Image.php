@@ -31,7 +31,7 @@ class icms_ipf_form_elements_Image extends icms_form_elements_Tray {
 			$objectArray['image'] = str_replace('{ICMS_URL}', ICMS_URL, $objectArray['image']);
 		}
 
-		if ($object->getVar($key, 'e') != '' && (substr($object->getVar($key, 'e'), 0, 4) == 'http' || substr($object->getVar($key, 'e'), 0, 11) == '{ICMS_URL}')) {
+		if ($object->getVar($key, 'e') != '' && (substr($object->getVar($key, 'e'), 0, 4) == 'http' || substr($object->getVar($key, 'e'), 0, 10) == '{ICMS_URL}')) {
 			$this->addElement(new icms_form_elements_Label('', "<img src='" . str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key, 'e')) . "' alt='' /><br/><br/>" ));
 		} elseif($object->getVar($key, 'e') != '') {
 			$this->addElement(new icms_form_elements_Label('', "<img src='" . $object_imageurl . $object->getVar($key, 'e') . "' alt='' /><br/><br/>" ));
