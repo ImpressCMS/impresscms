@@ -184,7 +184,7 @@ class icms_view_theme_Object {
 				$this->addMeta('meta', substr($name, 5), $value);
 			} elseif (substr($name, 0, 6) == 'footer') {
 				$values = $value;
-				if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
+							if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
 					$values = $value . '<script type="text/javascript">
                       var _gaq = _gaq || [];  _gaq.push(["_setAccount", "UA-' . $icmsConfigMetaFooter['google_analytics'] . '"]);  _gaq.push(["_trackPageview"]);
                       (function() {var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
