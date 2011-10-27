@@ -360,13 +360,14 @@ class icms_core_Filesystem {
 	static public function getDirList($dirname, array $ignore = array('cvs', '_darcs', '.svn'), $hideDot = TRUE) {
 		$dirList = array();
 		$iterator = new DirectoryIterator($dirname);
-		foreach ($iterator as $file) {
-			if ($file->isDir() && !$file->isDot()) {
-				$filename = $file->getFilename();
+		while($iterator->valid()){
+			if ($iterator->isDir() && !$iterator->isDot()) {
+				$filename = $iterator->getFilename();
 				if (!$hideDot || substr($filename, 0, 1) != '.') {
 					$dirList[$filename] = $filename;
 				}
 			}
+			$iterator->next();
 		}
 		return array_diff($dirList, $ignore);
 	}
