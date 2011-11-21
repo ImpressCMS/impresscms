@@ -14,13 +14,21 @@
 $xoopsOption['pagetype'] = 'user';
 /** Include mainfile.php - required */
 include 'mainfile.php';
+/* $_POST parameters
+ *	email
+ *
+ *	$_GET parameters
+ *	code
+ */
 
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$email = (isset($_GET['email']))
-	? trim(filter_input(INPUT_GET, 'email'))
-	: ((isset($_POST['email'])) ? trim(filter_input(INPUT_POST, 'email')) : $email);
-
+if (!empty($_GET)) {
+    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+    extract($clean_GET);
+}
+if (!empty($_POST)) {
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+    extract($clean_POST);
+}
 if ($email == '') {
 	redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 }
@@ -37,7 +45,7 @@ if (empty($getuser)) {
 } else {
 	$icmspass = new icms_core_Password();
 
-	$code = isset($_GET['code']) ? trim(filter_input(INPUT_GET, 'code')) : '';
+//	$code = isset($_GET['code']) ? trim(filter_input(INPUT_GET, 'code')) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
 	$enc_type = (int) $icmsConfigUser['enc_type'];
 	if ($code != '' && $areyou == $code) {

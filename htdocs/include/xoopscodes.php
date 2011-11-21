@@ -13,7 +13,9 @@
  * @version	$Id$
  */
 
-/*
+/**
+ * @deprecated 	this is not used anywhere in the core
+ * @todo		Remove by 2.0
  * displayes xoopsCode buttons and target textarea to which xoopscodes are inserted
  * $textarea_id is a unique id of the target textarea
  */
@@ -58,7 +60,9 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 	//Fin du hack
 }
 
-/*
+/**
+ * @deprecated	This is not used anywhere in the core
+ * @todo		Remove by 2.0
  * Displays smilie image buttons used to insert smilie codes to a target textarea in a form
  * $textarea_id is a unique of the target textarea
  */

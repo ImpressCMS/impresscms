@@ -3,7 +3,6 @@
  * icms_Event class definition
  *
  * @category	ICMS
- * @package		icms
  *
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

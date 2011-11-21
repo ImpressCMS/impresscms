@@ -73,7 +73,7 @@ class icms_core_DataFilter {
 	static public function checkUrlString($text) {
 		// Check control code
 		if (preg_match("/[\0-\31]/", $text)) {
-			return false;
+			return FALSE;
 		}
 		// check black pattern(deprecated)
 		return !preg_match("/^(javascript|vbscript|about):/i", $text);
@@ -198,8 +198,8 @@ class icms_core_DataFilter {
 	*					'path' = URL must have a path after the domain name (like www.example.com/example1/)
 	*					'query' = URL must have a query string (like "example.php?name=Vaughan&age=34")
 	*				EMAIL:
-	*					'true' = Generate an email address that is protected from spammers
-	*					'false' = Generate an email address that is NOT protected from spammers
+	*					'TRUE' = Generate an email address that is protected from spammers
+	*					'FALSE' = Generate an email address that is NOT protected from spammers
 	*				IP:
 	*					'ipv4' = Requires the value to be a valid IPv4 IP (like 255.255.255.255)
 	*					'ipv6' = Requires the value to be a valid IPv6 IP (like 2001:0db8:85a3:08d3:1319:8a2e:0370:7334)
@@ -229,11 +229,11 @@ class icms_core_DataFilter {
 	*
 	* @param	mixed		$options2	Options to use with specified filter options1
 	*				URL:
-	*					'true' = URLEncode the URL (ie. http://www.example > http%3A%2F%2Fwww.example)
-	*					'false' = Do Not URLEncode the URL
+	*					'TRUE' = URLEncode the URL (ie. http://www.example > http%3A%2F%2Fwww.example)
+	*					'FALSE' = Do Not URLEncode the URL
 	*				EMAIL:
-	*					'true' = Reject if email is banned (Uses: $icmsConfigUser['bad_emails'])
-	*					'false' = Do Not use Email Blacklist
+	*					'TRUE' = Reject if email is banned (Uses: $icmsConfigUser['bad_emails'])
+	*					'FALSE' = Do Not use Email Blacklist
 	*				IP:
 	*					NOT USED!
 	*				INT:
@@ -250,11 +250,11 @@ class icms_core_DataFilter {
 	 * @param $options2
 	 */
 	static public function checkVar($data, $type, $options1 = '', $options2 = '') {
-		if (!$data || !$type) return false;
+		if (!$data || !$type) return FALSE;
 
 		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'special', 'html', 'text');
 		if (!in_array($type, $valid_types)) {
-			return false;
+			return FALSE;
 		} else {
 			switch ($type) {
 				case 'url':
@@ -343,10 +343,10 @@ class icms_core_DataFilter {
 
 	/**
 	 * Filter an array of variables, such as $_GET or $_POST, using a set of filters.
-	 * 
-	 * Any items in the input array not found in the filter array will be filtered as 
-	 * a string. 
-	 * 
+	 *
+	 * Any items in the input array not found in the filter array will be filtered as
+	 * a string.
+	 *
 	 * @param 	array	$input		items to be filtered
 	 * @param 	array	$filters 	the keys of this array should match the keys in
 	 * 								the input array and the values should be valid types
@@ -371,11 +371,11 @@ class icms_core_DataFilter {
 			}
 			$output[$key] = self::checkVar($input[$key], $filter, $options[0], $options[1]);
 		}
-		
+
 		if (!$strict) {
 			foreach ($diff = array_diff_key($input, $filters) as $key => $value) {
 				$output[$key] = self::checkVar($diff[$key], 'str');
-			} 
+			}
 		}
 		return $output;
 	}
@@ -625,7 +625,7 @@ class icms_core_DataFilter {
 	 *
 	 * @param $message
 	 */
-	static public function getSmileys($all = false) {
+	static public function getSmileys($all = FALSE) {
 		return self::priv_getSmileys($all);
 	}
 
@@ -638,7 +638,7 @@ class icms_core_DataFilter {
 	 */
 	static public function censorString(&$text) {
 		$icmsConfigCensor = icms::$config->getConfigsByCat(ICMS_CONF_CENSOR);
-		if ($icmsConfigCensor['censor_enable'] == true) {
+		if ($icmsConfigCensor['censor_enable'] == TRUE) {
 			$replacement = $icmsConfigCensor['censor_replace'];
 			if (!empty($icmsConfigCensor['censor_words'])) {
 				foreach ($icmsConfigCensor['censor_words'] as $bad) {
@@ -734,7 +734,7 @@ class icms_core_DataFilter {
 	 */
 	static public function loadExtension($name) {
 		if (empty($name) || !include_once ICMS_PLUGINS_PATH . "/textsanitizer/{$name}/{$name}.php") {
-			return false;
+			return FALSE;
 		}
 	}
 
@@ -794,7 +794,7 @@ class icms_core_DataFilter {
 			$addedtag_close = 1;
 		}
 		$oldlevel = error_reporting(0);
-		$buffer = highlight_string($text, true);
+		$buffer = highlight_string($text, TRUE);
 		error_reporting($oldlevel);
 		$pos_open = $pos_close = 0;
 		if ($addedtag_open) {
@@ -824,7 +824,7 @@ class icms_core_DataFilter {
 	static public function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
 
-		if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') return false;
+		if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') return FALSE;
 
 		$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
 
@@ -862,11 +862,11 @@ class icms_core_DataFilter {
 	 * credit for this function should goto lwc courtesy of php.net.
 	 *
 	 * @param string $str		The text to be reversed.
-	 * @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
-	 *				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
+	 * @param string $reverse	TRUE will reverse everything including numbers, FALSE will reverse text only but numbers will be left intact.
+	 *				example: when TRUE: impresscms 2008 > 8002 smcsserpmi, FALSE: impresscms 2008 > 2008 smcsserpmi
 	 * @return string
 	 */
-	static public function utf8_strrev($str, $reverse = false) {
+	static public function utf8_strrev($str, $reverse = FALSE) {
 		preg_match_all('/./us', $str, $ar);
 		if ($reverse) {
 			return join('', array_reverse($ar[0]));
@@ -909,16 +909,16 @@ class icms_core_DataFilter {
 		if ($icmsConfigMultilang['ml_enable']) {
 			$tags = explode(',', $icmsConfigMultilang['ml_tags']);
 			$strs = array();
-			$hasML = false;
+			$hasML = FALSE;
 			foreach ($tags as $tag) {
 				if (preg_match("/\[" . $tag . "](.*)\[\/" . $tag . "\]/sU", $str, $matches)) {
 					if (count($matches) > 0) {
-						$hasML = true;
+						$hasML = TRUE;
 						$strs[] = $matches[1];
 					}
 				}
 			}
-		} else {$hasML = false;}
+		} else {$hasML = FALSE;}
 
 		if (!$hasML) {$strs = array($str);}
 
@@ -933,12 +933,12 @@ class icms_core_DataFilter {
 
 			$DEP_CHAR = 127;
 			$pos_st = 0;
-			$action = false;
+			$action = FALSE;
 			for ($pos_i = 0; $pos_i < strlen($strs[$i]); $pos_i++) {
 				if (ord(substr($strs[$i], $pos_i, 1)) > 127) {$pos_i++;}
 				if ($pos_i<=$start) {$pos_st = $pos_i;}
 				if ($pos_i>=$pos_st+$length) {
-					$action = true;
+					$action = TRUE;
 					break;
 				}
 			}
@@ -992,27 +992,24 @@ class icms_core_DataFilter {
 					}
 					return $data;
 				}
-				return false;
+				return FALSE;
 			break;
 
 			case "email": // returns False if email is invalid, returns $string if valid
 				global $icmsConfigUser;
-
-				$icmsStopSpammers = new icms_core_StopSpammer();
 
 				$data = filter_var($data, FILTER_SANITIZE_EMAIL);
 
 				if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
 					if ($options2 == 1 && is_array($icmsConfigUser['bad_emails'])) {
 						foreach ($icmsConfigUser['bad_emails'] as $be) {
-							if ((!empty($be) && preg_match('/' . $be . '/i', $data))
-								|| $icmsStopSpammers->badEmail($data)) {
-								return false;
-							}
+							if ((!empty($be) && preg_match('/' . $be . '/i', $data))) return FALSE;
 						}
 					}
+					$icmsStopSpammers = new icms_core_StopSpammer();
+					if ($icmsStopSpammers->badEmail($data)) return FALSE;
 				} else {
-					return false;
+					return FALSE;
 				}
 				if ($options1 == 1) {
 					$data = str_replace('@', ' at ', $data);
@@ -1155,14 +1152,14 @@ class icms_core_DataFilter {
 	 * @return   string
 	 */
 	static private function priv_smiley($message) {
-		$smileys = self::priv_getSmileys(true);
+		$smileys = self::priv_getSmileys(TRUE);
 		foreach ($smileys as $smile) {
 			$message = str_replace(
 				$smile['code'],
 				'<img src="' . ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'])
 					. '" alt="" />',
 				$message
-				);
+			);
 		}
 		return $message;
 	}
@@ -1173,7 +1170,7 @@ class icms_core_DataFilter {
 	 * @param	bool	$all
 	 * @return   array
 	 */
-	static private function priv_getSmileys($all = false) {
+	static private function priv_getSmileys($all = FALSE) {
 		if (count(self::$allSmileys) == 0) {
 			if ($result = icms::$xoopsDB->query("SELECT * FROM " . icms::$xoopsDB->prefix('smiles'))) {
 				while ($smiley = icms::$xoopsDB->fetchArray($result)) {

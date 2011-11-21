@@ -4,8 +4,7 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_core
- * @subpackage	icms_core_Autoloader
+ * @category	ICMS
  * @since		1.3
  * @author		Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
  * @version		$Id$

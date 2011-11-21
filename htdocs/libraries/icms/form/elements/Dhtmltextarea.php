@@ -17,7 +17,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @category	ICMS
- * @package		Forms
+ * @package		Form
  * @subpackage	Elements
  */
 class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {

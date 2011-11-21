@@ -1,25 +1,25 @@
 <?php
 /**
-* Functions for dealing with OpenID trust roots
-*
-* PHP versions 4 and 5
-*
-* LICENSE: See the COPYING file included in this distribution.
-*
-* @package OpenID
-* @author JanRain, Inc. <openid@janrain.com>
-* @copyright 2005-2008 Janrain, Inc.
-* @license http://www.apache.org/licenses/LICENSE-2.0 Apache
-*/
+ * Functions for dealing with OpenID trust roots
+ *
+ * PHP versions 4 and 5
+ *
+ * LICENSE: See the COPYING file included in this distribution.
+ *
+ * @package OpenID
+ * @author JanRain, Inc. <openid@janrain.com>
+ * @copyright 2005-2008 Janrain, Inc.
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
+ */
 
 require_once 'Auth/OpenID/Discover.php';
 
 /**
-* A regular expression that matches a domain ending in a top-level domains.
-* Used in checking trust roots for sanity.
-*
-* @access private
-*/
+ * A regular expression that matches a domain ending in a top-level domains.
+ * Used in checking trust roots for sanity.
+ *
+ * @access private
+ */
 define('Auth_OpenID___TLDs',
        '/\.(ac|ad|ae|aero|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|asia' .
        '|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|biz|bj|bm|bn|bo|br' .
@@ -44,20 +44,20 @@ define('Auth_OpenID___HostSegmentRe',
        "/^(?:[-a-zA-Z0-9!$&'\\(\\)\\*+,;=._~]|%[a-zA-Z0-9]{2})*$/");
 
 /**
-* A wrapper for trust-root related functions
-*/
+ * A wrapper for trust-root related functions
+ */
 class Auth_OpenID_TrustRoot {
     /*
-* Return a discovery URL for this realm.
-*
-* Return null if the realm could not be parsed or was not valid.
-*
-* @param return_to The relying party return URL of the OpenID
-* authentication request
-*
-* @return The URL upon which relying party discovery should be
-* run in order to verify the return_to URL
-*/
+     * Return a discovery URL for this realm.
+     *
+     * Return null if the realm could not be parsed or was not valid.
+     *
+     * @param return_to The relying party return URL of the OpenID
+     * authentication request
+     *
+     * @return The URL upon which relying party discovery should be
+     * run in order to verify the return_to URL
+     */
     static function buildDiscoveryURL($realm)
     {
         $parsed = Auth_OpenID_TrustRoot::_parse($realm);
@@ -82,17 +82,17 @@ class Auth_OpenID_TrustRoot {
     }
 
     /**
-* Parse a URL into its trust_root parts.
-*
-* @static
-*
-* @access private
-*
-* @param string $trust_root The url to parse
-*
-* @return mixed $parsed Either an associative array of trust root
-* parts or false if parsing failed.
-*/
+     * Parse a URL into its trust_root parts.
+     *
+     * @static
+     *
+     * @access private
+     *
+     * @param string $trust_root The url to parse
+     *
+     * @return mixed $parsed Either an associative array of trust root
+     * parts or false if parsing failed.
+     */
     static function _parse($trust_root)
     {
         $trust_root = Auth_OpenID_urinorm($trust_root);
@@ -175,30 +175,30 @@ class Auth_OpenID_TrustRoot {
     }
 
     /**
-* Is this trust root sane?
-*
-* A trust root is sane if it is syntactically valid and it has a
-* reasonable domain name. Specifically, the domain name must be
-* more than one level below a standard TLD or more than two
-* levels below a two-letter tld.
-*
-* For example, '*.com' is not a sane trust root, but '*.foo.com'
-* is. '*.co.uk' is not sane, but '*.bbc.co.uk' is.
-*
-* This check is not always correct, but it attempts to err on the
-* side of marking sane trust roots insane instead of marking
-* insane trust roots sane. For example, 'kink.fm' is marked as
-* insane even though it "should" (for some meaning of should) be
-* marked sane.
-*
-* This function should be used when creating OpenID servers to
-* alert the users of the server when a consumer attempts to get
-* the user to accept a suspicious trust root.
-*
-* @static
-* @param string $trust_root The trust root to check
-* @return bool $sanity Whether the trust root looks OK
-*/
+     * Is this trust root sane?
+     *
+     * A trust root is sane if it is syntactically valid and it has a
+     * reasonable domain name. Specifically, the domain name must be
+     * more than one level below a standard TLD or more than two
+     * levels below a two-letter tld.
+     *
+     * For example, '*.com' is not a sane trust root, but '*.foo.com'
+     * is.  '*.co.uk' is not sane, but '*.bbc.co.uk' is.
+     *
+     * This check is not always correct, but it attempts to err on the
+     * side of marking sane trust roots insane instead of marking
+     * insane trust roots sane. For example, 'kink.fm' is marked as
+     * insane even though it "should" (for some meaning of should) be
+     * marked sane.
+     *
+     * This function should be used when creating OpenID servers to
+     * alert the users of the server when a consumer attempts to get
+     * the user to accept a suspicious trust root.
+     *
+     * @static
+     * @param string $trust_root The trust root to check
+     * @return bool $sanity Whether the trust root looks OK
+     */
     static function isSane($trust_root)
     {
         $parts = Auth_OpenID_TrustRoot::_parse($trust_root);
@@ -256,19 +256,19 @@ class Auth_OpenID_TrustRoot {
     }
 
     /**
-* Does this URL match the given trust root?
-*
-* Return whether the URL falls under the given trust root. This
-* does not check whether the trust root is sane. If the URL or
-* trust root do not parse, this function will return false.
-*
-* @param string $trust_root The trust root to match against
-*
-* @param string $url The URL to check
-*
-* @return bool $matches Whether the URL matches against the
-* trust root
-*/
+     * Does this URL match the given trust root?
+     *
+     * Return whether the URL falls under the given trust root. This
+     * does not check whether the trust root is sane. If the URL or
+     * trust root do not parse, this function will return false.
+     *
+     * @param string $trust_root The trust root to match against
+     *
+     * @param string $url The URL to check
+     *
+     * @return bool $matches Whether the URL matches against the
+     * trust root
+     */
     static function match($trust_root, $url)
     {
         $trust_root_parsed = Auth_OpenID_TrustRoot::_parse($trust_root);
@@ -326,21 +326,21 @@ class Auth_OpenID_TrustRoot {
 }
 
 /*
-* If the endpoint is a relying party OpenID return_to endpoint,
-* return the endpoint URL. Otherwise, return None.
-*
-* This function is intended to be used as a filter for the Yadis
-* filtering interface.
-*
-* @see: C{L{openid.yadis.services}}
-* @see: C{L{openid.yadis.filters}}
-*
-* @param endpoint: An XRDS BasicServiceEndpoint, as returned by
-* performing Yadis dicovery.
-*
-* @returns: The endpoint URL or None if the endpoint is not a
-* relying party endpoint.
-*/
+ * If the endpoint is a relying party OpenID return_to endpoint,
+ * return the endpoint URL. Otherwise, return None.
+ *
+ * This function is intended to be used as a filter for the Yadis
+ * filtering interface.
+ *
+ * @see: C{L{openid.yadis.services}}
+ * @see: C{L{openid.yadis.filters}}
+ *
+ * @param endpoint: An XRDS BasicServiceEndpoint, as returned by
+ * performing Yadis dicovery.
+ *
+ * @returns: The endpoint URL or None if the endpoint is not a
+ * relying party endpoint.
+ */
 function filter_extractReturnURL($endpoint)
 {
     if ($endpoint->matchTypes(array(Auth_OpenID_RP_RETURN_TO_URL_TYPE))) {
@@ -364,9 +364,9 @@ function &Auth_OpenID_extractReturnURL(&$endpoint_list)
 }
 
 /*
-* Is the return_to URL under one of the supplied allowed return_to
-* URLs?
-*/
+ * Is the return_to URL under one of the supplied allowed return_to
+ * URLs?
+ */
 function Auth_OpenID_returnToMatches($allowed_return_to_urls, $return_to)
 {
     foreach ($allowed_return_to_urls as $allowed_return_to) {
@@ -391,9 +391,9 @@ function Auth_OpenID_returnToMatches($allowed_return_to_urls, $return_to)
 }
 
 /*
-* Given a relying party discovery URL return a list of return_to
-* URLs.
-*/
+ * Given a relying party discovery URL return a list of return_to
+ * URLs.
+ */
 function Auth_OpenID_getAllowedReturnURLs($relying_party_url, $fetcher,
               $discover_function=null)
 {
@@ -413,7 +413,7 @@ function Auth_OpenID_getAllowedReturnURLs($relying_party_url, $fetcher,
     }
 
     call_user_func_array($discover_function,
-                         array($relying_party_url, $fetcher));
+                         array($relying_party_url, &$fetcher));
 
     $return_to_urls = array();
     $matching_endpoints = Auth_OpenID_extractReturnURL($endpoints);
@@ -426,15 +426,15 @@ function Auth_OpenID_getAllowedReturnURLs($relying_party_url, $fetcher,
 }
 
 /*
-* Verify that a return_to URL is valid for the given realm.
-*
-* This function builds a discovery URL, performs Yadis discovery on
-* it, makes sure that the URL does not redirect, parses out the
-* return_to URLs, and finally checks to see if the current return_to
-* URL matches the return_to.
-*
-* @return true if the return_to URL is valid for the realm
-*/
+ * Verify that a return_to URL is valid for the given realm.
+ *
+ * This function builds a discovery URL, performs Yadis discovery on
+ * it, makes sure that the URL does not redirect, parses out the
+ * return_to URLs, and finally checks to see if the current return_to
+ * URL matches the return_to.
+ *
+ * @return true if the return_to URL is valid for the realm
+ */
 function Auth_OpenID_verifyReturnTo($realm_str, $return_to, $fetcher,
               $_vrfy='Auth_OpenID_getAllowedReturnURLs')
 {
@@ -458,5 +458,4 @@ function Auth_OpenID_verifyReturnTo($realm_str, $return_to, $fetcher,
         return false;
     }
 }
-
 

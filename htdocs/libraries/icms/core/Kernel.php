@@ -18,8 +18,7 @@
  *  namespace. Please use icms::method() now, instead of $GLOBALS["impresscms"]->method();
  *
  * @category	ICMS
- * @package		icms_core
- * @subpackage	icms_core_Kernel
+ * @package		core
  * @since 		1.1
  * @deprecated	This should not even end up in the 1.3 final package - it was introduced during the refactoring
  * @todo		Remove this before 1.3 final

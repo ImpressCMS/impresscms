@@ -64,7 +64,7 @@ define('_IMGDETAILS', 'Image details');
 define('_INSTRUCTIONS', 'Instructions');
 define('_INSTRUCTIONS_DSC', 'To select crop area, drag and move the dotted rectangle or type in values directly into the form.');
 
-define('_MD_IMAGE_EDITORTITLE', 'DHTML Image Editor');
+define('_MD_IMAGE_EDITORTITLE', 'Online Image Editor');
 define('_MD_IMAGE_VIEWSUBS', 'View Sub-categories');
 define('_MD_IMAGE_COPYOF', 'Copy of ');
 

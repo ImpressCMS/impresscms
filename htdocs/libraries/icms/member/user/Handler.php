@@ -29,7 +29,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @param bool $isNew flag the new objects as "new"?
 	 * @return object icms_member_user_Object
 	 */
-	public function &create($isNew = true) {
+	public function &create($isNew = TRUE) {
 		$user = new icms_member_user_Object();
 		if ($isNew) {
 			$user->setNew();
@@ -45,7 +45,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &get($id) {
 		$id = (int) $id;
-		$user = false;
+		$user = FALSE;
 		if ($id > 0) {
 			$sql = "SELECT * FROM " . $this->db->prefix('users') . " WHERE uid = '" . $id . "'";
 			if (!$result = $this->db->query($sql)) {return $user;}
@@ -65,11 +65,11 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @param bool $force
 	 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 	 */
-	public function insert(&$user, $force = false) {
+	public function insert(&$user, $force = FALSE) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if (!is_a($user, 'icms_member_user_Object')) {return false;}
-		if (!$user->isDirty()) {return true;}
-		if (!$user->cleanVars()) {return false;}
+		if (!is_a($user, 'icms_member_user_Object')) {return FALSE;}
+		if (!$user->isDirty()) {return TRUE;}
+		if (!$user->cleanVars()) {return FALSE;}
 		foreach ($user->cleanVars as $k => $v) {${$k} = $v;}
 
 		// RMV-NOTIFY
@@ -80,48 +80,48 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts,
 				attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method,
 				notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt,
-				user_viewoid, pass_expired, enc_type, login_name) 
+				user_viewoid, pass_expired, enc_type, login_name)
 				VALUES ('%u', %s, %s, %s, %s, %s, '%u',
 				%s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u',
 				'%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s)",
-				$this->db->prefix('users'), 
-				(int) ($uid), 
-				$this->db->quoteString($uname), 
-				$this->db->quoteString($name), 
-				$this->db->quoteString($email), 
-				$this->db->quoteString($url), 
-				$this->db->quoteString($user_avatar), 
-				time(), 
-				$this->db->quoteString($user_icq), 
-				$this->db->quoteString($user_from), 
-				$this->db->quoteString($user_sig), 
-				(int) ($user_viewemail), 
-				$this->db->quoteString($actkey), 
-				$this->db->quoteString($user_aim), 
-				$this->db->quoteString($user_yim), 
-				$this->db->quoteString($user_msnm), 
-				$this->db->quoteString($pass), 
-				(int) ($posts), 
-				(int) ($attachsig), 
-				(int) ($rank), 
-				(int) ($level), 
-				$this->db->quoteString($theme), 
-				$this->db->quoteString((float)($timezone_offset)), 
-				0, 
-				$this->db->quoteString($umode), 
-				(int) ($uorder), 
-				(int) ($notify_method), 
-				(int) ($notify_mode), 
-				$this->db->quoteString($user_occ), 
-				$this->db->quoteString($bio), 
-				$this->db->quoteString($user_intrest), 
-				(int) ($user_mailok), 
-				$this->db->quoteString($language), 
-				$this->db->quoteString($openid), 
-				$this->db->quoteString($salt), 
-				(int) ($user_viewoid), 
-				(int) ($pass_expired), 
-				(int) ($enc_type), 
+				$this->db->prefix('users'),
+				(int) $uid,
+				$this->db->quoteString($uname),
+				$this->db->quoteString($name),
+				$this->db->quoteString($email),
+				$this->db->quoteString($url),
+				$this->db->quoteString($user_avatar),
+				time(),
+				$this->db->quoteString($user_icq),
+				$this->db->quoteString($user_from),
+				$this->db->quoteString($user_sig),
+				(int) $user_viewemail,
+				$this->db->quoteString($actkey),
+				$this->db->quoteString($user_aim),
+				$this->db->quoteString($user_yim),
+				$this->db->quoteString($user_msnm),
+				$this->db->quoteString($pass),
+				(int) $posts,
+				(int) $attachsig,
+				(int) $rank,
+				(int) $level,
+				$this->db->quoteString($theme),
+				$this->db->quoteString((float) $timezone_offset),
+				0,
+				$this->db->quoteString($umode),
+				(int) $uorder,
+				(int) $notify_method,
+				(int) $notify_mode,
+				$this->db->quoteString($user_occ),
+				$this->db->quoteString($bio),
+				$this->db->quoteString($user_intrest),
+				(int) $user_mailok,
+				$this->db->quoteString($language),
+				$this->db->quoteString($openid),
+				$this->db->quoteString($salt),
+				(int) $user_viewoid,
+				(int) $pass_expired,
+				(int) $enc_type,
 				$this->db->quoteString($login_name)
 			);
 		} else {
@@ -133,56 +133,56 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s,
 				user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s,
 				user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'",
-				$this->db->prefix('users'), 
-				$this->db->quoteString($uname), 
-				$this->db->quoteString($name), 
-				$this->db->quoteString($email), 
-				$this->db->quoteString($url), 
-				$this->db->quoteString($user_avatar), 
-				$this->db->quoteString($user_icq), 
-				$this->db->quoteString($user_from), 
-				$this->db->quoteString($user_sig), 
-				$user_viewemail, 
-				$this->db->quoteString($user_aim), 
-				$this->db->quoteString($user_yim), 
-				$this->db->quoteString($user_msnm), 
-				(int) ($posts), 
-				$this->db->quoteString($pass), 
-				(int) ($attachsig), 
-				(int) ($rank), 
-				(int) ($level), 
-				$this->db->quoteString($theme), 
-				$this->db->quoteString((float)($timezone_offset)), 
-				$this->db->quoteString($umode), 
-				(int) ($last_login), 
-				(int) ($uorder), 
-				(int) ($notify_method), 
-				(int) ($notify_mode), 
-				$this->db->quoteString($user_occ), 
-				$this->db->quoteString($bio), 
-				$this->db->quoteString($user_intrest), 
-				(int) ($user_mailok), 
-				$this->db->quoteString($language), 
-				$this->db->quoteString($openid), 
-				$this->db->quoteString($salt), 
-				(int) ($user_viewoid), 
-				(int) ($pass_expired), 
-				(int) ($enc_type), 
-				$this->db->quoteString($login_name), 
-				(int) ($uid)
+				$this->db->prefix('users'),
+				$this->db->quoteString($uname),
+				$this->db->quoteString($name),
+				$this->db->quoteString($email),
+				$this->db->quoteString($url),
+				$this->db->quoteString($user_avatar),
+				$this->db->quoteString($user_icq),
+				$this->db->quoteString($user_from),
+				$this->db->quoteString($user_sig),
+				$user_viewemail,
+				$this->db->quoteString($user_aim),
+				$this->db->quoteString($user_yim),
+				$this->db->quoteString($user_msnm),
+				(int) $posts,
+				$this->db->quoteString($pass),
+				(int) $attachsig,
+				(int) $rank,
+				(int) $level,
+				$this->db->quoteString($theme),
+				$this->db->quoteString((float) $timezone_offset),
+				$this->db->quoteString($umode),
+				(int) $last_login,
+				(int) $uorder,
+				(int) $notify_method,
+				(int) $notify_mode,
+				$this->db->quoteString($user_occ),
+				$this->db->quoteString($bio),
+				$this->db->quoteString($user_intrest),
+				(int) $user_mailok,
+				$this->db->quoteString($language),
+				$this->db->quoteString($openid),
+				$this->db->quoteString($salt),
+				(int) $user_viewoid,
+				(int) $pass_expired,
+				(int) $enc_type,
+				$this->db->quoteString($login_name),
+				(int) $uid
 			);
 		}
-		if (false != $force) {
+		if (FALSE != $force) {
 			$result = $this->db->queryF($sql);
 		} else {
 			$result = $this->db->query($sql);
 		}
-		if (!$result) {return false;}
+		if (!$result) {return FALSE;}
 		if ($user->isNew()) {
 			$uid = $this->db->getInsertId();
 			$user->assignVar('uid', $uid);
 		}
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -191,26 +191,26 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @param object $user reference to the user to delete
 	 * @param bool $force
 	 * @return bool FALSE if failed.
-	 * @TODO we need some kind of error message instead of just a false return to inform whether user was deleted aswell as PM messages.
+	 * @TODO we need some kind of error message instead of just a FALSE return to inform whether user was deleted aswell as PM messages.
 	 */
-	public function delete(&$user, $force = false) {
+	public function delete(&$user, $force = FALSE) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if (!is_a($user, 'icms_member_user_Object')) {return false;}
+		if (!is_a($user, 'icms_member_user_Object')) {return FALSE;}
 		$pass = substr(md5(time()), 0, 8);
 		$salt = substr(md5(time() * 2), 0, 12);
 		$sql = sprintf(
-			"UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'", 
-			$this->db->prefix('users'), $pass, $salt, (int) ($user->getVar('uid'))
+			"UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'",
+			$this->db->prefix('users'), $pass, $salt, (int) $user->getVar('uid')
 		);
-		if (false != $force) {
+		if (FALSE != $force) {
 			$result = $this->db->queryF($sql);
 		} else {
 			$result = $this->db->query($sql);
 		}
 		if (!$result) {
-			return false;
+			return FALSE;
 		}
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -220,7 +220,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @param bool $id_as_key use the UID as key for the array?
 	 * @return array array of {@link icms_member_user_Object} objects
 	 */
-	public function getObjects($criteria = null, $id_as_key = false) {
+	public function getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . $this->db->prefix('users');
@@ -253,7 +253,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @param object $criteria {@link icms_db_criteria_Element} to match
 	 * @return int count of users
 	 */
-	public function getCount($criteria = null) {
+	public function getCount($criteria = NULL) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('users');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
 		$result = $this->db->query($sql);
@@ -269,13 +269,13 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @return bool FALSE if deletion failed
 	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
 	 */
-	public function deleteAll($criteria = null) {
+	public function deleteAll($criteria = NULL) {
 		$pass = substr(md5(time()), 0, 8);
 		$salt = substr(md5(time() * 2), 0, 12);
 		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s", $this->db->prefix('users'), $pass, $salt);
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= " " . $criteria->renderWhere();}
-		if (!$result = $this->db->query($sql)) {return false;}
-		return true;
+		if (!$result = $this->db->query($sql)) {return FALSE;}
+		return TRUE;
 	}
 
 	/**
@@ -287,12 +287,12 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return  bool
 	 **/
-	public function updateAll($fieldname, $fieldvalue, $criteria = null) {
+	public function updateAll($fieldname, $fieldvalue, $criteria = NULL) {
 		$set_clause = is_numeric($fieldvalue) ? $fieldname . ' = ' . $fieldvalue : $fieldname . ' = ' . $this->db->quoteString($fieldvalue);
 		$sql = 'UPDATE ' . $this->db->prefix('users') . ' SET ' . $set_clause;
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
-		if (!$result = $this->db->query($sql)) {return false;}
-		return true;
+		if (!$result = $this->db->query($sql)) {return FALSE;}
+		return TRUE;
 	}
 
 	/**
@@ -315,7 +315,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 
 		// initializations
 		$member_handler = icms::handler('icms_member');
-		$thisUser = ($uid > 0) ? $thisUser = $member_handler->getUser($uid) : false;
+		$thisUser = ($uid > 0) ? $thisUser = $member_handler->getUser($uid) : FALSE;
 		$icmsStopSpammers = new icms_core_StopSpammer();
 		$stop = '';
 		switch ($icmsConfigUser['uname_test_level']) {
@@ -331,67 +331,66 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		}
 
 		// check email
-		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') != $email && $email !== false) || !is_object($thisUser)) {
-			if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) $stop .= _US_INVALIDMAIL.'<br />';
+		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') != $email && $email !== FALSE) || !is_object($thisUser)) {
+			if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) $stop .= _US_INVALIDMAIL . '<br />';
 			$count = $this->getCount(icms_buildCriteria(array('email' => addslashes($email))));
-			if ($count > 0) $stop .= _US_EMAILTAKEN.'<br />';
+			if ($count > 0) $stop .= _US_EMAILTAKEN . '<br />';
 		}
 
 		// check login_name
 		$login_name = icms_core_DataFilter::icms_trim($login_name);
-		if ((is_object($thisUser) && $thisUser->getVar('login_name', 'e') != $login_name && $login_name !== false) || !is_object($thisUser)) {
-			if (empty($login_name) || preg_match($restriction, $login_name)) $stop .= _US_INVALIDNICKNAME.'<br />';
-			if (strlen($login_name) > $icmsConfigUser['maxuname']) $stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']).'<br />';
-			if (strlen($login_name) < $icmsConfigUser['minuname']) $stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']).'<br />';
+		if ((is_object($thisUser) && $thisUser->getVar('login_name', 'e') != $login_name && $login_name !== FALSE) || !is_object($thisUser)) {
+			if (empty($login_name) || preg_match($restriction, $login_name)) $stop .= _US_INVALIDNICKNAME . '<br />';
+			if (strlen($login_name) > $icmsConfigUser['maxuname']) $stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']) . '<br />';
+			if (strlen($login_name) < $icmsConfigUser['minuname']) $stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']) . '<br />';
 			foreach ($icmsConfigUser['bad_unames'] as $bu) {
-				if (!empty($bu) && preg_match('/'.$bu.'/i', $login_name)) {
-					$stop .= _US_NAMERESERVED.'<br />';
+				if (!empty($bu) && preg_match('/' . $bu . '/i', $login_name)) {
+					$stop .= _US_NAMERESERVED . '<br />';
 					break;
 				}
 			}
-			if (strrpos($login_name, ' ') > 0) $stop .= _US_NICKNAMENOSPACES.'<br />';
+			if (strrpos($login_name, ' ') > 0) $stop .= _US_NICKNAMENOSPACES . '<br />';
 			$count = $this->getCount(icms_buildCriteria(array('login_name' => addslashes($login_name))));
-			if ($count > 0) $stop .= _US_LOGINNAMETAKEN.'<br />';
+			if ($count > 0) $stop .= _US_LOGINNAMETAKEN . '<br />';
 		}
 
 		// check uname
-		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') != $uname && $uname !== false) || !is_object($thisUser)) {
-			if ($icmsStopSpammers->badUsername($uname)) $stop .= _US_INVALIDNICKNAME.'<br />';
+		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') != $uname && $uname !== FALSE) || !is_object($thisUser)) {
 			$count = $this->getCount(icms_buildCriteria(array('uname' => addslashes($uname))));
-			if ($count > 0) $stop .= _US_NICKNAMETAKEN.'<br />';
+			if ($count > 0) $stop .= _US_NICKNAMETAKEN . '<br />';
 		}
 
 		// check password
-		if ($pass !== false) {
-			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD.'<br />';
+		if ($pass !== FALSE) {
+			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD . '<br />';
 			if ((isset($pass)) && ($pass != $vpass)) {
-				$stop .= _US_PASSNOTSAME.'<br />';
+				$stop .= _US_PASSNOTSAME . '<br />';
 			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
-				$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']).'<br />';
+				$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']) . '<br />';
 			}
-			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)) $stop .= _US_BADPWD.'<br />';
+			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, TRUE) || strripos($pass, $login_name) === TRUE)) $stop .= _US_BADPWD . '<br />';
 		}
 
 		// check other things
-		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) $stop .= _US_INVALIDIP.'<br />';
+		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) $stop .= _US_INVALIDIP . '<br />';
 
 		return $stop;
 	}
-	
+
 	/**
 	 * Return a linked username or full name for a specific $userid
 	 *
 	 * @param integer $uid uid of the related user
-	 * @param bool $name true to return the fullname, false to use the username; if true and the user does not have fullname, username will be used instead
+	 * @param bool $name TRUE to return the fullname, FALSE to use the username; if TRUE and the user does not have fullname, username will be used instead
 	 * @param array $users array already containing icms_member_user_Object objects in which case we will save a query
-	 * @param bool $withContact true if we want contact details to be added in the value returned (PM and email links)
+	 * @param bool $withContact TRUE if we want contact details to be added in the value returned (PM and email links)
 	 * @return string name of user with a link on his profile
 	 */
 	static public function getUserLink($uid, $name = FALSE, $users = array(), $withContact = FALSE) {
 		global $icmsConfig;
 
 		if (!is_numeric($uid)) return $uid;
-		$uid = (int)$uid;
+		$uid = (int) $uid;
 		if ($uid > 0) {
 			if ($users == array()) {
 				$member_handler = icms::handler("icms_member");
@@ -410,18 +409,18 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				if (($name) && !empty($fullname2)) $fullname = $user->getVar('name');
 				if (!empty($fullname)) $linkeduser = $fullname . "[";
 				$linkeduser .= "<a href='" . ICMS_URL . "/userinfo.php?uid=" . $uid . "'>";
-				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username)."</a>";
+				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username) . "</a>";
 				if (!empty($fullname)) $linkeduser .= "]";
 
 				if ($withContact) {
-					$linkeduser .= '<a href="mailto:'.$user->getVar('email').'">';
-					$linkeduser .= '<img style="vertical-align: middle;" src="' . ICMS_URL
-						. '/images/icons/' . $icmsConfig["language"] . '/email.gif'.'" alt="'
+					$linkeduser .= '<a href="mailto:' . $user->getVar('email') . '">';
+					$linkeduser .= '<img style="vertical-align: middle;" src="' . ICMS_IMAGES_URL
+						. '/icons/' . $icmsConfig["language"] . '/email.gif' . '" alt="'
 						. _US_SEND_MAIL . '" title="' . _US_SEND_MAIL . '"/></a>';
 					$js = "javascript:openWithSelfMain('" . ICMS_URL . '/pmlite.php?send2=1&to_userid='
 						. $uid . "', 'pmlite', 450, 370);";
 					$linkeduser .= '<a href="' . $js . '"><img style="vertical-align: middle;" src="'
-						. ICMS_URL . '/images/icons/' . $icmsConfig["language"] . '/pm.gif'
+						. ICMS_IMAGES_URL . '/icons/' . $icmsConfig["language"] . '/pm.gif'
 						. '" alt="' . _US_SEND_PM . '" title="' . _US_SEND_PM . '"/></a>';
 				}
 
@@ -448,7 +447,4 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		}
 		return $uname;
 	}
-	
-	
 }
-

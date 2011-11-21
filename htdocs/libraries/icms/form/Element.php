@@ -19,7 +19,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Taiwen Jiang    <phppp@users.sourceforge.net>
  * @category	ICMS
  * @package     Form
- * @subpackage	Element
+ * @subpackage	Elements
  */
 abstract class icms_form_Element {
 

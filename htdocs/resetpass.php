@@ -15,22 +15,27 @@
 
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
-
-$email = (isset($_GET['email']))
-	? trim(filter_input(INPUT_GET, 'email'))
-	: ((isset($_POST['email'])) ? trim(filter_input(INPUT_POST, 'email')) : $email);
-$username = (isset($_GET['username']))
-	? trim(filter_input(INPUT_GET, 'username'))
-	: ((isset($_POST['username'])) ? trim(filter_input(INPUT_POST, 'username')) : $username);
-$c_password = (isset($_GET['c_password']))
-	? trim(StopXSS($_GET['c_password']))
-	: ((isset($_POST['c_password'])) ? trim(StopXSS($_POST['c_password'])) : $c_password);
-$password = (isset($_GET['password']))
-	? trim(StopXSS($_GET['password']))
-	: ((isset($_POST['password'])) ? trim(StopXSS($_POST['password'])) : $password);
-$password2 = (isset($_GET['password2']))
-	? trim(StopXSS($_GET['password2']))
-	: ((isset($_POST['password2'])) ? trim(StopXSS($_POST['password2'])) : $password2);
+/* the following are passed through $_POST/$_GET
+ *	'email' => array('email', 'options' => array(0, 1)),
+ *	'username' => 'str',
+ *	'c_password' => 'str',
+ *	'password' => 'str',
+ *	'password2' => 'str',
+ */
+$filter_get = array(
+	'email' => array('email', 'options' => array(0, 1)),
+);
+$filter_post = array(
+	'email' => array('email', 'options' => array(0, 1)),
+);
+if (!empty($_GET)) {
+    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+    extract($clean_GET);
+}
+if (!empty($_POST)) {
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+    extract($clean_POST);
+}
 
 global $icmsConfigUser;
 

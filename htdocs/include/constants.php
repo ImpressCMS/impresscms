@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * ImpressCMS core constants definition
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -115,6 +114,3 @@ if (!defined('XOOPS_XMLRPC')) {
 } else {
 	define('XOOPS_DB_CHKREF', 0);
 }
-
-
-

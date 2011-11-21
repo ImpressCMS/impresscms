@@ -22,7 +22,7 @@
 <{if $search_results[$sort_key].search_more_url != ''}>
 	  <span style="margin: 10px; padding: 2px 0.5em 3px 0.5em; height:30px;">
 	  <a href="<{$search_results[$sort_key].search_more_url}>">
-	  <img style="vertical-align: middle;" src="images/search/blue_view.png" alt="<{$search_results[$sort_key].search_more_title}>" /> <{$smarty.const._SR_SHOWALLR}>
+	  <img style="vertical-align: middle;" src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/find.png" alt="<{$search_results[$sort_key].search_more_title}>" /> <{$smarty.const._SR_SHOWALLR}>
 	  </a>
 	  </span>
 	<{/if}>

@@ -46,10 +46,10 @@ if ($icmsConfig['gzip_compression'] == 1
 if (defined('ICMS_INCLUDE_OPENID')) {
 	require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
 }
-/** @todo in 1.4: set default timezone for time/date functions for strict PHP 5 compliance
- * Use date_default_timezone_set(), but our method of handling timezone offsets will need
- * to be adjusted to match timezone designations in PHP ~skenow
+/* This address the strict compliance for PHP 5.3/5.4, but the rest of our timezone handling
+ * can be improved beyond this. ~skenow
  */
+date_default_timezone_set(timezone_name_from_abbr("", $icmsConfig['default_TZ'] * 3600, 0));
 
 // -- Include site-wide lang file
 icms_loadLanguageFile('core', 'global');
