@@ -3,7 +3,27 @@ ImpressCMS ChangeLog
 Release date:
 Revision:
 DB Version:
-Build Version: 51
+Build Version: 
+
+=== ImpressCMS 1.3.1 Final ===
+Release date: 21 December 2011
+Revision: 
+DB Version: 41
+Build Version: 55
+
+Security Fix:
+* Several security vulnerabilities reported by High-Tech Bridge SA Security Research Lab - HTB23064: https://www.htbridge.ch/advisory/multiple_vulnerabilities_in_impresscms.html
+
+=== ImpressCMS 1.3.1 RC ===
+Release date: 21 December 2011
+Revision: 11502
+DB Version: 41
+Build Version: 53
+
+Maintenance release...
+Details of this release are found in the workspace on Assembla - http://impresscmsdev.assembla.com/spaces/impresscms/milestones/585713-impresscms-1-3-1
+
+<-- Migrated to Assembla workspace and split the repository into core and addons -->
 
 === ImpressCMS 1.3 Final ===
 Release date: 18 September 2011

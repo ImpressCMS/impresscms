@@ -44,7 +44,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		$this->_submit_button_caption = $submit_button_caption;
 
 		if (!isset($form_action)) {
-			$form_action = xoops_getenv('PHP_SELF');
+			$form_action = xoops_getenv('SCRIPT_NAME');
 		}
 
 		parent::__construct( $form_caption , $form_name, $form_action);

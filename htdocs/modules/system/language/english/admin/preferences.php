@@ -579,7 +579,7 @@ define("_MD_AM_PURIFIER_AUTO_LINKIFYDSC","This directive turns on linkification,
 define("_MD_AM_PURIFIER_AUTO_PURILINKIFY","Enable Purifier Internal Linkify");
 define("_MD_AM_PURIFIER_AUTO_PURILINKIFYDSC","Internal auto-formatter that converts configuration directives in syntax %Namespace.Directive to links. a tags with the href attribute must be allowed. (Leave this as is if you are not having any problems)");
 define("_MD_AM_PURIFIER_AUTO_CUSTOM","Allowed Customised AutoFormatting");
-define("_MD_AM_PURIFIER_AUTO_CUSTOMDSC","This directive can be used to add custom auto-format injectors. Specify an array of injector names (class name minus the prefix) or concrete implementations. Injector class must exist. please visit <a href='www.htmlpurifier.org'>HTML Purifier Homepage</a> for more info.");
+define("_MD_AM_PURIFIER_AUTO_CUSTOMDSC","This directive can be used to add custom auto-format injectors. Specify an array of injector names (class name minus the prefix) or concrete implementations. Injector class must exist. please visit <a href='http://www.htmlpurifier.org'>HTML Purifier Homepage</a> for more info.");
 define("_MD_AM_PURIFIER_AUTO_REMOVEEMPTY","Remove Empty Elements");
 define("_MD_AM_PURIFIER_AUTO_REMOVEEMPTYDSC"," When enabled, HTML Purifier will attempt to remove empty elements that contribute no semantic information to the document. The following types of nodes will be removed:<br /><br />
  * Tags with no attributes and no content, and that are not empty elements (remove \<a\>\</a\> but not \<br /\>), and<br />

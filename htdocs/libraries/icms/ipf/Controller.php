@@ -366,7 +366,7 @@ class icms_ipf_Controller {
 			if ($this->handler->_moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false;
 			}
-			icms_core_Message::confirm($hiddens, xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
+			icms_core_Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
 			icms_cp_footer();
 
@@ -411,7 +411,7 @@ class icms_ipf_Controller {
 				$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 				'confirm' => 1,
 				'redirect_page' => $impresscms->urls['previouspage']),
-				xoops_getenv('PHP_SELF'),
+				xoops_getenv('SCRIPT_NAME'),
 				sprintf($confirm_msg ,
 				$icmsObj->getVar($this->handler->identifierName)),
 				_CO_ICMS_DELETE

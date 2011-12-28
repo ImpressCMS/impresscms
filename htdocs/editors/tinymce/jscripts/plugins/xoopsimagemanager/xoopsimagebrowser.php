@@ -275,14 +275,14 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$query = isset($_POST['query']) ? $_POST['query'] : null;
 
 	if ($imgcat_id <= 0) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1,'');
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type,1,'');
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory =& $imgcat_handler->get($imgcat_id);
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	$categ_url  = $imgcat_handler->getCategFolder($imagecategory,1,'url');
 	if (!is_object($imagecategory)) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1);
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type,1);
 	}
 
     $icmsTpl->assign('admnav',adminNav($imgcat_id,'/',1));
@@ -473,7 +473,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 function imanager_addcat() {
     if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!icms::$security->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory =& $imgcat_handler->create();
@@ -494,12 +494,12 @@ function imanager_addcat() {
 
 	if (!file_exists($categ_path)) {
 		if (!mkdir($categ_path)) {
-			redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1,_MD_FAILADDCAT);
+			redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type,1,_MD_FAILADDCAT);
 		}
 	}
 
 	if (!$imgcat_handler->insert($imagecategory)) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1,_MD_FAILADDCAT);
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type,1,_MD_FAILADDCAT);
 	}
 	$newid = $imagecategory->getVar('imgcat_id');
 	$imagecategoryperm_handler = icms::handler('icms_member_groupperm');
@@ -533,18 +533,18 @@ function imanager_addcat() {
 		$imagecategoryperm_handler->insert($imagecategoryperm);
 		unset($imagecategoryperm);
 	}
-	redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,2,_MD_AM_DBUPDATED);
+	redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type,2,_MD_AM_DBUPDATED);
 }
 
 function imanager_addfile() {
     if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!icms::$security->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory =& $imgcat_handler->get( (int) ($imgcat_id));
 	if (!is_object($imagecategory)) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1);
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type,1);
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 
@@ -599,13 +599,13 @@ function imanager_addfile() {
 	} else {
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
-	redirect_header($_SERVER['PHP_SELF'].$redir,2,_MD_AM_DBUPDATED);
+	redirect_header($_SERVER['SCRIPT_NAME'].$redir,2,_MD_AM_DBUPDATED);
 }
 
 function imanager_updateimage() {
     if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!icms::$security->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$count = count($image_id);
 	if ($count > 0) {
@@ -660,23 +660,23 @@ function imanager_updateimage() {
 	} else {
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
-	redirect_header($_SERVER['PHP_SELF'].$redir,2,_MD_AM_DBUPDATED);
+	redirect_header($_SERVER['SCRIPT_NAME'].$redir,2,_MD_AM_DBUPDATED);
 }
 
 function imanager_delfileok($image_id,$redir=null) {
 	global $target,$type;
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!icms::$security->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$image_id = (int) ($image_id);
 	if ($image_id <= 0) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1);
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type,1);
 	}
 	$image_handler = icms::handler('icms_image');
 	$image =& $image_handler->get($image_id);
 	if (!is_object($image)) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1);
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type,1);
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory  =& $imgcat_handler->get( (int) ($image->getVar('imgcat_id')));
@@ -693,14 +693,14 @@ function imanager_delfileok($image_id,$redir=null) {
 	} else {
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
-	redirect_header($_SERVER['PHP_SELF'].$redir,2,_MD_AM_DBUPDATED);
+	redirect_header($_SERVER['SCRIPT_NAME'].$redir,2,_MD_AM_DBUPDATED);
 }
 
 function imanager_clone() {
 	global $target,$type;
 
 	if (!icms::$security->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 
 	$imgcat_id = (int) ($_POST['imgcat_id']);
@@ -709,7 +709,7 @@ function imanager_clone() {
 	$imgcat_handler = icms::handler('icms_image_category');
 	$imagecategory =& $imgcat_handler->get( (int) ($imgcat_id));
 	if (!is_object($imagecategory)) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1);
+		redirect_header($_SERVER['SCRIPT_NAME'].'?op=list&target='.$target.'&type='.$type,1);
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 
@@ -752,7 +752,7 @@ function imanager_clone() {
 	} else {
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
-	redirect_header($_SERVER['PHP_SELF'].$redir,2,$msg);
+	redirect_header($_SERVER['SCRIPT_NAME'].$redir,2,$msg);
 }
 
 function icmsPopupHeader() {
@@ -799,7 +799,7 @@ function icmsPopupFooter() {
 function showAddImgForm($imgcat_id) {
 	global $target,$type;
 	$imgcat_handler = icms::handler('icms_image_category');
-	$form = new icms_form_Theme(_ADDIMAGE, 'image_form', $_SERVER['PHP_SELF'], 'post', true);
+	$form = new icms_form_Theme(_ADDIMAGE, 'image_form', $_SERVER['SCRIPT_NAME'], 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');
 	$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'image_nicename', 50, 255), true);
 	$select = new icms_form_elements_Select(_IMAGECAT, 'imgcat_id', (int) ($imgcat_id));
@@ -824,7 +824,7 @@ function showAddImgForm($imgcat_id) {
 function adminNav($id = null, $separador = "/", $list = false, $style="style='font-weight:bold'") {
 	global $target,$type;
 
-	$admin_url = $_SERVER['PHP_SELF'].'?target='.$target.'&type='.$type;
+	$admin_url = $_SERVER['SCRIPT_NAME'].'?target='.$target.'&type='.$type;
 	if ($id == false) {
 		return false;
 	} else {
@@ -853,5 +853,5 @@ function adminNav($id = null, $separador = "/", $list = false, $style="style='fo
 function redir($imgcat_id,$msg=null) {
 	global $target,$type;
 
-	redirect_header($_SERVER['PHP_SELF'].'?op=listimg&imgcat_id='.(int) $imgcat_id.'&target='.$target.'&type='.$type,2,$msg);
+	redirect_header($_SERVER['SCRIPT_NAME'].'?op=listimg&imgcat_id='.(int) $imgcat_id.'&target='.$target.'&type='.$type,2,$msg);
 }

@@ -20,14 +20,17 @@ $admin_dir = ICMS_MODULES_PATH . '/system/admin/';
 $dirlist = icms_core_Filesystem::getDirList($admin_dir);
 /* changes to only allow permission admins you already have */
 $gperm = icms::handler('icms_member_groupperm');
-$groups = icms::$user->getGroups ();
+$groups = icms::$user->getGroups();
 foreach ($dirlist as $file) {
 	if (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $file . '/icms_version.php')) {
 		include ICMS_MODULES_PATH . '/system/admin/' . $file . '/icms_version.php';
 	} elseif (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $file . '/xoops_version.php')) {
 		include ICMS_MODULES_PATH . '/system/admin/' . $file . '/xoops_version.php';
 	}
-	if (!empty($modversion['category']) && count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category'])))>0) {
+	if (!empty($modversion['category']) 
+		&& (count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category']))) > 0
+			|| in_array(ICMS_GROUP_ADMIN, $groups))
+	) {
 		$s_cat_checkbox->addOption($modversion['category'], $modversion['name']);
 	}
 	unset($modversion);

@@ -8,7 +8,7 @@
 
 function EditAreaLoader(){
 	var t=this;
-	t.version= "0.8";
+	t.version= "0.8.2";
 	date= new Date();
 	t.start_time=date.getTime();
 	t.win= "loading";	// window loading state
@@ -24,6 +24,7 @@ function EditAreaLoader(){
 	// scripts that must be loaded in the iframe
 	t.scripts_to_load= ["elements_functions", "resize_area", "reg_syntax"];
 	t.sub_scripts_to_load= ["edit_area", "manage_area" ,"edit_area_functions", "keyboard", "search_replace", "highlight", "regexp"];
+	t.syntax_display_name= { /*syntax_display_name_AUTO-FILL-BY-COMPRESSOR*/ };
 	
 	t.resize= []; // contain resizing datas
 	t.hidden= {};	// store datas of the hidden textareas
@@ -47,7 +48,7 @@ function EditAreaLoader(){
 		,allow_toggle: true		// true or false
 		,language: "en"
 		,syntax: ""
-		,syntax_selection_allow: "basic,brainfuck,c,coldfusion,cpp,css,html,js,pas,perl,php,python,ruby,robotstxt,sql,tsql,vb,xml"
+		,syntax_selection_allow: "basic,brainfuck,c,coldfusion,cpp,css,html,java,js,pas,perl,php,python,ruby,robotstxt,sql,tsql,vb,xml"
 		,display: "onload" 		// onload or later
 		,max_undo: 30
 		,browsers: "known"	// all or known
@@ -94,7 +95,7 @@ function EditAreaLoader(){
 	// navigator identification
 	t.set_browser_infos(t);
 
-	if(t.isIE>=6 || t.isOpera>=9 || t.isFirefox || t.isChrome || t.isCamino || t.isSafari>=3)
+	if(t.isIE>=6 || t.isGecko || ( t.isWebKit && !t.isSafari<3 ) || t.isOpera>=9  || t.isCamino )
 		t.isValidBrowser=true;
 	else
 		t.isValidBrowser=false;
@@ -120,9 +121,13 @@ EditAreaLoader.prototype ={
 	// add browser informations to the object passed in parameter
 	set_browser_infos : function(o){
 		ua= navigator.userAgent;
-		o.isMacOS = (ua.indexOf('Mac OS') != -1);
-
-		o.isIE = (navigator.appName == "Microsoft Internet Explorer");
+		
+		// general detection
+		o.isWebKit	= /WebKit/.test(ua);
+		o.isGecko	= !o.isWebKit && /Gecko/.test(ua);
+		o.isMac		= /Mac/.test(ua);
+		
+		o.isIE	= (navigator.appName == "Microsoft Internet Explorer");
 		if(o.isIE){
 			o.isIE = ua.replace(/^.*?MSIE\s+([0-9\.]+).*$/, "$1");
 			if(o.isIE<6)
@@ -138,15 +143,15 @@ EditAreaLoader.prototype ={
 
 		if(o.isFirefox =(ua.indexOf('Firefox') != -1))
 			o.isFirefox = ua.replace(/^.*?Firefox.*?([0-9\.]+).*$/i, "$1");
-		// Iceweasel is a clone of Firefox 	
-		if(o.isIceweasel =(ua.indexOf('Iceweasel') != -1))
-			o.isFirefox= o.isIceweasel = ua.replace(/^.*?Iceweasel.*?([0-9\.]+).*$/i, "$1");
-		// grandparadisio is a clone of Firefox 	
-		if(o.GranParadiso =(ua.indexOf('GranParadiso') != -1))
-			o.isFirefox= o.isGranParadiso = ua.replace(/^.*?GranParadiso.*?([0-9\.]+).*$/i, "$1");
-		// BonEcho is a clone of Firefox
-		if(o.BonEcho =(ua.indexOf('BonEcho') != -1))
-			o.isFirefox= o.isBonEcho = ua.replace(/^.*?BonEcho.*?([0-9\.]+).*$/i, "$1");
+		// Firefox clones 	
+		if( ua.indexOf('Iceweasel') != -1 )
+			o.isFirefox	= ua.replace(/^.*?Iceweasel.*?([0-9\.]+).*$/i, "$1");
+		if( ua.indexOf('GranParadiso') != -1 )
+			o.isFirefox	= ua.replace(/^.*?GranParadiso.*?([0-9\.]+).*$/i, "$1");
+		if( ua.indexOf('BonEcho') != -1 )
+			o.isFirefox	= ua.replace(/^.*?BonEcho.*?([0-9\.]+).*$/i, "$1");
+		if( ua.indexOf('SeaMonkey') != -1)
+			o.isFirefox = (ua.replace(/^.*?SeaMonkey.*?([0-9\.]+).*$/i, "$1") ) + 1;
 			
 		if(o.isCamino =(ua.indexOf('Camino') != -1))
 			o.isCamino = ua.replace(/^.*?Camino.*?([0-9\.]+).*$/i, "$1");
@@ -158,7 +163,7 @@ EditAreaLoader.prototype ={
 			o.isChrome = ua.replace(/^.*?Chrome.*?([0-9\.]+).*$/i, "$1");
 			o.isSafari	= false;
 		}
-	
+		
 	},
 	
 	window_loaded : function(){
@@ -318,7 +323,7 @@ EditAreaLoader.prototype ={
 				html+="<label for='edit_area_toggle_checkbox_"+ id +"'>{$toggle}</label></div>";	
 			}
 			if(editAreas[id]["settings"]["debug"])
-				html+="<textarea id='edit_area_debug_"+ id +"' style='z-index: 20; width: 100%; height: 120px;overflow: auto; border: solid black 1px;'></textarea><br />";				
+				html+="<textarea id='edit_area_debug_"+ id +"' spellcheck='off' style='z-index: 20; width: 100%; height: 120px;overflow: auto; border: solid black 1px;'></textarea><br />";				
 			html= t.translate(html, editAreas[id]["settings"]["language"]);				
 			span.innerHTML= html;				
 			father= d.getElementById(id).parentNode;
@@ -343,7 +348,7 @@ EditAreaLoader.prototype ={
 		}
 				
 		// get toolbar content
-		area=editAreas[id];
+		var area=editAreas[id];
 		
 		for(i=0; i<area["settings"]["tab_toolbar"].length; i++){
 		//	alert(this.tab_toolbar[i]+"\n"+ this.get_control_html(this.tab_toolbar[i]));
@@ -487,8 +492,8 @@ EditAreaLoader.prototype ={
 			} catch(e){};
 			if(this.isIE){
 				t.selectionStart= selStart;
-				t.selectionEnd= selEnd;
-				t.focused=true;
+				t.selectionEnd	= selEnd;
+				t.focused		= true;
 				set_IE_selection(t);
 			}else{
 				if(this.isOpera && this.isOpera < 9.6 ){	// Opera bug when moving selection start and selection end
@@ -594,7 +599,7 @@ EditAreaLoader.prototype ={
 	
 			for( i=0; i<elems.length; i++ ){
 				if (elems[i].src && elems[i].src.match(/edit_area_[^\\\/]*$/i) ) {
-					var src = elems[i].src;
+					var src = unescape( elems[i].src ); // use unescape for utf-8 encoded urls
 					src = src.substring(0, src.lastIndexOf('/'));
 					this.baseURL = src;
 					this.file_name= elems[i].src.substr(elems[i].src.lastIndexOf("/")+1);

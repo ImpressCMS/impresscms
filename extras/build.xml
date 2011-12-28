@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<project name="DeployImpressCMS" default="help">
+
+<taskdef name="svnexportdiff"	classname="phing.tasks.ext.svn.SvnExportDiffTask" />
+	
+  <property name="test.exportdir"  value="test_branch_${branchnumber}" />
+  <property name="dist.exportdir"  value="impresscms_${branchnumber}" />
+  <property name="repobase" value="http://subversion.assembla.com/svn/impresscms" />
+  <property name="repobranchbase" value="/branches/impresscms_" />
+  <property name="repoversionbase" value="/releases/impresscms" />	
+  <property name="repotrunkbase" value="/trunk/htdocs" />
+	
+  <property name="package.exportdir"  value="package_branch_${package.version}_${package.stage}" />
+  <property name="package.major_upgrade_version" value="1.0" />
+	
+  	
+	<target name="getbranch">
+		<propertyprompt propertyName="branchnumber" promptText="enter branch number (X.X)"/>
+	</target>
+	
+	<target name="getversion">
+		<propertyprompt propertyName="package.version" promptText="enter version number (X.X.X)"/>
+		<propertyprompt propertyName="package.stage" promptText="enter release stage (alpha, alpha2, beta, rc, ...)"/>
+		
+	</target>
+	
+<target name="help">
+	<echo msg="ImpressCMS test deployment and package creation tool"/>
+	<echo msg="----------------------------------------------------"/>
+	<echo msg="exportrepo	  :	Checkout SVN branch to test_branch_(branch_number) (branch requested)"/>
+	<echo msg="updaterepo	  :	Update SVN branch in test_branch_(branch_number) (branch requested) "/>
+	<echo msg="package.export :	Create Full packages of a version (version requested)"/>
+	<echo msg="package.upgrade:	Create Full AND upgrade (xoops-to-icms) packages of a version (version requested)"/>
+	
+	</target>
+  <target name="exportrepo" depends="getbranch">
+  	<echo msg="Cleaning up previous install of ImpressCMS ${branchnumber} test"/>
+  	  	<delete dir="${test.exportdir}"/>
+  	<echo msg="Checking out ImpressCMS ${branchnumber} for test"/>
+    <svncheckout
+       username="${username}"
+       password="${password}"
+       nocache="true"
+       repositoryurl="${repobase}${repobranchbase}${branchnumber}/htdocs"
+       todir="${test.exportdir}"/>
+  </target>
+	
+	<target name="updaterepo" depends="getbranch">
+		<echo msg="updating to the latest version of branch ${branchnumber}." />
+		<svnupdate todir="${test.exportdir}"/>
+	</target>
+	
+	<target name="package.export" depends="getversion">
+	  	<echo msg="Checking out ImpressCMS ${package.version} ${package.stage} for package creation"/>
+	    <svnexport
+	       username="${username}"
+	       password="${password}"
+	       nocache="true"
+	       repositoryurl="${repobase}${repoversionbase}_${package.version}_${package.stage}"
+	       todir="${package.exportdir}"/>
+		<echo msg="Creating full release archives" />
+		<zip destfile="impresscms_${package.version}_${package.stage}.zip" basedir="${package.exportdir}" />
+		<tar destfile="impresscms_${package.version}_${package.stage}.tar.gz" compression="gzip" basedir="${package.exportdir}" />
+	</target>
+	
+	<target name="package.upgrade" depends="package.export">
+		<echo msg="Removing files that are not present in upgrade packages" />
+		<delete dir="${package.exportdir}/htdocs/install"/>
+		<delete dir="${package.exportdir}/htdocs/cache"/>
+		<delete dir="${package.exportdir}/htdocs/templates_c"/>
+		<delete file="${package.exportdir}/htdocs/favicon.ico"/>
+		<delete file="${package.exportdir}/htdocs/mainfile.php"/>
+		<move file="${package.exportdir}/upgrade" todir="${package.exportdir}/htdocs/upgrade" overwrite="true" />
+		<zip destfile="xoops-or-impresscms_${package.major_upgrade_version}-to-impresscms_${package.version}_${package.stage}.zip" basedir="${package.exportdir}" />
+		<tar destfile="xoops-or-impresscms_${package.major_upgrade_version}-to-impresscms_${package.version}_${package.stage}.tar.gz" compression="gzip" basedir="${package.exportdir}" />
+	</target>
+
+	<target name="package.update" depends="package.upgrade">
+		
+		<svnexportdiff svnpath="" nocache="true" revision="${package.lastrevision}" repositoryurl="${repobase}"/>	
+	</target>
+	
+</project>

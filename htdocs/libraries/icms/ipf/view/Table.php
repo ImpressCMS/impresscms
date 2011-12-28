@@ -195,9 +195,9 @@ class icms_ipf_view_Table {
 	 */
 	public function getDefaultSort() {
 		if ($this->_sortsel) {
-			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
+			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
 		} else {
-			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_sortsel', $this->_objectHandler->identifierName);
+			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_sortsel', $this->_objectHandler->identifierName);
 		}
 	}
 
@@ -214,9 +214,9 @@ class icms_ipf_view_Table {
 	 */
 	public function getDefaultOrder() {
 		if ($this->_ordersel) {
-			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_ordersel', $this->_ordersel);
+			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_ordersel', $this->_ordersel);
 		} else {
-			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_ordersel', 'ASC');
+			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_ordersel', 'ASC');
 		}
 	}
 
@@ -270,7 +270,7 @@ class icms_ipf_view_Table {
 		$this->_sortsel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] : $this->getDefaultSort();
 		//$this->_sortsel = isset($_POST['sortsel']) ? $_POST['sortsel'] : $this->_sortsel;
 
-		icms_setCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
+		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
 		$fieldsForSorting = $this->_tempObject->getFieldsForSorting($this->_sortsel);
 
 		if (isset($this->_tempObject->vars[$this->_sortsel]['itemName'])) {
@@ -281,7 +281,7 @@ class icms_ipf_view_Table {
 
 		$this->_ordersel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] : $this->getDefaultOrder();
 		//$this->_ordersel = isset($_POST['ordersel']) ? $_POST['ordersel'] :$this->_ordersel;
-		icms_setCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_ordersel', $this->_ordersel);
+		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_ordersel', $this->_ordersel);
 		$ordersArray = $this->getOrdersArray();
 		$this->_criteria->setOrder($this->_ordersel);
 	}
@@ -416,9 +416,9 @@ class icms_ipf_view_Table {
 	 */
 	public function getDefaultFilter() {
 		if ($this->_filtersel) {
-			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_filtersel', $this->_filtersel);
+			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_filtersel', $this->_filtersel);
 		} else {
-			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_filtersel', 'default');
+			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_filtersel', 'default');
 		}
 	}
 
@@ -465,9 +465,9 @@ class icms_ipf_view_Table {
 	 */
 	public function getDefaultFilter2() {
 		if ($this->_filtersel2) {
-			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_filtersel2', $this->_filtersel2);
+			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_filtersel2', $this->_filtersel2);
 		} else {
-			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_filtersel2', 'default');
+			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_filtersel2', 'default');
 		}
 	}
 	 /**
@@ -499,7 +499,7 @@ class icms_ipf_view_Table {
 		/**
 		 * What was $params_of_the_options_sel doing again ?
 		 */
-		//$this->_tpl->assign('icms_optionssel_action', $_SERVER['PHP_SELF'] . "?" . implode('&', $params_of_the_options_sel));
+		//$this->_tpl->assign('icms_optionssel_action', $_SERVER['SCRIPT_NAME'] . "?" . implode('&', $params_of_the_options_sel));
 		$this->_tpl->assign('icms_optionssel_action', $current_url);
 		$this->_tpl->assign('icms_optionssel_limitsArray', $limitsArray);
 	}
@@ -609,19 +609,19 @@ class icms_ipf_view_Table {
 		$this->setSortOrder();
 
 		if (!$this->_isTree) {
-			$this->_limitsel = isset($_GET['limitsel']) ? $_GET['limitsel'] : icms_getCookieVar($_SERVER['PHP_SELF'] . '_limitsel', '15');
+			$this->_limitsel = isset($_GET['limitsel']) ? $_GET['limitsel'] : icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_limitsel', '15');
 		} else {
 			$this->_limitsel = 'all';
 		}
 
 		$this->_limitsel = isset($_POST['limitsel']) ? $_POST['limitsel'] : $this->_limitsel;
-		icms_setCookieVar($_SERVER['PHP_SELF'] . '_limitsel', $this->_limitsel);
+		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_limitsel', $this->_limitsel);
 		$limitsArray = $this->getLimitsArray();
 		$this->_criteria->setLimit($this->_limitsel);
 
 		$this->_filtersel = isset($_GET['filtersel']) ? $_GET['filtersel'] : $this->getDefaultFilter();
 		$this->_filtersel = isset($_POST['filtersel']) ? $_POST['filtersel'] : $this->_filtersel;
-		icms_setCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_filtersel', $this->_filtersel);
+		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_filtersel', $this->_filtersel);
 		$filtersArray = $this->getFiltersArray();
 
 		if ($filtersArray) {
@@ -647,7 +647,7 @@ class icms_ipf_view_Table {
 					$filters2Array = $this->getFilters2Array();
 					$this->_tpl->assign('icms_optionssel_filters2Array', $filters2Array);
 
-					icms_setCookieVar($_SERVER['PHP_SELF'] . '_filtersel2', $this->_filtersel2);
+					icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_filtersel2', $this->_filtersel2);
 					if ($this->_filtersel2 != 'default') {
 						$this->_criteria->add(new icms_db_criteria_Item($this->_filtersel, $this->_filtersel2));
 					}

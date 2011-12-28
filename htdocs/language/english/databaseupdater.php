@@ -41,3 +41,7 @@ define("_DATABASEUPDATER_MSG_CONFIG_SCC", "Successfully inserted %s config");
 define( '_DATABASEUPDATER_MSG_FROM_112', "<code><h3>You have updated your site from ImpressCMS 1.1.x to ImpressCMS 1.2 so you <strong>must install the new Content module</strong> to update the core content manager. You will be redirected to the installation process in 20 seconds. If this does not happen click <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1'>here</a>.</h3></code>" );
 define('_DATABASEUPDATER_MSG_DROPFIELD_ERR', 'An error occured while deleting specified fields %1$s from table %2$s');
 define("_DATABASEUPDATER_MSG_DROPFIELD", 'Successfully dropped field %1$s from table %2$s');
+
+// Added in 1.2.7/1.3.1
+define("_DATABASEUPDATER_MSG_DROP_TABLE", "Successfully dropped database table %s");
+define("_DATABASEUPDATER_MSG_DROP_TABLE_ERR", "Error dropping database table %s");

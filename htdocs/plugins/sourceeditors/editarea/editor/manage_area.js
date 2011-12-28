@@ -7,7 +7,7 @@
 	EditArea.prototype.check_line_selection= function(timer_checkup){
 		var changes, infos, new_top, new_width,i;
 		
-		var t1=t2=t2_1=t3=tend= new Date().getTime();
+		var t1=t2=t2_1=t3=tLines=tend= new Date().getTime();
 		// l'editeur n'existe plus => on quitte
 		if(!editAreas[this.id])
 			return false;
@@ -62,8 +62,8 @@
 					}
 					this.selection_field_text.innerHTML = this.selection_field.innerHTML;
 					t2_1 = new Date().getTime();
-					// check if we need to update the highlighted background
-					if(this.reload_highlight || (infos["full_text"] != this.last_text_to_highlight && (this.last_selection["line_start"]!=infos["line_start"] || this.show_line_colors || this.last_selection["line_nb"]!=infos["line_nb"] || this.last_selection["nb_line"]!=infos["nb_line"]) ) )
+					// check if we need to update the highlighted background 
+					if(this.reload_highlight || (infos["full_text"] != this.last_text_to_highlight && (this.last_selection["line_start"]!=infos["line_start"] || this.show_line_colors || this.settings['word_wrap'] || this.last_selection["line_nb"]!=infos["line_nb"] || this.last_selection["nb_line"]!=infos["nb_line"]) ) )
 					{
 						this.maj_highlight(infos);
 					}
@@ -74,10 +74,18 @@
 			// manage line heights
 			if( this.settings['word_wrap'] && infos["full_text"] != this.last_selection["full_text"])
 			{
-				//this.fixLinesHeight(changes.lineStart,changes.lineNewEnd);
-				this.fixLinesHeight(changes.lineStart, -1);
+				// refresh only 1 line if text change concern only one line and that the total line number has not changed
+				if( changes.newText.split("\n").length == 1 && this.last_selection['nb_line'] && infos['nb_line'] == this.last_selection['nb_line'] )
+				{
+					this.fixLinesHeight( infos['full_text'], changes.lineStart, changes.lineStart );
+				}
+				else
+				{
+					this.fixLinesHeight( infos['full_text'], changes.lineStart, -1 );
+				}
 			}
-			
+		
+			tLines= new Date().getTime();
 			// manage bracket finding
 			if( infos["line_start"] != this.last_selection["line_start"] || infos["curr_pos"] != this.last_selection["curr_pos"] || infos["full_text"].length!=this.last_selection["full_text"].length || this.reload_highlight || !timer_checkup )
 			{
@@ -89,17 +97,17 @@
 					no_real_move=false;					
 					//findEndBracket(infos["line_start"], infos["curr_pos"], selec_char);
 					if(this.findEndBracket(infos, selec_char) === true){
-						_$("end_bracket").style.visibility="visible";
-						_$("cursor_pos").style.visibility="visible";
-						_$("cursor_pos").innerHTML= selec_char;
-						_$("end_bracket").innerHTML= (this.assocBracket[selec_char] || this.revertAssocBracket[selec_char]);
+						_$("end_bracket").style.visibility	="visible";
+						_$("cursor_pos").style.visibility	="visible";
+						_$("cursor_pos").innerHTML			= selec_char;
+						_$("end_bracket").innerHTML			= (this.assocBracket[selec_char] || this.revertAssocBracket[selec_char]);
 					}else{
-						_$("end_bracket").style.visibility="hidden";
-						_$("cursor_pos").style.visibility="hidden";
+						_$("end_bracket").style.visibility	="hidden";
+						_$("cursor_pos").style.visibility	="hidden";
 					}
 				}else{
-					_$("cursor_pos").style.visibility="hidden";
-					_$("end_bracket").style.visibility="hidden";
+					_$("cursor_pos").style.visibility	="hidden";
+					_$("end_bracket").style.visibility	="hidden";
 				}
 				//alert("move cursor");
 				this.displayToCursorPosition("cursor_pos", infos["line_start"], infos["curr_pos"]-1, infos["curr_line"], no_real_move);
@@ -110,58 +118,59 @@
 		}
 		
 		tend= new Date().getTime();
-		/*if( (tend-t1) > 30 )
-			this.debug.value="tps total: "+ (tend-t1) + " tps get_infos: "+ (t2-t1)+ " tps selec: "+ (t2_1-t2)+ " tps highlight: "+ (t3-t2_1) +" tps cursor+lines: "+ (tend-t3)+" \n"+this.debug.value;
-		*/
+		//if( (tend-t1) > 7 )
+		//	console.log( "tps total: "+ (tend-t1) + " tps get_infos: "+ (t2-t1)+ " tps selec: "+ (t2_1-t2)+ " tps highlight: "+ (t3-t2_1) +" tps lines: "+ (tLines-t3) +" tps cursor+lines: "+ (tend-tLines)+" \n" );
+		
 		
 		if(timer_checkup){
-			//if(this.do_highlight==true)	//can slow down check speed when highlight mode is on
 			setTimeout("editArea.check_line_selection(true)", this.check_line_selection_timer);
 		}
 	};
 
 
 	EditArea.prototype.get_selection_infos= function(){
-		var sel={}, start, end;
+		var sel={}, start, end, len, str;
+	
+		this.getIESelection();
+		start	= this.textarea.selectionStart;
+		end		= this.textarea.selectionEnd;		
 		
-		if(this.isIE)
-			this.getIESelection();
-		start=this.textarea.selectionStart;
-		end=this.textarea.selectionEnd;		
-		
-		if(this.last_selection["selectionStart"]==start && this.last_selection["selectionEnd"]==end && this.last_selection["full_text"]==this.textarea.value)
+		if( this.last_selection["selectionStart"] == start && this.last_selection["selectionEnd"] == end && this.last_selection["full_text"] == this.textarea.value )
+		{	
 			return this.last_selection;
+		}
 			
 		if(this.tabulation!="\t" && this.textarea.value.indexOf("\t")!=-1) 
 		{	// can append only after copy/paste 
-			var len= this.textarea.value.length;
-			this.textarea.value=this.replace_tab(this.textarea.value);
-			start=end= start+(this.textarea.value.length-len);
-			this.area_select(start, 0);
+			len		= this.textarea.value.length;
+			this.textarea.value	= this.replace_tab(this.textarea.value);
+			start	= end	= start+(this.textarea.value.length-len);
+			this.area_select( start, 0 );
 		}
 		
-		sel["selectionStart"]= start;
-		sel["selectionEnd"]= end;		
-		sel["full_text"]= this.textarea.value;
-		sel["line_start"]=1;
-		sel["line_nb"]=1;
-		sel["curr_pos"]=0;
-		sel["curr_line"]="";
-		sel["indexOfCursor"]=0;
-		sel["selec_direction"]= this.last_selection["selec_direction"];
-		
+		sel["selectionStart"]	= start;
+		sel["selectionEnd"]		= end;		
+		sel["full_text"]		= this.textarea.value;
+		sel["line_start"]		= 1;
+		sel["line_nb"]			= 1;
+		sel["curr_pos"]			= 0;
+		sel["curr_line"]		= "";
+		sel["indexOfCursor"]	= 0;
+		sel["selec_direction"]	= this.last_selection["selec_direction"];
+
 		//return sel;	
-		var splitTab=sel["full_text"].split("\n");
-		var nbLine=Math.max(0, splitTab.length);		
-		var nbChar=Math.max(0, sel["full_text"].length - (nbLine - 1));	// (remove \n caracters from the count)
-		if(sel["full_text"].indexOf("\r")!=-1)
-			nbChar= nbChar - (nbLine -1);		// (remove \r caracters from the count)
-		sel["nb_line"]=nbLine;		
-		sel["nb_char"]=nbChar;		
+		var splitTab= sel["full_text"].split("\n");
+		var nbLine	= Math.max(0, splitTab.length);		
+		var nbChar	= Math.max(0, sel["full_text"].length - (nbLine - 1));	// (remove \n caracters from the count)
+		if( sel["full_text"].indexOf("\r") != -1 )
+			nbChar	= nbChar - ( nbLine - 1 );		// (remove \r caracters from the count)
+		sel["nb_line"]	= nbLine;		
+		sel["nb_char"]	= nbChar;
+	
 		if(start>0){
-			var str=sel["full_text"].substr(0,start);
-			sel["curr_pos"]= start - str.lastIndexOf("\n");
-			sel["line_start"]=Math.max(1, str.split("\n").length);
+			str					= sel["full_text"].substr(0,start);
+			sel["curr_pos"]		= start - str.lastIndexOf("\n");
+			sel["line_start"]	= Math.max(1, str.split("\n").length);
 		}else{
 			sel["curr_pos"]=1;
 		}
@@ -170,9 +179,9 @@
 		}
 		sel["indexOfCursor"]=start;		
 		sel["curr_line"]=splitTab[Math.max(0,sel["line_start"]-1)];
-		
-		// determine in with direction the direction grow
-		if(sel["selectionStart"]==this.last_selection["selectionStart"]){
+	
+		// determine in which direction the selection grow
+		if(sel["selectionStart"] == this.last_selection["selectionStart"]){
 			if(sel["selectionEnd"]>this.last_selection["selectionEnd"])
 				sel["selec_direction"]= "down";
 			else if(sel["selectionEnd"] == this.last_selection["selectionStart"])
@@ -182,12 +191,12 @@
 		}else{
 			sel["selec_direction"]= "up";
 		}
-			
-		_$("nbLine").innerHTML= nbLine;		
-		_$("nbChar").innerHTML= nbChar;		
-		_$("linePos").innerHTML=sel["line_start"];
-		_$("currPos").innerHTML=sel["curr_pos"];
 		
+		_$("nbLine").innerHTML	= nbLine;		
+		_$("nbChar").innerHTML	= nbChar;		
+		_$("linePos").innerHTML	= sel["line_start"];
+		_$("currPos").innerHTML	= sel["curr_pos"];
+
 		return sel;		
 	};
 	
@@ -195,6 +204,9 @@
 	EditArea.prototype.getIESelection= function(){
 		var selectionStart, selectionEnd, range, stored_range;
 		
+		if( !this.isIE )
+			return false;
+			
 		// make it work as nowrap mode (easier for range manipulation with lineHeight)
 		if( this.settings['word_wrap'] )
 			this.textarea.wrap='off';
@@ -218,7 +230,7 @@
 			selectionStart	-= ( line_start - this.textarea.value.substr(0, selectionStart).split("\n").length ) * 2;
 			
 			selectionEnd	= selectionStart + range.text.length;		
-			selectionEnd	+= (line_start + line_nb - 1 - this.textarea.value.substr(0, selectionStart + range.text.length).split("\n").length)*2;			
+			selectionEnd	+= (line_start + line_nb - 1 - this.textarea.value.substr(0, selectionEnd ).split("\n").length)*2;			
 		
 			this.textarea.selectionStart	= selectionStart;
 			this.textarea.selectionEnd		= selectionEnd;
@@ -232,14 +244,19 @@
 	
 	// select the text for IE (and take care of \r caracters)
 	EditArea.prototype.setIESelection= function(){
-		var nbLineStart=this.textarea.value.substr(0, this.textarea.selectionStart).split("\n").length - 1;
-		var nbLineEnd=this.textarea.value.substr(0, this.textarea.selectionEnd).split("\n").length - 1;
-		var range = document.selection.createRange();
-		range.moveToElementText( this.textarea );
+		var a = this.textarea, nbLineStart, nbLineEnd, range;
+		
+		if( !this.isIE )
+			return false;
+		
+		nbLineStart	= a.value.substr(0, a.selectionStart).split("\n").length - 1;
+		nbLineEnd 	= a.value.substr(0, a.selectionEnd).split("\n").length - 1;
+		range		= document.selection.createRange();
+		range.moveToElementText( a );
 		range.setEndPoint( 'EndToStart', range );
 		
-		range.moveStart('character', this.textarea.selectionStart - nbLineStart);
-		range.moveEnd('character', this.textarea.selectionEnd - nbLineEnd - (this.textarea.selectionStart - nbLineStart)  );
+		range.moveStart('character', a.selectionStart - nbLineStart);
+		range.moveEnd('character', a.selectionEnd - nbLineEnd - (a.selectionStart - nbLineStart)  );
 		range.select();
 	};
 	
@@ -305,8 +322,7 @@
 		this.is_tabbing=true;
 		//infos=getSelectionInfos();
 		//if( document.selection ){
-		if( this.isIE )
-			this.getIESelection();
+		this.getIESelection();
 		/* Insertion du code de formatage */
 		var start = this.textarea.selectionStart;
 		var end = this.textarea.selectionEnd;
@@ -337,11 +353,15 @@
 		this.textarea.selectionEnd = pos_end;
 		
 		//if( document.selection ){
-		if(this.isIE){
+		if(this.isIE)
+		{
 			this.setIESelection();
 			setTimeout("editArea.is_tabbing=false;", 100);	// IE can't accept to make 2 tabulation without a little break between both
-		}else
-			this.is_tabbing=false;	
+		}
+		else
+		{ 
+			this.is_tabbing=false;
+		}	
 		
   	};
 	
@@ -352,8 +372,7 @@
 		t.is_tabbing=true;
 		//infos=getSelectionInfos();
 		//if( document.selection ){
-		if(t.isIE)
-			t.getIESelection();
+		t.getIESelection();
 		
 		var start	= a.selectionStart;
 		var end		= a.selectionEnd;
@@ -414,8 +433,7 @@
 	EditArea.prototype.press_enter= function(){		
 		if(!this.smooth_selection)
 			return false;
-		if(this.isIE)
-			this.getIESelection();
+		this.getIESelection();
 		var scrollTop= this.result.scrollTop;
 		var scrollLeft= this.result.scrollLeft;
 		var start=this.textarea.selectionStart;
@@ -439,8 +457,8 @@
 		this.area_select(start+ begin_line.length ,0);
 		// during this process IE scroll back to the top of the textarea
 		if(this.isIE){
-			this.result.scrollTop= scrollTop;
-			this.result.scrollLeft= scrollLeft;
+			this.result.scrollTop	= scrollTop;
+			this.result.scrollLeft	= scrollLeft;
 		}
 		return true;
 		
@@ -492,8 +510,8 @@
 	};
 	
 	EditArea.prototype.displayToCursorPosition= function(id, start_line, cur_pos, lineContent, no_real_move){
-		var elem,dest,content,posLeft=0,posTop,fixPadding,topOffset,endElem;
-		
+		var elem,dest,content,posLeft=0,posTop,fixPadding,topOffset,endElem;	
+
 		elem		= this.test_font_size;
 		dest		= _$(id);
 		content		= "<span id='test_font_size_inner'>"+lineContent.substr(0, cur_pos).replace(/&/g,"&amp;").replace(/</g,"&lt;")+"</span><span id='endTestFont'>"+lineContent.substr(cur_pos).replace(/&/g,"&amp;").replace(/</g,"&lt;")+"</span>";
@@ -502,14 +520,14 @@
 		} else {
 			elem.innerHTML= content;
 		}
-	
+		
 
-		//console.log( _$('endTestFont').offsetLeft, this.content_highlight.style.paddingLeft.replace("px", "") );
 		endElem		= _$('endTestFont');
 		topOffset	= endElem.offsetTop;
 		fixPadding	= parseInt( this.content_highlight.style.paddingLeft.replace("px", "") );
 		posLeft 	= 45 + endElem.offsetLeft + ( !isNaN( fixPadding ) && topOffset > 0 ? fixPadding : 0 );
 		posTop		= this.getLinePosTop( start_line ) + topOffset;// + Math.floor( ( endElem.offsetHeight - 1 ) / this.lineHeight ) * this.lineHeight;
+	
 		// detect the case where the span start on a line but has no display on it
 		if( this.isIE && cur_pos > 0 && endElem.offsetLeft == 0 )
 		{
@@ -517,14 +535,12 @@
 		}
 		if(no_real_move!=true){	// when the cursor is hidden no need to move him
 			dest.style.top=posTop+"px";
-			dest.style.left=posLeft+"px";		
+			dest.style.left=posLeft+"px";	
 		}
 		// usefull for smarter scroll
 		dest.cursor_top=posTop;
 		dest.cursor_left=posLeft;	
-		
 	//	_$(id).style.marginLeft=posLeft+"px";
-		
 	};
 	
 	EditArea.prototype.getLinePosTop= function(start_line){
@@ -557,8 +573,8 @@
 	 * @param Integer linestart
 	 * @param Integer lineEnd End line or -1 to cover all lines
 	 */
-	EditArea.prototype.fixLinesHeight= function( lineStart,lineEnd ){
-		var aText = this.textarea.value.split("\n");
+	EditArea.prototype.fixLinesHeight= function( textValue, lineStart,lineEnd ){
+		var aText = textValue.split("\n");
 		if( lineEnd == -1 )
 			lineEnd	= aText.length-1;
 		for( var i = Math.max(0, lineStart); i <= lineEnd; i++ )
@@ -576,12 +592,17 @@
 		start	= Math.max(0, Math.min(this.textarea.value.length, start));
 		end		= Math.max(start, Math.min(this.textarea.value.length, start+length));
 
-		if(this.isIE){
-			this.textarea.selectionStart = start;
-			this.textarea.selectionEnd = end;		
+		if(this.isIE)
+		{
+			this.textarea.selectionStart	= start;
+			this.textarea.selectionEnd		= end;		
 			this.setIESelection();
-		}else{
-			if(this.isOpera && this.isOpera < 9.6 ){	// Opera bug when moving selection start and selection end
+		}
+		else
+		{
+			// Opera bug when moving selection start and selection end
+			if(this.isOpera && this.isOpera < 9.6 )
+			{	
 				this.textarea.setSelectionRange(0, 0);
 			}
 			this.textarea.setSelectionRange(start, end);

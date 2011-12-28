@@ -27,10 +27,10 @@ function keyDown(e){
 	
 	var low_letter= letter.toLowerCase();
 			
-	if(letter=="Page up" && !editArea.isOpera){
+	if(letter=="Page up" && !AltPressed(e) && !editArea.isOpera){
 		editArea.execCommand("scroll_page", {"dir": "up", "shift": ShiftPressed(e)});
 		use=true;
-	}else if(letter=="Page down" && !editArea.isOpera){
+	}else if(letter=="Page down" && !AltPressed(e) && !editArea.isOpera){
 		editArea.execCommand("scroll_page", {"dir": "down", "shift": ShiftPressed(e)});
 		use=true;
 	}else if(editArea.is_editable==false){
@@ -43,7 +43,7 @@ function keyDown(e){
 			editArea.execCommand("tab_selection");
 		
 		use=true;
-		if(editArea.isOpera || (editArea.isFirefox && editArea.isMacOS) )	// opera && firefox mac can't cancel tabulation events...
+		if(editArea.isOpera || (editArea.isFirefox && editArea.isMac) )	// opera && firefox mac can't cancel tabulation events...
 			setTimeout("editArea.execCommand('focus');", 1);
 	}else if(letter=="Entrer" && target_id=="textarea"){
 		if(editArea.press_enter())

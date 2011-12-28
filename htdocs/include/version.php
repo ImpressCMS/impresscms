@@ -23,15 +23,15 @@ define('XOOPS_VERSION', ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define('ICMS_VERSION_STATUS', 1);
+define('ICMS_VERSION_STATUS', 10);
 
 /**
  * Build number
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-// impresscms_1.3.0 final = 50
-define('ICMS_VERSION_BUILD', 51);
+// impresscms_1.2.7 Final = 54
+define('ICMS_VERSION_BUILD', 55);
 
 /**
  * Latest dbversion of the System Module

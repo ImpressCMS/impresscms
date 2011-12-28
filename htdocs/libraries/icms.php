@@ -299,7 +299,7 @@ abstract class icms {
 			$http = strpos(ICMS_URL, "https://") === false
 				? "http://"
 				: "https://";
-			$phpself = $_SERVER['PHP_SELF'];
+			$phpself = $_SERVER['SCRIPT_NAME'];
 			$httphost = $_SERVER['HTTP_HOST'];
 			$querystring = $_SERVER['QUERY_STRING'];
 			if ($querystring != '' ) {

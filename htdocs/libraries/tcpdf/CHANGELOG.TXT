@@ -1,3 +1,27 @@
+5.9.141 (2011-12-14)
+	- Some minor bugs were fixed.
+
+5.9.140 (2011-12-13)
+	- SVG now supports embedded images encoded as base64.
+
+5.9.139 (2011-12-11)
+	- Spot color methods were fixed.
+
+5.9.138 (2011-12-10)
+	- cropMark() method was improved (check source code documentation).
+	- Example n. 56 was updated.
+	- Bug item #3452390 "Check Box still not ticked when set to true" was fixed.
+
+5.9.137 (2011-12-01)
+	- Bug item #3447005 "Background color and border of Form Elements is printed" was fixed.
+	- Color support for Form elements was improved.
+
+5.9.136 (2011-11-27)
+	- Bug item #3443387 "SetMargins with keep option does not work for top margin" was fixed.
+
+5.9.135 (2011-11-04)
+	- Bug item #3433406 "Double keywords in description" was fixed.
+
 5.9.134 (2011-10-29)
 	- The default value for $defcol parameter on convertHTMLColorToDec() method was fixed.
 	- Deafult HTTP headers were changed to avoid browser caching.

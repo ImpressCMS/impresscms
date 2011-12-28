@@ -58,7 +58,7 @@ $xoTheme->addStylesheet(ICMS_URL . '/icms' . (@_ADM_USE_RTL === TRUE?'_rtl':'') 
 $style_info = '';
 if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-		if (empty( $key ) )
+		if (empty($key))
 		continue;
 		if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
 			$xoTheme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', array('media' => 'screen'));

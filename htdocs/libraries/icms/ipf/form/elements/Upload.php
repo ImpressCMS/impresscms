@@ -22,7 +22,7 @@ class icms_ipf_form_elements_Upload extends icms_form_elements_File {
 	 */
 	public function __construct($object, $key) {
 		parent::__construct($object->vars[$key]['form_caption'], $key, isset($object->vars[$key]['form_maxfilesize']) ? $object->vars[$key]['form_maxfilesize'] : 0);
-		$this->setExtra(" size=50");
+		$this->setExtra(" size=30");
 	}
 
 	/**

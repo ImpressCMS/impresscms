@@ -36,7 +36,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 			$_SERVER['DOCUMENT_ROOT'] = str_replace( '\\', '/', substr($_SERVER['SCRIPT_FILENAME'], 0, 0-strlen($_SERVER['PHP_SELF'])));
 		} elseif(isset($_SERVER['PATH_TRANSLATED'])) {
 			$_SERVER['DOCUMENT_ROOT'] = str_replace( '\\', '/', substr(str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']), 0, 0-strlen($_SERVER['PHP_SELF'])));
-		} else {
+		}	else {
 			// define here your DOCUMENT_ROOT path if the previous fails (e.g. '/var/www')
 			$_SERVER['DOCUMENT_ROOT'] = '/';
 		}
@@ -81,17 +81,17 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * cache directory for temporary files (full path)
 	 */
-	define ('K_PATH_CACHE', K_PATH_MAIN.'cache/');
+	define ('K_PATH_CACHE', ICMS_CACHE_PATH . '/');
 
 	/**
 	 * cache directory for temporary files (url path)
 	 */
-	define ('K_PATH_URL_CACHE', K_PATH_URL.'cache/');
+	define ('K_PATH_URL_CACHE', ICMS_URL.'/cache/');
 
 	/**
 	 *images directory
 	 */
-	define ('K_PATH_IMAGES', K_PATH_MAIN.'images/');
+	define ('K_PATH_IMAGES', ICMS_ROOT_PATH.'/images/');
 
 	/**
 	 * blank image
@@ -131,7 +131,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * image logo
 	 */
-	define ('PDF_HEADER_LOGO', 'tcpdf_logo.jpg');
+	define ('PDF_HEADER_LOGO', 'logo.gif');
 
 	/**
 	 * header logo image width [mm]
@@ -176,7 +176,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * default main font name
 	 */
-	define ('PDF_FONT_NAME_MAIN', 'helvetica');
+	define ('PDF_FONT_NAME_MAIN', (@_PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')) ? _PDF_LOCAL_FONT : 'arialunicid0');
 
 	/**
 	 * default main font size
@@ -186,7 +186,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * default data font name
 	 */
-	define ('PDF_FONT_NAME_DATA', 'helvetica');
+	define ('PDF_FONT_NAME_DATA', (@_PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')) ? _PDF_LOCAL_FONT : 'arialunicid0');
 
 	/**
 	 * default data font size
