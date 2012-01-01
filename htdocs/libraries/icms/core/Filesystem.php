@@ -17,7 +17,8 @@
 /**
  * Perform filesystem actions
  */
-class icms_core_Filesystem {
+class
+icms_core_Filesystem {
 
 	/* Since all the methods are static, there is no __construct necessary	 */
 
@@ -297,6 +298,9 @@ class icms_core_Filesystem {
 	 *
 	 */
 	static public function validateChecksum() {
+        $rootdir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
+        $dir = new RecursiveDirectoryIterator($rootdir);
+        $checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_TRUST_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
 		$validationFile = new SplFileObject($checkfile);
 		if ($validationFile->isReadable()) {
 			$currentHash = $currentPerms = array();
