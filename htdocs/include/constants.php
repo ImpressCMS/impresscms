@@ -90,7 +90,7 @@ define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL . '/imagemanager');
 /**
  * @todo make this $icms_images_setname as an option in preferences...
  */
-$icms_images_setname = 'crystal';
+$icms_images_setname = 'kfaenza';
 define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
 
 /**#@+

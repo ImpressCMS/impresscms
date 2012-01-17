@@ -7,7 +7,7 @@ Build Version:
 
 === ImpressCMS 1.3.1 Final ===
 Release date: 21 December 2011
-Revision: 
+Revision: 11506
 DB Version: 41
 Build Version: 55
 

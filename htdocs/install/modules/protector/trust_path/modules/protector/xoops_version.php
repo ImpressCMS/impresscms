@@ -334,7 +334,7 @@ $modversion['config'][] = array(
 	'description'	=> $constpref.'_MANIPUCHECKDSC' ,
 	'formtype'		=> 'yesno' ,
 	'valuetype'		=> 'int' ,
-	'default'		=> 1 ,
+	'default'		=> 0 ,
 	'options'		=> array()
 ) ;
 $modversion['config'][] = array(
