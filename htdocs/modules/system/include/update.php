@@ -332,25 +332,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	if (!$abortUpdate) $newDbVersion = 42;
 
 	if ($dbVersion < $newDbVersion) {
-		/* remove banner remainings */
-		$table = new icms_db_legacy_updater_Table('banner');
-		if ($table->exists()) $table->dropTable();
-		unset($table);
-		$table = new icms_db_legacy_updater_Table('bannerclient');
-		if ($table->exists()) $table->dropTable();
-		unset($table);
-		$table = new icms_db_legacy_updater_Table('bannerfinish');
-		if ($table->exists()) $table->dropTable();
-		unset($table);
 		
-		$table = new icms_db_legacy_updater_Table('config');
-		$icmsDatabaseUpdater->runQuery("DELETE FROM `" . $table->name() . "` WHERE conf_modid = 0 AND conf_name IN ('banners', 'my_ip')");
-		unset($table);
-		
-		$table = new icms_db_legacy_updater_Table('config');
-		$icmsDatabaseUpdater->runQuery("DELETE FROM `" . $table->name() . "` WHERE page_url = 'modules/system/admin.php?fct=banners*'");
-		unset($table);
-
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
