@@ -33,11 +33,11 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Final",
-	'status'=> "Final",
+	'status_version'=> "Beta",
+	'status'=> "Beta",
 	'date'=> "",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_FINAL,
+	'warning'=>_CO_ICMS_WARNING_BETA,
 
 /** Contributors */
 	'developer_website_url' => "http://www.impresscms.org",
