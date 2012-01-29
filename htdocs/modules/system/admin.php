@@ -81,7 +81,9 @@ if ($admintest != 0) {
 				if (in_array(ICMS_GROUP_ADMIN, $groups) 
 					|| FALSE !== $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid'))
 				) {
-					if (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $fct . '/main.php')) {
+					if (file_exists(ICMS_MODULES_PATH . "/system/admin/" . $fct . ".php")) {
+						include_once ICMS_MODULES_PATH . "/system/admin/" . $fct . ".php";
+					} elseif (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $fct . '/main.php')) {
 						include_once ICMS_MODULES_PATH . '/system/admin/' . $fct . '/main.php';
 					} else {$error = TRUE;}
 				} else {$error = TRUE;}
