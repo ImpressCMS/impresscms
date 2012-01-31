@@ -88,8 +88,8 @@ if ($admintest != 0) {
 					} else {$error = TRUE;}
 				} else {$error = TRUE;}
 			} elseif ($fct == 'version') {
-				if (file_exists(ICMS_MODULES_PATH . '/system/admin/version/main.php')) {
-					include_once ICMS_MODULES_PATH . '/system/admin/version/main.php';
+				if (file_exists(ICMS_MODULES_PATH . '/system/admin/version.php')) {
+					include_once ICMS_MODULES_PATH . '/system/admin/version.php';
 				} else {$error = TRUE;}
 			} else {$error = TRUE;}
 		} else {$error = TRUE;}
