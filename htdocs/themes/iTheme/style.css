@@ -64,3 +64,17 @@ h6 {font-size:.8em;}
 
 /* ----------  mode debug  ---------- */
 #xo-logger-output {font-size:80%;}
+
+/* ----------  Tooltip box  ---------- */
+.caption-text img {float: right; padding-top: 2px;}
+span.helptext {position: absolute; right: 50px; z-index: 9000; background-color:#000; outline:1px solid #669; border:2px solid #fff; padding:10px 15px; width:200px; display:none; color:#fff; text-align:left; font-size:12px; font-weight:normal;
+/* outline radius for mozilla/firefox only */ 
+outline-radius:4px; 
+-moz-outline-radius:4px; 
+-webkit-outline-radius:4px;
+/* opacity for tooltip box */ 
+filter:alpha(opacity=70);
+-moz-opacity:0.75;
+-khtml-opacity: 0.75;
+opacity: 0.75;
+}

@@ -5,7 +5,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Object
+ * @package		Core
  * @version		SVN: $Id$
  */
 
@@ -16,7 +16,7 @@
  * data access mechanisms to the data source of its corresponsing data objects
  *
  * @category	ICMS
- * @package		Object
+ * @package		Core
  * @abstract
  * @author  Kazumi Ono <onokazu@xoops.org>
  */

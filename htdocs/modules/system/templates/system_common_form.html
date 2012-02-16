@@ -10,10 +10,13 @@
       <tr><td class="even" colspan="2">&nbsp;</td></tr>
       <{elseif $element.hidden != true}>
       <tr id="<{$element.name}>_row">
-        <td class="head"><label for='<{$element.name}>'><{$element.caption}> <{if $element.required}> <span style='color:#f00'>*</span><{/if}></label>
+        <td class="head">
+        <label for='<{$element.name}>'><{$element.caption}> <{if $element.required}> <span style='color:#f00'>*</span><{/if}>
         <{if $element.description}>
-        	<div style="font-weight: normal"><{$element.description}></div>
+        	<img class="helptip" style="float:<{$smarty.const._GLOBAL_RIGHT}>;padding-top: 2px;" title="<{$smarty.const._MD_AM_HELP_TIP}>" alt="<{$smarty.const._MD_AM_HELP_TIP}>" src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/acp_help.png" alt="<{$smarty.const._MD_AM_HELP_TIP}>">
+        	<span class="helptext" style="display: none;"><{$element.description}></span>
         <{/if}>
+        </label>
         </td>
         <td class="<{cycle values="even,odd"}>"><{$element.body}></td>
       </tr>

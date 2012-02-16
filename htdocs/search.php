@@ -12,12 +12,12 @@ $xoopsOption['pagetype'] = "search";
 
 include 'mainfile.php';
 
-if ($icmsConfigSearch['enable_search'] == false) {
+if ($icmsConfigSearch['enable_search'] == FALSE) {
 	header('Location: ' . ICMS_URL . '/index.php');
 	exit();
 }
 
-$search_limiter = (($icmsConfigSearch['enable_deep_search'] == true) ? $icmsConfigSearch['num_shallow_search'] : false);
+$search_limiter = (($icmsConfigSearch['enable_deep_search'] == FALSE) ? $icmsConfigSearch['num_shallow_search'] : FALSE);
 $xoopsOption['template_main'] = 'system_search.html';
 include ICMS_ROOT_PATH . '/header.php';
 
@@ -59,13 +59,13 @@ $groups = is_object(icms::$user) ? icms::$user->getGroups() : XOOPS_GROUP_ANONYM
 $gperm_handler = icms::handler('icms_member_groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
-$xoopsTpl->assign('basic_search', false);
+$xoopsTpl->assign('basic_search', FALSE);
 
 if ($action == 'search') {
 	// This area seems to handle the 'just display the advanced search page' part.
 	$search_form = include 'include/searchform.php';
 	$xoopsTpl->assign('search_form', $search_form);
-	$xoopsTpl->assign('basic_search', true);
+	$xoopsTpl->assign('basic_search', TRUE);
 	$xoopsTpl->assign('icms_pagetitle', _SEARCH);
 	include ICMS_ROOT_PATH . '/footer.php';
 	exit();
@@ -164,7 +164,7 @@ switch ($action) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hassearch', 1));
 		$criteria->add(new icms_db_criteria_Item('isactive', 1));
 		$criteria->add(new icms_db_criteria_Item('mid', "(" . implode(',', $available_modules) . ")", 'IN'));
-		$modules =& $module_handler->getObjects($criteria, true);
+		$modules =& $module_handler->getObjects($criteria, TRUE);
 		$mids = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
 		if (empty($mids) || !is_array($mids)) {
 			unset($mids);
@@ -213,7 +213,7 @@ switch ($action) {
 						}
 					}
 
-					if ($icmsConfigSearch['enable_deep_search'] == true) {
+					if ($icmsConfigSearch['enable_deep_search'] == FALSE) {
 						if ($count > $max_results_per_page) {
 							$search_url = ICMS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
 							$search_url .= "&mid=$mid&action=showall&andor=$andor";
@@ -253,8 +253,8 @@ switch ($action) {
 		$all_results_counts[$modname] = $count;
 		if (is_array($results) && $count > 0) {
 			(($count - $start) > $max_results_per_page)
-				? $num_show_this_page = $max_results_per_page
-				: $num_show_this_page = $count - $start;
+			? $num_show_this_page = $max_results_per_page
+			: $num_show_this_page = $count - $start;
 			for ($i = $start; $i < $start + $num_show_this_page; $i++) {
 				$results[$i]['processed_image_alt_text'] = icms_core_DataFilter::checkVar($modname, 'text', 'output') . ": ";
 				if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
@@ -297,8 +297,8 @@ switch ($action) {
 		}
 		break;
 
-		default:
-			break;
+	default:
+		break;
 }
 
 arsort($all_results_counts);

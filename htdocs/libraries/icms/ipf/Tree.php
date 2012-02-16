@@ -19,10 +19,9 @@ defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 /**
  *
  *
- *
- * @category
- * @package
- * @subpackage
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Tree
  *
  */
 class icms_ipf_Tree {

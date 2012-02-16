@@ -15,6 +15,7 @@
  *
  * @category	ICMS
  * @package		Core
+ * @subpackage  Password
  *
  */
 final class icms_core_Password {

@@ -1309,7 +1309,7 @@ class Smarty
 							$protection_type = intval($icmsConfigPersona['email_protect']);
 							if($protection_type == 1 && (function_exists ( 'gd_info' ))) {
 							$patterns [] = '/' . $email . '/';
-							$replacements [] = "<img src='" . ICMS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
+							$replacements [] = "<img style='vertical-align:middle;' class='email_protect' src='" . ICMS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
 							} // uses gd protection methode.
 							elseif($protection_type == 2 && function_exists ('mcrypt_encrypt') && isset($icmsConfigPersona['recprvkey']) && $icmsConfigPersona['recprvkey'] != '' && isset($icmsConfigPersona['recpubkey']) && $icmsConfigPersona['recpubkey'] != ''){
 							require_once ICMS_LIBRARIES_PATH.'/recaptcha/recaptchalib.php';
@@ -1354,7 +1354,7 @@ class Smarty
 							$protection_type = intval($icmsConfigPersona['email_protect']);
 							if($protection_type == 1 && (function_exists ( 'gd_info' ))) {
 							$patterns [] = '/' . $email . '/';
-							$replacements [] = "<img src='" . ICMS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
+							$replacements [] = "<img style='vertical-align:middle;' class='email_protect' src='" . ICMS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
 							} // uses gd protection methode.
 							elseif($protection_type == 2 && function_exists ('mcrypt_encrypt') && isset($icmsConfigPersona['recprvkey']) && $icmsConfigPersona['recprvkey'] != '' && isset($icmsConfigPersona['recpubkey']) && $icmsConfigPersona['recpubkey'] != ''){
 							require_once ICMS_LIBRARIES_PATH.'/recaptcha/recaptchalib.php';

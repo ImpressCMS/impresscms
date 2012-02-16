@@ -15,13 +15,13 @@ $font = ICMS_LIBRARIES_PATH . '/icms/form/elements/captcha/fonts/'.$icmsConfigPe
 // If you use TTF fontLength = 8
 // If you don't you may put 7 :-)
 $fontSize = (int) ($icmsConfigPersona['email_font_len']);
-$height = $fontSize*1.2+14; // height of image
+$height = $fontSize+7; // height of image
 $emailAddress = urldecode(base64_decode($_GET['p']));
 
 Header( "Content-type: image/png");
 
 $emailAddressLength = strlen($emailAddress);
-$width = $emailAddressLength * ($fontSize*1.00);
+$width = $emailAddressLength * ($fontSize-2.5);
 
 $image = imagecreate($width,$height);
 
@@ -59,9 +59,9 @@ ImageFilledRectangle($image,0,0,$width,$height,$white);
 
 // Add the text using TTF
 if ($icmsConfigPersona['email_shadow']!="") {
-	imagettftext($image, $fontSize, 0, (int) ($icmsConfigPersona['shadow_y']), $height- (int) ($icmsConfigPersona['shadow_x'])-10, $shadow , $font, $emailAddress);
+	imagettftext($image, $fontSize, 0, (int) ($icmsConfigPersona['shadow_y']), $height- (int) ($icmsConfigPersona['shadow_x'])-5, $shadow , $font, $emailAddress);
 }
-imagettftext($image, $fontSize, 0, 0, $height-10, $frente, $font, $emailAddress);
+imagettftext($image, $fontSize, 0, 0, $height-5, $frente, $font, $emailAddress);
 
 // If you don't want to use TTF fonts, and display default font uncomment line above
 

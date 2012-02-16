@@ -157,9 +157,7 @@ switch ($op) {
 			$oldpass = !empty($old_password) 
 				? icms_core_DataFilter::stripSlashesGPC(trim($old_password)) 
 				: '';
-		}
-	
-		if ($password !== '') {
+
 			$member_handler = icms::handler('icms_member');
 			$username = $member_handler->getUser($uid)->getVar('login_name');
 			if (!$member_handler->loginUser(addslashes($username), $oldpass)) {

@@ -3,7 +3,7 @@
  * Finds users
  *
  * limit: Only work with javascript enabled
- * TODO: plugins for external applications, including but not limited: sending massive emails/PMs, membership edit
+ * @todo: plugins for external applications, including but not limited: sending massive emails/PMs, membership edit
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -291,7 +291,7 @@ if (empty($_POST["user_submit"])) {
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
 		$criteria->setStart($start);
-		$foundusers = $user_handler->getUsersByGroupLink(@$_POST["groups"] ,$criteria);
+		$foundusers = $user_handler->getUsersByGroupLink(@$_POST["groups"], $criteria, TRUE);
 
 	} else {
 		$query = trim($_POST["query"]);

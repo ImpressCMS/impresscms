@@ -1,6 +1,7 @@
 <?php
 /**
  * Form control creating an hidden field for an object derived from icms_ipf_Object
+ * @todo		Remove the hardcoded height attribute, line breaks, styles
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -33,8 +34,11 @@ class icms_ipf_form_elements_Image extends icms_form_elements_Tray {
 
 		if ($object->getVar($key, 'e') != '' && (substr($object->getVar($key, 'e'), 0, 4) == 'http' || substr($object->getVar($key, 'e'), 0, 10) == '{ICMS_URL}')) {
 			$this->addElement(new icms_form_elements_Label('', "<img src='" . str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key, 'e')) . "' alt='' /><br/><br/>" ));
-		} elseif($object->getVar($key, 'e') != '') {
-			$this->addElement(new icms_form_elements_Label('', "<img src='" . $object_imageurl . $object->getVar($key, 'e') . "' alt='' /><br/><br/>" ));
+		} elseif ($object->getVar($key, 'e') != '') {
+			$this->addElement(new icms_form_elements_Label('', "<a rel='lightbox' title='" . $object_imageurl . $object->getVar($key, 'e') 
+				. "' href='" . $object_imageurl . $object->getVar($key, 'e') 
+				. "' ><img class='acp_object_imageurl' src='" . $object_imageurl . $object->getVar($key, 'e') 
+				. "' alt='" . $object_imageurl . $object->getVar($key, 'e') . "' height='150' /></a><br/><br/>" ));
 		}
 
 		$this->addElement(new icms_ipf_form_elements_Fileupload($object, $key));
