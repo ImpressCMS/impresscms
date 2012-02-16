@@ -11,25 +11,15 @@
 
 define('ICMS_IN_ADMIN', 1);
 
-include 'header.php';
+include_once "../../mainfile.php";
+include_once dirname(__FILE__) . '/include/common.php';
 
-$filter_post = array(
-    'uid' => 'int',
-);
-
-$filter_get = array(
-    'uid' => 'int',
-);
-
-if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
-    extract($clean_GET);
-}
-if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
-    extract($clean_POST);
-}
-
+$fct = (isset($_GET['fct']))
+	? trim(filter_input(INPUT_GET, 'fct'))
+	: ((isset($_POST['fct']))
+		? trim(filter_input(INPUT_POST, 'fct'))
+		: '');
+	
 if (isset($fct) && $fct == 'users') {
 	icms_loadLanguageFile('core', 'user');
 	// hook for profile module
@@ -44,7 +34,7 @@ if (isset($fct) && $fct == 'users') {
 	}
 }
 
-include ICMS_ROOT_PATH . '/include/cp_functions.php';
+include ICMS_INCLUDE_PATH . '/cp_functions.php';
 icms_loadLanguageFile('system', 'admin');
 icms_loadLanguageFile('core', 'moduleabout');
 
@@ -86,10 +76,6 @@ if ($admintest != 0) {
 					} elseif (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $fct . '/main.php')) {
 						include_once ICMS_MODULES_PATH . '/system/admin/' . $fct . '/main.php';
 					} else {$error = TRUE;}
-				} else {$error = TRUE;}
-			} elseif ($fct == 'version') {
-				if (file_exists(ICMS_MODULES_PATH . '/system/admin/version.php')) {
-					include_once ICMS_MODULES_PATH . '/system/admin/version.php';
 				} else {$error = TRUE;}
 			} else {$error = TRUE;}
 		} else {$error = TRUE;}
