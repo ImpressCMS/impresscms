@@ -4,6 +4,7 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @category	ICMS
  * @package		Administration
  * @subpackage	AdSense
  * @since		1.2
@@ -29,6 +30,7 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 	if (!$clone && !$adsenseObj->isNew()) {
 		$sform = $adsenseObj->getForm(_CO_ICMS_ADSENSES_EDIT, 'addadsense');
 		$sform->assign($icmsAdminTpl);
+		
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_EDIT_INFO);
 		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
 	} else {
@@ -36,6 +38,7 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 		$adsenseObj->setVar('tag', '');
 		$sform = $adsenseObj->getForm(_CO_ICMS_ADSENSES_CREATE, 'addadsense');
 		$sform->assign($icmsAdminTpl);
+
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_CREATE_INFO);
 		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
 	}
@@ -43,12 +46,12 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 
 switch ($op) {
 	case "mod":
-		$adsenseid = isset($_GET['adsenseid']) ? (int) $_GET['adsenseid'] : 0 ;
+		$adsenseid = isset($adsenseid) ? (int) $adsenseid : 0;
 		editadsense(TRUE, $adsenseid);
 		break;
 
 	case "clone":
-		$adsenseid = isset($_GET['adsenseid']) ? (int) $_GET['adsenseid'] : 0 ;
+		$adsenseid = isset($adsenseid) ? (int) $adsenseid : 0;
 		editadsense(TRUE, $adsenseid, TRUE);
 		break;
 
@@ -67,12 +70,15 @@ switch ($op) {
 		$objectTable = new icms_ipf_view_Table($icms_admin_handler);
 		$objectTable->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT));
 		$objectTable->addColumn(new icms_ipf_view_Column(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));
+
 		$objectTable->addIntroButton('addadsense', 'admin.php?fct=adsense&amp;op=mod', _CO_ICMS_ADSENSES_CREATE);
 		$objectTable->addQuickSearch(array('title', 'summary', 'description'));
 		$objectTable->addCustomAction('getCloneLink');
+		
 		$icmsAdminTpl->assign('icms_adsense_table', $objectTable->fetch());
 		$icmsAdminTpl->assign('icms_adsense_explain', TRUE);
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_DSC);
+		
 		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/adsense/system_adm_adsense.html');
 		break;
 }

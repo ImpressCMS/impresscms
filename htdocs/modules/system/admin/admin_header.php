@@ -2,7 +2,7 @@
 /**
  *
  *
- * @category	icms
+ * @category	ICMS
  * @package		Administration
  * @subpackage	System
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -19,15 +19,15 @@ if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmi
  * only include the things in cp_header not already included by admin.php - which is nothing!
  */
 
-$module_dir = basename(dirname(dirname(__FILE__))) . "/";
-include_once ICMS_MODULES_PATH . "/" . $module_dir . "include/common.php";
+$module_dir = basename(dirname(dirname(__FILE__)));
+include_once ICMS_MODULES_PATH . "/" . $module_dir . "/include/common.php";
 if (!defined("CPANEL_ADMIN_URL")) define("CPANEL_ADMIN_URL", CPANEL_URL . "admin/");
 
-icms_loadLanguageFile('system', 'common');
+icms_loadLanguageFile($module_dir, 'common');
 
 if ($fct !== "") {
-	$icms_admin_handler = icms_getModuleHandler($fct, "system");
-	icms_loadLanguageFile($fct, "system");
+	$icms_admin_handler = icms_getModuleHandler($fct, $module_dir);
+	icms_loadLanguageFile($module_dir, $fct, TRUE);
 }
 
 $filter_post = array(
