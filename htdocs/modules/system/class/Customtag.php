@@ -13,16 +13,16 @@
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
-define('ICMS_CUSTOMTAG_TYPE_XCODES', 1);
-define('ICMS_CUSTOMTAG_TYPE_HTML', 2);
-define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
+defined('ICMS_CUSTOMTAG_TYPE_XCODES') || define('ICMS_CUSTOMTAG_TYPE_XCODES', 1);
+defined('ICMS_CUSTOMTAG_TYPE_HTML') || define('ICMS_CUSTOMTAG_TYPE_HTML', 2);
+defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
 
 /**
  * Custom tags
  * @package		Administration
  * @subpackage	Custom Tags
  */
-class SystemCustomtag extends icms_ipf_Object {
+class mod_system_Customtag extends icms_ipf_Object {
 	public $content = FALSE;
 	public $evaluated = FALSE;
 
@@ -123,7 +123,7 @@ class SystemCustomtag extends icms_ipf_Object {
 	 * Generate link and graphic for cloning a custom tag
 	 */
 	public function getCloneLink() {
-		$ret = '<a href="' . ICMS_URL . '/modules/system/admin.php?fct=customtag&amp;op=clone&amp;customtagid=' . $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' . _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
+		$ret = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=customtag&amp;op=clone&amp;customtagid=' . $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' . _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
 		return $ret;
 	}
 
@@ -141,60 +141,5 @@ class SystemCustomtag extends icms_ipf_Object {
 	public function getCustomtagName() {
 		$ret = $this->getVar('name');
 		return $ret;
-	}
-}
-
-/**
- * Handler for the custom tag object
- */
-class SystemCustomtagHandler extends icms_ipf_Handler {
-	private $_objects = FALSE;
-
-	/**
-	 * Constructor
-	 * @param object $db
-	 */
-	public function __construct($db) {
-		parent::__construct($db, 'customtag', 'customtagid', 'name', 'description', 'system');
-		$this->addPermission('view_customtag', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC);
-	}
-
-	/**
-	 * Return an array of custom tag types
-	 */
-	public function getCustomtag_types() {
-		$ret = array(ICMS_CUSTOMTAG_TYPE_XCODES => 'BB-Codes', ICMS_CUSTOMTAG_TYPE_HTML => 'HTML', ICMS_CUSTOMTAG_TYPE_PHP => 'PHP');
-		return $ret;
-	}
-
-	/**
-	 * Return an array of custom tags, indexed by name
-	 */
-	public function getCustomtagsByName() {
-		if (!$this->_objects) {
-			global $icmsConfig;
-
-			$ret = array();
-
-			$criteria = new icms_db_criteria_Compo();
-
-			$criteria_language = new icms_db_criteria_Compo();
-			$criteria_language->add(new icms_db_criteria_Item('language', $icmsConfig['language']));
-			$criteria_language->add(new icms_db_criteria_Item('language', 'all'), 'OR');
-			$criteria->add($criteria_language);
-
-			$icms_permissions_handler = new icms_ipf_permission_Handler($this);
-			$granted_ids = $icms_permissions_handler->getGrantedItems('view_customtag');
-
-			if ($granted_ids && count($granted_ids) > 0) {
-				$criteria->add(new icms_db_criteria_Item('customtagid', '(' . implode(', ', $granted_ids) . ')', 'IN'));
-				$customtagsObj = $this->getObjects($criteria, TRUE);
-				foreach ($customtagsObj as $customtagObj) {
-					$ret[$customtagObj->getVar('name')] = $customtagObj;
-				}
-			}
-			$this->_objects = $ret;
-		}
-		return $this->_objects;
 	}
 }
