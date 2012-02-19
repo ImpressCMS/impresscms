@@ -16,7 +16,7 @@
  * @package		System
  * @subpackage	Ratings
  */
-class SystemRating extends icms_ipf_Object {
+class mod_system_Rating extends icms_ipf_Object {
 
 	/** */
 	public $_modulePlugin = FALSE;
