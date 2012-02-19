@@ -22,7 +22,7 @@ icms_loadLanguageFile("system", "userrank", TRUE);
  * @package		System
  * @subpackage	Users
  */
-class SystemUserrank extends icms_ipf_Object {
+class mod_system_Userrank extends icms_ipf_Object {
 
 	/** */
 	public $content = FALSE;
@@ -82,85 +82,5 @@ class SystemUserrank extends icms_ipf_Object {
 	public function getRankTitle() {
 		$ret = $this->getVar("rank_title");
 		return $ret;
-	}
-}
-
-/**
- * Handler for the user ranks object
- * 
- * @package		System
- * @subpackage	Users
- */
-class SystemUserrankHandler extends icms_ipf_Handler {
-	
-	/** */
-	public $objects = FALSE;
-
-	/**
-	 * Create a new instance of the handler
-	 * 
-	 * @param object $db
-	 */
-	public function __construct($db) {
-		global $icmsConfigUser;
-		parent::__construct($db, "userrank", "rank_id", "rank_title", "", "system");
-		$this->table = $this->db->prefix("ranks");
-		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/x-png", "image/png"), $icmsConfigUser["rank_maxsize"], $icmsConfigUser["rank_width"], $icmsConfigUser["rank_height"]);
-	}
-
-	/**
-	 * 
-	 * 
-	 * @param	int 	$rank_id
-	 * @param	int 	$posts
-	 * @return	array
-	 */
-	public function getRank($rank_id = 0, $posts = 0) {
-		$rank_id = (int) $rank_id;
-		$posts = (int) $posts;
-
-		$criteria = new icms_db_criteria_Compo();
-		if ($rank_id != 0) {
-			$criteria->add(new icms_db_criteria_Item("rank_id", $rank_id));
-		} else {
-			$criteria->add(new icms_db_criteria_Item("rank_min", $posts, "<="));
-			$criteria->add(new icms_db_criteria_Item("rank_max", $posts, ">="));
-			$criteria->add(new icms_db_criteria_Item("rank_special", "0"));
-		}
-
-		$ranks = $this->getObjects($criteria);
-		if (count($ranks) != 1) {
-			$rank = array(
-				"id" => 0,
-				"title" => "",
-				"image" => ICMS_UPLOAD_URL . "blank.gif");
-		} else {
-			$rank = array(
-				"id" => $rank_id,
-				"title" => $ranks[0]->getVar("rank_title"),
-				"image" => $this->getImageUrl() . $ranks[0]->getVar("rank_image"));
-		}
-
-		return $rank;
-	}
-
-	/**
-	 * Relocate images for ranks from previous location
-	 * @return	bool
-	 */
-	public function MoveAllRanksImagesToProperPath() {
-		$sql = "SELECT rank_image FROM " . $this->table;
-		$Query = $this->query($sql, FALSE);
-		for ($i = 0; $i < count($Query); $i++) {
-			$values[] = $Query[$i]["rank_image"];
-		}
-
-		foreach ($values as $value) {
-			if (file_exists(ICMS_UPLOAD_PATH . "/" . $value)) {
-				icms_core_Filesystem::copyRecursive(ICMS_UPLOAD_PATH . "/" . $value, $this->getImagePath() . $value);
-			}
-		}
-
-		return TRUE;
 	}
 }
