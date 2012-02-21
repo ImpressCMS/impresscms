@@ -30,11 +30,11 @@ if ($fct !== "") {
 	icms_loadLanguageFile($module_dir, $fct, TRUE);
 }
 
-$filter_post = array(
+$filter_post[] = array(
     'uid' => 'int',
 );
 
-$filter_get = array(
+$filter_get[] = array(
     'uid' => 'int',
 );
 
