@@ -39,7 +39,7 @@ function editblock($bid = 0, $clone = FALSE) {
 
 	$blockObj = $icms_admin_handler->get($bid);
 
-	if (isset($_POST['op']) && $_POST['op'] == 'changedField' && in_array($_POST['changedField'], array('c_type'))) {
+	if (isset($op) && $op == 'changedField' && in_array($changedField, array('c_type'))) {
 		$controller = new icms_ipf_Controller($icms_admin_handler);
 		$controller->postDataToObject($blockObj);
 	}
