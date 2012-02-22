@@ -25,11 +25,6 @@ if (!defined("CPANEL_ADMIN_URL")) define("CPANEL_ADMIN_URL", CPANEL_URL . "admin
 
 icms_loadLanguageFile($module_dir, 'common');
 
-if ($fct !== "") {
-	$icms_admin_handler = icms_getModuleHandler($fct, $module_dir);
-	icms_loadLanguageFile($module_dir, $fct, TRUE);
-}
-
 $filter_post[] = array(
     'uid' => 'int',
 );
@@ -38,7 +33,7 @@ $filter_get[] = array(
     'uid' => 'int',
 );
 
-$op = "";
+$fct = $op = "";
 
 if (!empty($_GET)) {
     $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
@@ -47,4 +42,9 @@ if (!empty($_GET)) {
 if (!empty($_POST)) {
     $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
     extract($clean_POST);
+}
+
+if ($fct !== "") {
+	$icms_admin_handler = icms_getModuleHandler($fct, $module_dir);
+	icms_loadLanguageFile($module_dir, $fct, TRUE);
 }

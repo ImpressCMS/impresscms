@@ -15,7 +15,6 @@
 
 /* set filters before including admin_header */
 $bid = 0;
-$op = "";
 
 $filter_get = array(
 	'bid' => 'int',
@@ -75,7 +74,6 @@ function editblock($bid = 0, $clone = FALSE) {
 	$icmsAdminTpl->assign('bid', $bid);
 	$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
 }
-
 
 /* Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
