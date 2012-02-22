@@ -11,16 +11,20 @@
  * @version		SVN: $Id$
  */
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-	exit("Access Denied");
-}
+/* set get and post filters before including admin_header */
+$filter_get = array('rating_id' => 'int');
+$filter_post = array('rating_id' => 'int');
+$rating_id = 0;
+$changedField = "";
+
+include "admin_header.php";
 
 function editrating($showmenu = FALSE, $ratingid = 0) {
-	global $icms_rating_handler, $icmsAdminTpl;
+	global $icms_admin_handler, $icmsAdminTpl;
 
 	icms_cp_header();
 
-	$ratingObj = $icms_rating_handler->get($ratingid);
+	$ratingObj = $icms_admin_handler->get($ratingid);
 
 	if (!$ratingObj->isNew()) {
 
@@ -32,12 +36,12 @@ function editrating($showmenu = FALSE, $ratingid = 0) {
 	} else {
 		$ratingObj->hideFieldFromForm(array('item', 'itemid', 'uid', 'date', 'rate'));
 
-		if (isset($_POST['op'])) {
-			$controller = new icms_ipf_Controller($icms_rating_handler);
+		if (isset($op)) {
+			$controller = new icms_ipf_Controller($icms_admin_handler);
 			$controller->postDataToObject($ratingObj);
 
-			if ($_POST['op'] == 'changedField') {
-				switch($_POST['changedField']) {
+			if ($op == 'changedField') {
+				switch($changedField) {
 					case 'dirname' :
 						$ratingObj->showFieldOnForm(array('item', 'itemid', 'uid', 'date', 'rate'));
 						break;
@@ -52,17 +56,6 @@ function editrating($showmenu = FALSE, $ratingid = 0) {
 		$icmsAdminTpl->display('db:admin/rating/system_adm_rating.html');
 	}
 }
-icms_loadLanguageFile('system', 'common');
-
-$icms_rating_handler = icms_getmodulehandler('rating');
-
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op'])) 
-	? trim(filter_input(INPUT_POST, 'op'))
-	: ((isset($_GET['op']))
-		? trim(filter_input(INPUT_GET, 'op'))
-		: '');
 
 switch ($op) {
 	/*	case "mod":
@@ -82,12 +75,12 @@ switch ($op) {
 		break;
 
 		case "addrating":
-		$controller = new icms_ipf_Controller($icms_rating_handler);
+		$controller = new icms_ipf_Controller($icms_admin_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_RATINGS_CREATED, _CO_ICMS_RATINGS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=rating');
 		break;
 		*/
 	case "del":
-		$controller = new icms_ipf_Controller($icms_rating_handler);
+		$controller = new icms_ipf_Controller($icms_admin_handler);
 		$controller->handleObjectDeletion();
 
 		break;
@@ -96,7 +89,7 @@ switch ($op) {
 
 		icms_cp_header();
 
-		$objectTable = new icms_ipf_view_Table($icms_rating_handler, false, array('delete'));
+		$objectTable = new icms_ipf_view_Table($icms_admin_handler, false, array('delete'));
 		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, false, 'getUnameValue'));
 		$objectTable->addColumn(new icms_ipf_view_Column('dirname', _GLOBAL_LEFT));
 		$objectTable->addColumn(new icms_ipf_view_Column('item', _GLOBAL_LEFT, false, 'getItemValue'));
