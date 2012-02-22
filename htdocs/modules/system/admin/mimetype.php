@@ -10,10 +10,12 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		SVN: $Id$
  */
+/* set post and get filters before including admin_header */
+$filter_get = array('mimetypeid' => 'int');
+$filter_post = array('mimetypeid' => 'int');
+$mimetypeid = 0;
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-	exit("Access Denied");
-}
+include 'admin_header.php';
 
 /**
  * Logic and rendering for mimetypes management
@@ -22,10 +24,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
  * @param int	$mimetypeid	Unique ID for mimetype entry
  */
 function editmimetype($showmenu = FALSE, $mimetypeid = 0) {
-	global $icms_mimetype_handler, $icmsAdminTpl;
+	global $icms_admin_handler, $icmsAdminTpl;
 
 	icms_cp_header();
-	$mimetypeObj = $icms_mimetype_handler->get($mimetypeid);
+	$mimetypeObj = $icms_admin_handler->get($mimetypeid);
 
 	if (!$mimetypeObj->isNew()) {
 		$sform = $mimetypeObj->getForm(_CO_ICMS_MIMETYPE_EDIT, 'addmimetype');
@@ -44,37 +46,30 @@ function editmimetype($showmenu = FALSE, $mimetypeid = 0) {
 		$icmsAdminTpl->display('db:admin/mimetype/system_adm_mimetype.html');
 	}
 }
-icms_loadLanguageFile('system', 'common');
-
-$icms_mimetype_handler = icms_getModuleHandler('mimetype');
-
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op')) : ((isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op')) : '');
 
 switch ($op) {
 	case "mod":
-		$mimetypeid = isset($_GET['mimetypeid']) ? (int) $_GET['mimetypeid'] : 0;
 		editmimetype(TRUE, $mimetypeid);
 		break;
 
 	case "addmimetype":
-		$controller = new icms_ipf_Controller($icms_mimetype_handler);
+		$controller = new icms_ipf_Controller($icms_admin_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_MIMETYPE_CREATED, _CO_ICMS_MIMETYPE_MODIFIED);
 		break;
 
 	case "del":
-		$controller = new icms_ipf_Controller($icms_mimetype_handler);
+		$controller = new icms_ipf_Controller($icms_admin_handler);
 		$controller->handleObjectDeletion();
 		break;
 
 	default:
 		icms_cp_header();
 
-		$objectTable = new icms_ipf_view_Table($icms_mimetype_handler);
+		$objectTable = new icms_ipf_view_Table($icms_admin_handler);
 		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, 150));
 		$objectTable->addColumn(new icms_ipf_view_Column('extension', _GLOBAL_LEFT, 150));
 		$objectTable->addColumn(new icms_ipf_view_Column('types', _GLOBAL_LEFT));
+
 		$objectTable->addIntroButton('addmimetype', 'admin.php?fct=mimetype&amp;op=mod', _CO_ICMS_MIMETYPE_CREATE);
 		$objectTable->addQuickSearch(array('name', 'extension', 'types'));
 
