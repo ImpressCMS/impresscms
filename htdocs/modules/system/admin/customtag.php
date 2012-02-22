@@ -10,9 +10,12 @@
  * @author		marcan <marcan@impresscms.org>
  * @version		SVN: $Id$
  */
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar("mid"))) {
-	exit("Access Denied");
-}
+/* set get and post filters before including admin_header */
+$filter_get = array('customtagid' => 'int');
+$filter_post = array('customtagid' => 'int');
+$customtagid = 0;
+
+include 'admin_header.php';
 
 /**
  * Generate the form for editing a custom tag
@@ -21,13 +24,13 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
  * @param $clone		are you cloning an existing custom tag?
  */
 function editcustomtag($customtagid = 0, $clone = FALSE) {
-	global $icms_customtag_handler, $icmsAdminTpl;
+	global $icms_admin_handler, $icmsAdminTpl;
 
 	icms_cp_header();
-	$customtagObj = $icms_customtag_handler->get($customtagid);
+	$customtagObj = $icms_admin_handler->get($customtagid);
 
-	if (isset($_POST["op"]) && $_POST["op"] == "changedField" && in_array($_POST["changedField"], array("customtag_type"))) {
-		$controller = new icms_ipf_Controller($icms_customtag_handler);
+	if (isset($op) && $op == "changedField" && in_array($changedField, array("customtag_type"))) {
+		$controller = new icms_ipf_Controller($icms_admin_handler);
 		$controller->postDataToObject($customtagObj);
 	}
 	switch ($customtagObj->getVar("customtag_type")) {
@@ -56,22 +59,15 @@ function editcustomtag($customtagid = 0, $clone = FALSE) {
 		$customtagObj->setVar("tag", "");
 
 		$sform = $customtagObj->getForm(_CO_ICMS_CUSTOMTAG_CREATE, "addcustomtag");
-		$sform->assign($icmsAdminTpl);
 
+		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->assign("icms_custom_tag_title", _CO_ICMS_CUSTOMTAG_CREATE_INFO);
+
 		$icmsAdminTpl->display("db:admin/customtag/system_adm_customtag.html");
 	}
 }
-icms_loadLanguageFile("system", "common");
 
-$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
-
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-
-$clean_op = "";
-if (isset($_GET["op"])) $clean_op = htmlentities($_GET["op"]);
-if (isset($_POST["op"])) $clean_op = htmlentities($_POST["op"]);
+$clean_op = $op;
 
 $valid_op = array ("mod", "changedField", "clone", "addcustomtag", "del", "");
 
@@ -79,33 +75,32 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case "mod":
 		case "changedField":
-			$customtagid = isset($_GET["customtagid"]) ? (int)$_GET["customtagid"] : 0;
 			editcustomtag($customtagid);
 			break;
 
 		case "clone":
-			$customtagid = isset($_GET["customtagid"]) ? (int)$_GET["customtagid"] : 0;
 			editcustomtag($customtagid, TRUE);
 			break;
 
 		case "addcustomtag":
-			$controller = new icms_ipf_Controller($icms_customtag_handler);
+			$controller = new icms_ipf_Controller($icms_admin_handler);
 			$controller->storeFromDefaultForm(_CO_ICMS_CUSTOMTAG_CREATED, _CO_ICMS_CUSTOMTAG_MODIFIED);
 			break;
 
 		case "del":
-			$controller = new icms_ipf_Controller($icms_customtag_handler);
+			$controller = new icms_ipf_Controller($icms_admin_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		default:
 			icms_cp_header();
+			$objectTable = new icms_ipf_view_Table($icms_admin_handler);
 
-			$objectTable = new icms_ipf_view_Table($icms_customtag_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("name", _GLOBAL_LEFT, 150, "getCustomtagName"));
 			$objectTable->addColumn(new icms_ipf_view_Column("description", _GLOBAL_LEFT));
 			$objectTable->addColumn(new icms_ipf_view_Column(_CO_ICMS_CUSTOMTAGS_TAG_CODE, "center", 200, "getXoopsCode"));
 			$objectTable->addColumn(new icms_ipf_view_Column("language", "center", 150));
+
 			$objectTable->addIntroButton("addcustomtag", "admin.php?fct=customtag&amp;op=mod", _CO_ICMS_CUSTOMTAG_CREATE);
 			$objectTable->addQuickSearch(array("title", "summary", "description"));
 			$objectTable->addCustomAction("getCloneLink");
@@ -113,6 +108,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icmsAdminTpl->assign("icms_customtag_table", $objectTable->fetch());
 			$icmsAdminTpl->assign("icms_custom_tag_explain", TRUE);
 			$icmsAdminTpl->assign("icms_custom_tag_title", _CO_ICMS_CUSTOMTAGS_DSC);
+
 			$icmsAdminTpl->display(ICMS_MODULES_PATH . "/system/templates/admin/customtag/system_adm_customtag.html");
 
 			break;
