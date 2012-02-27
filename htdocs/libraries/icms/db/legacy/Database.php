@@ -18,8 +18,8 @@ defined( 'ICMS_ROOT_PATH' ) or die();
 /**
  * Abstract base class for Database access classes
  *
- * @package database
- * @subpackage  main
+ * @package Database
+ * @subpackage  Legacy
  * @author		Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
  */
 abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {

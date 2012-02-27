@@ -529,8 +529,8 @@ CREATE TABLE users (
   enc_type tinyint(2) unsigned NOT NULL default '1',
   login_name varchar(255) NOT NULL default '',
   PRIMARY KEY  (uid),
-  KEY uname (uname),
-  UNIQUE KEY login_name (login_name)
+  KEY uname (uname(10)),
+  UNIQUE KEY login_name (login_name(10))
 );
 
 #

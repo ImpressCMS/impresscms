@@ -21,6 +21,8 @@ include 'mainfile.php';
  *	code
  */
 
+$filter_get = $filter_post = array('email' => array('email', 'options' => array(0, 0)));
+
 if (!empty($_GET)) {
     $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
     extract($clean_GET);
@@ -35,7 +37,7 @@ if ($email == '') {
 
 $member_handler = icms::handler('icms_member');
 $criteria = new icms_db_criteria_Compo();
-$criteria->add(new icms_db_criteria_Item('email', icms_core_DataFilter::addSlashes($email)));
+$criteria->add(new icms_db_criteria_Item('email',$email));
 $criteria->add(new icms_db_criteria_Item('level', '-1', '!='));
 $getuser =& $member_handler->getUsers($criteria);
 

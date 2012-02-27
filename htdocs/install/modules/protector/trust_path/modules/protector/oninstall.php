@@ -93,8 +93,18 @@ function protector_oninstall_base( $module , $mydirname )
 	/*
 	Fixes Bug #619 : parse Error
 	*/
-	if((defined(ICMS_PRELOAD_PATH) && !file_exists(ICMS_PRELOAD_PATH.'/protector.php')) && (! defined( 'PROTECTOR_POSTCHECK_INCLUDED' )||! defined( 'PROTECTOR_PRECHECK_INCLUDED' )) && function_exists('icms_copyr')){
-		icms_core_Filesystem::copyRecursive(ICMS_TRUST_PATH.'/modules/protector/patches/ImpressCMS1.1/preload_protector.php',ICMS_PRELOAD_PATH.'/protector.php');
+	if((defined('ICMS_PRELOAD_PATH') 
+		&& !file_exists(ICMS_PRELOAD_PATH.'/protector.php')) 
+		&& (!defined('PROTECTOR_POSTCHECK_INCLUDED') || !defined('PROTECTOR_PRECHECK_INCLUDED')) 
+	) {
+		if (icms_core_Filesystem::copyRecursive(
+			ICMS_TRUST_PATH.'/modules/protector/patches/ImpressCMS1.1/preload_protector.php',
+			ICMS_PRELOAD_PATH.'/protector.php')
+		) {
+			$ret[] = 'Successfully moved protector preload<br />';
+		} else {
+			$ret[] = icms_core_Message::error("Failed to move protector preload - your site is not protected.", "", FALSE);
+		}
 	}
 
 	icms_view_Tpl::template_clear_module_cache( $mid ) ;

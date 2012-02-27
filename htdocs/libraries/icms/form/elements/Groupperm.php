@@ -6,8 +6,9 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * @author Kazumi Ono <onokazu@myweb.ne.jp>
  * @copyright copyright (c) 2000-2003 XOOPS.org
- * @package kernel
- * @subpackage form
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
  */
 class icms_form_elements_Groupperm extends icms_form_Element {
 	/**

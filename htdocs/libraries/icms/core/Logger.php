@@ -11,7 +11,7 @@
  * @since		XOOPS
  * @category	ICMS
  * @package		Core
- * @subpackage	icms_core_Logger
+ * @subpackage	Logger
  * @version		$Id$
  */
 

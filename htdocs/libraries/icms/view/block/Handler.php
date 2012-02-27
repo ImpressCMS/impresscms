@@ -5,7 +5,8 @@
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
  * @category	ICMS
- * @package		Block
+ * @package		View
+ * @subpackage	Block
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @version		SVN: $Id$
  */
@@ -18,7 +19,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @copyright	The ImpressCMS Project <http://www.impresscms.org>
  * @license		GNU GPL v2
  * @category	ICMS
- * @package		Block
+ * @package		View
+ * @subpackage	Block
  * @since		ImpressCMS 1.2
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */

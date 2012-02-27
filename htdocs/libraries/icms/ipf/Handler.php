@@ -9,7 +9,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
  * @package		Ipf
- * @subpackage	Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
@@ -24,7 +23,6 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * Persistable Object Handlder
  * @category	ICMS
  * @package		Ipf
- * @subpackage	Object
  * @since		1.1
  * @todo		Properly name the vars using the naming conventions
  */

@@ -18,8 +18,8 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Generates META tags
  * @category	ICMS
- * @package		ipf_Metagen
- * @todo		Properly set visibility of variables - in version 1.4
+ * @package		Ipf
+ * @todo		Properly set visibility of variables - in version 2.0
  */
 class icms_ipf_Metagen {
 	/** @var object */

@@ -5,6 +5,7 @@
  *
  * @category	ICMS
  * @package		Core
+ * @subpackage  Filters
  * @since		1.3
  * @author		vaughan montgomery (vaughan@impresscms.org)
  * @author		ImpressCMS Project

@@ -34,12 +34,19 @@ icms::boot();
 if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli') {
 	$icmsConfig['gzip_compression'] = 0;
 }
+
 if ($icmsConfig['gzip_compression'] == 1
-	&& extension_loaded('zlib') && !ini_get('zlib.output_compression')) {
-	if (@ini_get('zlib.output_compression_level') < 0) {
-		ini_set('zlib.output_compression_level', 6);
-	}
-	ob_start('ob_gzhandler');
+	&& extension_loaded('zlib')
+	&& !ini_get('zlib.output_compression')
+	) {
+		ini_set('zlib.output_compression', TRUE);
+		if (ini_get( 'zlib.output_compression_level') < 0 ) {
+			ini_set( 'zlib.output_compression_level', 6 );
+		}
+		if (!zlib_get_coding_type()) {
+			ini_set('zlib.output_compression', FALSE);
+			ob_start('ob_gzhandler');
+		}
 }
 
 // Include openid common functions if needed

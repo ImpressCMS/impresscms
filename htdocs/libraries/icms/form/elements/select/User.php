@@ -37,7 +37,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 	 * @param	int		$size			Number or rows. "1" makes a drop-down-list.
 	 * @param	bool	$multiple	   Allow multiple selections?
 	 */
-	public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false, $showremovedusers = false, $justremovedusers = false) {
+	public function __construct($caption, $name, $include_anon = FALSE, $value = NULL, $size = 1, $multiple = FALSE, $showremovedusers = FALSE, $justremovedusers = FALSE) {
 		$limit = 200;
 		$select_element = new icms_form_elements_Select('', $name, $value, $size, $multiple);
 		if ($include_anon) {
@@ -45,9 +45,12 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		}
 		$member_handler = icms::handler('icms_member');
 		$user_count = $member_handler->getUserCount();
-		$value = is_array($value) ? $value : (empty ($value) ? array () : array (
-			$value
-		));
+		$value = is_array($value) 
+			? $value 
+			: (empty ($value) 
+				? array () 
+				: array ($value)
+			);
 		if ($user_count > $limit && count($value) > 0) {
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("uid", "(" . implode(",", $value) . ")", "IN"));
 		} else {
@@ -102,8 +105,14 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 
 		$token = icms::$security->createToken();
 		$action_tray = new icms_form_elements_Tray("", " | ");
-		$action_tray->addElement(new icms_form_elements_Label('', "<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name . ($multiple ? "[]" : "") . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>" . _MA_USER_REMOVE . "</a>"));
-		$action_tray->addElement(new icms_form_elements_Label('', "<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL . "/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >" . _MA_USER_MORE . "</a>" . $js_addusers));
+		$action_tray->addElement(new icms_form_elements_Label('',
+			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name 
+			. ($multiple ? "[]" : "") . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"
+			. _MA_USER_REMOVE . "</a>"));
+		$action_tray->addElement(new icms_form_elements_Label('',
+			"<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL 
+			. "/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"
+			. _MA_USER_MORE . "</a>" . $js_addusers));
 
 		parent::__construct($caption, '<br /><br />', $name);
 		$this->addElement($select_element);

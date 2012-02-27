@@ -690,4 +690,6 @@ define('_MD_AM_CENSOR_DSC', 'Manage the language that is not permitted on your s
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM","Allow Custom Filters");
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","Allow Custom Filters?<br /><br />if enabled this will allow you to use custom filters located in;<br />'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
 
+// added in 1.3.2
+define("_MD_AM_HELP_TIP","View help text");
 ?>
