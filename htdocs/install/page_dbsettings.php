@@ -65,10 +65,16 @@ function getDbCharsets($link) {
 	return $charsets;
 }
 
+/**
+ * Get a list of collations supported by the database engine
+ * @param 	database connection $link
+ * @param 	string $charset
+ * @return	array	Character sets supported by the db, as strings
+ */
 function getDbCollations($link, $charset) {
 	static $collations = array ( );
 
-	if ($result = mysql_query ( "SHOW COLLATION LIKE '" . mysql_real_escape_string ( $charset ) . "%'", $link )) {
+	if ($result = mysql_query("SHOW COLLATION WHERE Charset='" . mysql_real_escape_string($charset) . "'", $link)) {
 		while ($row = mysql_fetch_assoc ( $result )) {
 			$collations [$charset] [$row ["Collation"]] = $row ["Default"] ? 1 : 0;
 		}
@@ -176,11 +182,34 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && ! empty ( $vars ['DB_NAME'] )) {
 		} else {
 			$db_exist = true;
 		}
-		if ($db_exist && $vars ['DB_CHARSET']) {
+		if ($db_exist && $vars['DB_CHARSET']) {
+			/* Attempt to set the character set and collation to the selected */
 			$sql = "ALTER DATABASE `" . $vars ['DB_NAME'] . "` DEFAULT CHARACTER SET " . mysql_real_escape_string ( $vars ['DB_CHARSET'] ) . ($vars ['DB_COLLATION'] ? " COLLATE " . mysql_real_escape_string ( $vars ['DB_COLLATION'] ) : "");
-			if (! mysql_query ( $sql )) {
-				$error = ERR_CHARSET_NOT_SET .'<br />'. $sql;
-			}
+			if (!mysql_query($sql)) {
+				/* if the alter statement fails, set the constants to match existing */
+				$sql = "USE " . mysql_real_escape_string($vars["DB_NAME"]);
+				$result = mysql_query($sql);
+				
+				/* get the character set variables for the current database */
+				$sql = "SHOW VARIABLES like 'character%'";
+				$result = mysql_query($sql); 
+				while ($row = mysql_fetch_assoc($result)) {
+					$character_sets[$row["Variable_name"]] = $row["Value"];
+				}
+				$vars["DB_CHARSET"] = $character_sets["character_set_database"]
+					? $character_sets["character_set_database"]
+					: $character_sets["character_set_server"];
+				
+				/* get the collation for the current database */
+				$sql = "SHOW VARIABLES LIKE 'collation%'";
+				$result = mysql_query($sql);
+				while ($row = mysql_fetch_assoc($result)) {
+					$collations[$row["Variable_name"]] = $row["Value"];
+				}
+				$vars["DB_COLLATION"] = $collations["collation_database"] 
+					? $collations["collation_database"]
+					: $collations["collation_server"];
+			} 
 		}
 	}
 	if (empty ( $error )) {

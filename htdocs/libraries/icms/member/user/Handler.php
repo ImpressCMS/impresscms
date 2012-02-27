@@ -408,7 +408,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				$fullname2 = $user->getVar('name');
 				if (($name) && !empty($fullname2)) $fullname = $user->getVar('name');
 				if (!empty($fullname)) $linkeduser = $fullname . "[";
-				$linkeduser .= "<a href='" . ICMS_URL . "/userinfo.php?uid=" . $uid . "'>";
+                $linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $uid . '">';
 				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username) . "</a>";
 				if (!empty($fullname)) $linkeduser .= "]";
 

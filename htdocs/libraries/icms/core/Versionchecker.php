@@ -31,7 +31,7 @@ class icms_core_Versionchecker {
 	 * URL of the XML containing version information
 	 * @public $version_xml string
 	 */
-	public $version_xml = "http://www.impresscms.org/impresscms_version.xml";
+	public $version_xml = "http://www.impresscms.org/impresscms_version_branch13.xml";
 
 	/*
 	 * Time before fetching the $version_xml again and store it in $cache_version_xml
