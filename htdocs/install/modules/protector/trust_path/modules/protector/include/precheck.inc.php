@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/precheck_functions.php' ;
 
-if(in_array('Database', get_declared_classes()) ) {
+if(in_array('icms_db_legacy_Factory', get_declared_classes()) ) {
 	require dirname(__FILE__).'/postcheck.inc.php' ;
 	return ;
 }
@@ -22,5 +22,3 @@ if ( empty( $_SERVER[ 'REQUEST_URI' ] ) ) {		 // Not defined by IIS
 }
 
 protector_prepare() ;
-
-?>
