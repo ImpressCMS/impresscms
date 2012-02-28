@@ -123,7 +123,7 @@ foreach( $num_array as $n ) {
 }
 
 // beggining of Output
-xoops_cp_header();
+icms_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 
 // title
@@ -268,7 +268,7 @@ echo "
 </td></tr></table>
 " ;
 
-xoops_cp_footer();
+icms_cp_footer();
 
 
 function protector_ip_cmp( $a , $b )
@@ -280,5 +280,3 @@ function protector_ip_cmp( $a , $b )
 
 	return $aval > $bval ? 1 : -1 ;
 }
-
-?>
