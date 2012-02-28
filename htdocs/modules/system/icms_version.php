@@ -14,7 +14,7 @@
 
 defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 
-/**  General Information  */
+/*  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
 	'version'=> 2.0,
@@ -27,19 +27,19 @@ $modversion = array(
 	'dirname'=> basename(dirname(__FILE__ )),
 	'modname' => 'system',
 
-/**  Images information  */
+/*  Images information  */
 	'iconsmall'=> "images/icon_small.png",
 	'iconbig'=> "images/system_big.png",
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
-/**  Development information */
-	'status_version'=> "Final",
-	'status'=> "Final",
+/*  Development information */
+	'status_version'=> "Alpha",
+	'status'=> "Alpha",
 	'date'=> "",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_FINAL,
+	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
-/** Contributors */
+/* Contributors */
 	'developer_website_url' => "http://www.impresscms.org",
 	'developer_website_name' => "ImpressCMS Core & Module developers",
 	'developer_email' => "contact@impresscms.org" );
@@ -65,24 +65,28 @@ $modversion['autotasks'][] = array(
 	'interval' => 1
 );
 
-/** Manual */
-$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Extended_Profile/"._LANGCODE."' target='_blank'>"._LANGNAME."</a>";
+/* Manual */
+$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/modules/wiki/index.php?page=System/" . _LANGCODE . "' target='_blank'>" . _MI_SYSTEM_NAME . "</a>";
 
-/** Administrative information */
+/* Administrative information */
 $modversion['hasAdmin'] = TRUE;
 $modversion['adminindex'] = "admin.php";
 $modversion['adminmenu'] = "menu.php";
 
-/** Install and update informations */
+/* Database information */
+$modversion['object_items'] = array();
+//$modversion['tables']  = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
+
+/* Install and update informations */
 $modversion['onUpdate'] = "include/update.php";
 
-/** Search information */
+/* Search information */
 $modversion['hasSearch'] = FALSE;
 
-/** Menu information */
+/* Menu information */
 $modversion['hasMain'] = FALSE;
 
-/** Blocks information */
+/* Blocks information */
 $modversion['blocks'][1] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME2,
@@ -249,7 +253,7 @@ $modversion['blocks'][] = array(
 	'template' => 'system_admin_block_cp_new.html'
 	);
 
-/** Templates information */
+/* Templates information */
 $modversion['templates'][1] = array(
 	'file' => 'system_imagemanager.html',
 	'description' => '');
