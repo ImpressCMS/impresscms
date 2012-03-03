@@ -33,6 +33,8 @@ if (!$allowed) {
 	$themeFactory->defaultTheme = $icmsConfig['theme_set'];
 	$icmsTheme =& $themeFactory->createInstance(array("plugins" => array()));
 	$icmsTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
+	/** @todo	Remove icms.css in 2.0 */
+	icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
 	$icmsTheme->addStylesheet(ICMS_URL . "/icms" 
 		. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? "_rtl" : "") . ".css", array("media" => "screen"));
 	$icmsTpl =& $icmsTheme->template;

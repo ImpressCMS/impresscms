@@ -50,6 +50,7 @@ class TextSanitizer
 		return preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text);
 	}
 
+	/** @todo	get_magic_quotes_gpc is removed in PHP 5.4 */
 	function &addSlashes($text, $force=false)
 	{
 		if ($force) {
@@ -63,6 +64,7 @@ class TextSanitizer
 
 	/*
 	 * if magic_quotes_gpc is on, stirip back slashes
+	 * @todo	get_magic_quotes_gpc is removed in PHP 5.4
 	 */
 	function &stripSlashesGPC($text)
 	{
@@ -212,6 +214,7 @@ class TextSanitizer
 		return $this->stripSlashesGPC($text);
 	}
 
+	/** @todo	get_magic_quotes_runtime is deprecated in PHP 5.4 and will always return FALSE */
 	function &oopsStripSlashesRT($text)
 	{
 		if (get_magic_quotes_runtime()) {

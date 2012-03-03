@@ -121,6 +121,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
+	 * @todo 	Remove magic_quotes_gpc and magic_quotes_runtime - 
+	 * 			they will always return FALSE in PHP 5.4
 	 *
 	 * Add slashes to the text if magic_quotes_gpc is turned off.
 	 *

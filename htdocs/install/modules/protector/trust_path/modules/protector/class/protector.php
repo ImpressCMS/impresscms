@@ -1,4 +1,5 @@
 <?php
+/** @todo	Remove get_magic_quotes_gpc - they are deprecated in PHP 5.4 and will always return FALSE */
 
 class Protector {
 

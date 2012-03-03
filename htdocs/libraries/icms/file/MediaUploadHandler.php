@@ -187,6 +187,7 @@ class icms_file_MediaUploadHandler {
 
 	/**
 	 * Fetch the uploaded file
+	 * @todo	Remote get_magic_quotes_gpd - is is deprecated and will always return FALSE in PHP 5.4
 	 * @param   string  $media_name Name of the file field
 	 * @param   int     $index      Index of the file (if more than one uploaded under that name)
 	 * @return  bool

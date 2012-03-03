@@ -98,7 +98,8 @@ function icms_cp_header(){
 						}
 					}
 					window.onload=startList;');
-
+	/** @todo	Remove icms.css in 2.0 */
+	icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
 	$xoTheme->addStylesheet(ICMS_URL . '/icms' . (( defined('_ADM_USE_RTL') && _ADM_USE_RTL ) ? '_rtl' : '') . '.css', array('media' => 'screen'));
 
 	// JQuery UI Dialog

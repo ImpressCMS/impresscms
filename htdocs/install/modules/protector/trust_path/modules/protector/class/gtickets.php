@@ -1,6 +1,7 @@
 <?php
 // GIJOE's Ticket Class (based on Marijuana's Oreteki XOOPS)
 // nobunobu's suggestions are applied
+/** @todo replace get_magic_quotes_gpc - it is deprecated in PHP 5.4 and will always return FALSE */
 
 if( ! class_exists( 'XoopsGTicket' ) ) {
 
