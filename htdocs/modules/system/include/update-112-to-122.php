@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-	if ($dbVersion < 12) include 'update-to-112.php';
+	if ($dbVersion < 11) include 'update-to-112.php';
 
 	/*
 	 * These are updates to the database that occured between 1.1.2 and 1.2.2

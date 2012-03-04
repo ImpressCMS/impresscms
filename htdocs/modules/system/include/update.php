@@ -69,10 +69,10 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 	$CleanWritingFolders = FALSE;
 
-	if ($dbVersion < 41) include 'update-122-to-13.php';
+	if ($dbVersion < 42) include 'update-122-to-13.php';
 		
 /*  Begin upgrade to version 2.0 */
-	if (!$abortUpdate) $newDbVersion = 42;
+	if (!$abortUpdate) $newDbVersion = 43;
 	
 	/*
 	 * The update for this version will need to convert the system module to an IPF module
