@@ -113,6 +113,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 **/
 	protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+        
+        $IframeRegExp = str_ireplace( 'http://', '', $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] );
 
 		$icmsPurifierConf = array(
             'HTML.DefinitionID' => $icmsConfigPurifier['purifier_HTML_DefinitionID'],
@@ -163,7 +165,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
             'URI.DefinitionID' => $icmsConfigPurifier['purifier_URI_DefinitionID'],
             'URI.DefinitionRev' => $icmsConfigPurifier['purifier_URI_DefinitionRev'],
             'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
-            'URI.SafeIframeRegexp' => $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'],
+            'URI.SafeIframeRegexp' => '%^http://(' . $IframeRegExp . ')%',
             'Attr.AllowedFrameTargets' => $icmsConfigPurifier['purifier_Attr_AllowedFrameTargets'],
             'Attr.AllowedRel' => $icmsConfigPurifier['purifier_Attr_AllowedRel'],
             'Attr.AllowedClasses' => $icmsConfigPurifier['purifier_Attr_AllowedClasses'],

@@ -693,15 +693,13 @@ define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","Allow Custom Filters?<br /><br /
 // added in 1.3.2
 define("_MD_AM_HELP_TIP","View help text");
 
+// added in 1.3.3
 define("_MD_AM_PURIFIER_HTML_SAFEIFRAME","Enable Safe Iframes");
 define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC","Whether or not to permit Iframes in documents, with a number of extra security features added to prevent script execution. You must define a Regex pattern with Safe Iframe RegEXP before enabling!.");
-define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP","Safe Iframes RegEXP");
-define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC","A PCRE regular expression that will be matched against an iframe URI. This is a relatively inflexible scheme, but works well enough for the most common use-case of iframes: embedded video.<br /><br />
-    Here are some example values:<br /><br />
-
-    %^http://www.youtube.com/embed/% - Allow YouTube videos<br />
-    %^http://player.vimeo.com/video/% - Allow Vimeo videos<br />
-    %^http://(www.youtube.com/embed/|player.vimeo.com/video/)% - Allow both<br /><br />
-.<br /><br />HTML Safe Iframe must be enabled for this to work.");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP","Safe Iframe Domain(s)");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC","Enter the domains that are allowed in Iframes. Seperate with pipe char. |.<br /><br />
+    Example:<br /><br />
+    www.youtube.com/embed/|player.vimeo.com/video/<br /><br />
+    HTML Safe Iframe must be enabled for this to work.");
 
 ?>
