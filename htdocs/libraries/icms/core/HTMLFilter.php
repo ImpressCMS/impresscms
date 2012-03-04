@@ -114,8 +114,17 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
         
-        $IframeRegExp = str_ireplace( 'http://', '', $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] );
-
+        $IframeRegExp = '';
+        if ( $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] !== '' ) {
+            $IframeRegExp = str_ireplace( 'http://', '', $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] );
+            $pos = strpos( $IframeRegExp, '|' );
+            if ( $pos === false ) {
+                $IframeRegExp = '%^http://' . $IframeRegExp . '%';
+            } else {
+                $IframeRegExp = '%^http://(' . $IframeRegExp . ')%';
+            }
+        }
+ 
 		$icmsPurifierConf = array(
             'HTML.DefinitionID' => $icmsConfigPurifier['purifier_HTML_DefinitionID'],
             'HTML.DefinitionRev' => $icmsConfigPurifier['purifier_HTML_DefinitionRev'],
@@ -165,7 +174,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
             'URI.DefinitionID' => $icmsConfigPurifier['purifier_URI_DefinitionID'],
             'URI.DefinitionRev' => $icmsConfigPurifier['purifier_URI_DefinitionRev'],
             'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
-            'URI.SafeIframeRegexp' => '%^http://(' . $IframeRegExp . ')%',
+            'URI.SafeIframeRegexp' => $IframeRegExp,
             'Attr.AllowedFrameTargets' => $icmsConfigPurifier['purifier_Attr_AllowedFrameTargets'],
             'Attr.AllowedRel' => $icmsConfigPurifier['purifier_Attr_AllowedRel'],
             'Attr.AllowedClasses' => $icmsConfigPurifier['purifier_Attr_AllowedClasses'],
