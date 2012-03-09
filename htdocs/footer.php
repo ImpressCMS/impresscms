@@ -78,7 +78,9 @@ if (isset($xoopsOption['theme_use_smarty']) && $xoopsOption['theme_use_smarty'] 
 			$xoTheme->contentTemplate = $xoopsOption['template_main'];
 		}
 	}
-	$xoTheme->render();
+	/* check if the module is cached and retrieve it, otherwise, render the page */
+	if (!$xoTheme->checkCache()) {
+		$xoTheme->render();
+	}
 }
 icms::$logger->stopTime();
-

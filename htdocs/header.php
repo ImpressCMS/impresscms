@@ -83,7 +83,7 @@ if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/jquery.js', array('type' => 'text/javascript'));
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_URL . '/libraries/jquery/helptip.js', array( 'type' => 'text/javascript'));
+$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/helptip.js', array( 'type' => 'text/javascript'));
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css', array('media' => 'screen'));
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/jgrowl'
 	. (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'') . '.css', array('media' => 'screen'));
@@ -131,16 +131,6 @@ if (@is_object($xoTheme->plugins['icms_view_PageBuilder'])) {
 
 if ($icmsModule )
 $xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$icmsModule->getVar('mid', 'n')];
-
-if ($xoTheme->checkCache()) exit();
-
-if (!isset($xoopsOption['template_main']) && $icmsModule) {
-	// new themes using Smarty does not have old functions that are required in old modules, so include them now
-	include ICMS_INCLUDE_PATH . '/old_theme_functions.php';
-	// Need this also
-	$xoopsTheme['thename'] = $icmsConfig['theme_set'];
-	ob_start();
-}
 
 // Assigning the selected language as a smarty var
 $xoopsTpl->assign('icmsLang', $icmsConfig['language']);

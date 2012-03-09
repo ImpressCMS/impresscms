@@ -45,3 +45,7 @@ define("_DATABASEUPDATER_MSG_DROPFIELD", 'Successfully dropped field %1$s from t
 // Added in 1.2.7/1.3.1
 define("_DATABASEUPDATER_MSG_DROP_TABLE", "Successfully dropped database table %s");
 define("_DATABASEUPDATER_MSG_DROP_TABLE_ERR", "Error dropping database table %s");
+
+// Added in 1.3.2
+define("_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL", "Query successful: %s");
+define("_DATABASEUPDATER_MSG_QUERY_FAILED", "Query failed: %s");
