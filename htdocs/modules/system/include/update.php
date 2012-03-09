@@ -99,7 +99,34 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}
+	
+	
+	if (!$abortUpdate) $newDbVersion = 42;
+	/* 1.3.2 release - HTML Purifier 4.4.0 update */
+	
+	if ($dbVersion < $newDbVersion) {
+		/* New HTML Purifier options -
+		 * purifier_URI_SafeIframeRegexp. after purifier_URI_AllowedSchemes
+		 * purifier_HTML_SafeIframe, after purifier_HTML_SafeObject
+		 */
+		$table = new icms_db_legacy_updater_Table("config");
+		
+		// retrieve the value of the position before the config to be inserted. 
+		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_URI_AllowedSchemes")));
+		$p = $configs[0]->getVar('conf_order') + 1;
 
+		//move all the other options down
+		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_SafeIframeRegexp', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP', '', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC', 'textsarea', 'array', $p);
+
+		// retrieve the value of the position before the config to be inserted. 
+		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_HTML_SafeObject")));
+		$p = $configs[0]->getVar('conf_order') + 1;
+		//move all the other options down
+		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_SafeIframe', '_MD_AM_PURIFIER_HTML_SAFEIFRAME', '0', '_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC', 'yesno', 'int', $p);		
+	}
+	
 /*
  * This portion of the upgrade must remain as the last section of code to execute
  * Place all release upgrade steps above this point
