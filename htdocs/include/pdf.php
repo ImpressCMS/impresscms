@@ -37,7 +37,7 @@ function Generate_PDF ($content, $doc_title, $doc_keywords) {
 	$sitename = $icmsConfig['sitename'];
 	$siteslogan = $icmsConfig['slogan'];
 	$pdfheader = icms_core_DataFilter::undoHtmlSpecialChars($sitename.' - '.$siteslogan);
-	$pdf->SetHeaderData("logo.gif", PDF_HEADER_LOGO_WIDTH, $pdfheader, ICMS_URL);
+	$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $pdfheader, ICMS_URL);
 
 	//set margins
 	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);

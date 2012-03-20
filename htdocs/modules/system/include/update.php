@@ -99,7 +99,9 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}
+	
 
+	
 /*
  * This portion of the upgrade must remain as the last section of code to execute
  * Place all release upgrade steps above this point

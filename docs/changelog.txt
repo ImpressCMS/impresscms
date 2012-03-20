@@ -5,6 +5,29 @@ Revision:
 DB Version:
 Build Version: 
 
+=== ImpressCMS 1.3.2 RC ===
+Release date: March 2012
+Revision: 
+DB Version: 42
+Build Version: 57
+
+=== ImpressCMS 1.3.2 Beta ===
+Release date: March 2012
+Revision: 
+DB Version: 42
+Build Version: 56
+
+Improved
+* HTML Purifier updated to 4.4.0
+* SimplePie updated to 1.2.1
+
+Fixed
+* Fixes in lost password and find user
+* Database collation properly selected with newer versions of MySQL
+* Search results
+
+Details of this release are found on Assembla - http://impresscmsdev.assembla.com/spaces/impresscms/milestones/671493-impresscms-1-3-2
+
 === ImpressCMS 1.3.1 Final ===
 Release date: 21 December 2011
 Revision: 11506

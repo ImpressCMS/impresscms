@@ -339,17 +339,30 @@ class icms_view_theme_Object {
 		$this->template->assign_by_ref('xoops_contents', $this->content);
 		$this->template->assign_by_ref('icms_contents', $this->content);
 
-		$header = empty($xoopsOption['xoops_module_header'])
+		$header = empty($xoopsOption['icms_module_header'])
+			? $this->template->get_template_vars('icms_module_header')
+			: $xoopsOption['icms_module_header'];
+		/** @todo	Remove xoops_module_header in 2.0 */
+		$xheader = empty($xoopsOption['xoops_module_header'])
 			? $this->template->get_template_vars('xoops_module_header')
 			: $xoopsOption['xoops_module_header'];
+		if ($xheader != "") icms_core_Debug::setDeprecated('icms_module_header', sprintf(_CORE_REMOVE_IN_VERSION, "2.0"));
+		$header = ($header != "") ? $header : $xheader;
 		$this->template->assign('xoops_module_header', $header . "\n" . $this->renderMetas(null, true));
 		$this->template->assign('icms_module_header', $header . "\n" . $this->renderMetas(null, true));
 
-		if (!empty($xoopsOption['xoops_pagetitle'])) {
-			$this->template->assign('xoops_pagetitle', $xoopsOption['xoops_pagetitle']);
-			$this->template->assign('icms_pagetitle', $xoopsOption['xoops_pagetitle']);
-		}
-
+		$pagetitle = empty($xoopsOption['icms_pagetitle'])
+			? $this->template->get_template_vars('icms_pagetitle')
+			: $xoopsOption['icms_pagetitle'];
+		/** @todo	Remove xoops_pagetitle in 2.0 */
+		$xpagetitle = empty($xoopsOption['xoops_pagetitle'])
+			? $this->template->get_template_vars('xoops_pagetitle')
+			: $xoopsOption['xoops_pagetitle'];
+		if ($xpagetitle != "") icms_core_Debug::setDeprecated('icms_pagetitle', sprintf(_CORE_REMOVE_IN_VERSION, "2.0"));
+		$pagetitle = ($pagetitle != "") ? $pagetitle : $xpagetitle;
+		$this->template->assign('xoops_pagetitle', $pagetitle);
+		$this->template->assign('icms_pagetitle', $pagetitle);
+		
 		// Do not cache the main (theme.html) template output
 		$this->template->caching = 0;
 		$this->template->display($this->path . '/' . $this->canvasTemplate);

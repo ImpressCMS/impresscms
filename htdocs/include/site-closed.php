@@ -33,7 +33,9 @@ if (!$allowed) {
 	$themeFactory->defaultTheme = $icmsConfig['theme_set'];
 	$icmsTheme =& $themeFactory->createInstance(array("plugins" => array()));
 	$icmsTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
-	$icmsTheme->addStylesheet(ICMS_URL . "/icms" 
+	/** @todo	Remove icms.css in 2.0 */
+	icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
+	$icmsTheme->addStylesheet(ICMS_URL . "/icms"
 		. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? "_rtl" : "") . ".css", array("media" => "screen"));
 	$icmsTpl =& $icmsTheme->template;
 
@@ -45,8 +47,8 @@ if (!$allowed) {
 		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
-		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) 
-			? $icmsModule->getVar('name') 
+		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
+			? $icmsModule->getVar('name')
 			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'lang_login' => _LOGIN,
 		'lang_username' => _USERNAME,
@@ -66,6 +68,7 @@ if (!$allowed) {
 	$icmsTpl->caching = 0;
 
 	icms_loadLanguageFile("system", "customtag", TRUE);
+	icms_Autoloader::register(ICMS_MODULES_PATH . "/system/class", "mod_system");
 	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 	$customtags_array = array();
 	if (is_object($icmsTpl)) {
