@@ -21,7 +21,7 @@
  * @since 		ImpressCMS 1.2
  * @author 		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class mod_system_Blocksadmin extends icms_view_block_Object {
+class mod_system_Blocks extends icms_view_block_Object {
 
 	/**
 	 * Constructor
@@ -49,17 +49,17 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 		$this->setControl('name', 'label');
 		$this->setControl('visible', 'yesno');
 		$this->setControl('bcachetime', array(
-			'itemHandler' => 'blocksadmin',
+			'itemHandler' => 'blocks',
 			'method' => 'getBlockCacheTimeArray',
 			'module' => 'system'
 			));
 		$this->setControl('side', array(
-			'itemHandler' => 'blocksadmin',
+			'itemHandler' => 'blocks',
 			'method' => 'getBlockPositionArray',
 			'module' => 'system'
 			));
 		$this->setControl('c_type', array(
-			'itemHandler' => 'blocksadmin',
+			'itemHandler' => 'blocks',
 			'method' => 'getContentTypeArray',
 			'module' => 'system',
 			'onSelect' => 'submit'
@@ -93,12 +93,12 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 	 */
 	private function visible() {
 		if ($this->getVar('visible', 'n') == 1) {
-			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocksadmin&op=visible&bid=' 
-				. $this->getVar('bid') . '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL 
+			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=visible&bid='
+				. $this->getVar('bid') . '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL
 				. '/actions/button_ok.png" alt="' . _VISIBLE . '"/></a>';
 		} else {
-			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocksadmin&op=visible&bid=' 
-				. $this->getVar('bid') . '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL 
+			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=visible&bid='
+				. $this->getVar('bid') . '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL
 				. '/actions/button_cancel.png" alt="' . _VISIBLE . '"/></a>';
 		}
 		return $rtn;
@@ -116,8 +116,8 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 	 */
 	private function side() {
 		$block_positions = $this->handler->getBlockPositions(TRUE);
-		$rtn = (defined($block_positions[$this->getVar('side', 'n')]['title'])) 
-			? constant($block_positions[$this->getVar('side', 'n')]['title']) 
+		$rtn = (defined($block_positions[$this->getVar('side', 'n')]['title']))
+			? constant($block_positions[$this->getVar('side', 'n')]['title'])
 			: $block_positions[$this->getVar('side', 'n')]['title'];
 		return $rtn;
 	}
@@ -135,8 +135,8 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 	 * Renders a graphic and link to move the block up (lower weight)
 	 */
 	public function getUpActionLink() {
-		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocksadmin&op=up&bid=' 
-			. $this->getVar('bid') . '" title="' . _UP . '" ><img src="' . ICMS_IMAGES_SET_URL 
+		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=up&bid='
+			. $this->getVar('bid') . '" title="' . _UP . '" ><img src="' . ICMS_IMAGES_SET_URL
 			. '/actions/up.png" alt="' . _UP . '"/></a>';
 		return $rtn;
 	}
@@ -145,8 +145,8 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 	 * Renders a graphic and link to move the block down (increase weight)
 	 */
 	public function getDownActionLink() {
-		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocksadmin&op=down&bid=' 
-			. $this->getVar('bid') . '" title="' . _DOWN . '" ><img src="' . ICMS_IMAGES_SET_URL 
+		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=down&bid='
+			. $this->getVar('bid') . '" title="' . _DOWN . '" ><img src="' . ICMS_IMAGES_SET_URL
 			. '/actions/down.png" alt="' . _DOWN . '"/></a>';
 		return $rtn;
 	}
@@ -155,8 +155,8 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 	 * Renders a graphic and link to clone the block
 	 */
 	public function getCloneActionLink() {
-		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocksadmin&op=clone&bid=' 
-			. $this->getVar('bid') . '" title="' . _CLONE . '" ><img src="' . ICMS_IMAGES_SET_URL 
+		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=clone&bid='
+			. $this->getVar('bid') . '" title="' . _CLONE . '" ><img src="' . ICMS_IMAGES_SET_URL
 			. '/actions/editcopy.png" alt="' . _CLONE . '"/></a>';
 		return $rtn;
 	}
@@ -165,8 +165,8 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 	 * Renders a graphic and link to edit a block
 	 */
 	public function getEditActionLink() {
-		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocksadmin&op=mod&bid=' 
-			. $this->getVar('bid') . '" title="' . _EDIT . '" ><img src="' . ICMS_IMAGES_SET_URL 
+		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=mod&bid='
+			. $this->getVar('bid') . '" title="' . _EDIT . '" ><img src="' . ICMS_IMAGES_SET_URL
 			. '/actions/edit.png" alt="' . _EDIT . '"/></a>';
 		return $rtn;
 	}
@@ -191,7 +191,7 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 	 * @return string
 	 */
 	public function getDeleteItemLink($onlyUrl=FALSE, $withimage=TRUE, $userSide=FALSE) {
-		$ret = ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&op=del&" 
+		$ret = ICMS_MODULES_URL . "/system/admin.php?fct=blocks&op=del&"
 			. $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
 		if ($onlyUrl) {
 			if ($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
@@ -203,8 +203,8 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 			if ($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
 				return "<img src='" . ICMS_IMAGES_URL . "/blank.gif' width='22' alt=''  title='' />";
 			} else {
-				return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL 
-					. "/actions/editdelete.png' style='vertical-align: middle;' alt='" 
+				return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL
+					. "/actions/editdelete.png' style='vertical-align: middle;' alt='"
 					. _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "' /></a>";
 			}
 		}
@@ -237,8 +237,8 @@ class mod_system_Blocksadmin extends icms_view_block_Object {
 		$positions = $this->handler->getBlockPositions(TRUE);
 		$block_positions = array();
 		foreach ($positions as $k=>$position) {
-			$block_positions[$k] = defined($position['title']) 
-				? constant($position['title']) 
+			$block_positions[$k] = defined($position['title'])
+				? constant($position['title'])
 				: $position['title'];
 		}
 		$control->addOptionArray($block_positions);

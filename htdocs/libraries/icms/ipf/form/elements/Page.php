@@ -21,7 +21,7 @@ class icms_ipf_form_elements_Page extends icms_form_elements_Tray {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		icms_loadLanguageFile('system', 'blocksadmin', TRUE);
+		icms_loadLanguageFile('system', 'blocks', TRUE);
 		parent::__construct(_AM_VISIBLEIN, ' ', $key . '_visiblein_tray');
 		$visible_label = new icms_form_elements_Label('', '<select name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
 		$this->addElement($visible_label);

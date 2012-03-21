@@ -20,6 +20,6 @@ $modversion = array(
 	'official' => 1,
 	'image' => "blocksadmin.gif",
 	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=blocksadmin",
+	'adminpath' => "admin.php?fct=blocks",
 	'category' => XOOPS_SYSTEM_BLOCK,
 	'group' => _MD_AM_GROUPS_LAYOUT);

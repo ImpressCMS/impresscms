@@ -84,37 +84,37 @@ define('_AM_BLOCKS_PERMGROUPS','Groups allowed to view this block');
 // Texts
 
 // Actions
-define("_AM_SYSTEM_BLOCKSADMIN_CREATE", "Create a New Block");
-define("_AM_SYSTEM_BLOCKSADMIN_EDIT", "Edit a Block");
-define("_AM_SYSTEM_BLOCKSADMIN_MODIFIED", "Block Modified Succesfully!");
-define("_AM_SYSTEM_BLOCKSADMIN_CREATED", "Block Created Succesfully!");
+define("_AM_SYSTEM_BLOCKS_CREATE", "Create a New Block");
+define("_AM_SYSTEM_BLOCKS_EDIT", "Edit a Block");
+define("_AM_SYSTEM_BLOCKS_MODIFIED", "Block Modified Succesfully!");
+define("_AM_SYSTEM_BLOCKS_CREATED", "Block Created Succesfully!");
 
 // Fields
-define("_CO_SYSTEM_BLOCKSADMIN_NAME", "Name");
-define("_CO_SYSTEM_BLOCKSADMIN_NAME_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_TITLE", "Title");
-define("_CO_SYSTEM_BLOCKSADMIN_TITLE_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_MID", "Module");
-define("_CO_SYSTEM_BLOCKSADMIN_MID_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_VISIBLE", "Visible");
-define("_CO_SYSTEM_BLOCKSADMIN_VISIBLE_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_CONTENT", "Content");
-define("_CO_SYSTEM_BLOCKSADMIN_CONTENT_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_SIDE", "Side");
-define("_CO_SYSTEM_BLOCKSADMIN_SIDE_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_WEIGHT", "Weight");
-define("_CO_SYSTEM_BLOCKSADMIN_WEIGHT_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_BLOCK_TYPE", "Block Type");
-define("_CO_SYSTEM_BLOCKSADMIN_BLOCK_TYPE_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_C_TYPE", "Content Type");
-define("_CO_SYSTEM_BLOCKSADMIN_C_TYPE_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_OPTIONS", "Options");
-define("_CO_SYSTEM_BLOCKSADMIN_OPTIONS_DSC", "");
-define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME", "Block Cache Time");
-define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME_DSC", "");
+define("_CO_SYSTEM_BLOCKS_NAME", "Name");
+define("_CO_SYSTEM_BLOCKS_NAME_DSC", "");
+define("_CO_SYSTEM_BLOCKS_TITLE", "Title");
+define("_CO_SYSTEM_BLOCKS_TITLE_DSC", "");
+define("_CO_SYSTEM_BLOCKS_MID", "Module");
+define("_CO_SYSTEM_BLOCKS_MID_DSC", "");
+define("_CO_SYSTEM_BLOCKS_VISIBLE", "Visible");
+define("_CO_SYSTEM_BLOCKS_VISIBLE_DSC", "");
+define("_CO_SYSTEM_BLOCKS_CONTENT", "Content");
+define("_CO_SYSTEM_BLOCKS_CONTENT_DSC", "");
+define("_CO_SYSTEM_BLOCKS_SIDE", "Side");
+define("_CO_SYSTEM_BLOCKS_SIDE_DSC", "");
+define("_CO_SYSTEM_BLOCKS_WEIGHT", "Weight");
+define("_CO_SYSTEM_BLOCKS_WEIGHT_DSC", "");
+define("_CO_SYSTEM_BLOCKS_BLOCK_TYPE", "Block Type");
+define("_CO_SYSTEM_BLOCKS_BLOCK_TYPE_DSC", "");
+define("_CO_SYSTEM_BLOCKS_C_TYPE", "Content Type");
+define("_CO_SYSTEM_BLOCKS_C_TYPE_DSC", "");
+define("_CO_SYSTEM_BLOCKS_OPTIONS", "Options");
+define("_CO_SYSTEM_BLOCKS_OPTIONS_DSC", "");
+define("_CO_SYSTEM_BLOCKS_BCACHETIME", "Block Cache Time");
+define("_CO_SYSTEM_BLOCKS_BCACHETIME_DSC", "");
 
-define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS", "Block View permission");
-define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC", "");
+define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS", "Block View permission");
+define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS_DSC", "");
 
 define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
 define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");

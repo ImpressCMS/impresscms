@@ -21,16 +21,16 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class mod_system_BlocksadminHandler extends icms_view_block_Handler {
+class mod_system_BlocksHandler extends icms_view_block_Handler {
 
 	private $block_positions;
 	private $modules_name;
 
 	public function __construct(& $db) {
-		icms_ipf_Handler::__construct($db, 'blocksadmin', 'bid', 'title', 'content', 'system');
+		icms_ipf_Handler::__construct($db, 'blocks', 'bid', 'title', 'content', 'system');
 		$this->table = $this->db->prefix('newblocks');
 
-		$this->addPermission('block_read', _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS, _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC);
+		$this->addPermission('block_read', _CO_SYSTEM_BLOCKS_BLOCKRIGHTS, _CO_SYSTEM_BLOCKS_BLOCKRIGHTS_DSC);
 	}
 
 	public function getVisibleStatusArray() {
@@ -48,8 +48,8 @@ class mod_system_BlocksadminHandler extends icms_view_block_Handler {
 		$block_positions = $this->getBlockPositions(TRUE);
 		$rtn = array();
 		foreach ($block_positions as $k=>$v) {
-			$rtn[$k] = (defined($block_positions[$k]['title'])) 
-				? constant($block_positions[$k]['title']) 
+			$rtn[$k] = (defined($block_positions[$k]['title']))
+				? constant($block_positions[$k]['title'])
 				: $block_positions[$k]['title'];
 		}
 		return $rtn;
@@ -107,8 +107,8 @@ class mod_system_BlocksadminHandler extends icms_view_block_Handler {
 		$criteria->add(new icms_db_criteria_Item('side', $blockObj->vars['side']['value']));
 		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '<'));
 		$sideBlocks = $this->getObjects($criteria);
-		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1) 
-			? $sideBlocks[0]->getVar('weight') - 1 
+		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1)
+			? $sideBlocks[0]->getVar('weight') - 1
 			: $blockObj->getVar('weight') - 1;
 		if ($weight < 0) $weight = 0;
 		$blockObj->setVar('weight', $weight);
@@ -124,8 +124,8 @@ class mod_system_BlocksadminHandler extends icms_view_block_Handler {
 		$criteria->add(new icms_db_criteria_Item('side', $blockObj->vars['side']['value']));
 		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '>'));
 		$sideBlocks = $this->getObjects($criteria);
-		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1) 
-			? $sideBlocks[0]->getVar('weight') + 1 
+		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1)
+			? $sideBlocks[0]->getVar('weight') + 1
 			: $blockObj->getVar('weight') + 1;
 		$blockObj->setVar('weight', $weight);
 		$this->insert($blockObj, TRUE);
