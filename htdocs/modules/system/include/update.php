@@ -100,7 +100,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		/* Remove system/admin/blocksadmin/ */
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blocksadmin/", TRUE)) $abortUpdate = TRUE;
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/blocksadmin.php", TRUE)) $abortUpdate = TRUE;
-		// deal with symlinks and help files
+		// deal with symlinks and help files, images and image folders
 
 		/* Remove system/admin/blockspadmin/ */
 		//if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blockspadmin/", TRUE)) $abortUpdate = TRUE;
