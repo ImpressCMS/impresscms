@@ -15,7 +15,7 @@
  */
 
 /**
- * System Blockspadmin Class
+ * System positions Class
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license		LICENSE.txt
@@ -24,7 +24,7 @@
  * @since 		ImpressCMS 1.2
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class mod_system_Blockspadmin extends icms_view_block_position_Object {
+class mod_system_Positions extends icms_view_block_position_Object {
 
 	/**
 	 * Constructor
