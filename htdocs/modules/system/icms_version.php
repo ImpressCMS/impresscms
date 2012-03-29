@@ -344,7 +344,7 @@ $modversion['templates'][] = array(
 	);
 
 $modversion['templates'][] = array(
-	'file' => 'admin/blockspadmin/system_adm_blockspadmin.html',
+	'file' => 'admin/positions/system_adm_positions.html',
 	'description' => ''
 	);
 
@@ -354,7 +354,7 @@ $modversion['templates'][] = array(
 	);
 
 $modversion['templates'][] = array(
-	'file' => 'admin/blocksadmin/system_adm_blocksadmin.html',
+	'file' => 'admin/blocks/system_adm_blocks.html',
 	'description' => ''
 	);
 

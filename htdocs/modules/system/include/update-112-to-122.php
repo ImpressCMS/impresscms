@@ -509,7 +509,7 @@
 			"NULL, 1, '" . _CPHOME . "', 'admin.php', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU14 . "', 'modules/system/admin.php?fct=avatars*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU2 . "', 'modules/system/admin.php?fct=blocksadmin*', 1",
-			"NULL, 1, '" . _MI_SYSTEM_ADMENU19 . "', 'modules/system/admin.php?fct=blockspadmin*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU19 . "', 'modules/system/admin.php?fct=blockpositions*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU16 . "', 'modules/system/admin.php?fct=comments*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU12 . "', 'modules/system/admin.php?fct=findusers*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU21 . "', 'modules/system/admin.php?fct=customtag*', 1",

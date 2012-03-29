@@ -147,7 +147,7 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 	 * Event automatically triggered by IcmsPersistable Framework before the object is inserted or updated
 	 * We also need to do the transformation in case of an insert to handle cloned blocks with options
 	 *
-	 * @param object $obj SystemBlocksadmin object
+	 * @param object $obj Systemblocks object
 	 * @return TRUE
 	 */
 	public function beforeSave(&$obj) {

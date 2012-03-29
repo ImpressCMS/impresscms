@@ -26,7 +26,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	/**
 	 * Constructor
 	 *
-	 * @param SystemBlocksadminHandler $handler
+	 * @param SystemblocksHandler $handler
 	 */
 	public function __construct(& $handler) {
 		parent::__construct($handler);

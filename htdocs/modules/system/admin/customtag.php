@@ -19,12 +19,12 @@ include 'admin_header.php';
 
 /**
  * Generate the form for editing a custom tag
- * 
+ *
  * @param $customtagid	unique identifier for the custom tag
  * @param $clone		are you cloning an existing custom tag?
  */
 function editcustomtag($customtagid = 0, $clone = FALSE) {
-	global $icms_admin_handler, $icmsAdminTpl;
+	global $icms_admin_handler, $icmsAdminTpl, $op, $changedField;
 
 	icms_cp_header();
 	$customtagObj = $icms_admin_handler->get($customtagid);
@@ -36,15 +36,15 @@ function editcustomtag($customtagid = 0, $clone = FALSE) {
 	switch ($customtagObj->getVar("customtag_type")) {
 		case ICMS_CUSTOMTAG_TYPE_XCODES:
 			break;
-			
+
 		case ICMS_CUSTOMTAG_TYPE_HTML:
 			$customtagObj->setControl("customtag_content", array("name" => "source", "syntax" => "html"));
 			break;
-			
+
 		case ICMS_CUSTOMTAG_TYPE_PHP:
 			$customtagObj->setControl("customtag_content", array("name" => "source", "syntax" => "php"));
 			break;
-			
+
 		default:
 			break;
 	}

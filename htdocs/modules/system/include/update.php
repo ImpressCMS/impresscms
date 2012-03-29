@@ -82,6 +82,12 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	 */
 
 	if ($dbVersion < $newDbVersion) {
+		/* all theses file deletions should not be a reason the update fails - everything will still work,
+		 * there will just be some notices
+		 */
+		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/class/", TRUE);
+		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/kernel/", TRUE);
+
 		/* list of directories in the system/admin/ folder */
 		$admin_dir = ICMS_MODULES_PATH . '/system/admin/';
 		$dirlist = icms_core_Filesystem::getDirList($admin_dir);
@@ -93,20 +99,28 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/main.php')) $abortUpdate = TRUE;
 			/* Remove the system/{function}/class/ subfolder, if it exists */
 			if (!icms_core_Filesystem::deleteRecursive($admin_dir . $dir . "/class/", TRUE)) $abortUpdate = TRUE;
+			/* copy the images folders, but don't delete them - there may be uses in content areas */
+
 		}
 		/* Remove system/xoops_version.php */
 		if (!icms_core_Filesystem::deleteFile(ICMS_MODULES_PATH . "/system/xoops_version.php")) $abortUpdate = TRUE;
 
-		/* Remove system/admin/blocksadmin/ */
+		/* Remove system/admin/blocksadmin/
+		 * If this fails, the cpanel will be a bit messed up, but the system will still function
+		 */
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blocksadmin/", TRUE)) $abortUpdate = TRUE;
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/blocksadmin.php", TRUE)) $abortUpdate = TRUE;
-		// deal with symlinks and help files, images and image folders
+		// deal with symlinks and help files, templates
 
 		/* Remove system/admin/blockspadmin/ */
-		//if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blockspadmin/", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blockspadmin/", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/blockspadmin.php", TRUE)) $abortUpdate = TRUE;
+		// deal with symlinks and help files, templates
 
 		/* Remove system/admin/modulesadmin/ */
 		//if (!icms_core_Filesystem::deleteRecursive($admin_dir . "modulesadmin/", TRUE)) $abortUpdate = TRUE;
+		//if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/modulesadmin.php", TRUE)) $abortUpdate = TRUE;
+		// deal with symlinks and help files, templates
 
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
