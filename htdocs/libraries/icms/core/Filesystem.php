@@ -172,6 +172,8 @@ icms_core_Filesystem {
 		$success = FALSE;
 		if (is_file($dirname)) {
 			$success = unlink($dirname);
+		} else {
+			$success = TRUE;
 		}
 		return $success;
 	}
