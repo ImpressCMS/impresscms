@@ -118,8 +118,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		// deal with symlinks and help files, templates
 
 		/* Remove system/admin/modulesadmin/ */
-		//if (!icms_core_Filesystem::deleteRecursive($admin_dir . "modulesadmin/", TRUE)) $abortUpdate = TRUE;
-		//if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/modulesadmin.php", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "modulesadmin/", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/modulesadmin.php", TRUE)) $abortUpdate = TRUE;
 		// deal with symlinks and help files, templates
 
 		/* Finish up this portion of the db update */
@@ -139,7 +139,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
     }
 	if ($from_112 && ! $abortUpdate) {
 		echo _DATABASEUPDATER_MSG_FROM_112;
-		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
+		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modules&op=install&module=content&from_112=1\'",20000);</script>';
 	}
 
 	$feedback = ob_get_clean();

@@ -24,18 +24,18 @@ function xoops_module_list() {
 	$icmsAdminTpl->assign('lang_madmin', _MD_AM_MODADMIN);
 	$icmsAdminTpl->assign('lang_module', _MD_AM_MODULE);
 	$icmsAdminTpl->assign('lang_version', _MD_AM_VERSION);
-	$icmsAdminTpl->assign('lang_modstatus', _MD_AM_MODULESADMIN_STATUS);
+	$icmsAdminTpl->assign('lang_modstatus', _MD_AM_MODULES_STATUS);
 	$icmsAdminTpl->assign('lang_lastup', _MD_AM_LASTUP);
 	$icmsAdminTpl->assign('lang_active', _MD_AM_ACTIVE);
 	$icmsAdminTpl->assign('lang_order', _MD_AM_ORDER);
 	$icmsAdminTpl->assign('lang_order0', _MD_AM_ORDER0);
 	$icmsAdminTpl->assign('lang_action', _MD_AM_ACTION);
-	$icmsAdminTpl->assign('lang_modulename', _MD_AM_MODULESADMIN_MODULENAME);
-	$icmsAdminTpl->assign('lang_moduletitle', _MD_AM_MODULESADMIN_MODULETITLE);
+	$icmsAdminTpl->assign('lang_modulename', _MD_AM_MODULES_MODULENAME);
+	$icmsAdminTpl->assign('lang_moduletitle', _MD_AM_MODULES_MODULETITLE);
 	$icmsAdminTpl->assign('lang_info', _INFO);
 	$icmsAdminTpl->assign('lang_update', _MD_AM_UPDATE);
 	$icmsAdminTpl->assign('lang_unistall', _MD_AM_UNINSTALL);
-	$icmsAdminTpl->assign('lang_support', _MD_AM_MODULESADMIN_SUPPORT);
+	$icmsAdminTpl->assign('lang_support', _MD_AM_MODULES_SUPPORT);
 	$icmsAdminTpl->assign('lang_submit', _MD_AM_SUBMIT);
 	$icmsAdminTpl->assign('lang_install', _MD_AM_INSTALL);
 	$icmsAdminTpl->assign('lang_installed', _MD_AM_INSTALLED);
@@ -87,7 +87,7 @@ function xoops_module_list() {
 			unset($module);
 	}
 
-	return $icmsAdminTpl->fetch('db:admin/modulesadmin/system_adm_modulesadmin.html');
+	return $icmsAdminTpl->fetch('db:admin/modules/system_adm_modules.html');
 }
 
 /**

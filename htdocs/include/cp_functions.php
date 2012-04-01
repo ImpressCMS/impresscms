@@ -529,7 +529,7 @@ function impresscms_get_adminmenu() {
 	$admin_menu[] = array(
 		'id' => 'modules',
 		'text' => _MODULES,
-		'link' => ICMS_URL . '/modules/system/admin.php?fct=modulesadmin',
+		'link' => ICMS_URL . '/modules/system/admin.php?fct=modules',
 		'menu' => $modules_menu,
 	);
 

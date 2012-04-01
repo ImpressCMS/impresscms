@@ -359,7 +359,7 @@ $modversion['templates'][] = array(
 	);
 
 $modversion['templates'][] = array(
-	'file' => 'admin/modulesadmin/system_adm_modulesadmin.html',
+	'file' => 'admin/modules/system_adm_modules.html',
 	'description' => ''
 	);
 

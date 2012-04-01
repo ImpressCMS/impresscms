@@ -15,7 +15,7 @@ if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmi
 }
 
 /* Normally, you would include cp_functions, cp_header.
- * Since this module loads all the object files as includes instead of directly, 
+ * Since this module loads all the object files as includes instead of directly,
  * only include the things in cp_header not already included by admin.php - which is nothing!
  */
 
@@ -44,7 +44,8 @@ if (!empty($_POST)) {
     extract($clean_POST);
 }
 
-if ($fct !== "") {
+/* @todo This really only works for IPF-based objects - will need to adjust */
+if ($fct !== "" && $fct !== 'modules') {
 	$icms_admin_handler = icms_getModuleHandler($fct, $module_dir);
 	icms_loadLanguageFile($module_dir, $fct, TRUE);
 }

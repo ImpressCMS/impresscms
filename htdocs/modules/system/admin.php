@@ -19,7 +19,7 @@ $fct = (isset($_GET['fct']))
 	: ((isset($_POST['fct']))
 		? trim(filter_input(INPUT_POST, 'fct'))
 		: '');
-	
+
 if (isset($fct) && $fct == 'users') {
 	icms_loadLanguageFile('core', 'user');
 	// hook for profile module
@@ -40,7 +40,7 @@ icms_loadLanguageFile('core', 'moduleabout');
 
 // Check if function call does exist (security)
 /** @todo we don't need to scan the directory on every page load. Set a var on install or update
- *  that can be checked instead 
+ *  that can be checked instead
  */
 $admin_dir = ICMS_MODULES_PATH . '/system/admin';
 $dirlist = icms_core_Filesystem::getDirList($admin_dir);
@@ -59,6 +59,9 @@ if (is_object(icms::$user)) {
 include_once ICMS_MODULES_PATH . '/system/constants.php';
 $error = FALSE;
 if ($admintest != 0) {
+	if (icms_getModuleInfo('system')->getDBVersion() < ICMS_SYSTEM_DBVERSION) {
+		icms_core_Message::warning(_CO_ICMS_UPDATE_NEEDED, "", TRUE);
+	}
 	if (isset($fct) && $fct != '') {
 		if (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $fct . '/icms_version.php')) {
 			include ICMS_MODULES_PATH . '/system/admin/' . $fct . '/icms_version.php';
@@ -68,7 +71,7 @@ if ($admintest != 0) {
 			unset($modversion);
 			if ($category > 0) {
 				$groups =& icms::$user->getGroups();
-				if (in_array(ICMS_GROUP_ADMIN, $groups) 
+				if (in_array(ICMS_GROUP_ADMIN, $groups)
 					|| FALSE !== $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid'))
 				) {
 					if (file_exists(ICMS_MODULES_PATH . "/system/admin/" . $fct . ".php")) {
