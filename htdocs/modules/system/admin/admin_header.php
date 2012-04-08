@@ -44,8 +44,7 @@ if (!empty($_POST)) {
     extract($clean_POST);
 }
 
-/* @todo This really only works for IPF-based objects - will need to adjust */
-if ($fct !== "" && $fct !== 'modules') {
+if ($fct !== "") {
 	$icms_admin_handler = icms_getModuleHandler($fct, $module_dir);
 	icms_loadLanguageFile($module_dir, $fct, TRUE);
 }
