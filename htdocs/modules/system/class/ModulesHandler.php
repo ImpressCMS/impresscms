@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Administration
  * @subpackage	Modules
- * @version		$Id$
+ * @version		SVN $Id$
  */
 
 class mod_system_ModulesHandler extends icms_module_Handler {
