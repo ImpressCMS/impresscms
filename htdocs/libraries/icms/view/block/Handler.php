@@ -354,7 +354,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 				$this->db->query($sql);
 			}
 		} else {
-			icms_loadLanguageFile('system', 'blocksadmin', true);
+			icms_loadLanguageFile('system', 'blocks', true);
 			if ($obj->getVar('block_type') == 'K') {
 				$obj->setVar('name', _AM_CLONE);
 			} else {

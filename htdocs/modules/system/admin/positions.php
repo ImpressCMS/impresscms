@@ -32,15 +32,15 @@ function editblockposition($id = 0) {
 	$blockObj = $icms_admin_handler->get($id);
 
 	if (!$blockObj->isNew()) {
-		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSPADMIN_EDIT, 'addblockposition');
+		$sform = $blockObj->getForm(_AM_SYSTEM_POSITIONS_EDIT, 'addblockposition');
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSPADMIN_CREATE, 'addblockposition');
+		$sform = $blockObj->getForm(_AM_SYSTEM_POSITIONS_CREATE, 'addblockposition');
 		$sform->assign($icmsAdminTpl);
 	}
 	$icmsAdminTpl->assign('id', $id);
-	$icmsAdminTpl->assign('lang_badmin', _AM_SYSTEM_BLOCKSPADMIN_TITLE);
-	$icmsAdminTpl->display('db:admin/blockspadmin/system_adm_blockspadmin.html');
+	$icmsAdminTpl->assign('lang_badmin', _AM_SYSTEM_POSITIONS_TITLE);
+	$icmsAdminTpl->display('db:admin/positions/system_adm_positions.html');
 }
 
 $clean_op = $op;
@@ -59,7 +59,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case "addblockposition":
 			$controller = new icms_ipf_Controller($icms_admin_handler);
-			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSPADMIN_CREATED, _AM_SYSTEM_BLOCKSPADMIN_MODIFIED);
+			$controller->storeFromDefaultForm(_AM_SYSTEM_POSITIONS_CREATED, _AM_SYSTEM_POSITIONS_MODIFIED);
 			break;
 
 		case "del":
@@ -75,14 +75,14 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column('title', FALSE, FALSE, 'getCustomTitle', FALSE, FALSE, FALSE));
 			$objectTable->addColumn(new icms_ipf_view_Column('description'));
 
-			$objectTable->addIntroButton('addblockposition', 'admin.php?fct=blockspadmin&amp;op=mod', _AM_SYSTEM_BLOCKSPADMIN_CREATE);
+			$objectTable->addIntroButton('addblockposition', 'admin.php?fct=positions&amp;op=mod', _AM_SYSTEM_POSITIONS_CREATE);
 			$objectTable->addQuickSearch(array('pname', 'title', 'description'));
 
 			$icmsAdminTpl->assign('icms_blockposition_table', $objectTable->fetch());
-			$icmsAdminTpl->assign('lang_badmin', _AM_SYSTEM_BLOCKSPADMIN_TITLE);
-			$icmsAdminTpl->assign('icms_blockposition_info', _AM_SYSTEM_BLOCKSPADMIN_INFO);
+			$icmsAdminTpl->assign('lang_badmin', _AM_SYSTEM_POSITIONS_TITLE);
+			$icmsAdminTpl->assign('icms_blockposition_info', _AM_SYSTEM_POSITIONS_INFO);
 
-			$icmsAdminTpl->display('db:admin/blockspadmin/system_adm_blockspadmin.html');
+			$icmsAdminTpl->display('db:admin/positions/system_adm_positions.html');
 			break;
 	}
 	icms_cp_footer();

@@ -95,10 +95,10 @@ icms_core_Filesystem {
 			$dd = opendir($d);
 			while ($file = readdir($dd)) {
 				$files_array = $remove_admin_cache
-						? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
-							&& $file != '.svn')
-						: ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
-							&& $file != '.svn' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
+				? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
+				&& $file != '.svn')
+				: ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
+				&& $file != '.svn' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
 				if (is_file($d . $file) && $files_array) {
 					unlink($d . $file);
 				}
@@ -116,10 +116,10 @@ icms_core_Filesystem {
 	 */
 	static public function cleanWriteFolders() {
 		return self::cleanFolders(
-			array(
+		array(
 				'templates_c' => ICMS_COMPILE_PATH . '/',
 				'cache' => ICMS_CACHE_PATH . '/',
-			)
+		)
 		);
 	}
 
@@ -166,13 +166,16 @@ icms_core_Filesystem {
 	 * Replaces icms_deleteFile()
 	 *
 	 * @param string $dirname path of the file
-	 * @return	The unlinked dirname
+	 * @return	bool TRUE if the file is deleted or doesn't exist; FALSE otherwise
 	 */
 	static public function deleteFile($dirname) {
-		// Simple delete for a file
+		$success = FALSE;
 		if (is_file($dirname)) {
-			return unlink($dirname);
+			$success = unlink($dirname);
+		} else {
+			$success = TRUE;
 		}
+		return $success;
 	}
 
 	/**
@@ -200,34 +203,32 @@ icms_core_Filesystem {
 
 	/**
 	 *
-	 * Recursively delete a directory
+	 * Recursively delete a directory or its contents
 	 * Replaces icms_unlinkRecursive()
-	 * @todo	Can be rewritten with SPL Directory Iterators
 	 *
-	 * @param string $dir Directory name
-	 * @param bool $deleteRootToo Delete specified top-level directory as well
+	 * @param	string	$dir Directory name
+	 * @param	bool 	$deleteRootToo Delete specified top-level directory as well
+	 * @return	bool	TRUE if directory is removed or doesn't exist; FALSE otherwise
 	 */
-	static public function deleteRecursive($dir, $deleteRootToo=true) {
-		if (!$dh = @opendir($dir)) {
-			return;
-		}
-		while (false !== ($obj = readdir($dh))) {
-			if ($obj == '.' || $obj == '..') {
-				continue;
+	static public function deleteRecursive($dir, $deleteRootToo= TRUE) {
+		$success = FALSE;
+		if (!is_dir($dir)) return TRUE;
+		$iterator = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($dir),
+			RecursiveIteratorIterator::CHILD_FIRST
+		);
+		foreach ($iterator as $path) {
+			if ($path->isDir()) {
+				$success = rmdir($path->__toString());
+			} else {
+				$success = unlink($path->__toString());
 			}
-
-			if (!@unlink($dir . '/' . $obj)) {
-				self::deleteRecursive($dir . '/' . $obj, true);
-			}
 		}
+		unset($iterator);
 
-		closedir($dh);
+		if ($deleteRootToo) $success = rmdir($dir);
 
-		if ($deleteRootToo) {
-			@rmdir($dir);
-		}
-
-		return;
+		return $success;
 	}
 
 	/**
@@ -299,9 +300,9 @@ icms_core_Filesystem {
 	 *
 	 */
 	static public function validateChecksum() {
-        $rootdir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
-        $dir = new RecursiveDirectoryIterator($rootdir);
-        $checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_TRUST_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
+		$rootdir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
+		$dir = new RecursiveDirectoryIterator($rootdir);
+		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_TRUST_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
 		$validationFile = new SplFileObject($checkfile);
 		if ($validationFile->isReadable()) {
 			$currentHash = $currentPerms = array();
@@ -409,8 +410,8 @@ icms_core_Filesystem {
 						$file = $prefix . $filename;
 						$fileList[$file] = $file;
 					} elseif (preg_match("/(\." . $extList . ")$/i", $filename)) {
-							$file = $prefix . $filename;
-							$fileList[$file] = $file;
+						$file = $prefix . $filename;
+						$fileList[$file] = $file;
 					}
 				}
 			}
@@ -418,7 +419,7 @@ icms_core_Filesystem {
 		asort($fileList);
 		return $fileList;
 	}
-	
+
 	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_TRUST_PATH) {
 		if ($extension == '') $extension = 'php';
 		if (DIRECTORY_SEPARATOR !== "/") $location = str_replace(DIRECTORY_SEPARATOR, "/", $location);
@@ -431,10 +432,10 @@ icms_core_Filesystem {
 			fclose($fp);
 		}
 	}
-	
-/* These will not be in the final release, but are only placeholders while the refactoring
- * is being completed
- */
+
+	/* These will not be in the final release, but are only placeholders while the refactoring
+	 * is being completed
+	 */
 	static public function getImgList($dirname, $prefix = '', $extension = array('gif', 'jpg', 'png')) {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
@@ -450,6 +451,6 @@ icms_core_Filesystem {
 	static public function getHtmlFiles($dirname, $prefix = '', $extension = array('htm', 'html', 'xhtml')) {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
-/* The above will be removed */
+	/* The above will be removed */
 
 }

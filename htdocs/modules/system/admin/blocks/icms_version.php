@@ -1,6 +1,6 @@
 <?php
 /**
- * Administration of blocksadmin, versionfile
+ * Administration of blocks, versionfile
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
@@ -18,8 +18,8 @@ $modversion = array(
 	'help' => "blocks.html",
 	'license' => "GPL see LICENSE",
 	'official' => 1,
-	'image' => "blocksadmin.gif",
+	'image' => "blocks.gif",
 	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=blocksadmin",
+	'adminpath' => "admin.php?fct=blocks",
 	'category' => XOOPS_SYSTEM_BLOCK,
 	'group' => _MD_AM_GROUPS_LAYOUT);

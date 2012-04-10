@@ -274,7 +274,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
-	 * @return  array	Array of objects - installed module 
+	 * @return  array	Array of objects - installed module
 	 */
 	public function getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array();
@@ -426,4 +426,73 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		// We are in /something.php: let the page handle permissions
 		return TRUE;
 	}
+
+	/**
+	 * Function and rendering for installation of a module
+	 *
+	 * @param 	string	$dirname
+	 * @return	string	Results of the installation process
+	 */
+	public function install($dirname) {
+
+	}
+	/**
+	 * Logic for uninstalling a module
+	 *
+	 * @param unknown_type $dirname
+	 * @return	string	Result messages for uninstallation
+	 */
+	public function uninstall($dirname) {
+
+	}
+	/**
+	 * Logic for updating a module
+	 *
+	 * @param 	str $dirname
+	 * @return	str	Result messages from the module update
+	 */
+	public function update($dirname) {
+
+	}
+	/**
+	 * Logic for activating a module
+	 *
+	 * @param	int	$mid
+	 * @return	string	Result message for activating the module
+	 */
+	public function activate($mid) {
+
+	 }
+
+	/**
+	 * Logic for deactivating a module
+	 *
+	 * @param	int	$mid
+	 * @return	string	Result message for deactivating the module
+	 */
+	 public function deactivate($mid) {
+
+	 }
+
+	/**
+	 * Logic for changing the weight (order) and name of modules
+	 *
+	 * @param int $mid		Unique ID for the module to change
+	 * @param int $weight	Integer value of the weight to be applied to the module
+	 * @param str $name		Name to be applied to the module
+	 */
+	 public function change($mid, $weight, $name) {
+
+	 }
+
+	/**
+	 *
+	 * @param	string	$dirname	Directory name of the module
+	 * @param	string	$template	Name of the template file
+	 * @param	boolean	$block		Are you trying to retrieve the template for a block?
+	 */
+	 public function getTemplate($dirname, $template, $block = FALSE) {
+
+	 }
+
 }

@@ -201,7 +201,7 @@
 			if(t.isIE)
 				children[i].unselectable = true; // IE
 			else
-				children[i].onmousedown= function(){return false};
+				children[i].onmousedown= function(){return false;};
 		/*	children[i].style.MozUserSelect = "none"; // Moz
 			children[i].style.KhtmlUserSelect = "none";  // Konqueror/Safari*/
 		}

@@ -32,10 +32,7 @@ icms_loadLanguageFile('system', 'admin');
 asort($dirlist);
 $adminmenu = array();
 foreach ($dirlist as $file) {
-	$mod_version_file = 'xoops_version.php';
-	if (file_exists($admin_dir . '/' . $file . '/icms_version.php')) {
-		$mod_version_file = 'icms_version.php';
-	}
+	$mod_version_file = 'icms_version.php';
 	include $admin_dir . '/' . $file . '/' . $mod_version_file;
 	if ($modversion['hasAdmin']) {
 		$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
@@ -53,7 +50,7 @@ foreach ($dirlist as $file) {
 				if ($catcount > 0) {
 					for ($x = 0; $x < $catcount; $x++) {
 						$subs[$x]['title'] = constant($confcats[$x]->getVar('confcat_name'));
-						$subs[$x]['link'] = ICMS_URL.'/modules/system/admin.php?fct=preferences' 
+						$subs[$x]['link'] = ICMS_URL.'/modules/system/admin.php?fct=preferences'
 							. '&amp;op=show&amp;confcat_id=' . $confcats[$x]->getVar('confcat_id');
 					}
 					$adminmenu[$modversion['group']]['subs'][] = array(

@@ -25,8 +25,14 @@ include 'mainfile.php';
 include ICMS_ROOT_PATH . '/include/cp_functions.php';
 
 // test to see if the system module should be updated, added in 1.2
-if (icms_getModuleInfo('system')->getDBVersion() < ICMS_SYSTEM_DBVERSION) {
-	redirect_header('modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system', 1, _CO_ICMS_UPDATE_NEEDED);
+$currentVer = icms_getModuleInfo('system')->getDBVersion();
+if ($currentVer < ICMS_SYSTEM_DBVERSION) {
+	// target changes in 2.0
+	if ($currentVer > 42) {
+		redirect_header('modules/system/admin.php?fct=modules&amp;op=update&amp;module=system', 1, _CO_ICMS_UPDATE_NEEDED);
+	} else {
+		redirect_header('modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system', 1, _CO_ICMS_UPDATE_NEEDED);
+	}
 }
 
 $op = isset($_GET['rssnews']) ? (int) ($_GET['rssnews']) : 0;

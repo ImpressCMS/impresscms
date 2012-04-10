@@ -1,6 +1,6 @@
 <?php
 // $Id$
-//%%%%%%	File Name  modulesadmin.php 	%%%%%
+//%%%%%%	File Name  modules.php 	%%%%%
 define("_MD_AM_MODADMIN","Modules Administration");
 define("_MD_AM_MODULE","Module");
 define("_MD_AM_VERSION","Version");
@@ -58,10 +58,10 @@ define('_MD_AM_LISTUPBLKS', 'The following blocks will be updated.<br />Select t
 define('_MD_AM_NEWBLKS', 'New Blocks');
 define('_MD_AM_DEPREBLKS', 'Deprecated Blocks');
 
-define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
-define('_MD_AM_MODULESADMIN_STATUS', 'Status');
-define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
-define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
+define('_MD_AM_MODULES_SUPPORT', 'Module Support Site');
+define('_MD_AM_MODULES_STATUS', 'Status');
+define('_MD_AM_MODULES_MODULENAME', 'Module Name');
+define('_MD_AM_MODULES_MODULETITLE', 'Module Title');
 ######################## Added in 1.2 ###################################
 define('_MD_AM_MOD_DATA_UPDATED',' Module data updated.');
 define('_MD_AM_MOD_REBUILD_BLOCKS','Rebuilding blocks...');

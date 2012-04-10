@@ -27,8 +27,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 	$oldversion = $module->getVar('version');
 	if ($oldversion < 120) {
-		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM " 
-				. icms::$xoopsDB->prefix('tplfile') . " t1, " 
+		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM "
+				. icms::$xoopsDB->prefix('tplfile') . " t1, "
 				. icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
 		$tplids = array();
@@ -70,38 +70,65 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	$CleanWritingFolders = FALSE;
 
 	if ($dbVersion < 42) include 'update-122-to-13.php';
-		
+
 /*  Begin upgrade to version 2.0 */
 	if (!$abortUpdate) $newDbVersion = 43;
-	
+
 	/*
 	 * The update for this version will need to convert the system module to an IPF module
-	 * and set the ipf flag to 1 in the modules table. 
+	 * and set the ipf flag to 1 in the modules table.
 	 * There will be a lot of files that will need to be removed - all the legacy files and folders
 	 * along with the system module changes.
 	 */
 
 	if ($dbVersion < $newDbVersion) {
-		/* list of directories in the system/admin/ folder
-		 * remove xoops_version.php and main.php from these folders if the update has 
-		 * been successful. 
-		 * 
-		 * Remove the class/ subfolder, if it exists 
-		 * 
-		 * Remove system/xoops_version.php
+		/* all theses file deletions should not be a reason the update fails - everything will still work,
+		 * there will just be some notices
 		 */
-		$admin_dir = ICMS_MODULES_PATH . '/system/admin';
+		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/class/", TRUE);
+		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/kernel/", TRUE);
+
+		/* list of directories in the system/admin/ folder */
+		$admin_dir = ICMS_MODULES_PATH . '/system/admin/';
 		$dirlist = icms_core_Filesystem::getDirList($admin_dir);
-			
+		foreach ($dirlist as $dir) {
+			/* remove xoops_version.php and main.php from these folders if the update has
+		 	 * been successful.
+		 	 */
+			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/xoops_version.php')) $abortUpdate = TRUE;
+			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/main.php')) $abortUpdate = TRUE;
+			/* Remove the system/{function}/class/ subfolder, if it exists */
+			if (!icms_core_Filesystem::deleteRecursive($admin_dir . $dir . "/class/", TRUE)) $abortUpdate = TRUE;
+			/* copy the images folders, but don't delete them - there may be uses in content areas */
+
+		}
+		/* Remove system/xoops_version.php */
+		if (!icms_core_Filesystem::deleteFile(ICMS_MODULES_PATH . "/system/xoops_version.php")) $abortUpdate = TRUE;
+
+		/* Remove system/admin/blocksadmin/
+		 * If this fails, the cpanel will be a bit messed up, but the system will still function
+		 */
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blocksadmin/", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/blocksadmin.php", TRUE)) $abortUpdate = TRUE;
+		// deal with symlinks and help files, templates
+
+		/* Remove system/admin/blockspadmin/ */
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blockspadmin/", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/blockspadmin.php", TRUE)) $abortUpdate = TRUE;
+		// deal with symlinks and help files, templates
+
+		/* Remove system/admin/modulesadmin/ */
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "modulesadmin/", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/modulesadmin.php", TRUE)) $abortUpdate = TRUE;
+		// deal with symlinks and help files, templates
+
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}
-	
 
-	
 /*
  * This portion of the upgrade must remain as the last section of code to execute
  * Place all release upgrade steps above this point
@@ -112,7 +139,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
     }
 	if ($from_112 && ! $abortUpdate) {
 		echo _DATABASEUPDATER_MSG_FROM_112;
-		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
+		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modules&op=install&module=content&from_112=1\'",20000);</script>';
 	}
 
 	$feedback = ob_get_clean();
@@ -122,6 +149,5 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		echo $feedback;
 	}
 
-	$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }

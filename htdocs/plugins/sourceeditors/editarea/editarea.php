@@ -62,9 +62,12 @@ class IcmsSourceEditorEditArea extends icms_form_elements_Textarea {
 	}
 
 	public function render() {
+		global $xoTheme;
 		$ret = parent::render();
+		$xoTheme->addScript(ICMS_URL . $this->rootpath . '/editor/edit_area_full_with_plugins.js', array('type' => 'text/javascript'),'');
+		// @todo this still has to be added like this - until someone figures it out
 		$ret .= '
-<script language="javascript" type="text/javascript" src="' . ICMS_URL . $this->rootpath . '/editor/edit_area_compressor.php?plugins"></script>
+<script language="javascript" type="text/javascript" src="' . ICMS_URL . $this->rootpath . '/editor/edit_area_full_with_plugins.js"></script>
 <script language="javascript" type="text/javascript">
 editAreaLoader.init({
 	id: "' . $this->getName() . '_tarea",

@@ -2016,7 +2016,7 @@ function icms_moduleAction($dirname = 'system')
 	('update_ok' == $_POST['op'] || 'install_ok' == $_POST['op'] || 'uninstall_ok' == $_POST['op'])
 	&&
 	// current action
-		'modulesadmin' == $_POST['fct']
+		'modules' == $_POST['fct']
 	);
 	return $ret;
 }

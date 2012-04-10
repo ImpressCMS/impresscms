@@ -1,4 +1,4 @@
-<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/modulesadmin/images/modulesadmin_big.png)"><{$lang_madmin}></div><br />
+<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/modules/images/modules_big.png)"><{$lang_madmin}></div><br />
 <h2><{$lang_installed}></h2>
 <form action='admin.php' method='post' name='moduleadmin' id='moduleadmin'>
 <table width="100%" cellpadding="4" cellspacing="1" border="0" class="outer">
@@ -59,9 +59,9 @@
         <{if $module.support_site_url != '' &&  $module.isactive == '1'}>
           <a href="<{$module.support_site_url}>" rel="external"><img src="<{$xoops_url}>/modules/system/images/support.png" alt="<{$lang_support}>" title="<{$lang_support}>"/></a>
         <{/if}>
-        <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$module.dirname}>"><img src="<{$xoops_url}>/modules/system/images/update.png" alt="<{$lang_update}>" title="<{$lang_update}>"/></a>
+        <a href="<{$xoops_url}>/modules/system/admin.php?fct=modules&amp;op=update&amp;module=<{$module.dirname}>"><img src="<{$xoops_url}>/modules/system/images/update.png" alt="<{$lang_update}>" title="<{$lang_update}>"/></a>
         <{if $module.isactive != '1'}>
-          <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=uninstall&amp;module=<{$module.dirname}>"><img src="<{$xoops_url}>/modules/system/images/uninstall.png" alt="<{$lang_unistall}>" title="<{$lang_unistall}>" /></a>
+          <a href="<{$xoops_url}>/modules/system/admin.php?fct=modules&amp;op=uninstall&amp;module=<{$module.dirname}>"><img src="<{$xoops_url}>/modules/system/images/uninstall.png" alt="<{$lang_unistall}>" title="<{$lang_unistall}>" /></a>
         <{/if}>  
         <a href='javascript:openWithSelfMain("<{$xoops_url}>/modules/system/admin.php?fct=version&amp;mid=<{$module.mid}>","Info",300,230);'><img src="<{$xoops_url}>/modules/system/images/info.png" alt="<{$lang_info}>" title="<{$lang_info}>" /></a>
         <input type="hidden" name="module[]" value="<{$module.mid}>" />
@@ -70,7 +70,7 @@
   <{/foreach}>
   <tr class='foot'>
     <td colspan='7' align='center'>
-      <input type='hidden' name='fct' value='modulesadmin' />
+      <input type='hidden' name='fct' value='modules' />
       <input type='hidden' name='op' value='confirm' />
       <input type='submit' name='submit' value='<{$lang_submit}>' />
     </td>
@@ -95,7 +95,7 @@
       <td align='center'><{$module.version}></td>
       <td align='center'><{$module.status}></td>
       <td width='130px' align='center'>
-        <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=install&module=<{$module.dirname}>"><img src="<{$xoops_url}>/modules/system/images/install.png" alt="<{$lang_install}>" title="<{$lang_install}>" /></a>
+        <a href="<{$xoops_url}>/modules/system/admin.php?fct=modules&op=install&module=<{$module.dirname}>"><img src="<{$xoops_url}>/modules/system/images/install.png" alt="<{$lang_install}>" title="<{$lang_install}>" /></a>
         <a href='javascript:openWithSelfMain("<{$xoops_url}>/modules/system/admin.php?fct=version&mid=<{$module.dirname}>","Info",300,230);'><img src="<{$xoops_url}>/modules/system/images/info.png" alt="<{$lang_info}>" title="<{$lang_info}>" /></a>
       </td>
     </tr>

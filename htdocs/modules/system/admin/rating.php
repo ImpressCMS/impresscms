@@ -20,7 +20,7 @@ $changedField = "";
 include "admin_header.php";
 
 function editrating($showmenu = FALSE, $ratingid = 0) {
-	global $icms_admin_handler, $icmsAdminTpl;
+	global $icms_admin_handler, $icmsAdminTpl, $op, $changedField;
 
 	icms_cp_header();
 

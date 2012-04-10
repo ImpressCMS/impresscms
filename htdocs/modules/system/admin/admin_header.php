@@ -15,7 +15,7 @@ if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmi
 }
 
 /* Normally, you would include cp_functions, cp_header.
- * Since this module loads all the object files as includes instead of directly, 
+ * Since this module loads all the object files as includes instead of directly,
  * only include the things in cp_header not already included by admin.php - which is nothing!
  */
 

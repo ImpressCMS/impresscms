@@ -22,8 +22,8 @@ $modversion = array(
 	'help' => "blocksp.html",
 	'license' => "GPL see LICENSE",
 	'official' => 1,
-	'image' => "blockspadmin.gif",
+	'image' => "positions.gif",
 	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=blockspadmin",
+	'adminpath' => "admin.php?fct=positions",
 	'category' => XOOPS_SYSTEM_BLOCKP,
 	'group' => _MD_AM_GROUPS_LAYOUT);

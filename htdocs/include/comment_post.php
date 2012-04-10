@@ -112,12 +112,14 @@ switch ($op) {
 		$com_text = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_text']));
 		if ($icmsModule->getVar('dirname') != 'system') {
 			include ICMS_ROOT_PATH . '/header.php';
-			themecenterposts($com_title, $p_comment);
+			//themecenterposts($com_title, $p_comment);
+			echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$com_title.'</td></tr><tr><td><br />'.$p_comment.'<br /></td></tr></table>';
 			include ICMS_INCLUDE_PATH . '/comment_form.php';
 			include ICMS_ROOT_PATH . '/footer.php';
 		} else {
 			icms_cp_header();
-			themecenterposts($com_title, $p_comment);
+			//themecenterposts($com_title, $p_comment);
+			echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$com_title.'</td></tr><tr><td><br />'.$p_comment.'<br /></td></tr></table>';
 			include ICMS_INCLUDE_PATH . '/comment_form.php';
 			icms_cp_footer();
 		}
