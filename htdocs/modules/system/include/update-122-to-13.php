@@ -225,70 +225,85 @@
 			icms::$config->insertConfig($configs[0]);
 		}
 		unset($configs);
-		
+
 		/* New HTML Purifier options -
 		 * purifier_HTML_FlashAllowFullScreen, after purifier_HTML_AttrNameUseCDATA
 		 * purifier_Output_FlashCompat, after purifier_HTML_FlashAllowFullScreen
 		 * purifier_Filter_AllowCustom, after purifier_Filter_YouTube
 		 * purifier_Core_NormalizeNewlines, after purifier_Core_RemoveInvalidImg
 		 */
-		
+
 		$table = new icms_db_legacy_updater_Table("config");
 
-		// retrieve the value of the position before the config to be inserted. 
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_HTML_AttrNameUseCDATA")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 		//move all the other options down
 		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_FlashAllowFullScreen', '_MD_AM_PURIFIER_HTML_FLASHFULLSCRN', '0', '_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC', 'yesno', 'int', $p);
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Output_FlashCompat', '_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT', '0', '_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC', 'yesno', 'int', $p++);
-				
-		// retrieve the value of the position before the config to be inserted. 
+
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_Filter_YouTube")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 		//move all the other options down
 		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 1 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_AllowCustom', '_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM', '0', '_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC', 'yesno', 'int', $p);
 
-		// retrieve the value of the position before the config to be inserted. 
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_Core_RemoveInvalidImg")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 		//move all the other options down
 		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 1 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_NormalizeNewlines', '_MD_AM_PURIFIER_CORE_NORMALNEWLINES', '1', '_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC', 'yesno', 'int', $p);
-		
+
 		unset($table);
-		
+
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}
-	
+
 	if (!$abortUpdate) $newDbVersion = 42;
 	/* 1.3.2 release - HTML Purifier 4.4.0 update */
-	
+
 	if ($dbVersion < $newDbVersion) {
 		/* New HTML Purifier options -
 		 * purifier_URI_SafeIframeRegexp. after purifier_URI_AllowedSchemes
 		 * purifier_HTML_SafeIframe, after purifier_HTML_SafeObject
 		 */
 		$table = new icms_db_legacy_updater_Table("config");
-		
-		// retrieve the value of the position before the config to be inserted. 
+
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_URI_AllowedSchemes")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 
 		//move all the other options down
-		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
-		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_SafeIframeRegexp', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP', '', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC', 'textsarea', 'text', $p);
+		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_SafeIframeRegexp', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP', 'http://www.youtube.com/|http://player.vimeo.com/video/|http://blip.tv/play/', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC', 'textsarea', 'text', $p);
 
-		// retrieve the value of the position before the config to be inserted. 
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_HTML_SafeObject")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 		//move all the other options down
-		$icmsDatabaseUpdater->runQuery("UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER);
-		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_SafeIframe', '_MD_AM_PURIFIER_HTML_SAFEIFRAME', '0', '_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC', 'yesno', 'int', $p);		
+		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_SafeIframe', '_MD_AM_PURIFIER_HTML_SAFEIFRAME', 0, '_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC', 'yesno', 'int', $p);
+
+		// append iframe info to allowed elements and allowed attributes
+		// need to unserialize the array, append the values, then serialize it again
+		$allowElements = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_HTML_AllowedElements")));
+		$eleValue = $allowElements[0]->getConfValueForOutput();
+		array_push($eleValue, 'iframe');
+		$newElements = addslashes(serialize($eleValue));
+		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_value ='" . $newElements . "' WHERE conf_name = 'purifier_HTML_AllowedElements'", sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		$allowAttributes = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_HTML_AllowedAttributes")));
+		$attrValue = $allowAttributes[0]->getConfValueForOutput();
+		array_push($attrValue, 'iframe.src', 'iframe.width', 'iframe.height');
+		$newAttributes = addslashes(serialize($attrValue));
+		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_value ='" . $newAttributes . "' WHERE conf_name = 'purifier_HTML_AllowedAttributes'", sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 	}
-	
