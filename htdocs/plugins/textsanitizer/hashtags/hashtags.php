@@ -9,7 +9,6 @@
  * @version		$Id$
  */
 define('HASHTAG_LINK',	ICMS_URL . '/search.php?query=%s&amp;action=results'); // The link to search results
-if (@defined(_ENTER_HASHTAG) === FALSE) {define( '_ENTER_HASHTAG', 'Enter the term(s) to tag:');}
 
 /**
  * Finds the hashtag in the text

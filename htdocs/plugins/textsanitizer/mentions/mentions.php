@@ -9,7 +9,6 @@
  * @version		$Id$
  */
 define('MENTIONS_LINK',	ICMS_URL . '/userinfo.php?uid=%u'); // The link to user profile
-if (@defined(_ENTER_MENTION) === FALSE) {define('_ENTER_MENTION', 'Enter the user name to mention:');}
 
 /**
  * Finds the mention in the text
