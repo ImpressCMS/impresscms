@@ -56,7 +56,7 @@ $op = '';
 	'usecookie' => 'int',
 	'xoops_upload_file' => 'array'
 	'user_avatar'=> 'str',
-	'op' => 'str', 
+	'op' => 'str',
 */
 $filter_post = array(
     'user_sig' => 'html',
@@ -83,28 +83,28 @@ if (!empty($_POST)) {
     $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
     extract($clean_POST);
 }
-	
+
 switch ($op) {
 	case 'saveuser':
 		if (!icms::$security->check()) {
 			redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', icms::$security->getErrors()));
 		}
-	
+
 		if (icms::$user->getVar('uid') != $uid) {
 			redirect_header('index.php', 3, _US_NOEDITRIGHT);
 		}
-	
+
 		$errors = array();
-	
+
 		if ($icmsConfigUser['allow_chgmail'] == 1) {
 			if (!empty($email)) {
 				$email = icms_core_DataFilter::stripSlashesGPC(trim($email));
 			}
-	
+
 			if ($email == '' || !icms_core_DataFilter::checkVar($email, 'email', 0, 1))	{
 				$errors[] = _US_INVALIDMAIL;
 			}
-	
+
 			$count = 0;
 			if ($email) {
 				$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s',
@@ -116,30 +116,30 @@ switch ($op) {
 				}
 			}
 		}
-	
+
 		if ($icmsConfigUser['allow_chguname'] == 1) {
 			if (!empty($uname)) {
 				$uname = icms_core_DataFilter::stripSlashesGPC(trim($uname));
 			}
-	
+
 			if ($uname == '') {
 				$errors[] = _US_INVALIDNICKNAME;
 			}
 			if (strlen($uname) > $icmsConfigUser['maxuname']) {
 				$errors[] .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']) . "<br />";
 			}
-	
+
 			if (strlen($uname) < $icmsConfigUser['minuname']) {
 				$errors[] .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']) . "<br />";
 			}
-	
+
 			foreach ($icmsConfigUser['bad_unames'] as $bu) {
 				if (!empty($bu) && preg_match("/" . $bu . "/i", $uname)) {
 					$errors[] .= _US_NAMERESERVED . "<br />";
 					break;
 				}
 			}
-	
+
 			$count = 0;
 			if ($uname) {
 				$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s',
@@ -151,11 +151,11 @@ switch ($op) {
 				}
 			}
 		}
-	
+
 		if (!empty($password)) {
 			$password = icms_core_DataFilter::stripSlashesGPC(trim($password));
-			$oldpass = !empty($old_password) 
-				? icms_core_DataFilter::stripSlashesGPC(trim($old_password)) 
+			$oldpass = !empty($old_password)
+				? icms_core_DataFilter::stripSlashesGPC(trim($old_password))
 				: '';
 
 			$member_handler = icms::handler('icms_member');
@@ -163,27 +163,27 @@ switch ($op) {
 			if (!$member_handler->loginUser(addslashes($username), $oldpass)) {
 				$errors[] = _US_SORRYINCORRECTPASS;
 			}
-	
+
 			if (strlen($password) < $icmsConfigUser['minpass']) {
 				$errors[] = sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']);
 			}
-	
+
 			if (!empty($vpass)) {
 				$vpass = icms_core_DataFilter::stripSlashesGPC(trim($vpass));
 			}
-	
+
 			if ($password != $vpass) {
 				$errors[] = _US_PASSNOTSAME;
 			}
-	
-			if ($password == $username 
-				|| $password == icms_core_DataFilter::utf8_strrev($username, TRUE) 
+
+			if ($password == $username
+				|| $password == icms_core_DataFilter::utf8_strrev($username, TRUE)
 				|| strripos($password, $username) === TRUE
 				) {
 				$errors[] = _US_BADPWD;
 			}
 		}
-	
+
 		if (count($errors) > 0) {
 			/** Include the header that starts page rendering */
 			include ICMS_ROOT_PATH . '/header.php';
@@ -197,11 +197,11 @@ switch ($op) {
 			if ($icmsConfigUser['allow_chgmail'] == 1) {
 				$edituser->setVar('email', $email, TRUE);
 			}
-	
+
 			if ($icmsConfigUser['allow_chguname'] == 1) {
 				$edituser->setVar('uname', $uname, TRUE);
 			}
-	
+
 			$edituser->setVar('url', formatURL($url));
 			$edituser->setVar('user_icq', $user_icq);
 			$edituser->setVar('user_from', $user_from);
@@ -215,7 +215,7 @@ switch ($op) {
 					$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 				}
 			}
-	
+
 			$user_viewemail = (!empty($user_viewemail)) ? 1 : 0;
 			$edituser->setVar('user_viewemail', $user_viewemail);
 			$user_viewoid = (!empty($user_viewoid)) ? 1 : 0;
@@ -231,7 +231,7 @@ switch ($op) {
 				$pass = $icmspass->encryptPass($password, $salt, $icmsConfigUser['enc_type']);
 				$edituser->setVar('pass', $pass, TRUE);
 			}
-	
+
 			$attachsig = !empty($attachsig) ? 1 : 0;
 			$edituser->setVar('attachsig', $attachsig);
 			$edituser->setVar('timezone_offset', $timezone_offset);
@@ -250,13 +250,13 @@ switch ($op) {
 			} else {
 				$edituser->setVar('theme', $icmsConfig['theme_set']);
 			}
-	
+
 			if (!empty($usecookie)) {
 				setcookie($icmsConfig['usercookie'], icms::$user->getVar('login_name'), time()+ 31536000);
 			} else {
 				setcookie($icmsConfig['usercookie']);
 			}
-	
+
 			if (!$member_handler->insertUser($edituser)) {
 				/** Include the header that starts page rendering */
 				include ICMS_ROOT_PATH . '/header.php';
@@ -278,7 +278,7 @@ switch ($op) {
 		if ($icmsConfigUser['pass_level'] > 20) {
 			icms_PasswordMeter();
 		}
-	
+
 		echo '<a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;
 			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br /><br />';
 		$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', TRUE);
@@ -290,14 +290,14 @@ switch ($op) {
 		} else {
 			$email_text = new icms_form_elements_Label('', icms::$user->getVar('email'));
 		}
-	
+
 		$email_tray->addElement($email_text);
 		$email_cbox_value = icms::$user->getVar('user_viewemail') ? 1 : 0;
 		$email_cbox = new icms_form_elements_Checkbox('', 'user_viewemail', $email_cbox_value);
 		$email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
 		$email_tray->addElement($email_cbox);
 		$form->addElement($email_tray);
-	
+
 		if ($icmsConfigAuth['auth_openid'] == 1) {
 			$openid_tray = new icms_form_elements_Tray(_US_OPENID_FORM_CAPTION, '<br />');
 			$openid_text = new icms_form_elements_Text('', 'openid', 30, 255, icms::$user->getVar('openid'));
@@ -309,19 +309,19 @@ switch ($op) {
 			$openid_tray->addElement($openid_cbox);
 			$form->addElement($openid_tray);
 		}
-	
+
 		if ($icmsConfigUser['allow_chguname'] == 1) {
 			$uname_label = new icms_form_elements_Text(_US_NICKNAME, 'uname', 30, 60, icms::$user->getVar('uname', 'E'));
 		} else {
 			$uname_label = new icms_form_elements_Label(_US_NICKNAME, icms::$user->getVar('uname'));
 		}
-	
+
 		$form->addElement($uname_label);
 		$name_text = new icms_form_elements_Text(_US_REALNAME, 'name', 30, 60, icms::$user->getVar('name', 'E'));
 		$form->addElement($name_text);
 		$url_text = new icms_form_elements_Text(_US_WEBSITE, 'url', 30, 100, icms::$user->getVar('url', 'E'));
 		$form->addElement($url_text);
-	
+
 		$timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, 'timezone_offset', icms::$user->getVar('timezone_offset'));
 		$icq_text = new icms_form_elements_Text(_US_ICQ, 'user_icq', 15, 15, icms::$user->getVar('user_icq', 'E'));
 		$aim_text = new icms_form_elements_Text(_US_AIM, 'user_aim', 18, 18, icms::$user->getVar('user_aim', 'E'));
@@ -349,7 +349,7 @@ switch ($op) {
 				$sig_tray->addElement($sig_cbox);
 			}
 		}
-	
+
 		$umode_select = new icms_form_elements_Select(_US_CDISPLAYMODE, 'umode', icms::$user->getVar('umode'));
 		$umode_select->addOptionArray(array('nest'=>_NESTED, 'flat'=>_FLAT, 'thread'=>_THREADED));
 		$uorder_select = new icms_form_elements_Select(_US_CSORTORDER, 'uorder', icms::$user->getVar('uorder'));
@@ -358,12 +358,12 @@ switch ($op) {
 		foreach ($icmsConfig['theme_set_allowed'] as $theme) {
 			$selected_theme->addOption($theme, $theme);
 		}
-	
+
 		$selected_language = new icms_form_elements_Select(_US_SELECT_LANG, 'language_selected', icms::$user->getVar('language'));
 		foreach (icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/") as $language) {
 			$selected_language->addOption($language, $language);
 		}
-	
+
 		// TODO: add this to admin user-edit functions...
 		icms_loadLanguageFile('core', 'notification');
 		include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
@@ -385,7 +385,7 @@ switch ($op) {
 		$uid_hidden = new icms_form_elements_Hidden('uid', (int) icms::$user->getVar('uid'));
 		$op_hidden = new icms_form_elements_Hidden('op', 'saveuser');
 		$submit_button = new icms_form_elements_Button('', 'submit', _US_SAVECHANGES, 'submit');
-	
+
 		$form->addElement($timezone_select);
 		$form->addElement($icq_text);
 		$form->addElement($aim_text);
@@ -398,11 +398,11 @@ switch ($op) {
 		if (count($icmsConfig['theme_set_allowed']) > 1) {
 			$form->addElement($selected_theme);
 		}
-	
+
 		if ($icmsConfigMultilang['ml_enable']) {
 			$form->addElement($selected_language);
 		}
-	
+
 		$form->addElement($umode_select);
 		$form->addElement($uorder_select);
 		$form->addElement($notify_method_select);
@@ -437,7 +437,7 @@ switch ($op) {
 			echo '<div style="text-align:center;"><h4 style="color:#ff0000; font-weight:bold;">' . _US_OLDDELETED . '</h4>';
 			echo '<img src="' . ICMS_UPLOAD_URL . '/' . $oldavatar . '" alt="" /></div>';
 		}
-	
+
 		if ($icmsConfigUser['avatar_allow_upload'] == 1 && icms::$user->getVar('posts') >= $icmsConfigUser['avatar_minposts']) {
 			$form = new icms_form_Theme(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', TRUE);
 			$form->setExtra('enctype="multipart/form-data"');
@@ -477,11 +477,11 @@ switch ($op) {
 		if (!empty($_POST['xoops_upload_file']) && is_array($_POST['xoops_upload_file'])) {
 			$xoops_upload_file = $_POST['xoops_upload_file'];
 		}
-	
+
 		if (!empty($uid)) {
 			$uid = (int) $uid;
 		}
-	
+
 		if (empty($uid) || icms::$user->getVar('uid') != $uid) {
 			redirect_header('index.php', 3, _US_NOEDITRIGHT);
 		}
@@ -512,8 +512,8 @@ switch ($op) {
 							}
 						}
 						$sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'",
-							 icms::$xoopsDB->prefix('users'), 
-							 icms::$xoopsDB->quoteString($uploader->getSavedFileName()), 
+							 icms::$xoopsDB->prefix('users'),
+							 icms::$xoopsDB->quoteString($uploader->getSavedFileName()),
 							 (int) icms::$user->getVar('uid')
 						);
 						icms::$xoopsDB->query($sql);
@@ -534,16 +534,15 @@ switch ($op) {
 		if (!icms::$security->check()) {
 			redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', icms::$security->getErrors()));
 		}
-	
+
 		if (!empty($uid)) {
 			$uid = (int) $uid;
 		}
-	
+
 		if (empty($uid) || icms::$user->getVar('uid') != $uid) {
 			redirect_header('index.php', 3, _US_NOEDITRIGHT);
 		}
-	
-		$user_avatar = '';
+
 		$avt_handler = icms::handler('icms_data_avatar');
 		if (!empty($user_avatar)) {
 			$user_avatar = icms_core_DataFilter::addSlashes(trim($user_avatar));
@@ -555,7 +554,7 @@ switch ($op) {
 			}
 			unset($avatars, $criteria_avatar);
 		}
-	
+
 		$user_avatarpath = str_replace("\\", "/", realpath(ICMS_UPLOAD_PATH . '/' . $user_avatar));
 		if (0 === strpos($user_avatarpath, ICMS_UPLOAD_PATH) && is_file($user_avatarpath)) {
 			$oldavatar = icms::$user->getVar('user_avatar');
