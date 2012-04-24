@@ -22,12 +22,12 @@ class mod_system_AvatarsHandler extends icms_data_avatar_Handler {
 	 *
 	 * Constructs the avatar handler
 	 *
-	 * @param obj $db
+	 * @param obj $db	database instance (@see icms_db_Factory::instance)
 	 */
 	public function __construct(&$db) {
 		parent::__construct($db);
 		/* overriding the default table name
-		 * @todo	completele refactoring and use standard table name
+		 * @todo	complete refactoring and use standard table name
 		 */
 		$this->table = $this->db->prefix('avatar');
 	}

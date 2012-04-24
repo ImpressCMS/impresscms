@@ -27,7 +27,7 @@ switch ($op) {
 		icms_loadLanguageFile('system', 'preferences', TRUE);
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('
-			. ICMS_URL . '/modules/system/admin/avatars/images/avatars_big.png)">'
+			. ICMS_MODULES_URL . '/system/admin/avatars/images/avatars_big.png)">'
 			. _MD_AVATARMAN . '</div><br />';
 		$savatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'S'));
 		$cavatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'C'));
