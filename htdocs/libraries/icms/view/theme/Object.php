@@ -578,7 +578,7 @@ class icms_view_theme_Object {
 
 				default:
 					foreach ($this->metas[$zone][$type] as $name => $content) {
-						$str .= '<meta name="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES) . "\" />\n";
+						$str .= '<meta name="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content['value'], ENT_QUOTES) . "\" />\n";
 					}
 					break;
 			}
