@@ -10,7 +10,10 @@
  * @version		$Id$
  */
 
-if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmin(icms::$module->getVar('mid'))) {
+if (!is_object(icms::$user)
+	|| !is_object(icms::$module)
+	|| !icms::$user->isAdmin(icms::$module->getVar('mid'))
+) {
 	exit("Access Denied");
 }
 
