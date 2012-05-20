@@ -9,13 +9,6 @@
  * @version		SVN: $Id$
  */
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-	exit("Access Denied");
-}
-
-/** load helper functions for smilies administration */
-include_once ICMS_MODULES_PATH . "/system/admin/smilies/smilies.php";
-
 /* user input variables - sanitize these properly!
  *
  * GET variables
@@ -47,6 +40,9 @@ $filter_post = array(
 
 /** common header for the admin functions */
 include 'admin_header.php';
+
+/** load helper functions for smilies administration */
+include_once ICMS_MODULES_PATH . "/system/admin/smilies/smilies.php";
 
 $db =& icms_db_Factory::instance();
 
