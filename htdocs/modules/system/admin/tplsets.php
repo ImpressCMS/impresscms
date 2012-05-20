@@ -5,7 +5,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		System
- * @subpackage	Template Sets
+ * @subpackage	Templates
  * @todo		Extract HTML and CSS to a template
  * @version		SVN: $Id$
  */
@@ -23,7 +23,7 @@ $filter_post = array(
 /** common header for the admin functions */
 include 'admin_header.php';
 
-if ($op == "") $op = 'list';
+if ($op == '') $op = 'list';
 
 if ($op == 'edittpl_go') {
 	if (isset($previewtpl)) {
