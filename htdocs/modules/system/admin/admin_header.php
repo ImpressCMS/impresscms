@@ -10,7 +10,10 @@
  * @version		$Id$
  */
 
-if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmin(icms::$module->getVar('mid'))) {
+if (!is_object(icms::$user)
+	|| !is_object(icms::$module)
+	|| !icms::$user->isAdmin(icms::$module->getVar('mid'))
+) {
 	exit("Access Denied");
 }
 
@@ -20,6 +23,7 @@ if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmi
  */
 
 $module_dir = basename(dirname(dirname(__FILE__)));
+/** common constants for this module */
 include_once ICMS_MODULES_PATH . "/" . $module_dir . "/include/common.php";
 if (!defined("CPANEL_ADMIN_URL")) define("CPANEL_ADMIN_URL", CPANEL_URL . "admin/");
 

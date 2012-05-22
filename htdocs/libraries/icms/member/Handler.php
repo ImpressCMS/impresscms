@@ -187,16 +187,14 @@ class icms_member_Handler {
 
 	/**
 	 * get a list of usernames and their IDs
-	 *
+	 * 
+	 * @deprecated	This isn't really a membership method, but for the user handler
+	 * 
 	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return array associative array of user-IDs and names
 	 */
-	public function getUserList($criteria = null) {
-		$users = $this->_uHandler->getObjects($criteria, true);
-		$ret = array();
-		foreach (array_keys($users) as $i) {
-			$ret[$i] = $users[$i]->getVar('uname');
-		}
+	public function getUserList($criteria = NULL) {
+		$ret = $this->_uHandler->getList($criteria);
 		return $ret;
 	}
 
