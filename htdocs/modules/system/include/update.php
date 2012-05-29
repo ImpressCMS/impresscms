@@ -99,7 +99,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/main.php')) $abortUpdate = TRUE;
 			/* Remove the system/{function}/class/ subfolder, if it exists */
 			if (!icms_core_Filesystem::deleteRecursive($admin_dir . $dir . "/class/", TRUE)) $abortUpdate = TRUE;
-			/* copy the images folders, but don't delete them - there may be uses in content areas */
+			/* @todo copy the images folders, but don't delete them - there may be uses in content areas */
 
 		}
 		/* Remove system/xoops_version.php */
@@ -110,17 +110,25 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		 */
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blocksadmin/", TRUE)) $abortUpdate = TRUE;
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/blocksadmin.php", TRUE)) $abortUpdate = TRUE;
-		// deal with symlinks and help files, templates
+		// @todo deal with symlinks and help files, templates
 
 		/* Remove system/admin/blockspadmin/ */
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blockspadmin/", TRUE)) $abortUpdate = TRUE;
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/blockspadmin.php", TRUE)) $abortUpdate = TRUE;
-		// deal with symlinks and help files, templates
+		// @todo deal with symlinks and help files, templates
 
 		/* Remove system/admin/modulesadmin/ */
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "modulesadmin/", TRUE)) $abortUpdate = TRUE;
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/modulesadmin.php", TRUE)) $abortUpdate = TRUE;
-		// deal with symlinks and help files, templates
+		// @todo deal with symlinks and help files, templates
+
+		/* Change instances of auth_method "xoops" to "local" */
+		$sql = "UPDATE `" . icms::$xoopsDB->prefix('config') . "` SET `conf_value` = 'local' WHERE `conf_name` = 'auth_method' AND `conf_value` = 'xoops';";
+		$sql .= "UPDATE `" . icms::$xoopsDB->prefix('configoption') . "` SET `confop_value` = 'local' WHERE `confop_value` = 'xoops' AND `confop_name` = '_MD_AM_AUTH_CONFOPTION_XOOPS';";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		/* @todo Set the IPF property of the module to '1' here */
+
 
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
