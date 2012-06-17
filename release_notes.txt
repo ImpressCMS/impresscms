@@ -1,8 +1,8 @@
-ImpressCMS 2.0 Alpha release notes
+ImpressCMS 2.0 Alpha 2 release notes
 ================================================
 
 The ImpressCMS Project is very proud to announce the first Alpha version of its 2.0 release! 
-ImpressCMS 2.0 Alpha is a major refactoring of the core and is not intended for production sites.
+ImpressCMS 2.0 Alpha 2 is a major refactoring of the core and is not intended for production sites.
 
 Please see the full [[Change Log]] for details in docs/changelog.txt.
 
@@ -32,7 +32,7 @@ wget http://www.impresscms.org/download/
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-http://subversion.assembla.com/svn/impresscms/releases/impresscms_2.0_alpha/
+http://subversion.assembla.com/svn/impresscms/releases/impresscms_2.0_alpha_2/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 

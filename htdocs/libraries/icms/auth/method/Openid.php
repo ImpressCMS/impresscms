@@ -1,6 +1,6 @@
 <?php
 /**
- * Authorization classes, OpenID protocol class file
+ * Authentication classes, OpenID protocol class file
  *
  * This class handles the authentication of a user with its openid. If the the authenticate openid
  * is not found in the users database, the user will be able to create his account on this site or
@@ -10,7 +10,7 @@
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package		Auth
+ * @package		Authentication
  * @subpackage	Openid
  * @since		1.1
  * @author		malanciault <marcan@impresscms.org)
@@ -26,13 +26,13 @@ define('OPENID_STEP_NO_USER_FOUND', 4);
 define('OPENID_STEP_USER_FOUND', 5);
 
 /**
- * OpenID authorization class
+ * OpenID authentication class
  *
  * @category	ICMS
- * @package		Auth
+ * @package		Authentication
  * @subpackage	Openid
  */
-class icms_auth_Openid extends icms_auth_Object {
+class icms_auth_method_Openid extends icms_auth_Object {
 
 	/**
 	 * @var string $displayid $displayid fetch from the openid authentication
@@ -65,18 +65,18 @@ class icms_auth_Openid extends icms_auth_Object {
 	/**
 	 * Authentication Service constructor
 	 */
-	public function __construct(&$dao) {
-		parent::__construct($dao);
+	public function __construct() {
+		$this->_dao = NULL;
 		$this->auth_method = 'openid';
 	}
-	
+
 	/**
 	 * Overloading method to allow access to private properties outside the class
-	 * 
-	 * Instead of creating separate methods for each private property, this allows you to 
+	 *
+	 * Instead of creating separate methods for each private property, this allows you to
 	 * access (read) the properties and still keep them from being written from the public
 	 * scope
-	 * 
+	 *
 	 * @param string $name
 	 */
 	public function &__get($name) {

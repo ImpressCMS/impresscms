@@ -29,6 +29,7 @@ if (!defined("CPANEL_ADMIN_URL")) define("CPANEL_ADMIN_URL", CPANEL_URL . "admin
 
 icms_loadLanguageFile($module_dir, 'common');
 
+/* set filter types, if not strings */
 $filter_post[] = array(
     'uid' => 'int',
 );
@@ -37,8 +38,10 @@ $filter_get[] = array(
     'uid' => 'int',
 );
 
+/* set default values for variables */
 $fct = $op = "";
 
+/* filter the user input */
 if (!empty($_GET)) {
     $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
     extract($clean_GET);

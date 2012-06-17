@@ -1,23 +1,23 @@
 <?php
 /**
- * Authorization classes, LDAP class file
+ * Authentication classes, LDAP class file
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Auth
- * @subpackage	Ldap
+ * @package		Authentication
+ * @subpackage	LDAP
  * @version		SVN: $Id$
  */
 /**
- * Authentification class for standard LDAP Server V2 or V3
+ * Authentication class for standard LDAP Server V2 or V3
  *
  * @category	ICMS
- * @package     Auth
- * @subpackage  Ldap
+ * @package     Authentication
+ * @subpackage  LDAP
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  */
-class icms_auth_Ldap extends icms_auth_Object {
+class icms_auth_method_Ldap extends icms_auth_Object {
 
 	public $cp1252_map = array(
 		"\xc2\x80" => "\xe2\x82\xac", /* EURO SIGN */
@@ -66,8 +66,8 @@ class icms_auth_Ldap extends icms_auth_Object {
 	/**
 	 * Authentication Service constructor
 	 */
-	public function __construct(&$dao) {
-		$this->_dao = $dao;
+	public function __construct() {
+		$this->_dao = NULL;
 		//The config handler object allows us to look at the configuration options that are stored in the database
 		global $icmsConfigAuth;
 		$confcount = count($icmsConfigAuth);
@@ -87,8 +87,14 @@ class icms_auth_Ldap extends icms_auth_Object {
 	 * @param string $pwd Password
 	 * @return bool
 	 */
-	public function authenticate($uname, $pwd = null) {
-		$authenticated = false;
+	public function authenticate($uname, $pwd = NULL) {
+		global $icmsConfigAuth;
+		$authenticated = FALSE;
+		if (in_array($uname, $icmsConfigAuth['ldap_users_bypass'])) {
+			/* use local authentication if user is bypassed for LDAP */
+			$auth = new icms_auth_method_Local(icms::$xoopsDB);
+			return $auth->authenticate($uname, $pwd);
+		}
 		if (!extension_loaded('ldap')) {
 			$this->setErrors(0, _AUTH_LDAP_EXTENSION_NOT_LOAD);
 			return $authenticated;
@@ -105,17 +111,17 @@ class icms_auth_Ldap extends icms_auth_Object {
 			// If the uid is not in the DN we proceed to a search
 			// The uid is not always in the dn
 			$userDN = $this->getUserDN($uname);
-			if (!$userDN) return false;
+			if (!$userDN) return FALSE;
 			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userDN, stripslashes($pwd));
 			if ($authenticated) {
 				icms::$session->securityLevel = 3;
 				icms::$session->check_ip_blocks = 2;
 				icms::$session->salt_key = XOOPS_DB_SALT;
-				icms::$sesseion->enableRegenerateId = true;
-				icms::$session->icms_sessionOpen();
+				icms::$session->enableRegenerateId = TRUE;
+				icms::$session->sessionOpen();
 				// We load the User database
-				return $this->loadicms_member_user_Object($userDN, $uname, $pwd);
+				return $this->getMember($userDN, $uname, $pwd);
 			} else {
 				icms::$session->destroy(session_id());
 				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userDN . ')');
@@ -133,12 +139,12 @@ class icms_auth_Ldap extends icms_auth_Object {
 	 * @return userDN or false
 	 */
 	public function getUserDN($uname) {
-		$userDN = false;
+		$userDN = FALSE;
 		if (!$this->ldap_loginname_asdn) {
 			// Bind with the manager
 			if (!ldap_bind($this->_ds, $this->ldap_manager_dn, stripslashes($this->ldap_manager_pass))) {
 				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $this->ldap_manager_dn . ')');
-				return false;
+				return FALSE;
 			}
 			$filter = $this->getFilter($uname);
 			$sr = ldap_search($this->_ds, $this->ldap_base_dn, $filter);
@@ -176,16 +182,15 @@ class icms_auth_Ldap extends icms_auth_Object {
 	 * @param string $pwd Password
 	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
 	 **/
-	public function loadicms_member_user_Object($userdn, $uname, $pwd = null) {
-		$provisHandler = icms_auth_Provisionning::getInstance($this);
+	public function getMember($userdn, $uname, $pwd = NULL) {
+		$provisHandler = icms_auth_method_ldap_Provisioning::getInstance($this);
 		$sr = ldap_read($this->_ds, $userdn, '(objectclass=*)');
 		$entries = ldap_get_entries($this->_ds, $sr);
 		if ($entries['count'] > 0) {
 			$icmsUser = $provisHandler->sync($entries[0], $uname, $pwd);
 		} else {
-			$this->setErrors(0, sprintf('loadicms_member_user_Object - ' . _AUTH_LDAP_CANT_READ_ENTRY, $userdn));
+			$this->setErrors(0, sprintf('getMember - ' . _AUTH_LDAP_CANT_READ_ENTRY, $userdn));
 		}
 		return $icmsUser;
 	}
 }
-
