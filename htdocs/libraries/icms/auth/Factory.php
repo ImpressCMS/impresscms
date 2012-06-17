@@ -1,20 +1,20 @@
 <?php
 /**
- * Authorization classes, factory class file
+ * Authentication classes, factory class file
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Auth
+ * @package		Authentication
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @version		SVN: $Id$
  */
 
 /**
- * Authentification class factory
+ * Authentication class factory
  *
  * @category	ICMS
- * @package     Auth
+ * @package     Authentication
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_Factory {
@@ -36,45 +36,29 @@ class icms_auth_Factory {
 			global $icmsConfigAuth;
 
 			if (empty($icmsConfigAuth['auth_method'])) {
-				// If there is a config error, we use xoops
-				$auth_method = 'xoops';
+				// If there is a config error, we use local authentication
+				$auth_method = 'local';
 			} else {
 				$auth_method = $icmsConfigAuth['auth_method'];
 
-				// However if auth_method is XOOPS, and openid login is activated and a user is trying to authenticate with his openid
+				// However if auth_method is Local, and Openid login is activated and a user is trying to authenticate with his openid
 
 				/*
-				 * @todo we need to add this in the preference
+				 * @todo remove this from the factory class!
+				 * this actually should NOT be part of the factory class
 				 */
-				$config_to_enable_openid = true;
 
-				if ($icmsConfigAuth['auth_method'] == 'xoops' && $config_to_enable_openid && (isset($_REQUEST['openid_identity']) || isset($_SESSION['openid_response']))) {
+				if ($icmsConfigAuth['auth_method'] == 'local'
+					&& $icmsConfigAuth['auth_openid']
+					&& (isset($_REQUEST['openid_identity']) || isset($_SESSION['openid_response']))
+				) {
 					$auth_method = 'openid';
 				}
 			}
-			// Verify if uname allow to bypass LDAP auth
-			if (in_array($uname, $icmsConfigAuth['ldap_users_bypass'])) $auth_method = 'xoops';
-			/* with autoloading in ImpressCMS 1.3, requiring the file is not necessary */
-			$class = 'icms_auth_' . ucfirst($auth_method);
-			switch ($auth_method) {
-				case 'xoops' :
-					$dao =& icms::$xoopsDB;
-					break;
 
-				case 'ldap'  :
-					$dao = null;
-					break;
-
-				case 'ads'  :
-					$dao = null;
-					break;
-
-				default:
-					break;
-			}
-			$auth_instance = new $class($dao);
+			$class = 'icms_auth_method_' . ucfirst($auth_method);
+			$auth_instance = new $class();
 			return $auth_instance;
 		}
 	}
 }
-

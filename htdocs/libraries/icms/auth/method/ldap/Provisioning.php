@@ -1,42 +1,42 @@
 <?php
 /**
- * Authorization classes, provisioning class file
+ * Authentication classes, provisioning class file
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Auth
+ * @package		Authentication
  * @version		SVN: $Id$
  */
 
 /**
- * Authentification provisionning class. This class is responsible to
+ * Authentication provisioning class. This class is responsible to
  * provide synchronisation method to the user Database
  *
  * @category	ICMS
- * @package     Auth
+ * @package     Authentication
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  */
-class icms_auth_Provisionning {
+class icms_auth_method_ldap_Provisioning {
 
 	private $_auth_instance;
 
 	/**
-	 * Gets instance of {@link icms_auth_Provisionning}
+	 * Gets instance of {@link icms_auth_method_ldap_Provisioning}
 	 * @param   object $auth_instance
-	 * @return  object $provis_instance {@link icms_auth_Provisionning}
+	 * @return  object $provis_instance {@link icms_auth_method_ldap_Provisioning}
 	 **/
 	static public function &getInstance(&$auth_instance) {
 		static $provis_instance;
 		if (!isset($provis_instance)) {
-			$provis_instance = new icms_auth_Provisionning($auth_instance);
+			$provis_instance = new self($auth_instance);
 		}
 		return $provis_instance;
 	}
 
 	/**
 	 * Authentication Service constructor
-	 * @param object $auth_instance {@link icms_auth_Provisionning}
+	 * @param object $auth_instance {@link icms_auth_method_ldap_Provisioning}
 	 **/
 	public function __construct(&$auth_instance) {
 		$this->_auth_instance = &$auth_instance;
@@ -155,6 +155,4 @@ class icms_auth_Provisionning {
 		}
 		return $ret;
 	}
-
 }
-
