@@ -2,16 +2,20 @@
 /**
  * Site index aka home page.
  * redirects to installation, if ImpressCMS is not installed yet
- * 
+ *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License(GPL)
  * @package		core
  * @author	    Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		AVN: $Id$
+ * @version		SVN: $Id$
  **/
 
-/** Need the mainfile */
-include "mainfile.php";
+
+if (!file_exists("mainfile.php")) {
+	header("Location: install/index.php");
+}
+/** mainfile is required, if it doesn't exist - installation is needed */
+require "mainfile.php";
 
 $member_handler = icms::handler('icms_member');
 $group = $member_handler->getUserBestGroup((@is_object(icms::$user) ? icms::$user->getVar('uid') : 0));
