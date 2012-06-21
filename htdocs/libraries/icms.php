@@ -165,13 +165,14 @@ abstract class icms {
 		self::loadService('module', array('icms_module_Handler', 'service'), array($isAdmin));
 	}
 
+	/**
+	 * Finalizes all processes as the script exits
+	 */
 	static public function shutdown() {
 		// Ensure the session service can write data before the DB connection is closed
 		if (session_id()) session_write_close();
 		// Ensure the logger can decorate output before objects are destroyed
-		while (ob_get_level()) {
-			ob_end_flush();
-		}
+		while (@ob_end_flush());
 	}
 
 	/**
