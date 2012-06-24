@@ -170,7 +170,9 @@ icms_core_Filesystem {
 	 */
 	static public function deleteFile($dirname) {
 		$success = FALSE;
+		
 		if (is_file($dirname)) {
+			if (!is_writable($dirname)) chmod($dirname, 0777);	
 			$success = unlink($dirname);
 		} else {
 			$success = TRUE;
@@ -218,6 +220,7 @@ icms_core_Filesystem {
 			RecursiveIteratorIterator::CHILD_FIRST
 		);
 		foreach ($iterator as $path) {
+			if (!$path->isWritable()) chmod($path->__toString(), 0777);
 			if ($path->isDir()) {
 				$success = rmdir($path->__toString());
 			} else {
