@@ -118,7 +118,6 @@ function displayUsers() {
 	$rank_value = 0;
 	$mailok_value = 0;
 	$pass_expired_value = 0;
-	$enc_type_value = $icmsConfigUser['enc_type'];
 	$op_value = 'addUser';
 	$form_title = _AM_ADDUSER;
 	$form_isedit = FALSE;
@@ -173,7 +172,6 @@ function modifyUser($user) {
 		$rank_value = $user->rank(FALSE);
 		$mailok_value = $user->getVar('user_mailok', 'E');
 		$pass_expired_value = $user->getVar('pass_expired') ? 1 : 0;
-		$enc_type_value = $user->getVar('enc_type', 'E');
 		$op_value = 'updateUser';
 		$form_title = _AM_UPDATEUSER . ': ' . $user->getVar('uname');
 		$language_value = $user->getVar('language');
@@ -232,17 +230,15 @@ function modifyUser($user) {
  * @param $user_mailok
  * @param $language
  * @param $openid
- * @param $salt
  * @param $user_viewoid
  * @param $pass_expired
- * @param $enc_type
  * @param $groups
  */
 function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim,
 					$user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar,
 					$user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method,
-					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid,
-					$pass_expired, $enc_type, $groups = array()
+					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $user_viewoid,
+					$pass_expired, $groups = array()
 					) {
 	global $icmsConfig, $icmsModule, $icmsConfigUser, $user_handler;
 	$edituser =& $user_handler->get($uid);
@@ -297,10 +293,8 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 			}
 
 			$icmspass = new icms_core_Password();
-			$edituser->setVar('salt', $salt);
-			$edituser->setVar('enc_type', $enc_type);
 			$edituser->setVar('pass_expired', $pass_expired);
-			$pass = $icmspass->encryptPass($pass, $salt, $enc_type);
+			$pass = $icmspass->encryptPass($pass);
 			$edituser->setVar('pass', $pass);
 		}
 		if (!$user_handler->insert($edituser)) {

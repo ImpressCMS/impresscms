@@ -225,10 +225,7 @@ switch ($op) {
 			$edituser->setVar('user_msnm', $user_msnm);
 			if ($password != '') {
 				$icmspass = new icms_core_Password();
-				$salt = $icmspass->createSalt();
-				$edituser->setVar('salt', $salt, TRUE);
-				$edituser->setVar('enc_type', $icmsConfigUser['enc_type'], TRUE);
-				$pass = $icmspass->encryptPass($password, $salt, $icmsConfigUser['enc_type']);
+				$pass = $icmspass->encryptPass($password);
 				$edituser->setVar('pass', $pass, TRUE);
 			}
 
@@ -381,7 +378,6 @@ switch ($op) {
 		$pwd_tray->addElement($pwd_text2);
 		$pwd_text_old = new icms_form_elements_Password(_US_OLD_PASSWORD, 'old_password', 10, 255);
 		$mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', (int) icms::$user->getVar('user_mailok'));
-		$salt_hidden = new icms_form_elements_Hidden('salt', icms_core_DataFilter::checkVar(icms::$user->getVar('salt'), 'str'));
 		$uid_hidden = new icms_form_elements_Hidden('uid', (int) icms::$user->getVar('uid'));
 		$op_hidden = new icms_form_elements_Hidden('op', 'saveuser');
 		$submit_button = new icms_form_elements_Button('', 'submit', _US_SAVECHANGES, 'submit');
@@ -414,7 +410,6 @@ switch ($op) {
 		$form->addElement($pwd_tray_old);
 		$form->addElement($cookie_radio);
 		$form->addElement($mailok_radio);
-		$form->addElement($salt_hidden);
 		$form->addElement($uid_hidden);
 		$form->addElement($op_hidden);
 		$form->addElement($token_hidden);

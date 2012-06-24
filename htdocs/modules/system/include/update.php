@@ -127,7 +127,16 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$sql .= "UPDATE `" . icms::$xoopsDB->prefix('configoption') . "` SET `confop_value` = 'local' WHERE `confop_value` = 'xoops' AND `confop_name` = '_MD_AM_AUTH_CONFOPTION_XOOPS';";
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-		/* @todo Set the IPF property of the module to '1' here */
+		/* Change enc_type options in preferences (+20) & expire passwords if values less than 20" */
+        /* we won't need to do this if we do this new password system in 1.3 versions */
+		$val = "SELECT `confop_value` FROM `" . icms::$xoopsDB->prefix('configoption') . "` WHERE `confop_name` = '_MD_AM_ENC_MD5';";
+		$icmsDatabaseUpdater->runQuery($val, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $val), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $val));
+        if ($val < 20) {
+            $sql = "UPDATE `" . icms::$xoopsDB->prefix('configoption') . "` SET `confop_value` = confop_value + 20 WHERE `confop_name` LIKE '_MD_AM_ENC_%';";
+            $icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+        }
+
+        /* @todo Set the IPF property of the module to '1' here */
 
 
 		/* Finish up this portion of the db update */

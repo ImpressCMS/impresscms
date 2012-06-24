@@ -49,11 +49,9 @@ if (empty($getuser)) {
 
 //	$code = isset($_GET['code']) ? trim(filter_input(INPUT_GET, 'code')) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
-	$enc_type = (int) $icmsConfigUser['enc_type'];
 	if ($code != '' && $areyou == $code) {
 		$newpass = $icmspass->createSalt(8);
-		$salt = $icmspass->createSalt();
-		$pass = $icmspass->encryptPass($newpass, $salt, $icmsConfigUser['enc_type']);
+		$pass = $icmspass->encryptPass($newpass);
 		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass2.tpl');
@@ -71,8 +69,8 @@ if (empty($getuser)) {
 		}
 
 		// Next step: add the new password to the database
-		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'",
-						icms::$xoopsDB->prefix('users'), $pass, $salt, $enc_type, 0, (int) $getuser[0]->getVar('uid'));
+		$sql = sprintf("UPDATE %s SET pass = '%s', pass_expired = '%u' WHERE uid = '%u'",
+						icms::$xoopsDB->prefix('users'), $pass, 1, (int) $getuser[0]->getVar('uid'));
 		if (!icms::$xoopsDB->queryF($sql)) {
 			/** Include header.php to start page rendering */
 			include 'header.php';
