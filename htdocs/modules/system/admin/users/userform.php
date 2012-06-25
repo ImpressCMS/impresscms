@@ -137,9 +137,6 @@ else {
 	}
 }
 
-$salt_hidden = new icms_form_elements_Hidden('salt', icms_core_Password::createSalt());
-
-$enc_type_hidden = new icms_form_elements_Hidden('enc_type', $icmsConfigUser['enc_type']);
 $pass_expired_hidden = new icms_form_elements_Hidden('pass_expired', 0);
 $fct_hidden = new icms_form_elements_Hidden("fct", "users");
 $op_hidden = new icms_form_elements_Hidden("op", $op_value);
@@ -152,8 +149,6 @@ $form->addElement($name_text);
 $form->addElement($email_tray, true);
 $form->addElement($openid_tray, true);
 $form->addElement($url_text);
-//  $form->addElement($avatar_tray);
-//  $form->addElement($theme_select);
 $form->addElement($timezone_select);
 $form->addElement($icq_text);
 $form->addElement($aim_text);
@@ -175,14 +170,10 @@ $form->addElement($rank_select);
 if (!$form_isedit) {
 	$form->addElement($pwd_text, true);
 	$form->addElement($pwd_text2, true);
-	$form->addElement($salt_hidden, true);
-	$form->addElement($enc_type_hidden, true);
 	$form->addElement($pass_expired_hidden, true);
 } else {
 	$form->addElement($pwd_text);
 	$form->addElement($pwd_text2);
-	$form->addElement($salt_hidden);
-	$form->addElement($enc_type_hidden);
 	$form->addElement($pass_expired_hidden);
 }
 

@@ -75,7 +75,7 @@ final class icms_core_Password {
 	 * @param    string  $uname      Username to find User Salt key for.
 	 * @return   string  returns the Salt key of the user.
      * 
-     * To be removed in future versions
+     * To be removed!
 	 **/
 	private function priv_getUserSalt($uname) {
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
@@ -109,7 +109,7 @@ final class icms_core_Password {
      * @param    string  $uname      Username to find Enc_type for.
      * @return   string  returns the Encryption type of the user.
      * 
-     * To be removed in future versions
+     * To be removed!
      **/
     private function priv_getUserEncType($uname) {
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
@@ -139,7 +139,7 @@ final class icms_core_Password {
     /**
      * This Private Function returns the User Password Hash belonging to username.
      * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-     * @since    2.0
+     * @since    1.3.3
      * @param    string  $uname      Username to find hash for.
      * @return   string  returns the Password hash of the user.
      **/
@@ -179,7 +179,7 @@ final class icms_core_Password {
 	 *                               use in conjunction only with $enc_type above.
 	 * @return   Hash of users password.
      * 
-     * To be removed in 2.0, use priv_encryptPassword() instead
+     * To be removed!, use priv_encryptPassword() instead
 	 **/
 	private function priv_encryptPass($pass, $salt, $enc_type) {
 		if ($enc_type == 0) {
@@ -214,7 +214,7 @@ final class icms_core_Password {
 	/**
 	 * This Private Function is used to Encrypt User Passwords
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-	 * @since    2.0
+	 * @since    1.3.3
 	 * @param    string  $pass       plaintext password to be encrypted
 	 * @param    string  $salt       unique user salt key used in encryption process
 	 * @param    int     $enc_type   encryption type to use.
@@ -239,7 +239,7 @@ final class icms_core_Password {
 	/**
 	 * This Private Function rehashes (stretches) the Password Hash
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-	 * @since    2.0
+	 * @since    1.3.3
 	 * @param    string     $hash           hash to be re-hashed (stretched)
 	 * @param    int        $iterations     Number of times to re-hash
 	 * @return   Hash of users password.
@@ -274,7 +274,7 @@ final class icms_core_Password {
 	/**
 	 * This Private Function verifies if the password is correct
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-	 * @since    2.0
+	 * @since    1.3.3
 	 * @param    string     $pass       Password to be verified
 	 * @param    string     $uname      Username of password to be verified
 	 * @return   mixed      returns password HASH if correct, returns false if incorrect
@@ -290,7 +290,7 @@ final class icms_core_Password {
             if (self::priv_encryptPassword($pass, $userSalt, $encType) == $userHash) {
                 return $userHash;
             }
-        } else { // to be removed in 2.0
+        } else { // to be removed!
             $encType = self::priv_getUserEncType($uname);
             
             if (self::priv_encryptPass($pass, $userSalt, $encType) == $userHash) {
@@ -340,7 +340,7 @@ final class icms_core_Password {
 	 * @param    string  $uname      Username to find User Salt key for.
 	 * @return   string  returns the Salt key of the user.
      * 
-     * To be removed in 2.0
+     * To be removed!
 	 **/
 	public function getUserSalt($uname = '') {
 		return self::priv_getUserSalt($uname);
@@ -353,7 +353,7 @@ final class icms_core_Password {
      * @param    string  $uname      Username to find Encryption Type for.
      * @return   string  returns the Encryption Type of the user.
      * 
-     * to be removed in 2.0
+     * to be removed!
      **/
     public function getUserEncType($uname = '')
     {
@@ -378,7 +378,7 @@ final class icms_core_Password {
     /**
      * This Public Function verifies if the users password is correct.
      * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-     * @since    2.0
+     * @since    1.3.3
      * @param    string  $uname      Username to verify.
      * @param    string  $pass       Password to verify.
      * @return   mixed      returns Hash if correct, returns false if incorrect.
