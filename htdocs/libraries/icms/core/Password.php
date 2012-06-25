@@ -182,63 +182,32 @@ final class icms_core_Password {
      * To be removed in 2.0, use priv_encryptPassword() instead
 	 **/
 	private function priv_encryptPass($pass, $salt, $enc_type) {
-		global $icmsConfigUser;
-        
 		if ($enc_type == 0) {
 			return md5($pass);
 		} else {
 			$pass = $salt . md5($pass) . $this->mainSalt;
-			switch ($enc_type) {
-				default:
-					case '1':
-						return hash('sha256', $pass);
-				break;
-				case '2':
-					return hash('sha384', $pass);
-				break;
-				case '3':
-					return hash('sha512', $pass);
-				break;
-				case '4':
-					return hash('ripemd128', $pass);
-				break;
-				case '5':
-					return hash('ripemd160', $pass);
-				break;
-				case '6':
-					return hash('whirlpool', $pass);
-				break;
-				case '7':
-					return hash('haval128,4', $pass);
-				break;
-				case '8':
-					return hash('haval160,4', $pass);
-				break;
-				case '9':
-					return hash('haval192,4', $pass);
-				break;
-				case '10':
-					return hash('haval224,4', $pass);
-				break;
-				case '11':
-					return hash('haval256,4', $pass);
-				break;
-				case '12':
-					return hash('haval128,5', $pass);
-				break;
-				case '13':
-					return hash('haval160,5', $pass);
-				break;
-				case '14':
-					return hash('haval192,5', $pass);
-				break;
-				case '15':
-					return hash('haval224,5', $pass);
-				break;
-				case '16':
-					return hash('haval256,5', $pass);
-				break;
-			}
+
+            $type = array();
+            $type['encType'] = array(
+                                        1 => 'sha256',
+                                        2 => 'sha384',
+                                        3 => 'sha512',
+                                        4 => 'ripemd128',
+                                        5 => 'ripemd160',
+                                        6 => 'whirlpool',
+                                        7 => 'haval128,4',
+                                        8 => 'haval160,4',
+                                        9 => 'haval192,4',
+                                        10 => 'haval224,4',
+                                        11 => 'haval256,4',
+                                        12 => 'haval128,5',
+                                        13 => 'haval160,5',
+                                        14 => 'haval192,5',
+                                        15 => 'haval224,5',
+                                        16 => 'haval256,5',
+                                    );
+            
+            return hash($type['encType'][$enc_type], $pass);
         }
     }
 
@@ -276,60 +245,27 @@ final class icms_core_Password {
 	 * @return   Hash of users password.
 	 **/
     private function priv_rehash($hash, $iterations, $enc_type = 21) {
-        switch ($enc_type) {
-            default:
-            case '21':
-                $type = 'sha256';
-            break;
-            case '22':
-                $type = 'sha384';
-            break;
-            case '23':
-                $type = 'sha512';
-            break;
-            case '24':
-                $type = 'ripemd128';
-            break;
-            case '25':
-                $type = 'ripemd160';
-            break;
-            case '26':
-                $type = 'whirlpool';
-            break;
-            case '27':
-                $type = 'haval128,4';
-            break;
-            case '28':
-                $type = 'haval160,4';
-            break;
-            case '29':
-                $type = 'haval192,4';
-            break;
-            case '30':
-                $type = 'haval224,4';
-            break;
-            case '31':
-                $type = 'haval256,4';
-            break;
-            case '32':
-                $type = 'haval128,5';
-            break;
-            case '33':
-                $type = 'haval160,5';
-            break;
-            case '34':
-                $type = 'haval192,5';
-            break;
-            case '35':
-                $type = 'haval224,5';
-            break;
-            case '36':
-                $type = 'haval256,5';
-            break;
-        }
+        $type['encType'] = array(
+                                    21 => 'sha256',
+                                    22 => 'sha384',
+                                    23 => 'sha512',
+                                    24 => 'ripemd128',
+                                    25 => 'ripemd160',
+                                    26 => 'whirlpool',
+                                    27 => 'haval128,4',
+                                    28 => 'haval160,4',
+                                    29 => 'haval192,4',
+                                    30 => 'haval224,4',
+                                    31 => 'haval256,4',
+                                    32 => 'haval128,5',
+                                    33 => 'haval160,5',
+                                    34 => 'haval192,5',
+                                    35 => 'haval224,5',
+                                    36 => 'haval256,5',
+                                );
 
         for ($i = 0; $i < $iterations; ++$i) {
-            $hashed = hash($type, $hash . $hash);
+            $hashed = hash($type['encType'][$enc_type], $hash . $hash);
         }
         
         return $hashed;
