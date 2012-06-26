@@ -305,5 +305,39 @@
 		$newAttributes = addslashes(serialize($attrValue));
 		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_value ='" . $newAttributes . "' WHERE conf_name = 'purifier_HTML_AllowedAttributes'", sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+        unset($table);
+
+        /* this should be the last step of the update */
+        $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+
 	}
+
+	if (!$abortUpdate) $newDbVersion = 43;
+	/* 1.3.3 release - change in encryption methods */
+
+	if ($dbVersion < $newDbVersion) {
+
+		$table = new icms_db_legacy_updater_Table("configoption");
+
+        /* Change enc_type options in preferences (+20) & expire passwords if values less than 20" */
+		$val = "SELECT `confop_value` FROM `" . $table->name() . "` WHERE confop_name = '_MD_AM_ENC_MD5';";
+		$icmsDatabaseUpdater->runQuery($val, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $val), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $val));
+        if ($val < 20) {
+            $sql = "UPDATE `" . $table->name() . "` SET confop_value = confop_value + 20 WHERE confop_name LIKE '_MD_AM_ENC_%';";
+            $icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+        }
+
+        unset($table);
+
+		$table = new icms_db_legacy_updater_Table("users");
+
+        /* Set all user passwords as Expired (required due to password algorhythm update */
+        $sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0;";
+        $icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+        unset($table);
+
+        /* this should be the last step of the update */
+        $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+	}
+
