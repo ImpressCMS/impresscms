@@ -312,9 +312,8 @@ class icms_member_Handler {
 		if ($is_expired == 1) {
 			redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
 		}
-		$salt = $icmspass->getUserSalt($uname);
-		$enc_type = $icmspass->getUserEncType($uname);
-		$pwd = $icmspass->encryptPass($pwd, $salt, $enc_type);
+
+        $pwd = $icmspass->verifyPass($pwd, $uname);
 		
 		$table = new icms_db_legacy_updater_Table('users');
 		if ($table->fieldExists('loginname')) {

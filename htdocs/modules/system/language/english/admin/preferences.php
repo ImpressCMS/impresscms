@@ -702,3 +702,9 @@ define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC","A list of URLs that you want t
     http://www.youtube.com/embed/ - Allow YouTube videos<br />
     http://player.vimeo.com/video/ - Allow Vimeo videos<br />
     http://www.youtube.com/embed/|http://player.vimeo.com/video/ - Allow both<br /><br />HTML Safe Iframe must be enabled for this to work.");
+
+// added in 1.3.3
+define("_MD_AM_ENC_RIPEMD256","RIPEMD 256");
+define("_MD_AM_ENC_RIPEMD320","RIPEMD 320");
+define("_MD_AM_ENC_SNEFRU256","Snefru 256");
+define("_MD_AM_ENC_GOST","Gost");

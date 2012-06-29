@@ -69,10 +69,10 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 	$CleanWritingFolders = FALSE;
 
-	if ($dbVersion < 42) include 'update-122-to-13.php';
+	if ($dbVersion < 43) include 'update-122-to-13.php';
 
 /*  Begin upgrade to version 2.0 */
-	if (!$abortUpdate) $newDbVersion = 43;
+	if (!$abortUpdate) $newDbVersion = 44;
 
 	/*
 	 * The update for this version will need to convert the system module to an IPF module
@@ -82,11 +82,12 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	 */
 
 	if ($dbVersion < $newDbVersion) {
+		$remnants = array();
 		/* all theses file deletions should not be a reason the update fails - everything will still work,
 		 * there will just be some notices
 		 */
-		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/class/", TRUE);
-		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/kernel/", TRUE);
+		if (!icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/class/", TRUE)) $remnants[] = "/class/";
+		if (!icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/kernel/", TRUE)) $remnants[] = "/kernel/";
 
 		/* list of directories in the system/admin/ folder */
 		$admin_dir = ICMS_MODULES_PATH . '/system/admin/';
@@ -95,44 +96,47 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			/* remove xoops_version.php and main.php from these folders if the update has
 		 	 * been successful.
 		 	 */
-			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/xoops_version.php')) $abortUpdate = TRUE;
-			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/main.php')) $abortUpdate = TRUE;
+			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/xoops_version.php')) $remnants[] = $dir . "/xoops_version.php";
+			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/main.php')) $remnants[] = $dir . "/main.php";
 			/* Remove the system/{function}/class/ subfolder, if it exists */
-			if (!icms_core_Filesystem::deleteRecursive($admin_dir . $dir . "/class/", TRUE)) $abortUpdate = TRUE;
-			/* @todo copy the images folders, but don't delete them - there may be uses in content areas */
+			if (!icms_core_Filesystem::deleteRecursive($admin_dir . $dir . "/class/", TRUE)) $remnants[] = $dir . "/class/";
+			/* @todo ? copy the images folders, but don't delete them - there may be uses in content areas */
 
 		}
 		/* Remove system/xoops_version.php */
-		if (!icms_core_Filesystem::deleteFile(ICMS_MODULES_PATH . "/system/xoops_version.php")) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteFile(ICMS_MODULES_PATH . "/system/xoops_version.php")) $remnants[] = "/modules/system/xoops_version.php";
 
 		/* Remove system/admin/blocksadmin/
-		 * If this fails, the cpanel will be a bit messed up, but the system will still function
+		 * If this fails, the system will still function, but there will be old files left to delete manually
 		 */
-		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blocksadmin/", TRUE)) $abortUpdate = TRUE;
-		if (!icms_core_Filesystem::deleteFile($admin_dir . "language/english/admin/blocksadmin.php", TRUE)) $abortUpdate = TRUE;
-		// @todo deal with symlinks and help files, templates
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blocksadmin/", TRUE)) $remnants[] = "/modules/system/admin/blocksadmin/";
+		if (!icms_core_Filesystem::deleteFile(ICMS_MODULES_PATH . "/system/language/english/admin/blocksadmin.php")) $remnants[] = "/modules/system/language/english/admin/blocksadmin.php";
+		// @todo deal with symlinks and help files, templates, handle multiple languages
 
 		/* Remove system/admin/blockspadmin/ */
-		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blockspadmin/", TRUE)) $abortUpdate = TRUE;
-		if (!icms_core_Filesystem::deleteFile($admin_dir . "language/english/admin/blockspadmin.php", TRUE)) $abortUpdate = TRUE;
-		// @todo deal with symlinks and help files, templates
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blockspadmin/", TRUE)) $remnants[] = "/modules/system/admin/blockspadmin/";
+		if (!icms_core_Filesystem::deleteFile(ICMS_MODULES_PATH . "/system/language/english/admin/blockspadmin.php")) $remnants[] = "/modules/system/language/english/admin/blockspadmin.php";
+		// @todo deal with symlinks and help files, templates, handle multiple languages
 
 		/* Remove system/admin/modulesadmin/ */
-		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "modulesadmin/", TRUE)) $abortUpdate = TRUE;
-		if (!icms_core_Filesystem::deleteFile($admin_dir . "language/english/admin/modulesadmin.php", TRUE)) $abortUpdate = TRUE;
-		// @todo deal with symlinks and help files, templates
+		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "modulesadmin/", TRUE)) $remnants[] = "/modules/system/admin/modulesadmin/";
+		if (!icms_core_Filesystem::deleteFile(ICMS_MODULES_PATH . "/system/language/english/admin/modulesadmin.php")) $remnants[] = "/modules/system/language/english/admin/modulesadmin.php";
+		// @todo deal with symlinks and help files, templates, handle multiple languages
 
 		/* Change instances of auth_method "xoops" to "local" */
 		$sql = "UPDATE `" . icms::$xoopsDB->prefix('config') . "` SET `conf_value` = 'local' WHERE `conf_name` = 'auth_method' AND `conf_value` = 'xoops';";
 		$sql .= "UPDATE `" . icms::$xoopsDB->prefix('configoption') . "` SET `confop_value` = 'local' WHERE `confop_value` = 'xoops' AND `confop_name` = '_MD_AM_AUTH_CONFOPTION_XOOPS';";
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-		/* @todo Set the IPF property of the module to '1' here */
+        /* @todo Set the IPF property of the module to '1' here */
 
 
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			if (count($remnants)) {
+				icms_core_Message::warning($remnants, "Unable to remove these files - you can remove them manually", TRUE);
+			}
 			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}

@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$result = $dbm->queryFromFile('./sql/'.XOOPS_DB_TYPE.'.data.sql');
 	$result = $dbm->queryFromFile('./language/'.$language.'/'.XOOPS_DB_TYPE.'.lang.data.sql');
 	$group = make_groups( $dbm );
-	$result = make_data( $dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $adminsalt, $group );
+	$result = make_data( $dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $group );
 	$content = $dbm->report();
 } else {
 	$msg = $process ? READY_INSERT_DATA : DATA_ALREADY_INSERTED;

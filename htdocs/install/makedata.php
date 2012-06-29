@@ -34,7 +34,7 @@ function make_groups(&$dbm) {
 	return $gruops;
 }
 
-function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $adminsalt, $gruops) {
+function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $gruops) {
 	//$dbm = new db_manager;
 
 	$tables = array();
@@ -187,11 +187,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 	// data for table 'users'
 	$pwd = new icms_core_Password();
-	$temp = $pwd->encryptPass($adminpass, $adminsalt, 1, 1);
+	$temp = $pwd->encryptPass($adminpass);
 	$regdate = time();
 	//$dbadminname= addslashes($adminname);
 	// RMV-NOTIFY (updated for extra columns in user table)
-	$dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'iTheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '".addslashes($adminsalt)."', 0, 0, 1, '".addslashes($adminlogin_name)."')");
+	$dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'iTheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '', 0, 0, 1, '".addslashes($adminlogin_name)."')");
 
 	// data for table 'block_module_link'
 
@@ -329,25 +329,25 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textsarea', 'text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', " . $p++ . ")");
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'enc_type', '_MD_AM_ENC_TYPE', '1', '_MD_AM_ENC_TYPEDSC', 'select', 'int', " . $p++ . ")");
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'enc_type', '_MD_AM_ENC_TYPE', '23', '_MD_AM_ENC_TYPEDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_MD5', '0', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA256', '1', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA384', '2', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA512', '3', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_RIPEMD128', '4', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_RIPEMD160', '5', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_WHIRLPOOL', '6', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1284', '7', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1604', '8', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1924', '9', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2244', '10', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2564', '11', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1285', '12', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1605', '13', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1925', '14', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2245', '15', $i)");
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2565', '16', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_MD5', '20', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA256', '21', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA384', '22', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA512', '23', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_RIPEMD128', '24', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_RIPEMD160', '25', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_WHIRLPOOL', '26', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1284', '27', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1604', '28', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1924', '29', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2244', '30', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2564', '31', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1285', '32', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1605', '33', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1925', '34', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2245', '35', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2565', '36', $i)");
 	// ----------
 
 	// Data for Config Category 3 (Meta & Footer Preferences)

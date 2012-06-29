@@ -30,7 +30,6 @@ $error =& $_SESSION['error'];
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$vars['adminsalt'] = icms_core_Password::createSalt();
 	$vars['adminname'] = $_POST['adminname'];
 	$vars['adminlogin_name'] = $_POST['adminlogin_name'];
 	$vars['adminmail'] = $_POST['adminmail'];
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	if (!preg_match( "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'] )) {
 		$error = ERR_INVALID_EMAIL;
-	} elseif (@empty( $vars['adminlogin_name'] ) || @empty( $vars['adminname'] )  || @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail']) || empty( $vars['adminsalt'])) {
+	} elseif (@empty( $vars['adminlogin_name'] ) || @empty( $vars['adminname'] )  || @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail'])) {
 		$error = ERR_REQUIRED;
 	} elseif ($vars['adminpass'] != $vars['adminpass2']) {
 		$error = ERR_PASSWORD_MATCH;
