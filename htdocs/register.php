@@ -36,8 +36,6 @@ $user_viewemail = (isset($_POST['user_viewemail']) && (int) $_POST['user_viewema
 $user_mailok = (isset($_POST['user_mailok']) && (int) $_POST['user_mailok']) ? 1 : 0;
 $agree_disc = (isset($_POST['agree_disc']) && (int) $_POST['agree_disc']) ? 1 : 0;
 $actkey = isset($_POST['actkey']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['actkey'])) : '';
-$salt = isset($_POST['salt']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['salt'])) : '';
-$enc_type = $icmsConfigUser['enc_type'];
 
 $thisuser = icms::handler('icms_member_user');
 switch ($op) {
@@ -85,8 +83,6 @@ switch ($op) {
 				. "' /><input type='hidden' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass) 
 				. "' /><input type='hidden' name='user_mailok' value='" . (int) $user_mailok 
 				. "' /><input type='hidden' name='actkey' value='" . icms_core_DataFilter::htmlSpecialChars($actkey) 
-				. "' /><input type='hidden' name='salt' value='" . icms_core_DataFilter::htmlSpecialChars($salt) 
-				. "' /><input type='hidden' name='enc_type' value='". (int) $enc_type 
 				. "' /><input type='hidden' name='agree_disc' value='" . (int) $agree_disc 
 				. "' /><br /><br /><input type='hidden' name='op' value='finish' />" . icms::$security->getTokenHTML() 
 				. "<input type='submit' value='". _US_FINISH ."' /></form>";
@@ -136,16 +132,13 @@ switch ($op) {
 
 			$icmspass = new icms_core_Password();
 
-			$salt = $icmspass->createSalt();
-			$newuser->setVar('salt', $salt, TRUE);
-			$pass1 = $icmspass->encryptPass($pass, $salt, $enc_type);
+			$pass1 = $icmspass->encryptPass($pass);
 			$newuser->setVar('pass', $pass1, TRUE);
 			$newuser->setVar('timezone_offset', $timezone_offset, TRUE);
 			$newuser->setVar('user_regdate', time(), TRUE);
 			$newuser->setVar('uorder', $icmsConfig['com_order'], TRUE);
 			$newuser->setVar('umode', $icmsConfig['com_mode'], TRUE);
 			$newuser->setVar('user_mailok', $user_mailok, TRUE);
-			$newuser->setVar('enc_type', $enc_type, TRUE);
 			$newuser->setVar('notify_method', 2);
 			if ($valid_actkey || $icmsConfigUser['activation_type'] == 1) {
 				$newuser->setVar('level', 1, TRUE);
