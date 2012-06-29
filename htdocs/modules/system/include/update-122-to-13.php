@@ -319,14 +319,10 @@
 
 		$table = new icms_db_legacy_updater_Table("configoption");
 
-        /* Change enc_type options in preferences (+20) & expire passwords if values less than 20" */
-		$val = "SELECT `confop_value` FROM `" . $table->name() . "` WHERE confop_name = '_MD_AM_ENC_MD5';";
-		$icmsDatabaseUpdater->runQuery($val, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $val), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $val));
-        if ($val < 20) {
-            $sql = "UPDATE `" . $table->name() . "` SET confop_value = confop_value + 20 WHERE confop_name LIKE '_MD_AM_ENC_%';";
-            $icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
-        }
-
+		/* Change enc_type options in preferences (+20) & expire passwords if values less than 20" */
+		$sql = "UPDATE `" . $table->name() . "` SET confop_value = confop_value + 20 WHERE confop_name LIKE '_MD_AM_ENC_%' AND confop_value < 20;";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+		
         unset($table);
 
 		$table = new icms_db_legacy_updater_Table("users");
@@ -340,4 +336,3 @@
         /* this should be the last step of the update */
         $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 	}
-
