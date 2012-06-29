@@ -109,17 +109,17 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		 * If this fails, the cpanel will be a bit messed up, but the system will still function
 		 */
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blocksadmin/", TRUE)) $abortUpdate = TRUE;
-		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/blocksadmin.php", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteFile($admin_dir . "language/english/admin/blocksadmin.php", TRUE)) $abortUpdate = TRUE;
 		// @todo deal with symlinks and help files, templates
 
 		/* Remove system/admin/blockspadmin/ */
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "blockspadmin/", TRUE)) $abortUpdate = TRUE;
-		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/blockspadmin.php", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteFile($admin_dir . "language/english/admin/blockspadmin.php", TRUE)) $abortUpdate = TRUE;
 		// @todo deal with symlinks and help files, templates
 
 		/* Remove system/admin/modulesadmin/ */
 		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "modulesadmin/", TRUE)) $abortUpdate = TRUE;
-		if (!icms_core_Filesystem::deleteRecursive($admin_dir . "language/english/admin/modulesadmin.php", TRUE)) $abortUpdate = TRUE;
+		if (!icms_core_Filesystem::deleteFile($admin_dir . "language/english/admin/modulesadmin.php", TRUE)) $abortUpdate = TRUE;
 		// @todo deal with symlinks and help files, templates
 
 		/* Change instances of auth_method "xoops" to "local" */
