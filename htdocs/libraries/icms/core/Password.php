@@ -222,7 +222,7 @@ final class icms_core_Password {
 	 **/
 	private function priv_encryptPassword($pass, $salt, $enc_type, $iterations) {
 		if ($enc_type == 20) {
-			return '$' . $enc_type . '$0$' . md5($pass); // this should never be used. should be removed???
+			return '$' . $enc_type . '$20$' . md5($pass); // this should never be used. should be removed???
 		} else {
             $hash = '$' . $enc_type . '$' . $iterations . '$' . $salt . '-' . self::priv_rehash(
                                         self::priv_rehash($salt, $iterations) . 
