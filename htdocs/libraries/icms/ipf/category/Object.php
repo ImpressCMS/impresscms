@@ -113,7 +113,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 */
 	public function getCategoryPath($withAllLink=true, $currentCategory=false)	{
 
-		$controller = new icms_ipf_ObjectController($this->handler);
+		$controller = new icms_ipf_Controller($this->handler);
 
 		if (!$this->_categoryPath) {
 			if ($withAllLink && !$currentCategory) {
