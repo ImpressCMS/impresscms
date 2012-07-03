@@ -15,6 +15,7 @@
 
 /* set filter types, if not strings */
 $filter_get = array();
+
 $filter_post = array(
 	'modid' => 'int',
 );

@@ -14,28 +14,6 @@
  * @version		SVN: $Id$
  */
 
-/*
- * GET variables
- * (str) op:		list (default), listimg, addcat, editcat, updatecat, delcat, delcatok,
- * 					reordercateg, addfile, save, delfile, delfileok, cloneimg
- * 					save_edit_ok
- * (int) limit, default 15
- * (int) start, default 0
- * (int) imgcat_id
- * (int) image_id
- * (str) msg
- * (str) fct:		images
- *
- * POST variables
- * (str) op, default 'list'
- * (int) limit, default 15
- * (int) start, default 0
- * (int) imgcat_id
- * (int) image_id
- * (str) query
- *
- */
-
 /* set filter types, if not strings */
 $filter_get = array(
 	'limit' => 'int',

@@ -13,6 +13,7 @@
 $filter_get = array(
 	'g_id' => 'int',
 );
+
 $filter_post = array();
 
 /* set default values for variables, $op and $fct are handled in the header */

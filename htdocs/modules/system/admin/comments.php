@@ -17,6 +17,7 @@ $filter_get = array(
 	'limit' => 'int',
 	'com_id' => 'int',
 );
+
 $filter_post = array();
 
 /* set default values for variables */

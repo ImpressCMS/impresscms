@@ -11,9 +11,15 @@
  * @version		SVN: $Id$
  */
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar("mid"))) {
-	exit("Access Denied");
-}
+/* set get and post filters before including admin_header, if not strings */
+$filter_post = array();
+
+$filter_get = array();
+
+/* set default values for variables. $op and $fct are handled in the header */
+
+/** common header for the admin functions */
+include "admin_header.php";
 
 /**
  * Logic and rendering for editing user ranks

@@ -8,12 +8,15 @@
  * @version		SVN: $Id$
  */
 
-/* set filters before including admin_header */
-$mid = 0;
-
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array('mid' => 'int');
+
 $filter_post = array('mid' => 'int');
 
+/* set default values for variables. $op and $fct are handled in the header */
+$mid = 0;
+
+/** common header for the admin functions */
 include "admin_header.php";
 
 !empty($op) || $op = 'list';

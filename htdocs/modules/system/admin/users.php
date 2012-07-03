@@ -13,7 +13,7 @@
  * @version	$Id$
  */
 
-/* set filter types, if not strings */
+/* set get and post filters before including admin_header, if not strings */
 $filter_post = array(
     'user_sig' => 'html',
     'bio'=> 'html',
@@ -23,7 +23,7 @@ $filter_get = array(
     'uid' => 'int',
 );
 
-/* set default values for variables */
+/* set default values for variables. $op and $fct are handled in the header */
 $op = '';
 
 /** common header for the admin functions */

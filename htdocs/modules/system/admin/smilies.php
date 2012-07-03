@@ -9,27 +9,11 @@
  * @version		SVN: $Id$
  */
 
-/* user input variables - sanitize these properly!
- *
- * GET variables
- * (int) id, default 'SmilesAdmin'
- * (str) op
- *
- * POST variables
- * (str) op, default 'SmilesAdmin'
- * (int|arr) smile_id
- * (arr) smile_display
- * (arr) old_display
- * (str) xoops_upload_file
- * (str) smile_code
- * (str) smile_desc
- * (int) id
- */
-
-/* set filter types, if not strings */
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array(
 	'id' => 'int',
 );
+
 $filter_post = array(
 	'id' => 'int',
 	'smile_id' => 'int',

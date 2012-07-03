@@ -11,7 +11,14 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id$
  */
+/* set get and post filters before including admin_header, if not strings */
+$filter_post = array();
 
+$filter_get = array();
+
+/* set default values for variables. $op and $fct are handled in the header */
+
+/** common header for the admin functions */
 include "admin_header.php";
 
 /**

@@ -11,12 +11,16 @@
  * @version		SVN: $Id$
  */
 
-/* set get and post filters before including admin_header */
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array('rating_id' => 'int');
+
 $filter_post = array('rating_id' => 'int');
+
+/* set default values for variables, $op and $fct are handled in the header */
 $rating_id = 0;
 $changedField = "";
 
+/** common header for the admin functions */
 include "admin_header.php";
 
 function editrating($showmenu = FALSE, $ratingid = 0) {
