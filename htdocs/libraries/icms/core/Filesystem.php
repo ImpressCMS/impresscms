@@ -18,8 +18,7 @@
 /**
  * Perform filesystem actions
  */
-class
-icms_core_Filesystem {
+class icms_core_Filesystem {
 
 	/* Since all the methods are static, there is no __construct necessary	 */
 
@@ -95,10 +94,10 @@ icms_core_Filesystem {
 			$dd = opendir($d);
 			while ($file = readdir($dd)) {
 				$files_array = $remove_admin_cache
-				? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
-				&& $file != '.svn')
-				: ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
-				&& $file != '.svn' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
+					? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
+						&& $file != '.svn')
+					: ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
+						&& $file != '.svn' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
 				if (is_file($d . $file) && $files_array) {
 					unlink($d . $file);
 				}
@@ -116,10 +115,10 @@ icms_core_Filesystem {
 	 */
 	static public function cleanWriteFolders() {
 		return self::cleanFolders(
-		array(
+			array(
 				'templates_c' => ICMS_COMPILE_PATH . '/',
 				'cache' => ICMS_CACHE_PATH . '/',
-		)
+			)
 		);
 	}
 
