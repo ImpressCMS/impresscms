@@ -386,7 +386,7 @@ final class icms_core_Password {
         global $icmsConfigUser;
         
         $salt = self::createSalt();
-        $iterations = 500;
+        $iterations = 5000;
         $enc_type = (isset($icmsConfigUser['enc_type']) ? (int) $icmsConfigUser['enc_type'] : 23);
         
         return self::priv_encryptPassword($pass, $salt, $enc_type, $iterations);
