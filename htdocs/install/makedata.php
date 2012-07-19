@@ -36,8 +36,6 @@ function make_groups(&$dbm) {
 
 function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $gruops) {
 	//$dbm = new db_manager;
-    $exectime = ini_get("max_execution_time");
-    ini_set("max_execution_time", "120");
 
 	$tables = array();
 
@@ -658,8 +656,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// <<<<< End of Purifier Category >>>>>
 
 	$dbm->insert('system_autotasks', " VALUES (0, 'Inactivating users', 'autotask.php', 0, 1440, 0, 1, ".time().", 'addon/system', 00)");
-
-    ini_set("max_execution_time", $exectime);
 
 	return $gruops;
 }
