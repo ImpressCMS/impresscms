@@ -1,4 +1,18 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 1.3.3 Beta ===
+Release date: July 2012
+Revision: 11794
+DB Version: 43
+Build Version: 63
+
+Changed
+* Change in encryption methods - upgrading will expire all passwords and users will have to update them on next login
+
+Fixed
+* Pages with redirects were slow to load when gzip was enabled
+* OpenID works on systems where /dev/urandom is not accessible
+* LDAP authentication now works after fixing typos
+
 === ImpressCMS 2.0 Alpha 2 ===
 Release date: June 2012
 Revision: 11725
