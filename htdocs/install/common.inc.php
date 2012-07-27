@@ -31,7 +31,8 @@ require_once 'include/functions.php';
 require_once '../libraries/icms/Autoloader.php';
 icms_Autoloader::setup();
 
-error_reporting( E_ALL );
+$errorHandler = icms_core_Logger::instance();
+error_reporting(E_ALL);
 
 class XoopsInstallWizard {
 
@@ -247,4 +248,3 @@ if (!@is_array( $_SESSION['settings'] )) {
 	$_SESSION['settings'] = array();
 }
 
-?>
