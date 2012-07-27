@@ -14,30 +14,42 @@ icms_loadLanguageFile('core', 'databaseupdater');
 
 function installation_notify($versionstring, $icmsroot) {
 
-    //set POST variables
-    $url = 'http://difdts.nebulagame.com/notify/notify.php';
-    $fields = array(
-        'siteid'=>urlencode(sha1($icmsroot)),
-        'version'=>urlencode($versionstring)
-    );
+	// @todo: change the URL to an official ImpressCMS server
+	//set POST variables
+	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
+	$fields = array(
+			'siteid' => hash('sha256', $icmsbase),
+			'version' => urlencode($versionstring)
+	);
 
-//url-ify the data for the POST
-    foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-    rtrim($fields_string,'&');
+	//url-ify the data for the POST
+	foreach($fields as $key=>$value) {
+		$fields_string .= $key . '=' . $value . '&';
+	}
+	rtrim($fields_string, '&');
 
-//open connection
-    $ch = curl_init();
+	try {
+		//open connection
+		$ch = curl_init();
 
-//set the url, number of POST vars, POST data
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_POST,count($fields));
-    curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, count($fields));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
 
-//execute post
-    $result = curl_exec($ch);
+		//execute post
+		if (curl_exec($ch)) {
+			icms_core_Message::error($url . $fields_string, 'Notification Sent to');
+		} else {
+			throw new Execption("Unable to contact update server");
+		}
 
-//close connection
-    curl_close($ch);
+		//close connection
+		curl_close($ch);
+	} catch(Exception $e) {
+		icms_core_Message::error(sprintf($e->getMessage()));
+	}
 }
 
 /**
