@@ -169,9 +169,9 @@ class icms_core_Filesystem {
 	 */
 	static public function deleteFile($dirname) {
 		$success = FALSE;
-		
+
 		if (is_file($dirname)) {
-			if (!is_writable($dirname)) chmod($dirname, 0777);	
+			if (!is_writable($dirname)) chmod($dirname, 0777);
 			$success = unlink($dirname);
 		} else {
 			$success = TRUE;
@@ -298,6 +298,7 @@ class icms_core_Filesystem {
 	 * Validate the current installation directory against an existing checksum file
 	 * This reports any changes to your installation directory - added, removed or changed files
 	 *
+	 * @todo	change echo statements to a message array, add parameter to render or return the array
 	 * @author	Steve Kenow <skenow@impresscms.org>
 	 *
 	 */
@@ -435,6 +436,22 @@ class icms_core_Filesystem {
 		}
 	}
 
+	/**
+	 * Rename or relocate a file or directory
+	 *
+	 * @param	str		$oldname 	File or directory to rename, with path
+	 * @param 	str		$newname	New name, with full path
+	 * @param	bool	$overwrite	If TRUE, overwrite an existing file with the same name
+	 */
+	static public function rename($oldname, $newname, $overwrite) {
+		if ($oldname == $newname) return TRUE;
+		if (file_exists($newname) && !$overwrite) return FALSE;
+		if (empty($newname)) return FALSE;
+
+		$success = rename($oldname, $newname);
+		return $success;
+	}
+
 	/* These will not be in the final release, but are only placeholders while the refactoring
 	 * is being completed
 	 */
@@ -453,6 +470,5 @@ class icms_core_Filesystem {
 	static public function getHtmlFiles($dirname, $prefix = '', $extension = array('htm', 'html', 'xhtml')) {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
-	/* The above will be removed */
-
 }
+
