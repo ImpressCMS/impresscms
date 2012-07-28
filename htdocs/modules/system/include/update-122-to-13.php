@@ -328,7 +328,7 @@
 		$table = new icms_db_legacy_updater_Table("users");
 
         /* Set all user passwords as Expired (required due to password algorhythm update */
-        $sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0;";
+        $sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0 AND pass NOT LIKE '$%';";
         $icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
         unset($table);

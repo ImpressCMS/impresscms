@@ -6,7 +6,7 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		4.00
- * @version		$Id$
+ * @version		$Id: tinymce.php 11324 2011-08-22 02:41:00Z skenow $
  * @package		xoopseditor
  */
 class TinyMCE {

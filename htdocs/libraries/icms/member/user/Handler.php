@@ -79,11 +79,11 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				"INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq,
 				user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts,
 				attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method,
-				notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt,
-				user_viewoid, pass_expired, enc_type, login_name)
+				notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, user_viewoid,
+                pass_expired, login_name)
 				VALUES ('%u', %s, %s, %s, %s, %s, '%u',
 				%s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u',
-				'%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s)",
+				'%u', '%u', %s, %s, %s, '%u', %s, %s, '%u', '%u', %s)",
 				$this->db->prefix('users'),
 				(int) $uid,
 				$this->db->quoteString($uname),
@@ -118,10 +118,8 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				(int) $user_mailok,
 				$this->db->quoteString($language),
 				$this->db->quoteString($openid),
-				$this->db->quoteString($salt),
 				(int) $user_viewoid,
 				(int) $pass_expired,
-				(int) $enc_type,
 				$this->db->quoteString($login_name)
 			);
 		} else {
@@ -131,8 +129,8 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				user_yim = %s, user_msnm = %s, posts = %d, pass = %s, attachsig = '%u', rank = '%u',
 				level= '%s', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u',
 				uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s,
-				user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s,
-				user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'",
+				user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, user_viewoid = '%u',
+                pass_expired = '%u', login_name = %s WHERE uid = '%u'",
 				$this->db->prefix('users'),
 				$this->db->quoteString($uname),
 				$this->db->quoteString($name),
@@ -164,10 +162,8 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				(int) $user_mailok,
 				$this->db->quoteString($language),
 				$this->db->quoteString($openid),
-				$this->db->quoteString($salt),
 				(int) $user_viewoid,
 				(int) $pass_expired,
-				(int) $enc_type,
 				$this->db->quoteString($login_name),
 				(int) $uid
 			);
@@ -197,10 +193,9 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
 		if (!is_a($user, 'icms_member_user_Object')) {return FALSE;}
 		$pass = substr(md5(time()), 0, 8);
-		$salt = substr(md5(time() * 2), 0, 12);
 		$sql = sprintf(
-			"UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'",
-			$this->db->prefix('users'), $pass, $salt, (int) $user->getVar('uid')
+			"UPDATE %s SET level = '-1', pass = '%s' WHERE uid = '%u'",
+			$this->db->prefix('users'), $pass, (int) $user->getVar('uid')
 		);
 		if (FALSE != $force) {
 			$result = $this->db->queryF($sql);
@@ -271,8 +266,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 */
 	public function deleteAll($criteria = NULL) {
 		$pass = substr(md5(time()), 0, 8);
-		$salt = substr(md5(time() * 2), 0, 12);
-		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s", $this->db->prefix('users'), $pass, $salt);
+		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), $pass);
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= " " . $criteria->renderWhere();}
 		if (!$result = $this->db->query($sql)) {return FALSE;}
 		return TRUE;

@@ -56,10 +56,21 @@ final class icms_core_Password {
 		}
 
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
+        $table = new icms_db_legacy_updater_Table('users');
 
-		$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
-			icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-		list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+		if ($table->fieldExists('loginname')) {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE loginname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+		} elseif ($table->fieldExists('login_name')) {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE login_name = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+		} else {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+		}
 
 		if ($pass_expired == 1) {
 			return true;
@@ -222,7 +233,7 @@ final class icms_core_Password {
 	 **/
 	private function priv_encryptPassword($pass, $salt, $enc_type, $iterations) {
 		if ($enc_type == 20) {
-			return '$' . $enc_type . '$0$' . md5($pass); // this should never be used. should be removed???
+			return '$' . $enc_type . '$20$' . md5($pass); // this should never be used. should be removed???
 		} else {
             $hash = '$' . $enc_type . '$' . $iterations . '$' . $salt . '-' . self::priv_rehash(
                                         self::priv_rehash($salt, $iterations) . 
@@ -375,7 +386,7 @@ final class icms_core_Password {
         global $icmsConfigUser;
         
         $salt = self::createSalt();
-        $iterations = 500;
+        $iterations = 5000;
         $enc_type = (isset($icmsConfigUser['enc_type']) ? (int) $icmsConfigUser['enc_type'] : 23);
         
         return self::priv_encryptPassword($pass, $salt, $enc_type, $iterations);

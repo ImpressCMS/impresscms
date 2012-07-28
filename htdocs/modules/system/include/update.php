@@ -11,6 +11,47 @@
  */
 
 icms_loadLanguageFile('core', 'databaseupdater');
+
+function installation_notify($versionstring, $icmsroot) {
+
+	// @todo: change the URL to an official ImpressCMS server
+	//set POST variables
+	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
+	$fields = array(
+			'siteid' => hash('sha256', $icmsbase),
+			'version' => urlencode($versionstring)
+	);
+
+	//url-ify the data for the POST
+	foreach($fields as $key=>$value) {
+		$fields_string .= $key . '=' . $value . '&';
+	}
+	rtrim($fields_string, '&');
+
+	try {
+		//open connection
+		$ch = curl_init();
+
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, count($fields));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
+
+		//execute post
+		if (curl_exec($ch)) {
+			icms_core_Message::error($url . $fields_string, 'Notification Sent to');
+		} else {
+			throw new Execption("Unable to contact update server");
+		}
+
+		//close connection
+		curl_close($ch);
+	} catch(Exception $e) {
+		icms_core_Message::error(sprintf($e->getMessage()));
+	}
+}
+
 /**
  * Automatic update of the system module
  *
@@ -161,5 +202,6 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		echo $feedback;
 	}
 
+    installation_notify($newDbVersion, ICMS_ROOT_PATH );
 	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }

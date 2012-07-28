@@ -46,7 +46,7 @@ switch ($op) {
 
 	case "update":
 		if (!icms::$security->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
+			redirect_header("admin.php?fct=groups", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$system_catids = empty($system_catids) ? array() : $system_catids;
 		$admin_mids = empty($admin_mids) ? array() : $admin_mids;
@@ -68,9 +68,7 @@ switch ($op) {
 		}
 
 		if (!$member_handler->insertGroup($group)) {
-			icms_cp_header();
-			echo $group->getHtmlErrors();
-			icms_cp_footer();
+			redirect_header("admin.php?fct=groups", 3, $group->getHtmlErrors());
 		} else {
 			$groupid = $group->getVar('groupid');
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_groupid', $groupid));
@@ -154,18 +152,16 @@ switch ($op) {
 				$blockperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($blockperm);
 			}
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 1, _AM_DBUPDATED);
+			redirect_header("admin.php?fct=groups", 1, _AM_DBUPDATED);
 		}
 		break;
 
 	case "add":
 		if (!icms::$security->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
+			redirect_header("admin.php?fct=groups", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		if (!$name) {
-			icms_cp_header();
-			echo _AM_UNEED2ENTER;
-			icms_cp_footer();
+			redirect_header("admin.php?fct=groups", 3, _AM_UNEED2ENTER);
 			exit();
 		}
 
@@ -183,9 +179,7 @@ switch ($op) {
 			$group->setVar("group_type", 'Admin');
 		}
 		if (!$member_handler->insertGroup($group)) {
-			icms_cp_header();
-			echo $group->getHtmlErrors();
-			icms_cp_footer();
+			redirect_header("admin.php?fct=groups", 3, $group->getHtmlErrors());
 		} else {
 			$groupid = $group->getVar('groupid');
 			if (count($system_catids) > 0) {
@@ -248,7 +242,7 @@ switch ($op) {
 				$blockperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($blockperm);
 			}
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 1, _AM_DBUPDATED);
+			redirect_header("admin.php?fct=groups", 1, _AM_DBUPDATED);
 		}
 		break;
 
@@ -260,7 +254,7 @@ switch ($op) {
 
 	case "delConf":
 		if (!icms::$security->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
+			redirect_header("admin.php?fct=groups", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		if ((int) ($g_id) > 0 && !in_array($g_id, array(ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS))) {
 			$group =& $member_handler->getGroup($g_id);
@@ -268,12 +262,12 @@ switch ($op) {
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			$gperm_handler->deleteByGroup($g_id);
 		}
-		redirect_header("admin.php?fct=groups&amp;op=adminMain", 1, _AM_DBUPDATED);
+		redirect_header("admin.php?fct=groups", 1, _AM_DBUPDATED);
 		break;
 
 	case "addUser":
 		if (!icms::$security->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
+			redirect_header("admin.php?fct=groups", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$size = count($uids);
 		for ($i = 0; $i < $size; $i++) {
@@ -284,7 +278,7 @@ switch ($op) {
 
 	case "delUser":
 		if (!icms::$security->check()) {
-			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', icms::$security->getErrors()));
+			redirect_header("admin.php?fct=groups", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		if ((int) $groupid > 0) {
 			$memstart = isset($memstart) ? (int) $memstart : 0;

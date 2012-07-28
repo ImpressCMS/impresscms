@@ -78,10 +78,8 @@ class icms_member_user_Object extends icms_core_Object {
 
 		$this->initVar('language', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('openid', XOBJ_DTYPE_TXTBOX, '', false, 255);
-		$this->initVar('salt', XOBJ_DTYPE_TXTBOX, null, false, 255);
 		$this->initVar('user_viewoid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('pass_expired', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('enc_type', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 
 		// for backward compatibility
