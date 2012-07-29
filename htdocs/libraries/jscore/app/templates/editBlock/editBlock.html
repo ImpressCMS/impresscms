@@ -1,0 +1,13 @@
+<div class="blockEditModalWrapper">
+  <div id="ed_block_{{ block.blockId }}">
+    <a style="outline: 0;" href='{{ block.moduleUrl }}/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid={{ block.blockId }}&amp;rtn={{block.retUrl }}'> <img src='{{ block.imagesetUrl }}/actions/button_cancel.png' alt='{{ labels.invisible }}'  />{{ labels.invisible }}</a><br />
+    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid={{ block.blockId }}'> <img src='{{ block.imagesetUrl }}/actions/editcopy.png' alt='{{ labels.clone }}'  /> {{ labels.clone }}</a><br />
+    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid={{ block.blockId }}'> <img src='{{ block.imagesetUrl }}/actions/edit.png' alt='{{ labels.edit }}'  /> {{ labels.edit }}</a><br />
+    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid={{ block.blockId }}&amp;rtn={{block.retUrl }}'> <img src='{{ block.imagesetUrl }}/actions/up.png' alt='{{ labels.up }}'  /> {{ labels.up }}</a><br />
+    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid={{ block.blockId }}&amp;rtn={{block.retUrl }}'> <img src='{{ block.imagesetUrl }}/actions/down.png' alt='{{ labels.down }}'  /> {{ labels.down }}</a>
+
+    {{#block.canDelete}}
+      <br /><a href='{{ block.moduleUrl }}/system/admin.php?fct=blocksadmin&amp;op=del&amp;bid={{ block.blockId }}'> <img src='{{ block.imagesetUrl }}/actions/editdelete.png' alt='{{ labels.delete }}'  /> {{ labels.del }}</a>
+    {{/block.canDelete}}
+  </div>
+</div>
