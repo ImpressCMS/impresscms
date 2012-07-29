@@ -18,11 +18,12 @@ function installation_notify($versionstring, $icmsroot) {
 	//set POST variables
 	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
 	$fields = array(
-			'siteid' => hash('sha256', $icmsbase),
+			'siteid' => hash('sha256', $icmsroot),
 			'version' => urlencode($versionstring)
 	);
 
 	//url-ify the data for the POST
+	$fields_string = "";
 	foreach($fields as $key=>$value) {
 		$fields_string .= $key . '=' . $value . '&';
 	}
