@@ -16,9 +16,7 @@ define(function(require) {
   , app = {
     initialize: function(message, options) {
       tools.loadCSS(icms.config.jscore + 'app/modules/notify/notify.css', 'jquery-notify');
-      $(document).ready(function() {
-        app.showMessage(message, options);
-      });
+      app.showMessage(message, options);
     }
     , showMessage: function(message, options) {
       if(typeof message !== 'undefined' && message !== false) {
