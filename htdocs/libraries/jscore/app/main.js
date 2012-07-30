@@ -1,9 +1,9 @@
 /*
-  Module: Main
-  The main app module
+	Module: Main
+	The main app module
 
-    Method: initialize
-    Initializes the routes.
+		Method: initialize
+		Initializes the routes.
     Scrape the page for widgets
 */
 define(function(require) {
@@ -11,6 +11,7 @@ define(function(require) {
   , routes = require('app/routes')
   , moduleActivator = require('util/module-activator')
   , notifier = require('modules/notify/main')
+  , adminMenu = require('modules/adminMenu/main')
   , mediator = require('mediator')
   , app = {
     initialize: function() {
@@ -24,6 +25,10 @@ define(function(require) {
         mediator.subscribe('addNotification', function(message, options) {
           notifier.initialize(message, options);
         });
+
+        if(icms.adminMenu !== false) {
+          adminMenu.initialize();
+        }
       });
     }
   };

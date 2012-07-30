@@ -17,7 +17,9 @@ $icmsJsConfigData = array(
   'imageset' => ICMS_IMAGES_SET_URL,
   'gaActive' => $icmsConfigMetaFooter['use_google_analytics'],
   'uiTheme' => 'smoothness',
-  'adminMenu' => false
+  'adminMenu' => false,
+  'onlineCount' => '0',
+  'membersOnline' => '0'
 );
 
 $icmsJsUserData = array(
@@ -33,6 +35,60 @@ $icmsJsUserData = array(
   'last_login' => (!icms::$user) ? 0 : icms::$user->vars['last_login']['value'],
   'language' => (!icms::$user) ? 0 : icms::$user->vars['language']['value']
 );
+
+
+// Front Side ACP Menu
+if (is_object(icms::$user)) {
+  $icmsModule = icms::handler('icms_module')->getByDirname('system');
+  if (icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+    if ( file_exists ( ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php' )) {
+      $file = file_get_contents(ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php");
+      $admin_menu = eval('return ' . $file . ';');
+      $icmsJsConfigData['adminMenu'] = $admin_menu;
+
+      global $icmsModule;
+      $online_handler = icms::handler('icms_core_Online');
+      mt_srand((double)microtime()*1000000);
+      // set gc probabillity to 10% for now..
+      if (mt_rand(1, 100) < 11) {
+        $online_handler->gc(300);
+      }
+      if (is_object(icms::$user)) {
+        $uid = icms::$user->getVar('uid');
+        $uname = icms::$user->getVar('uname');
+      } else {
+        $uid = 0;
+        $uname = '';
+      }
+      if (is_object($icmsModule)) {
+        $online_handler->write($uid, $uname, time(), $icmsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
+      } else {
+        $online_handler->write($uid, $uname, time(), 0, $_SERVER['REMOTE_ADDR']);
+      }
+      $onlines = $online_handler->getAll();
+      if (FALSE !== $onlines) {
+        $total = count($onlines);
+        $guests = 0;
+        for ($i = 0; $i < $total; $i++) {
+          if ($onlines[$i]['online_uid'] == 0) {
+            $guests++;
+          }
+        }
+        $members = $total - $guests;
+        $icmsJsConfigData['onlineCount'] = $total;
+        $icmsJsConfigData['membersOnline'] = $members;
+      }
+
+
+
+        $xoTheme->addScript('' , array( 'type' => 'text/javascript' ), "var frontMenu='" . $frontMenu . "'");
+        $xoTheme->addScript(ICMS_URL . '/modules/system/admin_menu.js' , array( 'type' => 'text/javascript' ));
+        $xoTheme->addStylesheet(ICMS_URL . '/modules/system/admin_menu.css');
+      }
+    }
+  }
+}
+
 
 $redirectMessage = (!empty($_SESSION['redirect_message'])) ? '"' . $_SESSION['redirect_message'] . '"' : 'false';
 unset( $_SESSION['redirect_message'] );
