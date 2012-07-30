@@ -26,6 +26,7 @@ require(
     tools: 'utils/tools',
     routes: 'app/routes',
     locale: 'locale/' + icms.config.language + '/',
+    handlebars: 'lib/handlebars',
     hogan: 'lib/hogan',
     jsonpath: 'lib/jsonpath',
     use: 'util/use',
@@ -34,6 +35,9 @@ require(
   use: {
     underscore: {
       attach: "_"
+    },
+    handlebars: {
+      attach: "Handlebars"
     },
     hogan: {
       attach: "Hogan"

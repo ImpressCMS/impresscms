@@ -1,6 +1,6 @@
 define(function (require) {
-	var labels = {
-		success: 'Success'
+  var labels = {
+    success: 'Success'
     , welcome: 'Welcome'
     , edit: 'Edit'
     , clone: 'Clone'
@@ -8,6 +8,8 @@ define(function (require) {
     , del: 'Delete'
     , up: 'Up'
     , down: 'Down'
+    , logout: 'Log Out'
+    , login: 'Log In'
 	};
 	return labels;
 });

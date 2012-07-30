@@ -10,7 +10,7 @@ define(function(require) {
   , tools = require('util/tools')
   , labels = require('locale/labels')
   , editHTML = require('text!templates/editBlock/editBlock.html')
-  , Hogan = require('util/use!hogan')
+  , Handlebars = require('util/use!handlebars')
   , data = {}
   , markup
   , editTemplate
@@ -21,7 +21,7 @@ define(function(require) {
         if(firstrun) {
           firstrun = false;
           tools.loadCSS(icms.config.jscore + 'plugins/jquery.ui/css/' + icms.config.uiTheme + '/jquery.ui.css', 'jquery-ui');
-          editTemplate = Hogan.compile(editHTML);
+          editTemplate = Handlebars.compile(editHTML);
         }
         data.labels = labels;
         data.block = {
@@ -44,7 +44,7 @@ define(function(require) {
               data.block.canDelete = _this.data('candelete');
               data.block.retUrl = _this.data('returl');
 
-              markup = editTemplate.render(data);
+              markup = editTemplate(data);
 
               $(markup).dialog({
                 modal: true

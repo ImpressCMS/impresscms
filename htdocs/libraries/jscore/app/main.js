@@ -1,9 +1,9 @@
 /*
-  Module: Main
-  The main app module
+	Module: Main
+	The main app module
 
-    Method: initialize
-    Initializes the routes.
+		Method: initialize
+		Initializes the routes.
     Scrape the page for widgets
 */
 define(function(require) {

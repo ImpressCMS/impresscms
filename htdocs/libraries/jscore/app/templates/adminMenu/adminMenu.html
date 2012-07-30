@@ -1,43 +1,44 @@
-<!-- //
-  This is gonna take some effort....
-<div id="admin-menu" class="clearfix"><ul>
-<li><a href="' . ICMS_URL . '"><img src="' . ICMS_URL . '/favicon.ico" alt="' . $icmsConfig['sitename'] . '" style="height:11px" /></a></li>
+<div id="admin-menu" class="clearfix">
+  <ul>
+    <li><a href="{{ config.url }}"><img src="{{ config.url }}/favicon.ico" alt="{{ config.sitename }}" style="height:11px" /></a></li>
 
-{{#menu}}
-  <li><a href="' . $parent['link'] . '" title="' . $parent['text'] . '">' . $parent['text'] . '</a>
-    if(array_key_exists('menu', $parent)) {
-      <div class="secondary"><ul>
-      foreach($parent['menu'] as $secondary) {
-        if(array_key_exists('subs', $secondary)) {
-          <li class="expandable"><a href="' . $secondary['link'] . '" title="' . $secondary['title'] . '">' . $secondary['title'] . '</a>
-            <div class="tertiary"><ul>
-            foreach($secondary['subs'] as $tertiary) {
-              if(array_key_exists('subs', $tertiary)) {
-                <li class="expandable"><a href="' . $tertiary['link'] . '" title="' . $tertiary['title'] . '">' . $tertiary['title'] . '</a>
-                  <div class="quadmenu"><ul>
-                  foreach($tertiary['subs'] as $quadmenu) {
-                    <li><a href="' . $quadmenu['link'] . '" title="' . $quadmenu['title'] . '">' . $quadmenu['title'] . '</a></li>
-                  }
-                  </ul></div>
-                </li>
-              } else {
-                <li><a href="' . $tertiary['link'] . '" title="' . $tertiary['title'] . '">' . $tertiary['title'] . '</a></li>
-              }                     
-            }
-            </ul></div>
+    {{#each admenu}}
+    <li><a href="{{link}}" title="{{text}}">{{this.text}}</a>
+      {{#if menu}}
+      <div class="secondary">
+        <ul>
+        {{#each menu}}
+          <li{{#if subs}} class="expandable"{{/if}}><a href="{{link}}" title="{{title}}">{{title}}</a>
+            {{#if subs}}
+            <div class="tertiary">
+              <ul>
+                {{#each subs}}
+                  <li{{#if subs}} class="expandable"{{/if}}><a href="{{link}}" title="{{title}}">{{title}}</a>
+                    {{#if subs}}
+                    <div class="quadmenu">
+                      <ul>
+                        {{#each subs}}
+                          <li{{#if subs}} class="expandable"{{/if}}><a href="{{link}}" title="{{title}}">{{title}}</a>
+                          </li>
+                        {{/each}}
+                      </ul>
+                    </div>              
+                    {{/if}}                  
+                  </li>
+                {{/each}}
+              </ul>
+            </div>              
+            {{/if}}
           </li>
-        } else {
-          <li><a href="' . $secondary['link'] . '" title="' . $secondary['title'] . '">' . $secondary['title'] . '</a></li>
-        }
-      }
-      </ul></div>
-    }
-  </li>
-{{/menu}}
+        {{/each}}
+        <ul>
+      </div>
+      {{/if}}
+    </li>
+    {{/each}}
 
-<li class="admin-menu-action admin-menu-tab"><a href="' . ICMS_URL . '/user.php?op=logout">' . _LOGOUT . '</a></li>
-<li class="admin-menu-action"><a href="' . ICMS_URL . '/user.php">' . THEME_WELLCOME . ', ' . icms::$user->getVar('uname') . '</a></li>
-<li class="admin-menu-action admin-menu-users"><a href="' . ICMS_URL . '/modules/system/admin.php?fct=findusers">' . $members . '/' . $total . '</a></li>
-
-</ul></div>
-// -->
+    <li class="admin-menu-action admin-menu-tab"><a href="{{ config.url }}/user.php?op=logout">{{ labels.logout }}</a></li>
+    <li class="admin-menu-action"><a href="{{ config.url }}/user.php">{{ labels.welcome }}, {{ user.uname}}</a></li>
+    <li class="admin-menu-action admin-menu-users"><a href="{{ config.url }}/modules/system/admin.php?fct=findusers">{{ config.membersOnline }}/{{ config.onlineCount }}</a></li>    
+  </ul>
+</div>

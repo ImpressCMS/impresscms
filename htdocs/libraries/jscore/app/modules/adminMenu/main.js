@@ -9,6 +9,17 @@
 define(function(require) {
   var $ = require('jquery')
   , tools = require('util/tools')
+  , labels = require('locale/labels')
+  , adminHTML = require('text!templates/adminMenu/adminMenu.html')
+  , Handlebars = require('util/use!handlebars')
+  , defaultData = {
+    labels: labels
+    , config: icms.config
+    , user: icms.user
+    , admenu: icms.config.adminMenu
+  }
+  , adminTemplate
+  , markup
   , app = {
     initialize: function() {
       tools.loadCSS(icms.config.jscore + 'app/modules/adminMenu/adminMenu.css', 'icms-adminMenu');
@@ -18,6 +29,11 @@ define(function(require) {
       });
     }
     , buildMenu: function(data) {
+      adminTemplate = Handlebars.compile(adminHTML);
+      console.log(defaultData);
+      markup = adminTemplate(defaultData);
+
+      $('#admin-menu-wrapper').append(markup);
     }
   };
   return app;
