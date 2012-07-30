@@ -1,9 +1,9 @@
 /*
-	Module: Main
-	The main app module
+  Module: Main
+  The main app module
 
-		Method: initialize
-		Initializes the routes.
+    Method: initialize
+    Initializes the routes.
     Scrape the page for widgets
 */
 define(function(require) {
@@ -26,7 +26,7 @@ define(function(require) {
           notifier.initialize(message, options);
         });
 
-        if(icms.adminMenu !== false) {
+        if(icms.config.adminMenu !== false) {
           adminMenu.initialize();
         }
       });

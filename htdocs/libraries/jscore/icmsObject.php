@@ -79,15 +79,10 @@ if (is_object(icms::$user)) {
         $icmsJsConfigData['membersOnline'] = $members;
       }
 
-
-
-        $xoTheme->addScript('' , array( 'type' => 'text/javascript' ), "var frontMenu='" . $frontMenu . "'");
-        $xoTheme->addScript(ICMS_URL . '/modules/system/admin_menu.js' , array( 'type' => 'text/javascript' ));
-        $xoTheme->addStylesheet(ICMS_URL . '/modules/system/admin_menu.css');
-      }
     }
   }
 }
+
 
 
 $redirectMessage = (!empty($_SESSION['redirect_message'])) ? '"' . $_SESSION['redirect_message'] . '"' : 'false';
@@ -120,5 +115,7 @@ $xoTheme->addScript(NULL, array('type' => 'text/javascript'),
     '}' .
   '};'
 );
+
+$bootstrap = file_exists( ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js') ? ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js' : ICMS_LIBRARIES_URL . '/jscore/bootstrap.js';
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/modernizr.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/require.js', array('type' => 'text/javascript', 'data-main' => ICMS_LIBRARIES_URL . '/jscore/bootstrap.js' ));
+$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/require.js', array('type' => 'text/javascript', 'data-main' => $bootstrap ));
