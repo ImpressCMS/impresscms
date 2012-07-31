@@ -73,6 +73,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 
 			$purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
+            $html .= '<!-- cleaned with htmlpurifier -->';
 		}
 		return $html;
 	}
