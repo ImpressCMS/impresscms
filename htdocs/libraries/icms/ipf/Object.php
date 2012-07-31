@@ -765,7 +765,7 @@ class icms_ipf_Object extends icms_core_Object {
 			return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br, $formatML);
 		} else {
 			if ($html) {
-				return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
+				return icms_core_DataFilter::checkVar($ret, 'html', 'output');
 			} else {
 				return icms_core_DataFilter::checkVar($ret, 'text', 'output');
 			}
@@ -922,7 +922,6 @@ class icms_ipf_Object extends icms_core_Object {
 				switch (strtolower($format)) {
 					case 's':
 					case 'show':
-						$ts = icms_core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
@@ -932,7 +931,7 @@ class icms_ipf_Object extends icms_core_Object {
 							$br = false;
 						}
 						if ($html) {
-							return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
+							return icms_core_DataFilter::checkVar($ret, 'html', 'output');
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
 						}
@@ -945,16 +944,15 @@ class icms_ipf_Object extends icms_core_Object {
 
 					case 'p':
 					case 'preview':
-						$ts = icms_core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-							return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
+							return icms_core_DataFilter::checkVar($ret, 'html', 'input');
 						} else {
-							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+							return icms_core_DataFilter::checkVar($ret, 'text', 'input');
 						}
 						break 1;
 
