@@ -226,9 +226,10 @@ final class icms_core_Password {
 	 * This Private Function is used to Encrypt User Passwords
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.3.3
-	 * @param    string  $pass       plaintext password to be encrypted
-	 * @param    string  $salt       unique user salt key used in encryption process
-	 * @param    int     $enc_type   encryption type to use.
+	 * @param    string  $pass          plaintext password to be encrypted
+	 * @param    string  $salt          unique user salt key used in encryption process
+	 * @param    int     $enc_type      encryption type to use.
+	 * @param    int     $iterations    Number of times to rehash(stretch).
 	 * @return   Hash of users password.
 	 **/
 	private function priv_encryptPassword($pass, $salt, $enc_type, $iterations) {
@@ -251,6 +252,7 @@ final class icms_core_Password {
 	 * @since    1.3.3
 	 * @param    string     $hash           hash to be re-hashed (stretched)
 	 * @param    int        $iterations     Number of times to re-hash
+	 * @param    int        $enc_type       encryption type to use
 	 * @return   Hash of users password.
 	 **/
     private function priv_rehash($hash, $iterations, $enc_type = 21) {
@@ -274,8 +276,7 @@ final class icms_core_Password {
                                     37 => 'ripemd256',
                                     38 => 'ripemd320',
                                     39 => 'snefru256',
-                                    40 => 'gost'
-            
+                                    40 => 'gost'            
                                 );
 
         for ($i = 0; $i < $iterations; ++$i) {
@@ -330,14 +331,26 @@ final class icms_core_Password {
 		$salt = '';
 		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$microtime = function_exists('microtime') ? microtime() : time();
-		srand((double)$microtime * 1000000);
+		mt_srand((double)$microtime * 1000000);
 		for ($i=0; $i<=$slength; $i++)
-		$salt.= substr($base, rand() % strlen($base), 1);
+		$salt.= substr($base, mt_rand(0, $slength) % strlen($base), 1);
         
 		return $salt;
 	}
 
-	/**
+    public function createCryptoKey($slength = 64) {
+        if (function_exists('openssl_random_pseudo_bytes')) {
+            $key = openssl_random_pseudo_bytes($slength, $strong);
+            if ($strong === TRUE) {
+                return $key;
+            } else {
+                return self::createCryptoKey($slength);
+            }
+        } else {
+            return self::createSalt($slength);
+        }
+    }
+    /**
 	 * This Public Function checks whether a users password has been expired
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.1
