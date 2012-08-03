@@ -10,8 +10,19 @@
  * @version		$Id$
  */
 
+// this needs to be the latest db version
+define('SYSTEM_DB_VERSION', icms::$module->getVar('dbversion'));
+
 icms_loadLanguageFile('core', 'databaseupdater');
 
+/**
+ * Posts a notification of an install or update of the system module
+ *
+ * @todo	Make this part of the icms_module_Handler, so it can be applied for every module
+ *
+ * @param	string	$versionstring	A string representing the version of the module
+ * @param	string	$icmsroot		A unique identifier for the site
+ */
 function installation_notify($versionstring, $icmsroot) {
 
 	// @todo: change the URL to an official ImpressCMS server
@@ -32,7 +43,7 @@ function installation_notify($versionstring, $icmsroot) {
 	try {
 		//open connection - this causes a fatal error if the extension is not loaded
 		if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
-		$ch = @curl_init();
+		$ch = curl_init();
 
 		//set the url, number of POST vars, POST data
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -62,7 +73,7 @@ function installation_notify($versionstring, $icmsroot) {
  * @param int $dbVersion The database version
  * @return mixed
  */
-function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = NULL) {
+function icms_module_update_system(&$module, $oldversion = NULL, $dbVersion = NULL) {
 
 	global $icmsConfig, $xoTheme;
 
@@ -71,8 +82,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	$oldversion = $module->getVar('version');
 	if ($oldversion < 120) {
 		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM "
-		. icms::$xoopsDB->prefix('tplfile') . " t1, "
-		. icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
+				. icms::$xoopsDB->prefix('tplfile') . " t1, "
+				. icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
 		$tplids = array();
 		while (list($tplid) = icms::$xoopsDB->fetchRow($result)) {
@@ -114,7 +125,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 	if ($dbVersion < 43) include 'update-122-to-13.php';
 
-	/*  Begin upgrade to version 2.0 */
+/*  Begin upgrade to version 2.0 */
 	if (!$abortUpdate) $newDbVersion = 44;
 
 	/*
@@ -137,8 +148,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$dirlist = icms_core_Filesystem::getDirList($admin_dir);
 		foreach ($dirlist as $dir) {
 			/* remove xoops_version.php and main.php from these folders if the update has
-			 * been successful.
-			 */
+		 	 * been successful.
+		 	 */
 			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/xoops_version.php')) $remnants[] = $dir . "/xoops_version.php";
 			if (!icms_core_Filesystem::deleteFile($admin_dir . $dir . '/main.php')) $remnants[] = $dir . "/main.php";
 			/* Remove the system/{function}/class/ subfolder, if it exists */
@@ -171,7 +182,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$sql .= "UPDATE `" . icms::$xoopsDB->prefix('configoption') . "` SET `confop_value` = 'local' WHERE `confop_value` = 'xoops' AND `confop_name` = '_MD_AM_AUTH_CONFOPTION_XOOPS';";
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-		/* @todo Set the IPF property of the module to '1' here */
+        /* @todo Set the IPF property of the module to '1' here */
 
 
 		/* Finish up this portion of the db update */
@@ -192,14 +203,14 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		}
 	}
 
-	/*
-	 * This portion of the upgrade must remain as the last section of code to execute
-	 * Place all release upgrade steps above this point
-	 */
+/*
+ * This portion of the upgrade must remain as the last section of code to execute
+ * Place all release upgrade steps above this point
+ */
 	echo "</code>";
-	if ($abortUpdate) {
-		icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
-	}
+    if ($abortUpdate) {
+        icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
+    }
 	if ($from_112 && ! $abortUpdate) {
 		echo _DATABASEUPDATER_MSG_FROM_112;
 		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modules&op=install&module=content&from_112=1\'",20000);</script>';
@@ -212,6 +223,5 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		echo $feedback;
 	}
 
-	installation_notify($newDbVersion, ICMS_ROOT_PATH );
 	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }

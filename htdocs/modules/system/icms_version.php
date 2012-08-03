@@ -74,8 +74,14 @@ $modversion['adminindex'] = "admin.php";
 $modversion['adminmenu'] = "menu.php";
 
 /* Database information */
-$modversion['object_items'] = array();
-//$modversion['tables']  = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
+/*  once the conversion is completed, we can use this
+$modversion['object_items'] = icms_core_Filesystem::getDirList(
+	ICMS_MODULES_PATH . '/system/admin/',
+	array('findusers', 'mailusers', 'preferences', 'version')
+);
+*/
+$modversion['object_items'] = array('adsense', 'autotasks', 'customtag', 'mimetype', 'rating');
+$modversion['tables']  = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
 
 /* Install and update informations */
 $modversion['onUpdate'] = "include/update.php";
