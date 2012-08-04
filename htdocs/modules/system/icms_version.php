@@ -80,7 +80,7 @@ $modversion['object_items'] = icms_core_Filesystem::getDirList(
 	array('findusers', 'mailusers', 'preferences', 'version')
 );
 */
-$modversion['object_items'] = array('adsense', 'autotasks', 'customtag', 'mimetype', 'rating');
+$modversion['object_items'] = array('adsense', 'autotasks', 'customtag', 'mimetype');
 $modversion['tables']  = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
 
 /* Install and update informations */

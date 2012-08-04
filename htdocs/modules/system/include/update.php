@@ -10,8 +10,8 @@
  * @version		$Id$
  */
 
-// this needs to be the latest db version
-define('SYSTEM_DB_VERSION', icms::$module->getVar('dbversion'));
+// this needs to be the latest db version.
+define('SYSTEM_DB_VERSION', ICMS_SYSTEM_DBVERSION);
 
 icms_loadLanguageFile('core', 'databaseupdater');
 
@@ -188,10 +188,10 @@ function icms_module_update_system(&$module, $oldversion = NULL, $dbVersion = NU
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 			if (count($remnants)) {
 				icms_core_Message::warning($remnants, "Unable to remove these files - you can remove them manually", TRUE);
 			}
-			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 
 			/* Add this as the last instruction of the last version update - outside of this and it will notify every time
 			 * they update the system module, even if there isn't an update being applied
@@ -199,7 +199,6 @@ function icms_module_update_system(&$module, $oldversion = NULL, $dbVersion = NU
 			 * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.*/
 			echo "Notifying ImpressCMS";
 			installation_notify($newDbVersion, ICMS_URL);
-
 		}
 	}
 

@@ -25,9 +25,21 @@ define('XOOPS_INSTALL', 1);
 
 @include_once '../mainfile.php';
 include_once '../include/version.php';
+
+
+/* we need this so we can use icms_core_Logger during the install to trap errors */
+if(!defined('ICMS_ROOT_PATH')) {
+	if (isset($vars) && $vars['ROOT_PATH']) {
+		define('ICMS_ROOT_PATH', $vars['ROOT_PATH']);
+	} else {
+		define('ICMS_ROOT_PATH', "");
+	}
+}
+
 // including a few functions
 require_once 'include/functions.php';
 
+/** Start the autoloader */
 require_once '../libraries/icms/Autoloader.php';
 icms_Autoloader::setup();
 
@@ -56,20 +68,13 @@ class XoopsInstallWizard {
 		if (version_compare( phpversion(), '5', '<')) {
 			$this->no_php5 = true;
 		}
-		/*		 elseif (ini_get('safe_mode') == 1 || strtolower(ini_get('safe_mode')) == 'on') {
-			$this->safe_mode = true;
-			} */
 
 		// Load the main language file
 		$this->initLanguage( !@empty( $_COOKIE['xo_install_lang'] ) ? $_COOKIE['xo_install_lang'] : 'english' );
 		// Setup pages
 		if ($this->no_php5) {
 			$this->pages[]= 'no_php5';
-		}
-		/*		elseif ($this->safe_mode) {
-			$this->pages[]= 'safe_mode';
-			} */
-		else {
+		} else {
 			$this->pages[]= 'langselect';
 			$this->pages[]= 'start';
 			$this->pages[]= 'modcheck';
@@ -162,7 +167,6 @@ class XoopsInstallWizard {
 	}
 
 	function initLanguage( $language) {
-		//echo $language;
 		if (!file_exists( "./language/$language/install.php" )) {
 			$language = 'english';
 		}
@@ -247,4 +251,3 @@ session_start();
 if (!@is_array( $_SESSION['settings'] )) {
 	$_SESSION['settings'] = array();
 }
-
