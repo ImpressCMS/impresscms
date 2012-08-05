@@ -95,15 +95,20 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		$language = 'english';
 	}
 
+
 	$modversion = array();
+	include_once '../include/functions.php';
 	include_once '../modules/system/icms_version.php';
 	$time = time();
-
 	// RMV-NOTIFY (updated for extra column in table)
 	/* do not alter the value for dbversion (the 3rd to last field) - all updates for
 	 * this will be handled by the module update process
+	 *
+	 * moved this ahead of the inclusion of system/icms_version.php for a reason - not completely without consequence
+	 * $modversion is not yet defined ~skenow
 	 */
 	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 40, 'system', 1)");
+
 
 	foreach ($modversion['templates'] as $tplfile) {
 		if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {

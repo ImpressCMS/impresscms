@@ -10,26 +10,39 @@
  * @version		$Id$
  */
 
+// this needs to be the latest db version.
+define('SYSTEM_DB_VERSION', ICMS_SYSTEM_DBVERSION);
+
 icms_loadLanguageFile('core', 'databaseupdater');
 
+/**
+ * Posts a notification of an install or update of the system module
+ *
+ * @todo	Make this part of the icms_module_Handler, so it can be applied for every module
+ *
+ * @param	string	$versionstring	A string representing the version of the module
+ * @param	string	$icmsroot		A unique identifier for the site
+ */
 function installation_notify($versionstring, $icmsroot) {
 
 	// @todo: change the URL to an official ImpressCMS server
 	//set POST variables
 	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
 	$fields = array(
-			'siteid' => hash('sha256', $icmsbase),
+			'siteid' => hash('sha256', $icmsroot),
 			'version' => urlencode($versionstring)
 	);
 
 	//url-ify the data for the POST
+	$fields_string = "";
 	foreach($fields as $key=>$value) {
 		$fields_string .= $key . '=' . $value . '&';
 	}
 	rtrim($fields_string, '&');
 
 	try {
-		//open connection
+		//open connection - this causes a fatal error if the extension is not loaded
+		if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
 		$ch = curl_init();
 
 		//set the url, number of POST vars, POST data
@@ -60,7 +73,7 @@ function installation_notify($versionstring, $icmsroot) {
  * @param int $dbVersion The database version
  * @return mixed
  */
-function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = NULL) {
+function icms_module_update_system(&$module, $oldversion = NULL, $dbVersion = NULL) {
 
 	global $icmsConfig, $xoTheme;
 
@@ -175,10 +188,17 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 			if (count($remnants)) {
 				icms_core_Message::warning($remnants, "Unable to remove these files - you can remove them manually", TRUE);
 			}
-			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+
+			/* Add this as the last instruction of the last version update - outside of this and it will notify every time
+			 * they update the system module, even if there isn't an update being applied
+			 *
+			 * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.*/
+			echo "Notifying ImpressCMS";
+			installation_notify($newDbVersion, ICMS_URL);
 		}
 	}
 
@@ -202,6 +222,5 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		echo $feedback;
 	}
 
-    installation_notify($newDbVersion, ICMS_ROOT_PATH );
 	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }

@@ -783,6 +783,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		foreach ($obj->cleanVars as $k => $v) {
 			if ($obj->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
 				$cleanvars[$k] = (int) ($v);
+			} elseif ($obj->vars[$k]['data_type'] == XOBJ_DTYPE_TXTAREA) {
+                $html = !empty($obj->vars[$k]['dohtml']) ? 1 : 0;
+				if ($html) {
+					$cleanvars[$k] = $this->db->quoteString(icms_core_DataFilter::checkVar($v, 'html', 'input'));
+				} else {
+					$cleanvars[$k] = $this->db->quoteString(icms_core_DataFilter::checkVar($v, 'text', 'input'));
+				}
 			} elseif (is_array($v)) {
 				$cleanvars[ $k ] = $this->db->quoteString( implode( ',', $v ) );
 			} else {

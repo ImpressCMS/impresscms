@@ -882,11 +882,19 @@ function icms_sanitizeAdsenses_callback($matches) {
  * @return array of tables used in the module
  * @todo Move to a static class method - Module
  */
-function icms_getTablesArray($moduleName, $items)
-{
+function icms_getTablesArray($moduleName, $items) {
 	$ret = array();
-	if (is_array($items))
-	foreach($items as $item) {$ret[] = $moduleName.'_'.$item;}
+	if (is_array($items)) {
+		foreach($items as $item) {
+			//$table = icms::handler('mod_' . $moduleName . '_' . ucfirst($item))->table;
+			$table = icms_getModuleHandler($item, $moduleName, NULL, TRUE)->table;
+			if (empty($table)) {
+				$ret[] = $moduleName . '_' . $item;
+			} else {
+				$ret[] = $table;
+			}
+		}
+	}
 	return $ret;
 }
 

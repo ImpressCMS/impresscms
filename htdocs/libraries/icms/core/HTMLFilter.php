@@ -70,9 +70,13 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			$icmsPurifyConf = self::getHTMLFilterConfig();
 			// uncomment for specific config debug info
 			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
-
+            $pos = strpos($html, '<!-- cleaned with htmlpurifier -->');
+            if ($pos !== FALSE) {
+                $html = str_replace('<!-- cleaned with htmlpurifier -->', '', $html);
+            }
 			$purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
+            $html .= '<!-- cleaned with htmlpurifier -->';
 		}
 		return $html;
 	}
