@@ -1931,27 +1931,27 @@ function one_wordwrap($string,$width=false){
  * Adds required jQuery files to header for Password meter.
  * @todo Move to a static class method - Password
  */
-function icms_PasswordMeter(){
+function icms_PasswordMeter() {
 	global $xoTheme, $icmsConfigUser;
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
-	$xoTheme->addScript('', array('type' => ''), '
+	$xoTheme->addScript('', array('type' => 'text/javascript'), '
 				$(document).ready( function() {
-					$.fn.shortPass = "'._CORE_PASSLEVEL1.'";
-					$.fn.badPass = "'._CORE_PASSLEVEL2.'";
-					$.fn.goodPass = "'._CORE_PASSLEVEL3.'";
-					$.fn.strongPass = "'._CORE_PASSLEVEL4.'";
-					$.fn.samePassword = "'._CORE_UNAMEPASS_IDENTIC.'";
+					$.fn.shortPass = "' . _CORE_PASSLEVEL1 . '";
+					$.fn.badPass = "' . _CORE_PASSLEVEL2 . '";
+					$.fn.goodPass = "' . _CORE_PASSLEVEL3 . '";
+					$.fn.strongPass = "' . _CORE_PASSLEVEL4 . '";
+					$.fn.samePassword = "' . _CORE_UNAMEPASS_IDENTIC . '";
 					$.fn.resultStyle = "";
 				$(".password_adv").passStrength({
-					minPass: '.$icmsConfigUser['minpass'].',
-					strongnessPass: '.$icmsConfigUser['pass_level'].',
+					minPass: ' . $icmsConfigUser['minpass'] . ',
+					strongnessPass: ' . $icmsConfigUser['pass_level'] . ',
 					shortPass: 		"top_shortPass",
 					badPass:		"top_badPass",
 					goodPass:		"top_goodPass",
 					strongPass:		"top_strongPass",
 					baseStyle:		"top_testresult",
-					userid:			"#uname",
+					userid:			"#uid",
 					messageloc:		0
 				});
 			});
