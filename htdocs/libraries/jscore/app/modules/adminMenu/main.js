@@ -1,10 +1,13 @@
 /*
-  Module: Notify
-  Handles display notification if needed
-  See: http://richardhsu.github.com/jquery.ambiance/#_ for options
-
+  Module: Admin menu
+  If you are an admin - you should see a pretty admin menu now.
+  
   Method: initialize
-  if notification are needed initialize is triggered and adds the needed resources to the page.
+  Loads the adminMenu CSS
+  Sets up the dom for the menu
+
+  Method: buildMenu
+  Passes our menu data to our template and appends container to dom.
 */
 define(function(require) {
   var $ = require('jquery')
@@ -30,7 +33,6 @@ define(function(require) {
     }
     , buildMenu: function(data) {
       adminTemplate = Handlebars.compile(adminHTML);
-      console.log(defaultData);
       markup = adminTemplate(defaultData);
 
       $('#admin-menu-wrapper').append(markup);
