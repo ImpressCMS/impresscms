@@ -1,4 +1,5 @@
 /*
+  This is a potential work in progress - the goal of which would be to display the admin panel in an overlay
   Module: Edit Block
   Handles displaying the edit block modal for admins
 

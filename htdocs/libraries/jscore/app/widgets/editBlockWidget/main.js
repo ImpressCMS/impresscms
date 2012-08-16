@@ -3,6 +3,12 @@
   Handles displaying the edit block modal for admins
 
   Method: initialize
+  Instantiates bindings and constructs data model.
+
+  Method bindDialog
+  Creates overall modal event and constructs remaining data per element.
+  Cleans dom when modal is closed.
+  
 */
 define(function(require) {
   var $ = require('jquery')
@@ -14,15 +20,11 @@ define(function(require) {
   , data = {}
   , markup
   , editTemplate
-  , firstrun = true
   , app = {
     initialize: function(ele, options) {
       if(typeof ele !== 'undefined') {
-        if(firstrun) {
-          firstrun = false;
-          tools.loadCSS(icms.config.jscore + 'plugins/jquery.ui/css/' + icms.config.uiTheme + '/jquery.ui.css', 'jquery-ui');
-          editTemplate = Handlebars.compile(editHTML);
-        }
+        tools.loadCSS(icms.config.jscore + 'plugins/jquery.ui/css/' + icms.config.uiTheme + '/jquery.ui.css', 'jquery-ui');
+        editTemplate = Handlebars.compile(editHTML);
         data.labels = labels;
         data.block = {
           moduleUrl: icms.config.url + '/modules'
@@ -30,9 +32,6 @@ define(function(require) {
         };
         app.bindDialog(ele, data);
       }
-    }
-    , loadResources:  function() {
-
     }
     , bindDialog: function(ele, data) {
         $(document).ready(function() {
