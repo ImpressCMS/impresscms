@@ -1,0 +1,25 @@
+@import url(style_icms.css);
+
+::selection {background: #ffb400; color: #000;}
+
+html {background: #000;}
+body {background: #232323; visibility: hidden; font-family: 'Droid Sans', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 25px;}
+
+h1,h2,h3,h4,h5,h6 {font-family: 'Ubuntu', Helvetica, Arial, sans-serif; font-weight: bold;}
+h1,h2,h3 {border-bottom:1px solid;}
+
+a, a:visited {color: #ffb400; text-decoration: none;}
+a:hover, a:focus {color: #000; text-decoration: underline;}
+
+/* Align Left */
+#header_wrapper,
+#main,
+#footer {margin-left: 0;}
+
+header, footer {background: #000;}
+#header {padding: 10px 0;}
+#logo {padding: 0 10px;}
+#footer {padding: 20px 0;}
+
+#leftside_wrapper {background: #232323; width: 210px; padding: 0 10px; color: #fff;}
+#main_wrapper {background: #f1f1f1;}

@@ -1,0 +1,13 @@
+<{if $show_footer}>
+  <footer>
+    <div id="footer" class="container_<{$grid_columns}>" role="footer">
+      <{if $use_html_path_instead}>
+        <{includeq file="$html_footer_path"}>
+      <{else}>
+        <{if $use_icms_footer}>
+          <{$icms_footer}>
+        <{/if}>
+      <{/if}>
+    </div>
+  </footer>
+<{/if}>
