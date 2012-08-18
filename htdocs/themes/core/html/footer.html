@@ -1,0 +1,15 @@
+<{if $show_footer}>
+  <footer class="<{$footer_wrapper_extra_classes}>">
+    <div id="footer" class="footer container_<{$grid_columns}> <{$footer_grid_extra_classes}>" role="footer">
+      <div id="footer_inner" class="footer_inner">
+        <{if $use_html_path_instead}>
+          <{includeq file="$html_footer_path"}>
+        <{else}>
+          <{if $use_icms_footer}>
+            <{$icms_footer}>
+          <{/if}>
+        <{/if}>
+      </div>
+    </div>
+  </footer>
+<{/if}>
