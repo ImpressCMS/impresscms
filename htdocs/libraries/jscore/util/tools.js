@@ -17,9 +17,10 @@ define(['jquery'], function ($) {
 		}
 		
     , serializeJSON: function(ele) {
-      var json = {};
+      var json = {}, result;
       $.map(ele.serializeArray(), function(n, i){
-        json[n['name']] = n['value'];
+        result = n['value'] === '' ? null : n['value'];
+        json[n['name']] = result;
       });
       return json;
     }
