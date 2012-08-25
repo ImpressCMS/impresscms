@@ -58,7 +58,7 @@ class icms_config_Item_Object extends icms_core_Object {
 				break;
 
 			case 'array':
-				$value = @ unserialize($this->getVar('conf_value', 'N'));
+				$value = @ $this->getVar('conf_value', 'N');
 				return $value ? $value : array();
 
 			case 'float':
