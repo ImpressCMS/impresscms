@@ -25,6 +25,7 @@ function xoops_header($closehead=true) {
 	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
 	$myts =& icms_core_Textsanitizer::getInstance();
 
+	/** @todo	Move to a separate class::method - HTTP */
 	if(!headers_sent())
 	{
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -32,6 +33,7 @@ function xoops_header($closehead=true) {
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header('Cache-Control: no-store, no-cache, max-age=1, s-maxage=1, must-revalidate, post-check=0, pre-check=0');
 		header("Pragma: no-cache");
+		header('X-Powered-By: ImpressCMS');
 	}
 	echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'._LANGCODE.'" lang="'._LANGCODE.'">

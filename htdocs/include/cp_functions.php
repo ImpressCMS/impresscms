@@ -40,6 +40,7 @@ function icms_cp_header(){
 	icms::$logger->stopTime('Module init');
 	icms::$logger->startTime('ImpressCMS CP Output Init');
 
+	/** @todo	Move to a separate class::method - HTTP */
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -47,6 +48,7 @@ function icms_cp_header(){
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
+		header('X-Powered-By: ImpressCMS');
 	}
 
 	$icmsAdminTpl = new icms_view_Tpl();
@@ -385,6 +387,7 @@ function icms_cp_footer() {
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		header('Cache-Control: private, no-cache');
 		header('Pragma: no-cache');
+		header("X-Powered-By: ImpressCMS");
 	}
 	if ( isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate ) {
 		trigger_error("xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING);
