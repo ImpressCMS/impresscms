@@ -1931,9 +1931,12 @@ function one_wordwrap($string,$width=false){
 }
 /**
  * Adds required jQuery files to header for Password meter.
+ *
+ * @param	string	$password_fieldclass	element id for the password field
+ * @param	string	$username_fieldid	element id for the username field
  * @todo Move to a static class method - Password
  */
-function icms_PasswordMeter() {
+function icms_PasswordMeter($password_fieldclass = "password_adv", $username_fieldid = "uname"){
 	global $xoTheme, $icmsConfigUser;
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
@@ -1945,7 +1948,7 @@ function icms_PasswordMeter() {
 					$.fn.strongPass = "' . _CORE_PASSLEVEL4 . '";
 					$.fn.samePassword = "' . _CORE_UNAMEPASS_IDENTIC . '";
 					$.fn.resultStyle = "";
-				$(".password_adv").passStrength({
+				$(".' . $password_fieldclass . '").passStrength({
 					minPass: ' . $icmsConfigUser['minpass'] . ',
 					strongnessPass: ' . $icmsConfigUser['pass_level'] . ',
 					shortPass: 		"top_shortPass",
@@ -1953,7 +1956,7 @@ function icms_PasswordMeter() {
 					goodPass:		"top_goodPass",
 					strongPass:		"top_strongPass",
 					baseStyle:		"top_testresult",
-					userid:			"#uid",
+					userid:			"#' . $username_fieldid . '",
 					messageloc:		0
 				});
 			});
