@@ -49,7 +49,7 @@ class Auth_OpenID_CryptUtil {
                 if ($f === false) {
                     $msg = 'Define Auth_OpenID_RAND_SOURCE as null to ' .
                         ' continue with an insecure random number generator.';
-                    trigger_error($msg, E_USER_ERROR);
+                    //trigger_error($msg, E_USER_ERROR);
                 }
             }
         }

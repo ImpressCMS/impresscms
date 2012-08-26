@@ -134,9 +134,6 @@ class icms_form_elements_Password extends icms_form_Element {
 	 */
 	public function render() {
 		global $icmsConfigUser;
-		if ($icmsConfigUser['pass_level'] > 20 ) {
-			icms_PasswordMeter();
-		}
 		$ele_name = $this->getName();
 		return "<input class='" . $this->getClassName()
 			. "' type='password' name='" . $ele_name
@@ -147,4 +144,3 @@ class icms_form_elements_Password extends icms_form_Element {
 			. "/>";
 	}
 }
-

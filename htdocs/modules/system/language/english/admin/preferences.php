@@ -37,6 +37,8 @@ define("_MD_AM_SESSNAME","Session name");
 define("_MD_AM_SESSNAMEDSC","The name of session (Valid only when 'use custom session' is enabled)");
 define("_MD_AM_SESSEXPIRE","Session expiration");
 define("_MD_AM_SESSEXPIREDSC","Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled. Works only when you are using PHP4.2.0 or later.)");
+define("_MD_AM_MYIP","Your IP address");
+define("_MD_AM_MYIPDSC","");
 define("_MD_AM_ALWDHTML","HTML tags allowed in all posts.");
 define("_MD_AM_INVLDMINPASS","Invalid value for minimum length of password.");
 define("_MD_AM_INVLDUCOOK","Invalid value for usercookie name.");

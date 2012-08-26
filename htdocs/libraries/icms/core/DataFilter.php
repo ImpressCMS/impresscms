@@ -452,8 +452,8 @@ class icms_core_DataFilter {
 	 * @param   bool	$image  allow inline images?
 	 * @return  string
 	 **/
-	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1) {
-		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, $smiley, $icode, $image));
+	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1, $br = 0) {
+		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, $smiley, $icode, $image, $br));
 
 		$html = self::codePreConv($html, $icode);
 		$html = self::makeClickable($html);
@@ -467,12 +467,15 @@ class icms_core_DataFilter {
 				$html = self::codeDecode($html, 0);
 			}
 		}
+        if ($br !== 0) {
+			$html = self::nl2Br($html);
+		}
 
 		$html = self::codeConv($html, $icode, $image);
 
 		$html = icms_core_HTMLFilter::filterHTML($html);
 
-		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, $smiley, $icode, $image));
+		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, $smiley, $icode, $image, $br));
 		return $html;
 	}
 
@@ -485,18 +488,25 @@ class icms_core_DataFilter {
 	 * @param   bool	$icode  allow icmscode?
 	 * @return  string
 	 **/
-	static public function filterHTMLdisplay($html, $icode = 1) {
-		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $icode));
+	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
+		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $icode, $br));
         
-        if ($icode !== 0) {
-            $html = self::codePreConv($html, $icode);
-            $html = self::makeClickable($html);
-            $html = self::smiley($html);
-            $html = self::codeDecode($html);
-            $html = self::codeConv($html, 1, 1);
-        }
+        if ($icode == 1) {
+            if ($icode !== 0) {
+                $html = self::codePreConv($html, $icode);
+                $html = self::makeClickable($html);
+                $html = self::smiley($html);
+                $html = self::codeDecode($html);
+                $html = self::codeConv($html, 1, 1);
+            }
 
-		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, $icode));
+            //$html = icms_core_HTMLFilter::filterHTML($html);
+        }
+        if ($br !== 0) {
+			$text = self::nl2Br($html);
+		}
+
+		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, $icode, $br));
 		return $html;
 	}
 

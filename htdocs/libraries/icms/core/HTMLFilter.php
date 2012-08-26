@@ -59,7 +59,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 **/
 	public function filterHTML($html) {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
-		if ($icmsConfigPurifier['enable_purifier'] !== 0) {
+
+        if ($icmsConfigPurifier['enable_purifier'] !== 0) {
 			ICMS_PLUGINS_PATH;
 			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
 			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
@@ -70,7 +71,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			$icmsPurifyConf = self::getHTMLFilterConfig();
 			// uncomment for specific config debug info
 			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
-
+            
             $purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
 		}

@@ -23,7 +23,42 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 	public function __construct($object, $key) {
 		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key));
 		$control = $object->getControl($key);
-		$this->addOptionArray($control['options']);
+		
+		if (isset($control['options'])) {
+			$this->addOptionArray($control['options']);
+		} else {
+			// let's find if the method we need to call comes from an already defined object
+			if (isset($control['object'])) {
+				if (method_exists($control['object'], $control['method'])) {
+					if ($option_array = $control['object']->$control['method']()) {
+						// Adding the options array to the select element
+						$this->addOptionArray($option_array);
+					}
+				}
+			} else {
+				// finding the itemHandler; if none, let's take the itemHandler of the $object
+				if (isset($control['itemHandler'])) {
+					if (!isset($control['module'])) {
+						// Creating the specified core object handler
+						$control_handler = icms::handler($control['itemHandler']);
+					} else {
+						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
+					}
+				} else {
+					$control_handler =& $object->handler;
+				}
+
+				// Checking if the specified method exists
+				if (method_exists($control_handler, $control['method'])) {
+					$option_array = call_user_func_array(array($control_handler, $control['method']),
+						isset($control['params']) ? $control['params'] : array());
+					if (is_array($option_array) && count($option_array) > 0) {
+						// Adding the options array to the select element
+						$this->addOptionArray($option_array);
+					}
+				}
+			}
+		}
 	}
 
 	/**
