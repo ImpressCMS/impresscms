@@ -25,24 +25,37 @@ header {border: 0; padding-top: 0;}
   display: block;
   background: #efefef;
 }
-#header_search form {margin: 0; float: right;}
+#header_search form {margin: 0 10px 0 0; float: right;}
 
 #nav_toggle {
   display: block;
   position: absolute;
-  top: 40px;
-  right: 10px;
+  top: 0px;
+  right: 10px;  
+  background: #fff;
+  border:1px solid #dadada;
+  border-radius:3px;
+  padding:4px 8px; 
+  transition: all 0.25s ease-in-out;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;    
+}
+
+#nav_toggle:hover,
+#nav_toggle:focus {
+    outline:none;
+    border-color:#9ecaed;
+    box-shadow:0 0 10px #9ecaed; 
 }
 
 nav#primary_navigation {
-  background: #F1F1F1;
+  background: #CCC;
   margin: 0;
   width: 100%;
   float: left;
-  display: none;
+  display: block;
   clear: both;
   height: auto;
-  display: none;
 }
 
 nav#primary_navigation ul {
@@ -72,6 +85,7 @@ nav#primary_navigation ul li a {
   clear: both;
   border-radius: 10px;
   box-shadow: 0 0 1px #ccc;
+  line-height: 20px;
 }
 
 nav#primary_navigation ul li.active a,
@@ -84,3 +98,9 @@ nav#primary_navigation ul li a:hover {
 
 #leftside_wrapper {width: auto; min-height: 0!important;}
 #main_wrapper {background: #F1F1F1;}
+
+footer {
+  width: 100%;
+  float: left;
+  clear: both;
+}

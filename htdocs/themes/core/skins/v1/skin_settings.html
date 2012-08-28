@@ -18,13 +18,12 @@
 <{assign var=show_logo value=1}>
 <{assign var=show_sitename value=0}>
 <{assign var=show_slogan value=0}>
-<{assign var=show_search value=0}>
+<{assign var=show_search value=1}>
 
 <{************** Preface Settings **************}>
-<{assign var=show_preface value=0}>
+<{assign var=show_preface value=1}>
 
 <{*************** ASIDE LEFT ****************}>
-<{assign var=leftcolumn_grid_extra_classes value='alpha omega'}>
 <{if !$xoBlocks.canvas_left}>
   <{assign var=show_leftblocks value=0}>
 <{/if}>
@@ -35,6 +34,7 @@
 <{/if}>
 
 <{*************** FOOTER ****************}>
+<{assign var=use_html_path_instead value=1}>
 <{assign var=footer_grid_extra_classes value=''}>
 
 <{************** Block Logic **************}>
