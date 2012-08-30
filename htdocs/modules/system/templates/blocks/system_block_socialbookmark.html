@@ -1,3 +1,7 @@
+<div id="socialModule" class="socialModule" data-module="<{$icms_url}>/libraries/jscore/app/widgets/socialShare/main.js" data-module-parameters="fb=true&amp;twit=true">
+  <div class="fb-like" data-send="false" data-layout="box_count" data-width="450" data-show-faces="false"></div>
+</div>
+
 <{foreach item=provider from=$block.provider}>
 <a href="#" onclick="window.open(<{$provider.link}>);return false;" rel="nofollow" title="<{$provider.title}>"><img src="<{$block.imagepath}><{$provider.image}>" alt="<{$provider.title}>"/></a>
 <{/foreach}>
