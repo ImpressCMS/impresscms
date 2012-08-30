@@ -555,6 +555,7 @@ function b_system_info_edit($options) {
 function b_system_themes_show($options) {
 	global $icmsConfig;
 	$theme_options = '';
+	$theme_options .= '<option disabled="disabled">' . sprintf(_MB_SYSTEM_NUMTHEME, count($icmsConfig['theme_set_allowed']) . '') . '</option>';
 	foreach ($icmsConfig['theme_set_allowed'] as $theme) {
 		$theme_options .= '<option value="' . $theme . '"';
 		if ($theme == $icmsConfig['theme_set']) {
@@ -564,12 +565,10 @@ function b_system_themes_show($options) {
 	}
 	$block = array();
 	if ($options[0] == 1) {
-		$block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"" . ICMS_THEME_URL . "/" . $icmsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"". (int) $options[1] . "\" /><br /><select id=\"theme_select\" name=\"theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'theme_select', 'themes', '/shot.gif', '" . ICMS_URL . "');\">" . $theme_options . "</select><input type=\"submit\" value=\"" . _GO . "\" />";
+		$block['theme_select'] = "<img id=\"icms_theme_img\" src=\"" . ICMS_THEME_URL . "/" . $icmsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"". (int) $options[1] . "\" /><select id=\"theme_select_with_image\" name=\"theme_select\">" . $theme_options . "</select><input type=\"submit\" value=\"" . _GO . "\" />";
 	} else {
-		$block['theme_select'] = '<select name="theme_select" onchange="submit();" size="3">' . $theme_options . '</select>';
+		$block['theme_select'] = '<select id="theme_select" name="theme_select">' . $theme_options . '</select>';
 	}
-
-	$block['theme_select'] .= '<p>(' . sprintf(_MB_SYSTEM_NUMTHEME, count($icmsConfig['theme_set_allowed']) . '') . ')</p>';
 	return $block;
 }
 
