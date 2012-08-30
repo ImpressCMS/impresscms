@@ -350,7 +350,7 @@ class icms_core_Object {
 
 					case 'e':
 					case 'edit':
-						return htmlspecialchars($ret, ENT_QUOTES, _CHARSET);
+						return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
@@ -397,12 +397,7 @@ class icms_core_Object {
 
 					case 'e':
 					case 'edit':
-                        $filtered = strpos($ret, '<!-- input filtered -->');
-                        if ($filtered !== FALSE) {
-                            $ret = str_replace('<!-- input filtered -->', '', $ret);
-                            $ret = str_replace('<!-- filtered with htmlpurifier -->', '', $ret);
-                        }
-						return htmlspecialchars($ret, ENT_QUOTES);
+						return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
