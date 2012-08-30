@@ -538,7 +538,6 @@ class icms_view_theme_Object {
 			$str .= implode("\n", $this->htmlHeadStrings);
 		} else {
 			$sort = array();
-			$types = array('http', 'meta', 'link', 'stylesheet', 'script');
 			foreach($this->metas[$zone][$type] as $name => $item) {
 				$sort[] = $item['weight'];
 			}

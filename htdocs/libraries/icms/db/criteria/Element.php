@@ -57,7 +57,7 @@ abstract class icms_db_criteria_Element {
 	/**
 	 * Constructor
 	 **/
-	public function __construct();
+	public function __construct(){}
 
 	/**
 	 * Render the criteria element
