@@ -15,6 +15,7 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
+
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
@@ -23,7 +24,9 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 	public function __construct($object, $key) {
 		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key));
 		$control = $object->getControl($key);
-		
+		if(isset($control['delimeter'])) {
+			$this->_delimeter = $control['delimeter'];
+		}
 		if (isset($control['options'])) {
 			$this->addOptionArray($control['options']);
 		} else {
@@ -67,18 +70,30 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 	 * @return	string  $ret  the constructed input form element string
 	 */
 	public function render() {
-		$ret = "";
-		if (count($this->getOptions()) > 1 && substr($this->getName(), -2, 2) != "[]") {
-			$newname = $this->getName() . "[]";
-			$this->setName($newname);
+		$ret = "<div class='grouped'>";
+		$ele_name = $this->getName();
+		$ele_value = $this->getValue();
+		$ele_options = $this->getOptions();
+		$ele_extra = $this->getExtra();
+		$ele_delimeter = $this->getDelimeter();
+		if (count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]") {
+			$ele_name = $ele_name . "[]";
+			$this->setName($ele_name);
 		}
-		foreach ($this->getOptions() as $value => $name) {
-			$ret .= "<input type='checkbox' name='" . $this->getName() . "' value='" . $value . "'";
-			if (count($this->getValue()) > 0 && in_array($value, $this->getValue())) {
+		foreach ($ele_options as $value => $name) {
+			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name 
+				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $this->getExtra() . " />" . $name . "<br/>";
+			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . $ele_delimeter . "</label></span>";
 		}
+		if (count($ele_options) > 1) {
+			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='" 
+				. $ele_name	. "_checkemall' class='checkemall' /><label for='" 
+				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
+		}
+		$ret .= "</div>";
 		return $ret;
 	}
 

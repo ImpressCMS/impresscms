@@ -99,7 +99,7 @@ class icms_config_Item_Object extends icms_core_Object {
 				if (!is_array($value)) {
 					$value = explode('|', trim($value));
 				}
-				$this->setVar('conf_value', serialize($value), $force_slash);
+				$this->setVar('conf_value', $value, $force_slash);
 				break;
 
 			case 'text':

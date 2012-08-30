@@ -59,6 +59,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		$config = new icms_config_Item_Object();
 		if ($isNew) {
 			$config->setNew();
+            $config->setNewConfig();
 		}
 		return $config;
 	}
