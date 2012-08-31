@@ -693,8 +693,6 @@ define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM","Allow Custom Filters");
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","Allow Custom Filters?<br /><br />if enabled this will allow you to use custom filters located in;<br />'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
 
 // added in 1.3.2
-define("_MD_AM_HELP_TIP","View help text");
-
 define("_MD_AM_PURIFIER_HTML_SAFEIFRAME","Enable Safe Iframes");
 define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC","Whether or not to permit Iframes in documents, with a number of extra security features added to prevent script execution. You must add safe domains in Safe Iframes URLs before enabling!.");
 define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP","Safe Iframes URLs");
