@@ -66,9 +66,9 @@ class db_manager {
 				elseif ($prefixed_query[1] == 'INSERT INTO') {
 					if ($this->db->query($prefixed_query[0]) != false) {
 						if (! isset($this->s_tables['insert'][$table])) {
-							$this->s_tables['insert'][$table] = 1;
+							$this->s_tables['insert'][$table] = $this->db->getAffectedRows();
 						} else {
-							$this->s_tables['insert'][$table]++;
+							$this->s_tables['insert'][$table] += $this->db->getAffectedRows();
 						}
 					} else {
 						if (! isset($this->f_tables['insert'][$table])) {
@@ -172,9 +172,9 @@ class db_manager {
 			return false;
 		} else {
 			if (!isset($this->s_tables['insert'][$table])) {
-				$this->s_tables['insert'][$table] = 1;
+				$this->s_tables['insert'][$table] = $this->db->getAffectedRows();
 			} else {
-				$this->s_tables['insert'][$table]++;
+				$this->s_tables['insert'][$table] += $this->db->getAffectedRows();
 			}
 			return $this->db->getInsertId();
 		}
@@ -195,5 +195,3 @@ class db_manager {
 		return $ret;
 	}
 }
-
-?>

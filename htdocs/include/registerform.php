@@ -51,8 +51,6 @@ if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] 
 	$reg_form->addElement($disc_tray);
 }
 
-$reg_form->addElement(new icms_form_elements_Hidden("salt", icms_core_DataFilter::htmlSpecialChars($salt)));
-$reg_form->addElement(new icms_form_elements_Hidden("enc_type", (int) ($enc_type)));
 $reg_form->addElement(new icms_form_elements_Hidden("actkey", icms_core_DataFilter::htmlSpecialChars($actkey)));
 
 if ($icmsConfigUser['use_captcha'] == true) {

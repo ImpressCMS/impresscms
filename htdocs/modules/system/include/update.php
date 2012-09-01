@@ -16,56 +16,6 @@ define('SYSTEM_DB_VERSION', ICMS_SYSTEM_DBVERSION);
 icms_loadLanguageFile('core', 'databaseupdater');
 
 /**
- * Posts a notification of an install or update of the system module
- *
- * @todo	Make this part of the icms_module_Handler, so it can be applied for every module
- *
- * @param	string	$versionstring	A string representing the version of the module
- * @param	string	$icmsroot		A unique identifier for the site
- */
-function installation_notify($versionstring, $icmsroot) {
-
-	// @todo: change the URL to an official ImpressCMS server
-	//set POST variables
-	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
-	$fields = array(
-			'siteid' => hash('sha256', $icmsroot),
-			'version' => urlencode($versionstring)
-	);
-
-	//url-ify the data for the POST
-	$fields_string = "";
-	foreach($fields as $key=>$value) {
-		$fields_string .= $key . '=' . $value . '&';
-	}
-	rtrim($fields_string, '&');
-
-	try {
-		//open connection - this causes a fatal error if the extension is not loaded
-		if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
-		$ch = curl_init();
-
-		//set the url, number of POST vars, POST data
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_POST, count($fields));
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
-
-		//execute post
-		if (curl_exec($ch)) {
-			icms_core_Message::error($url . $fields_string, 'Notification Sent to');
-		} else {
-			throw new Execption("Unable to contact update server");
-		}
-
-		//close connection
-		curl_close($ch);
-	} catch(Exception $e) {
-		icms_core_Message::error(sprintf($e->getMessage()));
-	}
-}
-
-/**
  * Automatic update of the system module
  *
  * @param object $module reference to the module object
@@ -197,8 +147,7 @@ function icms_module_update_system(&$module, $oldversion = NULL, $dbVersion = NU
 			 * they update the system module, even if there isn't an update being applied
 			 *
 			 * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.*/
-			echo "Notifying ImpressCMS";
-			installation_notify($newDbVersion, ICMS_URL);
+			icms_module_Handler::installation_notify($newDbVersion, ICMS_URL);
 		}
 	}
 

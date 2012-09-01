@@ -939,7 +939,7 @@ class icms_ipf_Object extends icms_core_Object {
 
 					case 'e':
 					case 'edit':
-						return htmlspecialchars($ret, ENT_QUOTES);
+                        return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':

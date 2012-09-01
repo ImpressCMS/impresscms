@@ -281,6 +281,7 @@ switch ($op) {
 		$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', TRUE);
 		$login_name_label = new icms_form_elements_Label(_US_LOGINNAME, icms::$user->getVar('login_name'));
 		$form->addElement($login_name_label);
+		$form->addElement(new icms_form_elements_Hidden("uname", icms::$user->getVar('login_name')));
 		$email_tray = new icms_form_elements_Tray(_US_EMAIL, '<br />');
 		if ($icmsConfigUser['allow_chgmail'] == 1) {
 			$email_text = new icms_form_elements_Text('', 'email', 30, 60, icms::$user->getVar('email'));

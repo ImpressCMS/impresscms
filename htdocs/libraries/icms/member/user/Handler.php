@@ -445,7 +445,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Retrieve a list of users based on passed criteria
-	 * 
+	 *
 	 * @param	object	$criteria criteria for finding users (@see icms_db_criteria_Compo)
 	 * @return	array	An array of usernames, with the userid as the key
 	 */
@@ -456,5 +456,5 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 			$ret[$i] = $users[$i]->getVar('uname');
 		}
 		return $ret;
-	}	
+	}
 }

@@ -25,6 +25,7 @@ function xoops_header($closehead=true) {
 	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
 	$myts =& icms_core_Textsanitizer::getInstance();
 
+	/** @todo	Move to a separate class::method - HTTP */
 	if(!headers_sent())
 	{
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -32,6 +33,7 @@ function xoops_header($closehead=true) {
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header('Cache-Control: no-store, no-cache, max-age=1, s-maxage=1, must-revalidate, post-check=0, pre-check=0');
 		header("Pragma: no-cache");
+		header('X-Powered-By: ImpressCMS');
 	}
 	echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'._LANGCODE.'" lang="'._LANGCODE.'">
@@ -1929,29 +1931,35 @@ function one_wordwrap($string,$width=false){
 }
 /**
  * Adds required jQuery files to header for Password meter.
+ *
+ * @param	string	$password_fieldclass	element id for the password field
+ * @param	string	$username_fieldid	element id for the username field
+ *
+ * @param	string	$password_fieldclass	element id for the password field
+ * @param	string	$username_fieldid	element id for the username field
  * @todo Move to a static class method - Password
  */
-function icms_PasswordMeter(){
+function icms_PasswordMeter($password_fieldclass = "password_adv", $username_fieldid = "uname"){
 	global $xoTheme, $icmsConfigUser;
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
-	$xoTheme->addScript('', array('type' => ''), '
+	$xoTheme->addScript('', array('type' => 'text/javascript'), '
 				$(document).ready( function() {
-					$.fn.shortPass = "'._CORE_PASSLEVEL1.'";
-					$.fn.badPass = "'._CORE_PASSLEVEL2.'";
-					$.fn.goodPass = "'._CORE_PASSLEVEL3.'";
-					$.fn.strongPass = "'._CORE_PASSLEVEL4.'";
-					$.fn.samePassword = "'._CORE_UNAMEPASS_IDENTIC.'";
+					$.fn.shortPass = "' . _CORE_PASSLEVEL1 . '";
+					$.fn.badPass = "' . _CORE_PASSLEVEL2 . '";
+					$.fn.goodPass = "' . _CORE_PASSLEVEL3 . '";
+					$.fn.strongPass = "' . _CORE_PASSLEVEL4 . '";
+					$.fn.samePassword = "' . _CORE_UNAMEPASS_IDENTIC . '";
 					$.fn.resultStyle = "";
-				$(".password_adv").passStrength({
-					minPass: '.$icmsConfigUser['minpass'].',
-					strongnessPass: '.$icmsConfigUser['pass_level'].',
+				$(".' . $password_fieldclass . '").passStrength({
+					minPass: ' . $icmsConfigUser['minpass'] . ',
+					strongnessPass: ' . $icmsConfigUser['pass_level'] . ',
 					shortPass: 		"top_shortPass",
 					badPass:		"top_badPass",
 					goodPass:		"top_goodPass",
 					strongPass:		"top_strongPass",
 					baseStyle:		"top_testresult",
-					userid:			"#uname",
+					userid:			"#' . $username_fieldid . '",
 					messageloc:		0
 				});
 			});

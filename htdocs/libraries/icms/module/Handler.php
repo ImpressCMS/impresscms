@@ -494,5 +494,57 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 public function getTemplate($dirname, $template, $block = FALSE) {
 
 	 }
-
-}
+	 
+	 /**
+	  * Posts a notification of an install or update of the system module
+	  *
+	  * @todo	Add a parameter for the module being updated/installed
+	  * @todo	Add a parameter for the action - install, uninstall, activate, deactivate, update
+	  * @todo	Add language constants
+	  *
+	  * @param	string	$versionstring	A string representing the version of the module
+	  * @param	string	$icmsroot		A unique identifier for the site
+	  */
+	 public static function installation_notify($versionstring, $icmsroot) {
+	 
+	 	// @todo: change the URL to an official ImpressCMS server
+	 	//set POST variables
+	 	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
+	 	$fields = array(
+	 			'siteid' => hash('sha256', $icmsroot),
+	 			'version' => urlencode($versionstring)
+	 	);
+	 
+	 	//url-ify the data for the POST
+	 	$fields_string = "";
+	 	foreach($fields as $key=>$value) {
+	 		$fields_string .= $key . '=' . $value . '&';
+	 	}
+	 	rtrim($fields_string, '&');
+	 
+	 	try {
+	 		//open connection - this causes a fatal error if the extension is not loaded
+	 		if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
+	 		$ch = curl_init();
+	 
+	 		//set the url, number of POST vars, POST data
+	 		curl_setopt($ch, CURLOPT_URL, $url);
+	 		curl_setopt($ch, CURLOPT_POST, count($fields));
+	 		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+	 		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
+	 
+	 		//execute post
+	 		if (curl_exec($ch)) {
+	 			icms_core_Message::error($url . $fields_string, 'Notification Sent to');
+	 		} else {
+	 			throw new Execption("Unable to contact update server");
+	 		}
+	 
+	 		//close connection
+	 		curl_close($ch);
+	 	} catch(Exception $e) {
+	 		icms_core_Message::error(sprintf($e->getMessage()));
+	 	}
+	 }
+ }
+	 

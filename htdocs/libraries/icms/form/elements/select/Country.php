@@ -52,7 +52,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"AI" => _COUNTRY_AI,
 			"AL" => _COUNTRY_AL,
 			"AM" => _COUNTRY_AM,
-			"AN" => _COUNTRY_AN,
+		//	"AN" => _COUNTRY_AN,	transitionally reserved
 			"AO" => _COUNTRY_AO,
 			"AQ" => _COUNTRY_AQ,
 			"AR" => _COUNTRY_AR,
