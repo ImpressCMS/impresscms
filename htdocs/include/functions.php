@@ -889,7 +889,8 @@ function icms_getTablesArray($moduleName, $items) {
 	if (is_array($items)) {
 		foreach($items as $item) {
 			//$table = icms::handler('mod_' . $moduleName . '_' . ucfirst($item))->table;
-			$table = icms_getModuleHandler($item, $moduleName, NULL, TRUE)->table;
+			$module = icms_getModuleHandler($item, $moduleName, NULL, TRUE);
+			if (is_object($module)) $table = $module->table;
 			if (empty($table)) {
 				$ret[] = $moduleName . '_' . $item;
 			} else {
