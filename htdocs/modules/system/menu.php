@@ -29,7 +29,6 @@ $admin_dir = ICMS_ROOT_PATH . '/modules/system/admin';
 $dirlist = icms_core_Filesystem::getDirList($admin_dir);
 
 icms_loadLanguageFile('system', 'admin');
-asort($dirlist);
 $adminmenu = array();
 foreach ($dirlist as $file) {
 	$mod_version_file = 'icms_version.php';
