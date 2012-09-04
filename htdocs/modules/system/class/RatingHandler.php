@@ -24,10 +24,10 @@ class mod_system_RatingHandler extends icms_ipf_Handler {
 
 	/**
 	 * Constructor for the ratings handler
-	 * 
+	 *
 	 * @param object $db
 	 */
-	public function __construct($db) {
+	public function __construct(&$db) {
 		parent::__construct($db, 'rating', 'ratingid', 'rate', '', 'system');
 		$this->generalSQL = 'SELECT * FROM ' . $this->table . ' AS ' . $this->_itemname . ' INNER JOIN ' . $this->db->prefix('users') . ' AS user ON ' . $this->_itemname . '.uid=user.uid';
 
@@ -65,7 +65,7 @@ class mod_system_RatingHandler extends icms_ipf_Handler {
 
 	/**
 	 * Get the average rating for an item
-	 * 
+	 *
 	 * @param int $itemid
 	 * @param str $dirname
 	 * @param str $item
@@ -83,10 +83,10 @@ class mod_system_RatingHandler extends icms_ipf_Handler {
 		$ret['sum'] = isset($sum) ? $sum : 0;
 		return $ret;
 	}
-	
+
 	/**
 	 * Determine if a user has already rated an item
-	 * 
+	 *
 	 * @param	str	$item
 	 * @param	int	$itemid
 	 * @param	str	$dirname

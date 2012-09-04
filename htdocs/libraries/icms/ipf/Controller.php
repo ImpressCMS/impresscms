@@ -125,10 +125,16 @@ class icms_ipf_Controller {
 					}
 					$icmsObj->setVar($key, $value);
 					break;
-					
+
 				case XOBJ_DTYPE_URL:
 					if (isset($_POST[$key])) {
 						$icmsObj->setVar($key, filter_var($_POST[$key], FILTER_SANITIZE_URL));
+					}
+					break;
+
+				case XOBJ_DTYPE_ARRAY:
+					if (is_array($_POST[$key])) {
+						$icmsObj->setVar($key, serialize($_POST[$key]));
 					}
 					break;
 

@@ -59,6 +59,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		$config = new icms_config_Item_Object();
 		if ($isNew) {
 			$config->setNew();
+            $config->setNewConfig();
 		}
 		return $config;
 	}
@@ -81,6 +82,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 			if ($numrows == 1) {
 				$myrow = $this->db->fetchArray($result);
 				$config = new icms_config_Item_Object();
+				$config->setType($myrow["conf_valuetype"]);
 				$config->assignVars($myrow);
 			}
 		}
@@ -213,6 +215,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
 			$config = new icms_config_item_Object();
+			$config->setType($myrow["conf_valuetype"]);
 			$config->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $config;

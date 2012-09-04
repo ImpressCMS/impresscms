@@ -72,7 +72,7 @@ class mainfile_manager {
 				if ($key == 'PROTECTOR1' || $key == 'PROTECTOR2') {
 					$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/", $val, $content);
 					$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
-					ontinue;
+					continue;
 				}
 				$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/"
 				, "define('".$key."', '". str_replace( '$', '\$', addslashes( $val ) ) ."')"

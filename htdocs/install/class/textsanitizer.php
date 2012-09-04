@@ -13,6 +13,7 @@
  * @version	$Id$
  */
 // This is subset and modified version of module.textsanitizer.php
+/** @todo This funtion has been deprecated in PHP 5.3.0. In PHP 5.4 raises an E_CORE_ERROR level error. - need to adjust in 2.0 ~skenow */
 @set_magic_quotes_runtime(0);
 
 class TextSanitizer

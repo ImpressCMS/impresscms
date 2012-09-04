@@ -15,6 +15,7 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
+
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
@@ -23,7 +24,44 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 	public function __construct($object, $key) {
 		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key));
 		$control = $object->getControl($key);
-		$this->addOptionArray($control['options']);
+		if(isset($control['delimeter'])) {
+			$this->_delimeter = $control['delimeter'];
+		}
+		if (isset($control['options'])) {
+			$this->addOptionArray($control['options']);
+		} else {
+			// let's find if the method we need to call comes from an already defined object
+			if (isset($control['object'])) {
+				if (method_exists($control['object'], $control['method'])) {
+					if ($option_array = $control['object']->$control['method']()) {
+						// Adding the options array to the select element
+						$this->addOptionArray($option_array);
+					}
+				}
+			} else {
+				// finding the itemHandler; if none, let's take the itemHandler of the $object
+				if (isset($control['itemHandler'])) {
+					if (!isset($control['module'])) {
+						// Creating the specified core object handler
+						$control_handler = icms::handler($control['itemHandler']);
+					} else {
+						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
+					}
+				} else {
+					$control_handler =& $object->handler;
+				}
+
+				// Checking if the specified method exists
+				if (method_exists($control_handler, $control['method'])) {
+					$option_array = call_user_func_array(array($control_handler, $control['method']),
+						isset($control['params']) ? $control['params'] : array());
+					if (is_array($option_array) && count($option_array) > 0) {
+						// Adding the options array to the select element
+						$this->addOptionArray($option_array);
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -32,18 +70,30 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 	 * @return	string  $ret  the constructed input form element string
 	 */
 	public function render() {
-		$ret = "";
-		if (count($this->getOptions()) > 1 && substr($this->getName(), -2, 2) != "[]") {
-			$newname = $this->getName() . "[]";
-			$this->setName($newname);
+		$ret = "<div class='grouped'>";
+		$ele_name = $this->getName();
+		$ele_value = $this->getValue();
+		$ele_options = $this->getOptions();
+		$ele_extra = $this->getExtra();
+		$ele_delimeter = $this->getDelimeter();
+		if (count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]") {
+			$ele_name = $ele_name . "[]";
+			$this->setName($ele_name);
 		}
-		foreach ($this->getOptions() as $value => $name) {
-			$ret .= "<input type='checkbox' name='" . $this->getName() . "' value='" . $value . "'";
-			if (count($this->getValue()) > 0 && in_array($value, $this->getValue())) {
+		foreach ($ele_options as $value => $name) {
+			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name 
+				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $this->getExtra() . " />" . $name . "<br/>";
+			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . $ele_delimeter . "</label></span>";
 		}
+		if (count($ele_options) > 1) {
+			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='" 
+				. $ele_name	. "_checkemall' class='checkemall' /><label for='" 
+				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
+		}
+		$ret .= "</div>";
 		return $ret;
 	}
 

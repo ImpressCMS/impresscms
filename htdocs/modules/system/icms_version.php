@@ -49,12 +49,16 @@ $modversion['people']['developers'][] = "[url=http://community.impresscms.org/us
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=106]TheRplima[/url]";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=69]vaughan[/url]";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=340]nekro[/url]";
+
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=53]davidl2[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=10]sato-san[/url]";
+
 $modversion['people']['translators'][] = "";
+
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=372]UnderDog[/url]";
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
+
 //$modversion['people']['other'][] = "";
 
 // Autotasks
@@ -62,7 +66,7 @@ $modversion['autotasks'][] = array(
 	'enabled' => TRUE,
 	'name' => _MI_SYSTEM_REMOVEUSERS,
 	'code' => 'autotask.php',
-	'interval' => 1
+	'interval' => 1440
 );
 
 /* Manual */
@@ -74,8 +78,28 @@ $modversion['adminindex'] = "admin.php";
 $modversion['adminmenu'] = "menu.php";
 
 /* Database information */
-$modversion['object_items'] = array();
-//$modversion['tables']  = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
+/*  once the conversion is completed, we can use this
+$modversion['object_items'] = icms_core_Filesystem::getDirList(
+	ICMS_MODULES_PATH . '/system/admin/',
+	array('findusers', 'mailusers', 'preferences', 'version')
+);
+*/
+
+/* This represents the objects that can be automatically updated via IPF */
+$modversion['object_items'] = array(
+	'adsense',
+	'autotasks',
+	'customtag',
+	'mimetype',
+	'pages',
+	'rating',
+	'blocks',
+	'positions',
+	'userrank'
+);
+
+/* This will be the list of database tables for the above objects */
+$modversion['tables']  = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
 
 /* Install and update informations */
 $modversion['onUpdate'] = "include/update.php";

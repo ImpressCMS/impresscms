@@ -155,7 +155,7 @@ class icms_view_theme_Object {
 			'xoops_sitename' => $this->template->get_template_vars('icms_sitename'),
 			'xoops_slogan' => $this->template->get_template_vars('icms_slogan'),
 			'xoops_dirname' => $this->template->get_template_vars('icms_dirname'),
-			'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
+			//'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
 		));
 		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
@@ -538,7 +538,6 @@ class icms_view_theme_Object {
 			$str .= implode("\n", $this->htmlHeadStrings);
 		} else {
 			$sort = array();
-			$types = array('http', 'meta', 'link', 'stylesheet', 'script');
 			foreach($this->metas[$zone][$type] as $name => $item) {
 				$sort[] = $item['weight'];
 			}

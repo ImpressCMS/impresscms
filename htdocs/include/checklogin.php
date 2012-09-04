@@ -75,6 +75,7 @@ if (FALSE != $user) {
 			exit();
 		}
 	}
+    
 	$user->setVar('last_login', time());
 	if (!$member_handler->insertUser($user)) {}
 	// Regenrate a new session id and destroy old session
@@ -142,7 +143,12 @@ if (FALSE != $user) {
 	$notification_handler = icms::handler('icms_data_notification');
 	$notification_handler->doLoginMaintenance($user->getVar('uid'));
 
-	redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), FALSE);
+	$is_expired = $user->getVar('pass_expired');
+	if ($is_expired == 1) {
+		redirect_header(ICMS_URL . '/user.php?op=resetpass', 5, _US_PASSEXPIRED, FALSE);
+	} else {
+    	redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), FALSE);
+    }
 } elseif (empty($_POST['xoops_redirect'])) {
 	redirect_header(ICMS_URL . '/user.php', 5, $icmsAuth->getHtmlErrors());
 } else {

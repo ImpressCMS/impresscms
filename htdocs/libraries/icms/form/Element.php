@@ -284,7 +284,7 @@ abstract class icms_form_Element {
 	 */
 	public function getExtra($encode = false) {
 		if (!$encode) {
-			return implode(' ', $this->_extra);
+			return " " . implode(' ', $this->_extra);
 		}
 		$value = array();
 		foreach ($this->_extra as $val) {

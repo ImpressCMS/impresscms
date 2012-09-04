@@ -378,6 +378,7 @@ class icms_core_Filesystem {
 			}
 			$iterator->next();
 		}
+		asort($dirList);
 		return array_diff($dirList, $ignore);
 	}
 

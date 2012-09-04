@@ -62,7 +62,7 @@ function &getStore() {
     //$store_path = "/tmp/_php_consumer_test";
     $store_path = ICMS_TRUST_PATH . "/_php_consumer";
 
-    if (!file_exists($store_path) 
+    if (!file_exists($store_path)
     	&& !mkdir($store_path)
     ) {
         print "Could not create the FileStore directory."
@@ -100,7 +100,7 @@ function getReturnTo() {
 }
 
 function getTrustRoot() {
-	$directory = dirname($_SERVER['PHP_SELF']); 
+	$directory = dirname($_SERVER['PHP_SELF']);
 	$directory = "/" ? "" : $directory;
 	return sprintf("%s://%s:%s%s/",
                    getScheme(), $_SERVER['SERVER_NAME'],
@@ -118,10 +118,10 @@ function getTrustRoot() {
  */
 
 $store_path = ICMS_TRUST_PATH . "/_php_consumer";
-if (!file_exists($store_path) 
+if (!file_exists($store_path)
 	&& !mkdir($store_path)
 ) {
-    print "Could not create the FileStore directory." 
+    print "Could not create the FileStore directory."
     	. " Please check the effective permissions.";
     exit(0);
 }
@@ -135,6 +135,7 @@ $consumer = new Auth_OpenID_Consumer($store);
 
 /**
  * Sanitization Functions
+ * @todo	get_magic_quotes_gpc is deprecated in PHP 5.4 - need to adjust
  */
 function quote_smart($value) {
     // Stripslashes

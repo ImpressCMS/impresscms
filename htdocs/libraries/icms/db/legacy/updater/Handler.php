@@ -254,7 +254,7 @@ class icms_db_legacy_updater_Handler {
 			return false;
 		}
 
-		$table = new icms_db_legacy_updater_Table($dirname . '_' . $item);
+		$table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
 		$object = $module_handler->create();
 		$objectVars = $object->getVars();
 
