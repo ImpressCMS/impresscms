@@ -561,7 +561,7 @@ class icms_view_theme_Object {
 					break;
 
 				case 'stylesheet':
-					/* @todo use a preference option to determine whether to combine the files, or not */
+					/* @todo use a preference option to determine whether to combine the files, or not, and 1 for compressing the file */
 					$combine = TRUE;
 					if ($combine) {
 						/* all local files will be a path, all remote files will have scheme:// */
