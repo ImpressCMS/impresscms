@@ -424,17 +424,112 @@ class icms_core_Filesystem {
 		return $fileList;
 	}
 
-	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_TRUST_PATH) {
+	/**
+	 * Create and write contents to a file
+	 *
+	 * @param	string	$contents	The contents to be written to the file
+	 * @param	string	$filename	The filename
+	 * @param	string	$extension	The extension of the new file
+	 * @param	string	$location	The path to the new file
+	 * @param	boolean	$overwrite	If TRUE, overwrite any existing file. If FALSE, append to any existing file
+	 * @return	boolean				TRUE, if the operation was successful, FALSE if it fails
+	 */
+	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_TRUST_PATH, $overwrite = TRUE) {
 		if ($extension == '') $extension = 'php';
 		if (DIRECTORY_SEPARATOR !== "/") $location = str_replace(DIRECTORY_SEPARATOR, "/", $location);
 		$file = $location . '/' . $filename . '.' . $extension;
-		if ($fp = fopen($file, "wt")) {
+		$mode = $overwrite ? "wb" : "ab";
+		if ($fp = fopen($file, $mode)) {
 			if (fwrite($fp, $contents) == FALSE) {
 				echo 'failed write file';
 				return FALSE;
 			}
 			fclose($fp);
 		}
+		return TRUE;
+	}
+
+	/**
+	 * Combine several files of the same type (css or js) and write to a single file
+	 *
+	 * @param	array	$files		An array of files, with the URI of the file as the key
+	 * @param	string	$type		Common extension of the files (css or js)
+	 * @param	bool	$minimize	If TRUE, minimize the file (reduce whitespace and line breaks, default is FALSE
+	 * @param	boolean	$replace	If TRUE, replace any existing file with an updated version
+	 * @param	integer	$maxage		Maximum age, in seconds, of the file before updating. Default 0 = never expire. $replace value overrides $maxage
+	 * @param	string	$location	Path of the output file
+	 * @return	mixed				Full path and name of the file created, if successful. FALSE if the write operation fails
+	 */
+	static public function combineFiles(array $files, $type, $minimize = FALSE, $replace = FALSE, $maxage = 0, $location = ICMS_CACHE_PATH) {
+		$expired = FALSE;
+
+		/* generate a unique filename based on all the files included and the order they're added
+		 * remove site specific path information and directory separators, full paths are still needed
+		 */
+		$filename = hash("sha256",
+				str_replace(
+						array("\\", ICMS_URL . "/", "/", "." . $type),
+						array("/", "", "-", ""),
+						implode("+", array_keys($files))
+				)
+		);
+
+		$combinedFile = $location . "/" . $filename . "." . $type;
+
+		/* check to see if the compound file has been cached and for how long */
+		$combinedFileExists = file_exists($combinedFile);
+		if ($combinedFileExists && $maxage !== 0) {
+			$expired = (time() - filectime($combinedFile)) > $maxage;
+		}
+
+		if (!$combinedFileExists || $replace || $expired) {
+			/* create the file and write the contents of the files there */
+			$overwrite = $replace || $expired;
+			foreach ($files as $file => $properties) {
+				$handle = fopen(ICMS_ROOT_PATH . $file, "r");
+				$file_contents = fread($handle, filesize(ICMS_ROOT_PATH . $file));
+				$success = self::writeFile(
+						"/* " . $type . " from " . $file . " */\n" . $file_contents . "\n",
+						$filename,
+						$type,
+						$location,
+						$overwrite
+				);
+				fclose($handle);
+				if ($success === FALSE) return FALSE;
+				$overwrite = FALSE;
+			}
+		}
+		$filepath = $combinedFile;
+
+		$minFile = $location . "/" . $filename . "-min". "." . $type;
+		$minFileExists = file_exists($minFile);
+		if ($minFileExists && $maxage !== 0) {
+			$expired = (time() - filectime($minFile)) > $maxage;
+		}
+
+		if ($minimize && (!$minFileExists || $replace || $expired)) {
+			$handle = fopen($combinedFile, "r");
+			$file_contents = fread($handle, filesize($combinedFile));
+			/* @todo this could be more sophisticated for minifying */
+			$min_contents = preg_replace(
+				array( "/\t/", "/(\s)+/",),
+				array( " ", "\\1",),
+				$file_contents
+			);
+			$success = self::writeFile(
+					$min_contents,
+					$filename . "-min",
+					$type,
+					$location,
+					TRUE
+			);
+			fclose($handle);
+			if ($success === FALSE) return FALSE;
+			$filepath = $minFile;
+		}
+
+		return $filepath;
 	}
 
 	/**
@@ -472,4 +567,3 @@ class icms_core_Filesystem {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
 }
-
