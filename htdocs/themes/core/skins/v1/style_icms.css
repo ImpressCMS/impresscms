@@ -1,0 +1,23 @@
+/* Start Main/User Menu */
+#mainmenu, #usermenu { font-size: 1em; }
+#mainmenu a, #usermenu a { display: block; margin: 0; padding: 2px; color: #666; }
+#mainmenu a:hover, #usermenu a:hover { color: #000; }
+#mainmenu a.menuTop, #usermenu a.menuTop {  }
+#mainmenu a.menuMain { padding-left: 5px; }
+#mainmenu a.menuSub { padding-left: 10px; }
+#mainmenu a.menuSub:hover {  }
+#usermenu a.highlight { color: #59BBE6; }
+/* End Main/User Menu */
+
+/* codes and quotes */
+.xoopsCode { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto; }
+.xoopsQuote { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px; }
+.icmsCode { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto; }
+.icmsQuote { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px; }
+
+/* Admin Help Nav */
+#helpbar a { float: left; width: 14px; height: 14px; padding: 2px 0 4px 5px; background: #F3AC03; color: #333333; border: 1px dotted #dddddd; }
+
+.cpDashPanel .tabs-left > .nav-tabs > li > a, .cpDashPanel .tabs-right > .nav-tabs > li > a {min-width: 100px; }
+.cpDashPanel .tab-content a { float: left; width: 30%; margin: 0 2% 2% 0; padding: 10px 1px; outline: 1px #ccc; border: 1px solid #ddd; text-align: center; }
+.cpDashPanel .tab-content a img { margin: 0 0 10px 0; }

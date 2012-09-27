@@ -1,0 +1,10 @@
+body {visibility: visible;}
+
+#nav_toggle {
+  display: none;
+}
+
+nav#primary_navigation {
+  display: block !important;
+}
+
