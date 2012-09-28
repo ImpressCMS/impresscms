@@ -1,0 +1,44 @@
+<{if $block.feed == 'ImpressCMS Project News'}>
+<div class="cycleFeed clearfix odd">
+  <div class="titleLeft">
+    <span>
+      <h3>Recent News</h3>
+      <p>
+        Latest News about the ImpressCMS project.<br /><br />
+        <a href="<{$icms_url}>/modules/news">View All News</a>
+      </p>
+    </span>
+    <div class="pager"></div>
+  </div>
+<{/if}>
+
+<{if $block.feed == 'ImpressCMS Blog'}>
+<div class="cycleFeed clearfix even">
+  <div class="titleLeft">
+    <span>
+      <h3>Recent Blogs</h3>
+      <p>
+        Latest blog posts from our community members.<br /><br />
+        <a href="<{$icms_url}>/modules/imblogging">View All Blogs</a>
+      </p>
+    </span>
+    <div class="pager"></div>
+  </div>
+<{/if}>
+
+  <div class="feedLoop">
+    <ul>
+    <{foreach item=post from=$block.reader_recent_posts}>
+    	<li class="<{cycle values='alpha,beta,omega'}>">
+        <div class="postData">
+          <p>
+            <{if $post.date}><span class="itemDate"><{$post.date|date_format:"%b %e, %Y"}></span><br /><{/if}>
+            <a href="<{$post.link}>"><{$post.title}></a><br />
+            <{$post.description|strip_tags:false|truncate:"140"}>
+          </p>
+        </div>
+      </li>
+    <{/foreach}>
+    </ul>
+  </div>
+</div>

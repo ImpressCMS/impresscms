@@ -1,0 +1,75 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<{$icms_langcode}>"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="<{$icms_langcode}>"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="<{$icms_langcode}>"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="<{$icms_langcode}>"> <!--<![endif]-->
+<head>
+  <{includeq file="$theme_name/html/meta.html"}>
+</head>
+<body class="<{if $ishome}>home <{/if}><{if $bodyClasses}><{$bodyClasses}><{/if}><{if $inAdmin}> admin<{/if}>">
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->  
+
+  <!-- Facebook Javascript SDK -->
+  <{if $use_facebook_sdk}>
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '<{$fb_app_id}>', // App I
+          channelUrl : '<{$icms_imageurl}>/extra/fbChannel.php', // Channel File
+          status     : true, // check login status
+          cookie     : true, // enable cookies to allow the server to access the session
+          xfbml      : true  // parse XFBML
+        });
+
+        // Additional initialization code here
+      };
+
+      // Load the SDK Asynchronously
+      (function(d){
+         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement('script'); js.id = id; js.async = true;
+         js.src = "//connect.facebook.net/en_US/all.js";
+         ref.parentNode.insertBefore(js, ref);
+       }(document));
+    </script>    
+  <{/if}>
+  
+  <div id="fullWrapper" class="fullWrapper">
+    <{includeq file="$theme_name/html/header.html"}>
+    <{includeq file="$theme_name/html/page.html"}>
+    <{includeq file="$theme_name/html/footer.html"}>
+  </div>
+  
+  <{if $enable_concatenate}>
+    <{if $enable_skin_js}>
+      <script src="<{$icms_url}>/boiler.php?type=script&amp;f=media/js/boiler-core-plugins.js,media/js/boiler-core-scripts.js,skins/<{$skin}>/media/js/plugins.js,skins/<{$skin}>/media/js/scripts.js"></script>
+    <{else}>
+      <script src="<{$icms_url}>/boiler.php?type=script&amp;f=media/js/boiler-core-plugins.js,media/js/boiler-core-scripts.js"></script>
+    <{/if}>
+  <{else}>
+    <{if $enable_twitter_intents}>
+      <script type="text/javascript" charset="utf-8">
+        window.twttr = (function (d,s,id) {
+          var t, js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
+          js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+          return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
+        }(document, "script", "twitter-wjs"));
+      </script>
+    <{/if}>
+
+    <script src="<{$icms_imageurl}>media/js/boiler-core-plugins.js"></script>
+    <script src="<{$icms_imageurl}>media/js/boiler-core-scripts.js"></script>
+
+    <{if $enable_skin_js}>
+      <script src="<{$icms_imageurl}>skins/<{$skin}>/media/js/plugins.js"></script>
+      <script src="<{$icms_imageurl}>skins/<{$skin}>/media/js/scripts.js"></script>
+    <{/if}>
+  <{/if}>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<div class="cycleFeed clearfix odd">
+  <div class="titleLeft">
+    <span>
+      <h3>Case Studies</h3>
+      <p>
+        Impressive applications built with ImpressCMS.<br /><br />
+        <a href="<{$icms_url}>/modules/catalogue">View All Cases</a>
+      </p>
+    </span>
+  </div>
+
+  <div class="feedLoop fullFeed">
+    <ul>
+    <{foreach item=catalogue_item from=$block.catalogue_items}>
+      <li class="alpha omega">
+        <div class="postData">
+          <{if $catalogue_item.imagePath}>
+            <div class="alignright thumbContainer">
+              <a class="modalTrigger" href="<{$catalogue_item.imagePath}>" title="">
+                <img class="thumbnail treatment" alt="" src="<{$catalogue_item.imagePath}>" width="300" />
+              </a>
+            </div>
+          <{/if}>
+
+          <p>
+            <{if $catalogue_item.date}><span class="itemDate"><{$catalogue_item.date|date_format:"%b %e, %Y"}></span><br /><{/if}>
+            <{$catalogue_item.itemLink}><br />
+            <{$catalogue_item.description|truncate:"575"}>
+          </p>
+        </div>
+      </li>
+    <{/foreach}>
+    </ul>
+  </div>
+</div>
