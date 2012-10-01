@@ -1,0 +1,38 @@
+<{*
+ *
+ * Skin Settings File - Use this to override default settings.
+ *
+*}>
+
+<{assign var=grid_columns value='12'}>
+<{assign var=enable_responsive value=1}>
+<{assign var=enable_wides value=0}>
+
+<{************** Skin Settings **************}>
+  <{assign var=add_meta value=1}>
+  <{assign var=use_facebook_sdk value=0}>
+  <{assign var=enable_twitter_intents value=0}>
+  
+
+<{************** Header Settings **************}>
+<{assign var=show_logo value=1}>
+<{assign var=show_sitename value=0}>
+<{assign var=show_slogan value=0}>
+<{assign var=show_search value=1}>
+
+<{************** Preface Settings **************}>
+<{assign var=show_preface value=1}>
+
+<{*************** ASIDE LEFT ****************}>
+<{if !$xoBlocks.canvas_left}>
+  <{assign var=show_leftblocks value=0}>
+<{/if}>
+
+<{*************** ASIDE RIGHT ****************}>
+<{if !$xoBlocks.canvas_right}>
+  <{assign var=show_rightblocks value=0}>
+<{/if}>
+
+<{*************** FOOTER ****************}>
+<{assign var=use_html_path_instead value=1}>
+<{assign var=footer_grid_extra_classes value=''}>
