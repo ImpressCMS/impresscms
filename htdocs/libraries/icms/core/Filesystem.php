@@ -427,6 +427,10 @@ class icms_core_Filesystem {
 	/**
 	 * Create and write contents to a file
 	 *
+	 * General file system permissions apply
+	 * - if the file exists, you need write permissions for the file
+	 * - if the file does not exist, you need write permissions for the path
+	 *
 	 * @param	string	$contents	The contents to be written to the file
 	 * @param	string	$filename	The filename
 	 * @param	string	$extension	The extension of the new file
@@ -465,6 +469,8 @@ class icms_core_Filesystem {
 
 		/* generate a unique filename based on all the files included and the order they're added
 		 * remove site specific path information and directory separators, full paths are still needed
+		 *
+		 * @todo handle remote files separately. Add an option to add to local cache
 		 */
 		$filename = hash("sha256",
 				str_replace(
@@ -486,6 +492,7 @@ class icms_core_Filesystem {
 			/* create the file and write the contents of the files there */
 			$overwrite = $replace || $expired;
 			foreach ($files as $file => $properties) {
+				/* local files, only */
 				$handle = fopen(ICMS_ROOT_PATH . $file, "r");
 				$file_contents = fread($handle, filesize(ICMS_ROOT_PATH . $file));
 				$success = self::writeFile(
@@ -534,6 +541,10 @@ class icms_core_Filesystem {
 
 	/**
 	 * Rename or relocate a file or directory
+	 *
+	 * General file system permissions apply
+	 * - if the file exists, you need write permissions for the file
+	 * - if the file does not exist, you need write permissions for the path
 	 *
 	 * @param	str		$oldname 	File or directory to rename, with path
 	 * @param 	str		$newname	New name, with full path
