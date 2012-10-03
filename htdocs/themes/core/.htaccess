@@ -1,0 +1,3 @@
+# h5bp.com/i/378
+BrowserMatch MSIE ie
+Header set X-UA-Compatible "IE=Edge,chrome=1" env=ie
