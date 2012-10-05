@@ -99,11 +99,11 @@ body.adminMenu {
   padding: 0;
 }
 #admin-menu-wrapper #admin-menu li.admin-menu-tab {
-  background: url(images/bkg_tab.png) repeat left bottom;
+  background: url(images/bkg_red.png) repeat-x left top;
   padding-bottom: 1px;
 }
 #admin-menu-wrapper #admin-menu li.admin-menu-tab:hover {
-  background-image: url(images/bkg_red.png);
+  background-image: url(images/bkg_tab.png);
 }
 #admin-menu-wrapper #admin-menu li li {
   background: #202020;

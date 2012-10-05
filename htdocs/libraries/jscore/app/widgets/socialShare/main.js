@@ -28,6 +28,9 @@ define(function(require) {
     , twitter: function() {
 
     }
+    , addServices: function(services) {
+
+    }
   };
   return app;
 });

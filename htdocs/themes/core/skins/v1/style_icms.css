@@ -30,9 +30,13 @@ th {color: #0066CC; padding: 2px; vertical-align: middle; border-bottom: 4px sol
 .controlButtons input {margin-bottom: 0;}
 
 /* core messages */
-.coreMessage {display: block; position: fixed; width: auto; top: 20px; right: 10px; z-index: 9999; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; margin: 10px;}
+.coreMessage {display: block; width: auto; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; margin: 10px 0;
+-webkit-box-shadow:  0px 2px 15px -5px rgba(0, 0, 0, .7);
+   -moz-box-shadow:  0px 2px 15px -5px rgba(0, 0, 0, .7);
+        box-shadow:  0px 2px 15px -5px rgba(0, 0, 0, .7);
+}
 .coreMessage .message-title {font-weight: bold; float: left; clear: both;}
-.coreMessage .message {float: right; clear: both;}
+.coreMessage .message {float: left; clear: both;}
 
 .errorMsg { background: #B94A48; color: #F2DEDE; text-align: center; border: 1px solid #DDD; font-weight: bold; padding: 10px; margin: 10px 0;}
 .confirmMsg { background-color: #DDFFDF; color: #136C99; text-align: center; border: 1px solid #DDD; font-weight: bold; padding: 10px; margin: 10px 0;}

@@ -21,7 +21,11 @@ $icmsJsConfigData = array(
   ),
   'adminMenu' => false,
   'onlineCount' => '0',
-  'membersOnline' => '0'
+  'membersOnline' => '0',
+  'social' => array(
+    'fbAppId' => $icmsConfig['fbAppId'],
+    'fbChannel' => $icmsConfig['fbChannel'],
+  )
 );
 
 $icmsJsUserData = array(
