@@ -422,7 +422,11 @@ class icms_core_DataFilter {
 	static public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
 		icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
-		$text = self::htmlSpecialChars($text);
+        // neccessary for the time being until we rework the IPF & Data Object Types in 2.0
+        $text = str_replace('<!-- input filtered -->', '', $text);
+        $text = str_replace('<!-- filtered with htmlpurifier -->', '', $text);
+
+        $text = self::htmlSpecialChars($text);
 		$text = self::codePreConv($text, $icode);
 		$text = self::makeClickable($text);
 		if ($smiley != 0) {
@@ -439,7 +443,7 @@ class icms_core_DataFilter {
 			$text = self::nl2Br($text);
 		}
 		$text = self::codeConv($text, $icode, $image);
-
+        
 		icms::$preload->triggerEvent('afterFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 		return $text;
 	}
@@ -507,6 +511,9 @@ class icms_core_DataFilter {
         
         $html = self::makeClickable($html);
         $html = self::censorString($html);
+        
+//        $html = str_replace('<!-- input filtered -->', '', $html);
+//        $html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
 
 		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
 		return $html;

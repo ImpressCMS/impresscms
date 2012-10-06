@@ -264,7 +264,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 		} else {
 			$signature = icms_core_DataFilter::checkVar($user_sig, 'html', 'input');
-			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
+			$edituser->setVar('user_sig', $signature);
 		}
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1) ? 1 : 0;
 		$edituser->setVar('user_viewemail', $user_viewemail);

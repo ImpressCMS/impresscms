@@ -169,16 +169,16 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 			$this->setName($ele_name);
 		}
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name 
+			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
 				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . $ele_delimeter . "</label></span>";
+			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . "</label></span>" . $ele_delimeter;
 		}
 		if (count($ele_options) > 1) {
-			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='" 
-				. $ele_name	. "_checkemall' class='checkemall' /><label for='" 
+			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
+				. $ele_name	. "_checkemall' class='checkemall' /><label for='"
 				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
 		}
 		$ret .= "</div>";

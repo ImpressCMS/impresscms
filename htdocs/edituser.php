@@ -212,7 +212,7 @@ switch ($op) {
 					$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 				} else {
 					$signature = icms_core_DataFilter::checkVar($user_sig, 'html', 'input');
-					$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
+					$edituser->setVar('user_sig', $signature);
 				}
 			}
 
