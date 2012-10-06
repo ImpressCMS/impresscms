@@ -59,8 +59,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 **/
 	public function filterHTML($html) {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
-
-        if ($icmsConfigPurifier['enable_purifier'] !== 0) {
+		if ($icmsConfigPurifier['enable_purifier'] !== 0) {
 			ICMS_PLUGINS_PATH;
 			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
 			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
@@ -71,11 +70,10 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			$icmsPurifyConf = self::getHTMLFilterConfig();
 			// uncomment for specific config debug info
 			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
-            
-            $purifier = new HTMLPurifier($icmsPurifyConf);
+
+			$purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
 		}
-        
 		return $html;
 	}
 
@@ -115,18 +113,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 **/
 	protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
-        
-        $IframeRegExp = '';
-        if ( $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] !== '' ) {
-            $IframeRegExp = str_ireplace( 'http://', '', $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] );
-            $pos = strpos( $IframeRegExp, '|' );
-            if ( $pos === false ) {
-                $IframeRegExp = '%^http://' . $IframeRegExp . '%';
-            } else {
-                $IframeRegExp = '%^http://(' . $IframeRegExp . ')%';
-            }
-        }
- 
+
 		$icmsPurifierConf = array(
             'HTML.DefinitionID' => $icmsConfigPurifier['purifier_HTML_DefinitionID'],
             'HTML.DefinitionRev' => $icmsConfigPurifier['purifier_HTML_DefinitionRev'],
@@ -176,7 +163,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
             'URI.DefinitionID' => $icmsConfigPurifier['purifier_URI_DefinitionID'],
             'URI.DefinitionRev' => $icmsConfigPurifier['purifier_URI_DefinitionRev'],
             'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
-            'URI.SafeIframeRegexp' => $IframeRegExp,
+            'URI.SafeIframeRegexp' => $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'],
             'Attr.AllowedFrameTargets' => $icmsConfigPurifier['purifier_Attr_AllowedFrameTargets'],
             'Attr.AllowedRel' => $icmsConfigPurifier['purifier_Attr_AllowedRel'],
             'Attr.AllowedClasses' => $icmsConfigPurifier['purifier_Attr_AllowedClasses'],
