@@ -338,11 +338,7 @@ class icms_core_Object {
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-                            if ($br) { // have to use this whilst ever there's a zillion editors in the core
-                                return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
-                            } else {
-                                return icms_core_DataFilter::checkVar($ret, 'html', 'output');
-                            }
+							return icms_core_DataFilter::checkVar($ret, 'html', 'output');
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
 						}
@@ -361,7 +357,7 @@ class icms_core_Object {
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-                            return icms_core_DataFilter::checkVar($ret, 'html', 'input');
+							return icms_core_DataFilter::checkVar($ret, 'html', 'input');
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'input');
 						}

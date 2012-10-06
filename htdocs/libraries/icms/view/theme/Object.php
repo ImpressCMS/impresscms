@@ -544,6 +544,7 @@ class icms_view_theme_Object {
 			array_multisort(array_values($sort), array_keys($sort), $this->metas[$zone][$type]);
 			switch($type) {
 				case 'script':
+					/* new js refactoring will change how we do this */
 					foreach ($this->metas[$zone][$type] as $attrs) {
 						$str .= '<script' . $this->renderAttributes($attrs['value']) . ">";
 						if (@$attrs['value']['_']) {
@@ -560,10 +561,23 @@ class icms_view_theme_Object {
 					break;
 
 				case 'stylesheet':
+					/* @todo use a preference option to determine whether to combine the files, or not, and 1 for compressing the file */
+					$combine = TRUE;
+					if ($combine) {
+						/* all local files will be a path, all remote files will have scheme:// */
+						$filepath = array_flip(str_replace(ICMS_URL, "", array_keys($this->metas[$zone][$type])));
+						/* combineFiles($filearray, $filetype, $minimize, $replace, $maxage, $location) */
+						$filesrc = icms_core_Filesystem::combineFiles($filepath, "css", TRUE);
+						/* only render a link if the result is not FALSE */
+						if ($filepath !== FALSE) {
+							$str .= '<link href="' . str_replace(ICMS_ROOT_PATH, ICMS_URL, $filesrc) . '" rel="stylesheet" type="text/css">';
+						}
+					}
+
 					foreach ($this->metas[$zone][$type] as $attrs) {
 						if (@$attrs['value']['_']) {
 							$str .= '<style' . $this->renderAttributes($attrs['value']) . ">\n" . $attrs['value']['_'] . "\n</style>";
-						} else {
+						} elseif (!$combine) {
 							$str .= '<link rel="stylesheet"' . $this->renderAttributes($attrs['value']) . " />\n";
 						}
 					}

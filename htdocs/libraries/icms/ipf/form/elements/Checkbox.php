@@ -15,18 +15,23 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
-
+	
+	private $_delimeter = "&nbsp;";
+	
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key));
+		
 		$control = $object->getControl($key);
 		if(isset($control['delimeter'])) {
 			$this->_delimeter = $control['delimeter'];
 		}
+		
+		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key), $this->_delimeter);
+		
 		if (isset($control['options'])) {
 			$this->addOptionArray($control['options']);
 		} else {
@@ -86,7 +91,7 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . $ele_delimeter . "</label></span>";
+			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . "</label></span>" . $ele_delimeter;
 		}
 		if (count($ele_options) > 1) {
 			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='" 

@@ -56,10 +56,21 @@ final class icms_core_Password {
 		}
 
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
+        $table = new icms_db_legacy_updater_Table('users');
 
-		$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
-			icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-		list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+		if ($table->fieldExists('loginname')) {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE loginname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+		} elseif ($table->fieldExists('login_name')) {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE login_name = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+		} else {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+		}
 
 		if ($pass_expired == 1) {
 			return true;
@@ -215,18 +226,17 @@ final class icms_core_Password {
 	 * This Private Function is used to Encrypt User Passwords
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.3.3
-	 * @param    string  $pass       plaintext password to be encrypted
-	 * @param    string  $salt       unique user salt key used in encryption process
-	 * @param    int     $enc_type   encryption type to use.
+	 * @param    string  $pass          plaintext password to be encrypted
+	 * @param    string  $salt          unique user salt key used in encryption process
+	 * @param    int     $enc_type      encryption type to use.
+	 * @param    int     $iterations    Number of times to rehash(stretch).
 	 * @return   Hash of users password.
 	 **/
-	private function priv_encryptPassword($pass, $salt, $enc_type) {
-        $iterations = 500;
-
+	private function priv_encryptPassword($pass, $salt, $enc_type, $iterations) {
 		if ($enc_type == 20) {
-			return '$20$' . md5($pass); // this should never be used. should be removed???
+			return '$' . $enc_type . '$20$' . md5($pass); // this should never be used. should be removed???
 		} else {
-            $hash = '$' . $enc_type . '$' . $salt . '-' . self::priv_rehash(
+            $hash = '$' . $enc_type . '$' . $iterations . '$' . $salt . '-' . self::priv_rehash(
                                         self::priv_rehash($salt, $iterations) . 
                                         self::priv_rehash($pass, $iterations) . 
                                         self::priv_rehash($this->mainSalt, $iterations),
@@ -242,6 +252,7 @@ final class icms_core_Password {
 	 * @since    1.3.3
 	 * @param    string     $hash           hash to be re-hashed (stretched)
 	 * @param    int        $iterations     Number of times to re-hash
+	 * @param    int        $enc_type       encryption type to use
 	 * @return   Hash of users password.
 	 **/
     private function priv_rehash($hash, $iterations, $enc_type = 21) {
@@ -262,6 +273,10 @@ final class icms_core_Password {
                                     34 => 'haval192,5',
                                     35 => 'haval224,5',
                                     36 => 'haval256,5',
+                                    37 => 'ripemd256',
+                                    38 => 'ripemd320',
+                                    39 => 'snefru256',
+                                    40 => 'gost'            
                                 );
 
         for ($i = 0; $i < $iterations; ++$i) {
@@ -280,14 +295,15 @@ final class icms_core_Password {
 	 * @return   mixed      returns password HASH if correct, returns false if incorrect
 	 **/
     private function priv_verifyPassword($pass, $uname) {
-        $userSalt = self::priv_getUserSalt($uname); // to be deprecated in future versions
+        $userSalt = self::priv_getUserSalt($uname); // to be removed!
         $userHash = self::priv_getUserHash($uname);
         
-        if(preg_match_all("/(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
-            $encType = $matches[2][0];
-            $userSalt = $matches[4][0];
+        if(preg_match_all("/(\\$)(\\d+)(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
+            $encType = (int) $matches[2][0];
+            $iterations = (int) $matches[4][0];
+            $userSalt = $matches[6][0];
             
-            if (self::priv_encryptPassword($pass, $userSalt, $encType) == $userHash) {
+            if (self::priv_encryptPassword($pass, $userSalt, $encType, $iterations) == $userHash) {
                 return $userHash;
             }
         } else { // to be removed!
@@ -315,14 +331,26 @@ final class icms_core_Password {
 		$salt = '';
 		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$microtime = function_exists('microtime') ? microtime() : time();
-		srand((double)$microtime * 1000000);
+		mt_srand((double)$microtime * 1000000);
 		for ($i=0; $i<=$slength; $i++)
-		$salt.= substr($base, rand() % strlen($base), 1);
+		$salt.= substr($base, mt_rand(0, $slength) % strlen($base), 1);
         
 		return $salt;
 	}
 
-	/**
+    public function createCryptoKey($slength = 64) {
+        if (function_exists('openssl_random_pseudo_bytes')) {
+            $key = openssl_random_pseudo_bytes($slength, $strong);
+            if ($strong === TRUE) {
+                return $key;
+            } else {
+                return self::createCryptoKey($slength);
+            }
+        } else {
+            return self::createSalt($slength);
+        }
+    }
+    /**
 	 * This Public Function checks whether a users password has been expired
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.1
@@ -371,8 +399,10 @@ final class icms_core_Password {
         global $icmsConfigUser;
         
         $salt = self::createSalt();
+        $iterations = 5000;
+        $enc_type = (isset($icmsConfigUser['enc_type']) ? (int) $icmsConfigUser['enc_type'] : 23);
         
-        return self::priv_encryptPassword($pass, $salt, $icmsConfigUser['enc_type']);
+        return self::priv_encryptPassword($pass, $salt, $enc_type, $iterations);
 	}
     
     /**

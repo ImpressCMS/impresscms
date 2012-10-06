@@ -77,7 +77,6 @@ class icms_view_block_Object extends icms_ipf_Object {
                     $content = $this->getVar('content', 'n');
                     $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
                     $content = str_replace(XOOPS_DB_SALT, '', $content);
-                    $content = str_replace(ICMS_DB_SALT, '', $content);
 					return $content;
 				} elseif ($c_type == 'P') {
 					ob_start();
@@ -86,7 +85,6 @@ class icms_view_block_Object extends icms_ipf_Object {
 					ob_end_clean();
                     $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
                     $content = str_replace(XOOPS_DB_SALT, '', $content);
-                    $content = str_replace(ICMS_DB_SALT, '', $content);
 					return $content;
 				} elseif ($c_type == 'S') {
 					$myts =& icms_core_Textsanitizer::getInstance();

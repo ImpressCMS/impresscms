@@ -15,6 +15,9 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 class icms_ipf_form_elements_Radio extends icms_form_elements_Radio {
+
+	private $_delimeter = "&nbsp;";
+
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
@@ -22,13 +25,17 @@ class icms_ipf_form_elements_Radio extends icms_form_elements_Radio {
 	 */
 	public function __construct($object, $key) {
 		$var = $object->vars[$key];
-
-		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'));
+		
+		$control = $object->getControl($key);
+		if(isset($control['delimeter'])) {
+			$this->_delimeter = $control['delimeter'];
+		}
+		
+		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'), $this->_delimeter);
 
 		// Adding the options inside this Radio element
 		// If the custom method is not from a module, than it's from the core
-		$control = $object->getControl($key);
-
+		
 		if (isset($control['options'])) {
 			$this->addOptionArray($control['options']);
 		} else {
