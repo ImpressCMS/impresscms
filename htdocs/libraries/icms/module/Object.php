@@ -198,7 +198,10 @@ class icms_module_Object extends icms_core_Object {
 	 * Load the admin menu for the module
 	 */
 	public function loadAdminMenu() {
-		if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
+		if ($this->getInfo('adminmenu')
+			&& $this->getInfo('adminmenu') != ''
+			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))
+		) {
 			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
 			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu;}

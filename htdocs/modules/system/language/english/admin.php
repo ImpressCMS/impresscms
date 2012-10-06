@@ -66,7 +66,9 @@ define('_MD_AM_RANK_DSC', 'User ranks are picture, used to make difference betwe
 define('_MD_AM_VRSN_DSC', 'Use this tool to check your system for updates.');
 define('_MD_AM_PREF_DSC',"ImpressCMS Site Preferences");
 
+/* duplicated from admin/tags.php - needed for cpanel block and system menu,
+ * admin/{feature}/icms_version.php
 
-define("_MD_AM_TAGS", "Tags");
-define("_MD_AM_TAGS_DSC", "Tags");
-
+define("_MD_AM_TAGS", "Tags - admin.php - _MD_AM_TAGS");
+define("_MD_AM_TAGS_DSC", "Tags - admin.php - _MD_AM_TAGS_DSC");
+ */
