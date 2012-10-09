@@ -1,7 +1,7 @@
 <?php
 // $Id$
 //%%%%%%	Admin Module Name  Version 	%%%%%
-if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
+//if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 define("_AM_VERSION_TITLE", 'ImpressCMS Version Checker');
 define("_AM_VERSION_NO_UPDATE", 'You are running the latest version of ImpressCMS !');
 define("_AM_VERSION_UPDATE_NEEDED", 'There is a new version of ImpressCMS ! The ImpressCMS Project strongly recommends always using the latest release.');

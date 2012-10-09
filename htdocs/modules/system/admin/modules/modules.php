@@ -29,7 +29,7 @@ function xoops_module_list() {
 	$icmsAdminTpl->assign('lang_active', _MD_AM_ACTIVE);
 	$icmsAdminTpl->assign('lang_order', _MD_AM_ORDER);
 	$icmsAdminTpl->assign('lang_order0', _MD_AM_ORDER0);
-	$icmsAdminTpl->assign('lang_action', _MD_AM_ACTION);
+	$icmsAdminTpl->assign('lang_action', _AM_ACTION);
 	$icmsAdminTpl->assign('lang_modulename', _MD_AM_MODULES_MODULENAME);
 	$icmsAdminTpl->assign('lang_moduletitle', _MD_AM_MODULES_MODULETITLE);
 	$icmsAdminTpl->assign('lang_info', _INFO);

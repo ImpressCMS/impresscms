@@ -2,7 +2,7 @@
 // $Id$
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
-if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
+//if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_MD_AM_SITEPREF","Site Preferences");
 define("_MD_AM_SITENAME","Site name");
@@ -45,7 +45,7 @@ define("_MD_AM_INVLDUCOOK","Invalid value for usercookie name.");
 define("_MD_AM_INVLDSCOOK","Invalid value for sessioncookie name.");
 define("_MD_AM_INVLDSEXP","Invalid value for session expiration time.");
 define("_MD_AM_ADMNOTSET","Admin mail is not set.");
-define("_MD_AM_YES","Yes");
+//define("_MD_AM_YES","Yes");
 define("_MD_AM_NO","No");
 define("_MD_AM_DONTCHNG","Don't change!");
 define("_MD_AM_REMEMBER","Remember to chmod 666 this file in order to let the system write to it properly.");

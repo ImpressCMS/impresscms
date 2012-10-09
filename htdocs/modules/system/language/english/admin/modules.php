@@ -6,7 +6,7 @@ define("_MD_AM_MODULE","Module");
 define("_MD_AM_VERSION","Version");
 define("_MD_AM_LASTUP","Last Update");
 define("_MD_AM_DEACTIVATED","Deactivated");
-define("_MD_AM_ACTION","Action");
+//define("_MD_AM_ACTION","Action");
 define("_MD_AM_DEACTIVATE","Deactivate");
 define("_MD_AM_ACTIVATE","Activate");
 define("_MD_AM_UPDATE","Update");
