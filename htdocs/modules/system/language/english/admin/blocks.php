@@ -1,7 +1,10 @@
 <?php
 // $Id$
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
-if (!defined('_AM_DBUPDATED')) {if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}}
+//if (!defined('_AM_DBUPDATED')) {if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}}
+
+define('_MD_AM_BKAD','Blocks');
+define('_MD_AM_BKAD_DSC', 'Manage and create blocks used throughout your website.');
 
 //%%%%%%	blocks.php 	%%%%%
 define("_AM_BADMIN","Blocks Administration");
@@ -15,7 +18,7 @@ define("_AM_SIDE","Side");
 define("_AM_BLKDESC","Block Description");
 define("_AM_TITLE","Title");
 define("_AM_WEIGHT","Weight");
-define("_AM_ACTION","Action");
+//define("_AM_ACTION","Action");
 define("_AM_BLKTYPE","Block Type");
 define("_AM_LEFT","Left");
 define("_AM_RIGHT","Right");
@@ -24,16 +27,16 @@ define("_AM_VISIBLE","Visible");
 define("_AM_POSCONTT","Position of the additional content");
 define("_AM_ABOVEORG","Above the original content");
 define("_AM_AFTERORG","After the original content");
-define("_AM_EDIT","Edit");
-define("_AM_DELETE","Delete");
-define("_AM_SBLEFT","Side Block - Left");
-define("_AM_SBRIGHT","Side Block - Right");
-define("_AM_CBLEFT","Center Block - Left");
-define("_AM_CBRIGHT","Center Block - Right");
-define("_AM_CBCENTER","Center Block - Center");
-define("_AM_CBBOTTOMLEFT","Center Block - Bottom left");
-define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
-define("_AM_CBBOTTOM","Center Block - Bottom");
+//define("_AM_EDIT","Edit");
+//define("_AM_DELETE","Delete");
+//define("_AM_SBLEFT","Side Block - Left");
+//define("_AM_SBRIGHT","Side Block - Right");
+//define("_AM_CBLEFT","Center Block - Left");
+//define("_AM_CBRIGHT","Center Block - Right");
+//define("_AM_CBCENTER","Center Block - Center");
+//define("_AM_CBBOTTOMLEFT","Center Block - Bottom left");
+//define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
+//define("_AM_CBBOTTOM","Center Block - Bottom");
 define("_AM_CONTENT","Content");
 define("_AM_OPTIONS","Options");
 define("_AM_CTYPE","Content Type");
@@ -52,7 +55,7 @@ define("_AM_EDITBLOCK","Edit a block");
 define("_AM_SYSTEMCANT","System blocks cannot be deleted!");
 define("_AM_MODULECANT","This block cannot be deleted directly! If you wish to disable this block, deactivate the module.");
 define("_AM_RUSUREDEL","Are you sure you want to delete block '%s'?");
-define("_AM_NAME","Name");
+//define("_AM_NAME","Name");
 define("_AM_USEFULTAGS","Useful Tags:");
 define("_AM_BLOCKTAG1","%s will print %s");
 define('_AM_SVISIBLEIN', 'Show blocks visible in %s');
@@ -116,12 +119,11 @@ define("_CO_SYSTEM_BLOCKS_BCACHETIME_DSC", "");
 define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS", "Block View permission");
 define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS_DSC", "");
 
-define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
-define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
-define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");
-define("_AM_CBRIGHT_ADMIN","Admin Center Block - Right");
-define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
-define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
-define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
-define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
-?>
+//define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
+//define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
+//define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");
+//define("_AM_CBRIGHT_ADMIN","Admin Center Block - Right");
+//define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
+//define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
+//define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
+//define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");

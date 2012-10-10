@@ -1,5 +1,8 @@
 <?php
 // $Id$
+define('_MD_AM_TPLSETS', 'Templates');
+define('_MD_AM_TPLSETS_DSC', 'Templates are sets of html/css files that render the screen layout of modules.');
+
 //%%%%%% Template Manager %%%%%
 define('_MD_TPLMAIN','Template Set Manager');
 define('_MD_INSTALL','Install');

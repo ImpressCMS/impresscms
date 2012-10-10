@@ -63,7 +63,7 @@ switch($op) {
 				$db->query("UPDATE " . $db->prefix('smiles') . " SET display='" . (int) $smiledisplay . "' WHERE id ='" . $smileid . "'");
 			}
 		}
-		redirect_header('admin.php?fct=smilies', 2, _AM_DBUPDATED);
+		redirect_header('admin.php?fct=smilies', 2, _ICMS_DBUPDATED);
 		break;
 
 	case "SmilesAdd":
@@ -91,7 +91,7 @@ switch($op) {
 		}
 
 		if (!isset($err)) {
-			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin', 2, _AM_DBUPDATED);
+			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin', 2, _ICMS_DBUPDATED);
 		} else {
 			icms_cp_header();
 			icms_core_Message::error($err);
@@ -140,7 +140,7 @@ switch($op) {
 		}
 
 		if (!isset($err)) {
-			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin', 2, _AM_DBUPDATED);
+			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin', 2, _ICMS_DBUPDATED);
 		} else {
 			icms_cp_header();
 			icms_core_Message::error($err);
@@ -163,7 +163,7 @@ switch($op) {
 		}
 		$sql = sprintf("DELETE FROM %s WHERE id = '%u'", $db->prefix('smiles'), $id);
 		$db->query($sql);
-		redirect_header("admin.php?fct=smilies&amp;op=SmilesAdmin", 2, _AM_DBUPDATED);
+		redirect_header("admin.php?fct=smilies&amp;op=SmilesAdmin", 2, _ICMS_DBUPDATED);
 		break;
 
 	case "SmilesAdmin":

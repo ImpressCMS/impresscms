@@ -64,8 +64,8 @@ if ($admintest != 0) {
 	}
 	if (isset($fct) && $fct != '') {
 		if (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $fct . '/icms_version.php')) {
-			include ICMS_MODULES_PATH . '/system/admin/' . $fct . '/icms_version.php';
 			icms_loadLanguageFile('system', $fct, TRUE);
+			include ICMS_MODULES_PATH . '/system/admin/' . $fct . '/icms_version.php';
 			$sysperm_handler = icms::handler('icms_member_groupperm');
 			$category = !empty($modversion['category']) ? (int) $modversion['category'] : 0;
 			unset($modversion);

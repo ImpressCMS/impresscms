@@ -120,7 +120,7 @@ switch ($op) {
 			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _MD_AM_MODULE
 			. '</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_status&amp;order=' . $otherorder
 			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CM_STATUS
-			. '</a></td><td class="head">' . _MD_AM_ACTION . '</td></tr>';
+			. '</a></td><td class="head">' . _AM_ACTION . '</td></tr>';
 		$class = 'even';
 		foreach (array_keys($comments) as $i) {
 			$class = ($class == 'odd') ? 'even' : 'odd';

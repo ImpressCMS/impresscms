@@ -151,7 +151,7 @@ switch ($op) {
 				$blockperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($blockperm);
 			}
-			redirect_header("admin.php?fct=groups", 1, _AM_DBUPDATED);
+			redirect_header("admin.php?fct=groups", 1, _ICMS_DBUPDATED);
 		}
 		break;
 
@@ -241,7 +241,7 @@ switch ($op) {
 				$blockperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($blockperm);
 			}
-			redirect_header("admin.php?fct=groups", 1, _AM_DBUPDATED);
+			redirect_header("admin.php?fct=groups", 1, _ICMS_DBUPDATED);
 		}
 		break;
 
@@ -261,7 +261,7 @@ switch ($op) {
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			$gperm_handler->deleteByGroup($g_id);
 		}
-		redirect_header("admin.php?fct=groups", 1, _AM_DBUPDATED);
+		redirect_header("admin.php?fct=groups", 1, _ICMS_DBUPDATED);
 		break;
 
 	case "addUser":
@@ -272,7 +272,7 @@ switch ($op) {
 		for ($i = 0; $i < $size; $i++) {
 			$member_handler->addUserToGroup($groupid, $uids[$i]);
 		}
-		redirect_header("admin.php?fct=groups&amp;op=modify&amp;g_id=" . $groupid . "", 0, _AM_DBUPDATED);
+		redirect_header("admin.php?fct=groups&amp;op=modify&amp;g_id=" . $groupid . "", 0, _ICMS_DBUPDATED);
 		break;
 
 	case "delUser":
@@ -288,7 +288,7 @@ switch ($op) {
 			} else {
 				$member_handler->removeUsersFromGroup($groupid, $uids);
 			}
-			redirect_header('admin.php?fct=groups&amp;op=modify&amp;g_id=' . $groupid . '&amp;memstart=' . $memstart, 0, _AM_DBUPDATED);
+			redirect_header('admin.php?fct=groups&amp;op=modify&amp;g_id=' . $groupid . '&amp;memstart=' . $memstart, 0, _ICMS_DBUPDATED);
 		}
 		break;
 

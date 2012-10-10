@@ -58,7 +58,7 @@ switch ($op) {
 		if (@is_array($groups_hidden)) {
 			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
 		}
-		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, 
+		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm,
 					$user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig,
 					$theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode,
 					$timezone_offset, $user_mailok, $language, $openid, $user_viewoid, $pass_expired, $groups
@@ -90,10 +90,10 @@ switch ($op) {
 			echo "<div><h4>" . sprintf(_AM_AYSYWTDU, " " . $list . " ") . "</h4>"
 				. _AM_BYTHIS . "<br /><br /><form action='admin.php' method='post'>"
 				. "<input type='hidden' name='fct' value='users' />"
-				. "<input type='hidden' name='op' value='delete_many_ok' />" 
-				. icms::$security->getTokenHTML() 
+				. "<input type='hidden' name='op' value='delete_many_ok' />"
+				. icms::$security->getTokenHTML()
 				. "<input type='submit' value='" . _YES . "' />"
-				. "<input type='button' value='" . _NO 
+				. "<input type='button' value='" . _NO
 				. "' onclick='javascript:location.href=\"admin.php?op=adminMain\"' />"
 				. $hidden . "</form></div>";
 		} else {echo _AM_NOUSERS;}
@@ -148,7 +148,7 @@ switch ($op) {
 			$online_handler = icms::handler('icms_core_Online');
 			$online_handler->destroy($del_uid);
 			xoops_notification_deletebyuser($del_uid);
-			redirect_header('admin.php?fct=users', 1, _AM_DBUPDATED);
+			redirect_header('admin.php?fct=users', 1, _ICMS_DBUPDATED);
 		}
 		break;
 
@@ -207,7 +207,7 @@ switch ($op) {
 						icms_cp_footer();
 						exit();
 					}
-					
+
 					$icmspass = new icms_core_Password();
 					$password = $icmspass->encryptPass($password, $salt, $enc_type);
 					$newuser->setVar('pass', $password);
@@ -248,7 +248,7 @@ switch ($op) {
 							 /* Hack by marcan <INBOX>
 							 * Sending a confirmation email to the newly registered user
 							 */
-							redirect_header('admin.php?fct=users', 1,_AM_DBUPDATED);
+							redirect_header('admin.php?fct=users', 1,_ICMS_DBUPDATED);
 						}
 					}
 			}
@@ -272,7 +272,7 @@ switch ($op) {
 		if (!$result) {
 			exit();
 		}
-		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . (int) $uid, 1 , _AM_DBUPDATED);
+		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . (int) $uid, 1 , _ICMS_DBUPDATED);
 		break;
 
 	case 'mod_users':

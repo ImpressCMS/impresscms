@@ -31,6 +31,7 @@ $dirlist = icms_core_Filesystem::getDirList($admin_dir);
 icms_loadLanguageFile('system', 'admin');
 $adminmenu = array();
 foreach ($dirlist as $file) {
+	icms_loadLanguageFile('system', $file, TRUE);
 	$mod_version_file = 'icms_version.php';
 	include $admin_dir . '/' . $file . '/' . $mod_version_file;
 	if ($modversion['hasAdmin']) {

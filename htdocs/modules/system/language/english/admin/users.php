@@ -1,12 +1,13 @@
 <?php
 // $Id$
+define('_MD_AM_USER','Edit Users');
+define('_MD_AM_USER_DSC', 'Create, Modify or Delete registered users.');
+
 //%%%%%%	Admin Module Name  Users 	%%%%%
-if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
+//if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_AM_AYSYWTDU","Are you sure you want to delete user %s?");
 define("_AM_BYTHIS","By doing this all the info for this user will be removed permanently.");
-define("_AM_YES","Yes");
-define("_AM_NO","No");
 define("_AM_YMCACF","You must complete all required fields");
 define("_AM_CNRNU","Could not register new user.");
 define("_AM_EDEUSER","Edit/Delete Users");
@@ -113,4 +114,4 @@ define("_AM_ADD2GROUP", "Add users to %s group");
 define("_AM_GROUPS", "Groups");
 
 ######################## Added in 1.3 ###################################
-define("_AM_ACTIONS","Actions");
+//define("_AM_ACTIONS","Actions");

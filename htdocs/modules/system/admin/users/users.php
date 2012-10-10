@@ -9,8 +9,8 @@
  * @version		SVN: $Id$
  */
 
-if (!is_object(icms::$user) 
-	|| !is_object($icmsModule) 
+if (!is_object(icms::$user)
+	|| !is_object($icmsModule)
 	|| !icms::$user->isAdmin($icmsModule->getVar('mid'))
 ) {
 	exit('Access Denied');
@@ -18,7 +18,7 @@ if (!is_object(icms::$user)
 
 /**
  * Displays user information form
- * 
+ *
  */
 function displayUsers() {
 	global $icmsConfig, $icmsModule, $icmsConfigUser, $user_handler;
@@ -42,13 +42,13 @@ function displayUsers() {
 	$user_select_tray->addElement($user_select);
 	$user_select_nav = new icms_form_elements_Label('', $nav->renderNav(4));
 	$user_select_tray->addElement($user_select_nav);
-	
+
 	$op_select = new icms_form_elements_Select('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER, 'delUser'=>_AM_DELUSER));
-	
+
 	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
 	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');
-	
+
 	$editform = new icms_form_Theme(_AM_EDEUSER, 'edituser', 'admin.php');
 	$editform->addElement($user_select_tray);
 	$editform->addElement($op_select);
@@ -317,7 +317,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 					$groups as $groupid) {$member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));
 				}
 			}
-			redirect_header('admin.php?fct=users', 1, _AM_DBUPDATED);
+			redirect_header('admin.php?fct=users', 1, _ICMS_DBUPDATED);
 		}
 	}
 	exit();
@@ -365,6 +365,6 @@ function synchronize($id, $type) {
 		default:
 			break;
 	}
-	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . $id, 1, _AM_DBUPDATED);
+	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . $id, 1, _ICMS_DBUPDATED);
 	exit();
 }

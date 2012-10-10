@@ -1,6 +1,8 @@
 <?php
 // $Id$
 //%%%%%% Image Manager %%%%%
+define('_MD_AM_IMAGES', 'Image Manager');
+define('_MD_AM_IMAGES_DSC', 'Create groups of images and manage the permissions for each group. Crop and resize uploaded photos.');
 
 define('_MD_IMGMAIN','Image Manager Main');
 
