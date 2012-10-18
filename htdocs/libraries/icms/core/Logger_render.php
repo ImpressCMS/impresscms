@@ -48,6 +48,7 @@ if ($mode == 'popup') {
 
 if (empty( $mode )) {
 	$ret .= "\n<div id=\"xo-logger-output\">\n<div id='xo-logger-tabs'>\n";
+	$ret .= "<p>\n" . _CORE_DEVELOPER_DASHBOARD . " </p>\n";
 	$ret .= "<a href='javascript:xoSetLoggerView(\"none\")'>" . _NONE . "</a> | \n";
 	$ret .= "<a href='javascript:xoSetLoggerView(\"\")'>" . _ALL . "</a> | \n";
 	$count = count( $this->errors );
@@ -75,7 +76,8 @@ if (empty($mode) || $mode == 'errors') {
 		E_STRICT => _STRICT,
 	);
 	$class = 'even';
-	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>' . _ERRORS . '</th></tr>';
+	$count = count( $this->errors );
+	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>' . _ERRORS . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
 	foreach ( $this->errors as $error) {
 		$ret .= "\n<tr><td class='$class'>";
 		$ret .= isset( $types[ $error['errno'] ] ) ? $types[ $error['errno'] ] : 'Unknown';
@@ -88,7 +90,8 @@ if (empty($mode) || $mode == 'errors') {
 
 if (empty($mode) || $mode == 'queries') {	
 	$class = 'even';
-	$ret .= '<table id="xo-logger-queries" class="outer"><tr><th>' . _QUERIES . '</th></tr>';
+	$count = count( $this->queries );
+	$ret .= '<table id="xo-logger-queries" class="outer"><tr><th>' . _QUERIES . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
 	$sqlmessages ='';
 	foreach ($this->queries as $q) {
 		if (isset($q['error'])) {
@@ -104,7 +107,8 @@ if (empty($mode) || $mode == 'queries') {
 
 if (empty($mode) || $mode == 'blocks') {
 	$class = 'even';
-	$ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">' . _BLOCKS . '</th></tr>';
+	$count = count( $this->blocks );
+	$ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">' . _BLOCKS . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
 	foreach ($this->blocks as $b) {
 		if ($b['cached']) {
 			$ret .= '<tr><td class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _CACHED . ' : ' . icms_conv_nr2local(sprintf(_REGENERATES, (int) ($b['cachetime']))) . '</td></tr>';
@@ -118,7 +122,8 @@ if (empty($mode) || $mode == 'blocks') {
 
 if (empty($mode) || $mode == 'extra') {
 	$class = 'even';
-	$ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">' . _EXTRA . '</th></tr>';
+	$count = count( $this->extra );
+	$ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">' . _EXTRA . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
 	foreach ($this->extra as $ex) {
 		$ret .= '<tr><td class="' . $class . '"><strong>' . htmlspecialchars($ex['name']) . ':</strong> ' . htmlspecialchars($ex['msg']) . '</td></tr>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
@@ -128,7 +133,8 @@ if (empty($mode) || $mode == 'extra') {
 
 if (empty($mode) || $mode == 'timers') {
 	$class = 'even';
-	$ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">' . _TIMERS . '</th></tr>';
+	$count = count( $this->logstart );
+	$ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">' . _TIMERS . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
 	foreach ( $this->logstart as $k => $v) {
 		$ret .= '<tr><td class="' . $class.'"><strong>' . htmlspecialchars($k) . '</strong> ' . sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>') . '</td></tr>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
@@ -138,7 +144,8 @@ if (empty($mode) || $mode == 'timers') {
 
 if (empty($mode) || $mode == 'deprecated') {
 	$class = 'even';
-	$ret .= '<table id="xo-logger-deprecated" class="outer"><tr><th colspan="2">' . _CORE_DEPRECATED . '</th></tr>';
+	$count = count($this->deprecated);
+	$ret .= '<table id="xo-logger-deprecated" class="outer"><tr><th colspan="2">' . _CORE_DEPRECATED . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
 	foreach ( $this->deprecated as $dep) {
 		$ret .= '<tr><td class="' . $class.'">' . $dep . '</td></tr>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
@@ -179,7 +186,7 @@ if (empty( $mode )) {
 		for ( i=0; i!=log.childNodes.length; i++) {
 			elt = log.childNodes[i];
 			if (elt.tagName && elt.tagName.toLowerCase() != 'script' && elt.id != "xo-logger-tabs") {
-				elt.style.display = ( !name || elt.id == "xo-logger-" + name ) ? "block" : "none";
+				elt.style.display = ( !name || elt.id == "xo-logger-" + name ) ? "table" : "none";
 			}
 		}
 		xoLogCreateCookie( 'XOLOGGERVIEW', name, 1 );

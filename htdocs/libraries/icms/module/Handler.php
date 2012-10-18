@@ -61,7 +61,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		$module = FALSE;
 		if ($id > 0) {
 			if (!empty($this->_cachedModule_lookup[$id]) &&
-				!empty($this->_cachedModule[$this->_cachedModule_lookup[$id]])
+					!empty($this->_cachedModule[$this->_cachedModule_lookup[$id]])
 			) {
 				if ($loadConfig) $this->loadConfig($this->_cachedModule[$this->_cachedModule_lookup[$id]]);
 				return $this->_cachedModule[$this->_cachedModule_lookup[$id]];
@@ -94,7 +94,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getByDirname($dirname, $loadConfig = FALSE) {
 		if (!empty($this->_cachedModule[$dirname]) &&
-			$this->_cachedModule[$dirname]->getVar('dirname') == $dirname
+				$this->_cachedModule[$dirname]->getVar('dirname') == $dirname
 		) {
 			if ($loadConfig) $this->loadConfig($this->_cachedModule[$dirname]);
 			return $this->_cachedModule[$dirname];
@@ -127,8 +127,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		if ($module->config !== NULL) return TRUE;
 		icms_loadLanguageFile($module->getVar("dirname"), "main");
 		if ($module->getVar("hasconfig") == 1
-			|| $module->getVar("hascomments") == 1
-			|| $module->getVar("hasnotification") == 1
+				|| $module->getVar("hascomments") == 1
+				|| $module->getVar("hasnotification") == 1
 		) {
 			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
 		}
@@ -152,7 +152,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		 */
 		$fieldsToStoreInDB = array();
 		foreach ($module->cleanVars as $k => $v) {
-			if ($k == 'last_update') { $v = time(); }
+			if ($k == 'last_update') {
+				$v = time();
+			}
 			if ($module->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
 				$cleanvars[$k] = (int) $v;
 			} elseif (is_array($v)) {
@@ -165,12 +167,14 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 
 		if ($module->isNew()) {
 			$sql = "INSERT INTO " . $this->db->prefix('modules')
-				. " (" . implode(',', array_keys($fieldsToStoreInDB))
-				. ") VALUES (" . implode(',', array_values($fieldsToStoreInDB)) . ")";
+			. " (" . implode(',', array_keys($fieldsToStoreInDB))
+			. ") VALUES (" . implode(',', array_values($fieldsToStoreInDB)) . ")";
 		} else {
 			$sql = "UPDATE " . $this->db->prefix('modules') . " SET";
 			foreach ($fieldsToStoreInDB as $key => $value) {
-				if (isset($notfirst)) { $sql .= ","; }
+				if (isset($notfirst)) {
+					$sql .= ",";
+				}
 				$sql .= " " . $key . " = " . $value;
 				$notfirst = TRUE;
 			}
@@ -179,7 +183,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		}
 
 		if (!$result = $this->db->query($sql)) return FALSE;
-		if ($module->isNew()) { $module->assignVar('mid', $this->db->getInsertId()); }
+		if ($module->isNew()) {
+			$module->assignVar('mid', $this->db->getInsertId());
+		}
 		if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
 			unset($this->_cachedModule[$module->getVar('dirname')]);
 		}
@@ -199,27 +205,27 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		if (get_class($module) != 'icms_module_Object') return FALSE;
 
 		$sql = sprintf(
-			"DELETE FROM %s WHERE mid = '%u'",
-			$this->db->prefix('modules'), (int) $module->getVar('mid')
+				"DELETE FROM %s WHERE mid = '%u'",
+				$this->db->prefix('modules'), (int) $module->getVar('mid')
 		);
 		if (!$result = $this->db->query($sql)) return FALSE;
 
 		// delete admin permissions assigned for this module
 		$sql = sprintf(
-			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int) $module->getVar('mid')
+				"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
+				$this->db->prefix('group_permission'), (int) $module->getVar('mid')
 		);
 		$this->db->query($sql);
 		// delete read permissions assigned for this module
 		$sql = sprintf(
-			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int) $module->getVar('mid')
+				"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
+				$this->db->prefix('group_permission'), (int) $module->getVar('mid')
 		);
 		$this->db->query($sql);
 
 		$sql = sprintf(
-			"SELECT block_id FROM %s WHERE module_id = '%u'",
-			$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
+				"SELECT block_id FROM %s WHERE module_id = '%u'",
+				$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
 		);
 		if ($result = $this->db->query($sql)) {
 			$block_id_arr = array();
@@ -232,27 +238,27 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		if (isset($block_id_arr)) {
 			foreach ($block_id_arr as $i) {
 				$sql = sprintf(
-					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
-					$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
+						"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
+						$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
 				);
 				if ($result2 = $this->db->query($sql)) {
 					if (0 < $this->db->getRowsNum($result2)) {
 						// this block has other entries, so delete the entry for this module
 						$sql = sprintf(
-							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
-							$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
+								"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
+								$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
 						);
 						$this->db->query($sql);
 					} else {
 						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
 						$sql = sprintf(
-							"UPDATE %s SET visible = '0' WHERE bid = '%u'",
-							$this->db->prefix('newblocks'), (int) $i
+								"UPDATE %s SET visible = '0' WHERE bid = '%u'",
+								$this->db->prefix('newblocks'), (int) $i
 						);
 						$this->db->query($sql);
 						$sql = sprintf(
-							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
-							$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
+								"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
+								$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
 						);
 						$this->db->query($sql);
 					}
@@ -402,6 +408,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		if ($module) $module->launch();
 		return $module ? $module : NULL;
 	}
+
 	/**
 	 * Checks if the current user can access the specified module
 	 * @param icms_module_Object $module
@@ -436,6 +443,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	public function install($dirname) {
 
 	}
+
 	/**
 	 * Logic for uninstalling a module
 	 *
@@ -445,6 +453,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	public function uninstall($dirname) {
 
 	}
+
 	/**
 	 * Logic for updating a module
 	 *
@@ -454,6 +463,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	public function update($dirname) {
 
 	}
+
 	/**
 	 * Logic for activating a module
 	 *
@@ -462,7 +472,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	public function activate($mid) {
 
-	 }
+	}
 
 	/**
 	 * Logic for deactivating a module
@@ -470,9 +480,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param	int	$mid
 	 * @return	string	Result message for deactivating the module
 	 */
-	 public function deactivate($mid) {
+	public function deactivate($mid) {
 
-	 }
+	}
 
 	/**
 	 * Logic for changing the weight (order) and name of modules
@@ -481,9 +491,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param int $weight	Integer value of the weight to be applied to the module
 	 * @param str $name		Name to be applied to the module
 	 */
-	 public function change($mid, $weight, $name) {
+	public function change($mid, $weight, $name) {
 
-	 }
+	}
 
 	/**
 	 *
@@ -491,60 +501,64 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param	string	$template	Name of the template file
 	 * @param	boolean	$block		Are you trying to retrieve the template for a block?
 	 */
-	 public function getTemplate($dirname, $template, $block = FALSE) {
+	public function getTemplate($dirname, $template, $block = FALSE) {
 
-	 }
-	 
-	 /**
-	  * Posts a notification of an install or update of the system module
-	  *
-	  * @todo	Add a parameter for the module being updated/installed
-	  * @todo	Add a parameter for the action - install, uninstall, activate, deactivate, update
-	  * @todo	Add language constants
-	  *
-	  * @param	string	$versionstring	A string representing the version of the module
-	  * @param	string	$icmsroot		A unique identifier for the site
-	  */
-	 public static function installation_notify($versionstring, $icmsroot) {
-	 
-	 	// @todo: change the URL to an official ImpressCMS server
-	 	//set POST variables
-	 	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
-	 	$fields = array(
-	 			'siteid' => hash('sha256', $icmsroot),
-	 			'version' => urlencode($versionstring)
-	 	);
-	 
-	 	//url-ify the data for the POST
-	 	$fields_string = "";
-	 	foreach($fields as $key=>$value) {
-	 		$fields_string .= $key . '=' . $value . '&';
-	 	}
-	 	rtrim($fields_string, '&');
-	 
-	 	try {
-	 		//open connection - this causes a fatal error if the extension is not loaded
-	 		if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
-	 		$ch = curl_init();
-	 
-	 		//set the url, number of POST vars, POST data
-	 		curl_setopt($ch, CURLOPT_URL, $url);
-	 		curl_setopt($ch, CURLOPT_POST, count($fields));
-	 		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-	 		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
-	 
-	 		//execute post
-	 		if (curl_exec($ch)) {
-	 			icms_core_Message::error($url . $fields_string, 'Notification Sent to');
-	 		} else {
-	 			throw new Execption("Unable to contact update server");
-	 		}
-	 
-	 		//close connection
-	 		curl_close($ch);
-	 	} catch(Exception $e) {
-	 		icms_core_Message::error(sprintf($e->getMessage()));
-	 	}
-	 }
- }
-	 
+	}
+
+	/**
+	 * Posts a notification of an install or update of the system module
+	 *
+	 * @todo	Add language constants
+	 *
+	 * @param	string	$versionstring	A string representing the version of the module
+	 * @param	string	$icmsroot		A unique identifier for the site
+	 * @param	string	$modulename		The module being installed or updated, 'system' for the core
+	 * @param	string	$action			Action triggering the notification: install, uninstall, activate, deactivate, update
+	 */
+	public static function installation_notify($versionstring, $icmsroot, $modulename = 'system', $action = 'install') {
+
+		$validActions = array('install', 'update', 'uninstall', 'activate', 'deactivate');
+		if (!in_array($action, $validActions)) $action = 'install';
+
+		// @todo: change the URL to an official ImpressCMS server
+		//set POST variables
+		$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
+		$fields = array(
+				'siteid' => hash('sha256', $icmsroot),
+				'version' => urlencode($versionstring),
+				'module' => urlencode($modulename),
+				'action' => urlencode($action),
+		);
+
+		//url-ify the data for the POST
+		$fields_string = "";
+		foreach($fields as $key=>$value) {
+			$fields_string .= $key . '=' . $value . '&';
+		}
+		rtrim($fields_string, '&');
+
+		try {
+			//open connection - this causes a fatal error if the extension is not loaded
+			if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
+			$ch = curl_init();
+
+			//set the url, number of POST vars, POST data
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_POST, count($fields));
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+			curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
+
+			//execute post
+			if (curl_exec($ch)) {
+				icms_core_Message::error($url . $fields_string, 'Notification Sent to');
+			} else {
+				throw new Execption("Unable to contact update server");
+			}
+
+			//close connection
+			curl_close($ch);
+		} catch(Exception $e) {
+			icms_core_Message::error(sprintf($e->getMessage()));
+		}
+	}
+}
