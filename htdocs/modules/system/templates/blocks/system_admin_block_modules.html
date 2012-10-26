@@ -1,0 +1,14 @@
+<div class="cpDashPanel Panel">
+	<div class="tab-content dashboardPanel">
+		<div class="inner">
+	  	<{foreach item=mod from=$block.mods}>
+				<div class="cpPanelItem">
+		  		<a href="<{$mod.link}>" title="<{$mod.title}>">
+		  			<img src="<{if $mod.image != ''}><{$mod.image}><{else}><{$xoops_url}>/modules/system/images/modules.png<{/if}>" alt="<{$mod.title}>" /><br />
+		  			<span><{$mod.title}></span>
+		  		</a>
+		  	</div>	  			
+ 			<{/foreach}>
+ 		</div>
+ 	</div>
+</div>
