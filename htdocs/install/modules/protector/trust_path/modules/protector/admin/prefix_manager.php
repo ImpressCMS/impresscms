@@ -226,7 +226,7 @@ $dbTable = "<div class='protectorPrefixManager'>\n";
 		$prefix4disp = htmlspecialchars( $prefix['name'] , ENT_QUOTES ) ;
 		$ticket_input = $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'protector_admin' ) ;
 
-		if( $prefix['name'] !== XOOPS_DB_PREFIX ) {
+		if( $prefix['name'] == XOOPS_DB_PREFIX ) {
 			$del_button = '' ;
 			$style_append = ' confirmMsg' ;
 		} else {
