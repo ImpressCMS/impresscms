@@ -176,6 +176,11 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 
 // beggining of Output
 icms_cp_header();
+
+// title
+$moduleName = $xoopsModule->getVar('name');
+echo "<div class='CPbigTitle' style='background-image: url(../images/iconbig_icms.png)'><a href='#'>" . $moduleName . "</a>: " . _AM_H3_PREFIXMAN . "</div>\n";
+
 include dirname(__FILE__).'/mymenu.php' ;
 
 // query
@@ -200,77 +205,73 @@ while( $row_table = $db->fetchArray( $srs ) ) {
 }
 
 
+
+
 // table
-echo "
-<h3>"._AM_H3_PREFIXMAN."</h3>
-<table class='outer' width='95%'>
-	<tr>
-		<th>PREFIX</th>
-		<th>TABLES</th>
-		<th>UPDATED</th>
-		<th>COPY</th>
-		<th>ACTIONS</th>
-	</tr>
-" ;
+$dbTable = "<div class='protectorPrefixManager'>\n";
+	// Loop through prefixes
+	foreach( $prefixes as $prefix ) {
 
-foreach( $prefixes as $prefix ) {
+		// count the number of tables with the prefix
+		$table_count = 0 ;
+		$has_xoopscomments = false ;
+		foreach( $tables as $table ) {
+			if( $table == $prefix['name'] . '_xoopscomments' ) $has_xoopscomments = true ;
+			if( substr( $table , 0 , strlen( $prefix['name'] ) + 1 ) === $prefix['name'] . '_' ) $table_count ++ ;
+		}
 
-	// count the number of tables with the prefix
-	$table_count = 0 ;
-	$has_xoopscomments = false ;
-	foreach( $tables as $table ) {
-		if( $table == $prefix['name'] . '_xoopscomments' ) $has_xoopscomments = true ;
-		if( substr( $table , 0 , strlen( $prefix['name'] ) + 1 ) === $prefix['name'] . '_' ) $table_count ++ ;
+		// check if prefix_xoopscomments exists
+		if( ! $has_xoopscomments ) continue ;
+
+		$prefix4disp = htmlspecialchars( $prefix['name'] , ENT_QUOTES ) ;
+		$ticket_input = $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'protector_admin' ) ;
+
+		if( $prefix['name'] !== XOOPS_DB_PREFIX ) {
+			$del_button = '' ;
+			$style_append = ' confirmMsg' ;
+		} else {
+			$del_button = "<span class='sep'> &ndash;or&ndash;</span>\n";
+			$del_button .= "<input type='submit' name='delete' value='Delete DB' onclick='return confirm(\"" . _AM_CONFIRM_DELETE . "\")' />\n";
+			$style_append = ' warningMsg' ;
+		}
+
+		$dbTable .= "<div class='coreMessage" . $style_append . "'\n";
+			$dbTable .= "<p>\n";
+				$dbTable .= "<strong>Prefix: </strong> <span>" . $prefix4disp . "</span><br />\n";
+				$dbTable .= "<strong>Entries: </strong> <span>" . $table_count . "</span><br />\n";
+				$dbTable .= "<strong>Last Update: </strong> <span>" . $prefix['updated'] . "</span><br />\n";
+				$dbTable .= "<h3></h3>\n";
+				$dbTable .= "<div class='dbControls'>\n";
+					$dbTable .= "<form action='?page=prefix_manager' method='post'>\n";
+						$dbTable .= "<div>\n";
+							$dbTable .= $ticket_input . "\n";
+							$dbTable .= "<input type='hidden' name='old_prefix' value='" . $prefix4disp . "' />\n";
+							$dbTable .= "<input type='text' name='new_prefix' placeholder='new_prefix' maxlength='16' />\n";
+							$dbTable .= "<input type='submit' name='copy' value='Copy DB' />\n";
+							$dbTable .= $del_button . "\n";
+							$dbTable .= "<span class='sep'> &ndash;or&ndash;</span>\n";
+							$dbTable .= "<input type='submit' name='backup' value='Backup DB' onclick='this.form.target=\"_blank\"' />\n";
+						$dbTable .= "</div>\n";
+					$dbTable .= "</form>\n";
+				$dbTable .= "</div>\n";
+			$dbTable .= "</p>\n";
+		$dbTable .= "</div>\n";
 	}
 
-	// check if prefix_xoopscomments exists
-	if( ! $has_xoopscomments ) continue ;
+	$dbTable .= "<div class='coreMessage resultMsg'\n";
+		$dbTable .= "<p>" . sprintf(_AM_TXT_HOWTOCHANGEDB,XOOPS_ROOT_PATH,XOOPS_DB_PREFIX) . "</p>\n";
+	$dbTable .= "</div>\n";
+$dbTable .= "</div>\n";
 
-	$prefix4disp = htmlspecialchars( $prefix['name'] , ENT_QUOTES ) ;
-	$ticket_input = $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'protector_admin' ) ;
-
-	if( $prefix['name'] == XOOPS_DB_PREFIX ) {
-		$del_button = '' ;
-		$style_append = 'background-color:#FFFFFF' ;
-	} else {
-		$del_button = "<input type='submit' name='delete' value='delete' onclick='return confirm(\""._AM_CONFIRM_DELETE."\")' />" ;
-		$style_append = '' ;
-	}
-
-	echo "
-	<tr>
-		<td class='odd' style='$style_append;'>$prefix4disp</td>
-		<td class='odd' style='text-align:"._GLOBAL_RIGHT.";$style_append;'>$table_count</td>
-		<td class='odd' style='text-align:"._GLOBAL_RIGHT.";$style_append;'>{$prefix['updated']}</td>
-		<td class='odd' style='text-align:center;$style_append;' nowrap='nowrap'>
-			<form action='?page=prefix_manager' method='POST' style='margin:0px;'>
-				$ticket_input
-				<input type='hidden' name='old_prefix' value='$prefix4disp' />
-				<input type='text' name='new_prefix' size='8' maxlength='16' />
-				<input type='submit' name='copy' value='copy' />
-			</form>
-		</td>
-		<td class='odd' style='text-align:center;$style_append;'>
-			<form action='?page=prefix_manager' method='POST' style='margin:0px;'>
-				$ticket_input
-				<input type='hidden' name='prefix' value='$prefix4disp' />
-				$del_button
-				<input type='submit' name='backup' value='backup' onclick='this.form.target=\"_blank\"' />
-			</form>
-		</td>
-	</tr>\n" ;
-
-}
-
-echo "
-</table>
-<p>".sprintf(_AM_TXT_HOWTOCHANGEDB,XOOPS_ROOT_PATH,XOOPS_DB_PREFIX)."</p>
-
-" ;
+echo $dbTable;
 
 // Display Log if exists
 if( ! empty( $_SESSION['protector_logger'] ) ) {
-	echo $_SESSION['protector_logger'] ;
+	$log = "<div class='coreMessage'\n";
+		$log .= "<p>" . $_SESSION['protector_logger'] . "</p>\n";
+	$log .= "</div>\n";
+
+	echo $log;
 	$_SESSION['protector_logger'] = '' ;
 	unset( $_SESSION['protector_logger'] ) ;
 }
