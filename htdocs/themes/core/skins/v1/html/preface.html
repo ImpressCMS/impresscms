@@ -1,0 +1,30 @@
+<div id="preface_wrapper" class="preface_wrapper">
+  <div id="preface" class="preface">
+    <div id="preface_inner" class="clearfix container_<{$grid_columns}> preface_inner">
+      <div class="block">
+        <div class="block_inner">
+          <{if $ishome}>
+            <div class="flexslider" data-module="<{$icms_imageurl}>skins/<{$skin}>/media/js/modules/flexslider">
+              <ul class="slides">
+<!--                 <li>
+                  <iframe id="player_1" src="http://player.vimeo.com/video/39683393?api=1&player_id=player_1" width="980" height="360" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                </li> -->
+                <li>
+                  <img src="http://lorempixel.com/980/360/technics/1" />
+                </li>
+                <li>
+                  <img src="http://lorempixel.com/980/360/technics/2" />
+                </li>
+                <li>
+                  <img src="http://lorempixel.com/980/360/technics/3" />
+                </li>
+              </ul>
+            </div>
+          <{else}>
+            <h1><{$icms_pagetitle}></h1>
+          <{/if}>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

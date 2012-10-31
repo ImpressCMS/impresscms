@@ -1,0 +1,51 @@
+<header class="header_outer clearfix <{$header_wrapper_extra_classes}>">
+  <div role="head" id="header_wrapper" class="header_wrapper container_<{$grid_columns}> <{$header_grid_extra_classes}> clearfix">
+    <div id="header" class="header">
+
+      <{if $show_logo}>
+        <div id="logo" role="banner" class="logo">
+          <a href="<{$icms_url}>" title="<{$icms_sitename}>">
+            <{if $logo_path != ''}>
+              <span id="logo_img" class="logo_img">
+                <img src="<{$icms_imageurl}><{$logo_path}>" alt="<{$icms_sitename}> logo" />
+              </span>
+            <{/if}>
+
+            <{if $show_sitename}>
+              <span id="logo_sitename" class="logo_sitename">
+                <{$icms_sitename}>
+              </span>
+            <{/if}>
+
+            <{if $show_slogan}>
+              <span id="logo_slogan" class="logo_slogan">
+                <{$icms_slogan}>
+              </span>
+            <{/if}>
+          </a>
+        </div>
+      <{/if}>
+
+      <{if $show_search}>
+        <div id="header_search" class="header_search">
+          <form action="<{$icms_url}>/search.php" method="get" role="search">
+            <span>
+              <input aria-required="true" placeholder="<{$search_input_text}>" type="text" name="query" size="14" />
+              <input type="hidden" name="action" value="results" />
+              <input type="submit" value="<{$search_button_text}>" />              
+            </span>
+          </form>
+        </div>
+      <{/if}>
+      <{if $enable_responsive}>
+        <h3 id="nav_toggle" class="nav_toggle">
+          <a href="#primary_navigation">Navigation</a>
+        </h3>
+      <{/if}>
+    </div>
+  </div>
+
+  <{if $show_nav}>
+    <{includeq file="$theme_name/html/nav.html"}>
+  <{/if}>
+</header>

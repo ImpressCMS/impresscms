@@ -1,0 +1,165 @@
+<div id="<{$icms_id}>" class="clearFix">
+	<{if $icms_table_header}>
+		<{$icms_table_header}>
+	<{/if}>
+
+	<{if $icms_introButtons || $icms_pagenav}>
+		<div class="buttonsPagerWrapper">
+			<{if $icms_introButtons}>
+				<div class="introButtons">
+					<{foreach from=$icms_introButtons item=introButton}>
+						<a href="<{$introButton.location}>" class="smallButton" title="<{$introButton.name}>">
+							<span><{$introButton.value}></span>
+						</a>
+					<{/foreach}>
+				</div>
+			<{/if}>
+
+			<{if $icms_pagenav}>
+				<div class="pageNavWrapper">
+					<{$icms_pagenav}>
+				</div>
+			<{/if}>	
+		</div>
+	<{/if}>
+
+	<{if $icms_showFilterAndLimit || $icms_quicksearch}>
+		<form class="quickSearchBoxFilterWrapper" action="<{$icms_optionssel_action}>" method="post">
+			<{if $icms_quicksearch}>
+				<div class="quickSearchBox">
+					<label for="quicksearch_<{$icms_id}>"><{$icms_quicksearch}></label>
+					<input type="text" id="quicksearch_<{$icms_id}>" name="quicksearch_<{$icms_id}>" />
+					<input type="submit" name="button_quicksearch_<{$icms_id}>" value="<{$smarty.const._SEARCH}>" />
+				</div>
+			<{/if}>
+			
+			<{if $icms_showFilterAndLimit}>
+				<div class="filterAndLimit">
+					<{if $icms_optionssel_filtersArray}>
+						<div class="singleObject">
+							<label for="filtersel"><{$smarty.const._CO_ICMS_FILTER}></label>
+							<select id="filtersel"name="filtersel" onchange="submit()">
+								<{foreach from=$icms_optionssel_filtersArray key=key item=field}>
+									<option value="<{$key}>" <{$field.selected}>><{$field.caption}></option>
+								<{/foreach}>
+							</select>
+						</div>
+						<{if $icms_optionssel_filters2Array}>
+							<div class="singleObject">
+								<select name="filtersel2" onchange="submit()">
+									<{foreach from=$icms_optionssel_filters2Array key=key item=field}>
+										<option value="<{$key}>" <{$field.selected}>><{$field.caption}></option>
+									<{/foreach}>
+								</select>
+							</div>
+						<{/if}>
+					<{/if}>
+					<{if !$icms_isTree}>
+						<div class="singleObject">
+							<label for="limitsel"><{$smarty.const._CO_ICMS_SHOW_ONLY}></label>
+							<select id="limitsel" name="limitsel" onchange="submit()">
+								<{foreach from=$icms_optionssel_limitsArray key=key item=field}>
+									<option value="<{$key}>" <{$field.selected}>><{$field.caption}></option>
+								<{/foreach}>
+							</select>
+						</div>
+					<{/if}>
+				</div>
+			<{/if}>
+		</form>
+	<{/if}>
+
+	<{if $icms_actionButtons || $icms_withSelectedActions}>
+		<form id="form_<{$icms_id}>" method="post">
+	<{/if}>
+		<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>
+			<tr>
+			 <{foreach from=$icms_columns item=column}>
+			 	<th width="<{$column.width}>" align='<{$column.align}>'><strong><{$column.caption}></strong></th>
+			 <{/foreach}>
+			 <{if $icms_has_actions}>
+			 	<th width='<{$icms_actions_column_width}>' align='center'>
+			 		<{if $icms_show_action_column_title}>
+			 			<strong><{$smarty.const._CO_ICMS_ACTIONS}></strong>
+			 		<{/if}>
+			 	</th>
+			 <{/if}>
+			</tr>
+
+			<{if $icms_persistable_objects}>
+				<{foreach from=$icms_persistable_objects item=icms_object}>
+					<{if $icms_actionButtons}>
+						<input type='hidden' name='<{$icms_id}>_objects[]' id='listed_objects' value='<{$icms_object.id}>' />
+					<{/if}>
+					<tr>
+						<{foreach from=$icms_object.columns item=column}>
+							<td class="<{$column.keyname}> <{$icms_object.class}>" width="<{$column.width}>" align="<{$column.align}>"><{$column.value}></td>
+						<{/foreach}>
+						<{if $icms_object.actions}>
+							<td class="<{$icms_object.class}>" align='center'>
+								<{foreach from=$icms_object.actions item=action}>
+									<{$action}>
+								<{/foreach}>
+							</td>
+						<{/if}>
+					</tr>
+				<{/foreach}>
+			<{else}>
+				<tr>
+					<td class='head' style='text-align: center; font-weight: bold;' colspan="<{$icms_colspan}>"><{$smarty.const._CO_ICMS_NO_OBJECT}></td>
+				</tr>
+			<{/if}>
+		</table>
+		<{if  $icms_actionButtons || $icms_withSelectedActions}>
+			<input type='hidden' name='op' id='op' value='' />
+			<{if $icms_withSelectedActions}>
+				<div style="padding: 5px;text-align: <{$smarty.const._GLOBAL_LEFT}>; border-left: 1px solid silver; border-bottom: 1px solid silver; border-right: 1px solid silver;">
+				<{$smarty.const._CO_ICMS_WITH_SELECTED}>
+				<select name='selected_action'>
+					<option value = ''>---</option>
+					<{foreach from=$icms_withSelectedActions key=key item=action}>
+						<option value = '<{$key}>'><{$action}></option>
+					<{/foreach}>
+				</select>
+				<input type="submit" name="<{$actionButton.op}>" onclick="this.form.elements.op.value='with_selected_actions'" value="<{$smarty.const._CO_ICMS_SUBMIT}>" />
+				</div>
+			<{/if}>
+			<{if $icms_actionButtons}>
+				<div class="actionButtonTray">
+					<{foreach from=$icms_actionButtons item=actionButton}>
+						<input type="submit" name="<{$actionButton.op}>" onclick="this.form.elements.op.value='<{$actionButton.op}>'" value="<{$actionButton.text}>" />
+					<{/foreach}>
+				</div>
+			<{/if}>
+
+			<{if $icms_introButtons || $icms_pagenav}>
+				<div class="buttonsPagerWrapper">
+					<{if $icms_introButtons}>
+						<div class="introButtons">
+							<{foreach from=$icms_introButtons item=introButton}>
+								<a href="<{$introButton.location}>" class="smallButton" title="<{$introButton.name}>">
+									<span><{$introButton.value}></span>
+								</a>
+							<{/foreach}>
+						</div>
+					<{/if}>
+
+					<{if $icms_pagenav}>
+						<div class="pageNavWrapper">
+							<{$icms_pagenav}>
+						</div>
+					<{/if}>
+				</div>
+			<{/if}>
+		</form>
+		<{/if}>
+
+		<{if $icms_table_footer}>
+			<{$icms_table_footer}>
+		<{/if}>
+	</div>
+
+	<{if $icms_printer_friendly_page}>
+		<a href="javascript:openWithSelfMain('<{$icms_printer_friendly_page}>', 'smartpopup', 700, 519);"><img  src="<{$xoops_url}>/modules/icms/images/actions/fileprint.png" alt="" /></a>
+	<{/if}>
+</div>

@@ -1,0 +1,145 @@
+<div class="CPbigTitle" style="background-image: url(<{$icms_url}>/modules/system/admin/modules/images/modules_big.png)"><{$lang_madmin}></div>
+
+<div class="cpDashPanel Panel">
+  <div class="tabbable tabs-left">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#installedPanel"><{$lang_installed}></a>
+      </li>
+      <li>
+        <a href="#uninstalledPanel"><{$lang_noninstall}></a>
+      </li>      
+    </ul>
+
+    <div class="tab-content">
+
+      <div id="installedPanel" class="tab-pane active">
+        <form action="admin.php" method="post" name="moduleadmin" id="moduleadmin">
+          <div class="inner modulesAdminPanel">
+            <{foreach item=module from=$modules}>
+              <div class="cpPanelItem">
+                <div class="inner">
+                  <div class="clearfix moduleIcon">
+                    <{if $module.hasadmin == 1 && $module.isactive == '1'}>
+                      <a href="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.adminindex}>">
+                        <h4 class="originalModuleName"><{$module.name}> - <{$module.version}> <{$module.status}></h4>
+                      </a>
+                    <{else}>
+                      <a href="javascript: void(0);">
+                        <h4 class="originalModuleName"><{$module.name}> - <{$module.version}> <{$module.status}></h4>
+                      </a>
+                    <{/if}>
+                    <img src="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" /><br />
+                    <small><strong><{$lang_lastup}>:</strong> <span><{$module.last_update}></span></small>
+                  </div>
+
+                  <div class="clearfix moduleInfo">
+                    <div class="clearfix moduleActive">
+                      <span class="moduleActiveTitle"><{$lang_active}>: </span>
+                      <{if $module.dirname == 'system'}>
+                        <input type="checkbox" id="newstatus_system_placeholder" name="newstatus_system_placeholder" value="1" checked="checked" disabled />
+                        <input type="hidden" name="newstatus[<{$module.mid}>]" value="1" />
+                        <input type="hidden" name="oldstatus[<{$module.mid}>]" value="1" />
+                      <{else}>
+                        <input type="checkbox" id="newstatus_<{$module.mid}>" name="newstatus[<{$module.mid}>]" value="<{if $module.isactive == '1'}>1<{else}>0<{/if}>"<{if $module.isactive == '1'}> checked<{/if}> />
+                        <input type="hidden" name="oldstatus[<{$module.mid}>]" value="<{if $module.isactive == '1'}>1<{else}>0<{/if}>" />
+                      <{/if}>
+                    </div>
+
+                    <div class="clearfix newModuleName">
+                      <label for="newname_<{$module.mid}>"><{$lang_moduletitle}></label>
+                      <input type="text" id="newname_<{$module.mid}>" name="newname[<{$module.mid}>]" placeholder="<{$module.title}>" value="<{$module.title}>" maxlength="150" size="30" />
+                      <input type="hidden" name="oldname[<{$module.mid}>]" value="<{$module.title}>" />
+                    </div>
+
+                    <div class="clearfix moduleOrder">
+                      <span class="moduleOrderTitle"><{$lang_order}>: </span>
+                      <{if $module.hasmain == '1'}>
+                        <input type="hidden" name="oldweight[<{$module.mid}>]" value="<{$module.weight}>" />
+                        <input type="text" id="weight_<{$module.mid}>" name="weight[<{$module.mid}>]" size="3" maxlength="5" placeholder="<{$module.weight}>" value="<{$module.weight}>" />
+                      <{else}>
+                        <input type="hidden" name="oldweight[<{$module.mid}>]" value="0" />
+                        <input type="text" id="weight_<{$module.mid}>" name="weight[<{$module.mid}>]" size="3" maxlength="5" placeholder="0" value="0" disabled />
+                      <{/if}>
+                      <span class="moduleOrderInfo"><small><{$lang_order0}></small></span>
+                    </div>
+
+                    <div class="clearfix moduleActions">
+                      <{if $module.isactive == '1'}>
+                        <a class="smallButton" title="<{$lang_update}>" href="<{$icms_url}>/modules/system/admin.php?fct=modules&amp;op=update&amp;module=<{$module.dirname}>">
+                          <img src="<{$icms_url}>/images/kfaenza/actions/reload.png" alt="<{$lang_update}>"/>
+                          <{$lang_update}>
+                        </a>
+                      <{/if}>
+
+                      <{if $module.isactive != '1'}>
+                        <a class="smallButton" title="<{$lang_unistall}>" href="<{$icms_url}>/modules/system/admin.php?fct=modules&amp;op=uninstall&amp;module=<{$module.dirname}>">
+                          <img src="<{$icms_url}>/images/kfaenza/actions/button_cancel.png" alt="<{$lang_unistall}>" />
+                          <{$lang_unistall}>
+                        </a>
+                      <{/if}>  
+                      <a class="smallButton modalButton" title="<{$lang_info}>" href="<{$icms_url}>/modules/system/admin.php?fct=version&amp;mid=<{$module.mid}>">
+                        <img src="<{$icms_url}>/images/kfaenza/actions/help.png" alt="<{$lang_info}>" />
+                        <{$lang_info}>
+                      </a>
+                      <{if $module.support_site_url != '' &&  $module.isactive == '1'}>
+                        <a class="smallButton" title="<{$lang_support}>" href="<{$module.support_site_url}>" rel="external">
+                          <img src="<{$icms_url}>/images/kfaenza/actions/gohome.png" alt="<{$lang_support}>"/>
+                          <{$lang_support}>
+                        </a>
+                      <{/if}>
+                      <input type="hidden" name="module[]" value="<{$module.mid}>" />                      
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            <{/foreach}>
+
+            <div class="clearfix controlButtons">
+              <input type="hidden" name="fct" value="modules" />
+              <input type="hidden" name="op" value="confirm" />
+              <input type="submit" name="submit" value="<{$lang_submit}>" />
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div id="uninstalledPanel" class="tab-pane">
+        <div class="inner modulesAdminPanel">
+          <{if $avmodules}>
+            <{foreach item=module name=dashloop from=$avmodules}>
+              <div class="cpPanelItem">
+                <div class="inner">
+                  <div class="clearfix moduleIcon">
+                    <a href="javascript: void(0);">
+                      <h4 class="originalModuleName"><{$module.name}> - <{$module.version}> <{$module.status}></h4>
+                    </a>
+                    <img src="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" /><br />
+                  </div>      
+                  
+                  <div class="clearfix moduleInfo">
+                    <div class="clearfix moduleActions">
+                      <a class="smallButton" title="<{$lang_install}>" href="<{$icms_url}>/modules/system/admin.php?fct=modules&amp;op=install&amp;module=<{$module.dirname}>">
+                        <img src="<{$icms_url}>/images/kfaenza/actions/compfile.png" alt="<{$lang_install}>" />
+                        <{$lang_install}>
+                      </a>
+                      <a class="smallButton modalButton" title="<{$lang_info}>" href="<{$icms_url}>/modules/system/admin.php?fct=version&amp;mid=<{$module.dirname}>">
+                        <img src="<{$icms_url}>/images/kfaenza/actions/help.png" alt="<{$lang_info}>" />
+                        <{$lang_info}>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <{/foreach}>
+          <{else}>
+            <h3>No Modules available for Installation</h3>
+            <a class="smallButton modalButton" title="ImpressCMS Addons" data-scrolling="yes" data-width="1000" data-height="780" rel="external" href="http://addons.impresscms.org">Need a module?</a>
+          <{/if}>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
