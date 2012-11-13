@@ -3,20 +3,20 @@
  * Handles all security functions within ImpressCMS
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license	LICENSE.txt
  * @category	ICMS
- * @package		Core
+ * @package	Core
  * @subpackage	Security
- * @version		SVN: $Id$
+ * @version	SVN: $Id: Security.php 12112 2012-11-09 02:15:50Z skenow $
  */
 /**
  * Class for managing security aspects such as checking referers, applying tokens and checking global variables for contamination
  *
  * @category	ICMS
- * @package		Core
+ * @package	Core
  * @subpackage	Security
- *
- * @author        Jan Pedersen     <mithrandir@xoops.org>
+ * @copyright	(c) 2000-2005 The Xoops Project - www.xoops.org
+ * @author		Jan Pedersen <mithrandir@xoops.org>
  */
 class icms_core_Security {
 
@@ -253,4 +253,3 @@ class icms_core_Security {
 		}
 	}
 }
-

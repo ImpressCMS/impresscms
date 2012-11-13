@@ -2,25 +2,28 @@
 /**
  * icms_core_Logger component main class file
  *
- * See the enclosed file LICENSE for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
- *
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Kazumi Ono  <onokazu@xoops.org>
- * @author		Skalpa Keo <skalpa@xoops.org>
- * @since		XOOPS
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
  * @category	ICMS
  * @package		Core
  * @subpackage	Logger
- * @version		$Id$
+ * @version		$Id: Logger.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 /**
  * Collects information for a page request
  *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author		Kazumi Ono  <onokazu@xoops.org>
+ * @author		Skalpa Keo <skalpa@xoops.org>
+ * @category	ICMS
+ * @package	Core
+ * @subpackage	Logger
+ * @since		XOOPS
  * Records information about database queries, blocks, and execution time
  * and can display it as HTML. It also catches php runtime errors.
- * @package kernel
  */
 class icms_core_Logger {
 

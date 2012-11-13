@@ -2,13 +2,17 @@
 /**
  * The Renderer functions of the Error logger
  *
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license	LICENSE.txt
  * @category	ICMS
- * @package		Core
+ * @package	Core
  * @subpackage	Logger
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @since		XOOPS - original location /class/logger_render.php
+ * @version	$Id: Logger_render.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die();
@@ -142,6 +146,10 @@ if (empty($mode) || $mode == 'timers') {
 	$ret .= '</table>';
 }
 
+/** 
+ * @author		ImpressCMS
+ * @since 		1.3
+ */
 if (empty($mode) || $mode == 'deprecated') {
 	$class = 'even';
 	$count = count($this->deprecated);
@@ -196,4 +204,3 @@ if (empty( $mode )) {
 
 EOT;
 }
-

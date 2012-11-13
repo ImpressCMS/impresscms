@@ -3,12 +3,12 @@
  * Input validation and processing, BB code conversion, Smiley conversion
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package		Core
+ * @package	Core
  * @subpackage	Textsanitizer
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @version	SVN: $Id: Textsanitizer.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 /**
@@ -17,12 +17,12 @@
  * <b>Singleton</b>
  *
  * @category	ICMS
- * @package		Core
+ * @package	Core
  * @subpackage	Textsanitizer
  *
+ * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @author		Goghs Cheng
- * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
 class icms_core_Textsanitizer {
 

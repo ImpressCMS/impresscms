@@ -10,7 +10,7 @@
  * @author		vaughan montgomery (vaughan@impresscms.org)
  * @author		ImpressCMS Project
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version		$Id$
+ * @version		$Id: HTMLFilter.php 12112 2012-11-09 02:15:50Z skenow $
 **/
 /**
  *
@@ -117,13 +117,12 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
         
         $IframeRegExp = '';
-        if ( $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] !== '' ) {
-            $IframeRegExp = str_ireplace( 'http://', '', $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] );
+        if ($icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] !== '') {
             $pos = strpos( $IframeRegExp, '|' );
-            if ( $pos === false ) {
-                $IframeRegExp = '%^http://' . $IframeRegExp . '%';
+            if ($pos === FALSE) {
+                $IframeRegExp = '%^' . $IframeRegExp . '%';
             } else {
-                $IframeRegExp = '%^http://(' . $IframeRegExp . ')%';
+                $IframeRegExp = '%^(' . $IframeRegExp . ')%';
             }
         }
  

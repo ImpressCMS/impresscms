@@ -3,18 +3,22 @@
  * Manage of online users
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license	GPL - LICENSE.txt
  * @category	ICMS
- * @package		Core
- * @version		SVN: $Id$
+ * @package	Core
+ * @version	SVN: $Id: OnlineHandler.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 /**
  * A handler for "Who is Online?" information
  *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package     Core
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @package	Core
+ * @since		XOOPS
+ * @author		Kazumi Ono	<onokazu@xoops.org>
  */
 class icms_core_OnlineHandler {
 
@@ -150,4 +154,3 @@ class icms_core_OnlineHandler {
 		return $ret;
 	}
 }
-
