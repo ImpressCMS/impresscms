@@ -567,7 +567,7 @@ function b_system_themes_show($options) {
 	if ($options[0] == 1) {
 		$block['theme_select'] = "<img id=\"icms_theme_img\" src=\"" . ICMS_THEME_URL . "/" . $icmsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"". (int) $options[1] . "\" /><select id=\"theme_select_with_image\" name=\"theme_select\">" . $theme_options . "</select><input type=\"submit\" value=\"" . _GO . "\" />";
 	} else {
-		$block['theme_select'] = '<select id="theme_select" name="theme_select">' . $theme_options . '</select>';
+		$block['theme_select'] = '<select id="theme_select" name="theme_select" onchange="submit();">' . $theme_options . '</select>';
 	}
 	return $block;
 }
