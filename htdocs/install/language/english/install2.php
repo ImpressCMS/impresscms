@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: install2.php 9920 2010-03-27 17:46:23Z skenow $
 define("_INSTALL_WEBMASTER","Webmasters");
 define("_INSTALL_WEBMASTERD","Webmasters of this site");
 define("_INSTALL_REGUSERS","Registered Users");

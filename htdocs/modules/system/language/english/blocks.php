@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: blocks.php 9349 2009-09-06 19:25:40Z Phoenyx $
 // Blocks
 define("_MB_SYSTEM_ADMENU","Administration Menu");
 define("_MB_SYSTEM_RNOW","Register now!");

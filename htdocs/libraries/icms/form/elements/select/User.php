@@ -11,7 +11,7 @@
  * @package		Form
  * @subpackage	Elements
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: User.php 11574 2012-02-16 00:44:50Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

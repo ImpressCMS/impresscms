@@ -8,7 +8,7 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id$
+ * @version		$Id: wmp.php 10326 2010-07-11 18:54:25Z malanciault $
  */
 
 /**

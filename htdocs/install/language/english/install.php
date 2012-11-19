@@ -6,7 +6,7 @@
  * @author       Skalpa Keo <skalpa@xoops.org>
  * @author       Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
  * @since        1.0
- * @version		$Id$
+ * @version		$Id: install.php 11369 2011-09-05 22:01:30Z skenow $
  * @package 		installer
  */
 

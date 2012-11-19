@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		$Id: Passwordtray.php 10711 2010-10-10 17:11:29Z phoenyx $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

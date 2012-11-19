@@ -4,7 +4,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	User
- * @version		SVN: $Id$
+ * @version		SVN: $Id: userinfo.php 12085 2012-10-23 14:23:54Z sato-san $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -48,6 +48,7 @@ if (is_object(icms::$user)) {
             'user_ownpage' => TRUE,
             'lang_editprofile' => _US_EDITPROFILE,
             'lang_avatar' => _US_AVATAR,
+            'lang_notifications' => _US_NOTIFICATIONS,
             'lang_inbox' => _US_INBOX,
             'lang_logout' => _US_LOGOUT,
             'user_candelete' => $icmsConfigUser['self_delete'] ? TRUE : FALSE,

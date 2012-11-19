@@ -9,15 +9,15 @@
  * @license		GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @package		core
  * @since		1.2
- * @version		SVN: $Id$
+ * @version		SVN: $Id: icms_version.php 12079 2012-10-19 06:46:30Z sato-san $
  */
 
 defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 
-/*  General Information  */
+/**  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
-	'version'=> 2.0,
+	'version'=> 1.34,
 	'description'=> _MI_SYSTEM_DESC,
 	'author'=> "",
 	'credits'=> "The ImpressCMS Project",
@@ -27,19 +27,19 @@ $modversion = array(
 	'dirname'=> basename(dirname(__FILE__ )),
 	'modname' => 'system',
 
-/*  Images information  */
+/**  Images information  */
 	'iconsmall'=> "images/icon_small.png",
 	'iconbig'=> "images/system_big.png",
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
-/*  Development information */
-	'status_version'=> "Alpha",
-	'status'=> "Alpha",
-	'date'=> "",
+/**  Development information */
+	'status_version'=> "trunk",
+	'status'=> "trunk",
+	'date'=> "October 2012",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_ALPHA,
+	'warning'=>_CO_ICMS_WARNING_BETA,
 
-/* Contributors */
+/** Contributors */
 	'developer_website_url' => "http://www.impresscms.org",
 	'developer_website_name' => "ImpressCMS Core & Module developers",
 	'developer_email' => "contact@impresscms.org" );
@@ -49,16 +49,16 @@ $modversion['people']['developers'][] = "[url=http://community.impresscms.org/us
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=106]TheRplima[/url]";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=69]vaughan[/url]";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=340]nekro[/url]";
-
+$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1168]phoenyx[/url]";
+$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
+$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=53]davidl2[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=10]sato-san[/url]";
-
+$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
 $modversion['people']['translators'][] = "";
-
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=372]UnderDog[/url]";
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
-
 //$modversion['people']['other'][] = "";
 
 // Autotasks
@@ -69,48 +69,24 @@ $modversion['autotasks'][] = array(
 	'interval' => 1440
 );
 
-/* Manual */
-$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/modules/wiki/index.php?page=System/" . _LANGCODE . "' target='_blank'>" . _MI_SYSTEM_NAME . "</a>";
+/** Manual */
+$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Extended_Profile/"._LANGCODE."' target='_blank'>"._LANGNAME."</a>";
 
-/* Administrative information */
+/** Administrative information */
 $modversion['hasAdmin'] = TRUE;
 $modversion['adminindex'] = "admin.php";
 $modversion['adminmenu'] = "menu.php";
 
-/* Database information */
-/*  once the conversion is completed, we can use this
-$modversion['object_items'] = icms_core_Filesystem::getDirList(
-	ICMS_MODULES_PATH . '/system/admin/',
-	array('findusers', 'mailusers', 'preferences', 'version')
-);
-*/
-
-/* This represents the objects that can be automatically updated via IPF */
-$modversion['object_items'] = array(
-	'adsense',
-	'autotasks',
-	'customtag',
-	'mimetype',
-	'pages',
-	'rating',
-	'blocks',
-	'positions',
-	'userrank'
-);
-
-/* This will be the list of database tables for the above objects */
-$modversion['tables']  = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
-
-/* Install and update informations */
+/** Install and update informations */
 $modversion['onUpdate'] = "include/update.php";
 
-/* Search information */
+/** Search information */
 $modversion['hasSearch'] = FALSE;
 
-/* Menu information */
+/** Menu information */
 $modversion['hasMain'] = FALSE;
 
-/* Blocks information */
+/** Blocks information */
 $modversion['blocks'][1] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME2,
@@ -277,7 +253,7 @@ $modversion['blocks'][] = array(
 	'template' => 'system_admin_block_cp_new.html'
 	);
 
-/* Templates information */
+/** Templates information */
 $modversion['templates'][1] = array(
 	'file' => 'system_imagemanager.html',
 	'description' => '');
@@ -368,7 +344,7 @@ $modversion['templates'][] = array(
 	);
 
 $modversion['templates'][] = array(
-	'file' => 'admin/positions/system_adm_positions.html',
+	'file' => 'admin/blockspadmin/system_adm_blockspadmin.html',
 	'description' => ''
 	);
 
@@ -378,12 +354,12 @@ $modversion['templates'][] = array(
 	);
 
 $modversion['templates'][] = array(
-	'file' => 'admin/blocks/system_adm_blocks.html',
+	'file' => 'admin/blocksadmin/system_adm_blocksadmin.html',
 	'description' => ''
 	);
 
 $modversion['templates'][] = array(
-	'file' => 'admin/modules/system_adm_modules.html',
+	'file' => 'admin/modulesadmin/system_adm_modulesadmin.html',
 	'description' => ''
 	);
 
@@ -486,3 +462,4 @@ $modversion['templates'][] = array(
 	'file' => 'admin/autotasks/system_adm_autotasks.html',
 	'description' => ''
 	);
+

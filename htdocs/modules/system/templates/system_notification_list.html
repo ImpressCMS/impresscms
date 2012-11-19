@@ -1,5 +1,7 @@
 <h4><{$lang_activenotifications}></h4>
-<form action="notifications.php" method="post">
+
+<p><a href="<{$icms_url}>/userinfo.php?uid=<{$user.uid}>" title="<{$user.name}>"><{$smarty.const._PROFILE}></a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<{$smarty.const._MB_SYSTEM_NOTIF}> </p>
+<form id="notificationlist" action="notifications.php" method="post">
 <table class="outer">
   <tr>
 	<th><input name="allbox" id="allbox" onclick="xoopsCheckAll('notificationlist', 'allbox');" type="checkbox" value="<{$lang_checkall}>" /></th>

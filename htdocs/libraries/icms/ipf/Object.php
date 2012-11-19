@@ -221,7 +221,7 @@ class icms_ipf_Object extends icms_core_Object {
 				$this->setControl($varname, "yesno");
 				break;
 
-			case "meta_keywords":
+			case "meta_keywords": // should this be textsarea instead of textarea???
 				$value = $default != 'notdefined' ? $default : '';
 				$this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_ICMS_META_KEYWORDS, _CO_ICMS_META_KEYWORDS_DSC, false, true, $displayOnForm);
 				$this->setControl('meta_keywords', array(
@@ -230,7 +230,7 @@ class icms_ipf_Object extends icms_core_Object {
 										));
 				break;
 
-			case "meta_description":
+			case "meta_description": // should this be textsarea instead of textarea???
 				$value = $default != 'notdefined' ? $default : '';
 				$this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_ICMS_META_DESCRIPTION, _CO_ICMS_META_DESCRIPTION_DSC, false, true, $displayOnForm);
 				$this->setControl('meta_description', array(
@@ -765,7 +765,11 @@ class icms_ipf_Object extends icms_core_Object {
 			return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br, $formatML);
 		} else {
 			if ($html) {
-				return icms_core_DataFilter::checkVar($ret, 'html', 'output');
+                if ($br) {
+                    return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
+                } else {
+                    return icms_core_DataFilter::checkVar($ret, 'html', 'output');
+                }
 			} else {
 				return icms_core_DataFilter::checkVar($ret, 'text', 'output');
 			}
@@ -931,7 +935,11 @@ class icms_ipf_Object extends icms_core_Object {
 							$br = false;
 						}
 						if ($html) {
-							return icms_core_DataFilter::checkVar($ret, 'html', 'output');
+                            if ($br) { // have to use this whilst ever we have a zillion editors in the core
+                                return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
+                            } else {
+                                return icms_core_DataFilter::checkVar($ret, 'html', 'output');
+                            }
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
 						}

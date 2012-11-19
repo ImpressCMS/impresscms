@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: modinfo.php 10326 2010-07-11 18:54:25Z malanciault $
 // Module Info
 
 // The name of this module
@@ -35,6 +35,7 @@ define('_MI_SYSTEM_BNAME17', "Related Content");
 define('_MI_SYSTEM_BNAME18', "Share this page!");
 
 // Names of admin menu items
+define("_MI_SYSTEM_ADMENU1","Banners");
 define("_MI_SYSTEM_ADMENU2","Blocks");
 define("_MI_SYSTEM_ADMENU3","Groups");
 define("_MI_SYSTEM_ADMENU5","Modules");

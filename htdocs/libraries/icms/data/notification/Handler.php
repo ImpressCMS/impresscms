@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Notification
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 10825 2010-12-03 00:01:23Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -657,6 +657,8 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Determine if notification is enabled for the selected module.
 	 *
+	 * Replaces function notificationEnabled()
+	 *
 	 * @param  string  $style	  Subscription style: 'block' or 'inline'
 	 * @param  int	 $module_id  ID of the module  (default current module)
 	 * @return bool
@@ -688,6 +690,8 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * Replaces function &notificationCategoryInfo()
+	 *
 	 * Get an associative array of info for a particular notification
 	 * category in the selected module.  If no category is selected,
 	 * return an array of info for all categories.
@@ -719,6 +723,8 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * Replaces function &notificationCommentCategoryInfo()
+	 *
 	 * Get associative array of info for the category to which comment events
 	 * belong.
 	 *
@@ -754,6 +760,8 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	// TODO: some way to include or exclude admin-only events...
 
 	/**
+	 * Replaces function &notificationEvents()
+	 *
 	 * Get an array of info for all events (each event has associative array)
 	 * in the selected category of the selected module.
 	 *
@@ -872,6 +880,8 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * Replaces function notificationEventEnabled()
+	 *
 	 * Determine whether a particular notification event is enabled.
 	 * Depends on module config options.
 	 *
@@ -896,6 +906,8 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * Replaces function &notificationEventInfo()
+	 *
 	 * Get associative array of info for the selected event in the selected
 	 * category (for the selected module).
 	 *
@@ -916,6 +928,8 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * Replaces function &notificationSubscribableCategoryInfo()
+	 *
 	 * Get an array of associative info arrays for subscribable categories
 	 * for the selected module.
 	 *
@@ -969,6 +983,8 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * Replaces function notificationGenerateConfig()
+	 *
 	 * Generate module config info for a particular category, event pair.
 	 * The selectable config options are given names depending on the
 	 * category and event names, and the text depends on the category

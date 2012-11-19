@@ -8,7 +8,7 @@
  * @author		vaughan montgomery (vaughan@impresscms.org)
  * @author		ImpressCMS Project
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version	SVN: $Id: Password.php 12112 2012-11-09 02:15:50Z skenow $
+ * @version	SVN: $Id: Password.php 12111 2012-11-09 02:11:04Z skenow $
  */
 /**
  * Password generation and validation

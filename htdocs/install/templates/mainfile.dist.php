@@ -12,7 +12,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
+* @version		$Id: mainfile.dist.php 11358 2011-09-02 19:55:40Z phoenyx $
 */
 
 if (!defined("XOOPS_MAINFILE_INCLUDED")) {

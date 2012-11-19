@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: userform.php 11958 2012-08-25 23:43:35Z skenow $
  */
 
 global $icmsConfigUser, $icmsConfigAuth;
@@ -152,6 +152,8 @@ $form->addElement($name_text);
 $form->addElement($email_tray, true);
 $form->addElement($openid_tray, true);
 $form->addElement($url_text);
+//  $form->addElement($avatar_tray);
+//  $form->addElement($theme_select);
 $form->addElement($timezone_select);
 $form->addElement($icq_text);
 $form->addElement($aim_text);

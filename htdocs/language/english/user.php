@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: user.php 12085 2012-10-23 14:23:54Z sato-san $
 //%%%%%%		File Name user.php 		%%%%%
 define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
 define('_US_LOSTPASSWORD','Lost your password?');
@@ -209,4 +209,6 @@ define('_US_MULTLOGIN', 'It was not possible to login on the site!! <br />
 define("_US_OPENID_LOGIN", "Login with your OpenID");
 define("_US_OPENID_URL", "Your OpenID URL:");
 define("_US_OPENID_NORMAL_LOGIN", "Go back to normal login");
-?>
+
+######################## Added in 1.3 ###################################
+define('_US_NOTIFICATIONS', "Notifications");

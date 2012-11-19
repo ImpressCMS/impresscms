@@ -9,7 +9,7 @@
  * @package		libraries
  * @since		1.2
  * @author		TheRplima <therplima@impresscms.org>
- * @version		$Id$
+ * @version		$Id: wideimage.php 10326 2010-07-11 18:54:25Z malanciault $
  */
 /**
  *

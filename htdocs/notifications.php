@@ -10,7 +10,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		$Id: notifications.php 11479 2011-12-15 04:02:07Z skenow $
  */
 
 $xoopsOption['pagetype'] = 'notification';

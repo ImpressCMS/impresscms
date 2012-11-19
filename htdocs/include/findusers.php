@@ -10,7 +10,7 @@
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		Xoops 1.00
  * @package core
- * @version		$Id$
+ * @version		$Id: findusers.php 11572 2012-02-16 00:35:21Z skenow $
  */
 
 include "../mainfile.php";

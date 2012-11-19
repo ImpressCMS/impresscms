@@ -7,7 +7,7 @@
  * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		$Id: Base.php 11501 2011-12-17 22:31:45Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -404,20 +404,37 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				return new icms_form_elements_select_Country($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
 				break;
 
+			case 'sourceeditor':
+				// leave as last element so that default is executed for sourceeditor as well
+				icms_core_Debug::setDeprecated('icms_ipf_form_elements_Source', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+				$controlName = "source";
+
 			default:
 				$classname = "icms_ipf_form_elements_" . ucfirst($controlName);
 				if (!class_exists($classname)) {
-					// perhaps this is a control created by the module
-					$moduleName = $this->targetObject->handler->_moduleName;
-					$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/class/form/elements/";
-					$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
-					$classFileName = strtolower($classname) . ".php";
+					/** @todo remove in 1.4 or even for 1.3 final */
+					$classname = "IcmsForm" . ucfirst($controlName) . "Element";
+					if (!class_exists($classname)) {
+						if (file_exists(ICMS_ROOT_PATH . "/class/icmsform/elements/" . strtolower($classname) . ".php")) {
+							include_once ICMS_ROOT_PATH . "/class/icmsform/elements/" . strtolower($classname) . ".php" ;
+						} else {
+							// perhaps this is a control created by the module
+							$moduleName = $this->targetObject->handler->_moduleName;
+							if ($moduleName != 'system') {
+								$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/class/form/elements/";
+							} else {
+								$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/admin/{$name}/class/form/elements/";
+							}
+							$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
+							$classFileName = strtolower($classname) . ".php";
 
-					if (file_exists($moduleFormElementsPath . $classFileName)) {
-						include_once $moduleFormElementsPath . $classFileName ;
-					} else {
-						trigger_error($classname . " not found", E_USER_WARNING);
-						return new icms_form_elements_Label();
+							if (file_exists($moduleFormElementsPath . $classFileName)) {
+								include_once $moduleFormElementsPath . $classFileName ;
+							} else {
+								trigger_error($classname . " not found", E_USER_WARNING);
+								return new icms_form_elements_Label();
+							}
+						}
 					}
 				}
 				return new $classname($this->targetObject, $key);

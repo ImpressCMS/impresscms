@@ -7,7 +7,7 @@
  * @author		phppp (infomax@gmail.com)
  * @since		Xoops 2.0.17
  * @package 	core
- * @version		SVN: $Id$
+ * @version		SVN: $Id: site-closed.php 11613 2012-02-29 00:41:19Z skenow $
  */
 
 defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
@@ -35,7 +35,7 @@ if (!$allowed) {
 	$icmsTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
 	/** @todo	Remove icms.css in 2.0 */
 	icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
-	$icmsTheme->addStylesheet(ICMS_URL . "/icms"
+	$icmsTheme->addStylesheet(ICMS_URL . "/icms" 
 		. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? "_rtl" : "") . ".css", array("media" => "screen"));
 	$icmsTpl =& $icmsTheme->template;
 
@@ -47,8 +47,9 @@ if (!$allowed) {
 		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
-		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
-			? $icmsModule->getVar('name')
+		'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) 
+			? $icmsModule->getVar('name') 
 			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'lang_login' => _LOGIN,
 		'lang_username' => _USERNAME,
@@ -68,7 +69,6 @@ if (!$allowed) {
 	$icmsTpl->caching = 0;
 
 	icms_loadLanguageFile("system", "customtag", TRUE);
-	icms_Autoloader::register(ICMS_MODULES_PATH . "/system/class", "mod_system");
 	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 	$customtags_array = array();
 	if (is_object($icmsTpl)) {

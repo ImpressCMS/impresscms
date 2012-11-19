@@ -7,7 +7,7 @@
  * @package		System
  * @subpackage	Blocks
  * @since		ImpressCMS 1.2
- * @version		SVN: $Id$
+ * @version		SVN: $Id: system_admin_blocks.php 11152 2011-03-30 16:45:08Z m0nty_ $
  */
 
 /**
@@ -27,7 +27,7 @@ function b_system_admin_warnings_show() {
 	}
 	/** @todo make this dynamic, so the value is updated automatically */
 	if (getDbValue(icms::$xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE) {
-		array_push($block['msg'], icms_core_Message::error('<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=modules&amp;op=update&amp;module=system">' . _WARNINGUPDATESYSTEM . '</a>'));
+		array_push($block['msg'], icms_core_Message::error('<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">' . _WARNINGUPDATESYSTEM . '</a>'));
 	}
 	if (is_writable(ICMS_ROOT_PATH . '/mainfile.php')) {
 		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINWRITEABLE, ICMS_ROOT_PATH . '/mainfile.php'), '', FALSE));
@@ -108,7 +108,6 @@ function b_system_admin_cp_show() {
 		if (file_exists($admin_dir . '/' . $file . '/icms_version.php')) {
 			$mod_version_file = 'icms_version.php';
 		}
-		icms_loadLanguageFile('system', $file, TRUE);
 		include $admin_dir . '/' . $file . '/' . $mod_version_file;
 		if ($modversion['hasAdmin']) {
 			$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
@@ -232,7 +231,6 @@ function b_system_admin_cp_new_show() {
 		if (file_exists($admin_dir . '/' . $file . '/icms_version.php')) {
 			$mod_version_file = 'icms_version.php';
 		}
-		icms_loadLanguageFile('system', $file, TRUE);
 		include $admin_dir . '/' . $file . '/' . $mod_version_file;
 		if ($modversion['hasAdmin']) {
 			$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;

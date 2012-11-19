@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Blocks
- * @version		SVN: $Id$
+ * @version		SVN: $Id: system_waiting.php 11152 2011-03-30 16:45:08Z m0nty_ $
  */
 
 /**

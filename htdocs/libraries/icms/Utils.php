@@ -7,7 +7,7 @@
  * @category	ICMS
  * @since		1.3
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Utils.php 11448 2011-11-21 16:37:13Z fiammy $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

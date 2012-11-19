@@ -8,7 +8,7 @@
 * @author       vaughan montgomery (vaughan@impresscms.org)
 * @author       ImpressCMS Project
 * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
-* @version      SVN: $Id$
+* @version      SVN: $Id: DataFilter.php 12015 2012-09-11 23:06:05Z m0nty $
 **/
 /**
  *

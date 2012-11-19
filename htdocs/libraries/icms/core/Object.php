@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Core
- * @version		SVN: $Id: Object.php 12112 2012-11-09 02:15:50Z skenow $
+ * @version		SVN: $Id: Object.php 12111 2012-11-09 02:11:04Z skenow $
  */
 
 /**#@+

@@ -8,7 +8,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id$
+ * @version		SVN: $Id: lostpass.php 11909 2012-08-12 04:42:41Z skenow $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -24,6 +24,9 @@ include 'mainfile.php';
 $code = '';
 
 $filter_get = $filter_post = array('email' => array('email', 'options' => array(0, 0)));
+
+/* set default value for parameters */
+$code = '';
 
 if (!empty($_GET)) {
     $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);

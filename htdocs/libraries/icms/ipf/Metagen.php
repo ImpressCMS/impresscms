@@ -10,7 +10,7 @@
  * @package		Ipf
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Metagen.php 11872 2012-08-04 17:48:03Z m0nty $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Module
- * @version	$Id$
+ * @version	$Id: Handler.php 12072 2012-10-18 00:39:30Z skenow $
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
 
@@ -61,7 +61,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		$module = FALSE;
 		if ($id > 0) {
 			if (!empty($this->_cachedModule_lookup[$id]) &&
-					!empty($this->_cachedModule[$this->_cachedModule_lookup[$id]])
+				!empty($this->_cachedModule[$this->_cachedModule_lookup[$id]])
 			) {
 				if ($loadConfig) $this->loadConfig($this->_cachedModule[$this->_cachedModule_lookup[$id]]);
 				return $this->_cachedModule[$this->_cachedModule_lookup[$id]];
@@ -94,7 +94,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getByDirname($dirname, $loadConfig = FALSE) {
 		if (!empty($this->_cachedModule[$dirname]) &&
-				$this->_cachedModule[$dirname]->getVar('dirname') == $dirname
+			$this->_cachedModule[$dirname]->getVar('dirname') == $dirname
 		) {
 			if ($loadConfig) $this->loadConfig($this->_cachedModule[$dirname]);
 			return $this->_cachedModule[$dirname];
@@ -127,8 +127,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		if ($module->config !== NULL) return TRUE;
 		icms_loadLanguageFile($module->getVar("dirname"), "main");
 		if ($module->getVar("hasconfig") == 1
-				|| $module->getVar("hascomments") == 1
-				|| $module->getVar("hasnotification") == 1
+			|| $module->getVar("hascomments") == 1
+			|| $module->getVar("hasnotification") == 1
 		) {
 			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
 		}
@@ -152,9 +152,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		 */
 		$fieldsToStoreInDB = array();
 		foreach ($module->cleanVars as $k => $v) {
-			if ($k == 'last_update') {
-				$v = time();
-			}
+			if ($k == 'last_update') { $v = time(); }
 			if ($module->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
 				$cleanvars[$k] = (int) $v;
 			} elseif (is_array($v)) {
@@ -167,14 +165,12 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 
 		if ($module->isNew()) {
 			$sql = "INSERT INTO " . $this->db->prefix('modules')
-			. " (" . implode(',', array_keys($fieldsToStoreInDB))
-			. ") VALUES (" . implode(',', array_values($fieldsToStoreInDB)) . ")";
+				. " (" . implode(',', array_keys($fieldsToStoreInDB))
+				. ") VALUES (" . implode(',', array_values($fieldsToStoreInDB)) . ")";
 		} else {
 			$sql = "UPDATE " . $this->db->prefix('modules') . " SET";
 			foreach ($fieldsToStoreInDB as $key => $value) {
-				if (isset($notfirst)) {
-					$sql .= ",";
-				}
+				if (isset($notfirst)) { $sql .= ","; }
 				$sql .= " " . $key . " = " . $value;
 				$notfirst = TRUE;
 			}
@@ -183,9 +179,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		}
 
 		if (!$result = $this->db->query($sql)) return FALSE;
-		if ($module->isNew()) {
-			$module->assignVar('mid', $this->db->getInsertId());
-		}
+		if ($module->isNew()) { $module->assignVar('mid', $this->db->getInsertId()); }
 		if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
 			unset($this->_cachedModule[$module->getVar('dirname')]);
 		}
@@ -205,27 +199,27 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		if (get_class($module) != 'icms_module_Object') return FALSE;
 
 		$sql = sprintf(
-				"DELETE FROM %s WHERE mid = '%u'",
-				$this->db->prefix('modules'), (int) $module->getVar('mid')
+			"DELETE FROM %s WHERE mid = '%u'",
+			$this->db->prefix('modules'), (int) $module->getVar('mid')
 		);
 		if (!$result = $this->db->query($sql)) return FALSE;
 
 		// delete admin permissions assigned for this module
 		$sql = sprintf(
-				"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
-				$this->db->prefix('group_permission'), (int) $module->getVar('mid')
+			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
+			$this->db->prefix('group_permission'), (int) $module->getVar('mid')
 		);
 		$this->db->query($sql);
 		// delete read permissions assigned for this module
 		$sql = sprintf(
-				"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
-				$this->db->prefix('group_permission'), (int) $module->getVar('mid')
+			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
+			$this->db->prefix('group_permission'), (int) $module->getVar('mid')
 		);
 		$this->db->query($sql);
 
 		$sql = sprintf(
-				"SELECT block_id FROM %s WHERE module_id = '%u'",
-				$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
+			"SELECT block_id FROM %s WHERE module_id = '%u'",
+			$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
 		);
 		if ($result = $this->db->query($sql)) {
 			$block_id_arr = array();
@@ -238,27 +232,27 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		if (isset($block_id_arr)) {
 			foreach ($block_id_arr as $i) {
 				$sql = sprintf(
-						"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
-						$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
+					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
+					$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
 				);
 				if ($result2 = $this->db->query($sql)) {
 					if (0 < $this->db->getRowsNum($result2)) {
 						// this block has other entries, so delete the entry for this module
 						$sql = sprintf(
-								"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
-								$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
+							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
+							$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
 						);
 						$this->db->query($sql);
 					} else {
 						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
 						$sql = sprintf(
-								"UPDATE %s SET visible = '0' WHERE bid = '%u'",
-								$this->db->prefix('newblocks'), (int) $i
+							"UPDATE %s SET visible = '0' WHERE bid = '%u'",
+							$this->db->prefix('newblocks'), (int) $i
 						);
 						$this->db->query($sql);
 						$sql = sprintf(
-								"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
-								$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
+							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
+							$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
 						);
 						$this->db->query($sql);
 					}
@@ -408,7 +402,6 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		if ($module) $module->launch();
 		return $module ? $module : NULL;
 	}
-
 	/**
 	 * Checks if the current user can access the specified module
 	 * @param icms_module_Object $module
@@ -432,77 +425,6 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		}
 		// We are in /something.php: let the page handle permissions
 		return TRUE;
-	}
-
-	/**
-	 * Function and rendering for installation of a module
-	 *
-	 * @param 	string	$dirname
-	 * @return	string	Results of the installation process
-	 */
-	public function install($dirname) {
-
-	}
-
-	/**
-	 * Logic for uninstalling a module
-	 *
-	 * @param unknown_type $dirname
-	 * @return	string	Result messages for uninstallation
-	 */
-	public function uninstall($dirname) {
-
-	}
-
-	/**
-	 * Logic for updating a module
-	 *
-	 * @param 	str $dirname
-	 * @return	str	Result messages from the module update
-	 */
-	public function update($dirname) {
-
-	}
-
-	/**
-	 * Logic for activating a module
-	 *
-	 * @param	int	$mid
-	 * @return	string	Result message for activating the module
-	 */
-	public function activate($mid) {
-
-	}
-
-	/**
-	 * Logic for deactivating a module
-	 *
-	 * @param	int	$mid
-	 * @return	string	Result message for deactivating the module
-	 */
-	public function deactivate($mid) {
-
-	}
-
-	/**
-	 * Logic for changing the weight (order) and name of modules
-	 *
-	 * @param int $mid		Unique ID for the module to change
-	 * @param int $weight	Integer value of the weight to be applied to the module
-	 * @param str $name		Name to be applied to the module
-	 */
-	public function change($mid, $weight, $name) {
-
-	}
-
-	/**
-	 *
-	 * @param	string	$dirname	Directory name of the module
-	 * @param	string	$template	Name of the template file
-	 * @param	boolean	$block		Are you trying to retrieve the template for a block?
-	 */
-	public function getTemplate($dirname, $template, $block = FALSE) {
-
 	}
 
 	/**

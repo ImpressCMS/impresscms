@@ -8,7 +8,7 @@
  * @package		Members
  * @subpackage	Users
  * @since		XOOPS
- * @version		$Id$
+ * @version		$Id: checklogin.php 11963 2012-08-26 02:57:04Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') || exit();
@@ -37,7 +37,7 @@ if (empty($user) || !is_object($user)) {
 
 if (FALSE != $user) {
 	if (0 == $user->getVar('level')) {
-		redirect_header(ICMS_URL . '/index.php', 5, _US_NOACTTPADM);
+		redirect_header(ICMS_URL . '/', 5, _US_NOACTTPADM);
 		exit();
 	}
 	if ($icmsConfigPersona['multi_login']) {
@@ -48,7 +48,7 @@ if (FALSE != $user) {
 			foreach ($onlines as $online) {
 				if ($online['online_uid'] == $user->getVar('uid')) {
 					$user = FALSE;
-					redirect_header(ICMS_URL . '/index.php', 3, _US_MULTLOGIN);
+					redirect_header(ICMS_URL . '/', 3, _US_MULTLOGIN);
 				}
 			}
 			if (is_object($user)) {
@@ -71,11 +71,11 @@ if (FALSE != $user) {
 			}
 		}
 		if (!$allowed) {
-			redirect_header(ICMS_URL . '/index.php', 1, _NOPERM);
+			redirect_header(ICMS_URL . '/', 1, _NOPERM);
 			exit();
 		}
 	}
-    
+
 	$user->setVar('last_login', time());
 	if (!$member_handler->insertUser($user)) {}
 	// Regenrate a new session id and destroy old session
@@ -111,7 +111,7 @@ if (FALSE != $user) {
 		}
 		$url .= $_POST['xoops_redirect'];
 	} else {
-		$url = ICMS_URL . '/index.php';
+		$url = ICMS_URL . '/';
 	}
 	if ($pos = strpos($url, '://')) {
 		$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);

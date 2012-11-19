@@ -7,7 +7,7 @@
  * @package		libraries
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		$Id: adsense.php 11316 2011-08-10 02:34:28Z skenow $
  */
 
 /**

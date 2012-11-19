@@ -11,7 +11,7 @@
  *
  * @package		core
  * @since		XOOPS
- * @version		$Id$
+ * @version		$Id: cp_functions.php 12115 2012-11-18 16:10:55Z fiammy $
  *
  * @author		The XOOPS Project <http://www.xoops.org>
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
@@ -27,7 +27,7 @@ define ('XOOPS_CPFUNC_LOADED', 1);
  * Function icms_cp_header
  *
  * @since ImpressCMS 1.2
- * @version $Id$
+ * @version $Id: cp_functions.php 12115 2012-11-18 16:10:55Z fiammy $
  *
  * @author rowd (from the XOOPS Community)
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
@@ -40,7 +40,6 @@ function icms_cp_header(){
 	icms::$logger->stopTime('Module init');
 	icms::$logger->startTime('ImpressCMS CP Output Init');
 
-	/** @todo	Move to a separate class::method - HTTP */
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -48,7 +47,6 @@ function icms_cp_header(){
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		header('X-Powered-By: ImpressCMS');
 	}
 
 	$icmsAdminTpl = new icms_view_Tpl();
@@ -371,10 +369,26 @@ if (! empty( $_SESSION['redirect_message'] )) {
 }
 
 /**
+ * Backwards compatibility function.
+ *
+ * @since XOOPS
+ * @version $Id: cp_functions.php 12115 2012-11-18 16:10:55Z fiammy $
+ * @deprecated use icms_cp_header instead
+ * @todo		Remove in version 1.4 -  - all occurrences in the core have been removed
+ *
+ * @author The Xoops Project <http://www.xoops.org>
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ */
+function xoops_cp_header() {
+	icms_core_Debug::setDeprecated('icms_cp_header', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_cp_header();
+}
+
+/**
  * Function icms_cp_footer
  *
  * @since ImpressCMS 1.2
- * @version $Id$
+ * @version $Id: cp_functions.php 12115 2012-11-18 16:10:55Z fiammy $
  * @author rowd (from XOOPS Community)
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
@@ -387,7 +401,6 @@ function icms_cp_footer() {
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		header('Cache-Control: private, no-cache');
 		header('Pragma: no-cache');
-		header("X-Powered-By: ImpressCMS");
 	}
 	if ( isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate ) {
 		trigger_error("xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING);
@@ -407,9 +420,70 @@ function icms_cp_footer() {
 	return;
 }
 
+/**
+ * Backwards compatibility function
+ *
+ * @version $Id: cp_functions.php 12115 2012-11-18 16:10:55Z fiammy $
+ * @deprecated use icms_cp_footer instead
+ * @todo remove in 1.4 - all occurrences in the core have been removed
+ *
+ * @author The XOOPS Project <http://www.xoops.org>
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ */
+function xoops_cp_footer() {
+	icms_core_Debug::setDeprecated('icms_cp_footer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_cp_footer();
+}
+
+/**
+ * Do we need this? Only occurrences in the core are commented out
+ * @todo remove this by 1.4
+ * @deprecated used for old modules that don't use smarty templates
+ */
+function OpenTable() {
+	icms_core_Debug::setDeprecated('the smarty template system', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #2F5376;'><tr class='bg4'><td valign='top'>\n";
+}
+/**
+ * Do we need this? Only occurrences in the core are commented out
+ * @todo remove this by 1.4
+ * @deprecated used for old modules that don't use smarty templates
+ */
+function CloseTable() {
+	icms_core_Debug::setDeprecated('the smarty template system', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	echo '</td></tr></table>';
+}
+
 function themecenterposts($title, $content) {
 	echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $title . '</td></tr><tr><td><br />' . $content . '<br /></td></tr></table>';
 }
+/**
+ * Do we need this? No occurrences in the core
+ * @todo remove this by 1.4
+ */
+function myTextForm($url, $value) {
+	return '<form action="' . $url . '" method="post"><input type="submit" value="' . $value . '" /></form>';
+}
+
+/**
+ *
+ * Is this needed? There are no occurrences in the core
+ * @todo remove by version 1.4
+ */
+function xoopsfwrite() {
+	if ($_SERVER ['REQUEST_METHOD'] != 'POST') {
+		return false;
+	} else {
+
+	}
+	if (! icms::$security->checkReferer ()) {
+		return false;
+	} else {
+
+	}
+	return true;
+}
+
 /**
  * Creates a multidimensional array with items of the dropdown menus of the admin panel.
  * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file
@@ -532,7 +606,7 @@ function impresscms_get_adminmenu() {
 	$admin_menu[] = array(
 		'id' => 'modules',
 		'text' => _MODULES,
-		'link' => ICMS_URL . '/modules/system/admin.php?fct=modules',
+		'link' => ICMS_URL . '/modules/system/admin.php?fct=modulesadmin',
 		'menu' => $modules_menu,
 	);
 
@@ -590,19 +664,19 @@ function impresscms_get_adminmenu() {
 	);
 
 	$menu[] = array(
-		'link' => 'http://sourceforge.net/projects/impresscms/',
-		'title' => _IMPRESSCMS_SOURCEFORGE,
+		'link' => 'https://impresscmsdev.assembla.com/spaces/impresscms/new_dashboard',
+		'title' => _IMPRESSCMS_PROJECT,
 		'absolute' => 1,
 		//'small' = ICMS_URL . '/images/impresscms.png',
 	);
-
+/*
 	$menu[] = array(
 		'link' => 'http://www.impresscms.org/donations/',
 		'title' => _IMPRESSCMS_DONATE,
 		'absolute' => 1,
 		//'small' = ICMS_URL . '/images/impresscms.png',
 	);
-
+*/
 	$menu[] = array(
 	'link' => ICMS_URL . '/admin.php?rssnews=1',
 	'title' => _IMPRESSCMS_NEWS,
@@ -631,6 +705,17 @@ function impresscms_sort_adminmenu_modules($a, $b) {
 }
 
 /**
+ * Function maintained only for compatibility
+ *
+ * @todo remove this in 1.4  - all occurrences in the core have been removed
+ * @deprecated use impresscms_get_adminmenu instead
+ */
+function xoops_module_get_admin_menu() {
+	icms_core_Debug::setDeprecated('impresscms_get_adminmenu', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return impresscms_get_adminmenu ();
+}
+
+/**
  * Writes entire admin menu into cache
  * @param string  $content  content to write to the admin menu file
  * @return true
@@ -653,4 +738,16 @@ function xoops_module_write_admin_menu($content) {
 	// file is delete after clear_cache (smarty)
 	icms_core_Filesystem::writeIndexFile(ICMS_CACHE_PATH);
 	return true;
+}
+
+/**
+ * Writes index file
+ * @param string  $path  path to the file to write
+ * @return bool
+ * @todo use language constants for error messages
+ * @todo Move to static class Filesystem
+ */
+function xoops_write_index_file($path = '') {
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::writeIndexFile', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::writeIndexFile($path);
 }

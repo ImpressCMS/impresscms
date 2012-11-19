@@ -7,7 +7,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id$
+ * @version		SVN: $Id: register.php 12078 2012-10-19 04:52:21Z sato-san $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -87,7 +87,7 @@ switch ($op) {
 				. "' /><br /><br /><input type='hidden' name='op' value='finish' />" . icms::$security->getTokenHTML() 
 				. "<input type='submit' value='". _US_FINISH ."' /></form>";
 		} else {
-			echo "<span style='color:#ff0000;'>$stop</span>";
+			echo "<div id='registerstop' style='color:#ff0000;'>$stop</div>";
 			include 'include/registerform.php';
 			$reg_form->display();
 		}
@@ -144,13 +144,13 @@ switch ($op) {
 				$newuser->setVar('level', 1, TRUE);
 			}
 			if (!$member_handler->insertUser($newuser)) {
-				echo _US_REGISTERNG;
+				echo "<div id='registerng'>" . _US_REGISTERNG . "</div>";
 				include 'footer.php';
 				exit();
 			}
 			$newid = (int) $newuser->getVar('uid');
 			if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
-				echo _US_REGISTERNG;
+				echo "<div id='registerng'>" . _US_REGISTERNG . "</div>";
 				include 'footer.php';
 				exit();
 			}
@@ -181,9 +181,9 @@ switch ($op) {
 				$xoopsMailer->setFromName($icmsConfig['sitename']);
 				$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
 				if (!$xoopsMailer->send()) {
-					echo _US_YOURREGMAILNG;
+					echo "<div id='yourregmailng'>" . _US_YOURREGMAILNG . "</div>";
 				} else {
-					echo _US_YOURREGISTERED;
+					echo "<div id='yourregistered'>" . _US_YOURREGISTERED . "</div>";
 				}
 				// activation by admin
 			} elseif ($icmsConfigUser['activation_type'] == 2) {
@@ -200,13 +200,13 @@ switch ($op) {
 				$xoopsMailer->setFromName($icmsConfig['sitename']);
 				$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
 				if (!$xoopsMailer->send()) {
-					echo _US_YOURREGMAILNG;
+					echo "<div id='yourregmailng'>" . _US_YOURREGMAILNG . "</div>";
 				} else {
-					echo _US_YOURREGISTERED2;
+					echo "<div id='yourregistered2'>" . _US_YOURREGISTERED2 . "</div>";
 				}
 			}
 		} else {
-			echo "<span style='color:#ff0000; font-weight:bold;'>$stop</span>";
+			echo "<div id='registerstop' style='color:#ff0000; font-weight:bold;'>$stop</div>";
 			include 'include/registerform.php';
 			$reg_form->display();
 		}

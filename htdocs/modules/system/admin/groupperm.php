@@ -2,39 +2,24 @@
 /**
  * Update permissions for a member group
  *
- * Target for the group permissions form to handle the POST data. Only used
- * by some modules - not the core.
- *
- * @todo		Full refactoring: this should really be a callback method, not a separate target.
+ * Target for the group permissions form to handle the POST data
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		Administration
- * @version		SVN: $Id$
+ * @version		SVN: $Id: groupperm.php 11963 2012-08-26 02:57:04Z skenow $
  */
 
-/* set filter types, if not strings */
-$filter_get = array();
-$filter_post = array(
-	'modid' => 'int',
-);
-
-/* set default values for variables */
-$modid = 0;
-$redirect_url = "";
-
-/** common header for the admin functions */
-include "admin_header.php";
-$gperm_handler = $icms_admin_handler;
+include '../../../include/cp_header.php';
+$modid = isset($_POST['modid']) ? (int) ($_POST['modid']) : 0;
 
 // we dont want system module permissions to be changed here
-if ($modid <= 1) {
-	redirect_header(ICMS_URL . '/index.php', 1, _NOPERM);
+if ($modid <= 1 || !is_object(icms::$user) || !icms::$user->isAdmin($modid)) {
+	redirect_header(ICMS_URL . '/', 1, _NOPERM);
 	exit();
 }
 $module_handler = icms::handler('icms_module');
 $module =& $module_handler->get($modid);
-
 if (!is_object($module) || !$module->getVar('isactive')) {
 	redirect_header(ICMS_URL . '/admin.php', 1, _MODULENOEXIST);
 	exit();
@@ -44,8 +29,9 @@ $msg = array();
 
 $member_handler = icms::handler('icms_member');
 $group_list =& $member_handler->getGroupList();
-if (is_array($perms) && !empty($perms)) {
-	foreach ($perms as $perm_name => $perm_data) {
+if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
+	$gperm_handler = icms::handler('icms_member_groupperm');
+	foreach ($_POST['perms'] as $perm_name => $perm_data) {
 		if (FALSE != $gperm_handler->deleteByModule($modid, $perm_name)) {
 			foreach ($perm_data['groups'] as $group_id => $item_ids) {
 				foreach ($item_ids as $item_id => $selected) {
@@ -83,7 +69,7 @@ if (is_array($perms) && !empty($perms)) {
 
 $backlink = xoops_getenv("HTTP_REFERER");
 if ($module->getVar('hasadmin')) {
-	$adminindex = ($redirect_url != "") ? $redirect_url : $module->getInfo('adminindex');
+	$adminindex = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : $module->getInfo('adminindex');
 	if ($adminindex) {
 		$backlink = ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $adminindex;
 	}

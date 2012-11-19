@@ -10,7 +10,7 @@
  * @author		vaughan montgomery (vaughan@impresscms.org)
  * @author		ImpressCMS Project
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version		$Id: HTMLFilter.php 12112 2012-11-09 02:15:50Z skenow $
+ * @version		$Id: HTMLFilter.php 12116 2012-11-18 22:08:37Z skenow $
 **/
 /**
  *
@@ -59,6 +59,13 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 **/
 	public function filterHTML($html) {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+        
+        $fcomment = '<!-- filtered with htmlpurifier -->';
+        
+        $purified = strpos($html, $fcomment);
+        if ($purified !== FALSE) {
+            $html = str_replace($fcomment, '', $html);
+        }
 
         if ($icmsConfigPurifier['enable_purifier'] !== 0) {
 			ICMS_PLUGINS_PATH;
@@ -71,9 +78,11 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			$icmsPurifyConf = self::getHTMLFilterConfig();
 			// uncomment for specific config debug info
 			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
-            
+
             $purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
+            
+            $html .= $fcomment;
 		}
         
 		return $html;
@@ -116,8 +125,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
         
-        $IframeRegExp = '';
-        if ($icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] !== '') {
+        $IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];
+        if ($IframeRegExp !== '') {
             $pos = strpos( $IframeRegExp, '|' );
             if ($pos === FALSE) {
                 $IframeRegExp = '%^' . $IframeRegExp . '%';

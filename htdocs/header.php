@@ -4,7 +4,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		svn: $Id$
+ * @version		svn: $Id: header.php 11633 2012-03-07 01:37:06Z skenow $
  */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 

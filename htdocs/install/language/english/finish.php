@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: finish.php 11284 2011-06-23 15:28:30Z phoenyx $
 $content .=
 "<h3>Support</h3>
 <ul class=\"diags\">

@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @subpackage	Privmessage
- * @version		SVN: $Id$
+ * @version		SVN: $Id: viewpmsg.php 12085 2012-10-23 14:23:54Z sato-san $
  */
 $xoopsOption['pagetype'] = 'pmsg';
 include_once 'mainfile.php';
@@ -42,9 +42,9 @@ if (!is_object(icms::$user)) {
 	$criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
 	$criteria->setOrder('DESC');
 	$pm_arr =& $pm_handler->getObjects($criteria);
-	echo "<h4 style='text-align:center;'>" . _PM_PRIVATEMESSAGE
-	. "</h4><br /><a href='userinfo.php?uid=". (int) (icms::$user->getVar('uid')) . "'>"
-	. _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _PM_INBOX . "<br /><br />";
+	echo "<h4>" . _PM_PRIVATEMESSAGE
+	. "</h4><p><a href='userinfo.php?uid=". (int) (icms::$user->getVar('uid')) . "'>"
+	. _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _PM_INBOX . "</p>";
 	echo "<form id='prvmsg' method='post' action='viewpmsg.php'>";
 	echo "<table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";
 	echo "<tr align='center' valign='middle'><th>"

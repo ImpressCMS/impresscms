@@ -12,7 +12,7 @@
  * @subpackage	Logger
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @since		XOOPS - original location /class/logger_render.php
- * @version	$Id: Logger_render.php 12112 2012-11-09 02:15:50Z skenow $
+ * @version	$Id: Logger_render.php 12111 2012-11-09 02:11:04Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die();

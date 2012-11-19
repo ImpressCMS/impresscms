@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package	Core
  * @subpackage	Security
- * @version	SVN: $Id: Security.php 12112 2012-11-09 02:15:50Z skenow $
+ * @version	SVN: $Id: Security.php 12111 2012-11-09 02:11:04Z skenow $
  */
 /**
  * Class for managing security aspects such as checking referers, applying tokens and checking global variables for contamination

@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Data
  * @subpackage	Comment
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Renderer.php 11569 2012-02-09 23:15:32Z fiammy $
  */
 
 /**

@@ -3,7 +3,7 @@
 $db =& icms_db_Factory::instance() ;
 
 // beggining of Output
-icms_cp_header();
+xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 
 	// for RTL users
@@ -127,5 +127,5 @@ echo "</div>\n" ;
 
 
 
-icms_cp_footer();
+xoops_cp_footer();
 ?>

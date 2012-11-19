@@ -12,7 +12,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		$Id: makedata.php 11963 2012-08-26 02:57:04Z skenow $
  */
 
 include_once './class/dbmanager.php';
@@ -76,6 +76,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'content_admin')"
 		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'use_wysiwygeditor')");
 
+	// data for table 'banner'
+	$dbm->insert("banner", " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (1, 1, 0, 1, 0, '".XOOPS_URL."/images/banners/impresscms_banner.gif', '"._INSTALL_LOCAL_SITE."', 1008813250, '')"
+		. ", (2, 1, 0, 1, 0, '".XOOPS_URL."/images/banners/impresscms_banner_2.gif', 'http://www.impresscms.org/', 1008813250, '')"
+		. ",  (3, 1, 0, 1, 0, '".XOOPS_URL."/images/banners/banner.swf', 'http://www.impresscms.org/', 1008813250, '')"
+		. ", (4, 1, 0, 1, 0, '".XOOPS_URL."/images/banners/impresscms_banner_3.gif', '"._INSTALL_LOCAL_SITE."', 1008813250, '')");
+	// default theme
+
 	//Image Category to admin Logos
 	$dbm->insert("imagecategory", " (imgcat_id, imgcat_pid, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype, imgcat_foldername) VALUES (1, 0, 'Logos', 358400, 350, 80, 1, 0, 'C', 'file', 'logos')");
 	$dbm->insert("group_permission", " VALUES(0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'imgcat_write')"
@@ -95,21 +102,15 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		$language = 'english';
 	}
 
-
 	$modversion = array();
-	include_once '../include/functions.php';
-	include_once '../modules/system/icms_version.php';
+	include_once '../modules/system/xoops_version.php';
 	$time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
 	/* do not alter the value for dbversion (the 3rd to last field) - all updates for
 	 * this will be handled by the module update process
-	 *
-	 * moved this ahead of the inclusion of system/icms_version.php for a reason - not completely without consequence
-	 * $modversion is not yet defined ~skenow
 	 */
-	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 40, 'system', 1)");
-
+	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 40, 'system', 0)");
 
 	foreach ($modversion['templates'] as $tplfile) {
 		if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
@@ -188,7 +189,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$temp = $pwd->encryptPass($adminpass);
 	$regdate = time();
 	// RMV-NOTIFY (updated for extra columns in user table)
-	$dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'iTheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '', 0, 0, 1, '".addslashes($adminlogin_name)."')");
+	$dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'iTheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '','', 0, 0, 1, '".addslashes($adminlogin_name)."')");
 
 	// data for table 'block_module_link'
 	$sql = 'SELECT bid, side, template FROM '.$dbm->prefix('newblocks');
@@ -242,7 +243,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			. ", (" . $ci++ . ", '_MD_AM_DEBUGMODE2', 2, $i)"
 			. ", (" . $ci++ . ", '_MD_AM_DEBUGMODE3', 3, $i)");
 	// ----------
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'closesite', '_MD_AM_CLOSESITE', '0', '_MD_AM_CLOSESITEDSC', 'yesno', 'int', " . $p++ . ")"
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'banners', '_MD_AM_BANNERS', '1', '_MD_AM_BANNERSDSC', 'yesno', 'int', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'closesite', '_MD_AM_CLOSESITE', '0', '_MD_AM_CLOSESITEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'closesite_okgrp', '_MD_AM_CLOSESITEOK', '".addslashes(serialize(array('1')))."', '_MD_AM_CLOSESITEOKDSC', 'group_multi', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'closesite_text', '_MD_AM_CLOSESITETXT', '"._INSTALL_L165."', '_MD_AM_CLOSESITETXTDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'my_ip', '_MD_AM_MYIP', '127.0.0.1', '_MD_AM_MYIPDSC', 'textbox', 'text', " . $p++ . ")"
@@ -420,9 +422,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// Data for Config Category 7 (Authentication Settings)
 	$c=7; // sets config category id
 	$p=0; // reset position increment to 0 for new category id
-	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'auth_method','_MD_AM_AUTHMETHOD','local','_MD_AM_AUTHMETHODDESC','select','text', " . $p++ . ")");
+	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'auth_method','_MD_AM_AUTHMETHOD','xoops','_MD_AM_AUTHMETHODDESC','select','text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_XOOPS', 'local', $i)"
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_XOOPS', 'xoops', $i)"
 			. ", (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_LDAP', 'ldap', $i)"
 			. ", (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_AD', 'ads', $i)");
 	// ----------
@@ -466,7 +468,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=10; // sets config category id
 	$p=0;
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/imagemanager/logos/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '".XOOPS_URL."/index.php', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '".XOOPS_URL."/', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"

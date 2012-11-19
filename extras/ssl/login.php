@@ -42,7 +42,7 @@ if ($op == 'dologin') {
 	$user =& $member_handler->loginUser(addslashes($myts->stripSlashesGPC($username)), addslashes($myts->stripSlashesGPC($password)));
 	if (is_object($user)) {
 		if (0 == $user->getVar('level')) {
-			redirect_header(ICMS_URL.'/index.php', 5, _US_NOACTTPADM);
+			redirect_header(ICMS_URL.'/', 5, _US_NOACTTPADM);
 		}
 		if ($xoopsConfig['closesite'] == 1) {
 			$allowed = false;
@@ -53,7 +53,7 @@ if ($op == 'dologin') {
 				}
 			}
 			if (!$allowed) {
-				redirect_header(ICMS_URL.'/index.php', 1, _NOPERM);
+				redirect_header(ICMS_URL.'/', 1, _NOPERM);
 			}
 		}
 		$user->setVar('last_login', time());

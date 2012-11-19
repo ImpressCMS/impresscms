@@ -8,7 +8,7 @@
  * @package		Form
  * @subpackage	Elements
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Image.php 10681 2010-09-25 20:40:50Z skenow $
  */
 
 /**

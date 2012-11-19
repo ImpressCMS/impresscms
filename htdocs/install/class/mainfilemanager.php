@@ -10,14 +10,14 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: mainfilemanager.php 11915 2012-08-15 12:25:20Z qm-b $
  */
 
 /**
  * mainfile manager for XOOPS installer
  *
  * @author Haruki Setoyama  <haruki@planewave.org>
- * @version $Id$
+ * @version $Id: mainfilemanager.php 11915 2012-08-15 12:25:20Z qm-b $
  * @access public
  **/
 class mainfile_manager {

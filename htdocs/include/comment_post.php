@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: comment_post.php 11665 2012-03-30 01:28:06Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {

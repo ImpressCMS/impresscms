@@ -6,7 +6,8 @@
   <tr align="center">
     <td><input type="button" value="<{$lang_editprofile}>" onclick="location='edituser.php'" />
     <input type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'" />
-    <input type="button" value="<{$lang_inbox}>" onclick="location='viewpmsg.php'" />
+    <input type="button" value="<{$lang_notifications}>" onclick="location='notifications.php'" />
+    <input type="button" value="<{$lang_inbox}><{xoInboxCount assign=pmcount}><{if $pmcount}> (<{$pmcount}>) <{/if}>" onclick="location='viewpmsg.php'" />
 
     <{if $user_candelete == true}>
     <input type="button" value="<{$lang_deleteaccount}>" onclick="location='user.php?op=delete'" />

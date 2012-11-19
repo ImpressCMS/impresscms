@@ -15,7 +15,7 @@
  * @subpackage	Elements
  * @author		Zoullou <webmaster@zoullou.org>
  * @since		Xoops 2.0.15
- * @version		$Id$
+ * @version		$Id: Colorpicker.php 10446 2010-07-27 16:07:52Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

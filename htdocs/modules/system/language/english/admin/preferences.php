@@ -1,11 +1,8 @@
 <?php
-// $Id$
-define('_MD_AM_PREF','Preferences');
-define('_MD_AM_PREF_DSC',"ImpressCMS Site Preferences");
-
+// $Id: preferences.php 11999 2012-08-31 22:16:03Z skenow $
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
-//if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
+if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_MD_AM_SITEPREF","Site Preferences");
 define("_MD_AM_SITENAME","Site name");
@@ -40,15 +37,16 @@ define("_MD_AM_SESSNAME","Session name");
 define("_MD_AM_SESSNAMEDSC","The name of session (Valid only when 'use custom session' is enabled)");
 define("_MD_AM_SESSEXPIRE","Session expiration");
 define("_MD_AM_SESSEXPIREDSC","Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled. Works only when you are using PHP4.2.0 or later.)");
+define("_MD_AM_BANNERS","Activate banner ads?");
 define("_MD_AM_MYIP","Your IP address");
-define("_MD_AM_MYIPDSC","");
+define("_MD_AM_MYIPDSC","This IP will not count as an impression for banners");
 define("_MD_AM_ALWDHTML","HTML tags allowed in all posts.");
 define("_MD_AM_INVLDMINPASS","Invalid value for minimum length of password.");
 define("_MD_AM_INVLDUCOOK","Invalid value for usercookie name.");
 define("_MD_AM_INVLDSCOOK","Invalid value for sessioncookie name.");
 define("_MD_AM_INVLDSEXP","Invalid value for session expiration time.");
 define("_MD_AM_ADMNOTSET","Admin mail is not set.");
-//define("_MD_AM_YES","Yes");
+define("_MD_AM_YES","Yes");
 define("_MD_AM_NO","No");
 define("_MD_AM_DONTCHNG","Don't change!");
 define("_MD_AM_REMEMBER","Remember to chmod 666 this file in order to let the system write to it properly.");
@@ -315,9 +313,9 @@ define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC","If you select YES, all visito
 define("_MD_AM_ENC_TYPE","Change Password Encryption (default is SHA256)");
 define("_MD_AM_ENC_TYPEDSC","Changes the Algorithm used for encrypting user passwords.<br />Changing this will render all passwords invalid! all users will need to reset their passwords after changing this preference");
 define("_MD_AM_ENC_MD5","MD5 (not recommended)");
-define("_MD_AM_ENC_SHA256","SHA 256 (recommended)");
+define("_MD_AM_ENC_SHA256","SHA 256");
 define("_MD_AM_ENC_SHA384","SHA 384");
-define("_MD_AM_ENC_SHA512","SHA 512");
+define("_MD_AM_ENC_SHA512","SHA 512 (recommended)");
 define("_MD_AM_ENC_RIPEMD128","RIPEMD 128");
 define("_MD_AM_ENC_RIPEMD160","RIPEMD 160");
 define("_MD_AM_ENC_WHIRLPOOL","WHIRLPOOL");

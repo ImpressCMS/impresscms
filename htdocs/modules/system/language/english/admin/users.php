@@ -1,13 +1,12 @@
 <?php
-// $Id$
-define('_MD_AM_USER','Edit Users');
-define('_MD_AM_USER_DSC', 'Create, Modify or Delete registered users.');
-
+// $Id: users.php 11034 2011-02-19 20:12:41Z skenow $
 //%%%%%%	Admin Module Name  Users 	%%%%%
-//if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
+if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_AM_AYSYWTDU","Are you sure you want to delete user %s?");
 define("_AM_BYTHIS","By doing this all the info for this user will be removed permanently.");
+define("_AM_YES","Yes");
+define("_AM_NO","No");
 define("_AM_YMCACF","You must complete all required fields");
 define("_AM_CNRNU","Could not register new user.");
 define("_AM_EDEUSER","Edit/Delete Users");
@@ -71,47 +70,3 @@ define("_AM_USERS_DELETEED","deleted");
 define("_AM_COULD_NOT_DELETE","Could not delete");
 define("_AM_A_USER_WITH_THIS_EMAIL_ADDRESS","A user with this email address");
 define("_AM_ALREADY_EXISTS","already exists");
-
-// $Id$
-//%%%%%%	File Name findusers.php 	%%%%%
-
-define("_AM_FINDUS","Find Users");
-define("_AM_REALNAME","Real Name");
-define("_AM_REGDATE","Joined Date");
-define("_AM_PM","PM");
-define("_AM_PREVIOUS","Previous");
-define("_AM_NEXT","Next");
-define("_AM_USERSFOUND","%s user(s) found");
-
-define("_AM_ACTUS", "Active Users: %s");
-define("_AM_INACTUS", "Inactive Users: %s");
-define("_AM_NOFOUND","No Users Found");
-define("_AM_UNAME","User Name");
-define("_AM_URLC","URL contains");
-define("_AM_LASTLOGMORE","Last login is more than <span style='color:#ff0000;'>X</span> days ago");
-define("_AM_LASTLOGLESS","Last login is less than <span style='color:#ff0000;'>X</span> days ago");
-define("_AM_REGMORE","Joined date is more than <span style='color:#ff0000;'>X</span> days ago");
-define("_AM_REGLESS","Joined date is less than <span style='color:#ff0000;'>X</span> days ago");
-define("_AM_POSTSMORE","Number of Posts is greater than <span style='color:#ff0000;'>X</span>");
-define("_AM_POSTSLESS","Number of Posts is less than <span style='color:#ff0000;'>X</span>");
-define("_AM_SORT","Sort by");
-define("_AM_ORDER","Order");
-define("_AM_LASTLOGIN","Last login");
-define("_AM_POSTS","Number of posts");
-define("_AM_ASC","Ascending order");
-define("_AM_DESC","Descending order");
-define("_AM_LIMIT","Number of users per page");
-define("_AM_RESULTS", "Search results");
-define("_AM_SHOWMAILOK", "Accept mail");
-define("_AM_MAILOK","Only users that accept mail");
-define("_AM_MAILNG","Only users that don't accept mail");
-define("_AM_SHOWTYPE", "Active");
-define("_AM_ACTIVE","Only active users");
-define("_AM_INACTIVE","Only inactive users");
-define("_AM_BOTH", "All users");
-define("_AM_SENDMAIL", "Send mail");
-define("_AM_ADD2GROUP", "Add users to %s group");
-define("_AM_GROUPS", "Groups");
-
-######################## Added in 1.3 ###################################
-//define("_AM_ACTIONS","Actions");

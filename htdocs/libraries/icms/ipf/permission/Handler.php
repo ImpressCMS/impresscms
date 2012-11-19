@@ -11,7 +11,7 @@
  * @subpackage	Permission
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 10897 2010-12-19 18:17:29Z phoenyx $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

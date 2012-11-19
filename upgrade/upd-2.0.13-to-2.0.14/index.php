@@ -77,10 +77,10 @@ class upgrade_2014 {
 					$newline = defined( PHP_EOL ) ? PHP_EOL : ( strpos( php_uname(), 'Windows') ? "\r\n" : "\n" );
 					$prepend = implode( '', array_slice( $lines, 0, $insert ) );
 					$append = implode( '', array_slice( $lines, $insert ) );
-
+						
 					$content = $prepend . $patchCode . $append;
 					$content = str_replace( array( "\r\n", "\n" ), $newline, $content );
-
+						
 					fwrite( $fp,  $content );
 					fclose( $fp );
 					echo "Patch successfully applied";
@@ -119,7 +119,7 @@ class upgrade_2014 {
 		// Insert config values
 		$table = $db->prefix( 'config' );
 		$data = array(
-			'auth_method'			=> "'_MD_AM_AUTHMETHOD', 'local', '_MD_AM_AUTHMETHODDESC', 'select', 'text', 1",
+			'auth_method'			=> "'_MD_AM_AUTHMETHOD', 'xoops', '_MD_AM_AUTHMETHODDESC', 'select', 'text', 1",
 			'ldap_port'				=> "'_MD_AM_LDAP_PORT', '389', '_MD_AM_LDAP_PORT', 'textbox', 'int', 2 ",
 			'ldap_server'			=> "'_MD_AM_LDAP_SERVER', 'your directory server', '_MD_AM_LDAP_SERVER_DESC', 'textbox', 'text', 3 ",
 	   		'ldap_manager_dn'		=> "'_MD_AM_LDAP_MANAGER_DN', 'manager_dn', '_MD_AM_LDAP_MANAGER_DN_DESC', 'textbox', 'text', 5",

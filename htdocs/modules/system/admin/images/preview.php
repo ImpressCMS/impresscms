@@ -6,12 +6,10 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Images
- * @version		SVN: $Id$
+ * @version		SVN: $Id: preview.php 11141 2011-03-30 13:39:21Z m0nty_ $
  */
 
-/** this file gets linked directly, so mainfile.php must be included here */
 include '../../../../mainfile.php' ;
-/** the library for handling the image manipulation */
 include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 /*
  * GET variarbles
@@ -21,9 +19,9 @@ include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
  * arg1
  * arg2
  * arg3
- *
+ * 
  * no POST variables
- *
+ * 
  */
 $file = filter_input(INPUT_GET, 'file', FILTER_SANITIZE_STRING);
 $resize = isset($_GET['resize']) ? (int) $_GET['resize'] : 1;
@@ -79,3 +77,4 @@ if (NULL !== $filter) {
 		echo $img->asString('png');
 	}
 }
+

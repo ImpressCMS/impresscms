@@ -8,7 +8,7 @@
  * @package		View
  * @subpackage	Templates
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Tpl.php 11358 2011-09-02 19:55:40Z phoenyx $
  */
 
 if (!defined('SMARTY_DIR')) {
@@ -128,6 +128,90 @@ class icms_view_Tpl extends Smarty {
 	}
 
 	/**
+	 * @deprecated	Use $this->template_dir = $dirname instead
+	 * @todo 		Remove in version 1.4 - there are no other occurrences in the core
+	 */
+	function xoops_setTemplateDir($dirname) {
+		$this->template_dir = $dirname;
+		icms_core_Debug::setDeprecated('$this->template_dir = $dirname', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	}
+	/**
+	 * @deprecated	Use $this->template_dir instead
+	 * @todo		Remove in version 1.4 - there are no other occurrences in the core
+	 */
+	function xoops_getTemplateDir() {
+		icms_core_Debug::setDeprecated('$this->template_dir', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return $this->template_dir;
+	}
+	/**
+	 * @deprecated	Use $this->debugging = $flag, instead
+	 * @todo		Remove in version 1.4 - there are no more occurrences in the core
+	 * @param $flag
+	 */
+	function xoops_setDebugging($flag=false) {
+		$this->debugging = is_bool($flag) ? $flag : false;
+		icms_core_Debug::setDeprecated('$this->debugging = $flag', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	}
+	/**
+	 * @deprecated	Use $this->caching = $num, instead
+	 * @todo		Remove in version 1.4 - all occurrences have been removed from the core
+	 * @param $num
+	 */
+	function xoops_setCaching( $num = 0) {
+		$this->caching = (int)$num;
+		icms_core_Debug::setDeprecated('$this->caching = $num', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	}
+	/**
+	 * @deprecated	Use $this->compile_dir instead
+	 * @todo		Remove in version 1.4 - there are no other occurrences in the core
+	 * @param $dirname
+	 */
+	function xoops_setCompileDir($dirname) {
+		$this->compile_dir = $dirname;
+		icms_core_Debug::setDeprecated('$this->compile_dir = $dirname', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	}
+	/**
+	 * @deprecated	Use $this->cache_dir = $dirname, instead
+	 * @todo		Remove in version 1.4 - there are no other occurrences in the core
+	 * @param $dirname
+	 */
+	function xoops_setCacheDir($dirname) {
+		$this->cache_dir = $dirname;
+		icms_core_Debug::setDeprecated('$this->cache_dir = $dirname', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	}
+	/**
+	 * @deprecated	Use $this->compile_check, instead
+	 * @todo		Remove in version 1.4 - there are no other occurrences in the core
+	 */
+	function xoops_canUpdateFromFile() {
+		icms_core_Debug::setDeprecated('$this->compile_check', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return $this->compile_check;
+	}
+	/**
+	 * @deprecated	Use $this->fetchFromData( $data ), instead
+	 * @todo		Remove in version 1.4 - there are no other occurrences in the core
+	 * @param $data
+	 */
+	function xoops_fetchFromData( $data) {
+		icms_core_Debug::setDeprecated('$this->fetchFromData( $data )', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return $this->fetchFromData( $data );
+	}
+	/**
+	 * @deprecated	use $this->caching or $this->cache_lifetime, instead
+	 * @todo		Remove in version 1.4 - there are no other occurrences in the core
+	 * @param unknown_type $num
+	 */
+	function xoops_setCacheTime( $num = 0) {
+		if (( $num = (int)$num ) <= 0) {
+			icms_core_Debug::setDeprecated('$this->caching = 0', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+			$this->caching = 0;
+		} else {
+			icms_core_Debug::setDeprecated('$this->cache_lifetime = $num', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+			$this->cache_lifetime = $num;
+		}
+	}
+
+	/**
 	 * function to update compiled template file in templates_c folder
 
 	 * Prior to PHP5.3.0, when refering to the class with a variable, like $icmsAdminTpl, you
@@ -184,3 +268,4 @@ class icms_view_Tpl extends Smarty {
 		}
 	}
 }
+

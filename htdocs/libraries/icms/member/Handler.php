@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Member
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 11889 2012-08-06 15:40:12Z m0nty $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -187,9 +187,7 @@ class icms_member_Handler {
 
 	/**
 	 * get a list of usernames and their IDs
-	 * 
-	 * @deprecated	This isn't really a membership method, but for the user handler
-	 * 
+	 *
 	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return array associative array of user-IDs and names
 	 */

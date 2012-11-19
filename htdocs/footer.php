@@ -9,7 +9,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id$
+ * @version	$Id: footer.php 11633 2012-03-07 01:37:06Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') || die('ICMS root path not defined');
@@ -55,13 +55,11 @@ if (isset($xoopsOption['theme_use_smarty']) && $xoopsOption['theme_use_smarty'] 
 	/** Include the notifications area */
 	include_once ICMS_ROOT_PATH . '/include/notification_select.php';
 
-	/** @todo	Move to a separate class::method - HTTP */
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset=' . _CHARSET);
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		header('Cache-Control: private, no-cache');
 		header('Pragma: no-cache');
-		header('X-Powered-By: ImpressCMS');
 	}
 	/*
 	 global $icmsConfig;

@@ -1,8 +1,4 @@
 <?php
-
-define('_MD_AM_AUTOTASKS', 'Auto Tasks');
-define('_MD_AM_AUTOTASKS_DSC', 'Auto Tasks allow you to create a schedule of actions that the system will perform automatically.');
-
 define("_CO_ICMS_AUTOTASKS_NAME", "Task Name");
 define("_CO_ICMS_AUTOTASKS_NAME_DSC", "Enter the task name.");
 define("_CO_ICMS_AUTOTASKS_CODE", "Source Code");
@@ -34,3 +30,4 @@ define("_CO_ICMS_AUTOTASKS_FOREVER", "forever");
 define("_CO_ICMS_AUTOTASKS_INIT_ERROR", "Error: Can't  initialize selected auto tasks subsystem.");
 
 define("_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR", "Error in Autotask SourceCode: Can't execute Autotask");
+?>

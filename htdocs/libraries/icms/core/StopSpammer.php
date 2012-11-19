@@ -12,7 +12,7 @@
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: StopSpammer.php 11292 2011-06-29 13:39:21Z blauer-fisch $
  */
 /**
  * Checks usernames, emails and ip addresses against a blacklist
@@ -35,9 +35,6 @@ class icms_core_StopSpammer {
 
 	/**
 	 * Check the StopForumSpam API for a specific field (username, email or IP)
-	 * @todo fopen may be restricted by open_basedir, or the site may be unreachable
-	 * 		check before proceeding
-	 * @todo allow the administrator to disable this feature
 	 *
 	 * @param string $field field to check
 	 * @param string $value value to validate
@@ -111,7 +108,7 @@ class icms_core_StopSpammer {
 	    // return TRUE if it's not a valid IP
 	    if (!filter_var($ip, FILTER_VALIDATE_IP)) return TRUE;
 	    // return FALSE if it is a valid IPv6 address - only until IPv6 can be checked without error
-	    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+	    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) { 
 	        return FALSE;
 	    }
 	    return $this->checkForField('ip', $ip);

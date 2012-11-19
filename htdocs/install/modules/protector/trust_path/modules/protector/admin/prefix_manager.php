@@ -175,14 +175,14 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 
 
 // beggining of Output
-icms_cp_header();
+xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 
 // query
 $srs = $db->queryF( "SHOW TABLE STATUS FROM `".XOOPS_DB_NAME.'`' ) ;
 if( ! $db->getRowsNum( $srs ) ) {
 	die( "You are not allowed to copy tables" ) ;
-	icms_cp_footer() ;
+	xoops_cp_footer() ;
 	exit ;
 }
 
@@ -275,5 +275,5 @@ if( ! empty( $_SESSION['protector_logger'] ) ) {
 	unset( $_SESSION['protector_logger'] ) ;
 }
 
-icms_cp_footer();
+xoops_cp_footer();
 ?>

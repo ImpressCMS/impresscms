@@ -5,7 +5,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		File
- * @version		SVN: $Id$
+ * @version		SVN: $Id: MediaUploadHandler.php 11614 2012-03-03 00:55:21Z skenow $
  */
 /*!
  Example

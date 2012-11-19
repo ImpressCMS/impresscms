@@ -11,7 +11,7 @@
  * @package	Core
  * @subpackage	Message
  * @since		1.3
- * @version	SVN: $Id: Message.php 12112 2012-11-09 02:15:50Z skenow $
+ * @version	SVN: $Id: Message.php 12111 2012-11-09 02:11:04Z skenow $
  */
 
 /**

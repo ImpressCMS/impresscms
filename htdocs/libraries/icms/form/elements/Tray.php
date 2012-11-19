@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version	$Id$
+ * @version	$Id: Tray.php 10874 2010-12-12 14:52:03Z phoenyx $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

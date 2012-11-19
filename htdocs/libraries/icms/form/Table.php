@@ -5,7 +5,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		Form
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Table.php 10575 2010-08-28 21:30:27Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * $Id$
+ * $Id: common.php 11999 2012-08-31 22:16:03Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: global.php 12114 2012-11-18 15:44:37Z fiammy $
 //%%%%%%	File Name mainfile.php 	%%%%%
 define('_PLEASEWAIT','Please Wait');
 define('_FETCHING','Loading...');
@@ -89,7 +89,7 @@ define('_TITLE', 'Title');
 define('_OPTIONS', 'Options');
 define('_QUOTE', 'Quote');
 define('_HIDDENC', 'Hidden Content:');
-define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registration at ' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
+define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
 define('_LIST', 'List');
 define('_LOGIN','User Login');
 define('_USERNAME','Username: ');
@@ -213,7 +213,7 @@ define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
 define("_IMPRESSCMS_Support","Support the project !");
-define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
+define('_IMPRESSCMS_PROJECT','Project Development on Assembla');
 define('_IMPRESSCMS_ADMIN','Administration of');
 /** The default separator used in icms_view_Tree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
@@ -310,7 +310,4 @@ define('_AUTHOR', 'Author');
 define("_CREDITS", "Credits");
 define("_LICENSE", "License");
 define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>');
-
-// added in 2.0
-define('_ENTER_MENTION', 'Enter the user name to mention:');
-define( '_ENTER_HASHTAG', 'Enter the term(s) to tag:');
+define("_BLOCK_ID", "Block ID");

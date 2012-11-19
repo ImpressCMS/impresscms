@@ -9,7 +9,7 @@
  * @package	core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id$
+ * @version		$Id: registerform.php 11896 2012-08-09 12:40:03Z m0nty $
  */
 defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
 

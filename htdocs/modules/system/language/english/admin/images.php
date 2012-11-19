@@ -1,8 +1,6 @@
 <?php
-// $Id$
+// $Id: images.php 11445 2011-11-18 08:17:59Z sato-san $
 //%%%%%% Image Manager %%%%%
-define('_MD_AM_IMAGES', 'Image Manager');
-define('_MD_AM_IMAGES_DSC', 'Create groups of images and manage the permissions for each group. Crop and resize uploaded photos.');
 
 define('_MD_IMGMAIN','Image Manager Main');
 

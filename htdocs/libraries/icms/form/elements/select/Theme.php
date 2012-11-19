@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Theme.php 10863 2010-12-07 17:41:03Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

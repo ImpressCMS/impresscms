@@ -1,7 +1,5 @@
 <?php
-// $Id$
-define('_MD_AM_RANK','User Ranks');
-define('_MD_AM_RANK_DSC', 'User ranks are picture, used to make difference between users in different levels of your website!');
+// $Id: userrank.php 9538 2009-11-13 18:59:32Z pesianstranger $
 
 ######################## Added in 1.2 ###################################
 define('_CO_ICMS_USERRANKS','User Ranks Settings');
@@ -31,3 +29,4 @@ define('_CO_ICMS_USERRANK_RANK_IMAGE_DSC', '');
 
 define('_CO_ICMS_USERRANK_EXPLAIN_TITLE', 'What are User Ranks ?');
 define('_CO_ICMS_USERRANK_EXPLAIN', 'User ranks are picture, used to make difference between users in different levels of your site! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=User_ranks">User ranks</a>.');
+?>

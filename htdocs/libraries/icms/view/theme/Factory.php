@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package 	View
  * @subpackage 	Theme
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Factory.php 11358 2011-09-02 19:55:40Z phoenyx $
  */
 
 /**

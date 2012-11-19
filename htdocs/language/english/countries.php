@@ -11,7 +11,7 @@ define('_COUNTRY_AG', 'Antigua and Barbuda');
 define('_COUNTRY_AI', 'Anguilla');
 define('_COUNTRY_AL', 'Albania');
 define('_COUNTRY_AM', 'Armenia');
-// define('_COUNTRY_AN', 'Netherlands Antilles'); transitionally reserved
+define('_COUNTRY_AN', 'Netherlands Antilles');
 define('_COUNTRY_AO', 'Angola');
 define('_COUNTRY_AQ', 'Antarctica');
 define('_COUNTRY_AR', 'Argentina');

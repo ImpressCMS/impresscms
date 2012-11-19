@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 11188 2011-04-16 03:29:27Z skenow $
  */
 
 /**

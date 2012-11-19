@@ -11,7 +11,7 @@
  * @author	http://www.xoops.org The XOOPS Project
  * @author		marcan <marcan@impresscms.org>
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: functions.php 10607 2010-09-07 16:19:19Z skenow $
  */
 
 

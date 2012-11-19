@@ -45,6 +45,16 @@
 	<!-- Header -->
     <div id="xo-header">
 	    <div id="xo-headerlogo"><a href="<{xoAppUrl /}>" title=""><img src="<{$icms_imageurl}>img/logo.png" alt="<{$icms_sitename}>" /></a></div>
+	    <div id="xo-headerbanner">
+	<!-- Header menu (optional) -->
+	<div id="xo-globalnav">
+		  <a href="<{$icms_url}>" title="<{$icms_sitename}>"><{$smarty.const.THEME_HOME}></a>
+		  <a href="#" title="Link 2"><{$smarty.const.THEME_MODULE1}></a>
+		  <a href="#" title="Link 3"><{$smarty.const.THEME_MODULE2}></a>
+		  <a href="#" title="Link 4"><{$smarty.const.THEME_MODULE3}></a>
+		  <a href="#" title="Link 5"><{$smarty.const.THEME_MODULE4}></a>
+	</div>
+	</div>
     </div>
 
 	<!-- Content -->
@@ -106,7 +116,10 @@
 </div>
 	<!-- Footer -->
 	<div id="xo-footer">
-	<div style="margin-left: auto; margin-right: auto;"><{$icms_footer}></div>
+	<div id="banner" style="margin-left: auto; margin-right: auto;"><{$icms_banner}>
+	<br />
+	<{$icms_footer}>
+	</div>
 	</div>
 </body>
 </html>

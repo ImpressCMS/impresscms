@@ -13,7 +13,7 @@
  * @author		marcan <marcan@impresscms.org>
  * @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 12068 2012-10-14 21:28:13Z skenow $
  * @todo		Use language constants for messages
  * @todo		Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
@@ -783,13 +783,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		foreach ($obj->cleanVars as $k => $v) {
 			if ($obj->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
 				$cleanvars[$k] = (int) ($v);
-			} elseif ($obj->vars[$k]['data_type'] == XOBJ_DTYPE_TXTAREA) {
-                $html = !empty($obj->vars[$k]['dohtml']) ? 1 : 0;
-				if ($html) {
-					$cleanvars[$k] = $this->db->quoteString(icms_core_DataFilter::checkVar($v, 'html', 'input'));
-				} else {
-					$cleanvars[$k] = $this->db->quoteString(icms_core_DataFilter::checkVar($v, 'text', 'input'));
-				}
 			} elseif (is_array($v)) {
 				$cleanvars[ $k ] = $this->db->quoteString( implode( ',', $v ) );
 			} else {

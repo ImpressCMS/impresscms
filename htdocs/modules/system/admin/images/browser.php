@@ -10,33 +10,33 @@
  * @subpackage	Images
  * @since		1.2
  * @author		Rodrigo Pereira Lima (aka TheRplima) <therplima@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: browser.php 11963 2012-08-26 02:57:04Z skenow $
  */
 
 include_once "../../../../mainfile.php";
 
 if (!icms::$user) {
-	redirect_header(ICMS_URL . '/index.php', 6, _NOPERM);
+	redirect_header(ICMS_URL . '/', 6, _NOPERM);
 }
 
 $icmsTpl = new icms_view_Tpl();
 /*
  * GET variables
- * (str) op:		list (default), listimg, addcat,
+ * (str) op:		list, listimg, addcat,
  * 					addfile, save, delfile, delfileok, cloneimg
  * 					save_edit_ok
- * (int) limit, default 15
- * (int) start, default 0
+ * (int) limit
+ * (int) start
  * (int) imgcat_id
  * (int) image_id
- * (str) type, default 'ibrow'
+ * (str) type
  * (str) target
  * (str) msg
  *
  * POST variables
  * (str) op
- * (int) limit, default 15
- * (int) start, default 0
+ * (int) limit
+ * (int) start
  * (int) imgcat_id
  * (int) image_id
  * (str) query
@@ -53,7 +53,6 @@ global $icmsConfig;
 // Adding language files
 icms_loadLanguageFile('system', 'images', TRUE);
 switch ($op) {
-	default:
 	case 'list':
 		icmsPopupHeader();
 		echo imanager_index($imgcat_id);
@@ -115,7 +114,7 @@ function imanager_index($imgcat_id = NULL) {
 	global $icmsTpl, $icmsConfig, $target, $type;
 
 	if (!is_object(icms::$user)) {
-		$groups = array(ICMS_GROUP_ANONYMOUS);
+		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = FALSE;
 	} else {
 		$groups =& icms::$user->getGroups();
@@ -255,8 +254,8 @@ function imanager_index($imgcat_id = NULL) {
 	$sup->addOptionArray($list);
 	$form->addElement($sup);
 	$form->addElement(new icms_form_elements_Text(_MD_IMGCATNAME, 'imgcat_name', 50, 255), TRUE);
-	$form->addElement(new icms_form_elements_select_Group(_MD_IMGCATRGRP, 'readgroup', TRUE, ICMS_GROUP_ADMIN, 5, TRUE));
-	$form->addElement(new icms_form_elements_select_Group(_MD_IMGCATWGRP, 'writegroup', TRUE, ICMS_GROUP_ADMIN, 5, TRUE));
+	$form->addElement(new icms_form_elements_select_Group(_MD_IMGCATRGRP, 'readgroup', TRUE, XOOPS_GROUP_ADMIN, 5, TRUE));
+	$form->addElement(new icms_form_elements_select_Group(_MD_IMGCATWGRP, 'writegroup', TRUE, XOOPS_GROUP_ADMIN, 5, TRUE));
 	$form->addElement(new icms_form_elements_Text(_IMGMAXSIZE, 'imgcat_maxsize', 10, 10, 50000));
 	$form->addElement(new icms_form_elements_Text(_IMGMAXWIDTH, 'imgcat_maxwidth', 3, 4, 120));
 	$form->addElement(new icms_form_elements_Text(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, 120));
@@ -294,7 +293,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	global $icmsTpl, $target, $type;
 
 	if (!is_object(icms::$user)) {
-		$groups = array(ICMS_GROUP_ANONYMOUS);
+		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = FALSE;
 	} else {
 		$groups =& icms::$user->getGroups();
@@ -547,8 +546,8 @@ function imanager_addcat() {
 	if (!isset($readgroup)) {
 		$readgroup = array();
 	}
-	if (!in_array(ICMS_GROUP_ADMIN, $readgroup)) {
-		array_push($readgroup, ICMS_GROUP_ADMIN);
+	if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
+		array_push($readgroup, XOOPS_GROUP_ADMIN);
 	}
 	foreach ($readgroup as $rgroup) {
 		$imagecategoryperm =& $imagecategoryperm_handler->create();
@@ -562,8 +561,8 @@ function imanager_addcat() {
 	if (!isset($writegroup)) {
 		$writegroup = array();
 	}
-	if (!in_array(ICMS_GROUP_ADMIN, $writegroup)) {
-		array_push($writegroup, ICMS_GROUP_ADMIN);
+	if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
+		array_push($writegroup, XOOPS_GROUP_ADMIN);
 	}
 	foreach ($writegroup as $wgroup) {
 		$imagecategoryperm =& $imagecategoryperm_handler->create();
@@ -931,3 +930,4 @@ function redir($imgcat_id, $msg = NULL) {
 
 	redirect_header($_SERVER['SCRIPT_NAME'] . '?op=listimg&imgcat_id=' . (int) $imgcat_id . '&target=' . $target . '&type=' . $type, 2, $msg);
 }
+
