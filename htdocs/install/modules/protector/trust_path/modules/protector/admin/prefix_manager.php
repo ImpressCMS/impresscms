@@ -228,14 +228,13 @@ $dbTable = "<div class='protectorPrefixManager'>\n";
 
 		if( $prefix['name'] == XOOPS_DB_PREFIX ) {
 			$del_button = '' ;
-			$style_append = ' confirmMsg' ;
+			$style_append = ' ';
 		} else {
-			$del_button = "<span class='sep'> &ndash;or&ndash;</span>\n";
 			$del_button .= "<input type='submit' name='delete' value='Delete DB' onclick='return confirm(\"" . _AM_CONFIRM_DELETE . "\")' />\n";
 			$style_append = ' warningMsg' ;
 		}
 
-		$dbTable .= "<div class='coreMessage" . $style_append . "'\n";
+		$dbTable .= "<div class='coreMessage'>\n";
 			$dbTable .= "<p>\n";
 				$dbTable .= "<strong>Prefix: </strong> <span>" . $prefix4disp . "</span><br />\n";
 				$dbTable .= "<strong>Entries: </strong> <span>" . $table_count . "</span><br />\n";
@@ -249,7 +248,6 @@ $dbTable = "<div class='protectorPrefixManager'>\n";
 							$dbTable .= "<input type='text' name='new_prefix' placeholder='new_prefix' maxlength='16' />\n";
 							$dbTable .= "<input type='submit' name='copy' value='Copy DB' />\n";
 							$dbTable .= $del_button . "\n";
-							$dbTable .= "<span class='sep'> &ndash;or&ndash;</span>\n";
 							$dbTable .= "<input type='submit' name='backup' value='Backup DB' onclick='this.form.target=\"_blank\"' />\n";
 						$dbTable .= "</div>\n";
 					$dbTable .= "</form>\n";
