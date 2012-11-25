@@ -44,7 +44,7 @@ define('_DATE','Date');   // Posted date
 define('_MAIN','Main');
 define('_MANUAL','Manual');
 define('_INFO','Info');
-define('_CPHOME','Control Panel Home');
+define('_CPHOME','Admin Control Panel');
 define('_YOURHOME','Home Page');
 
 //%%%%%%	File Name misc.php (who's-online popup)	%%%%%
@@ -205,15 +205,14 @@ define("_ADM_USE_RTL","0");
 define('_MODULES','Modules');
 define('_SYSTEM','System');
 define('_IMPRESSCMS_NEWS','News');
-define('_ABOUT','The ImpressCMS Project');
+define('_ABOUT','ImpressCMS Project');
 define('_IMPRESSCMS_HOME','Project Home');
 define('_IMPRESSCMS_COMMUNITY','Community');
 define('_IMPRESSCMS_ADDONS','Addons');
 define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
-define("_IMPRESSCMS_Support","Support the project !");
-define('_IMPRESSCMS_PROJECT','Project Development on Assembla');
+define("_IMPRESSCMS_SUPPORT","Support the project !");
 define('_IMPRESSCMS_ADMIN','Administration of');
 /** The default separator used in icms_view_Tree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
@@ -311,3 +310,4 @@ define("_CREDITS", "Credits");
 define("_LICENSE", "License");
 define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>');
 define("_BLOCK_ID", "Block ID");
+define('_IMPRESSCMS_PROJECT','Project Development');
