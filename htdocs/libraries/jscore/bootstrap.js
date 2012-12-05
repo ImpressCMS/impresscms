@@ -28,7 +28,8 @@ require(
     i18nprecompile: 'lib/i18nprecompile',
     json2: 'lib/json2',
     use: 'util/require-utils/use',
-    GA : '//www.google-analytics.com/ga'
+    GA : '//www.google-analytics.com/ga',
+    themeBase : icms.config.themeUrl
   },
   shim: {
     underscore: {

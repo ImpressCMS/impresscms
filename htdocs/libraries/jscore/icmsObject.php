@@ -25,7 +25,8 @@ $icmsJsConfigData = array(
   'social' => array(
     'fbAppId' => $icmsConfig['fbAppId'],
     'fbChannel' => $icmsConfig['fbChannel'],
-  )
+  ),
+  'themeUrl' => $icmsConfig['xoops_url'] . '/themes/' . $icmsConfig['theme_set']
 );
 
 $icmsJsUserData = array(

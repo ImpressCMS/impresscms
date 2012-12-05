@@ -11,16 +11,27 @@ define(function (require) {
 			}, this);
 		},
 		applyRoute: function(){
-			if( typeof router !== ' undefined') {
+			if( typeof router !== 'undefined') {
 				require(['routes/' + router + '/main'],function(route){
-					route.initialize();
-				});
-			} else {
-				console.warn('No router provided - so no router loaded - only shell will load.');
-				require(['routes/' + shell + '/main'],function(route){
-					route.initialize();
+					if(route.initialize) {
+						route.initialize();
+						window.routerLoaded = router;
+						router = undefined;
+					}
 				});
 			}
+
+			if( typeof themeRoute !== 'undefined') {
+				var tRoute = icms.config.themeUrl + '/app/routes/' + themeRoute;
+				require([tRoute], function(route) {
+					if(route.initialize) {
+						route.initialize();
+						window.themeRouteLoaded = themeRoute;
+						themeRoute = undefined;
+					}
+				});
+			}
+
 		}
 	};
 

@@ -51,6 +51,11 @@
   <!-- Ideally we want these scripts in the footer, however - this isn't possible at this time -->
   <{$icms_module_header}>
 
+  <script type="text/javascript">
+    var themeRoute = 'main';
+    routeReady.resolve();
+  </script>
+
   <link rel="stylesheet" href="<{$icms_imageurl}>media/css/boiler/boiler-core.min.css" />
   <{if $include_button_css}>
     <link rel="stylesheet" href="<{$icms_imageurl}>media/css/buttons/buttons.css" />
