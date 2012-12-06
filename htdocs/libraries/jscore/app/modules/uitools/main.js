@@ -27,7 +27,9 @@ define(function(require) {
   }
   , module = {
     initialize: function(message, options) {
-      tools.loadCSS(icms.config.jscore + 'app/modules/uitools/uitools.css', 'core-uitools');
+      if(typeof hasBootstrap === 'undefined' || hasBootstrap === false) {
+        tools.loadCSS(icms.config.jscore + 'app/modules/uitools/uitools.css', 'core-uitools');
+      }
       tools.loadCSS(icms.config.jscore + 'plugins/jquery.ui/css/' + icms.config.uiTheme + '/jquery.ui.css', 'core-jquery-ui');
       $(document).ready(function() {
         module.ui();
@@ -59,12 +61,32 @@ define(function(require) {
         nextActive.addClass('active');
       });
 
-      // if a tab is present let's just general assume we wanna click a link with an equal href.
+      // At this time the most logical way to handle this is to check the hash against known values
+      // We can not just assume a hash is intended to be a click event on a matching anchor.
       if(typeof hash !== 'undefined' || hash !== '') {
-        hash = hash === '#lost' ? hash + 'pass-form' : hash;
-        $('a[href="' + hash + '"]').click();
+        if(hash === '#lost') {
+          $('a[href="' + hash + 'pass-form"]').click();
+        }
       }
 
+    }
+
+    , helptip: function() {
+      var helptips = $('.helptip a');
+
+      helptips.each(function() {
+        var _this = $(this);
+        _this.off().on({
+          click: function(e) {
+            e.preventDefault();
+            return false;
+          }
+        }).popover({
+          placement: 'left'
+          , trigger: 'click'
+          , content: _this.closest('label').find('.helptext').html()
+        });
+      });
     }
 
     , modals: function() {
@@ -112,24 +134,6 @@ define(function(require) {
           });
           return false;
         }
-      });
-    }
-
-    , helptip: function() {
-      var helptips = $('.helptip a');
-
-      helptips.each(function() {
-        var _this = $(this);
-        _this.off().on({
-          click: function(e) {
-            e.preventDefault();
-            return false;
-          }
-        }).popover({
-          placement: 'left'
-          , trigger: 'click'
-          , content: _this.closest('label').find('.helptext').html()
-        });
       });
     }
   };

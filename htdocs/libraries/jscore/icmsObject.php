@@ -90,8 +90,6 @@ if (is_object(icms::$user)) {
   }
 }
 
-
-
 $redirectMessage = (!empty($_SESSION['redirect_message'])) ? '"' . $_SESSION['redirect_message'] . '"' : 'false';
 unset( $_SESSION['redirect_message'] );
 

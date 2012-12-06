@@ -12,7 +12,7 @@ define(function (require) {
 		},
 		applyRoute: function(){
 			if( typeof router !== 'undefined') {
-				require(['routes/' + router + '/main'],function(route){
+				require([router],function(route){
 					if(route.initialize) {
 						route.initialize();
 						window.routerLoaded = router;
