@@ -1,10 +1,9 @@
 define(function(require) {
   var $ = require('jquery')
-  , test = require('themeBase/app/modules/test')
+  , boiler = require('themeBase/app/modules/boiler/main')
   , app = {
     initialize: function() {
-      console.log('In Theme Route');
-      test.initialize();
+      boiler.initialize();
     }
   };
   return app;

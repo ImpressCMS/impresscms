@@ -1,241 +1,244 @@
 <div id="page" class="page clearfix">
   <div id="page_inner" class="page_inner">
     <{if $show_preface && !$inAdmin && $preface_blockzone != '' || $use_preface_override_file != ''}>
-      <div id="preface_wrapper" class="preface_wrapper clearfix">
-          <{if $use_preface_override_file != ''}>
-            <{includeq file="$use_preface_override_file"}>
-          <{else}>
-            <div id="preface" class="preface container_<{$grid_columns}>">
-              <{if $preface_block_id == ''}>
-                <{foreach from=$xoBlocks.$preface_blockzone item=block name=prefaceblocks}>
-                  <div id="block_<{$block.id}>" class="block block_<{$block.id}> preface_block preface_block_<{$smarty.foreach.prefaceblocks.iteration}> grid_<{$preface_grid}> <{$preface_grid_extra_classes}>">
-                    <div class="block_inner">                  
-                      <{if $show_preface_block_titles && $block.title != '' && !$block.title|truncate:1:"":true == "_"}>
-                        <h3><span><{$block.title}><span></h3>
+      <{if $use_preface_override_file != ''}>
+        <{includeq file="$use_preface_override_file"}>
+      <{else}>
+        <div id="preface_wrapper" class="preface_wrapper">
+          <div id="preface" class="preface container">
+            <{if $preface_block_id == ''}>
+              <{foreach from=$xoBlocks.$preface_blockzone item=block name=prefaceblocks}>
+                <div id="block_<{$block.id}>" class="block block_<{$block.id}> preface_block preface_block_<{$smarty.foreach.prefaceblocks.iteration}> span<{$preface_grid}> <{$preface_grid_extra_classes}>">
+                  <div class="block_inner">                  
+                    <{if $show_preface_block_titles && $block.title != '' && !$block.title|truncate:1:"":true == "_"}>
+                      <h3><span><{$block.title}><span></h3>
+                    <{/if}>
+                    <{if $block.content}>
+                      <div class="preface_content block_content">
+                        <{$block.content}>
+                      </div>
+                    <{/if}>
+                  </div>
+                </div>
+              <{/foreach}>
+            <{else}>
+              <div id="single_preface_block" class="block single_preface_block preface_block span<{$preface_grid}> <{$preface_grid_extra_classes}>">
+                <div class="block_inner">
+                  <{if $show_preface_block_titles && $xoBlocks.$preface_blockzone.$preface_block_id.title && $xoBlocks.$preface_blockzone.$preface_block_id.title|truncate:1:"":true != "_"}>
+                    <h3><span><{$xoBlocks.$preface_blockzone.$preface_block_id.title}></span></h3>
+                  <{/if}>
+                  <{if $xoBlocks.$preface_blockzone.$preface_block_id.content}>
+                    <div class="preface_content block_content">
+                      <{$xoBlocks.$preface_blockzone.$preface_block_id.content}>
+                    </div>
+                  <{/if}>
+                </div>
+              </div>
+            <{/if}>
+          </div>
+        </div>
+      <{/if}>
+    <{/if}>
+
+    <div id="main_wrapper" class="main_wrapper">
+      <div id="main" role="main" class="main container">
+
+        <div class="row">
+
+          <{if $show_leftblocks && $leftLoop}>
+            <aside id="leftside_wrapper" class="leftside_wrapper span<{$leftcolumn_grid}> <{$leftcolumn_grid_extra_classes}>">
+              <div id="leftside" class="leftside">
+                <{foreach from=$leftLoop item=block name=leftblocks}>
+                  <div id="block_<{$block.id}>" class="block block_<{$block.id}> leftside_block leftside_block_<{$smarty.foreach.leftblocks.iteration}>">
+                    <div class="block_inner">
+                      <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
+                        <h3><span><{$block.title}></span></h3>
                       <{/if}>
                       <{if $block.content}>
-                        <div class="preface_content block_content">
+                        <div class="leftblock_content block_content clearfix">
                           <{$block.content}>
                         </div>
                       <{/if}>
                     </div>
                   </div>
                 <{/foreach}>
-              <{else}>
-                <div id="single_preface_block" class="block single_preface_block preface_block grid_<{$preface_grid}> <{$preface_grid_extra_classes}>">
-                  <div class="block_inner">
-                    <{if $show_preface_block_titles && $xoBlocks.$preface_blockzone.$preface_block_id.title && $xoBlocks.$preface_blockzone.$preface_block_id.title|truncate:1:"":true != "_"}>
-                      <h3><span><{$xoBlocks.$preface_blockzone.$preface_block_id.title}></span></h3>
-                    <{/if}>
-                    <{if $xoBlocks.$preface_blockzone.$preface_block_id.content}>
-                      <div class="preface_content block_content">
-                        <{$xoBlocks.$preface_blockzone.$preface_block_id.content}>
-                      </div>
-                    <{/if}>
-                  </div>
+              </div>
+            </aside>
+          <{/if}>
+
+          <div id="content_wrapper" class="content_wrapper span<{$content_grid}> <{$content_grid_extra_classes}>">
+
+            <{if $show_topblocks_in_content && $topLeftLoop || $topRightLoop || $topCenterLoop}>
+              <div id="top_blocks_wrapper" class="top_blocks_wrapper">
+                <div id="topblocks" class="topblocks">
+
+                  <{if $topLeftLoop}>
+                    <div id="topleft_blocks" class="topleft_blocks span<{$topleft_grid}> <{$topleft_grid_extra_classes}>">
+                      <{foreach from=$topLeftLoop item=block name=topleftblocks}>
+                        <div id="block_<{$block.id}>" class="block block_<{$block.id}> topleft_block topleft_block_<{$smarty.foreach.topleftblocks.iteration}>">
+                          <div class="block_inner">
+                            <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
+                              <h3><span><{$block.title}></span></h3>
+                            <{/if}>
+                            <{if $block.content}>
+                              <div class="topleftblock_content block_content">
+                                <{$block.content}>
+                              </div>
+                            <{/if}>
+                          </div>
+                        </div>
+                      <{/foreach}>
+                    </div>
+                  <{/if}>
+
+                  <{if $topRightLoop}>
+                    <div id="topright_blocks" class="topright_blocks span<{$topright_grid}> <{$topright_grid_extra_classes}>">
+                      <{foreach from=$topRightLoop item=block name=toprightblocks}>
+                        <div id="block_<{$block.id}>" class="block block_<{$block.id}> topright_block topright_block_<{$smarty.foreach.toprightblocks.iteration}>">
+                          <div class="block_inner">
+                            <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
+                              <h3><span><{$block.title}></span></h3>
+                            <{/if}>
+                            <{if $block.content}>
+                              <div class="toprightblock_content block_content">
+                                <{$block.content}>
+                              </div>
+                            <{/if}>
+                          </div>
+                        </div>
+                      <{/foreach}>
+                    </div>
+                  <{/if}>
+
+                  <{if $topCenterLoop}>
+                    <div id="topcenter_blocks" class="topcenter_blocks span<{$topcenter_grid}> <{$topcenter_grid_extra_classes}>">
+                      <{foreach from=$topCenterLoop item=block name=topcenterblocks}>
+                        <div id="block_<{$block.id}>" class="block block_<{$block.id}> topcenter_block topcenter_block_<{$smarty.foreach.topcenterblocks.iteration}>">
+                          <div class="block_inner">
+                            <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
+                              <h3><span><{$block.title}></span></h3>
+                            <{/if}>
+                            <{if $block.content}>
+                              <div class="topcenterblock_content block_content">
+                                <{$block.content}>
+                              </div>
+                            <{/if}>
+                          </div>
+                        </div>
+                      <{/foreach}>
+                    </div>
+                  <{/if}>
+
                 </div>
-              <{/if}>
-            </div>
-          <{/if}>
-      </div>
-    <{/if}>
+              </div>
+            <{/if}>
 
-    <div id="main_wrapper" class="main_wrapper clearfix">
-      <div id="main" role="main" class="main container_<{$grid_columns}>">
-
-        <{if $show_leftblocks && $leftLoop}>
-          <aside id="leftside_wrapper" class="leftside_wrapper grid_<{$leftcolumn_grid}> <{$leftcolumn_grid_extra_classes}>">
-            <div id="leftside" class="leftside">
-              <{foreach from=$leftLoop item=block name=leftblocks}>
-                <div id="block_<{$block.id}>" class="block block_<{$block.id}> leftside_block leftside_block_<{$smarty.foreach.leftblocks.iteration}>">
-                  <div class="block_inner">
-                    <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
-                      <h3><span><{$block.title}></span></h3>
-                    <{/if}>
-                    <{if $block.content}>
-                      <div class="leftblock_content block_content clearfix">
-                        <{$block.content}>
-                      </div>
-                    <{/if}>
-                  </div>
+            <{if $icms_contents}>
+              <div id="content" class="content span<{$content_grid}> <{$content_grid_extra_classes}>">
+                <div id="content_inner" class="content_inner">
+                  <{$icms_contents}>
                 </div>
-              <{/foreach}>
-            </div>
-          </aside>
-        <{/if}>
-
-        <div id="content_wrapper" class="content_wrapper grid_<{$content_grid}> <{$content_grid_extra_classes}>">
-
-          <{if $show_topblocks_in_content && $topLeftLoop || $topRightLoop || $topCenterLoop}>
-            <div id="top_blocks_wrapper" class="top_blocks_wrapper">
-              <div id="topblocks" class="topblocks">
-
-                <{if $topLeftLoop}>
-                  <div id="topleft_blocks" class="topleft_blocks grid_<{$topleft_grid}> <{$topleft_grid_extra_classes}>">
-                    <{foreach from=$topLeftLoop item=block name=topleftblocks}>
-                      <div id="block_<{$block.id}>" class="block block_<{$block.id}> topleft_block topleft_block_<{$smarty.foreach.topleftblocks.iteration}>">
-                        <div class="block_inner">
-                          <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
-                            <h3><span><{$block.title}></span></h3>
-                          <{/if}>
-                          <{if $block.content}>
-                            <div class="topleftblock_content block_content">
-                              <{$block.content}>
-                            </div>
-                          <{/if}>
-                        </div>
-                      </div>
-                    <{/foreach}>
-                  </div>
-                <{/if}>
-
-                <{if $topRightLoop}>
-                  <div id="topright_blocks" class="topright_blocks grid_<{$topright_grid}> <{$topright_grid_extra_classes}>">
-                    <{foreach from=$topRightLoop item=block name=toprightblocks}>
-                      <div id="block_<{$block.id}>" class="block block_<{$block.id}> topright_block topright_block_<{$smarty.foreach.toprightblocks.iteration}>">
-                        <div class="block_inner">
-                          <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
-                            <h3><span><{$block.title}></span></h3>
-                          <{/if}>
-                          <{if $block.content}>
-                            <div class="toprightblock_content block_content">
-                              <{$block.content}>
-                            </div>
-                          <{/if}>
-                        </div>
-                      </div>
-                    <{/foreach}>
-                  </div>
-                <{/if}>
-
-                <{if $topCenterLoop}>
-                  <div id="topcenter_blocks" class="topcenter_blocks grid_<{$topcenter_grid}> <{$topcenter_grid_extra_classes}>">
-                    <{foreach from=$topCenterLoop item=block name=topcenterblocks}>
-                      <div id="block_<{$block.id}>" class="block block_<{$block.id}> topcenter_block topcenter_block_<{$smarty.foreach.topcenterblocks.iteration}>">
-                        <div class="block_inner">
-                          <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
-                            <h3><span><{$block.title}></span></h3>
-                          <{/if}>
-                          <{if $block.content}>
-                            <div class="topcenterblock_content block_content">
-                              <{$block.content}>
-                            </div>
-                          <{/if}>
-                        </div>
-                      </div>
-                    <{/foreach}>
-                  </div>
-                <{/if}>
-
               </div>
-            </div>
-          <{/if}>
+            <{/if}>
 
-          <{if $icms_contents}>
-            <div id="content" class="content grid_<{$content_grid}> <{$content_grid_extra_classes}>">
-              <div id="content_inner" class="content_inner">
-                <{$icms_contents}>
+            <{if $show_bottomblocks_in_content && $bottomCenterLoop || $bottomLeftLoop || $bottomRightLoop}>
+              <div id="bottom_blocks_wrapper" class="bottom_blocks_wrapper">
+                <div id="bottomblocks" class="bottomblocks row">
+
+                  <{if $bottomCenterLoop}>
+                    <div id="bottomcenter_blocks" class="bottomcenter_blocks span<{$bottomcenter_grid}> <{$bottomcenter_grid_extra_classes}>">
+                      <{foreach from=$bottomCenterLoop item=block name=bottomcenterblocks}>
+                        <div id="block_<{$block.id}>" class="block block_<{$block.id}> bottomcenter_block bottomcenter_block_<{$smarty.foreach.bottomcenterblocks.iteration}>">
+                          <div class="block_inner">
+                            <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
+                              <h3><span><{$block.title}></span></h3>
+                            <{/if}>
+                            <{if $block.content}>
+                              <div class="bottomcenterblock_content block_content">
+                                <{$block.content}>
+                              </div>
+                            <{/if}>
+                          </div>
+                        </div>
+                      <{/foreach}>
+                    </div>
+                  <{/if}>
+
+                  <{if $bottomLeftLoop}>
+                    <div id="bottomleft_blocks" class="bottomleft_blocks span<{$bottomleft_grid}> <{$bottomleft_grid_extra_classes}>">
+                      <{foreach from=$bottomLeftLoop item=block name=bottomleftblocks}>
+                        <div id="block_<{$block.id}>" class="block block_<{$block.id}> bottomleft_block bottomleft_block_<{$smarty.foreach.bottomleftblocks.iteration}>">
+                          <div class="block_inner">
+                            <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
+                              <h3><span><{$block.title}></span></h3>
+                            <{/if}>
+                            <{if $block.content}>
+                              <div class="bottomleftblock_content block_content">
+                                <{$block.content}>
+                              </div>
+                            <{/if}>
+                          </div>
+                        </div>
+                      <{/foreach}>
+                    </div>
+                  <{/if}>
+
+                  <{if $bottomRightLoop}>
+                    <div id="bottomright_blocks" class="bottomright_blocks span<{$bottomright_grid}> <{$bottomright_grid_extra_classes}>">
+                      <{foreach from=$bottomRightLoop item=block name=bottomrightblocks}>
+                        <div id="block_<{$block.id}>" class="block block_<{$block.id}> bottomright_block bottomright_block_<{$smarty.foreach.bottomrightblocks.iteration}>">
+                          <div class="block_inner">
+                            <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
+                              <h3><span><{$block.title}></span></h3>
+                            <{/if}>
+                            <{if $block.content}>
+                              <div class="bottomrightblock_content block_content">
+                                <{$block.content}>
+                              </div>
+                            <{/if}>
+                          </div>
+                        </div>
+                      <{/foreach}>
+                    </div>
+                  <{/if}>
+
+                </div>
               </div>
-            </div>
-          <{/if}>
+            <{/if}>
 
-          <{if $show_bottomblocks_in_content && $bottomCenterLoop || $bottomLeftLoop || $bottomRightLoop}>
-            <div id="bottom_blocks_wrapper" class="bottom_blocks_wrapper">
-              <div id="bottomblocks" class="bottomblocks clearfix">
+          </div>
 
-                <{if $bottomCenterLoop}>
-                  <div id="bottomcenter_blocks" class="bottomcenter_blocks grid_<{$bottomcenter_grid}> <{$bottomcenter_grid_extra_classes}>">
-                    <{foreach from=$bottomCenterLoop item=block name=bottomcenterblocks}>
-                      <div id="block_<{$block.id}>" class="block block_<{$block.id}> bottomcenter_block bottomcenter_block_<{$smarty.foreach.bottomcenterblocks.iteration}>">
-                        <div class="block_inner">
-                          <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
-                            <h3><span><{$block.title}></span></h3>
-                          <{/if}>
-                          <{if $block.content}>
-                            <div class="bottomcenterblock_content block_content">
-                              <{$block.content}>
-                            </div>
-                          <{/if}>
+          <{if $rightLoop}>
+            <aside id="rightside_wrapper" class="rightside_wrapper span<{$rightcolumn_grid}> <{$rightcolumn_grid_extra_classes}>">
+              <div id="rightside" class="rightside">
+                <{foreach from=$rightLoop item=block name=rightblocks}>
+                  <div id="block_<{$block.id}>" class="block block_<{$block.id}> rightside_block rightside_block_<{$smarty.foreach.rightblocks.iteration}>">
+                    <div class="block_inner">
+                      <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
+                        <h3><span><{$block.title}></span></h3>
+                      <{/if}>
+                      <{if $block.content}>
+                        <div class="rightblock_content block_content">
+                          <{$block.content}>
                         </div>
-                      </div>
-                    <{/foreach}>
+                      <{/if}>
+                    </div>
                   </div>
-                <{/if}>
-
-                <{if $bottomLeftLoop}>
-                  <div id="bottomleft_blocks" class="bottomleft_blocks grid_<{$bottomleft_grid}> <{$bottomleft_grid_extra_classes}>">
-                    <{foreach from=$bottomLeftLoop item=block name=bottomleftblocks}>
-                      <div id="block_<{$block.id}>" class="block block_<{$block.id}> bottomleft_block bottomleft_block_<{$smarty.foreach.bottomleftblocks.iteration}>">
-                        <div class="block_inner">
-                          <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
-                            <h3><span><{$block.title}></span></h3>
-                          <{/if}>
-                          <{if $block.content}>
-                            <div class="bottomleftblock_content block_content">
-                              <{$block.content}>
-                            </div>
-                          <{/if}>
-                        </div>
-                      </div>
-                    <{/foreach}>
-                  </div>
-                <{/if}>
-
-                <{if $bottomRightLoop}>
-                  <div id="bottomright_blocks" class="bottomright_blocks grid_<{$bottomright_grid}> <{$bottomright_grid_extra_classes}>">
-                    <{foreach from=$bottomRightLoop item=block name=bottomrightblocks}>
-                      <div id="block_<{$block.id}>" class="block block_<{$block.id}> bottomright_block bottomright_block_<{$smarty.foreach.bottomrightblocks.iteration}>">
-                        <div class="block_inner">
-                          <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
-                            <h3><span><{$block.title}></span></h3>
-                          <{/if}>
-                          <{if $block.content}>
-                            <div class="bottomrightblock_content block_content">
-                              <{$block.content}>
-                            </div>
-                          <{/if}>
-                        </div>
-                      </div>
-                    <{/foreach}>
-                  </div>
-                <{/if}>
-
+                <{/foreach}>
               </div>
-            </div>
+            </aside>
           <{/if}>
 
         </div>
-
-        <{if $rightLoop}>
-          <aside id="rightside_wrapper" class="rightside_wrapper grid_<{$rightcolumn_grid}> <{$rightcolumn_grid_extra_classes}>">
-            <div id="rightside" class="rightside">
-              <{foreach from=$rightLoop item=block name=rightblocks}>
-                <div id="block_<{$block.id}>" class="block block_<{$block.id}> rightside_block rightside_block_<{$smarty.foreach.rightblocks.iteration}>">
-                  <div class="block_inner">
-                    <{if $block.title != '' && $block.title|truncate:1:"":true != "_"}>
-                      <h3><span><{$block.title}></span></h3>
-                    <{/if}>
-                    <{if $block.content}>
-                      <div class="rightblock_content block_content">
-                        <{$block.content}>
-                      </div>
-                    <{/if}>
-                  </div>
-                </div>
-              <{/foreach}>
-            </div>
-          </aside>
-        <{/if}>
-
       </div>
     </div>
 
     <{if $show_postscript && !$inAdmin && postscript_blockzone != ''|| $use_poostscript_override_file != ''}>
-      <div id="postscript_wrapper" class="postscript_wrapper clearfix">
-        <div id="postscript" class="postscript container_<{$grid_columns}>">
+      <div id="postscript_wrapper" class="postscript_wrapper">
+        <div id="postscript" class="postscript container row">
           <{if $postscript_block_id == ''}>
             <{foreach from=$xoBlocks.$postscript_blockzone item=block name=postscriptblocks}>
-              <div id="block_<{$block.id}>" class="block block_<{$block.id}> postscript_block postscript_block_<{$smarty.foreach.postscriptblocks.iteration}> grid_<{$postscript_grid}> <{$postscript_grid_extra_classes}>">
+              <div id="block_<{$block.id}>" class="block block_<{$block.id}> postscript_block postscript_block_<{$smarty.foreach.postscriptblocks.iteration}> span<{$postscript_grid}> <{$postscript_grid_extra_classes}>">
                 <div class="block_inner">
                   <{if $show_postscript_block_titles && $block.title != '' && $block.title|truncate:1:"":true != "_"}>
                     <h3><span><{$block.title}></span></h3>
@@ -249,7 +252,7 @@
               </div>
             <{/foreach}>
           <{else}>
-            <div id="single_postscript_block" class="block single_postscript_block postscript_block grid_<{$postscript_grid}> <{$postscript_grid_extra_classes}>">
+            <div id="single_postscript_block" class="block single_postscript_block postscript_block span<{$postscript_grid}> <{$postscript_grid_extra_classes}>">
               <div class="block_inner">
                 <{if $show_postscript_block_titles && $xoBlocks.$postscript_blockzone.$postscript_block_id.title && $xoBlocks.$postscript_blockzone.$postscript_block_id.title|truncate:1:"":true != "_"}>
                   <h3><span><{$xoBlocks.$postscript_blockzone.$postscript_block_id.title}></span></h3>

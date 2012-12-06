@@ -48,6 +48,9 @@
   <link rel="shortcut icon" type="image/ico" href="<{$icms_imageurl}>media/icons/favicon.ico" />
   <link rel="icon" type="image/png" href="<{$icms_imageurl}>media/icons/icon.png" />
 
+  <script type="text/javascript">
+    var hasBootstrap = true;
+  </script>
   <!-- Ideally we want these scripts in the footer, however - this isn't possible at this time -->
   <{$icms_module_header}>
 
@@ -55,32 +58,27 @@
     var themeRoute = 'main';
     routeReady.resolve();
   </script>
-
-  <link rel="stylesheet" href="<{$icms_imageurl}>media/css/boiler/boiler-core.min.css" />
-  <{if $include_button_css}>
-    <link rel="stylesheet" href="<{$icms_imageurl}>media/css/buttons/buttons.css" />
+  <link rel="stylesheet" href="<{$icms_imageurl}>media/css/bootstrap/bootstrap.min.css" />
+  <{if $enable_responsive}>
+    <link rel="stylesheet" href="<{$icms_imageurl}>media/css/bootstrap/responsive.min.css" />
   <{/if}>
 
-  <!-- if your skin is responsive - use style.css to set global styles (DRY) -->
-  <link rel="stylesheet" href="<{$icms_imageurl}>skins/<{$skin}>/style.css" />
+  <!--[if lt IE 9]>
+    <link rel="stylesheet" href="<{$icms_imageurl}>media/css/font-awesome/font-awesome-ie7.css">
+  <![endif]-->
 
-  <{if $enable_responsive}>
-    <link rel="stylesheet" media='screen and (min-width: 0px) and (max-width: 760px)' href="<{$icms_imageurl}>media/css/responsive/min/mobile.css" />
-    <link rel='stylesheet' media='screen and (min-width: 0px) and (max-width: 760px)' href='<{$icms_imageurl}>skins/<{$skin}>/media/css/responsive/mobile.css' />
-    <link rel='stylesheet' media='screen and (min-width: 760px) and (max-width: 980px)' href='<{$icms_imageurl}>media/css/responsive/min/720.css' />
-    <link rel='stylesheet' media='screen and (min-width: 760px) and (max-width: 9800px)' href='<{$icms_imageurl}>skins/<{$skin}>/media/css/responsive/narrow.css' />
-    <link rel='stylesheet' media='screen and (min-width: 980px)<{if $enable_wides}> and (max-width: 1280px)<{/if}>' href='<{$icms_imageurl}>media/css/responsive/min/960.css' />
-    <link rel='stylesheet' media='screen and (min-width: 980px)<{if $enable_wides}> and (max-width: 1280px)<{/if}>' href='<{$icms_imageurl}>skins/<{$skin}>/media/css/responsive/normal.css' />
-    <{if $enable_wides}>
-      <link rel='stylesheet' media='screen and (min-width: 1280px) and (max-width: 1600px)' href='<{$icms_imageurl}>media/css/responsive/min/1200.css' />
-      <link rel='stylesheet' media='screen and (min-width: 1600px) and (max-width: 1920px)' href='<{$icms_imageurl}>media/css/responsive/min/1560.css' />
-      <link rel='stylesheet' media='screen and (min-width: 1920px) and (max-width: 2540px)' href='<{$icms_imageurl}>media/css/responsive/min/1920.css' />
-      <link rel='stylesheet' media='screen and (min-width: 2540)' href='<{$icms_imageurl}>media/css/responsive/min/2520.css' />
-      <link rel='stylesheet' media='screen and (min-width: 1280px)' href='<{$icms_imageurl}>skins/<{$skin}>/media/css/responsive/wide.css' />
-    <{/if}>
-  <{else}>
-    <{if $grid_columns != ''}>
-      <link rel="stylesheet" href="<{$icms_imageurl}>media/css/960/min/960_<{$grid_columns}>_col<{if $icms_rtl}>_rtl/<{/if}>.css" />
+  <link rel="stylesheet" href="<{$icms_imageurl}>media/css/boiler/boiler.css" />
+
+  <{if $skin !== ''}>
+    <!-- if your skin is responsive - use style.css to set global styles (DRY) -->
+    <link rel="stylesheet" href="<{$icms_imageurl}>skins/<{$skin}>/style.css" />  
+    <{if $enable_responsive}>
+      <link rel='stylesheet' media='screen and (min-width: 0px) and (max-width: 760px)' href='<{$icms_imageurl}>skins/<{$skin}>/media/css/responsive/mobile.css' />
+      <link rel='stylesheet' media='screen and (min-width: 760px) and (max-width: 9800px)' href='<{$icms_imageurl}>skins/<{$skin}>/media/css/responsive/narrow.css' />
+      <link rel='stylesheet' media='screen and (min-width: 980px)<{if $enable_wides}> and (max-width: 1280px)<{/if}>' href='<{$icms_imageurl}>skins/<{$skin}>/media/css/responsive/normal.css' />
+      <{if $enable_wides}>
+        <link rel='stylesheet' media='screen and (min-width: 1280px)' href='<{$icms_imageurl}>skins/<{$skin}>/media/css/responsive/wide.css' />
+      <{/if}>
     <{/if}>
   <{/if}>
 

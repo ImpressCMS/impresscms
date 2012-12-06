@@ -17,7 +17,7 @@ a:hover, a:focus {color: #ffb400;}
 .invisible {visibility: hidden}
 
 /* Prettifying the inputs */
-input[type=text],input[type=password],input[type=phone],select {max-width: 95%;}
+input[type=text],input[type=password],input[type=phone],select {max-width: 90%;}
 input.wide {width: 95%;}
 a.smallButton {float: left; width: auto; color: #555;}
 a.smallButton, input[type=submit], input[type=button] {background: #fff; border:1px solid #dadada; border-radius:3px; padding:4px 8px; transition: all 0.25s ease-in-out; -webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out;}
@@ -30,30 +30,32 @@ ul.nav {padding: 0;}
 .tab-content .tab-pane {padding: 20px 0;}
 /* Header */
 header {min-height: 60px; background: #FFF; color: #6E6E6E;}
-#header {padding: 10px 0;}
-.logo {padding: 0 10px; float: left; width: auto;}
+#header {padding: 10px 0 0;}
+.logo {padding: 10px 0; float: left; width: auto;}
 .logo a, .logo a span, .logo a span img {float: left; max-width: 280px;}
 
 .header_search {float: right; width: auto;}
+.header_search form {margin-bottom: 10px;}
 .admin .header_search input[type=text] {width: 210px;}
 
 /* Primary Navigation */
-nav#primary_navigation ul {width: auto; float: right; margin-top: -20px;}
-nav#primary_navigation ul li {float: left; display: inline; margin: 0 0 0 30px; border-bottom: 3px solid transparent;}
-nav#primary_navigation ul li.active, nav#primary_navigation ul li:hover {border-bottom: 3px solid #D9D9D9;}
-nav#primary_navigation ul li.hasChildren:hover {border-color: transparent;}
-nav#primary_navigation ul li a {line-height: 41px; padding: 0; margin: 0; display: block; position: relative; overflow: hidden; font-size: 14px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; letter-spacing: 1px; color: #565656;}
-nav#primary_navigation ul li.active a, nav#primary_navigation ul li a:hover {color: #46B1E1; text-decoration: none;}
-nav#primary_navigation ul li.last {margin: 0;}
-nav#primary_navigation ul ul {display: none; position: absolute; z-index: 1;top: auto; left: auto; margin: 3px 0 0; background: #fff;
+#primary_navigation {width: auto; display: block; float: right; clear: both;}
+#primary_navigation ul {width: auto; float: right; margin-top: -20px;}
+#primary_navigation ul li {float: left; display: inline; margin: 0 0 0 30px; border-bottom: 3px solid transparent;}
+#primary_navigation ul li.active, nav#primary_navigation ul li:hover {border-bottom: 3px solid #D9D9D9;}
+#primary_navigation ul li.hasChildren:hover {border-color: transparent;}
+#primary_navigation ul li a {line-height: 41px; padding: 0; margin: 0; display: block; position: relative; overflow: hidden; font-size: 14px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; letter-spacing: 1px; color: #565656;}
+#primary_navigation ul li.active a, nav#primary_navigation ul li a:hover {color: #46B1E1; text-decoration: none;}
+#primary_navigation ul li.last {margin: 0;}
+#primary_navigation ul ul {display: none; position: absolute; z-index: 1;top: auto; left: auto; margin: 3px 0 0; background: #fff;
 -webkit-box-shadow:  0px 4px 10px -4px rgba(0, 0, 0, 0.7);
    -moz-box-shadow:  0px 4px 10px -4px rgba(0, 0, 0, 0.7);        
         box-shadow:  0px 4px 10px -4px rgba(0, 0, 0, 0.7);
 }
-nav#primary_navigation ul ul li { margin: 0; display: block; float: left; width: 100%; clear: both; background: #fff;}
-nav#primary_navigation ul ul li.active, nav#primary_navigation ul ul li:hover {border-color: transparent; background-color:#0254a6;}
-nav#primary_navigation ul ul li a {line-height: 36px; padding: 0 20px; margin: 0; display: block; position: relative; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; letter-spacing: 1px; color: #565656;}
-nav#primary_navigation ul ul li a:hover {color: #fff;}
+#primary_navigation ul ul li { margin: 0; display: block; float: left; width: 100%; clear: both; background: #fff;}
+#primary_navigation ul ul li.active, nav#primary_navigation ul ul li:hover {border-color: transparent; background-color:#0254a6;}
+#primary_navigation ul ul li a {line-height: 36px; padding: 0 20px; margin: 0; display: block; position: relative; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; letter-spacing: 1px; color: #565656;}
+#primary_navigation ul ul li a:hover {color: #fff;}
 
 /* Preface and Footer Backgrounds */
 .preface_wrapper, .footer_wrapper {
@@ -74,7 +76,7 @@ nav#primary_navigation ul ul li a:hover {color: #fff;}
 }
 
 .preface {overflow: visible; background: url(img/textures/diagTextureRight.png) top center no-repeat;}
-.preface .block_inner {color: #fff; padding: 20px;}
+.preface .block_inner {color: #fff; padding: 20px 0;}
 .preface h1, .preface h2, .preface h3, .preface h4, .preface h5, .preface h6 {border: 0;}
 
 /* Aside Left */

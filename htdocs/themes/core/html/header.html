@@ -1,9 +1,9 @@
-<header class="header_outer clearfix <{$header_wrapper_extra_classes}>">
-  <div role="head" id="header_wrapper" class="header_wrapper container_<{$grid_columns}> <{$header_grid_extra_classes}> clearfix">
-    <div id="header" class="header">
+<header class="header_outer <{$header_wrapper_extra_classes}>">
+  <div class="header_wrapper <{$header_grid_extra_classes}>">
+    <div id="header" class="container header">
 
       <{if $show_logo}>
-        <div id="logo" role="banner" class="logo">
+        <div id="logo" role="banner" class="brand logo">
           <a href="<{$icms_url}>" title="<{$icms_sitename}>">
             <{if $logo_path != ''}>
               <span id="logo_img" class="logo_img">
@@ -38,14 +38,16 @@
         </div>
       <{/if}>
       <{if $enable_responsive}>
-        <h3 id="nav_toggle" class="nav_toggle">
-          <a href="#primary_navigation">Navigation</a>
-        </h3>
+        <div id="nav_toggle" class="nav_toggle">
+          <a data-toggle="collapse" data-target=".nav-collapse">
+            <i class="icon icon-reorder"></i> Menu
+          </a>
+        </div>
       <{/if}>
+
+      <{if $show_nav}>
+        <{includeq file="$theme_name/html/nav.html"}>
+      <{/if}>      
     </div>
   </div>
-
-  <{if $show_nav}>
-    <{includeq file="$theme_name/html/nav.html"}>
-  <{/if}>
 </header>

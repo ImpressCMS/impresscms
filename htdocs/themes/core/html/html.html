@@ -40,36 +40,23 @@
   <{/if}>
   
   <div id="fullWrapper" class="fullWrapper">
-    <{includeq file="$theme_name/html/header.html"}>
-    <{includeq file="$theme_name/html/page.html"}>
-    <{includeq file="$theme_name/html/footer.html"}>
+    <div id="fullWrapperInner" class="fullWrapperInner">
+      <{includeq file="$theme_name/html/header.html"}>
+      <{includeq file="$theme_name/html/page.html"}>
+      <{includeq file="$theme_name/html/footer.html"}>
+    </DIV>
   </div>
   
-  <{if $enable_concatenate}>
-    <{if $enable_skin_js}>
-      <script src="<{$icms_url}>/boiler.php?type=script&amp;f=media/js/boiler-core-plugins.js,media/js/boiler-core-scripts.js,skins/<{$skin}>/media/js/plugins.js,skins/<{$skin}>/media/js/scripts.js"></script>
-    <{else}>
-      <script src="<{$icms_url}>/boiler.php?type=script&amp;f=media/js/boiler-core-plugins.js,media/js/boiler-core-scripts.js"></script>
-    <{/if}>
-  <{else}>
-    <{if $enable_twitter_intents}>
-      <script type="text/javascript" charset="utf-8">
-        window.twttr = (function (d,s,id) {
-          var t, js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
-          js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
-          return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
-        }(document, "script", "twitter-wjs"));
-      </script>
-    <{/if}>
-
-    <script src="<{$icms_imageurl}>media/js/boiler-core-plugins.js"></script>
-    <script src="<{$icms_imageurl}>media/js/boiler-core-scripts.js"></script>
-
-    <{if $enable_skin_js}>
-      <script src="<{$icms_imageurl}>skins/<{$skin}>/media/js/plugins.js"></script>
-      <script src="<{$icms_imageurl}>skins/<{$skin}>/media/js/scripts.js"></script>
-    <{/if}>
+  <{if $enable_twitter_intents}>
+    <script type="text/javascript" charset="utf-8">
+      window.twttr = (function (d,s,id) {
+        var t, js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
+        js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+        return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
+      }(document, "script", "twitter-wjs"));
+    </script>
   <{/if}>
+
 </body>
 </html>
