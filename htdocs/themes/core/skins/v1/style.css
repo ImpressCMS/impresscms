@@ -10,8 +10,20 @@ body {background:#0254a6; visibility: hidden; font: 13px/18px 'Droid Sans', Helv
 /* General styling */
 .container_12 {width: 100%; margin: 0;}
 ::selection {background: #ffb400; color: #000;}
-h1,h2,h3 {font-weight: bold; border-bottom:1px solid; padding-bottom: 5px;}
-h4,h5,h6 {font-weight: bold;}
+h1, h2, h3, h4, h5, h6 {
+  color: #666;
+  font-family: "Open Sans","Helvetica Neue",Helvetica,Arial;
+  font-weight: normal;
+  border-bottom:1px solid; padding-bottom: 5px;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
+h1 { font-size: 22px; line-height: 120%; margin-bottom: 20px; }
+h2 { font-size: 20px; line-height: 120%; margin-bottom: 20px; }
+h3 { font-size: 16px; line-height: 120%; margin-bottom: 20px; }
+h4 { font-size: 14px; line-height: 120%; margin-bottom: 20px; }
+h5 { font-size: 12px; line-height: 120%; margin-bottom: 20px; }
+h6 { font-size: 10px; line-height: 120%; margin-bottom: 20px; }
+
 a, a:visited {color: #08C; text-decoration: none;}
 a:hover, a:focus {color: #ffb400;}
 .invisible {visibility: hidden}
@@ -20,7 +32,7 @@ a:hover, a:focus {color: #ffb400;}
 input[type=text],input[type=password],input[type=phone],select {max-width: 90%;}
 .wide {width: 95%;}
 a.smallButton {float: left; width: auto; color: #555;}
-.smallButton, input[type=submit], input[type=button] {background: #fff; border:1px solid #dadada; border-radius:3px; padding:4px 8px; transition: all 0.25s ease-in-out; -webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out;}
+.smallButton, input[type=submit], input[type=button] {background: #fff; border:1px solid #dadada; border-radius:3px; padding:5px 8px; transition: all 0.25s ease-in-out; -webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out; vertical-align: middle;}
 .smallButton:hover, .smallButton:active, .smallButton:focus,
 input[type=submit]:hover,input[type=submit]:active,input[type=submit]:focus,
 input[type=button]:hover,input[type=button]:active,input[type=button]:focus {outline:none; border-color:#9ecaed; box-shadow:0 0 10px #9ecaed;}
