@@ -10,22 +10,22 @@ body {background:#0254a6; visibility: hidden; font: 13px/18px 'Droid Sans', Helv
 /* General styling */
 .container_12 {width: 100%; margin: 0;}
 ::selection {background: #ffb400; color: #000;}
-h1,h2,h3,h4,h5,h6 {font-weight: bold;}
-h1,h2,h3 {border-bottom:1px solid; padding-bottom: 5px;}
+h1,h2,h3 {font-weight: bold; border-bottom:1px solid; padding-bottom: 5px;}
+h4,h5,h6 {font-weight: bold;}
 a, a:visited {color: #08C; text-decoration: none;}
 a:hover, a:focus {color: #ffb400;}
 .invisible {visibility: hidden}
 
 /* Prettifying the inputs */
 input[type=text],input[type=password],input[type=phone],select {max-width: 90%;}
-input.wide {width: 95%;}
+.wide {width: 95%;}
 a.smallButton {float: left; width: auto; color: #555;}
-a.smallButton, input[type=submit], input[type=button] {background: #fff; border:1px solid #dadada; border-radius:3px; padding:4px 8px; transition: all 0.25s ease-in-out; -webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out;}
-a.smallButton:hover, a.smallButton:active, a.smallButton:focus,
+.smallButton, input[type=submit], input[type=button] {background: #fff; border:1px solid #dadada; border-radius:3px; padding:4px 8px; transition: all 0.25s ease-in-out; -webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out;}
+.smallButton:hover, .smallButton:active, .smallButton:focus,
 input[type=submit]:hover,input[type=submit]:active,input[type=submit]:focus,
 input[type=button]:hover,input[type=button]:active,input[type=button]:focus {outline:none; border-color:#9ecaed; box-shadow:0 0 10px #9ecaed;}
 ul.nav {padding: 0;}
-#mainMenu ul.nav {margin: 0;}
+#mainMenu ul.nav, #userMenu ul.nav {margin: 0;}
 .tab-content {padding: 0; margin: 0;}
 .tab-content .tab-pane {padding: 20px 0;}
 /* Header */
@@ -39,23 +39,108 @@ header {min-height: 60px; background: #FFF; color: #6E6E6E;}
 .admin .header_search input[type=text] {width: 210px;}
 
 /* Primary Navigation */
-#primary_navigation {width: auto; display: block; float: right; clear: both;}
-#primary_navigation ul {width: auto; float: right; margin-top: -20px;}
-#primary_navigation ul li {float: left; display: inline; margin: 0 0 0 30px; border-bottom: 3px solid transparent;}
-#primary_navigation ul li.active, nav#primary_navigation ul li:hover {border-bottom: 3px solid #D9D9D9;}
-#primary_navigation ul li.hasChildren:hover {border-color: transparent;}
-#primary_navigation ul li a {line-height: 41px; padding: 0; margin: 0; display: block; position: relative; overflow: hidden; font-size: 14px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; letter-spacing: 1px; color: #565656;}
-#primary_navigation ul li.active a, nav#primary_navigation ul li a:hover {color: #46B1E1; text-decoration: none;}
-#primary_navigation ul li.last {margin: 0;}
-#primary_navigation ul ul {display: none; position: absolute; z-index: 1;top: auto; left: auto; margin: 3px 0 0; background: #fff;
--webkit-box-shadow:  0px 4px 10px -4px rgba(0, 0, 0, 0.7);
-   -moz-box-shadow:  0px 4px 10px -4px rgba(0, 0, 0, 0.7);        
-        box-shadow:  0px 4px 10px -4px rgba(0, 0, 0, 0.7);
+/* #Navigation
+================================================== */
+#primary_navigation ul, 
+#primary_navigation li{
+  margin:0;
+  padding:0;
 }
-#primary_navigation ul ul li { margin: 0; display: block; float: left; width: 100%; clear: both; background: #fff;}
-#primary_navigation ul ul li.active, nav#primary_navigation ul ul li:hover {border-color: transparent; background-color:#0254a6;}
-#primary_navigation ul ul li a {line-height: 36px; padding: 0 20px; margin: 0; display: block; position: relative; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; letter-spacing: 1px; color: #565656;}
-#primary_navigation ul ul li a:hover {color: #fff;}
+#primary_navigation{
+  text-transform:uppercase;
+  position:relative;
+  float:right;
+}
+#primary_navigation ul li{
+  float:left;
+  margin:0;
+  display:block;
+}
+#primary_navigation ul li a{
+  line-height:41px;
+  padding:0;
+  margin:0;
+  display:block;
+  position:relative;
+  overflow:hidden;
+  font-size:12px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight:bold;
+  letter-spacing:1px;
+  color:#565656;
+  text-decoration: none;
+}
+#primary_navigation ul > li{
+  border-bottom:3px solid transparent;
+  margin:0 0 0 30px;
+}
+#primary_navigation ul > li:hover,
+#primary_navigation ul li.active {
+  border-bottom:3px solid #d9d9d9;
+}
+
+/* Subs */
+#primary_navigation ul ul{
+  position:absolute;
+  z-index:100;
+  top:43px;
+  text-transform:none;
+  display: none;
+  box-shadow:0 3px 5px rgba(0,0,0,0.4);
+}
+#primary_navigation ul ul li{
+  margin:0;
+  float:none;
+  position:relative;
+  background:#ffffff;
+  width:200px;
+  border-bottom:1px solid #e9e9e9;
+}
+#primary_navigation ul ul li:hover, 
+#primary_navigation ul ul li.active { 
+  border-bottom:1px solid #e9e9e9;
+}
+#primary_navigation ul ul li a{
+  position:relative;
+  border-top:none;
+  overflow:visible!important;
+  font-weight:normal;
+  letter-spacing:normal;
+}
+
+#primary_navigation ul ul li a{
+  line-height:18px;
+  margin:0;
+  padding:7px 15px;
+  color:#565656;
+}
+
+#primary_navigation ul ul li:first-child, 
+#primary_navigation ul ul li:first-child a:hover{ 
+  border-top:none; 
+}
+#primary_navigation ul ul li:last-child, 
+#primary_navigation ul ul li:last-child a:hover{ 
+  border-bottom:none; 
+}
+
+/* More Subs */
+#primary_navigation ul ul ul{
+  left:198px;
+  top:0;
+  padding:0;
+}
+
+/* States */
+#primary_navigation ul li:hover > a, 
+#primary_navigation ul ul li:hover > a{ 
+  color:#03aede; 
+}
+#primary_navigation ul ul li a:hover, 
+#primary_navigation ul ul li:hover > a{ 
+  background:#f9f9f9; 
+}
+
 
 /* Preface and Footer Backgrounds */
 .preface_wrapper, .footer_wrapper {
@@ -82,6 +167,8 @@ header {min-height: 60px; background: #FFF; color: #6E6E6E;}
 /* Aside Left */
 .leftside_wrapper {background: #F2F2F2; color: #6E6E6E;}
 .leftside { padding: 0 10px;}
+.block_1 .block_inner > h3 {margin-bottom: 0;}
+.block_5 .block_inner > h3 {margin-bottom: 0;}
 
 /* Aside Right */
 .rightside {padding: 0 10px;}

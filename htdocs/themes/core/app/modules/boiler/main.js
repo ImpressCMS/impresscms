@@ -5,8 +5,15 @@ define(function(require) {
     initialize: function() {
       $(document).ready(function() {
       // Begin domReady
-        $("ul.sf-menu").superfish();
-        $('.sf-with-ul').parent().addClass('hasChildren');
+        $('#primary_navigation li').has('ul').addClass('hasChildren').hoverIntent({
+          over: function() {
+            $(this).children('ul').stop(true,true).slideDown(400);
+          },
+          timeout: 500,
+          out: function() {
+            $(this).children('ul').slideUp(100);
+          }
+        });
 
         boiler.dom.left.css({
           minHeight: boiler.dom.left.parent().height() + 20
