@@ -174,7 +174,7 @@ header {min-height: 60px; background: #FFF; color: #6E6E6E;}
 
 .preface {overflow: visible; background: url(img/textures/diagTextureRight.png) top center no-repeat;}
 .preface .block_inner {color: #fff; padding: 20px 0;}
-.preface h1, .preface h2, .preface h3, .preface h4, .preface h5, .preface h6 {border: 0;}
+.preface h1, .preface h2, .preface h3, .preface h4, .preface h5, .preface h6 {border: 0; color: #fff;}
 
 /* Aside Left */
 .leftside_wrapper {background: #F2F2F2; color: #6E6E6E;}

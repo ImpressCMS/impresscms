@@ -3,6 +3,9 @@
 * Instantiate new javascript core
 * Author: William Hall
 */
+
+global $icmsConfigMetaFooter;
+
 $icmsJsConfigData = array(
   'jscore' => ICMS_LIBRARIES_URL . '/jscore/',
   'sitename' => $icmsConfig['sitename'],
@@ -16,15 +19,15 @@ $icmsJsConfigData = array(
   'imageset' => ICMS_IMAGES_SET_URL,
   'gaActive' => $icmsConfigMetaFooter['use_google_analytics'],
   'uiTheme' => 'smoothness',
-  'i18n' => $icmsConfig['i18n'] === false || $icmsConfig['i18n'] === null || $icmsConfig['i18n'] === 'undefined' ? false : array(
+  'i18n' => isset($icmsConfig['i18n']) ? $icmsConfig['i18n'] === false ? false : array(
     'locale' => $icmsConfig['i18n']
-  ),
+  ) : false,
   'adminMenu' => false,
   'onlineCount' => '0',
   'membersOnline' => '0',
   'social' => array(
-    'fbAppId' => $icmsConfig['fbAppId'],
-    'fbChannel' => $icmsConfig['fbChannel'],
+    'fbAppId' => isset($icmsConfig['fbAppId']) ? $icmsConfig['fbAppId'] : false,
+    'fbChannel' => isset($icmsConfig['fbChannel']) ? $icmsConfig['fbChannel'] : false,
   ),
   'themeUrl' => $icmsConfig['xoops_url'] . '/themes/' . $icmsConfig['theme_set']
 );

@@ -71,6 +71,28 @@ define(function(require) {
 
     }
 
+    , showPass: function() {
+      // Allows passwordfields to be shown
+      // <ele class="showpass" data-pass="#somePassFieldSelecter">
+      $('.showpass').click(function(e) {
+        e.preventDefault();
+        var _this = $(this)
+        , pass = $(this).data('pass');
+
+        if(!_this.hasClass('btn-info')) {
+          _this.addClass('btn-info');
+          _this.find('.icon-eye-open').addClass('icon-white');
+          $(pass).replaceWith('<input class="input-large" type="text" id="site_db_pass" name="site_db_pass" value="' + $(pass).attr('value') + '">');
+        } else {
+          _this.removeClass('btn-info');
+          $(pass).replaceWith('<input class="input-large" type="password" id="site_db_pass" name="site_db_pass" value="' + $(pass).attr('value') + '">');
+          _this.find('.icon-eye-open').removeClass('icon-white');
+        }
+
+        return false;
+      });
+    }
+
     , helptip: function() {
       var helptips = $('.helptip a');
 
