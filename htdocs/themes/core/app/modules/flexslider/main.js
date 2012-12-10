@@ -3,7 +3,7 @@ define(function (require) {
   , _flex = require('themeBase/app/modules/flexslider/flexcore')
   , module = {
     initialize: function(ele) {
-      $(window).load(function() {
+      $(document).ready(function() {
         ele
         .fitVids()
         .flexslider({

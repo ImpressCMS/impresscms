@@ -2,7 +2,7 @@
 
 /*html {background: #0254a6;}*/
 html {background: #444;}
-body {background:#0254a6; visibility: hidden; font: 13px/18px 'Droid Sans', Helvetica, Arial, sans-serif;}
+body {background:#0254a6; font: 13px/18px 'Droid Sans', Helvetica, Arial, sans-serif;}
 
 /* makes sure our admin menu doesn't show up naked */
 #admin-menu-wrapper #admin-menu {position: fixed; top: 100%;}

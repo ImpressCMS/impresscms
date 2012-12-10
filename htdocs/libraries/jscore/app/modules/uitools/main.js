@@ -73,23 +73,25 @@ define(function(require) {
 
     , showPass: function() {
       // Allows passwordfields to be shown
-      // <ele class="showpass" data-pass="#somePassFieldSelecter">
-      $('.showpass').click(function(e) {
-        e.preventDefault();
-        var _this = $(this)
-        , pass = $(this).data('pass');
+      // <ele class="showpass" data-pass="#somePassFieldSelecter"> (should always be id)
+      $('.showpass').on({
+        click : function(e) {
+          e.preventDefault();
+          var _this = $(this)
+          , pass = $(this).data('pass')
+          , passVal = $(pass).attr('value')
+          , selector = pass.match('#') ? pass.replace('#', '') : pass;
 
-        if(!_this.hasClass('btn-info')) {
-          _this.addClass('btn-info');
-          _this.find('.icon-eye-open').addClass('icon-white');
-          $(pass).replaceWith('<input class="input-large" type="text" id="site_db_pass" name="site_db_pass" value="' + $(pass).attr('value') + '">');
-        } else {
-          _this.removeClass('btn-info');
-          $(pass).replaceWith('<input class="input-large" type="password" id="site_db_pass" name="site_db_pass" value="' + $(pass).attr('value') + '">');
-          _this.find('.icon-eye-open').removeClass('icon-white');
+          if(_this.hasClass('btn-info')) {
+            _this.removeClass('btn-info').find('.icon-eye-open').removeClass('icon-white');
+            $(pass).replaceWith('<input class="input-large" type="password" id="' + selector + '" name="' + selector + '" value="' + passVal + '">');
+          } else {
+            _this.addClass('btn-info').find('.icon-eye-open').addClass('icon-white');
+            $(pass).replaceWith('<input class="input-large" type="text" id="' + selector + '" name="' + selector + '" value="' + passVal + '">');
+          }
+
+          return false;
         }
-
-        return false;
       });
     }
 
@@ -133,7 +135,6 @@ define(function(require) {
           modalMarkup = modalTemplate(modalData);
           $('body').append(modalMarkup);
 
-          console.log($('#' + modalData.id));
           $('.modal-body').css({
             maxHeight: options.height - 150 + 'px'
             , overflow: 'hidden'

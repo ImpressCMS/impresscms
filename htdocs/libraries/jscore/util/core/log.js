@@ -19,8 +19,16 @@ define(function(require) {
   , qs = require('util/amd-utils/queryString')
   , browser = require('util/core/browser')
   , noLog = null
-    , module = {
-        initialize:function(){
+  , module = {
+    initialize:function(){
+      //Prevents IE from breaking on console entries.
+      if (!window.console) {
+        window.console = {
+          log:function(){},
+          warn:function(){}
+        };
+      }
+      
       if(qs.hasParam('log') && qs.getParam('log') === true) {
         module.enableConsole();
       } else {
