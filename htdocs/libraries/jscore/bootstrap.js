@@ -1,6 +1,7 @@
 /*
   Module: bootstrap
   Loads activator and builder modules, executes both (for modules required by div data attrs)
+  Loads common module - common provides legacy functions to window scope in module form.
   Loads main app module
  */
 

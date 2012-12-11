@@ -102,3 +102,8 @@ th {color: #0066CC; padding: 2px; vertical-align: middle; border-bottom: 4px sol
 .admin .actionButtonTray {padding: 10px 0 5px; border-top: 4px solid #0254A6; text-align: center;}
 .admin .positionInfoWrapper {display: block; float: left; clear: both; width: 100%; background: #f3f3f3; border: 1px solid #ddd; margin: 10px 0;}
 .admin .positionInfoWrapper .inner {padding: 10px;}
+
+#xo-logger-output {width: 100%; float: left; clear: both; background: #ececec; margin: 0;}
+#xo-logger-output .nav {margin: 0;}
+#xo-logger-output .tab-pane {padding: 0 20px 20px;}
+#xo-logger-output .tab-pane div {overflow: auto; padding: 10px;}

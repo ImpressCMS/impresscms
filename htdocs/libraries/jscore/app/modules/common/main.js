@@ -7,6 +7,7 @@
 */
 define(function(require) {
   var $ = require('jquery')
+  , mediator = require('mediator')
   , _private = {
     openWithSelfMain: function(url,name,width,height,returnwindow) {
       var options = "width=" + width + ",height=" + height + ",toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no"
@@ -39,6 +40,7 @@ define(function(require) {
     initialize: function() {
       var methods = _private;
       $.extend(window, methods);
+      mediator.publish('commonReady');
     }
   };
   return app;
