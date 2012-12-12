@@ -1,21 +1,34 @@
-ImpressCMS 1.3.3 Beta release notes
-================================================
+ImpressCMS 1.3.4
+======================
+This release fixes a regression in custom PHP blocks, and also some problems with the safe iFrame functionality.
 
-The ImpressCMS Project is very proud to announce 1.3.3 Beta! 
-ImpressCMS 1.3.3 is a bug-fix and security release of the 1.3 series. This release is not intended for use on production sites.
+You can find the details of the changes in this release at https://impresscmsdev.assembla.com/spaces/impresscms/milestones/1571373-impresscms-1-3-4
 
-Please see the full Change Log for details in docs/changelog.txt.
+ImpressCMS 1.3.3
+======================
+In addition to the updated core of ImpressCMS, 3 core modules also have been updated - Banners, Profile and Protector.
+You can find the details of the changes in this release at http://impresscmsdev.assembla.com/spaces/impresscms/milestones/671493-impresscms-1-3-3
 
-==System requirements==
+Major changes:
 
-*PHP
-    ** PHP 5.2.5 or higher (5.1 may work, but is not officially supported, 5.3 is supported in ImpressCMS 1.3)
-    ** 16MB memory
-*MySQL
-    ** MySQL 4.1.0 or higher
-*Web server
-    ** Any server supporting the required PHP version (Apache highly recommended)
+Authentication fixes
+* LDAP and ADS authentication fixed
+* OpenID authentication fixed for some server configurations
 
+Performance improvements
+* Addressed slow loading pages when gzip was enabled
+* Improved performance of the installer during data insertion
+* Initial changes for PHP 5.4 compliance
+
+Other improvements and updates
+* Improvements in the rendering of scripts, css and meta links and tags
+* Updates to some external libraries
+* Dynamic extension of pagination styles
+
+Security improvements
+* Smarty Resizer now uses a more secure folder structure
+* Filtering with HTMLPurifier
+* Password hashing routine
 
 ==Downloading ImpressCMS==
 
@@ -121,11 +134,8 @@ To get on the developer mailing list, complete this short form to join the team 
 * Facebook group: http://www.facebook.com/group.php?gid=7395938599
 * Facebook fans page: http://www.facebook.com/pages/The-ImpressCMS-Project/22332836800
 * LinkedIn group: http://www.linkedin.com/e/gis/45459/3A9B02585174
-* Delicious: http://del.icio.us/tag/impresscms
 * Flickr: http://www.flickr.com/photos/tags/impresscms/
 * YouTube: http://www.youtube.com/impresscms
-* Last.FM: http://www.last.fm/group/ImpressCMS
-* ImpressCMS Toolbar: http://impresscms.ourtoolbar.com/
 
 '''The ImpressCMS Project'''
 http://www.impresscms.org
