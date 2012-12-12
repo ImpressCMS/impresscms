@@ -114,7 +114,7 @@ class icms_core_Message {
 	 */
 	static public function confirm($hiddens, $action, $msg, $submit='', $addtoken = true) {
 	$submit = ($submit != '') ? trim($submit) : _SUBMIT;
-	echo '<div class="confirmMsg">
+	echo '<div class="coreMessage">
 			<h4>' . $msg . '</h4>
 			<form method="post" action="' . $action . '">';
 	foreach ($hiddens as $name => $value) {

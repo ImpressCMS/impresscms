@@ -105,6 +105,7 @@ define('_US_ACTVMAILNG', 'Failed sending notification mail to %s');
 define('_US_ACTVMAILOK', 'Notification mail to %s sent.');
 
 //%%%%%%		File Name userinfo.php 		%%%%%
+define('_US_ACTIVITY','Activity');
 define('_US_SELECTNG','No User Selected! Please go back and try again.');
 define('_US_PM','PM');
 define('_US_ICQ','ICQ');
