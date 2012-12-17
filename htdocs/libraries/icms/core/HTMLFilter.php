@@ -10,7 +10,7 @@
  * @author		vaughan montgomery (vaughan@impresscms.org)
  * @author		ImpressCMS Project
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version		$Id$
+ * @version		$Id: HTMLFilter.php 12112 2012-11-09 02:15:50Z skenow $
 **/
 /**
  *
@@ -59,7 +59,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 **/
 	public function filterHTML($html) {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
-		if ($icmsConfigPurifier['enable_purifier'] !== 0) {
+
+        if ($icmsConfigPurifier['enable_purifier'] !== 0) {
 			ICMS_PLUGINS_PATH;
 			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
 			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
@@ -70,14 +71,11 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			$icmsPurifyConf = self::getHTMLFilterConfig();
 			// uncomment for specific config debug info
 			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
-            $pos = strpos($html, '<!-- cleaned with htmlpurifier -->');
-            if ($pos !== FALSE) {
-                $html = str_replace('<!-- cleaned with htmlpurifier -->', '', $html);
-            }
-			$purifier = new HTMLPurifier($icmsPurifyConf);
+            
+            $purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
-            $html .= '<!-- cleaned with htmlpurifier -->';
 		}
+        
 		return $html;
 	}
 
@@ -119,13 +117,12 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
         
         $IframeRegExp = '';
-        if ( $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] !== '' ) {
-            $IframeRegExp = str_ireplace( 'http://', '', $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] );
+        if ($icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] !== '') {
             $pos = strpos( $IframeRegExp, '|' );
-            if ( $pos === false ) {
-                $IframeRegExp = '%^http://' . $IframeRegExp . '%';
+            if ($pos === FALSE) {
+                $IframeRegExp = '%^' . $IframeRegExp . '%';
             } else {
-                $IframeRegExp = '%^http://(' . $IframeRegExp . ')%';
+                $IframeRegExp = '%^(' . $IframeRegExp . ')%';
             }
         }
  

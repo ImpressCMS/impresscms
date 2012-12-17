@@ -11,7 +11,7 @@
  * @author		Steve Kenow <skenow@impresscms.org>
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Filesystem.php 12049 2012-10-03 13:38:00Z skenow $
  * @since		1.3
  */
 
@@ -378,6 +378,7 @@ class icms_core_Filesystem {
 			}
 			$iterator->next();
 		}
+		asort($dirList);
 		return array_diff($dirList, $ignore);
 	}
 

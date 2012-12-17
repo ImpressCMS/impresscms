@@ -1,22 +1,24 @@
 <?php
 /**
  * Session Management
+ * 
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license	LICENSE.txt
  * @category	ICMS
- * @package		Core
+ * @package	Core
  * @subpackage	Session
- * @version		SVN: $Id$
- */
-/*
- Based on SecureSession class
- Written by Vagharshak Tozalakyan <vagh@armdex.com>
- Released under GNU Public License
+ * @version	SVN: $Id: Session.php 12112 2012-11-09 02:15:50Z skenow $
  */
 /**
  * Handler for a session
+ * 
+ * Based on SecureSession class 
+ * Written by Vagharshak Tozalakyan <vagh@armdex.com>
+ * Released under GNU Public License
+ * 
  * @category	ICMS
- * @package     Session
+ * @package	Session
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
 class icms_core_Session {

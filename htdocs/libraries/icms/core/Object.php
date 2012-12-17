@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Core
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Object.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 /**#@+
@@ -39,10 +39,13 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
 /**
  * Base class for all objects in the kernel (and beyond)
  *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package		Core
- *
- * @author Kazumi Ono (AKA onokazu)
+ * @package	Core
+ * @since		XOOPS
+ * @author		Kazumi Ono (AKA onokazu)
  **/
 class icms_core_Object {
 
@@ -338,7 +341,11 @@ class icms_core_Object {
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-							return icms_core_DataFilter::checkVar($ret, 'html', 'output');
+                            if ($br) { // have to use this whilst ever there's a zillion editors in the core
+                                return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
+                            } else {
+                                return icms_core_DataFilter::checkVar($ret, 'html', 'output');
+                            }
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
 						}
@@ -357,7 +364,7 @@ class icms_core_Object {
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-							return icms_core_DataFilter::checkVar($ret, 'html', 'input');
+                            return icms_core_DataFilter::checkVar($ret, 'html', 'input');
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'input');
 						}
