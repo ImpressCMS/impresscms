@@ -10,7 +10,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author		modified by marcan <marcan@impresscms.org>
- * @version	$Id$
+ * @version	$Id: functions.php 12074 2012-10-18 18:13:03Z skenow $
  */
 /**
  * The header
@@ -453,25 +453,17 @@ function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
 
 /**
  * Gets Username from UserID and creates a link to the userinfo (!) page
+ * @deprecated	icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact)
  *
  * @param	int	$userid	The User ID
  * @return	string	The linked username (from userID or "Anonymous")
- * @todo Move to a static class method - User
+ * @todo 	Remove in next major release
  */
 function xoops_getLinkedUnameFromId($userid)
 {
-	$userid = (int) ($userid);
-	if($userid > 0)
-	{
-		$member_handler = icms::handler('icms_member');
-		$user =& $member_handler->getUser($userid);
-		if(is_object($user))
-		{
-			$linkeduser = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$userid.'">'.$user->getVar('uname').'</a>';
-			return $linkeduser;
-		}
-	}
-	return $GLOBALS['icmsConfig']['anonymous'];
+	icms_core_Debug::setDeprecated("icms_member_user_Handler::getUserLink", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
+	return icms_member_user_Handler::getUserLink($userid);
+
 }
 /**
  * Get the icmsModule object of a specified module
@@ -889,8 +881,7 @@ function icms_getTablesArray($moduleName, $items) {
 	if (is_array($items)) {
 		foreach($items as $item) {
 			//$table = icms::handler('mod_' . $moduleName . '_' . ucfirst($item))->table;
-			$module = icms_getModuleHandler($item, $moduleName, NULL, TRUE);
-			if (is_object($module)) $table = $module->table;
+			$table = icms_getModuleHandler($item, $moduleName, NULL, TRUE)->table;
 			if (empty($table)) {
 				$ret[] = $moduleName . '_' . $item;
 			} else {
