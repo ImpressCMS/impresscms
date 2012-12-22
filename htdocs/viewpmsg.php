@@ -63,15 +63,15 @@ if (!is_object(icms::$user)) {
 	for ($i = 0; $i < $total_messages; $i++) {
 		$class = ($i % 2 == 0) ? 'even' : 'odd';
 		echo "<tr align='" . _GLOBAL_LEFT . "' class='$class'>"
-		. "<td style='vertical-align: top; width: 2%; text-align: center;'><input type='checkbox' id='message_" 
+		. "<td style='vertical-align: middle; width: 2%; text-align: center;'><input type='checkbox' id='message_" 
 		. $pm_arr[$i]->getVar('msg_id') . "' name='msg_id[]' value='" . $pm_arr[$i]->getVar('msg_id') . "' /></td>\n";
 		if ($pm_arr[$i]->getVar('read_msg') == 1) {
-			echo "<td style='vertical-align: top; width: 5%; text-align: center;'>&nbsp;</td>\n";
+			echo "<td style='vertical-align: middle; width: 5%; text-align: center;'>&nbsp;</td>\n";
 		} else {
-			echo "<td style='vertical-align: top; width: 5%; text-align: center;'>"
+			echo "<td style='vertical-align: middle; width: 5%; text-align: center;'>"
 			. "<img src='images/read.gif' alt='" . _PM_NOTREAD . "' /></td>\n";
 		}
-		echo "<td style='vertical-align: top; width: 5%; text-align: center;'>"
+		echo "<td style='vertical-align: middle; width: 5%; text-align: center;'>"
 		. "<img src='images/subject/" . $pm_arr[$i]->getVar('msg_image', 'E') . "' alt='' /></td>\n";
 		$postername = icms_member_user_Object::getUnameFromId($pm_arr[$i]->getVar('from_userid'));
 		echo "<td style='vertical-align: middle; width: 10%; text-align: center;'>";
@@ -82,10 +82,10 @@ if (!is_object(icms::$user)) {
 			echo $icmsConfig['anonymous'];
 		}
 		echo "</td>\n";
-		echo "<td valign='middle'><a href='readpmsg.php?start="
+		echo "<td valign='middle' style='vertical-align: middle;'><a href='readpmsg.php?start="
 		. (int) (($total_messages-$i-1)) . "&amp;total_messages="
 		. (int) $total_messages . "'>" . $pm_arr[$i]->getVar('subject') . "</a></td>";
-		echo "<td style='vertical-align: middle; width: 20%; text-align: center;'>"
+		echo "<td style='vertical-align: middle; width: 30%; text-align: center;'>"
 		. formatTimestamp($pm_arr[$i]->getVar('msg_time')) . "</td></tr>";
 	}
 

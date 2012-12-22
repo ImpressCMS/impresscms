@@ -1,5 +1,8 @@
 <?php
-// $Id$
+// $Id: preferences.php 12064 2012-10-10 14:37:53Z skenow $
+define('_MD_AM_PREF','Preferences');
+define('_MD_AM_PREF_DSC',"ImpressCMS Site Preferences");
+
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
 //if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}

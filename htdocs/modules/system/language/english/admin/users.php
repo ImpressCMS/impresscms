@@ -1,5 +1,8 @@
 <?php
-// $Id$
+// $Id: users.php 12064 2012-10-10 14:37:53Z skenow $
+define('_MD_AM_USER','Edit Users');
+define('_MD_AM_USER_DSC', 'Create, Modify or Delete registered users.');
+
 //%%%%%%	Admin Module Name  Users 	%%%%%
 //if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
@@ -69,7 +72,7 @@ define("_AM_COULD_NOT_DELETE","Could not delete");
 define("_AM_A_USER_WITH_THIS_EMAIL_ADDRESS","A user with this email address");
 define("_AM_ALREADY_EXISTS","already exists");
 
-// $Id$
+// $Id: users.php 12064 2012-10-10 14:37:53Z skenow $
 //%%%%%%	File Name findusers.php 	%%%%%
 
 define("_AM_FINDUS","Find Users");

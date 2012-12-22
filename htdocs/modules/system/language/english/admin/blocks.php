@@ -1,7 +1,10 @@
 <?php
-// $Id$
+// $Id: blocks.php 12064 2012-10-10 14:37:53Z skenow $
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
 //if (!defined('_AM_DBUPDATED')) {if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}}
+
+define('_MD_AM_BKAD','Blocks');
+define('_MD_AM_BKAD_DSC', 'Manage and create blocks used throughout your website.');
 
 //%%%%%%	blocks.php 	%%%%%
 define("_AM_BADMIN","Blocks Administration");

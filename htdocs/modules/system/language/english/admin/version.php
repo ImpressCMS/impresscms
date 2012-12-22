@@ -1,5 +1,8 @@
 <?php
-// $Id$
+// $Id: version.php 12064 2012-10-10 14:37:53Z skenow $
+define('_MD_AM_VRSN','Version Checker');
+define('_MD_AM_VRSN_DSC', 'Use this tool to check your system for updates.');
+
 //%%%%%%	Admin Module Name  Version 	%%%%%
 //if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 define("_AM_VERSION_TITLE", 'ImpressCMS Version Checker');
@@ -20,4 +23,3 @@ define("_AM_VERSION_MYSQL_SYSTEM", 'Your MYSQL Version:');
 define("_AM_VERSION_PHP_SYSTEM", 'Your PHP Version:');
 define("_AM_VERSION_API_SYSTEM", 'Your API name:');
 define("_AM_VERSION_SYSTEM_INFO", 'Click here to view your System information');
-?>

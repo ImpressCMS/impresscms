@@ -1,7 +1,9 @@
 <?php
-// $Id$
+// $Id: groups.php 12064 2012-10-10 14:37:53Z skenow $
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 //if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
+define('_MD_AM_ADGS','Groups');
+define('_MD_AM_ADGS_DSC', 'Manage permissions, members, visibility and access rights of groups of users.');
 
 define("_AM_EDITADG","Edit Groups");
 define("_AM_MODIFY","Modify");
@@ -61,3 +63,9 @@ define('_MD_AM_ID', 'ID');
 //define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
 //define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
 //define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
+
+// Group permission phrases (admin.php language file)
+define('_MD_AM_PERMADDNG', 'Could not add %s permission to %s for group %s');
+define('_MD_AM_PERMADDOK','Added %s permission to %s for group %s');
+define('_MD_AM_PERMRESETNG','Could not reset group permission for module %s');
+define('_MD_AM_PERMADDNGP', 'All parent items must be selected.');

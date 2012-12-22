@@ -1,5 +1,7 @@
 <?php
 include_once 'users.php';
+define('_MD_AM_MLUS', 'Mail Users');
+define('_MD_AM_MLUS_DSC', 'Send mail to users of whole groups - or filter recipients based on matching criteria.');
 
 define("_AM_SENDTOUSERS","Send message to users whose:");
 define("_AM_SENDTOUSERS2","Send to:");

@@ -1,4 +1,7 @@
 <?php
+define('_MD_AM_BKPOSAD','Block Positions');
+define('_MD_AM_BKPOSAD_DSC', 'Manage and create blocks positions that are used within the themes on your website.');
+
 define("_AM_SBLEFT","Side Block - Left");
 define("_AM_SBRIGHT","Side Block - Right");
 define("_AM_CBLEFT","Center Block - Left");
@@ -34,4 +37,3 @@ define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
 define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
 define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
 define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
-?>
