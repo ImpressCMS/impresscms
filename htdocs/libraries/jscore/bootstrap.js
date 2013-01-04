@@ -28,6 +28,7 @@ require(
     jsonpath: 'lib/jsonpath',
     i18nprecompile: 'lib/i18nprecompile',
     json2: 'lib/json2',
+    hoverIntent: 'lib/hoverIntent',
     use: 'util/require-utils/use',
     GA : '//www.google-analytics.com/ga',
     themeBase : icms.config.themeUrl
@@ -45,6 +46,10 @@ require(
     },
     jsonpath: {
       exports: 'jsonPath'
+    },
+    hoverIntent: {
+      deps: ['jquery'],
+      exports: 'hoverIntent'
     }
   },
   hbs : {

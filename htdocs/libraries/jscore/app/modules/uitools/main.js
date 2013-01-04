@@ -34,6 +34,7 @@ define(function(require) {
       $(document).ready(function() {
         module.ui();
         module.helptip();
+        module.checkAll();
         module.modals();
         mediator.publish('uitoolsReady');
       });
@@ -110,6 +111,19 @@ define(function(require) {
           , trigger: 'click'
           , content: _this.closest('label').find('.helptext').html()
         });
+      });
+    }
+
+    , checkAll: function() {
+      $('.checkemallWrapper input').on({
+        change: function() {
+          var _this = $(this);
+          if(_this.is(':checked')) {
+            $(this).closest('.grouped').find('input[type="checkbox"]').attr('checked', true);
+          } else {
+            $(this).closest('.grouped').find('input[type="checkbox"]').attr('checked', false);
+          }
+        }
       });
     }
 
