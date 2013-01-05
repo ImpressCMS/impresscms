@@ -20,7 +20,7 @@ function protector_postcommon()
 
 	// Protector object
 	require_once dirname(dirname(__FILE__)).'/class/protector.php' ;
-	$db =& icms_db_Factory::instance() ;
+	$db = icms_db_Factory::instance() ;
 	$protector =& Protector::getInstance() ;
 	$protector->setConn( $db->conn ) ;
 	$protector->updateConfFromDb() ;
