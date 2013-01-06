@@ -495,8 +495,8 @@ function &icms_getModuleInfo($moduleName = false)
 		else
 		{
 			$hModule = icms::handler('icms_module');
-			if($moduleName != 'icms') {$icmsModules[$moduleName] = & $hModule->getByDirname($moduleName);}
-			else {$icmsModules[$moduleName] = & $hModule->getByDirname('system');}
+			if($moduleName != 'icms') {$icmsModules[$moduleName] = $hModule->getByDirname($moduleName);}
+			else {$icmsModules[$moduleName] = $hModule->getByDirname('system');}
 		}
 	}
 	return $icmsModules[$moduleName];

@@ -11,10 +11,10 @@
 
 /**
  * Symlinks object
- * 
+ *
  * @package		System
  * @subpackage	Symlinks
- */ 
+ */
 class mod_system_Pages extends icms_data_page_Object {
 
 	/**
@@ -37,10 +37,10 @@ class mod_system_Pages extends icms_data_page_Object {
 	 */
 	public function getCustomPageStatus() {
 		if ($this->getVar('page_status') == 1) {
-			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->getVar('page_id') 
+			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->getVar('page_id')
 				. '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="' . _VISIBLE . '"/></a>';
 		} else {
-			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->getVar('page_id') 
+			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->getVar('page_id')
 				. '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL . '/actions/button_cancel.png" alt="' . _VISIBLE . '"/></a>';
 		}
 		return $rtn;
@@ -49,7 +49,7 @@ class mod_system_Pages extends icms_data_page_Object {
 	/**
 	 * Custom control to retrieve parent module for the symlink
 	 * @return	array 	Parent module for the symlink
-	 */ 
+	 */
 	public function getCustomPageModuleid() {
 		$modules = $this->handler->getModulesArray();
 		return $modules[$this->getVar('page_moduleid')];
@@ -59,7 +59,7 @@ class mod_system_Pages extends icms_data_page_Object {
 	 * Retrieve title of the symlink
 	 * @return	string
 	 */
-	public function getAdminViewItemLink() {
+	public function getAdminViewItemLink($onlyUrl = FALSE) {
 		$rtn = $this->getVar('page_title');
 		return $rtn;
 	}
@@ -68,7 +68,7 @@ class mod_system_Pages extends icms_data_page_Object {
 	 * Build a link to the page represented by the symlink, if available
 	 * @return	string
 	 */
-	public function getViewItemLink() {
+	public function getViewItemLink($onlyUrl = FALSE, $withimage = TRUE, $userSide = FALSE) {
 		$url = (substr($this->getVar('page_url', 'e'), 0, 7) == 'http://')
 			? $this->getVar('page_url', 'e')
 			: ICMS_URL . '/' . $this->getVar('page_url', 'e');
@@ -77,7 +77,7 @@ class mod_system_Pages extends icms_data_page_Object {
 		if (!$url) {
 			$ret = '';
 		} else {
-			$ret = '<a href="' . $url . '" alt="' . _PREVIEW . '" title="' . _PREVIEW 
+			$ret = '<a href="' . $url . '" alt="' . _PREVIEW . '" title="' . _PREVIEW
 				. '" rel="external"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
 		}
 
