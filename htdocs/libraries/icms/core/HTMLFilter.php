@@ -57,7 +57,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 *			HTMLPurifier, HTMLLawed etc, for now we just have HTMLPurifier.
 	 * @return   string
 	 **/
-	public function filterHTML($html) {
+	static public function filterHTML($html) {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
 
         if ($icmsConfigPurifier['enable_purifier'] !== 0) {
@@ -87,7 +87,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 *
 	 * @return	object	array list of filter objects
 	 */
-	private function getCustomFilterList() {
+	static private function getCustomFilterList() {
 		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
@@ -113,7 +113,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * Gets Custom Purifier configurations ** this function will improve in time **
 	 * @return  array    $icmsPurifierConf
 	 **/
-	protected function getHTMLFilterConfig() {
+	static protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
         
         $IframeRegExp = '';
