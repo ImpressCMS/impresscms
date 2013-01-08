@@ -49,11 +49,13 @@ $modversion['people']['developers'][] = "[url=http://community.impresscms.org/us
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=106]TheRplima[/url]";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=69]vaughan[/url]";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=340]nekro[/url]";
-
+$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1168]phoenyx[/url]";
+$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
+$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=53]davidl2[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=10]sato-san[/url]";
-
+$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
 $modversion['people']['translators'][] = "";
 
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=372]UnderDog[/url]";

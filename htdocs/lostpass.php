@@ -25,6 +25,9 @@ $code = '';
 
 $filter_get = $filter_post = array('email' => array('email', 'options' => array(0, 0)));
 
+/* set default value for parameters */
+$code = '';
+
 if (!empty($_GET)) {
     $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
     extract($clean_GET);

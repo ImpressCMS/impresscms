@@ -51,14 +51,14 @@ class icms_feeds_Rss {
 		$this->description = htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET);
 		$this->language = _LANGCODE;
 		$this->charset = _CHARSET;
-		$this->pubDate = date(_DATESTRING, time());
-		$this->lastbuild = formatTimestamp(time(), 'rss');
+		$this->pubDate = date('r', time());
+		$this->lastbuild = date('r', time());
 		$this->webMaster = $icmsConfig['adminmail'];
 		$this->channelEditor = $icmsConfig['adminmail'];
 		$this->generator = ICMS_VERSION_NAME;
 		$this->copyright = _COPYRIGHT . ' ' . formatTimestamp(time(), 'Y')
 			. ' ' . htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET);
-		$this->width  = 200;
+		$this->width  = 144;
 		$this->height = 50;
 		$this->ttl    = 60;
 		$this->image = array(

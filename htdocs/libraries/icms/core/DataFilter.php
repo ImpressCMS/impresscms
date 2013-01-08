@@ -1153,7 +1153,7 @@ class icms_core_DataFilter {
                             $data = str_replace('<!-- input filtered -->', '', $data);
                             $data = str_replace('<!-- filtered with htmlpurifier -->', '', $data);
                         }
-						return htmlspecialchars($data, ENT_QUOTES, _CHARSET);
+						return htmlspecialchars($data, ENT_QUOTES, _CHARSET, FALSE);
 					break;
 
                     case 'print':

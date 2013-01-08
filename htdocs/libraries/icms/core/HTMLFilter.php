@@ -60,8 +60,14 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	static public function filterHTML($html) {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
 
+        $fcomment = '<!-- filtered with htmlpurifier -->';
+        
+        $purified = strpos($html, $fcomment);
+        if ($purified !== FALSE) {
+            $html = str_replace($fcomment, '', $html);
+        }
+
         if ($icmsConfigPurifier['enable_purifier'] !== 0) {
-			ICMS_PLUGINS_PATH;
 			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
 			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
 			if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
@@ -74,6 +80,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
             
             $purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
+            
+            $html .= $fcomment;
 		}
         
 		return $html;
@@ -116,8 +124,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	static protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
         
-        $IframeRegExp = '';
-        if ($icmsConfigPurifier['purifier_URI_SafeIframeRegexp'] !== '') {
+        $IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];
+        if ($IframeRegExp !== '') {
             $pos = strpos( $IframeRegExp, '|' );
             if ($pos === FALSE) {
                 $IframeRegExp = '%^' . $IframeRegExp . '%';

@@ -219,7 +219,7 @@ class icms_view_PageBuilder {
 		if ($icmsConfigPersona['editre_block'] == TRUE) {
 			if (icms::$user && count($this->uagroups) > 0) {
 				$url = base64_encode(str_replace(ICMS_URL, '', icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
-				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $bid . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>'
+				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $bid . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT .' '. _BLOCK_ID .' '. $bid .'" alt="' . _EDIT . '"  /></a>'
 					. '<button style="display: none;"><div id="ed_block_' . $bid . '">'
 					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=visible&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png' alt='" . _INVISIBLE . "'  /> " . _INVISIBLE . "</a><br />"
 					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=clone&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png' alt='" . _CLONE . "'  /> " . _CLONE . "</a><br />"
