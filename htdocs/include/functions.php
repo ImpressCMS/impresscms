@@ -10,7 +10,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author		modified by marcan <marcan@impresscms.org>
- * @version	$Id: functions.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version	$Id: functions.php 12074 2012-10-18 18:13:03Z skenow $
  */
 /**
  * The header
@@ -25,6 +25,7 @@ function xoops_header($closehead=true) {
 	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
 	$myts =& icms_core_Textsanitizer::getInstance();
 
+	/** @todo	Move to a separate class::method - HTTP */
 	if(!headers_sent())
 	{
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -32,6 +33,7 @@ function xoops_header($closehead=true) {
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header('Cache-Control: no-store, no-cache, max-age=1, s-maxage=1, must-revalidate, post-check=0, pre-check=0');
 		header("Pragma: no-cache");
+		header('X-Powered-By: ImpressCMS');
 	}
 	echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'._LANGCODE.'" lang="'._LANGCODE.'">
@@ -451,25 +453,17 @@ function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
 
 /**
  * Gets Username from UserID and creates a link to the userinfo (!) page
+ * @deprecated	icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact)
  *
  * @param	int	$userid	The User ID
  * @return	string	The linked username (from userID or "Anonymous")
- * @todo Move to a static class method - User
+ * @todo 	Remove in next major release
  */
 function xoops_getLinkedUnameFromId($userid)
 {
-	$userid = (int) ($userid);
-	if($userid > 0)
-	{
-		$member_handler = icms::handler('icms_member');
-		$user =& $member_handler->getUser($userid);
-		if(is_object($user))
-		{
-			$linkeduser = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$userid.'">'.$user->getVar('uname').'</a>';
-			return $linkeduser;
-		}
-	}
-	return $GLOBALS['icmsConfig']['anonymous'];
+	icms_core_Debug::setDeprecated("icms_member_user_Handler::getUserLink", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
+	return icms_member_user_Handler::getUserLink($userid);
+
 }
 /**
  * Get the icmsModule object of a specified module
@@ -882,11 +876,19 @@ function icms_sanitizeAdsenses_callback($matches) {
  * @return array of tables used in the module
  * @todo Move to a static class method - Module
  */
-function icms_getTablesArray($moduleName, $items)
-{
+function icms_getTablesArray($moduleName, $items) {
 	$ret = array();
-	if (is_array($items))
-	foreach($items as $item) {$ret[] = $moduleName.'_'.$item;}
+	if (is_array($items)) {
+		foreach($items as $item) {
+			//$table = icms::handler('mod_' . $moduleName . '_' . ucfirst($item))->table;
+			$table = icms_getModuleHandler($item, $moduleName, NULL, TRUE)->table;
+			if (empty($table)) {
+				$ret[] = $moduleName . '_' . $item;
+			} else {
+				$ret[] = $table;
+			}
+		}
+	}
 	return $ret;
 }
 
@@ -1921,29 +1923,35 @@ function one_wordwrap($string,$width=false){
 }
 /**
  * Adds required jQuery files to header for Password meter.
+ *
+ * @param	string	$password_fieldclass	element id for the password field
+ * @param	string	$username_fieldid	element id for the username field
+ *
+ * @param	string	$password_fieldclass	element id for the password field
+ * @param	string	$username_fieldid	element id for the username field
  * @todo Move to a static class method - Password
  */
-function icms_PasswordMeter(){
+function icms_PasswordMeter($password_fieldclass = "password_adv", $username_fieldid = "uname"){
 	global $xoTheme, $icmsConfigUser;
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
-	$xoTheme->addScript('', array('type' => ''), '
+	$xoTheme->addScript('', array('type' => 'text/javascript'), '
 				$(document).ready( function() {
-					$.fn.shortPass = "'._CORE_PASSLEVEL1.'";
-					$.fn.badPass = "'._CORE_PASSLEVEL2.'";
-					$.fn.goodPass = "'._CORE_PASSLEVEL3.'";
-					$.fn.strongPass = "'._CORE_PASSLEVEL4.'";
-					$.fn.samePassword = "'._CORE_UNAMEPASS_IDENTIC.'";
+					$.fn.shortPass = "' . _CORE_PASSLEVEL1 . '";
+					$.fn.badPass = "' . _CORE_PASSLEVEL2 . '";
+					$.fn.goodPass = "' . _CORE_PASSLEVEL3 . '";
+					$.fn.strongPass = "' . _CORE_PASSLEVEL4 . '";
+					$.fn.samePassword = "' . _CORE_UNAMEPASS_IDENTIC . '";
 					$.fn.resultStyle = "";
-				$(".password_adv").passStrength({
-					minPass: '.$icmsConfigUser['minpass'].',
-					strongnessPass: '.$icmsConfigUser['pass_level'].',
+				$(".' . $password_fieldclass . '").passStrength({
+					minPass: ' . $icmsConfigUser['minpass'] . ',
+					strongnessPass: ' . $icmsConfigUser['pass_level'] . ',
 					shortPass: 		"top_shortPass",
 					badPass:		"top_badPass",
 					goodPass:		"top_goodPass",
 					strongPass:		"top_strongPass",
 					baseStyle:		"top_testresult",
-					userid:			"#uname",
+					userid:			"#' . $username_fieldid . '",
 					messageloc:		0
 				});
 			});

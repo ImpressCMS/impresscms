@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @since		1.3
- * @version		SVN: $Id: menu.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id: menu.php 12064 2012-10-10 14:37:53Z skenow $
  */
 
 // Loading System Configuration Links
@@ -29,9 +29,9 @@ $admin_dir = ICMS_ROOT_PATH . '/modules/system/admin';
 $dirlist = icms_core_Filesystem::getDirList($admin_dir);
 
 icms_loadLanguageFile('system', 'admin');
-asort($dirlist);
 $adminmenu = array();
 foreach ($dirlist as $file) {
+	icms_loadLanguageFile('system', $file, TRUE);
 	$mod_version_file = 'icms_version.php';
 	include $admin_dir . '/' . $file . '/' . $mod_version_file;
 	if ($modversion['hasAdmin']) {

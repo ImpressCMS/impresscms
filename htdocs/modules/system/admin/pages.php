@@ -13,11 +13,15 @@
  * @version		SVN: $Id: pages.php 11610 2012-02-28 03:53:55Z skenow $
  */
 
-/* set post and get filters before including admin_header */
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array('page_id' => 'int');
+
 $filter_post = array('page_id' => 'int');
+
+/* set default values for variables. $op and $fct are handled in the header */
 $page_id = 0;
 
+/** common header for the admin functions */
 include 'admin_header.php';
 
 /**

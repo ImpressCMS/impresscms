@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Member
  * @subpackage	User
- * @version		SVN: $Id: Handler.php 11761 2012-06-29 12:00:13Z m0nty $
+ * @version		SVN: $Id: Handler.php 12074 2012-10-18 18:13:03Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or exit();
@@ -374,13 +374,13 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Return a linked username or full name for a specific $userid
 	 *
-	 * @param integer $uid uid of the related user
-	 * @param bool $name TRUE to return the fullname, FALSE to use the username; if TRUE and the user does not have fullname, username will be used instead
-	 * @param array $users array already containing icms_member_user_Object objects in which case we will save a query
-	 * @param bool $withContact TRUE if we want contact details to be added in the value returned (PM and email links)
-	 * @return string name of user with a link on his profile
+	 * @param	integer	$uid	uid of the related user
+	 * @param	boolean	$name	TRUE to return the fullname, FALSE to use the username; if TRUE and the user does not have fullname, username will be used instead
+	 * @param	array	$users	array already containing icms_member_user_Object objects in which case we will save a query
+	 * @param	boolean	$withContact TRUE if we want contact details to be added in the value returned (PM and email links)
+	 * @param	boolean	$isAuthor	Set this to TRUE if you want the rel='author' attribute added to the link
 	 */
-	static public function getUserLink($uid, $name = FALSE, $users = array(), $withContact = FALSE) {
+	static public function getUserLink($uid, $name = FALSE, $users = array(), $withContact = FALSE, $isAuthor = FALSE) {
 		global $icmsConfig;
 
 		if (!is_numeric($uid)) return $uid;
@@ -395,6 +395,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 			}
 
 			if (is_object($user)) {
+				$author = $isAuthor ? " rel='author'" : "";
 				$fullname = '';
 				$linkeduser = '';
 
@@ -402,7 +403,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				$fullname2 = $user->getVar('name');
 				if (($name) && !empty($fullname2)) $fullname = $user->getVar('name');
 				if (!empty($fullname)) $linkeduser = $fullname . "[";
-                $linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $uid . '">';
+                $linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $uid . '"' . $author . '>';
 				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username) . "</a>";
 				if (!empty($fullname)) $linkeduser .= "]";
 
@@ -445,7 +446,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Retrieve a list of users based on passed criteria
-	 * 
+	 *
 	 * @param	object	$criteria criteria for finding users (@see icms_db_criteria_Compo)
 	 * @return	array	An array of usernames, with the userid as the key
 	 */
@@ -456,5 +457,5 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 			$ret[$i] = $users[$i]->getVar('uname');
 		}
 		return $ret;
-	}	
+	}
 }

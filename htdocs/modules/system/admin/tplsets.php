@@ -10,10 +10,11 @@
  * @version		SVN: $Id: tplsets.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
-/* set filter types, if not strings */
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array(
 	'html' => 'html',
 );
+
 $filter_post = array(
 	'html' => 'html',
 );
@@ -22,6 +23,7 @@ $filter_post = array(
 
 /** common header for the admin functions */
 include 'admin_header.php';
+$tplset_handler = $icms_admin_handler;
 
 if ($op == '') $op = 'list';
 
@@ -30,8 +32,6 @@ if ($op == 'edittpl_go') {
 		$op = 'previewtpl';
 	}
 }
-
-$tplset_handler = $icms_admin_handler;
 
 $icmsAdminTpl = new icms_view_Tpl();
 switch ($op) {

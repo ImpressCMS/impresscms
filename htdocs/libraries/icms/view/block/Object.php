@@ -8,7 +8,7 @@
  * @package		View
  * @subpackage	Block
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id: Object.php 11394 2011-09-22 19:29:50Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -74,13 +74,18 @@ class icms_view_block_Object extends icms_ipf_Object {
 		switch ($format) {
 			case 'S':
 				if ($c_type == 'H') {
-					return str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
+                    $content = $this->getVar('content', 'n');
+                    $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+                    $content = str_replace(XOOPS_DB_SALT, '', $content);
+					return $content;
 				} elseif ($c_type == 'P') {
 					ob_start();
 					echo eval($this->getVar('content', 'n'));
 					$content = ob_get_contents();
 					ob_end_clean();
-					return str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+                    $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+                    $content = str_replace(XOOPS_DB_SALT, '', $content);
+					return $content;
 				} elseif ($c_type == 'S') {
 					$myts =& icms_core_Textsanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));

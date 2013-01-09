@@ -8,7 +8,7 @@
 * @author       vaughan montgomery (vaughan@impresscms.org)
 * @author       ImpressCMS Project
 * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
-* @version      SVN: $Id: DataFilter.php 11650 2012-03-20 03:26:26Z skenow $
+* @version      SVN: $Id: DataFilter.php 12052 2012-10-06 14:29:08Z skenow $
 **/
 /**
  *
@@ -224,6 +224,7 @@ class icms_core_DataFilter {
 	*					'input' = Filters HTML for input to DB
 	*					'output' = Filters HTML for rendering output
 	*					'print' = Filters HTML for output to Printer
+    *                   'edit' = used for edit content forms 
 	*				TEXT:
 	*					'input' = Filters plain text for input to DB
 	*					'output' = Filters plain text for rendering output
@@ -324,7 +325,7 @@ class icms_core_DataFilter {
 				break;
 
 				case 'html':
-					$valid_options1 = array('input', 'output', 'print');
+					$valid_options1 = array('input', 'output', 'print', 'edit');
 					$options2 = '';
 					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 						$options1 = 'input';
@@ -400,10 +401,10 @@ class icms_core_DataFilter {
 		icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
 		$text = self::htmlSpecialChars($text);
-
 		$text = self::stripSlashesGPC($text);
 
 		icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
+        
 		return $text;
 	}
 
@@ -421,7 +422,11 @@ class icms_core_DataFilter {
 	static public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
 		icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
-		$text = self::htmlSpecialChars($text);
+        // neccessary for the time being until we rework the IPF & Data Object Types in 2.0
+        $text = str_replace('<!-- input filtered -->', '', $text);
+        $text = str_replace('<!-- filtered with htmlpurifier -->', '', $text);
+
+        $text = self::htmlSpecialChars($text);
 		$text = self::codePreConv($text, $icode);
 		$text = self::makeClickable($text);
 		if ($smiley != 0) {
@@ -438,7 +443,7 @@ class icms_core_DataFilter {
 			$text = self::nl2Br($text);
 		}
 		$text = self::codeConv($text, $icode, $image);
-
+        
 		icms::$preload->triggerEvent('afterFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 		return $text;
 	}
@@ -452,27 +457,26 @@ class icms_core_DataFilter {
 	 * @param   bool	$image  allow inline images?
 	 * @return  string
 	 **/
-	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1) {
-		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, $smiley, $icode, $image));
+	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1, $br = 0) {
+		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 
-		$html = self::codePreConv($html, $icode);
-		$html = self::makeClickable($html);
-		if ($smiley != 0) {
-			$html = self::smiley($html);
-		}
-		if ($icode != 0) {
-			if ($image != 0) {
-				$html = self::codeDecode($html);
-			} else {
-				$html = self::codeDecode($html, 0);
-			}
-		}
-
-		$html = self::codeConv($html, $icode, $image);
+        $html = str_replace('<!-- input filtered -->', '', $html);
+        
+		$html = self::codePreConv($html, 1);
+		$html = self::smiley($html);
+		$html = self::codeDecode($html);
+		$html = self::codeConv($html, 1, 1);
 
 		$html = icms_core_HTMLFilter::filterHTML($html);
 
-		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, $smiley, $icode, $image));
+        $purified = strpos($html, '<!-- filtered with htmlpurifier -->');
+        if ($purified === FALSE && $br == 1) {
+			$html = self::nl2Br($html);
+		}
+
+        $html .= '<!-- input filtered -->';
+
+		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 		return $html;
 	}
 
@@ -485,18 +489,33 @@ class icms_core_DataFilter {
 	 * @param   bool	$icode  allow icmscode?
 	 * @return  string
 	 **/
-	static public function filterHTMLdisplay($html, $icode = 1) {
-		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $icode));
+	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
+		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
+        
+        $ifiltered = strpos($html, '<!-- input filtered -->');
+        if ($ifiltered === FALSE) {
+            $html = self::codePreConv($html, 1);
+            $html = self::smiley($html);
+            $html = self::codeDecode($html);
+            $html = self::codeConv($html, 1, 1);
 
-		if ($icode !== 0) {
-			$html = self::codePreConv($html, $icode);
-			$html = self::makeClickable($html);
-			$html = self::smiley($html);
-			$html = self::codeDecode($html);
-			$html = self::codeConv($html, 1, 1);
-		}
+            $html = icms_core_HTMLFilter::filterHTML($html);
+            
+            $html .= '<!-- warning! output filtered only -->';
+        
+            $purified = strpos($html, '<!-- filtered with htmlpurifier -->');
+            if ($purified === FALSE || $br = 1) {
+            	$html = self::nl2Br($html);
+            }
+        }
+        
+        $html = self::makeClickable($html);
+        $html = self::censorString($html);
+        
+//        $html = str_replace('<!-- input filtered -->', '', $html);
+//        $html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
 
-		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, $icode));
+		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
 		return $html;
 	}
 
@@ -1128,7 +1147,16 @@ class icms_core_DataFilter {
 						return self::filterHTMLdisplay($data);
 					break;
 
-					case 'print':
+					case 'edit':
+                        $filtered = strpos($data, '<!-- input filtered -->');
+                        if ($filtered !== FALSE) {
+                            $data = str_replace('<!-- input filtered -->', '', $data);
+                            $data = str_replace('<!-- filtered with htmlpurifier -->', '', $data);
+                        }
+						return htmlspecialchars($data, ENT_QUOTES, _CHARSET);
+					break;
+
+                    case 'print':
 						// do nothing yet
 					break;
 				}

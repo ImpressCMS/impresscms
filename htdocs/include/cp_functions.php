@@ -20,7 +20,7 @@
 /** Be sure this is accessed correctly */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /** Creates constant indicating this file has been loaded */
-define ('XOOPS_CPFUNC_LOADED', 1);
+define('XOOPS_CPFUNC_LOADED', 1);
 /** Load the template class */
 
 /**
@@ -32,7 +32,7 @@ define ('XOOPS_CPFUNC_LOADED', 1);
  * @author rowd (from the XOOPS Community)
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
-function icms_cp_header(){
+function icms_cp_header() {
 	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule,
 		$xoopsModule, $xoopsTpl, $xoopsOption, $icmsTheme, $xoTheme,
 		$icmsConfigMultilang, $icmsAdminTpl;
@@ -54,8 +54,8 @@ function icms_cp_header(){
 	$icmsAdminTpl->assign('xoops_url', ICMS_URL);
 	$icmsAdminTpl->assign('icms_sitename', $icmsConfig['sitename']);
 
-	if ( @$xoopsOption['template_main'] ) {
-		if ( false === strpos( $xoopsOption['template_main'], ':' ) ) {
+	if (@$xoopsOption['template_main']) {
+		if (false === strpos($xoopsOption['template_main'], ':')) {
 			$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];
 		}
 	}
@@ -70,8 +70,8 @@ function icms_cp_header(){
 
 	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array(
 		'contentTemplate'	=> @$xoopsOption['template_main'],
-		'canvasTemplate'	=> 'theme' . (( file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')
-			|| file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') ) ?'_admin':'') . '.html',
+		'canvasTemplate'	=> 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')
+			|| file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')) ?'_admin':'') . '.html',
 		'plugins' 			=> array('icms_view_PageBuilder'),
 		'folderName'		=> $icmsConfig['theme_admin_set']
 	));
@@ -85,7 +85,7 @@ function icms_cp_header(){
 	/**
 	 * Loading admin dropdown menus
 	 */
-	if (! file_exists ( ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php' )) {
+	if (! file_exists(ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php')) {
 		xoops_module_write_admin_menu(impresscms_get_adminmenu());
 	}
 
@@ -94,11 +94,11 @@ function icms_cp_header(){
 
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	$module_handler = icms::handler('icms_module');
-	foreach ( $admin_menu as $k => $navitem ) {
+	foreach ($admin_menu as $k => $navitem) {
 		 //Getting array of allowed modules to use in admin home
 		if ($navitem ['id'] == 'modules') {
 			$perm_itens = array();
-			foreach ( $navitem ['menu'] as $item ) {
+			foreach ($navitem ['menu'] as $item) {
 				$module = $module_handler->getByDirname($item['dir']);
 				$admin_perm = $moduleperm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
 				if ($admin_perm) {
@@ -133,7 +133,7 @@ function icms_cp_header(){
 			$adminsubmenuorder = 1;
 			$adminsubsubmenuorder = 1;
 			if ($adminmenuorder == 1) {
-				foreach ( $navitem ['menu'] as $k => $sortarray ) {
+				foreach ($navitem ['menu'] as $k => $sortarray) {
 					$column[] = $sortarray['title'];
 					if (isset($sortarray['subs']) && count($sortarray['subs']) > 0 && $adminsubmenuorder) {
 						asort($navitem['menu'][$k]['subs']);
@@ -149,7 +149,7 @@ function icms_cp_header(){
 				//sort arrays after loop
 				array_multisort($column, SORT_ASC, $navitem['menu']);
 			}
-			foreach ( $navitem['menu'] as $item ) {
+			foreach ($navitem['menu'] as $item) {
 				foreach ($item['subs'] as $key => $subitem) {
 					if ($all_ok == false && !in_array($subitem['id'], $ok_syscats)) {
 						// remove the subitem
@@ -194,7 +194,7 @@ function icms_cp_header(){
 						$reversed_sysprefs[] = $sysprefs[$i];
 					}
 				}
-				foreach ( $reversed_sysprefs as $k ) {
+				foreach ($reversed_sysprefs as $k) {
 					$icmsAdminTpl->append(
 						'mod_options',
 						array(
@@ -205,7 +205,7 @@ function icms_cp_header(){
 				}
 			}
 		} else {
-			foreach ( $mods as $mod ) {
+			foreach ($mods as $mod) {
 				if ($mod['dir'] == $icmsModule->getVar('dirname')) {
 					$m = $mod; //Getting info of the current module
 					break;
@@ -217,7 +217,7 @@ function icms_cp_header(){
 						$reversed_module_admin_menu[] = $m['subs'][$i];
 					}
 				}
-				foreach ( $reversed_module_admin_menu as $k ) {
+				foreach ($reversed_module_admin_menu as $k) {
 					$icmsAdminTpl->append(
 						'mod_options',
 						array('title' => $k ['title'], 'link' => $k ['link'],
@@ -234,7 +234,7 @@ function icms_cp_header(){
 		$icmsAdminTpl->assign('lang_prefs', _PREFERENCES);
 	}
 
-	if ( @is_object($xoTheme->plugins['icms_view_PageBuilder']) ) {
+	if (@is_object($xoTheme->plugins['icms_view_PageBuilder'])) {
 		$aggreg =& $xoTheme->plugins['icms_view_PageBuilder'];
 
 		$icmsAdminTpl->assign_by_ref('xoAdminBlocks', $aggreg->blocks);
@@ -289,17 +289,17 @@ function icms_cp_footer() {
 		header('Cache-Control: private, no-cache');
 		header('Pragma: no-cache');
 	}
-	if ( isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate ) {
+	if (isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate) {
 		trigger_error("xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING);
-		if ( false === strpos( $xoopsOption['template_main'], ':' ) ) {
+		if (false === strpos($xoopsOption['template_main'], ':')) {
 			$xoTheme->contentTemplate = 'db:' . $xoopsOption['template_main'];
 		} else {
 			$xoTheme->contentTemplate = $xoopsOption['template_main'];
 		}
 	}
 
-	icms::$logger->stopTime( 'XOOPS output init' );
-	icms::$logger->startTime( 'Module display' );
+	icms::$logger->stopTime('XOOPS output init');
+	icms::$logger->startTime('Module display');
 
 	$xoTheme->render();
 
@@ -320,8 +320,8 @@ function themecenterposts($title, $content) {
  * @return array (content of admin panel dropdown menus)
  */
 function impresscms_get_adminmenu() {
-	$admin_menu = array ( );
-	$modules_menu = array ( );
+	$admin_menu = array();
+	$modules_menu = array();
 	$systemadm = false;
 
 	#########################################################################
@@ -364,9 +364,9 @@ function impresscms_get_adminmenu() {
 	# System Preferences menu
 	#########################################################################
 	$module_handler = icms::handler('icms_module');
-	$mod = & $module_handler->getByDirname ( 'system' );
-	$menu = array ( );
-	foreach ( $mod->getAdminMenu () as $lkn ) {
+	$mod = & $module_handler->getByDirname('system');
+	$menu = array();
+	foreach ($mod->getAdminMenu() as $lkn) {
 		$lkn['dir'] = 'system';
 		$menu[] = $lkn;
 	}
@@ -390,7 +390,7 @@ function impresscms_get_adminmenu() {
 	$criteria->add(new icms_db_criteria_Item('isactive', 1));
 	$modules = $module_handler->getObjects($criteria);
 	usort($modules, 'impresscms_sort_adminmenu_modules');
-	foreach ( $modules as $module ) {
+	foreach ($modules as $module) {
 		$rtn = array();
 		$inf = & $module->getInfo();
 		$rtn['link'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . (isset($inf['adminindex']) ? $inf['adminindex'] : '');
@@ -405,8 +405,8 @@ function impresscms_get_adminmenu() {
 		$rtn['absolute'] = 1;
 		$rtn['subs'] = array();
 		$module->loadAdminMenu();
-		if (is_array($module->adminmenu) && count ($module->adminmenu) > 0) {
-			foreach ( $module->adminmenu as $item ) {
+		if (is_array($module->adminmenu) && count($module->adminmenu) > 0) {
+			foreach ($module->adminmenu as $item) {
 				$item['link'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $item ['link'];
 				$rtn['subs'][] = $item;
 			}
@@ -452,7 +452,7 @@ function impresscms_get_adminmenu() {
 	);
 
 
-	if ( _LANGCODE != 'en' ){
+	if (_LANGCODE != 'en') {
 		$menu[] = array(
 			'link' => _IMPRESSCMS_LOCAL_SUPPORT,
 			'title' => _IMPRESSCMS_LOCAL_SUPPORT_TITLE,

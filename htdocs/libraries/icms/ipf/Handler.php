@@ -154,7 +154,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param string $keyname Name of the table key that uniquely identify each {@link icms_ipf_Object}
 	 * @param string $idenfierName Name of the field which properly identify the {@link icms_ipf_Object}
 	 * @param string $summaryName Name of the field which will be use as a summary for the object
-	 * @param string $modulename Name of the module controlling this object
+	 * @param string $modulename Directory name of the module controlling this object
 	 * @return object
 	 */
 	public function __construct(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename) {

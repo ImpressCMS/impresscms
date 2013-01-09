@@ -35,7 +35,7 @@ function displayGroups() {
 			if (ICMS_GROUP_ADMIN == $id || ICMS_GROUP_USERS == $id || ICMS_GROUP_ANONYMOUS == $id) {
 				echo '</td></tr>';
 			} else {
-				echo '&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id=' . (int) $id . '">' . _AM_DELETE . '</a></td></tr>';
+				echo '&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id=' . (int) $id . '">' . _DELETE . '</a></td></tr>';
 			}
 		}
 	}

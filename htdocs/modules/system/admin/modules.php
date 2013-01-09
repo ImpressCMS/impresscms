@@ -8,12 +8,15 @@
  * @version		SVN: $Id: modules.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
-/* set filters before including admin_header */
-$mid = 0;
-
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array('mid' => 'int');
+
 $filter_post = array('mid' => 'int');
 
+/* set default values for variables. $op and $fct are handled in the header */
+$mid = 0;
+
+/** common header for the admin functions */
 include "admin_header.php";
 
 !empty($op) || $op = 'list';
@@ -58,7 +61,7 @@ switch ($op) {
 		. "<input type='hidden' name='fct' value='modules' />"
 		. "<input type='hidden' name='op' value='submit' />"
 		. "<table width='100%' border='0' cellspacing='1' class='outer'>"
-		. "<tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
+		. "<tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
 		$mcount = 0;
 		foreach ($module as $mid) {
 			if ($mcount % 2 != 0) {

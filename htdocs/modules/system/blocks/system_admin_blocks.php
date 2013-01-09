@@ -108,6 +108,7 @@ function b_system_admin_cp_show() {
 		if (file_exists($admin_dir . '/' . $file . '/icms_version.php')) {
 			$mod_version_file = 'icms_version.php';
 		}
+		icms_loadLanguageFile('system', $file, TRUE);
 		include $admin_dir . '/' . $file . '/' . $mod_version_file;
 		if ($modversion['hasAdmin']) {
 			$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
@@ -231,6 +232,7 @@ function b_system_admin_cp_new_show() {
 		if (file_exists($admin_dir . '/' . $file . '/icms_version.php')) {
 			$mod_version_file = 'icms_version.php';
 		}
+		icms_loadLanguageFile('system', $file, TRUE);
 		include $admin_dir . '/' . $file . '/' . $mod_version_file;
 		if ($modversion['hasAdmin']) {
 			$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;

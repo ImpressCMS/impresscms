@@ -1,8 +1,11 @@
 <?php
-// $Id: preferences.php 11746 2012-06-27 12:29:48Z m0nty $
+// $Id: preferences.php 12064 2012-10-10 14:37:53Z skenow $
+define('_MD_AM_PREF','Preferences');
+define('_MD_AM_PREF_DSC',"ImpressCMS Site Preferences");
+
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
-if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
+//if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_MD_AM_SITEPREF","Site Preferences");
 define("_MD_AM_SITENAME","Site name");
@@ -37,13 +40,15 @@ define("_MD_AM_SESSNAME","Session name");
 define("_MD_AM_SESSNAMEDSC","The name of session (Valid only when 'use custom session' is enabled)");
 define("_MD_AM_SESSEXPIRE","Session expiration");
 define("_MD_AM_SESSEXPIREDSC","Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled. Works only when you are using PHP4.2.0 or later.)");
+define("_MD_AM_MYIP","Your IP address");
+define("_MD_AM_MYIPDSC","");
 define("_MD_AM_ALWDHTML","HTML tags allowed in all posts.");
 define("_MD_AM_INVLDMINPASS","Invalid value for minimum length of password.");
 define("_MD_AM_INVLDUCOOK","Invalid value for usercookie name.");
 define("_MD_AM_INVLDSCOOK","Invalid value for sessioncookie name.");
 define("_MD_AM_INVLDSEXP","Invalid value for session expiration time.");
 define("_MD_AM_ADMNOTSET","Admin mail is not set.");
-define("_MD_AM_YES","Yes");
+//define("_MD_AM_YES","Yes");
 define("_MD_AM_NO","No");
 define("_MD_AM_DONTCHNG","Don't change!");
 define("_MD_AM_REMEMBER","Remember to chmod 666 this file in order to let the system write to it properly.");
@@ -691,8 +696,6 @@ define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM","Allow Custom Filters");
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","Allow Custom Filters?<br /><br />if enabled this will allow you to use custom filters located in;<br />'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
 
 // added in 1.3.2
-define("_MD_AM_HELP_TIP","View help text");
-
 define("_MD_AM_PURIFIER_HTML_SAFEIFRAME","Enable Safe Iframes");
 define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC","Whether or not to permit Iframes in documents, with a number of extra security features added to prevent script execution. You must add safe domains in Safe Iframes URLs before enabling!.");
 define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP","Safe Iframes URLs");

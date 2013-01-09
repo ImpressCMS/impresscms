@@ -20,31 +20,35 @@
  * @package		Core
  * @subpackage	Textsanitizer
  *
+ * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @author		Goghs Cheng
- * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
 class icms_core_Textsanitizer {
+
 	/**
 	 * @public	array
 	 */
 	public $displaySmileys = array();
+
 	/**
 	 * @public	array
 	 */
 	public $allSmileys = array();
+
 	/**
 	 *
 	 */
 	public $censorConf;
+
 	/**
 	 * Constructor of this class
 	 * Gets allowed html tags from admin config settings
 	 * <br> should not be allowed since nl2br will be used
 	 * when storing data.
 	 *
-	 * @todo Sofar, this does nuttin' ;-)
-	 **/
+	 * @todo So far, this does nuttin' ;-)
+	 */
 	public function __construct() {}
 
 	/**
@@ -102,46 +106,29 @@ class icms_core_Textsanitizer {
 	 * @param   bool	$image  allow inline images?
 	 * @param   bool	$br	 convert linebreaks?
 	 * @return  string
-	 **/
+	 */
 	public function displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
-		// Before this can be deprecated, the events for dispalyTarea need to be added, first
+		// Before this can be deprecated, the events for displayTarea need to be added, first
 		//icms_core_Debug::setDeprecated('icms_core_DataFilter::checkVar - type = text or html, $options1 = input or output', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+
+		/* trigger all the events tied to the beforeDisplayTarea event */
 		icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
-		if ($html != 1) {
-			$text = icms_core_DataFilter::htmlSpecialChars($text);
+		if ($html = 0){
+			$text = icms_core_DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
+		} else {
+			$text = icms_core_DataFilter::filterHTMLdisplay($text, $xcode, $br);
 		}
 
-		$text = icms_core_DataFilter::codePreConv($text, $xcode);
-		$text = icms_core_DataFilter::makeClickable($text);
-		if ($smiley != 0) {
-			$text = icms_core_DataFilter::smiley($text);
-		}
-		if ($xcode != 0) {
-			if ($image != 0) {
-				$text = icms_core_DataFilter::codeDecode($text);
-			} else {
-				$text = icms_core_DataFilter::codeDecode($text, 0);
-			}
-		}
-		$config_handler = icms::handler('icms_config');
-		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
-		if ($br !== 0 || ($html !== 0 && $icmsConfigPurifier['enable_purifier'] !== 1)) {
-			$text = icms_core_DataFilter::nl2Br($text);
-		}
-		$text = icms_core_DataFilter::codeConv($text, $xcode, $image);
-
-		if ($html != 0 && $icmsConfigPurifier['enable_purifier'] !== 0) {
-			$text = icms_core_DataFilter::checkVar($text, 'html');
-		}
-
-		// ################# Preload Trigger afterDisplayTarea ##############
+		/* trigger all events tied to the afterDisplayTarea event */
 		icms::$preload->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 		return $text;
 	}
 
 	/**
 	 * Filters textarea form data submitted for preview
+	 *
+	 * The only difference between this and displayTarea is the need to deal with $_POST input instead of database output
 	 *
 	 * @param   string  $text
 	 * @param   bool	$html   allow html?
@@ -150,40 +137,23 @@ class icms_core_Textsanitizer {
 	 * @param   bool	$image  allow inline images?
 	 * @param   bool	$br	 convert linebreaks?
 	 * @return  string
-	 **/
+	 */
 	public function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
 		 /* @deprecated Use icms_core_DataFilter::checkVar, instead - the events for previewTarea need to be added, first */
 		//icms_core_Debug::setDeprecated('icms_core_DataFilter::checkVar - type = text or html, $options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+
+		/* trigger all the events tied to the beforePreviewTarea event */
 		icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		$text = icms_core_DataFilter::stripSlashesGPC($text);
-		if ($html != 1) {
-			$text = icms_core_DataFilter::htmlSpecialChars($text);
+
+		if ($html = 0) {
+			$text = icms_core_DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
+		} else {
+			$text = icms_core_DataFilter::filterHTMLdisplay($text, $xcode, $br);
 		}
 
-		$text = icms_core_DataFilter::codePreConv($text, $xcode);
-		$text = icms_core_DataFilter::makeClickable($text);
-		if ($smiley != 0) {
-			$text = icms_core_DataFilter::smiley($text);
-		}
-		if ($xcode != 0) {
-			if ($image != 0) {
-				$text = icms_core_DataFilter::codeDecode($text);
-			} else {
-				$text = icms_core_DataFilter::codeDecode($text, 0);
-			}
-		}
-		$config_handler = icms::handler('icms_config');
-		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
-		if ($br !== 0 || ($html !== 0 && $icmsConfigPurifier['enable_purifier'] !== 1)) {
-			$text = icms_core_DataFilter::nl2Br($text);
-		}
-		$text = icms_core_DataFilter::codeConv($text, $xcode, $image);
-
-		if ($html != 0 && $icmsConfigPurifier['enable_purifier'] !== 0) {
-			$text = icms_core_DataFilter::checkVar($text, 'html');
-		}
-
+		/* trigger all the events tied to the afterPreviewTarea event */
 		icms::$preload->triggerEvent('afterPreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		return $text;

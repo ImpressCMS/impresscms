@@ -25,6 +25,7 @@ $groups = icms::$user->getGroups();
 
 foreach ($dirlist as $file) {
 	if (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $file . '/icms_version.php')) {
+		icms_loadLanguageFile('system', $file, TRUE);
 		include ICMS_MODULES_PATH . '/system/admin/' . $file . '/icms_version.php';
 	}
 	if (!empty($modversion['category'])

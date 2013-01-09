@@ -10,11 +10,16 @@
  * @author		marcan <marcan@impresscms.org>
  * @version		SVN: $Id: customtag.php 11686 2012-04-10 02:50:48Z skenow $
  */
-/* set get and post filters before including admin_header */
+
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array('customtagid' => 'int');
+
 $filter_post = array('customtagid' => 'int');
+
+/* set default values for variables. $op and $fct are handled in the header */
 $customtagid = 0;
 
+/** common header for the admin functions */
 include 'admin_header.php';
 
 /**

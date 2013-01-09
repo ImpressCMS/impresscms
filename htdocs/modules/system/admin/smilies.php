@@ -9,27 +9,11 @@
  * @version		SVN: $Id: smilies.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
-/* user input variables - sanitize these properly!
- *
- * GET variables
- * (int) id, default 'SmilesAdmin'
- * (str) op
- *
- * POST variables
- * (str) op, default 'SmilesAdmin'
- * (int|arr) smile_id
- * (arr) smile_display
- * (arr) old_display
- * (str) xoops_upload_file
- * (str) smile_code
- * (str) smile_desc
- * (int) id
- */
-
-/* set filter types, if not strings */
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array(
 	'id' => 'int',
 );
+
 $filter_post = array(
 	'id' => 'int',
 	'smile_id' => 'int',
@@ -63,7 +47,7 @@ switch($op) {
 				$db->query("UPDATE " . $db->prefix('smiles') . " SET display='" . (int) $smiledisplay . "' WHERE id ='" . $smileid . "'");
 			}
 		}
-		redirect_header('admin.php?fct=smilies', 2, _AM_DBUPDATED);
+		redirect_header('admin.php?fct=smilies', 2, _ICMS_DBUPDATED);
 		break;
 
 	case "SmilesAdd":
@@ -91,7 +75,7 @@ switch($op) {
 		}
 
 		if (!isset($err)) {
-			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin', 2, _AM_DBUPDATED);
+			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin', 2, _ICMS_DBUPDATED);
 		} else {
 			icms_cp_header();
 			icms_core_Message::error($err);
@@ -140,7 +124,7 @@ switch($op) {
 		}
 
 		if (!isset($err)) {
-			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin', 2, _AM_DBUPDATED);
+			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin', 2, _ICMS_DBUPDATED);
 		} else {
 			icms_cp_header();
 			icms_core_Message::error($err);
@@ -163,7 +147,7 @@ switch($op) {
 		}
 		$sql = sprintf("DELETE FROM %s WHERE id = '%u'", $db->prefix('smiles'), $id);
 		$db->query($sql);
-		redirect_header("admin.php?fct=smilies&amp;op=SmilesAdmin", 2, _AM_DBUPDATED);
+		redirect_header("admin.php?fct=smilies&amp;op=SmilesAdmin", 2, _ICMS_DBUPDATED);
 		break;
 
 	case "SmilesAdmin":

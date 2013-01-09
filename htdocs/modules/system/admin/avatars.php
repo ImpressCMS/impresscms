@@ -9,13 +9,15 @@
  * @version		SVN: $Id: avatars.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
-$start = $user_id = $avatar_id = 0;
-
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array(
 	'start' => 'int',
 	'user_id' => 'int',
 	'avatar_id' => 'int',
 );
+
+/* set default values for variables. $op and $fct are handled in the header */
+$start = $user_id = $avatar_id = 0;
 
 /** common header for the admin functions */
 include "admin_header.php";

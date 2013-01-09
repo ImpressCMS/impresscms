@@ -1,12 +1,15 @@
 <?php
-// $Id: modules.php 11686 2012-04-10 02:50:48Z skenow $
+// $Id: modules.php 12064 2012-10-10 14:37:53Z skenow $
+define('_MD_AM_MDAD','Modules Admin');
+define('_MD_AM_MDAD_DSC', 'Manage modules menu weight, status, name or update modules as needed.');
+
 //%%%%%%	File Name  modules.php 	%%%%%
 define("_MD_AM_MODADMIN","Modules Administration");
 define("_MD_AM_MODULE","Module");
 define("_MD_AM_VERSION","Version");
 define("_MD_AM_LASTUP","Last Update");
 define("_MD_AM_DEACTIVATED","Deactivated");
-define("_MD_AM_ACTION","Action");
+//define("_MD_AM_ACTION","Action");
 define("_MD_AM_DEACTIVATE","Deactivate");
 define("_MD_AM_ACTIVATE","Activate");
 define("_MD_AM_UPDATE","Update");

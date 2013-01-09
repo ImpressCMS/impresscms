@@ -7,7 +7,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Module
- * @version		SVN: $Id: Object.php 11610 2012-02-28 03:53:55Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
@@ -198,7 +198,10 @@ class icms_module_Object extends icms_core_Object {
 	 * Load the admin menu for the module
 	 */
 	public function loadAdminMenu() {
-		if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
+		if ($this->getInfo('adminmenu')
+			&& $this->getInfo('adminmenu') != ''
+			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))
+		) {
 			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
 			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu;}

@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Core
- * @version		SVN: $Id: ObjectHandler.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		SVN: $Id: ObjectHandler.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 /**
@@ -15,18 +15,22 @@
  * This class is an abstract class of handler classes that are responsible for providing
  * data access mechanisms to the data source of its corresponsing data objects
  *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package		Core
+ * @package	Core
+ * @since		XOOPS
+ * @author		Kazumi Ono <onokazu@xoops.org>
  * @abstract
- * @author  Kazumi Ono <onokazu@xoops.org>
  */
 abstract class icms_core_ObjectHandler {
 
 	/**
-	 * holds referenced to {@link XoopsDatabase} class object
+	 * holds referenced to {@link icms_db_legacy_Database} class object
 	 *
 	 * @var object
-	 * @see XoopsDatabase
+	 * @see icms_db_legacy_Database
 	 * @access protected
 	 */
 	protected $db;
@@ -35,7 +39,7 @@ abstract class icms_core_ObjectHandler {
 	/**
 	* called from child classes only
 	*
-	* @param object $db reference to the {@link XoopsDatabase} object
+	* @param object $db reference to the {@link icms_db_legacy_Database} object
 	* @access protected
 	*/
 	function __construct(&$db) {
@@ -74,4 +78,3 @@ abstract class icms_core_ObjectHandler {
 	abstract function delete(&$object);
 
 }
-

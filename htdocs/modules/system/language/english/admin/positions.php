@@ -1,4 +1,7 @@
 <?php
+define('_MD_AM_BKPOSAD','Block Positions');
+define('_MD_AM_BKPOSAD_DSC', 'Manage and create blocks positions that are used within the themes on your website.');
+
 define("_AM_SBLEFT","Side Block - Left");
 define("_AM_SBRIGHT","Side Block - Right");
 define("_AM_CBLEFT","Center Block - Left");
@@ -15,9 +18,9 @@ define('_AM_SYSTEM_POSITIONS_MODIFIED', "Block Position Modified");
 define('_AM_SYSTEM_POSITIONS_CREATE',"Add New Block Position");
 define('_AM_SYSTEM_POSITIONS_EDIT',"Edit Block Position");
 define('_AM_SYSTEM_POSITIONS_INFO','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.
-<div class="positionInfoWrapper"><div class="inner">
+<div style="border: 1px dashed #AABBCC; padding:10px; width:86%;">
 <{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks.html</b>"}><br /><{/foreach}>
-</div></div>
+</div>
 ');
 
 define("_CO_SYSTEM_POSITIONS_ID", "Id");
@@ -34,4 +37,3 @@ define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
 define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
 define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
 define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
-?>

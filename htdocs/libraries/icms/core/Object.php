@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Core
- * @version		SVN: $Id: Object.php 11326 2011-08-25 16:55:48Z phoenyx $
+ * @version		SVN: $Id: Object.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 /**#@+
@@ -39,10 +39,13 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
 /**
  * Base class for all objects in the kernel (and beyond)
  *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package		Core
- *
- * @author Kazumi Ono (AKA onokazu)
+ * @package	Core
+ * @since		XOOPS
+ * @author		Kazumi Ono (AKA onokazu)
  **/
 class icms_core_Object {
 
@@ -71,6 +74,14 @@ class icms_core_Object {
 	private $_isNew = false;
 
 	/**
+	 * is it a newly created config object?
+	 *
+	 * @var bool
+	 * @access protected
+	 */
+	protected $_isNewConfig = false;
+
+    /**
 	 * has any of the values been modified?
 	 *
 	 * @var bool
@@ -119,6 +130,22 @@ class icms_core_Object {
 	/**#@-*/
 
 	/**#@+
+	 * used for new config objects when installing/updating module(s)
+	 *
+	 * @access public
+	 */
+	public function setNewConfig() {
+		$this->_isNewConfig = true;
+	}
+	public function unsetNewConfig() {
+		$this->_isNewConfig = false;
+	}
+	public function isNewConfig() {
+		return $this->_isNewConfig;
+	}
+	/**#@-*/
+
+    /**#@+
 	 * mark modified objects as dirty
 	 *
 	 * used for modified objects only
@@ -308,14 +335,17 @@ class icms_core_Object {
 				switch (strtolower($format)) {
 					case 's':
 					case 'show':
-						$ts =& icms_core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-							return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
+                            if ($br) { // have to use this whilst ever there's a zillion editors in the core
+                                return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
+                            } else {
+                                return icms_core_DataFilter::checkVar($ret, 'html', 'output');
+                            }
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
 						}
@@ -323,27 +353,32 @@ class icms_core_Object {
 
 					case 'e':
 					case 'edit':
-						return htmlspecialchars($ret, ENT_QUOTES);
+						return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
 					case 'preview':
-						$ts =& icms_core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-							return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
+                            return icms_core_DataFilter::checkVar($ret, 'html', 'input');
 						} else {
-							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+							return icms_core_DataFilter::checkVar($ret, 'text', 'input');
 						}
 						break 1;
 
 					case 'f':
 					case 'formpreview':
-						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
+                        $filtered = strpos($ret, '<!-- input filtered -->');
+                        if ($filtered !== FALSE) {
+                            $ret = str_replace('<!-- input filtered -->', '', $ret);
+                            $ret = str_replace('<!-- filtered with htmlpurifier -->', '', $ret);
+                        }
+
+                        return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -365,7 +400,7 @@ class icms_core_Object {
 
 					case 'e':
 					case 'edit':
-						return htmlspecialchars($ret, ENT_QUOTES);
+						return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
@@ -430,9 +465,10 @@ class icms_core_Object {
 	public function cleanVars() {
 		$existing_errors = $this->getErrors();
 		$this->_errors = array();
+
 		foreach ($this->vars as $k => $v) {
 			$cleanv = $v['value'];
-			if (!$v['changed']) {
+			if (!$v['changed'] || $this->_isNewConfig) {
 			} else {
 				$cleanv = is_string($cleanv) ? trim($cleanv) : $cleanv;
 				switch ($v['data_type']) {
@@ -458,9 +494,11 @@ class icms_core_Object {
 							continue;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = icms_core_DataFilter::stripSlashesGPC(icms_core_DataFilter::censorString($cleanv));
+							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
+                            $cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						} else {
-							$cleanv = icms_core_DataFilter::censorString($cleanv);
+							//$cleanv = icms_core_DataFilter::censorString($cleanv);
+                            $cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						}
 						break;
 
@@ -490,7 +528,7 @@ class icms_core_Object {
 							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
-						if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
+						if ($cleanv != '' && !icms_core_DataFilter::checkVar($cleanv, 'email')) {
 							$this->setErrors(_CORE_DB_INVALIDEMAIL);
 							continue;
 						}
@@ -517,7 +555,7 @@ class icms_core_Object {
 						break;
 
 					case XOBJ_DTYPE_ARRAY:
-						$cleanv = serialize($cleanv);
+						$cleanv = is_array($cleanv) ? serialize($cleanv) : $cleanv;
 						break;
 
 					case XOBJ_DTYPE_STIME:

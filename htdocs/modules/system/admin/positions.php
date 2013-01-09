@@ -14,12 +14,15 @@
  * @version		SVN: $Id: positions.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
-/* set get and post filters before including admin_header */
-$id = 0;
-
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array('id' => 'int');
+
 $filter_post = array('id' => 'int');
 
+/* set default values for variables, $op and $fct are handled in the header */
+$id = 0;
+
+/** common header for the admin functions */
 include "admin_header.php";
 
 /**

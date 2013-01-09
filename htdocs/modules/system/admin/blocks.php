@@ -13,19 +13,20 @@
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
-/* set filters before including admin_header */
-$bid = 0;
-
+/* set get and post filters before including admin_header, if not strings */
 $filter_get = array(
 	'bid' => 'int',
 	'startbid' => 'int',
 	'limitsel' => 'int',
 	);
 
-include "admin_header.php";
-
+/* set default values for variables. $op and $fct are handled in the header */
+$bid = 0;
 $clean_bid = $bid;
 $clean_op = $op;
+
+/** common header for the admin functions */
+include "admin_header.php";
 
 /**
  * Edit a block

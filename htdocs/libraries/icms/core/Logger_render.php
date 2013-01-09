@@ -2,13 +2,17 @@
 /**
  * The Renderer functions of the Error logger
  *
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license	LICENSE.txt
  * @category	ICMS
- * @package		Core
+ * @package	Core
  * @subpackage	Logger
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: Logger_render.php 11361 2011-09-03 12:47:59Z phoenyx $
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @since		XOOPS - original location /class/logger_render.php
+ * @version	$Id: Logger_render.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die();
@@ -127,6 +131,10 @@ if (empty($mode) || $mode == 'timers') {
 	$ret .= '</div>';
 }
 
+/** 
+ * @author		ImpressCMS
+ * @since 		1.3
+ */
 if (empty($mode) || $mode == 'deprecated') {
 	$class = 'even';
 	$ret .= '<div class="tab-pane" id="debug-deprecated"><h4>' . _CORE_DEPRECATED . '</h4>';
