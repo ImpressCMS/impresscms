@@ -1,22 +1,22 @@
 define(function () {
 
     /**
-     * ES5 Array.forEach
-     * @version 0.3.1 (2011/11/25)
+     * Array forEach
      */
-    var forEach = Array.prototype.forEach?
-                    function (arr, callback, thisObj) {
-                        arr.forEach(callback, thisObj);
-                    } :
-                    function (arr, callback, thisObj) {
-                        for (var i = 0, n = arr.length >>> 0; i < n; i++) {
-                            //according to spec callback should only be called for
-                            //existing items
-                            if (i in arr) {
-                                callback.call(thisObj, arr[i], i, arr);
-                            }
-                        }
-                    };
+    function forEach(arr, callback, thisObj) {
+        if (arr == null) {
+            return;
+        }
+        var i = -1,
+            n = arr.length;
+        while (++i < n) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if ( callback.call(thisObj, arr[i], i, arr) === false ) {
+                break;
+            }
+        }
+    }
 
     return forEach;
 

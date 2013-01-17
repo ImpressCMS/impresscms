@@ -2,16 +2,18 @@ define(['./some'], function (some) {
 
     /**
      * Returns first item that matches criteria
-     * @version 0.1.0 (2012/02/28)
      */
     function find(arr, iterator, thisObj){
-        var needle;
-        some(arr, function(val, i, arr){
+        var needle,
+            i = -1, n = arr.length,
+            val;
+        while (++i < n){
+            val = arr[i];
             if (iterator.call(thisObj, val, i, arr)) {
                 needle = val;
-                return true; // stop loop
+                break;
             }
-        });
+        }
         return needle;
     }
 

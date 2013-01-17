@@ -1,24 +1,29 @@
-define(['./isArray', './isObject', './isArguments'], function (isArray, isObject, isArguments) {
+define(['./kindOf'], function (kindOf) {
 
     var _win = this;
 
     /**
      * Convert array-like object into array
-     * @version 0.2.0 (2011/12/05)
      */
     function toArray(val){
-        var ret;
+        var ret = [],
+            kind = kindOf(val),
+            n;
 
-        if (val == null) {
-            ret = [];
-        } else if ( val && val !== _win && (isArray(val) || isArguments(val) || (isObject(val) && 'length' in val)) ) {
-            //window returns true on isObject in IE7 and may have length property
-            //only convert object to array if it is a array-like object
-            ret = Array.prototype.slice.call(val);
-        } else {
-            //string, regexp, function have .length but user probably just want
-            //to wrap value into an array..
-            ret = [val];
+        if (val != null) {
+            if ( val.length == null || kind === 'String' || kind === 'Function' || kind === 'RegExp' || val === _win ) {
+                //string, regexp, function have .length but user probably just want
+                //to wrap value into an array..
+                ret[ret.length] = val;
+            } else {
+                //window returns true on isObject in IE7 and may have length
+                //property. `typeof NodeList` returns `function` on Safari so
+                //we can't use it (#58)
+                n = val.length;
+                while (n--) {
+                    ret[n] = val[n];
+                }
+            }
         }
         return ret;
     }

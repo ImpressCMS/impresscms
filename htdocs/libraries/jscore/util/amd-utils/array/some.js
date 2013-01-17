@@ -1,26 +1,22 @@
-define(function (forEach) {
+define(function () {
 
     /**
-     * ES5 Array.some
-     * @version 0.2.1 (2011/11/25)
+     * Array some
      */
-    var some = Array.prototype.some?
-                function (arr, callback, thisObj) {
-                    return arr.some(callback, thisObj);
-                } :
-                function (arr, callback, thisObj) {
-                    var result = false,
-                        n = arr.length >>> 0;
-                    while (n--) {
-                        //according to spec callback should only be called for
-                        //existing items
-                        if ( n in arr && callback.call(thisObj, arr[n], n, arr) ) {
-                            result = true;
-                            break;
-                        }
-                    }
-                    return result;
-                };
+    function some(arr, callback, thisObj) {
+        var result = false,
+            i = -1,
+            n = arr.length;
+        while (++i < n) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if ( callback.call(thisObj, arr[i], i, arr) ) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 
     return some;
 });

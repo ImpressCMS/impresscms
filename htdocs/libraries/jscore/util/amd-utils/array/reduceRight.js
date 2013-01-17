@@ -1,36 +1,32 @@
 define(function () {
 
     /**
-     * ES5 Array.reduceRight
-     * @version 0.2.1 (2011/11/25)
+     * Array reduceRight
      */
-    var reduceRight = Array.prototype.reduceRight?
-                    function (arr, fn, initVal) {
-                        return initVal == null? arr.reduceRight(fn) : arr.reduceRight(fn, initVal);
-                    } :
-                    function (arr, fn, initVal) {
-                        var hasInit = typeof initVal !== 'undefined',
-                            result = initVal,
-                            i = arr.length >>> 0,
-                            val;
+    function reduceRight(arr, fn, initVal) {
+        // check for args.length since initVal might be "undefined" see #gh-57
+        var hasInit = arguments.length > 2,
+            result = initVal,
+            i = arr.length,
+            val;
 
-                        if (!i && !hasInit) {
-                            throw new Error('reduce of empty array with no initial value');
-                        }
+        if (!i && !hasInit) {
+            throw new Error('reduce of empty array with no initial value');
+        }
 
-                        while (--i >= 0) {
-                            val = arr[i];
-                            if (typeof val !== 'undefined') {
-                                if (! hasInit) {
-                                    result = val;
-                                    hasInit = true;
-                                } else {
-                                    result = fn(result, val, i, arr);
-                                }
-                            }
-                        }
-                        return result;
-                    };
+        while (--i >= 0) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            val = arr[i];
+            if (! hasInit) {
+                result = val;
+                hasInit = true;
+            } else {
+                result = fn(result, val, i, arr);
+            }
+        }
+        return result;
+    }
 
     return reduceRight;
 });

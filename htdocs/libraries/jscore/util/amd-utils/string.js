@@ -4,9 +4,12 @@ define(function(require){
 //run `node build` instead
 return {
     'camelCase' : require('./string/camelCase'),
+    'contains' : require('./string/contains'),
     'crop' : require('./string/crop'),
     'endsWith' : require('./string/endsWith'),
+    'escapeHtml' : require('./string/escapeHtml'),
     'escapeRegExp' : require('./string/escapeRegExp'),
+    'escapeUnicode' : require('./string/escapeUnicode'),
     'hyphenate' : require('./string/hyphenate'),
     'interpolate' : require('./string/interpolate'),
     'lowerCase' : require('./string/lowerCase'),
@@ -23,14 +26,17 @@ return {
     'rpad' : require('./string/rpad'),
     'rtrim' : require('./string/rtrim'),
     'sentenceCase' : require('./string/sentenceCase'),
+    'slugify' : require('./string/slugify'),
     'startsWith' : require('./string/startsWith'),
     'stripHtmlTags' : require('./string/stripHtmlTags'),
-    'toSlug' : require('./string/toSlug'),
     'trim' : require('./string/trim'),
     'truncate' : require('./string/truncate'),
     'typecast' : require('./string/typecast'),
     'unCamelCase' : require('./string/unCamelCase'),
-    'unHyphenate' : require('./string/unHyphenate'),
+    'underscore' : require('./string/underscore'),
+    'unescapeHtml' : require('./string/unescapeHtml'),
+    'unescapeUnicode' : require('./string/unescapeUnicode'),
+    'unhyphenate' : require('./string/unhyphenate'),
     'upperCase' : require('./string/upperCase')
 };
 

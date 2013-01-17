@@ -1,8 +1,7 @@
 define(function () {
 
     /**
-     * set "nested" object property
-     * @version 0.1.0 (2012/01/30)
+     * get "nested" object property
      */
     function get(obj, prop){
         var parts = prop.split('.'),

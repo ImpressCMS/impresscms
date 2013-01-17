@@ -4,11 +4,13 @@ define(function(require){
 //run `node build` instead
 return {
     'choice' : require('./random/choice'),
-    'pick' : require('./random/pick'),
+    'guid' : require('./random/guid'),
     'rand' : require('./random/rand'),
     'randBit' : require('./random/randBit'),
+    'randHex' : require('./random/randHex'),
     'randInt' : require('./random/randInt'),
-    'randSign' : require('./random/randSign')
+    'randSign' : require('./random/randSign'),
+    'random' : require('./random/random')
 };
 
 });
