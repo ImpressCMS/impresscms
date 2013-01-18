@@ -29,7 +29,7 @@ define(function(require) {
         };
       }
       
-      if(qs.hasParam('log') && qs.getParam('log') === true) {
+      if(qs.contains('log') && qs.getParam('log') === true) {
         module.enableConsole();
       } else {
         module.disableConsole();
