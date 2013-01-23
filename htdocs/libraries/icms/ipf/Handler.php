@@ -162,7 +162,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		parent::__construct($db);
 
 		$this->_itemname = $itemname;
-		// Todo: Autodect module
+		// @todo: Autodect module
+		// @todo: remove prefix - this is relevant to the database, not the object
 		if ($modulename == '') {
 			$this->_moduleName = 'system';
 			$this->table = $db->prefix($itemname);
