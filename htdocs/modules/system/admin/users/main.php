@@ -217,7 +217,7 @@ switch ($op) {
 					}
 					
 					$icmspass = new icms_core_Password();
-					$password = $icmspass->encryptPass($password, $salt, $enc_type);
+					$password = $icmspass->encryptPass($password);
 					$newuser->setVar('pass', $password);
 				}
 				$newuser->setVar('timezone_offset', $timezone_offset);
