@@ -939,9 +939,12 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * Gets a reference to the specified module object
 	 *
+	 * @param	string	$moduleName dirname of the module
+	 * @return	object	icmsModule object of the specified module
 	 */
-	public function getModuleInfo() {
+	public function &getModuleInfo() {
 		return icms_getModuleInfo($this->_moduleName);
 	}
 
