@@ -211,7 +211,8 @@ INSERT INTO `system_mimetype` (`mimetypeid`, `extension`, `types`, `name`, `dirn
 (120, 'wm', 'video/x-ms-wm', 'Windows Media A/V File', ''),
 (121, 'wmx', 'video/x-ms-wmx', 'Windows Media Player A/V Shortcut', ''),
 (122, 'ice', 'x-conference-xcooltalk', 'Cooltalk Audio', ''),
-(123, 'rar', 'application/octet-stream', 'WinRAR Compressed Archive', '');
+(123, 'rar', 'application/octet-stream', 'WinRAR Compressed Archive', ''),
+(124, 'mp4', 'video/mp4', 'MP4 Video File', '');
 
 INSERT INTO `group_permission` (`gperm_id`, `gperm_groupid`, `gperm_itemid`, `gperm_modid`, `gperm_name`) VALUES
 (NULL, 2, 20, 1, 'use_extension'),
