@@ -10,7 +10,7 @@
  */
 
 /**
- * 
+ *
  * @category	ICMS
  * @package		Database
  */
@@ -20,24 +20,24 @@ abstract class icms_db_Factory {
 	 * PDO database adapter
 	 * @var icms_db_IConnection
 	 */
-	static protected $pdoInstance = false;
+	static protected $pdoInstance = FALSE;
 	/**
 	 * Legacy database adapter
 	 * @var icms_db_legacy_Database
 	 */
-	static protected $xoopsInstance = false;
+	static protected $xoopsInstance = FALSE;
 
 	/**
 	 * Instanciate the PDO compatible DB adapter (if appropriate).
 	 * @throws RuntimeException
 	 */
 	static public function &pdoInstance() {
-		if ( self::$pdoInstance !== FALSE ) return self::$pdoInstance;
+		if (self::$pdoInstance !== FALSE) return self::$pdoInstance;
 		if (substr(XOOPS_DB_TYPE, 0, 4) != 'pdo.') {
 			self::$pdoInstance = NULL;
 			return self::$pdoInstance;
 		}
-		if (!class_exists('PDO', false)) {
+		if (!class_exists('PDO', FALSE)) {
 			throw new RuntimeException("PDO extension not available.");
 		}
 		$driver = substr(XOOPS_DB_TYPE, 4);
@@ -59,8 +59,8 @@ abstract class icms_db_Factory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function &instance() {
-		if ( self::$xoopsInstance !== false ) return self::$xoopsInstance;
-		$allowWebChanges = defined('XOOPS_DB_PROXY') ? false : true;
+		if (self::$xoopsInstance !== FALSE) return self::$xoopsInstance;
+		$allowWebChanges = defined('XOOPS_DB_PROXY') ? FALSE : TRUE;
 		if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
 			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
 		} else {
@@ -80,7 +80,4 @@ abstract class icms_db_Factory {
 		self::$xoopsInstance->setPrefix(XOOPS_DB_PREFIX);
 		return self::$xoopsInstance;
 	}
-
-
-
 }
