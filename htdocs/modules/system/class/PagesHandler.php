@@ -11,7 +11,7 @@
 
 /**
  * Symlinks handler
- * 
+ *
  * @package		System
  * @subpackage	Symlinks
  */
@@ -22,7 +22,7 @@ class mod_system_PagesHandler extends icms_data_page_Handler {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param $db
 	 */
 	public function __construct(& $db) {
@@ -32,14 +32,14 @@ class mod_system_PagesHandler extends icms_data_page_Handler {
 
 	/**
 	 * Get an array of installed modules
-	 * 
+	 *
 	 * @param boolean $full
 	 * @return	array
 	 */
 	public function getModulesArray($full = FALSE) {
 		if (!count($this->modules_name)) {
 			$icms_module_handler = icms::handler('icms_module');
-			$installed_modules =& $icms_module_handler->getObjects();
+			$installed_modules = $icms_module_handler->getObjects();
 			foreach ($installed_modules as $module) {
 				$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');
 				$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
@@ -58,7 +58,7 @@ class mod_system_PagesHandler extends icms_data_page_Handler {
 
 	/**
 	 * Change the status of the symlink in the db
-	 * 
+	 *
 	 * @param $page_id
 	 * @return	boolean	FALSE if failed, TRUE if successful
 	 */
