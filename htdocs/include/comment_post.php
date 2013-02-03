@@ -107,7 +107,7 @@ switch ($op) {
 				$dohtml = 0;
 			}
 		}
-		$p_comment =& icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input');
+		$p_comment = icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input');
 		$noname = isset($noname) ? (int) $noname : 0;
 		$com_text = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_text']));
 		if ($icmsModule->getVar('dirname') != 'system') {

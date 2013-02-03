@@ -92,7 +92,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param	bool	$loadConfig	set to TRUE in case you want to load the module config in addition
 	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 */
-	public function getByDirname($dirname, $loadConfig = FALSE) {
+	public function &getByDirname($dirname, $loadConfig = FALSE) {
 		if (!empty($this->_cachedModule[$dirname]) &&
 				$this->_cachedModule[$dirname]->getVar('dirname') == $dirname
 		) {
