@@ -133,15 +133,15 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	 * @param   bool    $id_as_key  Use IDs as keys into the array?
 	 *
 	 * @return  array   Array of {@link icms_data_notification_Object} objects
-	 **/
-	public function getObjects($criteria = null, $id_as_key = false) {
+	 */
+	public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM '.$this->db->prefix('xoopsnotifications');
+		$sql = 'SELECT * FROM '. $this->db->prefix('xoopsnotifications');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
+			$sql .= ' ' . $criteria->renderWhere();
 			$sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'not_id';
-			$sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();
+			$sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
