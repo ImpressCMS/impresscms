@@ -9,8 +9,7 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-class IcmsAutoTasksInternal
-extends icms_sys_autotasks_System {
+class IcmsAutoTasksInternal extends icms_sys_autotasks_System {
 
 	/**
 	 * check if can run
@@ -64,5 +63,3 @@ extends icms_sys_autotasks_System {
 	}
 
 }
-
-?>

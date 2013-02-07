@@ -9,8 +9,7 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-class IcmsAutoTasksAt
-extends icms_sys_autotasks_System {
+class IcmsAutoTasksAt extends icms_sys_autotasks_System {
 
 	/*
 	 * check if can run
@@ -58,8 +57,8 @@ extends icms_sys_autotasks_System {
 	 * @return string
 	 */
 	function getCommandLine() {
-		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
-		$config_atasks = &$atasks_handler->getConfig();
+		$atasks_handler =& icms_getModuleHandler('autotasks', 'system');
+		$config_atasks = $atasks_handler->getConfig();
 		if (($config_atasks['autotasks_helper_path'] = trim($config_atasks['autotasks_helper_path'])) != '') {
 			if (substr($config_atasks['autotasks_helper_path'], -1) != '\\') {
 				$config_atasks['autotasks_helper_path'] .= '\\';
@@ -77,11 +76,12 @@ extends icms_sys_autotasks_System {
 		$rez = shell_exec('at');
 		if (strstr($rez, 'There are no entries in the list.')) return -1;
 		$rez = explode("\n", $rez);
-		$pos = array(0 => strpos($rez[0], 'Status'),
-		1 => strpos($rez[0], 'ID'),
-		2 => strpos($rez[0], 'Day'),
-		3 => strpos($rez[0], 'Time'),
-		4 => strpos($rez[0], 'Command Line')
+		$pos = array(
+				0 => strpos($rez[0], 'Status'),
+				1 => strpos($rez[0], 'ID'),
+				2 => strpos($rez[0], 'Day'),
+				3 => strpos($rez[0], 'Time'),
+				4 => strpos($rez[0], 'Command Line')
 		);
 		$count = array(count($rez), count($pos));
 		$cmd_to_find = $this->getCommandLine();
@@ -108,5 +108,3 @@ extends icms_sys_autotasks_System {
 	}
 
 }
-
-?>
