@@ -221,7 +221,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 * @return	string HTML
 	 */
 	private function _renderSmileys() {
-		$smiles =& icms_core_DataFilter::getSmileys();
+		$smiles = icms_core_DataFilter::getSmileys();
 		$ret = '';
 		$count = count($smiles);
 		$ele_name = $this->getName();
