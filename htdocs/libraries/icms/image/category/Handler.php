@@ -153,7 +153,7 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
 	 * @return array {@link icms_image_category_Object}s matching the conditions
 	 **/
-	public function getObjects($criteria = null, $id_as_key = false) {
+	public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT c.* FROM ' . $this->db->prefix('imagecategory') . ' c LEFT JOIN '
@@ -173,9 +173,9 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 			$imgcat = new icms_image_category_Object();
 			$imgcat->assignVars($myrow);
 			if (!$id_as_key) {
-				$ret[] = &$imgcat;
+				$ret[] =& $imgcat;
 			} else {
-				$ret[$myrow['imgcat_id']] = &$imgcat;
+				$ret[$myrow['imgcat_id']] =& $imgcat;
 			}
 			unset($imgcat);
 		}
@@ -311,4 +311,3 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		return $folder . $imgcat->getVar('imgcat_foldername');
 	}
 }
-

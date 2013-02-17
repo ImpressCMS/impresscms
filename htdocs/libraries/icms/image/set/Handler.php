@@ -2,7 +2,7 @@
 
 /**
 * Manage of imagesets baseclass
-* Image sets - the image directory within a module - are part of templates 
+* Image sets - the image directory within a module - are part of templates
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
@@ -133,7 +133,7 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 		 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
 		 * @return array {@link icms_image_set_Object}s matching the conditions
 	 **/
-	function getObjects($criteria = null, $id_as_key = false) {
+	function &getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array ();
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
@@ -150,9 +150,9 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 			$imgset = new icms_image_set_Object();
 			$imgset->assignVars($myrow);
 			if (!$id_as_key) {
-				$ret[] = & $imgset;
+				$ret[] =& $imgset;
 			} else {
-				$ret[$myrow['imgset_id']] = & $imgset;
+				$ret[$myrow['imgset_id']] =& $imgset;
 			}
 			unset ($imgset);
 		}
