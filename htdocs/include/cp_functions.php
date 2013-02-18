@@ -490,8 +490,8 @@ function impresscms_get_adminmenu() {
 	);
 
 	$menu[] = array(
-		'link' => 'http://sourceforge.net/projects/impresscms/',
-		'title' => _IMPRESSCMS_SOURCEFORGE,
+		'link' => 'https://impresscmsdev.assembla.com/spaces/impresscms/new_dashboard',
+		'title' => _IMPRESSCMS_PROJECT,
 		'absolute' => 1,
 		//'small' = ICMS_URL . '/images/impresscms.png',
 	);

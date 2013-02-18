@@ -13,7 +13,7 @@
  * @author		marcan <marcan@impresscms.org>
  * @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id: Handler.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		SVN: $Id: Handler.php 12068 2012-10-14 21:28:13Z skenow $
  * @todo		Use language constants for messages
  * @todo		Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */

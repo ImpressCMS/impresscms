@@ -33,7 +33,7 @@ final class icms_core_Password {
 	 * @return       object
 	 * @static       $instance
 	 * @staticvar    object
-	 **/
+	 */
 	static public function getInstance() {
 		static $instance;
 		if (!isset($instance)) {
@@ -85,7 +85,7 @@ final class icms_core_Password {
 	}
 
 	/**
-	 * This Private Function checks whether a users password has been expired
+	 * This Public Function checks whether a users password has been expired
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.1
 	 * @param    string  $uname      The username of the account to be checked
@@ -299,8 +299,6 @@ final class icms_core_Password {
 	 * @param    string  $pass       plaintext password to be encrypted
 	 * @param    string  $salt       unique user salt key used in encryption process
 	 * @param    int     $enc_type   encryption type to use (this is required & only used when passwords are expired)
-	 * @param    int     $reset      set to 1 if we have determined that the user password has been expired
-	 *                               use in conjunction only with $enc_type above.
 	 * @return   Hash of users password.
      * 
 	 * To be removed in future versions, use _encryptPassword() instead

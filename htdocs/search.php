@@ -13,7 +13,7 @@ $xoopsOption['pagetype'] = "search";
 include 'mainfile.php';
 
 if ($icmsConfigSearch['enable_search'] == FALSE) {
-	header('Location: ' . ICMS_URL . '/index.php');
+	header('Location: ' . ICMS_URL . '/');
 	exit();
 }
 

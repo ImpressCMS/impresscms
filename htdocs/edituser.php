@@ -425,8 +425,9 @@ switch ($op) {
 	case 'avatarform':
 		/** Include the header that starts page rendering */
 		include ICMS_ROOT_PATH . '/header.php';
-		echo '<a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;
-			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '<br /><br />';
+		echo "<h4>" . _US_AVATAR . "</h4>";
+		echo '<p><a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>
+			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '</p>';
 		$oldavatar = icms::$user->getVar('user_avatar');
 		if (!empty($oldavatar) && $oldavatar != 'blank.gif') {
 			echo '<div style="text-align:center;"><h4 style="color:#ff0000; font-weight:bold;">' . _US_OLDDELETED . '</h4>';

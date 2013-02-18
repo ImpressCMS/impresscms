@@ -48,6 +48,7 @@ if (is_object(icms::$user)) {
             'user_ownpage' => TRUE,
             'lang_editprofile' => _US_EDITPROFILE,
             'lang_avatar' => _US_AVATAR,
+            'lang_notifications' => _US_NOTIFICATIONS,
             'lang_inbox' => _US_INBOX,
             'lang_logout' => _US_LOGOUT,
             'user_candelete' => $icmsConfigUser['self_delete'] ? TRUE : FALSE,
