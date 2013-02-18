@@ -155,7 +155,7 @@ class icms_member_Handler {
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 * @return array array of {@link icms_member_group_Object} objects
 	 */
-	public function getGroups($criteria = null, $id_as_key = false) {
+	public function &getGroups($criteria = null, $id_as_key = false) {
 		return $this->_gHandler->getObjects($criteria, $id_as_key);
 	}
 
@@ -187,9 +187,9 @@ class icms_member_Handler {
 
 	/**
 	 * get a list of usernames and their IDs
-	 * 
+	 *
 	 * @deprecated	This isn't really a membership method, but for the user handler
-	 * 
+	 *
 	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return array associative array of user-IDs and names
 	 */
@@ -268,9 +268,9 @@ class icms_member_Handler {
 	 * @param bool $asobject return groups as {@link icms_member_group_Object} objects or arrays?
 	 * @return array array of objects or arrays
 	 */
-	public function getGroupsByUser($user_id, $asobject = false) {
+	public function &getGroupsByUser($user_id, $asobject = FALSE) {
 		$group_ids = $this->_mHandler->getGroupsByUser($user_id);
-		if (! $asobject) {
+		if (!$asobject) {
 			return $group_ids;
 		} else {
 			foreach ($group_ids as $g_id) {
