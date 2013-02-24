@@ -85,7 +85,7 @@ class icms_member_Handler {
 	 * @param int $id ID for the group
 	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the group
 	 */
-	public function getGroup($id) {
+	public function &getGroup($id) {
 		return $this->_gHandler->get($id);
 	}
 
@@ -244,7 +244,7 @@ class icms_member_Handler {
 	 * @return array Array of {@link icms_member_user_Object} objects (if $asobject is TRUE)
 	 * or of associative arrays matching the record structure in the database.
 	 */
-	public function getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
+	public function &getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
 		$user_ids = $this->_mHandler->getUsersByGroup($group_id, $limit, $start);
 		if (! $asobject) {
 			return $user_ids;
