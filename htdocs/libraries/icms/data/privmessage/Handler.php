@@ -140,7 +140,7 @@ class icms_data_privmessage_Handler extends icms_core_ObjectHandler {
 	 * @param 	bool 	$id_as_key 	use ID as key into the array?
 	 * @return 	array	Array of {@link icms_data_privmessage_Object} objects
 	 **/
-	public function getObjects($criteria = null, $id_as_key = false) {
+	public function &getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('priv_msgs');

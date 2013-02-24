@@ -28,9 +28,9 @@ if (!empty($_GET)) {
     extract($clean_GET);
 }
 
-$op = (isset($_GET['op'])) 
+$op = (isset($_GET['op']))
 	? trim(filter_input(INPUT_GET, 'op'))
-	: ((isset($_POST['op'])) 
+	: ((isset($_POST['op']))
 		? trim(filter_input(INPUT_POST, 'op'))
 		: 'form');
 
@@ -424,7 +424,7 @@ if ($op == "form") {
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
 		$criteria->setStart($start);
-		$foundusers =& $member_handler->getUsersByGroupLink($groups, $criteria, TRUE);
+		$foundusers = $member_handler->getUsersByGroupLink($groups, $criteria, TRUE);
 		$ucount = 0;
 		foreach (array_keys($foundusers) as $j) {
 			if ($ucount % 2 == 0) {
@@ -433,28 +433,28 @@ if ($op == "form") {
 				$class = 'odd';
 			}
 			$ucount++;
-			$fuser_avatar = $foundusers[$j]->getVar("user_avatar") ? "<img src='" . ICMS_UPLOAD_URL . "/" 
+			$fuser_avatar = $foundusers[$j]->getVar("user_avatar") ? "<img src='" . ICMS_UPLOAD_URL . "/"
 				. $foundusers[$j]->getVar("user_avatar") . "' alt='' />" : "&nbsp;";
 			$fuser_name = $foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
-			echo "<tr class='$class'><td align='center'><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]' value='" 
-				. $foundusers[$j]->getVar("uid") . "' /><input type='hidden' name='memberslist_uname[" . $foundusers[$j]->getVar("uid") 
+			echo "<tr class='$class'><td align='center'><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]' value='"
+				. $foundusers[$j]->getVar("uid") . "' /><input type='hidden' name='memberslist_uname[" . $foundusers[$j]->getVar("uid")
 				. "]' id='memberslist_uname[]' value='" . $foundusers[$j]->getVar("uname") . "' /></td>";
-			echo "<td>$fuser_avatar</td><td><a href='" . ICMS_URL . "/userinfo.php?uid=" 
-				. $foundusers[$j]->getVar("uid") . "'>" . $foundusers[$j]->getVar("uname") 
-				. "</a></td><td>" . $foundusers[$j]->getVar("login_name") . "</td><td>" 
-				. $fuser_name . "</td><td align='center'><a href='mailto:" 
-				. $foundusers[$j]->getVar("email") . "'><img src='" . ICMS_URL . "/images/icons/" 
+			echo "<td>$fuser_avatar</td><td><a href='" . ICMS_URL . "/userinfo.php?uid="
+				. $foundusers[$j]->getVar("uid") . "'>" . $foundusers[$j]->getVar("uname")
+				. "</a></td><td>" . $foundusers[$j]->getVar("login_name") . "</td><td>"
+				. $fuser_name . "</td><td align='center'><a href='mailto:"
+				. $foundusers[$j]->getVar("email") . "'><img src='" . ICMS_URL . "/images/icons/"
 				. $GLOBALS["icmsConfig"]["language"] . "/email.gif' border='0' alt='";
 			printf(_SENDEMAILTO, $foundusers[$j]->getVar("uname", "E"));
-			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\"" 
-				. ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $foundusers[$j]->getVar("uid") 
-				. "\",\"pmlite\",800,680);'><img src='" . ICMS_URL . "/images/icons/" 
+			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\""
+				. ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $foundusers[$j]->getVar("uid")
+				. "\",\"pmlite\",800,680);'><img src='" . ICMS_URL . "/images/icons/"
 				. $GLOBALS["icmsConfig"]["language"] . "/pm.gif' border='0' alt='";
 			printf(_SENDPMTO, $foundusers[$j]->getVar("uname", "E"));
 			echo "' /></a></td><td align='center'>";
 			if ($foundusers[$j]->getVar("url", "E") != "") {
-				echo "<a href='" . $foundusers[$j]->getVar("url", "E") . "' target='_blank'><img src='" 
-					. ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] 
+				echo "<a href='" . $foundusers[$j]->getVar("url", "E") . "' target='_blank'><img src='"
+					. ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"]
 					. "/www.gif' border='0' alt='" . _VISITWEBSITE . "' /></a>";
 			} else {
 				echo "&nbsp;";
@@ -466,7 +466,7 @@ if ($op == "form") {
 				echo "&nbsp;";
 			}
 			echo "</td><td align='center'>" . icms_conv_nr2local($foundusers[$j]->getVar("posts")) . "</td>";
-			echo "<td align='center'><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=users&amp;uid=" 
+			echo "<td align='center'><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=users&amp;uid="
 				. $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'><img src='". ICMS_IMAGES_SET_URL . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a></td></tr>\n";
 		}
 		echo "<tr class='foot'><td><select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _AM_SENDMAIL . "</option>";

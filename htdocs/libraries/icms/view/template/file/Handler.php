@@ -286,7 +286,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
-		if (!$result =& $this->db->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);
@@ -326,7 +326,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	 * @param   bool    $getsource = false  get source or not
 	 * @return  array $ret containing number of templates in the tpl_set or empty array if fails
 	 **/
-	public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false) {
+	public function find($tplset = NULL, $type = NULL, $refid = NULL, $module = NULL, $file = NULL, $getsource = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($tplset)) {
 			$criteria->add(new icms_db_criteria_Item('tpl_tplset', $tplset));
@@ -351,7 +351,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 				$criteria->add(new icms_db_criteria_Item('tpl_type', $type));
 			}
 		}
-		return $this->getObjects($criteria, $getsource, false);
+		return $this->getObjects($criteria, $getsource, FALSE);
 	}
 
 	/**
@@ -365,9 +365,9 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('tpl_file', trim($tplname)));
 		$criteria->add(new icms_db_criteria_Item('tpl_tplset', trim($tplset_name)));
 		if ($this->getCount($criteria) > 0) {
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -381,7 +381,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	public function prefetchBlocks(&$block_arr) {
 		global $icmsConfig;
 
-		if (count($block_arr) == 0) return false;
+		if (count($block_arr) == 0) return FALSE;
 		$tplNames = array();
 
 		/**
@@ -402,7 +402,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 		$sql .= ") ORDER BY tpl_refid";
 
 		$result = $this->db->query($sql);
-		if (!$result) return false;
+		if (!$result) return FALSE;
 		while ($myrow = $this->db->fetchArray($result)) {
 			$tplfile = new icms_view_template_file_Object();
 			$tplfile->assignVars($myrow);

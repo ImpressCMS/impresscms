@@ -84,7 +84,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 			$group =& icms::$user->getGroups();
 		}
 		$imgcat_handler = icms::handler('icms_image_category');
-		$catlist =& $imgcat_handler->getList($group, 'imgcat_read', 1);
+		$catlist = $imgcat_handler->getList($group, 'imgcat_read', 1);
 		if (is_array($cat) && count($catlist) > 0) {
 			foreach ($catlist as $k=>$v) {
 				if (!in_array($k, $cat)) {
@@ -155,7 +155,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 			$group =& icms::$user->getGroups();
 		}
 		$imgcat_handler = icms::handler('icms_image_category');
-		$catlist =& $imgcat_handler->getList($group, 'imgcat_write', 1);
+		$catlist = $imgcat_handler->getList($group, 'imgcat_write', 1);
 		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();
 		$ret = "<select onchange='if(this.options[this.selectedIndex].value != \"\"){ document.getElementById(\""
