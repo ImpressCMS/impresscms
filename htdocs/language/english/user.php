@@ -209,4 +209,6 @@ define('_US_MULTLOGIN', 'It was not possible to login on the site!! <br />
 define("_US_OPENID_LOGIN", "Login with your OpenID");
 define("_US_OPENID_URL", "Your OpenID URL:");
 define("_US_OPENID_NORMAL_LOGIN", "Go back to normal login");
-?>
+
+// added in 1.3
+define('_US_NOTIFICATIONS', "Notifications");
