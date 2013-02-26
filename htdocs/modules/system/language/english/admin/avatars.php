@@ -10,7 +10,12 @@ define('_MD_SYSAVATARS','System Avatars');
 define('_MD_CSTAVATARS','Custom Avatars');
 define('_MD_ADDAVT','Add Avatar');
 define('_MD_USERS','Users using this avatar');
-define('_MD_RUDELIMG','Are you sure that you want to delete this avatar image?');
-define('_MD_FAILDEL', 'Failed deleting avatar %s from the database');
+// Altered in 2.0 alpha 2
+//define('_MD_RUDELIMG','Are you sure that you want to delete this avatar image?');
+//define('_MD_FAILDEL', 'Failed deleting avatar %s from the database');
+
 // added in 1.3
 define('_MD_RESTRICTIONS', 'Restrictions');
+// 2.0
+define('_CO_SYSTEM_AVATAR_DELETE','Are you sure that you want to delete this avatar image?');
+define('_CO_SYSTEM_AVATAR_DELETE_FAILED', 'Failed deleting avatar %s from the database');
