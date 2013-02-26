@@ -13,9 +13,9 @@
  */
 
 $modversion = array(
-	'name' => _MD_AM_TAGS,
+	'name' => _CO_SYSTEM_TAGS,
 	'version' => "1.0",
-	'description' => _MD_AM_TAGS_DSC,
+	'description' => _CO_SYSTEM_TAGS_DSC,
 	'author' => "Steve Kenow <skenow@impresscms.org",
 	'credits' => "The ImpressCMS Projects",
 	'help' => "",
