@@ -133,13 +133,15 @@ class icms_Autoloader {
 	static public function classPath($class, $useIncludePath = FALSE, $ext = ".php") {
 		$classPath = str_replace(array("\\", "_"), DIRECTORY_SEPARATOR, $class);
 		// First, try local repositories
-		if (strpos($class, "\\") || strpos($class, "_")) {
+		$char = strpos($class, '\\')?'\\':(strpos($class, '_')?'_':null);
+		if ($char) {
 			foreach (self::$localRepositories as $name => $info) {
 				list($len, $path) = $info;
-				if (!strncmp($name . "\\", $class, $len+1) || !strncmp($name . "_", $class, $len+1)) {
+				if (!strncmp($name, $class, $len)) {
 					$localPath = substr($classPath, $len + 1);
-					if (file_exists($path . DIRECTORY_SEPARATOR . $localPath . $ext)) {
-						return $path . DIRECTORY_SEPARATOR . $localPath;
+                                        $fname = $path . DIRECTORY_SEPARATOR . $localPath;
+					if (file_exists($fname . $ext)) {
+						return $fname;
 					}
 				}
 			}
