@@ -83,14 +83,14 @@ function modifyGroup($g_id) {
 	$desc_value = $thisgroup->getVar("description", "E");
 
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
-	$a_mod_value =& $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
-	$r_mod_value =& $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
-	$ed_mod_value =& $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
-	$debug_mod_value =& $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
-	$group_manager_value =& $moduleperm_handler->getItemIds('group_manager', $thisgroup->getVar('groupid'));
+	$a_mod_value = $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
+	$r_mod_value = $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
+	$ed_mod_value = $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
+	$debug_mod_value = $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
+	$group_manager_value = $moduleperm_handler->getItemIds('group_manager', $thisgroup->getVar('groupid'));
 
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$r_block_value =& $gperm_handler->getItemIds('block_read', $g_id);
+	$r_block_value = $gperm_handler->getItemIds('block_read', $g_id);
 	$op_value = "update";
 	$submit_value = _AM_UPDATEADG;
 	$g_id_value = $thisgroup->getVar("groupid");
@@ -100,7 +100,7 @@ function modifyGroup($g_id) {
 		$s_cat_disable = TRUE;
 	}
 
-	$s_cat_value =& $gperm_handler->getItemIds('system_admin', $g_id);
+	$s_cat_value = $gperm_handler->getItemIds('system_admin', $g_id);
 
 	include ICMS_MODULES_PATH . "/system/admin/groups/groupform.php";
 	echo "<br /><h4 style='text-align:" . _GLOBAL_LEFT . "'>" . _AM_EDITMEMBER . "</h4>";
@@ -117,8 +117,8 @@ function modifyGroup($g_id) {
 		}
 		$criteria = new icms_db_criteria_Item('level', 0, '>');
 		$criteria->setSort('uname');
-		$userslist =& $member_handler->getUserList($criteria);
-		$users =& array_diff($userslist, $mlist);
+		$userslist = $member_handler->getUserList($criteria);
+		$users = array_diff($userslist, $mlist);
 		echo '<table class="outer"><tr><th align="center">' . _AM_NONMEMBERS . '<br />';
 
 		echo '</th><th></th><th align="center">' . _AM_MEMBERS . '<br />';

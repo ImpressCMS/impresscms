@@ -971,11 +971,11 @@ class icms_ipf_Object extends icms_core_Object {
 				break;
 
 			case XOBJ_DTYPE_SIMPLE_ARRAY:
-				$ret =& explode('|', $ret);
+				$ret = explode('|', $ret);
 				break;
 
 			case XOBJ_DTYPE_ARRAY:
-				$ret =& unserialize($ret);
+				$ret = unserialize($ret);
 				break;
 
 			case XOBJ_DTYPE_SOURCE:

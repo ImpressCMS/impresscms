@@ -247,7 +247,7 @@ function imanager_index($imgcat_id = NULL) {
 		$form = new icms_form_Theme(_ADDIMAGE, 'image_form', 'admin.php', 'post', TRUE);
 		$form->setExtra('enctype="multipart/form-data"');
 		$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'image_nicename', 50, 255), TRUE);
-		$list =& $imgcat_handler->getCategList($groups, 'imgcat_write');
+		$list = $imgcat_handler->getCategList($groups, 'imgcat_write');
 		$select = new icms_form_elements_Select(_IMAGECAT, 'imgcat_id', $imgcat_id);
 		$list[0] = '--------------------';
 		ksort($list);
@@ -267,7 +267,7 @@ function imanager_index($imgcat_id = NULL) {
 		$icmsAdminTpl->assign('addimgform', $form->render());
 	}
 	$form = new icms_form_Theme(_MD_ADDIMGCAT, 'imagecat_form', 'admin.php', 'post', TRUE);
-	$list =& $imgcat_handler->getCategList($groups, 'imgcat_write');
+	$list = $imgcat_handler->getCategList($groups, 'imgcat_write');
 	$sup = new icms_form_elements_Select(_MD_IMGCATPARENT, 'imgcat_pid', $imgcat_id);
 	$list[0] = '--------------------';
 	ksort($list);
@@ -484,7 +484,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 			$arrimg[$i]['hasextra_link'] = 0;
 		}
 
-		$list =& $imgcat_handler->getList(array(), NULL, NULL, $imagecategory->getVar('imgcat_storetype'));
+		$list = $imgcat_handler->getList(array(), NULL, NULL, $imagecategory->getVar('imgcat_storetype'));
 		$div = '';
 		foreach ($list as $value => $name) {
 			$sel = '';

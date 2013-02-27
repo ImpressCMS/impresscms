@@ -146,7 +146,7 @@ switch ($op) {
 		}
 		$tpltpl_handler =& icms::handler('icms_view_template_file');
 		// get files that are already installed
-		$templates =& $tpltpl_handler->find($tplset, 'module', NULL, $moddir);
+		$templates = $tpltpl_handler->find($tplset, 'module', NULL, $moddir);
 		$inst_files = array();
 		$tcount = count($templates);
 		for ($i = 0; $i < $tcount; $i++) {
@@ -226,7 +226,7 @@ switch ($op) {
 		} else {
 			echo '<th>' . _MD_TPLSET_ACTIONS . '</th></tr>';
 		}
-		$btemplates =& $tpltpl_handler->find($tplset, 'block', NULL, $moddir);
+		$btemplates = $tpltpl_handler->find($tplset, 'block', NULL, $moddir);
 		$binst_files = array();
 		$btcount = count($btemplates);
 		for ($j = 0; $j < $btcount; $j++) {

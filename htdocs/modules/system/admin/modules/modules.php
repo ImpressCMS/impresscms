@@ -749,24 +749,29 @@ function xoops_module_uninstall($dirname) {
 
 			// delete tables used by this module
 			$modtables = $module->getInfo('tables');
+			$is_IPF = $module->getInfo('object_items');
 			if ($modtables !== FALSE && is_array($modtables)) {
 				$msgs[] = _MD_AM_MOD_TABLES_DELETE;
 				foreach ($modtables as $table) {
+					if ($is_IPF) {
+						$table = str_replace(XOOPS_DB_PREFIX . '_', '', $table);
+					}
+					$prefix_table = $db->prefix($table);
 					// prevent deletion of reserved core tables!
 					if (!in_array($table, $reservedTables)) {
-						$sql = 'DROP TABLE ' . $db->prefix($table);
+						$sql = 'DROP TABLE ' . $prefix_table;
 						if (!$db->query($sql)) {
 							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_MOD_TABLE_DELETE_FAIL . '</span>',
-								'<strong>'. $db->prefix($table) . '<strong> . '
+								'<strong>'. $prefix_table . '<strong> . '
 								);
 						} else {
 							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_MOD_TABLE_DELETED,
-								'<strong>' . $db->prefix($table) . '</strong>'
+								'<strong>' . $prefix_table . '</strong>'
 								);
 						}
 					} else {
 						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_MOD_TABLE_DELETE_NOTALLOWED . '</span>',
-							'<strong>' . $db->prefix($table) . '</strong>'
+							'<strong>' . $prefix_table . '</strong>'
 							);
 					}
 				}

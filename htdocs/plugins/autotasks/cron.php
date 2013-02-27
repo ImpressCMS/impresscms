@@ -13,8 +13,7 @@
 /**
  * some parts are taked from CronTab class developed by cjpa@audiophile.com
  */
-class IcmsAutoTasksCron
-extends icms_sys_autotasks_System {
+class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 
 	private $_lines = array();
 	private $_line_id = -1;
@@ -203,8 +202,8 @@ extends icms_sys_autotasks_System {
 	function getCronTabUser() {
 		static $user = null;
 		if ($user === null) {
-			$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
-			$config = &$atasks_handler->getConfig();
+			$atasks_handler =& icms_getModuleHandler('autotasks', 'system');
+			$config = $atasks_handler->getConfig();
 			$user = $config['autotasks_user'];
 		}
 		if (trim("$user") == '') $user = '';
@@ -287,5 +286,3 @@ extends icms_sys_autotasks_System {
 	}
 
 }
-
-?>

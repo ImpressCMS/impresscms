@@ -47,7 +47,7 @@ switch ($op) {
 		$otherorder = 'DESC';
 		$comments = array();
 		$module_handler = icms::handler('icms_module');
-		$module_array =& $module_handler->getList(new icms_db_criteria_Item('hascomments', 1));
+		$module_array = $module_handler->getList(new icms_db_criteria_Item('hascomments', 1));
 		$criteria = new icms_db_criteria_Compo();
 		if ($status > 0) {
 			$criteria->add(new icms_db_criteria_Item('com_status', $status));

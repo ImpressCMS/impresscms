@@ -185,7 +185,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
 	 * @return array {@link icms_view_template_set_Object}s matching the conditions
 	 **/
-	public function getObjects($criteria = null, $id_as_key = false) {
+	public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('tplset');
@@ -222,7 +222,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
-		if (!$result =& $this->db->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);
@@ -245,4 +245,3 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 		return $ret;
 	}
 }
-

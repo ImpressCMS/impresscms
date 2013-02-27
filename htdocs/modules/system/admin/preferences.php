@@ -109,7 +109,7 @@ switch ($op) {
 						
 				case 'autotasksystem':
 					$handler = icms_getModuleHandler('autotasks', 'system');
-					$options = &$handler->getSystemHandlersList(TRUE);
+					$options = $handler->getSystemHandlersList(TRUE);
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 1, FALSE);
 					foreach ($options as $option) {
 						$ele->addOption($option, $option);
