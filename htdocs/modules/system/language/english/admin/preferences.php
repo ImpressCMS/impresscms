@@ -49,7 +49,7 @@ define("_MD_AM_INVLDSCOOK","Invalid value for sessioncookie name.");
 define("_MD_AM_INVLDSEXP","Invalid value for session expiration time.");
 define("_MD_AM_ADMNOTSET","Admin mail is not set.");
 //define("_MD_AM_YES","Yes");
-define("_MD_AM_NO","No");
+//define("_MD_AM_NO","No");
 define("_MD_AM_DONTCHNG","Don't change!");
 define("_MD_AM_REMEMBER","Remember to chmod 666 this file in order to let the system write to it properly.");
 define("_MD_AM_IFUCANT","If you can't change the permissions you can edit the rest of this file by hand.");

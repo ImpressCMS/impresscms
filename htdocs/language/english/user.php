@@ -144,7 +144,7 @@ define('_US_PASSNOTSAME','Both passwords are different. They must be identical.'
 define('_US_PWDTOOSHORT','Sorry, your password must be at least <b>%s</b> characters long.');
 define('_US_PROFUPDATED','Your Profile Updated!');
 define('_US_USECOOKIE','Store my user name in a cookie for 1 year');
-define('_US_NO','No');
+//define('_US_NO','No');
 define('_US_DELACCOUNT','Delete Account');
 define('_US_MYAVATAR', 'My Avatar');
 define('_US_UPLOADMYAVATAR', 'Upload Avatar');
