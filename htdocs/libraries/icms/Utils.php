@@ -129,6 +129,7 @@ class icms_Utils {
 		     "qt"		=> "video/quicktime",
 		     "mov"		=> "video/quicktime",
 		     "avi"		=> "video/x-msvideo",
+             "mp4"		=> "video/mp4"
 		);
 	}
 }

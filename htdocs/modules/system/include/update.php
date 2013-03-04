@@ -169,8 +169,30 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$sql .= "UPDATE `" . icms::$xoopsDB->prefix('configoption') . "` SET `confop_value` = 'local' WHERE `confop_value` = 'xoops' AND `confop_name` = '_MD_AM_AUTH_CONFOPTION_XOOPS';";
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
+        /* Add the MP4 mimetype*/
+        $sql = "INSERT INTO `" . icms::$xoopsDB->prefix('system_mimetype') . "` (`mimetypeid`, `extension`, `types`, `name`, `dirname`) VALUES (NULL, 'mp4', 'video/mp4', 'MP4 Video File', '');";
+        $icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
         /* @todo Set the IPF property of the module to '1' here */
 
+
+
+        /*
+        $table = new icms_db_legacy_updater_Table('system_mimetype');
+
+            if (!$abortUpdate) {
+
+                $mime_cats = array(
+                    "NULL, 'mp4', 'video/mp4', 'MP4 Video File', ''");
+                foreach ($mime_cats as $mime) {
+                    $table->setData($mime);
+                }
+                $table->addData();
+            }
+            unset($table);
+
+    }
+*/
 
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
