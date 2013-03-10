@@ -9,7 +9,8 @@ define('_MD_AM_COMMENTS_DSC', 'Manage the comments made by users on your website
 define('_MD_AM_LISTCOMM','List Comments');
 define('_MD_AM_ALLMODS','All modules');
 define('_MD_AM_ALLSTATUS','Any status');
-define('_MD_AM_MODULE','Module');
+//
+//define('_CO_ICMS_MODULE','Module');
 define('_MD_AM_COMFOUND','%s comment(s) found.');
 
 // Added in 1.3

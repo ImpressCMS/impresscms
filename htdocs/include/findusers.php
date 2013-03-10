@@ -34,7 +34,7 @@ $name_form = 'memberslist';
 $name_userid = 'uid' . ( @$_REQUEST['multiple'] ? "[]" : "" );
 $name_username = 'uname' . ( @$_REQUEST['multiple'] ? "[]" : "" );
 
-icms_loadLanguageFile('core', 'findusers');
+icms_loadLanguageFile('core', 'user');
 
 $rank_handler = icms_getModuleHandler("userrank", "system");
 $user_handler = icms::handler("icms_member");

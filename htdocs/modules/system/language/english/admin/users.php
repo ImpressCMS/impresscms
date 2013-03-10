@@ -16,7 +16,7 @@ define("_AM_MODIFYUSER","Modify User");
 define("_AM_DELUSER","Delete User");
 define("_AM_GO","Go!");
 define("_AM_ADDUSER","Add User");
-define("_AM_NAME","Name");
+//define("_AM_NAME","Name");
 define("_AM_EMAIL","Email");
 define("_AM_OPENID","OpenID");
 define("_AM_OPTION","Option");

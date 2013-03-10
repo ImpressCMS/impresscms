@@ -80,7 +80,7 @@ $modversion['adminindex'] = "admin.php";
 $modversion['adminmenu'] = "menu.php";
 
 /* Database information */
-/*  once the conversion is completed, we can use this
+/*  @todo once the conversion is completed, we can use this
 $modversion['object_items'] = icms_core_Filesystem::getDirList(
 	ICMS_MODULES_PATH . '/system/admin/',
 	array('findusers', 'mailusers', 'preferences', 'version')
