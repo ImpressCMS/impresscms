@@ -220,7 +220,7 @@ switch ($op) {
 		}
 		if (!$avt_handler->delete($avatar)) {
 			icms_cp_header();
-			icms_core_Message::error(sprintf(_MD_FAILDEL, $avatar->getVar('avatar_id')));
+			icms_core_Message::error(sprintf(_MD_FAIL_DEL_AVATAR, $avatar->getVar('avatar_id')));
 			icms_cp_footer();
 			exit();
 		}

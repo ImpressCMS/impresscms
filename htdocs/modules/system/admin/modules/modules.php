@@ -22,7 +22,7 @@ function xoops_module_list() {
 	global $icmsAdminTpl, $icmsConfig;
 
 	$icmsAdminTpl->assign('lang_madmin', _MD_AM_MODADMIN);
-	$icmsAdminTpl->assign('lang_module', _MD_AM_MODULE);
+	$icmsAdminTpl->assign('lang_module', _CO_ICMS_MODULE);
 	$icmsAdminTpl->assign('lang_version', _MD_AM_VERSION);
 	$icmsAdminTpl->assign('lang_modstatus', _MD_AM_MODULES_STATUS);
 	$icmsAdminTpl->assign('lang_lastup', _MD_AM_LASTUP);

@@ -72,7 +72,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 			return;
 		}
 
-		icms_loadLanguageFile('core', 'findusers');
+		icms_loadLanguageFile('core', 'user');
 
 		$js_addusers = "<script type=\"text/javascript\">
 					function addusers(opts){
@@ -119,4 +119,3 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		$this->addElement($action_tray);
 	}
 }
-
