@@ -21,8 +21,8 @@ header {border: 0; padding-top: 0; float: left; clear: both; width: 100%;}
 
 nav#primary_navigation {background: #CCC; margin: 0; width: 100%; float: left; display: block; clear: both; height: auto;}
 nav#primary_navigation ul {display: block; float: none; position: relative; float: left; margin: 10px 0 10px 2%; width: 96%; clear: both;}
-nav#primary_navigation ul li {width: 97%; margin: 0 auto 5px; display: block; clear: both;}
-nav#primary_navigation ul li a {width: 100%; margin: 0; padding: 10px; color: #000; background: #fff; display: block; clear: both; border-radius: 10px; box-shadow: 0 0 1px #ccc; line-height: 20px;}
+nav#primary_navigation ul li {width: 100%; margin: 0 auto 5px; display: block; clear: both;}
+nav#primary_navigation ul li a {width: 100%; margin: 0; padding: 10px 0; text-indent: 10px; color: #000; background: #fff; display: block; clear: both; border-radius: 10px; box-shadow: 0 0 1px #ccc; line-height: 20px;}
 nav#primary_navigation ul li.active a,nav#primary_navigation ul li a:active,nav#primary_navigation ul li a:hover {color: #fff; background: #46B1E1;}
 nav#primary_navigation ul ul {display: none!important;}
 .sf-sub-indicator {display: none!important;}
@@ -31,7 +31,8 @@ nav#primary_navigation ul ul {display: none!important;}
 
 #preface_wrapper .block,
 #top_blocks_wrapper,
-#bottom_blocks_wrapper {
+#bottom_blocks_wrapper,
+#content {
   width: 96%;
   margin-left: 2%;
 }
@@ -40,3 +41,4 @@ nav#primary_navigation ul ul {display: none!important;}
 #rightside_wrapper {padding-bottom: 20px;}
 
 footer {width: 100%; float: left; clear: both;}
+footer a {display: block;}

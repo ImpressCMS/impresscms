@@ -141,7 +141,7 @@
 
             <{if $show_bottomblocks_in_content && $bottomCenterLoop || $bottomLeftLoop || $bottomRightLoop}>
               <div id="bottom_blocks_wrapper" class="bottom_blocks_wrapper">
-                <div id="bottomblocks" class="bottomblocks row">
+                <div id="bottomblocks" class="bottomblocks">
 
                   <{if $bottomCenterLoop}>
                     <div id="bottomcenter_blocks" class="bottomcenter_blocks span<{$bottomcenter_grid}> <{$bottomcenter_grid_extra_classes}>">
@@ -232,7 +232,7 @@
 
     <{if $show_postscript && !$inAdmin && postscript_blockzone != ''|| $use_poostscript_override_file != ''}>
       <div id="postscript_wrapper" class="postscript_wrapper">
-        <div id="postscript" class="postscript container row">
+        <div id="postscript" class="postscript container">
           <{if $postscript_block_id == ''}>
             <{foreach from=$xoBlocks.$postscript_blockzone item=block name=postscriptblocks}>
               <div id="block_<{$block.id}>" class="block block_<{$block.id}> postscript_block postscript_block_<{$smarty.foreach.postscriptblocks.iteration}> span<{$postscript_grid}> <{$postscript_grid_extra_classes}>">

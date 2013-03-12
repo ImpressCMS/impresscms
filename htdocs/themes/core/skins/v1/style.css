@@ -32,10 +32,11 @@ a:hover, a:focus {color: #ffb400;}
 input[type=text],input[type=password],input[type=phone],select {max-width: 90%;}
 .wide {width: 95%;}
 a.smallButton {float: left; width: auto; color: #555;}
-.smallButton, input[type=submit], input[type=button] {background: #fff; border:1px solid #dadada; border-radius:3px; padding:5px 8px; transition: all 0.25s ease-in-out; -webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out; vertical-align: middle;}
+.smallButton, input[type="submit"].btn-clear { background: #fff; border:1px solid #dadada; border-radius:3px; padding:5px 8px; transition: all 0.25s ease-in-out; -webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out;}
 .smallButton:hover, .smallButton:active, .smallButton:focus,
-input[type=submit]:hover,input[type=submit]:active,input[type=submit]:focus,
-input[type=button]:hover,input[type=button]:active,input[type=button]:focus {outline:none; border-color:#9ecaed; box-shadow:0 0 10px #9ecaed;}
+input[type="submit"].btn-clear:hover,input[type="submit"].btn-clear:active,input[type="submit"].btn-clear:focus,
+input[type="button"].btn-clear:hover,input[type="button"].btn-clear:active,input[type="button"].btn-clear:focus {outline:none; border-color:#9ecaed; box-shadow:0 0 10px #9ecaed;}
+a.btn {color: #fff;}
 ul.nav {padding: 0;}
 #mainMenu ul.nav, #userMenu ul.nav {margin: 0;}
 .tab-content {padding: 0; margin: 0;}
@@ -49,6 +50,7 @@ header {min-height: 60px; background: #FFF; color: #6E6E6E;}
 .header_search {float: right; width: auto;}
 .header_search form {margin-bottom: 10px;}
 .admin .header_search input[type=text] {width: 210px;}
+.header_search .btn-clear {margin-top: -9px; height: 30px;}
 
 /* Primary Navigation */
 /* #Navigation
