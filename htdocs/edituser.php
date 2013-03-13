@@ -168,13 +168,14 @@ switch ($op) {
 				$errors[] = sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']);
 			}
 
-			if (!empty($vpass)) {
-				$vpass = icms_core_DataFilter::stripSlashesGPC(trim($vpass));
-			}
+			// We only need 1 password field now...
+			// if (!empty($vpass)) {
+			// 	$vpass = icms_core_DataFilter::stripSlashesGPC(trim($vpass));
+			// }
 
-			if ($password != $vpass) {
-				$errors[] = _US_PASSNOTSAME;
-			}
+			// if ($password != $vpass) {
+			// 	$errors[] = _US_PASSNOTSAME;
+			// }
 
 			if ($password == $username
 				|| $password == icms_core_DataFilter::utf8_strrev($username, TRUE)
@@ -276,8 +277,7 @@ switch ($op) {
 			icms_PasswordMeter();
 		}
 
-		echo '<a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;
-			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br /><br />';
+		$icmsTpl->assign('icms_pagetitle', _US_EDITPROFILE);
 		$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', TRUE);
 		$login_name_label = new icms_form_elements_Label(_US_LOGINNAME, icms::$user->getVar('login_name'));
 		$form->addElement($login_name_label);
@@ -372,10 +372,10 @@ switch ($op) {
 		$cookie_radio_value = empty($_COOKIE[$icmsConfig['usercookie']]) ? 0 : 1;
 		$cookie_radio = new icms_form_elements_Radioyn(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
 		$pwd_text = new icms_form_elements_Password('', 'password', 10, 255, "", FALSE, ($icmsConfigUser['pass_level']?'password_adv':''));
-		$pwd_text2 = new icms_form_elements_Password('', 'vpass', 10, 255);
-		$pwd_tray = new icms_form_elements_Tray(_US_PASSWORD . '<br />' . _US_TYPEPASSTWICE);
+		// $pwd_text2 = new icms_form_elements_Password('', 'vpass', 10, 255);
+		$pwd_tray = new icms_form_elements_Tray(_US_PASSWORD); // . '<br />' . _US_TYPEPASSTWICE);
 		$pwd_tray->addElement($pwd_text);
-		$pwd_tray->addElement($pwd_text2);
+		// $pwd_tray->addElement($pwd_text2);
 		$pwd_text_old = new icms_form_elements_Password(_US_OLD_PASSWORD, 'old_password', 10, 255);
 		$mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', (int) icms::$user->getVar('user_mailok'));
 		$uid_hidden = new icms_form_elements_Hidden('uid', (int) icms::$user->getVar('uid'));

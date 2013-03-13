@@ -47,8 +47,8 @@ class icms_form_Theme extends icms_form_Base {
 	 */
 	public function render() {
 		$ele_name = $this->getName();
-		$ret = "<form id='" . $ele_name . "' name='" . $ele_name . "' action='" . $this->getAction()	. "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">
-		<div class='icms-theme-form'>
+		$ret = "<form class='form-horizontal' id='" . $ele_name . "' name='" . $ele_name . "' action='" . $this->getAction()	. "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">
+		<div class='icms-theme-form'><div class='inner'>
 		<fieldset>
 		<legend>" . $this->getTitle() . "</legend>
 		<div class='icms-form-contents'>";
@@ -61,7 +61,7 @@ class icms_form_Theme extends icms_form_Base {
 			$groupName = $ele->getName() != '' && $ele->getName() != 'XOOPS_TOKEN_REQUEST' ? " group-" . $ele->getName() : "";
 	
 			if(!$isHidden) {
-				$ret .= "<div class='fieldWrapper" . $groupName . $requiredClass . "'>";
+				$ret .= "<div class='fieldWrapper control-group" . $groupName . $requiredClass . "'>";
 				// $ret .= "<pre>" . print_r($ele, true) . "</pre>";
 			}
 
@@ -70,7 +70,7 @@ class icms_form_Theme extends icms_form_Base {
 			} elseif ( !$isHidden ) {
 				$caption = $ele->getCaption() != '' ? $ele->getCaption() : null;
 				if ($caption !== null) {
-					$ret .=	"<label for='".$ele->getName()."' class='caption-text'>{$caption}";
+					$ret .=	"<label for='".$ele->getName()."' class='caption-text control-label'>{$caption}";
 					$ret .= $required ? "<span class='caption-marker'>*</span>" : "";
 					$ret .= "</label>";
 				}
@@ -79,7 +79,7 @@ class icms_form_Theme extends icms_form_Base {
 					$ret .= "<div class='icms-form-element-help'>{$desc}</div>";
 				}
 					
-				$ret .= "<div class='single_element'>" . $ele->render() . "</div>\n";
+				$ret .= "<div class='single_element controls'>" . $ele->render() . "</div>\n";
 			} else {
 				$hidden .= $ele->render();
 			}
@@ -89,7 +89,7 @@ class icms_form_Theme extends icms_form_Base {
 			}
 		}
 			
-		$ret .= "\n<div class='hidden'>$hidden</div>\n</fieldset></div>\n</form>\n";
+		$ret .= "\n<div class='hidden'>$hidden</div>\n</fieldset></div>\n</div>\n</form>\n";
 		// $ret .= $this->renderValidationJS(true);
 		$class = $class == 'even' ? 'odd' : 'even';
 		return $ret;

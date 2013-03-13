@@ -119,7 +119,7 @@ foreach ($posarr as $k=>$v) {
 	$block_checkbox[$i]->addOptionArray($new_blocks_array);
 	$i++;
 }
-$r_block_tray = new icms_form_elements_Tray(_AM_BLOCKRIGHTS, "<div class=\"clear\"></div>");
+$r_block_tray = new icms_form_elements_Tray(_AM_BLOCKRIGHTS, null);
 foreach ($block_checkbox as $k=>$v) {
 	$r_block_tray->addElement($block_checkbox[$k]);
 }

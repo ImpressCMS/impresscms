@@ -83,7 +83,11 @@ switch ($op) {
 		$config = $config_handler->getConfigs($criteria);
 		$confcount = count($config);
 		for ($i = 0; $i < $confcount; $i++) {
-			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<span class="helptip"><a href="#" title="' . constant($config[$i]->getVar('conf_title')) . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/acp_help.png" alt="' . _MD_AM_HELP_TIP . '" /></a></span><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
+			if((! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '')) {
+				$title = constant($config[$i]->getVar('conf_title'));
+			} else {
+				$title = '<span class="helptip"><a href="#" title="' . constant($config[$i]->getVar('conf_title')) . '"><i class="icon-info-sign icon-white"></i></a></span><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>' . constant($config[$i]->getVar('conf_title'));
+			}
 			switch ($config[$i]->getVar('conf_formtype')) {
 				case 'textsarea' :
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {

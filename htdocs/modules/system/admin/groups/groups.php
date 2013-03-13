@@ -103,7 +103,6 @@ function modifyGroup($g_id) {
 	$s_cat_value = $gperm_handler->getItemIds('system_admin', $g_id);
 
 	include ICMS_MODULES_PATH . "/system/admin/groups/groupform.php";
-	echo "<br /><h4 style='text-align:" . _GLOBAL_LEFT . "'>" . _AM_EDITMEMBER . "</h4>";
 	$usercount = $member_handler->getUserCount(new icms_db_criteria_Item('level', 0, '>'));
 	$membercount = $member_handler->getUserCountByGroup($g_id);
 	if ($usercount < 200 && $membercount < 200) {
@@ -119,34 +118,54 @@ function modifyGroup($g_id) {
 		$criteria->setSort('uname');
 		$userslist = $member_handler->getUserList($criteria);
 		$users = array_diff($userslist, $mlist);
-		echo '<table class="outer"><tr><th align="center">' . _AM_NONMEMBERS . '<br />';
+		$gMem = '<table class="table table-bordered">';
+		  $gMem .= '<tr>';
+		    $gMem .= '<th colspan="2">' . _AM_EDITMEMBER . '</th>';
+		  $gMem .= '</tr>';
+		  $gMem .= '<tr>';
+		    $gMem .= '<td>';
+		      $gMem .= '<form action="admin.php" method="post">';
+		        $gMem .= '<fieldset>';
+		        	$gMem .= '<div class="control-group">';
+		        		$gMem .= '<label>' . _AM_NONMEMBERS . '</label>';
+			          $gMem .= '<select name="uids[]" multiple="multiple">';
+			          foreach ($users as $u_id => $u_name) {
+			            $gMem .= '<option value="' . (int) $u_id . '">' . $u_name . '</option>';
+			          }  
+			          $gMem .= '</select>';
+			        $gMem .= '</div>';
+		          $gMem .= '<input type="hidden" name="op" value="addUser" />';
+		          $gMem .= icms::$security->getTokenHTML();
+		          $gMem .= '<input type="hidden" name="fct" value="groups" />';
+		          $gMem .= '<input type="hidden" name="groupid" value="' . $thisgroup->getVar("groupid") .'" />';
+		          $gMem .= '<input type="submit" name="submit" value="' . _AM_ADDBUTTON . '" />';          
+		        $gMem .= '</fieldset>';
+		      $gMem .= '</form>';
+		    $gMem .= '</td>';
 
-		echo '</th><th></th><th align="center">' . _AM_MEMBERS . '<br />';
-		echo '</th></tr><tr><td class="even">'
-		. '<form action="admin.php" method="post">'
-		. '<select name="uids[]" size="10" multiple="multiple">' . "\n";
-		foreach ($users as $u_id => $u_name) {
-			echo '<option value="' . (int) $u_id . '">' . $u_name . '</option>' . "\n";
-		}
-		echo '</select>';
-		echo "</td><td align='center' class='odd'><input type='hidden' name='op' value='addUser' />"
-		. icms::$security->getTokenHTML()
-		. "<input type='hidden' name='fct' value='groups' /><input type='hidden' name='groupid' value='"
-		. $thisgroup->getVar("groupid")
-		. "' /><input type='submit' name='submit' value='"
-		. _AM_ADDBUTTON . "' /></form><br /><form action='admin.php' method='post' />"
-		. "<input type='hidden' name='op' value='delUser' />"
-		. icms::$security->getTokenHTML()
-		. "<input type='hidden' name='fct' value='groups' /><input type='hidden' name='groupid' value='"
-		. $thisgroup->getVar("groupid")
-		. "' /><input type='submit' name='submit' value='"
-		. _AM_DELBUTTON . "' /></td><td class='even'>";
-		echo "<select name='uids[]' size='10' multiple='multiple'>";
-		foreach ($mlist as $m_id => $m_name) {
-			echo '<option value="' . (int) $m_id . '">' . $m_name . '</option>' . "\n";
-		}
-		echo "</select>";
-		echo '</td></tr></form></table>';
+		    $gMem .=  '<td>';
+		      $gMem .= '<form action="admin.php" method="post" />';
+		        $gMem .= '<fieldset>';
+		          $gMem .= ' <div class="control-group">';
+		          	$gMem .= '<label>' . _AM_MEMBERS . '</label>';
+		          	$gMem .= '<select name="uids[]" multiple="multiple">';
+		          	foreach ($mlist as $m_id => $m_name) {
+		            	$gMem .= '<option value="' . (int) $m_id . '">' . $m_name . '</option>';
+		          	}
+		          	$gMem .= '</select>';
+		          $gMem .= '</div>';
+		          $gMem .= '<input type="hidden" name="op" value="delUser" />';
+		          $gMem .= icms::$security->getTokenHTML();
+		          $gMem .= '<input type="hidden" name="fct" value="groups" />';
+		          $gMem .= '<input type="hidden" name="groupid" value="' . $thisgroup->getVar("groupid") . '" />';
+		          $gMem .= '<input type="submit" name="submit" value="' . _AM_DELBUTTON . '" />';
+		        $gMem .= '</fieldset>';
+		      $gMem .= '</form>';
+		    $gMem .= '</td>';
+		  $gMem .= '</tr>';
+		$gMem .= '</table>';
+
+		echo $gMem;
 	} else {
 		$members =& $member_handler->getUsersByGroup($g_id, FALSE, 200, $memstart);
 		$mlist = array();

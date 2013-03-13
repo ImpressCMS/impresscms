@@ -16,7 +16,7 @@
 */
 define(function(require) {
     var $ = require('jquery')
-  , qs = require('util/amd-utils/queryString')
+  , qs = require('util/mout/queryString')
   , browser = require('util/core/browser')
   , noLog = null
   , module = {
@@ -28,7 +28,7 @@ define(function(require) {
           warn:function(){}
         };
       }
-      
+
       if(qs.contains('log') && qs.getParam('log') === true) {
         module.enableConsole();
       } else {

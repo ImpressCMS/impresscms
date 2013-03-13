@@ -1,9 +1,9 @@
 define(['jquery'], function ($) {
   var module = {
     loadCSS:function(url, id) {
-      
+
       if(typeof id !== 'undefined') {
-        if($(id).length) {
+        if($('#' + id).length) {
           return;
         }
       }

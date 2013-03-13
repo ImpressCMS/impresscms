@@ -18,6 +18,7 @@ define(function(require) {
   , mediator = require('mediator')
   , labels = require('locale/labels')
   , modalTemplate = require('hbs!templates/uiTools/modal')
+  , pass = require('plugins/password/passfield')
   , modalMarkup = null
   , modalData = {
     id: null
@@ -33,6 +34,7 @@ define(function(require) {
       tools.loadCSS(icms.config.jscore + 'plugins/jquery.ui/css/' + icms.config.uiTheme + '/jquery.ui.css', 'core-jquery-ui');
       $(document).ready(function() {
         module.ui();
+        module.passwords();
         module.helptip();
         module.checkAll();
         module.modals();
@@ -70,6 +72,15 @@ define(function(require) {
         }
       }
 
+    }
+
+    , passwords: function() {
+      tools.loadCSS(icms.config.jscore + 'plugins/password/passfield.css', 'core-jquery-password');
+      $('input[type=password]').passField({
+        'showTip': false
+        , 'showWarn': false
+        , 'showGenerate' : false
+      });
     }
 
     , showPass: function() {
@@ -134,7 +145,7 @@ define(function(require) {
           e.preventDefault();
 
           var _this = $(this), options = {}, frameHeight;
-          
+
           options.width = typeof _this.data('width') !== 'undefined' ? Math.floor(parseInt(_this.data('width'), 10)) : 500;
           options.height = typeof _this.data('height') !== 'undefined' ? Math.floor(parseInt(_this.data('height'), 10)) : 560;
           options.marginLeft = options.width / 2;
@@ -162,7 +173,7 @@ define(function(require) {
             shown: function() {
               $('#' + modalData.id).addClass('in');
               $('.close, .modal-backdrop').click(function() {
-                $('#' + modalData.id).modal('close');
+                $('#' + modalData.id).modal('hide');
               });
             }
             , hidden: function() {

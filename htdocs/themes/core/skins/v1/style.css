@@ -29,6 +29,7 @@ a:hover, a:focus {color: #ffb400;}
 .invisible {visibility: hidden}
 
 /* Prettifying the inputs */
+input[type=submit] {vertical-align: top; line-height: 24px;}
 input[type=text],input[type=password],input[type=phone],select {max-width: 90%;}
 .wide {width: 95%;}
 a.smallButton {float: left; width: auto; color: #555;}
@@ -50,7 +51,7 @@ header {min-height: 60px; background: #FFF; color: #6E6E6E;}
 .header_search {float: right; width: auto;}
 .header_search form {margin-bottom: 10px;}
 .admin .header_search input[type=text] {width: 210px;}
-.header_search .btn-clear {margin-top: -9px; height: 30px;}
+.header_search .btn-clear {line-height: 20px; height: 30px;}
 
 /* Primary Navigation */
 /* #Navigation

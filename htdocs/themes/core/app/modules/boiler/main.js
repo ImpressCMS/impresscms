@@ -1,7 +1,7 @@
 define(function(require) {
   var $ = require('jquery')
-  , _boilerPlugins = require('themeBase/app/lib/boiler-core-plugins')
-  , hover = require('hoverIntent')
+  , _boilerPlugins = require('themeBase/app/libs/boiler-core-plugins')
+  , _hover = require('hoverIntent')
   , app = {
     initialize: function() {
         $(document).ready(function() {

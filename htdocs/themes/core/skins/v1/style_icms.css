@@ -30,10 +30,13 @@ table.outer td {padding: 0; border: 0;  vertical-align: top;}
 .controlButtons input {margin-bottom: 0;}
 
 /* core messages */
-.coreMessage {display: block; width: auto; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; margin: 10px 0;
--webkit-box-shadow:  0px 2px 15px -5px rgba(0, 0, 0, .7);
-   -moz-box-shadow:  0px 2px 15px -5px rgba(0, 0, 0, .7);
-        box-shadow:  0px 2px 15px -5px rgba(0, 0, 0, .7);
+.coreMessage {display: block; width: auto; padding: 10px; margin: 10px 0;
+-webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+        border-radius: 5px; 
+-webkit-box-shadow:  0 2px 15px -5px rgba(0, 0, 0, .7);
+   -moz-box-shadow:  0 2px 15px -5px rgba(0, 0, 0, .7);
+        box-shadow:  0 2px 15px -5px rgba(0, 0, 0, .7);
 }
 .coreMessage .message-title {font-weight: bold; float: left; clear: both;}
 .coreMessage .message {float: left; clear: both;}
@@ -71,41 +74,37 @@ fieldset {display: block; width: 100%;}
 .admin input, .admin textarea, .admin select {width: auto;}
 .admin select {max-width: 210px;}
 .admin select[multiple="multiple"] {max-width: none; width: 220px;}
-/*.admin .icms-theme-form { padding: 10px; background: #f2f2f2; border-bottom: 1px solid #ddd;}*/
-/*.admin .icms-theme-form .fieldWrapper {padding: 19px 0;}
-*/
+.admin .icms-theme-form { margin: 10px 0 0 0;
+-webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+        border-radius: 5px; 
+-webkit-box-shadow:  0 2px 15px -5px rgba(0, 0, 0, .7);
+   -moz-box-shadow:  0 2px 15px -5px rgba(0, 0, 0, .7);
+        box-shadow:  0 2px 15px -5px rgba(0, 0, 0, .7);
+}
+.admin .icms-theme-form .inner {padding: 10px; display: block;}
+.admin .icms-theme-form .fieldWrapper {padding: 10px 0; border-bottom: 1px solid #ddd;}
+.admin .icms-theme-form .group-button {padding: 0; border: 0;}
+.form-horizontal .control-label {padding: 0; text-align: left;}
 
-.icms-theme-form .well {display: block; margin: 0;}
-.icms-theme-form label {display: block;}
-.icms-theme-form .control-group {margin-bottom: 10px;}
-.icms-theme-form fieldset {display: block; width: 100%;}
-.icms-theme-form legend {margin: 0 0 10px; text-align: left; font-size: 18px; border-bottom: 1px solid #ddd;}
-.icms-theme-form label .caption-marker {font-weight: normal; color: red; padding: 1px 2px;}
-.icms-theme-form .fieldWrapper .helptip { float: right; display: block; margin: 0 5px;}
-.icms-theme-form .fieldWrapper .helptip a { float: left; display: block;}
-.icms-theme-form .fieldWrapper .helptip a img {float: left; }
-.icms-theme-form .fieldWrapper .helptip .popover {text-align: left;}
-.icms-theme-form .fieldWrapper .helptext {display: none;}
+.admin .icms-theme-form label .caption-marker {font-weight: normal; color: red; padding: 1px 2px;}
+.helptip {float: right; margin: 0 0 0 5px; font-size: 16px;}
+.helptip a { float: left; width: 100%; height: 100%; display: block; text-decoration: none; color: #888;}
+.helptip a:hover {color: #08C;}
+.helptip .popover {text-align: left;}
+.helptext {display: none;}
 .form-horizontal .control-group {margin-bottom: 10px;}
-.icms-theme-form .titleWrapper {margin-bottom: 0;}
-/*.admin .icms-theme-form .fieldWrapper {width: 100%; float: left; clear: both; padding: 5px 0; border-bottom: 1px solid #ddd;}
-.admin .icms-theme-form .group-button {border-bottom: 0;}
-.admin .icms-theme-form .grouped {background: #ececec; float: left; width: 100%; clear: both; margin: 0 0 15px 0; border: 1px solid #CCC;}
-.admin .icms-theme-form .grouped .inner {padding: 10px;float: left;}
-.admin .icms-theme-form .grouped .icms_checkboxoption label {float: right;}
+
+.admin .icms-theme-form .grouped {float: left; width: 100%;}
+.admin .icms-theme-form .grouped .inner {display: block; padding: 10px;}
+/*.admin .icms-theme-form .grouped .icms_checkboxoption label {float: right;}*/
 .admin .icms-theme-form .grouped .checkemallWrapper {width: 100%; clear: both; float: left; border-top: 1px solid #ccc; padding: 0;}
 .admin .icms-theme-form .grouped .checkemallWrapper .inner {padding: 10px; float: left; width: auto;}
 .admin .icms-theme-form .grouped .icms_checkboxoption {float: left; display: inline-block; padding: 2px 4px 6px;}
-.admin .icms-theme-form .grouped .icms_checkboxoption input {float: left;}
-.admin .icms-theme-form label {font-weight: bold; width: 30%; float: left; padding: 1% 0;}
-.admin .icms-theme-form .grouped .icms_checkboxoption label {clear: none; width: auto; padding: 0; margin-left: 5px;}
-.admin .icms-theme-form label .caption-marker {font-weight: normal; color: red; padding: 1px 2px;}
-.admin .icms-theme-form .fieldWrapper > div {width: 68%; float: right; padding: 1% 1% 0; background: #fefefe;}
-.admin .icms-theme-form .group-button > div {width: 98%; float: left; clear: both;}
-.admin .icms-theme-form .fieldWrapper .helptip { float: right; display: block; margin: 0 5px;}
-.admin .icms-theme-form .fieldWrapper .helptip a { float: left; display: block;}
-.admin .icms-theme-form .fieldWrapper .helptip a img {float: left; }
-.admin .icms-theme-form .fieldWrapper .helptext {display: none;}*/
+/*.admin .icms-theme-form .grouped .icms_checkboxoption input {float: left;}*/
+/*.admin .icms-theme-form .grouped .icms_checkboxoption label {clear: none; width: auto; padding: 0; margin-left: 5px;}*/
+.icms-theme-form .grouped .icms_checkboxoption input {margin: 0 5px 0 0;}
+.titleWrapper {margin: 0;}
 
 .admin code {display: block; float: left; clear: both; width: 100%; height: auto; max-height: 400px; overflow-x: hidden; overflow-y: auto; background: #f3f3f3; border: 1px solid #ddd; margin: 10px 0; padding: 10px;}
 .admin .buttonsPagerWrapper {margin: 10px 0 0 0;}

@@ -308,30 +308,28 @@ final class icms_core_Password {
 			return md5($pass);
 		} else {
 			$pass = $salt . md5($pass) . $this->mainSalt;
-
-            $type = array();
-            $type['encType'] = array(
-                                        1 => 'sha256',
-                                        2 => 'sha384',
-                                        3 => 'sha512',
-                                        4 => 'ripemd128',
-                                        5 => 'ripemd160',
-                                        6 => 'whirlpool',
-                                        7 => 'haval128,4',
-                                        8 => 'haval160,4',
-                                        9 => 'haval192,4',
-                                        10 => 'haval224,4',
-                                        11 => 'haval256,4',
-                                        12 => 'haval128,5',
-                                        13 => 'haval160,5',
-                                        14 => 'haval192,5',
-                                        15 => 'haval224,5',
-                                        16 => 'haval256,5',
-                                    );
-            
-            return hash($type['encType'][$enc_type], $pass);
-        }
+      $type = array();
+      $type['encType'] = array(
+        1 => 'sha256',
+        2 => 'sha384',
+        3 => 'sha512',
+        4 => 'ripemd128',
+        5 => 'ripemd160',
+        6 => 'whirlpool',
+        7 => 'haval128,4',
+        8 => 'haval160,4',
+        9 => 'haval192,4',
+        10 => 'haval224,4',
+        11 => 'haval256,4',
+        12 => 'haval128,5',
+        13 => 'haval160,5',
+        14 => 'haval192,5',
+        15 => 'haval224,5',
+        16 => 'haval256,5',
+      );
+      return hash($type['encType'][$enc_type], $pass);
     }
+  }
 
 	/**
 	 * This Private Function is used to Encrypt User Passwords
@@ -344,16 +342,16 @@ final class icms_core_Password {
 	 * @return   Hash of users password.
 	 */
 	private function _encryptPassword($pass, $salt, $enc_type, $iterations) {
-		if ($enc_type == 20) {
-			return '$' . $enc_type . '$20$' . md5($pass); // this should never be used. should be removed???
+    if ($enc_type == 20) {
+		  return '$' . $enc_type . '$20$' . md5($pass); // this should never be used. should be removed???
 		} else {
-			$hash = '$' . $enc_type . '$' . $iterations . '$' . $salt . '-' . self::_rehash(
-				self::_rehash($salt, $iterations) .
-				self::_rehash($pass, $iterations) .
+		  $hash = '$' . $enc_type . '$' . $iterations . '$' . $salt . '-' . self::_rehash(
+        self::_rehash($salt, $iterations) .
+        self::_rehash($pass, $iterations) .
 				self::_rehash($this->mainSalt, $iterations),
-                                        $iterations, $enc_type);
-            
-            return $hash;
+        $iterations, $enc_type
+      );
+      return $hash;
 		}
 	}
 
@@ -367,35 +365,34 @@ final class icms_core_Password {
 	 * @return   Hash of users password.
 	 */
 	private function _rehash($hash, $iterations, $enc_type = 21) {
-        $type['encType'] = array(
-                                    21 => 'sha256',
-                                    22 => 'sha384',
-                                    23 => 'sha512',
-                                    24 => 'ripemd128',
-                                    25 => 'ripemd160',
-                                    26 => 'whirlpool',
-                                    27 => 'haval128,4',
-                                    28 => 'haval160,4',
-                                    29 => 'haval192,4',
-                                    30 => 'haval224,4',
-                                    31 => 'haval256,4',
-                                    32 => 'haval128,5',
-                                    33 => 'haval160,5',
-                                    34 => 'haval192,5',
-                                    35 => 'haval224,5',
-                                    36 => 'haval256,5',
-                                    37 => 'ripemd256',
-                                    38 => 'ripemd320',
-                                    39 => 'snefru256',
-                                    40 => 'gost'            
-                                );
+    $type['encType'] = array(
+      21 => 'sha256',
+      22 => 'sha384',
+      23 => 'sha512',
+      24 => 'ripemd128',
+      25 => 'ripemd160',
+      26 => 'whirlpool',
+      27 => 'haval128,4',
+      28 => 'haval160,4',
+      29 => 'haval192,4',
+      30 => 'haval224,4',
+      31 => 'haval256,4',
+      32 => 'haval128,5',
+      33 => 'haval160,5',
+      34 => 'haval192,5',
+      35 => 'haval224,5',
+      36 => 'haval256,5',
+      37 => 'ripemd256',
+      38 => 'ripemd320',
+      39 => 'snefru256',
+      40 => 'gost'            
+    );
 
-        for ($i = 0; $i < $iterations; ++$i) {
-            $hashed = hash($type['encType'][$enc_type], $hash . $hash);
-        }
-        
-        return $hashed;
+    for ($i = 0; $i < $iterations; ++$i) {
+      $hashed = hash($type['encType'][$enc_type], $hash . $hash);
     }
+    return $hashed;
+  }
     
 	/**
 	 * This Private Function verifies if the password is correct
@@ -408,23 +405,22 @@ final class icms_core_Password {
 	private function _verifyPassword($pass, $uname) {
 		$userSalt = self::_getUserSalt($uname); // to be deprecated in future versions
 		$userHash = self::_getUserHash($uname);
-        
-        if(preg_match_all("/(\\$)(\\d+)(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
-            $encType = (int) $matches[2][0];
-            $iterations = (int) $matches[4][0];
-            $userSalt = $matches[6][0];
-            
+
+    if(preg_match_all("/(\\$)(\\d+)(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
+      $encType = (int) $matches[2][0];
+      $iterations = (int) $matches[4][0];
+      $userSalt = $matches[6][0];
+
 			if (self::_encryptPassword($pass, $userSalt, $encType, $iterations) == $userHash) {
-                return $userHash;
-            }
+        return $userHash;
+      }
 		} else { // to be removed in future versions
 			$encType = self::_getUserEncType($uname);
             
 			if (self::_encryptPass($pass, $userSalt, $encType) == $userHash) {
-                return $userHash;
-            }
-        }
-        
-        return false;
+        return $userHash;
+      }
     }
+    return false;
+  }
 }
