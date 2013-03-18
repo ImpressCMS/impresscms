@@ -138,7 +138,9 @@ class icms_form_elements_Password extends icms_form_Element {
 		// 	icms_PasswordMeter();
 		// }
 		$ele_name = $this->getName();
-		return "<input class='" . $this->getClassName()
+		$classes = $this->isRequired() ? 'required ' : '';
+		$classes .= $this->getClassName();
+		return "<input class='" . $classes
 			. "' type='password' name='" . $ele_name
 			. "' id='" . $ele_name
 			. "' size='" . $this->getSize()

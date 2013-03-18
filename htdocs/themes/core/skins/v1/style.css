@@ -38,6 +38,18 @@ a.smallButton {float: left; width: auto; color: #555;}
 input[type="submit"].btn-clear:hover,input[type="submit"].btn-clear:active,input[type="submit"].btn-clear:focus,
 input[type="button"].btn-clear:hover,input[type="button"].btn-clear:active,input[type="button"].btn-clear:focus {outline:none; border-color:#9ecaed; box-shadow:0 0 10px #9ecaed;}
 a.btn {color: #fff;}
+input.error,
+select.error,
+textarea.error,
+input.error:focus,
+select.error:focus,
+textarea.error:focus {
+  border-color: #b94a48;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
 ul.nav {padding: 0;}
 #mainMenu ul.nav, #userMenu ul.nav {margin: 0;}
 .tab-content {padding: 0; margin: 0;}

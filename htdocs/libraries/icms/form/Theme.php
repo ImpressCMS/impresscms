@@ -59,9 +59,13 @@ class icms_form_Theme extends icms_form_Base {
 			$requiredClass = $required ? " required" : "";
 			$isHidden = $ele->isHidden() ? true : false;
 			$groupName = $ele->getName() != '' && $ele->getName() != 'XOOPS_TOKEN_REQUEST' ? " group-" . $ele->getName() : "";
-	
+
+			if($required) {
+				$ele->setClass("required");
+			}
+
 			if(!$isHidden) {
-				$ret .= "<div class='fieldWrapper control-group" . $groupName . $requiredClass . "'>";
+				$ret .= "<div class='fieldWrapper control-group" . $groupName . "'>";
 				// $ret .= "<pre>" . print_r($ele, true) . "</pre>";
 			}
 

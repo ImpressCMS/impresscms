@@ -10,8 +10,8 @@
     <div id="block_login_form" class="block_login_form<{if $block.auth_openid}> tab-pane active<{/if}>">
       <form action="<{$icms_url}>/user.php" method="post">
         <div>
-          <input type="text" class="uname" name="uname" size="12" value="" maxlength="25" placeholder="<{$block.lang_username}>" />
-          <input type="password" name="pass" size="12" maxlength="32" placeholder="<{$block.lang_password}>" />
+          <input type="text" class="uname required" name="uname" size="12" value="" maxlength="25" placeholder="<{$block.lang_username}>" />
+          <input type="password" class="required" name="pass" size="12" maxlength="32" placeholder="<{$block.lang_password}>" />
       
           <{if $block.rememberme }>
             <label class="checkbox" for="rememberme">

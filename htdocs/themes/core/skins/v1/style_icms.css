@@ -50,6 +50,7 @@ table.outer td {padding: 0; border: 0;  vertical-align: top;}
 .warningMsg { background-color : #b99048; color: #f2eede; text-align: center; border: 1px solid #DDD; font-weight: bold; padding: 10px; margin: 10px 0;}
 .warningMsg a, .warningMsg a:visited {color: #f2eede;}
 
+.marker {font-size: 18px; padding-top: 6px; float: right; color: #B94A48;}
 
 /* Admin styles */
 .CPbigTitle {background-repeat: no-repeat; background-position: 10px 10px; font-size: 20px; padding: 20px 0 20px 50px; margin: 0; border-bottom: 1px solid #ccc;}
@@ -105,7 +106,6 @@ fieldset {display: block; width: 100%;}
 /*.admin .icms-theme-form .grouped .icms_checkboxoption label {clear: none; width: auto; padding: 0; margin-left: 5px;}*/
 .icms-theme-form .grouped .icms_checkboxoption input {margin: 0 5px 0 0;}
 .titleWrapper {margin: 0;}
-
 .admin code {display: block; float: left; clear: both; width: 100%; height: auto; max-height: 400px; overflow-x: hidden; overflow-y: auto; background: #f3f3f3; border: 1px solid #ddd; margin: 10px 0; padding: 10px;}
 .admin .buttonsPagerWrapper {margin: 10px 0 0 0;}
 .admin .introButtons {float: left;}

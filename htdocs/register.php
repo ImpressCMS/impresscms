@@ -30,7 +30,7 @@ $uname = isset($_POST['uname']) ? icms_core_DataFilter::stripSlashesGPC($_POST['
 $email = isset($_POST['email']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])) : '';
 $url = isset($_POST['url']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['url'])) : '';
 $pass = isset($_POST['pass']) ? icms_core_DataFilter::stripSlashesGPC($_POST['pass']) : '';
-$vpass = isset($_POST['vpass']) ? icms_core_DataFilter::stripSlashesGPC($_POST['vpass']) : '';
+// $vpass = isset($_POST['vpass']) ? icms_core_DataFilter::stripSlashesGPC($_POST['vpass']) : '';
 $timezone_offset = isset($_POST['timezone_offset']) ? (float)($_POST['timezone_offset']) : $icmsConfig['default_TZ'];
 $user_viewemail = (isset($_POST['user_viewemail']) && (int) $_POST['user_viewemail']) ? 1 : 0;
 $user_mailok = (isset($_POST['user_mailok']) && (int) $_POST['user_mailok']) ? 1 : 0;
@@ -41,17 +41,17 @@ $thisuser = icms::handler('icms_member_user');
 switch ($op) {
 	case 'newuser':
 		include 'header.php';
-		$xoTheme->addScript('', array('type' => ''), '
-				$(".password").passStrength({
-					shortPass: 		"top_shortPass",
-					badPass:		"top_badPass",
-					goodPass:		"top_goodPass",
-					strongPass:		"top_strongPass",
-					baseStyle:		"top_testresult",
-					messageloc:		0
-				});
-			});
-		');
+		// $xoTheme->addScript('', array('type' => ''), '
+		// 		$(".password").passStrength({
+		// 			shortPass: 		"top_shortPass",
+		// 			badPass:		"top_badPass",
+		// 			goodPass:		"top_goodPass",
+		// 			strongPass:		"top_strongPass",
+		// 			baseStyle:		"top_testresult",
+		// 			messageloc:		0
+		// 		});
+		// 	});
+		// ');
 		$stop = '';
 		if (!icms::$security->check()) {
 			$stop .= implode('<br />', icms::$security->getErrors()) . "<br />";
@@ -61,7 +61,7 @@ switch ($op) {
 				$stop .= _US_UNEEDAGREE . '<br />';
 			}
 		}
-		$stop .= $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
+		$stop .= $thisuser->userCheck($login_name, $uname, $email, $pass); //, $vpass
 		if (empty($stop)) {
 			echo _US_LOGINNAME . ": " . icms_core_DataFilter::htmlSpecialChars($login_name) . "<br />"
 				. _US_NICKNAME . ": " . icms_core_DataFilter::htmlSpecialChars($uname) . "<br />"
@@ -80,7 +80,7 @@ switch ($op) {
 				. "' /><input type='hidden' name='timezone_offset' value='" . $timezone_offset 
 				. "' /><input type='hidden' name='url' value='" . icms_core_DataFilter::htmlSpecialChars($url) 
 				. "' /><input type='hidden' name='pass' value='" . icms_core_DataFilter::htmlSpecialChars($pass) 
-				. "' /><input type='hidden' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass) 
+				// . "' /><input type='hidden' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass) 
 				. "' /><input type='hidden' name='user_mailok' value='" . (int) $user_mailok 
 				. "' /><input type='hidden' name='actkey' value='" . icms_core_DataFilter::htmlSpecialChars($actkey) 
 				. "' /><input type='hidden' name='agree_disc' value='" . (int) $agree_disc 
@@ -97,7 +97,7 @@ switch ($op) {
 		
 	case 'finish':
 		include 'header.php';
-		$stop = $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
+		$stop = $thisuser->userCheck($login_name, $uname, $email, $pass); //, $vpass
 		if (!icms::$security->check()) {
 			$stop .= implode('<br />', icms::$security->getErrors()) . "<br />";
 		}

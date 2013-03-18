@@ -494,6 +494,10 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				// $ret .= "<pre>" . print_r($ele, true) . "</pre>";
 			}
 
+			if($required) {
+				$ele->setClass("required");
+			}
+
 			if (!is_object($ele)) {
 				$ret .= $ele;
 			} elseif ( !$isHidden ) {
@@ -508,7 +512,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 					$ret .= "<div class='icms-form-element-help'>{$desc}</div>";
 				}
 					
-				$ret .= "<div class='$class'>" . $ele->render() . "</div>\n";
+				$ret .= "<div class='".$class."'>" . $ele->render() . "</div>\n";
 			} else {
 				$hidden .= $ele->render();
 			}
@@ -540,6 +544,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			$elements[$n]['body'] = $ele->render();
 			$elements[$n]['hidden'] = $ele->isHidden();
 			$elements[$n]['required'] = $ele->isRequired();
+			$elements[$n]['class'] = get_class($ele);
 			$elements[$n]['section'] = get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection();
 			$elements[$n]['section_close'] = get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection();
 			$elements[$n]['hide'] = isset($this->targetObject->vars[$n]['hide']) ? $this->targetObject->vars[$n]['hide'] : FALSE;

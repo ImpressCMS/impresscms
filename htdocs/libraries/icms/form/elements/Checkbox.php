@@ -165,12 +165,15 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		$ele_delimeter = $this->getDelimeter();
 		$extra = '';
 
+		$classes = $this->isRequired() ? 'required ' : '';
+		$classes .= get_class($this);
+
 		if (count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]") {
 			$ele_name = $ele_name . "[]";
 			$this->setName($ele_name);
 		}
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<span class='icms_checkboxoption'><label for='" . $ele_name . "_item_" . $value . "'><input type='checkbox' name='" . $ele_name 
+			$ret .= "<span class='icms_checkboxoption'><label for='" . $ele_name . "_item_" . $value . "'><input type='checkbox' class='".$classes."' name='" . $ele_name 
 				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";

@@ -172,7 +172,9 @@ class icms_form_elements_Select extends icms_form_Element {
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
-		$ret = "<select size='" . $this->getSize() . "'" . $this->getExtra();
+		$classes = $this->isRequired() ? 'required ' : '';
+		$classes .= get_class($this);
+		$ret = "<select class='".$classes."' size='" . $this->getSize() . "'" . $this->getExtra();
 		if ($this->isMultiple() != false) {
 			$ret .= " name='" . $ele_name . "[]' id='" . $ele_name . "[]' multiple='multiple'>\n";
 		} else {

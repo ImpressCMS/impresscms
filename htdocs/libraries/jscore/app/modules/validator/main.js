@@ -1,71 +1,66 @@
 /*
-  Module: Validator
+  Module: Validate
   Handles loose validation of forms
+  Handles ajaxSubmission if required
 
   Method: initialize
   determines if there is a form that requires validation.
+  if valid - check for ajax req and handle submission and callback
 */
 define(function(require) {
-  var mediator = require('mediator')
+  var $ = require('jquery')
+  , mediator = require('mediator')
   , errors = require('locale/errors')
+  , _form = require('plugins/forms/jquery.form')
+  , _validate = require('plugins/forms/jquery.validate')
   , module = {
     initialize: function(message, options) {
       $(document).ready(function() {
-        var forms = $('form'), i, j, reqs = null;
-        for(i=0; i<forms.length; i++){
-          reqs = $(forms[i]).find('.required');
-          if(reqs !== null) {
-            $(forms[i]).addClass('doValidation');
-            reqs = null;
-          }
-        }
+        var notifSettings = {
+          type: 'error'
+          , timeout: 5
+        };
 
-        $('form').on({
-          submit: function() {
-            var $this = $(this), eles, i, input
-            , notifSettings = {
-              type: 'error'
-              , timeout: 5
-            };
+        $('form').each(function() {
+          var $this = $(this)
+          , formName = $this.attr('name')
+          , ajax = $this.hasClass('ajax') ? true : false
+          , errorSymbol = $('<i class="marker icon-warning-sign error">&nbsp;</i>');
 
-            if($this.hasClass('doValidation')) {
-              eles = $this.find('.required');
-              // Loop through required elements and ensure a value is present - otherwise add error
-              for(i=0; i<eles.length;i++){
-                if($(eles[i]).find('input').val() === '') {
-                  $(eles[i]).find('input:first').addClass('error');
-                }
-                if($(eles[i]).find('textarea').val() === '') {
-                  $(eles[i]).find('textarea:first').addClass('error');
-                }
-                if($(eles[i]).find('select').val() === '') {
-                  $(eles[i]).find('select:first').addClass('error');
-                }
+          $this.validate({
+            errorElement: 'span'
+            , wrapper : '.icon-warning-sign'
+            , highlight: function(element, errorClass) {
+              if(!$(element).siblings('.icon-warning-sign').length) {
+                $(element).addClass(errorClass).parent().prepend(errorSymbol.clone());
               }
-
-              // Are ethere any errors?
-              if($this.find('.error').length) {
-                // If we have errors on the form - animate the window to the first field with an error
-                $("html, body").animate({ scrollTop: parseInt($this.find('.error:first').closest('.fieldWrapper').offset().top, 10)}, 600);
-
-                // Notify the user of the error
-                mediator.publish('addNotification', errors.required , notifSettings);
-
-                // When the user changes teh value of the field - remove the error state
-                $this.find('.error').on({
-                  focus: function() {
-                    $(this).removeClass('error');
+            }
+            , unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+                $(element).siblings('.icon-warning-sign').remove();
+            }
+            , submitHandler: function(form) {
+              if(ajax) {
+                form.ajaxSubmit({
+                  success: function(data) {
+                    mediator.publish('formCallback', formName, 'success', data);
+                  }
+                  , error: function(data) {
+                    mediator.publish('formCallback', formName, 'error', data);
                   }
                 });
               } else {
-                return true;
+                form.submit();
               }
             }
-            return false;
-          }
+            , invalidHandler: function(event, validator) {
+              var count = validator.numberOfInvalids();
+              if(count) {
+                mediator.publish('addNotification', errors.required , notifSettings);
+              }
+            }
+          });
         });
-
-
       });
     }
   };
