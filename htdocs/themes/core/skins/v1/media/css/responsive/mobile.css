@@ -1,6 +1,5 @@
 body {visibility: visible; padding: 0;}
-.js body.adminMenu {margin-top: 0!important;}
-#admin-menu {visibility: hidden;}
+.js body.adminMenu {margin-top: 40px!important;}
 
 header, #header_wrapper, #primary_navigation, #page, #preface_wrapper, #main_wrapper, #postscript_wrapper, footer, #footer {display: block;}
 
@@ -14,7 +13,7 @@ header {border: 0; padding-top: 0; float: left; clear: both; width: 100%;}
 
 nav#primary_navigation {background: #CCC; margin: 0; width: 100%; float: left; display: block; clear: both; height: auto;}
 .toSel {display: none;}
-.mobileMenu {display: block;}
+.admin .mobileMenu, .mobileMenu {display: block;}
 
 #preface_wrapper, #main_wrapper, #postscript_wrapper {width: 100%; float: left; clear: both; display: block;}
 

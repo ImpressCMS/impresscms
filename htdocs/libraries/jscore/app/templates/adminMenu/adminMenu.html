@@ -1,5 +1,5 @@
 <div id="admin-menu" class="clearfix">
-  <ul>
+  <ul class="toSel" data-label="Admin Menu">
     <li><a href="{{ config.url }}"><img src="{{ config.url }}/favicon.ico" alt="{{ config.sitename }}" style="height:11px" /></a></li>
 
     {{#each admenu}}
@@ -37,8 +37,8 @@
     </li>
     {{/each}}
 
-    <li class="admin-menu-action admin-menu-tab"><a href="{{ config.url }}/user.php?op=logout">{{ labels.logout }}</a></li>
-    <li class="admin-menu-action"><a href="{{ config.url }}/user.php">{{ labels.welcome }}, {{ user.uname}}</a></li>
-    <li class="admin-menu-action admin-menu-users"><a href="{{ config.url }}/modules/system/admin.php?fct=findusers">{{ config.membersOnline }}/{{ config.onlineCount }}</a></li>    
+    <li class="admin-menu-action admin-menu-tab"><a data-prefix=">" href="{{ config.url }}/user.php?op=logout">{{ labels.logout }}</a></li>
+    <li class="admin-menu-action"><a data-prefix=">" href="{{ config.url }}/user.php">{{ labels.welcome }}, {{ user.uname}}</a></li>
+    <li class="admin-menu-action admin-menu-users"><a data-hidden="true" href="{{ config.url }}/modules/system/admin.php?fct=findusers">{{ config.membersOnline }}/{{ config.onlineCount }}</a></li>    
   </ul>
 </div>

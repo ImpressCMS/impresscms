@@ -34,22 +34,28 @@ define(function(require) {
     , mobileMenus: function() {
       // Create the dropdown base
       var toSel = $('.toSel')
-      , sel, i, menu, depth;
+      , dash = ['', '', '--', '&nbsp;&nbsp;--', '&nbsp;&nbsp;&nbsp;&nbsp;--'];
 
       toSel.each(function() {
-        sel = $('<select class="mobileMenu"><option value="false" text="Navigation">Navigation</option></select>');
-        menu = $(this);
-        menu.after(sel);
+        var menu = $(this)
+        , label = typeof(menu.data('label')) !== 'undefined' ? menu.data('label') : 'Navigation'
+        , sel = $('<select class="mobileMenu"><option value="false" text="Navigation">'+label+'</option></select>');
+
         menu.find('a').each(function() {
           var el = $(this)
-          , depth = el.parentsUntil(toSel).length;
+          , depth = el.parents("ul").size()
+          , oLabel = $('<span />')
+          , text = typeof(el.data('prefix')) !== 'undefined' ? el.data('prefix') + el.text() : dash[depth] + el.text();
 
-          $('<option />', {
-            'value': el.attr('href').match(/void/) ? false : el.attr('href'),
-            'text': depth > 1 ? '--' + el.text() : el.text(),
-            'selected' : el.hasClass('active') ? 'selected' : false
-          }).appendTo(sel);
+          if(typeof(el.data('hidden') !== 'undefined') && el.data('hidden') !== true) {
+            $('<option />', {
+              'value': el.attr('href').match(/void/) ? false : el.attr('href'),
+              'text': oLabel.html(text).text(),
+              'selected' : el.hasClass('active') ? 'selected' : false
+            }).attr('class', el.attr('class')).appendTo(sel);
+          }
         });
+        menu.after(sel);
       });
 
       $('.mobileMenu').on({

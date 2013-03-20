@@ -171,13 +171,17 @@ figure { margin: 0; }
 label { cursor: pointer; }
 
 // Mobile Menu hidden
-.mobileMenu {
+.mobileMenu,
+.admin .mobileMenu {
   display: none;
   width: 98%;
   max-width: 100%;
   margin: 10px 1%;  
 }
 
+#admin-menu .mobileMenu {
+  margin: 5px 1%;
+}
 /* ==|== print styles =======================================================
    Print styles.
    Inlined to avoid required HTTP connection: h5bp.com/r
