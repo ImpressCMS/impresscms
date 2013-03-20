@@ -34,7 +34,6 @@ var boiler = {};
       header: $('#header'),
       logo: $('#logo'),
       search: $('#header_search'),
-      navToggle: $('#nav_toggle'),
       navigation: $('#primary_navigation'),
       page: $('#page'),
       preface: $('#preface_wrapper'),
@@ -46,13 +45,6 @@ var boiler = {};
       postscript: $('#postscript_wrapper'),
       footer: $('#footer')
     };
-
-    boiler.dom.navToggle.on({
-      click: function(e) {
-        e.preventDefault();
-        boiler.dom.navigation.slideToggle('fast');
-      }
-    });
     // End DomReady
   });
 }(window.jQuery);

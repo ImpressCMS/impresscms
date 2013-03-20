@@ -224,7 +224,6 @@ svg:not(:root) {
 figure {
   margin: 0;
 }
-
 /* =============================================================================
    Chrome Frame Prompt
    ========================================================================== */
@@ -295,19 +294,16 @@ figure {
 .omega {
   margin-right: 0;
 }
-/* Nav Toggle for Mobile */
-#nav_toggle {
+/* Indicate that 'label' will shift focus to the associated form element */
+label {
+  cursor: pointer;
+}
+.mobileMenu {
   display: none;
+  width: 98%;
+  max-width: 100%;
+  margin: 10px 1%;
 }
-#nav_toggle a {
-  background: url("../../img/nav-toggle.png") no-repeat scroll left top transparent;
-  display: block;
-  height: 0;
-  overflow: hidden;
-  padding-top: 15px;
-  width: 25px;
-}
-
 /* ==|== print styles =======================================================
    Print styles.
    Inlined to avoid required HTTP connection: h5bp.com/r
