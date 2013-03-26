@@ -8,7 +8,7 @@
 
   <div class="login-content<{if $block.auth_openid}> tab-content<{/if}>">
     <div id="block_login_form" class="block_login_form<{if $block.auth_openid}> tab-pane active<{/if}>">
-      <form action="<{$icms_url}>/user.php" method="post">
+      <form action="<{if $block.dossl}><{$icms_secure_url}><{else}><{$icms_url}><{/if}>/user.php" method="post">
         <div>
           <input type="text" class="uname required" name="uname" size="12" value="" maxlength="25" placeholder="<{$block.lang_username}>" />
           <input type="password" class="required" name="pass" size="12" maxlength="32" placeholder="<{$block.lang_password}>" />
@@ -22,27 +22,26 @@
           
           <input type="hidden" name="icms_redirect" value="<{$icms_requesturi}>" />
           <input type="hidden" name="op" value="login" />
-          <input type="submit" value="<{$block.lang_login}>" />
-          <{$block.sslloginlink}>
+          <button type="submit" class="btn btn-block btn-primary"><{$block.lang_login}></button>
         </div>
       </form>
     </div>
     <{if $block.auth_openid}>  
       <div id="block-openid-form" class="tab-pane">
-        <form method="get" action="<{$icms_url}>/try_auth.php">
+        <form method="get" action="<{if $block.dossl}><{$icms_secure_url}><{else}><{$icms_url}><{/if}>/try_auth.php">
           <div>
             <{$smarty.const._MB_SYSTEM_OPENID_URL}>
             <input type="hidden" name="action" value="verify" />
             <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
-            <input type="submit" value="<{$block.lang_login}>" />          
+            <button type="submit" class="btn btn-block btn-primary"><{$block.lang_login}></button>
           </div>
         </form>
       </div>
     <{/if}>
     <div id="block_login_actions" class="block_login_actions">
-      <a href="<{$icms_url}>/user.php#lost" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
+      <a class="btn btn-block" href="<{$icms_url}>/user.php#lost" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
       <{if $block.registration }>
-        <a href="<{$icms_url}>/register.php" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
+        <a class="btn btn-block" href="<{$icms_url}>/register.php" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
       <{/if}>
     </div>      
   </div>

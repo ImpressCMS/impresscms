@@ -9,6 +9,10 @@
 #usermenu a.highlight { color: #59BBE6; }
 /* End Main/User Menu */
 
+/* Search Block */
+.search_block form {margin: 0;}
+.search_block input[type=text] {width: 100%; max-width: 93%}
+
 /* codes and quotes */
 .xoopsCode { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto; }
 .xoopsQuote { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px; }

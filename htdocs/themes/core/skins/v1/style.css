@@ -29,15 +29,14 @@ a:hover, a:focus {color: #ffb400;}
 .invisible {visibility: hidden}
 
 /* Prettifying the inputs */
-input[type=submit] {vertical-align: top; line-height: 24px;}
+.btn-clear {vertical-align: top; line-height: 24px;}
 input[type=text],input[type=password],input[type=phone],select {max-width: 90%;}
 .wide {width: 95%;}
 a.smallButton {float: left; width: auto; color: #555;}
-.smallButton, input[type="submit"].btn-clear { background: #fff; border:1px solid #dadada; border-radius:3px; padding:5px 8px; transition: all 0.25s ease-in-out; -webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out;}
+.smallButton, .btn-clear { background: #fff; border:1px solid #dadada; border-radius:3px; padding:5px 8px; transition: all 0.25s ease-in-out; -webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out;}
 .smallButton:hover, .smallButton:active, .smallButton:focus,
-input[type="submit"].btn-clear:hover,input[type="submit"].btn-clear:active,input[type="submit"].btn-clear:focus,
-input[type="button"].btn-clear:hover,input[type="button"].btn-clear:active,input[type="button"].btn-clear:focus {outline:none; border-color:#9ecaed; box-shadow:0 0 10px #9ecaed;}
-a.btn {color: #fff;}
+.btn-clear:hover,.btn-clear:active,.btn-clear:focus {outline:none; border-color:#9ecaed; box-shadow:0 0 10px #9ecaed;}
+a.btn-primary {color: #fff;}
 input.error,
 select.error,
 textarea.error,

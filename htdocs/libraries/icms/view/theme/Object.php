@@ -130,6 +130,7 @@ class icms_view_theme_Object {
 		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule;
 		$this->template->assign(
 			array(
+				'icms_secure_url' => preg_replace('/http:/','https:',ICMS_URL),
 				'icms_style' => ICMS_URL . '/icms' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css',
 				'icms_theme' => $this->folderName,
 				'icms_imageurl' => (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName . '/'))

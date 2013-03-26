@@ -51,7 +51,6 @@ $icmsJsUserData = array(
   'language' => (!icms::$user) ? 0 : icms::$user->vars['language']['value']
 );
 
-
 // Front Side ACP Menu
 if (is_object(icms::$user)) {
   $icmsModule = icms::handler('icms_module')->getByDirname('system');
@@ -101,10 +100,22 @@ if (is_object(icms::$user)) {
 $redirectMessage = (!empty($_SESSION['redirect_message'])) ? '"' . $_SESSION['redirect_message'] . '"' : 'false';
 unset( $_SESSION['redirect_message'] );
 
-$xoTheme->addScript(NULL, array('type' => 'text/javascript'),
+$icmsTheme->addScript(NULL, array('type' => 'text/javascript'),
   'var icms = {' .
     'config: ' . json_encode($icmsJsConfigData) .
     ', user: ' . json_encode($icmsJsUserData) .
+    ', module: {'.
+      'lookup: function(mod, args, callback) {' . 
+        '$.ajax({'.
+          'url: "http://mrtheme.com/js/modules/" + mod + "/" + mod + ".php?"+args'.
+          ', dataType: "json"'.
+          ', success: function(data) {'.
+            'icms.module[mod] = data;'.
+            'if(typeof callback === "function") { callback(); }'.
+          '}'.
+        '});'.
+      '}'.
+    '}' .
     ', redirectMessage: ' . $redirectMessage .
   '}' . 
   ', routeReady = {' .
@@ -130,5 +141,5 @@ $xoTheme->addScript(NULL, array('type' => 'text/javascript'),
 );
 
 $bootstrap = file_exists( ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js') ? ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js' : ICMS_LIBRARIES_URL . '/jscore/bootstrap.js';
-$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/modernizr.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/require.js', array('type' => 'text/javascript', 'data-main' => $bootstrap, 'data-loaded' => 'icms_core' ));
+$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/modernizr.js', array('type' => 'text/javascript'));
+$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/require.js', array('type' => 'text/javascript', 'data-main' => $bootstrap, 'data-loaded' => 'icms_core' ));

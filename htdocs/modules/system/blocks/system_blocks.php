@@ -88,10 +88,7 @@ function b_system_login_show() {
 		$block['lang_youoid'] = _MB_SYSTEM_OPENID_URL;
 		$block['lang_login_oid'] = _MB_SYSTEM_OPENID_LOGIN;
 		$block['lang_back2normoid'] = _MB_SYSTEM_OPENID_NORMAL_LOGIN;
-		if ($icmsConfig['use_ssl'] == 1 && $icmsConfig['sslloginlink'] != '') {
-			$block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('"
-				. $icmsConfig['sslloginlink'] . "', 'ssllogin', 300, 200);\">" . _MB_SYSTEM_SECURE . "</a>";
-		}
+		$block['dossl'] = $icmsConfig['use_ssl'];
 
 		if ($icmsConfigUser['allow_register'] == 1) {
 			$block['registration'] = $icmsConfigUser['allow_register'];

@@ -38,6 +38,7 @@ define(function(require) {
         module.helptip();
         module.checkAll();
         module.modals();
+        module.mobileMenus();
         mediator.publish('uitoolsReady');
       });
     }
@@ -152,7 +153,7 @@ define(function(require) {
           options.marginTop = options.height / 2;
 
           frameHeight = typeof _this.data('height') !== 'undefined' ? options.height - 100 : '100%';
-          frameScrolling = typeof _this.data('scrolling') !== 'undefined' ? _this.data('scrolling') - 100 : 'no';
+          frameScrolling = typeof _this.data('scrolling') !== 'undefined' ? _this.data('scrolling') : 'no';
           modalData.id = 'modal_' + Math.random().toString(36).substring(7);
           modalData.title = _this.attr('title');
           modalData.content = '<iframe src="' + $(this).attr('href') + '" scrolling="' + frameScrolling + '" width="100%" height="' + frameHeight + '" frameborder="0"></iframe>';
@@ -181,6 +182,44 @@ define(function(require) {
             }
           });
           return false;
+        }
+      });
+    }
+    , mobileMenus: function() {
+      // Create the dropdown base
+      var toSel = $('.toSel')
+      , dash = ['', '', '&ndash;&ndash;', '&nbsp;&nbsp;&ndash;&ndash;', '&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&ndash;'];
+
+      toSel.each(function() {
+        var menu = $(this)
+        , label = typeof(menu.data('label')) !== 'undefined' ? menu.data('label') : 'Navigation'
+        , sel = $('<select class="mobileMenu"><option value="false" text="Navigation">'+label+'</option></select>');
+
+        if(!menu.hasClass('rendered')) {
+          menu.find('a').each(function() {
+            var el = $(this)
+            , depth = el.parents("ul").size()
+            , oLabel = $('<span />')
+            , text = typeof(el.data('prefix')) !== 'undefined' ? el.data('prefix') + el.text() : dash[depth] + el.text();
+
+            if(typeof(el.data('hidden') !== 'undefined') && el.data('hidden') !== true) {
+              $('<option />', {
+                'value': el.attr('href').match(/void/) ? false : el.attr('href'),
+                'text': oLabel.html(text).text(),
+                'selected' : el.hasClass('active') || el.parent().hasClass('active') ? 'selected' : false
+              }).attr('class', el.attr('class')).appendTo(sel);
+            }
+          });
+          menu.addClass('rendered').after(sel);
+        }
+      });
+
+      $('.mobileMenu').on({
+        change: function() {
+          var _this = $(this).find("option:selected");
+          if(_this.val() !== 'false' || _this.val() ==='#' || !_this.val.match(/void/)) {
+            window.location = _this.val();
+          }
         }
       });
     }
