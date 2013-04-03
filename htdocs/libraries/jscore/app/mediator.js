@@ -47,6 +47,11 @@ define(['jquery'], function($){
 		, l;
 		for ( i = 0, l = channels[channel].length; i < l; i++) {
 			channels[channel][i].apply(this, args);
+			if(i === l-1) {
+				if(!channel.match('/Done/')) {
+					obj.publish(channel + 'Done');
+				}
+			}
 		}
 	};
 
