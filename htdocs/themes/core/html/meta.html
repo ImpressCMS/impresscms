@@ -51,9 +51,12 @@
   <script type="text/javascript">
     var hasBootstrap = true;
   </script>
-  <!-- Ideally we want these scripts in the footer, however - this isn't possible at this time -->
-  <{$icms_module_header}>
 
+  <!-- Loading scripts from system -->
+  <{$head}>
+  <{$module}>
+  <!-- End system scripts -->
+  
   <script type="text/javascript">
     var themeRoute = 'main';
     routeReady.resolve();
