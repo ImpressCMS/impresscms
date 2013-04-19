@@ -141,5 +141,5 @@ $icmsTheme->addScript(NULL, array('type' => 'text/javascript'),
 );
 
 $bootstrap = file_exists( ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js') ? ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js' : ICMS_LIBRARIES_URL . '/jscore/bootstrap.js';
-$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/modernizr.js', array('type' => 'text/javascript'));
-$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/require.js', array('type' => 'text/javascript', 'data-main' => $bootstrap, 'data-loaded' => 'icms_core' ));
+$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/modernizr.js', array('type' => 'text/javascript'), '', 'head', '-2');
+$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/require.js', array('type' => 'text/javascript', 'data-main' => $bootstrap, 'data-loaded' => 'icms_core' ), '', 'head', '-1');
