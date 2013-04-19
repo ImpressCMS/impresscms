@@ -10,16 +10,10 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: main.php 11905 2012-08-12 03:41:32Z skenow $
+ * @version	$Id$
  */
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-	exit("Access Denied");
-}
-
-include_once ICMS_ROOT_PATH . "/modules/system/admin/users/users.php";
-$op = '';
-
+/* set get and post filters before including admin_header, if not strings */
 $filter_post = array(
     'user_sig' => 'html',
     'bio'=> 'html',
@@ -29,14 +23,14 @@ $filter_get = array(
     'uid' => 'int',
 );
 
-if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
-    extract($clean_POST);
-}
-if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
-    extract($clean_GET);
-}
+/* set default values for variables. $op and $fct are handled in the header */
+$op = '';
+
+/** common header for the admin functions */
+include "admin_header.php";
+$user_handler = $icms_admin_handler;
+
+include_once ICMS_MODULES_PATH . "/system/admin/users/users.php";
 
 switch ($op) {
 	case 'modifyUser':
@@ -60,22 +54,20 @@ switch ($op) {
 		if (!isset($openid)) {
 			$openid = NULL;
 		}
-		$groups = isset($_POST['groups']) ? $groups : array(XOOPS_GROUP_ANONYMOUS);
+		$groups = isset($_POST['groups']) ? $groups : array(ICMS_GROUP_ANONYMOUS);
 		if (@is_array($groups_hidden)) {
 			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
 		}
-		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim,
-					$user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, 
-					$user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, 
-					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $user_viewoid, 
-					$pass_expired, $groups
+		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm,
+					$user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig,
+					$theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode,
+					$timezone_offset, $user_mailok, $language, $openid, $user_viewoid, $pass_expired, $groups
 				);
 		break;
 
 	case 'delUser':
 		icms_cp_header();
-		$member_handler = icms::handler('icms_member');
-		$userdata =& $member_handler->getUser($uid);
+		$userdata =& $user_handler->get($uid);
 		icms_core_Message::confirm(array('fct' => 'users',
 											'op' => 'delUserConf',
 											'del_uid' => $userdata->getVar('uid')
@@ -98,10 +90,10 @@ switch ($op) {
 			echo "<div><h4>" . sprintf(_AM_AYSYWTDU, " " . $list . " ") . "</h4>"
 				. _AM_BYTHIS . "<br /><br /><form action='admin.php' method='post'>"
 				. "<input type='hidden' name='fct' value='users' />"
-				. "<input type='hidden' name='op' value='delete_many_ok' />" 
-				. icms::$security->getTokenHTML() 
+				. "<input type='hidden' name='op' value='delete_many_ok' />"
+				. icms::$security->getTokenHTML()
 				. "<input type='submit' value='" . _YES . "' />"
-				. "<input type='button' value='" . _NO 
+				. "<input type='button' value='" . _NO
 				. "' onclick='javascript:location.href=\"admin.php?op=adminMain\"' />"
 				. $hidden . "</form></div>";
 		} else {echo _AM_NOUSERS;}
@@ -116,15 +108,15 @@ switch ($op) {
 		$output = '';
 		$member_handler = icms::handler('icms_member');
 		for ($i = 0; $i < $count; $i++) {
-			$deluser =& $member_handler->getUser($memberslist_id[$i]);
+			$deluser =& $user_handler->get($memberslist_id[$i]);
 			$delgroups = $deluser->getGroups();
-			if (in_array(XOOPS_GROUP_ADMIN, $delgroups)) {
+			if (in_array(ICMS_GROUP_ADMIN, $delgroups)) {
 				$output .= sprintf(
 						_AM_ADMIN_CAN_NOT_BE_DELETEED . ' (' ._AM_NICKNAME . ': %s)',
 						$deluser->getVar('uname')
 					) . '<br />';
 			} else {
-				if (!$member_handler->deleteUser($deluser)) {
+				if (!$user_handler->delete($deluser)) {
 					$output .= _AM_COULD_NOT_DELETE . ' ' . $deluser->getVar('uname') . '<br />';
 				} else {
 					$output .= $deluser->getVar('uname') . ' ' . _AM_USERS_DELETEED . '<br />';
@@ -142,13 +134,13 @@ switch ($op) {
 			redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$member_handler = icms::handler('icms_member');
-		$user =& $member_handler->getUser($del_uid);
+		$user =& $user_handler->get($del_uid);
 		$groups = $user->getGroups();
-		if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
+		if (in_array(ICMS_GROUP_ADMIN, $groups)) {
 			icms_cp_header();
 			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED . '.(' . _AM_NICKNAME . ': %s)', $user->getVar('uname'));
 			icms_cp_footer();
-		} elseif (!$member_handler->deleteUser($user)) {
+		} elseif (!$user_handler->delete($user)) {
 			icms_cp_header();
 			echo _AM_ADMIN_CAN_NOT_BE_DELETEED . $deluser->getVar('uname');
 			icms_cp_footer();
@@ -156,7 +148,7 @@ switch ($op) {
 			$online_handler = icms::handler('icms_core_Online');
 			$online_handler->destroy($del_uid);
 			xoops_notification_deletebyuser($del_uid);
-			redirect_header('admin.php?fct=users', 1, _AM_DBUPDATED);
+			redirect_header('admin.php?fct=users', 1, _ICMS_DBUPDATED);
 		}
 		break;
 
@@ -169,14 +161,14 @@ switch ($op) {
 		} else {
 			$member_handler = icms::handler('icms_member');
 			// make sure the username doesnt exist yet
-			if ($member_handler->getUserCount(new icms_db_criteria_Item('uname', $username)) > 0
-				|| $member_handler->getUserCount(new icms_db_criteria_Item('login_name', $login_name)) > 0
+			if ($user_handler->getCount(new icms_db_criteria_Item('uname', $username)) > 0
+				|| $user_handler->getCount(new icms_db_criteria_Item('login_name', $login_name)) > 0
 			) {
 				$adduser_errormsg = _AM_NICKNAME . ' ' . $username . ' ' . _AM_ALREADY_EXISTS;
-			} elseif ($member_handler->getUserCount(new icms_db_criteria_Item('email', $email)) > 0) {
+			} elseif ($user_handler->getCount(new icms_db_criteria_Item('email', $email)) > 0) {
 				$adduser_errormsg = _AM_A_USER_WITH_THIS_EMAIL_ADDRESS . ' "' . $email . '" ' . _AM_ALREADY_EXISTS;
 			} else {
-				$newuser =& $member_handler->createUser();
+				$newuser =& $user_handler->create();
 				if (isset($user_viewemail)) {
 					$newuser->setVar('user_viewemail', $user_viewemail);
 				}
@@ -215,15 +207,14 @@ switch ($op) {
 						icms_cp_footer();
 						exit();
 					}
-					
+
 					$icmspass = new icms_core_Password();
-					$password = $icmspass->encryptPass($password);
+					$password = $icmspass->encryptPass($password, $salt, $enc_type);
 					$newuser->setVar('pass', $password);
 				}
 				$newuser->setVar('timezone_offset', $timezone_offset);
 				$newuser->setVar('uorder', $uorder);
 				$newuser->setVar('umode', $umode);
-				// RMV-NOTIFY
 				$newuser->setVar('notify_method', $notify_method);
 				$newuser->setVar('notify_mode', $notify_mode);
 				$newuser->setVar('bio', $bio);
@@ -236,12 +227,12 @@ switch ($op) {
 
 				if ($icmsConfigAuth['auth_openid'] == 1) {
 					$newuser->setVar('openid', $openid);}
-					if (!$member_handler->insertUser($newuser)) {
+					if (!$user_handler->insert($newuser)) {
 						$adduser_errormsg = _AM_CNRNU;
 					} else {
 						$groups_failed = array();
 						if (!isset($_POST['groups'])) {
-							$groups = array(XOOPS_GROUP_ANONYMOUS);
+							$groups = array(ICMS_GROUP_ANONYMOUS);
 						}
 						foreach ($groups as $group) {
 							if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
@@ -254,29 +245,10 @@ switch ($op) {
 							);
 							$adduser_errormsg = sprintf(_AM_CNRNU2, implode(", ", $group_names));
 						} else {
-							/* Hack by marcan <INBOX>
-							 * Sending a confirmation email to the newly registered user
-							 */
-							/**
-							 * @todo this has been commented out for now as we need to add a check box on the
-							 * form to ask the admin if he wants to send the welcome message or not
-							 */
-							/*
-							 $xoopsMailer = new icms_messaging_Handler();
-							 $xoopsMailer->useMail();
-							 $xoopsMailer->setTemplate('welcome.tpl');
-							 $xoopsMailer->assign('UNAME', $uname);
-							 $xoopsMailer->assign('PASSWORD', $vpass);
-							 $xoopsMailer->assign('X_UEMAIL', $email);
-							 $xoopsMailer->setToEmails($email);
-							 $xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-							 $xoopsMailer->setFromName($icmsConfig['sitename']);
-							 $xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION,icms_core_DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
-							 $xoopsMailer->send();
 							 /* Hack by marcan <INBOX>
 							 * Sending a confirmation email to the newly registered user
 							 */
-							redirect_header('admin.php?fct=users', 1,_AM_DBUPDATED);
+							redirect_header('admin.php?fct=users', 1,_ICMS_DBUPDATED);
 						}
 					}
 			}
@@ -300,7 +272,7 @@ switch ($op) {
 		if (!$result) {
 			exit();
 		}
-		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . (int) $uid, 1 , _AM_DBUPDATED);
+		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . (int) $uid, 1 , _ICMS_DBUPDATED);
 		break;
 
 	case 'mod_users':

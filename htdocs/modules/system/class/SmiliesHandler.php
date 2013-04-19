@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Administration
  * @subpackage	Smilies
- * @version		SVN $Id: SmiliesHandler.php 11719 2012-05-22 00:40:10Z skenow $
+ * @version		SVN $Id$
  */
 
 /**
@@ -20,12 +20,17 @@
  * @package		Administration
  * @subpackage	Smilies
  */
-class mod_system_SmiliesHandler {
+class mod_system_SmiliesHandler extends icms_ipf_Handler {
 
 	/**
 	 * Construct the handler
 	 * @@param  obj $db	database instance (@see icms_db_Factory::instance)
 	 */
-	public function __construct(&$db) {}
-
+	public function __construct(&$db) {
+		parent::__construct($db, 'smilies', 'id', 'emotion', 'emotion', 'system');
+		/* overriding the default table name
+		 * @todo	complete refactoring and use standard table name
+		 */
+		$this->table = $this->db->prefix('smiles');
+	}
 }

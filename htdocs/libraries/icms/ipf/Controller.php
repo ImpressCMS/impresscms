@@ -11,7 +11,7 @@
  * @since		1.1
  * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Controller.php 11512 2011-12-28 04:19:27Z skenow $
+ * @version		SVN: $Id$
  * @todo		Use language constants for messages
  */
 
@@ -125,10 +125,16 @@ class icms_ipf_Controller {
 					}
 					$icmsObj->setVar($key, $value);
 					break;
-					
+
 				case XOBJ_DTYPE_URL:
 					if (isset($_POST[$key])) {
 						$icmsObj->setVar($key, filter_var($_POST[$key], FILTER_SANITIZE_URL));
+					}
+					break;
+
+				case XOBJ_DTYPE_ARRAY:
+					if (is_array($_POST[$key])) {
+						$icmsObj->setVar($key, serialize($_POST[$key]));
 					}
 					break;
 

@@ -8,7 +8,7 @@
  * @package		Config
  * @subpackage	Item
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id: Object.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -30,6 +30,8 @@ class icms_config_Item_Object extends icms_core_Object {
 
 	/**
 	 * Constructor
+	 *
+	 * @todo	Cannot set the data type of the conf_value on instantiation - the data type must be retrieved from the db.
 	 */
 	public function __construct() {
 		$this->initVar('conf_id', XOBJ_DTYPE_INT, null, false);
@@ -56,7 +58,7 @@ class icms_config_Item_Object extends icms_core_Object {
 				break;
 
 			case 'array':
-				$value = @ unserialize($this->getVar('conf_value', 'N'));
+				$value = @ $this->getVar('conf_value', 'N');
 				return $value ? $value : array();
 
 			case 'float':
@@ -83,7 +85,7 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @param	bool    $force_slash
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
-		if ($this->getVar('conf_formtype') == 'textarea') {
+		if ($this->getVar('conf_formtype') == 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');
@@ -136,5 +138,28 @@ class icms_config_Item_Object extends icms_core_Object {
 	public function &getConfOptions() {
 		return $this->_confOptions;
 	}
-}
 
+	/**
+	 * This function will properly set the data type for each config item, overriding the
+	 * default in the __construct method
+	 *
+	 * @since	1.3.3
+	 * @param	string	$newType	data type of the config item
+	 * @return	void
+	 */
+	public function setType($newType) {
+		$types = array(
+			'text' => XOBJ_DTYPE_TXTBOX,
+			'textarea' => XOBJ_DTYPE_TXTAREA,
+			'int' => XOBJ_DTYPE_INT,
+			'url' => XOBJ_DTYPE_URL,
+			'email' => XOBJ_DTYPE_EMAIL,
+			'array' => XOBJ_DTYPE_ARRAY,
+			'other' => XOBJ_DTYPE_OTHER,
+			'source' => XOBJ_DTYPE_SOURCE,
+			'float' => XOBJ_DTYPE_FLOAT,
+		);
+
+		$this->vars['conf_value']['data_type'] = $types[$newType];
+	}
+}

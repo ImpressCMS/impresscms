@@ -8,7 +8,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id: lostpass.php 11738 2012-06-24 02:20:38Z m0nty $
+ * @version		SVN: $Id$
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -20,6 +20,8 @@ include 'mainfile.php';
  *	$_GET parameters
  *	code
  */
+/* set default value for $code */
+$code = '';
 
 $filter_get = $filter_post = array('email' => array('email', 'options' => array(0, 0)));
 
@@ -50,7 +52,6 @@ if (empty($getuser)) {
 } else {
 	$icmspass = new icms_core_Password();
 
-//	$code = isset($_GET['code']) ? trim(filter_input(INPUT_GET, 'code')) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
 	if ($code != '' && $areyou == $code) {
 		$newpass = $icmspass->createSalt(8);

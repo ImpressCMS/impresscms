@@ -10,10 +10,13 @@
  * @subpackage	Blocks
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @author		Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
- * @version		SVN: $Id: BlocksHandler.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
+
+/* This may be loaded by other modules - and not just through the cpanel */
+icms_loadLanguageFile('system', 'blocks', TRUE);
 
 /**
  * System Block Configuration Object Handler Class

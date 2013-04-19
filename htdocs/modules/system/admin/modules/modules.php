@@ -7,7 +7,7 @@
  * @package		System
  * @subpackage	Modules
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: modules.php 11672 2012-04-01 20:30:11Z skenow $
+ * @version		SVN: $Id$
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
@@ -92,6 +92,8 @@ function xoops_module_list() {
 
 /**
  * Function and rendering for installation of a module
+ *
+ * @todo	add installation_notify()
  *
  * @param 	string	$dirname
  * @return	string	Results of the installation process
@@ -621,6 +623,8 @@ function &xoops_module_gettemplate($dirname, $template, $block = FALSE) {
 /**
  * Logic for uninstalling a module
  *
+ * @todo	add installation_notify(), send status
+ *
  * @param unknown_type $dirname
  * @return	string	Result messages for uninstallation
  */
@@ -907,6 +911,8 @@ function xoops_module_activate($mid) {
 /**
  * Logic for deactivating a module
  *
+ * @todo	Add installation_notify() - send status change?
+ *
  * @param	int	$mid
  * @return	string	Result message for deactivating the module
  */
@@ -982,6 +988,8 @@ function xoops_module_change($mid, $weight, $name) {
 
 /**
  * Logic for updating a module
+ *
+ * @todo	add installation_notify(), only if the version of the module changes
  *
  * @param 	str $dirname
  * @return	str	Result messages from the module update
@@ -1088,35 +1096,35 @@ function icms_module_update($dirname) {
 			$count = count($blocks);
 			$showfuncs = array();
 			$funcfiles = array();
-			for ($i = 1; $i <= $count; $i++) {
-				if (isset($blocks[$i]['show_func']) && $blocks[$i]['show_func'] != '' && isset($blocks[$i]['file']) && $blocks[$i]['file'] != '') {
-					$editfunc = isset($blocks[$i]['edit_func']) ? $blocks[$i]['edit_func'] : '';
-					$showfuncs[] = $blocks[$i]['show_func'];
-					$funcfiles[] = $blocks[$i]['file'];
+			foreach ($blocks as $i => $block) {
+				if (isset($block['show_func']) && $block['show_func'] != '' && isset($block['file']) && $block['file'] != '') {
+					$editfunc = isset($block['edit_func']) ? $block['edit_func'] : '';
+					$showfuncs[] = $block['show_func'];
+					$funcfiles[] = $block['file'];
 					$template = $content = '';
-					if ((isset($blocks[$i]['template']) && trim($blocks[$i]['template']) != '')) {
-						$content =& xoops_module_gettemplate($dirname, $blocks[$i]['template'], TRUE);
+					if ((isset($block['template']) && trim($block['template']) != '')) {
+						$content =& xoops_module_gettemplate($dirname, $block['template'], TRUE);
 					}
 					if (!$content) {
 						$content = '';
 					} else {
-						$template = $blocks[$i]['template'];
+						$template = $block['template'];
 					}
 					$options = '';
-					if (!empty($blocks[$i]['options'])) {
-						$options = $blocks[$i]['options'];
+					if (!empty($block['options'])) {
+						$options = $block['options'];
 					}
 					$sql = "SELECT bid, name FROM " . icms::$xoopsDB->prefix('newblocks')
 						. " WHERE mid='" . (int) $module->getVar('mid')
-						. "' AND func_num='". (int) $i
-						. "' AND show_func='" . addslashes($blocks[$i]['show_func'])
-						. "' AND func_file='" . addslashes($blocks[$i]['file']) . "'";
+						. "' AND func_num='" . (int) $i
+						. "' AND show_func='" . addslashes($block['show_func'])
+						. "' AND func_file='" . addslashes($block['file']) . "'";
 					$fresult = icms::$xoopsDB->query($sql);
 					$fcount = 0;
 					while ($fblock = icms::$xoopsDB->fetchArray($fresult)) {
 						$fcount++;
 						$sql = "UPDATE " . icms::$xoopsDB->prefix("newblocks")
-							. " SET name='" . addslashes($blocks[$i]['name'])
+							. " SET name='" . addslashes($block['name'])
 							. "', edit_func='" . addslashes($editfunc)
 							. "', content='', template='" . $template
 							. "', last_modified=" . time()
@@ -1135,27 +1143,26 @@ function icms_module_update($dirname) {
 									$tplfile_new->setVar('tpl_module', $dirname);
 									$tplfile_new->setVar('tpl_refid', (int) $fblock['bid']);
 									$tplfile_new->setVar('tpl_tplset', 'default');
-									$tplfile_new->setVar('tpl_file', $blocks[$i]['template'], TRUE);
+									$tplfile_new->setVar('tpl_file', $block['template'], TRUE);
 									$tplfile_new->setVar('tpl_type', 'block');
-								}
-								else {
+								} else {
 									$tplfile_new = $tplfile[0];
 								}
 								$tplfile_new->setVar('tpl_source', $content, TRUE);
-								$tplfile_new->setVar('tpl_desc', $blocks[$i]['description'], TRUE);
+								$tplfile_new->setVar('tpl_desc', $block['description'], TRUE);
 								$tplfile_new->setVar('tpl_lastmodified', time());
 								$tplfile_new->setVar('tpl_lastimported', 0);
 								if (!$tplfile_handler->insert($tplfile_new)) {
 									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'
-										. _MD_AM_TEMPLATE_UPDATE_FAIL . '</span>', '<strong>' . $blocks[$i]['template'] . '</strong>');
+										. _MD_AM_TEMPLATE_UPDATE_FAIL . '</span>', '<strong>' . $block['template'] . '</strong>');
 								} else {
-									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_UPDATED, '<strong>' . $blocks[$i]['template'] . '</strong>');
+									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_UPDATED, '<strong>' . $block['template'] . '</strong>');
 									if ($icmsConfig['template_set'] == 'default') {
 										if (!$icmsAdminTpl->template_touch($tplfile_new->getVar('tpl_id'))) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'
-												. _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $blocks[$i]['template'] . '</strong>');
+												. _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $block['template'] . '</strong>');
 										} else {
-											$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_RECOMPILED, '<strong>' . $blocks[$i]['template'] . '</strong>');
+											$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_RECOMPILED, '<strong>' . $block['template'] . '</strong>');
 										}
 									}
 								}
@@ -1165,14 +1172,14 @@ function icms_module_update($dirname) {
 
 					if ($fcount == 0) {
 						$newbid = icms::$xoopsDB->genId(icms::$xoopsDB->prefix('newblocks') . '_bid_seq');
-						$block_name = addslashes($blocks[$i]['name']);
+						$block_name = addslashes($block['name']);
 						/* @todo properly handle the block_type when updating the system module */
 						$sql = "INSERT INTO " . icms::$xoopsDB->prefix("newblocks")
 							. " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('"
-							. (int) $newbid . "', '". (int) $module->getVar('mid') . "', '". (int) $i . "', '" . addslashes($options) . "', '" . $block_name . "', '" . $block_name . "', '', '1', '0', '0', 'M', 'H', '1', '" . addslashes($dirname) . "', '" . addslashes($blocks[$i]['file']) . "', '" . addslashes($blocks[$i]['show_func']) . "', '" . addslashes($editfunc) . "', '" . $template . "', '0', '" . time() . "')";
+							. (int) $newbid . "', '". (int) $module->getVar('mid') . "', '". (int) $i . "', '" . addslashes($options) . "', '" . $block_name . "', '" . $block_name . "', '', '1', '0', '0', 'M', 'H', '1', '" . addslashes($dirname) . "', '" . addslashes($block['file']) . "', '" . addslashes($block['show_func']) . "', '" . addslashes($editfunc) . "', '" . $template . "', '0', '" . time() . "')";
 						$result = icms::$xoopsDB->query($sql);
 						if (!$result) {
-							$msgs[] = sprintf('&nbsp;&nbsp;' .  _MD_AM_CREATE_FAIL, $blocks[$i]['name']);
+							$msgs[] = sprintf('&nbsp;&nbsp;' .  _MD_AM_CREATE_FAIL, $block['name']);
 							echo $sql;
 						} else {
 							if (empty($newbid)) {
@@ -1203,30 +1210,30 @@ function icms_module_update($dirname) {
 								$tplfile->setVar('tpl_refid', (int) $newbid);
 								$tplfile->setVar('tpl_source', $content, TRUE);
 								$tplfile->setVar('tpl_tplset', 'default');
-								$tplfile->setVar('tpl_file', $blocks[$i]['template'], TRUE);
+								$tplfile->setVar('tpl_file', $block['template'], TRUE);
 								$tplfile->setVar('tpl_type', 'block');
 								$tplfile->setVar('tpl_lastimported', 0);
 								$tplfile->setVar('tpl_lastmodified', time());
-								$tplfile->setVar('tpl_desc', $blocks[$i]['description'], TRUE);
+								$tplfile->setVar('tpl_desc', $block['description'], TRUE);
 								if (!$tplfile_handler->insert($tplfile)) {
 									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_INSERT_FAIL . '</span>',
-										'<strong>' . $blocks[$i]['template'] . '</strong>');
+										'<strong>' . $block['template'] . '</strong>');
 								} else {
 									$newid = $tplfile->getVar('tpl_id');
 									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_INSERTED,
-										'<strong>' . $blocks[$i]['template'] . '</strong>', '<strong>' . $newid . '</strong>');
+										'<strong>' . $block['template'] . '</strong>', '<strong>' . $newid . '</strong>');
 									if ($icmsConfig['template_set'] == 'default') {
 										if (!$icmsAdminTpl->template_touch($newid)) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>',
-												'<strong>' . $blocks[$i]['template'] . '</strong>');
+												'<strong>' . $block['template'] . '</strong>');
 										} else {
-											$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_RECOMPILED, '<strong>' . $blocks[$i]['template'] . '</strong>');
+											$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_RECOMPILED, '<strong>' . $block['template'] . '</strong>');
 										}
 									}
 								}
 							}
 							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_BLOCK_CREATED,
-								'<strong>' . $blocks[$i]['name'] . '</strong>',
+								'<strong>' . $block['name'] . '</strong>',
 								'<strong>' . $newbid . '</strong>');
 							$sql = "INSERT INTO " . icms::$xoopsDB->prefix('block_module_link')
 								. " (block_id, module_id, page_id) VALUES ('"
@@ -1423,7 +1430,12 @@ function icms_module_update($dirname) {
 					) {
 						// preserve the old value if any
 						// form type and value type must be the same
-						$confobj->setVar('conf_value', $config_old[$config['name']]['value'], TRUE);
+						// need to deal with arrays, because getInfo('config') doesn't convert arrays
+						if (is_array($config_old[$config['name']]['value'])) {
+							$confobj->setVar('conf_value', serialize($config_old[$config['name']]['value']), TRUE);
+						} else {
+							$confobj->setVar('conf_value', $config_old[$config['name']]['value'], TRUE);
+						}
 					} else {
 						$confobj->setConfValueForInput($config['default'], TRUE);
 					}

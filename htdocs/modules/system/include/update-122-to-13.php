@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Core
  * @subpackage
- * @version		SVN: $Id: update-122-to-13.php 11782 2012-07-15 22:58:40Z m0nty $
+ * @version		SVN: $Id$
  */
 
 	if ($dbVersion < 40) include 'update-112-to-122.php';
@@ -307,9 +307,11 @@
 
         unset($table);
 
-        /* this should be the last step of the update */
-        $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-
+		/* Finish up this portion of the db update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+		}
 	}
 
 	if (!$abortUpdate) $newDbVersion = 43;
@@ -322,17 +324,28 @@
 		/* Change enc_type options in preferences (+20) & expire passwords if values less than 20" */
 		$sql = "UPDATE `" . $table->name() . "` SET confop_value = confop_value + 20 WHERE confop_name LIKE '_MD_AM_ENC_%' AND confop_value < 20;";
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
-		
-        unset($table);
 
-		$table = new icms_db_legacy_updater_Table("users");
+		unset($table);
 
-        /* Set all user passwords as Expired (required due to password algorhythm update */
-        $sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0 AND pass NOT LIKE '$%';";
-        $icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+		$table = new icms_db_legacy_updater_Table("config");
 
-        unset($table);
+		/* Change default encryption (+20) if values less than 20" */
+		$sql = "UPDATE `" . $table->name() . "` SET conf_value = conf_value + 20 WHERE conf_name = 'enc_type' AND conf_value < 20;";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-        /* this should be the last step of the update */
-        $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		unset($table);
+
+        $table = new icms_db_legacy_updater_Table("users");
+
+		/* Set all user passwords as Expired (required due to password algorhythm update */
+		$sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0 AND pass NOT LIKE '$%';";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		unset($table);
+
+		/* Finish up this portion of the db update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+		}
 	}

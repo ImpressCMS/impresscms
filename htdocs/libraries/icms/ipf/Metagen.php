@@ -10,7 +10,7 @@
  * @package		Ipf
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Metagen.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -62,7 +62,7 @@ class icms_ipf_Metagen {
 		$this->setDescription($description);
 
 		if (!$keywords) {
-			$keywords = $this->createMetaKeywords();
+            $keywords = $this->createMetaKeywords();
 		}
 
 		/*		$myts = icms_core_Textsanitizer::getInstance();
@@ -365,7 +365,8 @@ class icms_ipf_Metagen {
 	 */
 	public function createMetaTags() {
 		global $xoopsTpl, $xoTheme;
-
+        $this->_keywords = preg_replace("(<!--.*?-->)", '', $this->_keywords); // stops html comments appearing in meta key
+        
 		if (is_object($xoTheme)) {
 			$xoTheme->addMeta('meta', 'keywords', $this->_keywords);
 			$xoTheme->addMeta('meta', 'description', $this->_description);

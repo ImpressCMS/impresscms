@@ -4,7 +4,7 @@
  *
  * @license GNU
  * @author marcan <marcan@smartfactory.ca>
- * @version $Id: Table.php 11118 2011-03-26 21:18:22Z skenow $
+ * @version $Id$
  * @link http://www.smartfactory.ca The SmartFactory
  * @package database
  */
@@ -124,7 +124,7 @@ class icms_db_legacy_updater_Table {
 		$bRetVal = false;
 		$ret = $this->_db->queryF("SHOW TABLES FROM `" . XOOPS_DB_NAME . "` LIKE '" . $this->name() . "'");
 		list ($m_table) = $this->_db->fetchRow($ret);
-		if ($m_table == $this->name()) $bRetVal = true;
+		if ($m_table == strtolower($this->name())) $bRetVal = true;
 		return $bRetVal;
 	}
 

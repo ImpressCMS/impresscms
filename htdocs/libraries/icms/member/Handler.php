@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Member
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: Handler.php 11738 2012-06-24 02:20:38Z m0nty $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -193,8 +193,12 @@ class icms_member_Handler {
 	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return array associative array of user-IDs and names
 	 */
-	public function getUserList($criteria = NULL) {
-		$ret = $this->_uHandler->getList($criteria);
+	public function getUserList($criteria = null) {
+		$users = $this->_uHandler->getObjects($criteria, true);
+		$ret = array();
+		foreach (array_keys($users) as $i) {
+			$ret[$i] = $users[$i]->getVar('uname');
+		}
 		return $ret;
 	}
 
@@ -308,10 +312,10 @@ class icms_member_Handler {
 			$uname = self::icms_getLoginFromUserEmail($uname);
 		}
 
-		$is_expired = $icmspass->passExpired($uname);
+/*		$is_expired = $icmspass->passExpired($uname);
 		if ($is_expired == 1) {
 			redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
-		}
+		} */
 
         $pwd = $icmspass->verifyPass($pwd, $uname);
 		
