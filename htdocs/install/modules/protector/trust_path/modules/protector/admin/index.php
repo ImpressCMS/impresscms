@@ -124,23 +124,14 @@ foreach( $num_array as $n ) {
 
 // beggining of Output
 icms_cp_header();
-
-// title
-$moduleName = $xoopsModule->getVar('name');
-echo "<div class='CPbigTitle' style='background-image: url(../images/iconbig_icms.png)'><a href='#'>" . $moduleName . "</a></div>\n";
-
 include dirname(__FILE__).'/mymenu.php' ;
 
-// configs writable check
-if( ! is_writable(dirname(dirname(__FILE__)) . '/configs') ) {
-  $writableError = "<div class='coreMessage errorMsg'>\n";
-    $writableError .= "<p>\n";
-      $writableError .= "<strong>" . _AM_FMT_CONFIGSNOTWRITABLE . "</strong><br />\n";
-      $writableError .= "<span>" . dirname(dirname(__FILE__))  . "/configs</span>\n";
-    $writableError .= "</p>\n";
-  $writableError .= "</div>\n";
+// title
+echo "<h3 style='text-align:"._GLOBAL_LEFT.";'>".$xoopsModule->getVar('name')."</h3>\n" ;
 
-  echo $writableError;
+// configs writable check
+if( ! is_writable( dirname(dirname(__FILE__)).'/configs' ) ) {
+	printf( "<p style='color:red;font-weight:bold;'>"._AM_FMT_CONFIGSNOTWRITABLE."</p>\n" , dirname(dirname(__FILE__)).'/configs' ) ;
 }
 
 // bad_ips
@@ -159,122 +150,123 @@ usort( $group1_ips , 'protector_ip_cmp' ) ;
 $group1_ips4disp = htmlspecialchars(implode("\n",$group1_ips),ENT_QUOTES) ;
 
 // edit configs about IP ban and IPs for group=1
-  $ipForm .= "<form name='ConfigForm' action='' method='post'>\n";
-    $ipForm .= "<div class='icms-theme-form'>\n";
-      $ipForm .= "<fieldset>\n";
-        $ipForm .= $xoopsGTicket->getTicketHtml(__LINE__,1800,'protector_admin') . "\n";
-        $ipForm .= "<input type='hidden' name='action' value='update_ips' />\n";
-        $ipForm .= "<legend>" . $moduleName . "</legend>\n";
-        $ipForm .= "<div class='icms-form-contents'>\n";
-
-          $ipForm .= "<div class='fieldWrapper group-bad-ips'>\n";
-            $ipForm .= "<label for='bad_ips'>" . _AM_TH_BADIPS . "</label>\n";
-            $ipForm .= "<p class='ip_path'><span>" . htmlspecialchars($protector->get_filepath4badips()) . "</span></p>\n";
-            $ipForm .= "<textarea name='bad_ips' id='bad_ips'>" . $bad_ips4disp . "</textarea>\n";
-          $ipForm .= "</div>\n";
-
-          $ipForm .= "<div class='fieldWrapper group-group1-ips'>\n";
-            $ipForm .= "<label for='group1_ips'>" . _AM_TH_GROUP1IPS . "</label>\n";
-            $ipForm .= "<p class='ip_path'><span>" . htmlspecialchars($protector->get_filepath4group1ips()) . "</span></p>\n";
-            $ipForm .= "<textarea name='group1_ips' id='group1_ips'>" . $group1_ips4disp . "</textarea>\n";
-          $ipForm .= "</div>\n";
-
-          $ipForm .= "<div class='fieldWrapper group-button'>\n";
-            $ipForm .= "<input type='submit' value='" . _GO . "' />\n";
-          $ipForm .= "</div>\n";
-
-        $ipForm .= "</div>\n";
-      $ipForm .= "</fieldset>\n";
-    $ipForm .= "</div>\n";
-  $ipForm .= "</form>\n";
-
-// Render $ipForm
-echo $ipForm;
+echo "
+<form name='ConfigForm' action='' method='POST'>
+".$xoopsGTicket->getTicketHtml(__LINE__,1800,'protector_admin')."
+<input type='hidden' name='action' value='update_ips' />
+<table width='95%' class='outer' cellpadding='4' cellspacing='1'>
+  <tr valign='top' align='"._GLOBAL_LEFT."'>
+    <td class='head'>
+      "._AM_TH_BADIPS."
+    </td>
+    <td class='even'>
+      <textarea name='bad_ips' id='bad_ips' style='width:200px;height:60px;'>$bad_ips4disp</textarea>
+      <br />
+      ".htmlspecialchars($protector->get_filepath4badips())."
+    </td>
+  </tr>
+  <tr valign='top' align='"._GLOBAL_LEFT."'>
+    <td class='head'>
+      "._AM_TH_GROUP1IPS."
+    </td>
+    <td class='even'>
+      <textarea name='group1_ips' id='group1_ips' style='width:200px;height:60px;'>$group1_ips4disp</textarea>
+      <br />
+      ".htmlspecialchars($protector->get_filepath4group1ips())."
+    </td>
+  </tr>
+  <tr valign='top' align='"._GLOBAL_LEFT."'>
+    <td class='head'>
+    </td>
+    <td class='even'>
+      <input type='submit' value='"._GO."' />
+    </td>
+  </tr>
+</table>
+</form>
+" ;
 
 
 // header of log listing
-$logHeader = "<div class='quickSearchBoxFilterWrapper'>\n";
-  $logHeader .= "<form action='' method='GET'>\n";
-    $logHeader .= "<div class='filterAndLimit'>\n";
-      $logHeader .= "<div class='singleObject'>\n";
-        $logHeader .= "<select name='num' onchange='submit();'>" . $num_options . "</select>\n";
-        $logHeader .= "<input type='submit' value='" . _SUBMIT . "'>\n";
-      $logHeader .= "</div>\n";
-    $logHeader .= "</div>\n";
+echo "
+<table width='95%' border='0' cellpadding='4' cellspacing='0'><tr><td>
+<form action='' method='GET' style='margin-bottom:0px;'>
+  <table width='95%' border='0' cellpadding='4' cellspacing='0'>
+    <tr>
+      <td align='"._GLOBAL_LEFT."'>
+        <select name='num' onchange='submit();'>$num_options</select>
+        <input type='submit' value='"._SUBMIT."'>
+      </td>
+      <td align='"._GLOBAL_RIGHT."'>
+        $nav_html
+      </td>
+    </tr>
+  </table>
+</form>
+<form name='MainForm' action='' method='POST' style='margin-top:0px;'>
+".$xoopsGTicket->getTicketHtml(__LINE__,1800,'protector_admin')."
+<input type='hidden' name='action' value='' />
+<table width='95%' class='outer' cellpadding='4' cellspacing='1'>
+  <tr valign='middle'>
+    <th width='5'><input type='checkbox' name='dummy' onclick=\"with(document.MainForm){for(i=0;i<length;i++){if(elements[i].type=='checkbox'){elements[i].checked=this.checked;}}}\" /></th>
+    <th>"._AM_TH_DATETIME."</th>
+    <th>"._AM_TH_USER."</th>
+    <th>"._AM_TH_IP."<br />"._AM_TH_AGENT."</th>
+    <th>"._AM_TH_TYPE."</th>
+    <th>"._AM_TH_DESCRIPTION."</th>
+  </tr>
+" ;
 
-    $logHeader .= "<div class='pageNavWrapper'>\n";
-      $logHeader .= $nav_html . "\n";
-    $logHeader .= "</div>\n";
-  $logHeader .= "</form>\n";
-$logHeader .= "</div>\n";
+// body of log listing
+$oddeven = 'odd' ;
+while( list( $lid , $uid , $ip , $agent , $type , $description , $timestamp , $uname ) = $db->fetchRow( $prs ) ) {
+	$oddeven = ( $oddeven == 'odd' ? 'even' : 'odd' ) ;
 
-// Render $logHeader
-echo $logHeader;
+	$ip = htmlspecialchars( $ip , ENT_QUOTES ) ;
+	$type = htmlspecialchars( $type , ENT_QUOTES ) ;
+	$description = htmlspecialchars( $description , ENT_QUOTES ) ;
+	$uname = htmlspecialchars( ( $uid ? $uname : _GUESTS ) , ENT_QUOTES ) ;
 
-// logTable
-$logTable = "<form name='MainForm' action='' method='POST'>\n";
-  $logTable .= "<div class='icms-table=form'>\n";
-    $logTable .= $xoopsGTicket->getTicketHtml(__LINE__,1800,'protector_admin') . "\n";
-    $logTable .= "<input type='hidden' name='action' value='' />\n";
-    $logTable .= "<table width='95%' class='outer' cellpadding='4' cellspacing='1'>\n";
-      $logTable .= "<tr valign='middle'>\n";
-        $logTable .= "<th width='5'><input type='checkbox' name='dummy' onclick=\"with(document.MainForm){for(i=0;i<length;i++){if(elements[i].type=='checkbox'){elements[i].checked=this.checked;}}}\" /></th>\n";
-        $logTable .= "<th>" . _AM_TH_DATETIME . "</th>\n";
-        $logTable .= "<th>" . _AM_TH_USER . "</th>\n";
-        $logTable .= "<th>" . _AM_TH_IP . "<br />" . _AM_TH_AGENT . "</th>\n";
-        $logTable .= "<th>" . _AM_TH_TYPE . "</th>\n";
-        $logTable .= "<th>" . _AM_TH_DESCRIPTION . "</th>\n";
-      $logTable .= "</tr>\n";
+	// make agents shorter
+	if( preg_match( '/MSIE\s+([0-9.]+)/' , $agent , $regs ) ) {
+		$agent_short = 'IE ' . $regs[1] ;
+	} else if( stristr( $agent , 'Gecko' ) !== false ) {
+		$agent_short = strrchr( $agent , ' ' ) ;
+	} else {
+		$agent_short = substr( $agent , 0 , strpos( $agent , ' ' ) ) ;
+	}
+	$agent4disp = htmlspecialchars( $agent , ENT_QUOTES ) ;
+	$agent_desc = $agent == $agent_short ? $agent4disp : htmlspecialchars( $agent_short , ENT_QUOTES ) . "<img src='../images/dotdotdot.gif' alt='$agent4disp' title='$agent4disp' />" ;
 
-      // body of log listing
-      $oddeven = 'odd' ;
-      while( list( $lid , $uid , $ip , $agent , $type , $description , $timestamp , $uname ) = $db->fetchRow( $prs ) ) {
-      	$oddeven = ( $oddeven == 'odd' ? 'even' : 'odd' ) ;
+	echo "
+  <tr>
+    <td class='$oddeven'><input type='checkbox' name='ids[]' value='$lid' /></td>
+    <td class='$oddeven'>".formatTimestamp($timestamp)."</td>
+    <td class='$oddeven'>$uname</td>
+    <td class='$oddeven'>$ip<br />$agent_desc</td>
+    <td class='$oddeven'>$type</td>
+    <td class='$oddeven' width='100%'>$description</td>
+  </tr>\n" ;
+}
 
-      	$ip = htmlspecialchars( $ip , ENT_QUOTES ) ;
-      	$type = htmlspecialchars( $type , ENT_QUOTES ) ;
-      	$description = htmlspecialchars( $description , ENT_QUOTES ) ;
-      	$uname = htmlspecialchars( ( $uid ? $uname : _GUESTS ) , ENT_QUOTES ) ;
-
-      	// make agents shorter
-      	if( preg_match( '/MSIE\s+([0-9.]+)/' , $agent , $regs ) ) {
-      		$agent_short = 'IE ' . $regs[1] ;
-      	} else if( stristr( $agent , 'Gecko' ) !== false ) {
-      		$agent_short = strrchr( $agent , ' ' ) ;
-      	} else {
-      		$agent_short = substr( $agent , 0 , strpos( $agent , ' ' ) ) ;
-      	}
-      	$agent4disp = htmlspecialchars( $agent , ENT_QUOTES ) ;
-      	$agent_desc = $agent == $agent_short ? $agent4disp : htmlspecialchars( $agent_short , ENT_QUOTES ) . "<img src='../images/dotdotdot.gif' alt='$agent4disp' title='$agent4disp' />" ;
-
-
-        $logTable .= "<tr>\n";
-          $logTable .= "<td class='" . $oddeven . "'><input type='checkbox' name='ids[]' value='" . $lid . "' /></td>\n";
-          $logTable .= "<td class='" . $oddeven . "'>" . formatTimestamp($timestamp) . "</td>\n";
-          $logTable .= "<td class='" . $oddeven . "'>$uname</td>\n";
-          $logTable .= "<td class='" . $oddeven . "'>" . $ip . "<br />" . $agent_desc . "</td>\n";
-          $logTable .= "<td class='" . $oddeven . "'>" . $type . "</td>\n";
-          $logTable .= "<td class='" . $oddeven . "' width='100%'>" . $description . "</td>\n";
-        $logTable .= "</tr>\n";
-      }
-
-      // footer of log listing
-    $logTable .= "</table>\n";
-  $logTable .= "</div>\n";
-
-  $logTable .= "<div class='pageNavWrapper'>\n";
-    $logTable .= $nav_html . "\n";
-  $logTable .= "</div>\n";  
-
-  $logTable .= "<div class='actionButtonTray'>\n";
-  $logTable .= "<input type='button' value='" . _AM_LABEL_REMOVE . "' onclick='if(confirm(\"" . _AM_JS_REMOVECONFIRM . "\")){document.MainForm.action.value=\"delete\"; submit();}' />\n";  
-  $logTable .= "<input type='button' value='" . _AM_LABEL_COMPACTLOG . "' onclick='if(confirm(\"" . _AM_JS_COMPACTLOGCONFIRM . "\")){document.MainForm.action.value=\"compactlog\"; submit();}' />\n";
-  $logTable .= "<input type='button' value='" . _AM_LABEL_REMOVEALL . "' onclick='if(confirm(\"" . _AM_JS_REMOVEALLCONFIRM . "\")){document.MainForm.action.value=\"deleteall\"; submit();}' />\n";
-  $logTable .= "</div>\n";
-$logTable .= "</form>\n";
-
-// Render $logTable
-echo $logTable;
+// footer of log listing
+echo "
+  <tr>
+    <td colspan='8' align='"._GLOBAL_LEFT."'>"._AM_LABEL_REMOVE."<input type='button' value='"._AM_BUTTON_REMOVE."' onclick='if(confirm(\""._AM_JS_REMOVECONFIRM."\")){document.MainForm.action.value=\"delete\"; submit();}' /></td>
+  </tr>
+</table>
+<div align='"._GLOBAL_RIGHT."'>
+  $nav_html
+</div>
+<div style='clear:both;'><br /><br /></div>
+<div align='"._GLOBAL_RIGHT."'>
+"._AM_LABEL_COMPACTLOG."<input type='button' value='"._AM_BUTTON_COMPACTLOG."' onclick='if(confirm(\""._AM_JS_COMPACTLOGCONFIRM."\")){document.MainForm.action.value=\"compactlog\"; submit();}' />
+&nbsp;
+"._AM_LABEL_REMOVEALL."<input type='button' value='"._AM_BUTTON_REMOVEALL."' onclick='if(confirm(\""._AM_JS_REMOVEALLCONFIRM."\")){document.MainForm.action.value=\"deleteall\"; submit();}' />
+</div>
+</form>
+</td></tr></table>
+" ;
 
 icms_cp_footer();
 

@@ -12,7 +12,7 @@
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id: sdata.dist.php 8570 2009-04-11 13:15:53Z icmsunderdog $
+* @version		$Id$
 */
 
 // Database Hostname

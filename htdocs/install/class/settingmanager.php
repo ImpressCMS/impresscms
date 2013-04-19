@@ -10,14 +10,14 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: settingmanager.php 10864 2010-12-08 00:27:17Z skenow $
+ * @version	$Id$
  */
 
 /**
  * setting manager for XOOPS installer
  *
  * @author Haruki Setoyama  <haruki@planewave.org>
- * @version $Id: settingmanager.php 10864 2010-12-08 00:27:17Z skenow $
+ * @version $Id$
  * @access public
  **/
 class setting_manager {

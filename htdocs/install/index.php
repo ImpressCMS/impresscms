@@ -1,5 +1,5 @@
 <?php
-// $Id: index.php 9920 2010-03-27 17:46:23Z skenow $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

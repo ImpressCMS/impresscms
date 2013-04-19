@@ -83,18 +83,10 @@ foreach( array_keys( $adminmenu ) as $i ) {
 }
 
 // display (you can customize htmls)
-$protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http://' : 'https://';
-$host     = $_SERVER['HTTP_HOST'];
-$script   = $_SERVER['SCRIPT_NAME'];
-$params   = $_SERVER['QUERY_STRING'] ? '?' . $_SERVER['QUERY_STRING'] : '';
- 
-$currentUrl = $protocol . $host . $script . $params;
-
-echo '<div class="adminTabMenu"><ul class="nav nav-tabs">';
+echo "<div style='text-align:"._GLOBAL_LEFT.";width:98%;'>" ;
 foreach( $adminmenu as $menuitem ) {
-	$activeclass = htmlspecialchars($menuitem['link'],ENT_QUOTES) == $currentUrl ? ' class="active"' : '';
-	echo "<li" .  $activeclass . "><a href='".htmlspecialchars($menuitem['link'],ENT_QUOTES)."'>".htmlspecialchars($menuitem['title'],ENT_QUOTES)."</a></li>\n" ;
+	echo "<div style='float:"._GLOBAL_LEFT.";height:1.5em;'><nobr><a href='".htmlspecialchars($menuitem['link'],ENT_QUOTES)."' style='background-color:{$menuitem['color']};font:normal normal bold 9pt/12pt;'>".htmlspecialchars($menuitem['title'],ENT_QUOTES)."</a> | </nobr></div>\n" ;
 }
-echo '</ul></div>';
+echo "</div>\n<hr style='clear:"._GLOBAL_LEFT.";display:block;' />\n" ;
 
 ?>

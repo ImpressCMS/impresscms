@@ -10,7 +10,7 @@
  * @package		installer
  * @since        Xoops 2.0.14
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: common.inc.php 11876 2012-08-04 23:45:34Z skenow $
+ * @version		$Id$
  */
 
 /**

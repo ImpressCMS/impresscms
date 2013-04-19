@@ -7,7 +7,7 @@
  * @package		installer
  * @since		1.0
  * @author		malanciault
- * @version		$Id: passwd.php 9920 2010-03-27 17:46:23Z skenow $
+ * @version		$Id$
  */
 //  If you use HTTP authentication for XOOPS installer,
 //  put user name and passward in the define statement below.
