@@ -107,7 +107,7 @@ $icmsTheme->addScript(NULL, array('type' => 'text/javascript'),
     ', module: {'.
       'lookup: function(mod, args, callback) {' . 
         '$.ajax({'.
-          'url: "http://mrtheme.com/js/modules/" + mod + "/" + mod + ".php?"+args'.
+          'url: icms.config.url + "/modules/" + mod + "/" + mod + ".php?"+args'.
           ', dataType: "json"'.
           ', success: function(data) {'.
             'icms.module[mod] = data;'.
