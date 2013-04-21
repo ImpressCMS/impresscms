@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Symlinks
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Pages.php 11585 2012-02-19 05:26:17Z skenow $
  */
 
 /**

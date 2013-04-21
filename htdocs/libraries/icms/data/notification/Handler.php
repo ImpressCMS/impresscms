@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Notification
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 11393 2011-09-22 19:20:47Z phoenyx $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id$
+ * @version		SVN: $Id: user.php 11044 2011-02-27 00:57:00Z skenow $
  */
 
 $xoopsOption['pagetype'] = 'user';

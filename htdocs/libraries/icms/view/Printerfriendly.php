@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		ImpressCMS
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		$Id: Printerfriendly.php 11765 2012-07-01 03:11:53Z skenow $
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");

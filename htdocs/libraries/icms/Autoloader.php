@@ -7,7 +7,7 @@
  * @category	ICMS
  * @since		1.3
  * @author		Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
- * @version		$Id$
+ * @version		$Id: Autoloader.php 11450 2011-11-21 23:27:25Z skenow $
  */
 class icms_Autoloader {
 	/**

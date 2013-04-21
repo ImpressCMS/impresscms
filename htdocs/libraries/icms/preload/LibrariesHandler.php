@@ -10,7 +10,7 @@
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: LibrariesHandler.php 10868 2010-12-11 12:02:57Z phoenyx $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

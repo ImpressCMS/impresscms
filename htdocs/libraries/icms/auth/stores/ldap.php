@@ -7,6 +7,7 @@
  * @category	ICMS
  * @package		Authentication
  * @subpackage	LDAP
+ * @author		modified by UnderDog <underdog@impresscms.org>
  * @version		SVN: $Id: Factory.php 10809 2010-11-20 22:28:44Z phoenyx $
  */
 

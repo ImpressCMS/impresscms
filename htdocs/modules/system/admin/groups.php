@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Groups
- * @version		SVN: $Id$
+ * @version		SVN: $Id: groups.php 11785 2012-07-16 23:38:09Z skenow $
  */
 
 /* set filter types, if not strings */

@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Administration
  * @subpackage	Avatars
- * @version		SVN $Id$
+ * @version		SVN $Id: AvatarsHandler.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /**

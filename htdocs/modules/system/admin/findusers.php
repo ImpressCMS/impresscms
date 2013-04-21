@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Users
- * @version		SVN: $Id$
+ * @version		SVN: $Id: findusers.php 11610 2012-02-28 03:53:55Z skenow $
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {

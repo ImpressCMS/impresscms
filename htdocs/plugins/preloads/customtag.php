@@ -7,7 +7,7 @@
  * @package		libraries
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		$Id: customtag.php 10897 2010-12-19 18:17:29Z phoenyx $
  */
 /**
  *

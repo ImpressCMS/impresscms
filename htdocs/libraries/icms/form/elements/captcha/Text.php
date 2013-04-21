@@ -8,7 +8,7 @@
  * @package		Form
  * @subpackage	Elements
  * @autho		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Text.php 10681 2010-09-25 20:40:50Z skenow $
  */
 /**
  * Creates text version of Captcha element

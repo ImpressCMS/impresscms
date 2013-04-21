@@ -8,7 +8,7 @@
  * @package		View
  * @subpackage	Block
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

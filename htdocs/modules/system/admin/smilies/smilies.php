@@ -7,7 +7,7 @@
  * @package		System
  * @subpackage	Smilies
  * @todo		Extract HTML and CSS to a template
- * @version		SVN: $Id$
+ * @version		SVN: $Id: smilies.php 11348 2011-08-31 03:39:49Z blauer-fisch $
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {

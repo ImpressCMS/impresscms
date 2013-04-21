@@ -7,7 +7,7 @@
  * @package	core
  * @since	1.1
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: checkinvite.php 10809 2010-11-20 22:28:44Z phoenyx $
  */
 
 if (!defined('ICMS_ROOT_PATH')) {

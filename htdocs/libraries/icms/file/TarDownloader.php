@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		File
  *
- * @version		SVN: $Id$
+ * @version		SVN: $Id: TarDownloader.php 10749 2010-11-04 03:57:45Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or exit();

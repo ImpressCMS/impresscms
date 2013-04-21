@@ -5,7 +5,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		Form
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Table.php 10575 2010-08-28 21:30:27Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -49,13 +49,13 @@ class icms_form_Table extends icms_form_Base {
 			. "' id='" . $this->getName()
 			. "' action='" . $this->getAction()
 			. "' method='" . $this->getMethod() . "'" . $this->getExtra()
-			. ">\n<table border='0' width='100%'>\n";
+			. ">\n<table>\n";
 		$hidden = '';
 		foreach ($this->getElements() as $ele) {
 			if (!$ele->isHidden()) {
-				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td>" . $ele->getCaption();
+				$ret .= "<tr><td>" . $ele->getCaption();
 				if ($ele_desc = $ele->getDescription()) {
-					$ret .= '<br /><br /><span style="font-weight: normal;">' . $ele_desc . '</span>';
+					$ret .= '<span>' . $ele_desc . '</span>';
 				}
 				$ret .= "</td><td>" . $ele->render() . "</td></tr>";
 			} else {

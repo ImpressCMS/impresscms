@@ -8,7 +8,7 @@
  * @subpackage	Mimetypes
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: mimetype.php 11610 2012-02-28 03:53:55Z skenow $
  */
 
 /* set get and post filters before including admin_header, if not strings */

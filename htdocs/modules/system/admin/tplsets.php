@@ -7,7 +7,7 @@
  * @package		System
  * @subpackage	Templates
  * @todo		Extract HTML and CSS to a template
- * @version		SVN: $Id$
+ * @version		SVN: $Id: tplsets.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /* set get and post filters before including admin_header, if not strings */

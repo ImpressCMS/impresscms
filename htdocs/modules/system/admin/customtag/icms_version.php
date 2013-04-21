@@ -7,7 +7,7 @@
  * @package		Administration
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		$Id: icms_version.php 11610 2012-02-28 03:53:55Z skenow $
  */
 
 $modversion = array(

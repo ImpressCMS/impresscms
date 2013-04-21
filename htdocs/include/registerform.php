@@ -9,7 +9,7 @@
  * @package	core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id$
+ * @version		$Id: registerform.php 11079 2011-03-17 12:43:06Z m0nty_ $
  */
 defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
 
@@ -30,7 +30,7 @@ if ($icmsConfigUser['pass_level']>20) {
 	icms_PasswordMeter();
 }
 $reg_form->addElement(new icms_form_elements_Password(_US_PASSWORD, "pass", 10, 255, icms_core_DataFilter::htmlSpecialChars($pass), false, ($icmsConfigUser['pass_level']?'password_adv':'')), true);
-$reg_form->addElement(new icms_form_elements_Password(_US_VERIFYPASS, "vpass", 10, 255, icms_core_DataFilter::htmlSpecialChars($vpass)), true);
+// $reg_form->addElement(new icms_form_elements_Password(_US_VERIFYPASS, "vpass", 10, 255, icms_core_DataFilter::htmlSpecialChars($vpass)), true);
 $reg_form->addElement(new icms_form_elements_Text(_US_WEBSITE, "url", 25, 255, icms_core_DataFilter::htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $icmsConfig['default_TZ'];
 $reg_form->addElement(new icms_form_elements_select_Timezone(_US_TIMEZONE, "timezone_offset", $tzselected));
@@ -38,12 +38,12 @@ $reg_form->addElement(new icms_form_elements_select_Timezone(_US_TIMEZONE, "time
 $reg_form->addElement(new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', $user_mailok));
 
 if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] != '') {
-	$disc_tray = new icms_form_elements_Tray(_US_DISCLAIMER, '<br />');
-	$disclaimer_html = '<div id="disclaimer">'.nl2br($icmsConfigUser['reg_disclaimer']).'</div>';
+	$disc_tray = new icms_form_elements_Tray(_US_DISCLAIMER, '');
+	$disclaimer_html = '<div id="disclaimer" class="modal hide fade"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3>'._US_DISCLAIMER.'</h3></div><div class="modal-body">'.nl2br($icmsConfigUser['reg_disclaimer']).'</div><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn">Close</button></div></div>';
 	$disc_text = new icms_form_elements_Label('', $disclaimer_html, 'disclaimer');
 	$disc_tray->addElement($disc_text);
 	$agree_chk = new icms_form_elements_Checkbox('', 'agree_disc', $agree_disc);
-	$agree_chk->addOption(1, _US_IAGREE);
+	$agree_chk->addOption(1, _US_IAGREE_DISCLAIMER);
 	$eltname = $agree_chk->getName();
 	$eltmsg = str_replace('"', '\"', stripslashes( sprintf( _FORM_ENTER, _US_IAGREE ) ) );
 	$agree_chk->customValidationCode[] = "if (myform.{$eltname}.checked == false) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
@@ -51,6 +51,8 @@ if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] 
 	$reg_form->addElement($disc_tray);
 }
 
+$reg_form->addElement(new icms_form_elements_Hidden("salt", icms_core_DataFilter::htmlSpecialChars($salt)));
+$reg_form->addElement(new icms_form_elements_Hidden("enc_type", (int) ($enc_type)));
 $reg_form->addElement(new icms_form_elements_Hidden("actkey", icms_core_DataFilter::htmlSpecialChars($actkey)));
 
 if ($icmsConfigUser['use_captcha'] == true) {

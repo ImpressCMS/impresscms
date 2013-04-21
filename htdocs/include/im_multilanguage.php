@@ -4,7 +4,7 @@
  *
  * @license GNU
  * @author GIJOE
- * @version $Id$
+ * @version $Id: im_multilanguage.php 11194 2011-04-20 23:49:33Z skenow $
  * @package core
  */
 

@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version	$Id$
+ * @version	$Id: Tray.php 10874 2010-12-12 14:52:03Z phoenyx $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -148,18 +148,25 @@ class icms_form_elements_Tray extends icms_form_Element {
 	public function render() {
 		$count = 0;
 		$ret = "";
+		// $empty = "<h4 class='titleWrapper'>"._EMPTY_ZONES."</h4><div class='grouped'><div class='inner'>";
 		foreach ($this->getElements() as $ele) {
 			if ($count > 0) {
 				$ret .= $this->getDelimeter();
 			}
-			if ($ele->getCaption() != '') {
-				$ret .= $ele->getCaption() . "&nbsp;";
+			if ($ele->getCaption() != '' && $ele->render() != '') {
+				$ret .= $ele->getCaption();
 			}
+
+			// if($ele->getCaption() != '' && $ele->render() == '') {
+			// 	$empty .= strip_tags($ele->getCaption()) . ', ';
+			// }
+
 			$ret .= $ele->render() . "\n";
 			if (!$ele->isHidden()) {
 				$count++;
 			}
 		}
+		// $ret .= rtrim($empty, ', ') . '</div></div>';
 		return $ret;
 	}
 }

@@ -10,7 +10,7 @@
 * @since	XOOPS
 * @author	http://www.xoops.org The XOOPS Project
 * @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
+* @version	$Id: xoops_version.php 8568 2009-04-11 12:52:08Z icmsunderdog $
 */
 
 // ImpressCMS - Nekro!

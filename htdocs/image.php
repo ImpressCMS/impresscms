@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @since		XOOPS
- * @version		$Id$
+ * @version		$Id: image.php 10921 2010-12-21 19:05:12Z phoenyx $
  */
 
 $image_id = isset($_GET["id"]) ? (int) $_GET["id"] : 0;
