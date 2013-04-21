@@ -7,10 +7,10 @@
  * @package		Administration
  * @author		Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: groupform.php 11785 2012-07-16 23:38:09Z skenow $
  */
 
-$name_text = new icms_form_elements_Text(_AM_GROUP_NAME, "name", 30, 50, $name_value);
+$name_text = new icms_form_elements_Text(_NAME, "name", 30, 50, $name_value);
 $desc_text = new icms_form_elements_Textarea(_AM_DESCRIPTION, "desc", $desc_value);
 
 $s_cat_checkbox = new icms_form_elements_Checkbox(_AM_SYSTEMRIGHTS, "system_catids[]", $s_cat_value);
@@ -102,7 +102,7 @@ $i = 0;
 $groups = icms::$user->getGroups();
 foreach ($posarr as $k=>$v) {
 	$tit = (defined($posarr[$k]['title'])) ? constant($posarr[$k]['title']) : $posarr[$k]['title'];
-	$block_checkbox[$i] = new icms_form_elements_Checkbox('<strong>' . $tit . '</strong><br />', "read_bids[]", $r_block_value);
+	$block_checkbox[$i] = new icms_form_elements_Checkbox('<h4 class="titleWrapper">' . $tit . '</h4>', "read_bids[]", $r_block_value);
 	$new_blocks_array = array();
 	$blocks_array = $icms_block_handler->getAllBlocks("list", $k);
 
@@ -119,7 +119,7 @@ foreach ($posarr as $k=>$v) {
 	$block_checkbox[$i]->addOptionArray($new_blocks_array);
 	$i++;
 }
-$r_block_tray = new icms_form_elements_Tray(_AM_BLOCKRIGHTS, "<br /><br />");
+$r_block_tray = new icms_form_elements_Tray(_AM_BLOCKRIGHTS, null);
 foreach ($block_checkbox as $k=>$v) {
 	$r_block_tray->addElement($block_checkbox[$k]);
 }

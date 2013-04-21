@@ -7,7 +7,7 @@
  * @package		Ipf
  * @subpackage	Export
  * @author		marcan <marcan@smartfactory.ca>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Renderer.php 10326 2010-07-11 18:54:25Z malanciault $
  */
 
 /**

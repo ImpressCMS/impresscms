@@ -8,7 +8,7 @@
  * @package		View
  * @subpackage	Templates
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Tpl.php 11387 2011-09-22 18:39:05Z phoenyx $
  */
 
 if (!defined('SMARTY_DIR')) {

@@ -7,7 +7,7 @@
  * @subpackage	Autotasks
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		license.txt
- * @version		SVN: $Id$
+ * @version		SVN: $Id: AutotasksHandler.php 11578 2012-02-17 02:39:57Z skenow $
  */
 
 /**

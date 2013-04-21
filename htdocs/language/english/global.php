@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: global.php 11705 2012-04-24 22:02:56Z debianus $
 //%%%%%%	File Name mainfile.php 	%%%%%
 define('_PLEASEWAIT','Please Wait');
 define('_FETCHING','Loading...');
@@ -316,3 +316,4 @@ define('_IMPRESSCMS_PROJECT','Project Development');
 // added in 2.0
 define('_ENTER_MENTION', 'Enter the user name to mention:');
 define( '_ENTER_HASHTAG', 'Enter the term(s) to tag:');
+define('_NAME', 'Name');

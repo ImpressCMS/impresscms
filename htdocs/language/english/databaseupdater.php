@@ -1,7 +1,7 @@
 <?php
 
 /**
- * $Id$
+ * $Id: databaseupdater.php 11686 2012-04-10 02:50:48Z skenow $
  * Author: The SmartFactory <www.smartfactory.ca>
  * Licence: GNU
  */

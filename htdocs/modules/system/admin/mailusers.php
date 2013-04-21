@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Users
- * @version		SVN: $Id$
+ * @version		SVN: $Id: mailusers.php 11610 2012-02-28 03:53:55Z skenow $
  * @todo	scrub the input arrays (GET and POST)
  */
 

@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Avatars
- * @version		SVN: $Id$
+ * @version		SVN: $Id: avatars.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /* set get and post filters before including admin_header, if not strings */
@@ -220,7 +220,7 @@ switch ($op) {
 		}
 		if (!$avt_handler->delete($avatar)) {
 			icms_cp_header();
-			icms_core_Message::error(sprintf(_MD_FAILDEL, $avatar->getVar('avatar_id')));
+			icms_core_Message::error(sprintf(_MD_FAIL_DEL_AVATAR, $avatar->getVar('avatar_id')));
 			icms_cp_footer();
 			exit();
 		}

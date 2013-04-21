@@ -8,7 +8,7 @@
  * @category	icms
  * @package		Administration
  * @subpackage	System
- * @version		$Id$
+ * @version		$Id: common.php 11610 2012-02-28 03:53:55Z skenow $
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");

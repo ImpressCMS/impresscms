@@ -12,7 +12,7 @@
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: StopSpammer.php 11735 2012-06-21 23:21:24Z skenow $
  */
 /**
  * Checks usernames, emails and ip addresses against a blacklist

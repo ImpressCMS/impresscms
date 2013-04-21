@@ -10,7 +10,7 @@
  * @subpackage	Block Positions
  * @since		1.1
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: icms_version.php 11664 2012-03-29 04:14:16Z skenow $
  */
 
 $modversion = array(

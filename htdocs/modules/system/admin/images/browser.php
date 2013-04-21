@@ -10,7 +10,7 @@
  * @subpackage	Images
  * @since		1.2
  * @author		Rodrigo Pereira Lima (aka TheRplima) <therplima@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: browser.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 include_once "../../../../mainfile.php";
@@ -82,7 +82,7 @@ switch ($op) {
 		$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
 		$src = '<img src="' . ICMS_MODULES_URL . "/system/admin/images/preview.php?file=" . $image->getVar('image_name') . '" title="' . $image->getVar('image_nicename') . '" /><br />';
 		echo '<div style="margin:5px;" align="center">' . $src . '</div>';
-		icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'browser.php', _MD_RUDELIMG);
+		icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'browser.php', _MD_DELETE_AVATAR);
 		icmsPopupFooter();
 		break;
 

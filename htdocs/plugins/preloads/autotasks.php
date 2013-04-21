@@ -7,7 +7,7 @@
  * @package		libraries
  * @since		1.1
  * @author		mekdrop <mekdrop@gmail.com>
- * @version		$Id$
+ * @version		$Id: autotasks.php 10362 2010-07-13 23:23:40Z skenow $
  */
 /**
  *

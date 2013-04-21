@@ -10,7 +10,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		Administration
- * @version		SVN: $Id$
+ * @version		SVN: $Id: groupperm.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /* set filter types, if not strings */

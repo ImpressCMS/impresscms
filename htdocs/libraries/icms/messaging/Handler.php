@@ -6,7 +6,7 @@
  * @package		Messaging
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 10807 2010-11-20 19:16:00Z phoenyx $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

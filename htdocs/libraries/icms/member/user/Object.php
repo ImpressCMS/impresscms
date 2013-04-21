@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Member
  * @subpackage	User
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Object.php 11761 2012-06-29 12:00:13Z m0nty $
  */
 
 defined('ICMS_ROOT_PATH') or exit();

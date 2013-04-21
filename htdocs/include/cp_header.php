@@ -6,7 +6,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
- * @version		SVN: $Id$
+ * @version		SVN: $Id: cp_header.php 11006 2011-02-05 17:26:34Z skenow $
  */
 // Make sure the kernel launches the module in admin mode and checks the correct permissions
 define('ICMS_IN_ADMIN', 1);

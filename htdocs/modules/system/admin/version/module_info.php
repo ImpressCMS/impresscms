@@ -7,7 +7,7 @@
  * @package		System
  * @subpackage	Version
  * @since		1.0
- * @version		SVN: $Id$
+ * @version		SVN: $Id: module_info.php 11276 2011-06-21 13:52:19Z mcdonald3072 $
  */
 
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");

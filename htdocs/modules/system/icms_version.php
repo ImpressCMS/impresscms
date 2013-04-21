@@ -80,7 +80,7 @@ $modversion['adminindex'] = "admin.php";
 $modversion['adminmenu'] = "menu.php";
 
 /* Database information */
-/*  once the conversion is completed, we can use this
+/*  @todo once the conversion is completed, we can use this
 $modversion['object_items'] = icms_core_Filesystem::getDirList(
 	ICMS_MODULES_PATH . '/system/admin/',
 	array('findusers', 'mailusers', 'preferences', 'version')
@@ -486,5 +486,10 @@ $modversion['templates'][] = array(
 
 $modversion['templates'][] = array(
 	'file' => 'admin/autotasks/system_adm_autotasks.html',
+	'description' => ''
+	);
+
+$modversion['templates'][]= array(
+	'file' => 'system_pm_inbox.html',
 	'description' => ''
 	);

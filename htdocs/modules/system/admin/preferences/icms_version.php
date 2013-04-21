@@ -6,7 +6,7 @@
 * @license		LICENSE.txt
 * @package		System
 * @subpackage	Preferences
-* @version		SVN: $Id$
+* @version		SVN: $Id: icms_version.php 11610 2012-02-28 03:53:55Z skenow $
 */
 
 $modversion = array(

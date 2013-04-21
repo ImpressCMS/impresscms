@@ -1933,29 +1933,33 @@ function one_wordwrap($string,$width=false){
  */
 function icms_PasswordMeter($password_fieldclass = "password_adv", $username_fieldid = "uname"){
 	global $xoTheme, $icmsConfigUser;
-	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
-	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
-	$xoTheme->addScript('', array('type' => 'text/javascript'), '
-				$(document).ready( function() {
-					$.fn.shortPass = "' . _CORE_PASSLEVEL1 . '";
-					$.fn.badPass = "' . _CORE_PASSLEVEL2 . '";
-					$.fn.goodPass = "' . _CORE_PASSLEVEL3 . '";
-					$.fn.strongPass = "' . _CORE_PASSLEVEL4 . '";
-					$.fn.samePassword = "' . _CORE_UNAMEPASS_IDENTIC . '";
-					$.fn.resultStyle = "";
-				$(".' . $password_fieldclass . '").passStrength({
-					minPass: ' . $icmsConfigUser['minpass'] . ',
-					strongnessPass: ' . $icmsConfigUser['pass_level'] . ',
-					shortPass: 		"top_shortPass",
-					badPass:		"top_badPass",
-					goodPass:		"top_goodPass",
-					strongPass:		"top_strongPass",
-					baseStyle:		"top_testresult",
-					userid:			"#' . $username_fieldid . '",
-					messageloc:		0
-				});
-			});
-');
+	// Replacing with new password widget.
+	// $xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
+	// $pass = 'require(["jquery","'.ICMS_URL.'/libraries/jquery/password_strength_plugin.js"], function($) {';
+	// 	$pass .= '$(document).ready( function() {';
+	// 		$pass .= '$.fn.shortPass = "' . _CORE_PASSLEVEL1 . '";';
+	// 		$pass .= '$.fn.badPass = "' . _CORE_PASSLEVEL2 . '";';
+	// 		$pass .= '$.fn.goodPass = "' . _CORE_PASSLEVEL3 . '";';
+	// 		$pass .= '$.fn.strongPass = "' . _CORE_PASSLEVEL4 . '";';
+	// 		$pass .= '$.fn.samePassword = "' . _CORE_UNAMEPASS_IDENTIC . '";';
+	// 		$pass .= '$.fn.resultStyle = "";';
+	// 		$pass .= '$(".' . $password_fieldclass . '").passStrength({';
+	// 			$pass .= 'minPass: ' . $icmsConfigUser['minpass'] . ',';
+	// 			$pass .= 'strongnessPass: ' . $icmsConfigUser['pass_level'] . ',';
+	// 			$pass .= 'shortPass: 		"top_shortPass",';
+	// 			$pass .= 'badPass:		"top_badPass",';
+	// 			$pass .= 'goodPass:		"top_goodPass",';
+	// 			$pass .= 'strongPass:		"top_strongPass",';
+	// 			$pass .= 'baseStyle:		"top_testresult",';
+	// 			$pass .= 'userid:			"#' . $username_fieldid . '",';
+	// 			$pass .= 'messageloc:		0';
+	// 		$pass .= '});';
+	// 	$pass .= '});';
+	// $pass .= '});';
+	$pass = "require(['app/widgets/password/main'], function(pass) {";
+		$pass .= 'pass.initialize($(".' . $password_fieldclass . '"));';
+	$pass .= '});';
+	$xoTheme->addScript('', array('type' => 'text/javascript'), $pass);
 }
 
 /**

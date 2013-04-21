@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Comments
- * @version		SVN: $Id$
+ * @version		SVN: $Id: comments.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /* set filter types, if not strings */
@@ -118,7 +118,7 @@ switch ($op) {
 			. '</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_ip&amp;order=' . $otherorder
 			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit
 			. '">IP</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_modid&amp;order=' . $otherorder
-			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _MD_AM_MODULE
+			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CO_ICMS_MODULE
 			. '</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_status&amp;order=' . $otherorder
 			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CM_STATUS
 			. '</a></td><td class="head">' . _AM_ACTION . '</td></tr>';

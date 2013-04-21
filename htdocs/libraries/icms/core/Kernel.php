@@ -8,7 +8,7 @@
  * @package		Core
  * @subpackage	Kernel
  * @since		1.1
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Kernel.php 11604 2012-02-27 03:12:10Z skenow $
  */
 
 /**

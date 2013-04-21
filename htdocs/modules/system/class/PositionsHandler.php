@@ -11,7 +11,7 @@
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: PositionsHandler.php 11686 2012-04-10 02:50:48Z skenow $
  */
 /**
  * System positions Handler Class
