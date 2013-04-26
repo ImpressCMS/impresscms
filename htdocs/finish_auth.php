@@ -8,7 +8,7 @@
  * @subpackage  Openid
  * @since		1.1
  * @author		malanciault <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: finish_auth.php 11255 2011-06-10 21:36:28Z skenow $
  */
 /**
  * Set this to TRUE to troubleshoot OpenID login

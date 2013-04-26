@@ -7,7 +7,7 @@
  * @package		System
  * @subpackage	Blocks
  * @since		ImpressCMS 1.2
- * @version		SVN: $Id$
+ * @version		SVN: $Id: system_admin_blocks.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 /**

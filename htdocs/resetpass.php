@@ -10,7 +10,7 @@
  * @since		ImpressCMS 1.1
  * @author		Vaughan Montgomery <vaughan@impresscms.org>
  * @author		The ImpressCMS Project
- * @version		SVN: $Id$
+ * @version		SVN: $Id: resetpass.php 11738 2012-06-24 02:20:38Z m0nty $
  */
 
 $xoopsOption['pagetype'] = 'user';

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: global.php 11705 2012-04-24 22:02:56Z debianus $
 //%%%%%%	File Name mainfile.php 	%%%%%
 define('_PLEASEWAIT','Please Wait');
 define('_FETCHING','Loading...');

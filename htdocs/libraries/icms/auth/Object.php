@@ -8,7 +8,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Authentication
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Object.php 11731 2012-06-17 01:25:04Z skenow $
  */
 
 /**

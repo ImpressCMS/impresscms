@@ -11,7 +11,7 @@
  * @subpackage	Legacy
  * @author		Kazumi Ono  <onokazu@xoops.org>
  * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Database.php 11604 2012-02-27 03:12:10Z skenow $
  */
 
 defined( 'ICMS_ROOT_PATH' ) or die();

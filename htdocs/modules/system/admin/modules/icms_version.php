@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Modules
- * @version		SVN: $Id$
+ * @version		SVN: $Id: icms_version.php 11672 2012-04-01 20:30:11Z skenow $
  */
 
 $modversion = array(

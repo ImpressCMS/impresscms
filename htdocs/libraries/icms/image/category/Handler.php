@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Image
  * @subpackage	Category
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Handler.php 10614 2010-09-08 15:39:19Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

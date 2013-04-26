@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Forms
  * @subpackage	Elements
- * @version		$Id$
+ * @version		$Id: Dhtmltextarea.php 11450 2011-11-21 23:27:25Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

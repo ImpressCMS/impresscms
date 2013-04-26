@@ -9,7 +9,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		$Id: readpmsg.php 11072 2011-03-14 15:52:14Z m0nty_ $
  */
 
 $xoopsOption['pagetype'] = "pmsg";

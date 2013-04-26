@@ -8,7 +8,7 @@
  * @subpackage	Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Autotasks.php 11578 2012-02-17 02:39:57Z skenow $
  */
 defined('ICMS_ROOT_PATH') || die('ImpressCMS root path not defined');
 

@@ -9,7 +9,7 @@
  * @subpackage	RSS
  * @since		1.1
  * @author		Ignacio Segura, "Nachenko"
- * @version		$Id$
+ * @version		$Id: Rss.php 10806 2010-11-20 17:09:38Z phoenyx $
  */
 
 defined('ICMS_ROOT_PATH') or exit();

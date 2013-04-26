@@ -9,7 +9,7 @@ define("_AM_EDITADG","Edit Groups");
 define("_AM_MODIFY","Modify");
 //define("_AM_DELETE","Delete");
 define("_AM_CREATENEWADG","Create New Group");
-//define("_AM_NAME","Name");
+define("_AM_GROUP_NAME", "Group Name");
 define("_AM_DESCRIPTION","Description");
 define("_AM_INDICATES","* indicates required fields");
 define("_AM_SYSTEMRIGHTS","Can administrate the following System features");

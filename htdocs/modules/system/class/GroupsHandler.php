@@ -7,7 +7,7 @@
  * @subpackage	Groups
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @version		$Id$
+ * @version		$Id: GroupsHandler.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /**

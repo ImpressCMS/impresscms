@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Comments
- * @version		SVN: $Id$
+ * @version		SVN: $Id: comments.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /* set filter types, if not strings */

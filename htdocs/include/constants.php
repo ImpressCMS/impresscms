@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @since		1.3
- * @version		SVN: $Id$
+ * @version		SVN: $Id: constants.php 11522 2012-01-17 00:32:46Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) {

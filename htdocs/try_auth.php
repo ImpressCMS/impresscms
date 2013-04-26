@@ -9,7 +9,7 @@
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: try_auth.php 11255 2011-06-10 21:36:28Z skenow $
  */
 /**
  * Has this file been included?

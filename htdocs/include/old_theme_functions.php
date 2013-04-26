@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: old_theme_functions.php 9920 2010-03-27 17:46:23Z skenow $
  */
 
 // These are needed when viewing old modules (that don't use Smarty template files) when a theme that use Smarty templates are selected.

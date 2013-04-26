@@ -6,7 +6,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		plugins
- * @version		$Id$
+ * @version		$Id: hashtags.php 11691 2012-04-14 21:15:44Z skenow $
  */
 define('HASHTAG_LINK',	ICMS_URL . '/search.php?query=%s&amp;action=results'); // The link to search results
 

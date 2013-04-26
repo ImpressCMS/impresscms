@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Data
  * @subpackage	Comment
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Renderer.php 11604 2012-02-27 03:12:10Z skenow $
  */
 
 /**

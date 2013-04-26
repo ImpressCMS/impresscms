@@ -10,7 +10,7 @@
  * @subpackage	Images
  * @since		1.2
  * @author		Rodrigo Pereira Lima (aka TheRplima) <therplima@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: browser.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 include_once "../../../../mainfile.php";

@@ -8,7 +8,7 @@
  * @package		Plugins
  * @subpackage	Editor
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: EditorHandler.php 10868 2010-12-11 12:02:57Z phoenyx $
  */
 
 /**

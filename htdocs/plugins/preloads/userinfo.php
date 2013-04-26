@@ -7,7 +7,7 @@
  * @package		libraries
  * @since		1.1
  * @author		TheRplima <therplima@impresscms.org>
- * @version		$Id$
+ * @version		$Id: userinfo.php 10807 2010-11-20 19:16:00Z phoenyx $
  */
 /**
  *

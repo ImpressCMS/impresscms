@@ -7,7 +7,7 @@
  * @package		core
  * @since		1.3
  * @author		malanciault <marcan@impresscms.org)
- * @version		$Id$
+ * @version		$Id: update-to-112.php 10809 2010-11-20 22:28:44Z phoenyx $
  */
 
 	/*

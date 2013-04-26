@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Authentication
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Factory.php 11731 2012-06-17 01:25:04Z skenow $
  */
 
 /**

@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{config.sitename}}</title>
+    {{#each styles}}
+      <link rel="stylesheet" href="{{this}}">
+    {{/each}}
+    <script type="text/javascript" src="{{icms.config.url}}/libraries/jscore/lib/modernizr.js"></script>
+    <script type="text/javascript" data-main="{{icms.config.url}}/libraries/jscore/bootstrap.js" data-loaded="icms_core" src="{{icms.config.url}}/libraries/jscore/lib/require.js"></script>
+  </head>
+  <body>
+    {{{dump}}}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn btn-primary" type="button" onclick="javascript: window.close();" style="float: right; margin: 10px">{{close}}</button>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -7,7 +7,7 @@
  * @subpackage	Templates
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @version		$Id$
+ * @version		$Id: TplsetsHandler.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /**

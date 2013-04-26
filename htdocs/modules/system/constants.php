@@ -5,7 +5,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		Administration
- * @version		SVN: $Id$
+ * @version		SVN: $Id: constants.php 11396 2011-09-23 18:44:58Z phoenyx $
  */
 
 /**

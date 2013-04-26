@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Comments
- * @version		SVN: $Id$
+ * @version		SVN: $Id: comment_post.php 11011 2011-02-06 00:02:25Z skenow $
  */
 
 include './admin_header.php';
