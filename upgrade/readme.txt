@@ -3,7 +3,7 @@ Upgrade script instructions
 See below the procedures to migrate your XOOPS or ImpressCMS site for the newest version of ImpressCMS.
 We strongly recommend that you follow all the steps faithfully for your site is updated with security.
 
-1. Get the xoops-or-impresscms_1.0-to-impresscms-1.1 package from the sourceforge file repository.
+1. Get the xoops-or-impresscms_1.0-to-impresscms-2.0 package from the sourceforge file repository.
 2. Copy the content of htdocs/ over your existing files.
 3. On your server, delete the file cache/adminmenu.php
 4. Access <your.site.url>/upgrade/ with a browser.
@@ -29,57 +29,5 @@ We strongly recommend that you follow all the steps faithfully for your site is 
    o) htdocs/themes/impresstheme_light/xotpl
 10. Enjoy !
 
-==New Features in 1.1==
-For a complete list of new features, visit http://wiki.impresscms.org/index.php?title=ImpressCMS_1.1_Features
-Admin Preferences
-* Authorization
-      * Enable OpenID (NO)
-* Content - all new options
-      * Default page (none)
-      * Display navigation menu on user side (YES)
-      * Display related pages (YES)
-      * Show poster and published info (YES)
-* General
-      * Use local date/time functions (NO)
-      * Default editor (DHTML)
-      * Enable editors (none selected)
-      * Use CAPTCHA in comment forms (NO)
-* Meta + Footer
-      * Google Meta information (none)
-      * Enable Google Analytics (NO)
-      * Google Analytics id (empty)
-* Personalization - all new options
-      * Admin left logo (ImpressmCMS)
-      * Admin left logo link URL (site url)
-      * Admin left logo link title (ImpressCMS)
-      * Admin right logo (none)
-      * Admin right logo link URL (none)
-      * Admin right logo link title (none)
-      * Admin News feed URL (http://community.impresscms.org/modules/smartsection/backend.php)
-      * Edit and Remove blocks from user side? (YES)
-      * Prevent multiple login from same user? (NO)
-      * Multilogin redirection message
-      * Protect email addresses against SPAM? (NO)
-      * Font used in email address protection
-      * Font size used in email address protection
-      * Font color used in email address protection
-      * Shadow color used in email address protection
-      * X offset of shadow used in email address protection
-      * Y offset for shadow used in email address protection
-      * Truncate long URLs ? (NO)
-      * URL maximum length
-      * Amount of starting characters
-      * Amount of ending characters
-      * Show ImpressCMS Project drop down menu? (YES - same as before)
-      * Use Hide content tag? (NO)
-      * Use Extended Calendar with Jalali? (NO)
-* User Settings
-      * Security level (none - same as old method)
-      * Use CAPTCHA for registration (OFF)
-      * Send Welcome message (NO)
-      * Welcome message content
-      * Allow signature (YES - same as before)
-      * Allow images and HTML in signature (YES - same as before)
-      * Max length of signature (255 - same as before)
-      * Allow Gravatar (YES)
-      * Encryption type (MD5 - old method)
+== New Features in ImpressCMS 2.0 ==
+For a complete list of new features, visit https://impresscmsdev.assembla.com/spaces/dW4voyNP0r4ldbeJe5cbLr/tickets?report[id]=0&report[milestone_id_cond]=0&report[milestone_id_val][]=585723&report[title]=ImpressCMS+2.0+Tickets
