@@ -19,7 +19,6 @@ $icmsJsConfigData = array(
   'theme_set' => $icmsConfig['theme_set'],
   'theme_admin_set' => $icmsConfig['theme_admin_set'],
   'theme_set_allowed' => $icmsConfig['theme_set_allowed'],
-  'path' => $icmsConfig['root_path'],
   'url' => $icmsConfig['xoops_url'],
   'imageset' => ICMS_IMAGES_SET_URL,
   'gaActive' => $icmsConfigMetaFooter['use_google_analytics'],
