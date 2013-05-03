@@ -98,7 +98,7 @@ class icms_Autoloader {
 		if (!isset(self::$imported[ $namespace ])) {
 			$nspath = self::classPath($namespace, TRUE, DIRECTORY_SEPARATOR . "namespace.php");
 			if ($nspath) {
-				include_once($nspath . DIRECTORY_SEPARATOR . "namespace.php");
+				include_once $nspath . DIRECTORY_SEPARATOR . "namespace.php";
 				return self::$imported[$namespace] = TRUE;
 			}
 			self::$imported[$namespace] = FALSE;
@@ -147,7 +147,7 @@ class icms_Autoloader {
 			}
 		}
 		// Search global repositories
-		foreach(self::$globalRepositories as $path) {
+		foreach (self::$globalRepositories as $path) {
 			if (file_exists($path . DIRECTORY_SEPARATOR . $classPath . $ext)) {
 				return $path . DIRECTORY_SEPARATOR . $classPath;
 			}
