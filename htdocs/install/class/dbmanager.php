@@ -10,14 +10,14 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: dbmanager.php 11773 2012-07-10 22:53:11Z skenow $
+ * @version	$Id$
  */
 
 /**
  * database manager for XOOPS installer
  *
  * @author Haruki Setoyama  <haruki@planewave.org>
- * @version $Id: dbmanager.php 11773 2012-07-10 22:53:11Z skenow $
+ * @version $Id$
  * @access public
  **/
 class db_manager {

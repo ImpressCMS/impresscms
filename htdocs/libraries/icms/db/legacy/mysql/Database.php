@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Database
  * @subpackage	Legacy
- * @version		SVN: $Id: Database.php 11447 2011-11-21 15:57:25Z fiammy $
+ * @version		SVN: $Id: Database.php 11408 2011-10-18 17:05:49Z fiammybe $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

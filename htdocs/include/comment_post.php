@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: comment_post.php 11665 2012-03-30 01:28:06Z skenow $
+ * @version	$Id: comment_post.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
@@ -107,7 +107,7 @@ switch ($op) {
 				$dohtml = 0;
 			}
 		}
-		$p_comment =& icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input');
+		$p_comment = icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input');
 		$noname = isset($noname) ? (int) $noname : 0;
 		$com_text = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_text']));
 		if ($icmsModule->getVar('dirname') != 'system') {

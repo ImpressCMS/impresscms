@@ -183,7 +183,7 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	 * @param   boolean $getbinary
 	 * @return  array   Array of {@link icms_image_Object} objects
 	 **/
-	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false) {
+	public function &getObjects($criteria = NULL, $id_as_key = FALSE, $getbinary = FALSE) {
 		$ret = array();
 		$limit = $start = 0;
 		if ($getbinary) {
@@ -192,7 +192,7 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 			$sql = "SELECT * FROM ".$this->db->prefix('image');
 		}
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= " ".$criteria->renderWhere();
+			$sql .= " " . $criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))
 					? 'image_weight'
 					: $criteria->getSort();
@@ -208,9 +208,9 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 			$image = new icms_image_Object();
 			$image->assignVars($myrow);
 			if (!$id_as_key) {
-				$ret[] = &$image;
+				$ret[] =& $image;
 			} else {
-				$ret[$myrow['image_id']] = &$image;
+				$ret[$myrow['image_id']] =& $image;
 			}
 			unset($image);
 		}
@@ -223,12 +223,12 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @return  int
 	 **/
-	public function getCount($criteria = null) {
-		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('image');
+	public function getCount($criteria = NULL) {
+		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('image');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
+			$sql .= ' ' . $criteria->renderWhere();
 		}
-		if (!$result = &$this->db->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);
@@ -242,17 +242,16 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	 * @param   bool    $image_display
 	 * @return  array   Array of {@link icms_image_Object} objects
 	 **/
-	public function getList($imgcat_id, $image_display = null) {
+	public function getList($imgcat_id, $image_display = NULL) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id)));
 		if (isset($image_display)) {
 			$criteria->add(new icms_db_criteria_Item('image_display', (int) ($image_display)));
 		}
-		$images = &$this->getObjects($criteria, false, true);
+		$images =& $this->getObjects($criteria, FALSE, TRUE);
 		$ret = array();
-		foreach ( array_keys($images) as $i) {
+		foreach (array_keys($images) as $i) {
 			$ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');
 		}
 		return $ret;
 	}
 }
-

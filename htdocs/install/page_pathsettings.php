@@ -12,7 +12,7 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_pathsettings.php 10825 2010-12-03 00:01:23Z skenow $
+ * @version		$Id$
  */
 /**
  *
@@ -43,7 +43,7 @@ class PathStuffController {
 			$this->xoopsRootPath = $_SESSION['settings']['ROOT_PATH'];
 		} else {
 			$path = str_replace( "\\", "/", @realpath( '../' ) );
-			if (file_exists( "$path/mainfile.php" )) {
+			if (file_exists( "$path/libraries/icms.php" )) {
 				$this->xoopsRootPath = $path;
 			}
 		}
@@ -136,7 +136,7 @@ class PathStuffController {
 	function checkRootPath() {
 		if (@is_dir( $this->xoopsRootPath ) && @is_readable( $this->xoopsRootPath )) {
 			@include_once "$this->xoopsRootPath/include/version.php";
-			if (file_exists( "$this->xoopsRootPath/mainfile.php" ) && defined( 'XOOPS_VERSION' )) {
+			if (file_exists( "$this->xoopsRootPath/libraries/icms.php" ) && defined('ICMS_VERSION_NAME')) {
 				return $this->validRootPath = true;
 			}
 		}
@@ -165,7 +165,7 @@ class PathStuffController {
 	}
 
 	function checkPermissions() {
-		$paths = array( 'mainfile.php', 'uploads', 'modules', 'templates_c', 'cache' );
+		$paths = array('uploads', 'modules', 'templates_c', 'cache' );
 		$errors = array();
 		foreach ( $paths as $path) {
 			$errors[$path] = $this->makeWritable( "$this->xoopsRootPath/$path" );
@@ -386,5 +386,3 @@ $content = ob_get_contents();
 ob_end_clean();
 
 include 'install_tpl.php';
-
-?>

@@ -10,7 +10,7 @@
  * @package		installer
  * @since        1.0
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
- * @version		$Id: page_modulesinstall.php 10906 2010-12-20 15:09:53Z phoenyx $
+ * @version		$Id$
  */
 /**
  *
@@ -25,10 +25,10 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once ICMS_ROOT_PATH."/mainfile.php";
-include_once ICMS_ROOT_PATH."/include/common.php";
+include_once "../mainfile.php";
+include_once "../include/common.php";
 include_once "../include/cp_functions.php";
-include_once './class/dbmanager.php';
+include_once 'class/dbmanager.php';
 include "modulesadmin.php";
 $dbm = new db_manager();
 
@@ -52,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		 * Automatically updating the system module before installing the selected modules
 		 * @since 1.3
 		 */
-		include_once ICMS_ROOT_PATH . '/modules/system/include/update.php';
 		$module_handler = icms::handler('icms_module');
 		$system_moduleObj = $module_handler->getByDirname('system');
-		xoops_module_update_system($system_moduleObj);
+		include_once ICMS_ROOT_PATH . '/modules/system/include/update.php';
+		icms_module_update_system($system_moduleObj);
 
 		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
 		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';

@@ -1,61 +1,20 @@
-ImpressCMS 1.3.4
-======================
-This release fixes a regression in custom PHP blocks, and also some problems with the safe iFrame functionality.
+ImpressCMS 2.0 Alpha 2 release notes
+================================================
 
-You can find the details of the changes in this release at https://impresscmsdev.assembla.com/spaces/impresscms/milestones/1571373-impresscms-1-3-4
+The ImpressCMS Project is very proud to announce the first Alpha version of its 2.0 release! 
+ImpressCMS 2.0 Alpha 2 is a major refactoring of the core and is not intended for production sites.
 
-ImpressCMS 1.3.3
-======================
-In addition to the updated core of ImpressCMS, 3 core modules also have been updated - Banners, Profile and Protector.
-You can find the details of the changes in this release at http://impresscmsdev.assembla.com/spaces/impresscms/milestones/671493-impresscms-1-3-3
+Please see the full Change Log for details at https://impresscmsdev.assembla.com/spaces/dW4voyNP0r4ldbeJe5cbLr/tickets?report[id]=0&report[milestone_id_cond]=0&report[milestone_id_val][]=585723&report[title]=ImpressCMS+2.0+Tickets.
 
-Major changes:
+==System requirements==
 
-Authentication fixes
-* LDAP and ADS authentication fixed
-* OpenID authentication fixed for some server configurations
-
-Performance improvements
-* Addressed slow loading pages when gzip was enabled
-* Improved performance of the installer during data insertion
-* Initial changes for PHP 5.4 compliance
-
-Other improvements and updates
-* Improvements in the rendering of scripts, css and meta links and tags
-* Updates to some external libraries
-* Dynamic extension of pagination styles
-
-Security improvements
-* Smarty Resizer now uses a more secure folder structure
-* Filtering with HTMLPurifier
-* Password hashing routine
-
-==Downloading ImpressCMS==
-
-This release can be downloaded from the [https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Official%20Releases/ ImpressCMS SourceForge project page].
-
-==Using wget command to download the .tar.gz full package==
-
-This release can be downloaded directly on your server using the WGET command (providing you have SSH access to your server). To download it, simply use this code:
-
-wget http://www.impresscms.org/download/
-
-==Checking out ImpressCMS from the SVN==
-
-You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
-
-The path for this release is the following:
-http://subversion.assembla.com/svn/impresscms/releases/impresscms_1.3.3_beta/
-
-If you feel like getting the latest "edge" version of the 1.3 release, you can checkout the core impresscms_1.3 branch at :
-
-http://subversion.assembla.com/svn/impresscms/branches/impresscms_1.3
-
-If you feel like getting the latest "edge" version of the development branch, checkout the core trunk at :
-
-http://subversion.assembla.com/svn/impresscms/trunk
-
-The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is, of course, not to be used on production sites.
+*PHP
+    ** PHP 5.2.5 or higher (5.3 or 5.4 is recommended)
+    ** 16MB memory
+*MySQL
+    ** MySQL 4.1.0 or higher
+*Web server
+    ** Any server supporting the required PHP version (Apache highly recommended)
 
 ==Installing ImpressCMS==
 
@@ -69,7 +28,7 @@ For complete installation documentation, please refer to the Installation Guide 
 
 If you are upgrading from a previous version of ImpressCMS or XOOPS, please follow these instructions:
 
-* Download an upgrade package (tar.gz or zip formats are available) http://www.impresscms.org/modules/content/content.php?page=ImpressCMS-1_3_x
+* Download an upgrade package (tar.gz or zip formats are available) http://www.impresscms.org/modules/content/content.php?page=ImpressCMS-2_0 .
 * Extract the package to your local computer
 * Login to your site
 * If you are using a custom set of templates, please change back to the default template set
@@ -102,6 +61,23 @@ If you are upgrading from a previous version of ImpressCMS or XOOPS, please foll
 
 * Enjoy !
 
+==Downloading ImpressCMS==
+
+This release can be downloaded from http://www.impresscms.org/modules/content/content.php?page=ImpressCMS-2_0 .
+
+==Checking out ImpressCMS from Git==
+
+Starting with version 2.0, ImpressCMS source code is being developed on Git. You can easily get ImpressCMS from Git. Instructions about this can be found here: http://wiki.impresscms.org/modules/wiki/index.php?page=Install_and_update_using_Git .
+
+The path for this release is the following:
+https://impresscmsdev.assembla.com/code/impresscms/git/nodes/impresscms_2.0alpha2?type=tag
+
+If you feel like getting the latest "edge" version, you can checkout the ImpressCMS_2.0 branch from :
+
+git://git.assembla.com/impresscms.git
+
+The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is, of course, not to be used on production sites.
+
 ==Revealing the blank page backtrace log==
 
 ImpressCMS displays a basic error page when a fatal error preventing it to run is encountered. To help you diagnose the cause of the error, this page contains additional messages that are hidden by default. To reveal them, use your browser "select all" function (for most browsers, you can use "Ctrl+A").
@@ -117,6 +93,7 @@ The Protector module is installed by default with a new installation of ImpressC
 ===The ImpressCMS Network===
 
 Sourceforge Project: http://www.sourceforge.net/projects/impresscms
+Assembla Project: https://www.assembla.com/spaces/impresscms/
 * Home of ImpressCMS: http://www.impresscms.org
 * Community support: http://community.impresscms.org
 * Addons, modules, themes and languages: http://addons.impresscms.org
@@ -132,10 +109,13 @@ To get on the developer mailing list, complete this short form to join the team 
 
 * Ohloh project: http://www.ohloh.net/projects/10042?p=ImpressCMS
 * Facebook group: http://www.facebook.com/group.php?gid=7395938599
-* Facebook fans page: http://www.facebook.com/pages/The-ImpressCMS-Project/22332836800
+* Facebook fans page: http://www.facebook.com/ImpressCMS
 * LinkedIn group: http://www.linkedin.com/e/gis/45459/3A9B02585174
+* Delicious: http://del.icio.us/tag/impresscms
 * Flickr: http://www.flickr.com/photos/tags/impresscms/
 * YouTube: http://www.youtube.com/impresscms
+* Last.FM: http://www.last.fm/group/ImpressCMS
+* ImpressCMS Toolbar: http://impresscms.ourtoolbar.com/
 
 '''The ImpressCMS Project'''
 http://www.impresscms.org

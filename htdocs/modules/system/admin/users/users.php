@@ -6,11 +6,11 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Users
- * @version		SVN: $Id: users.php 11994 2012-08-30 15:59:03Z m0nty $
+ * @version		SVN: $Id: users.php 11738 2012-06-24 02:20:38Z m0nty $
  */
 
-if (!is_object(icms::$user) 
-	|| !is_object($icmsModule) 
+if (!is_object(icms::$user)
+	|| !is_object($icmsModule)
 	|| !icms::$user->isAdmin($icmsModule->getVar('mid'))
 ) {
 	exit('Access Denied');
@@ -18,36 +18,38 @@ if (!is_object(icms::$user)
 
 /**
  * Displays user information form
- * 
+ *
  */
 function displayUsers() {
-	global $icmsConfig, $icmsModule, $icmsConfigUser;
+	global $icmsConfig, $icmsModule, $icmsConfigUser, $user_handler;
 	$userstart = isset($_GET['userstart']) ? (int) $_GET['userstart'] : 0;
 
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/users/images/users_big.png)">' . _MD_AM_USER . '</div><br />';
-	$member_handler = icms::handler('icms_member');
-	$usercount = $member_handler->getUserCount(new icms_db_criteria_Item('level', '-1', '!='));
+	$usercount = $user_handler->getCount(new icms_db_criteria_Item('level', '-1', '!='));
 	$nav = new icms_view_PageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
-	$editform = new icms_form_Theme(_AM_EDEUSER, 'edituser', 'admin.php');
-	$user_select = new icms_form_elements_Select('', 'uid');
+
 	$criteria = new icms_db_criteria_Compo();
 	$criteria->add(new icms_db_criteria_Item('level', '-1', '!='));
 	$criteria->setSort('uname');
 	$criteria->setOrder('ASC');
 	$criteria->setLimit(200);
 	$criteria->setStart($userstart);
-	$user_select->addOptionArray($member_handler->getUserList($criteria));
+
+	$user_select = new icms_form_elements_Select('', 'uid');
+	$user_select->addOptionArray($user_handler->getList($criteria));
 	$user_select_tray = new icms_form_elements_Tray(_AM_NICKNAME, '<br />');
 	$user_select_tray->addElement($user_select);
 	$user_select_nav = new icms_form_elements_Label('', $nav->renderNav(4));
 	$user_select_tray->addElement($user_select_nav);
-	
+
 	$op_select = new icms_form_elements_Select('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER, 'delUser'=>_AM_DELUSER));
-	
+
 	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
 	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');
+
+	$editform = new icms_form_Theme(_AM_EDEUSER, 'edituser', 'admin.php');
 	$editform->addElement($user_select_tray);
 	$editform->addElement($op_select);
 	$editform->addElement($submit_button);
@@ -55,17 +57,19 @@ function displayUsers() {
 	$editform->display();
 
 	echo "<br />\n";
-	$usercount = $member_handler->getUserCount(new icms_db_criteria_Item('level', '-1'));
+	$usercount = $user_handler->getCount(new icms_db_criteria_Item('level', '-1'));
 	$nav = new icms_view_PageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
-	$editform = new icms_form_Theme(_AM_REMOVED_USERS, 'edituser', 'admin.php');
-	$user_select = new icms_form_elements_Select('', 'uid');
+
+
 	$criteria = new icms_db_criteria_Compo();
 	$criteria->add(new icms_db_criteria_Item('level', '-1'));
 	$criteria->setSort('uname');
 	$criteria->setOrder('ASC');
 	$criteria->setLimit(200);
 	$criteria->setStart($userstart);
-	$user_select->addOptionArray($member_handler->getUserList($criteria));
+
+	$user_select = new icms_form_elements_Select('', 'uid');
+	$user_select->addOptionArray($user_handler->getList($criteria));
 	$user_select_tray = new icms_form_elements_Tray(_AM_NICKNAME, '<br />');
 	$user_select_tray->addElement($user_select);
 	$user_select_nav = new icms_form_elements_Label('', $nav->renderNav(4));
@@ -76,6 +80,8 @@ function displayUsers() {
 
 	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
 	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');
+
+	$editform = new icms_form_Theme(_AM_REMOVED_USERS, 'edituser', 'admin.php');
 	$editform->addElement($user_select_tray);
 	$editform->addElement($op_select);
 	$editform->addElement($submit_button);
@@ -116,7 +122,7 @@ function displayUsers() {
 	$form_title = _AM_ADDUSER;
 	$form_isedit = FALSE;
 	$language_value = $icmsConfig['language'];
-	$groups = array(XOOPS_GROUP_USERS);
+	$groups = array(ICMS_GROUP_USERS);
 	include ICMS_MODULES_PATH . '/system/admin/users/userform.php';
 	icms_cp_footer();
 }
@@ -124,14 +130,13 @@ function displayUsers() {
 /**
  * Logic and rendering for modifying a member profile
  *
- * @param object $user
+ * @param int $user	userid
  */
 function modifyUser($user) {
-	global $icmsConfig, $icmsModule;
+	global $icmsConfig, $icmsModule,$user_handler;
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/users/images/users_big.png)">' . _MD_AM_USER . '</div><br />';
-	$member_handler = icms::handler('icms_member');
-	$user =& $member_handler->getUser($user);
+	$user =& $user_handler->get($user);
 	if (is_object($user)) {
 		if (!$user->isActive()) {
 			icms_core_Message::confirm(array('fct' => 'users', 'op' => 'reactivate', 'uid' => $user->getVar('uid')), 'admin.php', _AM_NOTACTIVE);
@@ -235,10 +240,9 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $user_viewoid,
 					$pass_expired, $groups = array()
 					) {
-	global $icmsConfig, $icmsModule, $icmsConfigUser;
-	$member_handler = icms::handler('icms_member');
-	$edituser =& $member_handler->getUser($uid);
-	if ($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new icms_db_criteria_Item('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new icms_db_criteria_Item('login_name', $login_name)) > 0) {
+	global $icmsConfig, $icmsModule, $icmsConfigUser, $user_handler;
+	$edituser =& $user_handler->get($uid);
+	if ($edituser->getVar('uname') != $uname && $user_handler->getCount(new icms_db_criteria_Item('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $user_handler->getCount(new icms_db_criteria_Item('login_name', $login_name)) > 0) {
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/users/images/users_big.png)">' . _MD_AM_USER . '</div><br />';
 		echo _AM_UNAME . ' ' . $uname . ' ' . _AM_ALREADY_EXISTS;
@@ -293,7 +297,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 			$pass = $icmspass->encryptPass($pass);
 			$edituser->setVar('pass', $pass);
 		}
-		if (!$member_handler->insertUser($edituser)) {
+		if (!$user_handler->insert($edituser)) {
 			icms_cp_header();
 			echo $edituser->getHtmlErrors();
 			icms_cp_footer();
@@ -301,9 +305,9 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 			if ($groups != array()) {
 				$oldgroups = $edituser->getGroups();
 				//If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-				if ($edituser->getVar('uid') == icms::$user->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups))) {
+				if ($edituser->getVar('uid') == icms::$user->getVar('uid') && (in_array(ICMS_GROUP_ADMIN, $oldgroups)) && !(in_array(ICMS_GROUP_ADMIN, $groups))) {
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
-					$groups[] = XOOPS_GROUP_ADMIN;
+					$groups[] = ICMS_GROUP_ADMIN;
 				}
 				$member_handler = icms::handler('icms_member');
 				foreach ($oldgroups as $groupid) {
@@ -313,7 +317,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 					$groups as $groupid) {$member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));
 				}
 			}
-			redirect_header('admin.php?fct=users', 1, _AM_DBUPDATED);
+			redirect_header('admin.php?fct=users', 1, _ICMS_DBUPDATED);
 		}
 	}
 	exit();
@@ -361,6 +365,6 @@ function synchronize($id, $type) {
 		default:
 			break;
 	}
-	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . $id, 1, _AM_DBUPDATED);
+	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . $id, 1, _ICMS_DBUPDATED);
 	exit();
 }

@@ -11,7 +11,7 @@
  * @package		Form
  * @subpackage	Elements
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @version		SVN: $Id: User.php 11574 2012-02-16 00:44:50Z skenow $
+ * @version		SVN: $Id: User.php 11604 2012-02-27 03:12:10Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -72,7 +72,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 			return;
 		}
 
-		icms_loadLanguageFile('core', 'findusers');
+		icms_loadLanguageFile('core', 'user');
 
 		$js_addusers = "<script type=\"text/javascript\">
 					function addusers(opts){
@@ -119,4 +119,3 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		$this->addElement($action_tray);
 	}
 }
-

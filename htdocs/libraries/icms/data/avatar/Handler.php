@@ -203,7 +203,7 @@ class icms_data_avatar_Handler extends icms_core_ObjectHandler {
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
-		if (!$result =& $this->db->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);

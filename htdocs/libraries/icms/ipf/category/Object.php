@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Object.php 11766 2012-07-01 22:34:18Z skenow $
+ * @version		SVN: $Id: Object.php 11767 2012-07-01 22:36:00Z skenow $
  *
  * @todo		Properly set visibility of variables - in version 1.4
  */

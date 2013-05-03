@@ -4,7 +4,7 @@
  *
  * @license GNU
  * @author marcan <marcan@smartfactory.ca>
- * @version $Id: Table.php 11900 2012-08-10 15:00:42Z qm-b $
+ * @version $Id$
  * @link http://www.smartfactory.ca The SmartFactory
  * @package database
  */

@@ -7,7 +7,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Module
- * @version		SVN: $Id: Object.php 11108 2011-03-24 03:08:54Z m0nty_ $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
@@ -90,8 +90,8 @@ class icms_module_Object extends icms_core_Object {
 	 * @return void
 	 */
 	public function registerClassPath($isactive = NULL) {
-		if ($this->getVar("dirname") == "system") return;
-		$class_path = ICMS_ROOT_PATH . "/modules/" . $this->getVar("dirname") . "/class";
+		//if ($this->getVar("dirname") == "system") return;
+		$class_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname") . "/class";
 
 		// check if class path exists
 		if (!is_dir($class_path)) return;
@@ -198,7 +198,10 @@ class icms_module_Object extends icms_core_Object {
 	 * Load the admin menu for the module
 	 */
 	public function loadAdminMenu() {
-		if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
+		if ($this->getInfo('adminmenu')
+			&& $this->getInfo('adminmenu') != ''
+			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))
+		) {
 			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
 			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu;}
@@ -305,46 +308,6 @@ class icms_module_Object extends icms_core_Object {
 		$tpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/system_adm_modulemenu.html');
 	}
 
-	/**#@+
-	 * For backward compatibility only!
-	 * @deprecated Use $this->getVar('mid') instead
-	 * @todo		Remove in version 1.4
-	 */
-	public function mid() {
-		icms_core_Debug::setDeprecated('getVar("mid")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('mid');
-	}
-	/**
-	 *
-	 * @deprecated	Use getVar('dirname') instead
-	 * @todo 		Remove in version 1.4
-	 */
-	public function dirname() {
-		icms_core_Debug::setDeprecated('getVar("dirname")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('dirname');
-	}
-	/**
-	 *
-	 * @deprecated	Use getVar('name') instead
-	 * @todo		Remove in version 1.4
-	 */
-	public function name() {
-		icms_core_Debug::setDeprecated('getVar("name")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('name');
-	}
-	/**
-	 *
-	 * @deprecated	Use the handler method instead
-	 * @todo		Remove in version 1.4
-	 * @param unknown_type $dirname
-	 */
-	public function &getByDirName($dirname) {
-		icms_core_Debug::setDeprecated('Module Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		$modhandler = icms::handler('icms_module');
-		$inst = & $modhandler->getByDirname($dirname);
-		return $inst;
-	}
-
 	/**
 	 * Modules Message Function
 	 *
@@ -357,7 +320,7 @@ class icms_module_Object extends icms_core_Object {
 	 *
 	 * @todo Make this work with templates ;)
 	 */
-	function setMessage($msg, $title = '', $render = false) {
+	public function setMessage($msg, $title = '', $render = false) {
 		$ret = '<div class="moduleMsg">';
 		if ($title != '') {$ret .= '<h4>' . $title . '</h4>';}
 		if (is_array($msg)) {

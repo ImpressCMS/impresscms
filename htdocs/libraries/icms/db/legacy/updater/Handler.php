@@ -4,7 +4,7 @@
  *
  * @license GNU
  * @author marcan <marcan@smartfactory.ca>
- * @version $Id: Handler.php 10810 2010-11-21 00:06:11Z skenow $
+ * @version $Id$
  * @link http://www.smartfactory.ca The SmartFactory
  * @package database
  */
@@ -254,7 +254,7 @@ class icms_db_legacy_updater_Handler {
 			return false;
 		}
 
-		$table = new icms_db_legacy_updater_Table($dirname . '_' . $item);
+		$table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
 		$object = $module_handler->create();
 		$objectVars = $object->getVars();
 

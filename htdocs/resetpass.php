@@ -10,12 +10,11 @@
  * @since		ImpressCMS 1.1
  * @author		Vaughan Montgomery <vaughan@impresscms.org>
  * @author		The ImpressCMS Project
- * @version		SVN: $Id: resetpass.php 11946 2012-08-23 12:45:17Z m0nty $
+ * @version		SVN: $Id: resetpass.php 11738 2012-06-24 02:20:38Z m0nty $
  */
 
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
-
 /* the following are passed through $_POST/$_GET
  *	'c_password' => 'str',
  *	'password' => 'str',
@@ -48,41 +47,41 @@ if ((isset($password)) && ($password !== $password2)) {
 
 if (!icms::$user) {
 	redirect_header('user.php', 2, sprintf(_US_SORRYNOTFOUND, 3, ''), FALSE);
-} else {
-	$icmspass = new icms_core_Password();
+	} else {
+		$icmspass = new icms_core_Password();
 
 	if (!$icmspass->verifyPass($c_password, icms::$user->getVar('login_name'))) {
 		redirect_header('user.php?op=resetpass', 2, _US_SORRYINCORRECTPASS);
-	}
+		}
 
-	$pass = $icmspass->encryptPass($password);
-	$xoopsMailer = new icms_messaging_Handler();
-	$xoopsMailer->useMail();
-	$xoopsMailer->setTemplate('resetpass2.tpl');
-	$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-	$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-	$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
-	$xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
+		$pass = $icmspass->encryptPass($password);
+		$xoopsMailer = new icms_messaging_Handler();
+		$xoopsMailer->useMail();
+		$xoopsMailer->setTemplate('resetpass2.tpl');
+		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+		$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+		$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
+		$xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
 	$xoopsMailer->setToUsers(icms::$user->getVar('uid'));
-	$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-	$xoopsMailer->setFromName($icmsConfig['sitename']);
-	$xoopsMailer->setSubject(sprintf(_US_PWDRESET, ICMS_URL));
-	if (!$xoopsMailer->send()) {
-		echo $xoopsMailer->getErrors();
-	}
+		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+		$xoopsMailer->setFromName($icmsConfig['sitename']);
+		$xoopsMailer->setSubject(sprintf(_US_PWDRESET, ICMS_URL));
+		if (!$xoopsMailer->send()) {
+			echo $xoopsMailer->getErrors();
+		}
 
-	$sql = sprintf("UPDATE %s SET pass = '%s', pass_expired = '%u' WHERE uid = '%u'",
-					icms::$xoopsDB->prefix('users'),
-					$pass,
-					0,
+		$sql = sprintf("UPDATE %s SET pass = '%s', pass_expired = '%u' WHERE uid = '%u'",
+						icms::$xoopsDB->prefix('users'),
+						$pass,
+						0,
 					(int) icms::$user->getVar('uid')
-	);
+					);
 	if (!icms::$xoopsDB->query($sql)) {
-		include 'header.php';
-		echo _US_RESETPWDNG;
-		include 'footer.php';
-		exit();
-	}
-	unset($pass);
+			include 'header.php';
+			echo _US_RESETPWDNG;
+			include 'footer.php';
+			exit();
+		}
+		unset($pass);
 	redirect_header('user.php', 3, sprintf(_US_PWDRESET, icms::$user->getVar('uname')), FALSE);
 }

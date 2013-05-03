@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id: user.php 11964 2012-08-26 03:05:49Z skenow $
+ * @version		SVN: $Id: user.php 11044 2011-02-27 00:57:00Z skenow $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -78,7 +78,7 @@ switch ($op) {
 		break;
 
 	case 'resetpass':
-		if (icms::$user) {
+		if (!icms::$user) {
 			$xoopsOption['template_main'] = 'system_userform.html';
 			include 'header.php';
 			$redirect = FALSE;
@@ -97,11 +97,11 @@ switch ($op) {
 			icms_makeSmarty(array(
 	            'redirect_page' => $redirect,
 	            'lang_reset' => 1,
-//	            'lang_username' => _USERNAME,
-//	            'lang_uname' => isset($_GET['uname']) ? filter_input(INPUT_GET, 'uname') : '',
+	            'lang_username' => _USERNAME,
+	            'lang_uname' => isset($_GET['uname']) ? filter_input(INPUT_GET, 'uname') : '',
 	            'lang_resetpassword' => _US_RESETPASSWORD,
 	            'lang_resetpassinfo' => _US_RESETPASSINFO,
-//	            'lang_youremail' => _US_YOUREMAIL,
+	            'lang_youremail' => _US_YOUREMAIL,
 	            'lang_sendpassword' => _US_SENDPASSWORD,
 	            'lang_subresetpassword' => _US_SUBRESETPASSWORD,
 	            'lang_currentpass' => _US_CURRENTPASS,
@@ -139,7 +139,7 @@ switch ($op) {
 	case $op == 'logout':
 		$sessHandler = icms::$session;
 		$sessHandler->sessionClose(icms::$user->getVar('uid'));
-		redirect_header(ICMS_URL . '/', 3, _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT);
+		redirect_header(ICMS_URL . '/index.php', 3, _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT);
 		break;
 
 	case 'actv':
@@ -189,7 +189,7 @@ switch ($op) {
 		}
 		exit();
 		break;
-
+		
 	case 'delete':
 		if (!icms::$user || $icmsConfigUser['self_delete'] != 1) {
 			redirect_header('index.php',5,_US_NOPERMISS);

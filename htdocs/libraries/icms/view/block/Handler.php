@@ -8,7 +8,7 @@
  * @package		View
  * @subpackage	Block
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id: Handler.php 11561 2012-02-06 22:37:24Z fiammy $
+ * @version		SVN: $Id: Handler.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -354,7 +354,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 				$this->db->query($sql);
 			}
 		} else {
-			icms_loadLanguageFile('system', 'blocksadmin', true);
+			icms_loadLanguageFile('system', 'blocks', true);
 			if ($obj->getVar('block_type') == 'K') {
 				$obj->setVar('name', _AM_CLONE);
 			} else {

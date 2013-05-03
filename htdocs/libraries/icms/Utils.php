@@ -7,7 +7,7 @@
  * @category	ICMS
  * @since		1.3
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Utils.php 11448 2011-11-21 16:37:13Z fiammy $
+ * @version		SVN: $Id: Utils.php 11450 2011-11-21 23:27:25Z skenow $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -129,6 +129,7 @@ class icms_Utils {
 		     "qt"		=> "video/quicktime",
 		     "mov"		=> "video/quicktime",
 		     "avi"		=> "video/x-msvideo",
+             "mp4"		=> "video/mp4"
 		);
 	}
 }

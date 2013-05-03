@@ -223,7 +223,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
 	 **/
-	public function getObjects($criteria = null, $id_as_key = false) {
+	public function &getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('xoopscomments');
@@ -263,7 +263,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
-		if (!$result =& $this->db->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);
@@ -316,7 +316,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
 	 **/
-	public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
+	public function &getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
 		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
 		if (isset($status)) {
@@ -360,7 +360,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
 	 **/
-	public function getTopComments($module_id, $item_id, $order, $status = null) {
+	public function &getTopComments($module_id, $item_id, $order, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
 		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
 		$criteria->add(new icms_db_criteria_Item('com_pid', 0));
@@ -380,7 +380,7 @@ class icms_data_comment_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
 	 **/
-	public function getThread($comment_rootid, $comment_id, $status = null) {
+	public function &getThread($comment_rootid, $comment_id, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_rootid', (int) $comment_rootid));
 		$criteria->add(new icms_db_criteria_Item('com_id', (int) $comment_id, '>='));
 		if (isset($status)) {

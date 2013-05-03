@@ -1,25 +1,40 @@
 ImpressCMS ChangeLog
-=== ImpressCMS 1.3.4 Final ===
-Release Date: Dec 1, 2012
-Revision: 12123
-DB Version: 43
-Build Version: 67
+=== ImpressCMS 2.0.0 alpha 2 ===
+Release date: 30 Apr 2013
+Revision :
+DB Version: 44
+Build Version: 62
 
-=== ImpressCMS 1.3.4 RC ===
-Release Date: Nov 26 , 2012
-Revision: 12121
-DB Version: 43
-Build Version: 66
+Changes:
+* White screen on new install on page_modulesinstall.php - 608
+* Allow the use of CDN for javascript/CSS - 603
+* Optimising size - making some things optional downloads - 337
+* iTheme tabs are misaligned on some browsers - 437
+* Upgrade to HTMLPurifier 4.3.0 - 486
+* Relocate some Geshi Filters - 493
+* Move Geshi Doc outside of htdocs folder - 594
+* Password reset forced on newly installed 1.3.3 site - 609
+* relocate cache(s) to TrustPath - 617
+* Add mp4 MIME Type - 682
+* Block option links on IE8 - 18
+* protector preload needs to be updated - 540
+* Enable definition of new page zones and sorting of meta inserts (scripts, css, links) - 567
+* Hashtags and Mentions plugin have extra images - 607
+* IPF database updater does not honor table overrides - 624
+* Use of undefined constant _CO_SYSTEM_BLOCKS_BLOCKRIGHTS and _CO_SYSTEM_BLOCKS_BLOCKRIGHTS_DSC in file /modules/system/class/BlocksHandler.php - 625
+* Move to new branch of SimplePie (1.3) - 671
+* Only include files when they are needed - 246
 
-=== ImpressCMS 1.3.3 Final ===
-Release Date: Okt 4, 2012
+
+=== ImpressCMS 1.3.4 ===
+Release date: 03 Dec 2012
+Revision: 12125
+DB Version: 43
+Build Version: 63
+
+=== ImpressCMS 1.3.3 ===
+Release date: 10 Oct 2012
 Revision: 12065
-DB Version: 65
-Build Version: 65
-
-=== ImpressCMS 1.3.3 Beta ===
-Release date: July 2012
-Revision: 11794
 DB Version: 43
 Build Version: 63
 

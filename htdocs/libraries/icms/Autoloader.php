@@ -7,7 +7,7 @@
  * @category	ICMS
  * @since		1.3
  * @author		Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
- * @version		$Id: Autoloader.php 11448 2011-11-21 16:37:13Z fiammy $
+ * @version		$Id: Autoloader.php 11450 2011-11-21 23:27:25Z skenow $
  */
 class icms_Autoloader {
 	/**
@@ -181,7 +181,6 @@ class icms_Autoloader {
 			"xoopsmodule" 					=> "/kernel/module.php",
 			"xoopsmodulehandler"			=> "/kernel/module.php",
 			"xoopsmemberhandler"			=> "/kernel/member.php",
-			"icmspreloadhandler"			=> "/kernel/icmspreloadhandler.php",
 			"icmspreloaditem" 				=> "/kernel/icmspreloadhandler.php",
 			"icmskernel" 					=> "/kernel/icmskernel.php",
 			"icmssecurity" 					=> "/class/xoopssecurity.php",
@@ -213,11 +212,9 @@ class icms_Autoloader {
 			"xoopsformselectuser"			=> "/class/xoopsform/formselectuser.php",
 			"xoopsformselecttheme"			=> "/class/xoopsform/formselecttheme.php",
 			"xoopsformselectmatchoption"	=> "/class/xoopsform/formselectmatchoption.php",
-			"xoopsformtext"					=> "/class/xoopsform/formtext.php",
 			"xoopsformtextarea"				=> "/class/xoopsform/formtextarea.php",
 			"xoopsformdhtmltextarea"		=> "/class/xoopsform/formdhtmltextarea.php",
 			"xoopsformelementtray"			=> "/class/xoopsform/formelementtray.php",
-			"xoopsthemeform"				=> "/class/xoopsform/themeform.php",
 			"xoopssimpleform"				=> "/class/xoopsform/simpleform.php",
 			"xoopsformtextdateselect"		=> "/class/xoopsform/formtextdateselect.php",
 			"xoopsformdatetime"				=> "/class/xoopsform/formdatetime.php",
@@ -235,7 +232,7 @@ class icms_Autoloader {
 			"icmspersistablecolumn"			=> "/kernel/icmspersistabletable.php",
 			"icmspersistabletable"			=> "/kernel/icmspersistabletable.php",
 			"errorhandler"					=> "/class/module.errorhandler.php",
-			"icmsmetagen"					=> "/kernel/icmsmetagen.php",
+			"icmsmetagen"					=> "/kernel/icmsmetagen.php"
 		);
 		if (in_array($class, array_keys($legacyClassPath))) {
 			include_once ICMS_ROOT_PATH . $legacyClassPath[$class];

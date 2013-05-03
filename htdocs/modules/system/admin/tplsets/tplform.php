@@ -5,8 +5,8 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		System
- * @subpackage	Template Sets
- * @version		SVN: $Id: tplform.php 11032 2011-02-18 05:19:56Z skenow $
+ * @subpackage	Templates
+ * @version		SVN: $Id: tplform.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 if ($tform['tpl_tplset'] != 'default') {

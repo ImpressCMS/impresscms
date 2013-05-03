@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package	Core
  * @subpackage	Session
- * @version	SVN: $Id: Session.php 12111 2012-11-09 02:11:04Z skenow $
+ * @version	SVN: $Id: Session.php 12112 2012-11-09 02:15:50Z skenow $
  */
 /**
  * Handler for a session

@@ -27,60 +27,6 @@ CREATE TABLE avatar_user_link (
 );
 # --------------------------------------------------------
 
-#
-# Table structure for table `banner`
-#
-
-CREATE TABLE banner (
-  bid smallint(5) unsigned NOT NULL auto_increment,
-  cid tinyint(3) unsigned NOT NULL default '0',
-  imptotal mediumint(8) unsigned NOT NULL default '0',
-  impmade mediumint(8) unsigned NOT NULL default '0',
-  clicks mediumint(8) unsigned NOT NULL default '0',
-  imageurl varchar(255) NOT NULL default '',
-  clickurl varchar(255) NOT NULL default '',
-  date int(10) NOT NULL default '0',
-  htmlbanner tinyint(1) NOT NULL default '0',
-  htmlcode text NOT NULL,
-  PRIMARY KEY  (bid),
-  KEY idxbannercid (cid),
-  KEY idxbannerbidcid (bid,cid)
-);
-# --------------------------------------------------------
-
-#
-# Table structure for table `bannerclient`
-#
-
-CREATE TABLE bannerclient (
-  cid smallint(5) unsigned NOT NULL auto_increment,
-  name varchar(60) NOT NULL default '',
-  contact varchar(60) NOT NULL default '',
-  email varchar(60) NOT NULL default '',
-  login varchar(10) NOT NULL default '',
-  passwd varchar(10) NOT NULL default '',
-  extrainfo text NOT NULL,
-  PRIMARY KEY  (cid),
-  KEY login (login)
-);
-# --------------------------------------------------------
-
-#
-# Table structure for table `bannerfinish`
-#
-
-CREATE TABLE bannerfinish (
-  bid smallint(5) unsigned NOT NULL auto_increment,
-  cid smallint(5) unsigned NOT NULL default '0',
-  impressions mediumint(8) unsigned NOT NULL default '0',
-  clicks mediumint(8) unsigned NOT NULL default '0',
-  datestart int(10) unsigned NOT NULL default '0',
-  dateend int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY  (bid),
-  KEY cid (cid)
-);
-# --------------------------------------------------------
-
 # Adding dynamic block area/position system - TheRpLima - 2007-10-21
 #
 # Table structure for table xoops_block_positions

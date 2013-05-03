@@ -9,7 +9,10 @@
 * @version		$Id$
 */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
+
+define('_MD_AM_ADSENSES', 'Adsenses');
+define('_MD_AM_ADSENSES_DSC', 'Adsenses are tags that you can define and use anywhere on your website.');
 
 define('_CO_ICMS_ADSENSES', 'Adsense ads');
 define('_CO_ICMS_ADSENSES_DSC', 'Here is a list of the adsense ads available in the system.');
@@ -41,7 +44,7 @@ define('_CO_ICMS_ADSENSE_STYLE_DSC', 'The ad will be displayed in a container wi
 define('_CO_ICMS_ADSENSE_TAG', 'ID of the [adsense] tag to display this ad');
 define('_CO_ICMS_ADSENSE_TAG_DSC', 'The module will automatically generate an ID for you. However, if you which to customize it, you can. Remember that this needs to be unique.');
 define('_CO_ICMS_ADSENSE_EXPLAIN_TITLE', 'What are Adsenses ?');
-define('_CO_ICMS_ADSENSE_EXPLAIN', 'Adsenses are tags that you can define and use anywhere on your ImpressCMS site. You could see them as extended BBCodes, but usable in all ImpressCMS text areas as well as in all templates ! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Adsense">Adsenses</a>.');
+define('_CO_ICMS_ADSENSE_EXPLAIN', 'AdSenses are tags that you can define and use anywhere on your ImpressCMS site to insert Google AdSense ads. Documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/modules/wiki/index.php?page=Adsense">Adsense</a>.');
 define('_CO_ICMS_ADSENSE_COLOR_BACKGROUND', 'Background color');
 define('_CO_ICMS_ADSENSE_COLOR_BACKGROUND_DSC', 'The background color of your text ads');
 define('_CO_ICMS_ADSENSE_COLOR_BORDER', 'Border color');

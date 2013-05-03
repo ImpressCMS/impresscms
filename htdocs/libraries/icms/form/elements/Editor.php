@@ -12,7 +12,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: Editor.php 11569 2012-02-09 23:15:32Z fiammy $
+ * @version	$Id: Editor.php 11604 2012-02-27 03:12:10Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");

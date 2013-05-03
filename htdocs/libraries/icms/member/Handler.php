@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Member
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: Handler.php 11889 2012-08-06 15:40:12Z m0nty $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -85,7 +85,7 @@ class icms_member_Handler {
 	 * @param int $id ID for the group
 	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the group
 	 */
-	public function getGroup($id) {
+	public function &getGroup($id) {
 		return $this->_gHandler->get($id);
 	}
 
@@ -155,7 +155,7 @@ class icms_member_Handler {
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 * @return array array of {@link icms_member_group_Object} objects
 	 */
-	public function getGroups($criteria = null, $id_as_key = false) {
+	public function &getGroups($criteria = null, $id_as_key = false) {
 		return $this->_gHandler->getObjects($criteria, $id_as_key);
 	}
 
@@ -187,6 +187,8 @@ class icms_member_Handler {
 
 	/**
 	 * get a list of usernames and their IDs
+	 *
+	 * @deprecated	This isn't really a membership method, but for the user handler
 	 *
 	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return array associative array of user-IDs and names
@@ -242,7 +244,7 @@ class icms_member_Handler {
 	 * @return array Array of {@link icms_member_user_Object} objects (if $asobject is TRUE)
 	 * or of associative arrays matching the record structure in the database.
 	 */
-	public function getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
+	public function &getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
 		$user_ids = $this->_mHandler->getUsersByGroup($group_id, $limit, $start);
 		if (! $asobject) {
 			return $user_ids;
@@ -266,9 +268,9 @@ class icms_member_Handler {
 	 * @param bool $asobject return groups as {@link icms_member_group_Object} objects or arrays?
 	 * @return array array of objects or arrays
 	 */
-	public function getGroupsByUser($user_id, $asobject = false) {
+	public function &getGroupsByUser($user_id, $asobject = FALSE) {
 		$group_ids = $this->_mHandler->getGroupsByUser($user_id);
-		if (! $asobject) {
+		if (!$asobject) {
 			return $group_ids;
 		} else {
 			foreach ($group_ids as $g_id) {

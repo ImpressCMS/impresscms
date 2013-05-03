@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Groups
- * @version		SVN: $Id: groups.php 11140 2011-03-30 13:24:45Z m0nty_ $
+ * @version		SVN: $Id: groups.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
@@ -19,21 +19,23 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 function displayGroups() {
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/groups/images/groups_big.png)">' . _AM_EDITADG . '</div><br />';
+
 	$member_handler = icms::handler('icms_member');
 	$groups =& $member_handler->getGroups();
 	echo "<table class='outer' width='40%' cellpadding='4' cellspacing='1'><tr><th colspan='2'>" . _AM_EDITADG . "</th></tr>";
 	$count = count($groups);
+
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$ugroups  = (is_object(icms::$user)) ? icms::$user->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+	$ugroups  = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	for ($i = 0; $i < $count; $i++) {
 		$id = $groups[$i]->getVar('groupid');
 		if ($gperm_handler->checkRight('group_manager', $id, $ugroups)) {
 			echo '<tr><td class="head">' . $groups[$i]->getVar('name') . '</td>';
 			echo '<td class="even"><a href="admin.php?fct=groups&amp;op=modify&amp;g_id=' . (int) $id . '">' . _AM_MODIFY . '</a>';
-			if (XOOPS_GROUP_ADMIN == $id || XOOPS_GROUP_USERS == $id || XOOPS_GROUP_ANONYMOUS == $id) {
+			if (ICMS_GROUP_ADMIN == $id || ICMS_GROUP_USERS == $id || ICMS_GROUP_ANONYMOUS == $id) {
 				echo '</td></tr>';
 			} else {
-				echo '&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id=' . (int) $id . '">' . _AM_DELETE . '</a></td></tr>';
+				echo '&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id=' . (int) $id . '">' . _DELETE . '</a></td></tr>';
 			}
 		}
 	}
@@ -74,34 +76,34 @@ function modifyGroup($g_id) {
 	}
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/groups/images/groups_big.png)"><a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG . '</div><br />';
+
 	$member_handler = icms::handler('icms_member');
 	$thisgroup =& $member_handler->getGroup($g_id);
 	$name_value = $thisgroup->getVar("name", "E");
 	$desc_value = $thisgroup->getVar("description", "E");
+
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
-	$a_mod_value =& $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
-	$r_mod_value =& $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
-	$ed_mod_value =& $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
-	$debug_mod_value =& $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
-	$group_manager_value =& $moduleperm_handler->getItemIds('group_manager', $thisgroup->getVar('groupid'));
+	$a_mod_value = $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
+	$r_mod_value = $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
+	$ed_mod_value = $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
+	$debug_mod_value = $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
+	$group_manager_value = $moduleperm_handler->getItemIds('group_manager', $thisgroup->getVar('groupid'));
+
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$r_block_value =& $gperm_handler->getItemIds('block_read', $g_id);
+	$r_block_value = $gperm_handler->getItemIds('block_read', $g_id);
 	$op_value = "update";
 	$submit_value = _AM_UPDATEADG;
 	$g_id_value = $thisgroup->getVar("groupid");
 	$type_value = $thisgroup->getVar("group_type", "E");
 	$form_title = _AM_MODIFYADG;
-	if (XOOPS_GROUP_ADMIN == $g_id) {
+	if (ICMS_GROUP_ADMIN == $g_id) {
 		$s_cat_disable = TRUE;
 	}
 
-	$sysperm_handler = icms::handler('icms_member_groupperm');
-	$s_cat_value =& $sysperm_handler->getItemIds('system_admin', $g_id);
+	$s_cat_value = $gperm_handler->getItemIds('system_admin', $g_id);
 
 	include ICMS_MODULES_PATH . "/system/admin/groups/groupform.php";
-	echo "<br /><h4 style='text-align:" . _GLOBAL_LEFT . "'>" . _AM_EDITMEMBER . "</h4>";
 	$usercount = $member_handler->getUserCount(new icms_db_criteria_Item('level', 0, '>'));
-	$member_handler = icms::handler('icms_member');
 	$membercount = $member_handler->getUserCountByGroup($g_id);
 	if ($usercount < 200 && $membercount < 200) {
 		// do the old way only when counts are small
@@ -114,36 +116,56 @@ function modifyGroup($g_id) {
 		}
 		$criteria = new icms_db_criteria_Item('level', 0, '>');
 		$criteria->setSort('uname');
-		$userslist =& $member_handler->getUserList($criteria);
-		$users =& array_diff($userslist, $mlist);
-		echo '<table class="outer"><tr><th align="center">' . _AM_NONMEMBERS . '<br />';
+		$userslist = $member_handler->getUserList($criteria);
+		$users = array_diff($userslist, $mlist);
+		$gMem = '<table class="table table-bordered">';
+		  $gMem .= '<tr>';
+		    $gMem .= '<th colspan="2">' . _AM_EDITMEMBER . '</th>';
+		  $gMem .= '</tr>';
+		  $gMem .= '<tr>';
+		    $gMem .= '<td>';
+		      $gMem .= '<form action="admin.php" method="post">';
+		        $gMem .= '<fieldset>';
+		        	$gMem .= '<div class="control-group">';
+		        		$gMem .= '<label>' . _AM_NONMEMBERS . '</label>';
+			          $gMem .= '<select name="uids[]" multiple="multiple">';
+			          foreach ($users as $u_id => $u_name) {
+			            $gMem .= '<option value="' . (int) $u_id . '">' . $u_name . '</option>';
+			          }  
+			          $gMem .= '</select>';
+			        $gMem .= '</div>';
+		          $gMem .= '<input type="hidden" name="op" value="addUser" />';
+		          $gMem .= icms::$security->getTokenHTML();
+		          $gMem .= '<input type="hidden" name="fct" value="groups" />';
+		          $gMem .= '<input type="hidden" name="groupid" value="' . $thisgroup->getVar("groupid") .'" />';
+		          $gMem .= '<input type="submit" name="submit" value="' . _AM_ADDBUTTON . '" />';          
+		        $gMem .= '</fieldset>';
+		      $gMem .= '</form>';
+		    $gMem .= '</td>';
 
-		echo '</th><th></th><th align="center">' . _AM_MEMBERS . '<br />';
-		echo '</th></tr><tr><td class="even">'
-		. '<form action="admin.php" method="post">'
-		. '<select name="uids[]" size="10" multiple="multiple">' . "\n";
-		foreach ($users as $u_id => $u_name) {
-			echo '<option value="' . (int) $u_id . '">' . $u_name . '</option>' . "\n";
-		}
-		echo '</select>';
-		echo "</td><td align='center' class='odd'><input type='hidden' name='op' value='addUser' />" 
-		. icms::$security->getTokenHTML() 
-		. "<input type='hidden' name='fct' value='groups' /><input type='hidden' name='groupid' value='" 
-		. $thisgroup->getVar("groupid") 
-		. "' /><input type='submit' name='submit' value='" 
-		. _AM_ADDBUTTON . "' /></form><br /><form action='admin.php' method='post' />"
-		. "<input type='hidden' name='op' value='delUser' />" 
-		. icms::$security->getTokenHTML() 
-		. "<input type='hidden' name='fct' value='groups' /><input type='hidden' name='groupid' value='" 
-		. $thisgroup->getVar("groupid") 
-		. "' /><input type='submit' name='submit' value='" 
-		. _AM_DELBUTTON . "' /></td><td class='even'>";
-		echo "<select name='uids[]' size='10' multiple='multiple'>";
-		foreach ($mlist as $m_id => $m_name) {
-			echo '<option value="' . (int) $m_id . '">' . $m_name . '</option>' . "\n";
-		}
-		echo "</select>";
-		echo '</td></tr></form></table>';
+		    $gMem .=  '<td>';
+		      $gMem .= '<form action="admin.php" method="post" />';
+		        $gMem .= '<fieldset>';
+		          $gMem .= ' <div class="control-group">';
+		          	$gMem .= '<label>' . _AM_MEMBERS . '</label>';
+		          	$gMem .= '<select name="uids[]" multiple="multiple">';
+		          	foreach ($mlist as $m_id => $m_name) {
+		            	$gMem .= '<option value="' . (int) $m_id . '">' . $m_name . '</option>';
+		          	}
+		          	$gMem .= '</select>';
+		          $gMem .= '</div>';
+		          $gMem .= '<input type="hidden" name="op" value="delUser" />';
+		          $gMem .= icms::$security->getTokenHTML();
+		          $gMem .= '<input type="hidden" name="fct" value="groups" />';
+		          $gMem .= '<input type="hidden" name="groupid" value="' . $thisgroup->getVar("groupid") . '" />';
+		          $gMem .= '<input type="submit" name="submit" value="' . _AM_DELBUTTON . '" />';
+		        $gMem .= '</fieldset>';
+		      $gMem .= '</form>';
+		    $gMem .= '</td>';
+		  $gMem .= '</tr>';
+		$gMem .= '</table>';
+
+		echo $gMem;
 	} else {
 		$members =& $member_handler->getUsersByGroup($g_id, FALSE, 200, $memstart);
 		$mlist = array();
@@ -159,16 +181,15 @@ function modifyGroup($g_id) {
 		echo "</th></tr><tr><td class='even' align='center'>"
 		. "<input type='hidden' name='op' value='delUser' />"
 		. "<input type='hidden' name='fct' value='groups' />"
-		. "<input type='hidden' name='groupid' value='" . $thisgroup->getVar("groupid") 
-		. "' /><input type='hidden' name='memstart' value='" . $memstart 
-		. "' />" . icms::$security->getTokenHTML() 
+		. "<input type='hidden' name='groupid' value='" . $thisgroup->getVar("groupid")
+		. "' /><input type='hidden' name='memstart' value='" . $memstart
+		. "' />" . icms::$security->getTokenHTML()
 		. "<select name='uids[]' size='10' multiple='multiple'>";
 		foreach ($mlist as $m_id => $m_name) {
 			echo '<option value="' . (int) $m_id . '">' . $m_name . '</option>' . "\n";
 		}
-		echo "</select><br /><input type='submit' name='submit' value='" . _DELETE 
+		echo "</select><br /><input type='submit' name='submit' value='" . _DELETE
 		. "' /></td></tr></table></form>";
 	}
 	icms_cp_footer();
 }
-

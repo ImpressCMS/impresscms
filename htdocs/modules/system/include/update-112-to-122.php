@@ -7,7 +7,7 @@
  * @package		core
  * @since		1.3
  * @author		malanciault <marcan@impresscms.org)
- * @version		$Id: update-112-to-122.php 11624 2012-03-04 03:42:23Z skenow $
+ * @version		$Id: update-112-to-122.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 	if ($dbVersion < 11) include 'update-to-112.php';
@@ -508,16 +508,15 @@
 		$new_pages = array(
 			"NULL, 1, '" . _CPHOME . "', 'admin.php', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU14 . "', 'modules/system/admin.php?fct=avatars*', 1",
-			"NULL, 1, '" . _MI_SYSTEM_ADMENU1 . "', 'modules/system/admin.php?fct=banners*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU2 . "', 'modules/system/admin.php?fct=blocksadmin*', 1",
-			"NULL, 1, '" . _MI_SYSTEM_ADMENU19 . "', 'modules/system/admin.php?fct=blockspadmin*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU19 . "', 'modules/system/admin.php?fct=blockpositions*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU16 . "', 'modules/system/admin.php?fct=comments*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU12 . "', 'modules/system/admin.php?fct=findusers*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU21 . "', 'modules/system/admin.php?fct=customtag*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU3 . "', 'modules/system/admin.php?fct=groups*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU13 . "', 'modules/system/admin.php?fct=images*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU11 . "', 'modules/system/admin.php?fct=mailusers*', 1",
-			"NULL, 1, '" . _MD_AM_MDAD . "', 'modules/system/admin.php?fct=modulesadmin*', 1",
+			"NULL, 1, '" . _MD_AM_MDAD . "', 'modules/system/admin.php?fct=modules*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU20 . "', 'modules/system/admin.php?fct=pages*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU6 . "', 'modules/system/admin.php?fct=preferences*', 1",
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU7 . "', 'modules/system/admin.php?fct=smilies*', 1",
@@ -570,7 +569,7 @@
 	/* copy settings for the old waiting contents block to the new block
 	 * and set the block_type correctly for new system blocks -
 	 * blocks added during a module update default to block_type 'M', which
-	 * is not correct for the system module, adding todo in modulesadmin
+	 * is not correct for the system module, adding todo in modules
 	 */
 	if ($dbVersion < $newDbVersion) {
 		$result = icms::$xoopsDB->query('SELECT title, side, weight, visible, bcachetime, bid' . ' FROM `' . icms::$xoopsDB->prefix('newblocks') . '` WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_blocks.php"');

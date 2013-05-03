@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Page.php 10721 2010-10-11 19:40:51Z phoenyx $
+ * @version		$Id: Page.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -21,7 +21,7 @@ class icms_ipf_form_elements_Page extends icms_form_elements_Tray {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		icms_loadLanguageFile('system', 'blocksadmin', TRUE);
+		icms_loadLanguageFile('system', 'blocks', TRUE);
 		parent::__construct(_AM_VISIBLEIN, ' ', $key . '_visiblein_tray');
 		$visible_label = new icms_form_elements_Label('', '<select name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
 		$this->addElement($visible_label);

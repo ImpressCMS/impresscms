@@ -12,22 +12,22 @@
  * @author		Kazumi Ono (AKA onokazu)
  * @author		RpLima
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
- * @version		$Id: modulesadmin.php 11358 2011-09-02 19:55:40Z phoenyx $
+ * @version		$Id$
  */
 /**
  *
  */
-icms_loadLanguageFile('system', 'modulesadmin', true);
+icms_loadLanguageFile('system', 'modules', true);
 
 function xoops_module_install($dirname) {
 	$dirname = trim($dirname);
 	$db =& icms_db_Factory::instance();
-	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
+	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications');
 	$module_handler = icms::handler('icms_module');
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
-		$module->registerClassPath();		
+		$module->registerClassPath();
 		$module->setVar('weight', 1);
 		$error = false;
 		$errs = array();
@@ -105,7 +105,7 @@ function xoops_module_install($dirname) {
 				foreach ($created_tables as $ct) {
 					$db->query("DROP TABLE ".$db->prefix($ct));
 				}
-				$ret = "<p>".sprintf(_MD_AM_FAILINS, "<b>".$module->name()."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />";
+				$ret = "<p>".sprintf(_MD_AM_FAILINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />";
 				foreach ( $errs as $err) {
 					$ret .= " - ".$err."<br />";
 				}
@@ -239,7 +239,6 @@ function xoops_module_install($dirname) {
 					}
 					// Main notification options
 					include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-					include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 					$options = array();
 					$options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
 					$options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
@@ -482,7 +481,7 @@ function icms_module_update($dirname) {
 	$module->setVar('name', $temp_name);
 	if (!$module_handler->insert($module)) {
 		echo '<p>Could not update '.$module->getVar('name').'</p>';
-		echo "<br /><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a>";
+		echo "<br /><a href='admin.php?fct=modules'>"._MD_AM_BTOMADMIN."</a>";
 	} else {
 		$newmid = $module->getVar('mid');
 		$msgs = array();
@@ -577,8 +576,8 @@ function icms_module_update($dirname) {
 						if (!$result) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_UPDATE_FAIL,$fblock['name']);
 						} else {
-							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_BLOCK_UPDATED, 
-								'<strong>' . $fblock['name'] . '</strong>', 
+							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_BLOCK_UPDATED,
+								'<strong>' . $fblock['name'] . '</strong>',
 								'<strong>' . icms_conv_nr2local($fblock['bid']) . '</strong>');
 							if ($template != '') {
 								$tplfile =& $tplfile_handler->find('default', 'block', $fblock['bid']);
@@ -744,7 +743,6 @@ function icms_module_update($dirname) {
 			}
 			// Main notification options
 			include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-			include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 			$options = array();
 			$options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
 			$options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;

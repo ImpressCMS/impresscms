@@ -33,6 +33,7 @@ class IcmsPreloadWideimage extends icms_preload_Item {
 	 * Events to be triggered at the start of the admin pages loading
 	 */
 	function eventAdminHeader() {
-		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+		if (extension_loaded('gd'))
+			include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
 	}
 }

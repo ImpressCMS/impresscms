@@ -11,7 +11,7 @@
  * @since		1.1
  * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Controller.php 11972 2012-08-26 17:49:13Z skenow $
+ * @version		SVN: $Id$
  * @todo		Use language constants for messages
  */
 

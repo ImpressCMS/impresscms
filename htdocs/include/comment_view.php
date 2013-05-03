@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: comment_view.php 11011 2011-02-06 00:02:25Z skenow $
+ * @version	$Id: comment_view.php 11731 2012-06-17 01:25:04Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
@@ -19,10 +19,45 @@ if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 include_once ICMS_MODULES_PATH . '/system/constants.php';
 
+/*
+ * (int) $_GET[$comment_config['itemName']
+ * (str) $_GET['com_mode']
+ * (int) $_GET['com_order']
+ * (int) $_GET['com_id']
+ * (int) $_GET['com_rootid']
+ *
+ * (array of strings for the URL) $comment_config['extraParams']
+ * 	$_POST[$extra_param]
+ * 	$_GET[$extra_param]
+ */
+
+/* set filter types, if not strings */
+$filter_get = array(
+	'com_order' => 'int',
+	'com_id' => 'int',
+	'com_rootid' => 'int',
+);
+
+$filter_post = array();
+
+/* set default values for variables */
+$com_order = $com_id = $com_rootid = 0;
+$com_mode = '';
+
+/* filter the user input */
+if (!empty($_GET)) {
+    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+    extract($clean_GET);
+}
+if (!empty($_POST)) {
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+    extract($clean_POST);
+}
+
 if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$groups = (icms::$user) ? icms::$user -> getGroups() : ICMS_GROUP_ANONYMOUS;
+	$groups = (icms::$user) ? icms::$user ->getGroups() : ICMS_GROUP_ANONYMOUS;
 	$xoopsTpl->assign('xoops_iscommentadmin', $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $groups));
 
 	icms_loadLanguageFile('core', 'comment');
@@ -30,7 +65,6 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 	$com_itemid = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? (int) $_GET[$comment_config['itemName']] : 0;
 
 	if ($com_itemid > 0) {
-		$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
 		if ($com_mode == '') {
 			if (is_object(icms::$user)) {
 				$com_mode = icms::$user->getVar('umode');
@@ -45,8 +79,6 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			} else {
 				$com_order = $icmsConfig['com_order'];
 			}
-		} else {
-			$com_order = (int) $_GET['com_order'];
 		}
 		if ($com_order != XOOPS_COMMENT_OLD1ST) {
 			$xoopsTpl->assign(array('comment_order' => XOOPS_COMMENT_NEW1ST, 'order_other' => XOOPS_COMMENT_OLD1ST));
@@ -62,12 +94,10 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$admin_view = FALSE;
 		}
 
-		$com_id = isset($_GET['com_id']) ? (int) $_GET['com_id'] : 0;
-		$com_rootid = isset($_GET['com_rootid']) ? (int) $_GET['com_rootid'] : 0;
 		$comment_handler = icms::handler('icms_data_comment');
+		$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 		if ($com_mode == 'flat') {
 			$comments =& $comment_handler->getByItemId($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
-			$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 			$renderer->setComments($comments);
 			$renderer->renderFlatView($admin_view);
 		} elseif ($com_mode == 'thread') {
@@ -86,7 +116,6 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 					} else {
 						$extra_params .= $extra_param . '=&amp;';
 					}
-					//$extra_params .= isset(${$extra_param}) ? $extra_param .'='.${$extra_param}.'&amp;' : $extra_param .'=&amp;';
 				}
 				$comment_url .= $extra_params;
 			}
@@ -95,7 +124,6 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				// Show specific thread tree
 				$comments =& $comment_handler->getThread($com_rootid, $com_id);
 				if (FALSE != $comments) {
-					$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 					$renderer->setComments($comments);
 					$renderer->renderThreadView($com_id, $admin_view);
 				}
@@ -111,7 +139,6 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 							$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
 						);
 						if (FALSE != $comments) {
-							$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 							$renderer->setComments($comments);
 							$renderer->renderThreadView($top_comments[$i]->getVar('com_id'), $admin_view);
 						}
@@ -128,7 +155,6 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 					$comments =& $comment_handler->getThread(
 						$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
 					);
-					$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 					$renderer->setComments($comments);
 					$renderer->renderNestView($top_comments[$i]->getVar('com_id'), $admin_view);
 				}
@@ -191,7 +217,8 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		$navbar .= '</td></tr></table></form>';
 		$xoopsTpl->assign(
 			array(
-				'commentsnav' => $navbar, 'editcomment_link' => 'comment_edit.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra,
+				'commentsnav' => $navbar,
+				'editcomment_link' => 'comment_edit.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra,
 				'deletecomment_link' => 'comment_delete.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra,
 				'replycomment_link' => 'comment_reply.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra
 			)

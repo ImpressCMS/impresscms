@@ -9,8 +9,7 @@
  * @package		core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: pmlite.php 11406 2011-10-17 03:35:09Z skenow $
+ * @version		$Id: pmlite.php 11407 2011-10-17 03:39:15Z skenow $
  */
 
 $xoopsOption['pagetype'] = "pmsg";
@@ -89,8 +88,8 @@ if (icms::$user) {
 					$xoopsMailer->send();
 				}
 				echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED 
-					. "</h4><br /><a href=\"javascript:window.opener.location='" . ICMS_URL . "/viewpmsg.php';window.close();\">" 
-					. _PM_CLICKHERE . "</a><br /><br /><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . "</a></div>";
+					. "</h4><br /><a href=\"javascript:parent.window.location='" . ICMS_URL . "/viewpmsg.php';\">" 
+					. _PM_CLICKHERE . "</a><br /><br /><a href=\"javascript:parent.jQuery('.modal').modal('hide');\">" . _PM_ORCLOSEWINDOW . "</a></div>";
 			}
 		}
 	} elseif ($reply == 1 || $send == 1 || $send2 == 1) {

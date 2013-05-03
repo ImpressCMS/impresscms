@@ -9,7 +9,10 @@
 * @version		$Id$
 */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
+
+define('_MD_AM_RATINGS', 'Ratings');
+define('_MD_AM_RATINGS_DSC', 'With using this tool, you can add a new rating method to your modules, and control the results through this section!');
 
 define('_CO_ICMS_RATING_RATE_IT', 'Rate it !');
 define('_CO_ICMS_RATING_DUPLICATE_ENTRY', 'Sorry ! You have already rated this ! You cannot rate something twice.');

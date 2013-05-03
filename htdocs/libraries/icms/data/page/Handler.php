@@ -30,7 +30,7 @@ class icms_data_page_Handler extends icms_ipf_Handler {
 
 	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 		$rtn = array();
-		$pages =& $this->getObjects($criteria, true);
+		$pages = $this->getObjects($criteria, true);
 		foreach ($pages as $page) {
 			$rtn[$page->getVar('page_moduleid') . '-' . $page->getVar('page_id')] = $page->getVar('page_title');
 		}

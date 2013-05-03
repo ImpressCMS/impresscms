@@ -11,7 +11,7 @@
  * @subpackage	View
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Table.php 12013 2012-09-11 17:41:40Z m0nty $
+ * @version		SVN: $Id: Table.php 11512 2011-12-28 04:19:27Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

@@ -148,7 +148,7 @@ class icms_form_Groupperm extends icms_form_Base {
 			}
 		}
 		$ret .= "</table>$hidden</form>";
-		$ret .= $this->renderValidationJS(true);
+		// $ret .= $this->renderValidationJS(true);
 		return $ret;
 	}
 

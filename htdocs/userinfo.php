@@ -4,7 +4,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	User
- * @version		SVN: $Id: userinfo.php 12085 2012-10-23 14:23:54Z sato-san $
+ * @version		SVN: $Id: userinfo.php 11072 2011-03-14 15:52:14Z m0nty_ $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -92,10 +92,11 @@ icms_makeSmarty(array(
 	'lang_website' => _US_WEBSITE,
 	'user_realname' => $thisUser->getVar('name'),
 	'lang_realname' => _US_REALNAME,
+  'lang_activity' => _US_ACTIVITY,
 	'lang_avatar' => _US_AVATAR,
 	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
 	'user_alwopenid' => $icmsConfigAuth['auth_openid'],
-	'lang_openid', $icmsConfigAuth['auth_openid'] == TRUE ? _US_OPENID_FORM_CAPTION : '',
+	'lang_openid', _US_OPENID_FORM_CAPTION,
 	'lang_email' => _US_EMAIL,
 	'lang_privmsg' => _US_PM,
 	'lang_icq' => _US_ICQ,
@@ -126,10 +127,8 @@ icms_makeSmarty(array(
 	'lang_lastlogin' => _US_LASTLOGIN,
 	'lang_notregistered' => _US_NOTREGISTERED,
 	'user_pmlink' => is_object(icms::$user) 
-		? "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid="
-			. (int) $thisUser->getVar('uid') . "', 'pmlite', 800,680);\"><img src=\"" 
-			. ICMS_URL . "/images/icons/" . $icmsConfig['language'] . "/pm.gif\" alt=\""
-			. sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>" 
+		? "<button type=\"button\" class=\"btn btn-mini btn-info\" href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid="
+			. (int) $thisUser->getVar('uid') . "', 'pmlite', 800,680);\"><i class=\"icon-envelope\"></i> "._US_PM."</button>" 
 		: '',
 	'user_rankimage' => $userrank['image'] ?
 		'<img src="' . $userrank['image'] . '" alt="' . $userrank['title'] . '" />' : '',
@@ -192,7 +191,8 @@ foreach ($mids as $mid) {
         	}
         	$icmsTpl->append('modules', array('name' => $module->getVar('name'),
 												'results' => $results,
-												'showall_link' => $showall_link
+												'showall_link' => $showall_link,
+                        'id' => $mid
 												));
         }
         unset ($module);

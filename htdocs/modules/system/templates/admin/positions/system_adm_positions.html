@@ -1,0 +1,15 @@
+<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/positions/images/positions_big.png)"><a href="#"><{$lang_badmin}></a></div>
+<{if $icms_blockposition_title}>
+	<h4 class="smallTitle"><{$icms_blockposition_title}></h4>
+<{/if}>
+<{if $icms_blockposition_info}>
+	<p><{$icms_blockposition_info}></p>
+<{/if}>
+
+<{if $icms_blockposition_table}>
+	<{$icms_blockposition_table}>
+<{/if}>
+
+<{if $addblockposition}>
+	<{includeq file='db:system_common_form.html' form=$addblockposition}>
+<{/if}>

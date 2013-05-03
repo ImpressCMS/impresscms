@@ -1,0 +1,17 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+/* TEAM */
+  <your title>: <your name>
+  Site:
+  Twitter:
+  Location:
+
+/* THANKS */
+  ImpressCMS Team: http://www.impresscms.org
+  William Hall (Boiler Framework): http://www.mrtheme.com
+  
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: Modernizr, jQuery
+  Software: ImpressCMS with Boiler Framework

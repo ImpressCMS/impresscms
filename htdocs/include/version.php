@@ -7,10 +7,10 @@
  * @package		core
  * @since		1.0
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: version.php 12123 2012-12-03 07:41:09Z fiammy $
+ * @version		$Id: version.php 11745 2012-06-26 03:55:32Z skenow $
  */
 
-define('ICMS_VERSION_NAME', 'ImpressCMS 1.3.4 Final');
+define('ICMS_VERSION_NAME', 'ImpressCMS 2.0 Alpha 2');
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
@@ -23,15 +23,15 @@ define('XOOPS_VERSION', ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define('ICMS_VERSION_STATUS', 10);
+define('ICMS_VERSION_STATUS', 1);
 
 /**
  * Build number
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-// impresscms_1.3.4 RC = 66
-define('ICMS_VERSION_BUILD', 67);
+// 2.0 alpha 2 = 62
+define('ICMS_VERSION_BUILD', 62);
 
 /**
  * Latest dbversion of the System Module
@@ -42,4 +42,4 @@ define('ICMS_VERSION_BUILD', 67);
  * So, developers, everytime you add an upgrade block in system/include/update.php to upgrade something in the DB,
  * please also change this constant
  */
-define('ICMS_SYSTEM_DBVERSION', 43);
+define('ICMS_SYSTEM_DBVERSION', 44);

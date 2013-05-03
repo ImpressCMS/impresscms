@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Forms
  * @subpackage	Elements
- * @version		$Id: Dhtmltextarea.php 11448 2011-11-21 16:37:13Z fiammy $
+ * @version		$Id: Dhtmltextarea.php 11450 2011-11-21 23:27:25Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -221,7 +221,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 * @return	string HTML
 	 */
 	private function _renderSmileys() {
-		$smiles =& icms_core_DataFilter::getSmileys();
+		$smiles = icms_core_DataFilter::getSmileys();
 		$ret = '';
 		$count = count($smiles);
 		$ele_name = $this->getName();

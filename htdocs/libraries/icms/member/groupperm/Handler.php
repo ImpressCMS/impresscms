@@ -275,7 +275,7 @@ class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
 				return true;
 			}
 			$criteria2 = new icms_db_criteria_Compo();
-			foreach ( $gperm_groupid as $gid) {
+			foreach ($gperm_groupid as $gid) {
 				$criteria2->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteria2);
@@ -325,7 +325,7 @@ class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
 		$criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
 		if (is_array($gperm_groupid)) {
 			$criteria2 = new icms_db_criteria_Compo();
-			foreach ( $gperm_groupid as $gid) {
+			foreach ($gperm_groupid as $gid) {
 				$criteria2->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteria2);
@@ -351,21 +351,20 @@ class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
 	public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1) {
 		$ret = array();
 		$perms = array();
-		if (isset($this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid])) {
-  			$perms = array($this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid]);
+		if (isset($this::$_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid])) {
+  			$perms = array($this::$_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid]);
 		} else {
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', $gperm_name));
 			$criteria->add(new icms_db_criteria_Item('gperm_itemid', (int) $gperm_itemid));
 			$criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
 			$perms = $this->getObjects($criteria, true);
-			foreach ( $perms as $perm) {
-		  		$this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid] = $perm;
+			foreach ($perms as $perm) {
+		  		$this::$_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid] = $perm;
 	  		}
 		}
-		foreach ( array_keys($perms) as $i) {
+		foreach (array_keys($perms) as $i) {
 			$ret[] = $perms[$i]->getVar('gperm_groupid');
 		}
 		return $ret;
 	}
 }
-

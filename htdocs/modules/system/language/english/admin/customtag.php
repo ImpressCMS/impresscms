@@ -1,4 +1,6 @@
 <?php
+define('_MD_AM_CUSTOMTAGS', 'Custom Tags');
+define('_MD_AM_CUSTOMTAGS_DSC', 'Custom Tags are tags that you can define and use anywhere on your website.');
 
 define('_CO_ICMS_CUSTOMTAGS','Custom Tags');
 define('_CO_ICMS_CUSTOMTAGS_DSC', 'Here is a list of the custom tags available in the system.');
@@ -34,4 +36,3 @@ define('_CO_ICMS_CUSTOMTAGS_EXPLAIN_TITLE', 'What are Custom Tags ?');
 define('_CO_ICMS_CUSTOMTAGS_EXPLAIN', 'Custom Tags are tags that you can define and use anywhere on your ImpressCMS site. You could see them as extended BBCodes, but multilingual, with group permissions, supporting PHP,  and usable in all ImpressCMS text area as well as in all templates ! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Custom_Tags">Custom Tags</a>.');
 ######################## Added in 1.2 ###################################
 define('_CO_ICMS_CUSTOMTAGS_TAG_CODE', 'IcmsCode');
-?>

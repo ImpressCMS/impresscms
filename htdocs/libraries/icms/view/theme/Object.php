@@ -4,7 +4,7 @@
  *
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author       Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: Object.php 11967 2012-08-26 04:54:37Z skenow $
+ * @version		$Id: Object.php 11719 2012-05-22 00:40:10Z skenow $
  * @category	ICMS
  * @package		View
  * @subpackage 	Theme
@@ -130,6 +130,7 @@ class icms_view_theme_Object {
 		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule;
 		$this->template->assign(
 			array(
+				'icms_secure_url' => preg_replace('/http:/','https:',ICMS_URL),
 				'icms_style' => ICMS_URL . '/icms' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css',
 				'icms_theme' => $this->folderName,
 				'icms_imageurl' => (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName . '/'))
@@ -140,7 +141,6 @@ class icms_view_theme_Object {
 				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 				'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 				'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
-				'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
 				'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
 						? $icmsModule->getVar('name')
 						: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES)
@@ -156,8 +156,7 @@ class icms_view_theme_Object {
 			'xoops_sitename' => $this->template->get_template_vars('icms_sitename'),
 			'xoops_slogan' => $this->template->get_template_vars('icms_slogan'),
 			'xoops_dirname' => $this->template->get_template_vars('icms_dirname'),
-			'xoops_banner' => $this->template->get_template_vars('icms_banner'),
-			//'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
+			'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
 		));
 		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
@@ -189,7 +188,7 @@ class icms_view_theme_Object {
 							if ($icmsConfigMetaFooter['use_google_analytics'] == TRUE && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
 					$values = $value . '<script type="text/javascript">
                       var _gaq = _gaq || [];  _gaq.push(["_setAccount", "UA-' . $icmsConfigMetaFooter['google_analytics'] . '"]);  _gaq.push(["_trackPageview"]);
-                      (function() {var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = TRUE;
+                      (function() {var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
                       ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
                       var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);})();
                     </script>';
@@ -540,12 +539,14 @@ class icms_view_theme_Object {
 			$str .= implode("\n", $this->htmlHeadStrings);
 		} else {
 			$sort = array();
+			$types = array('http', 'meta', 'link', 'stylesheet', 'script');
 			foreach($this->metas[$zone][$type] as $name => $item) {
 				$sort[] = $item['weight'];
 			}
 			array_multisort(array_values($sort), array_keys($sort), $this->metas[$zone][$type]);
 			switch($type) {
 				case 'script':
+					/* new js refactoring will change how we do this */
 					foreach ($this->metas[$zone][$type] as $attrs) {
 						$str .= '<script' . $this->renderAttributes($attrs['value']) . ">";
 						if (@$attrs['value']['_']) {
@@ -562,10 +563,23 @@ class icms_view_theme_Object {
 					break;
 
 				case 'stylesheet':
+					/* @todo use a preference option to determine whether to combine the files, or not, and 1 for compressing the file */
+					$combine = TRUE;
+					if ($combine) {
+						/* all local files will be a path, all remote files will have scheme:// */
+						$filepath = array_flip(str_replace(ICMS_URL, "", array_keys($this->metas[$zone][$type])));
+						/* combineFiles($filearray, $filetype, $minimize, $replace, $maxage, $location) */
+						$filesrc = icms_core_Filesystem::combineFiles($filepath, "css", TRUE);
+						/* only render a link if the result is not FALSE */
+						if ($filepath !== FALSE) {
+							$str .= '<link href="' . str_replace(ICMS_ROOT_PATH, ICMS_URL, $filesrc) . '" rel="stylesheet" type="text/css">';
+						}
+					}
+
 					foreach ($this->metas[$zone][$type] as $attrs) {
 						if (@$attrs['value']['_']) {
 							$str .= '<style' . $this->renderAttributes($attrs['value']) . ">\n" . $attrs['value']['_'] . "\n</style>";
-						} else {
+						} elseif (!$combine) {
 							$str .= '<link rel="stylesheet"' . $this->renderAttributes($attrs['value']) . " />\n";
 						}
 					}

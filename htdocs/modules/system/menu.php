@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @since		1.3
- * @version		SVN: $Id: menu.php 10998 2011-02-02 19:15:09Z skenow $
+ * @version		SVN: $Id: menu.php 12064 2012-10-10 14:37:53Z skenow $
  */
 
 // Loading System Configuration Links
@@ -29,13 +29,10 @@ $admin_dir = ICMS_ROOT_PATH . '/modules/system/admin';
 $dirlist = icms_core_Filesystem::getDirList($admin_dir);
 
 icms_loadLanguageFile('system', 'admin');
-asort($dirlist);
 $adminmenu = array();
 foreach ($dirlist as $file) {
-	$mod_version_file = 'xoops_version.php';
-	if (file_exists($admin_dir . '/' . $file . '/icms_version.php')) {
-		$mod_version_file = 'icms_version.php';
-	}
+	icms_loadLanguageFile('system', $file, TRUE);
+	$mod_version_file = 'icms_version.php';
 	include $admin_dir . '/' . $file . '/' . $mod_version_file;
 	if ($modversion['hasAdmin']) {
 		$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
@@ -53,7 +50,7 @@ foreach ($dirlist as $file) {
 				if ($catcount > 0) {
 					for ($x = 0; $x < $catcount; $x++) {
 						$subs[$x]['title'] = constant($confcats[$x]->getVar('confcat_name'));
-						$subs[$x]['link'] = ICMS_URL.'/modules/system/admin.php?fct=preferences' 
+						$subs[$x]['link'] = ICMS_URL.'/modules/system/admin.php?fct=preferences'
 							. '&amp;op=show&amp;confcat_id=' . $confcats[$x]->getVar('confcat_id');
 					}
 					$adminmenu[$modversion['group']]['subs'][] = array(

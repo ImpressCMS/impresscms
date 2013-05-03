@@ -145,7 +145,7 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	 * @param bool $id_as_key should the groups' IDs be used as keys for the associative array?
 	 * @return mixed Array of groups
 	 */
-	public function getObjects($criteria = null, $id_as_key = false) {
+	public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('groups');

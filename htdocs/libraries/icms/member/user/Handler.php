@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Member
  * @subpackage	User
- * @version		SVN: $Id: Handler.php 12051 2012-10-05 20:48:50Z skenow $
+ * @version		SVN: $Id: Handler.php 12074 2012-10-18 18:13:03Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or exit();
@@ -426,9 +426,10 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * Retrieve a username from the database given an email address
 	 *
-	 *
-	 * @param string $email Email address for a user
+	 * @param	string	$email Email address for a user
+	 * @return	string	A username matching the provided email address
 	 */
 	static public function getUnameFromEmail($email = '') {
 		$db = icms_db_Factory::instance();
@@ -441,5 +442,20 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 		return $uname;
+	}
+
+	/**
+	 * Retrieve a list of users based on passed criteria
+	 *
+	 * @param	object	$criteria criteria for finding users (@see icms_db_criteria_Compo)
+	 * @return	array	An array of usernames, with the userid as the key
+	 */
+	public function getList($criteria = NULL) {
+		$users = $this->getObjects($criteria, TRUE);
+		$ret = array();
+		foreach (array_keys($users) as $i) {
+			$ret[$i] = $users[$i]->getVar('uname');
+		}
+		return $ret;
 	}
 }

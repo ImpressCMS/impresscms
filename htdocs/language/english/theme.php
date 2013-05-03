@@ -42,48 +42,6 @@ define("THEME_NAVTITLE","Navigation");
 define("THEME_HOME","Home");
 define("THEME_HOME_DESC","Back to home");
 
-define("THEME_MODULE1","News");
-define("THEME_MODULE1_DESC","See news");
-
-define("THEME_MODULE1_SUB1","Category 1"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE1_SUB2","Category 2"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE1_SUB3","Category 3"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE1_SUB4","Category 4"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE1_SUB5","Category 5"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-
-define("THEME_MODULE2","Forum");
-define("THEME_MODULE2_DESC","Visit our Forums");
-
-define("THEME_MODULE3","Gallery");
-define("THEME_MODULE3_DESC","Visit our Photo Gallery");
-
-define("THEME_MODULE3_SUB1","Gallery 1"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE3_SUB2","Gallery 2"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE3_SUB3","Gallery 3"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE3_SUB4","Gallery 4"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE3_SUB5","Gallery 5"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-
-define("THEME_MODULE4","Movies");
-define("THEME_MODULE4_DESC","See our movies");
-
-define("THEME_MODULE4_SUB1","Movie 1");
-define("THEME_MODULE4_SUB2","Movie 2"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE4_SUB3","Movie 3"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE4_SUB4","Movie 4"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-define("THEME_MODULE4_SUB5","Movie 5"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
-
-define("THEME_MODULE5","Web Links");
-define("THEME_MODULE5_DESC","Visit our web links");
-
-define("THEME_MODULE6","Downloads");
-define("THEME_MODULE6_DESC","Download our files");
-
-define("THEME_MODULE7","XoopsInfo");
-define("THEME_MODULE7_DESC","Use XoopsInfo Module");
-
-define("THEME_MODULE8","Protector");
-define("THEME_MODULE8_DESC","Use Protector Module");
-
 // Theme accessibility
 define("THEME_Aa","Aa");
 define("THEME_Amin","-");

@@ -8,7 +8,7 @@
  * @package     Core
  * @subpackage	Template
  *
- * @version		SVN: $Id: PageBuilder.php 12084 2012-10-22 09:02:44Z sato-san $
+ * @version		SVN: $Id: PageBuilder.php 11686 2012-04-10 02:50:48Z skenow $
  *
  * @author      Skalpa Keo <skalpa@xoops.org>
  * @author      Gustavo Pilla (aka nekro) <nekro@impresscms.org>
@@ -219,28 +219,8 @@ class icms_view_PageBuilder {
 		if ($icmsConfigPersona['editre_block'] == TRUE) {
 			if (icms::$user && count($this->uagroups) > 0) {
 				$url = base64_encode(str_replace(ICMS_URL, '', icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
-				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $bid . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT .' '. _BLOCK_ID .' '. $bid .'" alt="' . _EDIT . '"  /></a>'
-					. '<button style="display: none;"><div id="ed_block_' . $bid . '">'
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png' alt='" . _INVISIBLE . "'  /> " . _INVISIBLE . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png' alt='" . _CLONE . "'  /> " . _CLONE . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' alt='" . _EDIT . "'  /> " . _EDIT . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/up.png' alt='" . _UP . "'  /> " . _UP . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/down.png' alt='" . _DOWN . "'  /> " . _DOWN . "</a>";
-				if ($xobject->getVar('dirname') == '') {
-					$titlebtns .= "<br /><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=del&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt='" . _DELETE . "'  /> " . _DELETE . "</a>";
-				}
-				$titlebtns .= '</div></button>';
-				$titlebtns .= '<script type="text/javascript">
-					$(function() {
-						$(\'#ed_block_' . $bid . '\').dialog({
-							bgiframe: true,
-							//height: 140,
-							autoOpen: false,
-							modal: true
-						});
-					});
-					</script>
-				';
+				$canDelete = ($xobject->getVar('dirname') == '') ? 'true' : 'false';
+				$titlebtns = '&nbsp;<a href="#" data-module="app/widgets/editBlockWidget/main" data-blockid="' . $bid . '" data-candelete="' . $canDelete . '" data-returl="'. $url .'" data-title="' . $xobject->getVar('title') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
 			} else {
 				$titlebtns = '';
 			}

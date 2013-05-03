@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version	$Id: Checkbox.php 12029 2012-09-25 16:06:38Z skenow $
+ * @version	$Id: Checkbox.php 11420 2011-10-25 03:14:27Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -158,30 +158,40 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 * @return    string
 	 */
 	public function render() {
-		$ret = "<div class='grouped'>";
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
+		$extra = '';
+
+		$classes = $this->isRequired() ? 'required ' : '';
+		$classes .= get_class($this);
+
 		if (count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]") {
 			$ele_name = $ele_name . "[]";
 			$this->setName($ele_name);
 		}
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
+			$ret .= "<span class='icms_checkboxoption'><label for='" . $ele_name . "_item_" . $value . "'><input type='checkbox' class='".$classes."' name='" . $ele_name 
 				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . "</label></span>" . $ele_delimeter;
+			$ret .= $ele_extra . " />" . $name . $ele_delimeter . "</label></span>";
 		}
 		if (count($ele_options) > 1) {
-			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
-				. $ele_name	. "_checkemall' class='checkemall' /><label for='"
-				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
+			$extra .= "<div class='checkemallWrapper'><div class='inner'>";
+			$extra .= "<span class='icms_checkboxoption'><label for='" 
+				. $ele_name . "_checkemall'><input type='checkbox' id='" 
+				. $ele_name	. "_checkemall' class='checkemall' />" . _CHECKALL . "</label></span>";
+			$extra .= "</div></div>";
 		}
-		$ret .= "</div>";
-		return $ret;
+
+		if($ret != '') {
+			return '<div class="grouped"><div class="inner">' . $ret . '</div>' . $extra . '</div>';
+		} else {
+			return;
+		}
 	}
 }

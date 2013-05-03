@@ -8,7 +8,7 @@
  * @package		Database
  * @subpackage	Criteria
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: Element.php 11989 2012-08-30 08:09:00Z qm-b $
+ * @version		SVN: $Id$
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 

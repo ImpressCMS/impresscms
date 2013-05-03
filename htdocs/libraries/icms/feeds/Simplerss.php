@@ -13,7 +13,7 @@
  * @subpackage	RSS
  * @since		1.2
  * @author		malanciault <marcan@impresscms.org)
- * @version		$Id: Simplerss.php 12107 2012-11-08 15:22:12Z skenow $
+ * @version		$Id: Simplerss.php 12108 2012-11-08 22:24:04Z skenow $
  */
 
 include_once ICMS_LIBRARIES_PATH . '/simplepie/autoloader.php';

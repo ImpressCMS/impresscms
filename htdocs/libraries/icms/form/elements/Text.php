@@ -106,9 +106,12 @@ class icms_form_elements_Text extends icms_form_Element {
 	 * @return	string  HTML
 	 */
 	public function render() {
+		$classes = $this->isRequired() ? 'required ' : '';
+		$classes .= get_class($this);
 		return "<input type='text' name='" . $this->getName()
 			. "' id='" . $this->getName()
 			. "' size='" . $this->getSize()
+			. "' class='" . $classes
 			. "' maxlength='" . $this->getMaxlength()
 			. "' value='" . $this->getValue() . "'" . $this->getExtra()
 			. " />";

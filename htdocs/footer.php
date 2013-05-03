@@ -9,7 +9,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id: footer.php 11633 2012-03-07 01:37:06Z skenow $
+ * @version	$Id: footer.php 11650 2012-03-20 03:26:26Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') || die('ICMS root path not defined');

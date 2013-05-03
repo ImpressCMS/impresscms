@@ -24,7 +24,6 @@ class icms_AutologinEventHandler {
 	}
 
 	static public function sessionAutologin($autologinName, $autologinPass) {
-		// autologin V2 GIJ
 		if (!empty($_POST)) {
 			$_SESSION['AUTOLOGIN_POST'] = $_POST;
 			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
@@ -33,21 +32,12 @@ class icms_AutologinEventHandler {
 			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 			redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
 		}
-		// end of autologin V2
 
-		// redirect to ICMS_URL/ when query string exists (anti-CSRF) V1 code
-		/* if (! empty($_SERVER['QUERY_STRING'])) {
-		redirect_header(ICMS_URL . '/' , 0 , 'Now, logging in automatically') ;
-		exit ;
-		}*/
-
-		$myts = icms_core_Textsanitizer::getInstance();
-		$uname = $myts->stripSlashesGPC($autologinName);
-		$pass = $myts->stripSlashesGPC($autologinPass);
+		$uname = icms_core_DataFilter::stripSlashesGPC($autologinName);
+		$pass = icms_core_DataFilter::stripSlashesGPC($autologinPass);
 		if (empty($uname) || is_numeric($pass)) {
 			$user = false ;
 		} else {
-			// V3
 			$uname4sql = addslashes($uname);
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname4sql));
 			$user_handler = icms::handler('icms_member_user');
@@ -55,7 +45,6 @@ class icms_AutologinEventHandler {
 			if (empty($users) || count($users) != 1) {
 				$user = false ;
 			} else {
-				// V3.1 begin
 				$user = $users[0] ;
 				$old_limit = time() - (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
 				list($old_Ynj, $old_encpass) = explode(':', $pass);
@@ -64,7 +53,6 @@ class icms_AutologinEventHandler {
 				{
 					$user = false;
 				}
-				// V3.1 end
 			}
 			unset($users);
 		}
@@ -97,7 +85,6 @@ class icms_AutologinEventHandler {
 			$expire = time()
 					+ (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
 			setcookie('autologin_uname', $uname, $expire, $icms_cookie_path, '', $secure, 1);
-			// V3.1
 			$Ynj = date('Y-n-j');
 			setcookie(
 				'autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
@@ -112,4 +99,3 @@ class icms_AutologinEventHandler {
 }
 
 icms_AutologinEventHandler::setup();
-
