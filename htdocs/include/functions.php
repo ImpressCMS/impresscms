@@ -696,6 +696,18 @@ function icms_currency($var, $currencyObj=false)
 }
 
 /**
+ * Use this snippet to extract any currency out of a string
+ *
+ * @see icms_currency
+ * @deprecated Use icms_currency
+ * @todo remove in version 2.1
+ */
+function icms_float($var) {
+	icms_core_Debug::setDeprecated('icms_currency', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+	return icms_currency($var);
+}
+
+/**
  * Strip text from unwanted text (purify)
  *
  * @param string $text	String to purify
