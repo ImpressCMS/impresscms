@@ -127,11 +127,6 @@ define(function(require) {
         mediator.subscribe('addNotification', function(message, options) {
           notifier.showMessage(message, options);
         });
-
-        icms.module.lookup('protector', 'test=here&cat=fuzzy', function() {
-          console.log(icms.module.protector);
-        });
-
       });
     }
   };
