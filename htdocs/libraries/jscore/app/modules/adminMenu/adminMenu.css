@@ -33,6 +33,10 @@
   line-height: 29px;
 }
 
+.hideProjectMenu .projectMenu {
+  display: none;
+}
+
 #admin-menu-wrapper #admin-menu li.admin-menu-icon a {
   padding: 1px 8px 4px;
 }

@@ -1,40 +1,41 @@
 <div id="admin-menu" class="clearfix">
   <ul class="toSel rendered" data-label="Admin Menu">
     <li><a href="{{ config.url }}"><img src="{{ config.url }}/favicon.ico" alt="{{ config.sitename }}" style="height:11px" /></a></li>
+    
 
     {{#each admenu}}
-    <li><a href="{{{link}}}" title="{{text}}">{{this.text}}</a>
-      {{#if menu}}
-      <div class="secondary">
-        <ul>
-        {{#each menu}}
-          <li{{#if subs}} class="expandable"{{/if}}><a href="{{{link}}}" title="{{title}}">{{title}}</a>
-            {{#if subs}}
-            <div class="tertiary">
-              <ul>
-                {{#each subs}}
-                  <li{{#if subs}} class="expandable"{{/if}}><a href="{{{link}}}" title="{{title}}">{{title}}</a>
-                    {{#if subs}}
-                    <div class="quadmenu">
-                      <ul>
-                        {{#each subs}}
-                          <li{{#if subs}} class="expandable"{{/if}}><a href="{{{link}}}" title="{{title}}">{{title}}</a>
-                          </li>
-                        {{/each}}
-                      </ul>
-                    </div>              
-                    {{/if}}                  
-                  </li>
-                {{/each}}
-              </ul>
-            </div>              
-            {{/if}}
-          </li>
-        {{/each}}
-        <ul>
-      </div>
-      {{/if}}
-    </li>
+      <li{{#projectMenu}} class="projectMenu"{{/projectMenu}}><a href="{{{link}}}" title="{{text}}">{{this.text}}</a>
+        {{#if menu}}
+        <div class="secondary">
+          <ul>
+          {{#each menu}}
+            <li{{#if subs}} class="expandable"{{/if}}><a href="{{{link}}}" title="{{title}}">{{title}}</a>
+              {{#if subs}}
+              <div class="tertiary">
+                <ul>
+                  {{#each subs}}
+                    <li{{#if subs}} class="expandable"{{/if}}><a href="{{{link}}}" title="{{title}}">{{title}}</a>
+                      {{#if subs}}
+                      <div class="quadmenu">
+                        <ul>
+                          {{#each subs}}
+                            <li{{#if subs}} class="expandable"{{/if}}><a href="{{{link}}}" title="{{title}}">{{title}}</a>
+                            </li>
+                          {{/each}}
+                        </ul>
+                      </div>              
+                      {{/if}}                  
+                    </li>
+                  {{/each}}
+                </ul>
+              </div>              
+              {{/if}}
+            </li>
+          {{/each}}
+          <ul>
+        </div>
+        {{/if}}
+      </li>
     {{/each}}
 
     <li class="admin-menu-action admin-menu-tab"><a data-prefix=">" href="{{ config.url }}/user.php?op=logout">{{ labels.logout }}</a></li>

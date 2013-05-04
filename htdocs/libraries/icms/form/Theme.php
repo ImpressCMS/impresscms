@@ -95,7 +95,7 @@ class icms_form_Theme extends icms_form_Base {
 			
 		$ret .= "\n<div class='hidden'>$hidden</div>\n</fieldset></div>\n</div>\n</form>\n";
 		// $ret .= $this->renderValidationJS(true);
-		$class = $class == 'even' ? 'odd' : 'even';
+		// $class = $class == 'even' ? 'odd' : 'even';
 		return $ret;
 	}
 }
