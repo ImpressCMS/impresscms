@@ -121,6 +121,7 @@ define(function(require) {
         }).popover({
           placement: 'left'
           , trigger: 'click'
+          , html: true
           , content: _this.closest('label').find('.helptext').html()
         });
       });
