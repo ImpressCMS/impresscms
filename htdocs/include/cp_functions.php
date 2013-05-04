@@ -511,10 +511,11 @@ function impresscms_get_adminmenu() {
 	);
 
 	$admin_menu[] = array(
-		'id' => 'news',
+		'id' => 'projectMenu',
 		'text' => _ABOUT,
 		'link' => '#',
 		'menu' => $menu,
+		'projectMenu' => true,
 	);
 
 	#########################################################################

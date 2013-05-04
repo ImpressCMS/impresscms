@@ -26,7 +26,8 @@ define(function(require) {
     initialize: function() {
       tools.loadCSS(icms.config.jscore + 'app/modules/adminMenu/adminMenu.css', 'icms-adminMenu');
       $(document).ready(function() {
-        $('body').addClass('adminMenu').append('<div id="admin-menu-wrapper" />');
+        var hideMenu = icms.config.showProjectMenu ? '' : ' hideProjectMenu';
+        $('body').addClass('adminMenu' + hideMenu).append('<div id="admin-menu-wrapper" />');
         app.buildMenu(icms.config.adminmenu);
       });
     }

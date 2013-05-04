@@ -19,6 +19,7 @@ $icmsJsConfigData = array(
   'theme_set' => $icmsConfig['theme_set'],
   'theme_admin_set' => $icmsConfig['theme_admin_set'],
   'theme_set_allowed' => $icmsConfig['theme_set_allowed'],
+  'path' => $icmsConfig['root_path'],
   'url' => $icmsConfig['xoops_url'],
   'imageset' => ICMS_IMAGES_SET_URL,
   'gaActive' => $icmsConfigMetaFooter['use_google_analytics'],
@@ -27,6 +28,7 @@ $icmsJsConfigData = array(
     'locale' => $icmsConfig['i18n']
   ) : false,
   'adminMenu' => false,
+  'showProjectMenu' => false,
   'onlineCount' => '0',
   'membersOnline' => '0',
   'social' => array(
@@ -58,6 +60,7 @@ if (is_object(icms::$user)) {
       $file = file_get_contents(ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php");
       $admin_menu = eval('return ' . $file . ';');
       $icmsJsConfigData['adminMenu'] = $admin_menu;
+      $icmsJsConfigData['showProjectMenu'] = isset($icmsConfigPersona['show_impresscms_menu']) ? $icmsConfigPersona['show_impresscms_menu'] : true;
 
       global $icmsModule;
       $online_handler = icms::handler('icms_core_Online');
