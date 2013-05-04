@@ -43,10 +43,10 @@ if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] 
 	$disc_text = new icms_form_elements_Label('', $disclaimer_html, 'disclaimer');
 	$disc_tray->addElement($disc_text);
 	$agree_chk = new icms_form_elements_Checkbox('', 'agree_disc', $agree_disc);
-	$agree_chk->addOption(1, _US_IAGREE_DISCLAIMER);
+	$agree_chk->addOption(1, _US_IAGREE);
 	$eltname = $agree_chk->getName();
 	$eltmsg = str_replace('"', '\"', stripslashes( sprintf( _FORM_ENTER, _US_IAGREE ) ) );
-	$agree_chk->customValidationCode[] = "if (myform.{$eltname}.checked == false) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+	// $agree_chk->customValidationCode[] = "if (myform.{$eltname}.checked == false) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
 	$disc_tray->addElement($agree_chk, true);
 	$reg_form->addElement($disc_tray);
 }
