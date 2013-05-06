@@ -140,7 +140,7 @@ $icmsTheme->addScript(NULL, array('type' => 'text/javascript'),
     ' this.callback.call(this.scope);' .
     '}' .
   '};'
-);
+, 'head', '-10');
 
 $bootstrap = file_exists( ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js') ? ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js' : ICMS_LIBRARIES_URL . '/jscore/bootstrap.js';
 $icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/modernizr.js', array('type' => 'text/javascript'), '', 'head', '-2');
