@@ -115,7 +115,7 @@ fieldset {display: block; width: 100%;}
 .admin .introButtons {float: left;}
 .admin .pageNavWrapper {float: right;}
 .admin div.pagination.default {margin: 5px 0; height: auto;}
-.admin .quickSearchBoxFilterWrapper {float: left; clear: both; width: 100%; margin: 10px 0; border-top: 1px solid #CCC; padding: 10px 0 0;}
+.admin .quickSearchBoxFilterWrapper {clear: both;float: left; clear: both; width: 100%; margin: 10px 0; border-top: 1px solid #CCC; padding: 10px 0 0;}
 .admin .quickSearchBox {float: right;}
 .admin .filterAndLimit {float: left;}
 .admin .filterAndLimit .singleObject {float: left; margin: 0 10px 0 0;}
