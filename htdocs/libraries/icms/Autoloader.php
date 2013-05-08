@@ -98,7 +98,7 @@ class icms_Autoloader {
 		if (!isset(self::$imported[ $namespace ])) {
 			$nspath = self::classPath($namespace, TRUE, DIRECTORY_SEPARATOR . "namespace.php");
 			if ($nspath) {
-				include_once($nspath . DIRECTORY_SEPARATOR . "namespace.php");
+				include_once $nspath . DIRECTORY_SEPARATOR . "namespace.php";
 				return self::$imported[$namespace] = TRUE;
 			}
 			self::$imported[$namespace] = FALSE;
@@ -133,19 +133,21 @@ class icms_Autoloader {
 	static public function classPath($class, $useIncludePath = FALSE, $ext = ".php") {
 		$classPath = str_replace(array("\\", "_"), DIRECTORY_SEPARATOR, $class);
 		// First, try local repositories
-		if (strpos($class, "\\") || strpos($class, "_")) {
+		$char = strpos($class, '\\') ? TRUE : (strpos($class, '_') ? TRUE : FALSE);
+		if ($char) {
 			foreach (self::$localRepositories as $name => $info) {
 				list($len, $path) = $info;
-				if (!strncmp($name . "\\", $class, $len+1) || !strncmp($name . "_", $class, $len+1)) {
+				if (!strncmp($name, $class, $len)) {
 					$localPath = substr($classPath, $len + 1);
-					if (file_exists($path . DIRECTORY_SEPARATOR . $localPath . $ext)) {
-						return $path . DIRECTORY_SEPARATOR . $localPath;
+					$fname = $path . DIRECTORY_SEPARATOR . $localPath;
+					if (file_exists($fname . $ext)) {
+						return $fname;
 					}
 				}
 			}
 		}
 		// Search global repositories
-		foreach(self::$globalRepositories as $path) {
+		foreach (self::$globalRepositories as $path) {
 			if (file_exists($path . DIRECTORY_SEPARATOR . $classPath . $ext)) {
 				return $path . DIRECTORY_SEPARATOR . $classPath;
 			}
