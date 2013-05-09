@@ -6,7 +6,7 @@
 
     <!-- start module menu loop -->
     <{foreach item=module from=$block.modules}>
-      <li clas="menuMain<{if $icms_dirname==$module.directory}> actlink<{/if}>">
+      <li class="menuMain<{if $icms_dirname==$module.directory}> active<{/if}>">
         <a href="<{$icmss_url}>/modules/<{$module.directory}>/" title="<{$module.name}>"><{$module.name}></a>
         <{if $module.sublinks}>
           <ul>
@@ -18,11 +18,11 @@
       </li>
     <{/foreach}>
     <!-- end module menu loop -->
-  	
+    
     <{if $block.priv_enabled == true}>
-    	<li class="menuMain<{if $icms_pagetitle=='privacy'}> active<{/if}>">
+      <li class="menuMain<{if $icms_pagetitle=='privacy'}> active<{/if}>">
         <a href="<{$icms_url}>/privpolicy.php" title="<{$block.lang_privpolicy}>"><{$block.lang_privpolicy}></a>
       </li>
-  	<{/if}>
+    <{/if}>
   </ul>
 </div>
