@@ -1,12 +1,12 @@
 <?php
 //============================================================+
-// File name   : eng.php
+// File name   : bul.php
 // Begin       : 2004-03-03
-// Last Update : 2010-10-26
+// Last Update : 2010-03-22
 //
 // Description : Language module for TCPDF
 //               (contains translated texts)
-//               English
+//               Arabic
 //
 // Author: Nicola Asuni
 //
@@ -23,12 +23,12 @@
 /**
  * TCPDF language file (contains translated texts).
  * @package com.tecnick.tcpdf
- * @brief TCPDF language file: English
+ * @brief TCPDF language file: Bulgarian
  * @author Nicola Asuni
- * @since 2004-03-03
+ * @since 2012-03-22
  */
-
-// English
+ 
+// Bulgarian
 
 global $l;
 $l = Array();
@@ -37,11 +37,11 @@ $l = Array();
 
 $l['a_meta_charset'] = 'UTF-8';
 $l['a_meta_dir'] = 'ltr';
-$l['a_meta_language'] = 'en';
+$l['a_meta_language'] = 'bg';
 
 // TRANSLATIONS --------------------------------------
-$l['w_page'] = 'page';
+$l['w_page'] = 'страница';
 
 //============================================================+
-// END OF FILE
+// END OF FILE                                                 
 //============================================================+
