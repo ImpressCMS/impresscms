@@ -1,11 +1,12 @@
+/* global icms: true */
 /*
 Module: routes
 Include file for all route modules.
 Loaded by bootstrap.
 */
-define(function (require) {
+define(function () {
 	var route = {
-		initialize: function(routes) {
+		initialize: function() {
 			routeReady.done(function(){
 				this.applyRoute();
 			}, this);
@@ -15,19 +16,19 @@ define(function (require) {
 				require([router],function(route){
 					if(route.initialize) {
 						route.initialize();
-						window.routerLoaded = router;
-						router = undefined;
+						window.routerLoaded = window.router;
+						window.router = undefined;
 					}
 				});
 			}
 
-			if( typeof themeRoute !== 'undefined') {
-				var tRoute = icms.config.themeUrl + '/app/routes/' + themeRoute;
+			if( typeof window.themeRoute !== 'undefined') {
+				var tRoute = icms.config.themeUrl + '/app/routes/' + window.themeRoute;
 				require([tRoute], function(route) {
 					if(route.initialize) {
 						route.initialize();
-						window.themeRouteLoaded = themeRoute;
-						themeRoute = undefined;
+						window.themeRouteLoaded = window.themeRoute;
+						window.themeRoute = undefined;
 					}
 				});
 			}

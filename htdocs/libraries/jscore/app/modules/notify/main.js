@@ -1,3 +1,4 @@
+/* global icms: true */
 /*
   Module: Notify
   Handles display notification if needed
@@ -6,10 +7,12 @@
   Method: initialize
   if notification are needed initialize is triggered and adds the needed resources to the page.
 */
-define(function(require) {
-  var tools = require('util/core/tools')
-  , notifyCore = require('plugins/jquery.ambiance')
-  , notifyDefaults = {
+define([
+  'util/core/tools'
+  , 'plugins/jquery.ambiance'
+]
+, function(tools) {
+  var notifyDefaults = {
     timeout: 4
   }
   , app = {

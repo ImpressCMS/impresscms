@@ -14,10 +14,8 @@
  @Method: enableValidation
  checks if logging is disabled and resets it to original value if it is
 */
-define(function(require) {
-    var $ = require('jquery')
-  , qs = require('util/mout/queryString')
-  , noConsole = null
+define(['jquery','util/mout/queryString'], function($, qs) {
+    var noConsole = null
   , module = {
     initialize:function(){
       //Prevents IE from breaking on console entries.
@@ -39,7 +37,7 @@ define(function(require) {
     , disableConsole: function() {
       console.log('Logging disabled locally: use (?/&)console=true to enable');
       noConsole = window.console;
-      window['console'] = {
+      window.console = {
         log: function () {},
         warn: function () {},
         error: function () {},
@@ -63,7 +61,7 @@ define(function(require) {
       if(noConsole === null) {
         return;
       } else {
-        window['console'] = noConsole;
+        window.console = noConsole;
       }
     }
   };

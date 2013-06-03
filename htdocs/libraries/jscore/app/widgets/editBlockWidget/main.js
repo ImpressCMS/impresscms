@@ -1,20 +1,22 @@
+/* global icms: true */
 /*
   Module: Edit Block
   Handles displaying the edit block modal for admins
 
   Method: initialize
 */
-define(function(require) {
-  var $ = require('jquery')
-  , ui = require('plugins/jquery.ui/jquery.ui')
-  , tools = require('util/core/tools')
-  , labels = require('locale/labels')
-  , editHTML = require('hbs!templates/editBlock/editBlock')
-  , data = {}
+define([
+  'jquery'
+  , 'util/core/tools'
+  , 'locale/labels'
+  , 'hbs!templates/editBlock/editBlock'
+  , 'plugins/jquery.ui/jquery.ui'
+]
+, function($, tools, labels, editHTML) {
+  var data = {}
   , markup
-  , firstrun = true
   , app = {
-    initialize: function(ele, options) {
+    initialize: function(ele) {
       if(typeof ele !== 'undefined') {
         tools.loadCSS(icms.config.jscore + 'plugins/jquery.ui/css/' + icms.config.uiTheme + '/jquery.ui.css', 'jquery-ui');
         data.labels = labels;

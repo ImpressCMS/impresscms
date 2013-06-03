@@ -1,8 +1,10 @@
-define(function(require) {
-  var $ = require('jquery')
-  // , uiI18N = require('plugins/jquery.ui/jquery.ui.i18n')
-  , mediator = require('mediator')
-  , module = {
+define([
+  'jquery'
+  , 'mediator'
+  // , 'plugins/jquery.ui/jquery.ui.i18n'
+]
+, function($, mediator) {
+  var module = {
     inititialize: function() {
       $(document).ready(function() {
         mediator.subscribe('uitoolsReady', function() {

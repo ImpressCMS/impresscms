@@ -1,3 +1,4 @@
+/* global icms: true */
 /*
   Module: bootstrap
   Loads activator and builder modules, executes both (for modules required by div data attrs)
@@ -35,10 +36,10 @@ require(
   },
   shim: {
     underscore: {
-      exports: "_"
+      exports: '_'
     },
     handlebars: {
-      exports: "Handlebars"
+      exports: 'Handlebars'
     },
     backbone: {
       deps: ['util/require-utils/underscore', 'jquery'],
