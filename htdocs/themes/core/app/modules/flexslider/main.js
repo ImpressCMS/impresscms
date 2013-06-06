@@ -1,13 +1,14 @@
-define(function (require) {
-  var $ = require('jquery')
-  , _flex = require('themeBase/app/modules/flexslider/flexcore')
-  , module = {
+define([
+  'jquery'
+  , 'themeBase/app/modules/flexslider/flexcore'
+], function ($) {
+  var module = {
     initialize: function(ele) {
       $(document).ready(function() {
         ele
         .fitVids()
         .flexslider({
-          animation: "slide",
+          animation: 'slide',
           useCSS: false,
           animationLoop: false,
           smoothHeight: true
