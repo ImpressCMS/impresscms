@@ -54,8 +54,8 @@ $icmsJsUserData = array(
 
 // Front Side ACP Menu
 if (is_object(icms::$user)) {
-  $icmsModule = icms::handler('icms_module')->getByDirname('system');
-  if (icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+  $icmsJsModule = icms::handler('icms_module')->getByDirname('system');
+  if (icms::$user->isAdmin($icmsJsModule->getVar('mid'))) {
     if ( file_exists ( ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php' )) {
       $file = file_get_contents(ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php");
       $admin_menu = eval('return ' . $file . ';');
