@@ -1,5 +1,6 @@
 <?php
 // $Id: comment.php 9538 2009-11-13 18:59:32Z pesianstranger $
+define('_CM_HEADER','Comments');
 define('_CM_TITLE','Title');
 define('_CM_MESSAGE','Message');
 define('_CM_DOSMILEY','Enable Smiley Icons');

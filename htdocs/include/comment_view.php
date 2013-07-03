@@ -162,9 +162,10 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		}
 
 		// assign comment nav bar
-		$navbar = '<form method="get" action="'
-		. $comment_config['pageName']
-		. '"><table width="95%" class="outer" cellspacing="1"><tr><td class="even" align="center"><select name="com_mode"><option value="flat"';
+		$navbar = '<div class="alert alert-info commentNotice">' . _CM_NOTICE . '</div>';
+		$navbar .= '<form class="form-inline commentControls" method="get" action="'. $comment_config['pageName']. '">';
+		$navbar .= '<h2 class="alignleft">' . _CM_HEADER . '</h2>';
+		$navbar .= '<div class="alignright"><select name="com_mode"><option value="flat"';
 		if ($com_mode == 'flat') {
 			$navbar .= ' selected="selected"';
 		}
@@ -185,7 +186,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$navbar .= ' selected="selected"';
 		}
 		unset($postcomment_link);
-		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="'. _CM_REFRESH .'" class="formButton" />';
+		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="'. _CM_REFRESH .'" class="btn formButton" />';
 		if (!empty($icmsModuleConfig['com_anonpost']) || is_object(icms::$user)) {
 			$postcomment_link = 'comment_new.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode;
 
@@ -211,10 +212,10 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			}
 		}
 		if (isset($postcomment_link)) {
-			$navbar .= '&nbsp;<input type="button" onclick="self.location.href=\'' . $postcomment_link . ''
-				. $link_extra . '\'" class="formButton" value="' . _CM_POSTCOMMENT . '" />';
+			$navbar .= '<input type="button" onclick="self.location.href=\'' . $postcomment_link . ''
+				. $link_extra . '\'" class="btn btn-primary formButton" value="' . _CM_POSTCOMMENT . '" />';
 		}
-		$navbar .= '</td></tr></table></form>';
+		$navbar .= '</div></form>';
 		$xoopsTpl->assign(
 			array(
 				'commentsnav' => $navbar,
@@ -230,7 +231,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				'lang_from' => _CM_FROM, 'lang_joined' => _CM_JOINED, 'lang_posts' => _CM_POSTS,
 				'lang_poster' => _CM_POSTER, 'lang_thread' => _CM_THREAD, 'lang_edit' => _EDIT,
 				'lang_delete' => _DELETE, 'lang_reply' => _REPLY, 'lang_subject' => _CM_REPLIES,
-				'lang_posted' => _CM_POSTED, 'lang_updated' => _CM_UPDATED, 'lang_notice' => _CM_NOTICE
+				'lang_posted' => _CM_POSTED, 'lang_updated' => _CM_UPDATED, 'lang_notice' => '' //_CM_NOTICE
 			)
 		);
 	}
