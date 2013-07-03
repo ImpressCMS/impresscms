@@ -164,8 +164,8 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		// assign comment nav bar
 		$navbar = '<div class="alert alert-info commentNotice">' . _CM_NOTICE . '</div>';
 		$navbar .= '<form class="form-inline commentControls" method="get" action="'. $comment_config['pageName']. '">';
-		$navbar .= '<h2 class="alignleft">' . _CM_HEADER . '</h2>';
-		$navbar .= '<div class="alignright"><select name="com_mode"><option value="flat"';
+		$navbar .= '<h2 class="alignleft commentHeader">' . _CM_HEADER . '</h2>';
+		$navbar .= '<div class="alignright commentFormControls"><select name="com_mode"><option value="flat"';
 		if ($com_mode == 'flat') {
 			$navbar .= ' selected="selected"';
 		}
@@ -186,7 +186,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$navbar .= ' selected="selected"';
 		}
 		unset($postcomment_link);
-		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="'. _CM_REFRESH .'" class="btn formButton" />';
+		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="'. _CM_REFRESH .'" class="btn" />';
 		if (!empty($icmsModuleConfig['com_anonpost']) || is_object(icms::$user)) {
 			$postcomment_link = 'comment_new.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode;
 
@@ -211,11 +211,15 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				}
 			}
 		}
+
+		$navbar .= '</div>';
+
 		if (isset($postcomment_link)) {
 			$navbar .= '<input type="button" onclick="self.location.href=\'' . $postcomment_link . ''
-				. $link_extra . '\'" class="btn btn-primary formButton" value="' . _CM_POSTCOMMENT . '" />';
+				. $link_extra . '\'" class="btn btn-block btn-primary" value="' . _CM_POSTCOMMENT . '" />';
 		}
-		$navbar .= '</div></form>';
+		
+		$navbar .= '</form>';
 		$xoopsTpl->assign(
 			array(
 				'commentsnav' => $navbar,

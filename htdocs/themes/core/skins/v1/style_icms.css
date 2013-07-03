@@ -9,8 +9,9 @@
 #usermenu a.highlight { color: #59BBE6; }
 /* End Main/User Menu */
 
-.commentHeading {width: 100%; text-align: left;}
-.commentControls select {width: auto;}
+.commentHeader {margin: 5px 0 20px;}
+.commentFormControls {margin: 0 0 10px;}
+.commentFormControls select {width: auto; font-size: 12px;}
 .commentWrapper .media {clear: both;}
 .commentWrapper.threaded table {margin-top: 15px;}
 
