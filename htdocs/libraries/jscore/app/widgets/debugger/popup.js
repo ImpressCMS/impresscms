@@ -1,16 +1,18 @@
+/* global icms: true */
 /*
   Module: Popup
   Handles Handles behavior of debugger popup
 
   Method: initialize
 */
-define(function(require) {
-  var $ = require('jquery')
-  , popupHTML = require('hbs!templates/debugger/popup')
-  , mediator = require('mediator')
-  , data = {}
+define([
+  'jquery'
+  , 'mediator'
+  , 'hbs!templates/debugger/popup'
+]
+, function($, mediator, popupHTML) {
+  var data = {}
   , styles
-  , scripts
   , markup = null
   , newdoc = null
   , i
@@ -33,10 +35,9 @@ define(function(require) {
         data.dump = options.dump;
 
         markup = popupHTML(data);
-        console.log('hey', data);
 
         mediator.subscribe('commonReady', function() {
-          newdoc = window.openWithSelfMain("", "", 680, 450, true);
+          newdoc = window.openWithSelfMain('', '', 680, 450, true);
           newdoc.window.icms = {};
           $.extend(newdoc.window.icms, window.icms);
           newdoc.window.routeReady = {};

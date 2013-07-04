@@ -1,4 +1,4 @@
-define(function (require) {
+define(function () {
   var labels = {
     success: 'Success'
     , welcome: 'Welcome'

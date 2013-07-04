@@ -7,7 +7,7 @@
     <!-- start module menu loop -->
     <{foreach item=module from=$block.modules}>
       <li class="menuMain<{if $icms_dirname==$module.directory}> active<{/if}>">
-        <a href="<{$icmss_url}>/modules/<{$module.directory}>/" title="<{$module.name}>"><{$module.name}></a>
+        <a href="<{$icms_url}>/modules/<{$module.directory}>/" title="<{$module.name}>"><{$module.name}></a>
         <{if $module.sublinks}>
           <ul>
             <{foreach item=sublink from=$module.sublinks}>

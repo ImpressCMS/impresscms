@@ -1,3 +1,4 @@
+/* global icms: true */
 /*
   Module: UI Tools
   Provides UI layer provided by Twitter Bootstrap
@@ -10,16 +11,18 @@
   Method: ui
   Binds some default behaviors to elements that exist.
 */
-define(function(require) {
-  var $ = require('jquery')
-  , tools = require('util/core/tools')
-  , bs = require('plugins/twitter_bootstrap')
-  , jui = require('plugins/jquery.ui/jquery.ui')
-  , mediator = require('mediator')
-  , labels = require('locale/labels')
-  , modalTemplate = require('hbs!templates/uiTools/modal')
-  , pass = require('plugins/password/passfield')
-  , modalMarkup = null
+define([
+  'jquery'
+  , 'util/core/tools'
+  , 'mediator'
+  , 'locale/labels'
+  , 'hbs!templates/uiTools/modal'
+  , 'plugins/twitter_bootstrap'
+  , 'plugins/jquery.ui/jquery.ui'
+  , 'plugins/password/passfield'
+]
+, function($, tools, mediator, labels, modalTemplate) {
+  var modalMarkup = null
   , modalData = {
     id: null
     , title: null
@@ -27,8 +30,8 @@ define(function(require) {
     , text: labels
   }
   , module = {
-    initialize: function(message, options) {
-      if(typeof hasBootstrap === 'undefined' || hasBootstrap === false) {
+    initialize: function() {
+      if(typeof window.hasBootstrap === 'undefined' || window.hasBootstrap === false) {
         tools.loadCSS(icms.config.jscore + 'app/modules/uitools/uitools.css', 'core-uitools');
       }
       tools.loadCSS(icms.config.jscore + 'plugins/jquery.ui/css/' + icms.config.uiTheme + '/jquery.ui.css', 'core-jquery-ui');
@@ -146,7 +149,7 @@ define(function(require) {
         click: function(e) {
           e.preventDefault();
 
-          var _this = $(this), options = {}, frameHeight;
+          var _this = $(this), options = {}, frameHeight, frameScrolling;
 
           options.width = typeof _this.data('width') !== 'undefined' ? Math.floor(parseInt(_this.data('width'), 10)) : 500;
           options.height = typeof _this.data('height') !== 'undefined' ? Math.floor(parseInt(_this.data('height'), 10)) : 560;
@@ -199,7 +202,7 @@ define(function(require) {
         if(!menu.hasClass('rendered')) {
           menu.find('a').each(function() {
             var el = $(this)
-            , depth = el.parents("ul").size()
+            , depth = el.parents('ul').size()
             , oLabel = $('<span />')
             , text = typeof(el.data('prefix')) !== 'undefined' ? el.data('prefix') + el.text() : dash[depth] + el.text();
 
@@ -217,7 +220,7 @@ define(function(require) {
 
       $('.mobileMenu').on({
         change: function() {
-          var _this = $(this).find("option:selected");
+          var _this = $(this).find('option:selected');
           if(_this.val() !== 'false' || _this.val() ==='#' || !_this.val.match(/void/)) {
             window.location = _this.val();
           }

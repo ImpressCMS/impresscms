@@ -1,3 +1,4 @@
+/* global icms: true */
 /*
   Module: Admin menu
   If you are an admin - you should see a pretty admin menu now.
@@ -9,13 +10,15 @@
   Method: buildMenu
   Passes our menu data to our template and appends container to dom.
 */
-define(function(require) {
-  require('handlebars');
-  var $ = require('jquery')
-  , tools = require('util/core/tools')
-  , labels = require('locale/labels')
-  , adminHTML = require('hbs!templates/adminMenu/adminMenu')
-  , defaultData = {
+define([
+  'jquery'
+  , 'util/core/tools'
+  , 'locale/labels'
+  , 'handlebars'
+  , 'hbs!templates/adminMenu/adminMenu'
+]
+, function($, tools, labels, HandleBars, adminHTML) {
+  var defaultData = {
     labels: labels
     , config: icms.config
     , user: icms.user
@@ -31,7 +34,7 @@ define(function(require) {
         app.buildMenu(icms.config.adminmenu);
       });
     }
-    , buildMenu: function(data) {
+    , buildMenu: function() {
       markup = adminHTML(defaultData);
       $('#admin-menu-wrapper').append(markup);
 

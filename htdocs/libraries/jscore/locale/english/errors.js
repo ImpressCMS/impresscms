@@ -1,4 +1,4 @@
-define(function (require) {
+define(function () {
 	var labels = {
 		generalError: 'Something has gone wrong :('
     , timeOut: 'This is taking too long, please try again.'

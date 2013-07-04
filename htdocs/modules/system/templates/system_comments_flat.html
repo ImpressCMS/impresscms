@@ -1,9 +1,5 @@
-<table class="outer" cellpadding="5px" cellspacing="1px">
-  <tr>
-    <th width="20%"><{$lang_poster}></th>
-    <th><{$lang_thread}></th>
-  </tr>
+<div class="commentWrapper flat">
   <{foreach item=comment from=$comments}>
-    <{include file="db:system_comment.html" comment=$comment}>
+    <{include file="$icms_rootpath/modules/system/templates/system_comment.html" comment=$comment}>
   <{/foreach}>
-</table>
+</div>

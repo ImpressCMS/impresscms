@@ -1,3 +1,4 @@
+/* global icms: true */
 /*
   Module: Main
   The main app module
@@ -6,19 +7,20 @@
     Initializes the routes.
     Scrape the page for widgets
 */
-define(function(require) {
-  var $ = require('jquery')
-  , log = require('util/core/log')
-  , routes = require('app/routes')
-  , moduleActivator = require('util/require-utils/module-activator')
-  // , common = require('modules/common/main')
-  , notifier = require('modules/notify/main')
-  , adminMenu = require('modules/adminMenu/main')
-  , uitools = require('modules/uitools/main')
-  , validator = require('modules/validator/main')
-  , i18n = require('modules/i18n/main')
-  , mediator = require('mediator')
-  , _private = {
+define([
+  'jquery'
+  , 'util/core/log'
+  , 'app/routes'
+  , 'util/require-utils/module-activator'
+  , 'modules/notify/main'
+  , 'modules/adminMenu/main'
+  , 'modules/uitools/main'
+  , 'modules/validator/main'
+  , 'modules/i18n/main'
+  , 'mediator'
+]
+, function($, log, routes, moduleActivator, notifier, adminMenu, uitools, validator, i18n, mediator) {
+  var _private = {
     appendSelectOption: function(selectMenuId, optionName, optionValue){
       $('<option />', {
         'value': optionValue,
@@ -44,11 +46,11 @@ define(function(require) {
       });
     }
     , openWithSelfMain: function(url,name,width,height,returnwindow) {
-      var options = "width=" + width + ",height=" + height + ",toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no"
-      , new_window = window.open(url, name, options);
+      var options = 'width=' + width + ',height=' + height + ',toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no'
+      , newWindow = window.open(url, name, options);
 
       if (typeof returnwindow !== 'undefined') {
-        return new_window;
+        return newWindow;
       }
     }
     , setElementColor: function(id, color){
@@ -71,10 +73,10 @@ define(function(require) {
       , imgDom = $('#' + imgId)
       , selectDom = $('#' + selectId);
 
-      if (selectDom.options[selectDom.selectedIndex].value !== "") {
-        imgDom.src = url + "/" + imgDir + "/" + selectDom.options[selectDom.selectedIndex].value + extra;
+      if (selectDom.options[selectDom.selectedIndex].value !== '') {
+        imgDom.src = url + '/' + imgDir + '/' + selectDom.options[selectDom.selectedIndex].value + extra;
       } else {
-        imgDom.src = url + "/images/blank.gif";
+        imgDom.src = url + '/images/blank.gif';
       }
     }
     , xoopsGetElementById: function(id) {
@@ -84,7 +86,7 @@ define(function(require) {
       var el = $('form[name=' + fname + ']').find('input[name=' + ctlname + ']');
       return el.length ? el : null;
     }
-    , xoopsSavePosition: function() {
+    , xoopsSavePosition: function(id) {
       var textareaDom = $('#' + id);
       if (textareaDom.createTextRange) {
         textareaDom.caretPos = document.selection.createRange().duplicate();

@@ -7,14 +7,16 @@
   determines if there is a form that requires validation.
   if valid - check for ajax req and handle submission and callback
 */
-define(function(require) {
-  var $ = require('jquery')
-  , mediator = require('mediator')
-  , errors = require('locale/errors')
-  , _form = require('plugins/forms/jquery.form')
-  , _validate = require('plugins/forms/jquery.validate')
-  , module = {
-    initialize: function(message, options) {
+define([
+  'jquery'
+  , 'mediator'
+  , 'locale/errors'
+  , 'plugins/forms/jquery.form'
+  , 'plugins/forms/jquery.validate'
+]
+, function($, mediator, errors) {
+  var module = {
+    initialize: function() {
       $(document).ready(function() {
         var notifSettings = {
           type: 'error'

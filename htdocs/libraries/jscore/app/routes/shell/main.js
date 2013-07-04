@@ -2,7 +2,7 @@
   Module: Main
   App module for shell route
 */
-define(function (require) {
+define(function () {
 	var app = {
 		initialize: function () {
 

@@ -1,7 +1,7 @@
-define(function(require) {
-  var $ = require('jquery')
-  , boiler = require('themeBase/app/modules/boiler/main')
-  , app = {
+define([
+	'themeBase/app/modules/boiler/main'
+ ], function(boiler) {
+  var app = {
     initialize: function() {
       boiler.initialize();
     }
