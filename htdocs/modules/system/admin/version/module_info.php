@@ -27,59 +27,26 @@ if (!isset($versioninfo) || !is_object($versioninfo)) {
 	exit();
 }
 
-//$css = getCss($theme);
-echo "<html>\n<head>\n"
-	. "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" . _CHARSET . "\"></meta>\n"
-	. "<title>" . htmlspecialchars($icmsConfig['sitename']) . "</title>\n";
-
-?>
-	<script type="text/javascript">
-	<!--//
-	scrollID=0;
-	vPos=0;
-	
-	function onWard() {
-	   vPos+=2;
-	   window.scroll(0,vPos);
-	   vPos%=1000;
-	   scrollID=setTimeout("onWard()",30);
-	   }
-	function stop() {
-	   clearTimeout(scrollID);
-	}
-	//-->
-	</script>
-<?php
-/*
- if ($css) {
- echo "<link rel=\"stylesheet\" href=\"".$css."\" type=\"text/css\">\n\n";
- }
- */
-echo "</head>\n"
-. "<body onLoad=\"if (window.scroll)onWard()\" onmouseover=\"stop()\" onmouseout=\"if (window.scroll)onWard()\">\n"
-. "<div><table width=\"100%\"><tr><td align=\"center\"><br /><br /><br /><br /><br />";
+global $icmsAdminTpl;
+icms_cp_header();
 if ($modimage = $versioninfo->getInfo('image')) {
 	$modimage_path = '/modules/' . $versioninfo->getInfo('dirname') . '/' . $modimage;
 	$modimage_realpath = str_replace("\\", "/", realpath(ICMS_ROOT_PATH . $modimage_path));
 	if (0 === strpos($modimage_realpath, ICMS_ROOT_PATH) && is_file($modimage_realpath)) {
-		echo "<img src='" . ICMS_URL . $modimage_path . "' border='0' /><br />";
+		$icmsAdminTpl->assign('modImg', ICMS_URL . $modimage_path);
 	}
 }
 if ($modname = $versioninfo->getInfo('name')) {
-	echo "<big><b>" . htmlspecialchars($modname) . "</b></big>";
+	$icmsAdminTpl->assign('modName', htmlspecialchars($modname));
 }
 
 $modinfo = array(_VERSION, _DESCRIPTION, _AUTHOR, _CREDITS, _LICENSE);
+$modinfoMerged = array();
 foreach ($modinfo as $info) {
 	if ($info_output = $versioninfo->getInfo(strtolower($info))) {
-		echo "<br /><br /><u>$info</u><br />";
-		echo htmlspecialchars($info_output);
+		$modinfoMerged[$info] = htmlspecialchars($info_output);
 	}
 }
-echo "<br /><br /><br /><br /><br />";
-echo "<br /><br /><br /><br /><br />";
-echo "<a href=\"javascript:window.close();\">" . _CLOSE . "</a>";
-echo "<br /><br /><br /><br /><br /><br />";
-echo "</td></tr></table></div>";
-echo "</body></html>";
-
+$icmsAdminTpl->assign('modInfo', $modinfoMerged);
+$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/version/system_adm_module_info.html');
+icms_cp_footer();

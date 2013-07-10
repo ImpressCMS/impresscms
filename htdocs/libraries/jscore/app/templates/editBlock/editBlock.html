@@ -1,13 +1,38 @@
-<div class="blockEditModalWrapper">
-  <div id="ed_block_{{ block.blockId }}">
-    <a style="outline: 0;" href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=visible&amp;bid={{ block.blockId }}&amp;rtn={{block.retUrl }}'> <img src='{{ block.imagesetUrl }}/actions/button_cancel.png' alt='{{ labels.invisible }}'  />{{ labels.invisible }}</a><br />
-    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=clone&amp;bid={{ block.blockId }}'> <img src='{{ block.imagesetUrl }}/actions/editcopy.png' alt='{{ labels.clone }}'  /> {{ labels.clone }}</a><br />
-    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=mod&amp;bid={{ block.blockId }}'> <img src='{{ block.imagesetUrl }}/actions/edit.png' alt='{{ labels.edit }}'  /> {{ labels.edit }}</a><br />
-    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=up&amp;bid={{ block.blockId }}&amp;rtn={{block.retUrl }}'> <img src='{{ block.imagesetUrl }}/actions/up.png' alt='{{ labels.up }}'  /> {{ labels.up }}</a><br />
-    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=down&amp;bid={{ block.blockId }}&amp;rtn={{block.retUrl }}'> <img src='{{ block.imagesetUrl }}/actions/down.png' alt='{{ labels.down }}'  /> {{ labels.down }}</a>
+<a class="blockConfigure dropdown-toggle" data-toggle="dropdown" data-target="#">
+  <i class="icon icon-cog"></i>
+</a>
+<ul id="ed_block_{{ block.blockId }}" class="dropdown-menu add-arrow">
+  <li>
+    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=visible&amp;bid={{ block.blockId }}&amp;rtn={{block.retUrl }}'>
+      <i class="icon icon-eye-close"></i> {{ labels.invisible }}
+    </a>
+  </li>
+  <li>
+    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=clone&amp;bid={{ block.blockId }}'>
+      <i class="icon icon-copy"></i> {{ labels.clone }}
+    </a>
+  </li>
+  <li>
+    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=mod&amp;bid={{ block.blockId }}'>
+      <i class="icon icon-edit"></i> {{ labels.edit }}
+    </a>
+  </li>
+  <li>
+    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=up&amp;bid={{ block.blockId }}&amp;rtn={{block.retUrl }}'>
+      <i class="icon icon-angle-up"></i> {{ labels.up }}
+    </a>
+  </li>
+  <li>
+    <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=down&amp;bid={{ block.blockId }}&amp;rtn={{block.retUrl }}'>
+      <i class="icon icon-angle-down"></i> {{ labels.down }}
+    </a>
+  </li>
 
-    {{#if block.canDelete}}
-      <br /><a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=del&amp;bid={{ block.blockId }}'> <img src='{{ block.imagesetUrl }}/actions/editdelete.png' alt='{{ labels.delete }}'  /> {{ labels.del }}</a>
-    {{/if}}
-  </div>
-</div>
+  {{#if block.canDelete}}
+    <li>
+      <a href='{{ block.moduleUrl }}/system/admin.php?fct=blocks&amp;op=del&amp;bid={{ block.blockId }}'>
+        <i class="icon icon-remove"></i> {{ labels.del }}
+      </a>
+    </li>
+  {{/if}}
+</ul>
