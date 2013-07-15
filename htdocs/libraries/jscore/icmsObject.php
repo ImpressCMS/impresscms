@@ -142,6 +142,7 @@ $icmsTheme->addScript(NULL, array('type' => 'text/javascript'),
   '};'
 , 'head', '-10');
 
-$bootstrap = file_exists( ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js') ? ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js' : ICMS_LIBRARIES_URL . '/jscore/bootstrap.js';
-$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/modernizr.js', array('type' => 'text/javascript'), '', 'head', '-2');
-$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/require.js', array('type' => 'text/javascript', 'data-main' => $bootstrap, 'data-loaded' => 'icms_core' ), '', 'head', '-1');
+$bootstrap = file_exists( ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js') ? ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js' : ICMS_LIBRARIES_URL . '/jscore/app/main.js';
+$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/deps/libs/modernizr.js', array('type' => 'text/javascript'), '', 'head', '-3');
+$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/configs/require.js', array('type' => 'text/javascript'), '', 'head', '-2');
+$icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/deps/libs/require-jquery.js', array('type' => 'text/javascript', 'data-main' => $bootstrap, 'data-loaded' => 'icms_core' ), '', 'head', '-1');

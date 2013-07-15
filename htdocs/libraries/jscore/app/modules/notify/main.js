@@ -1,4 +1,4 @@
-/* global icms: true */
+2/* global icms: true */
 /*
   Module: Notify
   Handles display notification if needed
@@ -8,19 +8,16 @@
   if notification are needed initialize is triggered and adds the needed resources to the page.
 */
 define([
-  'util/core/tools'
+  'jquery'
+  , 'css!app/modules/notify/notify.css'
   , 'plugins/jquery.ambiance'
 ]
-, function(tools) {
+, function($) {
   var notifyDefaults = {
     timeout: 4
   }
   , app = {
-    initialize: function(message, options) {
-      tools.loadCSS(icms.config.jscore + 'app/modules/notify/notify.css', 'jquery-notify');
-      app.showMessage(message, options);
-    }
-    , showMessage: function(message, options) {
+    showMessage: function(message, options) {
       if(typeof message !== 'undefined' && message !== false && message !== '') {
         notifyDefaults.message = message;
 
@@ -36,7 +33,7 @@ define([
         $.extend(notifyDefaults, options);
 
         $(document).ready(function() {
-          jQuery.ambiance(notifyDefaults);
+          $.ambiance(notifyDefaults);
         });
       }
     }

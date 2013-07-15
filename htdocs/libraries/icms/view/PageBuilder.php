@@ -220,7 +220,7 @@ class icms_view_PageBuilder {
 			if (icms::$user && count($this->uagroups) > 0) {
 				$url = base64_encode(str_replace(ICMS_URL, '', icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
 				$canDelete = ($xobject->getVar('dirname') == '') ? 'true' : 'false';
-				$titlebtns = '&nbsp;<a href="#" data-module="app/widgets/editBlockWidget/main" data-blockid="' . $bid . '" data-candelete="' . $canDelete . '" data-returl="'. $url .'" data-title="' . $xobject->getVar('title') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
+				$titlebtns = '&nbsp;<span class="dropdown" data-module="app/widgets/editBlock/main" data-blockid="' . $bid . '" data-candelete="' . $canDelete . '" data-returl="'. $url .'" data-title="' . $xobject->getVar('title') . '"></span>';
 			} else {
 				$titlebtns = '';
 			}
