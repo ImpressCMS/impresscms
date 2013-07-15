@@ -12,32 +12,28 @@
 */
 define([
   'jquery'
-  , 'util/core/tools'
-  , 'locale/labels'
-  , 'handlebars'
-  , 'hbs!templates/adminMenu/adminMenu'
+  , 'i18n!nls/labels'
+  , 'hb!modules/adminMenu/templates/adminMenu.tpl'
+  , 'css!modules/adminMenu/media/adminMenu.css'
 ]
-, function($, tools, labels, HandleBars, adminHTML) {
-  var defaultData = {
-    labels: labels
-    , config: icms.config
-    , user: icms.user
-    , admenu: icms.config.adminMenu
-  }
-  , markup
-  , app = {
+, function($, labels, adminTpl) {
+  var app = {
     initialize: function() {
-      tools.loadCSS(icms.config.jscore + 'app/modules/adminMenu/adminMenu.css', 'icms-adminMenu');
+      var hideMenu = icms.config.showProjectMenu ? '' : ' hideProjectMenu';
       $(document).ready(function() {
-        var hideMenu = icms.config.showProjectMenu ? '' : ' hideProjectMenu';
         $('body').addClass('adminMenu' + hideMenu).append('<div id="admin-menu-wrapper" />');
-        app.buildMenu(icms.config.adminmenu);
+        app.buildMenu();
       });
     }
     , buildMenu: function() {
-      markup = adminHTML(defaultData);
-      $('#admin-menu-wrapper').append(markup);
+      var adminHTML = adminTpl({
+        labels: labels
+        , config: icms.config
+        , user: icms.user
+        , admenu: icms.config.adminMenu
+      });
 
+      $('#admin-menu-wrapper').append(adminHTML);
     }
   };
   return app;

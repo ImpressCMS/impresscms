@@ -1,7 +1,7 @@
 /* global boiler: true */
 define([
   'jquery'
-  , 'hoverIntent'
+  , 'plugins/hoverIntent'
 ], function($) {
   var boiler = {
     wrap: function(elements, size, wrapElement, wrapClass) {

@@ -1,6 +1,7 @@
 define([
   'jquery'
-  , 'util/require-utils/cookie'
+  , 'libs/cookies'
+  , 'bootstrap/dropdown'
 ]
 , function($, cookie) {
   var app = {

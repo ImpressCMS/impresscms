@@ -7,19 +7,17 @@
     Initializes the routes.
     Scrape the page for widgets
 */
-define([
+require([
   'jquery'
-  , 'util/core/log'
-  , 'app/routes'
-  , 'util/require-utils/module-activator'
+  , 'core'
+  , 'ext/router'
+  , 'ext/activator'
   , 'modules/notify/main'
   , 'modules/adminMenu/main'
   , 'modules/uitools/main'
-  , 'modules/validator/main'
-  , 'modules/i18n/main'
-  , 'mediator'
+  // , 'modules/validator/main'
 ]
-, function($, log, routes, moduleActivator, notifier, adminMenu, uitools, validator, i18n, mediator) {
+, function($, Core, routes, activator, notifier, adminMenu, uitools, validator) {
   var _private = {
     appendSelectOption: function(selectMenuId, optionName, optionValue){
       $('<option />', {
@@ -102,35 +100,28 @@ define([
   , app = {
     initialize: function() {
       $.extend(window, _private);
-      mediator.publish('commonReady');
+      Core.mediator.publish('commonReady');
 
-      log.initialize();
       routes.initialize();
-      moduleActivator.execute();
-      // common.initialize();
+      activator.execute();
       if(icms.config.adminMenu !== false) {
         adminMenu.initialize();
       }
       uitools.initialize();
-      validator.initialize();
-
-      if(icms.config.i18n !== false) {
-        i18n.initialize();
-      }
-
+      // validator.initialize();
       $(document).ready(function() {
         $('a[rel="external"]').click(function(){
           $(this).attr('target', '_blank');
         });
 
         if(icms.redirectmessage !== false) {
-          notifier.initialize(icms.redirectMessage);
+          notifier.showMessage(icms.redirectMessage);
         }
-        mediator.subscribe('addNotification', function(message, options) {
+        Core.mediator.subscribe('addNotification', function(message, options) {
           notifier.showMessage(message, options);
         });
       });
     }
   };
-  return app;
+  return app.initialize();
 });

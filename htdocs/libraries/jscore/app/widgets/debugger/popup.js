@@ -8,7 +8,7 @@
 define([
   'jquery'
   , 'mediator'
-  , 'hbs!templates/debugger/popup'
+  , 'hb!templates/debugger/popup.tpl'
 ]
 , function($, mediator, popupHTML) {
   var data = {}
