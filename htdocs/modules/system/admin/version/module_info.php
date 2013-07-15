@@ -27,17 +27,18 @@ if (!isset($versioninfo) || !is_object($versioninfo)) {
 	exit();
 }
 
-global $icmsAdminTpl;
-icms_cp_header();
+$mImg = false;
+$mName = false;
+
 if ($modimage = $versioninfo->getInfo('image')) {
 	$modimage_path = '/modules/' . $versioninfo->getInfo('dirname') . '/' . $modimage;
 	$modimage_realpath = str_replace("\\", "/", realpath(ICMS_ROOT_PATH . $modimage_path));
 	if (0 === strpos($modimage_realpath, ICMS_ROOT_PATH) && is_file($modimage_realpath)) {
-		$icmsAdminTpl->assign('modImg', ICMS_URL . $modimage_path);
+		$mImg = ICMS_URL . $modimage_path;
 	}
 }
 if ($modname = $versioninfo->getInfo('name')) {
-	$icmsAdminTpl->assign('modName', htmlspecialchars($modname));
+	$mName = htmlspecialchars($modname);
 }
 
 $modinfo = array(_VERSION, _DESCRIPTION, _AUTHOR, _CREDITS, _LICENSE);
@@ -47,6 +48,20 @@ foreach ($modinfo as $info) {
 		$modinfoMerged[$info] = htmlspecialchars($info_output);
 	}
 }
-$icmsAdminTpl->assign('modInfo', $modinfoMerged);
-$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/version/system_adm_module_info.html');
-icms_cp_footer();
+
+echo '<!doctype html>';
+	echo '<html>';
+	echo '<head>';
+		echo '<title>' . $mName . '</title>';
+		echo '<link rel="stylesheet" href="' . ICMS_LIBRARIES_URL . '/jscore/app/modules/uitools/media/bootstrap.css" />';
+	echo '</head>';
+	echo '<body>';
+	  echo '<div class="well text-center">';
+	    echo '<h3>' . $mName . '</h3>';
+	    echo '<img src="' . $mImg . '" alt="" /><br /><br />';
+	    foreach($modinfoMerged as $key => $value) {
+	      echo '<strong>' . $key . ':</strong> ' . $value . '<br /><br />';
+	    }
+	  echo '</div>';
+	echo '</body>';
+echo '</html>';

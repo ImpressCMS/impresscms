@@ -20,6 +20,7 @@ define([
   , 'css!plugins/password/passfield.css'
   , 'bootstrap/popover'
   , 'bootstrap/modal'
+  , 'bootstrap/tab'
 ]
 , function($, Core, labels, modalTemplate) {
   var modalMarkup = null
@@ -32,7 +33,7 @@ define([
   , module = {
     initialize: function() {
       if(typeof window.hasBootstrap === 'undefined' || window.hasBootstrap === false) {
-        require(['css!app/modules/uitools/uitools.css']);
+        require(['css!modules/uitools/media/bootstrap.css']);
       }
       $(document).ready(function() {
         module.ui();
@@ -128,7 +129,7 @@ define([
           options.width = typeof _this.data('width') !== 'undefined' ? Math.floor(parseInt(_this.data('width'), 10)) : 500;
           options.height = typeof _this.data('height') !== 'undefined' ? Math.floor(parseInt(_this.data('height'), 10)) : 560;
           options.marginLeft = options.width / 2;
-          options.marginTop = options.height / 2;
+          // options.marginTop = options.height / 2;
 
           frameHeight = typeof _this.data('height') !== 'undefined' ? options.height - 100 : '100%';
           frameScrolling = typeof _this.data('scrolling') !== 'undefined' ? _this.data('scrolling') : 'no';
@@ -147,7 +148,7 @@ define([
             width: options.width + 30 + 'px'
             , height: options.height + 'px'
             , marginLeft: -options.marginLeft + 'px'
-            , marginTop: -options.marginTop + 'px'
+            // , marginTop: -options.marginTop + 'px'
           }).modal('show').on({
             shown: function() {
               $('#' + modalData.id).addClass('in');
