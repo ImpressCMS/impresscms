@@ -1,16 +1,11 @@
 <div class="socialModuleLinks" data-module="css!modules/uitools/media/social.css" data-init="false">
-	<ul class="unstyled inline">
-		<{foreach item=provider from=$block.provider}>
-			<{if $provider.name}>
-				<li><a href="#" onclick="window.open(<{$provider.link}>);return false;" rel="nofollow" title="<{$provider.title}>" class="btn btn-<{$provider.name}>"><i class="icon-<{$provider.name}>"></i> | <{$provider.name}></a></li>
-			<{/if}>
-		<{/foreach}>
-	</ul>
-	<ul class="inline">
-		<{foreach item=provider from=$block.provider}>
-			<{if !$provider.name}>
-				<a href="#" onclick="window.open(<{$provider.link}>);return false;" rel="nofollow" title="<{$provider.title}>"><img src="<{$block.imagepath}><{$provider.image}>" alt="<{$provider.title}>"/></a>
-			<{/if}>
-		<{/foreach}>
-	</ul>
+	<div class="btn-toolbar">
+  	<div class="btn-group">	
+			<{foreach item=provider from=$block.provider}>  		
+	  		<a href="#" onclick="window.open(<{$provider.link}>);return false;" rel="nofollow" data-original-title="<{$provider.title}>" class="btn">
+	  			<img src="<{$block.imagepath}><{$provider.image}>" alt="<{$provider.title}>"/>
+	  		</a>
+			<{/foreach}>
+		</div>
+	</div>
 </div>

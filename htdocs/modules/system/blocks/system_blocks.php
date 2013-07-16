@@ -669,15 +669,13 @@ function b_system_social_show($options) {
 	if ($options[$i]) $block['provider'][$i] = array(
 			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
 			'link'  => "'http://twitter.com/home?status='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "twitter.gif",
-			'name'	=> "twitter"
+			'image' => "twitter.gif"
 		);
 		$i++;
 		if ($options[$i]) $block['provider'][$i] = array(
 			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
 			'link'  => "'http://www.facebook.com/sharer.php?u='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "facebook.gif",
-			'name'	=> "facebook"
+			'image' => "facebook.gif"
 		);
 		$i++;
 		if ($options[$i]) $block['provider'][$i] = array(
@@ -791,8 +789,7 @@ function b_system_social_show($options) {
 		if ($options[$i]) $block['provider'][$i] = array(
 			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
 			'link'  => "'http://www.google.com/bookmarks/mark?op=add&amp;bkmk='+encodeURIComponent(location.href)+'&amp;annotation=&amp;labels=&amp;title='+encodeURIComponent(document.title)",
-			'image' => "google.gif",
-			'name'	=> "google-plus"
+			'image' => "google.gif"
 		);
 		$i++;
 		if ($options[$i]) $block['provider'][$i] = array(
