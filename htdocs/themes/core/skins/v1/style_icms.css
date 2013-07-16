@@ -119,6 +119,7 @@ fieldset {display: block; width: 100%;}
 /*.admin .icms-theme-form .grouped .icms_checkboxoption label {float: right;}*/
 .admin .icms-theme-form .grouped .checkemallWrapper {width: 100%; clear: both; float: left; border-top: 1px solid #ccc; padding: 0;}
 .admin .icms-theme-form .grouped .checkemallWrapper .inner {padding: 10px; float: left; width: auto;}
+.admin .icms-theme-form .grouped .checkemallWrapper .inner label {white-space: nowrap;}
 .admin .icms-theme-form .grouped .icms_checkboxoption {float: left; display: inline-block; padding: 2px 4px 6px;}
 /*.admin .icms-theme-form .grouped .icms_checkboxoption input {float: left;}*/
 /*.admin .icms-theme-form .grouped .icms_checkboxoption label {clear: none; width: auto; padding: 0; margin-left: 5px;}*/

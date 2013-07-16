@@ -109,11 +109,7 @@ define([
       $('.checkemallWrapper input').on({
         change: function() {
           var _this = $(this);
-          if(_this.is(':checked')) {
-            $(this).closest('.grouped').find('input[type="checkbox"]').attr('checked', true);
-          } else {
-            $(this).closest('.grouped').find('input[type="checkbox"]').attr('checked', false);
-          }
+          _this.closest('.grouped').find('input[type="checkbox"]').prop('checked', _this.is(':checked'));
         }
       });
     }
