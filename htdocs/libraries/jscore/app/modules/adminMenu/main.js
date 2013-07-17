@@ -26,8 +26,10 @@ define([
         , admenu: icms.config.adminMenu
       });
 
-      $('body').addClass('adminMenu' + hideMenu).append(adminHTML);
-      // $('#admin-menu').affix();
+      $(document).ready(function() {
+        $('body').addClass('adminMenu' + hideMenu).append(adminHTML);
+        $('#admin-menu').affix();
+      });
     }
   };
   return app;
