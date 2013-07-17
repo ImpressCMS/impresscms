@@ -4,6 +4,7 @@ body {visibility: visible; padding: 0;}
 header, #header_wrapper, #primary_navigation, #page, #preface_wrapper, #main_wrapper, #postscript_wrapper, footer, #footer {display: block;}
 
 header {border: 0; padding-top: 0; float: left; clear: both; width: 100%;}
+#lang_wrapper img {height: 20px;}
 #header_wrapper {width: 100%; float: left; clear: both; margin: 0;}
 #logo {padding: 0 0 10px 10px;}
 #logo a, #logo a span, #logo a span img {max-width: 200px;}
