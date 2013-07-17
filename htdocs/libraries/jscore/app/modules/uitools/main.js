@@ -37,6 +37,7 @@ define([
       }
       $(document).ready(function() {
         module.ui();
+        module.themeSelect();
         module.passwords();
         module.helptip();
         module.checkAll();
@@ -76,6 +77,16 @@ define([
         }
       }
 
+    }
+
+    , themeSelect: function() {
+      $('#theme_select_with_image').on({
+        change: function(e) {
+          e.preventDefault();
+
+          $('#icms_theme_img').prop('src', $(this).find(':selected').data('src'));
+        }
+      });
     }
 
     , passwords: function() {
