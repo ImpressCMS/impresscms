@@ -98,7 +98,10 @@ require([
   }
   , app = {
     initialize: function() {
-      Core.mediator.subscribe('addNotification', function(message, options) {
+      // assigning Core to icms object
+      icms.routeReady = $.Deferred();
+      icms.core = Core;
+      icms.core.mediator.subscribe('addNotification', function(message, options) {
         notifier.showMessage(message, options);
       });
 
@@ -109,7 +112,7 @@ require([
       }
 
       $.extend(window, _private);
-      Core.mediator.publish('commonReady');
+      icms.core.mediator.publish('commonReady');
 
       routes.initialize();
       activator.execute();

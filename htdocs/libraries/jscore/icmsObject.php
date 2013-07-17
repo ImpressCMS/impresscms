@@ -19,14 +19,11 @@ $icmsJsConfigData = array(
   'theme_set' => $icmsConfig['theme_set'],
   'theme_admin_set' => $icmsConfig['theme_admin_set'],
   'theme_set_allowed' => $icmsConfig['theme_set_allowed'],
-  'path' => $icmsConfig['root_path'],
+  // 'path' => $icmsConfig['root_path'],
   'url' => $icmsConfig['xoops_url'],
   'imageset' => ICMS_IMAGES_SET_URL,
   'gaActive' => $icmsConfigMetaFooter['use_google_analytics'],
   'uiTheme' => 'smoothness',
-  'i18n' => isset($icmsConfig['i18n']) ? $icmsConfig['i18n'] === false ? false : array(
-    'locale' => $icmsConfig['i18n']
-  ) : false,
   'adminMenu' => false,
   'showProjectMenu' => false,
   'onlineCount' => '0',
@@ -35,7 +32,8 @@ $icmsJsConfigData = array(
     'fbAppId' => isset($icmsConfig['fbAppId']) ? $icmsConfig['fbAppId'] : false,
     'fbChannel' => isset($icmsConfig['fbChannel']) ? $icmsConfig['fbChannel'] : false,
   ),
-  'themeUrl' => $icmsConfig['xoops_url'] . '/themes/' . $icmsConfig['theme_set']
+  'themeUrl' => $icmsConfig['xoops_url'] . '/themes/' . $icmsConfig['theme_set'],
+  'themeRoute' => $icmsConfig['xoops_url'] . '/themes/' . $icmsConfig['theme_set'] . '/app/routes/'
 );
 
 $icmsJsUserData = array(
@@ -119,30 +117,32 @@ $icmsTheme->addScript(NULL, array('type' => 'text/javascript'),
       '}'.
     '}' .
     ', redirectMessage: ' . $redirectMessage .
-  '}' . 
-  ', routeReady = {' .
-    'isResolved: false' .
-    ', callback : {}' .
-    ', done : function(callback, scope){' .
-      'this.callback = callback;' .
-      'this.scope = scope;' .
-      'if(this.isResolved){' .
-      ' this.call();' .
+    ', router: []' .
+    ', routeReady: {' .
+      'isResolved: false' .
+      ', callback : {}' .
+      ', done : function(callback, scope){' .
+        'this.callback = callback;' .
+        'this.scope = scope;' .
+        'if(this.isResolved){' .
+        ' this.call();' .
+        '}' .
+      '}' .
+      ', resolve:function(){' .
+        'this.isResolved = true;' .
+        'if(typeof this.callback == "function"){' .
+        ' this.call();' .
+        '}' .
+      '}' .
+      ', call : function(){' .
+      ' this.callback.call(this.scope);' .
       '}' .
     '}' .
-    ', resolve:function(){' .
-      'this.isResolved = true;' .
-      'if(typeof this.callback == "function"){' .
-      ' this.call();' .
-      '}' .
-    '}' .
-    ', call : function(){' .
-    ' this.callback.call(this.scope);' .
-    '}' .
-  '};'
+  '};' 
 , 'head', '-10');
 
 $bootstrap = file_exists( ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js') ? ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js' : ICMS_LIBRARIES_URL . '/jscore/app/main.js';
 $icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/deps/libs/modernizr.js', array('type' => 'text/javascript'), '', 'head', '-3');
 $icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/configs/require.js', array('type' => 'text/javascript'), '', 'head', '-2');
 $icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/deps/libs/require-jquery.js', array('type' => 'text/javascript', 'data-main' => $bootstrap, 'data-loaded' => 'icms_core' ), '', 'head', '-1');
+$icmsTheme->addScript(NULL, array('type' => 'text/javascript'), 'icms.routeReady.resolve();', 'foot', '100');
