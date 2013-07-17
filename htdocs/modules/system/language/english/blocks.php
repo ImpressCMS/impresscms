@@ -50,7 +50,7 @@ define("_MB_SYSTEM_NOWAITING_DISPLAY","Always displayed");
 define("_MB_SYSTEM_SQL_CACHE","SQL cache");
 // Social bookmarking
 define("_MB_SYSTEM_SOCIAL_PROVIDER_SELECT", "Select social bookmark providers to show");
-define("_MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK", "bookmark at: ");
+define("_MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK", "Bookmark");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_0", "Twitter");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_1", "Facebook");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_2", "MySpace");

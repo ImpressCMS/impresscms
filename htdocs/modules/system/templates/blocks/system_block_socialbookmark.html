@@ -1,11 +1,17 @@
 <div class="socialModuleLinks">
-	<div class="btn-toolbar">
-  	<div class="btn-group">	
-			<{foreach item=provider from=$block.provider}>  		
-	  		<a href="#" onclick="window.open(<{$provider.link}>);return false;" rel="nofollow" data-original-title="<{$provider.title}>" class="btn">
-	  			<img src="<{$block.imagepath}><{$provider.image}>" alt="<{$provider.title}>"/>
-	  		</a>
+	<div class="btn-group">
+		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+	    <{$block.label}>
+	    <span class="caret"></span>
+	  </a>
+	  <ul class="dropdown-menu">
+			<{foreach item=provider from=$block.provider name=social}>  		
+				<li>
+	  			<a href="#" onclick="window.open(<{$provider.link}>);return false;" rel="nofollow" data-original-title="<{$provider.title}>" class="text-left">
+	  				<img src="<{$block.imagepath}><{$provider.image}>" alt="<{$provider.title}>"/> <{$provider.title}>
+	  			</a>
+		  	</li>
 			<{/foreach}>
-		</div>
+		</ul>
 	</div>
 </div>
