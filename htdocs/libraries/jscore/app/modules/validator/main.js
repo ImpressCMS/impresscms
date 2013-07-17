@@ -9,12 +9,12 @@
 */
 define([
   'jquery'
-  , 'mediator'
-  , 'locale/errors'
+  , 'core'
+  , 'i18n!nls/errors'
   , 'plugins/forms/jquery.form'
   , 'plugins/forms/jquery.validate'
 ]
-, function($, mediator, errors) {
+, function($, Core, errors) {
   var module = {
     initialize: function() {
       $(document).ready(function() {
@@ -45,10 +45,10 @@ define([
               if(ajax) {
                 form.ajaxSubmit({
                   success: function(data) {
-                    mediator.publish('formCallback', formName, 'success', data);
+                    Core.mediator.publish('formCallback', formName, 'success', data);
                   }
                   , error: function(data) {
-                    mediator.publish('formCallback', formName, 'error', data);
+                    Core.mediator.publish('formCallback', formName, 'error', data);
                   }
                 });
               } else {
@@ -58,7 +58,7 @@ define([
             , invalidHandler: function(event, validator) {
               var count = validator.numberOfInvalids();
               if(count) {
-                mediator.publish('addNotification', errors.required , notifSettings);
+                Core.mediator.publish('addNotification', errors.required , notifSettings);
               }
             }
           });

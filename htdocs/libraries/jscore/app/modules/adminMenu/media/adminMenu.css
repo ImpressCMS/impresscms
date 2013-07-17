@@ -18,6 +18,10 @@
   width: 100%;
 }
 
+#admin-menu-wrapper #admin-menu.affix {
+  position: fixed;
+}
+
 #admin-menu-wrapper #admin-menu ul,
 #admin-menu-wrapper #admin-menu ol {
   padding: 0;

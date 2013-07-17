@@ -37,6 +37,7 @@ define([
       }
       $(document).ready(function() {
         module.ui();
+        module.themeSelect();
         module.passwords();
         module.helptip();
         module.checkAll();
@@ -78,6 +79,16 @@ define([
 
     }
 
+    , themeSelect: function() {
+      $('#theme_select_with_image').on({
+        change: function(e) {
+          e.preventDefault();
+
+          $('#icms_theme_img').prop('src', $(this).find(':selected').data('src'));
+        }
+      });
+    }
+
     , passwords: function() {
       $('input[type=password]').passField({
         'showTip': false
@@ -109,11 +120,7 @@ define([
       $('.checkemallWrapper input').on({
         change: function() {
           var _this = $(this);
-          if(_this.is(':checked')) {
-            $(this).closest('.grouped').find('input[type="checkbox"]').attr('checked', true);
-          } else {
-            $(this).closest('.grouped').find('input[type="checkbox"]').attr('checked', false);
-          }
+          _this.closest('.grouped').find('input[type="checkbox"]').prop('checked', _this.is(':checked'));
         }
       });
     }
