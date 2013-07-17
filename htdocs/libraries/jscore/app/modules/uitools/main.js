@@ -13,7 +13,6 @@
 */
 define([
   'jquery'
-  , 'core'
   , 'i18n!nls/labels'
   , 'hb!modules/uiTools/templates/modal'
   , 'plugins/password/passfield'
@@ -22,7 +21,7 @@ define([
   , 'bootstrap/modal'
   , 'bootstrap/tab'
 ]
-, function($, Core, labels, modalTemplate) {
+, function($, labels, modalTemplate) {
   var modalMarkup = null
   , modalData = {
     id: null
@@ -43,7 +42,7 @@ define([
         module.checkAll();
         module.modals();
         module.mobileMenus();
-        Core.mediator.publish('uitoolsReady');
+        icms.core.mediator.publish('uitoolsReady');
       });
     }
 

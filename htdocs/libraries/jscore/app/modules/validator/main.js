@@ -1,3 +1,4 @@
+/*global icms:true */
 /*
   Module: Validate
   Handles loose validation of forms
@@ -9,12 +10,11 @@
 */
 define([
   'jquery'
-  , 'core'
   , 'i18n!nls/errors'
   , 'plugins/forms/jquery.form'
   , 'plugins/forms/jquery.validate'
 ]
-, function($, Core, errors) {
+, function($, errors) {
   var module = {
     initialize: function() {
       $(document).ready(function() {
@@ -45,10 +45,10 @@ define([
               if(ajax) {
                 form.ajaxSubmit({
                   success: function(data) {
-                    Core.mediator.publish('formCallback', formName, 'success', data);
+                    icms.core.mediator.publish('formCallback', formName, 'success', data);
                   }
                   , error: function(data) {
-                    Core.mediator.publish('formCallback', formName, 'error', data);
+                    icms.core.mediator.publish('formCallback', formName, 'error', data);
                   }
                 });
               } else {
@@ -58,7 +58,7 @@ define([
             , invalidHandler: function(event, validator) {
               var count = validator.numberOfInvalids();
               if(count) {
-                Core.mediator.publish('addNotification', errors.required , notifSettings);
+                icms.core.mediator.publish('addNotification', errors.required , notifSettings);
               }
             }
           });

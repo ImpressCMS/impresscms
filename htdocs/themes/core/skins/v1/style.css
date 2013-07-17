@@ -91,6 +91,7 @@ header {min-height: 60px; background: #FFF; color: #6E6E6E;}
 .logo {padding: 10px 0; float: left; width: auto;}
 .logo a, .logo a span, .logo a span img {float: left; max-width: 280px;}
 
+.header_utility_wrapper {background: #222; padding: 2px 0;}
 .header_search {float: right; width: auto;}
 .header_search form {margin-bottom: 10px;}
 .admin .header_search input[type=text] {width: 210px;}
