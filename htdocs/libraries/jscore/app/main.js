@@ -13,11 +13,10 @@ require([
   , 'ext/router'
   , 'ext/activator'
   , 'modules/notify/main'
-  , 'modules/adminMenu/main'
   , 'modules/uitools/main'
-  // , 'modules/validator/main'
+  , 'modules/validator/main'
 ]
-, function($, Core, routes, activator, notifier, adminMenu, uitools, validator) {
+, function($, Core, routes, activator, notifier, uitools, validator) {
   var _private = {
     appendSelectOption: function(selectMenuId, optionName, optionValue){
       $('<option />', {
@@ -99,16 +98,24 @@ require([
   }
   , app = {
     initialize: function() {
+      Core.mediator.subscribe('addNotification', function(message, options) {
+        notifier.showMessage(message, options);
+      });
+
+      if(icms.config.adminMenu !== false) {
+        require(['modules/adminMenu/main'], function(adminMenu) {
+          adminMenu.initialize();
+        });
+      }
+
       $.extend(window, _private);
       Core.mediator.publish('commonReady');
 
       routes.initialize();
       activator.execute();
-      if(icms.config.adminMenu !== false) {
-        adminMenu.initialize();
-      }
       uitools.initialize();
-      // validator.initialize();
+      validator.initialize();
+
       $(document).ready(function() {
         $('a[rel="external"]').click(function(){
           $(this).attr('target', '_blank');
@@ -117,9 +124,6 @@ require([
         if(icms.redirectmessage !== false) {
           notifier.showMessage(icms.redirectMessage);
         }
-        Core.mediator.subscribe('addNotification', function(message, options) {
-          notifier.showMessage(message, options);
-        });
       });
     }
   };

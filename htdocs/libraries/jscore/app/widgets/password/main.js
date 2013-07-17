@@ -1,14 +1,12 @@
 /* global icms: true */
 define([
   'jquery'
-  , 'util/core/tools'
+  , 'css!plugins/password/passfield.css'
   , 'plugins/password/passfield'
 ]
-, function($, tools) {
+, function() {
   var app = {
     initialize: function(ele) {
-      tools.loadCSS(icms.config.jscore + 'plugins/password/passfield.css', 'core-jquery-password');
-
       if(typeof ele !== 'undefined') {
         app.enhancePass(ele);
       }
