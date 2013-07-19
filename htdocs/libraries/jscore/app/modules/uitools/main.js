@@ -14,7 +14,7 @@
 define([
   'jquery'
   , 'i18n!nls/labels'
-  , 'hb!modules/uiTools/templates/modal'
+  , 'hb!modules/uitools/templates/modal'
   , 'plugins/password/passfield'
   , 'css!plugins/password/passfield.css'
   , 'bootstrap/popover'
