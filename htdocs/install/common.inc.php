@@ -29,15 +29,15 @@ define('XOOPS_INSTALL', 1);
  */
 date_default_timezone_set(@date_default_timezone_get());
 
-/* we need this so we can use icms_core_Logger during the install to trap errors
-if(!defined('ICMS_ROOT_PATH')) {
+/* we need this so we can use icms_core_Logger during the install to trap errors */
+if (!defined('ICMS_ROOT_PATH')) {
 	if (isset($vars) && $vars['ROOT_PATH']) {
 		define('ICMS_ROOT_PATH', $vars['ROOT_PATH']);
 	} else {
-		define('ICMS_ROOT_PATH', "");
+		define('ICMS_ROOT_PATH', dirname(dirname(__FILE__)));
 	}
 }
- */
+
 include_once '../include/version.php';
 // including a few functions - relying more on the core, now
 include_once '../include/functions.php';
@@ -48,7 +48,7 @@ require_once 'include/functions.php';
 require_once '../libraries/icms/Autoloader.php';
 icms_Autoloader::setup();
 
-//$errorHandler = icms_core_Logger::instance();
+$errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
 
 class XoopsInstallWizard {
