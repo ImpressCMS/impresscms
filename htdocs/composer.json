@@ -1,0 +1,24 @@
+{
+    "name": "impresscms/impresscms_core",
+    "license": "MIT",
+    "type": "project",
+    "description": "The core bundle for the ImpressCMS Content Management System",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "David Janssens",
+            "email": "david.j@impresscms.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "ezyang/htmlpurifier": "v4.6.0",
+        "easybook/geshi": "1.0.8.12",
+        "phpmailer/phpmailer": "~5.2",
+        "simplepie/simplepie": "~1.3",
+        "openid/php-openid": "stable-dev",
+        "recaptcha/php5": "~1.0",
+        "tecnick.com/tcpdf":  "~6.0",
+        "smottt/wideimage": "dev-master"
+    }
+}
