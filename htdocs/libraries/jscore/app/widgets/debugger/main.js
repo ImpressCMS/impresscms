@@ -1,7 +1,10 @@
-define(function(require) {
-  var $ = require('jquery')
-  , cookie = require('util/require-utils/cookie')
-  , app = {
+define([
+  'jquery'
+  , 'libs/cookies'
+  , 'bootstrap/dropdown'
+]
+, function($, cookie) {
+  var app = {
     initialize: function() {
       $(document).ready(function() {
         var stored = cookie.getCookie('icms_debug');

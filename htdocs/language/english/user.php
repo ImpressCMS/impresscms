@@ -44,7 +44,8 @@ define('_US_FINISH','Finish');
 define('_US_REGISTERNG','Could not register new user.');
 define('_US_MAILOK','Receive occasional email notices from administrators and moderators?');
 define('_US_DISCLAIMER','Disclaimer');
-define('_US_IAGREE','I agree to the above');
+// define('_US_IAGREE','I agree to the above');
+define('_US_IAGREE','I agree to the <a href="#disclaimer" data-toggle="modal">Disclaimer</a>');
 define('_US_UNEEDAGREE', 'Sorry, you have to agree to our disclaimer to get registered.');
 define('_US_NOREGISTER','Sorry, we are currently closed for new user registrations');
 

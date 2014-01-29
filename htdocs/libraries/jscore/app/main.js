@@ -1,3 +1,4 @@
+/* global icms: true */
 /*
   Module: Main
   The main app module
@@ -6,19 +7,17 @@
     Initializes the routes.
     Scrape the page for widgets
 */
-define(function(require) {
-  var $ = require('jquery')
-  , log = require('util/core/log')
-  , routes = require('app/routes')
-  , moduleActivator = require('util/require-utils/module-activator')
-  // , common = require('modules/common/main')
-  , notifier = require('modules/notify/main')
-  , adminMenu = require('modules/adminMenu/main')
-  , uitools = require('modules/uitools/main')
-  , validator = require('modules/validator/main')
-  , i18n = require('modules/i18n/main')
-  , mediator = require('mediator')
-  , _private = {
+require([
+  'jquery'
+  , 'core'
+  , 'ext/router'
+  , 'ext/activator'
+  , 'modules/notify/main'
+  , 'modules/uitools/main'
+  , 'modules/validator/main'
+]
+, function($, Core, routes, activator, notifier, uitools, validator) {
+  var _private = {
     appendSelectOption: function(selectMenuId, optionName, optionValue){
       $('<option />', {
         'value': optionValue,
@@ -44,11 +43,11 @@ define(function(require) {
       });
     }
     , openWithSelfMain: function(url,name,width,height,returnwindow) {
-      var options = "width=" + width + ",height=" + height + ",toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no"
-      , new_window = window.open(url, name, options);
+      var options = 'width=' + width + ',height=' + height + ',toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no'
+      , newWindow = window.open(url, name, options);
 
       if (typeof returnwindow !== 'undefined') {
-        return new_window;
+        return newWindow;
       }
     }
     , setElementColor: function(id, color){
@@ -71,10 +70,10 @@ define(function(require) {
       , imgDom = $('#' + imgId)
       , selectDom = $('#' + selectId);
 
-      if (selectDom.options[selectDom.selectedIndex].value !== "") {
-        imgDom.src = url + "/" + imgDir + "/" + selectDom.options[selectDom.selectedIndex].value + extra;
+      if (selectDom.options[selectDom.selectedIndex].value !== '') {
+        imgDom.src = url + '/' + imgDir + '/' + selectDom.options[selectDom.selectedIndex].value + extra;
       } else {
-        imgDom.src = url + "/images/blank.gif";
+        imgDom.src = url + '/images/blank.gif';
       }
     }
     , xoopsGetElementById: function(id) {
@@ -84,7 +83,7 @@ define(function(require) {
       var el = $('form[name=' + fname + ']').find('input[name=' + ctlname + ']');
       return el.length ? el : null;
     }
-    , xoopsSavePosition: function() {
+    , xoopsSavePosition: function(id) {
       var textareaDom = $('#' + id);
       if (textareaDom.createTextRange) {
         textareaDom.caretPos = document.selection.createRange().duplicate();
@@ -99,22 +98,26 @@ define(function(require) {
   }
   , app = {
     initialize: function() {
-      $.extend(window, _private);
-      mediator.publish('commonReady');
+      // assigning Core to icms object
+      icms.routeReady = $.Deferred();
+      icms.core = Core;
+      icms.core.mediator.subscribe('addNotification', function(message, options) {
+        notifier.showMessage(message, options);
+      });
 
-      log.initialize();
-      routes.initialize();
-      moduleActivator.execute();
-      // common.initialize();
       if(icms.config.adminMenu !== false) {
-        adminMenu.initialize();
+        require(['modules/adminMenu/main'], function(adminMenu) {
+          adminMenu.initialize();
+        });
       }
+
+      $.extend(window, _private);
+      icms.core.mediator.publish('commonReady');
+
+      routes.initialize();
+      activator.execute();
       uitools.initialize();
       validator.initialize();
-
-      if(icms.config.i18n !== false) {
-        i18n.initialize();
-      }
 
       $(document).ready(function() {
         $('a[rel="external"]').click(function(){
@@ -122,18 +125,10 @@ define(function(require) {
         });
 
         if(icms.redirectmessage !== false) {
-          notifier.initialize(icms.redirectMessage);
+          notifier.showMessage(icms.redirectMessage);
         }
-        mediator.subscribe('addNotification', function(message, options) {
-          notifier.showMessage(message, options);
-        });
-
-        icms.module.lookup('protector', 'test=here&cat=fuzzy', function() {
-          console.log(icms.module.protector);
-        });
-
       });
     }
   };
-  return app;
+  return app.initialize();
 });

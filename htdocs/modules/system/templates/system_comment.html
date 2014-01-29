@@ -1,50 +1,70 @@
-<!-- start comment post -->
-        <tr>
-          <td class="head"><a id="comment<{$comment.id}>"></a> <{$comment.poster.uname}></td>
-          <td class="head"><div class="comDate"><span class="comDateCaption"><{$lang_posted}>:</span> <{$comment.date_posted}>&nbsp;&nbsp;<span class="comDateCaption"><{$lang_updated}>:</span> <{$comment.date_modified}></div></td>
-        </tr>
-        <tr>
+<div class="media">
+  <h4 class="muted"><{$comment.image}><{$comment.title}><small class="alignright"><{$comment.poster.uname}></small></h4>
 
-          <{if $comment.poster.id != 0}>
+  <a class="pull-left" href="#">
+    <img class="media-object" src="<{$comment.poster.avatar}>" alt="" />
+  </a>
 
-          <td class="odd"><div class="comUserRank"><div class="comUserRankText"><{$comment.poster.rank_title}></div><img class="comUserRankImg" src="<{$comment.poster.rank_image}>" alt="" /></div><img class="comUserImg" src="<{$comment.poster.avatar}>" alt="" /><div class="comUserStat"><span class="comUserStatCaption"><{$lang_joined}>:</span> <{$comment.poster.regdate}></div><div class="comUserStat"><span class="comUserStatCaption"><{$lang_from}>:</span> <{$comment.poster.from}></div><div class="comUserStat"><span class="comUserStatCaption"><{$lang_posts}>:</span> <{$comment.poster.postnum}></div><div class="comUserStatus"><{$comment.poster.status}></div></td>
+  <div class="media-body">
+    <div class="well">
+      <{$comment.text}>
+    </div>
 
-          <{else}>
+    <div class="postMeta alignleft muted">
+      <span class="dateCaption"><{$lang_posted}>:</span> <{$comment.date_posted}>
+      <{if $comment.date_modified !== $comment.date_posted}>
+        <span class="dateCaption"><{$lang_updated}>:</span> <{$comment.date_modified}>
+      <{/if}>
+    </div>
 
-          <td class="odd"> </td>
+    <div class="btn-group clearfix alignright">
+      <{if $xoops_iscommentadmin == true}>
+        <a class="btn btn-mini" href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><{$lang_edit}></a>
+        <a class="btn btn-mini" href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_delete}>"><{$lang_delete}></a>
+        <a class="btn btn-mini" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
+      <{elseif $xoops_isuser == true && $xoops_userid == $comment.poster.id}>
+        <a class="btn btn-mini" href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><{$lang_edit}></a>
+        <a class="btn btn-mini" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
+      <{elseif $xoops_isuser == true || $anon_canpost == true}>
+        <a class="btn btn-mini" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
+      <{else}>
+        <a class="btn btn-mini" href="<{$icms_url}>/user.php" title="Register">Register to post</a>
+      <{/if}>
+    </div>
 
-          <{/if}>
+    <{if $nested}>
+      <{foreach item=reply from=$comment.replies}>
+        <{include file="$icms_rootpath/modules/system/templates/system_comment.html" comment=$reply}>
+      <{/foreach}>
+    <{/if}>
 
-          <td class="odd">
-            <div class="comTitle"><{$comment.image}><{$comment.title}></div><div class="comText"><{$comment.text}></div>
-          </td>
-        </tr>
-        <tr>
-          <td class="even"></td>
+    <{if $threaded}>
+      <div class="media">
+        <{if $show_threadnav == true}>
+          <div class="btn-group alignleft">
+            <a class="btn btn-mini" href="<{$comment_url}>" title="<{$lang_top}>"><{$lang_top}></a>
+            <a class="btn btn-mini" href="<{$comment_url}>&amp;com_id=<{$comment.pid}>&amp;com_rootid=<{$comment.rootid}>#newscomment<{$comment.pid}>" title="<{$lang_parent}>"><{$lang_parent}></a>
+          </div>
+        <{/if}>
 
-          <{if $xoops_iscommentadmin == true}>
+        <{if $comment.show_replies == true}>
+          <table class="table table-striped table-bordered table=hover table-condensed">
+            <tr>
+              <th><{$lang_subject}></th>
+              <th><{$lang_poster}></th>
+              <th><{$lang_posted}></th>
+            </tr>
+            <{foreach item=reply from=$comment.replies}>
+            <tr>
+              <td><{$reply.prefix}> <a href="<{$comment_url}>&amp;com_id=<{$reply.id}>&amp;com_rootid=<{$reply.root_id}>" title="<{$reply.simple_title}>"><{$reply.title}></a></td>
+              <td><{$reply.poster.uname}></td>
+              <td><{$reply.date_posted}></td>
+            </tr>
+            <{/foreach}>
+          </table>      
+        <{/if}>
+      </div>
+    <{/if}>
 
-          <td class="even" align="<{$smarty.const._GLOBAL_RIGHT}>">
-            <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/edit.gif" alt="<{$lang_edit}>" /></a><a href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_delete}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/delete.gif" alt="<{$lang_delete}>" /></a><a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/reply.gif" alt="<{$lang_reply}>" /></a>
-          </td>
-
-          <{elseif $xoops_isuser == true && $xoops_userid == $comment.poster.id}>
-
-          <td class="even" align="<{$smarty.const._GLOBAL_RIGHT}>">
-            <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/edit.gif" alt="<{$lang_edit}>" /></a><a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/reply.gif" alt="<{$lang_reply}>" /></a>
-          </td>
-
-          <{elseif $xoops_isuser == true || $anon_canpost == true}>
-
-          <td class="even" align="<{$smarty.const._GLOBAL_RIGHT}>">
-            <a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/reply.gif" alt="<{$lang_reply}>" /></a>
-          </td>
-
-          <{else}>
-
-          <td class="even"> </td>
-
-          <{/if}>
-
-        </tr>
-<!-- end comment post -->
+  </div>
+</div>

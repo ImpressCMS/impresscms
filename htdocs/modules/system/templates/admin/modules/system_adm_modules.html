@@ -21,15 +21,13 @@
                 <div class="inner">
                   <div class="clearfix moduleIcon">
                     <{if $module.hasadmin == 1 && $module.isactive == '1'}>
-                      <a href="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.adminindex}>">
-                        <h4 class="originalModuleName"><{$module.name}> - <{$module.version}> <{$module.status}></h4>
-                      </a>
+                    <a href="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.adminindex}>">
                     <{else}>
-                      <a href="javascript: void(0);">
-                        <h4 class="originalModuleName"><{$module.name}> - <{$module.version}> <{$module.status}></h4>
-                      </a>
+                    <a href="javascript: void(0);">
                     <{/if}>
-                    <img src="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" /><br />
+                      <h4 class="originalModuleName"><{$module.name}> - <{$module.version}> <{$module.status}></h4>
+                      <img src="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" />
+                    </a><br />
                     <small><strong><{$lang_lastup}>:</strong> <span><{$module.last_update}></span></small>
                   </div>
 
@@ -78,7 +76,7 @@
                           <{$lang_unistall}>
                         </a>
                       <{/if}>  
-                      <a class="smallButton modalButton" title="<{$lang_info}>" href="<{$icms_url}>/modules/system/admin.php?fct=version&amp;mid=<{$module.mid}>">
+                      <a class="smallButton modalButton" title="<{$lang_info}>" data-scrolling="yes" data-width="900" data-height="580" href="<{$icms_url}>/modules/system/admin.php?fct=version&amp;mid=<{$module.mid}>">
                         <img src="<{$icms_url}>/images/kfaenza/actions/help.png" alt="<{$lang_info}>" />
                         <{$lang_info}>
                       </a>
@@ -99,7 +97,7 @@
             <div class="clearfix controlButtons">
               <input type="hidden" name="fct" value="modules" />
               <input type="hidden" name="op" value="confirm" />
-              <input type="submit" name="submit" value="<{$lang_submit}>" />
+              <input class="btn btn-primary" type="submit" name="submit" value="<{$lang_submit}>" />
             </div>
           </div>
         </form>

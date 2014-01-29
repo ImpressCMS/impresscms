@@ -17,19 +17,34 @@
 	  <div class="tab-content">
 
 	    <div id="login_form" class="tab-pane active">
-	      <form style="margin-top: 0px;" action="<{$icms_url}>/user.php" method="post">
-	        <div>
-	          <input type="text" class="uname" name="uname" size="12" value="<{$usercookie}>" maxlength="25" placeholder="<{$lang_username}>" />
-	          <input type="password" name="pass" size="12" maxlength="32" placeholder="<{$lang_password}>" />
-	      
-	          <{if $rememberme }>
-	            <input type="checkbox" name="rememberme" id="rememberme" value="On" />
-	            <label for="rememberme"><{$lang_rememberme}></label>
-	          <{/if}>
-	          
-	          <input type="hidden" name="icms_redirect" value="<{$redirect_page}>" />
+	      <form class="form-horizontal" action="<{$icms_url}>/user.php" method="post">
+					<div class="control-group">
+	        	<label class="control-label" for="userLoginName"><{$lang_username}></label>
+	        	<div class="controls">
+	          	<input type="text" id="userLoginName" class="uname" name="uname" value="<{$usercookie}>" />
+	        	</div>
+	        </div>
+
+	        <div class="control-group">
+	        	<label class="control-label" for="userLoginPass"><{$lang_password}></label>
+	        	<div class="controls">
+	          	<input type="password" id="userLoginPass" name="pass" />
+	          </div>
+	        </div>
+
+					<{if $rememberme }>
+		      	<div class="control-group">
+		      		<label for="rememberme">
+		      			<input type="checkbox" name="rememberme" id="rememberme" value="On" />
+		      			<{$lang_rememberme}>
+		      		</label>
+		      	</div>
+          <{/if}>
+	        
+	        <div class="control-group">
+	        	<input type="hidden" name="icms_redirect" value="<{$redirect_page}>" />
 	          <input type="hidden" name="op" value="login" />
-	          <input type="submit" value="<{$lang_login}>" />
+	          <input class="btn btn-primary" type="submit" value="<{$lang_login}>" />
 	          <{$sslloginlink}>
 	        </div>
 	      </form>
@@ -37,12 +52,12 @@
 
 			<{if $auth_openid}>  
 		    <div id="openid-form" class="tab-pane">
-		      <form method="get" action="<{$icms_url}>/try_auth.php">
+		      <form class="form-inline" method="get" action="<{$icms_url}>/try_auth.php">
 		        <div>
 		          <{$smarty.const._MB_SYSTEM_OPENID_URL}>
 		          <input type="hidden" name="action" value="verify" />
 		          <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
-		          <input type="submit" value="<{$lang_login}>" />          
+		          <input class="btn btn-primary" type="submit" value="<{$lang_login}>" />          
 		        </div>
 		      </form>
 		    </div>
@@ -50,12 +65,12 @@
 
 		  <div id="lostpass-form" class="tab-pane">
 		  	<p><{$lang_noproblem}></p>
-				<form action="lostpass.php" method="post">
+				<form class="form-inline" action="<{$icms_url}>/lostpass.php" method="post">
 					<div>
 						<input type="text" name="email" size="26" maxlength="60" placeholder="<{$lang_youremail}>" />
 						<input type="hidden" name="op" value="mailpasswd" />
 						<input type="hidden" name="t" value="<{$mailpasswd_token}>" />
-			     	<input type="submit" value="<{$lang_sendpassword}>" />
+			     	<input class="btn btn-primary" type="submit" value="<{$lang_sendpassword}>" />
 			     </div>
 				</form>		  	
 		  </div>

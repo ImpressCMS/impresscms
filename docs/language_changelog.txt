@@ -9,6 +9,413 @@ Legend :
   -  a constant was removed OR a whole file was removed
   #  Directory / Folders guide
 
+ImpressCMS 2.0
+=======================================================
+# Directory: modules/system/language/english/admin
+=======================================================
++ tags.php
+---------------------------
++ define("_CO_SYSTEM_TAGS", "Tags");
++ define("_CO_SYSTEM_TAGS_DSC", "Tags Described");
++ define("_CO_SYSTEM_TAGS_EXPLAIN_TITLE", "Tags Explained");
++ define("_CO_SYSTEM_TAGS_EXPLAIN", "");
++ define("_CO_SYSTEM_TAGS_TAG", "Tag");
++ define("_CO_SYSTEM_TAGS_TAG_DSC", "");
++ define("_CO_SYSTEM_TAGS_STATUS", "Tag Status");
++ define("_CO_SYSTEM_TAGS_STATUS_DSC", "");
++ define("_CO_SYSTEM_TAGS_COUNT", "Tag Count");
++ define("_CO_SYSTEM_TAGS_COUNT_DSC", "");
++ define("_CO_SYSTEM_TAG_CREATE", "Create a new tag");
++ define("_CO_SYSTEM_TAG_EDIT", "Edit this tag");
++ define("_CO_SYSTEM_TAG_CREATED", "The tag was successfully created");
++ define("_CO_SYSTEM_TAG_MODIFIED", "The tag was successfully modified");
+
+
+autotask.php
+---------------------------
++ define('_MD_AM_AUTOTASKS', 'Auto Tasks');
++ define('_MD_AM_AUTOTASKS_DSC', 'Auto Tasks allow you to create a schedule of actions that the system will perform automatically.');
+
+avatars.php
+---------------------------
++ define('_MD_AM_AVATARS', 'Avatars');
++ define('_MD_AM_AVATARS_DSC', 'Manage the avatars available to the users of your website.');
+- define('_MD_RUDELIMG','Are you sure that you want to delete this avatar image?');
+- define('_MD_FAILDEL', 'Failed deleting avatar %s from the database');
+
+- banners.php
+---------------------------
+
+blocksadmin.php -> blocks.php
+---------------------------
++ define('_MD_AM_BKAD','Blocks');
++ define('_MD_AM_BKAD_DSC', 'Manage and create blocks used throughout your website.');
+- define("_AM_ACTION","Action");
+- define("_AM_EDIT","Edit");
+- define("_AM_DELETE","Delete");
+- define("_AM_SBLEFT","Side Block - Left");
+- define("_AM_SBRIGHT","Side Block - Right");
+- define("_AM_CBLEFT","Center Block - Left");
+- define("_AM_CBRIGHT","Center Block - Right");
+- define("_AM_CBCENTER","Center Block - Center");
+- define("_AM_CBBOTTOMLEFT","Center Block - Bottom left");
+- define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
+- define("_AM_CBBOTTOM","Center Block - Bottom");
+- define("_AM_NAME","Name");
+- define("_AM_SYSTEM_BLOCKSADMIN_CREATE", "Create a New Block");
+- define("_AM_SYSTEM_BLOCKSADMIN_EDIT", "Edit a Block");
+- define("_AM_SYSTEM_BLOCKSADMIN_MODIFIED", "Block Modified Succesfully!");
+- define("_AM_SYSTEM_BLOCKSADMIN_CREATED", "Block Created Succesfully!");
+- define("_CO_SYSTEM_BLOCKSADMIN_NAME", "Name");
+- define("_CO_SYSTEM_BLOCKSADMIN_NAME_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_TITLE", "Title");
+- define("_CO_SYSTEM_BLOCKSADMIN_TITLE_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_MID", "Module");
+- define("_CO_SYSTEM_BLOCKSADMIN_MID_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_VISIBLE", "Visible");
+- define("_CO_SYSTEM_BLOCKSADMIN_VISIBLE_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_CONTENT", "Content");
+- define("_CO_SYSTEM_BLOCKSADMIN_CONTENT_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_SIDE", "Side");
+- define("_CO_SYSTEM_BLOCKSADMIN_SIDE_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_WEIGHT", "Weight");
+- define("_CO_SYSTEM_BLOCKSADMIN_WEIGHT_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_BLOCK_TYPE", "Block Type");
+- define("_CO_SYSTEM_BLOCKSADMIN_BLOCK_TYPE_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_C_TYPE", "Content Type");
+- define("_CO_SYSTEM_BLOCKSADMIN_C_TYPE_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_OPTIONS", "Options");
+- define("_CO_SYSTEM_BLOCKSADMIN_OPTIONS_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME", "Block Cache Time");
+- define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME_DSC", "");
+- define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS", "Block View permission");
+- define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC", "");
+- define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
+- define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
+- define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");
+- define("_AM_CBRIGHT_ADMIN","Admin Center Block - Right");
+- define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
+- define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
+- define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
+- define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
++ define("_AM_SYSTEM_BLOCKS_CREATE", "Create a New Block");
++ define("_AM_SYSTEM_BLOCKS_EDIT", "Edit a Block");
++ define("_AM_SYSTEM_BLOCKS_MODIFIED", "Block Modified Succesfully!");
++ define("_AM_SYSTEM_BLOCKS_CREATED", "Block Created Succesfully!");
++ define("_CO_SYSTEM_BLOCKS_NAME", "Name");
++ define("_CO_SYSTEM_BLOCKS_NAME_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_TITLE", "Title");
++ define("_CO_SYSTEM_BLOCKS_TITLE_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_MID", "Module");
++ define("_CO_SYSTEM_BLOCKS_MID_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_VISIBLE", "Visible");
++ define("_CO_SYSTEM_BLOCKS_VISIBLE_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_CONTENT", "Content");
++ define("_CO_SYSTEM_BLOCKS_CONTENT_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_SIDE", "Side");
++ define("_CO_SYSTEM_BLOCKS_SIDE_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_WEIGHT", "Weight");
++ define("_CO_SYSTEM_BLOCKS_WEIGHT_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_BLOCK_TYPE", "Block Type");
++ define("_CO_SYSTEM_BLOCKS_BLOCK_TYPE_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_C_TYPE", "Content Type");
++ define("_CO_SYSTEM_BLOCKS_C_TYPE_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_OPTIONS", "Options");
++ define("_CO_SYSTEM_BLOCKS_OPTIONS_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_BCACHETIME", "Block Cache Time");
++ define("_CO_SYSTEM_BLOCKS_BCACHETIME_DSC", "");
++ define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS", "Block View permission");
++ define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS_DSC", "");
+
+comments.php
+---------------------------
++ define('_MD_AM_COMMENTS', 'Comments');
++ define('_MD_AM_COMMENTS_DSC', 'Manage the comments made by users on your website.');
+- define('_CO_ICMS_MODULE','Module');
+
+findusers.php
+---------------------------
++ define('_MD_AM_FINDUSER', 'Find Users');
++ define('_MD_AM_FINDUSER_DSC', 'Search through registered users with filters.');
+
+groups.php
+---------------------------
++ define('_MD_AM_ADGS','Groups');
++ define('_MD_AM_ADGS_DSC', 'Manage permissions, members, visibility and access rights of groups of users.');
+-+define("_AM_GROUP_NAME", "Group Name");
+- define("_AM_YES","Yes");
+- define("_AM_NO","No");
+- define("_AM_SBLEFT","Side Block - Left");
+- define("_AM_SBRIGHT","Side Block - Right");
+- define("_AM_CBLEFT","Center Block - Left");
+- define("_AM_CBRIGHT","Center Block - Right");
+- define("_AM_CBCENTER","Center Block - Center");
+- define("_AM_CBBOTTOMLEFT","Center Block - Bottom left");
+- define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
+- define("_AM_CBBOTTOM","Center Block - Bottom");
+- define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
+- define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
+- define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");
+- define("_AM_CBRIGHT_ADMIN","Admin Center Block - Right");
+- define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
+- define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
+- define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
+- define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
++ define('_MD_AM_PERMADDNG', 'Could not add %s permission to %s for group %s');
++ define('_MD_AM_PERMADDOK','Added %s permission to %s for group %s');
++ define('_MD_AM_PERMRESETNG','Could not reset group permission for module %s');
++ define('_MD_AM_PERMADDNGP', 'All parent items must be selected.');
+
+images.php
+---------------------------
++ define('_MD_AM_IMAGES', 'Image Manager');
++ define('_MD_AM_IMAGES_DSC', 'Create groups of images and manage the permissions for each group. Crop and resize uploaded photos.');
+
+mailusers.php
+---------------------------
+- define("_AM_MAILOK","Send message only to users that accept notification messages (optional)");
+- define("_AM_INACTIVE","Send message to inactive users only (optional)");
+- define("_AM_EMAIL","Email");
+- define("_AM_PM","Private Message");
+
+mimetype.php
+---------------------------
++ define('_MD_AM_MIMETYPES', 'Mime Types');
++ define('_MD_AM_MIMETYPES_DSC', 'Manage the allowed extensions for files uploaded to your website.');
+
+modulesadmin.php -> modules.php
+---------------------------
+- define("_MD_AM_ACTION","Action");
+- define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
+- define('_MD_AM_MODULESADMIN_STATUS', 'Status');
+- define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
+- define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
++ define('_MD_AM_MODULES_SUPPORT', 'Module Support Site');
++ define('_MD_AM_MODULES_STATUS', 'Status');
++ define('_MD_AM_MODULES_MODULENAME', 'Module Name');
++ define('_MD_AM_MODULES_MODULETITLE', 'Module Title');
+pages.php
+---------------------------
+blockspadmin.php -> positions.php
+---------------------------
++ define('_MD_AM_BKPOSAD','Block Positions');
++ define('_MD_AM_BKPOSAD_DSC', 'Manage and create blocks positions that are used within the themes on your website.');
+
+- define('_AM_SYSTEM_BLOCKSPADMIN_TITLE',"Block Positions Administration");
+- define('_AM_SYSTEM_BLOCKSPADMIN_CREATED', "New Block Position Created");
+- define('_AM_SYSTEM_BLOCKSPADMIN_MODIFIED', "Block Position Modified");
+- define('_AM_SYSTEM_BLOCKSPADMIN_CREATE',"Add New Block Position");
+- define('_AM_SYSTEM_BLOCKSPADMIN_EDIT',"Edit Block Position");
+- define('_AM_SYSTEM_BLOCKSPADMIN_INFO','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.
+<div style="border: 1px dashed #AABBCC; padding:10px; width:86%;">
+<{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks.html</b>"}><br /><{/foreach}>
+</div>
+');
+
+- define("_CO_SYSTEM_BLOCKSPADMIN_ID", "Id");
+- define("_CO_SYSTEM_BLOCKSPADMIN_TITLE", "Title");
+- define("_CO_SYSTEM_BLOCKSPADMIN_PNAME", "Position Name");
+- define('_CO_SYSTEM_BLOCKSPADMIN_PNAME_DSC',"Name of Block Position, it is with this name that will have to be created the Loop in the theme for the exhibition of blocks.<br/>Use a name with small_caption letters, without spaces and special characters.");
+- define("_CO_SYSTEM_BLOCKSPADMIN_DESCRIPTION", "Description");
++ define('_AM_SYSTEM_POSITIONS_TITLE',"Block Positions Administration");
++ define('_AM_SYSTEM_POSITIONS_CREATED', "New Block Position Created");
++ define('_AM_SYSTEM_POSITIONS_MODIFIED', "Block Position Modified");
++ define('_AM_SYSTEM_POSITIONS_CREATE',"Add New Block Position");
++ define('_AM_SYSTEM_POSITIONS_EDIT',"Edit Block Position");
++ define('_AM_SYSTEM_POSITIONS_INFO','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.
+<div style="border: 1px dashed #AABBCC; padding:10px; width:86%;">
+<{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks.html</b>"}><br /><{/foreach}>
+</div>
+');
+
++ define("_CO_SYSTEM_POSITIONS_ID", "Id");
++ define("_CO_SYSTEM_POSITIONS_TITLE", "Title");
++ define("_CO_SYSTEM_POSITIONS_PNAME", "Position Name");
++ define('_CO_SYSTEM_POSITIONS_PNAME_DSC',"Name of Block Position, it is with this name that will have to be created the Loop in the theme for the exhibition of blocks.<br/>Use a name with small_caption letters, without spaces and special characters.");
++ define("_CO_SYSTEM_POSITIONS_DESCRIPTION", "Description");
+
+preferences.php
+---------------------------
++ define('_MD_AM_PREF','Preferences');
++ define('_MD_AM_PREF_DSC',"ImpressCMS Site Preferences");
+- define("_MD_AM_BANNERS","Activate banner ads?");
++- define("_MD_AM_MYIPDSC","");
+- define("_MD_AM_YES","Yes");
+- define("_MD_AM_NO","No");
++-define("_MD_AM_ENC_SHA256","SHA 256 (recommended)");
++-define("_MD_AM_ENC_SHA512","SHA 512");
+
+rating.php
+---------------------------
++ define('_MD_AM_RATINGS', 'Ratings');
++ define('_MD_AM_RATINGS_DSC', 'With using this tool, you can add a new rating method to your modules, and control the results through this section!');
+
+smilies.php
+---------------------------
++ define('_MD_AM_SMLS','Smilies');
++ define('_MD_AM_SMLS_DSC', 'Manage the available smilies and define the code associatted wit
+- define('_AM_DBUPDATED','Database Updated Successfully!');
+- define('_AM_ACTION','Action');
+- define('_AM_EDIT','Edit');
+
+tplsets.php
+---------------------------
++ define('_MD_AM_TPLSETS', 'Templates');
++ define('_MD_AM_TPLSETS_DSC', 'Templates are sets of html/css files that render the screen layout of modules.');
+
+userrank.php
+---------------------------
++ define('_MD_AM_RANK','User Ranks');
++ define('_MD_AM_RANK_DSC', 'User ranks are picture, used to make difference between users in different levels of your website!');
+
+users.php
+---------------------------
++ define('_MD_AM_USER','Edit Users');
++ define('_MD_AM_USER_DSC', 'Create, Modify or Delete registered users.');
+- define("_AM_YES","Yes");
+- define("_AM_NO","No");
+- define("_AM_NAME","Name");
++ define("_AM_FINDUS","Find Users");
++ define("_AM_REALNAME","Real Name");
++ define("_AM_REGDATE","Joined Date");
++ define("_AM_PM","PM");
++ define("_AM_PREVIOUS","Previous");
++ define("_AM_NEXT","Next");
++ define("_AM_USERSFOUND","%s user(s) found");
++ define("_AM_ACTUS", "Active Users: %s");
++ define("_AM_INACTUS", "Inactive Users: %s");
++ define("_AM_NOFOUND","No Users Found");
++ define("_AM_UNAME","User Name");
++ define("_AM_URLC","URL contains");
++ define("_AM_LASTLOGMORE","Last login is more than <span style='color:#ff0000;'>X</span> days ago");
++ define("_AM_LASTLOGLESS","Last login is less than <span style='color:#ff0000;'>X</span> days ago");
++ define("_AM_REGMORE","Joined date is more than <span style='color:#ff0000;'>X</span> days ago");
++ define("_AM_REGLESS","Joined date is less than <span style='color:#ff0000;'>X</span> days ago");
++ define("_AM_POSTSMORE","Number of Posts is greater than <span style='color:#ff0000;'>X</span>");
++ define("_AM_POSTSLESS","Number of Posts is less than <span style='color:#ff0000;'>X</span>");
++ define("_AM_SORT","Sort by");
++ define("_AM_ORDER","Order");
++ define("_AM_LASTLOGIN","Last login");
++ define("_AM_POSTS","Number of posts");
++ define("_AM_ASC","Ascending order");
++ define("_AM_DESC","Descending order");
++ define("_AM_LIMIT","Number of users per page");
++ define("_AM_RESULTS", "Search results");
++ define("_AM_SHOWMAILOK", "Accept mail");
++ define("_AM_MAILOK","Only users that accept mail");
++ define("_AM_MAILNG","Only users that don't accept mail");
++ define("_AM_SHOWTYPE", "Active");
++ define("_AM_ACTIVE","Only active users");
++ define("_AM_INACTIVE","Only inactive users");
++ define("_AM_BOTH", "All users");
++ define("_AM_SENDMAIL", "Send mail");
++ define("_AM_ADD2GROUP", "Add users to %s group");
++ define("_AM_GROUPS", "Groups");
+- define("_AM_ACTIONS","Actions");
+
+version.php
+---------------------------
++ define('_MD_AM_VRSN','Version Checker');
++ define('_MD_AM_VRSN_DSC', 'Use this tool to check your system for updates.');
+
+=======================================================
+# Directory: modules/system/language/english
+=======================================================
+
+admin.php
+---------------------------
+- define('_MD_AM_ADGS','Groups');
+- define('_MD_AM_BKAD','Blocks');
+- define('_MD_AM_MDAD','Modules Admin');
+- define('_MD_AM_SMLS','Smilies');
+- define('_MD_AM_RANK','User Ranks');
+- define('_MD_AM_USER','Edit Users');
+- define('_MD_AM_FINDUSER', 'Find Users');
+- define('_MD_AM_PREF','Preferences');
+- define('_MD_AM_VRSN','Version Checker');
+- define('_MD_AM_MLUS', 'Mail Users');
+- define('_MD_AM_IMAGES', 'Image Manager');
+- define('_MD_AM_AVATARS', 'Avatars');
+- define('_MD_AM_TPLSETS', 'Templates');
+- define('_MD_AM_COMMENTS', 'Comments');
+- define('_MD_AM_BKPOSAD','Block Positions');
+- define('_MD_AM_PAGES','Symlink Manager');
+- define('_MD_AM_CUSTOMTAGS', 'Custom Tags');
+- define('_MD_AM_PERMADDNG', 'Could not add %s permission to %s for group %s');
+- define('_MD_AM_PERMADDOK','Added %s permission to %s for group %s');
+- define('_MD_AM_PERMRESETNG','Could not reset group permission for module %s');
+- define('_MD_AM_PERMADDNGP', 'All parent items must be selected.');
+- if (!defined('_MD_AM_AUTOTASKS')) {define('_MD_AM_AUTOTASKS', 'Auto Tasks');}
+- define('_MD_AM_ADSENSES', 'Adsenses');
+- define('_MD_AM_RATINGS', 'Ratings');
+- define('_MD_AM_MIMETYPES', 'Mime Types');
+- define('_MD_AM_ADSENSES_DSC', 'Adsenses are tags that you can define and use anywhere on your website.');
+- define('_MD_AM_AUTOTASKS_DSC', 'Auto Tasks allow you to create a schedule of actions that the system will perform automatically.');
+- define('_MD_AM_AVATARS_DSC', 'Manage the avatars available to the users of your website.');
+- define('_MD_AM_BANS_DSC', 'Manage ad campaigns and advertiser accounts.');
+- define('_MD_AM_BKPOSAD_DSC', 'Manage and create blocks positions that are used within the themes on your website.');
+- define('_MD_AM_BKAD_DSC', 'Manage and create blocks used throughout your website.');
+- define('_MD_AM_COMMENTS_DSC', 'Manage the comments made by users on your website.');
+- define('_MD_AM_CUSTOMTAGS_DSC', 'Custom Tags are tags that you can define and use anywhere on your website.');
+- define('_MD_AM_USER_DSC', 'Create, Modify or Delete registered users.');
+- define('_MD_AM_FINDUSER_DSC', 'Search through registered users with filters.');
+- define('_MD_AM_ADGS_DSC', 'Manage permissions, members, visibility and access rights of groups of users.');
+- define('_MD_AM_IMAGES_DSC', 'Create groups of images and manage the permissions for each group. Crop and resize uploaded photos.');
+- define('_MD_AM_MLUS_DSC', 'Send mail to users of whole groups - or filter recipients based on matching criteria.');
+- define('_MD_AM_MIMETYPES_DSC', 'Manage the allowed extensions for files uploaded to your website.');
+- define('_MD_AM_MDAD_DSC', 'Manage modules menu weight, status, name or update modules as needed.');
+- define('_MD_AM_RATINGS_DSC', 'With using this tool, you can add a new rating method to your modules, and control the results through this section!');
+- define('_MD_AM_SMLS_DSC', 'Manage the available smilies and define the code associatted with each.');
+- define('_MD_AM_PAGES_DSC', 'Symlink allows you to create a unique link based on any page of your website, which can be used for blocks specific to a page URL, or to link directly within the content of a module.');
+- define('_MD_AM_TPLSETS_DSC', 'Templates are sets of html/css files that render the screen layout of modules.');
+- define('_MD_AM_RANK_DSC', 'User ranks are picture, used to make difference between users in different levels of your website!');
+- define('_MD_AM_VRSN_DSC', 'Use this tool to check your system for updates.');
+- define('_MD_AM_PREF_DSC',"ImpressCMS Site Preferences");
++ define('_AM_ACTION', 'Actions');
+
+common.php
+---------------------------
++ define("_CO_ICMS_MODULE", "Module");
+
+modinfo.php
+---------------------------
+- define("_MI_SYSTEM_ADMENU1","Banners");
+
+theme.php
+---------------------------
+- define("THEME_MODULE1","News");
+- define("THEME_MODULE1_DESC","See news");
+- define("THEME_MODULE1_SUB1","Category 1"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE1_SUB2","Category 2"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE1_SUB3","Category 3"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE1_SUB4","Category 4"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE1_SUB5","Category 5"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE2","Forum");
+- define("THEME_MODULE2_DESC","Visit our Forums");
+- define("THEME_MODULE3","Gallery");
+- define("THEME_MODULE3_DESC","Visit our Photo Gallery");
+- define("THEME_MODULE3_SUB1","Gallery 1"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE3_SUB2","Gallery 2"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE3_SUB3","Gallery 3"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE3_SUB4","Gallery 4"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE3_SUB5","Gallery 5"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE4","Movies");
+- define("THEME_MODULE4_DESC","See our movies");
+- define("THEME_MODULE4_SUB1","Movie 1");
+- define("THEME_MODULE4_SUB2","Movie 2"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE4_SUB3","Movie 3"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE4_SUB4","Movie 4"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE4_SUB5","Movie 5"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
+- define("THEME_MODULE5","Web Links");
+- define("THEME_MODULE5_DESC","Visit our web links");
+- define("THEME_MODULE6","Downloads");
+- define("THEME_MODULE6_DESC","Download our files");
+- define("THEME_MODULE7","XoopsInfo");
+- define("THEME_MODULE7_DESC","Use XoopsInfo Module");
+- define("THEME_MODULE8","Protector");
+- define("THEME_MODULE8_DESC","Use Protector Module");
+
+
 ImpressCMS 1.3
 =======================================================
 # Directory: modules/system/language/english/

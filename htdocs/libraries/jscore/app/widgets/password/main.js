@@ -1,11 +1,12 @@
-define(function(require) {
-  var $ = require('jquery')
-  , tools = require('util/core/tools')
-  , pass = require('plugins/password/passfield')
-  , app = {
-    initialize: function(ele, options) {
-      tools.loadCSS(icms.config.jscore + 'plugins/password/passfield.css', 'core-jquery-password');
-
+/* global icms: true */
+define([
+  'jquery'
+  , 'css!plugins/password/passfield.css'
+  , 'plugins/password/passfield'
+]
+, function() {
+  var app = {
+    initialize: function(ele) {
       if(typeof ele !== 'undefined') {
         app.enhancePass(ele);
       }

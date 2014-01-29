@@ -1,4 +1,11 @@
 <header class="header_outer <{$header_wrapper_extra_classes}>">
+  <{if $ml_is_enabled}>
+    <div class="header_utility_wrapper">
+      <div id="utility" class="container utility">
+          <div id="lang_wrapper" class="pull-right">[mlimg]</div>
+      </div>
+    </div>
+  <{/if}>
   <div class="header_wrapper <{$header_grid_extra_classes}>">
     <div id="header" class="container header">
 

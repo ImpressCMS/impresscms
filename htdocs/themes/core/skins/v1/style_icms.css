@@ -9,6 +9,12 @@
 #usermenu a.highlight { color: #59BBE6; }
 /* End Main/User Menu */
 
+.commentHeader {margin: 5px 0 20px;}
+.commentFormControls {margin: 0 0 10px;}
+.commentFormControls select {width: auto; font-size: 12px;}
+.commentWrapper .media {clear: both;}
+.commentWrapper.threaded table {margin-top: 15px;}
+
 /* Search Block */
 .search_block form {margin: 0;}
 .search_block input[type=text] {width: 100%; max-width: 93%}
@@ -47,8 +53,15 @@ table.outer td {padding: 0; border: 0;  vertical-align: top;}
 
 .errorMsg { background: #B94A48; color: #F2DEDE; text-align: center; border: 1px solid #DDD; font-weight: bold; padding: 10px; margin: 10px 0;}
 .errorMsg a, .errorMsg a:visited {color: #F2DEDE;}
-.confirmMsg { background-color: #48b948; color: #def2de; text-align: center; border: 1px solid #DDD; font-weight: bold; padding: 10px; margin: 10px 0;}
-.confirmMsg a, .confirmMsg a:visited {color: #def2de;}
+.confirmMsg { 
+	color: #3a87ad;
+	background-color: #d9edf7;
+	border: 1px solid #bce8f1;
+	text-align: center;
+	padding: 10px;
+	margin: 10px 0;
+}
+.confirmMsg a, .confirmMsg a:visited {color: #3a87ad; font-weight: bold;}
 .resultMsg { background-color : #488db9; color: #dee4f2; text-align: center; border: 1px solid #DDD; font-weight: bold; padding: 10px; margin: 10px 0;}
 .resultMsg a, .resultMsg a:visited {color: #dee4f2;}
 .warningMsg { background-color : #b99048; color: #f2eede; text-align: center; border: 1px solid #DDD; font-weight: bold; padding: 10px; margin: 10px 0;}
@@ -64,6 +77,7 @@ table.outer td {padding: 0; border: 0;  vertical-align: top;}
 
 .cpDashPanel .tabs-left > .nav-tabs > li > a, .cpDashPanel .tabs-right > .nav-tabs > li > a {min-width: 100px; }
 .cpDashPanel .tab-content .cpPanelItem { float: left; width: 30%; margin: 0 2% 2% 0; padding: 10px 1px; outline: 1px #ccc; border: 1px solid #ddd; text-align: center; }
+.cpDashPanel .tab-content .cpPanelItem:nth-child(4n) {clear: left;}
 /*.cpDashPanel .modulesAdminPanel .cpPanelItem {width: 22%;}*/
 .cpDashPanel .tab-content a {width: 100%; float: left;}  
 .cpDashPanel .tab-content a.modalButton {width: auto; overflow: hidden;}
@@ -105,17 +119,18 @@ fieldset {display: block; width: 100%;}
 /*.admin .icms-theme-form .grouped .icms_checkboxoption label {float: right;}*/
 .admin .icms-theme-form .grouped .checkemallWrapper {width: 100%; clear: both; float: left; border-top: 1px solid #ccc; padding: 0;}
 .admin .icms-theme-form .grouped .checkemallWrapper .inner {padding: 10px; float: left; width: auto;}
+.admin .icms-theme-form .grouped .checkemallWrapper .inner label {white-space: nowrap;}
 .admin .icms-theme-form .grouped .icms_checkboxoption {float: left; display: inline-block; padding: 2px 4px 6px;}
 /*.admin .icms-theme-form .grouped .icms_checkboxoption input {float: left;}*/
 /*.admin .icms-theme-form .grouped .icms_checkboxoption label {clear: none; width: auto; padding: 0; margin-left: 5px;}*/
 .icms-theme-form .grouped .icms_checkboxoption input {margin: 0 5px 0 0;}
 .titleWrapper {margin: 0;}
 .admin code {display: block; float: left; clear: both; width: 100%; height: auto; max-height: 400px; overflow-x: hidden; overflow-y: auto; background: #f3f3f3; border: 1px solid #ddd; margin: 10px 0; padding: 10px;}
-.admin .buttonsPagerWrapper {margin: 10px 0 0 0;}
+.admin .buttonsPagerWrapper {clear:both; margin: 10px 0 0 0;}
 .admin .introButtons {float: left;}
 .admin .pageNavWrapper {float: right;}
 .admin div.pagination.default {margin: 5px 0; height: auto;}
-.admin .quickSearchBoxFilterWrapper {float: left; clear: both; width: 100%; margin: 10px 0; border-top: 1px solid #CCC; padding: 10px 0 0;}
+.admin .quickSearchBoxFilterWrapper {clear: both;float: left; clear: both; width: 100%; margin: 10px 0; border-top: 1px solid #CCC; padding: 10px 0 0;}
 .admin .quickSearchBox {float: right;}
 .admin .filterAndLimit {float: left;}
 .admin .filterAndLimit .singleObject {float: left; margin: 0 10px 0 0;}
@@ -132,3 +147,20 @@ fieldset {display: block; width: 100%;}
 /* Carousel pagination */
 .carousel .pagination {margin: 0;}
 .carousel .pagination ul {margin: 5px 0 0;}
+
+/* ---------- ACP module tabs ---------- */
+#buttontop {background:none repeat scroll 0 0 #E7E7E7;border:1px solid #FFFFFF;float:left;line-height:normal;margin:0 0 10px;border:1px solid #CCCCCC;padding:1px;width:99.5%;}
+#buttonbar {background:none repeat scroll 0 0 #E7E7E7;border:1px solid #FFFFFF;float:left;line-height:normal;margin-bottom:10px;border:1px solid #CCCCCC;padding:1px;width:99.5%;}
+#buttonbar ul {border-left:1px solid #CCCCCC;list-style:none outside none;margin:15px 2px 0 0;padding:0;}
+#buttonbar li {float:left;margin:0;padding:0;}
+#buttonbar li:first-child {border-left:1px solid #CCCCCC;}
+#buttonbar a {background:none repeat scroll 0 0 #F1F2F3;border-right:1px solid #CCCCCC;border-top:1px solid #CCCCCC;float:left;margin:0;padding:4px 8px;text-decoration:none;border-bottom:medium none;}
+#buttonbar a span {background:none repeat scroll 0 0 transparent;color:#444444;display:block;float:none;vertical-align:middle;font-weight:normal;padding:2px;}
+#buttonbar a span {float:none;}
+#buttonbar a:hover span {color:#444444;}
+#buttonbar #current a {background:none repeat scroll 0 0 #DCDEE0;}
+#buttonbar #current a span {color:#000000;}
+#buttonbar a:hover {background:none repeat scroll 0 0 #DCDEE0;color:#000000;}
+#buttonbar a:hover span {}
+#groupform .icms_checkboxoption {float:left;padding:2px;width:48.9%;}
+#wrap {border-left:medium none;border-right:medium none;border-top:medium none;float:left;margin-bottom:15px;width:100%;}

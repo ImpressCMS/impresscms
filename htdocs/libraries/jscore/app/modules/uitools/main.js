@@ -1,3 +1,4 @@
+/* global icms: true */
 /*
   Module: UI Tools
   Provides UI layer provided by Twitter Bootstrap
@@ -10,16 +11,18 @@
   Method: ui
   Binds some default behaviors to elements that exist.
 */
-define(function(require) {
-  var $ = require('jquery')
-  , tools = require('util/core/tools')
-  , bs = require('plugins/twitter_bootstrap')
-  , jui = require('plugins/jquery.ui/jquery.ui')
-  , mediator = require('mediator')
-  , labels = require('locale/labels')
-  , modalTemplate = require('hbs!templates/uiTools/modal')
-  , pass = require('plugins/password/passfield')
-  , modalMarkup = null
+define([
+  'jquery'
+  , 'i18n!nls/labels'
+  , 'hb!modules/uitools/templates/modal'
+  , 'plugins/password/passfield'
+  , 'css!plugins/password/passfield.css'
+  , 'bootstrap/popover'
+  , 'bootstrap/modal'
+  , 'bootstrap/tab'
+]
+, function($, labels, modalTemplate) {
+  var modalMarkup = null
   , modalData = {
     id: null
     , title: null
@@ -27,19 +30,19 @@ define(function(require) {
     , text: labels
   }
   , module = {
-    initialize: function(message, options) {
-      if(typeof hasBootstrap === 'undefined' || hasBootstrap === false) {
-        tools.loadCSS(icms.config.jscore + 'app/modules/uitools/uitools.css', 'core-uitools');
+    initialize: function() {
+      if(typeof window.hasBootstrap === 'undefined' || window.hasBootstrap === false) {
+        require(['css!modules/uitools/media/bootstrap.css']);
       }
-      tools.loadCSS(icms.config.jscore + 'plugins/jquery.ui/css/' + icms.config.uiTheme + '/jquery.ui.css', 'core-jquery-ui');
       $(document).ready(function() {
         module.ui();
+        module.themeSelect();
         module.passwords();
         module.helptip();
         module.checkAll();
         module.modals();
         module.mobileMenus();
-        mediator.publish('uitoolsReady');
+        icms.core.mediator.publish('uitoolsReady');
       });
     }
 
@@ -75,36 +78,21 @@ define(function(require) {
 
     }
 
+    , themeSelect: function() {
+      $('#theme_select_with_image').on({
+        change: function(e) {
+          e.preventDefault();
+
+          $('#icms_theme_img').prop('src', $(this).find(':selected').data('src'));
+        }
+      });
+    }
+
     , passwords: function() {
-      tools.loadCSS(icms.config.jscore + 'plugins/password/passfield.css', 'core-jquery-password');
       $('input[type=password]').passField({
         'showTip': false
         , 'showWarn': false
         , 'showGenerate' : false
-      });
-    }
-
-    , showPass: function() {
-      // Allows passwordfields to be shown
-      // <ele class="showpass" data-pass="#somePassFieldSelecter"> (should always be id)
-      $('.showpass').on({
-        click : function(e) {
-          e.preventDefault();
-          var _this = $(this)
-          , pass = $(this).data('pass')
-          , passVal = $(pass).attr('value')
-          , selector = pass.match('#') ? pass.replace('#', '') : pass;
-
-          if(_this.hasClass('btn-info')) {
-            _this.removeClass('btn-info').find('.icon-eye-open').removeClass('icon-white');
-            $(pass).replaceWith('<input class="input-large" type="password" id="' + selector + '" name="' + selector + '" value="' + passVal + '">');
-          } else {
-            _this.addClass('btn-info').find('.icon-eye-open').addClass('icon-white');
-            $(pass).replaceWith('<input class="input-large" type="text" id="' + selector + '" name="' + selector + '" value="' + passVal + '">');
-          }
-
-          return false;
-        }
       });
     }
 
@@ -121,6 +109,7 @@ define(function(require) {
         }).popover({
           placement: 'left'
           , trigger: 'click'
+          , html: true
           , content: _this.closest('label').find('.helptext').html()
         });
       });
@@ -130,11 +119,7 @@ define(function(require) {
       $('.checkemallWrapper input').on({
         change: function() {
           var _this = $(this);
-          if(_this.is(':checked')) {
-            $(this).closest('.grouped').find('input[type="checkbox"]').attr('checked', true);
-          } else {
-            $(this).closest('.grouped').find('input[type="checkbox"]').attr('checked', false);
-          }
+          _this.closest('.grouped').find('input[type="checkbox"]').prop('checked', _this.is(':checked'));
         }
       });
     }
@@ -145,12 +130,12 @@ define(function(require) {
         click: function(e) {
           e.preventDefault();
 
-          var _this = $(this), options = {}, frameHeight;
+          var _this = $(this), options = {}, frameHeight, frameScrolling;
 
           options.width = typeof _this.data('width') !== 'undefined' ? Math.floor(parseInt(_this.data('width'), 10)) : 500;
           options.height = typeof _this.data('height') !== 'undefined' ? Math.floor(parseInt(_this.data('height'), 10)) : 560;
           options.marginLeft = options.width / 2;
-          options.marginTop = options.height / 2;
+          // options.marginTop = options.height / 2;
 
           frameHeight = typeof _this.data('height') !== 'undefined' ? options.height - 100 : '100%';
           frameScrolling = typeof _this.data('scrolling') !== 'undefined' ? _this.data('scrolling') : 'no';
@@ -169,7 +154,7 @@ define(function(require) {
             width: options.width + 30 + 'px'
             , height: options.height + 'px'
             , marginLeft: -options.marginLeft + 'px'
-            , marginTop: -options.marginTop + 'px'
+            // , marginTop: -options.marginTop + 'px'
           }).modal('show').on({
             shown: function() {
               $('#' + modalData.id).addClass('in');
@@ -198,7 +183,7 @@ define(function(require) {
         if(!menu.hasClass('rendered')) {
           menu.find('a').each(function() {
             var el = $(this)
-            , depth = el.parents("ul").size()
+            , depth = el.parents('ul').size()
             , oLabel = $('<span />')
             , text = typeof(el.data('prefix')) !== 'undefined' ? el.data('prefix') + el.text() : dash[depth] + el.text();
 
@@ -216,7 +201,7 @@ define(function(require) {
 
       $('.mobileMenu').on({
         change: function() {
-          var _this = $(this).find("option:selected");
+          var _this = $(this).find('option:selected');
           if(_this.val() !== 'false' || _this.val() ==='#' || !_this.val.match(/void/)) {
             window.location = _this.val();
           }

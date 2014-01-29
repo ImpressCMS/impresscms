@@ -1,3 +1,4 @@
+/*global icms:true */
 /*
   Module: Validate
   Handles loose validation of forms
@@ -7,14 +8,15 @@
   determines if there is a form that requires validation.
   if valid - check for ajax req and handle submission and callback
 */
-define(function(require) {
-  var $ = require('jquery')
-  , mediator = require('mediator')
-  , errors = require('locale/errors')
-  , _form = require('plugins/forms/jquery.form')
-  , _validate = require('plugins/forms/jquery.validate')
-  , module = {
-    initialize: function(message, options) {
+define([
+  'jquery'
+  , 'i18n!nls/errors'
+  , 'plugins/forms/jquery.form'
+  , 'plugins/forms/jquery.validate'
+]
+, function($, errors) {
+  var module = {
+    initialize: function() {
       $(document).ready(function() {
         var notifSettings = {
           type: 'error'
@@ -43,10 +45,10 @@ define(function(require) {
               if(ajax) {
                 form.ajaxSubmit({
                   success: function(data) {
-                    mediator.publish('formCallback', formName, 'success', data);
+                    icms.core.mediator.publish('formCallback', formName, 'success', data);
                   }
                   , error: function(data) {
-                    mediator.publish('formCallback', formName, 'error', data);
+                    icms.core.mediator.publish('formCallback', formName, 'error', data);
                   }
                 });
               } else {
@@ -56,7 +58,7 @@ define(function(require) {
             , invalidHandler: function(event, validator) {
               var count = validator.numberOfInvalids();
               if(count) {
-                mediator.publish('addNotification', errors.required , notifSettings);
+                icms.core.mediator.publish('addNotification', errors.required , notifSettings);
               }
             }
           });
