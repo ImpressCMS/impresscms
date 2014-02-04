@@ -1,5 +1,5 @@
 <?php
-// $Id: search.php 9538 2009-11-13 18:59:32Z pesianstranger $
+// $Id$
 //%%%%%%	File Name search.php 	%%%%%
 define("_SR_SEARCH","Search");
 define("_SR_PLZENTER","Please enter all required data!");

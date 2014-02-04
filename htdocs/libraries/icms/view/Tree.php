@@ -8,7 +8,7 @@
  * @package		View
  * @subpackage	Tree
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: Tree.php 11107 2011-03-24 02:56:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 /**

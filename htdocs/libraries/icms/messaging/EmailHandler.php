@@ -7,7 +7,7 @@
  * @subpackage	Email
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id: EmailHandler.php 11358 2011-09-02 19:55:40Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 /**

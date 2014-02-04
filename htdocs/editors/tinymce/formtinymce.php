@@ -6,7 +6,7 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		4.00
- * @version		$Id: formtinymce.php 11122 2011-03-26 23:48:15Z skenow $
+ * @version		$Id$
  * @package		xoopseditor
  */
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");

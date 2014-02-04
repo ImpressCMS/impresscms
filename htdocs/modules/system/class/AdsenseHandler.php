@@ -8,7 +8,7 @@
  * @subpackage	AdSense
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: AdsenseHandler.php 11575 2012-02-16 01:23:33Z skenow $
+ * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

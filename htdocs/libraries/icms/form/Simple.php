@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Form
- * @version		SVN: $Id: Simple.php 10575 2010-08-28 21:30:27Z skenow $
+ * @version		SVN: $Id$
  * @todo		this class is not used by the core; we will probably remove it in 1.4
  */
 

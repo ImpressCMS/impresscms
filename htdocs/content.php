@@ -7,7 +7,7 @@
  * @since		1.0
  * @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
  * @package		content
- * @version		$Id: content.php 10416 2010-07-17 20:00:30Z phoenyx $
+ * @version		$Id$
  */
 
 include_once 'mainfile.php';

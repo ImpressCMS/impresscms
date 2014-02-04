@@ -15,9 +15,6 @@
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-/* This may be loaded by other modules - and not just through the cpanel */
-icms_loadLanguageFile('system', 'positions', TRUE);
-
 /**
  * icms_view_block_position_Handler
  * @category	ICMS
@@ -54,3 +51,4 @@ class icms_view_block_position_Handler extends icms_ipf_Handler {
 		return parent::insert($obj, $force, $checkObject, $debug);
 	}
 }
+

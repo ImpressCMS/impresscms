@@ -9,7 +9,7 @@
  * @since		ImpressCMS 1.2
  * @package		Administration
  * @subpackage	Blocks
- * @version		$Id: blocks.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		$Id$
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 

@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Passwordtray.php 10711 2010-10-10 17:11:29Z phoenyx $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -36,9 +36,8 @@ class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
 	}
 
 	public function render() {
-		$reqClass = $this->isRequired() ? 'required ' : '';
 		$ret = parent::render();
-		$ret .= "<input type='password' class='".$reqClass."password' name='" . $this->_key . "2' id='" . $this->_key . "2' "
+		$ret .= "<input type='password' name='" . $this->_key . "2' id='" . $this->_key . "2' "
 			 .  "size='10' maxlength='32' value='' autocomplete='off' />";
 		return $ret;
 	}

@@ -17,7 +17,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @subpackage	VersionChecker
  * @since		1.0
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Versionchecker.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		$Id$
  */
 class icms_core_Versionchecker {
 

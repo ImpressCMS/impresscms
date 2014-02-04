@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Page.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

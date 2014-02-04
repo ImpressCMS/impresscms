@@ -10,7 +10,7 @@
 * @since	XOOPS
 * @author	http://www.xoops.org The XOOPS Project
 * @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id: editor_registry.php 10326 2010-07-11 18:54:25Z malanciault $
+* @version	$Id$
 */
 
 /**

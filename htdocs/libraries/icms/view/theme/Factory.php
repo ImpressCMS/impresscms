@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package 	View
  * @subpackage 	Theme
- * @version		SVN: $Id: Factory.php 11358 2011-09-02 19:55:40Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 /**
@@ -30,7 +30,7 @@ class icms_view_theme_Factory {
 	 * Default theme to instanciate if none specified
 	 * @public string
 	 */
-	public $defaultTheme = 'core';
+	public $defaultTheme = 'iTheme';
 	/**
 	 * If users are allowed to choose a custom theme
 	 * @public bool

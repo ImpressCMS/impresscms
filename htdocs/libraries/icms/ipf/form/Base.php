@@ -7,7 +7,7 @@
  * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Base.php 11644 2012-03-15 15:23:23Z skenow $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -474,56 +474,35 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @return	string  $ret
 	 */
 	public function render() {
-		$ele_name = $this->getName();
-		$ret = "<form id='" . $ele_name . "' name='" . $ele_name . "' action='" . $this->getAction()	. "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">"
-		. "<div class='icms-theme-form'>"
-		. "<fieldset>"
-		. "<legend>" . $this->getTitle() . "</legend>"
-		. "<div class='icms-form-contents'>";
-		
+		$required =& $this->getRequired();
+		$ret = "
+			<form name='".$this->getName()."_dorga' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$this->getName()."(this);'".$this->getExtra().">
+			<table width='100%' class='outer' cellspacing='1'>
+			<tr><th colspan='2'>".$this->getTitle()."</th></tr>
+		";
 		$hidden = '';
-		$class ='even';
-		foreach ( $this->getElements() as $ele ) {
-			$required = $ele->isRequired() === true ? true : false;
-			$requiredClass = $required ? " required" : "";
-			$isHidden = $ele->isHidden() ? true : false;
-			$groupName = $ele->getName() != '' && $ele->getName() != 'XOOPS_TOKEN_REQUEST' ? " group-" . $ele->getName() : "";
-	
-			if(!$isHidden) {
-				$ret .= "<div class='fieldWrapper" . $groupName . $requiredClass . "'>";
-				// $ret .= "<pre>" . print_r($ele, true) . "</pre>";
-			}
-
-			if($required) {
-				$ele->setClass("required");
-			}
-
+		$class = 'even';
+		foreach ($this->getElements() as $ele) {
 			if (!is_object($ele)) {
 				$ret .= $ele;
-			} elseif ( !$isHidden ) {
-				$caption = $ele->getCaption() != '' ? $ele->getCaption() : null;
-				if ($caption !== null) {
-					$ret .=	"<label for='".$ele->getName()."' class='caption-text'>{$caption}";
-					$ret .= $required ? "<span class='caption-marker'>*</span>" : "";
-					$ret .= "</label>";
+			} elseif (!$ele->isHidden()) {
+				if (get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection()) {
+					$ret .= '<tr><th colspan="2">' . $ele->render() . '</th></tr>';
+				} elseif (get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection()) {
+					$ret .= '<tr><td class="even" colspan="2">&nbsp;</td></tr>';
+				} else {
+					$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='"._GLOBAL_LEFT."'><td class='head'>".$ele->getCaption();
+					if ($ele->getDescription() != '') {
+						$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele->getDescription().'</span>';
+					}
+					$ret .= "</td><td class='$class'>".$ele->render()."</td></tr>\n";
 				}
-					
-				if (($desc = $ele->getDescription()) != '') {
-					$ret .= "<div class='icms-form-element-help'>{$desc}</div>";
-				}
-					
-				$ret .= "<div class='".$class."'>" . $ele->render() . "</div>\n";
 			} else {
 				$hidden .= $ele->render();
 			}
-
-			if(!$ele->isHidden()) {
-				$ret .= "</div>";
-			}
 		}
-			
-		$ret .= "\n<div class='hidden'>$hidden</div>\n</fieldset></div>\n</form>\n";
-		// $ret .= $this->renderValidationJS(true);
+		$ret .= "</table>\n$hidden\n</form>\n";
+		$ret .= $this->renderValidationJS(TRUE);
 		return $ret;
 	}
 
@@ -544,7 +523,6 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			$elements[$n]['body'] = $ele->render();
 			$elements[$n]['hidden'] = $ele->isHidden();
 			$elements[$n]['required'] = $ele->isRequired();
-			$elements[$n]['class'] = get_class($ele);
 			$elements[$n]['section'] = get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection();
 			$elements[$n]['section_close'] = get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection();
 			$elements[$n]['hide'] = isset($this->targetObject->vars[$n]['hide']) ? $this->targetObject->vars[$n]['hide'] : FALSE;
@@ -554,12 +532,12 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			}
 			$i++;
 		}
-		// $js = $this->renderValidationJS();
+		$js = $this->renderValidationJS();
 		if (!$smartyName) {
 			$smartyName = $this->getName();
 		}
 
-		$tpl->assign($smartyName, array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(), 'method' => $this->getMethod(), 'elements' => $elements));
+		$tpl->assign($smartyName, array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(),  'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'(this);"'.$this->getExtra(), 'javascript' => $js, 'elements' => $elements));
 	}
 
 	/**
@@ -648,7 +626,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		if ($withtags) {
 			$js .= "//--></script>\n<!-- End Form Vaidation JavaScript //-->\n";
 		}
-		// return $js;
+		return $js;
 	}
 
 	/**

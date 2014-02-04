@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Form
- * @version		SVN: $Id: Theme.php 10575 2010-08-28 21:30:27Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -32,10 +32,10 @@ class icms_form_Theme extends icms_form_Base {
 		$class = ($class != '') ? " class='$class'" : '';
 		//Fix for $extra tag not showing
 		if ($extra) {
-			$extra = "<div class='clear'>$extra</div>";
+			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
 			$this->addElement($extra);
 		} else {
-			$extra = "<div class='clear'>&nbsp;</div>";
+			$extra = "<tr><td colspan='2' $class>&nbsp;</td></tr>";
 			$this->addElement($extra);
 		}
 	}
@@ -47,55 +47,40 @@ class icms_form_Theme extends icms_form_Base {
 	 */
 	public function render() {
 		$ele_name = $this->getName();
-		$ret = "<form class='form-horizontal' id='" . $ele_name . "' name='" . $ele_name . "' action='" . $this->getAction()	. "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">
-		<div class='icms-theme-form'><div class='inner'>
-		<fieldset>
-		<legend>" . $this->getTitle() . "</legend>
-		<div class='icms-form-contents'>";
-		
+		$ret = "<form id='" . $ele_name
+				. "' name='" . $ele_name
+				. "' action='" . $this->getAction()
+				. "' method='" . $this->getMethod()
+				. "' onsubmit='return xoopsFormValidate_" . $ele_name . "();'" . $this->getExtra() . ">
+			<div class='xo-theme-form'>
+			<table width='100%' class='outer' cellspacing='1'>
+			<tr><th colspan='2'>" . $this->getTitle() . "</th></tr>
+		";
 		$hidden = '';
+		$class ='even';
 		foreach ( $this->getElements() as $ele ) {
-			$required = $ele->isRequired() === true ? true : false;
-			$requiredClass = $required ? " required" : "";
-			$isHidden = $ele->isHidden() ? true : false;
-			$groupName = $ele->getName() != '' && $ele->getName() != 'XOOPS_TOKEN_REQUEST' ? " group-" . $ele->getName() : "";
-
-			if($required) {
-				$ele->setClass("required");
-			}
-
-			if(!$isHidden) {
-				$ret .= "<div class='fieldWrapper control-group" . $groupName . "'>";
-				// $ret .= "<pre>" . print_r($ele, true) . "</pre>";
-			}
-
 			if (!is_object($ele)) {
 				$ret .= $ele;
-			} elseif ( !$isHidden ) {
-				$caption = $ele->getCaption() != '' ? $ele->getCaption() : null;
-				if ($caption !== null) {
-					$ret .=	"<label for='".$ele->getName()."' class='caption-text control-label'>{$caption}";
-					$ret .= $required ? "<span class='caption-marker'>*</span>" : "";
-					$ret .= "</label>";
+			} elseif ( !$ele->isHidden() ) {
+				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>";
+				if (($caption = $ele->getCaption()) != '') {
+					$ret .=
+				        "<div class='xoops-form-element-caption" . ($ele->isRequired() ? "-required" : "" ) . "'>"
+						. "<span class='caption-text'>{$caption}</span>"
+						. "<span class='caption-marker'>*</span>"
+						. "</div>";
 				}
-					
 				if (($desc = $ele->getDescription()) != '') {
-					$ret .= "<div class='icms-form-element-help'>{$desc}</div>";
+					$ret .= "<div class='xoops-form-element-help'>{$desc}</div>";
 				}
-					
-				$ret .= "<div class='single_element controls'>" . $ele->render() . "</div>\n";
+				$ret .= "</td><td class='$class'>" . $ele->render() . "</td></tr>\n";
 			} else {
 				$hidden .= $ele->render();
 			}
-
-			if(!$ele->isHidden()) {
-				$ret .= "</div>";
-			}
 		}
-			
-		$ret .= "\n<div class='hidden'>$hidden</div>\n</fieldset></div>\n</div>\n</form>\n";
-		// $ret .= $this->renderValidationJS(true);
-		$class = $class == 'even' ? 'odd' : 'even';
+		$ret .= "</table>\n$hidden\n</div>\n</form>\n";
+		$ret .= $this->renderValidationJS(true);
 		return $ret;
 	}
 }
+

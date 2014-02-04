@@ -11,7 +11,7 @@
  *
  * @package		core
  * @since		XOOPS
- * @version		$Id: cp_functions.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		$Id$
  *
  * @author		The XOOPS Project <http://www.xoops.org>
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
@@ -27,7 +27,7 @@ define('XOOPS_CPFUNC_LOADED', 1);
  * Function icms_cp_header
  *
  * @since ImpressCMS 1.2
- * @version $Id: cp_functions.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version $Id$
  *
  * @author rowd (from the XOOPS Community)
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
@@ -40,6 +40,7 @@ function icms_cp_header() {
 	icms::$logger->stopTime('Module init');
 	icms::$logger->startTime('ImpressCMS CP Output Init');
 
+	/** @todo	Move to a separate class::method - HTTP */
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -47,6 +48,7 @@ function icms_cp_header() {
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
+		header('X-Powered-By: ImpressCMS');
 	}
 
 	$icmsAdminTpl = new icms_view_Tpl();
@@ -80,7 +82,104 @@ function icms_cp_header() {
 	// ################# Preload Trigger startOutputInit ##############
 	icms::$preload->triggerEvent('adminHeader');
 
-	include_once(ICMS_LIBRARIES_PATH . '/jscore/icmsObject.php');
+	$xoTheme->addScript(ICMS_URL . '/include/xoops.js', array('type' => 'text/javascript'));
+	$xoTheme->addScript('' , array('type' => 'text/javascript') , 'startList = function() {
+						if (document.all&&document.getElementById) {
+							navRoot = document.getElementById("nav");
+							for (i=0; i<navRoot.childNodes.length; i++) {
+								node = navRoot.childNodes[i];
+								if (node.nodeName=="LI") {
+									node.onmouseover=function() {
+										this.className+=" over";
+									}
+									node.onmouseout=function() {
+										this.className=this.className.replace(" over", "");
+									}
+								}
+							}
+						}
+					}
+					window.onload=startList;');
+	/** @todo	Remove icms.css in 2.0 */
+	icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
+	$xoTheme->addStylesheet(ICMS_URL . '/icms' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css', array('media' => 'screen'));
+
+	// JQuery UI Dialog
+	$xoTheme->addScript(ICMS_URL . '/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
+if (! empty($_SESSION['redirect_message'])) {
+	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jgrowl.js', array('type' => 'text/javascript'));
+	$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/jgrowl'.((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?'_rtl':'').'.css', array('media' => 'screen'));
+	$xoTheme->addScript('', array('type' => 'text/javascript'), '
+	if (!window.console || !console.firebug) {
+		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+		window.console = {};
+
+		for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
+	}
+
+	(function($) {
+		$(document).ready(function() {
+			$.jGrowl("'.$_SESSION['redirect_message'].'", {  life:5000 , position: "center", speed: "slow" });
+		});
+	})(jQuery);
+	');
+	unset($_SESSION['redirect_message']) ;
+}
+	$xoTheme->addScript(ICMS_URL . '/libraries/jquery/ui/ui.min.js', array('type' => 'text/javascript'));
+	$xoTheme->addScript(ICMS_URL . '/libraries/jquery/helptip.js', array('type' => 'text/javascript'));
+	$xoTheme->addStylesheet(ICMS_URL . '/libraries/jquery/ui/css/ui-smoothness/ui.css', array('media' => 'screen'));
+	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
+	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/jquery.colorbox-min.js');
+
+	/*	$jscript = '';
+	 if(class_exists('icms_form_elements_Dhtmltextarea')) {
+		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+		if(empty($key))
+		continue;
+		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')) {
+		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
+		}else{
+		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+		$func = 'render_'.$key;
+		if (function_exists($func)) {
+		@list($encode, $jscript) = $func($ele_name);
+		if (!empty($jscript)) {
+		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)) {
+		$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
+		}else{
+		$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
+		}
+		}
+		}
+		}
+		}
+		}
+		*/
+	$style_info = '';
+	if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
+		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+			if (empty($key)) continue;
+			if (file_exists(ICMS_ROOT_PATH . '/plugins/textsanitizer/' . $key . '/' . $key . '.css')) {
+				$xoTheme->addStylesheet(
+					ICMS_URL . '/plugins/textsanitizer/' . $key . '/' . $key . '.css',
+					array('media' => 'screen')
+				);
+			} else {
+				$extension = include_once ICMS_ROOT_PATH . '/plugins/textsanitizer/' . $key . '/' . $key . '.php';
+				$func = 'style_' . $key;
+				if (function_exists($func)) {
+					$style_info = $func();
+					if (!empty($style_info)) {
+						if (!file_exists(ICMS_ROOT_PATH . '/' . $style_info)) {
+							$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
+						} else {
+							$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
+						}
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * Loading admin dropdown menus
@@ -275,7 +374,7 @@ function icms_cp_header() {
  * Function icms_cp_footer
  *
  * @since ImpressCMS 1.2
- * @version $Id: cp_functions.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version $Id$
  * @author rowd (from XOOPS Community)
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
@@ -288,6 +387,7 @@ function icms_cp_footer() {
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		header('Cache-Control: private, no-cache');
 		header('Pragma: no-cache');
+		header("X-Powered-By: ImpressCMS");
 	}
 	if (isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate) {
 		trigger_error("xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING);

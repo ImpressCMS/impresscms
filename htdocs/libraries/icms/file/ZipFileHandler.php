@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Core
- * @version		SVN: $Id: ZipFileHandler.php 10502 2010-08-21 15:44:29Z skenow $
+ * @version		SVN: $Id$
  */
 
 /**

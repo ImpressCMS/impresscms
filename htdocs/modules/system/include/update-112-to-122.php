@@ -7,7 +7,7 @@
  * @package		core
  * @since		1.3
  * @author		malanciault <marcan@impresscms.org)
- * @version		$Id: update-112-to-122.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		$Id$
  */
 
 	if ($dbVersion < 11) include 'update-to-112.php';

@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Element
- * @version	$Id: Element.php 11450 2011-11-21 23:27:25Z skenow $
+ * @version	$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -284,7 +284,7 @@ abstract class icms_form_Element {
 	 */
 	public function getExtra($encode = false) {
 		if (!$encode) {
-			return implode(' ', $this->_extra);
+			return " " . implode(' ', $this->_extra);
 		}
 		$value = array();
 		foreach ($this->_extra as $val) {
@@ -301,7 +301,7 @@ abstract class icms_form_Element {
 	public function renderValidationJS() {
 		// render custom validation code if any
 		if (!empty($this->customValidationCode)) {
-			// return implode("\n", $this->customValidationCode);
+			return implode("\n", $this->customValidationCode);
 			// generate validation code if required
 		} elseif ($this->isRequired()) {
 			$eltname    = $this->getName();
@@ -310,7 +310,7 @@ abstract class icms_form_Element {
 						? sprintf(_FORM_ENTER, $eltname)
 						: sprintf(_FORM_ENTER, $eltcaption);
 			$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
-			// return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+			return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
 		}
 		return '';
 	}

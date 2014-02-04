@@ -6,7 +6,7 @@
  * @package	core
  * @since		2009
  * @author	Wiliam Hall (aka Mr. Theme) <mrtheme@impresscms.org>
- * @version	$Id: suggest.php 11233 2011-05-15 14:05:17Z david-sf $
+ * @version	$Id$
  **/
 include 'mainfile.php';
 icms::$logger->disableLogger();

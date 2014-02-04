@@ -8,7 +8,7 @@
  * @package		Core
  * @subpackage	Textsanitizer
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Textsanitizer.php 11387 2011-09-22 18:39:05Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 /**

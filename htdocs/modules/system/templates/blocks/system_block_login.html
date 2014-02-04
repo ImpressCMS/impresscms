@@ -1,48 +1,36 @@
-<div class="login-block<{if $block.auth_openid}> btn-toggles<{/if}>">
-  <{if $block.auth_openid}>
-    <div class="btn-group">
-      <button data-toggle="#block_login_form" class="btn active">Normal</button>
-      <button data-toggle="#block-openid-form" class="btn">OpenID</button>
-    </div>
-  <{/if}>
-
-  <div class="login-content<{if $block.auth_openid}> tab-content<{/if}>">
-    <div id="block_login_form" class="block_login_form<{if $block.auth_openid}> tab-pane active<{/if}>">
-      <form action="<{if $block.dossl}><{$icms_secure_url}><{else}><{$icms_url}><{/if}>/user.php" method="post">
-        <div>
-          <input type="text" class="uname required" name="uname" size="12" value="" maxlength="25" placeholder="<{$block.lang_username}>" />
-          <input type="password" class="required" name="pass" size="12" maxlength="32" placeholder="<{$block.lang_password}>" />
-      
-          <{if $block.rememberme }>
-            <label class="checkbox" for="rememberme">
-              <input type="checkbox" name="rememberme" id="rememberme" value="On" />
-              <{$block.lang_rememberme}>
-            </label>
-          <{/if}>
-          
-          <input type="hidden" name="icms_redirect" value="<{$icms_requesturi}>" />
-          <input type="hidden" name="op" value="login" />
-          <button type="submit" class="btn btn-block btn-primary"><{$block.lang_login}></button>
-        </div>
-      </form>
-    </div>
-    <{if $block.auth_openid}>  
-      <div id="block-openid-form" class="tab-pane">
-        <form method="get" action="<{if $block.dossl}><{$icms_secure_url}><{else}><{$icms_url}><{/if}>/try_auth.php">
-          <div>
-            <{$smarty.const._MB_SYSTEM_OPENID_URL}>
-            <input type="hidden" name="action" value="verify" />
-            <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
-            <button type="submit" class="btn btn-block btn-primary"><{$block.lang_login}></button>
-          </div>
-        </form>
-      </div>
+<div id="block_login_form">
+  <form style="margin-top: 0px;" action="<{$xoops_url}>/user.php" method="post">
+    <p><{$block.lang_username}></p>
+    <div><input type="text" class="uname" name="uname" size="12" value="<{$block.unamevalue}>" maxlength="25" /><br /></div>
+    <p><{$block.lang_password}></p>
+    <div><input type="password" name="pass" size="12" maxlength="32" /><br /></div>
+    <{if $block.rememberme }>
+    <div><input type="checkbox" name="rememberme" value="On" /><{$block.lang_rememberme}><br /></div>
     <{/if}>
-    <div id="block_login_actions" class="block_login_actions">
-      <a class="btn btn-block" href="<{$icms_url}>/user.php#lost" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
-      <{if $block.registration }>
-        <a class="btn btn-block" href="<{$icms_url}>/register.php" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
-      <{/if}>
-    </div>      
-  </div>
+    <div><input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" /></div>
+    <div><input type="hidden" name="op" value="login" /></div>
+    <div><input type="submit" value="<{$block.lang_login}>" /><br /></div>
+    <{$block.sslloginlink}>
+  </form>
+  <{if $block.auth_openid}>
+	  <div style="text-align: <{$smarty.const._GLOBAL_LEFT}>;"><a href="#" onclick="xoopsGetElementById('openid-verify-form2').style.display = 'block'; xoopsGetElementById('block_login_form').style.display = 'none'; return false;"><{$smarty.const._MB_SYSTEM_OPENID_LOGIN}></a></div>
+  <{/if}>
 </div>
+
+<{if $block.auth_openid}>
+	<div id="openid-verify-form2" style="display: none;">
+	  <form method="get" action="<{$xoops_url}>/try_auth.php">
+	    <{$smarty.const._MB_SYSTEM_OPENID_URL}>
+	    <input type="hidden" name="action" value="verify" />
+	    <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
+	    <input type="submit" value="<{$block.lang_login}>" />
+	  </form>
+	  <div style="text-align: <{$smarty.const._GLOBAL_LEFT}>;"><a href="#" onclick="xoopsGetElementById('block_login_form').style.display = 'block'; xoopsGetElementById('openid-verify-form2').style.display = 'none'; return false;"><{$smarty.const._MB_SYSTEM_OPENID_NORMAL_LOGIN}></a></div>
+	</div>
+<{/if}>
+<br />
+<a href="<{$xoops_url}>/user.php#lost" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
+<{if $block.registration }>
+<br />
+<a href="<{$xoops_url}>/register.php" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
+<{/if}>

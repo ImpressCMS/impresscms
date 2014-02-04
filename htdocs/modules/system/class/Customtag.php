@@ -8,7 +8,7 @@
  * @subpackage	Custom Tags
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Customtag.php 11583 2012-02-19 05:10:24Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

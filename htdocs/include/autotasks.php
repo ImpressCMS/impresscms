@@ -8,7 +8,7 @@
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
  * @internal	This file is used for executing sheduled tasks
- * @version		$Id: autotasks.php 10020 2010-06-12 06:23:03Z skenow $
+ * @version		$Id$
  */
 
 ob_start();

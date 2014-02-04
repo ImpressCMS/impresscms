@@ -7,7 +7,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License(GPL)
  * @package		core
  * @author	    Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: index.php 11733 2012-06-21 23:11:44Z skenow $
+ * @version		SVN: $Id$
  **/
 
 

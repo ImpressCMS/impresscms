@@ -8,7 +8,7 @@
  * @subpackage	Users
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: UserrankHandler.php 11587 2012-02-19 05:36:47Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die ("ImpressCMS root path not defined");

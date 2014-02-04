@@ -7,7 +7,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		core
- * @version		SVN: $Id: searchform.php 10647 2010-09-17 02:17:54Z skenow $
+ * @version		SVN: $Id$
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 

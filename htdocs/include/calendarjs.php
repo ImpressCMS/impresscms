@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: calendarjs.php 11377 2011-09-08 15:14:24Z mcdonald3072 $
+ * @version	$Id$
  */
 
 defined('ICMS_ROOT_PATH') or exit();

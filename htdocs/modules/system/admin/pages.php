@@ -10,7 +10,7 @@
  * @package 	System
  * @subpackage	Symlinks
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id: pages.php 11610 2012-02-28 03:53:55Z skenow $
+ * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */

@@ -15,7 +15,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author		modified by marcan <marcan@impresscms.org>
- * @version		$Id: admin.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		$Id$
  */
 
 define('ICMS_IN_ADMIN', 1);

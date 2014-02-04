@@ -5,7 +5,7 @@
  * @package		System
  * @subpackage	Modules
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: modules.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */

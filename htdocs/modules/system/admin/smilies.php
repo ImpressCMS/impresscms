@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Smilies
- * @version		SVN: $Id: smilies.php 11719 2012-05-22 00:40:10Z skenow $
+ * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */

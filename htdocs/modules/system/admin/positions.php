@@ -11,7 +11,7 @@
  * @subpackage	Block Positions
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
- * @version		SVN: $Id: positions.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */

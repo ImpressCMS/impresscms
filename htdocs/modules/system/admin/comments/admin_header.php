@@ -8,7 +8,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Comments
- * @version		SVN: $Id: admin_header.php 11011 2011-02-06 00:02:25Z skenow $
+ * @version		SVN: $Id$
  */
 
 include '../../../../mainfile.php';

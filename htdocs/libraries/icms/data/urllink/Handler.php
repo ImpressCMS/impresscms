@@ -9,7 +9,7 @@
  * @subpackage	urllink
  * @since		1.3
  * @author		Phoenyx
- * @version		$Id: Handler.php 10849 2010-12-05 18:46:02Z phoenyx $
+ * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

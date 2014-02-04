@@ -1,5 +1,5 @@
 <?php
-// $Id: misc.php 8548 2009-04-11 10:34:21Z icmsunderdog $
+// $Id$
 define("_MSC_YOURNAMEC","Your Name: ");
 define("_MSC_YOUREMAILC","Your Email: ");
 define("_MSC_FRIENDNAMEC","Friend Name: ");

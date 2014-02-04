@@ -377,7 +377,6 @@ abstract class icms_form_Base {
 	 * </code>
 	 *
 	 * @param		boolean  $withtags	Include the < javascript > tags in the returned string
-	 * @TODO - rewrite this to tie into new JS Framework - whall
 	 */
 	public function renderValidationJS( $withtags = true ) {
 		$js = "";
@@ -396,7 +395,7 @@ abstract class icms_form_Base {
 		if ( $withtags ) {
 			$js .= "//--></script>\n<!-- End Form Vaidation JavaScript //-->\n";
 		}
-		// return $js;
+		return $js;
 	}
 
 	/**
@@ -426,7 +425,7 @@ abstract class icms_form_Base {
 				$elements[$n]['description']  = $ele_description;
 			}
 		}
-		// $js = $this->renderValidationJS();
+		$js = $this->renderValidationJS();
 		$tpl->assign($this->getName(), array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(),  'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'();"'.$this->getExtra(), 'javascript' => $js, 'elements' => $elements));
 	}
 }

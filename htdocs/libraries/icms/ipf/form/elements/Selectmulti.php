@@ -7,7 +7,7 @@
  * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Selectmulti.php 10721 2010-10-11 19:40:51Z phoenyx $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

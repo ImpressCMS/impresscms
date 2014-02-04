@@ -9,7 +9,7 @@
  * @subpackage  Criteria
  * @since		1.3
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Compo.php 10614 2010-09-08 15:39:19Z malanciault $
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

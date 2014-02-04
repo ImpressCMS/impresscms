@@ -8,7 +8,7 @@
 * @subpackage	Symlinks
 * @since		1.1
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		SVN: $Id: icms_version.php 11610 2012-02-28 03:53:55Z skenow $
+* @version		SVN: $Id$
 */
 
 $modversion = array(

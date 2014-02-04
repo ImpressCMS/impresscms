@@ -14,7 +14,7 @@
  * @package		Form
  * @subpackage	Elements
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Object.php 10807 2010-11-20 19:16:00Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 icms_loadLanguageFile('core', 'captcha');

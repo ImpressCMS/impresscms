@@ -9,7 +9,7 @@
  * @subpackage	AdSense
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: adsense.php 11610 2012-02-28 03:53:55Z skenow $
+ * @version		$Id$
  */
 /* set get and post filters before including admin_header, if not strings */
 $filter_post = array();
@@ -39,7 +39,7 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 		$sform->assign($icmsAdminTpl);
 		
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_EDIT_INFO);
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/adsense/system_adm_adsense.html');
+		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
 	} else {
 		$adsenseObj->setVar('adsenseid', 0);
 		$adsenseObj->setVar('tag', '');
@@ -47,7 +47,7 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 		$sform->assign($icmsAdminTpl);
 
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_CREATE_INFO);
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/adsense/system_adm_adsense.html');
+		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
 	}
 }
 

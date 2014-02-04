@@ -7,7 +7,7 @@
  * @package	core
  * @since	1.1
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: inviteform.php 11079 2011-03-17 12:43:06Z m0nty_ $
+ * @version	$Id$
  */
 
 if (!defined("ICMS_ROOT_PATH")) {

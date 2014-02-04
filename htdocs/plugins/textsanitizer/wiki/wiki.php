@@ -8,7 +8,7 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id: wiki.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		$Id$
  */
 /**
  * Link to associated page on Wikipedia for the enclosed text

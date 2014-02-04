@@ -1,89 +1,79 @@
 <{if $lang_reset !== 1}>
-	<div class="tabbable tabs-left">
-	  <ul class="nav nav-tabs">
-	    <li class="active">
-	      <a href="#login_form"><{$smarty.const._MB_SYSTEM_OPENID_NORMAL_LOGIN}></a>
-	    </li>
-    	<{if $auth_openid}>
-		    <li>
-		      <a href="#openid-form"><{$smarty.const._MB_SYSTEM_OPENID_LOGIN}></a>
-		    </li>
-		  <{/if}>
-	    <li>
-	    	<a href="#lostpass-form"><{$lang_lostpassword}></a>
-	    </li>
-	  </ul>
-
-	  <div class="tab-content">
-
-	    <div id="login_form" class="tab-pane active">
-	      <form style="margin-top: 0px;" action="<{$icms_url}>/user.php" method="post">
-	        <div>
-	          <input type="text" class="uname" name="uname" size="12" value="<{$usercookie}>" maxlength="25" placeholder="<{$lang_username}>" />
-	          <input type="password" name="pass" size="12" maxlength="32" placeholder="<{$lang_password}>" />
-	      
-	          <{if $rememberme }>
-	            <input type="checkbox" name="rememberme" id="rememberme" value="On" />
-	            <label for="rememberme"><{$lang_rememberme}></label>
-	          <{/if}>
-	          
-	          <input type="hidden" name="icms_redirect" value="<{$redirect_page}>" />
-	          <input type="hidden" name="op" value="login" />
-	          <input type="submit" value="<{$lang_login}>" />
-	          <{$sslloginlink}>
-	        </div>
-	      </form>
-	    </div>
-
-			<{if $auth_openid}>  
-		    <div id="openid-form" class="tab-pane">
-		      <form method="get" action="<{$icms_url}>/try_auth.php">
-		        <div>
-		          <{$smarty.const._MB_SYSTEM_OPENID_URL}>
-		          <input type="hidden" name="action" value="verify" />
-		          <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
-		          <input type="submit" value="<{$lang_login}>" />          
-		        </div>
-		      </form>
-		    </div>
-		  <{/if}>
-
-		  <div id="lostpass-form" class="tab-pane">
-		  	<p><{$lang_noproblem}></p>
-				<form action="lostpass.php" method="post">
-					<div>
-						<input type="text" name="email" size="26" maxlength="60" placeholder="<{$lang_youremail}>" />
-						<input type="hidden" name="op" value="mailpasswd" />
-						<input type="hidden" name="t" value="<{$mailpasswd_token}>" />
-			     	<input type="submit" value="<{$lang_sendpassword}>" />
-			     </div>
-				</form>		  	
-		  </div>
-
-	  </div>
+<div style="position: relative;">
+	<div>
+		<fieldset style="padding: 10px;">
+			<legend style="font-weight: bold;"><{$lang_login}></legend>
+<div id="icms_block_login_form">
+			<form action="user.php" method="post">
+		    	<div><{$lang_username}><input type="text" class="uname" name="uname" size="21" maxlength="25" value="<{$usercookie}>" />
+		    	<br />
+			    <br /></div>
+		    	<div><{$lang_password}><input type="password" name="pass" size="21" maxlength="32" /><br /></div>
+			    <{if $rememberme }>
+			    	<div><input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}><br /></div>
+			    <{/if}>
+			    <div><input type="hidden" name="op" value="login" /></div>
+		    	<div><input type="hidden" name="xoops_redirect" value="<{$redirect_page}>"/>
+			    <br />
+		    	<input type="submit" value="<{$lang_login}>" /></div>
+			</form>
+  <{if $auth_openid}>
+<br />
+	  <div style="text-align: <{$smarty.const._GLOBAL_LEFT}>;"><a href="#" onclick="xoopsGetElementById('icms_openid-verify-form2').style.display = 'block'; xoopsGetElementById('icms_block_login_form').style.display = 'none'; return false;"><{$lang_login_oid}></a></div>
+  <{/if}>
+</div>
+<{if $auth_openid}>
+	<div id="icms_openid-verify-form2" style="display: none;">
+	  <form method="get" action="<{$xoops_url}>/try_auth.php">
+	    <{$lang_youoid}>
+	    <input type="hidden" name="action" value="verify" />
+	    <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
+	    <input type="submit" value="<{$lang_login}>" />
+	  </form>
+<br />
+	  <div style="text-align: <{$smarty.const._GLOBAL_LEFT}>;"><a href="#" onclick="xoopsGetElementById('icms_block_login_form').style.display = 'block'; xoopsGetElementById('icms_openid-verify-form2').style.display = 'none'; return false;"><{$lang_back2normoid}></a></div>
 	</div>
-	
-	<{if $allow_registration }>
-		<div id="allowRegistration" class="allowRegistration">
-			<{$lang_notregister}>
-		</div>
-	<{/if}>
-<{else}>
-	<div id="passwordResetWrapper" class="passwordResetWrapper">
-		<h2><{$smarty.const._US_RESETPASSTITLE}></h2>
-		<p><{$smarty.const._US_RESETPASSINFO}></p>
+<br />
+<{/if}>
+			<a name="lost"></a>
+			<{if $allow_registration }>
+				<div style="text-align: <{$smarty.const._GLOBAL_RIGHT}>;"><{$lang_notregister}><br /></div>
+			<{/if}>
+		</fieldset>
+	</div>
 
-		<form action="<{$icms_url}>/resetpass.php" method="post">
+	<div>
+		<fieldset style="padding: 10px;">
+			<legend style="font-weight: bold;"><{$lang_lostpassword}></legend>
 			<div>
-				<input type="text" name="email" size="26" maxlength="100" placeholder="<{$lang_youremail}>" class="wide" /><br />
-				<input type="username" name="username" size="26" maxlength="60" value="<{$lang_uname}>" placeholder="<{$lang_username}>" class="wide" /><br />
-				<input type="password" name="c_password" size="26" maxlength="255" placeholder="<{$lang_currentpass}>" class="wide" /><br />
-				<input type="password" name="password" size="26" maxlength="255" placeholder="<{$lang_newpass}>" class="wide" /><br />
-				<input type="password" name="password2" size="26" maxlength="255" placeholder="<{$lang_newpass2}>" class="wide" /><br />
-				<input type="hidden" name="op" value="resetpass" />
-				<input type="hidden" name="t" value="<{$resetpassword_token}>" />
-	     	<input type="submit" value="<{$smarty.const._US_RESETPASSWORD}>" />
-	    </div>
-		</form>
+				<{$lang_noproblem}>
+			</div>
+			<form action="lostpass.php" method="post">
+				<div><br /><{$lang_youremail}> <input type="text" name="email" size="26" maxlength="60" />&nbsp;&nbsp;<input type="hidden" name="op" value="mailpasswd" /><input type="hidden" name="t" value="<{$mailpasswd_token}>" />
+		    	<br />
+		    	<br />
+		     	<input type="submit" value="<{$lang_sendpassword}>" /></div>
+			</form>
+		</fieldset>
 	</div>
+</div>
+<{else}>
+<div style="position: relative;height: 250px;">
+	<div style="float: <{$smarty.const._GLOBAL_LEFT}>; width: 80% ">
+		<fieldset style="padding: 10px;">
+			<legend style="font-weight: bold;"><{$smarty.const._US_RESETPASSWORD}></legend>
+			<h1><{$smarty.const._US_RESETPASSTITLE}></h1>
+			<div><{$smarty.const._US_RESETPASSINFO}></div>
+			<br />
+			<form action="resetpass.php" method="post">
+				<{$lang_currentpass}> <input type="password" name="c_password" size="26" maxlength="255" /><br />
+				<{$lang_newpass}> <input type="password" name="password" size="26" maxlength="255" /><br />
+				<{$lang_newpass2}> <input type="password" name="password2" size="26" maxlength="255" />&nbsp;&nbsp;<input type="hidden" name="op" value="resetpass" /><input type="hidden" name="t" value="<{$resetpassword_token}>" />
+		    	<br />
+		    	<br />
+		     	<input type="submit" value="<{$smarty.const._US_RESETPASSWORD}>" />
+			</form>
+		</fieldset>
+	</div>
+</div>
 <{/if}>

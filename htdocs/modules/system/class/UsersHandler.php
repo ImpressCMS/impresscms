@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Administration
  * @subpackage	Users
- * @version		SVN $Id: UsersHandler.php 11719 2012-05-22 00:40:10Z skenow $
+ * @version		SVN $Id$
  */
 
 /**

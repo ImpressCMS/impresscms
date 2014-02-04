@@ -9,7 +9,7 @@
  * @package		core
  * @since		1.0
  * @author		m0nty_
- * @version		$Id: privpolicy.php 11072 2011-03-14 15:52:14Z m0nty_ $
+ * @version		$Id$
  */
 
 $xoopsOption['pagetype'] = 'privpolicy';
@@ -21,12 +21,11 @@ if ($icmsConfigUser['priv_dpolicy'] == false) {
 $xoopsOption['template_main'] = 'system_privpolicy.html';
 include ICMS_ROOT_PATH.'/header.php';
 
-$icmsTpl->assign('priv_poltype', 'page');
-$icmsTpl->assign('icms_pagetitle', _PRV_PRIVACY_POLICY);
+$xoopsTpl->assign('priv_poltype', 'page');
 $priv = str_replace('{X_SITEURL}', ICMS_URL.'/', $icmsConfigUser['priv_policy']);
 $priv = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $priv);
 $priv = icms_core_DataFilter::checkVar($priv, 'html', 'output');
-$icmsTpl->assign('priv_policy', html_entity_decode($priv));
-$icmsTpl->assign('lang_privacy_policy', _PRV_PRIVACY_POLICY);
+$xoopsTpl->assign('priv_policy', $priv);
+$xoopsTpl->assign('lang_privacy_policy', _PRV_PRIVACY_POLICY);
 
 include ICMS_ROOT_PATH.'/footer.php';

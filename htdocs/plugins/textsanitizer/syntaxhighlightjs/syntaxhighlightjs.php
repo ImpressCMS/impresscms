@@ -8,7 +8,7 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id: syntaxhighlightjs.php 11185 2011-04-15 17:55:34Z m0nty_ $
+ * @version		$Id$
  */
 
 /**

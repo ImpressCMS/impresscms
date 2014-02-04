@@ -9,7 +9,7 @@
  * @since		ImpressCMS 1.1
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id: Handler.php 10619 2010-09-08 17:59:13Z malanciault $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

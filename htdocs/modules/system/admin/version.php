@@ -10,7 +10,7 @@
  * @subpackage	Version
  * @since		1.0
  * @author		malanciault <marcan@impresscms.org)
- * @version		SVN: $Id: version.php 11610 2012-02-28 03:53:55Z skenow $
+ * @version		SVN: $Id$
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin()) {

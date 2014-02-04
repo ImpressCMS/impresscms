@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Smilies
- * @version		SVN: $Id: smileform.php 11031 2011-02-18 05:18:10Z skenow $
+ * @version		SVN: $Id$
  */
 
 $smile_form = new icms_form_Theme($smiles['smile_form'], 'smileform', 'admin.php', 'post', TRUE);

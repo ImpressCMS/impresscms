@@ -6,7 +6,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		plugins
- * @version		$Id: mentions.php 11691 2012-04-14 21:15:44Z skenow $
+ * @version		$Id$
  */
 define('MENTIONS_LINK',	ICMS_URL . '/userinfo.php?uid=%u'); // The link to user profile
 

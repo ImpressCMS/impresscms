@@ -10,7 +10,7 @@
  * @subpackage	Blocks
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @author		Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
- * @version		SVN: $Id: Blocks.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 /**

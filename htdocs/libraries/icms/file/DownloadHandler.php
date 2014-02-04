@@ -8,7 +8,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		File
- * @version		SVN: $Id: DownloadHandler.php 10502 2010-08-21 15:44:29Z skenow $
+ * @version		SVN: $Id$
  */
 /**
  * Sends non HTML files through a http socket

@@ -7,7 +7,7 @@
  * @license		LICENSE.txt
  * @package	core
  * @since		1.2
- * @version		$Id: protection.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		$Id$
  */
 
 include '../mainfile.php';

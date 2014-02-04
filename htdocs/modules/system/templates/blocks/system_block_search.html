@@ -1,10 +1,4 @@
-<div class="search_block">
-  <form action="<{$icms_url}>/search.php" method="get">
-    <div class="control-group">
-      <input type="hidden" name="action" value="results" />
-      <input class="required" type="text" name="query" placeholder="<{$block.lang_search}>&hellip;" />
-      <button type="submit" class="btn btn-small btn-block btn-primary"><{$block.lang_search}></button>
-      <a class="btn btn-small btn-block" href="<{$icms_url}>/search.php"><{$block.lang_advsearch}></a>
-    </div>
-  </form>
-</div>
+<form style="margin-top: 0px;" action="<{$xoops_url}>/search.php" method="get">
+  <div><input type="text" name="query" size="14" /><input type="hidden" name="action" value="results" /><br /><input type="submit" value="<{$block.lang_search}>" /></div>
+</form>
+<a href="<{$xoops_url}>/search.php" title="<{$block.lang_advsearch}>"><{$block.lang_advsearch}></a>

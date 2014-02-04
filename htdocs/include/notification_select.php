@@ -12,7 +12,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: notification_select.php 10825 2010-12-03 00:01:23Z skenow $
+ * @version	$Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) {

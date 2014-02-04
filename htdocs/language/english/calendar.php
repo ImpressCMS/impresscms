@@ -1,5 +1,5 @@
 <?php
-// $Id: calendar.php 9538 2009-11-13 18:59:32Z pesianstranger $
+// $Id$
 //%%%%%		Time Zone	%%%%
 define("_CAL_SUNDAY", "Sunday");
 define("_CAL_MONDAY", "Monday");

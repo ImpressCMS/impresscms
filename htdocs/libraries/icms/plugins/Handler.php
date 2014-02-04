@@ -9,7 +9,7 @@
  * @since		1.2
  * @author		ImpressCMS
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: Handler.php 11450 2011-11-21 23:27:25Z skenow $
+ * @version		$Id$
  */
  /**
   * Handler for the plugins object

@@ -20,7 +20,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: Image.php 10924 2010-12-21 21:13:37Z skenow $
+ * @version	$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die();

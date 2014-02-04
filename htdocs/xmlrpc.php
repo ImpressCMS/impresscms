@@ -8,7 +8,7 @@
  * @since        XOOPS
  * @author       http://www.xoops.org The XOOPS Project
  * @author       Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version      $Id: xmlrpc.php 10806 2010-11-20 17:09:38Z phoenyx $
+ * @version      $Id$
  */
 define('XOOPS_XMLRPC', 1);
 include './mainfile.php';

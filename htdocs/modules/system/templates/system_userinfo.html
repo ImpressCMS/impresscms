@@ -1,178 +1,155 @@
-<div id="userinfoWrapper">
-  <h3><{$lang_allaboutuser}></h3>
+<{if $user_ownpage == true}>
 
-  <div id="userinfoContent">
-    <table class="table table-striped table-bordered" cellpadding="0" cellspacing="0">
-      <tr>
-        <td>
-          <div class="avatar">
-            <img clas="img-polaroid" src="<{$user_avatarurl}>" alt="Avatar" />
-            <div class="img-caption"><{if $user_rankimage}><{$user_rankimage}><br /><{/if}><{$user_ranktitle}></div>
-          </div>          
-        </td>
-        <td>
-          <div class="btn-group">
-            <{$user_pmlink}>
-          
-            <{if $user_ownpage == true || $xoops_isadmin == true}>
-              <{if $user_ownpage == true}>
-                <button type="button" class="btn btn-mini" onclick="location='edituser.php'"><{$lang_editprofile}></button>
-              <{else}>
-                <button type="button" class="btn btn-mini" onclick="location='<{$icms_url}>/modules/system/admin.php?fct=users&amp;uid=<{$user_uid}>&amp;op=modifyUser'"><{$lang_editprofile}></button>
-              <{/if}>
+<form id="usernav" action="user.php" method="post">
 
-              <{if $user_ownpage == true}>
-                <button type="button" class="btn btn-mini" onclick="location='edituser.php?op=avatarform'"><{$lang_avatar}></button>
-                <button type="button" class="btn btn-mini" onclick="location='viewpmsg.php'"><{$lang_inbox}></button>
+<table width="70%" style="margin: 0 auto;" border="0">
+  <tr align="center">
+    <td><input type="button" value="<{$lang_editprofile}>" onclick="location='edituser.php'" />
+    <input type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'" />
+    <input type="button" value="<{$lang_notifications}>" onclick="location='notifications.php'" />
+    <input type="button" value="<{$lang_inbox}><{xoInboxCount assign=pmcount}><{if $pmcount}> (<{$pmcount}>) <{/if}>" onclick="location='viewpmsg.php'" />
 
-                <{if $user_candelete == true}>
-                  <button type="button" class="btn btn-mini btn-danger" onclick="location='user.php?op=delete'"><{$lang_deleteaccount}></button>
-                <{/if}>
-              <{else}>
-                <button type="button" class="btn btn-mini btn-danger" onclick="location='<{$icms_url}>/modules/system/admin.php?fct=users&amp;op=delUser&amp;uid=<{$user_uid}>'"><{$lang_deleteaccount}></button>
-              <{/if}>
+    <{if $user_candelete == true}>
+    <input type="button" value="<{$lang_deleteaccount}>" onclick="location='user.php?op=delete'" />
+    <{/if}>
 
-              <{if $user_ownpage == true}>
-                <button type="button" class="btn btn-mini btn-warning" onclick="location='user.php?op=logout'"><{$lang_logout}></button>
-              <{/if}>
-            <{/if}>
-          </div>
-        </td>
-      </tr>
-      <{if $user_realname}>
-        <tr>
-          <td><{$lang_realname}></td>
-          <td><{$user_realname}></td>
-        </tr>
-      <{/if}>
-      <{if $user_posts}>
-        <tr>
-          <td><{$lang_posts}></td>
-          <td><{$user_posts}></td>
-        </tr>
-      <{/if}>      
-      <{if $user_joindate}>
-        <tr>
-          <td><{$lang_membersince}></td>
-          <td><{$user_joindate}></td>
-        </tr>
-      <{/if}>
-      <{if $user_lastlogin}>
-        <tr>
-          <td><{$lang_lastlogin}></td>
-          <td><{$user_lastlogin}></td>
-        </tr>
-      <{/if}>      
-      <{if $user_websiteurl}>
-        <tr>
-          <td><{$lang_website}></td>
-          <td><{$user_websiteurl}></td>
-        </tr>
-      <{/if}>
-      <{if $user_email}>
-        <tr>
-          <td><{$lang_email}></td>
-          <td><{$user_email}></td>
-        </tr>
-      <{/if}>
-      <{if $user_openid}>
-        <tr>
-          <td><{$lang_openid}></td>
-          <td><{$user_openid}></td>
-        </tr>      
-      <{/if}>
-      <{if $user_icq}>
-        <tr>
-          <td><{$lang_icq}></td>
-          <td><{$user_icq}></td>
-        </tr>
-      <{/if}>
-      <{if $user_aim}>
-        <tr>
-          <td><{$lang_aim}></td>
-          <td><{$user_aim}></td>
-        </tr>
-      <{/if}>
-      <{if $user_yim}>
-        <tr>
-          <td><{$lang_yim}></td>
-          <td><{$user_yim}></td>
-        </tr>
-      <{/if}>      
-      <{if $user_msnm}>
-        <tr>
-          <td><{$lang_msnm}></td>
-          <td><{$user_msnm}></td>
-        </tr>
-      <{/if}>
-      <{if $user_location}>
-        <tr>
-          <td><{$lang_location}></td>
-          <td><{$user_location}></td>
-        </tr>
-      <{/if}>
-      <{if $user_occupation}>
-        <tr>
-          <td><{$lang_occupation}></td>
-          <td><{$user_occupation}></td>
-        </tr>
-      <{/if}>
-      <{if $user_interest}>
-        <tr>
-          <td><{$lang_interest}></td>
-          <td><{$user_interest}></td>
-        </tr>
-      <{/if}>
-      <{if $user_extrainfo}>
-        <tr>
-          <td colspan="2">
-            <h4><{$lang_extrainfo}></h4>
-            <{$user_extrainfo}>
-          </td>
-        </tr>
-      <{/if}>      
-      <{if $user_signature}>
-        <tr>
-          <td colspan="2">
-            <h4><{$lang_signature}></h4>            
-            <{$user_signature}>
-          </td>
-        </tr>
-      <{/if}>        
-    </table>    
-  </div>
-</div>
+    <input type="button" value="<{$lang_logout}>" onclick="location='user.php?op=logout'" /></td>
+  </tr>
+</table>
+</form>
 
-<div id="userContentsWrapper">
-  <h3><{$lang_activity}></h3>
-  <div id="userContentsAccordion" class="accordion">
-    <!-- start module search results loop -->
-    <{foreach item=module from=$modules name=modloop}>
-      <div class="accordion-group">
-        <div class="accordion-heading">
-          <a class="accordion-toggle" data-toggle="collapse" data-parent="#userContentsAccordion" href="#collapse_<{$module.id}>">
-            <{$module.name}>
-          </a>
-        </div>
-        <div id="collapse_<{$module.id}>" class="accordion-body collapse<{if $smarty.foreach.modloop.iteration == 1}> in<{/if}>">
-          <div class="accordion-inner">
-            <{foreach item=result from=$module.results}>
-              <div class="media">
-                <a class="pull-left" href="<{$result.link}>" title="<{$result.title}>">
-                  <img src="<{$result.image}>" alt="<{$module.name}>" />
-                </a>
-                <div class="media-body">
-                  <h4 class="media-heading">
-                    <a href="<{$result.link}>" title="<{$result.title}>"><{$result.title}></a>
-                  </h4>
-                  <{$result.time}>
-                </div>
-              </div>
-            <{/foreach}>
-            <{$module.showall_link}>
-          </div>
-        </div>
-      </div>
-    <{/foreach}>
-  </div>
-</div>
+<{elseif $xoops_isadmin != false}>
+
+
+<table width="70%" style="margin: 0 auto;" border="0">
+  <tr align="center">
+    <td><input type="button" value="<{$lang_editprofile}>" onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&uid=<{$user_uid}>&op=modifyUser'" />
+    <input type="button" value="<{$lang_deleteaccount}>" onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&op=delUser&uid=<{$user_uid}>'" />
+    </td>
+  </tr>
+</table>
+
+<{/if}>
+
+<table width="100%" border="0" cellspacing="5px">
+  <tr valign="top">
+    <td style="width: 50%;">
+      <table class="outer" cellpadding="4px" cellspacing="1px" width="100%">
+        <tr>
+          <th colspan="2" align="center"><{$lang_allaboutuser}></th>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_avatar}></td>
+          <td align="center" class="even"><img src="<{$user_avatarurl}>" alt="Avatar" /></td>
+        </tr>
+        <tr>
+          <td class="head"><{$lang_realname}></td>
+          <td align="center" class="odd"><{$user_realname}></td>
+        </tr>
+        <tr>
+          <td class="head"><{$lang_website}></td>
+          <td class="even"><{$user_websiteurl}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_email}></td>
+          <td class="odd"><{$user_email}></td>
+        </tr>
+    <{if $user_alwopenid == true}>
+        <tr valign="top">
+          <td class="head"><{$lang_openid}></td>
+          <td class="odd"><{$user_openid}></td>
+        </tr>
+    <{/if}>
+	<tr valign="top">
+          <td class="head"><{$lang_privmsg}></td>
+          <td class="even"><{$user_pmlink}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_icq}></td>
+          <td class="odd"><{$user_icq}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_aim}></td>
+          <td class="even"><{$user_aim}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_yim}></td>
+          <td class="odd"><{$user_yim}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_msnm}></td>
+          <td class="even"><{$user_msnm}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_location}></td>
+          <td class="odd"><{$user_location}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_occupation}></td>
+          <td class="even"><{$user_occupation}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_interest}></td>
+          <td class="odd"><{$user_interest}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_extrainfo}></td>
+          <td class="even"><{$user_extrainfo}></td>
+        </tr>
+      </table>
+    </td>
+    <td style="width: 50%;">
+      <table class="outer" cellpadding="4px" cellspacing="1px" width="100%">
+        <tr valign="top">
+          <th colspan="2" align="center"><{$lang_statistics}></th>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_membersince}></td>
+          <td align="center" class="even"><{$user_joindate}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_rank}></td>
+          <td align="center" class="odd"><{if $user_rankimage}><{$user_rankimage}><br /><{/if}><{$user_ranktitle}></td>
+        </tr>
+        <tr valign="top">
+          <td class="head"><{$lang_posts}></td>
+          <td align="center" class="even"><{$user_posts}></td>
+        </tr>
+	<tr valign="top">
+          <td class="head"><{$lang_lastlogin}></td>
+          <td align="center" class="odd"><{$user_lastlogin}></td>
+        </tr>
+      </table>
+      <br />
+    <{if $user_showsignature == true}>
+      <table class="outer" cellpadding="4px" cellspacing="1px" width="100%">
+        <tr valign="top">
+          <th colspan="2" align="center"><{$lang_signature}></th>
+        </tr>
+        <tr valign="top">
+          <td class="even"><{$user_signature}></td>
+        </tr>
+      </table>
+    <{/if}>
+    </td>
+  </tr>
+</table>
+
+<!-- start module search results loop -->
+<{foreach item=module from=$modules}>
+
+<h4><{$module.name}></h4>
+<p>
+  <!-- start results item loop -->
+  <{foreach item=result from=$module.results}>
+
+  <img src="<{$result.image}>" alt="<{$module.name}>" /><b><a href="<{$result.link}>" title="<{$result.title}>"><{$result.title}></a></b><br /><small>(<{$result.time}>)</small><br />
+
+  <{/foreach}>
+  <!-- end results item loop -->
+
+<{$module.showall_link}>
+</p>
+
+<{/foreach}>
+<!-- end module search results loop -->

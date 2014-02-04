@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		ImpressCMS
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: Object.php 10817 2010-12-02 01:29:25Z skenow $
+ * @version		$Id$
  */
  /**
   * Enter description here ...

@@ -4,10 +4,11 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
+ * @package		icms_core
+ * @subpackage	icms_core_Autoloader
  * @since		1.3
  * @author		Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
- * @version		$Id: Autoloader.php 11450 2011-11-21 23:27:25Z skenow $
+ * @version		$Id$
  */
 class icms_Autoloader {
 	/**
@@ -133,15 +134,13 @@ class icms_Autoloader {
 	static public function classPath($class, $useIncludePath = FALSE, $ext = ".php") {
 		$classPath = str_replace(array("\\", "_"), DIRECTORY_SEPARATOR, $class);
 		// First, try local repositories
-		$char = strpos($class, '\\') ? TRUE : (strpos($class, '_') ? TRUE : FALSE);
-		if ($char) {
+		if (strpos($class, "\\") || strpos($class, "_")) {
 			foreach (self::$localRepositories as $name => $info) {
 				list($len, $path) = $info;
-				if (!strncmp($name, $class, $len)) {
+				if (!strncmp($name . "\\", $class, $len+1) || !strncmp($name . "_", $class, $len+1)) {
 					$localPath = substr($classPath, $len + 1);
-					$fname = $path . DIRECTORY_SEPARATOR . $localPath;
-					if (file_exists($fname . $ext)) {
-						return $fname;
+					if (file_exists($path . DIRECTORY_SEPARATOR . $localPath . $ext)) {
+						return $path . DIRECTORY_SEPARATOR . $localPath;
 					}
 				}
 			}
@@ -181,6 +180,7 @@ class icms_Autoloader {
 			"xoopsmodule" 					=> "/kernel/module.php",
 			"xoopsmodulehandler"			=> "/kernel/module.php",
 			"xoopsmemberhandler"			=> "/kernel/member.php",
+			"icmspreloadhandler"			=> "/kernel/icmspreloadhandler.php",
 			"icmspreloaditem" 				=> "/kernel/icmspreloadhandler.php",
 			"icmskernel" 					=> "/kernel/icmskernel.php",
 			"icmssecurity" 					=> "/class/xoopssecurity.php",
@@ -212,9 +212,11 @@ class icms_Autoloader {
 			"xoopsformselectuser"			=> "/class/xoopsform/formselectuser.php",
 			"xoopsformselecttheme"			=> "/class/xoopsform/formselecttheme.php",
 			"xoopsformselectmatchoption"	=> "/class/xoopsform/formselectmatchoption.php",
+			"xoopsformtext"					=> "/class/xoopsform/formtext.php",
 			"xoopsformtextarea"				=> "/class/xoopsform/formtextarea.php",
 			"xoopsformdhtmltextarea"		=> "/class/xoopsform/formdhtmltextarea.php",
 			"xoopsformelementtray"			=> "/class/xoopsform/formelementtray.php",
+			"xoopsthemeform"				=> "/class/xoopsform/themeform.php",
 			"xoopssimpleform"				=> "/class/xoopsform/simpleform.php",
 			"xoopsformtextdateselect"		=> "/class/xoopsform/formtextdateselect.php",
 			"xoopsformdatetime"				=> "/class/xoopsform/formdatetime.php",
@@ -232,7 +234,7 @@ class icms_Autoloader {
 			"icmspersistablecolumn"			=> "/kernel/icmspersistabletable.php",
 			"icmspersistabletable"			=> "/kernel/icmspersistabletable.php",
 			"errorhandler"					=> "/class/module.errorhandler.php",
-			"icmsmetagen"					=> "/kernel/icmsmetagen.php"
+			"icmsmetagen"					=> "/kernel/icmsmetagen.php",
 		);
 		if (in_array($class, array_keys($legacyClassPath))) {
 			include_once ICMS_ROOT_PATH . $legacyClassPath[$class];

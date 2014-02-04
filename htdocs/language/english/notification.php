@@ -1,5 +1,5 @@
 <?php
-// $Id: notification.php 11512 2011-12-28 04:19:27Z skenow $
+// $Id$
 
 // RMV-NOTIFY
 

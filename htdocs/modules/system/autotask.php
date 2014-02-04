@@ -5,7 +5,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Autotasks
- * @version		SVN: $Id: autotask.php 10998 2011-02-02 19:15:09Z skenow $ 
+ * @version		SVN: $Id$ 
  */
 defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 

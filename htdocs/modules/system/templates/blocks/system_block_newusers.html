@@ -1,42 +1,19 @@
-<div id="newMembersBlock" class="carousel slide" data-interval="false">
-  <div class="carousel-inner">
-    <{foreach item=user from=$block.users name=userloop}>
-      <div class="item<{if $smarty.foreach.userloop.first}> active<{/if}>">
-        <div class="media">
-          <{if $user.avatar != ""}>
-            <a class="pull-left" href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>">
-              <img class="media-object" src="<{$user.avatar}>" alt="<{$user.name}>'s avatar" />
-            </a>
-          <{/if}>
-          <div class="media-body">
-            <h4 class="media-heading">
-              <{$user.name}><{if $icms_isadmin}><small> - (<{$user.login_name}>)</small><{/if}>
-            </h4>
-            <div class="media2">
-              Joined: <{$user.joindate}>
-              <{if $icms_isadmin}>
-                <hr />
-                <a href="<{$icms_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><i class="icon-user"></i></a>
-                <a href="mailto:<{$user.email}>"><i class="icon-envelope"></i></a>
-              <{/if}>
-            </div>
-          </div>
-        </div>        
-      </div>
-    <{/foreach}>
-  </div>
-
-  <div class="pagination pagination-small clearfix">
-    <ul class="pull-right">
-      <li><a href="#newMembersBlock" data-slide="prev">&lsaquo;</a></li>
-      <li><a href="#newMembersBlock" data-slide="next">&rsaquo;</a></li>
-    </ul>
-  </div>
-</div>
-
+<table cellspacing="1px" class="outer">
+  <{foreach item=user from=$block.users}>
+  <tr class="<{cycle values="even,odd"}>" valign="middle">
+    <td align="center">
+      <{if $user.avatar != ""}>
+      <img src="<{$user.avatar}>" alt="<{$user.name}>'s avatar" width="32px" /><br />
+      <{/if}>
+      <a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{$user.name}></a>
+      <{if $xoops_isadmin}><br />(<{$user.login_name}>)<{/if}>
+      <br /><{$user.joindate}>
+    </td>
+  </tr>
+  <{/foreach}>
+</table>
 <{if $block.index_enabled == true}>
-  <hr />
-  <{$block.lang_activeusers}>: <{$block.active}><br />
-  <{$block.lang_inactiveusers}>: <{$block.inactive}><br />
-  <{$block.lang_totalusers}>: <{$block.registered}>
+<{$block.lang_activeusers}>: <{$block.active}><br />
+<{$block.lang_inactiveusers}>: <{$block.inactive}><br />
+<{$block.lang_totalusers}>: <{$block.registered}><br />
 <{/if}>

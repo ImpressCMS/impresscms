@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author		phoenyx
- * @version		$Id: Blockoptions.php 10733 2010-10-16 17:31:12Z phoenyx $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

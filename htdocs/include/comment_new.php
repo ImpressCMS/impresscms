@@ -11,7 +11,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: comment_new.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");

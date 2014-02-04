@@ -8,7 +8,7 @@
  * @subpackage	Users
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: invite.php 11072 2011-03-14 15:52:14Z m0nty_ $
+ * @version		$Id$
  */
 
 $xoopsOption['pagetype'] = 'user';

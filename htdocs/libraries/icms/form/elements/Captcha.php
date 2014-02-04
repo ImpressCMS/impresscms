@@ -14,7 +14,7 @@
  * @package		Form
  * @subpackage	Elements
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Captcha.php 10868 2010-12-11 12:02:57Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

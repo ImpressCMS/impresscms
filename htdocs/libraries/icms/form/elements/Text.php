@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version		SVN: $Id: Text.php 10446 2010-07-27 16:07:52Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -106,12 +106,9 @@ class icms_form_elements_Text extends icms_form_Element {
 	 * @return	string  HTML
 	 */
 	public function render() {
-		$classes = $this->isRequired() ? 'required ' : '';
-		$classes .= get_class($this);
 		return "<input type='text' name='" . $this->getName()
 			. "' id='" . $this->getName()
 			. "' size='" . $this->getSize()
-			. "' class='" . $classes
 			. "' maxlength='" . $this->getMaxlength()
 			. "' value='" . $this->getValue() . "'" . $this->getExtra()
 			. " />";

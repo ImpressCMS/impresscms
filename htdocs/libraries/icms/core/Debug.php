@@ -10,7 +10,7 @@
  * @author		Steve Kenow <skenow@impresscms.org>
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id: Debug.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		SVN: $Id$
  * @since		1.3
  */
 

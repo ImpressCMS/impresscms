@@ -6,7 +6,7 @@
  *  @package	Database
  *  @subpackage	Legacy
  *  @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *  @version	SVN: $Id: Proxy.php 10642 2010-09-16 02:46:12Z skenow $
+ *  @version	SVN: $Id$
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 

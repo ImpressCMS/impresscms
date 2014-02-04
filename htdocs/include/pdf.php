@@ -9,7 +9,7 @@
  * @package	core
  * @since	1.1
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id: pdf.php 11650 2012-03-20 03:26:26Z skenow $
+ * @version	$Id$
  */
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();

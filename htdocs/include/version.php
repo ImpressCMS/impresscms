@@ -7,7 +7,7 @@
  * @package		core
  * @since		1.0
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: version.php 11745 2012-06-26 03:55:32Z skenow $
+ * @version		$Id$
  */
 
 define('ICMS_VERSION_NAME', 'ImpressCMS 2.0 Alpha 2');

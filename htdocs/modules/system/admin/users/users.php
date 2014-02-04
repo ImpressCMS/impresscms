@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Users
- * @version		SVN: $Id: users.php 11738 2012-06-24 02:20:38Z m0nty $
+ * @version		SVN: $Id$
  */
 
 if (!is_object(icms::$user)

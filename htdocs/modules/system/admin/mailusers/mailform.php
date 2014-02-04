@@ -8,7 +8,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Users
- * @version		SVN: $Id: mailform.php 11358 2011-09-02 19:55:40Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 $form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', TRUE);

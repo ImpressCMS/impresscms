@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Images
- * @version		SVN: $Id: preview.php 11719 2012-05-22 00:40:10Z skenow $
+ * @version		SVN: $Id$
  */
 
 /** this file gets linked directly, so mainfile.php must be included here */

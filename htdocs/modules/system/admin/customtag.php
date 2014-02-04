@@ -8,7 +8,7 @@
  * @subpackage	Custom Tags
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: customtag.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */

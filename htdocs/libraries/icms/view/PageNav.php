@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		View
  * @subpackage	PageNav
- * @version	$Id: PageNav.php 10824 2010-12-02 18:07:17Z skenow $
+ * @version	$Id$
  */
 
 /**

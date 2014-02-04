@@ -1,5 +1,5 @@
 <?php
-// $Id: modinfo.php 11396 2011-09-23 18:44:58Z phoenyx $
+// $Id$
 // Module Info
 
 // The name of this module

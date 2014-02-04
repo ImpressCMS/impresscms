@@ -35,7 +35,7 @@
  * @package		core
  * @since		1.1
  * @author		stranger <stranger@impresscms.ir>
- * @version		$Id: pdf.php 9920 2010-03-27 17:46:23Z skenow $
+ * @version		$Id$
  */
 // ENGLISH
 
