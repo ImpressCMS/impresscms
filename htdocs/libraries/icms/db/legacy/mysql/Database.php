@@ -1,9 +1,40 @@
 <?php
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * DataBase Base class file for MySQL driver
  *
+ * @deprecated	PHP is removing support for the mysql driver functions. Switch to PDO
+ *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ *
  * @category	ICMS
  * @package		Database
  * @subpackage	Legacy
@@ -18,7 +49,9 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @category	ICMS
  * @package     Database
  * @subpackage	Legacy
+ *
  * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
 abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	/**
@@ -34,6 +67,8 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @return bool successful?
 	 */
 	public function connect($selectdb = true) {
+		defined('_CORE_MYSQL_DEPRECATED') || define('_CORE_MYSQL_DEPRECATED', 'The mysql extension is being deprecated as of PHP 5.5.0 (<a href="http://php.net/mysql_connect">PHP MySQL Extenstion</a>). Switch to PDO, instead');
+		icms_core_Debug::setDeprecated("PDO", _CORE_MYSQL_DEPRECATED);
 		static $db_charset_set;
 
 		$this->allowWebChanges = ($_SERVER['REQUEST_METHOD'] != 'GET');
@@ -234,7 +269,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 		if (false !== ($fp = fopen($file, 'r'))) {
 			
 			$sql_queries = trim(fread($fp, filesize($file)));
-			icms_db_legacy_mysql_Utility::splitMySqlFile($pieces, $sql_queries);
+			icms_db_legacy_mysql_Utility::splitSqlFile($pieces, $sql_queries);
 			foreach ($pieces as $query) {
 				// [0] contains the prefixed query
 				// [4] contains unprefixed table name
@@ -278,5 +313,16 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 */
 	public function getFieldsNum($result) {
 		return mysql_num_fields($result);
+	}
+	
+	/**
+	 * Retrieve the MySQL server version information
+	 *
+	 * @param obj $connecton	A MySQL database connection link
+	 * @return string
+	 */
+	public function getServerVersion($connecton = NULL) {
+		if (NULL === $connection) $connection = $this->conn;
+		return mysql_get_server_info($connection);
 	}
 }

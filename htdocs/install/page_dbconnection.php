@@ -13,7 +13,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		$Id: page_dbconnection.php 12397 2014-01-24 19:40:34Z skenow $
  */
 /**
  *
@@ -58,8 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty( $vars['DB_HOST'] ) && !empty
 
 if (@empty( $vars['DB_HOST'] )) {
 	// Fill with default values
+	// check for PDO MySQL and select it, if it is available
 	$vars = array_merge( $vars, array(
-        'DB_TYPE'        => 'mysql',
+        'DB_TYPE'        => 'pdo.mysql',
         'DB_HOST'        => 'localhost',
         'DB_USER'        => '',
         'DB_PASS'        => '',
@@ -90,7 +91,8 @@ ob_start();
 <div class="blokSQL">
 <div class="dbconn_line"><label> <?php echo LEGEND_DATABASE; ?><br />
 <select size="2" name="DB_TYPE" class="db_select">
-	<option value="mysql" selected="selected">mysql</option>
+	<option value="mysql" >MySQL</option>
+	<option value="pdo.mysql" selected="selected">PDO MySQL</option>
 </select> </label>
 <div class='clear'>&nbsp;</div>
 </div>

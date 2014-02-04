@@ -1,27 +1,28 @@
 <?php
 /**
- * Database connection
  *
+ *
+ * @copyright	The ImpressCMS Project - http://www.impresscms.org/
+ * @license		GNU General Public License (GPL) - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @since		2.0
  * @category	ICMS
  * @package		Database
- *
- * @copyright   The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
+ * @subpackage	MySQL
  */
 
 /**
- * Database connection
+ *
+ *
+ * @copyright	The ImpressCMS Project - http://www.impresscms.org/
  *
  * @category	ICMS
  * @package		Database
+ * @subpackage	MySQL
  */
-class icms_db_Connection extends PDO implements icms_db_IConnection {
+class icms_db_mysql_Connection extends PDO implements icms_db_IConnection {
 
 	/**
 	 *  Safely escape the string, but strips the outer quotes
-	 *
-	 * This is a legacy method and not part of PDO and must be declared in any class that implements this interface
 	 *
 	 * @see icms_db_IConnection::escape()
 	 * @param	string	$string
@@ -32,7 +33,7 @@ class icms_db_Connection extends PDO implements icms_db_IConnection {
 	}
 
 	/**
-	 * Executes an SQL statement and returns a result set as an SQL statement object
+	 *
 	 * @see PDO::query()
 	 * @return
 	 */
@@ -48,7 +49,7 @@ class icms_db_Connection extends PDO implements icms_db_IConnection {
 		} else {
 			$errorinfo = $this->errorInfo();
 			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
-	}
+		}
 
 		return $result;
 	}

@@ -53,7 +53,7 @@ if ($icmsVersionChecker->check()) {
 
 $icmsAdminTpl->assign('your_version', $icmsVersionChecker->installed_version_name);
 $icmsAdminTpl->assign('lang_php_version', PHP_VERSION);
-$icmsAdminTpl->assign('lang_mysql_version', mysql_get_server_info());
+$icmsAdminTpl->assign('lang_mysql_version', icms::$xoopsDB->getServerVersion());
 $icmsAdminTpl->assign('lang_server_api', PHP_SAPI);
 $icmsAdminTpl->assign('lang_os_name', PHP_OS);
 $icmsAdminTpl->assign('safe_mode', ini_get('safe_mode') ? _CO_ICMS_ON : _CO_ICMS_OFF);

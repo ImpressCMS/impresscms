@@ -10,7 +10,7 @@
  * @package		installer
  * @since        Xoops 2.0.14
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id$
+* @version		$Id: common.inc.php 12397 2014-01-24 19:40:34Z skenow $
  */
 
 /**
@@ -23,11 +23,13 @@ define( 'INSTALL_PASSWORD', '' );
 $xoopsOption['nocommon'] = true;
 define('XOOPS_INSTALL', 1);
 
-@include_once '../mainfile.php';
-include_once '../include/version.php';
+/* set the default timezone for date/time functions - for strict PHP 5.3/5.4
+ * suppress errors, because we don't care
+ * if it's not set, it will be set to UTC, which we would have defaulted, anyway
+ */
+date_default_timezone_set(@date_default_timezone_get());
 
-
-/* we need this so we can use icms_core_Logger during the install to trap errors */
+/* we need this so we can use icms_core_Logger during the install to trap errors
 if(!defined('ICMS_ROOT_PATH')) {
 	if (isset($vars) && $vars['ROOT_PATH']) {
 		define('ICMS_ROOT_PATH', $vars['ROOT_PATH']);
@@ -35,15 +37,18 @@ if(!defined('ICMS_ROOT_PATH')) {
 		define('ICMS_ROOT_PATH', "");
 	}
 }
-
-// including a few functions
+ */
+include_once '../include/version.php';
+// including a few functions - relying more on the core, now
+include_once '../include/functions.php';
+// installer common functions
 require_once 'include/functions.php';
 
 /** Start the autoloader */
 require_once '../libraries/icms/Autoloader.php';
 icms_Autoloader::setup();
 
-$errorHandler = icms_core_Logger::instance();
+//$errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
 
 class XoopsInstallWizard {

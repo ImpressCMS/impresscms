@@ -19,7 +19,7 @@ if (isset($_POST['queryString'])) {
 			. icms::$xoopsDB->prefix("autosearch_cat") . " c ON s.cat_id = c.cid WHERE name LIKE '%"
 			. $queryString . "%' ORDER BY cat_id LIMIT 8";
 		$query = icms::$xoopsDB->query($sql);
-		$num_results = mysql_num_rows($query);
+		$num_results = icms::$xoopsDB->getRowsNum($query);
 
 		echo "<ul id='searchresults'>";
 		if ($query) {
