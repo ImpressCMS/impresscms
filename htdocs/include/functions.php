@@ -57,7 +57,7 @@ function xoops_header($closehead=true) {
 	if(!empty($icmsConfigPlugins['sanitizer_plugins'])){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 			if( empty( $key ) )
-			continue;
+				continue;
 			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
 				echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
 			}else{
@@ -112,8 +112,11 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	global $icmsConfig;
 	if($timeoffset == '')
 	{
-		if(icms::$user) {$timeoffset = icms::$user->getVar('timezone_offset');}
-		else {$timeoffset = $icmsConfig['default_TZ'];}
+		if(icms::$user) {
+			$timeoffset = icms::$user->getVar('timezone_offset');
+		}
+		else {$timeoffset = $icmsConfig['default_TZ'];
+		}
 	}
 	$usertimestamp = (int) ($time) + ((float)($timeoffset) - $icmsConfig['server_TZ'])*3600;
 	return $usertimestamp;
@@ -129,7 +132,9 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 function userTimeToServerTime($timestamp, $userTZ=null)
 {
 	global $icmsConfig;
-	if(!isset($userTZ)) {$userTZ = $icmsConfig['default_TZ'];}
+	if(!isset($userTZ)) {
+		$userTZ = $icmsConfig['default_TZ'];
+	}
 	$timestamp = $timestamp - (($userTZ - $icmsConfig['server_TZ']) * 3600);
 	return $timestamp;
 }
@@ -145,7 +150,9 @@ function formatURL($url)
 	$url = trim($url);
 	if($url != '')
 	{
-		if((!preg_match("/^http[s]*:\/\//i", $url)) && (!preg_match("/^ftp*:\/\//i", $url)) && (!preg_match("/^ed2k*:\/\//i", $url))) {$url = 'http://'.$url;}
+		if((!preg_match("/^http[s]*:\/\//i", $url)) && (!preg_match("/^ftp*:\/\//i", $url)) && (!preg_match("/^ed2k*:\/\//i", $url))) {
+			$url = 'http://'.$url;
+		}
 	}
 	return $url;
 }
@@ -164,17 +171,25 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	global $icmsConfig, $icmsConfigPersona;
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{
-		if(preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {$url = ICMS_URL;}
+		if(preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
+			$url = ICMS_URL;
+		}
 	}
 	if(!$allowExternalLink && $pos = strpos($url, '://' ))
 	{
 		$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
-		if(substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {$url = ICMS_URL;}
-		elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {$url = ICMS_URL;}
+		if(substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {
+			$url = ICMS_URL;
+		}
+		elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+			$url = ICMS_URL;
+		}
 	}
 	$theme = $icmsConfig['theme_set'];
 	// if the user selected a theme in the theme block, let's use this theme
-	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
+	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
+		$theme = $_SESSION['xoopsUserTheme'];
+	}
 
 	$xoopsThemeFactory = new icms_view_theme_Factory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
@@ -187,16 +202,23 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		$xoopsTpl->assign('time', 300);
 		$xoopsTpl->assign('xoops_logdump', icms::$logger->dump());
 	}
-	else {$xoopsTpl->assign('time', (int) ($time));}
+	else {$xoopsTpl->assign('time', (int) ($time));
+	}
 	if(!empty($_SERVER['REQUEST_URI']) && $addredirect && strstr($url, 'user.php'))
 	{
-		if(!strstr($url, '?')) {$url .= '?xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);}
-		else {$url .= '&amp;xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);}
+		if(!strstr($url, '?')) {
+			$url .= '?xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);
+		}
+		else {$url .= '&amp;xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);
+		}
 	}
 	if(defined('SID') && SID && (!isset($_COOKIE[session_name()]) || ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '' && !isset($_COOKIE[$icmsConfig['session_name']]))))
 	{
-		if(!strstr($url, '?')) {$url .= '?' . SID;}
-		else {$url .= '&amp;'.SID;}
+		if(!strstr($url, '?')) {
+			$url .= '?' . SID;
+		}
+		else {$url .= '&amp;'.SID;
+		}
 	}
 	$url = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES));
 	$xoopsTpl->assign('url', $url);
@@ -250,20 +272,35 @@ function xoops_getenv($key)
  */
 function xoops_getcss($theme = '')
 {
-	if($theme == '') {$theme = $GLOBALS['icmsConfig']['theme_set'];}
+	if($theme == '') {
+		$theme = $GLOBALS['icmsConfig']['theme_set'];
+	}
 	$uagent = xoops_getenv('HTTP_USER_AGENT');
-	if(stristr($uagent, 'mac')) {$str_css = 'styleMAC.css';}
-	elseif(preg_match("/MSIE ([0-9]\.[0-9]{1,2})/i", $uagent)) {$str_css = 'style.css';}
-	else {$str_css = 'styleNN.css';}
+	if(stristr($uagent, 'mac')) {
+		$str_css = 'styleMAC.css';
+	}
+	elseif(preg_match("/MSIE ([0-9]\.[0-9]{1,2})/i", $uagent)) {
+		$str_css = 'style.css';
+	}
+	else {$str_css = 'styleNN.css';
+	}
 	if(is_dir(ICMS_THEME_PATH.'/'.$theme))
 	{
-		if(file_exists(ICMS_THEME_PATH.'/'.$theme.'/'.$str_css)) {return ICMS_THEME_URL.'/'.$theme.'/'.$str_css;}
-		elseif(file_exists(ICMS_THEME_PATH.'/'.$theme.'/style.css')) {return ICMS_THEME_URL.'/'.$theme.'/style.css';}
+		if(file_exists(ICMS_THEME_PATH.'/'.$theme.'/'.$str_css)) {
+			return ICMS_THEME_URL.'/'.$theme.'/'.$str_css;
+		}
+		elseif(file_exists(ICMS_THEME_PATH.'/'.$theme.'/style.css')) {
+			return ICMS_THEME_URL.'/'.$theme.'/style.css';
+		}
 	}
 	if(is_dir(ICMS_THEME_PATH.'/'.$theme.'/css'))
 	{
-		if(file_exists(ICMS_THEME_PATH.'/'.$theme.'/css/'.$str_css)) {return ICMS_THEME_URL.'/'.$theme.'/css/'.$str_css;}
-		elseif(file_exists(ICMS_THEME_PATH.'/'.$theme.'/css/style.css')) {return ICMS_THEME_URL.'/'.$theme.'/css/style.css';}
+		if(file_exists(ICMS_THEME_PATH.'/'.$theme.'/css/'.$str_css)) {
+			return ICMS_THEME_URL.'/'.$theme.'/css/'.$str_css;
+		}
+		elseif(file_exists(ICMS_THEME_PATH.'/'.$theme.'/css/style.css')) {
+			return ICMS_THEME_URL.'/'.$theme.'/css/style.css';
+		}
 	}
 	return '';
 }
@@ -279,30 +316,30 @@ function xoops_getcss($theme = '')
 function &xoops_gethandler($name, $optional = false) {
 	// Lookup table: old xoops names => fully qualified refactored name
 	$lookup = array(
-		//"avatar"			=> "",
-		//"block"				=> "icms_block",
-		//"blockposition"		=> "icms_block_position",
-		//"comment"			=> "",
-		"config"			=> "icms_config",
-		//"configcategory"	=> "",
-		//"configitem"		=> "",
-		//"configoption"		=> "",
-		//"group"				=> "",
-		//"groupperm"			=> "",
-		//"image"				=> "",
-		//"imagecategory"		=> "",
-		//"imageset"			=> "",
-		//"member"			=> "",
-		//"module"			=> "",
-		//"notification"		=> "",
-		//"object"			=> "",
-		//"online"			=> "",
-		//"page"				=> "",
-		//"privmessage"		=> "",
-		//"session"			=> "",
-		//"tplfile"			=> "",
-		//"tplset"			=> "",
-		//"icmspersistablecategory"	=> "",
+			//"avatar"			=> "",
+			//"block"				=> "icms_block",
+			//"blockposition"		=> "icms_block_position",
+			//"comment"			=> "",
+			"config"			=> "icms_config",
+			//"configcategory"	=> "",
+			//"configitem"		=> "",
+			//"configoption"		=> "",
+			//"group"				=> "",
+			//"groupperm"			=> "",
+			//"image"				=> "",
+			//"imagecategory"		=> "",
+			//"imageset"			=> "",
+			//"member"			=> "",
+			//"module"			=> "",
+			//"notification"		=> "",
+			//"object"			=> "",
+			//"online"			=> "",
+			//"page"				=> "",
+			//"privmessage"		=> "",
+			//"session"			=> "",
+			//"tplfile"			=> "",
+			//"tplset"			=> "",
+			//"icmspersistablecategory"	=> "",
 	);
 	$lower = strtolower($name);
 	return icms::handler(isset($lookup[$lower]) ? $lookup[$lower] : $name);
@@ -365,7 +402,9 @@ function xoops_comment_count($module_id, $item_id = null)
 {
 	$comment_handler = icms::handler('icms_data_comment');
 	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) ($module_id)));
-	if(isset($item_id)) {$criteria->add(new icms_db_criteria_Item('com_itemid', (int) ($item_id)));}
+	if(isset($item_id)) {
+		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) ($item_id)));
+	}
 	return $comment_handler->getCount($criteria);
 }
 
@@ -393,7 +432,9 @@ function xoops_comment_delete($module_id, $item_id)
 				{
 					// store poster ID and deleted post number into array for later use
 					$poster_id = $comments[$i]->getVar('com_uid');
-					if($poster_id != 0) {$deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);}
+					if($poster_id != 0) {
+						$deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);
+					}
 				}
 			}
 			$member_handler = icms::handler('icms_member');
@@ -401,7 +442,9 @@ function xoops_comment_delete($module_id, $item_id)
 			{
 				// update user posts
 				$com_poster = $member_handler->getUser($user_id);
-				if(is_object($com_poster)) {$member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - $post_num);}
+				if(is_object($com_poster)) {
+					$member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - $post_num);
+				}
 			}
 			return true;
 		}
@@ -422,7 +465,9 @@ function xoops_comment_delete($module_id, $item_id)
 function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null)
 {
 	// do not allow system permissions to be deleted
-	if( (int) ($module_id) <= 1) {return false;}
+	if( (int) ($module_id) <= 1) {
+		return false;
+	}
 	$gperm_handler = icms::handler('icms_member_groupperm');
 	return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
 }
@@ -438,7 +483,9 @@ function xoops_utf8_encode(&$text)
 {
 	if(XOOPS_USE_MULTIBYTES == 1)
 	{
-		if(function_exists('mb_convert_encoding')) {return mb_convert_encoding($text, 'UTF-8', 'auto');}
+		if(function_exists('mb_convert_encoding')) {
+			return mb_convert_encoding($text, 'UTF-8', 'auto');
+		}
 		return $text;
 	}
 	return utf8_encode($text);
@@ -449,7 +496,9 @@ function xoops_utf8_encode(&$text)
  * @see xoops_utf8_encode
  * @todo Move to a static class method - String
  */
-function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
+function xoops_convert_encoding(&$text) {
+	return xoops_utf8_encode($text);
+}
 
 /**
  * Gets Username from UserID and creates a link to the userinfo (!) page
@@ -491,12 +540,17 @@ function &icms_getModuleInfo($moduleName = false)
 	}
 	if(!isset($icmsModules[$moduleName]))
 	{
-		if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsModules[$moduleName] = & $icmsModule;}
+		if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {
+			$icmsModules[$moduleName] = & $icmsModule;
+		}
 		else
 		{
 			$hModule = icms::handler('icms_module');
-			if($moduleName != 'icms') {$icmsModules[$moduleName] = $hModule->getByDirname($moduleName);}
-			else {$icmsModules[$moduleName] = $hModule->getByDirname('system');}
+			if($moduleName != 'icms') {
+				$icmsModules[$moduleName] = $hModule->getByDirname($moduleName);
+			}
+			else {$icmsModules[$moduleName] = $hModule->getByDirname('system');
+			}
 		}
 	}
 	return $icmsModules[$moduleName];
@@ -532,7 +586,9 @@ function &icms_getModuleConfig($moduleName = false)
 		$ret = false;
 		return $ret;
 	}
-	if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsConfigs[$moduleName] = & $icmsModuleConfig;}
+	if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {
+		$icmsConfigs[$moduleName] = & $icmsModuleConfig;
+	}
 	else
 	{
 		$module = & icms_getModuleInfo($moduleName);
@@ -558,13 +614,20 @@ function &icms_getModuleConfig($moduleName = false)
  */
 function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefined')
 {
-	if(!$moduleName) {$moduleName = icms_getCurrentModuleName();}
+	if(!$moduleName) {
+		$moduleName = icms_getCurrentModuleName();
+	}
 	$configs = icms_getModuleConfig($moduleName);
-	if(isset($configs[$key])) {return $configs[$key];}
+	if(isset($configs[$key])) {
+		return $configs[$key];
+	}
 	else
 	{
-		if($default === 'default_is_undefined') {return null;}
-		else {return $default;}
+		if($default === 'default_is_undefined') {
+			return null;
+		}
+		else {return $default;
+		}
 	}
 }
 
@@ -577,8 +640,11 @@ function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefi
 function icms_getCurrentModuleName()
 {
 	global $icmsModule;
-	if(is_object($icmsModule)) {return $icmsModule->getVar('dirname');}
-	else {return false;}
+	if(is_object($icmsModule)) {
+		return $icmsModule->getVar('dirname');
+	}
+	else {return false;
+	}
 }
 
 /**
@@ -596,7 +662,9 @@ function icms_userIsAdmin($module = false)
 		global $icmsModule;
 		$module = $icmsModule->getVar('dirname');
 	}
-	if(isset ($icms_isAdmin[$module])) {return $icms_isAdmin[$module];}
+	if(isset ($icms_isAdmin[$module])) {
+		return $icms_isAdmin[$module];
+	}
 	if(!icms::$user)
 	{
 		$icms_isAdmin[$module] = false;
@@ -604,7 +672,9 @@ function icms_userIsAdmin($module = false)
 	}
 	$icms_isAdmin[$module] = false;
 	$icmsModule = icms_getModuleInfo($module);
-	if(!is_object($icmsModule)) {return false;}
+	if(!is_object($icmsModule)) {
+		return false;
+	}
 	$module_id = $icmsModule->getVar('mid');
 	$icms_isAdmin[$module] = icms::$user->isAdmin($module_id);
 	return $icms_isAdmin[$module];
@@ -623,12 +693,19 @@ function icms_userIsAdmin($module = false)
 function icms_loadLanguageFile($module, $file, $admin=false)
 {
 	global $icmsConfig;
-	if($module == 'core') {$languagePath = ICMS_ROOT_PATH.'/language/';}
-	else {$languagePath = ICMS_ROOT_PATH.'/modules/'.$module.'/language/';}
+	if($module == 'core') {
+		$languagePath = ICMS_ROOT_PATH.'/language/';
+	}
+	else {$languagePath = ICMS_ROOT_PATH.'/modules/'.$module.'/language/';
+	}
 	$extraPath = $admin ? 'admin/' : '';
 	$filename = $languagePath.$icmsConfig['language'].'/'.$extraPath.$file.'.php';
-	if(!file_exists($filename)) {$filename = $languagePath.'english/'.$extraPath.$file.'.php';}
-	if(file_exists($filename)) {include_once $filename ;}
+	if(!file_exists($filename)) {
+		$filename = $languagePath.'english/'.$extraPath.$file.'.php';
+	}
+	if(file_exists($filename)) {
+		include_once $filename ;
+	}
 }
 
 /**
@@ -658,7 +735,9 @@ function icms_getfloat($str, $set=FALSE)
 		else
 		{
 			// No comma exists, so we have to decide, how a single dot shall be treated
-			if(preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == TRUE && $set['single_dot_as_decimal'] == TRUE) {return (float)($str);}
+			if(preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == TRUE && $set['single_dot_as_decimal'] == TRUE) {
+				return (float)($str);
+			}
 			else
 			{
 				$str = str_replace('.', '', $str);	// Erase thousand seps
@@ -666,7 +745,8 @@ function icms_getfloat($str, $set=FALSE)
 			}
 		}
 	}
-	else {return 0;}
+	else {return 0;
+	}
 }
 
 /**
@@ -686,12 +766,19 @@ function icms_currency($var, $currencyObj=false)
 	$decimal_section = $decimal_section_original;
 	if($decimal_section)
 	{
-		if(strlen($decimal_section) == 1) {$decimal_section = '.00';}
-		elseif(strlen($decimal_section) == 2) {$decimal_section = $decimal_section . '0';}
+		if(strlen($decimal_section) == 1) {
+			$decimal_section = '.00';
+		}
+		elseif(strlen($decimal_section) == 2) {
+			$decimal_section = $decimal_section . '0';
+		}
 		$ret = str_replace($decimal_section_original, $decimal_section, $ret);
 	}
-	else {$ret = $ret . '.00';}
-	if($currencyObj) {$ret = $ret.' '.$currencyObj->getCode();}
+	else {$ret = $ret . '.00';
+	}
+	if($currencyObj) {
+		$ret = $ret.' '.$currencyObj->getCode();
+	}
 	return $ret;
 }
 
@@ -762,34 +849,34 @@ function icms_html2text($document)
 	// common HTML entities to their text equivalent.
 	// Credits : newbb2
 	$search = array ("'<script[^>]*?>.*?</script>'si",  // Strip out javascript
-	"'<img.*?/>'si",	   // Strip out img tags
-	"'<[\/\!]*?[^<>]*?>'si",		  // Strip out HTML tags
-	"'([\r\n])[\s]+'",				// Strip out white space
-	"'&(quot|#34);'i",				// Replace HTML entities
-	"'&(amp|#38);'i",
-	"'&(lt|#60);'i",
-	"'&(gt|#62);'i",
-	"'&(nbsp|#160);'i",
-	"'&(iexcl|#161);'i",
-	"'&(cent|#162);'i",
-	"'&(pound|#163);'i",
-	"'&(copy|#169);'i",
-	"'&#(\d+);'e");					// evaluate as php
+			"'<img.*?/>'si",	   // Strip out img tags
+			"'<[\/\!]*?[^<>]*?>'si",		  // Strip out HTML tags
+			"'([\r\n])[\s]+'",				// Strip out white space
+			"'&(quot|#34);'i",				// Replace HTML entities
+			"'&(amp|#38);'i",
+			"'&(lt|#60);'i",
+			"'&(gt|#62);'i",
+			"'&(nbsp|#160);'i",
+			"'&(iexcl|#161);'i",
+			"'&(cent|#162);'i",
+			"'&(pound|#163);'i",
+			"'&(copy|#169);'i",
+			"'&#(\d+);'e");					// evaluate as php
 
 	$replace = array ("",
-	"",
-	"",
-	"\\1",
-	"\"",
-	"&",
-	"<",
-	">",
-	" ",
-	chr(161),
-	chr(162),
-	chr(163),
-	chr(169),
-	"chr(\\1)");
+			"",
+			"",
+			"\\1",
+			"\"",
+			"&",
+			"<",
+			">",
+			" ",
+			chr(161),
+			chr(162),
+			chr(163),
+			chr(169),
+			"chr(\\1)");
 
 	$text = preg_replace($search, $replace, $document);
 	return $text;
@@ -822,7 +909,9 @@ function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>'
  */
 function icms_setCookieVar($name, $value, $time = 0)
 {
-	if($time == 0) {$time = time() + 3600 * 24 * 365;}
+	if($time == 0) {
+		$time = time() + 3600 * 24 * 365;
+	}
 	setcookie($name, $value, $time, '/');
 }
 
@@ -837,8 +926,11 @@ function icms_setCookieVar($name, $value, $time = 0)
 function icms_getCookieVar($name, $default = '')
 {
 	$name = str_replace('.', '_', $name);
-	if((isset($_COOKIE[$name])) && ($_COOKIE[$name] > '')) {return $_COOKIE[$name];}
-	else {return $default;}
+	if((isset($_COOKIE[$name])) && ($_COOKIE[$name] > '')) {
+		return $_COOKIE[$name];
+	}
+	else {return $default;
+	}
 }
 
 /**
@@ -916,7 +1008,9 @@ function icms_getTablesArray($moduleName, $items) {
 function showNav($id = null, $separador = '/', $style="style='font-weight:bold'")
 {
 	$url = ICMS_URL.'/content.php';
-	if($id == false) {return false;}
+	if($id == false) {
+		return false;
+	}
 	else
 	{
 		if($id > 0)
@@ -930,11 +1024,16 @@ function showNav($id = null, $separador = '/', $style="style='font-weight:bold'"
 			{
 				$seo = $content_handler->makeLink($cont);
 				$ret = "<a href='".$url."?page=".$seo."'>".$cont->getVar('content_title')."</a>";
-				if($cont->getVar('content_supid') == 0) {return "<a href='".ICMS_URL."'>"._CT_NAV."</a> $separador ".$ret;}
-				elseif($cont->getVar('content_supid') > 0) {$ret = showNav($cont->getVar('content_supid'), $separador)." $separador ".$ret;}
+				if($cont->getVar('content_supid') == 0) {
+					return "<a href='".ICMS_URL."'>"._CT_NAV."</a> $separador ".$ret;
+				}
+				elseif($cont->getVar('content_supid') > 0) {
+					$ret = showNav($cont->getVar('content_supid'), $separador)." $separador ".$ret;
+				}
 			}
 		}
-		else {return false;}
+		else {return false;
+		}
 	}
 	return $ret;
 }
@@ -986,8 +1085,11 @@ function icms_sanitizeContentCss($text)
 		$perm = $not_perm = array();
 		foreach($css as $k=>$v)
 		{
-			if(!preg_match('/^\#impress_content(.*?)/ie',$v)) {$css[$k] = '#impress_content '.icms_cleanTags(trim($v),array())."\r\n";}
-			else {$css[$k] = icms_cleanTags(trim($v),array())."\r\n";}
+			if(!preg_match('/^\#impress_content(.*?)/ie',$v)) {
+				$css[$k] = '#impress_content '.icms_cleanTags(trim($v),array())."\r\n";
+			}
+			else {$css[$k] = icms_cleanTags(trim($v),array())."\r\n";
+			}
 		}
 		$text = implode($css);
 	}
@@ -1009,32 +1111,34 @@ function icms_get_base_domain($url)
 
 	// generic tlds (source: http://en.wikipedia.org/wiki/Generic_top-level_domain)
 	$G_TLD = array(
-	'biz','com','edu','gov','info','int','mil','name','net','org','aero','asia','cat','coop','jobs','mobi','museum','pro','tel','travel',
-	'arpa','root','berlin','bzh','cym','gal','geo','kid','kids','lat','mail','nyc','post','sco','web','xxx',
-	'nato', 'example','invalid','localhost','test','bitnet','csnet','ip','local','onion','uucp','co');
+			'biz','com','edu','gov','info','int','mil','name','net','org','aero','asia','cat','coop','jobs','mobi','museum','pro','tel','travel',
+			'arpa','root','berlin','bzh','cym','gal','geo','kid','kids','lat','mail','nyc','post','sco','web','xxx',
+			'nato', 'example','invalid','localhost','test','bitnet','csnet','ip','local','onion','uucp','co');
 
 	// country tlds (source: http://en.wikipedia.org/wiki/Country_code_top-level_domain)
 	$C_TLD = array(
-	// active
-	'ac','ad','ae','af','ag','ai','al','am','an','ao','aq','ar','as','at','au','aw','ax','az',
-	'ba','bb','bd','be','bf','bg','bh','bi','bj','bm','bn','bo','br','bs','bt','bw','by','bz',
-	'ca','cc','cd','cf','cg','ch','ci','ck','cl','cm','cn','co','cr','cu','cv','cx','cy','cz',
-	'de','dj','dk','dm','do','dz','ec','ee','eg','er','es','et','eu','fi','fj','fk','fm','fo',
-	'fr','ga','gd','ge','gf','gg','gh','gi','gl','gm','gn','gp','gq','gr','gs','gt','gu','gw',
-	'gy','hk','hm','hn','hr','ht','hu','id','ie','il','im','in','io','iq','ir','is','it','je',
-	'jm','jo','jp','ke','kg','kh','ki','km','kn','kr','kw','ky','kz','la','lb','lc','li','lk',
-	'lr','ls','lt','lu','lv','ly','ma','mc','md','mg','mh','mk','ml','mm','mn','mo','mp','mq',
-	'mr','ms','mt','mu','mv','mw','mx','my','mz','na','nc','ne','nf','ng','ni','nl','no','np',
-	'nr','nu','nz','om','pa','pe','pf','pg','ph','pk','pl','pn','pr','ps','pt','pw','py','qa',
-	're','ro','ru','rw','sa','sb','sc','sd','se','sg','sh','si','sk','sl','sm','sn','sr','st',
-	'sv','sy','sz','tc','td','tf','tg','th','tj','tk','tl','tm','tn','to','tr','tt','tv','tw',
-	'tz','ua','ug','uk','us','uy','uz','va','vc','ve','vg','vi','vn','vu','wf','ws','ye','yu',
-	'za','zm','zw',
-	// inactive
-	'eh','kp','me','rs','um','bv','gb','pm','sj','so','yt','su','tp','bu','cs','dd','zr');
+			// active
+			'ac','ad','ae','af','ag','ai','al','am','an','ao','aq','ar','as','at','au','aw','ax','az',
+			'ba','bb','bd','be','bf','bg','bh','bi','bj','bm','bn','bo','br','bs','bt','bw','by','bz',
+			'ca','cc','cd','cf','cg','ch','ci','ck','cl','cm','cn','co','cr','cu','cv','cx','cy','cz',
+			'de','dj','dk','dm','do','dz','ec','ee','eg','er','es','et','eu','fi','fj','fk','fm','fo',
+			'fr','ga','gd','ge','gf','gg','gh','gi','gl','gm','gn','gp','gq','gr','gs','gt','gu','gw',
+			'gy','hk','hm','hn','hr','ht','hu','id','ie','il','im','in','io','iq','ir','is','it','je',
+			'jm','jo','jp','ke','kg','kh','ki','km','kn','kr','kw','ky','kz','la','lb','lc','li','lk',
+			'lr','ls','lt','lu','lv','ly','ma','mc','md','mg','mh','mk','ml','mm','mn','mo','mp','mq',
+			'mr','ms','mt','mu','mv','mw','mx','my','mz','na','nc','ne','nf','ng','ni','nl','no','np',
+			'nr','nu','nz','om','pa','pe','pf','pg','ph','pk','pl','pn','pr','ps','pt','pw','py','qa',
+			're','ro','ru','rw','sa','sb','sc','sd','se','sg','sh','si','sk','sl','sm','sn','sr','st',
+			'sv','sy','sz','tc','td','tf','tg','th','tj','tk','tl','tm','tn','to','tr','tt','tv','tw',
+			'tz','ua','ug','uk','us','uy','uz','va','vc','ve','vg','vi','vn','vu','wf','ws','ye','yu',
+			'za','zm','zw',
+			// inactive
+			'eh','kp','me','rs','um','bv','gb','pm','sj','so','yt','su','tp','bu','cs','dd','zr');
 
 	// get domain
-	if(!$full_domain = icms_get_url_domain($url)) {return $base_domain;}
+	if(!$full_domain = icms_get_url_domain($url)) {
+		return $base_domain;
+	}
 
 	// break up domain, reverse
 	$DOMAIN = explode('.', $full_domain);
@@ -1043,17 +1147,19 @@ function icms_get_base_domain($url)
 	if($debug) print_r($DOMAIN);
 
 	// first check for ip address
-	if(count($DOMAIN) == 4 && is_numeric($DOMAIN[0]) && is_numeric($DOMAIN[3])) {return $full_domain;}
+	if(count($DOMAIN) == 4 && is_numeric($DOMAIN[0]) && is_numeric($DOMAIN[3])) {
+		return $full_domain;
+	}
 
 	// if only 2 domain parts, that must be our domain
 	if(count($DOMAIN) <= 2) return $full_domain;
 
 	/*
 	 finally, with 3+ domain parts: obviously D0 is tld now,
-	 if D0 = ctld and D1 = gtld, we might have something like com.uk so,
-	 if D0 = ctld && D1 = gtld && D2 != 'www', domain = D2.D1.D0 else if D0 = ctld && D1 = gtld && D2 == 'www',
-	 domain = D1.D0 else domain = D1.D0 - these rules are simplified below.
-	 */
+	if D0 = ctld and D1 = gtld, we might have something like com.uk so,
+	if D0 = ctld && D1 = gtld && D2 != 'www', domain = D2.D1.D0 else if D0 = ctld && D1 = gtld && D2 == 'www',
+	domain = D1.D0 else domain = D1.D0 - these rules are simplified below.
+	*/
 	if(in_array($DOMAIN[0], $C_TLD) && in_array($DOMAIN[1], $G_TLD) && $DOMAIN[2] != 'www')
 	{
 		$full_domain = $DOMAIN[2].'.'.$DOMAIN[1].'.'.$DOMAIN[0];
@@ -1079,7 +1185,9 @@ function icms_get_url_domain($url)
 	$domain = '';
 	$_URL = parse_url($url);
 
-	if(!empty($_URL) || !empty($_URL['host'])) {$domain = $_URL['host'];}
+	if(!empty($_URL) || !empty($_URL['host'])) {
+		$domain = $_URL['host'];
+	}
 	return $domain;
 }
 
@@ -1128,14 +1236,20 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
 					$newLineByWordsLength = strlen($newLineByWords);
 					if($cut && $newLineByWordsLength > $width)
 					{
-						for($i = 0; $i < $newLineByWordsLength; $i = $i + $width) {$splitedArray[] = mb_substr($newLineByWords, $i, $width);}
+						for($i = 0; $i < $newLineByWordsLength; $i = $i + $width) {
+							$splitedArray[] = mb_substr($newLineByWords, $i, $width);
+						}
 						$addNewLine = false;
 					}
-					else	{$lineByWords = $newLineByWords;}
+					else	{$lineByWords = $newLineByWords;
+					}
 				}
-				if($addNewLine) {$splitedArray[] = $lineByWords;}
+				if($addNewLine) {
+					$splitedArray[] = $lineByWords;
+				}
 			}
-			else	{$splitedArray[] = $line;}
+			else	{$splitedArray[] = $line;
+			}
 		}
 		return implode($break, $splitedArray);
 	}
@@ -1155,12 +1269,16 @@ function getDbValue(&$db, $table, $field, $condition = '')
 {
 	$table = $db->prefix( $table );
 	$sql = "SELECT `$field` FROM `$table`";
-	if($condition) {$sql .= " WHERE $condition";}
+	if($condition) {
+		$sql .= " WHERE $condition";
+	}
 	$result = $db->query($sql);
 	if($result)
 	{
 		$row = $db->fetchRow($result);
-		if($row) {return $row[0];}
+		if($row) {
+			return $row[0];
+		}
 	}
 	return false;
 }
@@ -1178,18 +1296,32 @@ function icms_escapeValue($value, $quotes = true)
 {
 	if(is_string($value))
 	{
-		if(get_magic_quotes_gpc) {$value = stripslashes($value);}
+		if(get_magic_quotes_gpc) {
+			$value = stripslashes($value);
+		}
 		$value = icms::$xoopsDB->escape($value);
-		if($quotes) {$value = '"'.$value.'"';}
+		if($quotes) {
+			$value = '"'.$value.'"';
+		}
 	}
-	elseif($value === null) {$value = 'NULL';}
-	elseif(is_bool($value)) {$value = $value ? 1 : 0;}
-	elseif(is_numeric($value)) {$value = (int) ($value);}
-	elseif(is_int($value)) {$value = (int) ($value);}
+	elseif($value === null) {
+		$value = 'NULL';
+	}
+	elseif(is_bool($value)) {
+		$value = $value ? 1 : 0;
+	}
+	elseif(is_numeric($value)) {
+		$value = (int) ($value);
+	}
+	elseif(is_int($value)) {
+		$value = (int) ($value);
+	}
 	elseif(!is_numeric($value))
 	{
 		$value = icms::$xoopsDB->escape($value);
-		if($quotes) {$value = '"'.$value.'"';}
+		if($quotes) {
+			$value = '"'.$value.'"';
+		}
 	}
 	return $value;
 }
@@ -1212,8 +1344,8 @@ function icms_conv_nr2local($string)
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
 	if ( $basecheck ){
 		$string = str_replace(
-		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
-		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), $string);
+				array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
+				array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), $string);
 	}
 	return $string;
 }
@@ -1230,9 +1362,9 @@ function icms_conv_local2nr($string)
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
 	if ( $basecheck ){
 		$string = str_replace(
-		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9),
-		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
-		$string);
+				array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9),
+				array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
+				$string);
 	}
 	return $string;
 }
@@ -1345,51 +1477,51 @@ function ext_date($time)
 	icms_loadLanguageFile('core', 'calendar');
 	/*		$string = str_replace(
 		array(_CAL_AM, _CAL_PM, _CAL_AM_LONG, _CAL_PM_LONG, _CAL_SAT, _CAL_SUN, _CAL_MON, _CAL_TUE, _CAL_WED, _CAL_THU, _CAL_FRI, _CAL_SATURDAY, _CAL_SUNDAY, _CAL_MONDAY, _CAL_TUESDAY, _CAL_WEDNESDAY, _CAL_THURSDAY, _CAL_FRIDAY),
-		array('Am', 'Pm', 'AM', 'PM', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
-		$string);
-		*/
+			array('Am', 'Pm', 'AM', 'PM', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
+			$string);
+	*/
 	$trans = array( 'am'	=> _CAL_AM,
-					'pm'	=> _CAL_PM,
-					'AM'	=> _CAL_AM_CAPS,
-					'PM'	=> _CAL_PM_CAPS,
-					'Monday'	=> _CAL_MONDAY,
-					'Tuesday'   => _CAL_TUESDAY,
-					'Wednesday' => _CAL_WEDNESDAY,
-					'Thursday'  => _CAL_THURSDAY,
-					'Friday'	=> _CAL_FRIDAY,
-					'Saturday'  => _CAL_SATURDAY,
-					'Sunday'	=> _CAL_SUNDAY,
-					'Mon'		=> _CAL_MON,
-					'Tue'	   => _CAL_TUE,
-					'Wed'		 => _CAL_WED,
-					'Thu'		  => _CAL_THU,
-					'Fri'		=> _CAL_FRI,
-					'Sat'		  => _CAL_SAT,
-					'Sun'		=> _CAL_SUN,
-					'Januari'	=> _CAL_JANUARY,
-					'Februari'	=> _CAL_FEBRUARY,
-					'March'		=> _CAL_MARCH,
-					'April'		=> _CAL_APRIL,
-					'May'		=> _CAL_MAY,
-					'June'		=> _CAL_JUNE,
-					'July'		=> _CAL_JULY,
-					'August'	=> _CAL_AUGUST,
-					'September' => _CAL_SEPTEMBER,
-					'October'	=> _CAL_OCTOBER,
-					'November'	=> _CAL_NOVEMBER,
-					'December'	=> _CAL_DECEMBER,
-					'Jan'		=> _CAL_JAN,
-					'Feb'		=> _CAL_FEB,
-					'Mar'		=> _CAL_MAR,
-					'Apr'		=> _CAL_APR,
-					'May'		=> _CAL_MAY,
-					'Jun'		=> _CAL_JUN,
-					'Jul'		=> _CAL_JUL,
-					'Aug'		=> _CAL_AUG,
-					'Sep'		 => _CAL_SEP,
-					'Oct'		=> _CAL_OCT,
-					'Nov'		=> _CAL_NOV,
-					'Dec'		=> _CAL_DEC );
+			'pm'	=> _CAL_PM,
+			'AM'	=> _CAL_AM_CAPS,
+			'PM'	=> _CAL_PM_CAPS,
+			'Monday'	=> _CAL_MONDAY,
+			'Tuesday'   => _CAL_TUESDAY,
+			'Wednesday' => _CAL_WEDNESDAY,
+			'Thursday'  => _CAL_THURSDAY,
+			'Friday'	=> _CAL_FRIDAY,
+			'Saturday'  => _CAL_SATURDAY,
+			'Sunday'	=> _CAL_SUNDAY,
+			'Mon'		=> _CAL_MON,
+			'Tue'	   => _CAL_TUE,
+			'Wed'		 => _CAL_WED,
+			'Thu'		  => _CAL_THU,
+			'Fri'		=> _CAL_FRI,
+			'Sat'		  => _CAL_SAT,
+			'Sun'		=> _CAL_SUN,
+			'Januari'	=> _CAL_JANUARY,
+			'Februari'	=> _CAL_FEBRUARY,
+			'March'		=> _CAL_MARCH,
+			'April'		=> _CAL_APRIL,
+			'May'		=> _CAL_MAY,
+			'June'		=> _CAL_JUNE,
+			'July'		=> _CAL_JULY,
+			'August'	=> _CAL_AUGUST,
+			'September' => _CAL_SEPTEMBER,
+			'October'	=> _CAL_OCTOBER,
+			'November'	=> _CAL_NOVEMBER,
+			'December'	=> _CAL_DECEMBER,
+			'Jan'		=> _CAL_JAN,
+			'Feb'		=> _CAL_FEB,
+			'Mar'		=> _CAL_MAR,
+			'Apr'		=> _CAL_APR,
+			'May'		=> _CAL_MAY,
+			'Jun'		=> _CAL_JUN,
+			'Jul'		=> _CAL_JUL,
+			'Aug'		=> _CAL_AUG,
+			'Sep'		 => _CAL_SEP,
+			'Oct'		=> _CAL_OCT,
+			'Nov'		=> _CAL_NOV,
+			'Dec'		=> _CAL_DEC );
 
 	$timestamp = strtr( $time, $trans );
 	return $timestamp;
@@ -1592,7 +1724,9 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 			$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
 		} else {
 			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
-			if (file_exists($hnd_file)) {include_once $hnd_file;}
+			if (file_exists($hnd_file)) {
+				include_once $hnd_file;
+			}
 			$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
 			if (class_exists($class)) {
 				$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
@@ -1602,7 +1736,9 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 	if (!isset($handlers[$module_dir][$name]) && !$optional) {
 		trigger_error(sprintf(_CORE_MODULEHANDLER_NOTAVAILABLE, $module_dir, $name), E_USER_ERROR);
 	}
-	if (isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
+	if (isset($handlers[$module_dir][$name])) {
+		return $handlers[$module_dir][$name];
+	}
 	$inst = false;
 	return $inst;
 }
@@ -1667,8 +1803,8 @@ function icms_getImageSize($url, & $width, & $height) {
 			$width = $dimension[0] * $height / $dimension[1];
 		} else {
 			list ($width, $height) = array (
-			$dimension[0],
-			$dimension[1]
+					$dimension[0],
+					$dimension[1]
 			);
 		}
 		return true;
@@ -1733,10 +1869,10 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
 		$attr = " width='$width' height='$height'";
 	}
 	return array (
-	$width,
-	$height,
-	$type,
-	$attr
+			$width,
+			$height,
+			$type,
+			$attr
 	);
 }
 
@@ -1749,30 +1885,29 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
  * @return array
  * @todo Move to a static class method - Module
  */
-function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
+function icms_getModuleName($withLink = TRUE, $forBreadCrumb = FALSE, $moduleName = FALSE) {
 	if (!$moduleName) {
-		global $icmsModule;
-		$moduleName = $icmsModule->getVar('dirname');
+		$moduleName = icms::$module->getVar('dirname');
 	}
-	$icmsModule = icms_getModuleInfo($moduleName);
+	icms::$module = icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = icms_getModuleConfig($moduleName);
-	if (!isset ($icmsModule)) {
+	if (!isset (icms::$module)) {
 		return '';
 	}
 
 	if (!$withLink) {
-		return $icmsModule->getVar('name');
+		return icms::$module->getVar('name');
 	} else {
 		$seoMode = icms_getModuleModeSEO($moduleName);
 		if ($seoMode == 'rewrite') {
 			$seoModuleName = icms_getModuleNameForSEO($moduleName);
 			$ret = ICMS_URL . '/' . $seoModuleName . '/';
 		} elseif ($seoMode == 'pathinfo') {
-			$ret = ICMS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
+			$ret = ICMS_MODULES_URL . '/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
 		} else {
-			$ret = ICMS_URL . '/modules/' . $moduleName . '/';
+			$ret = ICMS_MODULES_URL . '/' . $moduleName . '/';
 		}
-		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
+		return '<a href="' . $ret . '">' . icms::$module->getVar('name') . '</a>';
 	}
 }
 
@@ -2026,17 +2161,17 @@ function icms_moduleAction($dirname = 'system')
 {
 	global $icmsModule;
 	$ret = @(
-	// action module 'system'
-	!empty($icmsModule) && 'system' == $icmsModule->getVar('dirname', 'n')
-	&&
-	// current dirname
-	($dirname == $_POST['dirname'] || $dirname == $_POST['module'])
-	&&
-	// current op
-	('update_ok' == $_POST['op'] || 'install_ok' == $_POST['op'] || 'uninstall_ok' == $_POST['op'])
-	&&
-	// current action
-		'modules' == $_POST['fct']
+			// action module 'system'
+			!empty($icmsModule) && 'system' == $icmsModule->getVar('dirname', 'n')
+			&&
+			// current dirname
+			($dirname == $_POST['dirname'] || $dirname == $_POST['module'])
+			&&
+			// current op
+			('update_ok' == $_POST['op'] || 'install_ok' == $_POST['op'] || 'uninstall_ok' == $_POST['op'])
+			&&
+			// current action
+			'modules' == $_POST['fct']
 	);
 	return $ret;
 }
@@ -2105,20 +2240,20 @@ function icms_ajaxCollapsableBar($id = '', $title = '', $dsc = '') {
  function icms_collapsableBar($id = '', $title = '', $dsc='')
  {
 
- global $icmsModule;
- //echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"toggle('" . $id . "'); toggleIcon('" . $id . "_icon')\";>";
+global $icmsModule;
+//echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"toggle('" . $id . "'); toggleIcon('" . $id . "_icon')\";>";
 
- ?>
- <h3 class="icms_collapsable_title"><a href="javascript:Effect.Combo('<? echo $id ?>');"><? echo $title ?></a></h3>
- <?
+?>
+<h3 class="icms_collapsable_title"><a href="javascript:Effect.Combo('<? echo $id ?>');"><? echo $title ?></a></h3>
+<?
 
- echo "<img id='" . $id . "_icon' src=" . ICMS_URL . "/images/close12.gif alt='' /></a>&nbsp;" . $title . "</h3>";
- echo "<div id='" . $id . "'>";
- if ($dsc != '') {
- echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
- }
- }
- */
+echo "<img id='" . $id . "_icon' src=" . ICMS_URL . "/images/close12.gif alt='' /></a>&nbsp;" . $title . "</h3>";
+echo "<div id='" . $id . "'>";
+if ($dsc != '') {
+echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
+}
+}
+*/
 /**
  *
  * Enter description here ...
@@ -2133,21 +2268,21 @@ function icms_openclose_collapsable($name) {
 	$cookie = icms_getCookieVar($cookie_name, '');
 	if ($cookie == 'none') {
 		echo '
-				<script type="text/javascript"><!--
-				togglecollapse("' . $name . '"); toggleIcon("' . $name . '_icon");
-					//-->
-				</script>
-				';
+		<script type="text/javascript"><!--
+		togglecollapse("' . $name . '"); toggleIcon("' . $name . '_icon");
+		//-->
+		</script>
+		';
 	}
 	/*	if ($cookie == 'none') {
 	 echo '
-	 <script type="text/javascript"><!--
-	 hideElement("' . $name . '");
-	 //-->
-	 </script>
-	 ';
-		}
-		*/
+	<script type="text/javascript"><!--
+	hideElement("' . $name . '");
+	//-->
+	</script>
+	';
+	}
+	*/
 }
 /**
  * @todo Move to a static class method
@@ -2171,7 +2306,7 @@ function icms_getUnameFromUserEmail($email = '')
 	if($email !== '')
 	{
 		$sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email,
-		ENT_QUOTES, _CHARSET)."'");
+				ENT_QUOTES, _CHARSET)."'");
 		list($uname, $email) = $db->fetchRow($sql);
 	}
 	else
