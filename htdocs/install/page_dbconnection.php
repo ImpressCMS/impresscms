@@ -13,7 +13,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: page_dbconnection.php 12397 2014-01-24 19:40:34Z skenow $
+ * @version		$Id: page_dbconnection.php 12426 2014-02-24 16:19:49Z fiammy $
  */
 /**
  *
@@ -57,10 +57,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty( $vars['DB_HOST'] ) && !empty
 }
 
 if (@empty( $vars['DB_HOST'] )) {
+	//so far, mysql extenstion has to exist and be loaded
+	$connections = array(
+			'mysql' => array('type' => 'mysql', 'name' => 'MySQL', 'selected' => 'selected'),
+	);
+	$db_connection = $connections['mysql'];
 	// Fill with default values
 	// check for PDO MySQL and select it, if it is available
+	if (class_exists("PDO", FALSE)) {
+		$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
+		$connections['mysql']['selected'] = '';
+		$connections['pdo'] = $db_connection;
+	}
 	$vars = array_merge( $vars, array(
-        'DB_TYPE'        => 'pdo.mysql',
+        'DB_TYPE'        => $db_connection['type'],
         'DB_HOST'        => 'localhost',
         'DB_USER'        => '',
         'DB_PASS'        => '',
@@ -91,8 +101,13 @@ ob_start();
 <div class="blokSQL">
 <div class="dbconn_line"><label> <?php echo LEGEND_DATABASE; ?><br />
 <select size="2" name="DB_TYPE" class="db_select">
-	<option value="mysql" >MySQL</option>
-	<option value="pdo.mysql" selected="selected">PDO MySQL</option>
+<?php
+	foreach ($connections as $option) {
+		$selected = "";
+		if (!empty($option['selected'])) $selected = " selected='selected'";
+		echo "<option value='" . $option['type'] . "'" . $selected . ">" . $option['name'] . "</option>";
+ 	}
+?>
 </select> </label>
 <div class='clear'>&nbsp;</div>
 </div>

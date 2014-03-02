@@ -12,7 +12,8 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id$
+ * @author		Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version		$Id: page_end.php 12389 2014-01-17 16:58:21Z skenow $
  */
 /**
  *
@@ -24,7 +25,7 @@ $success = isset($_GET['success'])?trim($_GET['success']):false;
 if ($success) {
 	if (is_dir(ICMS_ROOT_PATH.'/install')) {
 		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH.'/install', true);
-		header('Location: '.ICMS_URL.'/index.php');
+		header('Location: '.ICMS_URL.'/');
 	}
 	$_SESSION = array();
 }

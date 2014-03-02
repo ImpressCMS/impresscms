@@ -1,4 +1,13 @@
 <?php
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
 /**
  * Installer mainfile creation page
  *
@@ -12,7 +21,8 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id$
+ * @author		Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version		$Id: page_configsave.php 12329 2013-09-19 13:53:36Z skenow $
  */
 /**
  *

@@ -64,7 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 	$tables = array();
-	if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') $driver = substr(XOOPS_DB_TYPE, 4);
+	
+	if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
+		$driver = substr(XOOPS_DB_TYPE, 4);
+	} else {
+		$driver = XOOPS_DB_TYPE;
+	}
 	$result = $dbm->queryFromFile( './sql/' . $driver . '.structure.sql' );
 	$content = $dbm->report();
 	include 'install_tpl.php';
