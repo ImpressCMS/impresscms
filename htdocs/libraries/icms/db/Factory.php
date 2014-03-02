@@ -85,6 +85,7 @@ abstract class icms_db_Factory {
 		if (defined ('ICMS_DB_PORT')) {
 			$string_conn .= ';port='. ICMS_DB_PORT;
 		}
+		$string_conn .= ';charset=' . XOOPS_DB_CHARSET;
 		define ('ICMS_DB_DSN', $string_conn);
 		// <--
 
