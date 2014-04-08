@@ -27,10 +27,10 @@
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Andrei Zmievski <andrei@php.net>
  * @package Smarty
- * @version 2.6.26
+ * @version 2.6.28
  */
 
-/* $Id: Smarty.class.php 3163 2009-06-17 14:39:24Z monte.ohrt $ */
+/* $Id: Smarty.class.php 4660 2012-09-24 20:05:15Z uwe.tews@googlemail.com $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -465,7 +465,7 @@ class Smarty
      *
      * @var string
      */
-    var $_version              = '2.6.26';
+    var $_version              = '2.6.28';
 
     /**
      * current template inclusion depth
@@ -1090,7 +1090,8 @@ class Smarty
      */
     function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
-        trigger_error("Smarty error: $error_msg", $error_type);
+        $msg = htmlentities($error_msg);
+        trigger_error("Smarty error: $msg", $error_type);
     }
 
 
@@ -1292,39 +1293,7 @@ class Smarty
         $this->_cache_including = $_cache_including;
 
         if ($display) {
-            if (isset($_smarty_results)) {
-				##############################################################################################
-				# Code to protect email against spam. All email in the content of the site will be changed		
-				# by TheRplima
-				##############################################################################################
-				global $icmsConfigPersona;
-				if ( $icmsConfigPersona ['email_protect'] != 0 ) {
-					if (preg_match_all ( "/([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i", $_smarty_results, $texto )) {
-						$patterns = array ( );
-						$replacements = array ( );
-						foreach ( $texto [0] as $email ) {
-							if (preg_match_all ( "/mailto(.*?)$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
-								continue;
-							}
-							$protection_type = intval($icmsConfigPersona['email_protect']);
-							if($protection_type == 1 && (function_exists ( 'gd_info' ))) {
-							$patterns [] = '/' . $email . '/';
-							$replacements [] = "<img style='vertical-align:middle;' class='email_protect' src='" . ICMS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
-							} // uses gd protection methode.
-							elseif($protection_type == 2 && function_exists ('mcrypt_encrypt') && isset($icmsConfigPersona['recprvkey']) && $icmsConfigPersona['recprvkey'] != '' && isset($icmsConfigPersona['recpubkey']) && $icmsConfigPersona['recpubkey'] != ''){
-							require_once ICMS_LIBRARIES_PATH.'/recaptcha/recaptchalib.php';
-							$patterns [] = '/' . $email . '/';
-							$replacements [] = recaptcha_mailhide_html ($icmsConfigPersona['recpubkey'], $icmsConfigPersona['recprvkey'], $email);;
-							}// using reCaptcha methode
-						}
-						$_smarty_results = preg_replace ( $patterns, $replacements, $_smarty_results );
-					}
-				}
-				##############################################################################################
-				# Fim
-				##############################################################################################	
-            echo $_smarty_results;
-            }
+            if (isset($_smarty_results)) { echo $_smarty_results; }
             if ($this->debugging) {
                 // capture time for debugging info
                 $_params = array();
@@ -1337,39 +1306,7 @@ class Smarty
             return;
         } else {
             error_reporting($_smarty_old_error_level);
-            if (isset($_smarty_results)) {
-				##############################################################################################
-				# Code to protect email against spam. All email in the content of the site will be changed		
-				# by TheRplima
-				##############################################################################################
-				global $icmsConfigPersona;
-				if ( $icmsConfigPersona ['email_protect'] != 0 ) {
-					if (preg_match_all ( "/([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i", $_smarty_results, $texto )) {
-						$patterns = array ( );
-						$replacements = array ( );
-						foreach ( $texto [0] as $email ) {
-							if (preg_match_all ( "/mailto(.*?)$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
-								continue;
-							}
-							$protection_type = intval($icmsConfigPersona['email_protect']);
-							if($protection_type == 1 && (function_exists ( 'gd_info' ))) {
-							$patterns [] = '/' . $email . '/';
-							$replacements [] = "<img style='vertical-align:middle;' class='email_protect' src='" . ICMS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
-							} // uses gd protection methode.
-							elseif($protection_type == 2 && function_exists ('mcrypt_encrypt') && isset($icmsConfigPersona['recprvkey']) && $icmsConfigPersona['recprvkey'] != '' && isset($icmsConfigPersona['recpubkey']) && $icmsConfigPersona['recpubkey'] != ''){
-							require_once ICMS_LIBRARIES_PATH.'/recaptcha/recaptchalib.php';
-							$patterns [] = '/' . $email . '/';
-							$replacements [] = recaptcha_mailhide_html ($icmsConfigPersona['recpubkey'], $icmsConfigPersona['recprvkey'], $email);;
-							}// using reCaptcha methode
-						}
-						$_smarty_results = preg_replace ( $patterns, $replacements, $_smarty_results );
-					}
-				}
-				##############################################################################################
-				# Fim
-				##############################################################################################	
-				return $_smarty_results;
-			}
+            if (isset($_smarty_results)) { return $_smarty_results; }
         }
     }
 
