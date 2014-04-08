@@ -1,33 +1,76 @@
 <?php
+// $Id: misc.php 12399 2014-01-25 17:02:01Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
 /**
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id$
+ * @version	    $Id: misc.php 12399 2014-01-25 17:02:01Z skenow $
+ * @version	$Id: misc.php 12399 2014-01-25 17:02:01Z skenow $
  **/
 
 include 'mainfile.php';
 icms_loadLanguageFile('core', 'misc');
-$action = isset($_GET['action']) ? trim(StopXSS($_GET['action'])) : '';
-$action = isset($_POST['action']) ? trim(StopXSS($_POST['action'])) : $action;
-$type = isset($_GET['type']) ? trim(StopXSS($_GET['type'])) : '';
-$type = isset($_POST['type']) ? trim(StopXSS($_POST['type'])) : $type;
+/* set filter types, if not strings */
+$filter_post[] = array(
+		'uid' => 'int',
+		'start' => 'int',
+);
 
-if ($action == 'showpopups')
-{
+$filter_get[] = array(
+		'uid' => 'int',
+		'start' => 'int',
+);
+
+/* set default values for variables */
+$action = $type = "";
+
+/* filter the user input */
+if (!empty($_GET)) {
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	extract($clean_GET);
+}
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	extract($clean_POST);
+}
+
+if ($action == 'showpopups') {
 	xoops_header(false);
 	// show javascript close button?
 	$closebutton = 1;
 	switch($type)
 	{
 		case 'smilies':
-			$target = isset($_GET['target']) ? trim($_GET['target']) : '';
 			if ($target == '' || !preg_match('/^[0-9a-z_]*$/i', $target)) {} else {
 				echo "<script type=\"text/javascript\"><!--//
 				function doSmilie(addSmilie) {
@@ -81,14 +124,13 @@ if ($action == 'showpopups')
 			</head>
 			<body>
 			<h4><?php echo _MSC_AVAVATARS;?></h4>
-			<form name='avatars' action='<?php echo $_SERVER['REQUEST_URI'];?>'>
 			<table width='100%'>
 				<tr>
 				<?php
 				$avatar_handler = icms::handler('icms_data_avatar');
 				$avatarslist =& $avatar_handler->getList('S');
 				$cntavs = 0;
-				$counter = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
+				$counter = isset($start) ? (int) ($start) : 0;
 				foreach ($avatarslist as $file => $name)
 				{
 					echo '<td><img src="uploads/'.$file.'" alt="'.$name.'" style="padding:10px; vertical-align:top;" />
@@ -103,12 +145,11 @@ if ($action == 'showpopups')
 						$cntavs=0;
 					}
 				}
-				echo '</tr></table></form></div>';
+				echo '</tr></table></div>';
 				break;
 			case 'friend':
-				if (!icms::$security->check() || !isset($_POST['op']) || StopXSS($_POST['op']) == 'sendform') {
-					if (icms::$user)
-					{
+				if (!icms::$security->check() || !isset($op) || $op == 'sendform') {
+					if (icms::$user) {
 						$yname = icms::$user->getVar('uname', 'e');
 						$ymail = icms::$user->getVar('email', 'e');
 						$fname = '';
@@ -141,15 +182,15 @@ if ($action == 'showpopups')
 						. icms::$security->getTokenHTML()."</td></tr>
 						</table></form>\n";
 					$closebutton = 0;
-				} elseif ($_POST['op'] == 'sendsite') {
+				} elseif ($op == 'sendsite') {
 					if (icms::$user) {
 						$ymail = icms::$user->getVar('email');
 					} else {
-						$ymail = isset($_POST['ymail']) ? icms_core_DataFilter::stripSlashesGPC(trim($_POST['ymail'])) : '';
+						$ymail = isset($ymail) ? icms_core_DataFilter::stripSlashesGPC(trim($ymail)) : '';
 					}
-					if (!isset($_POST['yname']) || trim($_POST['yname']) == '' || $ymail == ''
-						|| !isset($_POST['fname']) || trim($_POST['fname']) == ''
-						|| !isset($_POST['fmail']) || trim($_POST['fmail']) == '') {
+					if (!isset($yname) || trim($yname) == '' || $ymail == ''
+						|| !isset($fname) || trim($fname) == ''
+						|| !isset($fmail) || trim($fmail) == '') {
 						redirect_header(ICMS_URL.'/misc.php?action=showpopups&amp;type=friend&amp;op=sendform',2,_MSC_NEEDINFO);
 					}
 					$yname = icms_core_DataFilter::stripSlashesGPC(trim($_POST['yname']));
@@ -178,7 +219,6 @@ if ($action == 'showpopups')
 				break;
 			case 'online':
 				echo '<table  width="100%" cellspacing="1" class="outer"><tr><th colspan="3">'._WHOSONLINE.'</th></tr>';
-				$start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 				$online_handler = icms::handler('icms_core_Online');
 				$online_total =& $online_handler->getCount();
 				$limit = ($online_total > 20) ? 20 : $online_total;
@@ -270,4 +310,3 @@ if ($action == 'showpopups')
 					</script>
 				<?php
 			}
-?>

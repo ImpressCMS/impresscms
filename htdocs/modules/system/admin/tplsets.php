@@ -1,4 +1,33 @@
 <?php
+// $Id: main.php 12396 2014-01-24 17:25:13Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Administration of template sets, main file
  *
@@ -125,6 +154,8 @@ switch ($op) {
 		if ($moddir == '') {
 			redirect_header('admin.php?fct=tplsets', 1);
 		}
+		/* tplset is taken from the $_GET variable and should be encoded before output */
+		$tplset_enc = filter_var($tplset, FILTER_SANITIZE_ENCODED);
 		icms_cp_header();
 		$module_handler = icms::handler('icms_module');
 		$module =& $module_handler->getByDirname($moddir);
@@ -133,7 +164,7 @@ switch ($op) {
 			. ICMS_MODULES_URL . '/system/admin/tplsets/images/tplsets_big.png)">'
 			. '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN
 			.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'
-			. $tplset . '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'
+			. $tplset_enc . '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'
 			. $modname . '<br /><br /></div><br />';
 
 		echo '<form action="admin.php" method="post" enctype="multipart/form-data">'
@@ -174,7 +205,7 @@ switch ($op) {
 							$bg = '#99ff99';
 						}
 						echo '<td style="background-color:' . $bg . ';">' . $last_imported_f
-							. ' [<a href="admin.php?fct=tplsets&amp;tplset=' . $tplset . '&amp;moddir=' . $moddir
+							. ' [<a href="admin.php?fct=tplsets&amp;tplset=' . $tplset_enc . '&amp;moddir=' . $moddir
 							. '&amp;op=importtpl&amp;id=' . $templates[$i]->getVar('tpl_id') . '">'
 							. _MD_IMPORT . '</a>]';
 					} else {
@@ -206,12 +237,12 @@ switch ($op) {
 						. '</td><td style="background-color:#FFFF99;">&nbsp;</td><td style="background-color:#FFFF99;">';
 					$physical_file = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $moddir . '/' . $nfile;
 					if (file_exists($physical_file)) {
-						echo '[<a href="admin.php?fct=tplsets&amp;moddir=' . $moddir . '&amp;tplset=' . $tplset . '&amp;op=importtpl&amp;file=' . urlencode($nfile) . '">' . _MD_IMPORT . '</a>]';
+						echo '[<a href="admin.php?fct=tplsets&amp;moddir=' . $moddir . '&amp;tplset=' . $tplset_enc . '&amp;op=importtpl&amp;file=' . urlencode($nfile) . '">' . _MD_IMPORT . '</a>]';
 					} else {
 						echo '&nbsp;';
 					}
 					echo '</td><td style="background-color:#FFFF99;vertical-align: middle;">'
-						. '<a href="admin.php?fct=tplsets&amp;moddir=' . $moddir . '&amp;tplset=' . $tplset
+						. '<a href="admin.php?fct=tplsets&amp;moddir=' . $moddir . '&amp;tplset=' . $tplset_enc
 						. '&amp;op=generatetpl&amp;type=module&amp;file=' . urlencode($nfile) . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/filenew2.png" alt="' . _MD_GENERATE . '" title="' . _MD_GENERATE . '" /></a></td>
 						<td style="background-color:#FFFF99;vertical-align: middle; text-align:' . _GLOBAL_RIGHT
 						. ';"><input type="file" name="' . $nfile . '" id="' . $nfile
@@ -300,7 +331,7 @@ switch ($op) {
 				. '<input type="hidden" name="fct" value="tplsets" />'
 				. '<input type="hidden" name="op" value="update" />' . icms::$security->getTokenHTML()
 				. '<input type="hidden" name="moddir" value="' . $moddir . '" />'
-				. '<input type="hidden" name="tplset" value="' . $tplset . '" />'
+				. '<input type="hidden" name="tplset" value="' . $tplset_enc . '" />'
 				. '<input type="submit" value="' . _MD_UPLOAD . '" /></div></form>';
 		}
 		icms_cp_footer();
