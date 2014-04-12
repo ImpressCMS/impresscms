@@ -276,4 +276,3 @@ if( ! empty( $_SESSION['protector_logger'] ) ) {
 }
 
 icms_cp_footer();
-?>

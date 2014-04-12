@@ -8,11 +8,12 @@
  * @copyright    The XOOPS project http://www.xoops.org/
  * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
  * @package		installer
- * @since        Xoops 2.3.0
+ * @since       2.3.0
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id$
+ * @author		Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version		$Id: page_langselect.php 12329 2013-09-19 13:53:36Z skenow $
  */
 /**
  *

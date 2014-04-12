@@ -165,7 +165,7 @@ class PathStuffController {
 	}
 
 	function checkPermissions() {
-		$paths = array('uploads', 'modules', 'templates_c', 'cache' );
+		$paths = array( 'mainfile.php', 'uploads', 'modules', 'templates_c', 'cache' );
 		$errors = array();
 		foreach ( $paths as $path) {
 			$errors[$path] = $this->makeWritable( "$this->xoopsRootPath/$path" );
