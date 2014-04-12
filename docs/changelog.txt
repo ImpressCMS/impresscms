@@ -1,5 +1,140 @@
 ImpressCMS ChangeLog
-=== ImpressCMS 2.0.0 alpha 2 ===
+=== ImpressCMS 2.0.0 Alpha 4 ===
+Release date: 15 Apr 2014
+DB Version: 44
+Build Version: 73
+
+Changes:
+* Integration of changes in 1.3.5, 1.3.6 and 1.3.6.1
+* Removed support for IE6
+
+
+Improvements:
+* PHP 5.4 strict compliance
+
+Fixes:
+
+
+ImpressCMS 1.3.6
+-------------------------------
+Date: 30 Jan 2014
+Revision: 12407
+DB Version: 43
+Build Version: 71
+
+Fixed:
+#759 - Error during Installation on PHP 5.5 (opcache enabled) (Steve Kenow)
+#760 - Fatal error in autotasks when filepath could contain escape sequence (Julian Egelstaff)
+
+Security Fix:
+#761 - Deletion of arbitrary files in the system - image editor (Pedro Ribeiro pedrib@gmail.com)
+#762 - Cross site scripting (XSS) - misc.php (Pedro Ribeiro pedrib@gmail.com)
+#763 - Cross site scripting (XSS) - tplsets (Pedro Ribeiro pedrib@gmail.com)
+
+Improved
+
+Added:
+#96, #643, #755 Complete support for PDO as the database connection (Steve Kenow)
+
+
+** Complete list of tickets addressed in the 1.3.6 Milestone - https://www.assembla.com/spaces/impresscms/milestones/4129593-impresscms-1-3-6
+
+ImpressCMS 1.3.5 Final, Patch 1
+-------------------------------
+Date: 5 Nov 2013
+Revision: 12366
+
+749 Update Smarty to 2.6.28 and move email protection out of Smarty
+
+
+ImpressCMS 1.3.5 Final, Patch 1
+-------------------------------
+Date: 5 Nov 2013
+Revision: 12366
+
+749 Update Smarty to 2.6.28 and move email protection out of Smarty
+
+
+ImpressCMS 1.3.5 Final
+-------------------
+Creation Date: 21 Sept 2013
+Revision: 12340
+DB Version: 43
+Build Version: 70
+
+###Changes:###
+720	Security issue in Smarty 2.6.26 fix (Steve Kenow)
+740 Corrected some more Xoops project copyright banners
+741 Updated the language downloads links in the installer
+
+###Bugfixes:###
+    Correcting a misspelled word in the installation_notify code
+    
+** Complete list of tickets addressed in the 1.3.5 Milestone - https://impresscmsdev.assembla.com/spaces/dW4voyNP0r4ldbeJe5cbLr/tickets?report[estimate_show]=true&report[id]=0&report[milestone_id_cond]=0&report[milestone_id_val][]=2260293&report[title]=ImpressCMS+1.3.5+Tickets
+
+    
+ImpressCMS 1.3.5 RC2
+-------------------
+Creation Date: 27 Aug 2013
+Revision: 12272
+DB Version: 43
+Build Version: 69
+
+
+
+ImpressCMS 1.3.5 RC (unreleased)
+-------------------
+Creation Date: 09 Aug 2013
+Revision:
+DB Version: 43
+Build Version: 68
+
+###Changes:###
+38	Utilising ICMS_THEME_PATH etc (Steve Kenow)
+730	Unable to use icms_ipf_form_Base::addCustomButton because buttons are created when the form is instantiated (Steve Kenow)
+452	search options: Show modules with no match (David Janssens)
+670	Verify Xoops License header (David Janssens)
+718	TinyMCE plugin: Image-Manager - better usability (Rene Sato)
+719	ImpressCMS with MariaDB (Rene Sato)
+
+*   Added SiteGround hosting sponsor to final install page and footer (Steve Kenow)
+
+###Updates:###
+684	Update  3rd Party Libraries (Rene Sato)
+683	Update the TinyMCE to 3.4.9 (David Janssens)
+720	Security issue in Smarty 2.6.26 (David Janssens)
+
+
+###3rd Party Library versions:###
+* jQuery 			1.9.1
+* jQuery UI 		1.10.3
+* jQuery Colorbox 	1.3.31
+* TCPDF 			5.9.204
+* HTMLPurifier 		4.5.0
+* TinyMCE 			3.5.8
+* Smarty            2.6.27
+
+###Bugfixes:###
+432	multi-language not working with gzip compression (Steve Kenow)
+505	error in include/pdf.php (qm-b)
+549	"Edit and Remove blocks from user side" not working (Steve Kenow)
+662	Notification: issue with the default value and setting (Rene Sato)
+664	Notifications: Text output without linebreak (David Janssens)
+676	Improve doc on upgrade (David Janssens)
+677	Backtrace: white font-color on white background (Steve Kenow)
+678	The icon from the hiddencontent is too height (Rene Sato)
+679	comments without HTML option for users (Rene Sato)
+716	Installer can not check the trust_path - issue with the new jQery version 1.9.1	(David Janssens)
+717	Inserting content during module install fails when installing during core installation (Steve Kenow)
+721	change deprecated message for banners (David Janssens)
+722	Improve variability of icms_core_Password::createSalt (Steve Kenow)
+723	"select all" on Notifications and Bookmarks works not (David Janssens)
+726	missing a PDF-icon in icon-set (David Janssens)
+729	function redirect_header and debugging mode 2 (popup mode, I think) (qm-b)
+734	problem searching image in image browser (qm-b)
+736	missing global for ML-list in tiny (qm-b)
+
+=== ImpressCMS 2.0.0 alpha 3 ===
 Release date: 30 Apr 2013
 Revision :
 DB Version: 44

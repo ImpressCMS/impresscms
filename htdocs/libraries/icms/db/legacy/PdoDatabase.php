@@ -286,8 +286,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 * @return mixed
 	 */
 	public function getServerVersion($connection = NULL) {
-		if (NULL === $connection)
-			$connection = $this->pdo;
+		if (NULL === $connection) $connection = $this->pdo;
 		return $connection->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}
 }
