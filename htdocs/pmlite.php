@@ -1,15 +1,41 @@
 <?php
+// $Id: pmlite.php 12363 2013-11-01 05:06:13Z sato-san $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
 /**
  * All functions for pm manager are going through here.
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id$
+ * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id: pmlite.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 
 $xoopsOption['pagetype'] = "pmsg";
@@ -87,9 +113,10 @@ if (icms::$user) {
 					$xoopsMailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $icmsConfig['sitename']));
 					$xoopsMailer->send();
 				}
+				redirect_header(icms_getPreviousPage(), 5, _PM_MESSAGEPOSTED);
 				echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED 
-					. "</h4><br /><a href=\"javascript:window.opener.location='" . ICMS_URL . "/viewpmsg.php';window.close();\">" 
-					. _PM_CLICKHERE . "</a><br /><br /><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . "</a></div>";
+					. "</h4><br /><a href='" . ICMS_URL . "/viewpmsg.php'>"
+					. _PM_CLICKHERE . "</a></div>";
 			}
 		}
 	} elseif ($reply == 1 || $send == 1 || $send2 == 1) {
@@ -106,7 +133,7 @@ if (icms::$user) {
 				$reply = $send2 = 0;
 			}
 		}
-		echo "<form action='pmlite.php' method='post' name='coolsus'>\n"
+		echo "<form action='".ICMS_URL."/pmlite.php' method='post' name='coolsus'>\n"
 			. "<table width='300' align='center' class='outer'><tr><td class='head' width='25%'>" 
 			. _PM_TO . "</td>";
 		if ($reply == 1) {
@@ -118,7 +145,7 @@ if (icms::$user) {
 			$user_sel = new icms_form_elements_select_User("", "to_userid");
 			echo "<td class='even'>" . $user_sel->render() . "</td>";
 		}
-		echo "</tr><tr><td class='head' width='25%'>" . _PM_SUBJECTC . "</td>";
+		echo "</tr><tr><td class='head xoops-form-element-caption-required' width='25%'>" . _PM_SUBJECTC . "<span class='caption-marker'>*</span></td>";
 		if ($reply == 1) {
 			$subject = $pm->getVar('subject', 'E');
 			if (!preg_match("/^Re:/i", $subject)) {
@@ -127,7 +154,7 @@ if (icms::$user) {
 			echo "<td class='even'><input type='text' name='subject' value='" . $subject 
 				. "' size='30' maxlength='100' /></td>";
 		} else {
-			echo "<td class='even'><input type='text' name='subject' size='30' maxlength='100' /></td>";
+			echo "<td class='even'><input required='required' type='text' name='subject' size='30' maxlength='100' /></td>";
 		}
 		echo "</tr><tr valign='top'><td class='head' width='25%'>" 
 			. _PM_MESSAGEC . "</td><td class='even'>";
@@ -153,12 +180,11 @@ if (icms::$user) {
 			. "<input type='hidden' name='op' value='submit' />" . icms::$security->getTokenHTML()
 			. "<input type='submit' class='formButton' name='submit' value='" . _PM_SUBMIT
 			. "' />&nbsp;<input type='reset' class='formButton' value='" . _PM_CLEAR
-			. "' />&nbsp;<input type='button' class='formButton' name='cancel' value='" . _PM_CANCELSEND
-			. "' onclick='javascript:window.close();' /></td></tr></table>\n"
+			. "' /></td></tr></table>\n"
 			. "</form>\n";
 	}
 } else {
-	echo "<div>" . _PM_SORRY . "<br /><br /><a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a> . </div>";
+	echo "<div>" . _PM_SORRY . "<br /><br />" . _PM_PLEACE . "<a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a>" . _PM_OR . "<a href='" . ICMS_URL . "/user.php'>" . _PM_LOGINNOW . "</a></div>";
 }
 
 xoops_footer();

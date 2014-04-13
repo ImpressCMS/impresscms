@@ -1,12 +1,42 @@
 <?php
+// $Id: viewpmsg.php 12363 2013-11-01 05:06:13Z sato-san $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
 /**
  * View and manage your private messages
  * 
+ * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author      sato-san <sato-san@impresscms.org>
  * @package		core
  * @subpackage	Privmessage
- * @version		SVN: $Id$
+ * @version		SVN: $Id: viewpmsg.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 $xoopsOption['pagetype'] = 'pmsg';
 include_once 'mainfile.php';
@@ -51,7 +81,7 @@ if (!is_object(icms::$user)) {
 	. "<input name='allbox' id='allbox' onclick='xoopsCheckAll(\"prvmsg\", \"allbox\");'"
 	. "type='checkbox' value='Check All' /></th><th>"
 	. "<img src='images/download.gif' alt='' /></th><th>&nbsp;</th><th>"
-	. _PM_FROM . "</th><th>" . _PM_SUBJECT . "</th><th align='center'>" . _PM_DATE . "</th></tr>\n";
+	. _PM_SUBJECT . "</th><th>" . _PM_FROM . "</th><th align='center'>" . _PM_DATE . "</th></tr>\n";
 	$total_messages = count($pm_arr);
 	if ($total_messages == 0) {
 		echo "<tr><td class='even' colspan='6' align='center'>" . _PM_YOUDONTHAVE . "</td></tr>";
@@ -74,6 +104,10 @@ if (!is_object(icms::$user)) {
 		echo "<td style='vertical-align: middle; width: 5%; text-align: center;'>"
 		. "<img src='images/subject/" . $pm_arr[$i]->getVar('msg_image', 'E') . "' alt='' /></td>\n";
 		$postername = icms_member_user_Object::getUnameFromId($pm_arr[$i]->getVar('from_userid'));
+		echo "<td valign='middle' style='vertical-align: middle;'><a href='readpmsg.php?start="
+		. (int) (($total_messages-$i-1)) . "&amp;total_messages="
+		. (int) $total_messages . "'>" . $pm_arr[$i]->getVar('subject') . "</a></td>";
+		
 		echo "<td style='vertical-align: middle; width: 10%; text-align: center;'>";
 		// no need to show deleted users
 		if ($postername) {
@@ -82,24 +116,23 @@ if (!is_object(icms::$user)) {
 			echo $icmsConfig['anonymous'];
 		}
 		echo "</td>\n";
-		echo "<td valign='middle' style='vertical-align: middle;'><a href='readpmsg.php?start="
-		. (int) (($total_messages-$i-1)) . "&amp;total_messages="
-		. (int) $total_messages . "'>" . $pm_arr[$i]->getVar('subject') . "</a></td>";
+		
+		
 		echo "<td style='vertical-align: middle; width: 30%; text-align: center;'>"
 		. formatTimestamp($pm_arr[$i]->getVar('msg_time')) . "</td></tr>";
 	}
 
 	if ($display == 1) {
 		echo "<tr class='foot' align='" . _GLOBAL_LEFT . "'><td colspan='6' align='" . _GLOBAL_LEFT
-		. "'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\""
-		. ICMS_URL . "/pmlite.php?send=1\",\"pmlite\",800,680);' value='"
-		. _PM_SEND . "' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"
+		. "'><a class='cboxElement' href='" . ICMS_URL . "/pmlite.php?send=1'>
+		<input type='button' class='formButton' value='" . _PM_SEND . "' /></a>
+		&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"
 		. _PM_DELETE . "' />" . icms::$security->getTokenHTML() . "</td></tr></table></form>";
 	} else {
 		echo "<tr class='bg2' align='" . _GLOBAL_LEFT . "'><td colspan='6' align='" . _GLOBAL_LEFT
-		. "'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\""
-		. ICMS_URL . "/pmlite.php?send=1\",\"pmlite\",800,680);' value='"
-		. _PM_SEND . "' /></td></tr></table></form>";
+		. "'><a class='cboxElement' href='" . ICMS_URL . "/pmlite.php?send=1'>
+		<input type='button' class='formButton' value='" . _PM_SEND . "' /></a>
+		</td></tr></table></form>";
 	}
 	include 'footer.php';
 }

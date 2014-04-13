@@ -1,10 +1,40 @@
 <?php
+// $Id: userinfo.php 12363 2013-11-01 05:06:13Z sato-san $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
 /**
+ * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author      sato-san <sato-san@impresscms.org>
  * @package		Member
  * @subpackage	User
- * @version		SVN: $Id$
+ * @version		SVN: $Id: userinfo.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -51,6 +81,7 @@ if (is_object(icms::$user)) {
             'lang_notifications' => _US_NOTIFICATIONS,
             'lang_inbox' => _US_INBOX,
             'lang_logout' => _US_LOGOUT,
+            'lang_administration' => _CPHOME,
             'user_candelete' => $icmsConfigUser['self_delete'] ? TRUE : FALSE,
             'lang_deleteaccount' => $icmsConfigUser['self_delete'] ? _US_DELACCOUNT : ''));
 		$thisUser = icms::$user;
@@ -126,10 +157,8 @@ icms_makeSmarty(array(
 	'lang_lastlogin' => _US_LASTLOGIN,
 	'lang_notregistered' => _US_NOTREGISTERED,
 	'user_pmlink' => is_object(icms::$user) 
-		? "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid="
-			. (int) $thisUser->getVar('uid') . "', 'pmlite', 800,680);\"><img src=\"" 
-			. ICMS_URL . "/images/icons/" . $icmsConfig['language'] . "/pm.gif\" alt=\""
-			. sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>" 
+		? "<a class='cboxElement' href='" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . (int) $thisUser->getVar('uid') . "'>
+		<input type='button' class='formButton' value='" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "' /></a>"
 		: '',
 	'user_rankimage' => $userrank['image'] ?
 		'<img src="' . $userrank['image'] . '" alt="' . $userrank['title'] . '" />' : '',
