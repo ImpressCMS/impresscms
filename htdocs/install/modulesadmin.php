@@ -12,7 +12,7 @@
  * @author		Kazumi Ono (AKA onokazu)
  * @author		RpLima
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
- * @version		$Id: modulesadmin.php 12398 2014-01-24 21:26:23Z skenow $
+ * @version		$Id: modulesadmin.php 12426 2014-02-24 16:19:49Z fiammy $
  */
 /**
  *
@@ -45,7 +45,12 @@ function xoops_module_install($dirname) {
 		$errs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
 		if ($sqlfile != false && is_array($sqlfile)) {
 			// handle instances when XOOPS_DB_TYPE includes 'pdo.'
-			if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') $driver = substr(XOOPS_DB_TYPE, 4);
+			
+			if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
+				$driver = substr(XOOPS_DB_TYPE, 4);
+			} else {
+				$driver = XOOPS_DB_TYPE;
+			}
 			$sql_file_path = ICMS_ROOT_PATH."/modules/".$dirname."/".$sqlfile[$driver];
 			if (!file_exists($sql_file_path)) {
 				$errs[] = "SQL file not found at <b>$sql_file_path</b>";

@@ -321,7 +321,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param obj $connecton	A MySQL database connection link
 	 * @return string
 	 */
-	public function getServerVersion($connecton = NULL) {
+	public function getServerVersion($connection = NULL) {
 		if (NULL === $connection) $connection = $this->conn;
 		return mysql_get_server_info($connection);
 	}

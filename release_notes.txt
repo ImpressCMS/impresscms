@@ -1,8 +1,8 @@
-ImpressCMS 2.0 Alpha 2 release notes
+ImpressCMS 2.0 Alpha 4 release notes
 ================================================
 
-The ImpressCMS Project is very proud to announce the first Alpha version of its 2.0 release! 
-ImpressCMS 2.0 Alpha 2 is a major refactoring of the core and is not intended for production sites.
+The ImpressCMS Project is very proud to announce the next Alpha version of its 2.0 release! 
+ImpressCMS 2.0 is a major refactoring of the core and is not intended for production sites.
 
 Please see the full Change Log for details at https://impresscmsdev.assembla.com/spaces/dW4voyNP0r4ldbeJe5cbLr/tickets?report[id]=0&report[milestone_id_cond]=0&report[milestone_id_val][]=585723&report[title]=ImpressCMS+2.0+Tickets.
 

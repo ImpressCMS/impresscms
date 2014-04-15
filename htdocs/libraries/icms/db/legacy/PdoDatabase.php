@@ -25,18 +25,21 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 
 	/**
 	 * The PDO connection that performs operations behind the scenes
+	 *
 	 * @var icms_db_IConnection
 	 */
 	protected $pdo;
 
 	/**
 	 * Legacy database connection var - to be replaced by $pdo
+	 *
 	 * @var			resource
 	 */
 	public $conn;
 
 	/**
 	 * Row count of the most recent statement
+	 *
 	 * @var int
 	 */
 	protected $rowCount = 0;
@@ -196,7 +199,8 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	// Inseridas por Claudia   fevereiro/2012, ImpressCMS.org
 
 	/**
-	 * Executa uma sql e retorna o nro. de linhas afetadas por update ou delete
+	 * Executa uma sql e retorna o nro.
+	 * de linhas afetadas por update ou delete
 	 * Executes a sql and returns the number of rows affected by update or delete
 	 *
 	 * This is not a legacy method and should only be implemented in the new PDO class
@@ -228,13 +232,13 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 * @todo	this can be removed without breaking legacy db functionality
 	 *
 	 * @param resource $result
-	 * @param string $class  O nome de classe para instanciar, definir as propriedades e retornar. Se n�o for especificado, um objeto stdClass � retornado.
-	 * 							The name of the class to instantiate, set the properties and return. If none is specified, a stdClass object returned.
-	 * @param array  $params  Um array opcional de par�metros para passar para o construtor do objeto class_name .
-	 * 							An optional array of parameters to pass to the constructor for class_name objects.
-	 * @return object
-	 *
-	 * Inserida por Claudia // added by Claudia (ImpressCMS)
+	 * @param string $class
+	 *        	O nome de classe para instanciar, definir as propriedades e retornar. Se n�o for especificado, um objeto stdClass � retornado.
+	 * 			The name of the class to instantiate, set the properties and return. If none is specified, a stdClass object returned.
+	 * @param array $params
+	 *        	Um array opcional de par�metros para passar para o construtor do objeto class_name .
+	 * 			An optional array of parameters to pass to the constructor for class_name objects.
+	 * @return object Inserida por Claudia // added by Claudia (ImpressCMS)
 	 */
 	function fetchObject($result, $class='stdClass', $params=array()) {
 		/*
@@ -281,7 +285,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 * @param obj $connection	A MySQL database connection link
 	 * @return mixed
 	 */
-	public function getServerVersion($connection) {
+	public function getServerVersion($connection = NULL) {
 		if (NULL === $connection) $connection = $this->pdo;
 		return $connection->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}

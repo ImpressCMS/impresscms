@@ -562,7 +562,7 @@ class icms_view_theme_Object {
 
 				case 'stylesheet':
 					/* @todo use a preference option to determine whether to combine the files, or not, and 1 for compressing the file */
-					$combine = TRUE;
+					$combine = FALSE; // jQuery and jgrowl use relative paths for images in styles. Combining them and placing the file in the cache folder has bad effects
 					if ($combine) {
 						/* all local files will be a path, all remote files will have scheme:// */
 						$filepath = array_flip(str_replace(ICMS_URL, "", array_keys($this->metas[$zone][$type])));
