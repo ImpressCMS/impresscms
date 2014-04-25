@@ -38,57 +38,87 @@
  * @version		$Id: pmlite.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 
+/* this will set which language file will load for this page */
 $xoopsOption['pagetype'] = "pmsg";
 
 include "mainfile.php";
-$reply = !empty($_GET['reply']) ? 1 : 0;
-$send = !empty($_GET['send']) ? 1 : 0;
-$send2 = !empty($_GET['send2']) ? 1 : 0;
-$to_userid = !empty($_GET['to_userid']) ? (int) ($_GET['to_userid']) : 0;
-$msg_id = !empty($_GET['msg_id']) ? (int) ($_GET['msg_id']) : 0;
-if (empty($_GET['refresh']) && isset($_POST['op']) && $_POST['op'] != "submit") {
+
+/* set filter types, if not strings */
+$filter_get[] = array(
+		'reply' => 'int',
+		'send' => 'int',
+		'send2' => 'int',
+		'refresh' => 'int',
+		'to_userid' => 'int',
+		'msg_id' => 'int',
+);
+
+$filter_post[] = array(
+		'to_userid' => 'int',
+		'msg_id' => 'int',
+		'subject' => 'str',
+		'message' => 'str',
+);
+
+/* set default values for variables */
+$op = $subject = $message = "";
+$reply = $send = $send2 = $refresh = $to_userid = $msg_id = 0;
+
+/* filter the user input */
+if (!empty($_GET)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	extract($clean_POST);
+}
+
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	extract($clean_POST);
+}
+
+if (empty($refresh) && !empty($op) && $op != "submit") {
 	$jump = "pmlite.php?refresh=" . time() . "";
-	if ($send == 1) {
+	if ($send != 0) {
 		$jump .= "&amp;send=" . $send . "";
-	} elseif ($send2 == 1) {
+	} elseif ($send2 != 0) {
 		$jump .= "&amp;send2=" . $send2 . "&amp;to_userid=" . $to_userid . "";
-	} elseif ($reply == 1) {
+	} elseif ($reply != 0) {
 		$jump .= "&amp;reply=" . $reply . "&amp;msg_id=" . $msg_id . "";
 	} else {
 	}
 	echo "<html><head><meta http-equiv='Refresh' content='0; url=" . $jump . "' /></head><body></body></html>";
 	exit();
 }
+
 xoops_header();
 if (icms::$user) {
-	if (isset($_POST['op']) && $_POST['op'] == "submit") {
+	if (!empty($op) && $op == "submit") {
 		if (!icms::$security->check()) {
 			$security_error = true;
 		}
-		$res = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("users") 
-			. " WHERE uid='". (int) ($_POST['to_userid']) . "'");
+		$res = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("users")
+			. " WHERE uid='". $to_userid . "'");
 		list($count) = icms::$xoopsDB->fetchRow($res);
 		if ($count != 1) {
 			echo "<br /><br /><div><h4>" . _PM_USERNOEXIST . "<br />"
 				. _PM_PLZTRYAGAIN . "</h4><br />";
-			if (isset($security_error) && $security_error == true) {
+			if (isset($security_error) && $security_error == TRUE) {
 				echo implode('<br />', icms::$security->getErrors());
 			}
 			echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . "</a> ]</div>";
 		} else {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->create();
-			$pm->setVar("subject", icms_core_DataFilter::filterTextareaInput($_POST['subject']));
-			$pm->setVar("msg_text", icms_core_DataFilter::filterHTMLinput($_POST['message'], TRUE, TRUE, TRUE));
-			$pm->setVar("to_userid", (int) ($_POST['to_userid']));
+			$pm->setVar("subject", icms_core_DataFilter::filterTextareaInput($subject));
+			$pm->setVar("msg_text", icms_core_DataFilter::filterHTMLinput($message, TRUE, TRUE, TRUE));
+			$pm->setVar("to_userid", $to_userid);
 			$pm->setVar("from_userid", (int) (icms::$user->getVar("uid")));
 			if (!$pm_handler->insert($pm)) {
-				echo $pm->getHtmlErrors() . "<br /><a href='javascript:history.go(-1)'>" 
+				echo $pm->getHtmlErrors() . "<br /><a href='javascript:history.go(-1)'>"
 					. _PM_GOBACK . "</a>";
 			} else {
 				// Send a Private Message email notification
 				$userHandler = icms::handler('icms_member_user');
-				$toUser =& $userHandler->get((int) ($_POST['to_userid']));
+				$toUser =& $userHandler->get($to_userid);
 				// Only send email notif if notification method is mail
 				if ($toUser->getVar('notify_method') == 2) {
 					$xoopsMailer = new icms_messaging_Handler();
@@ -107,20 +137,20 @@ if (icms::$user) {
 					$xoopsMailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
 					$xoopsMailer->assign('X_UNAME', $toUser->getVar('uname'));
 					$xoopsMailer->assign('X_FROMUNAME', icms::$user->getVar('uname'));
-					$xoopsMailer->assign('X_SUBJECT', icms_core_DataFilter::stripSlashesGPC($_POST['subject']));
-					$xoopsMailer->assign('X_MESSAGE', icms_core_DataFilter::stripSlashesGPC($_POST['message']));
+					$xoopsMailer->assign('X_SUBJECT', icms_core_DataFilter::stripSlashesGPC($subject));
+					$xoopsMailer->assign('X_MESSAGE', icms_core_DataFilter::stripSlashesGPC($message));
 					$xoopsMailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
 					$xoopsMailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $icmsConfig['sitename']));
 					$xoopsMailer->send();
 				}
 				redirect_header(icms_getPreviousPage(), 5, _PM_MESSAGEPOSTED);
-				echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED 
+				echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED
 					. "</h4><br /><a href='" . ICMS_URL . "/viewpmsg.php'>"
 					. _PM_CLICKHERE . "</a></div>";
 			}
 		}
-	} elseif ($reply == 1 || $send == 1 || $send2 == 1) {
-		if ($reply == 1) {
+	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {
+		if ($reply != 0) {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) (icms::$user->getVar('uid'))) {
@@ -134,11 +164,11 @@ if (icms::$user) {
 			}
 		}
 		echo "<form action='".ICMS_URL."/pmlite.php' method='post' name='coolsus'>\n"
-			. "<table width='300' align='center' class='outer'><tr><td class='head' width='25%'>" 
+			. "<table width='300' align='center' class='outer'><tr><td class='head' width='25%'>"
 			. _PM_TO . "</td>";
-		if ($reply == 1) {
+		if ($reply != 0) {
 			echo "<td class='even'><input type='hidden' name='to_userid' value='" . $pm->getVar("from_userid") . "' />" . $pm_uname . "</td>";
-		} elseif ($send2 == 1) {
+		} elseif ($send2 != 0) {
 			$to_username = icms_member_user_Object::getUnameFromId($to_userid);
 			echo "<td class='even'><input type='hidden' name='to_userid' value='" . $to_userid . "' />" . $to_username . "</td>";
 		} else {
@@ -146,19 +176,19 @@ if (icms::$user) {
 			echo "<td class='even'>" . $user_sel->render() . "</td>";
 		}
 		echo "</tr><tr><td class='head xoops-form-element-caption-required' width='25%'>" . _PM_SUBJECTC . "<span class='caption-marker'>*</span></td>";
-		if ($reply == 1) {
+		if ($reply != 0) {
 			$subject = $pm->getVar('subject', 'E');
 			if (!preg_match("/^Re:/i", $subject)) {
 				$subject = 'Re: ' . $subject;
 			}
-			echo "<td class='even'><input type='text' name='subject' value='" . $subject 
+			echo "<td class='even'><input type='text' name='subject' value='" . $subject
 				. "' size='30' maxlength='100' /></td>";
 		} else {
 			echo "<td class='even'><input required='required' type='text' name='subject' size='30' maxlength='100' /></td>";
 		}
-		echo "</tr><tr valign='top'><td class='head' width='25%'>" 
+		echo "</tr><tr valign='top'><td class='head' width='25%'>"
 			. _PM_MESSAGEC . "</td><td class='even'>";
-		if ($reply == 1) {
+		if ($reply != 0) {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) (icms::$user->getVar('uid'))) {
