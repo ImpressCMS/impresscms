@@ -47,8 +47,7 @@ if (icms_get_module_status("profile")) {
 	if ($module->config['profile_social'] && file_exists(ICMS_MODULES_PATH . '/profile/index.php')) {
 		header('Location: ' . ICMS_MODULES_URL . '/profile/index.php?uid=' . $uid);
 		exit();
-	}
-	elseif (!$module->config['profile_social'] && file_exists(ICMS_MODULES_PATH . '/profile/userinfo.php')) {
+	} elseif (!$module->config['profile_social'] && file_exists(ICMS_MODULES_PATH . '/profile/userinfo.php')) {
 		header('Location: ' . ICMS_MODULES_URL . '/profile/userinfo.php?uid=' . $uid);
 		exit();
 	}
@@ -106,9 +105,9 @@ if (is_object(icms::$user)) {
 
 if (is_object(icms::$user) && $isAdmin) {
 	icms_makeSmarty(array(
-        'lang_editprofile' => _US_EDITPROFILE,
-        'lang_deleteaccount' => _US_DELACCOUNT,
-        'user_uid' => (int) $thisUser->getVar('uid')
+		'lang_editprofile' => _US_EDITPROFILE,
+		'lang_deleteaccount' => _US_DELACCOUNT,
+		'user_uid' => (int) $thisUser->getVar('uid')
 	));
 }
 
@@ -156,7 +155,7 @@ icms_makeSmarty(array(
 	'user_posts' => icms_conv_nr2local($thisUser->getVar('posts')),
 	'lang_lastlogin' => _US_LASTLOGIN,
 	'lang_notregistered' => _US_NOTREGISTERED,
-	'user_pmlink' => is_object(icms::$user) 
+	'user_pmlink' => is_object(icms::$user)
 		? "<a class='cboxElement' href='" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . (int) $thisUser->getVar('uid') . "'>
 		<input type='button' class='formButton' value='" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "' /></a>"
 		: '',
@@ -165,18 +164,18 @@ icms_makeSmarty(array(
 	'user_ranktitle' => $userrank['title'],
 	'user_lastlogin' => !empty($date) ? formatTimestamp($thisUser->getVar('last_login'), 'm') : '',
 	'icms_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
-	'user_email' => ($thisUser->getVar('user_viewemail') == TRUE 
-			|| (is_object(icms::$user) 
-			&& (icms::$user->isAdmin() 
+	'user_email' => ($thisUser->getVar('user_viewemail') == TRUE
+			|| (is_object(icms::$user)
+			&& (icms::$user->isAdmin()
 			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid')))))
-		? $thisUser->getVar('email', 'E') 
+		? $thisUser->getVar('email', 'E')
 		: '&nbsp;',
 	'user_openid' => ($icmsConfigAuth['auth_openid'] == TRUE
-			&& ($thisUser->getVar('user_viewoid') == TRUE 
-			|| (is_object(icms::$user) 
+			&& ($thisUser->getVar('user_viewoid') == TRUE
+			|| (is_object(icms::$user)
 			&& (icms::$user->isAdmin()
-			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid')))))) 
-		? $thisUser->getVar('openid', 'E') 
+			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid'))))))
+		? $thisUser->getVar('openid', 'E')
 		: '&nbsp;'
 ));
 
@@ -194,37 +193,37 @@ $criteria->add(new icms_db_criteria_Item('isactive', 1));
 $mids = array_keys($module_handler->getList($criteria));
 
 foreach ($mids as $mid) {
-   	if ($gperm_handler->checkRight('module_read', $mid, $groups)) {
-   		$module = $module_handler->get($mid);
-   		$results = $module->search('', '', 5, 0, (int) $thisUser->getVar('uid'));
-   		$count = count($results);
-   		if (is_array($results) && $count > 0) {
-   			for ($i = 0; $i < $count; $i++) {
-   				if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-   					$results[$i]['image'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
-   				} else {
-   					$results[$i]['image'] = 'images/icons/' . $icmsConfig['language'] . '/posticon2.gif';
-   				}
-   				if (isset($results[$i]['link']) && $results[$i]['link'] != '') {
-   					if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-   						$results[$i]['link'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['link'];
-   					}
-   				}
-   				$results[$i]['title'] = icms_core_DataFilter::htmlSpecialChars($results[$i]['title']);
-   				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
-   			}
-   			if ($count == 5) {
-   				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid='. (int) $mid.
+	if ($gperm_handler->checkRight('module_read', $mid, $groups)) {
+		$module = $module_handler->get($mid);
+		$results = $module->search('', '', 5, 0, (int) $thisUser->getVar('uid'));
+		$count = count($results);
+		if (is_array($results) && $count > 0) {
+			for ($i = 0; $i < $count; $i++) {
+				if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
+					$results[$i]['image'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
+				} else {
+					$results[$i]['image'] = 'images/icons/' . $icmsConfig['language'] . '/posticon2.gif';
+				}
+				if (isset($results[$i]['link']) && $results[$i]['link'] != '') {
+					if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+						$results[$i]['link'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['link'];
+					}
+				}
+				$results[$i]['title'] = icms_core_DataFilter::htmlSpecialChars($results[$i]['title']);
+				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
+			}
+			if ($count == 5) {
+				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid='. (int) $mid.
 					'&amp;uid='. (int) $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
-        	} else {
-        		$showall_link = '';
-        	}
-        	$icmsTpl->append('modules', array('name' => $module->getVar('name'),
+			} else {
+				$showall_link = '';
+			}
+			$icmsTpl->append('modules', array('name' => $module->getVar('name'),
 												'results' => $results,
 												'showall_link' => $showall_link
 												));
-        }
-        unset ($module);
+		}
+		unset ($module);
 	}
 }
 

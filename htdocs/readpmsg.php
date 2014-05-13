@@ -41,7 +41,7 @@ $xoopsOption['pagetype'] = "pmsg";
 include_once "mainfile.php";
 
 if (!is_object(icms::$user)) {
-	redirect_header("user.php",0);
+	redirect_header("user.php", 0);
 } else {
 	$pm_handler = icms::handler('icms_data_privmessage');
 	if (!empty($_POST['delete'])) {
@@ -49,11 +49,11 @@ if (!is_object(icms::$user)) {
 			echo implode('<br />', icms::$security->getErrors());
 			exit();
 		}
-		$pm =& $pm_handler->get( (int) ($_POST['msg_id']));
+		$pm =& $pm_handler->get((int) ($_POST['msg_id']));
 		if (!is_object($pm) || $pm->getVar('to_userid') != icms::$user->getVar('uid') || !$pm_handler->delete($pm)) {
 			exit();
 		} else {
-			redirect_header("viewpmsg.php",1,_PM_DELETED);
+			redirect_header("viewpmsg.php", 1, _PM_DELETED);
 			exit();
 		}
 	}

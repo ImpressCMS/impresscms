@@ -27,7 +27,7 @@
 
 /**
  * View and manage your private messages
- * 
+ *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -93,7 +93,7 @@ if (!is_object(icms::$user)) {
 	for ($i = 0; $i < $total_messages; $i++) {
 		$class = ($i % 2 == 0) ? 'even' : 'odd';
 		echo "<tr align='" . _GLOBAL_LEFT . "' class='$class'>"
-		. "<td style='vertical-align: middle; width: 2%; text-align: center;'><input type='checkbox' id='message_" 
+		. "<td style='vertical-align: middle; width: 2%; text-align: center;'><input type='checkbox' id='message_"
 		. $pm_arr[$i]->getVar('msg_id') . "' name='msg_id[]' value='" . $pm_arr[$i]->getVar('msg_id') . "' /></td>\n";
 		if ($pm_arr[$i]->getVar('read_msg') == 1) {
 			echo "<td style='vertical-align: middle; width: 5%; text-align: center;'>&nbsp;</td>\n";
