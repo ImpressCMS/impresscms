@@ -75,7 +75,7 @@ if (!empty($_POST)) {
 	extract($clean_POST);
 }
 
-if (empty($refresh) && !empty($op) && $op != "submit") {
+if (empty($refresh) && !empty($op) && $op != _PM_SUBMIT) {
 	$jump = "pmlite.php?refresh=" . time() . "";
 	if ($send != 0) {
 		$jump .= "&amp;send=" . $send . "";
@@ -93,7 +93,7 @@ xoops_header();
 if (!icms::$user) {
 	echo "<div>" . _PM_SORRY . "<br /><br />" . _PM_PLEACE . "<a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a>" . _PM_OR . "<a href='" . ICMS_URL . "/user.php'>" . _PM_LOGINNOW . "</a></div>";
 } else {
-	if (!empty($op) && $op == "submit") {
+	if (!empty($op) && $op == _PM_SUBMIT) {
 		/* This section is for sending messages */
 		
 		if (!icms::$security->check()) {
@@ -155,12 +155,10 @@ if (!icms::$user) {
 		}
 	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {
 		/* This section is for composing messages */
-		
-		$msg_tmpl = "<form action='" . ICMS_URL . "/pmlite.php' method='post' name='coolsus'>\n"
-			. "<table width='300' align='center' class='outer'><tr><td class='head' width='25%'>"
-			. _PM_TO . "</td>";
+		$form = new icms_form_Theme('', coolsus, ICMS_URL . '/pmlite.php');
 		
 		if ($reply != 0) {
+			/* we are replying to a message */
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			
@@ -179,34 +177,26 @@ if (!icms::$user) {
 				$subject = 'Re: ' . $subject;
 			}
 			
-			$msg_tmpl .=  "<td class='even'><input type='hidden' name='to_userid' value='" . $pm->getVar("from_userid") . "' />" . $pm_uname . "</td>";
+			$userID = $pm->getVar("from_userid");
 		} elseif ($send2 != 0) {
-			$to_username = icms_member_user_Object::getUnameFromId($to_userid);
-			$msg_tmpl .=  "<td class='even'><input type='hidden' name='to_userid' value='" . $to_userid . "' />" . $to_username . "</td>";
+			/* we are sending directly to a member */
+			$userID = $to_userid;
 		} else {
-			$user_sel = new icms_form_elements_select_User("", "to_userid");
-			$msg_tmpl .=  "<td class='even'>" . $user_sel->render() . "</td>";
+			/* we are composing a new message from our inbox */
+			$userID = NULL;
 		}
 		
-		$msg_tmpl .=  "</tr><tr><td class='head xoops-form-element-caption-required' width='25%'>" . _PM_SUBJECTC . "<span class='caption-marker'>*</span></td>";
+		$form->addElement(new icms_form_elements_select_User(_PM_TO, 'to_userid', FALSE, $userID));
+		$form->addElement(new icms_form_elements_Text(_PM_SUBJECTC, 'subject', 30, 100, $subject), TRUE);
+		$form->addElement(new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', $message));
+		$form->addElement(new icms_form_elements_Button('', 'op', _PM_SUBMIT, 'submit'));
+		$form->addElement(new icms_form_elements_Button('', '', _PM_CLEAR, 'reset'));
 		
-		/* if subject == '', $subject is required */
-		$msg_tmpl .=  "<td class='even'><input type='text' name='subject' value='" . $subject . "' size='30' maxlength='100' /></td>";
+		$form->addElement(new icms_form_elements_Hiddentoken());
 		
-		$msg_tmpl .=  "</tr><tr valign='top'><td class='head' width='25%'>" . _PM_MESSAGEC . "</td><td class='even'>";
+		$renderedForm = $form->render();
 		
-		$textarea = new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', $message);
-		
-		$msg_tmpl .=  $textarea->render()
-			. "</td></tr>"
-			. "<tr><td class='head'>&nbsp;</td><td class='even'>"
-			. "<input type='hidden' name='op' value='submit' />" . icms::$security->getTokenHTML()
-			. "<input type='submit' class='formButton' name='submit' value='" . _PM_SUBMIT
-			. "' />&nbsp;<input type='reset' class='formButton' value='" . _PM_CLEAR
-			. "' /></td></tr></table>\n"
-			. "</form>\n";
-		
-		echo $msg_tmpl;
+		echo $renderedForm;
 	}
 }
 
