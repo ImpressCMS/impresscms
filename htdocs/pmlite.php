@@ -91,24 +91,26 @@ if (empty($refresh) && !empty($op) && $op != _PM_SUBMIT) {
 
 xoops_header();
 if (!icms::$user) {
-	echo "<div>" . _PM_SORRY . "<br /><br />" . _PM_PLEACE . "<a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a>" . _PM_OR . "<a href='" . ICMS_URL . "/user.php'>" . _PM_LOGINNOW . "</a></div>";
+	icms_core_Message::warning(
+		_PM_PLZREG . " <a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a> " . _OR . " <a href='" . ICMS_URL . "/user.php'>" . _LOGIN . "</a>",
+		_PM_SORRY,
+		TRUE
+	);
 } else {
 	if (!empty($op) && $op == _PM_SUBMIT) {
 		/* This section is for sending messages */
 
 		if (!icms::$security->check()) {
-			$security_error = true;
+			$security_error = TRUE;
 		}
 		$res = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("users")
 			. " WHERE uid='". $to_userid . "'");
 		list($count) = icms::$xoopsDB->fetchRow($res);
 		if ($count != 1) {
-			echo "<br /><br /><div><h4>" . _PM_USERNOEXIST . "<br />"
-				. _PM_PLZTRYAGAIN . "</h4><br />";
+			redirect_header(icms_getPreviousPage(), 5, _PM_USERNOEXIST . ' ' . _PM_PLZTRYAGAIN);
 			if (isset($security_error) && $security_error == TRUE) {
-				echo implode('<br />', icms::$security->getErrors());
+				redirect_header(icms_getPreviousPage(), 5, implode('<br />', icms::$security->getErrors()));
 			}
-			echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . "</a> ]</div>";
 		} else {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->create();
@@ -117,8 +119,7 @@ if (!icms::$user) {
 			$pm->setVar("to_userid", $to_userid);
 			$pm->setVar("from_userid", (int) (icms::$user->getVar("uid")));
 			if (!$pm_handler->insert($pm)) {
-				echo $pm->getHtmlErrors() . "<br /><a href='javascript:history.go(-1)'>"
-					. _PM_GOBACK . "</a>";
+				redirect_header(icms_getPreviousPage(), 5, $pm->getHtmlErrors());
 			} else {
 				// Send a Private Message email notification
 				$userHandler = icms::handler('icms_member_user');
@@ -148,9 +149,6 @@ if (!icms::$user) {
 					$xoopsMailer->send();
 				}
 				redirect_header(icms_getPreviousPage(), 5, _PM_MESSAGEPOSTED);
-				echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED
-					. "</h4><br /><a href='" . ICMS_URL . "/viewpmsg.php'>"
-					. _PM_CLICKHERE . "</a></div>";
 			}
 		}
 	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {

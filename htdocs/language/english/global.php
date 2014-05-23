@@ -317,3 +317,5 @@ define('_IMPRESSCMS_PROJECT','Project Development');
 define('_ENTER_MENTION', 'Enter the user name to mention:');
 define( '_ENTER_HASHTAG', 'Enter the term(s) to tag:');
 define('_NAME', 'Name');
+
+define('_OR', 'or');
