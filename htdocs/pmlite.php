@@ -95,7 +95,7 @@ if (!icms::$user) {
 } else {
 	if (!empty($op) && $op == _PM_SUBMIT) {
 		/* This section is for sending messages */
-		
+
 		if (!icms::$security->check()) {
 			$security_error = true;
 		}
@@ -155,13 +155,13 @@ if (!icms::$user) {
 		}
 	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {
 		/* This section is for composing messages */
-		$form = new icms_form_Theme('', 'coolsus', ICMS_URL . '/pmlite.php');
-		
+		$form = new icms_form_Theme('', 'coolsus', ICMS_URL . '/pmlite.php', 'post', TRUE);
+
 		if ($reply != 0) {
 			/* we are replying to a message */
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->get($msg_id);
-			
+
 			if ($pm->getVar("to_userid") == (int) (icms::$user->getVar('uid'))) {
 				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
 				$message  = "[quote]\n"
@@ -171,12 +171,12 @@ if (!icms::$user) {
 				unset($pm);
 				$reply = $send2 = 0;
 			}
-			
+
 			$subject = $pm->getVar('subject', 'E');
 			if (!preg_match("/^Re:/i", $subject)) {
 				$subject = 'Re: ' . $subject;
 			}
-			
+
 			$userID = $pm->getVar("from_userid");
 		} elseif ($send2 != 0) {
 			/* we are sending directly to a member */
@@ -185,17 +185,15 @@ if (!icms::$user) {
 			/* we are composing a new message from our inbox */
 			$userID = NULL;
 		}
-		
+
 		$form->addElement(new icms_form_elements_select_User(_PM_TO, 'to_userid', FALSE, $userID));
 		$form->addElement(new icms_form_elements_Text(_PM_SUBJECTC, 'subject', 30, 100, $subject), TRUE);
 		$form->addElement(new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', $message));
 		$form->addElement(new icms_form_elements_Button('', 'op', _PM_SUBMIT, 'submit'));
 		$form->addElement(new icms_form_elements_Button('', '', _PM_CLEAR, 'reset'));
-		
-		$form->addElement(new icms_form_elements_Hiddentoken());
-		
+
 		$renderedForm = $form->render();
-		
+
 		echo $renderedForm;
 	}
 }
