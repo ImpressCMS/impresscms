@@ -155,7 +155,7 @@ if (!icms::$user) {
 		}
 	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {
 		/* This section is for composing messages */
-		$form = new icms_form_Theme('', coolsus, ICMS_URL . '/pmlite.php');
+		$form = new icms_form_Theme('', 'coolsus', ICMS_URL . '/pmlite.php');
 		
 		if ($reply != 0) {
 			/* we are replying to a message */
