@@ -26,9 +26,9 @@ define("_PM_ORCLOSEWINDOW","Or click here to close this window.");
 define("_PM_USERWROTE","%s wrote:");
 define("_PM_TO","To: "); // with colon
 //define("_PM_SUBJECTC","Subject: "); 								//Never used. If needed, use global: _SUBJECT with colon
-define("_PM_MESSAGEC","Message: "); // with colon
-define("_PM_CLEAR","Clear");
-define("_PM_CANCELSEND","Cancel Send"); // _CANCEL + _SEND
+define("_PM_MESSAGEC","Message: "); 								// (with colon) Duplicated in comments _CM_MESSAGE
+define("_PM_CLEAR","Clear");										// Duplicated in notifications _NOT_CLEAR
+//define("_PM_CANCELSEND","Cancel Send"); 							// Never used. If needed, use globals: _CANCEL + _SEND
 //define("_PM_SUBMIT","Submit"); 									// replaced with global: _SUBMIT
 
 //%%%%%%	File Name viewpmsg.php 	%%%%%
