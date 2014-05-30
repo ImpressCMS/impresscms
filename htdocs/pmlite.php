@@ -185,7 +185,7 @@ if (!icms::$user) {
 		}
 
 		$form->addElement(new icms_form_elements_select_User(_PM_TO, 'to_userid', FALSE, $userID));
-		$form->addElement(new icms_form_elements_Text(_SUBJECTC, 'subject', 30, 100, $subject), TRUE);
+		$form->addElement(new icms_form_elements_Text(_SUBJECT, 'subject', 30, 100, $subject), TRUE);
 		$form->addElement(new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', $message));
 		$form->addElement(new icms_form_elements_Button('', 'op', _SUBMIT, 'submit'));
 		$form->addElement(new icms_form_elements_Button('', '', _PM_CLEAR, 'reset'));
