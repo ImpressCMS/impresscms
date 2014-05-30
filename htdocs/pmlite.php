@@ -75,7 +75,7 @@ if (!empty($_POST)) {
 	extract($clean_POST);
 }
 
-if (empty($refresh) && !empty($op) && $op != _PM_SUBMIT) {
+if (empty($refresh) && !empty($op) && $op != _SUBMIT) {
 	$jump = "pmlite.php?refresh=" . time() . "";
 	if ($send != 0) {
 		$jump .= "&amp;send=" . $send . "";
@@ -97,7 +97,7 @@ if (!icms::$user) {
 		TRUE
 	);
 } else {
-	if (!empty($op) && $op == _PM_SUBMIT) {
+	if (!empty($op) && $op == _SUBMIT) {
 		/* This section is for sending messages */
 
 		if (!icms::$security->check()) {
@@ -185,9 +185,9 @@ if (!icms::$user) {
 		}
 
 		$form->addElement(new icms_form_elements_select_User(_PM_TO, 'to_userid', FALSE, $userID));
-		$form->addElement(new icms_form_elements_Text(_PM_SUBJECTC, 'subject', 30, 100, $subject), TRUE);
+		$form->addElement(new icms_form_elements_Text(_SUBJECTC, 'subject', 30, 100, $subject), TRUE);
 		$form->addElement(new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', $message));
-		$form->addElement(new icms_form_elements_Button('', 'op', _PM_SUBMIT, 'submit'));
+		$form->addElement(new icms_form_elements_Button('', 'op', _SUBMIT, 'submit'));
 		$form->addElement(new icms_form_elements_Button('', '', _PM_CLEAR, 'reset'));
 
 		$renderedForm = $form->render();

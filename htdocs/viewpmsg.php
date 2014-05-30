@@ -74,14 +74,14 @@ if (!is_object(icms::$user)) {
 	$pm_arr =& $pm_handler->getObjects($criteria);
 	echo "<h4>" . _PM_PRIVATEMESSAGE
 	. "</h4><p><a href='userinfo.php?uid=". (int) (icms::$user->getVar('uid')) . "'>"
-	. _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _PM_INBOX . "</p>";
+	. _PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _PM_INBOX . "</p>";
 	echo "<form id='prvmsg' method='post' action='viewpmsg.php'>";
 	echo "<table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";
 	echo "<tr align='center' valign='middle'><th>"
 	. "<input name='allbox' id='allbox' onclick='xoopsCheckAll(\"prvmsg\", \"allbox\");'"
 	. "type='checkbox' value='Check All' /></th><th>"
 	. "<img src='images/download.gif' alt='' /></th><th>&nbsp;</th><th>"
-	. _PM_SUBJECT . "</th><th>" . _PM_FROM . "</th><th align='center'>" . _PM_DATE . "</th></tr>\n";
+	. _SUBJECT . "</th><th>" . _PM_FROM . "</th><th align='center'>" . _DATE . "</th></tr>\n";
 	$total_messages = count($pm_arr);
 	if ($total_messages == 0) {
 		echo "<tr><td class='even' colspan='6' align='center'>" . _PM_YOUDONTHAVE . "</td></tr>";
@@ -125,13 +125,13 @@ if (!is_object(icms::$user)) {
 	if ($display == 1) {
 		echo "<tr class='foot' align='" . _GLOBAL_LEFT . "'><td colspan='6' align='" . _GLOBAL_LEFT
 		. "'><a class='cboxElement' href='" . ICMS_URL . "/pmlite.php?send=1'>
-		<input type='button' class='formButton' value='" . _PM_SEND . "' /></a>
+		<input type='button' class='formButton' value='" . _SEND . "' /></a>
 		&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"
-		. _PM_DELETE . "' />" . icms::$security->getTokenHTML() . "</td></tr></table></form>";
+		. _DELETE . "' />" . icms::$security->getTokenHTML() . "</td></tr></table></form>";
 	} else {
 		echo "<tr class='bg2' align='" . _GLOBAL_LEFT . "'><td colspan='6' align='" . _GLOBAL_LEFT
 		. "'><a class='cboxElement' href='" . ICMS_URL . "/pmlite.php?send=1'>
-		<input type='button' class='formButton' value='" . _PM_SEND . "' /></a>
+		<input type='button' class='formButton' value='" . _SEND . "' /></a>
 		</td></tr></table></form>";
 	}
 	include 'footer.php';

@@ -66,7 +66,7 @@ if (!is_object(icms::$user)) {
 	$criteria->setSort('msg_time');
 	$pm_arr =& $pm_handler->getObjects($criteria);
 	echo "<div><h4>". _PM_PRIVATEMESSAGE."</h4></div><br /><a href='userinfo.php?uid="
-		. (int) (icms::$user->getVar("uid")) ."'>". _PM_PROFILE ."</a>&nbsp;
+		. (int) (icms::$user->getVar("uid")) ."'>". _PROFILE ."</a>&nbsp;
 		<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;
 		<a href='viewpmsg.php'>". _PM_INBOX ."</a>&nbsp;
 		<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;\n";
@@ -91,7 +91,7 @@ if (!is_object(icms::$user)) {
 				echo "<img src='uploads/".$poster->getVar("user_avatar")."' alt='' /><br />\n";
 			}
 			if ($poster->getVar("user_from") != "") {
-				echo _PM_FROMC."".$poster->getVar("user_from")."<br /><br />\n";
+				echo _PM_FROM .": " .$poster->getVar("user_from")."<br /><br />\n";
 			}
 			if ($poster->isOnline()) {
 				echo "<span style='color:#ee0000;font-weight:bold;'>"._PM_ONLINE."</span><br /><br />\n";
@@ -113,14 +113,14 @@ if (!is_object(icms::$user)) {
 		if ($poster != false) {
 			echo "<a href='".ICMS_URL."/pmlite.php?reply=1&amp;msg_id="
 				. $pm_arr[0]->getVar("msg_id")."' class='cboxElement'>
-				<input type='button' class='formButton' value='" . _PM_REPLY . "' /></a>\n";
+				<input type='button' class='formButton' value='" . _REPLY . "' /></a>\n";
 		}
 		echo "<input type='hidden' name='delete' value='1' />";
 		echo icms::$security->getTokenHTML();
 		echo "<input type='hidden' name='msg_id' value='".$pm_arr[0]->getVar("msg_id")."' />";
 		echo "<a href='#".$pm_arr[0]->getVar("msg_id")."' onclick='javascript:document.delete"
 			.$pm_arr[0]->getVar("msg_id").".submit();'>
-			<input type='button' class='formButton' value='" . _PM_DELETE . "' /></a>";
+			<input type='button' class='formButton' value='" . _DELETE . "' /></a>";
 		echo "</td></tr><tr><td colspan='2' align='"._GLOBAL_RIGHT."'>";
 		$previous = $start - 1;
 		$next = $start + 1;
