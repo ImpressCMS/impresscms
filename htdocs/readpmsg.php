@@ -33,7 +33,7 @@
  * @package		core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id: readpmsg.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 
@@ -65,7 +65,7 @@ if (!empty($_POST)) {
 	extract($clean_POST);
 }
 
-
+/* begin page logic */
 if (!is_object(icms::$user)) {
 	redirect_header("user.php", 0);
 } else {
