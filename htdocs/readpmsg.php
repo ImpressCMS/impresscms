@@ -40,6 +40,11 @@
 $xoopsOption['pagetype'] = "pmsg";
 require_once "mainfile.php";
 
+/* check access permissions */
+if (!is_object(icms::$user)) {
+	redirect_header("user.php", 0);
+}
+
 /* set filter types, if not strings */
 $filter_get[] = array(
 		'start' => 'int',
@@ -66,10 +71,6 @@ if (!empty($_POST)) {
 }
 
 /* begin page logic */
-if (!is_object(icms::$user)) {
-	redirect_header("user.php", 0);
-}
-
 $pm_handler = icms::handler('icms_data_privmessage');
 
 if ($delete != 0) {
