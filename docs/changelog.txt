@@ -1,4 +1,19 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 2.0.0 Alpha 5 ===
+Release date: 
+DB Version: 44
+Build Version: 
+
+Security Fix:
+* From 1.3.7 - Cross site scripting (XSS) - system image manager CVE-2014-4036
+
+Changes:
+
+Improvements:
+
+Fixes:
+
+
 === ImpressCMS 2.0.0 Alpha 4 ===
 Release date: 15 Apr 2014
 DB Version: 44
