@@ -10,7 +10,7 @@
 &nbsp;
 <span style='font-weight: bold;'>&raquo;&raquo;</span>
 &nbsp;
-<{if $messages eq ''}>
+<{if $messages == ''}>
 	<br />
 	<br />
 	<{$smarty.const._PM_YOUDONTHAVE}>
@@ -41,10 +41,10 @@
 			</a>
 		<{/if}>
 		<{$form}> 
-		<{if $previous ge 0}>
+		<{if $previous >= 0}>
 			<a href='readpmsg.php?start=<{$previous}>&amp;total_messages=<{$total_messages}>' style='float:<{$smarty.const._GLOBAL_LEFT}>'><{$smarty.const._PM_PREVIOUS}></a>
 		<{/if}>
-		<{if $next lt $total_messages}>
+		<{if $next < $total_messages}>
 			<a href='readpmsg.php?start=<{$next}>&amp;total_messages=<{$total_messages}>' style='float:<{$smarty.const._GLOBAL_RIGHT}>'><{$smarty.const._PM_NEXT}></a>
 		<{/if}>
 	</div>

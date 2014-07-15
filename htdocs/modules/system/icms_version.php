@@ -494,3 +494,7 @@ $modversion['templates'][] = array(
 		'description' => ''
 );
 
+$modversion['templates'][] = array(
+		'file' => 'system_viewmsgs.html',
+		'description' => ''
+);
