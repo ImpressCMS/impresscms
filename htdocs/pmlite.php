@@ -89,14 +89,15 @@ if (empty($refresh) && !empty($op) && $op != _SUBMIT) {
 	exit();
 }
 
-xoops_header();
 if (!icms::$user) {
+	xoops_header(TRUE);
 	icms_core_Message::warning(
 		_PM_PLZREG . " <a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a> " . _OR . " <a href='" . ICMS_URL . "/user.php'>" . _LOGIN . "</a>",
 		_PM_SORRY,
 		TRUE
 	);
 } else {
+	xoops_header(TRUE);
 	if (!empty($op) && $op == _SUBMIT) {
 		/* This section is for sending messages */
 
@@ -153,6 +154,10 @@ if (!icms::$user) {
 		}
 	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {
 		/* This section is for composing messages */
+		xoops_header(FALSE);
+		$theme = new icms_view_theme_Factory();
+		$icmsTheme =& $theme->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
+		
 		$form = new icms_form_Theme('', 'coolsus', ICMS_URL . '/pmlite.php', 'post', TRUE);
 
 		if ($reply != 0) {
@@ -191,8 +196,9 @@ if (!icms::$user) {
 		$form->addElement(new icms_form_elements_Button('', '', _PM_CLEAR, 'reset'));
 
 		$renderedForm = $form->render();
-
-		echo $renderedForm;
+		$icmsTheme->renderMetas();
+		
+		echo '</head><body>' . $renderedForm;
 	}
 }
 
