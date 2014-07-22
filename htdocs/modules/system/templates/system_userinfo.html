@@ -63,10 +63,12 @@
           <td class="odd"><{$user_openid}></td>
         </tr>
     <{/if}>
-	<tr valign="top">
+	<{if $user_ownpage != true}>
+		<tr valign="top">
           <td class="head"><{$lang_privmsg}></td>
           <td class="even"><{$user_pmlink}></td>
         </tr>
+    <{/if}>
         <tr valign="top">
           <td class="head"><{$lang_icq}></td>
           <td class="odd"><{$user_icq}></td>
