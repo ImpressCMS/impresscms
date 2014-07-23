@@ -92,6 +92,8 @@ if ($delete != 0) {
 $xoopsOption['template_main'] = 'system_readmsg.html';
 require ICMS_ROOT_PATH . '/header.php';
 
+$form = new icms_form_Simple('', 'delete', 'readpmsg.php', 'post', TRUE);
+
 $criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
 $criteria->setLimit(1);
 $criteria->setStart($start);
@@ -132,9 +134,10 @@ $var = $pm_arr[0]->getVar('msg_text', 'N');
 $permHandler = icms::handler('icms_member_groupperm');
 $filterType = $permHandler->checkRight('use_wysiwygeditor', 1, $poster->getGroups()) ? 'html' : 'text';
 
-$form = new icms_form_Simple('', 'delete', 'readpmsg.php', 'post', TRUE);
 $form->addElement(new icms_form_elements_Hidden('delete', '1'));
 $form->addElement(new icms_form_elements_Hidden('msg_id', $pm_arr[0]->getVar("msg_id")));
+
+
 $form->addElement(new icms_form_elements_Button('', 'delete_message', _DELETE, 'submit'));
 
 $previous = $start - 1;

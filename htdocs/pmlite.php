@@ -58,6 +58,7 @@ $filter_post[] = array(
 		'msg_id' => 'int',
 		'subject' => 'str',
 		'message' => 'str',
+		'reply' => 'int',
 );
 
 /* set default values for variables */
@@ -157,7 +158,7 @@ if (!icms::$user) {
 		xoops_header(FALSE);
 		$theme = new icms_view_theme_Factory();
 		$icmsTheme =& $theme->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
-		
+
 		$form = new icms_form_Theme('', 'coolsus', ICMS_URL . '/pmlite.php', 'post', TRUE);
 
 		if ($reply != 0) {
@@ -192,12 +193,16 @@ if (!icms::$user) {
 		$form->addElement(new icms_form_elements_select_User(_PM_TO, 'to_userid', FALSE, $userID));
 		$form->addElement(new icms_form_elements_Text(_SUBJECT, 'subject', 30, 100, $subject), TRUE);
 		$form->addElement(new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', $message));
-		$form->addElement(new icms_form_elements_Button('', 'op', _SUBMIT, 'submit'));
-		$form->addElement(new icms_form_elements_Button('', '', _PM_CLEAR, 'reset'));
+
+		$tray = new icms_form_elements_Tray();
+		$tray->addElement(new icms_form_elements_Button('', 'op', _SUBMIT, 'submit'));
+		$tray->addElement(new icms_form_elements_Button('', '', _PM_CLEAR, 'reset'));
+
+		$form->addElement($tray);
 
 		$renderedForm = $form->render();
 		$icmsTheme->renderMetas();
-		
+
 		echo '</head><body>' . $renderedForm;
 	}
 }
