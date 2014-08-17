@@ -46,12 +46,12 @@ if (!is_object(icms::$user)) {
 }
 
 /* set filter types, if not strings */
-$filter_get[] = array(
+$filter_get = array(
 		'start' => 'int',
 		'total_messages' => 'int',
 	);
 
-$filter_post[] = array(
+$filter_post = array(
 		'msg_id' => 'int',
 		'delete' => 'int',
 	);

@@ -42,10 +42,10 @@ $xoopsOption['pagetype'] = 'pmsg';
 require_once 'mainfile.php';
 
 /* set filter types, if not strings */
-$filter_get[] = array(
+$filter_get = array(
 );
 
-$filter_post[] = array(
+$filter_post = array(
 		'msg_id' => 'int',
 		'delete_messages' => 'str',
 );

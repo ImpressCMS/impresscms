@@ -44,7 +44,7 @@ $xoopsOption['pagetype'] = "pmsg";
 require "mainfile.php";
 
 /* set filter types, if not strings */
-$filter_get[] = array(
+$filter_get = array(
 		'reply' => 'int',
 		'send' => 'int',
 		'send2' => 'int',
@@ -53,11 +53,11 @@ $filter_get[] = array(
 		'msg_id' => 'int',
 );
 
-$filter_post[] = array(
+$filter_post = array(
 		'to_userid' => 'int',
 		'msg_id' => 'int',
 		'subject' => 'str',
-		'message' => 'str',
+		'message' => 'html',
 		'reply' => 'int',
 );
 
@@ -116,8 +116,8 @@ if (!icms::$user) {
 		} else {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->create();
-			$pm->setVar("subject", icms_core_DataFilter::filterTextareaInput($subject));
-			$pm->setVar("msg_text", icms_core_DataFilter::filterHTMLinput($message, TRUE, TRUE, TRUE));
+			$pm->setVar("subject", $subject);
+			$pm->setVar("msg_text", $message);
 			$pm->setVar("to_userid", $to_userid);
 			$pm->setVar("from_userid", (int) (icms::$user->getVar("uid")));
 			if (!$pm_handler->insert($pm)) {
