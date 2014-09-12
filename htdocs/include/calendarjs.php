@@ -5,7 +5,7 @@
  * @copyright    http://www.impresscms.org/ The ImpressCMS Project
  * @license    LICENSE.txt
  * @package    core
- * @since    ImpressCMS 1.3.5
+ * @since    ImpressCMS 1.3.8
  * @author    debianus
  * @version    $Id$
  */
@@ -29,10 +29,10 @@ function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
 $dateFormatTojQueryUIDatePickerFormat = dateFormatTojQueryUIDatePickerFormat(_SHORTDATESTRING);
 define('_DATEFORMATCHANGED', $dateFormatTojQueryUIDatePickerFormat);
 
-
-if (_LANGCODE  !== 'en' && file_exists (ICMS_URL . '/language/' .$icmsConfig['language']. '/datepicker-' ._LANGCODE. '.js')) {
+if (_LANGCODE  !== 'en' && file_exists (ICMS_ROOT_PATH.'/language/'.$icmsConfig['language']."/datepicker-" ._LANGCODE. ".js")) {
 	$icmsTheme->addScript(ICMS_URL . "/language/" .$icmsConfig['language']. "/datepicker-" ._LANGCODE. ".js",  array("type" => "text/javascript"));
 }
+
 
 $time = isset($jstime) ? $jstime : "null";
 $src = ' $(function() {
