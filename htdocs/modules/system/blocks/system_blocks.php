@@ -167,7 +167,7 @@ function b_system_search_show() {
  *
  * @return mixed $block or FALSE if the user is a guest
  */
-function b_system_user_show() {
+function b_system_user_show($options) {
 	if (is_object(icms::$user)) {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$block = array();
@@ -185,16 +185,13 @@ function b_system_user_show() {
 		$block['showavatar'] = $options[0];
 			if ($options[0] == 1) {
 			if (icms::$user->getVar('user_avatar') && icms::$user->getVar('user_avatar') != 'blank.gif' && icms::$user->getVar('user_avatar') != '') {
-				$block['user']['avatar'] = ICMS_UPLOAD_URL . '/' . icms::$user->getVar('user_avatar');
+				$block['user_avatar'] = ICMS_UPLOAD_URL . '/' . icms::$user->getVar('user_avatar');
 			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
-				$block['user']['avatar'] = icms::$user->gravatar('G', $icmsConfigUser['avatar_width']);
+				$block['user_avatar'] = icms::$user->gravatar('G', $icmsConfigUser['avatar_width']);
 			} else {
-				$block['user']['avatar'] = '';
+				$block['user_avatar'] = '';
 			}
-			} else {
-			$block['user']['avatar'] = '';
-			} 
-		}
+		} 
 		return $block;
 	}
 	return FALSE;
@@ -207,17 +204,17 @@ function b_system_user_show() {
  * @return string $form The edit Block option
  */
 function b_system_user_edit($options) {
-	$chk = "";
-	 $form .=  _MB_SYSTEM_DISPLAYA ;
-	if ($options[0] == 1) {
-		$chk = " checked='checked'";
-	}
-	$form .= "<input type='radio' name='options[0]' value='1'" . $chk . " />&nbsp;" . _YES;
-	$chk = "";
-	if ($options[0] == 0) {
-		$chk = ' checked="checked"';
-	}
-	$form .= '&nbsp;<input type="radio" name="options[0]" value="0"' . $chk . ' />' . _NO;
+    $chk = "";
+    $form =  _MB_SYSTEM_DISPLAYA;
+    if ($options[0] == 1) {
+        $chk = " checked='checked'";
+    }
+    $form .= "<input type='radio' name='options[0]' value='1'" . $chk . " />&nbsp;" . _YES;
+    $chk = "";
+    if ($options[0] == 0) {
+        $chk = ' checked="checked"';
+    }
+    $form .= '&nbsp;<input type="radio" name="options[0]" value="0"' . $chk . ' />' . _NO;
     return $form;
 }
 
@@ -555,7 +552,7 @@ function b_system_newmembers_edit($options) {
 }
 
 /**
- * Shows the form to edit the system info
+ * Shows the form to edit the sysem info
  *
  * @param array $options The block options
  * @return string $form The edit system info form HTML string
