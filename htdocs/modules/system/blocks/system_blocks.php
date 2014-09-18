@@ -182,16 +182,15 @@ function b_system_user_show($options) {
 		$block['lang_inbox'] = _MB_SYSTEM_INBOX;
 		$block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
 		$block['name'] = icms::$user->getVar('uname');			
-		$block['showavatar'] = $options[0];
-			if ($options[0] == 1) {
-			if (icms::$user->getVar('user_avatar') && icms::$user->getVar('user_avatar') != 'blank.gif' && icms::$user->getVar('user_avatar') != '') {
-				$block['user_avatar'] = ICMS_UPLOAD_URL . '/' . icms::$user->getVar('user_avatar');
-			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+		if ($options[0] == 1) {
+			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['user_avatar'] = icms::$user->gravatar('G', $icmsConfigUser['avatar_width']);
+			} elseif (icms::$user->getVar('user_avatar') && icms::$user->getVar('user_avatar') != 'blank.gif' && icms::$user->getVar('user_avatar') != '') {
+				$block['user_avatar'] = ICMS_UPLOAD_URL . '/' . icms::$user->getVar('user_avatar');
 			} else {
 				$block['user_avatar'] = '';
 			}
-		} 
+		}
 		return $block;
 	}
 	return FALSE;
@@ -283,10 +282,10 @@ function b_system_newmembers_show($options) {
 	$count = count($newmembers);
 	for ($i = 0; $i < $count; $i++) {
 		if ($options[1] == 1) {
-			if ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != '') {
-				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $newmembers[$i]->getVar('user_avatar');
-			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $newmembers[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
+			} elseif ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != '') {
+				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $newmembers[$i]->getVar('user_avatar');
 			} else {
 				$block['users'][$i]['avatar'] = '';
 			}
@@ -334,10 +333,10 @@ function b_system_topposters_show($options) {
 	$count = count($topposters);
 	for ($i = 0; $i < $count; $i++) {
 		if ($options[1] == 1) {
-			if ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != '') {
-				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $topposters[$i]->getVar('user_avatar');
-			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $topposters[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
+			} elseif ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != '') {
+				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $topposters[$i]->getVar('user_avatar');
 			} else {
 				$block['users'][$i]['avatar'] = '';
 			}
