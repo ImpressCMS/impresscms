@@ -73,58 +73,13 @@ switch ($op) {
 			$criteria->setStart($start);
 			$comments =& $comment_handler->getObjects($criteria, TRUE);
 		}
-		$form = '<form action="admin.php" method="get">';
-		$form .= '<select name="module">';
-		$module_array[0] = _MD_AM_ALLMODS;
-		foreach ($module_array as $k => $v) {
-			$sel = '';
-			if ($k == $module) {
-				$sel = ' selected="selected"';
-			}
-			$form .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
-		}
-		$form .= '</select>&nbsp;<select name="status">';
-		$status_array[0] = _MD_AM_ALLSTATUS;
-		foreach ($status_array as $k => $v) {
-			$sel = '';
-			if (isset($status) && $k == $status) {
-				$sel = ' selected="selected"';
-			}
-			$form .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
-		}
-		$form .= '</select>&nbsp;<select name="limit">';
-		foreach ($limit_array as $k) {
-			$sel = '';
-			if (isset($limit) && $k == $limit) {
-				$sel = ' selected="selected"';
-			}
-			$form .= '<option value="' . $k . '"' . $sel . '>' . icms_conv_nr2local($k) . '</option>';
-		}
-		$form .= '</select>&nbsp;<input type="hidden" name="fct" value="comments" /><input type="submit" value="'
-			. _GO . '" name="selsubmit" /></form>';
-
 		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/comments/images/comments_big.png)">'
-			. _MD_AM_COMMMAN . '</div><br />';
-		echo $form . "<br />";
-		echo '<table width="100%" class="outer" cellspacing="1"><tr><th colspan="8">'
-			. _MD_AM_LISTCOMM . '</th></tr><tr align="center"><td class="head">' . _MD_AM_MESSAGE_ICON . '</td><td class="head" align="'
-			. _GLOBAL_LEFT . '"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_title&amp;order=' . $otherorder
-			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CM_TITLE
-			. '</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_created&amp;order=' . $otherorder
-			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CM_POSTED
-			. '</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_uid&amp;order=' . $otherorder
-			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CM_POSTER
-			. '</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_ip&amp;order=' . $otherorder
-			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit
-			. '">IP</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_modid&amp;order=' . $otherorder
-			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CO_ICMS_MODULE
-			. '</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_status&amp;order=' . $otherorder
-			. '&amp;module=' . $module . '&amp;status=' . $status . '&amp;start=' . $start . '&amp;limit=' . $limit . '">' . _CM_STATUS
-			. '</a></td><td class="head">' . _AM_ACTION . '</td></tr>';
-		$class = 'even';
+		$module_array[0] = _MD_AM_ALLMODS;
+		$icmsAdminTpl->assign("modulesarray", $module_array);
+		$status_array[0] = _MD_AM_ALLSTATUS;
+		$icmsAdminTpl->assign("statusarray", $status_array);
+		$icmsAdminTpl->assign("limitarray", $limit_array);
 		foreach (array_keys($comments) as $i) {
-			$class = ($class == 'odd') ? 'even' : 'odd';
 			$poster_uname = $icmsConfig['anonymous'];
 			if ($comments[$i]->getVar('com_uid') > 0) {
 				$poster =& $member_handler->getUser($comments[$i]->getVar('com_uid'));
@@ -137,27 +92,23 @@ switch ($op) {
 				? '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/no_posticon.gif'
 				: ( '/images/subject/' . htmlspecialchars($icon, ENT_QUOTES ) );
 			$icon = '<img src="' . ICMS_URL . $icon  . '" alt="" />';
-
-			echo '<tr align="center"><td class="' . $class . '">' . $icon
-				. '</td><td class="' . $class . '" align="' . _GLOBAL_LEFT
-				. '"><a href="admin.php?fct=comments&amp;op=jump&amp;com_id=' . $i . '">'
-				. $comments[$i]->getVar('com_title') . '</a></td><td class="' . $class . '">'
-				. formatTimestamp($comments[$i]->getVar('com_created'), 'm') . '</td><td class="'
-				. $class . '">' . $poster_uname . '</td><td class="' . $class . '">'
-				. icms_conv_nr2local($comments[$i]->getVar('com_ip')) . '</td><td class="' . $class . '">'
-				. $module_array[$comments[$i]->getVar('com_modid')] . '</td><td class="' . $class . '">'
-				. $status_array2[$comments[$i]->getVar('com_status')] . '</td><td class="' . $class
-				. '" align="' . _CENTER . '"><a href="admin/comments/comment_edit.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a>
-				<a href="admin/comments/comment_delete.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a></td></tr>';
+			$comment[$i]['icon'] = $icon ;
+			$comment[$i]['title'] = $comments[$i]->getVar('com_title');
+			$comment[$i]['date'] = formatTimestamp($comments[$i]->getVar('com_created'), 'm');
+			$comment[$i]['poster'] = $poster_uname;
+			$comment[$i]['ip'] = icms_conv_nr2local($comments[$i]->getVar('com_ip'));
+			$comment[$i]['modid'] = $module_array[$comments[$i]->getVar('com_modid')];
+			$comment[$i]['status'] = $status_array2[$comments[$i]->getVar('com_status')];
+			$comment[$i]['id'] = $i;
+			$icmsAdminTpl->assign("commentsarray", $comment);
 		}
-		echo '</table>';
-		echo '<table style="width: 100%; border: 0; margin: 3px; padding: 3px;"><tr><td>'
-			. sprintf(_MD_AM_COMFOUND, '<b>' . icms_conv_nr2local($total) . '</b>');
-		if ($total > $limit) {
-			$nav = new icms_view_PageNav($total, $limit, $start, 'start', 'fct=comments&amp;op=list&amp;limit=' . $limit . '&amp;sort=' . $sort . '&amp;order=' . $order . '&amp;module=' . $module);
-			echo '</td><td align="center">' . $nav->renderNav();
-		}
-		echo '</td></tr></table>';
+		$icmsAdminTpl->assign("total", sprintf(_MD_AM_COMFOUND, '<b>' . icms_conv_nr2local($total) . '</b>'));	
+		$icmsAdminTpl->assign("otherorder",$otherorder);
+		$icmsAdminTpl->assign("start", $start);
+		$icmsAdminTpl->assign("status", $status);
+		$icmsAdminTpl->assign("module", $module );
+		$icmsAdminTpl->assign("limit", $limit);
+		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/comments/system_adm_comments.html');
 		icms_cp_footer();
 		break;
 
@@ -177,5 +128,4 @@ switch ($op) {
 		}
 		redirect_header('admin.php?fct=comments', 1);
 		break;
-
 }
