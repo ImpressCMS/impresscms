@@ -366,7 +366,7 @@ switch ($op) {
 			icms_cp_footer();
 			exit();
 		} else {
-			$err[] = 'Selected template (ID: ' . '$id' . ') does not exist';
+			$err[] = sprintf(_MD_TPLSET_TEMPLATE_NOTEXIST, $id);
 		}
 		icms_cp_header();
 		icms_core_Message::error($err);
@@ -434,7 +434,7 @@ switch ($op) {
 		$tplfile =& $tpltpl_handler->get($id);
 		$err = array();
 		if (!is_object($tplfile)) {
-			$err[] = 'Selected template (ID: ' . '$id' . ') does not exist';
+			$err[] = sprintf(_MD_TPLSET_TEMPLATE_NOTEXIST, $id);
 		} else {
 			if ($tplfile->getVar('tpl_tplset') != 'default') {
 				if (!$tpltpl_handler->delete($tplfile)) {
