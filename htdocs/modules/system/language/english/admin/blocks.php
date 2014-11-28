@@ -115,10 +115,8 @@ define("_CO_SYSTEM_BLOCKS_OPTIONS", "Options");
 define("_CO_SYSTEM_BLOCKS_OPTIONS_DSC", "");
 define("_CO_SYSTEM_BLOCKS_BCACHETIME", "Block Cache Time");
 define("_CO_SYSTEM_BLOCKS_BCACHETIME_DSC", "");
-
 define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS", "Block View permission");
 define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS_DSC", "");
-
 define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
 define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
 define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");
