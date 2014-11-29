@@ -121,7 +121,10 @@ function imanager_index($imgcat_id = NULL) {
 		$groups =& icms::$user->getGroups();
 		$admin = (!icms::$user->isAdmin(1)) ? FALSE : TRUE;
 	}
-
+	if (!is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
+				icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH)));
+				echo '<br />';
+	}
 	$imgcat_handler = icms::handler('icms_image_category');
 
 	$criteriaRead = new icms_db_criteria_Compo();
@@ -161,7 +164,7 @@ function imanager_index($imgcat_id = NULL) {
 	$icmsTpl->assign('lang_imanager_catsubs', _MD_IMAGECATSUBS);
 	$icmsTpl->assign('lang_imanager_catqtde', _MD_IMAGECATQTDE);
 	$icmsTpl->assign('lang_imanager_catoptions', _MD_IMAGECATOPTIONS);
-
+	$icmsTpl->assign('lang_imanager_folder_not_writable', IMANAGER_FOLDER_NOT_WRITABLE);
 	$icmsTpl->assign('lang_imanager_cat_edit', _EDIT);
 	$icmsTpl->assign('lang_imanager_cat_del', _DELETE);
 	$icmsTpl->assign('lang_imanager_cat_listimg', _LIST);
@@ -181,9 +184,14 @@ function imanager_index($imgcat_id = NULL) {
 	$icmsTpl->assign('admnav', adminNav($imgcat_id));
 
 	$image_handler = icms::handler('icms_image');
-	$count = $msize = $subs = array();
+	$count = $msize = $subs = $nwrite = array();
+	$hasnwrite = array();
 	$icmsTpl->assign('catcount', $catcount = count($imagecategorys));
 	for ($i = 0; $i < $catcount; $i++) {
+		$nwrite[$i] = is_writable($imgcat_handler->getCategFolder($imagecategorys[$i]));
+		if (!$nwrite[$i]) {
+			$hasnwrite[] = $imagecategorys[$i]->getVar('imgcat_name');
+		}
 		$msize[$i] = icms_convert_size($imagecategorys[$i]->getVar('imgcat_maxsize'));
 		$count[$i] = $image_handler->getCount(new icms_db_criteria_Item('imgcat_id', $imagecategorys[$i]->getVar('imgcat_id')));
 		$criteriaRead = new icms_db_criteria_Compo();
@@ -200,6 +208,7 @@ function imanager_index($imgcat_id = NULL) {
 		$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategorys[$i]->getVar('imgcat_id')));
 		$subs[$i]  = count($imgcat_handler->getObjects($criteriaRead));
 	}
+	$hasnwrite = implode(', ', $hasnwrite);
 	$scount = array();
 	foreach ($subs as $k=>$v) {
 		$criteriaRead = new icms_db_criteria_Compo();
@@ -221,6 +230,8 @@ function imanager_index($imgcat_id = NULL) {
 		}
 		$scount[$k] = $sc;
 	}
+	$icmsTpl->assign('nwrite', $nwrite);
+	$icmsTpl->assign('hasnwrite', $hasnwrite);
 	$icmsTpl->assign('msize', $msize);
 	$icmsTpl->assign('count', $count);
 	$icmsTpl->assign('subs', $subs);
