@@ -60,10 +60,10 @@
       <td class="head" colspan="12" align="right">
         <input type="submit" name="submit" value="<{$lang_imanager_cat_submit}>" />
         <{if $isAdmin}>
-          <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
+          <input type="button" onclick="jQuery('div#addcatform').slideToggle();"  value="<{$lang_imanager_cat_addnewcat}>" />
         <{/if}>
         <{if $writecatcount > 0}>
-          <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
+          <input type="button" onclick="jQuery('div#addimgform').slideToggle();" value="<{$lang_imanager_cat_addnewimg}>" />
         <{/if}>
       </td>
     </tr>
@@ -75,7 +75,7 @@
 <{/if}>
 <{if $hasnwrite}>
 <div id="legend">
-  <div class="imgcat_notwrite"><span><{$lang_imanager_folder_not_writable}>: <{$hasnwrite}></span></div>
+  <div class="warningMsg"><span><{$lang_imanager_folder_not_writable}>: <{$hasnwrite}></span></div>
 </div>
 <{/if}>
 <div id="addimgform" class="opt_divs" style="display:none; margin:5px; padding:5px;"><{$addimgform}></div>

@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<{$xoops_url}>/libraries/jquery/jquery.js"></script>
 <script type="text/javascript" src="<{$xoops_url}>/modules/system/admin/images/js/imanager.js"></script>
 <script type="text/javascript">window.moveTo(screen.availWidth/2-492,screen.availHeight/2-235);</script>
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/images/images/images_big.png)"><{$lang_imanager_title}></div><br />
@@ -5,10 +6,10 @@
 <{if $catcount > 0}>
 <div align="right">
   <{if $isAdmin}>
-    <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
+    <input type="button" onclick="jQuery('div#addcatform').slideToggle();" value="<{$lang_imanager_cat_addnewcat}>" />
   <{/if}>
   <{if $writecatcount > 0}>
-    <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
+    <input type="button" onclick="jQuery('div#addimgform').slideToggle();" value="<{$lang_imanager_cat_addnewimg}>" />
   <{/if}>
 </div>
 <form method="post">
@@ -57,11 +58,16 @@
 </form>
 <div align="right">
   <{if $isAdmin}>
-    <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
+    <input type="button" onclick="jQuery('div#addcatform').slideToggle();" value="<{$lang_imanager_cat_addnewcat}>" />
   <{/if}>
   <{if $writecatcount > 0}>
-    <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
+    <input type="button" onclick="jQuery('div#addimgform').slideToggle();" value="<{$lang_imanager_cat_addnewimg}>" />
   <{/if}>
+</div>
+<{/if}>
+<{if $hasnwrite}>
+<div id="legend">
+  <div class="warningMsg"><span><{$lang_imanager_folder_not_writable}>: <{$hasnwrite}></span></div>
 </div>
 <{/if}>
 <div id="addimgform" class="opt_divs" style="display:none; margin:5px; padding:5px;"><{$addimgform}></div>
