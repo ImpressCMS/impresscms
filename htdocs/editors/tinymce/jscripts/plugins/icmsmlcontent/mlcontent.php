@@ -8,13 +8,15 @@ if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-
 //only site users can access this file or if multilanguage is enabled
         //$easiestml_exist = false;
         $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+		echo $icmsConfigMultilang['ml_enable'];
+		
 if (is_object(icms::$user) && $easiestml_exist) {
+	
     function langDropdown()
-    {
+    {global $icmsConfigMultilang;echo 'ddd';
         // check THE EASIEST MULTILANGUAGE HACK
         $easiestml_exist = false;
         $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
