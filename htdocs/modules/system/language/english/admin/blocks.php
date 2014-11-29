@@ -1,5 +1,5 @@
 <?php
-// $Id: blocks.php 12064 2012-10-10 14:37:53Z skenow $
+// $Id:$
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
 //if (!defined('_AM_DBUPDATED')) {if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}}
 
