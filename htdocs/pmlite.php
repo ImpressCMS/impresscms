@@ -90,18 +90,19 @@ if (empty($refresh) && !empty($op) && $op != _SUBMIT) {
 	exit();
 }
 
+$html = '';
+/* Since we are using a popup/overlay - no need for any html headers/meta information */
+
 if (!icms::$user) {
-	xoops_header(TRUE);
+	/* Request is made by a non-user, or user that is not logged in */
 	icms_core_Message::warning(
 		_PM_PLZREG . " <a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a> " . _OR . " <a href='" . ICMS_URL . "/user.php'>" . _LOGIN . "</a>",
 		_PM_SORRY,
 		TRUE
 	);
 } else {
-	xoops_header(TRUE);
 	if (!empty($op) && $op == _SUBMIT) {
 		/* This section is for sending messages */
-
 		if (!icms::$security->check()) {
 			$security_error = TRUE;
 		}
@@ -153,9 +154,9 @@ if (!icms::$user) {
 				redirect_header(icms_getPreviousPage(), 5, _PM_MESSAGEPOSTED);
 			}
 		}
+		
 	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {
 		/* This section is for composing messages */
-		xoops_header(FALSE);
 		$theme = new icms_view_theme_Factory();
 		$icmsTheme =& $theme->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
 
@@ -203,8 +204,10 @@ if (!icms::$user) {
 		$renderedForm = $form->render();
 		$icmsTheme->renderMetas();
 
-		echo '</head><body>' . $renderedForm;
+		$body .= $renderedForm;
 	}
 }
+
+echo $body;
 
 xoops_footer();
