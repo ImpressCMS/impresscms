@@ -446,9 +446,7 @@ if ($op == "form") {
 				. $foundusers[$j]->getVar("email") . "'><img src='" . ICMS_URL . "/images/icons/"
 				. $GLOBALS["icmsConfig"]["language"] . "/email.gif' border='0' alt='";
 			printf(_SENDEMAILTO, $foundusers[$j]->getVar("uname", "E"));
-			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\""
-				. ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $foundusers[$j]->getVar("uid")
-				. "\",\"pmlite\",800,680);'><img src='" . ICMS_URL . "/images/icons/"
+			echo "' /></a></td><td align='center'><a class='cboxElement' href='". ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $foundusers[$j]->getVar("uid") . "'><img src='" . ICMS_URL . "/images/icons/"
 				. $GLOBALS["icmsConfig"]["language"] . "/pm.gif' border='0' alt='";
 			printf(_SENDPMTO, $foundusers[$j]->getVar("uname", "E"));
 			echo "' /></a></td><td align='center'>";
