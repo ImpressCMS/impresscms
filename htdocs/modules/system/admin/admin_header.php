@@ -29,14 +29,10 @@ if (!defined("CPANEL_ADMIN_URL")) define("CPANEL_ADMIN_URL", CPANEL_URL . "admin
 
 icms_loadLanguageFile($module_dir, 'common');
 
-/* set filter types, if not strings */
-$filter_post[] = array(
-    'uid' => 'int',
-);
+/* add filter types for common input variables. Individual pages provide other keys/values */
+$filter_post['uid'] = 'int';
 
-$filter_get[] = array(
-    'uid' => 'int',
-);
+$filter_get['uid'] = 'int';
 
 /* set default values for variables */
 $fct = $op = "";

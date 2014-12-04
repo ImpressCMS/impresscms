@@ -181,6 +181,7 @@ class icms_view_theme_Object {
 		// Meta tags
 		foreach ($icmsConfigMetaFooter as $name => $value) {
 			if (substr($name, 0, 5) == 'meta_') {
+				/* see line 317 */
 				$this->addMeta('meta', substr($name, 5), $value);
 			} elseif (substr($name, 0, 6) == 'footer') {
 				$values = $value;
@@ -313,7 +314,7 @@ class icms_view_theme_Object {
 		}
 		icms::$logger->startTime('Page rendering');
 
-		// @internal: Lame fix to ensure the metas specified in the xoops config page don't appear twice
+		// @internal: Lame fix to ensure the metas specified in the xoops config page don't appear twice. See line 184
 		$old = array('robots', 'keywords', 'description', 'rating', 'author', 'copyright');
 		foreach ($this->metas['module']['meta'] as $name => $value) {
 			if (in_array($name, $old)) {
