@@ -168,6 +168,7 @@ function b_system_search_show() {
  * @return mixed $block or FALSE if the user is a guest
  */
 function b_system_user_show($options) {
+	global $icmsConfigUser;
 	if (is_object(icms::$user)) {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$block = array();
@@ -181,7 +182,8 @@ function b_system_user_show($options) {
 		$block['new_messages'] = $pm_handler->getCount($criteria);
 		$block['lang_inbox'] = _MB_SYSTEM_INBOX;
 		$block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
-		$block['name'] = icms::$user->getVar('uname');			
+		$block['name'] = icms::$user->getVar('uname');
+		$block['user_avatar'] = '';
 		if ($options[0] == 1) {
 			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['user_avatar'] = icms::$user->gravatar('G', $icmsConfigUser['avatar_width']);
