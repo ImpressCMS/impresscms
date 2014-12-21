@@ -43,8 +43,7 @@
 					<a href="mailto:<{$users.email}>"><img src="<{$icms_url}>/images/icons/<{$icms_lang}>/email.gif" border="0" alt="<{$smarty.const._SENDEMAILTO}>,<{$users.uname_e}>" /></a>
 				</td>
 				<td align="center">
-					<a href="javascript:openWithSelfMain('<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$users.uid}>','pmlite',800,680);"><img src="<{$icms_url}>/images/icons/<{$icms_lang}>/pm.gif" border="0" alt="<{$smarty.const._SENDPMTO}>, <{$users.uname_e}>" /></a>
-					
+					<a class='cboxElement' href="<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$users.uid}>"><img src="<{$icms_url}>/images/icons/<{$icms_lang}>/pm.gif" border="0" alt="<{$smarty.const._SENDPMTO}>, <{$users.uname_e}>" /></a>
 				</td>
 			<td align="center">
 			<{if $users.url != ""}>

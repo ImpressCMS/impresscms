@@ -488,3 +488,13 @@ $modversion['templates'][] = array(
 	'file' => 'admin/autotasks/system_adm_autotasks.html',
 	'description' => ''
 	);
+
+$modversion['templates'][] = array(
+		'file' => 'system_readmsg.html',
+		'description' => ''
+);
+
+$modversion['templates'][] = array(
+		'file' => 'system_viewmsgs.html',
+		'description' => ''
+);

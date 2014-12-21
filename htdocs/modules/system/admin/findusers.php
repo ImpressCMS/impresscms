@@ -442,6 +442,7 @@ if ($op == "form") {
 			
 			$icmsAdminTpl->assign("users", $users);
 		}
+		
 		$group = !empty($group) ? (int) $group : 0;
 		$icmsAdminTpl->assign("groupvalue", $group);
 		if ($group > 0) {
@@ -449,6 +450,7 @@ if ($op == "form") {
 			$add2group =& $member_handler->getGroup($group);
 			$icmsAdminTpl->assign("groupvalue_name", sprintf(_AM_ADD2GROUP, $add2group->getVar('name')));
 		}
+		
 		$totalpages = ceil($total / $limit);
 		if ($totalpages > 1) {
 			$hiddenform = "<form name='findnext' action='admin.php' method='post'>";
@@ -465,16 +467,20 @@ if ($op == "form") {
 					$hiddenform .= "<input type='hidden' name='" . icms_core_DataFilter::htmlSpecialChars($k) . "' value='" . icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v)) . "' />\n";
 				}
 			}
+			
 			if (!isset($limit)) {
 				$hiddenform .= "<input type='hidden' name='limit' value='" . $limit . "' />\n";
 			}
+			
 			if (!isset($start)) {
 				$hiddenform .= "<input type='hidden' name='start' value='" . $start . "' />\n";
 			}
+			
 			$prev = $start - $limit;
 			if ($start - $limit >= 0) {
 				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _AM_PREVIOUS . "</a>&nbsp;\n";
 			}
+			
 			$counter = 1;
 			$currentpage = ($start+$limit) / $limit;
 			while ($counter <= $totalpages) {
@@ -484,28 +490,36 @@ if ($op == "form") {
 					if ($counter == $totalpages && $currentpage < $totalpages-4) {
 						$hiddenform .= "... ";
 					}
+					
 					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter-1)*$limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 					if ($counter == 1 && $currentpage > 5) {
 						$hiddenform .= "... ";
 					}
+					
 				}
+				
 				$counter++;
 			}
+			
 			$next = $start+$limit;
 			if ($total > $next) {
 				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _AM_NEXT . "</a>\n";
 			}
+			
 			$hiddenform .= "</form>";
 			echo "<div style='text-align:center'>" . $hiddenform . "<br />";
 			printf(_AM_USERSFOUND, $total);
 			echo "</div>";
 		}
 	}
+	
 	$icmsAdminTpl->assign("totalfound", sprintf(_AM_USERSFOUND, icms_conv_nr2local($total)));
 	$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());
 	$icmsAdminTpl->assign("total", $total);
 	$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/findusers/system_adm_findusers.html');
+
 } else {
 	redirect_header('admin.php?fct=findusers', 3, implode('<br />', icms::$security->getErrors()));
 }
+
 icms_cp_footer();

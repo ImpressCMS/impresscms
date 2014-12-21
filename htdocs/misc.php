@@ -41,12 +41,12 @@
 include 'mainfile.php';
 icms_loadLanguageFile('core', 'misc');
 /* set filter types, if not strings */
-$filter_post[] = array(
+$filter_post = array(
 		'uid' => 'int',
 		'start' => 'int',
 );
 
-$filter_get[] = array(
+$filter_get = array(
 		'uid' => 'int',
 		'start' => 'int',
 );

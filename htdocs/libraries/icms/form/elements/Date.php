@@ -47,21 +47,13 @@ class icms_form_elements_Date extends icms_form_elements_Text {
 		$jstime = formatTimestamp($ele_value, _SHORTDATESTRING);
 
 		include_once ICMS_ROOT_PATH . '/include/calendar' . ($icmsConfigPersona['use_jsjalali'] == true ? 'jalali' : '') . 'js.php';
-
-		$result = "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date(_SHORTDATESTRING, $ele_value)."'".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' onclick='return showCalendar(\"".$ele_name."\");' style='cursor:pointer;'>";
-		if ($icmsConfigPersona['use_jsjalali']) {
+		
+	if ($icmsConfigPersona['use_jsjalali']) {
 			include_once ICMS_ROOT_PATH . '/include/jalali.php';
-			$result = "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? icms_conv_nr2local(jdate(_SHORTDATESTRING, $ele_value)) : date(_SHORTDATESTRING, $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date(_SHORTDATESTRING, $ele_value)."' ".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' id='btn_".$ele_name."' style='cursor:pointer;'><script type='text/javascript'>
-				Calendar.setup({
-					inputField  : 'tmp_".$ele_name."',
-		       		ifFormat    : '%Y-%m-%d',
-		       		button      : 'btn_".$ele_name."',
-        			langNumbers : true,
-        			dateType	: '"._CALENDAR_TYPE."',
-					onUpdate	: function(cal){document.getElementById('".$ele_name."').value = cal.date.print('%Y-%m-%d');}
-				});
-			</script>";
 		}
+		
+		$result = "<input type='text' class='datepick'  name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date(_SHORTDATESTRING, $ele_value)."'".$this->getExtra()." />";
+		
 		return $result;
 	}
 }

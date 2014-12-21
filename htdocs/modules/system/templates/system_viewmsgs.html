@@ -1,0 +1,66 @@
+<h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
+<p>
+	<a href='userinfo.php?uid=<{$uid}>'><{$smarty.const._PROFILE}></a>&nbsp;
+	<span style='font-weight: bold;'>&raquo;&raquo;</span>&nbsp;<{$smarty.const._PM_INBOX}>
+</p>
+<form id='prvmsg' method='post' action='viewpmsg.php'>
+	<table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>
+		<tr align='center' valign='middle'>
+			<th><input name='allbox' id='allbox'
+				onclick='xoopsCheckAll("prvmsg", "allbox")'
+				type='checkbox' value='Check All' /></th>
+			<th><img src='images/download.gif' alt='' /></th>
+			<th>&nbsp;</th>
+			<th><{$smarty.const._SUBJECT}></th>
+			<th><{$smarty.const._PM_FROM}></th>
+			<th align='center'><{$smarty.const._DATE}></th>
+		</tr>
+
+	<{foreach from=$messages item=message name=msg}>
+		<tr align='<{$smarty.const._GLOBAL_LEFT}>' class="{cycle values="odd,even"}">
+			<td style='vertical-align: middle; width: 2%; text-align: center;'>
+				<input type='checkbox' id='message_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>' /></td> 
+			<td style='vertical-align: middle; width: 5%; text-align: center;'>&nbsp;
+				<{if $message.read_msg != 1}>
+					<img src='images/read.gif' alt='<{$smarty.const._PM_NOTREAD}>' />
+				<{/if}>
+			</td>
+			<td style='vertical-align: middle; width: 5%; text-align: center;'>
+				<img src='images/subject/<{$message.msg_image}>' alt='' />
+			</td>
+			<td valign='middle' style='vertical-align: middle;'>
+				<a href='readpmsg.php?start=<{$smarty.foreach.msg.total-$smarty.foreach.msg.iteration}>&amp;total_messages=<{$smarty.foreach.msg.total}>'><{$message.subject}></a>
+			</td>
+			<td style='vertical-align: middle; width: 10%; text-align:center;'>
+				<a href='userinfo.php?uid=<{$message.from_userid}>'><{$message.sender}></a>
+			</td>
+			<td style='vertical-align: middle; width: 30%; text-align: center;'>
+				<{$message.sent_time}>
+			</td>
+		</tr>
+	<{foreachelse}>
+		<tr><td class='even' colspan='6' align='center'><{$smarty.const._PM_YOUDONTHAVE}></td></tr>
+	<{/foreach}>
+
+	<{if $smarty.foreach.msg.total > 0}>		
+		<tr class='foot' align='<{$smarty.const._GLOBAL_LEFT}>'>
+			<td colspan='6' align='<{$smarty.const._GLOBAL_LEFT}>'>
+				<a class='cboxElement' href='<{$smarty.const.ICMS_URL}>/pmlite.php?send=1'> 
+					<input type='button' class='formButton' value='<{$smarty.const._SEND}>' />
+				</a>
+				&nbsp;<input type='submit' class='formButton' name='delete_messages' value='<{$smarty.const._DELETE}>' />
+				<{$token}>
+			</td>
+		</tr>
+	<{else}>
+		<tr class='foot' align='<{$smarty.const._GLOBAL_LEFT}>'>
+			<td colspan='6' align='<{$smarty.const._GLOBAL_LEFT}>'>
+				<a class='cboxElement' href='<{$smarty.const.ICMS_URL}>/pmlite.php?send=1'> 
+					<input type='button' class='formButton' value='<{$smarty.const._SEND}>' />
+				</a>
+			</td>
+		</tr>
+	<{/if}>
+
+	</table>
+</form>
