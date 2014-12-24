@@ -118,6 +118,8 @@ $modversion['blocks'][1] = array(
 	'name' => _MI_SYSTEM_BNAME2,
 	'description' => '',
 	'show_func' => 'b_system_user_show',
+	'edit_func' => 'b_system_user_edit',
+	'options' => '0',
 	'template' => 'system_block_user.html'
 	);
 
