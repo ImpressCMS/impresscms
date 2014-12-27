@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Avatars
- * @version		SVN: $Id$
+ * @version		SVN: $Id: avatars.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /* set get and post filters before including admin_header, if not strings */
@@ -28,17 +28,12 @@ switch ($op) {
 	case 'list':
 		icms_loadLanguageFile('system', 'preferences', TRUE);
 		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url('
-			. ICMS_MODULES_URL . '/system/admin/avatars/images/avatars_big.png)">'
-			. _MD_AVATARMAN . '</div><br />';
+		$icmsAdminTpl->assign("list", "1");
 		$savatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'S'));
 		$cavatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'C'));
-		echo '<ul><li>'
-			. _MD_SYSAVATARS . ' (' . sprintf(_NUMIMAGES, '<strong>' . icms_conv_nr2local($savatar_count) . '</strong>')
-			. ') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=S">' . _LIST . '</a>]</li><li>'
-			. _MD_CSTAVATARS . ' (' . sprintf(_NUMIMAGES, '<strong>' . icms_conv_nr2local($cavatar_count) . '</strong>')
-			. ') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=C">' . _LIST
-			. '</a>]</li></ul>';
+		$icmsAdminTpl->assign("systemavatars", sprintf(_NUMIMAGES, '<b>' . icms_conv_nr2local($savatar_count) . '</b>'));	
+		$icmsAdminTpl->assign("usersavatars", sprintf(_NUMIMAGES, '<b>' . icms_conv_nr2local($cavatar_count) . '</b>'));	
+		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/avatars/system_adm_avatars.html');
 		$form = new icms_form_Theme(_MD_ADDAVT, 'avatar_form', 'admin.php', "post", TRUE);
 		$form->setExtra('enctype="multipart/form-data"');
 		$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'avatar_name', 50, 255), TRUE);
@@ -59,15 +54,11 @@ switch ($op) {
 	case 'listavt':
 		icms_cp_header();
 		$type = ($type && $type == 'C') ? 'C' : 'S';
-		echo '<div class="CPbigTitle" style="background-image: url('
-			. ICMS_URL . '/modules/system/admin/avatars/images/avatars_big.png)"><a href="admin.php?fct=avatars">'
-			. _MD_AVATARMAN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;';
+		$icmsAdminTpl->assign("listavt", "1");
 		if ($type == 'S') {
-			echo _MD_SYSAVATARS;
+		$icmsAdminTpl->assign("typeS", "1");
 		} else {
-			echo _MD_CSTAVATARS;
 		}
-		echo '</div><br /><br /><br />';
 		$criteria = new icms_db_criteria_Item('avatar_type', $type);
 		$avtcount = $avt_handler->getCount($criteria);
 		$criteria->setStart($start);
@@ -75,55 +66,39 @@ switch ($op) {
 		$avatars =& $avt_handler->getObjects($criteria, TRUE);
 		if ($type == 'S') {
 			foreach (array_keys($avatars) as $i) {
-				echo '<form action="admin.php" method="post">';
 				$id = $avatars[$i]->getVar('avatar_id');
-				echo '<table class="outer" cellspacing="1" width="100%">'
-					. '<tr><td align="center" width="30%" rowspan="6"><img src="'
-					. ICMS_UPLOAD_URL . '/' . $avatars[$i]->getVar('avatar_file')
-					. '" alt="" /></td><td class="head">' . _IMAGENAME, '</td><td class="even"><input type="hidden" name="avatar_id[]" value="'
-					. $id . '" /><input type="text" name="avatar_name[]" value="' . $avatars[$i]->getVar('avatar_name', 'E') . '" size="20" maxlength="255" /></td></tr><tr><td class="head">'
-					. _IMAGEMIME . '</td><td class="odd">' . $avatars[$i]->getVar('avatar_mimetype') . '</td></tr><tr><td class="head">' . _MD_USERS . '</td><td class="even">'
-					. $avatars[$i]->getUserCount() . '</td></tr><tr><td class="head">'
-					. _IMGWEIGHT . '</td><td class="odd"><input type="text" name="avatar_weight[]" value="'
-					. $avatars[$i]->getVar('avatar_weight') . '" size="3" maxlength="4" /></td></tr><tr><td class="head">'
-					. _IMGDISPLAY . '</td><td class="even"><input type="checkbox" name="avatar_display[]" value="1"';
+				$avatar[$i]['id'] = $avatars[$i]->getVar('avatar_id') ;
+				$avatar[$i]['file'] = $avatars[$i]->getVar('avatar_file');
+				$avatar[$i]['name'] = $avatars[$i]->getVar('avatar_name', 'E');
+				$avatar[$i]['mimetype'] = $avatars[$i]->getVar('avatar_mimetype');
+				$avatar[$i]['count'] = $avatars[$i]->getUserCount() ;
+				$avatar[$i]['weight'] = $avatars[$i]->getVar('avatar_weight') ;
 				if ($avatars[$i]->getVar('avatar_display') == 1) {
-					echo ' checked="checked"';
-				}
-				echo ' /></td></tr><tr><td class="head">&nbsp;</td><td class="even"><a href="admin.php?fct=avatars&amp;op=delfile&amp;avatar_id='
-					. $id . '">' . _DELETE . '</a></td></tr></table><br />';
+				$avatar[$i]['display'] = "1";}
 			}
+			$icmsAdminTpl->assign("avatararray", $avatar );
 		} else {
 			foreach (array_keys($avatars) as $i) {
-				echo '<table cellspacing="1" class="outer" width="100%">'.
-					'<tr><td width="30%" rowspan="6" align="center"><img src="'
-					. ICMS_UPLOAD_URL . '/' . $avatars[$i]->getVar('avatar_file')
-					. '" alt="" /></td><td class="head">' . _IMAGENAME, '</td><td class="even"><a href="'
-					. ICMS_URL . '/userinfo.php?uid=';
 				$userids =& $avt_handler->getUser($avatars[$i]);
-				echo $userids[0] . '">' . $avatars[$i]->getVar('avatar_name')
-					. '</a></td></tr><tr><td class="head">' . _IMAGEMIME
-					. '</td><td class="odd">' . $avatars[$i]->getVar('avatar_mimetype')
-					. '</td></tr><tr><td class="head">&nbsp;</td><td align="center" class="even">'
-					. '<a href="admin.php?fct=avatars&amp;op=delfile&amp;avatar_id='
-					. $avatars[$i]->getVar('avatar_id') . '&amp;user_id=' . $userids[0] . '">'
-					. _DELETE . '</a></td></tr></table><br />';
+				$avatar[$i]['user'] = $userids[0] ;
+				$avatar[$i]['name'] = $avatars[$i]->getVar('avatar_name');
+				$avatar[$i]['file'] = $avatars[$i]->getVar('avatar_file');
+				$avatar[$i]['mimetype'] = $avatars[$i]->getVar('avatar_mimetype');
+				$avatar[$i]['id'] = $avatars[$i]->getVar('avatar_id') ;	
 			}
+			$icmsAdminTpl->assign("avatararray", $avatar );
 		}
 		if ($avtcount > 0) {
+		$icmsAdminTpl->assign("avtcount", $avtcount);
 			if ($avtcount > 10) {
-				$nav = new icms_view_PageNav($avtcount, 10, $start, 'start', 'fct=avatars&amp;type=' . $type . '&amp;op=listavt');
-				echo '<div style="text-align:' . _GLOBAL_RIGHT . ';">' . $nav->renderImageNav() . '</div>';
+			$nav = new icms_view_PageNav($avtcount, 10, $start, 'start', 'fct=avatars&amp;type=' . $type . '&amp;op=listavt');
+			$icmsAdminTpl->assign("nav", $nav->renderImageNav());
 			}
 			if ($type == 'S') {
-				echo '<div style="text-align:center;">'
-					. '<input type="hidden" name="op" value="save" />'
-					. '<input type="hidden" name="fct" value="avatars" />'
-					. '<input type="submit" name="submit" value="' . _SUBMIT . '" />'
-					. icms::$security->getTokenHTML()
-					. '</div></form>';
+			$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());	
 			}
 		}
+		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/avatars/system_adm_avatars.html');
 		icms_cp_footer();
 		break;
 

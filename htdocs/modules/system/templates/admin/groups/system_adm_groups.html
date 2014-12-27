@@ -1,0 +1,93 @@
+<{if $displaygroups}>
+	<div class="CPbigTitle" style="background-image: url(<{$icms_url}>/modules/system/admin/groups/images/groups_big.png)"><{$smarty.const._AM_EDITADG}>
+	</div><br />
+	<table class="outer" width="40%" cellpadding="4" cellspacing="1"><tr><th colspan="2"><{$smarty.const._AM_EDITADG}></th></tr>
+		<{foreach item=grouparray from=$grouparray}>	
+			<{if $grouprights}>
+				<tr>
+					<td class="head"><{$grouparray.name}></td>
+					<td class="even"><a href="admin.php?fct=groups&amp;op=modify&amp;g_id=<{$grouparray.id}>"><{$smarty.const._AM_MODIFY}></a>
+				<{if $groups2}>
+					</td>
+				</tr>
+				<{else}>
+					&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id=<{$grouparray.id}>"><{$smarty.const._AM_DELETE}></a>
+					</td>
+				</tr>
+				<{/if}>
+			<{/if}>
+		<{/foreach}>
+	</table><br />
+<{/if}>
+<{if $modifygroups}>
+	<{if $usersless200}>
+		<table class="table table-bordered">
+			<tr>
+				<th colspan="2"><{$smarty.const._AM_EDITMEMBER}></th>
+			</tr>
+			<tr>
+				<td>
+					<form action="admin.php" method="post">
+						<fieldset>
+							<div class="control-group">
+								<label><{$smarty.const._AM_NONMEMBERS}></label>
+								<select name="uids[]" multiple="multiple">
+									<{foreach item=usersarray from=$usersarray}>
+										<option value="<{$usersarray.id}>"><{$usersarray.name}></option>
+									<{/foreach}>	
+								</select>
+							</div>
+							<input type="hidden" name="op" value="addUser" /><{$security}>
+							<input type="hidden" name="fct" value="groups" />
+							<input type="hidden" name="groupid" value="<{$groupid}>" />
+							<input class="btn" type="submit" name="submit" value="<{$smarty.const._AM_ADDBUTTON}>" />
+						</fieldset>
+					</form>
+				</td>
+				<td>
+					<form action="admin.php" method="post">
+						<fieldset>
+							<div class="control-group">
+								<label><{$smarty.const._AM_MEMBERS}></label>
+								<select name="uids[]" multiple="multiple">
+									<{foreach item=multiple from=$multiple}>
+										<option value="<{$multiple.id}>"><{$multiple.name}></option>
+									<{/foreach}>
+								</select>
+							</div>
+							<input type="hidden" name="op" value="delUser" /><{$security}>
+							<input type="hidden" name="fct" value="groups" />
+							<input type="hidden" name="groupid" value="<{$groupid}>" />
+							<input class="btn" type="submit" name="submit" value="<{$smarty.const._AM_DELBUTTON}>" />
+						</fieldset>
+					</form>
+			   </td>
+			</tr>
+		</table>
+	<{else}>
+		<a href="<{$smarty.const.ICMS_MODULES_URL}>/system/admin.php?fct=findusers&amp;group=<{$g_id}>"><{$smarty.const._AM_FINDU4GROUP}></a><br />
+		<form action="admin.php" method="post">
+			<table class="outer">
+				<tr>
+					<th align="center"><{$smarty.const._AM_MEMBERS}><br />
+						<{$nav}>
+					</th>
+				</tr>
+				<tr>
+					<td class="even" align="center">
+						<input type="hidden" name="op" value="delUser" />
+						<input type="hidden" name="fct" value="groups" />
+						<input type="hidden" name="groupid" value="<{$groupid}>" />
+						<input type="hidden" name="memstart" value="<{$memstart}>" /><{$security}>
+						<select name="uids[]" size="10" multiple="multiple">
+							<{foreach item=multiple from=$multiple}>
+								<option value="<{$multiple.id}>"><{$multiple.name}></option>
+							<{/foreach}>
+						</select><br />
+						<input type="submit" name="submit" value="<{$smarty.const._DELETE}>" />
+					</td>
+				</tr>
+			</table>
+		</form>	
+	<{/if}>
+<{/if}>
