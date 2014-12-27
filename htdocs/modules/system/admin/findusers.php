@@ -413,13 +413,10 @@ if ($op == "form") {
 	$start = (!empty($start)) ? (int) $start : 0;
 	$member_handler = icms::handler('icms_member');
 	$total = $member_handler->getUserCountByGroupLink($groups, $criteria);
-	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/findusers/images/findusers_big.png)">' . _AM_FINDUS . '</div><br />';
 	if ($total == 0) {
-		echo "<h4>" . _AM_NOFOUND, "</h4>";
+		
 	} elseif ($start < $total) {
-		echo sprintf(_AM_USERSFOUND, icms_conv_nr2local($total)) . "<br />";
-		echo "<form action='admin.php' method='post' name='memberslist' id='memberslist'><input type='hidden' name='op' value='delete_many' />
-		<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr><th align='center'><input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"memberslist\", \"memberslist_checkall\");' /></th><th align='center'>" . _AM_AVATAR . "</th><th align='center'>" . _AM_UNAME . "</th><th align='center'>" . _AM_LOGINNAME . "</th><th align='center'>" . _AM_REALNAME . "</th><th align='center'>" . _AM_EMAIL . "</th><th align='center'>" . _AM_PM . "</th><th align='center'>" . _AM_URL . "</th><th align='center'>" . _AM_REGDATE . "</th><th align='center'>" . _AM_LASTLOGIN . "</th><th align='center'>" . _AM_POSTS . "</th><th align='center'>" . _AM_ACTIONS . "</th></tr>";
+		
 		$criteria->setSort($sort);
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
@@ -427,60 +424,33 @@ if ($op == "form") {
 		$foundusers = $member_handler->getUsersByGroupLink($groups, $criteria, TRUE);
 		$ucount = 0;
 		foreach (array_keys($foundusers) as $j) {
-			if ($ucount % 2 == 0) {
-				$class = 'even';
-			} else {
-				$class = 'odd';
-			}
 			$ucount++;
 			$fuser_avatar = $foundusers[$j]->getVar("user_avatar") ? "<img src='" . ICMS_UPLOAD_URL . "/"
 				. $foundusers[$j]->getVar("user_avatar") . "' alt='' />" : "&nbsp;";
 			$fuser_name = $foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
-			echo "<tr class='$class'><td align='center'><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]' value='"
-				. $foundusers[$j]->getVar("uid") . "' /><input type='hidden' name='memberslist_uname[" . $foundusers[$j]->getVar("uid")
-				. "]' id='memberslist_uname[]' value='" . $foundusers[$j]->getVar("uname") . "' /></td>";
-			echo "<td>$fuser_avatar</td><td><a href='" . ICMS_URL . "/userinfo.php?uid="
-				. $foundusers[$j]->getVar("uid") . "'>" . $foundusers[$j]->getVar("uname")
-				. "</a></td><td>" . $foundusers[$j]->getVar("login_name") . "</td><td>"
-				. $fuser_name . "</td><td align='center'><a href='mailto:"
-				. $foundusers[$j]->getVar("email") . "'><img src='" . ICMS_URL . "/images/icons/"
-				. $GLOBALS["icmsConfig"]["language"] . "/email.gif' border='0' alt='";
-			printf(_SENDEMAILTO, $foundusers[$j]->getVar("uname", "E"));
-			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\""
-				. ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $foundusers[$j]->getVar("uid")
-				. "\",\"pmlite\",800,680);'><img src='" . ICMS_URL . "/images/icons/"
-				. $GLOBALS["icmsConfig"]["language"] . "/pm.gif' border='0' alt='";
-			printf(_SENDPMTO, $foundusers[$j]->getVar("uname", "E"));
-			echo "' /></a></td><td align='center'>";
-			if ($foundusers[$j]->getVar("url", "E") != "") {
-				echo "<a href='" . $foundusers[$j]->getVar("url", "E") . "' target='_blank'><img src='"
-					. ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"]
-					. "/www.gif' border='0' alt='" . _VISITWEBSITE . "' /></a>";
-			} else {
-				echo "&nbsp;";
-			}
-			echo "</td><td align='center'>" . formatTimeStamp($foundusers[$j]->getVar("user_regdate"), "s") . "</td><td align='center'>";
-			if ($foundusers[$j]->getVar("last_login") != 0) {
-				echo formatTimeStamp($foundusers[$j]->getVar("last_login"), "m");
-			} else {
-				echo "&nbsp;";
-			}
-			echo "</td><td align='center'>" . icms_conv_nr2local($foundusers[$j]->getVar("posts")) . "</td>";
-			echo "<td align='center'><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=users&amp;uid="
-				. $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'><img src='". ICMS_IMAGES_SET_URL . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a></td></tr>\n";
+			$users[$j]['uid'] = 	$foundusers[$j]->getVar("uid");
+			$users[$j]['email'] = 	$foundusers[$j]->getVar("email");
+			$users[$j]['uname'] = 	$foundusers[$j]->getVar("uname");
+			$users[$j]['uname_e'] = $foundusers[$j]->getVar("uname", "E");
+			$users[$j]['name'] = 	$foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
+			$users[$j]['login_name'] = 	$foundusers[$j]->getVar("login_name");
+			$users[$j]['user_avatar'] = $fuser_avatar;
+			$users[$j]['user_regdate'] = formatTimeStamp($foundusers[$j]->getVar("user_regdate"), "s");
+			$users[$j]['url'] = $foundusers[$j]->getVar("url", "E");
+			$users[$j]['posts'] = icms_conv_nr2local($foundusers[$j]->getVar("posts"));
+			$users[$j]['last_login_m'] = formatTimeStamp($foundusers[$j]->getVar("last_login"), "m");
+			
+			$icmsAdminTpl->assign("users", $users);
 		}
-		echo "<tr class='foot'><td><select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _AM_SENDMAIL . "</option>";
+		
 		$group = !empty($group) ? (int) $group : 0;
+		$icmsAdminTpl->assign("groupvalue", $group);
 		if ($group > 0) {
 			$member_handler = icms::handler('icms_member');
 			$add2group =& $member_handler->getGroup($group);
-			echo "<option value='groups' selected='selected'>" . sprintf(_AM_ADD2GROUP, $add2group->getVar('name')) . "</option>";
+			$icmsAdminTpl->assign("groupvalue_name", sprintf(_AM_ADD2GROUP, $add2group->getVar('name')));
 		}
-		echo "</select>&nbsp;";
-		if ($group > 0) {
-			echo "<input type='hidden' name='groupid' value='" . $group . "' />";
-		}
-		echo "</td><td colspan='12'>" . icms::$security->getTokenHTML() . "<input type='submit' value='" . _SUBMIT . "' /></td></tr></table></form>\n";
+		
 		$totalpages = ceil($total / $limit);
 		if ($totalpages > 1) {
 			$hiddenform = "<form name='findnext' action='admin.php' method='post'>";
@@ -497,16 +467,20 @@ if ($op == "form") {
 					$hiddenform .= "<input type='hidden' name='" . icms_core_DataFilter::htmlSpecialChars($k) . "' value='" . icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v)) . "' />\n";
 				}
 			}
+			
 			if (!isset($limit)) {
 				$hiddenform .= "<input type='hidden' name='limit' value='" . $limit . "' />\n";
 			}
+			
 			if (!isset($start)) {
 				$hiddenform .= "<input type='hidden' name='start' value='" . $start . "' />\n";
 			}
+			
 			$prev = $start - $limit;
 			if ($start - $limit >= 0) {
 				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _AM_PREVIOUS . "</a>&nbsp;\n";
 			}
+			
 			$counter = 1;
 			$currentpage = ($start+$limit) / $limit;
 			while ($counter <= $totalpages) {
@@ -516,25 +490,36 @@ if ($op == "form") {
 					if ($counter == $totalpages && $currentpage < $totalpages-4) {
 						$hiddenform .= "... ";
 					}
+					
 					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter-1)*$limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 					if ($counter == 1 && $currentpage > 5) {
 						$hiddenform .= "... ";
 					}
+					
 				}
+				
 				$counter++;
 			}
+			
 			$next = $start+$limit;
 			if ($total > $next) {
 				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _AM_NEXT . "</a>\n";
 			}
+			
 			$hiddenform .= "</form>";
 			echo "<div style='text-align:center'>" . $hiddenform . "<br />";
 			printf(_AM_USERSFOUND, $total);
 			echo "</div>";
 		}
 	}
+	
+	$icmsAdminTpl->assign("totalfound", sprintf(_AM_USERSFOUND, icms_conv_nr2local($total)));
+	$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());
+	$icmsAdminTpl->assign("total", $total);
+	$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/findusers/system_adm_findusers.html');
+
 } else {
 	redirect_header('admin.php?fct=findusers', 3, implode('<br />', icms::$security->getErrors()));
 }
-icms_cp_footer();
 
+icms_cp_footer();

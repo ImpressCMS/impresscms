@@ -167,7 +167,8 @@ function b_system_search_show() {
  *
  * @return mixed $block or FALSE if the user is a guest
  */
-function b_system_user_show() {
+function b_system_user_show($options) {
+	global $icmsConfigUser;
 	if (is_object(icms::$user)) {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$block = array();
@@ -181,9 +182,41 @@ function b_system_user_show() {
 		$block['new_messages'] = $pm_handler->getCount($criteria);
 		$block['lang_inbox'] = _MB_SYSTEM_INBOX;
 		$block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
+		$block['name'] = icms::$user->getVar('uname');
+		$block['user_avatar'] = '';
+		if ($options[0] == 1) {
+			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+				$block['user_avatar'] = icms::$user->gravatar('G', $icmsConfigUser['avatar_width']);
+			} elseif (icms::$user->getVar('user_avatar') && icms::$user->getVar('user_avatar') != 'blank.gif' && icms::$user->getVar('user_avatar') != '') {
+				$block['user_avatar'] = ICMS_UPLOAD_URL . '/' . icms::$user->getVar('user_avatar');
+			} else {
+				$block['user_avatar'] = '';
+			}
+		}
 		return $block;
 	}
 	return FALSE;
+}
+
+/**
+ * Shows the form to edit User Menu Block
+ *
+ * @param array $options The block options
+ * @return string $form The edit Block option
+ */
+function b_system_user_edit($options) {
+    $chk = "";
+    $form =  _MB_SYSTEM_DISPLAYA;
+    if ($options[0] == 1) {
+        $chk = " checked='checked'";
+    }
+    $form .= "<input type='radio' name='options[0]' value='1'" . $chk . " />&nbsp;" . _YES;
+    $chk = "";
+    if ($options[0] == 0) {
+        $chk = ' checked="checked"';
+    }
+    $form .= '&nbsp;<input type="radio" name="options[0]" value="0"' . $chk . ' />' . _NO;
+    return $form;
 }
 
 /**
@@ -251,10 +284,10 @@ function b_system_newmembers_show($options) {
 	$count = count($newmembers);
 	for ($i = 0; $i < $count; $i++) {
 		if ($options[1] == 1) {
-			if ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != '') {
-				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $newmembers[$i]->getVar('user_avatar');
-			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $newmembers[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
+			} elseif ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != '') {
+				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $newmembers[$i]->getVar('user_avatar');
 			} else {
 				$block['users'][$i]['avatar'] = '';
 			}
@@ -302,10 +335,10 @@ function b_system_topposters_show($options) {
 	$count = count($topposters);
 	for ($i = 0; $i < $count; $i++) {
 		if ($options[1] == 1) {
-			if ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != '') {
-				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $topposters[$i]->getVar('user_avatar');
-			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $topposters[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
+			} elseif ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != '') {
+				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $topposters[$i]->getVar('user_avatar');
 			} else {
 				$block['users'][$i]['avatar'] = '';
 			}

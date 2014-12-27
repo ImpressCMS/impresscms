@@ -1,0 +1,51 @@
+<div>
+	<h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
+</div>
+<br />
+<a href='userinfo.php?uid=<{$uid}>'><{$smarty.const._PROFILE}></a>
+&nbsp;
+<span style='font-weight: bold;'>&raquo;&raquo;</span>
+&nbsp;
+<a href='viewpmsg.php'><{$smarty.const._PM_INBOX}></a>
+&nbsp;
+<span style='font-weight: bold;'>&raquo;&raquo;</span>
+&nbsp;
+<{if $messages == ''}>
+	<br />
+	<br />
+	<{$smarty.const._PM_YOUDONTHAVE}>
+<{else}>
+	<{$subject}><br />	
+	<div valign='top'>
+		<{if $poster}> <a href='userinfo.php?uid=<{$poster_id}>'><{$uname}></a><br />
+			<{if $gravatar}><img src='<{$gravatar}>' alt='' /><br /><{/if}> 
+			<{if $from}><{$smarty.const._PM_FROM}> : <{$from}><br /><br /><{/if}> 
+			<{if $online}>
+				<span style='color: #ee0000; font-weight: bold;'><{$smarty.const._PM_ONLINE}></span>
+				<br /><br />
+			<{/if}> 
+		<{else}> 
+			<{$anonymous}> 
+		<{/if}> 
+		<br />
+		<img src='images/subject/<{$image}>' alt='' />&nbsp;<{$smarty.const._PM_SENTC}><{$sent_time}>
+		<hr>
+		<strong><{$subject}></strong><br>
+		<br> <{$message_body}> <br>
+		<br>
+	</div>
+	<div class='foot' width='20%' align='<{$smarty.const._GLOBAL_LEFT}>'>
+		<{if $poster}>
+			<a href='<{$smarty.const.ICMS_URL}>/pmlite.php?reply=1&amp;msg_id=<{$msg_id}>' class='cboxElement'>
+				<input type='button' class='formButton' value='<{$smarty.const._REPLY}>' />
+			</a>
+		<{/if}>
+		<{$form}> 
+		<{if $previous >= 0}>
+			<a href='readpmsg.php?start=<{$previous}>&amp;total_messages=<{$total_messages}>' style='float:<{$smarty.const._GLOBAL_LEFT}>'><{$smarty.const._PM_PREVIOUS}></a>
+		<{/if}>
+		<{if $next < $total_messages}>
+			<a href='readpmsg.php?start=<{$next}>&amp;total_messages=<{$total_messages}>' style='float:<{$smarty.const._GLOBAL_RIGHT}>'><{$smarty.const._PM_NEXT}></a>
+		<{/if}>
+	</div>
+<{/if}>
