@@ -15,10 +15,6 @@
 
  *   @author Ken Egervari<br>
  *******************************************************************************
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
  * @package	XML
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project

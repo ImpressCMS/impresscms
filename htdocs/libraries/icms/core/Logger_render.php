@@ -2,17 +2,18 @@
 /**
  * The Renderer functions of the Error logger
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
+ * @since		XOOPS - original location /class/logger_render.php
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * 				You should have received a copy of XOOPS_copyrights.txt with
+ * 				this file. If not, you may obtain a copy from xoops.org
+ *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @license	LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package	Core
+ * @package		Core
  * @subpackage	Logger
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @since		XOOPS - original location /class/logger_render.php
- * @version	$Id: Logger_render.php 12112 2012-11-09 02:15:50Z skenow $
+ * @version	$Id: Logger_render.php 12310 2013-09-13 21:33:58Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die();
