@@ -33,8 +33,8 @@
  * @package		core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: readpmsg.php 12363 2013-11-01 05:06:13Z sato-san $
+ * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id: readpmsg.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 $xoopsOption['pagetype'] = "pmsg";
