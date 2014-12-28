@@ -5,8 +5,8 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright    The XOOPS project http://www.xoops.org/
- * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @copyright   The XOOPS project http://www.xoops.org/
+ * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
  * @package		installer
  * @since        Xoops 2.3.0
  * @author		Haruki Setoyama  <haruki@planewave.org>
@@ -15,6 +15,7 @@
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
  * @version		$Id: page_modcheck.php 12329 2013-09-19 13:53:36Z skenow $
  */
+
 /**
  *
  */

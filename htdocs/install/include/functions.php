@@ -2,13 +2,11 @@
 /**
  * Functions needed by the ImpressCMS installer
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	installer
+ * @package		installer
  * @author		marcan <marcan@impresscms.org>
- * @author	modified by UnderDog <underdog@impresscms.org>
+ * @author		modified by UnderDog <underdog@impresscms.org>
  * @version		$Id: functions.php 12329 2013-09-19 13:53:36Z skenow $
  */
 

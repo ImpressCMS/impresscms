@@ -1,4 +1,7 @@
 <?php
+//  If you use HTTP authentication for XOOPS installer,
+//  put user name and passward in the define statement below.
+
 /**
  * Password defines for installation
  *
@@ -9,8 +12,6 @@
  * @author		malanciault
  * @version		$Id$
  */
-//  If you use HTTP authentication for XOOPS installer,
-//  put user name and passward in the define statement below.
 /**
  *
  */
