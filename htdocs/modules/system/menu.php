@@ -3,7 +3,7 @@
  * Contains links to admin options and images for those admin options
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @since		1.3
  * @version		SVN: $Id: menu.php 12064 2012-10-10 14:37:53Z skenow $
