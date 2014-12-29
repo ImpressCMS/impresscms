@@ -44,8 +44,9 @@
  * @category	ICMS
  * @package		Core
  * @subpackage	Security
- * @copyright	(c) 2000-2005 The Xoops Project - www.xoops.org
+ *
  * @author		Jan Pedersen <mithrandir@xoops.org>
+ * @copyright	(c) 2000-2005 The Xoops Project - www.xoops.org
  */
 class icms_core_Security {
 

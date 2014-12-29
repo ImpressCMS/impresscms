@@ -67,6 +67,8 @@ class icms_core_DataFilter {
 // -------- Public Functions --------
 
 	/**
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param $text
 	 * @param $msg
@@ -81,6 +83,8 @@ class icms_core_DataFilter {
 	/**
 	* Filters out invalid strings included in URL, if any
 	*
+	* @author		vaughan montgomery (vaughan@impresscms.org)
+	* @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	* @param   array  $matches
 	* @return  string
 	*/
@@ -95,6 +99,8 @@ class icms_core_DataFilter {
 	/**
 	* Checks if invalid strings are included in URL
 	*
+	* @author		vaughan montgomery (vaughan@impresscms.org)
+	* @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	* @param   string  $text
 	* @return  bool
 	*/
@@ -181,6 +187,9 @@ class icms_core_DataFilter {
 
 	/**
 	* Filters Multidimensional Array Recursively removing keys with empty values
+	* @author		vaughan montgomery (vaughan@impresscms.org)
+	* @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	*
 	* @param       array     $array       Array to be filtered
 	* @return      array     $array
 	*/
@@ -207,6 +216,9 @@ class icms_core_DataFilter {
 	* Public Function checks Variables using specified filter type
 	*
 	* @TODO needs error trapping for debug if invalid types and options used!!
+	*
+	* @author		vaughan montgomery (vaughan@impresscms.org)
+	* @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	*
 	* @param	string		$data		Data to be checked
 	* @param	string		$type		Type of Filter To use for Validation
@@ -274,6 +286,8 @@ class icms_core_DataFilter {
 	*/
 
 	/**
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param $data
 	 * @param $type
@@ -378,6 +392,9 @@ class icms_core_DataFilter {
 	 * Any items in the input array not found in the filter array will be filtered as
 	 * a string.
 	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param 	array	$input		items to be filtered
 	 * @param 	array	$filters 	the keys of this array should match the keys in
 	 * 								the input array and the values should be valid types
@@ -427,6 +444,9 @@ class icms_core_DataFilter {
 	/**
 	 * Filters textarea form data for INPUt to DB (text only!!)
 	 * For HTML please use icms_core_HTMLFilter::filterHTMLinput()
+	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param   string  $text
 	 * @return  string
@@ -485,6 +505,9 @@ class icms_core_DataFilter {
 	/**
 	 * Filters HTML form data for INPUT to DB
 	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param   string  $html
 	 * @param   bool	$smiley allow smileys?
 	 * @param   bool	$icode  allow icmscode?
@@ -518,6 +541,9 @@ class icms_core_DataFilter {
 	 * Filters HTML form data for Display Only
 	 * we don't really require the icmscode stuff, but we need to for content already in the DB before
 	 * we start filtering on INPUT instead of OUTPUT!!
+	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param   string  $html
 	 * @param   bool	$icode  allow icmscode?
@@ -775,6 +801,9 @@ class icms_core_DataFilter {
 
 	/**
 	 * This function gets allowed plugins from DB and loads them in the sanitizer
+	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param	int	 $id			 ID of the config
 	 * @param	bool	$withoptions	load the config's options now?
 	 * @return	object  reference to the {@link IcmsConfig}
@@ -792,6 +821,8 @@ class icms_core_DataFilter {
 	/**
 	 * loads the textsanitizer plugins
 	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param	 string	$name	 Name of the extension to load
 	 * @return	bool
 	 */
@@ -803,6 +834,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Executes file with a certain extension using call_user_func_array
+	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param	 string	$name	 Name of the file to load
 	 * @param	 string	$text	 Text to show if the function doesn't exist
@@ -820,6 +853,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Syntaxhighlight the code
+	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param	 string	$text	 purifies (lightly) and then syntax highlights the text
 	 * @return	string	$text	 the syntax highlighted text
@@ -840,6 +875,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Syntaxhighlight the code using PHP highlight
+	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param	 string	$text	 Text to highlight
 	 * @return	string	$buffer   the highlighted text
@@ -881,6 +918,8 @@ class icms_core_DataFilter {
 	/**
 	 * Syntaxhighlight the code using Geshi highlight
 	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param	 string	$text	 The text to highlight
 	 * @return	string	$code	 the highlighted text
 	 */
@@ -910,6 +949,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Trims certain text
+	 *
+	 * Replaces include/functions.php :: xoops_trim()
 	 *
 	 * @param	string	$text	The Text to trim
 	 * @return	string	$text	The trimmed text
@@ -958,6 +999,8 @@ class icms_core_DataFilter {
 	 * Returns the portion of string specified by the start and length parameters.
 	 * If $trimmarker is supplied, it is appended to the return string.
 	 * This function works fine with multi-byte characters if mb_* functions exist on the server.
+	 *
+	 * Replaces legacy include/functions.php :: xoops_substr()
 	 *
 	 * @param	string	$str
 	 * @param	int	   $start
@@ -1014,7 +1057,7 @@ class icms_core_DataFilter {
 
 // -------- Private Functions --------
 
-	/*
+	/**
 	* Private Function checks & Validates Data
 	*
 	* @copyright The ImpressCMS Project <http://www.impresscms.org>
@@ -1220,6 +1263,9 @@ class icms_core_DataFilter {
 	/**
 	 * Replace emoticons in the message with smiley images
 	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param	string  $message
 	 * @return   string
 	 */
@@ -1238,6 +1284,9 @@ class icms_core_DataFilter {
 
 	/**
 	 * Get the smileys
+	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param	bool	$all
 	 * @return   array

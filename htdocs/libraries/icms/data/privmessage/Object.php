@@ -43,9 +43,11 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * A handler for Private Messages
  *
+ * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2007 XOOPS.org
+ *
  * @category	ICMS
  * @package		Privmessage
- * @author		Kazumi Ono	<onokazu@xoops.org>
  */
 class icms_data_privmessage_Object extends icms_core_Object {
 

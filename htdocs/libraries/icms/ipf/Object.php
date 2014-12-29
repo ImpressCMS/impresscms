@@ -134,6 +134,9 @@ class icms_ipf_Object extends icms_core_Object {
 			}
 		}
 
+		/** this section from icms_core_Object::initVar
+		 * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
+		 */
 		$this->vars[$key] = array_merge($this->vars[$key], array('multilingual' => $multilingual,
         'form_caption' => $form_caption,
         'form_dsc' => $form_dsc,

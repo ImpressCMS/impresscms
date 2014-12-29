@@ -43,7 +43,9 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @category	ICMS
  * @package		Config
  * @subpackage	Item
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_config_Item_Object extends icms_core_Object {
 	/**

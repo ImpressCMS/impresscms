@@ -44,13 +44,15 @@
  * This class is an abstract class of handler classes that are responsible for providing
  * data access mechanisms to the data source of its corresponsing data objects
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ *
  * @category	ICMS
- * @package	Core
+ * @package		Core
+ *
  * @since		XOOPS
  * @author		Kazumi Ono <onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ *
  * @abstract
  */
 abstract class icms_core_ObjectHandler {

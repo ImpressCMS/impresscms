@@ -67,7 +67,9 @@ define('ICMS_CONF_PURIFIER', 14);
  * This class is responsible for providing data access mechanisms to the data source
  * of configuration class objects.
  *
- * @author       Kazumi Ono <onokazu@xoops.org>
+ * @author      Kazumi Ono <onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ *
  * @category	ICMS
  * @package     Config
  * @subpackage  Item

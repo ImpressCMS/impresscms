@@ -48,9 +48,9 @@
  * @package		Core
  * @subpackage	Textsanitizer
  *
- * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @author		Goghs Cheng
+ * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
 class icms_core_Textsanitizer {
 

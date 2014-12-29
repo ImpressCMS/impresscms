@@ -44,7 +44,8 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * This class is responsible for providing data access mechanisms to the data source
  * of configuration option class objects.
  *
- * @author  Kazumi Ono <onokazu@xoops.org>
+ * @author  	Kazumi Ono <onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
  *
  * @category	ICMS
  * @package     Config

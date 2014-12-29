@@ -46,6 +46,8 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @category	ICMS
  * @package 	Config
  * @author		Kazumi Ono <webmaster@myweb.ne.jp>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ *
  * @todo		Tests that need to be made:
  * 				- error handling
  * @access		public

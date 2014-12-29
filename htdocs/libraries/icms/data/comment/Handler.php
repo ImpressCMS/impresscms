@@ -58,7 +58,6 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @category	ICMS
  * @package		Data
  * @subpackage  Comment
- * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
 class icms_data_comment_Handler extends icms_core_ObjectHandler {
 

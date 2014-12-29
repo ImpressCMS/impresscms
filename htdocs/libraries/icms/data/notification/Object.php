@@ -43,10 +43,11 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * A Notification
  *
+ * @author	    Michael van Dam	<mvandam@caltech.edu>
+ * @copyright	copyright (c) 2000-2007 XOOPS.org
+ *
  * @category	ICMS
  * @package     Notification
- *
- * @author	    Michael van Dam	<mvandam@caltech.edu>
  */
 class icms_data_notification_Object extends icms_core_Object {
 
