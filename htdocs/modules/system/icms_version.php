@@ -34,9 +34,10 @@
  *
  * This file holds the configuration information of this module
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @copyright	http://www.XOOPS.org/
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
+ * 
  * @package		core
  * @since		1.2
  * @version		SVN: $Id$

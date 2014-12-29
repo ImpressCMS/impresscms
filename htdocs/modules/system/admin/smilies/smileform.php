@@ -31,8 +31,9 @@
 /**
  * Administration of smilies, form file
  *
+ * @copyright	http://www.XOOPS.org/
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		System
  * @subpackage	Smilies
  * @version		SVN: $Id$

@@ -1,5 +1,4 @@
 <?php
-// $Id: admin_header.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -24,13 +23,19 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
+
 /**
  * Administration of comments, Admin Header file
  *
  * Checks the rights of the user for being able to admin the comments
  *
+ * @copyright	http://www.XOOPS.org/
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	Comments
  * @version		SVN: $Id$
@@ -52,4 +57,3 @@ if (is_object(icms::$user)) {
 	redirect_header(ICMS_URL . '/', 3, _NOPERM);
 	exit();
 }
-

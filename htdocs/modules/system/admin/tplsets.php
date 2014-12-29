@@ -1,5 +1,4 @@
 <?php
-// $Id: main.php 12396 2014-01-24 17:25:13Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -31,8 +30,9 @@
 /**
  * Administration of template sets, main file
  *
+ * @copyright	http://www.XOOPS.org/
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		System
  * @subpackage	Templates
  * @todo		Extract HTML and CSS to a template

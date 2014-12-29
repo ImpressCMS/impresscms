@@ -31,11 +31,11 @@
 /**
  * Form for setting group options
  *
+ * @copyright	http://www.XOOPS.org/
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @author		Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
- * @copyright	Copyright (c) 2000 XOOPS.org
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @version		SVN: $Id$
  */

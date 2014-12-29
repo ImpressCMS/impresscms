@@ -1,14 +1,4 @@
 <?php
-/**
- * Version checker, module_info file
- *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @package		System
- * @subpackage	Version
- * @since		1.0
- * @version		SVN: $Id$
- */
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -37,6 +27,18 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+
+/**
+ * Version checker, module_info file
+ *
+ * @copyright	http://www.XOOPS.org/
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		System
+ * @subpackage	Version
+ * @since		1.0
+ * @version		SVN: $Id$
+ */
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
 
 if ((int) $_GET['mid']) {

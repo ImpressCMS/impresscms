@@ -31,8 +31,9 @@
 /**
  * The beginning of the admin interface for ImpressCMS
  *
+ * @copyright	http://www.XOOPS.org/
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	System
  * @version		SVN: $Id: admin.php 12064 2012-10-10 14:37:53Z skenow $

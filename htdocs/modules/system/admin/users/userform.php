@@ -31,14 +31,14 @@
 /**
  * Administration of users, form file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	http://www.XOOPS.org/
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	Administration
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @version		$Id$
  */
 
 global $icmsConfigUser, $icmsConfigAuth;
