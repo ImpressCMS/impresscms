@@ -25,26 +25,26 @@
 //  ------------------------------------------------------------------------ //
 
 /**
- * Authorization classes, Active Directory class file
+ * Authentication classes, Active Directory class file
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Auth
- * @subpackage	Ads
- * @version		SVN: $Id: Ads.php 12313 2013-09-15 21:14:35Z skenow $
+ * @package		Authentication
+ * @subpackage	ActiveDirectory
+ * @version		SVN: $Id: Ads.php 11730 2012-06-17 01:00:09Z skenow $
  */
 
 /**
- * Authentification class for Active Directory
+ * Authentication class for Active Directory
  *
  * @copyright   http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license     http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since       XOOPS
  * @category	ICMS
- * @package     Auth
- * @subpackage	Ads
+ * @package     Authentication
+ * @subpackage	ActiveDirectory
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_method_Ads extends icms_auth_method_Ldap {

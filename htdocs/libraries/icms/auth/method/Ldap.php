@@ -25,18 +25,18 @@
 //  ------------------------------------------------------------------------ //
 
 /**
- * Authorization classes, LDAP class file
+ * Authentication classes, LDAP class file
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Auth
- * @subpackage	Ldap
- * @version		SVN: $Id: Ldap.php 12313 2013-09-15 21:14:35Z skenow $
+ * @package		Authentication
+ * @subpackage	LDAP
+ * @version		SVN: $Id: Ldap.php 11730 2012-06-17 01:00:09Z skenow $
  */
 
 /**
- * Authentification class for standard LDAP Server V2 or V3
+ * Authentication class for standard LDAP Server V2 or V3
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -44,8 +44,8 @@
  * @author	    http://www.xoops.org The XOOPS Project
  * @since       XOOPS
  * @category	ICMS
- * @package     Auth
- * @subpackage  Ldap
+ * @package     Authentication
+ * @subpackage  LDAP
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_method_Ldap extends icms_auth_Object {
