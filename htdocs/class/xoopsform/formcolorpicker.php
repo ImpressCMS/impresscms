@@ -8,11 +8,11 @@
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author       Zoullou <webmaster@zoullou.org>
  * @since        Xoops 2.0.15
- * @version		$Id: formcolorpicker.php 10543 2010-08-25 14:25:59Z malanciault $
+ * @version		$Id: formcolorpicker.php 12278 2013-08-31 22:12:36Z fiammy $
  * @package 		XoopsForms
  * @subpackage 	ColorPicker
  */

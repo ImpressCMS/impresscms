@@ -5,12 +5,12 @@
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	XoopsForms
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formeditor.php 10543 2010-08-25 14:25:59Z malanciault $
+ * @version	$Id: formeditor.php 12278 2013-08-31 22:12:36Z fiammy $
  */
 /**
  *

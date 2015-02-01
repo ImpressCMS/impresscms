@@ -1,16 +1,17 @@
 <?php
+// $Id: version.php 12455 2014-06-24 09:30:49Z sato-san $
 /**
  * Version information about ImpressCMS
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @copyright	The Xoops Project http://www.xoops.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
- * @since		1.0
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id: version.php 12123 2012-12-03 07:41:09Z fiammy $
+ * @since		Xoops
+ * @author		phppp
+ * @version		$Id: version.php 12455 2014-06-24 09:30:49Z sato-san $
  */
 
-define('ICMS_VERSION_NAME', 'ImpressCMS 1.3.4 Final');
+define('ICMS_VERSION_NAME', 'ImpressCMS 1.3.7 Final');
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
@@ -30,8 +31,8 @@ define('ICMS_VERSION_STATUS', 10);
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-// impresscms_1.3.4 RC = 66
-define('ICMS_VERSION_BUILD', 67);
+// impresscms_1.3.6.1 Final = 72, 2.0.0 alpha 4 = 73
+define('ICMS_VERSION_BUILD', 74);
 
 /**
  * Latest dbversion of the System Module

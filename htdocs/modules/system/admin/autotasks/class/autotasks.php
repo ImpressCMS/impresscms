@@ -8,7 +8,7 @@
  * @subpackage	Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
- * @version		SVN: $Id: autotasks.php 11291 2011-06-27 18:17:04Z phoenyx $
+ * @version		SVN: $Id: autotasks.php 12399 2014-01-25 17:02:01Z skenow $
  */
 defined('ICMS_ROOT_PATH') || die('ImpressCMS root path not defined');
 
@@ -19,7 +19,7 @@ icms_loadLanguageFile('system', 'autotasks', TRUE);
 
 /**
  * Task objects
- * 
+ *
  * @package		Administration
  * @subpackage	Autotasks
  */
@@ -29,7 +29,7 @@ class SystemAutoTasks extends icms_ipf_Object {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
@@ -114,7 +114,7 @@ class SystemAutoTasks extends icms_ipf_Object {
 
 	/**
 	 * Get the autotask type
-	 * 
+	 *
 	 * @param string $part
 	 * @return	string
 	 */
@@ -172,7 +172,7 @@ class SystemAutoTasks extends icms_ipf_Object {
 			
 			$dirname = ICMS_MODULES_PATH . '/' . $dirname;
 			$dirname = $dirname . '/' . $code;
-			$code = ' require "' . $dirname . '";';
+			$code = " require '" . $dirname . "';";
 			$is_bug = !(@highlight_string(file_get_contents($dirname), TRUE));
 		} else {
 			$is_bug = !(@highlight_string('<?' . 'php '. $code . ' return TRUE; ?' . '>', TRUE));
@@ -240,7 +240,7 @@ class SystemAutoTasks extends icms_ipf_Object {
 
 /**
  * Handler for the autotask objects
- * 
+ *
  * @package		Administration
  * @subpackage	Autotasks
  */
@@ -251,7 +251,7 @@ class SystemAutotasksHandler extends icms_ipf_Handler {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param object $db	Database object
 	 */
 	public function __construct($db) {

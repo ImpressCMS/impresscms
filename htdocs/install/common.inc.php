@@ -1,17 +1,17 @@
 <?php
 /**
- * Installer common include file
- *
- * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
- *
- * @copyright    The XOOPS project http://www.xoops.org/
- * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package		installer
- * @since        Xoops 2.0.14
- * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: common.inc.php 10607 2010-09-07 16:19:19Z skenow $
- */
+* Installer common include file
+*
+* See the enclosed file license.txt for licensing information.
+* If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+*
+* @copyright    The XOOPS project http://www.xoops.org/
+* @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+* @package		installer
+* @since        2.0.14
+* @author		Skalpa Keo <skalpa@xoops.org>
+* @version		$Id: common.inc.php 12389 2014-01-17 16:58:21Z skenow $
+*/
 
 /**
  * If non-empty, only this user can access this installer
@@ -23,9 +23,16 @@ define( 'INSTALL_PASSWORD', '' );
 $xoopsOption['nocommon'] = true;
 define('XOOPS_INSTALL', 1);
 
-@include_once '../mainfile.php';
+/* set the default timezone for date/time functions - for strict PHP 5.3/5.4
+ * suppress errors, because we don't care
+ * if it's not set, it will be set to UTC, which we would have defaulted, anyway
+ */
+date_default_timezone_set(@date_default_timezone_get());
+
 include_once '../include/version.php';
-// including a few functions
+// including a few functions - core
+include_once '../include/functions.php';
+// installer common functions
 require_once 'include/functions.php';
 
 require_once '../libraries/icms/Autoloader.php';

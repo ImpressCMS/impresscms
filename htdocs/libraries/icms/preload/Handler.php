@@ -9,7 +9,7 @@
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Handler.php 10947 2011-01-04 02:53:47Z skenow $
+ * @version		SVN: $Id: Handler.php 12368 2013-11-17 04:04:28Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -34,12 +34,16 @@ class icms_preload_Handler {
 	private $_preloadFilesArray = array();
 
 	/**
-	 * @var array $_preloadEventsArray array containing a list of all events for all preload file, indexed by event name and sorted by order ox execution
+	 * @var array $_preloadEventsArray array containing a list of all events for all preload file, indexed by event name and sorted by order of execution
 	 */
 	private $_preloadEventsArray = array();
 
 	/**
 	 * Constructor
+	 *
+	 * Determine the preloads by scanning the preloads directory and the preloads directory for each module specified
+	 * Preloads in the system preloads directory will execute for all requests. Preloads in a module's preload directory
+	 * will only load for that module's requests
 	 *
 	 * @return	void
 	 */
@@ -65,6 +69,12 @@ class icms_preload_Handler {
 
 	/**
 	 * Add the events defined in filename
+	 *
+	 * To be attached to the preload events, methods in each preload class must be prefixed with 'event'
+	 * and have a defined event (like 'beforeFilterHTMLinput'). A fully qualified method would look
+	 * like 'eventBeforeFilterHTMLinput'
+	 *
+	 * @todo	implement an order parameter, to enable prioritizing responses to an event
 	 *
 	 * @param string $filename
 	 */
@@ -121,11 +131,26 @@ class icms_preload_Handler {
 	 * Triggers a specific event on all the libraries
 	 *
 	 * Here are the currently supported events:
-	 * - startCoreBoot : this event is triggered at the  start of the core booting process (start  of include/common.php)
-	 * - finishCoreBoot : this event is triggered at the end of the core booting process (end of include/common.php)
-	 * - adminHeader : this event is triggered when calling icms_cp_header() and is used to output content in the head section of the admin side
-	 * - beforeFooter : this event is triggered when include/footer.php is called, at the begining of the file
-	 * - startOutputInit : this event is triggered when starting to output the content, in include/header.php after instantiation of $xoopsTpl
+	 * - startCoreBoot	 triggered at the  start of the core booting process (start  of include/common.php)
+	 * - finishCoreBoot	 triggered at the end of the core booting process (end of include/common.php)
+	 * - adminHeader	 triggered when calling icms_cp_header() and is used to output content in the head section of the admin side
+	 * - beforeFooter	 triggered when include/footer.php is called, at the beginning of the file
+	 * - startOutputInit	 triggered when starting to output the content, in include/header.php after instantiation of $xoopsTpl
+	 * - adminBeforeFooter	 triggered before the footer is loaded in the admin control panel
+	 * - beforeFilterTextareaInput	 triggered before text from a textarea is processed to save to the database (@see icms_core_DataFilter)
+	 * - afterFilterTextareaInput	 triggered after text from a textarea is processed to save to the database (@see icms_core_DataFilter)
+	 * - beforeFilterTextareaDisplay	 triggered before text from a textarea is processed to display (@see icms_core_DataFilter)
+	 * - afterFilterTextareaDisplay	 triggered after text from a textarea is processed to display (@see icms_core_DataFilter)
+	 * - beforeFilterHTMLinput	 triggered before text from a textarea is processed as HTML to save to the database (@see icms_core_DataFilter)
+	 * - afterFilterHTMLinput	 triggered after text from a textarea is processed as HTML to save to the database (@see icms_core_DataFilter)
+	 * - beforeFilterHTMLdisplay	 triggered before text from a textarea is processed as HTML to display (@see icms_core_DataFilter)
+	 * - afterFilterHTMLdisplay	 triggered after text from a textarea is processed as HTML to display (@see icms_core_DataFilter)
+	 * - beforeDisplayTarea	 triggered before before text from a textarea is processed to display (@see icms_core_Textsanitizer)
+	 * - afterDisplayTarea	 triggered after text from a textarea is processed to display (@see icms_core_Textsanitizer)
+	 * - beforePreviewTarea	 triggered before text from a textarea is processed for preview (@see icms_core_Textsanitizer)
+	 * - afterPreviewTarea	 triggered after text from a textarea is processed for preview (@see icms_core_Textsanitizer)
+	 * - savingSystemAdminPreferencesItem	 triggered before saving preferences in the admin control panel (modules/system/preferences/main.php)
+	 * - afterSaveSystemAdminPreferencesItems	triggered after  saving preferences in the admin control panel (modules/system/preferences/main.php)
 	 *
 	 * @param $event string name of the event to trigger
 	 * @param $array mixed container to pass any arguments to be used by the library
@@ -140,14 +165,16 @@ class icms_preload_Handler {
 	/**
 	 * Construct the name of the class based on the filename
 	 *
-	 * @param $filename string filename where the class is located
+	 * All preloads will be discovered if the class name is the
+	 * file name without the extension (uppercase the first letter) prefixed with 'IcmsPreload'
+	 * For example, file name = protectEmail.php -> class name = IcmsPreloadProtectEmail
 	 *
+	 * @todo	switch to use the PSR-0 naming convention (plugin_preload_{filename})
+	 *
+	 * @param	$filename string filename where the class is located
 	 * @return	string name of the class
-	 *
 	 */
 	public function getClassName($filename) {
 		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename));
 	}
-
 }
-

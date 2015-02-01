@@ -1,4 +1,30 @@
 <?php
+// $Id: banners.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
 /**
  * Allows banner clients to login and manage their banners
  *
@@ -6,7 +32,6 @@
  * email address, or change the target url for the banner
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
@@ -14,7 +39,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id: banners.php 11072 2011-03-14 15:52:14Z m0nty_ $
+ * @version	$Id: banners.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 $xoopsOption['pagetype'] = "banners";
@@ -71,7 +96,7 @@ function bannerstats() {
 			. "<td>" . _BANNERS_FUNCTIONS . "</td></tr></thead>"
 			. "<tfoot><tr><td colspan='7'></td></tr></tfoot>";
 
-		$result = icms::$xoopsDB->query("select bid, imptotal, impmade, clicks, date from 
+		$result = icms::$xoopsDB->query("select bid, imptotal, impmade, clicks, date from
 										" . icms::$xoopsDB->prefix('banner') . " where cid='". (int) ($cid) . "'"
 									);
 		$i = 0;
@@ -94,14 +119,14 @@ function bannerstats() {
 				. "<td>$left</td>"
 				. "<td>$clicks</td>"
 				. "<td>$percent%</td>"
-				. "<td><a href='banners.php?op=EmailStats&amp;cid=$cid&amp;bid=$bid' title='" 
+				. "<td><a href='banners.php?op=EmailStats&amp;cid=$cid&amp;bid=$bid' title='"
 				. _BANNERS_STATS . "'>" . _BANNERS_STATS . "</a></td></tr></tbody>";
 			$i++;
 		}
 		echo "</table><br /><br /><h4 class='content_title'>"
 			. _BANNERS_FOW_IN . htmlspecialchars( $icmsConfig['sitename'] ). "</h4><hr />";
 
-		$result = icms::$xoopsDB->query("select bid, imageurl, clickurl, htmlbanner, htmlcode from 
+		$result = icms::$xoopsDB->query("select bid, imageurl, clickurl, htmlbanner, htmlcode from
 										" . icms::$xoopsDB->prefix('banner') . " where cid='". (int) ($cid) . "'"
 									);
 		while (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = icms::$xoopsDB->fetchRow($result)) {
@@ -119,15 +144,15 @@ function bannerstats() {
 					echo '<img src="' . $imageurl . '" alt="" />';
 				}
 			}
-			echo "<br /><strong>" . _BANNERS_ID . $bid . "</strong><br />" 
+			echo "<br /><strong>" . _BANNERS_ID . $bid . "</strong><br />"
 				. sprintf(_BANNERS_SEND_STATS, 'banners.php?op=EmailStats&amp;cid=' . $cid . '&amp;bid=' . $bid) . "<br />";
 			if (!$htmlbanner) {
 				$clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
-				echo sprintf(_BANNERS_POINTS, $clickurl) . "<br /><form action='banners.php' method='post'>" 
+				echo sprintf(_BANNERS_POINTS, $clickurl) . "<br /><form action='banners.php' method='post'>"
 					. _BANNERS_URL . "<input type='text' name='url' size='50' maxlength='200' value='$clickurl' />"
 					. "<input type='hidden' name='bid' value='$bid' />"
 					. "<input type='hidden' name='cid' value='$cid' />"
-					. "<input type='submit' name='op' value='" . _BANNERS_CHANGE . "' />" 
+					. "<input type='submit' name='op' value='" . _BANNERS_CHANGE . "' />"
 					. icms::$security->getTokenHTML("BANNER_EDIT") . "</form>";
 			}
 		}
@@ -136,13 +161,13 @@ function bannerstats() {
 		echo "<br />";
 		if ($result = icms::$xoopsDB->query("select bid, impressions, clicks, datestart, dateend from
 			" . icms::$xoopsDB->prefix('bannerfinish') . " where cid='". (int) ($cid) . "'")) {
-			echo "<h4 class='content_title'>" . sprintf(_BANNERS_FINISHED, $name) 
-				. "</h4><hr /><table summary=''><caption>" 
-				. sprintf(_BANNERS_FINISHED, $name) . "</caption><thead><tr><td>ID</td><td>" 
-				. _BANNERS_IMP_MADE . "</td><td>" 
-				. _BANNERS_CLICKS . "</td><td>" 
-				. _BANNERS_PER_CLICKS . "</td><td>" 
-				. _BANNERS_STARTED . "</td><td>" 
+			echo "<h4 class='content_title'>" . sprintf(_BANNERS_FINISHED, $name)
+				. "</h4><hr /><table summary=''><caption>"
+				. sprintf(_BANNERS_FINISHED, $name) . "</caption><thead><tr><td>ID</td><td>"
+				. _BANNERS_IMP_MADE . "</td><td>"
+				. _BANNERS_CLICKS . "</td><td>"
+				. _BANNERS_PER_CLICKS . "</td><td>"
+				. _BANNERS_STARTED . "</td><td>"
 				. _BANNERS_ENDED . "</td></tr></thead>"
 				. "<tfoot><tr><td colspan='6'></td></tr></tfoot>";
 

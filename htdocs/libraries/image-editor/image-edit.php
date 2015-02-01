@@ -12,9 +12,13 @@
  * @version		$Id: image-edit.php 1244 2008-03-18 17:09:11Z real_therplima $
  */
 $xoopsOption ['nodebug'] = 1;
-if (file_exists ( '../../mainfile.php' ))
-	include_once '../../mainfile.php';
+if (file_exists ( '../../mainfile.php' )) include_once '../../mainfile.php';
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
+
+if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {
+	exit(_NOPERM);
+}
 
 include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 
@@ -30,7 +34,7 @@ $icmsTpl->assign('icms_imanager_temp_path', ICMS_IMANAGER_FOLDER_PATH . '/temp')
 $icmsTpl->assign('icms_imanager_temp_url', ICMS_IMANAGER_FOLDER_URL . '/temp');
 
 $image_id = (isset($_GET['image_id'])) ? (int) $_GET['image_id'] : ((isset($_POST['image_id'])) ? (int) $_POST['image_id'] : null);
-$uniq = (isset($_GET ['uniq'])) ? $_GET['uniq'] : ((isset($_POST['uniq'])) ? $_POST['uniq'] : null);
+$uniq = (isset($_GET ['uniq'])) ? filter_input(INPUT_GET,'uniq') : ((isset($_POST['uniq'])) ? filter_input(INPUT_POST, 'uniq') : null);
 $type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type') : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type') : null);
 $target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target') : ((isset($_POST['target'])) ? filter_input(INPUT_POST, 'target') : null);
 $op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : null);
@@ -55,11 +59,17 @@ if (!is_null($target) && !is_null($type)) {
 	}
 }
 
-if (! is_null ( $op ) && $op == 'cancel') {
-	$image_path = isset ( $_GET ['image_path'] ) ? $_GET ['image_path'] : null;
-
-	if (file_exists ( $image_path )) {
-		@unlink ( $image_path );
+if (!is_null($op) && $op == 'cancel') {
+	/* make sure the file is in the temp folder and prevent arbitrary deletes of any file */
+	$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
+	if (isset($_GET['image_path']) && strncmp(realpath($_GET ['image_path']), strlen($valid_path)) == 0) {
+		$image_path = realpath($_GET['image_path']);
+	} else {
+		$image_path = NULL;
+	}
+	
+	if (file_exists($image_path)) {
+		@unlink($image_path);
 	}
 
 	$arr = explode ( '/', $image_path );
@@ -242,4 +252,3 @@ foreach ( $plugins_arr as $plugin_folder ) {
 }
 
 echo $icmsTpl->fetch ( ICMS_LIBRARIES_PATH . '/image-editor/templates/image-editor.html' );
-?>

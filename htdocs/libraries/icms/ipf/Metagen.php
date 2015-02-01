@@ -10,7 +10,7 @@
  * @package		Ipf
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Metagen.php 11872 2012-08-04 17:48:03Z m0nty $
+ * @version		SVN: $Id: Metagen.php 12248 2013-08-09 08:56:21Z fiammy $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -142,12 +142,12 @@ class icms_ipf_Metagen {
 	 *
 	 */
 	public function setTitle($title) {
-		global $icmsModule, $icmsModuleConfig;
+		global $icmsModuleConfig;
 		$this->_title = $this->html2text($title);
 		$this->_title = $this->purifyText($this->_title);
 		$this->_original_title = $this->_title;
 
-		$moduleName = $icmsModule->getVar('name');
+		$moduleName = is_object(icms::$module) ? icms::$module->getVar('name') : "";
 
 		$titleTag = array();
 

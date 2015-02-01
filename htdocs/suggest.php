@@ -6,7 +6,7 @@
  * @package	core
  * @since		2009
  * @author	Wiliam Hall (aka Mr. Theme) <mrtheme@impresscms.org>
- * @version	$Id: suggest.php 11233 2011-05-15 14:05:17Z david-sf $
+ * @version	$Id: suggest.php 12403 2014-01-26 21:35:08Z skenow $
  **/
 include 'mainfile.php';
 icms::$logger->disableLogger();
@@ -19,7 +19,7 @@ if (isset($_POST['queryString'])) {
 			. icms::$xoopsDB->prefix("autosearch_cat") . " c ON s.cat_id = c.cid WHERE name LIKE '%"
 			. $queryString . "%' ORDER BY cat_id LIMIT 8";
 		$query = icms::$xoopsDB->query($sql);
-		$num_results = mysql_num_rows($query);
+		$num_results = icms::$xoopsDB->getRowsNum($query);
 
 		echo "<ul id='searchresults'>";
 		if ($query) {

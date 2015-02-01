@@ -8,7 +8,7 @@
  * @subpackage	Users
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: userrank.php 11034 2011-02-19 20:12:41Z skenow $
+ * @version		SVN: $Id: userrank.php 12310 2013-09-13 21:33:58Z skenow $
  */
 
 defined("ICMS_ROOT_PATH") or die ("ImpressCMS root path not defined");
@@ -18,7 +18,7 @@ icms_loadLanguageFile("system", "userrank", TRUE);
 
 /**
  * Ranks to assign members
- * 
+ *
  * @package		System
  * @subpackage	Users
  */
@@ -29,7 +29,7 @@ class SystemUserrank extends icms_ipf_Object {
 
 	/**
 	 * Create a new instance of the userrank object
-	 * 
+	 *
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
@@ -87,18 +87,18 @@ class SystemUserrank extends icms_ipf_Object {
 
 /**
  * Handler for the user ranks object
- * 
+ *
  * @package		System
  * @subpackage	Users
  */
 class SystemUserrankHandler extends icms_ipf_Handler {
-	
+
 	/** */
 	public $objects = FALSE;
 
 	/**
 	 * Create a new instance of the handler
-	 * 
+	 *
 	 * @param object $db
 	 */
 	public function __construct($db) {
@@ -109,8 +109,8 @@ class SystemUserrankHandler extends icms_ipf_Handler {
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @param	int 	$rank_id
 	 * @param	int 	$posts
 	 * @return	array

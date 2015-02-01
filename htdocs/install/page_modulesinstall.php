@@ -10,7 +10,7 @@
  * @package		installer
  * @since        1.0
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
- * @version		$Id: page_modulesinstall.php 10906 2010-12-20 15:09:53Z phoenyx $
+ * @version		$Id: page_modulesinstall.php 12389 2014-01-17 16:58:21Z skenow $
  */
 /**
  *
@@ -25,7 +25,7 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once ICMS_ROOT_PATH."/mainfile.php";
+include_once "../mainfile.php";
 include_once ICMS_ROOT_PATH."/include/common.php";
 include_once "../include/cp_functions.php";
 include_once './class/dbmanager.php';

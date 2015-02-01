@@ -1,18 +1,24 @@
 <?php
 /**
  * Image Creation script
+ * Xoops Frameworks addon
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * based on Frameworks::captcha by Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ *
+ * @copyright	The XOOPS project http://www.xoops.org/
+ * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since		XOOPS
+ *
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 /**
  * Captcha Image Handler
  *
+ * @author		modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements

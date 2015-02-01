@@ -3,13 +3,13 @@
  * Handles all functions related to 3rd party libraries within ImpressCMS
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	core
  * @package		libraries
  * @since		  1.1
  * @author		  marcan <marcan@impresscms.org>
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: icmslibrarieshandler.php 10868 2010-12-11 12:02:57Z phoenyx $
+ * @version	$Id: icmslibrarieshandler.php 12278 2013-08-31 22:12:36Z fiammy $
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -28,7 +28,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @package		libraries
  * @since		  1.1
  * @author		  marcan <marcan@impresscms.org>
- * @version		$Id: icmslibrarieshandler.php 10868 2010-12-11 12:02:57Z phoenyx $
+ * @version		$Id: icmslibrarieshandler.php 12278 2013-08-31 22:12:36Z fiammy $
  */
 class IcmsLibrariesHandler extends icms_preload_LibrariesHandler {
 	private $_deprecated;

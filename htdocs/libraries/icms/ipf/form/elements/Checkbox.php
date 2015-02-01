@@ -9,29 +9,29 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Checkbox.php 12005 2012-09-02 13:18:34Z qm-b $
+ * @version		$Id: Checkbox.php 12310 2013-09-13 21:33:58Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
-	
+
 	private $_delimeter = "&nbsp;";
-	
+
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		
+
 		$control = $object->getControl($key);
 		if(isset($control['delimeter'])) {
 			$this->_delimeter = $control['delimeter'];
 		}
-		
+
 		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key), $this->_delimeter);
-		
+
 		if (isset($control['options'])) {
 			$this->addOptionArray($control['options']);
 		} else {
@@ -71,6 +71,8 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 
 	/**
 	 * prepare HTML for output
+	 * @author	    Kazumi Ono	<onokazu@xoops.org>
+	 * @copyright	copyright (c) 2000-2003 XOOPS.org
 	 *
 	 * @return	string  $ret  the constructed input form element string
 	 */
@@ -86,7 +88,7 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 			$this->setName($ele_name);
 		}
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name 
+			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
 				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
@@ -94,8 +96,8 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . "</label></span>" . $ele_delimeter;
 		}
 		if (count($ele_options) > 1) {
-			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='" 
-				. $ele_name	. "_checkemall' class='checkemall' /><label for='" 
+			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
+				. $ele_name	. "_checkemall' class='checkemall' /><label for='"
 				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
 		}
 		$ret .= "</div>";
@@ -104,6 +106,8 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 
 	/**
 	 * Creates validation javascript
+	 * @author	    Kazumi Ono	<onokazu@xoops.org>
+	 * @copyright	copyright (c) 2000-2003 XOOPS.org
 	 * @return	string    $js   the constructed javascript
 	 */
 	public function renderValidationJS() {

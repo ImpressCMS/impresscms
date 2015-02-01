@@ -15,6 +15,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 if (is_object(icms::$user) && $easiestml_exist) {
     function langDropdown()
     {
+        global $icmsConfigMultilang;
         // check THE EASIEST MULTILANGUAGE HACK
         $easiestml_exist = false;
         $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));

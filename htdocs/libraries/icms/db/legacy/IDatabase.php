@@ -1,6 +1,20 @@
 <?php
+/**
+ * Standard interface for database classes
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ *
+ * @category    ICMS
+ * @package	    Database
+ */
 
-
+/**
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @category    ICMS
+ * @package	    Database
+ */
 interface icms_db_legacy_IDatabase {
 	/**
 	 * assign a {@link icms_core_Logger} object to the database
@@ -164,4 +178,3 @@ interface icms_db_legacy_IDatabase {
 	public function getFieldsNum($result);
 
 }
-

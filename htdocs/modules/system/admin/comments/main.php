@@ -1,4 +1,29 @@
 <?php
+// $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
 /**
  * Administration of comments, mainfile
  *
@@ -6,7 +31,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Comments
- * @version		SVN: $Id: main.php 11358 2011-09-02 19:55:40Z phoenyx $
+ * @version		SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
@@ -144,7 +169,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 					. icms_conv_nr2local($comments[$i]->getVar('com_ip')) . '</td><td class="' . $class . '">'
 					. $module_array[$comments[$i]->getVar('com_modid')] . '</td><td class="' . $class . '">'
 					. $status_array2[$comments[$i]->getVar('com_status')] . '</td><td class="' . $class
-					. '" align="' . _CENTER . '"><a href="admin/comments/comment_edit.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a> 
+					. '" align="' . _CENTER . '"><a href="admin/comments/comment_edit.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a>
 					<a href="admin/comments/comment_delete.php?com_id=' . $i . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a></td></tr>';
 			}
 			echo '</table>';

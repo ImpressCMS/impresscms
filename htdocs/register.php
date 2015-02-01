@@ -1,13 +1,43 @@
 <?php
+// $Id: register.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
 /**
  * Registration process for new users
  * Gathers required information and validates the new user
- *  
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author      skenow <skenow@impresscms.org>
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id: register.php 12078 2012-10-19 04:52:21Z sato-san $
+ * @version		SVN: $Id: register.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -72,19 +102,19 @@ switch ($op) {
 			}
 			$f_timezone = ($timezone_offset < 0) ? 'GMT ' . $timezone_offset : 'GMT +' . $timezone_offset;
 			echo _US_TIMEZONE . ": $f_timezone<br />";
-			echo "<form action='register.php' method='post'><input type='hidden' name='login_name' value='" 
-				. icms_core_DataFilter::htmlSpecialChars($login_name) 
-				. "' /><input type='hidden' name='uname' value='" . icms_core_DataFilter::htmlSpecialChars($uname) 
-				. "' /><input type='hidden' name='email' value='" . icms_core_DataFilter::htmlSpecialChars($email) 
-				. "' /><input type='hidden' name='user_viewemail' value='" . (int) $user_viewemail 
-				. "' /><input type='hidden' name='timezone_offset' value='" . $timezone_offset 
-				. "' /><input type='hidden' name='url' value='" . icms_core_DataFilter::htmlSpecialChars($url) 
-				. "' /><input type='hidden' name='pass' value='" . icms_core_DataFilter::htmlSpecialChars($pass) 
-				. "' /><input type='hidden' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass) 
-				. "' /><input type='hidden' name='user_mailok' value='" . (int) $user_mailok 
-				. "' /><input type='hidden' name='actkey' value='" . icms_core_DataFilter::htmlSpecialChars($actkey) 
-				. "' /><input type='hidden' name='agree_disc' value='" . (int) $agree_disc 
-				. "' /><br /><br /><input type='hidden' name='op' value='finish' />" . icms::$security->getTokenHTML() 
+			echo "<form action='register.php' method='post'><input type='hidden' name='login_name' value='"
+				. icms_core_DataFilter::htmlSpecialChars($login_name)
+				. "' /><input type='hidden' name='uname' value='" . icms_core_DataFilter::htmlSpecialChars($uname)
+				. "' /><input type='hidden' name='email' value='" . icms_core_DataFilter::htmlSpecialChars($email)
+				. "' /><input type='hidden' name='user_viewemail' value='" . (int) $user_viewemail
+				. "' /><input type='hidden' name='timezone_offset' value='" . $timezone_offset
+				. "' /><input type='hidden' name='url' value='" . icms_core_DataFilter::htmlSpecialChars($url)
+				. "' /><input type='hidden' name='pass' value='" . icms_core_DataFilter::htmlSpecialChars($pass)
+				. "' /><input type='hidden' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass)
+				. "' /><input type='hidden' name='user_mailok' value='" . (int) $user_mailok
+				. "' /><input type='hidden' name='actkey' value='" . icms_core_DataFilter::htmlSpecialChars($actkey)
+				. "' /><input type='hidden' name='agree_disc' value='" . (int) $agree_disc
+				. "' /><br /><br /><input type='hidden' name='op' value='finish' />" . icms::$security->getTokenHTML()
 				. "<input type='submit' value='". _US_FINISH ."' /></form>";
 		} else {
 			echo "<div id='registerstop' style='color:#ff0000;'>$stop</div>";
@@ -139,7 +169,7 @@ switch ($op) {
 			$newuser->setVar('uorder', $icmsConfig['com_order'], TRUE);
 			$newuser->setVar('umode', $icmsConfig['com_mode'], TRUE);
 			$newuser->setVar('user_mailok', $user_mailok, TRUE);
-			$newuser->setVar('notify_method', 2);
+			$newuser->setVar('notify_method', 1);
 			if ($valid_actkey || $icmsConfigUser['activation_type'] == 1) {
 				$newuser->setVar('level', 1, TRUE);
 			}

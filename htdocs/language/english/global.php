@@ -1,5 +1,6 @@
 <?php
-// $Id: global.php 12114 2012-11-18 15:44:37Z fiammy $
+// $Id: global.php 12229 2013-07-19 08:08:05Z fiammy $
+// $Id: global.php 12229 2013-07-19 08:08:05Z fiammy $
 //%%%%%%	File Name mainfile.php 	%%%%%
 define('_PLEASEWAIT','Please Wait');
 define('_FETCHING','Loading...');
@@ -44,7 +45,7 @@ define('_DATE','Date');   // Posted date
 define('_MAIN','Main');
 define('_MANUAL','Manual');
 define('_INFO','Info');
-define('_CPHOME','Control Panel Home');
+define('_CPHOME','Admin Control Panel');
 define('_YOURHOME','Home Page');
 
 //%%%%%%	File Name misc.php (who's-online popup)	%%%%%
@@ -205,15 +206,14 @@ define("_ADM_USE_RTL","0");
 define('_MODULES','Modules');
 define('_SYSTEM','System');
 define('_IMPRESSCMS_NEWS','News');
-define('_ABOUT','The ImpressCMS Project');
+define('_ABOUT','ImpressCMS Project');
 define('_IMPRESSCMS_HOME','Project Home');
 define('_IMPRESSCMS_COMMUNITY','Community');
 define('_IMPRESSCMS_ADDONS','Addons');
 define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
-define("_IMPRESSCMS_Support","Support the project !");
-define('_IMPRESSCMS_PROJECT','Project Development on Assembla');
+define("_IMPRESSCMS_SUPPORT","Support the project !");
 define('_IMPRESSCMS_ADMIN','Administration of');
 /** The default separator used in icms_view_Tree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
@@ -309,5 +309,15 @@ define("_LONGDATESTRING", "F jS Y, h:iA");
 define('_AUTHOR', 'Author');
 define("_CREDITS", "Credits");
 define("_LICENSE", "License");
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>');
+define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_BLOCK_ID", "Block ID");
+define('_IMPRESSCMS_PROJECT','Project Development');
+
+// added in 1.3.5
+define("_FILTERS","Filters");
+define("_FILTER","Filter");
+define("_FILTERS_MSG1","Input Filter: ");
+define("_FILTERS_MSG2","Input Filter (HTMLPurifier): ");
+define("_FILTERS_MSG3","Output Filter: ");
+define("_FILTERS_MSG4","Output Filter (HTMLPurifier): ");
+

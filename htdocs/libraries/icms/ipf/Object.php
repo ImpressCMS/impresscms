@@ -134,6 +134,9 @@ class icms_ipf_Object extends icms_core_Object {
 			}
 		}
 
+		/** this section from icms_core_Object::initVar
+		 * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
+		 */
 		$this->vars[$key] = array_merge($this->vars[$key], array('multilingual' => $multilingual,
         'form_caption' => $form_caption,
         'form_dsc' => $form_dsc,
@@ -934,7 +937,7 @@ class icms_ipf_Object extends icms_core_Object {
 						if (defined('XOOPS_EDITOR_IS_HTML')) {
 							$br = false;
 						}
-						if ($html) {
+						if ($html && (!is_int($ret) && !empty($ret))) {
                             if ($br) { // have to use this whilst ever we have a zillion editors in the core
                                 return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
                             } else {

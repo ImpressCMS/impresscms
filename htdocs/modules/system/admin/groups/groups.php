@@ -1,4 +1,33 @@
 <?php
+// $Id: groups.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Administration of usergroups, functionfile
  *
@@ -6,7 +35,7 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Groups
- * @version		SVN: $Id: groups.php 11140 2011-03-30 13:24:45Z m0nty_ $
+ * @version		SVN: $Id: groups.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
@@ -126,17 +155,17 @@ function modifyGroup($g_id) {
 			echo '<option value="' . (int) $u_id . '">' . $u_name . '</option>' . "\n";
 		}
 		echo '</select>';
-		echo "</td><td align='center' class='odd'><input type='hidden' name='op' value='addUser' />" 
-		. icms::$security->getTokenHTML() 
-		. "<input type='hidden' name='fct' value='groups' /><input type='hidden' name='groupid' value='" 
-		. $thisgroup->getVar("groupid") 
-		. "' /><input type='submit' name='submit' value='" 
+		echo "</td><td align='center' class='odd'><input type='hidden' name='op' value='addUser' />"
+		. icms::$security->getTokenHTML()
+		. "<input type='hidden' name='fct' value='groups' /><input type='hidden' name='groupid' value='"
+		. $thisgroup->getVar("groupid")
+		. "' /><input type='submit' name='submit' value='"
 		. _AM_ADDBUTTON . "' /></form><br /><form action='admin.php' method='post' />"
-		. "<input type='hidden' name='op' value='delUser' />" 
-		. icms::$security->getTokenHTML() 
-		. "<input type='hidden' name='fct' value='groups' /><input type='hidden' name='groupid' value='" 
-		. $thisgroup->getVar("groupid") 
-		. "' /><input type='submit' name='submit' value='" 
+		. "<input type='hidden' name='op' value='delUser' />"
+		. icms::$security->getTokenHTML()
+		. "<input type='hidden' name='fct' value='groups' /><input type='hidden' name='groupid' value='"
+		. $thisgroup->getVar("groupid")
+		. "' /><input type='submit' name='submit' value='"
 		. _AM_DELBUTTON . "' /></td><td class='even'>";
 		echo "<select name='uids[]' size='10' multiple='multiple'>";
 		foreach ($mlist as $m_id => $m_name) {
@@ -159,14 +188,14 @@ function modifyGroup($g_id) {
 		echo "</th></tr><tr><td class='even' align='center'>"
 		. "<input type='hidden' name='op' value='delUser' />"
 		. "<input type='hidden' name='fct' value='groups' />"
-		. "<input type='hidden' name='groupid' value='" . $thisgroup->getVar("groupid") 
-		. "' /><input type='hidden' name='memstart' value='" . $memstart 
-		. "' />" . icms::$security->getTokenHTML() 
+		. "<input type='hidden' name='groupid' value='" . $thisgroup->getVar("groupid")
+		. "' /><input type='hidden' name='memstart' value='" . $memstart
+		. "' />" . icms::$security->getTokenHTML()
 		. "<select name='uids[]' size='10' multiple='multiple'>";
 		foreach ($mlist as $m_id => $m_name) {
 			echo '<option value="' . (int) $m_id . '">' . $m_name . '</option>' . "\n";
 		}
-		echo "</select><br /><input type='submit' name='submit' value='" . _DELETE 
+		echo "</select><br /><input type='submit' name='submit' value='" . _DELETE
 		. "' /></td></tr></table></form>";
 	}
 	icms_cp_footer();

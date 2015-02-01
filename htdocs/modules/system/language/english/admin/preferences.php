@@ -1,5 +1,5 @@
 <?php
-// $Id: preferences.php 11999 2012-08-31 22:16:03Z skenow $
+// $Id: preferences.php 12227 2013-07-19 08:07:21Z fiammy $
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
 if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
@@ -102,7 +102,7 @@ define('_MD_AM_BADIPS', 'Enter IP addresses that should be banned from the site.
 define('_MD_AM_BADIPSDSC', '^aaa.bbb.ccc will disallow visitors with an IP that starts with aaa.bbb.ccc<br />aaa.bbb.ccc$ will disallow visitors with an IP that ends with aaa.bbb.ccc<br />aaa.bbb.ccc will disallow visitors with an IP that contains aaa.bbb.ccc');
 define('_MD_AM_PREFMAIN', 'Preferences Main');
 define('_MD_AM_METAKEY', 'Meta Keywords');
-define('_MD_AM_METAKEYDSC', 'The keywords meta tag is a series of keywords that represents the content of your site. Type in keywords with each separated by a comma or a space in between. (Ex. ImpressCMS, PHP, mySQL, portal system)');
+define('_MD_AM_METAKEYDSC', 'The keywords meta tag is a series of keywords that represents the content of your site. Type in keywords with each separated by a comma or a space in between. (Ex. ImpressCMS, PHP, Database, portal system)');
 define('_MD_AM_METARATING', 'Meta Rating');
 define('_MD_AM_METARATINGDSC', 'The rating meta tag defines your site age and content rating');
 define('_MD_AM_METAOGEN', 'General');

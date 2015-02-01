@@ -1,5 +1,6 @@
 <?php
-// $Id: comment.php 9538 2009-11-13 18:59:32Z pesianstranger $
+// $Id: comment.php 12229 2013-07-19 08:08:05Z fiammy $
+// $Id: comment.php 12229 2013-07-19 08:08:05Z fiammy $
 define('_CM_TITLE','Title');
 define('_CM_MESSAGE','Message');
 define('_CM_DOSMILEY','Enable Smiley Icons');

@@ -3,18 +3,19 @@
  * Class to encrypt User Passwords.
  *
  * @category	ICMS
- * @package	Core
+ * @package		Core
  * @since		1.2
  * @author		vaughan montgomery (vaughan@impresscms.org)
  * @author		ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version	SVN: $Id: Password.php 12111 2012-11-09 02:11:04Z skenow $
+ * @version	SVN: $Id: Password.php 12310 2013-09-13 21:33:58Z skenow $
  */
 /**
  * Password generation and validation
  *
  * @category	ICMS
- * @package	Core
+ * @package		Core
  * @subpackage	Password
  *
  */
@@ -60,7 +61,7 @@ final class icms_core_Password {
 		$microtime = function_exists('microtime') ? microtime() : time();
 		mt_srand((double)$microtime * 1000000);
 		for ($i=0; $i<=$slength; $i++)
-		$salt.= substr($base, mt_rand(0, $slength) % strlen($base), 1);
+		$salt.= substr($base, mt_rand(0, strlen($base)), 1);
 
 		return $salt;
 	}

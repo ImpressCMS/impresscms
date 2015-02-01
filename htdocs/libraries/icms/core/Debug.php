@@ -10,7 +10,7 @@
  * @author		Steve Kenow <skenow@impresscms.org>
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id: Debug.php 11569 2012-02-09 23:15:32Z fiammy $
+ * @version		SVN: $Id: Debug.php 12313 2013-09-15 21:14:35Z skenow $
  * @since		1.3
  */
 
@@ -52,7 +52,7 @@ class icms_core_Debug {
 
  	/**
  	 * Provides a backtrace for deprecated methods and functions, will be in the error section of debug
- 	 * This takes the place of icms_deprecated()
+ 	 * This takes the place of icms_deprecated() and include/functions.php :: xoops_refcheck()
  	 *
  	 * @param string $replacement Method or function to be used instead of the deprecated method or function
  	 * @param string $extra Additional information to provide about the change
@@ -63,9 +63,9 @@ class icms_core_Debug {
 		array_shift($trace);
 		$level = $msg = $message = '';
 		$pre =  '<strong><em>(' . _CORE_DEPRECATED . ')</em></strong> - ';
-		if ($trace[0]['function'] != 'include' 
-			&& $trace[0]['function'] != 'include_once' 
-			&& $trace[0]['function'] != 'require' 
+		if ($trace[0]['function'] != 'include'
+			&& $trace[0]['function'] != 'include_once'
+			&& $trace[0]['function'] != 'require'
 			&& $trace[0]['function'] != 'require_once'
 		) {
 			$pre .= $trace[0]['function'] . ': ';
@@ -77,8 +77,8 @@ class icms_core_Debug {
 			    	$message .= $level . $msg
 						. (isset( $step['class'] ) ? $step['class'] : '')
 						. (isset( $step['type'] ) ? $step['type'] : '' )
-						. sprintf(_CORE_DEPRECATED_MSG, $step['function'], 
-							str_replace(array(ICMS_TRUST_PATH, ICMS_ROOT_PATH), array("TRUSTPATH", "ROOTPATH"), $step['file']), 
+						. sprintf(_CORE_DEPRECATED_MSG, $step['function'],
+							str_replace(array(ICMS_TRUST_PATH, ICMS_ROOT_PATH), array("TRUSTPATH", "ROOTPATH"), $step['file']),
 							$step['line']
 						);
 			}

@@ -1,18 +1,27 @@
 <?php
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code 
+ which is considered copyrighted (c) material of the original comment or credit authors.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
 /**
  * Inserts configuration data's
  *
  * This file is responsible for configuration data's while installing
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: makedata.php 11963 2012-08-26 02:57:04Z skenow $
+ * @copyright   The XOOPS project http://www.xoops.org/
+ * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package		installer
+ * @since       2.3.0
+ * @author		Haruki Setoyama  <haruki@planewave.org>
+ * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author		Skalpa Keo <skalpa@xoops.org>
+ * @author		Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version		$Id: makedata.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 include_once './class/dbmanager.php';

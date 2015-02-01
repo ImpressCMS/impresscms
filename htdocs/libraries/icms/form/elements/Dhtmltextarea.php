@@ -1,4 +1,32 @@
 <?php
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * All functions for DHTML text area are here.
  *
@@ -7,7 +35,7 @@
  * @category	ICMS
  * @package		Forms
  * @subpackage	Elements
- * @version		$Id: Dhtmltextarea.php 11448 2011-11-21 16:37:13Z fiammy $
+ * @version		$Id: Dhtmltextarea.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -15,10 +43,12 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * A textarea with bbcode formatting and smilie buttons
  *
- * @author		Kazumi Ono	<onokazu@xoops.org>
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
+ *
+ * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	/**
@@ -160,42 +190,42 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		}
 		$ret .= "</select><span id='" . $this->_hiddenText . "'>" . _EXAMPLE . "</span>\n";
 		$ret .= "<br />\n";
-		$ret .= "<img onclick='javascript:xoopsmake" . _GLOBAL_LEFT . "(\"" . $ele_name 
-			. "\", \"" 
+		$ret .= "<img onclick='javascript:xoopsmake" . _GLOBAL_LEFT . "(\"" . $ele_name
+			. "\", \""
 			. htmlspecialchars(((defined('_ADM_USE_RTL') && _ADM_USE_RTL)
 				? _ALRIGHTCON
-				: _ALLEFTCON), ENT_QUOTES) 
-			. "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL 
+				: _ALLEFTCON), ENT_QUOTES)
+			. "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL
 			. "/images/align" . _GLOBAL_LEFT . ".gif' alt='align" . _GLOBAL_LEFT . "' />&nbsp;"
-			. "<img onclick='javascript:xoopsmakecenter(\"" . $ele_name . "\", \"" 
-			. htmlspecialchars(_ALCENTERCON, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL 
+			. "<img onclick='javascript:xoopsmakecenter(\"" . $ele_name . "\", \""
+			. htmlspecialchars(_ALCENTERCON, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL
 			. "/images/aligncenter.gif' alt='aligncenter' />&nbsp;"
-			. "<img onclick='javascript:xoopsmake" . _GLOBAL_RIGHT . "(\"" . $ele_name . "\", \"" 
+			. "<img onclick='javascript:xoopsmake" . _GLOBAL_RIGHT . "(\"" . $ele_name . "\", \""
 			. htmlspecialchars(((defined('_ADM_USE_RTL') && _ADM_USE_RTL)
 				? _ALLEFTCON
-				: _ALRIGHTCON), ENT_QUOTES) 
-			. "\");' onmouseover='style.cursor=\"pointer\"' src='" 
-			. ICMS_URL . "/images/align" . _GLOBAL_RIGHT . ".gif' alt='align" . _GLOBAL_RIGHT . "' />&nbsp;" 
-			. "<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeBold(\"" . $this->_hiddenText . "\");' onmouseover='style.cursor=\"pointer\"' src='" 
-			. ICMS_URL . "/images/bold.gif' alt='bold' />&nbsp;<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeItalic(\"" . $this->_hiddenText 
-			. "\");' onmouseover='style.cursor=\"pointer\"' src='" 
-			. ICMS_URL . "/images/italic.gif' alt='italic' />&nbsp;<img onclick='javascript:setVisible(\"" 
-			. $this->_hiddenText . "\");makeUnderline(\"" . $this->_hiddenText . "\");' onmouseover='style.cursor=\"pointer\"' src='" 
-			. ICMS_URL . "/images/underline.gif' alt='underline' />&nbsp;<img onclick='javascript:setVisible(\"" . $this->_hiddenText 
-			. "\");makeLineThrough(\"" . $this->_hiddenText . "\");' src='" 
-			. ICMS_URL . "/images/linethrough.gif' alt='linethrough' onmouseover='style.cursor=\"pointer\"' />&nbsp;&nbsp;<input type='text' id='" . $ele_name 
-			. "Addtext' size='20' />&nbsp;<input type='button' onclick='xoopsCodeText(\"" . $ele_name . "\", \"" 
-			. $this->_hiddenText . "\", \"" . htmlspecialchars(_ENTERTEXTBOX, ENT_QUOTES) 
+				: _ALRIGHTCON), ENT_QUOTES)
+			. "\");' onmouseover='style.cursor=\"pointer\"' src='"
+			. ICMS_URL . "/images/align" . _GLOBAL_RIGHT . ".gif' alt='align" . _GLOBAL_RIGHT . "' />&nbsp;"
+			. "<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeBold(\"" . $this->_hiddenText . "\");' onmouseover='style.cursor=\"pointer\"' src='"
+			. ICMS_URL . "/images/bold.gif' alt='bold' />&nbsp;<img onclick='javascript:setVisible(\"" . $this->_hiddenText . "\");makeItalic(\"" . $this->_hiddenText
+			. "\");' onmouseover='style.cursor=\"pointer\"' src='"
+			. ICMS_URL . "/images/italic.gif' alt='italic' />&nbsp;<img onclick='javascript:setVisible(\""
+			. $this->_hiddenText . "\");makeUnderline(\"" . $this->_hiddenText . "\");' onmouseover='style.cursor=\"pointer\"' src='"
+			. ICMS_URL . "/images/underline.gif' alt='underline' />&nbsp;<img onclick='javascript:setVisible(\"" . $this->_hiddenText
+			. "\");makeLineThrough(\"" . $this->_hiddenText . "\");' src='"
+			. ICMS_URL . "/images/linethrough.gif' alt='linethrough' onmouseover='style.cursor=\"pointer\"' />&nbsp;&nbsp;<input type='text' id='" . $ele_name
+			. "Addtext' size='20' />&nbsp;<input type='button' onclick='xoopsCodeText(\"" . $ele_name . "\", \""
+			. $this->_hiddenText . "\", \"" . htmlspecialchars(_ENTERTEXTBOX, ENT_QUOTES)
 			. "\")' class='formButton' value='" . _ADD . "' /><br /><br />"
 			. "<textarea id='" . $ele_name  . ""
-					. "' name='" . $name 
+					. "' name='" . $name
 					. "' onselect=\"xoopsSavePosition('" . $ele_name . "');\""
 					. "' onclick=\"xoopsSavePosition('" . $ele_name . "');\""
 					. "' onkeyup=\"xoopsSavePosition('" . $ele_name . "');\""
-					. "' cols='" . $this->getCols() 
-					. "' rows='" . $this->getRows() 
-					. "'" . $this->getExtra() . ">" 
-				. $this->getValue() 
+					. "' cols='" . $this->getCols()
+					. "' rows='" . $this->getRows()
+					. "'" . $this->getExtra() . ">"
+				. $this->getValue()
 			. "</textarea><br />\n";
 		$ret .= $this->_renderSmileys();
 		return $ret;

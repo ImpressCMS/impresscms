@@ -7,7 +7,7 @@
  * @package		System
  * @subpackage	Blocks
  * @since		ImpressCMS 1.2
- * @version		SVN: $Id: system_admin_blocks.php 11152 2011-03-30 16:45:08Z m0nty_ $
+ * @version		SVN: $Id: system_admin_blocks.php 12403 2014-01-26 21:35:08Z skenow $
  */
 
 /**
@@ -16,11 +16,18 @@
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <gpilla@nubee.com.ar>
  * @return array
- * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
+ * @todo This code is the copy of the one which was in the admin.php, it should be improved.
  */
 function b_system_admin_warnings_show() {
 	$block = array();
 	$block['msg'] = array();
+
+	// Check if PDO is being used - if not, issue a warning, because it is being removed from PHP
+	// @todo	Add a language constant in  language/{language}/core.php for the warning message
+	if (icms::$db === NULL) {
+		defined('_CORE_MYSQL_DEPRECATED') || define('_CORE_MYSQL_DEPRECATED', 'The mysql extension is being deprecated as of PHP 5.5.0 (<a href="http://php.net/mysql_connect">PHP MySQL Extenstion</a>). Switch to PDO, instead');
+		array_push($block['msg'], icms_core_Message::error(_CORE_MYSQL_DEPRECATED, '', FALSE));
+	}
 	// ###### Output warn messages for security  ######
 	if (is_dir(ICMS_ROOT_PATH . '/install/')) {
 		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINSTALL2, ICMS_ROOT_PATH . '/install/'), '', FALSE));

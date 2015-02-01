@@ -1,4 +1,33 @@
 <?php
+// $Id: smilies.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Administration of smilies, main functions file
  *
@@ -7,16 +36,15 @@
  * @package		System
  * @subpackage	Smilies
  * @todo		Extract HTML and CSS to a template
- * @version		SVN: $Id: smilies.php 11348 2011-08-31 03:39:49Z blauer-fisch $
+ * @version		SVN: $Id: smilies.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
 
 /**
  * Logic and rendering for Smilies administration
- * 
+ *
  */
 function SmilesAdmin() {
 	$db =& icms_db_Factory::instance();
@@ -59,8 +87,8 @@ function SmilesAdmin() {
 				$i++;
 			}
 			echo '<tr><td class="foot" colspan="5" align="center">'
-				. '<input type="hidden" name="op" value="SmilesUpdate" /><input type="hidden" name="fct" value="smilies" />' 
-				. icms::$security->getTokenHTML() 
+				. '<input type="hidden" name="op" value="SmilesUpdate" /><input type="hidden" name="fct" value="smilies" />'
+				. icms::$security->getTokenHTML()
 				. '<input type="submit" value="' . _SUBMIT . '" /></tr></table></form>';
 		}
 	} else {
@@ -81,7 +109,7 @@ function SmilesAdmin() {
 
 /**
  * Logic and rendering for editing a smilie
- * 
+ *
  * @param int $id
  */
 function SmilesEdit($id) {

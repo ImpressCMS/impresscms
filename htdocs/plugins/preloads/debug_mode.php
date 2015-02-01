@@ -32,12 +32,27 @@ class icms_DebugEventHandler {
 			break;
 		}
 	}
+	
+	/**
+	 * Adds the prepared sql statement to the debug console
+	 *
+	 * @param	array	$params
+	 * @param	unknown	$event
+	 */
 	static public function prepareQuery($params, $event) {
 		icms::$logger->addQuery('prepare: ' . $params['sql']);
 	}
+	
+	/**
+	 * Adds the query to the debug console for statements or queries that are executed
+	 *
+	 * @param array $params
+	 * @param unknown $event
+	 * @return	void
+	 */
 	static public function executeQuery($params, $event) {
-		icms::$logger->addQuery('execute: ' . $params['sql']);
+		icms::$logger->addQuery('execute: ' . $params['sql'], $params['error'], $params['errorno']);
 	}
-
 }
+
 icms_DebugEventHandler::setup();

@@ -1,6 +1,14 @@
 <?php
 /**
  * CAPTCHA class
+ * Xoops Frameworks addon
+ *
+ * based on Frameworks::captcha by Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ *
+ * @copyright	The XOOPS project http://www.xoops.org/
+ * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since		XOOPS
  *
  * Currently there are two types of CAPTCHA forms, text and image
  * The default mode is "text", it can be changed in the priority:
@@ -8,23 +16,20 @@
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Object.php 10807 2010-11-20 19:16:00Z phoenyx $
+ * @version		SVN: $Id: Object.php 12340 2013-09-22 04:11:09Z skenow $
  */
 
 icms_loadLanguageFile('core', 'captcha');
 /**
  * Creates the captcha object
  *
+ * @author		modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- *
  */
 class icms_form_elements_captcha_Object {
 

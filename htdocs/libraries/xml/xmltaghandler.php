@@ -1,6 +1,14 @@
 <?php
 // $Id: xmltaghandler.php 19118 2010-03-27 17:46:23Z skenow $
-
+/*******************************************************************************
+    Location: <b>xml/XmlTagHandler</b><br>
+     <br>
+    XmlTagHandler<br>
+    <br>
+    Copyright &copy; 2001 eXtremePHP.  All rights reserved.<br>
+    <br>
+    @author Ken Egervari, Remi Michalski<br>
+*******************************************************************************/
 /**
  * XML Parser Tag Handler
  *
@@ -15,10 +23,6 @@
  *   @author Ken Egervari, Remi Michalski
  *******************************************************************************
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
  * @package	Administration
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project

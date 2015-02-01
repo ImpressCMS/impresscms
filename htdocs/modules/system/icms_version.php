@@ -1,15 +1,45 @@
 <?php
+// $Id: icms_version.php 12455 2014-06-24 09:30:49Z sato-san $
+//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Config file of the System module
  *
  * This file holds the configuration information of this module
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		LICENSE.txt
- * @license		GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ *
  * @package		core
  * @since		1.2
- * @version		SVN: $Id: icms_version.php 12079 2012-10-19 06:46:30Z sato-san $
+ * @version		SVN: $Id: icms_version.php 12455 2014-06-24 09:30:49Z sato-san $
  */
 
 defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
@@ -17,7 +47,7 @@ defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
-	'version'=> 1.34,
+	'version'=> 1.37,
 	'description'=> _MI_SYSTEM_DESC,
 	'author'=> "",
 	'credits'=> "The ImpressCMS Project",
@@ -33,11 +63,11 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "trunk",
-	'status'=> "trunk",
-	'date'=> "October 2012",
+	'status_version'=> "Final",
+	'status'=> "Final",
+	'date'=> "18 June 2014",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_BETA,
+	'warning'=>_CO_ICMS_WARNING_FINAL,
 
 /** Contributors */
 	'developer_website_url' => "http://www.impresscms.org",
@@ -53,12 +83,11 @@ $modversion['people']['developers'][] = "[url=http://community.impresscms.org/us
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=53]davidl2[/url]";
-$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=10]sato-san[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
 $modversion['people']['translators'][] = "";
-$modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=372]UnderDog[/url]";
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
+$modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
 //$modversion['people']['other'][] = "";
 
 // Autotasks

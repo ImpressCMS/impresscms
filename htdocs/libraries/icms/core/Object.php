@@ -1,12 +1,42 @@
 <?php
+// $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Manage Objects
  *
+ * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Core
- * @version		SVN: $Id: Object.php 12111 2012-11-09 02:11:04Z skenow $
+ * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 /**#@+
@@ -39,14 +69,17 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
 /**
  * Base class for all objects in the kernel (and beyond)
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ *
  * @category	ICMS
- * @package	Core
+ * @package		Core
+ *
  * @since		XOOPS
  * @author		Kazumi Ono (AKA onokazu)
- **/
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * 				You should have received a copy of XOOPS_copyrights.txt with
+ * 				this file. If not, you may obtain a copy from xoops.org
+ */
 class icms_core_Object {
 
 	/**
@@ -340,7 +373,7 @@ class icms_core_Object {
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-						if ($html) {
+						if ($html && (!is_int($ret) && !empty($ret))) {
                             if ($br) { // have to use this whilst ever there's a zillion editors in the core
                                 return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
                             } else {
@@ -468,7 +501,7 @@ class icms_core_Object {
 
 		foreach ($this->vars as $k => $v) {
 			$cleanv = $v['value'];
-			if (!$v['changed'] || $this->_isNewConfig) {
+			if (!$v['changed'] || $this->_isNewConfig || (!is_int($cleanv) && empty($cleanv))) {
 			} else {
 				$cleanv = is_string($cleanv) ? trim($cleanv) : $cleanv;
 				switch ($v['data_type']) {

@@ -3,7 +3,7 @@
  * @package database
  * @subpackage  main
  * @since XOOPS
- * @version $Id: databasefactory.php 10624 2010-09-09 17:55:46Z phoenyx $
+ * @version $Id: databasefactory.php 12329 2013-09-19 13:53:36Z skenow $
  *
  * @author		The XOOPS Project Community <http://www.xoops.org>
  * @author      Gustavo Pilla  (aka nekro) <nekro@impresscms.org>

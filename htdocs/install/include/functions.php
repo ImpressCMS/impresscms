@@ -2,22 +2,19 @@
 /**
  * Functions needed by the ImpressCMS installer
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	installer
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		installer
  * @author		marcan <marcan@impresscms.org>
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: functions.php 10607 2010-09-07 16:19:19Z skenow $
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @version		$Id: functions.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 
 /**
  * Function to get the base domain name from a URL.
- * credit for this function should goto Phosphorus and Lime, it is released under LGPL.
+ * credit for this function should goto Phosphorus and Lime, it is released under GPL (v2).
+ * http://phosphorusandlime.blogspot.com/2007/08/php-get-base-domain.html
  *
  * @param string $url the URL to be stripped.
  * @return string
@@ -86,7 +83,8 @@ function imcms_get_base_domain($url)
 
 /**
  * Function to get the domain from a URL.
- * credit for this function should goto Phosphorus and Lime, it is released under LGPL.
+ * credit for this function should goto Phosphorus and Lime, it is released under GPL (v2).
+ * http://phosphorusandlime.blogspot.com/2007/08/php-get-base-domain.html
  *
  * @param string $url the URL to be stripped.
  * @return string

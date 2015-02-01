@@ -1,4 +1,32 @@
 <?php
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
 * Class to filter Data
 * @category		ICMS
@@ -8,7 +36,7 @@
 * @author       vaughan montgomery (vaughan@impresscms.org)
 * @author       ImpressCMS Project
 * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
-* @version      SVN: $Id: DataFilter.php 12015 2012-09-11 23:06:05Z m0nty $
+* @version      SVN: $Id: DataFilter.php 12369 2013-11-24 00:04:20Z skenow $
 **/
 /**
  *
@@ -39,6 +67,8 @@ class icms_core_DataFilter {
 // -------- Public Functions --------
 
 	/**
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param $text
 	 * @param $msg
@@ -53,6 +83,8 @@ class icms_core_DataFilter {
 	/**
 	* Filters out invalid strings included in URL, if any
 	*
+	* @author		vaughan montgomery (vaughan@impresscms.org)
+	* @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	* @param   array  $matches
 	* @return  string
 	*/
@@ -67,6 +99,8 @@ class icms_core_DataFilter {
 	/**
 	* Checks if invalid strings are included in URL
 	*
+	* @author		vaughan montgomery (vaughan@impresscms.org)
+	* @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	* @param   string  $text
 	* @return  bool
 	*/
@@ -121,7 +155,7 @@ class icms_core_DataFilter {
 
 	/**
 	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
-	 * @todo 	Remove magic_quotes_gpc and magic_quotes_runtime - 
+	 * @todo 	Remove magic_quotes_gpc and magic_quotes_runtime -
 	 * 			they will always return FALSE in PHP 5.4
 	 *
 	 * Add slashes to the text if magic_quotes_gpc is turned off.
@@ -153,6 +187,9 @@ class icms_core_DataFilter {
 
 	/**
 	* Filters Multidimensional Array Recursively removing keys with empty values
+	* @author		vaughan montgomery (vaughan@impresscms.org)
+	* @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	*
 	* @param       array     $array       Array to be filtered
 	* @return      array     $array
 	*/
@@ -179,6 +216,9 @@ class icms_core_DataFilter {
 	* Public Function checks Variables using specified filter type
 	*
 	* @TODO needs error trapping for debug if invalid types and options used!!
+	*
+	* @author		vaughan montgomery (vaughan@impresscms.org)
+	* @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	*
 	* @param	string		$data		Data to be checked
 	* @param	string		$type		Type of Filter To use for Validation
@@ -224,7 +264,7 @@ class icms_core_DataFilter {
 	*					'input' = Filters HTML for input to DB
 	*					'output' = Filters HTML for rendering output
 	*					'print' = Filters HTML for output to Printer
-    *                   'edit' = used for edit content forms 
+    *                   'edit' = used for edit content forms
 	*				TEXT:
 	*					'input' = Filters plain text for input to DB
 	*					'output' = Filters plain text for rendering output
@@ -246,6 +286,8 @@ class icms_core_DataFilter {
 	*/
 
 	/**
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param $data
 	 * @param $type
@@ -350,6 +392,9 @@ class icms_core_DataFilter {
 	 * Any items in the input array not found in the filter array will be filtered as
 	 * a string.
 	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param 	array	$input		items to be filtered
 	 * @param 	array	$filters 	the keys of this array should match the keys in
 	 * 								the input array and the values should be valid types
@@ -393,6 +438,9 @@ class icms_core_DataFilter {
 	/**
 	 * Filters textarea form data for INPUt to DB (text only!!)
 	 * For HTML please use icms_core_HTMLFilter::filterHTMLinput()
+	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param   string  $text
 	 * @return  string
@@ -451,6 +499,9 @@ class icms_core_DataFilter {
 	/**
 	 * Filters HTML form data for INPUT to DB
 	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param   string  $html
 	 * @param   bool	$smiley allow smileys?
 	 * @param   bool	$icode  allow icmscode?
@@ -485,35 +536,60 @@ class icms_core_DataFilter {
 	 * we don't really require the icmscode stuff, but we need to for content already in the DB before
 	 * we start filtering on INPUT instead of OUTPUT!!
 	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param   string  $html
 	 * @param   bool	$icode  allow icmscode?
 	 * @return  string
 	 **/
 	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
-		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
-        
-        $ifiltered = strpos($html, '<!-- input filtered -->');
-        if ($ifiltered === FALSE) {
-            $html = self::codePreConv($html, 1);
-            $html = self::smiley($html);
-            $html = self::codeDecode($html);
-            $html = self::codeConv($html, 1, 1);
+		global $icmsConfig;
 
-            $html = icms_core_HTMLFilter::filterHTML($html);
-            
-            $html .= '<!-- warning! output filtered only -->';
-        
-            $purified = strpos($html, '<!-- filtered with htmlpurifier -->');
-            if ($purified === FALSE || $br = 1) {
-            	$html = self::nl2Br($html);
-            }
-        }
-        
-        $html = self::makeClickable($html);
-        $html = self::censorString($html);
-        
-//        $html = str_replace('<!-- input filtered -->', '', $html);
-//        $html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
+		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
+
+		$ifiltered = strpos($html, '<!-- input filtered -->');
+		if ($ifiltered === FALSE) {
+			$html = self::codePreConv($html, 1);
+			$html = self::smiley($html);
+			$html = self::codeDecode($html);
+			$html = self::codeConv($html, 1, 1);
+
+			$html = icms_core_HTMLFilter::filterHTML($html);
+
+			//$html .= '<!-- warning! output filtered only -->';
+
+			$purified = strpos($html, '<!-- filtered with htmlpurifier -->');
+			if ($purified === FALSE || $br == 1) {
+				$html = self::nl2Br($html);
+			}
+		}
+
+		if ($icmsConfig['debug_mode'] !==0) {
+			$purified = strpos($html, '<!-- filtered with htmlpurifier -->');
+			if ($ifiltered === FALSE) {
+				if ($purified === FALSE) {
+					icms::$logger->addFilter(self::icms_substr($html, 0, 400), 3);
+				} else {
+					$html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
+					icms::$logger->addFilter(self::icms_substr($html, 0, 400), 4);
+				}
+			} else {
+				$html = str_replace('<!-- input filtered -->', '', $html);
+				if ($purified === FALSE) {
+					icms::$logger->addFilter(self::icms_substr($html, 0, 400), 1);
+				} else {
+					$html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
+					icms::$logger->addFilter(self::icms_substr($html, 0, 400), 2);
+				}
+			}
+		} else {
+			$html = str_replace('<!-- input filtered -->', '', $html);
+			$html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
+		}
+
+		$html = self::makeClickable($html);
+		$html = self::censorString($html);
 
 		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
 		return $html;
@@ -741,6 +817,9 @@ class icms_core_DataFilter {
 
 	/**
 	 * This function gets allowed plugins from DB and loads them in the sanitizer
+	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param	int	 $id			 ID of the config
 	 * @param	bool	$withoptions	load the config's options now?
 	 * @return	object  reference to the {@link IcmsConfig}
@@ -758,6 +837,8 @@ class icms_core_DataFilter {
 	/**
 	 * loads the textsanitizer plugins
 	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param	 string	$name	 Name of the extension to load
 	 * @return	bool
 	 */
@@ -769,6 +850,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Executes file with a certain extension using call_user_func_array
+	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param	 string	$name	 Name of the file to load
 	 * @param	 string	$text	 Text to show if the function doesn't exist
@@ -786,6 +869,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Syntaxhighlight the code
+	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param	 string	$text	 purifies (lightly) and then syntax highlights the text
 	 * @return	string	$text	 the syntax highlighted text
@@ -806,6 +891,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Syntaxhighlight the code using PHP highlight
+	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param	 string	$text	 Text to highlight
 	 * @return	string	$buffer   the highlighted text
@@ -847,6 +934,8 @@ class icms_core_DataFilter {
 	/**
 	 * Syntaxhighlight the code using Geshi highlight
 	 *
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param	 string	$text	 The text to highlight
 	 * @return	string	$code	 the highlighted text
 	 */
@@ -876,6 +965,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Trims certain text
+	 *
+	 * Replaces include/functions.php :: xoops_trim()
 	 *
 	 * @param	string	$text	The Text to trim
 	 * @return	string	$text	The trimmed text
@@ -925,6 +1016,8 @@ class icms_core_DataFilter {
 	 * If $trimmarker is supplied, it is appended to the return string.
 	 * This function works fine with multi-byte characters if mb_* functions exist on the server.
 	 *
+	 * Replaces legacy include/functions.php :: xoops_substr()
+	 *
 	 * @param	string	$str
 	 * @param	int	   $start
 	 * @param	int	   $length
@@ -947,7 +1040,9 @@ class icms_core_DataFilter {
 					}
 				}
 			}
-		} else {$hasML = FALSE;}
+		} else {
+			$hasML = FALSE;
+		}
 
 		if (!$hasML) {$strs = array($str);}
 
@@ -980,7 +1075,7 @@ class icms_core_DataFilter {
 
 // -------- Private Functions --------
 
-	/*
+	/**
 	* Private Function checks & Validates Data
 	*
 	* @copyright The ImpressCMS Project <http://www.impresscms.org>
@@ -1153,7 +1248,7 @@ class icms_core_DataFilter {
                             $data = str_replace('<!-- input filtered -->', '', $data);
                             $data = str_replace('<!-- filtered with htmlpurifier -->', '', $data);
                         }
-						return htmlspecialchars($data, ENT_QUOTES, _CHARSET);
+						return htmlspecialchars($data, ENT_QUOTES, _CHARSET, FALSE);
 					break;
 
                     case 'print':
@@ -1186,6 +1281,9 @@ class icms_core_DataFilter {
 	/**
 	 * Replace emoticons in the message with smiley images
 	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
 	 * @param	string  $message
 	 * @return   string
 	 */
@@ -1204,6 +1302,9 @@ class icms_core_DataFilter {
 
 	/**
 	 * Get the smileys
+	 *
+	 * @author		vaughan montgomery (vaughan@impresscms.org)
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
 	 * @param	bool	$all
 	 * @return   array

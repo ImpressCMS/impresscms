@@ -7,11 +7,13 @@
  * @since	ImpressCMS 1.1
  * @author      marcan <marcan@impresscms.org>
  * @author	The ImpressCMS Project
- * @version	$Id: sqlutility.php 10039 2010-06-16 22:16:40Z david-sf $
+ * @version	$Id: sqlutility.php 12403 2014-01-26 21:35:08Z skenow $
  */
 
 /**
  * This file is deprecated. Including the real file and that's it.
  */
-include_once ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
+// handle instances when XOOPS_DB_TYPE includes 'pdo.'
+if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') $driver = substr(XOOPS_DB_TYPE, 4);
+include_once ICMS_ROOT_PATH.'/class/database/drivers/'.$driver.'/sqlutility.php';
 ?>

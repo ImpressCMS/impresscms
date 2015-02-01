@@ -1,4 +1,33 @@
 <?php
+// $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Administration of avatars
  *
@@ -6,34 +35,33 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Avatars
- * @version		SVN: $Id: main.php 11285 2011-06-23 16:37:07Z phoenyx $
+ * @version		SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 } else {
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-	$op = (isset($_GET['op'])) 
+	$op = (isset($_GET['op']))
 		? trim(filter_input(INPUT_GET, 'op'))
-		: ((isset($_POST['op'])) 
+		: ((isset($_POST['op']))
 			? trim(filter_input(INPUT_POST, 'op'))
 			: 'list'
 		);
 	if ($op == 'list') {
 		icms_loadLanguageFile('system', 'preferences', TRUE);
 		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url(' 
-			. ICMS_URL . '/modules/system/admin/avatars/images/avatars_big.png)">' 
+		echo '<div class="CPbigTitle" style="background-image: url('
+			. ICMS_URL . '/modules/system/admin/avatars/images/avatars_big.png)">'
 			. _MD_AVATARMAN . '</div><br />';
 		$avt_handler = icms::handler('icms_data_avatar');
 		$savatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'S'));
 		$cavatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'C'));
-		echo '<ul><li>' 
-			. _MD_SYSAVATARS . ' (' . sprintf(_NUMIMAGES, '<strong>' . icms_conv_nr2local($savatar_count) . '</strong>') 
-			. ') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=S">' . _LIST . '</a>]</li><li>' 
-			. _MD_CSTAVATARS . ' (' . sprintf(_NUMIMAGES, '<strong>' . icms_conv_nr2local($cavatar_count) . '</strong>') 
-			. ') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=C">' . _LIST 
+		echo '<ul><li>'
+			. _MD_SYSAVATARS . ' (' . sprintf(_NUMIMAGES, '<strong>' . icms_conv_nr2local($savatar_count) . '</strong>')
+			. ') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=S">' . _LIST . '</a>]</li><li>'
+			. _MD_CSTAVATARS . ' (' . sprintf(_NUMIMAGES, '<strong>' . icms_conv_nr2local($cavatar_count) . '</strong>')
+			. ') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=C">' . _LIST
 			. '</a>]</li></ul>';
 		$form = new icms_form_Theme(_MD_ADDAVT, 'avatar_form', 'admin.php', "post", TRUE);
 		$form->setExtra('enctype="multipart/form-data"');
@@ -57,7 +85,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		$avt_handler = icms::handler('icms_data_avatar');
 		icms_cp_header();
 		$type = (isset($_GET['type']) && $_GET['type'] == 'C') ? 'C' : 'S';
-		echo '<div class="CPbigTitle" style="background-image: url(' 
+		echo '<div class="CPbigTitle" style="background-image: url('
 			. ICMS_URL . '/modules/system/admin/avatars/images/avatars_big.png)"><a href="admin.php?fct=avatars">'
 			. _MD_AVATARMAN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;';
 		if ($type == 'S') {
@@ -77,35 +105,35 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				echo '<form action="admin.php" method="post">';
 				$id = $avatars[$i]->getVar('avatar_id');
 				echo '<table class="outer" cellspacing="1" width="100%">'
-					. '<tr><td align="center" width="30%" rowspan="6"><img src="' 
-					. ICMS_UPLOAD_URL . '/' . $avatars[$i]->getVar('avatar_file') 
-					. '" alt="" /></td><td class="head">' . _IMAGENAME, '</td><td class="even"><input type="hidden" name="avatar_id[]" value="' 
-					. $id . '" /><input type="text" name="avatar_name[]" value="' . $avatars[$i]->getVar('avatar_name', 'E') . '" size="20" maxlength="255" /></td></tr><tr><td class="head">' 
-					. _IMAGEMIME . '</td><td class="odd">' . $avatars[$i]->getVar('avatar_mimetype') . '</td></tr><tr><td class="head">' . _MD_USERS . '</td><td class="even">' 
-					. $avatars[$i]->getUserCount() . '</td></tr><tr><td class="head">' 
-					. _IMGWEIGHT . '</td><td class="odd"><input type="text" name="avatar_weight[]" value="' 
-					. $avatars[$i]->getVar('avatar_weight') . '" size="3" maxlength="4" /></td></tr><tr><td class="head">' 
+					. '<tr><td align="center" width="30%" rowspan="6"><img src="'
+					. ICMS_UPLOAD_URL . '/' . $avatars[$i]->getVar('avatar_file')
+					. '" alt="" /></td><td class="head">' . _IMAGENAME, '</td><td class="even"><input type="hidden" name="avatar_id[]" value="'
+					. $id . '" /><input type="text" name="avatar_name[]" value="' . $avatars[$i]->getVar('avatar_name', 'E') . '" size="20" maxlength="255" /></td></tr><tr><td class="head">'
+					. _IMAGEMIME . '</td><td class="odd">' . $avatars[$i]->getVar('avatar_mimetype') . '</td></tr><tr><td class="head">' . _MD_USERS . '</td><td class="even">'
+					. $avatars[$i]->getUserCount() . '</td></tr><tr><td class="head">'
+					. _IMGWEIGHT . '</td><td class="odd"><input type="text" name="avatar_weight[]" value="'
+					. $avatars[$i]->getVar('avatar_weight') . '" size="3" maxlength="4" /></td></tr><tr><td class="head">'
 					. _IMGDISPLAY . '</td><td class="even"><input type="checkbox" name="avatar_display[]" value="1"';
 				if ($avatars[$i]->getVar('avatar_display') == 1) {
 					echo ' checked="checked"';
 				}
-				echo ' /></td></tr><tr><td class="head">&nbsp;</td><td class="even"><a href="admin.php?fct=avatars&amp;op=delfile&amp;avatar_id=' 
+				echo ' /></td></tr><tr><td class="head">&nbsp;</td><td class="even"><a href="admin.php?fct=avatars&amp;op=delfile&amp;avatar_id='
 					. $id . '">' . _DELETE . '</a></td></tr></table><br />';
 			}
 		} else {
 			foreach (array_keys($avatars) as $i) {
 				echo '<table cellspacing="1" class="outer" width="100%">'.
-					'<tr><td width="30%" rowspan="6" align="center"><img src="' 
-					. ICMS_UPLOAD_URL . '/' . $avatars[$i]->getVar('avatar_file') 
-					. '" alt="" /></td><td class="head">' . _IMAGENAME, '</td><td class="even"><a href="' 
+					'<tr><td width="30%" rowspan="6" align="center"><img src="'
+					. ICMS_UPLOAD_URL . '/' . $avatars[$i]->getVar('avatar_file')
+					. '" alt="" /></td><td class="head">' . _IMAGENAME, '</td><td class="even"><a href="'
 					. ICMS_URL . '/userinfo.php?uid=';
 				$userids =& $avt_handler->getUser($avatars[$i]);
-				echo $userids[0] . '">' . $avatars[$i]->getVar('avatar_name') 
-					. '</a></td></tr><tr><td class="head">' . _IMAGEMIME 
-					. '</td><td class="odd">' . $avatars[$i]->getVar('avatar_mimetype') 
+				echo $userids[0] . '">' . $avatars[$i]->getVar('avatar_name')
+					. '</a></td></tr><tr><td class="head">' . _IMAGEMIME
+					. '</td><td class="odd">' . $avatars[$i]->getVar('avatar_mimetype')
 					. '</td></tr><tr><td class="head">&nbsp;</td><td align="center" class="even">'
-					. '<a href="admin.php?fct=avatars&amp;op=delfile&amp;avatar_id=' 
-					. $avatars[$i]->getVar('avatar_id') . '&amp;user_id=' . $userids[0] . '">' 
+					. '<a href="admin.php?fct=avatars&amp;op=delfile&amp;avatar_id='
+					. $avatars[$i]->getVar('avatar_id') . '&amp;user_id=' . $userids[0] . '">'
 					. _DELETE . '</a></td></tr></table><br />';
 			}
 		}
@@ -118,8 +146,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				echo '<div style="text-align:center;">'
 					. '<input type="hidden" name="op" value="save" />'
 					. '<input type="hidden" name="fct" value="avatars" />'
-					. '<input type="submit" name="submit" value="' . _SUBMIT . '" />' 
-					. icms::$security->getTokenHTML() 
+					. '<input type="submit" name="submit" value="' . _SUBMIT . '" />'
+					. icms::$security->getTokenHTML()
 					. '</div></form>';
 			}
 		}

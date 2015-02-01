@@ -6,7 +6,7 @@
  * @author       Skalpa Keo <skalpa@xoops.org>
  * @author       Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
  * @since        1.0
- * @version		$Id: install.php 11369 2011-09-05 22:01:30Z skenow $
+ * @version		$Id: install.php 12168 2013-05-22 13:25:59Z skenow $
  * @package 		installer
  */
 
@@ -212,7 +212,7 @@ define("_MD_AM_RSSLOCALLINK_DESC",'http://community.impresscms.org/modules/smart
 define("_INSTALL_LOCAL_SITE",'http://www.impresscms.org/'); //Link to local support site
 define("_LOCAOL_STNAME",'ImpressCMS'); //Link to local support site
 define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support site
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
+define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_LOCAL_SENSORTXT",'#OOPS#'); //Add local translation
 define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
 define("_DEF_LANG_TAGS",'en,de'); //Add local translation

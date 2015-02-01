@@ -1,5 +1,5 @@
 <?php
-// $Id: welcome.php 9920 2010-03-27 17:46:23Z skenow $
+// $Id: welcome.php 12227 2013-07-19 08:07:21Z fiammy $
 $content .= '
 <p>
 	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for
@@ -13,9 +13,9 @@ $content .= '
 </p>
 <h3>Requirements</h3>
 <ul>
-	<li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc)</li>
-	<li><a href="http://www.php.net/" rel="external">PHP</a> 5.2 or higher (5.2.8 or higher recommended, <strong>5.3 is now supported</strong>) and 16mb minimum memory allocation</li>
-	<li><a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 or higher</li>
+	<li>- WWW Server: <a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc</li>
+	<li>- Script: <a href="http://www.php.net/" rel="external">PHP</a> 5.2.8 or higher and 16mb minimum memory allocation</li>
+	<li>- Database: <a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 or higher, <a href="https://mariadb.org/" rel="external">MariaDB</a> 5.1 or higher</li>
 </ul>
 <h3>Before you install</h3>
 <ul>

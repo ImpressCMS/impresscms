@@ -22,6 +22,12 @@
  * Records information about database queries, blocks, and execution time
  * and can display it as HTML. It also catches php runtime errors.
  * @package kernel
+ * since XOOPS
+ * @copyright	The XOOPS project http://www.xoops.org/
+ * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author		Kazumi Ono  <onokazu@xoops.org>
+ * @author		Skalpa Keo <skalpa@xoops.org>
+ *
  * @deprecated Use icms_core_Logger instead
  * @todo Remove in version 1.4
  */

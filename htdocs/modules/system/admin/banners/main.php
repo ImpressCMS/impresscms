@@ -1,4 +1,33 @@
 <?php
+// $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Administration of banners, mainfile
  *
@@ -6,12 +35,11 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Banners
- * @version		SVN: $Id: main.php 11135 2011-03-30 00:21:29Z skenow $
+ * @version		SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
-if (!is_object(icms::$user) 
-	|| !is_object($icmsModule) 
-	|| !icms::$user->isAdmin($icmsModule->getVar('mid'))) 
+if (!is_object(icms::$user)
+	|| !is_object($icmsModule)
+	|| !icms::$user->isAdmin($icmsModule->getVar('mid')))
 {
 	exit('Access Denied');
 }
@@ -34,23 +62,23 @@ $allowedHTML = array('htmlcode');
  * (url) 	clickurl
  * (str) 	op
  * (int) 	impadded
- * 
+ *
  * valid GET variables
- * op:	BannersAdmin, BannersAdd, BannerAddClient, BannerFinishDelete, 
- * 		BannerFinishDelete2, BannerEdit, BannerChange, BannerClientDelete, 
+ * op:	BannersAdmin, BannersAdd, BannerAddClient, BannerFinishDelete,
+ * 		BannerFinishDelete2, BannerEdit, BannerChange, BannerClientDelete,
  * 		BannerClientDelete2, BannerDelete, BannerDelete2, BannerClientEdit,
  * 		BannerClientChange
  * bid
  * cid
  * fct	banners
  */
-/* This is an example of how to use the icms_core_DataFilter::checkVarArray method on input 
+/* This is an example of how to use the icms_core_DataFilter::checkVarArray method on input
  * Specify all the get/post variables you will be expecting and their type
  * Optionally, use the options for the type for further control
  * You can leave out any variables that will be strings and then use the 3rd parameter
- * to apply the default string validation. If you set the $strict parameter to TRUE, though, 
+ * to apply the default string validation. If you set the $strict parameter to TRUE, though,
  * you will discard any variables not explicitly found in the filter array
- */ 
+ */
 $filter_post = array(
 	'name'			=> 'str',
 	'cid' 			=> 'int',
@@ -80,11 +108,11 @@ $name = $imageurl = $htmlcode = $contact = '';
 $email = $login = $passwd = $extrainfo = $clickurl = $op = '';
 $bid = $cid = $imptotal = $htmlbanner = $impadded = 0;
 
-if (!empty($_POST)) { 
+if (!empty($_POST)) {
 	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
 	extract($clean_POST);
 }
-if (!empty($_GET)) { 
+if (!empty($_GET)) {
 	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
 	extract($clean_GET);
 }

@@ -1,13 +1,44 @@
 <?php
+// $Id: viewpmsg.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
 /**
  * View and manage your private messages
- * 
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author      sato-san <sato-san@impresscms.org>
  * @package		core
  * @subpackage	Privmessage
- * @version		SVN: $Id: viewpmsg.php 12085 2012-10-23 14:23:54Z sato-san $
+ * @version		SVN: $Id: viewpmsg.php 12313 2013-09-15 21:14:35Z skenow $
  */
+
 $xoopsOption['pagetype'] = 'pmsg';
 include_once 'mainfile.php';
 $module_handler = icms::handler('icms_module');
@@ -63,7 +94,7 @@ if (!is_object(icms::$user)) {
 	for ($i = 0; $i < $total_messages; $i++) {
 		$class = ($i % 2 == 0) ? 'even' : 'odd';
 		echo "<tr align='" . _GLOBAL_LEFT . "' class='$class'>"
-		. "<td style='vertical-align: middle; width: 2%; text-align: center;'><input type='checkbox' id='message_" 
+		. "<td style='vertical-align: middle; width: 2%; text-align: center;'><input type='checkbox' id='message_"
 		. $pm_arr[$i]->getVar('msg_id') . "' name='msg_id[]' value='" . $pm_arr[$i]->getVar('msg_id') . "' /></td>\n";
 		if ($pm_arr[$i]->getVar('read_msg') == 1) {
 			echo "<td style='vertical-align: middle; width: 5%; text-align: center;'>&nbsp;</td>\n";

@@ -3,10 +3,11 @@
  * Creates Zipfiles
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ *
  * @category	ICMS
  * @package		Core
- * @version		SVN: $Id: ZipFileHandler.php 10502 2010-08-21 15:44:29Z skenow $
+ * @version		SVN: $Id: ZipFileHandler.php 12310 2013-09-13 21:33:58Z skenow $
  */
 
 /**
@@ -30,6 +31,7 @@
  * Official ZIP file format: http://www.pkware.com/appnote.txt
  *
  * @copyright	(c)	2002 - www.ipunkt.biz (rok)
+ *
  * @access		public
  * @category	ICMS
  * @package     Core

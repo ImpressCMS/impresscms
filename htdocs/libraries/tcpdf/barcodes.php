@@ -1,13 +1,13 @@
 <?php
 //============================================================+
 // File name   : barcodes.php
-// Version     : 1.0.021
+// Version     : 1.0.025
 // Begin       : 2008-06-09
-// Last Update : 2011-09-15
-// Author      : Nicola Asuni - Tecnick.com S.r.l - Via Della Pace, 11 - 09044 - Quartucciu (CA) - ITALY - www.tecnick.com - info@tecnick.com
+// Last Update : 2012-09-11
+// Author      : Nicola Asuni - Tecnick.com LTD - Manor Coach House, Church Hill, Aldershot, Hants, GU12 4RQ, UK - www.tecnick.com - info@tecnick.com
 // License     : GNU-LGPL v3 (http://www.gnu.org/copyleft/lesser.html)
 // -------------------------------------------------------------------
-// Copyright (C) 2008-2011  Nicola Asuni - Tecnick.com S.r.l.
+// Copyright (C) 2008-2012  Nicola Asuni - Tecnick.com LTD
 //
 // This file is part of TCPDF software library.
 //
@@ -37,14 +37,14 @@
  * PHP class to creates array representations for common 1D barcodes to be used with TCPDF.
  * @package com.tecnick.tcpdf
  * @author Nicola Asuni
- * @version 1.0.021
+ * @version 1.0.025
  */
 
 /**
  * @class TCPDFBarcode
  * PHP class to creates array representations for common 1D barcodes to be used with TCPDF (http://www.tcpdf.org).<br>
  * @package com.tecnick.tcpdf
- * @version 1.0.021
+ * @version 1.0.025
  * @author Nicola Asuni
  */
 class TCPDFBarcode {
@@ -145,8 +145,7 @@ class TCPDFBarcode {
  	 * @public
 	 */
 	public function getBarcodeHTML($w=2, $h=30, $color='black') {
-		// replace table for special characters
-		$html = '<div style="font-size:0;position:relative;">'."\n";
+		$html = '<div style="font-size:0;position:relative;width:'.($this->barcode_array['maxw'] * $w).'px;height:'.($h).'px;">'."\n";
 		// print bars
 		$x = 0;
 		foreach ($this->barcode_array['bcode'] as $k => $v) {
@@ -202,9 +201,9 @@ class TCPDFBarcode {
 				$y = round(($v['p'] * $h / $this->barcode_array['maxh']), 3);
 				// draw a vertical bar
 				if ($imagick) {
-					$bar->rectangle($x, $y, ($x + $bw), ($y + $bh));
+					$bar->rectangle($x, $y, ($x + $bw - 1), ($y + $bh - 1));
 				} else {
-					imagefilledrectangle($png, $x, $y, ($x + $bw), ($y + $bh), $fgcol);
+					imagefilledrectangle($png, $x, $y, ($x + $bw - 1), ($y + $bh - 1), $fgcol);
 				}
 			}
 			$x += $bw;
@@ -1453,7 +1452,7 @@ class TCPDFBarcode {
 			$seq .= '010101'; // right guard bar
 		} else {
 			$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
-			$half_len = ceil($len / 2);
+			$half_len = intval(ceil($len / 2));
 			if ($len == 8) {
 				for ($i = 0; $i < $half_len; ++$i) {
 					$seq .= $codes['A'][$code{$i}];

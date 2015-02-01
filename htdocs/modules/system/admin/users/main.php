@@ -1,18 +1,45 @@
 <?php
+// $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Administration of users, main file
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
  * @package	Administration
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: main.php 11905 2012-08-12 03:41:32Z skenow $
+ * @version	$Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
@@ -65,9 +92,9 @@ switch ($op) {
 			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
 		}
 		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim,
-					$user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, 
-					$user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, 
-					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $user_viewoid, 
+					$user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar,
+					$user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method,
+					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $user_viewoid,
 					$pass_expired, $groups
 				);
 		break;
@@ -98,10 +125,10 @@ switch ($op) {
 			echo "<div><h4>" . sprintf(_AM_AYSYWTDU, " " . $list . " ") . "</h4>"
 				. _AM_BYTHIS . "<br /><br /><form action='admin.php' method='post'>"
 				. "<input type='hidden' name='fct' value='users' />"
-				. "<input type='hidden' name='op' value='delete_many_ok' />" 
-				. icms::$security->getTokenHTML() 
+				. "<input type='hidden' name='op' value='delete_many_ok' />"
+				. icms::$security->getTokenHTML()
 				. "<input type='submit' value='" . _YES . "' />"
-				. "<input type='button' value='" . _NO 
+				. "<input type='button' value='" . _NO
 				. "' onclick='javascript:location.href=\"admin.php?op=adminMain\"' />"
 				. $hidden . "</form></div>";
 		} else {echo _AM_NOUSERS;}
@@ -217,7 +244,7 @@ switch ($op) {
 					}
 					
 					$icmspass = new icms_core_Password();
-					$password = $icmspass->encryptPass($password, $salt, $enc_type);
+					$password = $icmspass->encryptPass($password);
 					$newuser->setVar('pass', $password);
 				}
 				$newuser->setVar('timezone_offset', $timezone_offset);

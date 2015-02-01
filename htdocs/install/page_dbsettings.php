@@ -5,16 +5,17 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @copyright   The XOOPS project http://www.xoops.org/
+ * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
  * @package		installer
- * @since		XOOPS
- * @author		http://www.xoops.org/ The XOOPS Project
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: page_dbsettings.php 11601 2012-02-26 00:36:47Z skenow $
+ * @since       2.3.0
+ * @author		Haruki Setoyama  <haruki@planewave.org>
+ * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author		Skalpa Keo <skalpa@xoops.org>
+ * @author		Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version		$Id: page_dbsettings.php 12329 2013-09-19 13:53:36Z skenow $
  */
+
 /**
  *
  */
@@ -192,7 +193,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && ! empty ( $vars ['DB_NAME'] )) {
 				
 				/* get the character set variables for the current database */
 				$sql = "SHOW VARIABLES like 'character%'";
-				$result = mysql_query($sql); 
+				$result = mysql_query($sql);
 				while ($row = mysql_fetch_assoc($result)) {
 					$character_sets[$row["Variable_name"]] = $row["Value"];
 				}
@@ -206,10 +207,10 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && ! empty ( $vars ['DB_NAME'] )) {
 				while ($row = mysql_fetch_assoc($result)) {
 					$collations[$row["Variable_name"]] = $row["Value"];
 				}
-				$vars["DB_COLLATION"] = $collations["collation_database"] 
+				$vars["DB_COLLATION"] = $collations["collation_database"]
 					? $collations["collation_database"]
 					: $collations["collation_server"];
-			} 
+			}
 		}
 	}
 	if (empty ( $error )) {

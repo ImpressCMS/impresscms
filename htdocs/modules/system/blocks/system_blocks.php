@@ -1,4 +1,33 @@
 <?php
+// $Id: system_blocks.php 12313 2013-09-15 21:14:35Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Good ol' system blocks
  *
@@ -6,9 +35,8 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Blocks
- * @version		SVN: $Id: system_blocks.php 11152 2011-03-30 16:45:08Z m0nty_ $
+ * @version		SVN: $Id: system_blocks.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
 /**
  * Shows which users and guests are online
  *
@@ -42,8 +70,8 @@ function b_system_online_show() {
 		$members = '';
 		for ($i = 0; $i < $total; $i++) {
 			if ($onlines[$i]['online_uid'] > 0) {
-				$members .= ' <a href="' . ICMS_URL . '/userinfo.php?uid=' . $onlines[$i]['online_uid'] 
-					. '" title="' . $onlines[$i]['online_uname'] . '\'s ' . _PROFILE . '">' 
+				$members .= ' <a href="' . ICMS_URL . '/userinfo.php?uid=' . $onlines[$i]['online_uid']
+					. '" title="' . $onlines[$i]['online_uname'] . '\'s ' . _PROFILE . '">'
 					. $onlines[$i]['online_uname'] . '</a>, ';
 			} else {
 				$guests++;
@@ -89,7 +117,7 @@ function b_system_login_show() {
 		$block['lang_login_oid'] = _MB_SYSTEM_OPENID_LOGIN;
 		$block['lang_back2normoid'] = _MB_SYSTEM_OPENID_NORMAL_LOGIN;
 		if ($icmsConfig['use_ssl'] == 1 && $icmsConfig['sslloginlink'] != '') {
-			$block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('" 
+			$block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('"
 				. $icmsConfig['sslloginlink'] . "', 'ssllogin', 300, 200);\">" . _MB_SYSTEM_SECURE . "</a>";
 		}
 
@@ -139,7 +167,7 @@ function b_system_main_show() {
 			if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->getVar('mid'))) {
 				foreach ($sublinks as $sublink) {
 					$block['modules'][$i]['sublinks'][] = array(
-						'name' => $sublink['name'], 
+						'name' => $sublink['name'],
 						'url' => ICMS_MODULES_URL . '/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
 				}
 			} else {
@@ -197,9 +225,9 @@ function b_system_info_show($options) {
 	$block = array();
 	if (!empty($options[3])) {
 		$block['showgroups'] = TRUE;
-		$result = icms::$xoopsDB->query("SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM " 
-			. icms::$xoopsDB->prefix("groups_users_link") . " l LEFT JOIN " . icms::$xoopsDB->prefix("users") 
-			. " u ON l.uid=u.uid LEFT JOIN " . icms::$xoopsDB->prefix("groups") 
+		$result = icms::$xoopsDB->query("SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM "
+			. icms::$xoopsDB->prefix("groups_users_link") . " l LEFT JOIN " . icms::$xoopsDB->prefix("users")
+			. " u ON l.uid=u.uid LEFT JOIN " . icms::$xoopsDB->prefix("groups")
 			. " g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid");
 		if (icms::$xoopsDB->getRowsNum($result) > 0) {
 			$prev_caption = "";
@@ -225,8 +253,8 @@ function b_system_info_show($options) {
 		$block['showgroups'] = FALSE;
 	}
 	$block['logourl'] = ICMS_URL . '/images/' . $options[2];
-	$block['recommendlink'] = "<a href=\"javascript:openWithSelfMain('" 
-		. ICMS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform&amp;t=" . time() 
+	$block['recommendlink'] = "<a href=\"javascript:openWithSelfMain('"
+		. ICMS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform&amp;t=" . time()
 		. "','friend'," . $options[0] . "," . $options[1] . ")\">" . _MB_SYSTEM_RECO . "</a>";
 	return $block;
 }

@@ -12,13 +12,15 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_tablescreate.php 10607 2010-09-07 16:19:19Z skenow $
+ * @version		$Id: page_tablescreate.php 12426 2014-02-24 16:19:49Z fiammy $
  */
 /**
  *
  */
 require_once 'common.inc.php';
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
+
+include_once "../mainfile.php";
 
 icms_core_Filesystem::chmod("../mainfile.php", 0444);
 if (defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != '') {
@@ -43,8 +45,6 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-
-include_once "../mainfile.php";
 include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
@@ -64,7 +64,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 	$tables = array();
-	$result = $dbm->queryFromFile( './sql/' . XOOPS_DB_TYPE . '.structure.sql' );
+	
+	if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
+		$driver = substr(XOOPS_DB_TYPE, 4);
+	} else {
+		$driver = XOOPS_DB_TYPE;
+	}
+	$result = $dbm->queryFromFile( './sql/' . $driver . '.structure.sql' );
 	$content = $dbm->report();
 	include 'install_tpl.php';
 	exit();

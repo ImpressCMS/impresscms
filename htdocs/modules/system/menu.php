@@ -3,10 +3,10 @@
  * Contains links to admin options and images for those admin options
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @since		1.3
- * @version		SVN: $Id: menu.php 10998 2011-02-02 19:15:09Z skenow $
+ * @version		SVN: $Id: menu.php 12310 2013-09-13 21:33:58Z skenow $
  */
 
 // Loading System Configuration Links
@@ -53,7 +53,7 @@ foreach ($dirlist as $file) {
 				if ($catcount > 0) {
 					for ($x = 0; $x < $catcount; $x++) {
 						$subs[$x]['title'] = constant($confcats[$x]->getVar('confcat_name'));
-						$subs[$x]['link'] = ICMS_URL.'/modules/system/admin.php?fct=preferences' 
+						$subs[$x]['link'] = ICMS_URL.'/modules/system/admin.php?fct=preferences'
 							. '&amp;op=show&amp;confcat_id=' . $confcats[$x]->getVar('confcat_id');
 					}
 					$adminmenu[$modversion['group']]['subs'][] = array(

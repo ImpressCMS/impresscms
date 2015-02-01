@@ -1,5 +1,5 @@
 <?php
-// $Id: banners.php 11346 2011-08-30 18:27:22Z phoenyx $
+// $Id: banners.php 12239 2013-07-27 13:40:07Z skenow $
 //%%%%%%        Admin Module Name  Banners         %%%%%
 if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
@@ -56,4 +56,4 @@ define("_AM_USEHTML","Use Html?");
 define("_AM_CODEHTML","Code Html:");
 
 // added in 1.3
-define("_AM_BANNERS_DEPRECATED", "This feature is deprecated and will be removed with ImpressCMS 1.4!<br />Please consider installing the banners module.");
+define("_AM_BANNERS_DEPRECATED", "This feature is deprecated and will be removed after ImpressCMS 1.3!<br />Please consider installing the banners module.");

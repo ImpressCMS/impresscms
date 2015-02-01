@@ -7,7 +7,7 @@
  * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Base.php 11501 2011-12-17 22:31:45Z skenow $
+ * @version		$Id: Base.php 12310 2013-09-13 21:33:58Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -53,7 +53,6 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		$this->createElements();
 		//if ($captcha) $this->addCaptcha();
 		$this->createPermissionControls();
-		$this->createButtons($form_name, $form_caption, $submit_button_caption);
 	}
 
 	/**
@@ -291,11 +290,15 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	}
 
 	/**
-	 * Add an element to the form
+	 * Add form buttons
 	 *
+	 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+	 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+	 * @author 		marcan
 	 * @param	string  $form_name              name of the form
 	 * @param	string  $form_caption           caption of the form
 	 * @param	string  $submit_button_caption  caption of the button
+	 * 
 	 */
 	private function createButtons($form_name, $form_caption, $submit_button_caption = FALSE) {
 		$button_tray = new icms_form_elements_Tray('', '');
@@ -313,6 +316,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		$button_tray->addElement($butt_create);
 
 		//creating custom buttons
+		/* @todo add a property to the object that can be used to pass custom buttons */
 		if ($this->_custom_button) {
 			foreach($this->_custom_button as $custom_button) {
 				$butt_custom = new icms_form_elements_Button('', $custom_button['name'], $custom_button['caption'], 'submit');
@@ -488,9 +492,12 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	/**
 	 * create HTML to output the form as a theme-enabled table with validation.
 	 *
+	 * @author	    Kazumi Ono	<onokazu@xoops.org>
+	 * @copyright	copyright (c) 2000-2003 XOOPS.org
 	 * @return	string  $ret
 	 */
 	public function render() {
+		$this->createButtons($this->_form_name, $this->_form_caption, $this->_submit_button_caption);
 		$required =& $this->getRequired();
 		$ret = "
 			<form name='".$this->getName()."_dorga' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$this->getName()."(this);'".$this->getExtra().">
@@ -525,12 +532,14 @@ class icms_ipf_form_Base extends icms_form_Theme {
 
 	/**
 	 * assign to smarty form template instead of displaying directly
-	 *
+	 * @author	    Kazumi Ono	<onokazu@xoops.org>
+	 * @copyright	copyright (c) 2000-2003 XOOPS.org
 	 * @param	object  &$tpl         reference to a {@link Smarty} object
 	 * @see           Smarty
 	 * @param	mixed   $smartyName   if smartyName is passed, assign it to the smarty call else assign the name of the form element
 	 */
 	public function assign(&$tpl, $smartyName = FALSE){
+		$this->createButtons($this->_form_name, $this->_form_caption, $this->_submit_button_caption);
 		$i = 0;
 		$elements = array();
 		foreach ($this->getElements() as $ele) {
@@ -559,7 +568,8 @@ class icms_ipf_form_Base extends icms_form_Theme {
 
 	/**
 	 * create HTML to output the form as a theme-enabled table with validation.
-	 *
+	 * @author	    Kazumi Ono	<onokazu@xoops.org>
+	 * @copyright	copyright (c) 2000-2003 XOOPS.org
 	 * @param	  bool  $withtags   whether to add script HTML tag to the $js string
 	 * @return	bool  $js         the constructed javascript validation string
 	 */

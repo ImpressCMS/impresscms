@@ -1,4 +1,33 @@
 <?php
+// $Id: modulesadmin.php 12403 2014-01-26 21:35:08Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Logic and rendering for adminstration of modules
  *
@@ -7,9 +36,8 @@
  * @package		System
  * @subpackage	Modules
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: modulesadmin.php 11950 2012-08-25 22:52:46Z skenow $
+ * @version		SVN: $Id: modulesadmin.php 12403 2014-01-26 21:35:08Z skenow $
  */
-
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
@@ -101,7 +129,7 @@ function xoops_module_list() {
 function xoops_module_install($dirname) {
 	global $icmsConfig, $icmsAdminTpl;
 	$dirname = trim($dirname);
-	$db =& icms_db_Factory::instance();
+	$db = icms_db_Factory::instance();
 	$reservedTables = array(
 		'avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments',
 		'config', 'configcategory', 'configoption', 'image', 'imagebody',
@@ -134,8 +162,9 @@ function xoops_module_install($dirname) {
 		$errs[] = '<h4 style="text-align:' . _GLOBAL_LEFT . ';margin-bottom: 0px;border-bottom: dashed 1px #000000;">'
 			. _MD_AM_INSTALLING . $module->getInfo('name') . '</h4>';
 		if ($sqlfile !== FALSE && is_array($sqlfile)) {
-
-			$sql_file_path = ICMS_MODULES_PATH . "/" . $dirname . "/" . $sqlfile[XOOPS_DB_TYPE];
+			// handle instances when XOOPS_DB_TYPE includes 'pdo.'
+			if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') $driver = substr(XOOPS_DB_TYPE, 4);
+			$sql_file_path = ICMS_MODULES_PATH . "/" . $dirname . "/" . $sqlfile[$driver];
 			if (!file_exists($sql_file_path)) {
 				$errs[] = sprintf(_MD_AM_SQL_NOT_FOUND, '<strong>' . $sql_file_path . '</strong>');
 				$error = TRUE;

@@ -75,15 +75,15 @@ abstract class icms {
 	 * @var array
 	 */
 	static public $services = array(
-		"boot" => array(
+		'boot' => array(
 			'security'	=> array(array('icms_core_Security', 'service'), array()),
-			"logger"	=> array(array("icms_core_Logger", 'instance'), array()),
-			"db"		=> array(array('icms_db_Factory', 'pdoInstance'), array()),
-			"xoopsDB"	=> array(array('icms_db_Factory', 'instance'), array()),
+			'logger'	=> array(array('icms_core_Logger', 'instance'), array()),
+			'db'		=> array(array('icms_db_Factory', 'pdoInstance'), array()),
+			'xoopsDB'	=> array(array('icms_db_Factory', 'instance'), array()),
 			'config'	=> array(array('icms_config_Handler', 'service'), array()),
 			'session'	=> array(array('icms_core_Session', 'service'), array()),
 		),
-		"optional" => array(),
+		'optional' => array(),
 	);
 
 	/**
@@ -96,7 +96,7 @@ abstract class icms {
 	);
 
 	/** @var array */
-	static public $urls = false;
+	static public $urls = FALSE;
 
 	/**
 	 * array of handlers
@@ -206,7 +206,7 @@ abstract class icms {
 	 * @param 	boolean	$virtual
 	 * @return 	string
 	 */
-	static public function path($url, $virtual = false) {
+	static public function path($url, $virtual = FALSE) {
 		$path = '';
 		@list($root, $path) = explode('/', $url, 2);
 		if (!isset(self::$paths[$root])) {
@@ -225,7 +225,7 @@ abstract class icms {
 	 * @return 	string
 	 */
 	static public function url($url) {
-		return (false !== strpos($url, '://' ) ? $url : self::path($url, true ));
+		return (FALSE !== strpos($url, '://' ) ? $url : self::path($url, TRUE ));
 	}
 
 	/**
@@ -260,7 +260,7 @@ abstract class icms {
 	 * @param bool  $optional	Is the handler optional?
 	 * @return		object		$inst		The instance of the object that was created
 	 */
-	static public function &handler($name, $optional = false ) {
+	static public function &handler($name, $optional = FALSE ) {
 		if (!isset(self::$handlers[$name])) {
 			$class = $name . "Handler";
 			if (!class_exists($class)) {
@@ -274,15 +274,15 @@ abstract class icms {
 					} elseif (file_exists($hnd_file = ICMS_ROOT_PATH.'/class/' . $lower . '.php')) {
 						require_once $hnd_file;
 					}
-					if (!class_exists($class = 'Xoops' . ucfirst($lower) . 'Handler', false)) {
-						if (!class_exists($class = 'Icms' . ucfirst($lower) . 'Handler', false)) {
+					if (!class_exists($class = 'Xoops' . ucfirst($lower) . 'Handler', FALSE)) {
+						if (!class_exists($class = 'Icms' . ucfirst($lower) . 'Handler', FALSE)) {
 							// Not found at all
-							$class = false;
+							$class = FALSE;
 						}
 					}
 				}
 			}
-			self::$handlers[$name] = $class ? new $class(self::$xoopsDB) : false;
+			self::$handlers[$name] = $class ? new $class(self::$xoopsDB) : FALSE;
 		}
 		if (!self::$handlers[$name] && !$optional) {
 			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);
@@ -297,7 +297,7 @@ abstract class icms {
 	 */
 	static protected function buildRelevantUrls() {
 		if (!self::$urls) {
-			$http = strpos(ICMS_URL, "https://") === false
+			$http = strpos(ICMS_URL, "https://") === FALSE
 				? "http://"
 				: "https://";
 			$phpself = $_SERVER['SCRIPT_NAME'];

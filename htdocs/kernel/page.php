@@ -3,7 +3,7 @@
  * Classes responsible for managing core page objects
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license	LICENSE.txt
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	core
  * @since	ImpressCMS 1.1
  * @author	modified by UnderDog <underdog@impresscms.org>

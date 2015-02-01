@@ -3,6 +3,12 @@ Thank you for using of this "images-set" for ImpressCMS.
 
 
 
+(Version 1.2 [2013/07/12])
+
+- new PDF icon added
+
+
+
 (Version 1.1 [2011/12/26])
 
 - new Icons added (same like the old crystal icons)

@@ -1,4 +1,30 @@
 <?php
+// $Id: common.php 12400 2014-01-25 18:46:03Z skenow $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
 /**
  * All common information used in the core goes from here.
  * Be careful while editing this file!
@@ -6,7 +32,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
- * @version		$Id: common.php 11524 2012-01-21 22:09:00Z skenow $
+ * @version		$Id: common.php 12400 2014-01-25 18:46:03Z skenow $
  */
 
 /** make sure mainfile is included, for security and functionality */
@@ -23,6 +49,9 @@ include_once ICMS_INCLUDE_PATH . "/version.php";
 
 if (!isset($xoopsOption)) $xoopsOption = array();
 
+// load core language file before the initialization of the boot sequence
+icms_loadLanguageFile('core', 'theme');
+
 // -- Initialize kernel and launch bootstrap
 require_once ICMS_LIBRARIES_PATH . "/icms.php";
 icms::setup();
@@ -30,9 +59,12 @@ icms::boot();
 
 // -- Easiest ML by Gijoe (no longer needed here)
 
-// Disable gzip compression if PHP is run under CLI mode
+// Disable gzip compression if PHP is run under CLI mode or if multi-language is enabled
 // To be refactored
-if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli') {
+if (empty($_SERVER['SERVER_NAME'])
+		|| substr(PHP_SAPI, 0, 3) == 'cli'
+		|| $GLOBALS['icmsConfigMultilang']
+) {
 	$icmsConfig['gzip_compression'] = 0;
 }
 
@@ -61,7 +93,6 @@ date_default_timezone_set(timezone_name_from_abbr("", $icmsConfig['default_TZ'] 
 
 // -- Include site-wide lang file
 icms_loadLanguageFile('core', 'global');
-icms_loadLanguageFile('core', 'theme');
 icms_loadLanguageFile('core', 'core');
 icms_loadLanguageFile('system', 'common');
 @define('_GLOBAL_LEFT', @_ADM_USE_RTL == 1 ? 'right' : 'left');

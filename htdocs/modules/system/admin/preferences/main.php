@@ -1,4 +1,33 @@
 <?php
+// $Id: main.php 12455 2014-06-24 09:30:49Z sato-san $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
  * Administration of preferences, main file
  *
@@ -6,9 +35,8 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Preferences
- * @version		SVN: $Id: main.php 11565 2012-02-07 04:37:33Z sato-san $
+ * @version		SVN: $Id: main.php 12455 2014-06-24 09:30:49Z sato-san $
  */
-
 if (! is_object(icms::$user)
 	|| ! is_object($icmsModule)
 	|| ! icms::$user->isAdmin($icmsModule->getVar('mid'))
@@ -20,9 +48,9 @@ if (isset($_POST)) {
 	if (is_array($post_vars)) extract($post_vars);
 }
 $icmsAdminTpl = new icms_view_Tpl();
-$op = (isset($_GET['op'])) 
+$op = (isset($_GET['op']))
 	? trim(filter_input(INPUT_GET, 'op'))
-	: ((isset($_POST['op'])) 
+	: ((isset($_POST['op']))
 		? trim(filter_input(INPUT_POST, 'op'))
 		: 'list');
 
@@ -57,11 +85,11 @@ switch ($op) {
 		}
 
 		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><ul>';
+		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><div id="CPprefList"><ul>';
 		foreach ($ccats as $confcat) {
 			echo '<li><a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id=' . $confcat['id'] . '" title="' . _EDIT . ' ' . $confcat['name'] . '">' . $confcat['name'] . '</a></li>';
 		}
-		echo '</ul>';
+		echo '</ul></div>';
 		icms_cp_footer();
 		break;
 

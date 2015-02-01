@@ -45,18 +45,17 @@ echo ($html);
 /*
 $html = "<img
 	alt=\"image\"
-	src=\"".XOOPS_URL."/images/imgsrc.gif\"
+	src=\"".XOOPS_URL."/images/image.gif\"
 	onclick=\"javascript:xoopspopup=openWithSelfMain('".XOOPS_URL."/imagemanager.php?target=src','imgmanager',400,430,1);\"
-	onmouseover=\"style.cursor='hand'\"
-	style=\"\" />\n";
+	style=\"vertical-align:middle;cursor:pointer;\" />\n";
 */
 $html = "<img
-	alt=\"image\"
-	src=\"".ICMS_URL."/images/imgsrc.gif\"
+	alt=\"{#xoopsimagemanager.desc}\"
+	title=\"{#xoopsimagemanager.desc}\"
+	src=\"".ICMS_URL."/images/image.gif\"
 
-	onclick=\"javascript:xoopspopup=openWithSelfMain('xoopsimagebrowser.php?target=src&type=tiny','imgmanager',985,470,1);\"
-	onmouseover=\"style.cursor='hand'\"
-	style=\"\" />\n";
+	onclick=\"javascript:xoopspopup=openWithSelfMain('xoopsimagebrowser.php?target=src&type=tiny','imgmanager',985,650,1);\"
+	style=\"vertical-align:middle;cursor:pointer;\" />\n";
 //	onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/imagemanager.php?target=".$this->getName()."\",\"imgmanager\",400,430);'
 echo ($html);
 ?>
@@ -183,7 +182,7 @@ echo ($html);
 									  <td>
 										<input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" />
 <?php
-$html = "<img alt=\"image\" src=\"".ICMS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoversrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
+$html = "<img alt=\"{#xoopsimagemanager.desc}\" title=\"{#xoopsimagemanager.desc}\" src=\"".ICMS_URL."/images/image.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoversrc','imgmanager',985,650);\" style=\"vertical-align:middle;cursor:pointer;\" />\n";
 echo ($html);
 ?>
 										</td>
@@ -202,7 +201,7 @@ echo ($html);
 									  <td>
 										<input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value="" />
 <?php
-$html = "<img alt=\"image\" src=\"".ICMS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoutsrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
+$html = "<img alt=\"{#xoopsimagemanager.desc}\" title=\"{#xoopsimagemanager.desc}\" src=\"".ICMS_URL."/images/image.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoutsrc','imgmanager',985,650);\" style=\"vertical-align:middle;cursor:pointer;\" />\n";
 echo ($html);
 ?>
 										</td>
@@ -274,6 +273,7 @@ echo ($html);
 				<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
 			</div>
 		</div>
+		<div style="clear:both;"></div>
     </form>
 </body>
 </html>

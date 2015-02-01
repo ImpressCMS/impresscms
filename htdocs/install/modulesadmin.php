@@ -12,7 +12,7 @@
  * @author		Kazumi Ono (AKA onokazu)
  * @author		RpLima
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
- * @version		$Id: modulesadmin.php 11358 2011-09-02 19:55:40Z phoenyx $
+ * @version		$Id: modulesadmin.php 12426 2014-02-24 16:19:49Z fiammy $
  */
 /**
  *
@@ -27,7 +27,7 @@ function xoops_module_install($dirname) {
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
-		$module->registerClassPath();		
+		$module->registerClassPath();
 		$module->setVar('weight', 1);
 		$error = false;
 		$errs = array();
@@ -44,8 +44,14 @@ function xoops_module_install($dirname) {
 		$msgs[] = '';
 		$errs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
 		if ($sqlfile != false && is_array($sqlfile)) {
-
-			$sql_file_path = ICMS_ROOT_PATH."/modules/".$dirname."/".$sqlfile[XOOPS_DB_TYPE];
+			// handle instances when XOOPS_DB_TYPE includes 'pdo.'
+			
+			if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
+				$driver = substr(XOOPS_DB_TYPE, 4);
+			} else {
+				$driver = XOOPS_DB_TYPE;
+			}
+			$sql_file_path = ICMS_ROOT_PATH."/modules/".$dirname."/".$sqlfile[$driver];
 			if (!file_exists($sql_file_path)) {
 				$errs[] = "SQL file not found at <b>$sql_file_path</b>";
 				$error = true;
@@ -577,8 +583,8 @@ function icms_module_update($dirname) {
 						if (!$result) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_UPDATE_FAIL,$fblock['name']);
 						} else {
-							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_BLOCK_UPDATED, 
-								'<strong>' . $fblock['name'] . '</strong>', 
+							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_BLOCK_UPDATED,
+								'<strong>' . $fblock['name'] . '</strong>',
 								'<strong>' . icms_conv_nr2local($fblock['bid']) . '</strong>');
 							if ($template != '') {
 								$tplfile =& $tplfile_handler->find('default', 'block', $fblock['bid']);
