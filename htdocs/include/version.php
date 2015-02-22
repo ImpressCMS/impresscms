@@ -2,12 +2,12 @@
 /**
  * Version information about ImpressCMS
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @copyright	The Xoops Project http://www.xoops.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
- * @since		1.0
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @since		Xoops
+ * @author		phppp
+ * @version		$Id: version.php 12455 2014-06-24 09:30:49Z sato-san $
  */
 
 define('ICMS_VERSION_NAME', 'ImpressCMS 2.0 Alpha 4');

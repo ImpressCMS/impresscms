@@ -46,6 +46,7 @@
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @version		SVN: $Id: Element.php 12313 2013-09-15 21:14:35Z skenow $
  */
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**

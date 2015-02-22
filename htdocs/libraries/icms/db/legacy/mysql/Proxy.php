@@ -33,9 +33,9 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- *  @category	ICMS
- *  @package	Database
- *  @subpackage	Legacy
+ * @category	ICMS
+ * @package	Database
+ * @subpackage	Legacy
  * @version	SVN: $Id: Proxy.php 12313 2013-09-15 21:14:35Z skenow $
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

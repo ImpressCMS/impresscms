@@ -2,8 +2,8 @@
 /**
  * System Admin Blocks File
  *
- * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		LICENSE.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		System
  * @subpackage	Blocks
  * @since		ImpressCMS 1.2

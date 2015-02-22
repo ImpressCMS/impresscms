@@ -37,7 +37,8 @@
  * @category	ICMS
  * @package		Administration
  * @subpackage	Images
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @copyright	http://www.XOOPS.org/
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since		1.2
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
