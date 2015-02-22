@@ -456,9 +456,6 @@ div#floats_r{
 
 tr.blocked td {background-color: #FF0000;}
 
-.imgcat_notwrite {background-color: #FF0000; width:20px; height: 17px; padding-top: 3px; overflow: visible; margin-bottom: 2px;}
-.imgcat_notwrite span{margin-left: 25px; display: block; width: 400px;}
-
 /* Tooltip box */
 .caption-text img {float: right; padding-top: 2px;}
 span.helptext {position: absolute; right: 50px; z-index: 9000; background-color:#000; outline:1px solid #669; border:2px solid #fff; padding:10px 15px; width:200px; display:none; color:#fff; text-align:left; font-size:12px; font-weight:normal;

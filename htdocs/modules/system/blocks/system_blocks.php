@@ -31,9 +31,8 @@
 /**
  * Good ol' system blocks
  *
- * @copyright	http://www.XOOPS.org/
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		LICENSE.txt
  * @package		System
  * @subpackage	Blocks
  * @version		SVN: $Id$
@@ -626,13 +625,12 @@ function b_system_themes_show($options) {
 		$theme_options .= '>' . $theme . '</option>';
 	}
 	$block = array();
+	$block['imagenes'] = $options[0];
 	if ($options[0] == 1) {
-		$block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"" . ICMS_THEME_URL . "/" . $icmsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"". (int) $options[1] . "\" /><br /><select id=\"theme_select\" name=\"theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'theme_select', 'themes', '/shot.gif', '" . ICMS_URL . "');\">" . $theme_options . "</select><input type=\"submit\" value=\"" . _GO . "\" />";
-	} else {
-		$block['theme_select'] = '<select name="theme_select" onchange="submit();" size="3">' . $theme_options . '</select>';
+		$block['imagenesruta'] =  "" . ICMS_THEME_URL . "/" . $icmsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"". (int) $options[1] . "";
 	}
-
-	$block['theme_select'] .= '<p>(' . sprintf(_MB_SYSTEM_NUMTHEME, count($icmsConfig['theme_set_allowed']) . '') . ')</p>';
+	$block['numero'] =   sprintf(_MB_SYSTEM_NUMTHEME, count($icmsConfig['theme_set_allowed']));
+	$block['opciones'] = $theme_options;
 	return $block;
 }
 

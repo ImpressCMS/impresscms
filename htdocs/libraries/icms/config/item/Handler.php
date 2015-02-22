@@ -74,7 +74,7 @@ define('ICMS_CONF_PURIFIER', 14);
  * @package     Config
  * @subpackage  Item
  */
-class icms_config_Item_Handler extends icms_core_ObjectHandler {
+class icms_config_item_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Create a new {@link icms_config_Item_Object}

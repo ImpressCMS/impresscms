@@ -98,7 +98,10 @@ function imanager_index($imgcat_id=null) {
 		$groups =& icms::$user->getGroups();
 		$admin = (!icms::$user->isAdmin(1)) ? false : true;
 	}
-
+	if (!is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
+			icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH)));
+			echo '<br />';
+	}
 	$imgcat_handler = icms::handler('icms_image_category');
 
 	$criteriaRead = new icms_db_criteria_Compo();
@@ -143,7 +146,7 @@ function imanager_index($imgcat_id=null) {
 	$icmsTpl->assign('lang_imanager_cat_del',_DELETE);
 	$icmsTpl->assign('lang_imanager_cat_listimg',_LIST);
 	$icmsTpl->assign('lang_imanager_cat_submit',_SUBMIT);
-
+	$icmsTpl->assign('lang_imanager_folder_not_writable', IMANAGER_FOLDER_NOT_WRITABLE);
 	$icmsTpl->assign('lang_imanager_cat_addnewcat',_MD_ADDIMGCATBTN);
 	$icmsTpl->assign('lang_imanager_cat_addnewimg',_MD_ADDIMGBTN);
 
@@ -158,9 +161,14 @@ function imanager_index($imgcat_id=null) {
 	$icmsTpl->assign('admnav',adminNav($imgcat_id));
 
 	$image_handler = icms::handler('icms_image');
-	$count = $msize = $subs = array();
+	$count = $msize = $subs = $nwrite = array();
+	$hasnwrite = array();
 	$icmsTpl->assign('catcount',$catcount = count($imagecategorys));
 	for ($i = 0; $i < $catcount; $i++) {
+		$nwrite[$i] = is_writable($imgcat_handler->getCategFolder($imagecategorys[$i]));
+		if (!$nwrite[$i]) {
+			$hasnwrite[] = $imagecategorys[$i]->getVar('imgcat_name');
+		}
 		$msize[$i] = icms_convert_size($imagecategorys[$i]->getVar('imgcat_maxsize'));
 		$count[$i] = $image_handler->getCount(new icms_db_criteria_Item('imgcat_id', $imagecategorys[$i]->getVar('imgcat_id')));
 		$criteriaRead = new icms_db_criteria_Compo();
@@ -177,6 +185,7 @@ function imanager_index($imgcat_id=null) {
 		$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategorys[$i]->getVar('imgcat_id')));
 		$subs[$i]  = count($imgcat_handler->getObjects($criteriaRead));
 	}
+	$hasnwrite = implode(', ', $hasnwrite);
 	$scount = array();
 	foreach ($subs as $k=>$v) {
 		$criteriaRead = new icms_db_criteria_Compo();
@@ -198,6 +207,8 @@ function imanager_index($imgcat_id=null) {
 		}
 		$scount[$k] = $sc;
 	}
+	$icmsTpl->assign('nwrite', $nwrite);
+	$icmsTpl->assign('hasnwrite', $hasnwrite);
 	$icmsTpl->assign('msize',$msize);
 	$icmsTpl->assign('count',$count);
 	$icmsTpl->assign('subs',$subs);
@@ -431,7 +442,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 		if (in_array($images[$i]->getVar('image_mimetype'),$extra_perm)) {
 			$arrimg[$i]['hasextra_link'] = 1;
 			if (file_exists(ICMS_LIBRARIES_PATH.'/image-editor/image-edit.php')) {
-				$arrimg[$i]['editor_link'] = 'window.open(\''.ICMS_LIBRARIES_URL.'/image-editor/image-edit.php?image_id='.$images[$i]->getVar('image_id').'&uniq='.$uniq.'&target='.$target.'&type='.$type.'\',\'icmsDHTMLImageEditor\',\'width=800,height=600,left=\'+parseInt(screen.availWidth/2-400)+\',top=\'+parseInt(screen.availHeight/2-350)+\',resizable=no,location=no,menubar=no,status=no,titlebar=no,scrollbars=no\'); return false;';
+				$arrimg[$i]['editor_link'] = 'window.open(\''.ICMS_LIBRARIES_URL.'/image-editor/image-edit.php?image_id='.$images[$i]->getVar('image_id').'&target='.$target.'&type='.$type.'\',\'icmsDHTMLImageEditor\',\'width=800,height=600,left=\'+parseInt(screen.availWidth/2-400)+\',top=\'+parseInt(screen.availHeight/2-350)+\',resizable=no,location=no,menubar=no,status=no,titlebar=no,scrollbars=no\'); return false;';
 			} else {
 				$arrimg[$i]['editor_link'] = '';
 			}

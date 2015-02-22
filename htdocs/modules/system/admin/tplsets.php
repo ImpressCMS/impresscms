@@ -1,4 +1,5 @@
 <?php
+// $Id: main.php 12396 2014-01-24 17:25:13Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -30,9 +31,8 @@
 /**
  * Administration of template sets, main file
  *
- * @copyright	http://www.XOOPS.org/
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		LICENSE.txt
  * @package		System
  * @subpackage	Templates
  * @todo		Extract HTML and CSS to a template
@@ -366,7 +366,7 @@ switch ($op) {
 			icms_cp_footer();
 			exit();
 		} else {
-			$err[] = 'Selected template (ID: ' . '$id' . ') does not exist';
+			$err[] = sprintf(_MD_TPLSET_TEMPLATE_NOTEXIST, $id);
 		}
 		icms_cp_header();
 		icms_core_Message::error($err);
@@ -434,7 +434,7 @@ switch ($op) {
 		$tplfile =& $tpltpl_handler->get($id);
 		$err = array();
 		if (!is_object($tplfile)) {
-			$err[] = 'Selected template (ID: ' . '$id' . ') does not exist';
+			$err[] = sprintf(_MD_TPLSET_TEMPLATE_NOTEXIST, $id);
 		} else {
 			if ($tplfile->getVar('tpl_tplset') != 'default') {
 				if (!$tpltpl_handler->delete($tplfile)) {
