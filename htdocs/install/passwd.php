@@ -5,11 +5,9 @@
 /**
  * Password defines for installation
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		installer
- * @since		1.0
- * @author		malanciault
+ * @since		1.0 (XOOPS)
  * @version		$Id$
  */
 /**
