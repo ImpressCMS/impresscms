@@ -1,5 +1,5 @@
 <?php
-// $Id: blocks.php 12064 2012-10-10 14:37:53Z skenow $
+// $Id:$
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
 //if (!defined('_AM_DBUPDATED')) {if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}}
 
@@ -27,8 +27,8 @@ define("_AM_VISIBLE","Visible");
 define("_AM_POSCONTT","Position of the additional content");
 define("_AM_ABOVEORG","Above the original content");
 define("_AM_AFTERORG","After the original content");
-//define("_AM_EDIT","Edit");
-//define("_AM_DELETE","Delete");
+define("_AM_EDIT","Edit");
+define("_AM_DELETE","Delete");
 //define("_AM_SBLEFT","Side Block - Left");
 //define("_AM_SBRIGHT","Side Block - Right");
 //define("_AM_CBLEFT","Center Block - Left");
@@ -115,10 +115,8 @@ define("_CO_SYSTEM_BLOCKS_OPTIONS", "Options");
 define("_CO_SYSTEM_BLOCKS_OPTIONS_DSC", "");
 define("_CO_SYSTEM_BLOCKS_BCACHETIME", "Block Cache Time");
 define("_CO_SYSTEM_BLOCKS_BCACHETIME_DSC", "");
-
 define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS", "Block View permission");
 define("_CO_SYSTEM_BLOCKS_BLOCKRIGHTS_DSC", "");
-
 //define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
 //define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
 //define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");

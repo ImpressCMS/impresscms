@@ -8,13 +8,13 @@ if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-
 //only site users can access this file or if multilanguage is enabled
         //$easiestml_exist = false;
         $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+		
 if (is_object(icms::$user) && $easiestml_exist) {
-    function langDropdown()
-    {
+	function langDropdown() {
+		global $icmsConfigMultilang;
         // check THE EASIEST MULTILANGUAGE HACK
         $easiestml_exist = false;
         $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
@@ -44,6 +44,7 @@ if (is_object(icms::$user) && $easiestml_exist) {
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta charset="utf-8">
 <title>{#icmsmlcontent_dlg.title}</title>
 <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
 <script type="text/javascript" src="js/icmsmlcontent.js"></script>

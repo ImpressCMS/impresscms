@@ -127,9 +127,10 @@ class icms_view_theme_Object {
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref('xoTheme', $this);
 
-		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule;
+		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule, $icmsConfigMultilang;
 		$this->template->assign(
 			array(
+				'ml_is_enabled' => $icmsConfigMultilang['ml_enable'],
 				'icms_style' => ICMS_URL . '/icms' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css',
 				'icms_theme' => $this->folderName,
 				'icms_imageurl' => (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName . '/'))
