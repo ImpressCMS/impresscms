@@ -17,7 +17,7 @@ icms_loadLanguageFile("system", "autotasks", TRUE);
 
 /**
  * Task objects
- * 
+ *
  * @package		Administration
  * @subpackage	Autotasks
  */
@@ -27,7 +27,7 @@ class mod_system_Autotasks extends icms_ipf_Object {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
@@ -112,7 +112,7 @@ class mod_system_Autotasks extends icms_ipf_Object {
 
 	/**
 	 * Get the autotask type
-	 * 
+	 *
 	 * @param string $part
 	 * @return	string
 	 */
@@ -163,14 +163,14 @@ class mod_system_Autotasks extends icms_ipf_Object {
 		if (substr($this->getVar('sat_type'), 0, 6) == 'addon/') {
 			$dirname = substr($this->getVar('sat_type'), 6);
 			if ($dirname == '') return FALSE;
-			
+
 			// only execute autotasks for active modules
 			$module = icms::handler("icms_module")->getByDirname($dirname);
 			if ($module->getVar("isactive") != 1) return FALSE;
-			
+
 			$dirname = ICMS_MODULES_PATH . '/' . $dirname;
 			$dirname = $dirname . '/' . $code;
-			$code = ' require "' . $dirname . '";';
+			$code = " require '" . $dirname . "';";
 			$is_bug = !(@highlight_string(file_get_contents($dirname), TRUE));
 		} else {
 			$is_bug = !(@highlight_string('<?' . 'php '. $code . ' return TRUE; ?' . '>', TRUE));
