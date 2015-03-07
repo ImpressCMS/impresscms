@@ -42,24 +42,33 @@
  * @package		Administration
  * @version		SVN: $Id$
  */
+define('ICMS_IN_ADMIN', 1);
+
+/** necessary files, since this is a direct POST target */
+require_once "../../../mainfile.php";
+require_once dirname(dirname(__FILE__)) . '/include/common.php';
 
 /* set filter types, if not strings */
-$filter_get = array();
+//$filter_get = array(); // there should be no GET variables - this page is for POST, only!
 
 $filter_post = array(
 	'modid' => 'int',
+	'uid' => 'int',
+	'perms' => 'int', // ?
 );
 
 /* set default values for variables */
 $modid = 0;
-$redirect_url = "";
+$fct = $op = "";
 
-/** common header for the admin functions */
-include "admin_header.php";
-$gperm_handler = $icms_admin_handler;
+/* filter the user input */
+if (!empty($_POST)) {
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+    extract($clean_POST);
+}
 
-// we dont want system module permissions to be changed here
-if ($modid <= 1) {
+// we don't want system module permissions to be changed here
+if ($modid <= 1 || !is_object(icms::$user) || !icms::$user->isAdmin($modid) || !empty($_GET)) {
 	redirect_header(ICMS_URL . '/index.php', 1, _NOPERM);
 	exit();
 }
@@ -76,6 +85,7 @@ $msg = array();
 $member_handler = icms::handler('icms_member');
 $group_list =& $member_handler->getGroupList();
 if (is_array($perms) && !empty($perms)) {
+	$gperm_handler = icms::handler('icms_member_groupperm');
 	foreach ($perms as $perm_name => $perm_data) {
 		if (FALSE != $gperm_handler->deleteByModule($modid, $perm_name)) {
 			foreach ($perm_data['groups'] as $group_id => $item_ids) {
