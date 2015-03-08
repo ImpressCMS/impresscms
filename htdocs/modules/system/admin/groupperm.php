@@ -51,12 +51,12 @@ require_once dirname(dirname(__FILE__)) . '/include/common.php';
 icms_loadLanguageFile('system', 'groups', TRUE);
 
 /* set filter types, if not strings */
-//$filter_get = array(); // there should be no GET variables - this page is for POST, only!
+// there should be no GET variables - this page is for POST, only!
 
 $filter_post = array(
 	'modid' => 'int',
 	'uid' => 'int',
-	'perms' => 'int', // ?
+	'perms' => 'int',
 );
 
 /* set default values for variables */
@@ -74,6 +74,7 @@ if ($modid <= 1 || !is_object(icms::$user) || !icms::$user->isAdmin($modid) || !
 	redirect_header(ICMS_URL . '/index.php', 1, _NOPERM);
 	exit();
 }
+
 $module_handler = icms::handler('icms_module');
 $module =& $module_handler->get($modid);
 

@@ -137,9 +137,11 @@ class icms_form_Groupperm extends icms_form_Base {
 			$this->_itemTree[$item_id]['allchild'] = array ();
 			$this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
 		}
+
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$member_handler = icms::handler('icms_member');
-		$glist = & $member_handler->getGroupList();
+		$glist = $member_handler->getGroupList();
+
 		foreach (array_keys($glist) as $i) {
 			// get selected item id(s) for each group
 			$selected = $gperm_handler->getItemIds($this->_permName, $i, $this->_modid);
@@ -148,6 +150,7 @@ class icms_form_Groupperm extends icms_form_Base {
 			$this->addElement($ele);
 			unset ($ele);
 		}
+
 		$tray = new icms_form_elements_Tray('');
 		$tray->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
 		$tray->addElement(new icms_form_elements_Button('', 'reset', _CANCEL, 'reset'));
@@ -161,11 +164,11 @@ class icms_form_Groupperm extends icms_form_Base {
 			. ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";
 		$elements = $this->getElements();
 		$hidden = '';
+
 		foreach (array_keys($elements) as $i) {
 			if (!is_object($elements[$i])) {
 				$ret .= $elements[$i];
-			}
-			elseif (!$elements[$i]->isHidden()) {
+			} elseif (!$elements[$i]->isHidden()) {
 				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>" . $elements[$i]->getCaption();
 				if ($elements[$i]->getDescription() != '') {
 					$ret .= '<br /><br /><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
@@ -175,8 +178,10 @@ class icms_form_Groupperm extends icms_form_Base {
 				$hidden .= $elements[$i]->render();
 			}
 		}
+
 		$ret .= "</table>$hidden</form>";
 		$ret .= $this->renderValidationJS(true);
+
 		return $ret;
 	}
 
