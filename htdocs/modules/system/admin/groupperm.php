@@ -48,6 +48,8 @@ define('ICMS_IN_ADMIN', 1);
 require_once "../../../mainfile.php";
 require_once dirname(dirname(__FILE__)) . '/include/common.php';
 
+icms_loadLanguageFile('system', 'groups', TRUE);
+
 /* set filter types, if not strings */
 //$filter_get = array(); // there should be no GET variables - this page is for POST, only!
 
@@ -88,12 +90,14 @@ if (is_array($perms) && !empty($perms)) {
 	$gperm_handler = icms::handler('icms_member_groupperm');
 	foreach ($perms as $perm_name => $perm_data) {
 		if (FALSE != $gperm_handler->deleteByModule($modid, $perm_name)) {
+			$msg[] = sprintf(_MD_AM_PERMRESETOK, $perm_name, $module->getVar('name'));
 			foreach ($perm_data['groups'] as $group_id => $item_ids) {
 				foreach ($item_ids as $item_id => $selected) {
 					if ($selected == 1) {
 						// make sure that all parent ids are selected as well
 						if ($perm_data['parents'][$item_id] != '') {
 							$parent_ids = explode(':', $perm_data['parents'][$item_id]);
+
 							foreach ($parent_ids as $pid) {
 								if ($pid != 0 && !in_array($pid, array_keys($item_ids))) {
 									// one of the parent items were not selected, so skip this item
@@ -102,16 +106,19 @@ if (is_array($perms) && !empty($perms)) {
 								}
 							}
 						}
+
 						$gperm =& $gperm_handler->create();
 						$gperm->setVar('gperm_groupid', $group_id);
 						$gperm->setVar('gperm_name', $perm_name);
 						$gperm->setVar('gperm_modid', $modid);
 						$gperm->setVar('gperm_itemid', $item_id);
+
 						if (!$gperm_handler->insert($gperm)) {
 							$msg[] = sprintf(_MD_AM_PERMADDNG, '<strong>' . $perm_name . '</strong>', '<strong>' . $perm_data['itemname'][$item_id] . '</strong>', '<strong>' . $group_list[$group_id] . '</strong>');
 						} else {
 							$msg[] = sprintf(_MD_AM_PERMADDOK, '<strong>' . $perm_name . '</strong>', '<strong>' . $perm_data['itemname'][$item_id] . '</strong>', '<strong>' . $group_list[$group_id] . '</strong>');
 						}
+
 						unset($gperm);
 					}
 				}
@@ -132,4 +139,3 @@ if ($module->getVar('hasadmin')) {
 $backlink = $backlink ? $backlink : ICMS_URL . '/admin.php';
 
 redirect_header($backlink, 2, implode("<br />", $msg));
-
