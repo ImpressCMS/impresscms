@@ -69,3 +69,6 @@ define('_MD_AM_PERMADDNG', 'Could not add %s permission to %s for group %s');
 define('_MD_AM_PERMADDOK','Added %s permission to %s for group %s');
 define('_MD_AM_PERMRESETNG','Could not reset group permission for module %s');
 define('_MD_AM_PERMADDNGP', 'All parent items must be selected.');
+
+// added in  2.0.0
+define('_MD_AM_PERMRESETOK', 'Successfully reset group permissions for  %s in module %s');
