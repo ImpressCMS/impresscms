@@ -64,9 +64,9 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /*  Development information */
-	'status_version'=> "Alpha 4",
+	'status_version'=> "Alpha 5",
 	'status'=> "Alpha",
-	'date'=> "15 Apr 2014",
+	'date'=> "6 Apr 2015",
 	'author_word'=> "",
 	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
