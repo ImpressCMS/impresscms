@@ -17,7 +17,7 @@
 		</tr>
 
 	<{foreach from=$messages item=message name=msg}>
-		<tr align='<{$smarty.const._GLOBAL_LEFT}>' class="{cycle values="odd,even"}">
+        <tr align='<{$smarty.const._GLOBAL_LEFT}>' class="{cycle values='odd,even'}">
 			<td style='vertical-align: middle; width: 2%; text-align: center;'>
 				<input type='checkbox' id='message_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>' /></td> 
 			<td style='vertical-align: middle; width: 5%; text-align: center;'>&nbsp;
