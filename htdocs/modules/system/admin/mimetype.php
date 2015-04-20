@@ -81,7 +81,7 @@ switch ($op) {
 		$icmsAdminTpl->assign('icms_mimetype_table', $objectTable->fetch());
 		$icmsAdminTpl->assign('icms_mimetype_explain', TRUE);
 		$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPES_DSC);
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/mimetype/system_adm_mimetype.html');
+		$icmsAdminTpl->display('db:admin/mimetype/system_adm_mimetype.html');
 		break;
 }
 

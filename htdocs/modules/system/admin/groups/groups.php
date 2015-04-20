@@ -58,10 +58,13 @@ function displayGroups() {
 		$id = $groups[$i]->getVar('groupid');
 		if ($gperm_handler->checkRight('group_manager', $id, $ugroups)) {
 			if (ICMS_GROUP_ADMIN == $id || ICMS_GROUP_USERS == $id || ICMS_GROUP_ANONYMOUS == $id) {
+				$grouparray[$i]['permissions'] = false;
 			} else {
+				$grouparray[$i]['permissions'] = true;
 			}
 		}
 		$grouparray[$i]['name'] =  $groups[$i]->getVar('name');
+		$grouparray[$i]['description'] =  $groups[$i]->getVar('description');
 		$grouparray[$i]['id'] = (int) $id;
 		$icmsAdminTpl->assign("grouparray", $grouparray);
 	}
@@ -79,10 +82,9 @@ function displayGroups() {
 	$g_id_value = "";
 	$type_value = "";
 	$form_title = _AM_CREATENEWADG;
-	$icmsAdminTpl->assign("groups2", "1");
 	$icmsAdminTpl->assign("grouprights", "1");
 	$icmsAdminTpl->assign("displaygroups", "1");
-	$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/groups/system_adm_groups.html');
+	$icmsAdminTpl->display("db:admin/groups/system_adm_groups.html");
 	include ICMS_MODULES_PATH . "/system/admin/groups/groupform.php";
 	icms_cp_footer();
 }
@@ -150,45 +152,38 @@ function modifyGroup($g_id) {
 		$criteria->setSort('uname');
 		$userslist = $member_handler->getUserList($criteria);
 		$users = array_diff($userslist, $mlist);
-			          foreach ($users as $u_id => $u_name) {
-						$usersarray[$u_id]['name'] =  $u_name;
-						$usersarray[$u_id]['id'] = (int) $u_id;
-						$icmsAdminTpl->assign("usersarray", $usersarray);
-			           
-			          }  
-			      
-
-		          	foreach ($mlist as $m_id => $m_name) {
-						$multiple[$m_id]['name'] =  $m_name;
-						$multiple[$m_id]['id'] = (int) $m_id ;
-						$icmsAdminTpl->assign("multiple", $multiple);
-		            	
-		          	}
-		        
-	} else {
-		$members =& $member_handler->getUsersByGroup($g_id, FALSE, 200, $memstart);
-		$mlist = array();
-		if (count($members) > 0) {
-			$member_criteria = new icms_db_criteria_Item('uid', "(" . implode(',', $members) . ")", "IN");
-			$member_criteria->setSort('uname');
-			$mlist = $member_handler->getUserList($member_criteria);
+				  foreach ($users as $u_id => $u_name) {
+					$usersarray[$u_id]['name'] =  $u_name;
+					$usersarray[$u_id]['id'] = (int) $u_id;
+					$icmsAdminTpl->assign("usersarray", $usersarray);
+				  }
+				foreach ($mlist as $m_id => $m_name) {
+					$multiple[$m_id]['name'] =  $m_name;
+					$multiple[$m_id]['id'] = (int) $m_id ;
+					$icmsAdminTpl->assign("multiple", $multiple);
+				}
+		} else {
+			$members =& $member_handler->getUsersByGroup($g_id, FALSE, 200, $memstart);
+			$mlist = array();
+			if (count($members) > 0) {
+				$member_criteria = new icms_db_criteria_Item('uid', "(" . implode(',', $members) . ")", "IN");
+				$member_criteria->setSort('uname');
+				$mlist = $member_handler->getUserList($member_criteria);
+			}
+			$nav = new icms_view_PageNav($membercount, 200, $memstart, "memstart", "fct=groups&amp;op=modify&amp;g_id=" . (int) $g_id);
+			foreach ($mlist as $m_id => $m_name) {
+				$multiple[$m_id]['name'] =  $m_name;
+				$multiple[$m_id]['id'] = (int) $m_id ;
+				$icmsAdminTpl->assign("multiple", $multiple);
+			}
+			$icmsAdminTpl->assign("groupid", $thisgroup->getVar("groupid"));
+			$icmsAdminTpl->assign("g_id", (int) $g_id );
+			$icmsAdminTpl->assign("memstart",  $memstart );
+			$icmsAdminTpl->assign("nav", $nav->renderNav(4));
 		}
-		$nav = new icms_view_PageNav($membercount, 200, $memstart, "memstart", "fct=groups&amp;op=modify&amp;g_id=" . (int) $g_id);
-		foreach ($mlist as $m_id => $m_name) {
-			$multiple[$m_id]['name'] =  $m_name;
-			$multiple[$m_id]['id'] = (int) $m_id ;
-			$icmsAdminTpl->assign("multiple", $multiple);
-		}
-		$icmsAdminTpl->assign("groupid", $thisgroup->getVar("groupid"));
-		$icmsAdminTpl->assign("g_id", (int) $g_id );
-		$icmsAdminTpl->assign("memstart",  $memstart );
-		$icmsAdminTpl->assign("nav", $nav->renderNav(4));
-	}
 	$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());
 	$icmsAdminTpl->assign("modifygroups", "1");
 	$icmsAdminTpl->assign("groupform", "1");
-		
-
-	$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/groups/system_adm_groups.html');
+	$icmsAdminTpl->display('db:admin/groups/system_adm_groups.html');
 	icms_cp_footer();
 }

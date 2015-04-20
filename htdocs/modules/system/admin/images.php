@@ -553,8 +553,9 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$icmsAdminTpl->assign('pag', '');
 	}
 	$icmsAdminTpl->assign('addimgform', showAddImgForm($imgcat_id));
-
+	echo '<pre>'; print_r($images); echo '</pre>';echo 'adfadfadf';
 	return $icmsAdminTpl->fetch('db:admin/images/system_adm_imagemanager_imglist.html');
+
 }
 
 /**

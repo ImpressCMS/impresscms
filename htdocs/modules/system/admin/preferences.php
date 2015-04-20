@@ -87,11 +87,11 @@ switch ($op) {
 		}
 
 		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><ul>';
+		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><div class="CPindexOptions" align="center"><div class="cpicon cpicon-preferences" align="center">';
 		foreach ($ccats as $confcat) {
-			echo '<li><a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id=' . $confcat['id'] . '" title="' . _EDIT . ' ' . $confcat['name'] . '">' . $confcat['name'] . '</a></li>';
+			echo '<a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id=' . $confcat['id'] . '" title="' . _EDIT . ' ' . $confcat['name'] . '"><img alt="icon" src="' . ICMS_MODULES_URL  . '/system/images/preferences/' . $confcat['id'] . '.png"><span> ' . $confcat['name'] . '</span></a>';
 		}
-		echo '</ul>';
+		echo '</div></div>';
 		icms_cp_footer();
 		break;
 
@@ -113,7 +113,7 @@ switch ($op) {
 		$config = $config_handler->getConfigs($criteria);
 		$confcount = count($config);
 		for ($i = 0; $i < $confcount; $i++) {
-			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="'. ICMS_IMAGES_SET_URL . '/actions/acp_help.png" alt="' . _MD_AM_HELP_TIP . '" title="' . _MD_AM_HELP_TIP . '" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
+			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : '<span>' . constant($config[$i]->getVar('conf_title')) . '</span> <span data-toggle="tooltip" data-html="true" title="' . constant($config[$i]->getVar('conf_desc')) . '"><span class="glyphicon glyphicon-info-sign"></span></span>';
 			switch ($config[$i]->getVar('conf_formtype')) {
 				case 'textsarea' :
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
@@ -427,7 +427,7 @@ switch ($op) {
 			$form->addElement(new icms_form_elements_Hidden('redirect', ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex')));
 		}
 		for ($i = 0; $i < $count; $i++) {
-			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="'. ICMS_IMAGES_SET_URL . '/actions/acp_help.png" alt="' . _MD_AM_HELP_TIP . '" title="' . _MD_AM_HELP_TIP . '" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
+			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : '<span>' . constant($config[$i]->getVar('conf_title')) . '</span> <span data-toggle="tooltip" data-html="true" title="' . constant($config[$i]->getVar('conf_desc')) . '"><span class="glyphicon glyphicon-info-sign"></span></span>';
 			switch ($config[$i]->getVar('conf_formtype')) {
 				case 'textsarea' :
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
