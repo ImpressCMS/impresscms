@@ -81,12 +81,6 @@ icms::$preload->triggerEvent('startOutputInit');
 
 $xoTheme->addScript(ICMS_URL . '/include/xoops.js', array('type' => 'text/javascript'));
 $xoTheme->addScript(ICMS_URL . '/include/linkexternal.js', array('type' => 'text/javascript'));
-/**
- * @todo	Remove icms.css in 2.0
- * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
- */
-icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
-$xoTheme->addStylesheet(ICMS_URL . '/icms' . (@_ADM_USE_RTL === TRUE?'_rtl':'') . '.css', array('media' => 'screen'));
 
 $style_info = '';
 if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
@@ -114,8 +108,9 @@ if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/jquery.js', array('type' => 'text/javascript'));
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/helptip.js', array( 'type' => 'text/javascript'));
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css', array('media' => 'screen'));
+$xoTheme->addScript(ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.js', array( 'type' => 'text/javascript'));
+$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css', array('media' => 'screen'));
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/jgrowl'
 	. (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'') . '.css', array('media' => 'screen'));
 if (! empty( $_SESSION['redirect_message'])) {
