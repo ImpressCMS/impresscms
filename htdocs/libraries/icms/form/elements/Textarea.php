@@ -130,7 +130,7 @@ class icms_form_elements_Textarea extends icms_form_Element {
 	 * @return string HTML
 	 */
 	public function render(){
-		return "<textarea name='" . $this->getName()
+		return "<textarea class='form-control' name='" . $this->getName()
 			. "' id='" . $this->getName() . '_tarea'
 			. "' rows='" . $this->getRows()
 			. "' cols='" . $this->getCols()

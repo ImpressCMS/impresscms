@@ -136,7 +136,7 @@ class icms_form_elements_Text extends icms_form_Element {
 	 * @return	string  HTML
 	 */
 	public function render() {
-		return "<input type='text' name='" . $this->getName()
+		return "<input class='form-control' type='text' name='" . $this->getName()
 			. "' id='" . $this->getName()
 			. "' size='" . $this->getSize()
 			. "' maxlength='" . $this->getMaxlength()

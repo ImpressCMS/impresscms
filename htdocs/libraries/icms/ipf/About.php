@@ -222,8 +222,8 @@ class icms_ipf_About {
 			$this->_tpl->assign('module_license_txt', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
 			fclose($handle);
 		}
-
-		$this->_tpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/system_adm_moduleabout.html');
+	
+		$this->_tpl->display('db:admin/system_adm_moduleabout.html');
 
 		icms_cp_footer();
 	}

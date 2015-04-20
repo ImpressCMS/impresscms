@@ -52,23 +52,53 @@ if ($mode == 'popup') {
 }
 
 if (empty( $mode )) {
-	$ret .= "\n<div id=\"xo-logger-output\">\n<div id='xo-logger-tabs'>\n";
-	$ret .= "<p>\n" . _CORE_DEVELOPER_DASHBOARD . " </p>\n";
-	$ret .= "<a href='javascript:xoSetLoggerView(\"none\")'>" . _NONE . "</a> | \n";
-	$ret .= "<a href='javascript:xoSetLoggerView(\"\")'>" . _ALL . "</a> | \n";
-	$count = count( $this->errors );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"errors\")'>" . _ERRORS . " (" . icms_conv_nr2local($count) . ")</a>\n";
-	$count = count( $this->queries );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"queries\")'>" . _QUERIES . " (" . icms_conv_nr2local($count) . ")</a>\n";
-	$count = count( $this->blocks );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"blocks\")'>" . _BLOCKS . " (" . icms_conv_nr2local($count) . ")</a>\n";
-	$count = count( $this->extra );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"extra\")'>" . _EXTRA . " (" . icms_conv_nr2local($count) . ")</a>\n";
-	$count = count( $this->logstart );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"timers\")'>" . _TIMERS . " (" . icms_conv_nr2local($count) . ")</a>\n";
-	$count = count($this->deprecated);
-	$ret .= "<a href='javascript:xoSetLoggerView(\"deprecated\")'>" . _CORE_DEPRECATED . " (" . icms_conv_nr2local($count) . ")</a>\n";
-	$ret .= "</div>\n";
+	$ret .= "<script type=\"text/javascript\">\n";
+	$ret .= "function($, cookie) {\n";
+	$ret .= "\n var app = {\n";
+	$ret .= "\n   initialize: function() {\n";
+	$ret .= "\n    $(document).ready(function() {\n";
+	$ret .= "\n       var stored = cookie.getCookie('icms_debug');\n";
+	$ret .= "\n      if(stored !== 'undefined' && stored) {\n";
+	$ret .= "\n       $(stored).addClass('active').siblings().removeClass('active');\n";
+	$ret .= "\n        $('#xo-logger-output .nav a[href='+stored+']').parent().addClass('active').siblings().removeClass('active');\n";
+	$ret .= "\n      }\n";
+	$ret .= "\n     $('#xo-logger-output .nav a').on({\n";
+	$ret .= "\n     click: function() {\n";
+	$ret .= "\n         cookie.createCookie('icms_debug', $(this).attr('href'));\n";
+	$ret .= "\n         }\n";
+	$ret .= "\n     });\n";
+	$ret .= "\n    });\n";
+	$ret .= "\n  }\n";
+	$ret .= "\n };\n";
+	$ret .= "\n return app;\n";
+	$ret .= "\n});\n";
+	$ret .= "</script>\n";
+
+	$ret .= "\n<div id='xo-logger-output' class='tabbable'>\n";
+		$ret .= "<ul class=\"nav nav-tabs\">\n";
+			$ret .= "<li class='active'><a href='#debug-none' data-toggle='tab'>" . _NONE . "</a></li>\n";
+			
+			$count = count( $this->errors );
+			$ret .= "<li><a href='#debug-errors' data-toggle='tab'>" . _ERRORS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
+			
+			$count = count( $this->queries );
+			$ret .= "<li><a href='#debug-queries' data-toggle='tab'>" . _QUERIES . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
+
+			$count = count( $this->blocks );
+			$ret .= "<li><a href='#debug-blocks' data-toggle='tab'>" . _BLOCKS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
+			
+			$count = count( $this->extra );
+			$ret .= "<li><a href='#debug-extra' data-toggle='tab'>" . _EXTRA . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
+			
+			$count = count( $this->logstart );
+			$ret .= "<li><a href='#debug-timers' data-toggle='tab'>" . _TIMERS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
+			
+			$count = count($this->deprecated);
+			$ret .= "<li><a href='#debug-deprecated' data-toggle='tab'>" . _CORE_DEPRECATED . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
+		$ret .= "</ul>\n";
+
+		$ret .= "<div class='tab-content'>\n";
+			$ret .= "<div class='tab-pane active' id='debug-none'></div>\n";
 }
 
 if (empty($mode) || $mode == 'errors') {
@@ -81,70 +111,66 @@ if (empty($mode) || $mode == 'errors') {
 		E_STRICT => _STRICT,
 	);
 	$class = 'even';
-	$count = count( $this->errors );
-	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>' . _ERRORS . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
+	$ret .= "<h3>\n" . _CORE_DEVELOPER_DASHBOARD . " </h3>\n";
+	$ret .= '<div class="tab-pane fade" id="debug-errors"><h4>' . _ERRORS . '</h4>';
 	foreach ( $this->errors as $error) {
-		$ret .= "\n<tr><td class='$class'>";
+		$ret .= "\n<div class='$class'>";
 		$ret .= isset( $types[ $error['errno'] ] ) ? $types[ $error['errno'] ] : 'Unknown';
 		$ret .= sprintf( ": %s in file %s line %s<br />\n", $error['errstr'], $error['errfile'], $error['errline'] );
-		$ret .= "</td></tr>";
+		$ret .= "</div>";
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
-	$ret .= "\n</table>\n";
+	$ret .= "\n</table>\n</div>\n";
 }
 
 if (empty($mode) || $mode == 'queries') {	
 	$class = 'even';
-	$count = count( $this->queries );
-	$ret .= '<table id="xo-logger-queries" class="outer"><tr><th>' . _QUERIES . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
+	$ret .= '<div class="tab-pane fade" id="debug-queries"><h4>' . _QUERIES . '</h4>';
 	$sqlmessages ='';
 	foreach ($this->queries as $q) {
 		if (isset($q['error'])) {
-			$sqlmessages .= '<tr class="' . $class . '"><td><span style="color:#ff0000;">' . htmlentities($q['sql']) . '<br /><strong>' . _ERR_NR . '</strong> ' . $q['errno'] . '<br /><strong>' . _ERR_MSG . '</strong> ' . $q['error'] . '</span></td></tr>';
+			$sqlmessages .= '<div class="' . $class . '"><span style="color:#ff0000;">' . htmlentities($q['sql']) . '<br /><strong>' . _ERR_NR . '</strong> ' . $q['errno'] . '<br /><strong>' . _ERR_MSG . '</strong> ' . $q['error'] . '</span></div>';
 		} else {
-			$sqlmessages .= '<tr class="' . $class . '"><td>' . htmlentities($q['sql']) . '</td></tr>';
+			$sqlmessages .= '<div class="' . $class . '">' . htmlentities($q['sql']) . '</div>';
 		}
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
 	$ret .= str_replace(XOOPS_DB_PREFIX . '_', '', $sqlmessages);
-	$ret .= '<tr class="foot"><td>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->queries)) . '</span> ' . _QUERIES . '</td></tr></table>';
+	$ret .= '<div class="foot"><h5>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->queries)) . '</span> ' . _QUERIES . '</h5></div></div>';
 }
 
 if (empty($mode) || $mode == 'blocks') {
 	$class = 'even';
-	$count = count( $this->blocks );
-	$ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">' . _BLOCKS . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
+	$ret .= '<div class="tab-pane fade" id="debug-blocks"><h4>' . _BLOCKS . '</h4>';
 	foreach ($this->blocks as $b) {
 		if ($b['cached']) {
-			$ret .= '<tr><td class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _CACHED . ' : ' . icms_conv_nr2local(sprintf(_REGENERATES, (int) ($b['cachetime']))) . '</td></tr>';
+			$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _CACHED . ' : ' . icms_conv_nr2local(sprintf(_REGENERATES, (int) ($b['cachetime']))) . '</div>';
 		} else {
-			$ret .= '<tr><td class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _NOCACHE . '</td></tr>';
+			$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _NOCACHE . '</div>';
 		}
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
-	$ret .= '<tr class="foot"><td>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->blocks)) . '</span> ' . _BLOCK . '</td></tr></table>';
+	$ret .= '<div class="foot"><h5>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->blocks)) . '</span> ' . _BLOCK . '</h5></div></div>';
 }
 
 if (empty($mode) || $mode == 'extra') {
 	$class = 'even';
-	$count = count( $this->extra );
-	$ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">' . _EXTRA . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
+	$ret .= '<div class="tab-pane fade" id="debug-extra"><h4>' . _EXTRA . '</h4>';
 	foreach ($this->extra as $ex) {
-		$ret .= '<tr><td class="' . $class . '"><strong>' . htmlspecialchars($ex['name']) . ':</strong> ' . htmlspecialchars($ex['msg']) . '</td></tr>';
+		$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($ex['name']) . ':</strong> ' . htmlspecialchars($ex['msg']) . '</div>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
-	$ret .= '</table>';
+	$ret .= '</div>';
 }
 
 if (empty($mode) || $mode == 'timers') {
 	$class = 'even';
-	$count = count( $this->logstart );
-	$ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">' . _TIMERS . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
+	$ret .= '<div class="tab-pane fade" id="debug-timers"><h4>' . _TIMERS . '</h4>';
 	foreach ( $this->logstart as $k => $v) {
-		$ret .= '<tr><td class="' . $class.'"><strong>' . htmlspecialchars($k) . '</strong> ' . sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>') . '</td></tr>';
+		$ret .= '<div class="' . $class.'"><strong>' . htmlspecialchars($k) . '</strong> ' . sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>') . '</div>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
-	$ret .= '</table>';
+	$ret .= '</div>';
 }
 
 /** 
@@ -153,55 +179,14 @@ if (empty($mode) || $mode == 'timers') {
  */
 if (empty($mode) || $mode == 'deprecated') {
 	$class = 'even';
-	$count = count($this->deprecated);
-	$ret .= '<table id="xo-logger-deprecated" class="outer"><tr><th colspan="2">' . _CORE_DEPRECATED . ' (' . icms_conv_nr2local($count) . ') </th></tr>';
+	$ret .= '<div class="tab-pane fade" id="debug-deprecated"><h4>' . _CORE_DEPRECATED . '</h4>';
 	foreach ( $this->deprecated as $dep) {
-		$ret .= '<tr><td class="' . $class.'">' . $dep . '</td></tr>';
+		$ret .= '<div class="' . $class.'">' . $dep . '</div>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
-	$ret .= '</table>';
+	$ret .= '</div>';
 }
 
 if (empty( $mode )) {
-	$ret .= <<<EOT
-</div>
-<script type="text/javascript">
-	function xoLogCreateCookie(name,value,days) {
-		if (days) {
-			var date = new Date();
-			date.setTime(date.getTime()+(days*24*60*60*1000));
-			var expires = "; expires="+date.toGMTString();
-		}
-		else var expires = "";
-		document.cookie = name+"="+value+expires+"; path=/";
-	}
-	function xoLogReadCookie(name) {
-		var nameEQ = name + "=";
-		var ca = document.cookie.split(';');
-		for (var i=0;i < ca.length;i++) {
-			var c = ca[i];
-			while (c.charAt(0)==' ') c = c.substring(1,c.length);
-			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-		}
-		return null;
-	}
-	function xoLogEraseCookie(name) {
-		createCookie(name,"",-1);
-	}
-	function xoSetLoggerView( name) {
-		var log = document.getElementById( "xo-logger-output" );
-		if (!log ) return;
-		var i, elt;
-		for ( i=0; i!=log.childNodes.length; i++) {
-			elt = log.childNodes[i];
-			if (elt.tagName && elt.tagName.toLowerCase() != 'script' && elt.id != "xo-logger-tabs") {
-				elt.style.display = ( !name || elt.id == "xo-logger-" + name ) ? "table" : "none";
-			}
-		}
-		xoLogCreateCookie( 'XOLOGGERVIEW', name, 1 );
-	}
-	xoSetLoggerView( xoLogReadCookie( 'XOLOGGERVIEW' ) );
-</script>
-
-EOT;
+	$ret .= "</div>\n</div>\n";
 }
