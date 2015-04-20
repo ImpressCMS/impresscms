@@ -1,0 +1,13 @@
+<div class="media">
+	<{foreach item=user from=$block.users}>
+		<div>
+			<a class="thumbnail pull-left" style="margin-right:10px" href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{if $user.avatar != ""}><img width="40px" class="media-object" src="<{$user.avatar}>"><{/if}>
+			</a>
+		</div>
+		<div class="media-body">
+			<h5 class="media-heading">  <{$user.name}></h5>
+			<p><span class="label label-info"><{$user.posts}></span></p>
+		</div>
+		<hr />
+	<{/foreach}>
+</div>

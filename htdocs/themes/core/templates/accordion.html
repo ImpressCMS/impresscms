@@ -1,0 +1,19 @@
+<div class="infobox">
+	<div class="panel-group" id="accordion2">
+    <{assign var=accordion value=0}>
+    <{assign var=accordion2 value=0}>
+    <{foreach item=block from=$xoBlocks.accordion}>
+    <{assign var=accordion value=$accordion+1}><{assign var=accordion2 value=$accordion2+1}>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion2" href="#collapse<{$accordion}>"><{$block.title}></a>
+				</h4>
+			</div>
+			<div id="collapse<{$accordion2}>" class="panel-collapse collapse">
+				<div class="panel-body"><{$block.content}></div>
+			</div>
+		</div>
+    <{/foreach}>
+	</div> 
+</div>

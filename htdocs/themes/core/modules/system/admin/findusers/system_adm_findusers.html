@@ -1,0 +1,82 @@
+
+<div class="CPbigTitle" style="background-image: url(<{$icms_url}>/modules/system/admin/findusers/images/findusers_big.png)"><{$smarty.const._AM_FINDUS}> 
+</div><br />
+<{if $total == "0"}>
+<h4><{$smarty.const._AM_NOFOUND}></h4>
+<{else}>
+<p style="padding:10px"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<{$totalfound}></p>
+
+	<form action="admin.php" method="post" name="memberslist" id="memberslist" role="form">
+	<input type="hidden" name="op" value="delete_many" />
+		<table class="center table table-hover table-bordered table-responsive">
+			<tr>
+				<th>
+					<input type="checkbox" name="memberslist_checkall" id="memberslist_checkall" onclick="xoopsCheckAll('memberslist', 'memberslist_checkall');" />
+				</th>
+				<th><{$smarty.const._AM_AVATAR}></th>
+				<th><{$smarty.const._AM_UNAME}></th>
+				<th><{$smarty.const._AM_LOGINNAME}></th>
+				<th><{$smarty.const._AM_REALNAME}></th>
+				<th><{$smarty.const._AM_EMAIL}></th>
+				<th><{$smarty.const._AM_PM}></th>
+				<th><{$smarty.const._AM_URL}></th>
+				<th><{$smarty.const._AM_REGDATE}></th>
+				<th><{$smarty.const._AM_LASTLOGIN}></th>
+				<th><{$smarty.const._AM_POSTS}></th>
+				<th><{$smarty.const._AM_ACTION}></th>
+			</tr>
+			<{foreach item=users from=$users}>
+			<tr>
+				<td>
+					<input type="hidden" name="memberslist_uname[<{$users.uid}>]" id="memberslist_uname[]" value="<{$users.uname}>">
+					<input type="checkbox" name="memberslist_id[]" id="memberslist_id[]" value="<{$users.uid}>">
+					
+				</td>
+				<td><{$users.user_avatar}></td>
+				<td><a href="<{$icms_url}>/userinfo.php?uid=<{$users.uid}>"><{$users.uname}></a></td>
+				<td><{$users.login_name}></td>
+				<td><{$users.uname}></td>
+				<td>
+					<a href="mailto:<{$users.email}>"><span class="glyphicon glyphicon-envelope"></span></a>
+				</td>
+				<td>
+					<a class='cboxElement' href="<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$users.uid}>"><span class="glyphicon glyphicon-comment"></span></a>
+				</td>
+				<td>
+				<{if $users.url != ""}>
+					<a href="<{$users.url}>" target="_blank"><span class="glyphicon glyphicon-share"></span></a>
+				<{else}>
+						&nbsp;
+					<{/if}>
+				</td>
+				<td><{$users.user_regdate}></td>
+				<td>
+					<{if $users.last_login != "0"}>
+						<{$users.last_login_m}>
+					<{else}>
+						&nbsp;
+					<{/if}>
+				</td>
+				<td><{$users.posts}></td>
+				<td><a href="<{$smarty.const.ICMS_MODULES_URL}>/system/admin.php?fct=users&amp;uid=<{$users.uid}>]&amp;op=modifyUser"><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/edit.png" alt="<{$smarty.const._EDIT}>" title="<{$smarty.const._EDIT}>"></a></td>
+			</tr>		
+			<{/foreach}>
+		</table>
+		<div class="form-inline">
+			<div class="form-group">
+				<select class="form-control" name="fct">
+					<option value="users"><{$smarty.const._DELETE}></option>
+					<option value="mailusers"><{$smarty.const._AM_SENDMAIL}></option>
+					<{if $groupvalue > 0}>
+						<option value="groups" selected="selected"><{$groupvalue_name}></option>
+					<{/if}>
+				</select>&nbsp;
+			</div>
+			<{if $groupvalue > 0}>
+				<input type="hidden" name="groupid" value="<{$groupvalue}>">
+			<{/if}>
+			<{$security}>
+			<div class="form-group"><input type="submit" class="btn btn-primary" value="<{$smarty.const._SUBMIT}>"></div>
+		</div>
+	</form>
+<{/if}>

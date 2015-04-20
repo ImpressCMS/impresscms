@@ -1,0 +1,5 @@
+<div class="commentWrapper nested">
+  <{section name=i loop=$comments}>
+    <{include file="db:system_comment.html" comment=$comments[i] nested='true'}>
+  <{/section}>
+</div>

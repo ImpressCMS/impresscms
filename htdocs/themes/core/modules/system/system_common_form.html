@@ -1,0 +1,32 @@
+<{$form.javascript}>
+<form name="<{$form.name}>" role="form" action="<{$form.action}>" method="<{$form.method}>" <{$form.extra}>>
+  <div class="form_wrapper form-group">
+    <fieldset>
+      <!-- start of form elements loop -->
+      <{foreach item=element from=$form.elements}>
+        <{if $element.name == ''}>
+          <{if $element.caption}><legend><{$element.caption}></legend><{/if}>
+          <{$element.body}>
+        <{elseif $element.hidden != true}>
+          <div class="form_element_wrapper <{cycle values="even,odd"}>" id="<{$element.name}>_row">
+            <label for='<{$element.name}>'><{$element.caption}><{if $element.required}> <span style='color:#f00'>*</span><{/if}>
+        <{if $element.description}>
+        	<span data-toggle="tooltip" data-html="true" title="<{$element.description}>"><span class="glyphicon glyphicon-info-sign"></span>
+        <{/if}>
+        </label>
+            <div class="single_element<{if $element.required}> required<{/if}>" id="<{$element.name}>_element">
+              <{if $element.required}>
+                <{$element.body|replace:'input':'input required'}>
+              <{else}>
+                <{$element.body}>
+              <{/if}>
+            </div>
+          </div>
+        <{else}>
+          <{$element.body}>
+        <{/if}>
+      <{/foreach}>
+      <!-- end of form elements loop -->
+    </fieldset>
+  </div>
+</form>

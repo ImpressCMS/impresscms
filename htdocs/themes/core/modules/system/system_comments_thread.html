@@ -1,0 +1,5 @@
+<div class="commentWrapper threaded">
+  <{section name=i loop=$comments}>
+    <{include file="db:system_comment.html" comment=$comments[i] comment=$comments[i] threaded='true'}>
+  <{/section}>
+</div>

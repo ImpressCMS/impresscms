@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="<{$icms_langcode}>">       
+  <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Theme name -->
+    <{assign var=theme_name value=$xoTheme->folderName}>
+    <!-- Directory html files -->
+    <{assign var=theme_name value=$xoTheme->folderName|cat:'/templates'}>
+	<{assign var=common_templates value=$xoTheme->folderName|cat:'/modules/system'}>
+    <title><{if $icms_pagetitle !=''}><{$icms_pagetitle}> : <{/if}><{$icms_sitename}></title>
+    <meta charset="<{$icms_charset}>">
+	<meta name="robots" content="<{$icms_meta_robots}>">
+	<meta name="keywords" content="<{$icms_meta_keywords}>">
+	<meta name="description" content="<{$icms_meta_description}>">
+	<meta name="rating" content="<{$icms_meta_rating}>">
+	<meta name="author" content="<{$icms_meta_author}>">
+	<meta name="dcterms.rightsHolder" content="<{$icms_meta_copyright}>">
+	<meta name="generator" content="ImpressCMS">  
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Module Header -->
+	<{$icms_module_header}>
+	<link rel="stylesheet" href="<{$icms_imageurl}>css/boiler.css">
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="<{$icms_imageurl}>css/custom.css">
+	<link rel="shortcut icon" type="image/ico" href="<{$icms_imageurl}>favicon.ico">
+	<link rel="icon" type="image/png" href="<{$icms_imageurl}>icon.png">
+	<script src="<{$icms_imageurl}>js/script.js"></script>
+</head>     
+<body> 
+<{if $xoBlocks.canvas_left and $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>
+<{assign var=columns_layout value='col-md-6 col-lg-6'}>
+<{assign var=block_layout value='col-md-6 col-lg-6'}>
+<{elseif $xoBlocks.canvas_left or $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>
+<{assign var=columns_layout value='col-md-9 col-lg-9'}>
+<{assign var=block_layout value='col-md-6 col-lg-6'}>
+<{else}>
+<{assign var=columns_layout value='col-md-12 col-lg-12'}>
+<{assign var=block_layout value='col-md-6 col-lg-6'}>
+<{/if}>  
+<div class="container-fluid">
+<header class="container-fluid">
+	<div id="container" class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4" role="banner" id="logo">        
+				<a class="logo" href="<{$icms_url}>" title="<{$icms_sitename}>">
+					<span class="logo_img" id="logo_img">
+						<img src="<{$icms_imageurl}>img/logo.png" class="img-responsive" alt="<{$icms_sitename}>">
+					 </span>
+				</a>
+			</div>
+			<div id="slogan" class="col-xs-12 col-sm-6 col-md-4">
+				<span class="slogan"><{$icms_slogan}></span>
+			</div> 
+			<div class="col-md-4" id="header_search">
+				<form action="<{$icms_url}>/search.php" class="form-inline" role="form">
+					<div class="form-group">
+						<input class="hidden-xs input-sm" type="text" placeholder="<{$smarty.const.THEME_SEARCH}>&hellip;" name="query">
+						<input type="hidden" name="action" value="results">
+						<button type="submit" class="hidden-xs btn-sm btn btn-default"><{$smarty.const.THEME_SEARCH}></button>		 
+					</div> 
+				</form>
+			</div> 
+			
+		</div>
+	</div>
+	<div id="navbar_container" class="container">
+		<div class="row">
+	<nav id="navbar" class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" type="button">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+						
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="<{$icms_url}>"><{$smarty.const.THEME_HOME}></a></li>
+						<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Sublinks<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#"></a></li>
+								<li><a href="#">Two</a></li>
+								<li><a href="#">Three</a></li>
+								<li><a href="#">Four</a></li>
+							</ul>
+						</li>
+						<li><a href="<{$icms_url}>">Page</a></li>
+					<{if !$icms_isuser}> 
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#"><{$smarty.const.THEME_PSEUDO}><b class="caret"></b></a>
+						<ul class="dropdown-menu" style="min-width:220px">
+							<li><form role="form" style="margin-left: 10px;margin-right: 10px;padding-bottom: 8px;padding-top: 8px;" action="<{$icms_url}>/user.php" method="post" class="form-signin navbar-left">
+							<div class="input-group input-group2">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+								<input type="text" placeholder="<{$smarty.const.THEME_DESC_PSEUDO}>" class="form-control" name="uname">
+								</div>
+								<div class="input-group input-group2">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+								<input type="password" placeholder="<{$smarty.const.THEME_DESC_PASSWORD}>" class="form-control" name="pass">
+								</div>
+								<{if $rememberme}>
+								<input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}>
+								<{/if}>
+								<input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>">
+								<input type="hidden" name="op" value="login" />
+								<button class="btn btn-primary btn-block" type="submit"><{$smarty.const.THEME_PSEUDO}></button>
+							</form></li>
+							<li><a href="<{$icms_url}>/user.php#lost" title=""><span class="glyphicon glyphicon-warning-sign" style="padding-right:5px;"></span> <{$smarty.const._MB_SYSTEM_LPASS}></a></li>
+							<li><a href="<{$icms_url}>/register.php" title="<{$smarty.const.THEME_REGISTER}>"><span class="glyphicon glyphicon-user" style="padding-right:5px;"></span> <{$smarty.const.THEME_REGISTER}></a></li>
+						</ul>
+					</li>
+					<{/if}>
+					<{if $icms_isuser}>
+					<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#"><{$icms_uname}><b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu">
+							<{if $icms_isadmin}>
+							<li><a href="<{$icms_url}>/admin.php"><span class="glyphicon glyphicon-wrench" style="padding-right:5px;"></span> <{$smarty.const.THEME_ADMIN}></a></li>
+							<{/if}>
+							<li><a href="<{$icms_url}>/edituser.php"><span class="glyphicon glyphicon-pencil" style="padding-right:5px;"></span> Edit Profile</a></li>
+							<li><a href="<{$icms_url}>/edituser.php?op=avatarform"><span class="glyphicon glyphicon-camera" style="padding-right:5px;"></span> My Avatar</a></li>
+							<li><a href="<{$icms_url}>/notifications.php"><span class="glyphicon glyphicon-envelope" style="padding-right:5px;"></span> <{$smarty.const.THEME_NOTIFICATION}></a></li>
+							<li><{xoInboxCount assign=pmcount}><{if $pmcount}><a href="<{xoAppUrl viewpmsg.php}>" title="<{$smarty.const.THEME_INBOX}> <{$pmcount}> <{$smarty.const.THEME_NOTREAD}>"><span class="glyphicon glyphicon-comment" style="padding-right:5px;"></span> <{$smarty.const.THEME_INBOX}> <span class="badge badge-info"><{$pmcount}></span></a><{else}><a href="<{xoAppUrl viewpmsg.php}>" title="<{$smarty.const.THEME_INBOX}>"><span class="glyphicon glyphicon-comment" style="padding-right:5px;"></span> <{$smarty.const.THEME_INBOX}></a><{/if}></li>
+							<li class="divider"></li>
+							<li><a href="<{$icms_url}>/user.php?op=logout"><span class="glyphicon glyphicon-off" style="padding-right:5px;"></span> <{$smarty.const.THEME_LOGOUT}></a></li>
+						</ul>
+					</li>
+					<{/if}>
+					</ul>
+				</div>
+			</nav>	</div>
+	</div>
+  <!-- End Nav-bar -->
+   
+</header>
+	<div class="container-fluid main">
+		<div class="preface_wrapper container-fluid<{if $xoBlocks.slider}> slider<{/if}>" id="preface_wrapper">
+			<div class="preface" id="preface">
+				<div class="clearfix container preface_inner" id="preface_inner">
+					<div class="row">
+						<div class="block">
+						<div class="block_inner">
+							<{if $xoBlocks.slider}>
+								<{include file="$theme_name/slider.html"}>
+							<{else}>
+								<h1><{$icms_pagetitle}></h1>
+							<{/if}>
+						</div>
+					</div></div>
+				</div>
+			</div>
+		</div>
+		<div class="content-main container">
+		<div class="row">
+			<div role="main" class="<{if $columns_layout}><{$columns_layout}><{/if}> col-xs-12 col-lg-6 col-lg-push-3 col-md-push-3"> 
+				<{if $xoBlocks.page_topcenter}>
+					<{foreach item=block from=$xoBlocks.page_topcenter}>
+						<div class="row">
+							<div class="col-md-12">
+								<article role="article"><header><h2 class="h2"><{$block.title}></h2></header>
+								<div class="contnt"><{$block.content}></div></article>
+							</div>
+						</div>
+					<{/foreach}>
+				<{/if}>
+			<{if $xoBlocks.page_topleft or $xoBlocks.page_topright}>
+			<div class="row">
+				<{foreach item=block from=$xoBlocks.page_topleft}>
+				<div class="<{if $columns_layout}><{$block_layout}><{/if}>">
+					<article role="article"><header><h3 class="h3"><{$block.title}></h3></header>
+					<div class="contnt"><{$block.content}></div></article>
+				</div>
+				<{/foreach}>
+				<{foreach item=block from=$xoBlocks.page_topright}>	             
+					<div class="<{if $columns_layout}><{$block_layout}><{/if}>">
+						<article role="article"><header><h3 class="h3"><{$block.title}></h3></header>
+						<div class="contnt"><{$block.content}></div></article>
+					</div>            
+				<{/foreach}>   
+				</div>
+			<{/if}>
+			<{if $icms_contents}>
+				<div id="icms-content"><{$icms_contents}></div>
+			<{/if}>  
+				<{if $xoBlocks.page_bottomcenter}>
+				<{foreach item=block from=$xoBlocks.page_bottomcenter}>
+					<div class="row">
+						<div class="col-md-12">
+							<article role="article"><header><h2 class="h2"><{$block.title}></h2></header>           
+							<div class="contnt"><{$block.content}></div></article>
+						</div>    
+					</div>
+				<{/foreach}>
+				<{/if}>
+				<{if $xoBlocks.page_bottomleft or $xoBlocks.page_bottomright}>
+				<div class="row">
+				<{foreach item=block from=$xoBlocks.page_bottomleft}>
+					<div class="<{if $columns_layout}><{$block_layout}><{/if}>">
+							<article role="article"><header><h3 class="h3"><{$block.title}></h3></header>
+					  <div class="contnt"><{$block.content}></div></article>
+					</div>            
+					<{/foreach}>
+							<{foreach item=block from=$xoBlocks.page_bottomright}>
+					<div class="<{if $columns_layout}><{$block_layout}><{/if}>">
+							<article role="article"><header><h3 class="h3"><{$block.title}></h3></header>
+					  <div class="contnt"><{$block.content}></div></article>
+					</div>
+				<{/foreach}>
+					</div>
+		<{/if}>
+		</div>
+		<{if $xoBlocks.canvas_left}>
+			<aside role="complementary" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 col-lg-pull-6 col-md-pull-6">  
+				<div class="well">
+				<{foreach item=block from=$xoBlocks.canvas_left}>	             
+					<article role="article"><div class="infobox">
+						<header><h3 class="h3"><{$block.title}></h3></header>
+						<div class="contnt"><{$block.content}></div>
+					</div></article>
+				<{/foreach}>
+				</div>
+			</aside>
+		<{/if}>
+		<{if $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>	
+			<aside role="complementary" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+				<div class="well_right">
+				<{if $xoBlocks.tabs}>
+					<{include file="$theme_name/tabs.html"}>
+				<{/if}>
+				<{if $xoBlocks.accordion}>
+					<{include file="$theme_name/accordion.html"}>
+				<{/if}>
+				<{if $xoBlocks.menu}>
+					<{include file="$theme_name/menu.html"}>
+				<{/if}>
+				<{foreach item=block from=$xoBlocks.canvas_right}>
+					<div class="infobox">
+						<article role="article"><header><h3 class="h3"><{$block.title}></h3></header>
+						<div class="contnt"><{$block.content}></div></article>
+					</div>
+				<{/foreach}>
+				</div>
+			</aside>
+		<{/if}>
+	  </div>  
+		<{if $xoBlocks.prefoot}>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+						<{assign var=prefoot value=0}>
+						<{foreach item=block from=$xoBlocks.prefoot}>
+						<{assign var=prefoot value=$prefoot+1}>
+						<{/foreach}>
+						<{foreach item=block from=$xoBlocks.prefoot}>
+							<div class="col-xs-12 col-md-<{if $prefoot == '3'}>4<{elseif $prefoot == '2'}>6<{elseif $prefoot == '1'}>12<{/if}>">
+								<h4 class="h4"><{$block.title}></h4>
+								<div class="contnt"><{$block.content}></div>
+							</div>
+						<{/foreach}>
+				</div>
+			</div>
+		<{/if}>
+	</div> 
+</div>
+<footer role="contentinfo" class="container-fluid">
+    <script type="text/javascript">
+    $(document).ready(function() {
+    $('a[href=#top]').click(function(){
+    $('html, body').animate({scrollTop:0}, 'slow');
+    return false;
+    });
+    });
+    </script>
+	<div class="container footer_wrapper">
+		<div class="clearfix footer">
+			<div class="row">                  
+				<div class="footer_content">
+					<{$icms_footer}>
+					<span class="pull-right"><a href="#top"><{$smarty.const.THEME_UPTOP}></a></span>   
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+</div>
+</body>
+</html>
