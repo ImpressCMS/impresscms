@@ -33,7 +33,7 @@
 <![endif]-->
 
 <script type="text/javascript" src="<{$image_url}>js/cookie.js"></script>
-<script type="text/javascript" src="<{$image_url}>js/hoverIntent.min.js"></script>
+<script type="text/javascript" src="<{$image_url}>js/hoverIntent.js"></script>
 <script type="text/javascript" src="<{$image_url}>js/superfish.js"></script>
 <script type="text/javascript" src="<{$image_url}>js/supersubs.js"></script>
 <script type="text/javascript" src="<{$image_url}>js/quicksearch.js"></script>
@@ -60,7 +60,7 @@ var helpfile = "<{$icms_url}>/help.html";
   jQuery('#suggestions').fadeOut();
  });
  jQuery('#needhelp').colorbox({href:""+helpfile+""});
-
+ $('[data-toggle="tooltip"]').tooltip();
  });
 </script>
 

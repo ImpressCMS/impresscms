@@ -315,4 +315,6 @@ div.pagination.default span.disabled {
 	padding: 6px;
 	height: auto;
 }
-
+.form-control {
+  width: auto;border-radius: 0;
+}
