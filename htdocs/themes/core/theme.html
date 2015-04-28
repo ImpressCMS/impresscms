@@ -29,14 +29,22 @@
 	<link rel="stylesheet" href="<{$icms_imageurl}>css/custom.css">
 	<link rel="shortcut icon" type="image/ico" href="<{$icms_imageurl}>favicon.ico">
 	<link rel="icon" type="image/png" href="<{$icms_imageurl}>icon.png">
+	<script src="<{$icms_imageurl}>/js/jquery.backTop.min.js"></script>
 	<script src="<{$icms_imageurl}>js/script.js"></script>
 </head>     
 <body> 
-<{if $xoBlocks.canvas_left and $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>
-<{assign var=columns_layout value='col-md-6 col-lg-6'}>
+<{if $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>
+<{assign var=right_blocks value='1'}><{/if}>
+<{if $xoBlocks.canvas_left and $right_blocks == "1"}>
+<{assign var=columns_layout value='col-md-6 col-lg-6 col-lg-push-3 col-md-push-3'}>
+<{assign var=left_column value='col-lg-pull-6 col-md-pull-6'}>
 <{assign var=block_layout value='col-md-6 col-lg-6'}>
-<{elseif $xoBlocks.canvas_left or $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>
-<{assign var=columns_layout value='col-md-9 col-lg-9'}>
+<{elseif $xoBlocks.canvas_left}>
+<{assign var=columns_layout value='col-md-9 col-lg-9 col-xs-12 col-lg-push-3 col-md-push-3'}>
+<{assign var=left_column value='col-lg-pull-9 col-md-pull-9'}>
+<{assign var=block_layout value='col-md-6 col-lg-6'}>
+<{elseif $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>
+<{assign var=columns_layout value='col-md-9 col-lg-9 col-xs-12'}>
 <{assign var=block_layout value='col-md-6 col-lg-6'}>
 <{else}>
 <{assign var=columns_layout value='col-md-12 col-lg-12'}>
@@ -46,29 +54,41 @@
 <header class="container-fluid">
 	<div id="container" class="container">
 		<div class="row">
-			<div class="col-xs-12 col-sm-6 col-md-4" role="banner" id="logo">        
+			<div class="col-xs-10 col-sm-6 col-md-4" role="banner" id="logo">        
 				<a class="logo" href="<{$icms_url}>" title="<{$icms_sitename}>">
 					<span class="logo_img" id="logo_img">
 						<img src="<{$icms_imageurl}>img/logo.png" class="img-responsive" alt="<{$icms_sitename}>">
 					 </span>
 				</a>
 			</div>
-			<div id="slogan" class="col-xs-12 col-sm-6 col-md-4">
+			<div id="slogan" class="hidden-xs col-xs-12 col-sm-6 col-md-4">
 				<span class="slogan"><{$icms_slogan}></span>
 			</div> 
-			<div class="col-md-4" id="header_search">
+			<div class="hidden-print hidden-xs col-md-4" id="header_search">
 				<form action="<{$icms_url}>/search.php" class="form-inline" role="form">
 					<div class="form-group">
-						<input class="hidden-xs input-sm" type="text" placeholder="<{$smarty.const.THEME_SEARCH}>&hellip;" name="query">
+						<input class="input-sm" type="text" placeholder="<{$smarty.const.THEME_SEARCH}>&hellip;" name="query">
 						<input type="hidden" name="action" value="results">
-						<button type="submit" class="hidden-xs btn-sm btn btn-default"><{$smarty.const.THEME_SEARCH}></button>		 
+						<button type="submit" class="btn-sm btn btn-warning"><{$smarty.const.THEME_SEARCH}></button>		 
 					</div> 
 				</form>
-			</div> 
+			</div>
 			
+			<a class="col-xs-2 hidden-md hidden-sm hidden-lg" href="#" id="searchtoggle">
+				<span id="searchtoggle_span" class="pull-right btn btn-default btn-sm glyphicon glyphicon-search"></span>
+			</a>
+			<div class="hidden-print col-xs-12" id="searchbar" style="display:none">
+				<form action="<{$icms_url}>/search.php" class="form-inline searchmobile" role="form">
+					<div class="input-group pull-right" style="width:100%">
+						<input class="form-control input-sm" type="text" placeholder="<{$smarty.const.THEME_SEARCH}>&hellip;" name="query">
+						<input type="hidden" name="action" value="results">
+						 <span class="input-group-btn"><button type="submit" class="btn-sm btn btn-warning"><{$smarty.const.THEME_SEARCH}></button></span>	 
+					</div> 
+				</form>
+			</div>
 		</div>
 	</div>
-	<div id="navbar_container" class="container">
+	<div id="navbar_container" class="hidden-print container">
 		<div class="row">
 	<nav id="navbar" class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
@@ -141,7 +161,7 @@
    
 </header>
 	<div class="container-fluid main">
-		<div class="preface_wrapper container-fluid<{if $xoBlocks.slider}> slider<{/if}>" id="preface_wrapper">
+		<div class="hidden-print preface_wrapper container-fluid<{if $xoBlocks.slider}> slider<{/if}>" id="preface_wrapper">
 			<div class="preface" id="preface">
 				<div class="clearfix container preface_inner" id="preface_inner">
 					<div class="row">
@@ -159,7 +179,7 @@
 		</div>
 		<div class="content-main container">
 		<div class="row">
-			<div role="main" class="<{if $columns_layout}><{$columns_layout}><{/if}> col-xs-12 col-lg-6 col-lg-push-3 col-md-push-3"> 
+			<div role="main" class="<{if $columns_layout}><{$columns_layout}><{/if}> col-xs-12"> 
 				<{if $xoBlocks.page_topcenter}>
 					<{foreach item=block from=$xoBlocks.page_topcenter}>
 						<div class="row">
@@ -187,7 +207,7 @@
 				</div>
 			<{/if}>
 			<{if $icms_contents}>
-				<div id="icms-content"><{$icms_contents}></div>
+				<div class="row" id="icms-content"><div class="col-md-12"><{$icms_contents}></div></div>
 			<{/if}>  
 				<{if $xoBlocks.page_bottomcenter}>
 				<{foreach item=block from=$xoBlocks.page_bottomcenter}>
@@ -217,7 +237,7 @@
 		<{/if}>
 		</div>
 		<{if $xoBlocks.canvas_left}>
-			<aside role="complementary" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 col-lg-pull-6 col-md-pull-6">  
+			<aside role="complementary" class="hidden-print col-xs-12 col-sm-6 col-md-3 col-lg-3<{if $left_column}> <{$left_column}><{/if}>">  
 				<div class="well">
 				<{foreach item=block from=$xoBlocks.canvas_left}>	             
 					<article role="article"><div class="infobox">
@@ -229,7 +249,7 @@
 			</aside>
 		<{/if}>
 		<{if $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>	
-			<aside role="complementary" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+			<aside role="complementary" class="hidden-print col-xs-12 col-sm-6 col-md-3 col-lg-3">
 				<div class="well_right">
 				<{if $xoBlocks.tabs}>
 					<{include file="$theme_name/tabs.html"}>
@@ -252,42 +272,34 @@
 	  </div>  
 		<{if $xoBlocks.prefoot}>
 			<hr>
-			<div class="row">
+			<div class="row hidden-print">
 				<div class="col-md-12">
-						<{assign var=prefoot value=0}>
-						<{foreach item=block from=$xoBlocks.prefoot}>
-						<{assign var=prefoot value=$prefoot+1}>
-						<{/foreach}>
-						<{foreach item=block from=$xoBlocks.prefoot}>
-							<div class="col-xs-12 col-md-<{if $prefoot == '3'}>4<{elseif $prefoot == '2'}>6<{elseif $prefoot == '1'}>12<{/if}>">
-								<h4 class="h4"><{$block.title}></h4>
-								<div class="contnt"><{$block.content}></div>
-							</div>
-						<{/foreach}>
+					<{assign var=prefoot value=0}>
+					<{foreach item=block from=$xoBlocks.prefoot}>
+					<{assign var=prefoot value=$prefoot+1}>
+					<{/foreach}>
+					<{foreach item=block from=$xoBlocks.prefoot}>
+						<div class="col-xs-12 col-md-<{if $prefoot == '3'}>4<{elseif $prefoot == '2'}>6<{elseif $prefoot == '1'}>12<{/if}>">
+							<h4 class="h4"><{$block.title}></h4>
+							<div class="contnt"><{$block.content}></div>
+						</div>
+					<{/foreach}>
 				</div>
 			</div>
 		<{/if}>
 	</div> 
 </div>
 <footer role="contentinfo" class="container-fluid">
-    <script type="text/javascript">
-    $(document).ready(function() {
-    $('a[href=#top]').click(function(){
-    $('html, body').animate({scrollTop:0}, 'slow');
-    return false;
-    });
-    });
-    </script>
 	<div class="container footer_wrapper">
 		<div class="clearfix footer">
 			<div class="row">                  
 				<div class="footer_content">
 					<{$icms_footer}>
-					<span class="pull-right"><a href="#top"><{$smarty.const.THEME_UPTOP}></a></span>   
 				</div>
 			</div>
 		</div>
 	</div>
+	<a id="backTop"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></a>
 </footer>
 </div>
 </body>

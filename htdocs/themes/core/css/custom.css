@@ -1,4 +1,4 @@
-/* Custom code */
+﻿/* Custom code */
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 body {background-color:#f9f9f9 !important;
@@ -60,6 +60,13 @@ a, a:visited {
   text-align: right;
   margin-top:8px
 }
+#searchtoggle {
+    margin-top: 3px;
+}
+#searchtoggle_span {
+    padding: 7px 15px;
+}
+#searchbar {margin-top:8px}
 .input-sm {
   border-radius: 3px;
  
@@ -154,15 +161,8 @@ clear: right;
   font-size: 22px;
   line-height: 120%;
 }
-/* Right column*/
-
-.well {
-  background-color: #f5f5f5;
-  border: 1px solid #e3e3e3;
-  border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-    padding: 19px;
- }
+/* Columns*/
+aside .well {padding:7px 19px}
 .well_right {
   background-color: #ffffff;
   border: 0 none;
@@ -170,17 +170,29 @@ clear: right;
   box-shadow: none;
   margin-bottom: 20px;
   min-height: 20px;
-  padding: 19px;
+  padding: 7px 19px
 }
-
+#navbar {transition: all 0.4s ease-out 0s;}
 .goToTop {
   position: fixed;
   top: 0;
   height: 55px;
   z-index: 1;
-  background-color: #f9f9f9 !important;
-      width: 100%;
+  background-color: #4F5B7E !important ;
+      width: 100.222%
 
+}
+.goToTop .navbar-right {
+   padding-top: 11px;
+  height: 54px;padding-right:25px
+  
+}
+.goToTop .navbar a,.goToTop .navbar-nav > li > a {
+  color: #dddddd !important;
+}
+.goToTop  .navbar-nav > li.open > a  {
+  background-color: #f4f4f4;
+  color: #8b8989 !important;
 }
 .media:first-child {
   border-bottom: 1px solid #e3e3e3;
@@ -224,6 +236,16 @@ tr.even td {
 }
 tr.odd td {
 }
+/* Tables HTML5 */
+
+.center {
+vertical-align:top;
+text-align:center;
+}
+.right {vertical-align:top;
+text-align:right}
+
+
 /* Comments */
 .comTitle {
 }
@@ -363,6 +385,7 @@ select[name="theme_select"] {
 }
 
 /*Core Messages */
+.alert {text-shadow: 0pt 1px 0pt rgba(255, 255, 255, 0.5);}
 .errorMsg, .confirmMsg, .resultMsg {
 	padding: 8px 35px 8px 14px;
 	margin-bottom: 18px;
@@ -391,19 +414,9 @@ select[name="theme_select"] {
 }
 /*Quotes and Codes */
 .icmsCode {
-	padding: 0 3px 2px;
-	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-	font-size: 12px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background-color: #f7f7f9;
-	border: 1px solid #e1e1e8;
 }
 .icmsQuote {
-	padding: 0 0 0 15px;
-	margin: 0 0 18px;
-	border-left: 5px solid #eeeeee;
+
 }
 /* For  Blocks Content */
 .contnt {
@@ -536,7 +549,9 @@ div#attachsig_row{padding-bottom: 20px;}
 div#url_row{padding-bottom: 20px;}
 	/* Video*/
 div#video_desc_element{padding-bottom: 20px;}
-
+div#profile-profile-tribes ul, div#profile-profile-friends ul {
+  margin-left: 0;
+}
 
 /* Notifications - Core and modules */
 .notification_title{color:#0088CC;}
@@ -677,6 +692,30 @@ div.jGrowl > .ui-state-highlight {
 .footer {color: #fff; min-height: 100px; background: url(../img/textures/diagTexture.png) top center no-repeat;}
 .footer a {color: #ffb400;}
 .footer a:hover, .footer a:focus {color: #fff;}
+/* Go to Top */
+/*Main stylesheet for Backtop jQuery Plugin */
+#backTop {
+  background-color: #555;
+  border-radius: 4px;
+  box-sizing: content-box;
+  color: #f3f3f3;
+  cursor: pointer;
+  font-size: 38px;
+  height: 35px;
+  padding: 6px;
+  width: 35px;
+  z-index: 999999999;
+  opacity: 0.8;
+}
+#backTop:hover {
+  background-color: #303030;
+  color: #7C9FC8;
+  opacity: 1;
+}
+#backTop.black{
+    border:1px solid #ccc;
+}
+
 
 /* Content Module */
 
@@ -741,7 +780,33 @@ div.jGrowl > .ui-state-highlight {
 #xo-logger-output .tab-pane {padding: 0 20px 20px;}
 #xo-logger-output .tab-pane div {overflow: auto; padding: 10px;}
 
+/* Profile Module */
+
+div#profile-profile-visitors, div#profile-profile-search-results, div#profile-profile-visual, div#profile-profile-statistics, div.profile-profile-details {
+  float: none;
+  
+}
+div.profile-form h2, div#profile-profile-pictures h3, div#profile-profile-audio h3, div#profile-profile-visitors h3, div#profile-profile-tribes h3, div#profile-profile-search-results p, div#profile-profile-statistics p, div.profile-profile-details p, div#profile-profile-search-results h3, div#profile-profile-search-results h4, div#profile-profile-friends h3, div#profile-profile-visual h3, div#profile-profile-statistics h3, div.profile-profile-details h3, div#profile-profile-videos h3 {
+  margin: 10px 0;
+}
+div#profile-profile-tribes, div#profile-profile-friends, div#profile-profile-pictures, div#profile-profile-audio, div#profile-profile-videos {
+  text-align: left;
+}
+div#profile_header {
+  margin: 10px 0;
+}
+.thumb {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  line-height: 1.42857;
+  margin-bottom: 5px;
+  padding: 4px;
+  transition: border 0.2s ease-in-out 0s;
+}
+
 /*Media queries from bootstrap */
+
 
 @media screen and (max-width: 480px) {
 .navbar {
@@ -762,14 +827,6 @@ div.jGrowl > .ui-state-highlight {
   margin-top:0px;
 }
 
-#header_search {
-  background: none repeat scroll 0 0 #efefef;
-  margin: 0;
-  width: 100%;
-}
-#header_search form {
-  margin: 0 10px 0 0;
-}
 .navbar ul > li a {
   border-bottom: 0px solid transparent;
   margin: 0 0 0 10px;
@@ -789,6 +846,9 @@ div.jGrowl > .ui-state-highlight {
     height: 50px;
     width: 100%;
 	 padding: 0;
+}
+.goToTop {
+  display: none !important;
 }
  .well {
 	background:none;
@@ -816,6 +876,9 @@ div.jGrowl > .ui-state-highlight {
     width: 100%;
 	 padding: 0;
 }
+.goToTop {
+  display: none !important;
+}
 .preface_wrapper, .footer_wrapper {
   min-height: 50px;
 }
@@ -823,7 +886,8 @@ div.jGrowl > .ui-state-highlight {
   padding: 10px 5px;
 }
 .preface h1, .preface h2, .preface h3, .preface h4, .preface h5, .preface h6 {
-  font-size: 20px;
+  font-size: 20px; margin-bottom: 10px;
+    margin-top: 10px; padding-left: 10px;
 }
 .alert {
   display: block;
@@ -843,18 +907,15 @@ div.jGrowl > .ui-state-highlight {
 .col-sm-6 .slogan {display:none}
 }
 
-@media (min-width: 320px) and (max-width: 479px){
+@media (min-width: 320px) and (max-width: 480px){
 
 .carousel-caption {
   display:none
 }
 }
-@media (min-width: 361px) and (max-width: 480px){
 
-.carousel-caption {
-  display:none
-}
-#slogan {
-    margin-top: 0;
+@media and (max-width: 767px) {
+.goToTop {
+  display: none !important;
 }
 }
