@@ -81,7 +81,7 @@ switch ($op) {
 
 		if (count($error) > 0) {
 			icms_core_Message::error($error);
-			echo "<p><a href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a></p>";
+			echo "<p><a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a></p>";
 			icms_cp_footer();
 			break;
 		}
@@ -90,8 +90,8 @@ switch ($op) {
 		. "<form action='admin.php' method='post'>"
 		. "<input type='hidden' name='fct' value='modules' />"
 		. "<input type='hidden' name='op' value='submit' />"
-		. "<table width='100%' border='0' cellspacing='1' class='outer'>"
-		. "<tr align='center'><th>" . _CO_ICMS_MODULE . "</th><th>" . _AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
+		. "<table width='100%' border='0' cellspacing='1' class='table outer'>"
+		. "<tr class='center' align='center'><th>" . _CO_ICMS_MODULE . "</th><th>" . _AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
 		$mcount = 0;
 		foreach ($module as $mid) {
 			if ($mcount % 2 != 0) {
@@ -135,8 +135,8 @@ switch ($op) {
 			."' /></td></tr>";
 		}
 
-		echo "<tr class='foot' align='center'><td colspan='3'><input type='submit' value='"
-		. _MD_AM_SUBMIT . "' />&nbsp;<input type='button' value='" . _MD_AM_CANCEL
+		echo "<tr class='foot' align='center'><td colspan='3'><input class='btn btn-primary' type='submit' value='"
+		. _MD_AM_SUBMIT . "' />&nbsp;<input class='btn btn-warning' type='button' value='" . _MD_AM_CANCEL
 		. "' onclick='location=\"admin.php?fct=modules\"' />" . icms::$security->getTokenHTML()
 		. "</td></tr></table></form>";
 		icms_cp_footer();
@@ -176,7 +176,7 @@ switch ($op) {
 				}
 			}
 		}
-		echo "<br /><a href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
+		echo "<br /><a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
 		icms_cp_footer();
 		break;
 
@@ -214,7 +214,7 @@ switch ($op) {
 				}
 			}
 		}
-		echo "<br /><a href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
+		echo "<br /><a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
 		icms_cp_footer();
 		break;
 
@@ -247,7 +247,7 @@ switch ($op) {
 				}
 			}
 		}
-		echo "<a href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
+		echo "<a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
 		icms_cp_footer();
 		break;
 
@@ -286,7 +286,7 @@ switch ($op) {
 				}
 			}
 		}
-		echo "<br /><a href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
+		echo "<br /><a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
 		icms_cp_footer();
 		break;
 

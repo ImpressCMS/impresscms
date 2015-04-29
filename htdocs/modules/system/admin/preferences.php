@@ -89,7 +89,7 @@ switch ($op) {
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><div class="CPindexOptions" align="center"><div class="cpicon cpicon-preferences" align="center">';
 		foreach ($ccats as $confcat) {
-			echo '<a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id=' . $confcat['id'] . '" title="' . _EDIT . ' ' . $confcat['name'] . '"><img alt="icon" src="' . ICMS_MODULES_URL  . '/system/images/preferences/' . $confcat['id'] . '.png"><span> ' . $confcat['name'] . '</span></a>';
+			echo '<a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id=' . $confcat['id'] . '" title="' . _EDIT . ' ' . $confcat['name'] . '"><img alt="icon" src="' . ICMS_MODULES_URL  . '/system/images/preferences/' . $confcat['id'] . '.png"><div> ' . $confcat['name'] . '</div></a>';
 		}
 		echo '</div></div>';
 		icms_cp_footer();
