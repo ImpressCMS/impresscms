@@ -96,13 +96,14 @@ class icms_form_Theme extends icms_form_Base {
 				if (($caption = $ele->getCaption()) != '') {
 					$ret .=
 				        "<div class='xoops-form-element-caption" . ($ele->isRequired() ? "-required" : "" ) . "'>"
-						. "<span class='caption-text'>{$caption}</span>"
-						. "<span class='caption-marker'>*</span>"
+						. "<span class='caption-text'>{$caption}</span>";
+						if (($desc = $ele->getDescription()) != '') {
+							$ret .= "<div class='xoops-form-element-help'>{$desc}</div>";
+						}
+					$ret .= "<span class='caption-marker'> *</span>"
 						. "</div>";
 				}
-				if (($desc = $ele->getDescription()) != '') {
-					$ret .= "<div class='xoops-form-element-help'>{$desc}</div>";
-				}
+				
 				$ret .= "</td><td class='$class'>" . $ele->render() . "</td></tr>\n";
 			} else {
 				$hidden .= $ele->render();
