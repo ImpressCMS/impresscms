@@ -124,15 +124,10 @@ hr {
   padding: 0;
 }
 ins {
-  background: #ff9;
-  color: #000;
   text-decoration: none;
 }
 mark {
-  background: #ff0;
-  color: #000;
-  font-style: italic;
-  font-weight: bold;
+  background: none repeat scroll 0 0 #dfe6f9;
 }
 /* Redeclare monospace font family: h5bp.com/j */
 pre,

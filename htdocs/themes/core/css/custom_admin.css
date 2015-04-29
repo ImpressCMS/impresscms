@@ -115,7 +115,7 @@ float: left;
   box-shadow: inset 1px 1px 10px #cacaca;
     transition: all 0.3s ease 0s !important;
 }
-.preferences {
+.preferences,div .cpicon-preferences a {
   border: 1px solid #ddd;
   box-shadow: none;
   color: #646464 !important;
@@ -142,7 +142,7 @@ float: left;
   text-align: right;
   width: 20%;
 }
-.preferences div, .preferences span {
+.preferences div, .preferences span,div .cpicon-preferences div {
   color: #646464;
   font-size: 12px;
   font-weight: 400;
@@ -222,6 +222,7 @@ float: left;
 .center th , .center td, .center, .center tr th{
     text-align: center;
 }
+.caption-marker {color:#f00}
 #cancel_button, #modify_button {
     margin-top: 10px;
 }

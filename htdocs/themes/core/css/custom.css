@@ -669,6 +669,31 @@ div.jGrowl > .ui-state-highlight {
   border-color: #ddd #ddd #ddd transparent;
   *border-left-color: #ffffff;
 }
+/* Up and Down in collapsible panels */
+.panel-heading [data-toggle="collapse"]:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e072"; /* "play" icon */
+    float: right;
+  color: #456481;
+    font-size: 12px;
+    line-height: 22px;
+
+    /* rotate "play" icon from > (right arrow) to down arrow */
+    -webkit-transform: rotate(-90deg);
+    -moz-transform:    rotate(-90deg);
+    -ms-transform:     rotate(-90deg);
+    -o-transform:      rotate(-90deg);
+    transform:         rotate(-90deg);
+}
+.panel-heading [data-toggle="collapse"].collapsed:after {
+    /* rotate "play" icon from > (right arrow) to ^ (up arrow) */
+    -webkit-transform: rotate(90deg);
+    -moz-transform:    rotate(90deg);
+    -ms-transform:     rotate(90deg);
+    -o-transform:      rotate(90deg);
+    transform:         rotate(90deg);
+}
+
 #register {padding-bottom:20px}
 .openid_url {
   background-position: 4px center;

@@ -9,7 +9,7 @@
 					<{$element.body}>
 				<{elseif $element.hidden != true}>
 					<div class="form_element_wrapper" id="<{$element.name}>_row">
-						<label for='<{$element.name}>'><{$element.caption}><{if $element.required}> <span style='color:#f00'>*</span><{/if}>
+						<label for='<{$element.name}>'><{$element.caption}><{if $element.required}> <span class='caption-marker'>*</span><{/if}>
 							<{if $element.description}>
 								<span data-toggle="tooltip" data-html="true" title="<{$element.description}>"><span class="glyphicon glyphicon-info-sign"></span>
 							<{/if}>
