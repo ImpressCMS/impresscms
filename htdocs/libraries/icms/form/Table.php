@@ -79,7 +79,7 @@ class icms_form_Table extends icms_form_Base {
 			. "' id='" . $this->getName()
 			. "' action='" . $this->getAction()
 			. "' method='" . $this->getMethod() . "'" . $this->getExtra()
-			. ">\n<table border='0' width='100%'>\n";
+			. ">\n<table class='table' border='0' width='100%'>\n";
 		$hidden = '';
 		foreach ($this->getElements() as $ele) {
 			if (!$ele->isHidden()) {

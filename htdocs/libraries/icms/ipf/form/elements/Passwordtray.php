@@ -37,7 +37,7 @@ class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
 
 	public function render() {
 		$ret = parent::render();
-		$ret .= "<input type='password' name='" . $this->_key . "2' id='" . $this->_key . "2' "
+		$ret .= "<input class='form-control' type='password' name='" . $this->_key . "2' id='" . $this->_key . "2' "
 			 .  "size='10' maxlength='32' value='' autocomplete='off' />";
 		return $ret;
 	}

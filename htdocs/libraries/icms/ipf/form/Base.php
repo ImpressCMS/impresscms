@@ -477,7 +477,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		$required =& $this->getRequired();
 		$ret = "
 			<form name='".$this->getName()."_dorga' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$this->getName()."(this);'".$this->getExtra().">
-			<table width='100%' class='outer' cellspacing='1'>
+			<table width='100%' class='outer table' cellspacing='1'>
 			<tr><th colspan='2'>".$this->getTitle()."</th></tr>
 		";
 		$hidden = '';
