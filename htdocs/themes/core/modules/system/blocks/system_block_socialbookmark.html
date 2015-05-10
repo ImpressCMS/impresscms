@@ -4,7 +4,7 @@
 	    <{$block.label}><{$smarty.const._MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK}>
 	    <span class="caret"></span>
 	  </a>
-	  <ul class="dropdown-menu">
+	  <ul class="dropdown-menu add-arrow">
 			<{foreach item=provider from=$block.provider name=social}>  		
 				<li>
 	  			<a href="#" onclick="window.open(<{$provider.link}>);return false;" rel="nofollow" data-original-title="<{$provider.title}>" class="text-left">

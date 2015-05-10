@@ -5,7 +5,7 @@
 	  <div class="panel panel-default">
 		<div class="panel-heading">
 		  <a class="panel-title" aria-expanded="true" data-toggle="collapse" data-parent="#searchResults" href="#group<{$mod.index}>">
-			<{$sort_key}>: <{$smarty.const._SR_HITSRETURNED}> <span class="badge"><{$sort_value}></span>
+			<{$sort_key}>: <{$smarty.const._SR_HITSRETURNED}> <span class="label label-primary"><{$sort_value}></span>
 		  </a>
 		</div>
 		<div id="group<{$mod.index}>" class="panel-collapse collapse<{if $sort_value > 0}> in<{/if}>">
@@ -19,7 +19,7 @@
 								<img alt="<{$search_results[$sort_key].results[cur_result].processed_image_alt_text}>" src="<{$search_results[$sort_key].results[cur_result].processed_image_url}>" />
 								<{$search_results[$sort_key].results[cur_result].processed_image_tag}>&nbsp;
 								<strong><a href="<{$search_results[$sort_key].results[cur_result].link}>"><{$search_results[$sort_key].results[cur_result].processed_title}></a></strong>
-								<br /><small><a href="<{$search_results[$sort_key].results[cur_result].processed_user_url}>"><{$search_results[$sort_key].results[cur_result].processed_user_name}></a> <{$search_results[$sort_key].results[cur_result].processed_time}></small>
+								<br><small><a href="<{$search_results[$sort_key].results[cur_result].processed_user_url}>"><{$search_results[$sort_key].results[cur_result].processed_user_name}></a> <{$search_results[$sort_key].results[cur_result].processed_time}></small>
 						</td>
 					</tr>
 					<{/section}>
@@ -43,29 +43,30 @@
 </div>
 
 <div class="panel panel-default">
-	<div class="panel-body">
-		
-		
-	<h4><{$label_search_type}> <small><{$search_type}></small></h4>
-	<ul class="list-inline">
-		<li><{$label_keywords}></li>
-		<{* This section generates a space separated list of keywords that were searched. *}>
-		<{section name=cur_kw_searched loop=$searched_keywords}>
-			<li><mark><{$searched_keywords[cur_kw_searched]}></mark></li>
-		<{/section}>
-	</ul>
-	
-	<{if $ignored_keywords}>
+	<div class="panel-body">	
+		<h4><{$label_search_type}> <small><{$search_type}></small></h4>
 		<ul class="list-inline">
-			<li><{$label_ignored_keywords}></li>
-			<{* This section generates a space separated list of keywords that were NOT searched. *}>
-			<{section name=cur_kw_not_searched loop=$ignored_keywords}>
-			<li><mark><{$ignored_keywords[cur_kw_not_searched]}></mark></li>
+			<li><{$label_keywords}></li>
+			<{* This section generates a space separated list of keywords that were searched. *}>
+			<{section name=cur_kw_searched loop=$searched_keywords}>
+				<li><mark><{$searched_keywords[cur_kw_searched]}></mark></li>
 			<{/section}>
 		</ul>
-	<{/if}>
+		
+		<{if $ignored_keywords}>
+			<ul class="list-inline">
+				<li><{$label_ignored_keywords}></li>
+				<{* This section generates a space separated list of keywords that were NOT searched. *}>
+				<{section name=cur_kw_not_searched loop=$ignored_keywords}>
+				<li><mark><{$ignored_keywords[cur_kw_not_searched]}></mark></li>
+				<{/section}>
+			</ul>
+		<{/if}>
 	</div>
 </div>
 
 <{/if}>
+<a href="#searchtype-form-again" class="collapsed" aria-expanded="false" data-toggle="collapse"><h3>Search again</h3></a>
+<div id="searchtype-form-again" class="panel-collapse collapse">
 <{$search_form}>
+</div>

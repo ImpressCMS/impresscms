@@ -70,21 +70,15 @@
                     <div class="clearfix moduleActions">
                       <{if $module.isactive == '1'}>
                         <a class="btn btn-sm btn btn-primary" title="<{$lang_update}>" href="<{$icms_url}>/modules/system/admin.php?fct=modules&amp;op=update&amp;module=<{$module.dirname}>">
-                          <img src="<{$icms_url}>/images/kfaenza/actions/reload.png" alt="<{$lang_update}>"/>
-                          <{$lang_update}>
-                        </a>
+                          <span class="glyphicon glyphicon-ok-sign"></span> <{$lang_update}></a>
                       <{/if}>
 
                       <{if $module.isactive != '1'}>
                         <a class="btn btn-sm btn btn-danger" title="<{$lang_unistall}>" href="<{$icms_url}>/modules/system/admin.php?fct=modules&amp;op=uninstall&amp;module=<{$module.dirname}>">
-                          <img src="<{$icms_url}>/images/kfaenza/actions/button_cancel.png" alt="<{$lang_unistall}>">
-                          <{$lang_unistall}>
-                        </a>
+                         <span class="glyphicon glyphicon-remove-circle"></span> <{$lang_unistall}></a>
                       <{/if}>  
                       <a href="<{$icms_url}>/modules/system/admin.php?fct=version&amp;mid=<{$module.dirname}>" class="btn btn-sm bg-orange" title="<{$lang_info}>" data-toggle="modal" data-target="#Modal<{$module.mid}>">
-                        <img src="<{$icms_url}>/images/kfaenza/actions/help.png" alt="<{$lang_info}>">
-                        <{$lang_info}>
-                      </a>
+                        <span class="glyphicon glyphicon-question-sign"></span> <{$lang_info}></a>
 						  <div class="modal fade" id="Modal<{$module.mid}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog modal-sm">
 								 <div class="modal-header">
@@ -95,9 +89,7 @@
 						</div>
                       <{if $module.support_site_url != '' &&  $module.isactive == '1'}>
                         <a class="btn btn-sm btn btn-info" title="<{$lang_support}>" href="<{$module.support_site_url}>" rel="external">
-                          <img src="<{$icms_url}>/images/kfaenza/actions/gohome.png" alt="<{$lang_support}>"/>
-                          <{$lang_support}>
-                        </a>
+                          <span class="glyphicon glyphicon-home"></span> <{$lang_support}></a>
                       <{/if}>
                       <input type="hidden" name="module[]" value="<{$module.mid}>">                      
                     </div>
@@ -132,13 +124,9 @@
                   <div class="clearfix">
                     <div class="clearfix moduleActions" style="margin-top:10px">
                       <a style="float:none" class="btn btn-sm btn-primary" title="<{$lang_install}>" href="<{$icms_url}>/modules/system/admin.php?fct=modules&amp;op=install&amp;module=<{$module.dirname}>">
-                        <img src="<{$icms_url}>/images/kfaenza/actions/compfile.png" alt="<{$lang_install}>">
-                        <{$lang_install}>
-                      </a>  
+                         <span class="glyphicon glyphicon glyphicon-log-in"></span> <{$lang_install}></a>  
                       <a style="float:none" href="<{$icms_url}>/modules/system/admin.php?fct=version&amp;mid=<{$module.dirname}>" class="btn btn-sm bg-orange" title="<{$lang_info}>" data-toggle="modal" data-target="#Modal<{$module.dirname}>">
-                        <img src="<{$icms_url}>/images/kfaenza/actions/help.png" alt="<{$lang_info}>">
-                        <{$lang_info}>
-                      </a>
+                         <span class="glyphicon glyphicon-question-sign"></span> <{$lang_info}></a>
 						  <div class="modal fade" id="Modal<{$module.dirname}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog modal-sm">
 								 <div class="modal-header">

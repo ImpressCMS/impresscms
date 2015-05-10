@@ -7,8 +7,9 @@
 <p style="padding:10px"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<{$totalfound}></p>
 
 	<form action="admin.php" method="post" name="memberslist" id="memberslist" role="form">
-	<input type="hidden" name="op" value="delete_many" />
-		<table class="center table table-hover table-bordered table-responsive">
+	<input type="hidden" name="op" value="delete_many">
+		<div class="table-responsive">
+		<table class="center table table-hover table-bordered">
 			<tr>
 				<th>
 					<input type="checkbox" name="memberslist_checkall" id="memberslist_checkall" onclick="xoopsCheckAll('memberslist', 'memberslist_checkall');" />
@@ -62,6 +63,7 @@
 			</tr>		
 			<{/foreach}>
 		</table>
+		</div>
 		<div class="form-inline">
 			<div class="form-group">
 				<select class="form-control" name="fct">

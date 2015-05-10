@@ -1,7 +1,8 @@
-<table class="table table-responsive">
+<div class="table-responsive">
+<table class="table">
   <{foreach item=comment from=$block.comments}>
   <tr class="<{cycle values="even,odd"}>">
-    <td align="center"><img src="<{$xoops_url}>/images/subject/<{$comment.icon}>" alt="" /></td>
+    <td align="center"><img src="<{$icms_url}>/images/subject/<{$comment.icon}>" alt="" /></td>
     <td><{$comment.title}></td>
     <td align="center"><{$comment.module}></td>
     <td align="center"><{$comment.poster}></td>
@@ -9,3 +10,4 @@
   </tr>
   <{/foreach}>
 </table>
+</div>

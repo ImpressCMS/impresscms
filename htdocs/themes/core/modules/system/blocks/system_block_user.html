@@ -1,8 +1,8 @@
 <div id="userMenu" class="sidebar-nav">
 	<{if $block.user_avatar != ""}>
-	<div style="text-align: center;"><img alt="<{$block.name}>" src="<{$block.user_avatar}>"></div>
+	<div style="text-align: center;"><img style="max-width: 98px;margin: 0 auto;" class="thumb img-responsive" alt="<{$block.name}>" src="<{$block.user_avatar}>"></div>
 	<{/if}>
-	<ul class="nav nav-pills nav-list nav-stacked">
+	<ul style="padding-top: 0px; margin-top: 3px;" class="nav nav-pills nav-list nav-stacked">
 		
 		<{if $icms_isadmin}>
 		<li><a class="menuTop" href="<{$icms_url}>/admin.php" title="<{$block.lang_adminmenu}>"> <span class="glyphicon glyphicon-wrench" style="padding-right:5px;"> </span><{$block.lang_adminmenu}></a></li>

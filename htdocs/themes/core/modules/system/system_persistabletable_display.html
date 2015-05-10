@@ -24,7 +24,7 @@
 			<{if $icms_optionssel_filtersArray}>
 				<div class="form-group">
 					<label><{$smarty.const._CO_ICMS_FILTER}> : </label>
-					<select class="form-control" name='filtersel' onchange='submit()' >
+					<select class="form-control input-sm" name='filtersel' onchange='submit()' >
 						<{foreach from=$icms_optionssel_filtersArray key=key item=field}>
 							<option value='<{$key}>' <{$field.selected}> > <{$field.caption}></option>
 						<{/foreach}>
@@ -32,7 +32,7 @@
 				</div>
 				<{if $icms_optionssel_filters2Array}>
 					<div class="form-group">
-						<select class="form-control" name='filtersel2' onchange='submit()'>
+						<select class="form-control input-sm" name='filtersel2' onchange='submit()'>
 						<{foreach from=$icms_optionssel_filters2Array key=key item=field}>
 							<option value='<{$key}>' <{$field.selected}> > <{$field.caption}></option>
 						<{/foreach}>
@@ -43,7 +43,7 @@
 			<{if !$icms_isTree}>
 				<div class="form-group">
 					<label><{$smarty.const._CO_ICMS_SHOW_ONLY}> : </label> 
-					<select class="form-control" name='limitsel' onchange='submit()'>
+					<select class="form-control input-sm" name='limitsel' onchange='submit()'>
 						<{foreach from=$icms_optionssel_limitsArray key=key item=field}>
 							<option value= '<{$key}>' <{$field.selected}> > <{$field.caption}></option>
 						<{/foreach}>
@@ -54,9 +54,9 @@
 				<div class="form-group" style="float:right">
 					<label><{$icms_quicksearch}> :</label> 
 					<div class="input-group">
-						<input class="form-control" type="text" id="quicksearch_<{$icms_id}>" name="quicksearch_<{$icms_id}>">
+						<input class="form-control input-sm" type="text" id="quicksearch_<{$icms_id}>" name="quicksearch_<{$icms_id}>">
 						<span class="input-group-btn">
-							<button class="btn btn-info btn-flat" type="submit" name="button_quicksearch_<{$icms_id}>"> <{$smarty.const._SEARCH}></button>
+							<button class="btn btn-info btn-flat btn-sm" type="submit" name="button_quicksearch_<{$icms_id}>"> <{$smarty.const._SEARCH}></button>
 						</span>
 					</div>
 				</div>
@@ -70,8 +70,8 @@
 <{if $icms_actionButtons || $icms_withSelectedActions}>
 	<form id="form_<{$icms_id}>" method="post">
 <{/if}>
-<div class="box-body ">
-<table class="table table-hover table-responsive">
+<div class="box-body table-responsive">
+<table class="table table-hover">
 <tbody>
 	<tr>
 	 <{foreach from=$icms_columns item=column}>

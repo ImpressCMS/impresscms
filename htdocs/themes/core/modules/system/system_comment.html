@@ -1,7 +1,7 @@
 <div class="media">
   <h4 class="muted"><{$comment.image}><{$comment.title}> | <small><{$comment.poster.uname}></small></h4>
   <a class="pull-left" href="#">
-    <img class="media-object img-thumbnail" src="<{$comment.poster.avatar}>" alt="">
+    <img class="media-object img-thumbnail img-responsive" style="max-width:96px" src="<{$comment.poster.avatar}>" alt="">
   </a>
   <div class="media-body">
     <div class="well">
@@ -15,16 +15,16 @@
     </div>
     <div class="btn-group clearfix alignright">
       <{if $xoops_iscommentadmin == true}>
-        <a class="btn btn-default btn-sm" href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><{$lang_edit}></a>
-        <a class="btn btn-default btn-sm" href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_delete}>"><{$lang_delete}></a>
-        <a class="btn btn-default btn-sm" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
+        <a class="btn btn-default btn-xs" href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><{$lang_edit}></a>
+        <a class="btn btn-default btn-xs" href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_delete}>"><{$lang_delete}></a>
+        <a class="btn btn-default btn-xs" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
       <{elseif $xoops_isuser == true && $xoops_userid == $comment.poster.id}>
-        <a class="btn btn-default btn-sm" href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><{$lang_edit}></a>
-        <a class="btn btn-default btn-sm" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
+        <a class="btn btn-default btn-xs" href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><{$lang_edit}></a>
+        <a class="btn btn-default btn-xs" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
       <{elseif $xoops_isuser == true || $anon_canpost == true}>
-        <a class="btn btn-default btn-sm" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
+        <a class="btn btn-default btn-xs" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
       <{else}>
-        <a class="btn btn-default btn-sm" href="<{$icms_url}>/user.php" title="Register">Register to post</a>
+        <a class="btn btn-default btn-xs" href="<{$icms_url}>/user.php" title="Register">Register to post</a>
       <{/if}>
     </div>
     <{if $nested}>
@@ -60,6 +60,5 @@
         <{/if}>
       </div>
     <{/if}>
-
   </div>
 </div>
