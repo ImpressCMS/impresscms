@@ -25,22 +25,32 @@
 <{$core_scripts}>
 
 <!-- CSS -->
-	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link rel="stylesheet" media="screen" href="<{$image_url}>css/AdminLTE.css">
-	<link type="text/css" rel="stylesheet" href="<{$image_url}>css/skins/_all-skins.min.css">
-	<link type="text/css" rel="stylesheet" href="<{$image_url}>css/custom_admin.css">
-
+	<link rel="stylesheet" href="<{$image_url}>css/skins/_all-skins.min.css">
+	<link rel="stylesheet" href="<{$image_url}>css/custom_admin.css">
+	<link href="<{$image_url}>css/iCheck/square/blue.css" rel="stylesheet">
 <!--[if lt IE 8]>
 <script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js" type="text/javascript"></script>
 <![endif]-->
 
 <script src="<{$image_url}>js/cookie.js"></script>
 <script src="<{$image_url}>js/app.js"></script>
-<script>
+<script src="<{$image_url}>js/icheck.min.js"></script>
+<script src="<{$image_url}>js/bootstrap-filestyle.min.js"></script>
+
+<{literal}><script>
 $(function() {
 	$('[data-toggle=tooltip]').tooltip();
+	$('input').iCheck({
+    checkboxClass: 'icheckbox_square-blue',
+    radioClass: 'icheckbox_square-blue'
+  });
+ $(":file").filestyle(
+ {buttonText: "<{/literal}>&nbsp;<{$smarty.const._SEARCH}><{literal}>"}
+ );
 });
-</script>
+</script><{/literal}>
 </head>
 <body class="skin-blue wysihtml5-supported">
 	<div class="wrapper">

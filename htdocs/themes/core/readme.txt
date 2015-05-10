@@ -1,3 +1,44 @@
+core v. 1
+
+[CHANGES - USER SIDE]
+
+- New design based in core theme by Will Hall
+- Templates for system module moved to HTML5
+- In small devices center columns looks before left column
+- Header section redesigned for small and medium devices.
+- Tababble login form and lost pass template
+- Dropdown in Bookmarks block
+- New design for Theme select block
+- Go to top with image mode.
+- Sticky header nav
+- HTML5 templates for Content module
+- Top users block redesigned (carousel)
+- Top posters blocks redesigned.
+- Badges in Who is on line block and Pending content.
+- Edit content in User side uses Tooltip Bootstrap
+- Edit block in User side with Bootstrap design.
+- User info template redesigned.
+- New Cooming soon template (site closed).
+- Error template redesigned.
+- New look and feel for Comments.
+- Search template improves: accordion for results and new search.
+- Friendly printing added.
+
+[CHANGES - ADMIN SIDE]
+
+- New Admin Theme based in https://almsaeedstudio.com/
+- 
+- Input type file design based on
+- iCheck 
+
+
+
+
+
+
+
+======
+icmsbootstrap_v303
 
 Changelog:
 
@@ -17,24 +58,14 @@ Changelog:
 [UNSOLVED]
 - Core-Bug: "Remember me" is presend if you open the user.php only
 
-
-
-
-
-
 Have a lot of fun :-)
 
 Rene Sato
 --
 ImpressCMS Deutschland
 
-
-
-
-
-
-
-
+======
+ImpressCMS - Bootstrap v. 1
 
 Following the work by David (http://community.impresscms.org/modules/newbb/viewtopic.php?viewmode=flat&type=&topic_id=5158&forum=10
 ), I am happy introducing a port to ImpressCMS of Bootstrap. 
