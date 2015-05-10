@@ -20,9 +20,29 @@
 .box-body.table-responsive {
     overflow: auto;
 }
+.add-arrow::before {
+    border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: "";
+    display: inline-block;
+    left: 9px;
+    position: absolute;
+    top: -7px;
+}
+.add-arrow::after {
+    border-bottom: 6px solid #ffffff;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    content: "";
+    display: inline-block;
+    left: 10px;
+    position: absolute;
+    top: -6px;
+}
 /* estilos del tema adaptados */
 #fontsizer,.principal {
-  float: right;
+	float: right;
   font-size: 14px;
   height: 27px;
   list-style: none outside none;
@@ -58,7 +78,11 @@ float: left;
 .topnavbar_buttons, .user {
 	 float: right !important; 
 	 margin-top: 13px; 
-	 padding-right: 16px
+	 padding-right: 16px;
+}
+.topnavbar_buttons a ,#nav-change-language {
+    border: medium none;
+    margin-left: 0 !important;
 }
 .user-menu {
   background: none repeat scroll 0 0 #8099b7;
@@ -72,9 +96,7 @@ float: left;
 .user-menu a:hover,.user-menu a:active,.user-menu a:focus {
   color: #f3f3f3;
 }
-.dropdown-toggle {
-    color: #F3F3F3;
-}
+
 .user-header {
   padding: 10px 30px;
   text-align: center;
@@ -239,13 +261,74 @@ float: left;
 #xo-logger-output  h3 {padding-left:15px}
 #xo-logger-output .tab-pane {padding: 0 20px 20px;}
 #xo-logger-output .tab-pane div {overflow: auto; padding: 10px;}
+/* Input type file */
+.bootstrap-filestyle {width:50%}
+
+/*image manager*/
+.imanager_image_box {
+    float:left;
+    border:1px solid #CCCCCC;
+    padding:3px;
+    margin:5px;
+    text-align:center;
+    width:175px;
+    overflow:hidden;
+}
+
+.imanager_image_box:hover {
+    background-color: #f8f8f8;
+}
+
+.imanager_image_img {
+    display:block;
+    height:120px;
+    overflow:hidden;
+}
+
+
+.imanager_image_label{
+    display:block;
+    font-size:13px;
+    color: #E24949;
+    font-weight:bold;
+    line-height:180%;
+}
+
+.imanager_image_info{
+    display:block;
+    font-size:9px;
+    font-weight:normal;
+    color: #333333;
+    line-height:120%;
+    text-align:left;
+}
+
+.imanager_image_btns{
+    display:block;
+    margin-top:3px;
+}
+
+.img_list_info_panel{
+    padding: 5px;
+    margin:5px;
+}
+
+tr.blocked td {background-color: #FF0000;}
+/* AdminLTE override */
+.modal-content {
+    border-radius: 6px;
+}
+
 /*Media queries */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .btn-responsive {
     padding:4px 6px;
     font-size:90%;
     line-height: 1;
   }
+  .table select, .form-control, .bootstrap-filestyle {
+  width: 100%;
+}
 }
 
 @media (min-width: 769px) and (max-width: 992px) {
@@ -255,40 +338,40 @@ float: left;
     line-height: 1.2;
   }
 }
-@media screen and (max-width: 769px) {
-.FontSizeInc,.FontSizeDec, .FontSizeReset {
-	display: none
-}
-}
 @media screen and (max-width: 800px) {
 .cpPanelItem {
    width: 48%;
 }
 }
+@media screen and (max-width: 769px) {
+.FontSizeInc,.FontSizeDec, .FontSizeReset {
+	display: none
+}
+.main-header .navbar .sidebar-toggle {
+    font-size: 23px;
+}
+}
+
+@media screen and (max-width: 640px) {
+.content-wrapper, .right-side {
+    margin-top: 20px;
+}
+}
+
 @media screen and (max-width: 400px) {
 .cpPanelItem {
    width: 100%;
 }
-
+.content-wrapper, .right-side {
+    margin-top: 0px;
+}
+}
 @media screen and (max-width: 320px) {
 .topnavbar_buttons, .user {
   padding-right: 10px;
 }
 }
 
-
-@media screen and (max-width: 480px) {
-
-}
-@media screen and (max-width: 640px) {
-.table select, .form-control {
-  width: 100%;
-}
-}
-@media screen and (max-width: 769px) {
-.main-header .navbar .sidebar-toggle {
-    font-size: 23px;
-}
 @media screen and (max-width: 641px) {
 .main-header .navbar .sidebar-toggle {
     font-size: 14px;
@@ -305,15 +388,11 @@ float: left;
 .skin-blue .main-header .navbar .dropdown-menu li a {
   color: #777;
 }
-
 }
-
 @media (min-width: 220px) and (max-width: 387px){
 .main-header .navbar .sidebar-toggle {
     font-size: 18px;
 }
-
-
 .dropdown-toggle > span {
     display: none
 }
@@ -344,7 +423,6 @@ float: left;
 	.topnavbar button {
     padding: 4px 8px;
 }
-
 .user-menu {
   padding: 4.5px;
 }
@@ -364,7 +442,4 @@ float: left;
 .skin-blue .main-header .navbar .dropdown-menu li a:hover {
   color: #fff;
 }
-}
-@media (min-width: 361px) and (max-width: 480px){
-
 }
