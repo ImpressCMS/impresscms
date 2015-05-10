@@ -392,7 +392,7 @@ switch ($op) {
 		$form->addElement(new icms_form_elements_Hidden('op', 'save'));
 		$form->addElement(new icms_form_elements_Button('', 'button', _GO, 'submit'));
 		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/preferences/images/preferences_big.png)"><a href="admin.php?fct=preferences">' . _MD_AM_PREFMAIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . constant($confcat->getVar('confcat_name')) . '<br /><br /></div><br />';
+		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL  . '/system/images/preferences/' . $confcat->getVar('confcat_id') . '.png)"><a href="admin.php?fct=preferences">' . _MD_AM_PREFMAIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . constant($confcat->getVar('confcat_name')) . '<br /><br /></div><br />';
 		$form->display();
 		icms_cp_footer();
 		break;
