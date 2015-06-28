@@ -112,10 +112,10 @@ if (!$poster->isActive()) {
 if (is_object($poster) == TRUE) { // no need to do this for deleted users
 	$icmsTpl->assign(
 			array(
-				'uname', $poster->getVar("uname"),
-				'poster_id', $poster->getVar("uid"),
-				'gravatar', $poster->gravatar('G', $GLOBALS['icmsConfigUser']['avatar_width']),
-				'online', $poster->isOnline()
+				'uname' =>  $poster->getVar("uname"),
+				'poster_id' =>  $poster->getVar("uid"),
+				'gravatar' =>  $poster->gravatar('G', $GLOBALS['icmsConfigUser']['avatar_width']),
+				'online' =>  $poster->isOnline()
 			)
 	);
 
