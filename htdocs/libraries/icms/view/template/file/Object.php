@@ -74,9 +74,9 @@ class icms_view_template_file_Object extends icms_ipf_Object {
 	/**
 	 * Gets Template Source
 	 */
-	public function getSource()	{
+	/*public function getSource()	{
 		return $this->getVar('tpl_source');
-	}
+	}*/
 
 	/**
 	 * Gets Last Modified timestamp
