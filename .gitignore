@@ -10,3 +10,4 @@
 !/htdocs/modules/index.html
 /htdocs/mainfile.php
 /nbproject/
+/htdocs/templates_c/*.php
