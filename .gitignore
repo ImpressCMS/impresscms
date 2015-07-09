@@ -5,3 +5,6 @@
 /cfg_*/
 **/.svn/
 **/.git/
+/htdocs/modules/*
+!/htdocs/modules/system/
+!/htdocs/modules/index.html
