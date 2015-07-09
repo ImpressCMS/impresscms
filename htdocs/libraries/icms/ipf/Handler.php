@@ -544,7 +544,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return array
      */
     public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false) {
-        trigger_error(__FUNCTION__ . ' is deprecached method. Use getObjects instead!', E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated('getObjects');
         return $this->getObjects($criteria, $id_as_key, $as_object, $sql, true);
     }
     
@@ -559,7 +559,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return mixed reference to the {@link icms_ipf_Object}, FALSE if failed
      */
     public function &getD($id, $as_object = true) {
-        trigger_error(__FUNCTION__ . ' is deprecached method. Use getD instead!', E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated('get');
         return $this->get($id, $as_object, true);
     }
     
@@ -573,7 +573,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return array
      */
     public function getListD($criteria = null, $limit = 0, $start = 0) {
-        trigger_error(__FUNCTION__ . ' is deprecached method. Use getList instead!', E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated('getList');
         return $this->getList($criteria, $limit, $start, true);
     }    
     
@@ -587,7 +587,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @param    bool    $debug
      */
     public function insertD(&$obj, $force = false, $checkObject = true, $debug = false) {
-        trigger_error(__FUNCTION__ . ' is deprecached method. Use save instead!', E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated('save');
         return $this->save($obj, $force);
     }
     
@@ -602,7 +602,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
     public function insert(&$obj, $force = false, $checkObject = true, $debug = false) {
-        trigger_error(__FUNCTION__ . ' is deprecached method. Use save instead!', E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated('save');
         return $this->save($obj, $force);
     }    
 
@@ -1427,6 +1427,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return VOID
      */
     public function setUploaderConfig($_uploadPath = false, $_allowedMimeTypes = false, $_maxFileSize = false, $_maxWidth = false, $_maxHeight = false) {
+        icms_core_Debug::setDeprecated('enableUpload');
         $this->uploadEnabled = true;
         $this->_uploadPath = $_uploadPath ? $_uploadPath : $this->_uploadPath;
         $this->_allowedMimeTypes = $_allowedMimeTypes ? $_allowedMimeTypes : $this->_allowedMimeTypes;
