@@ -527,42 +527,78 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
     }
 
     /**
-     * Used to call deprecached method internaly
+     * retrieve objects with debug mode - so will show the query
+     *
+     * @deprecated since version 2.0
      * 
-     * @param string $depMethod
-     * @param array $funcArgs
-     * @param string $realMethod
-     * @param array $callArgs
-     * @return mixed
+     * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
+     * @param bool $id_as_key use the ID as key for the array?
+     * @param bool $as_object return an array of objects?     
+     *
+     * @return array
      */
-    protected function callDeprecachedMethod($depMethod, $funcArgs, $realMethod, $callArgs) {
-        trigger_error($depMethod . ' is deprecached method. Use ' . $realMethod . ' instead!', E_USER_DEPRECATED);
-        $args = array();
-        foreach ($funcArgs as $i => $param)
-            $args[] = isset($callArgs[$i]) ? $callArgs[$i] : $param;
-        return call_user_func(array($this, $realMethod), $args);
+    public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false) {
+        trigger_error(__FUNCTION__ . ' is deprecached method. Use getObjects instead!', E_USER_DEPRECATED);
+        return $this->getObjects($criteria, $id_as_key, $as_object, $sql, true);
     }
-
+    
+    
     /**
-     * Useds to forward deprecached function
-     * 
-     * @param string $name
-     * @param array $arguments
-     * @return mixed
+     * retrieve a {@link icms_ipf_Object}
+     *
+     * @deprecated since version 2.0
+     *
+     * @param mixed $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
+     * @param bool $as_object whether to return an object or an array
+     * @return mixed reference to the {@link icms_ipf_Object}, FALSE if failed
      */
-    public function __call($name, $arguments) {
-        switch ($name) {
-            case 'getObjectsD':
-                return $this->callDeprecachedMethod($name, array(null, false, true, false, true), 'getObjects', $arguments);
-            case 'getD':
-                return $this->callDeprecachedMethod($name, array(null, true, true), 'get', $arguments);
-            case 'getListD':
-                return $this->callDeprecachedMethod($name, array(null, 0, 0, true), 'getList', $arguments);
-            case 'insertD':
-            case 'insert':
-                return $this->callDeprecachedMethod($name, array(null, false, true, false, true), 'save', $arguments);
-        }
+    public function &getD($id, $as_object = true) {
+        trigger_error(__FUNCTION__ . ' is deprecached method. Use getD instead!', E_USER_DEPRECATED);
+        return $this->get($id, $as_object, true);
     }
+    
+    /**
+     *
+     * @deprecated since version 2.0
+     * 
+     * @param object    $criteria
+     * @param int       $limit
+     * @param int       $start
+     * @return array
+     */
+    public function getListD($criteria = null, $limit = 0, $start = 0) {
+        trigger_error(__FUNCTION__ . ' is deprecached method. Use getList instead!', E_USER_DEPRECATED);
+        return $this->getList($criteria, $limit, $start, true);
+    }    
+    
+    /**
+     *
+     * @deprecated since version 2.0
+     * 
+     * @param    obj        $obj
+     * @param    bool    $force
+     * @param    bool    $checkObject
+     * @param    bool    $debug
+     */
+    public function insertD(&$obj, $force = false, $checkObject = true, $debug = false) {
+        trigger_error(__FUNCTION__ . ' is deprecached method. Use save instead!', E_USER_DEPRECATED);
+        return $this->save($obj, $force);
+    }
+    
+    /**
+     * insert a new object in the database
+     *
+     * @deprecated since version 2.0
+     * 
+     * @param object $obj reference to the object
+     * @param bool $force whether to force the query execution despite security settings
+     * @param bool $checkObject check if the object is dirty and clean the attributes
+     * @return bool FALSE if failed, TRUE if already present and unchanged or successful
+     */
+    public function insert(&$obj, $force = false, $checkObject = true, $debug = false) {
+        trigger_error(__FUNCTION__ . ' is deprecached method. Use save instead!', E_USER_DEPRECATED);
+        return $this->save($obj, $force);
+    }    
 
     /**
      *
@@ -1132,10 +1168,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $for_update[] = &$data[$i];
             }
         }
+        
         if (($count = count($for_insert)) > 0) {
             if ($count > 1) {
 
-                $this->db->query('LOCK TABLES ' . $this->table . ' WRITE;');
+                //$this->db->query('LOCK TABLES ' . $this->table . ' WRITE;');
 
                 $sql = $this->generateInsertSQL($for_insert[0]);
                 if ($this->debugMode)
@@ -1166,7 +1203,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                     }
                 }
 
-                $this->db->query('UNLOCK TABLES;');
+                //$this->db->query('UNLOCK TABLES;');
             } else {
                 $sql = $this->generateInsertSQL($for_insert);
                 if ($this->debugMode)
@@ -1180,6 +1217,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $scount = (int)$this->executeEvent('afterInsert', $for_insert[0]);
             }
         }
+        
         if (($count = count($for_update)) > 0) {
             $sql = ($count == 1) ? $this->generateUpdateSQL($for_update[0]) : $this->generateUpdateSQL($for_update);
 
@@ -1208,20 +1246,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $this->executeEvent('afterSave', $data[$i]);
         }
 
-
         return $scount;
-    }
-
-    /**
-     * insert a new object in the database
-     *
-     * @param object $obj reference to the object
-     * @param bool $force whether to force the query execution despite security settings
-     * @param bool $checkObject check if the object is dirty and clean the attributes
-     * @return bool FALSE if failed, TRUE if already present and unchanged or successful
-     */
-    public function insert(&$obj, $force = false, $checkObject = true, $debug = false) {
-        return $this->save($obj, $force);
     }
 
     /**
