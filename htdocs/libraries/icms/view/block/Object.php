@@ -53,13 +53,13 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class icms_view_block_Object extends icms_ipf_Object {
 
+        public $visiblein = [];
+    
 	/**
 	 * Constructor for the block object
 	 * @param $handler
 	 */
-	public function __construct(& $handler) {
-
-		parent::__construct($handler);
+	public function __construct(& $handler, $data = array()) {
 
 		$this->quickInitVar('name', self::DTYPE_DEP_TXTBOX);
 		$this->quickInitVar('bid', self::DTYPE_INTEGER, TRUE);
@@ -95,8 +95,45 @@ class icms_view_block_Object extends icms_ipf_Object {
 		$this->quickInitVar('bcachetime', self::DTYPE_INTEGER);
 		$this->quickInitVar('last_modified', self::DTYPE_INTEGER);
 		$this->quickInitVar('options', self::DTYPE_DEP_TXTBOX);
-        $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
+                                
+      //  $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
+                parent::__construct($handler, $data);
+                
 	}
+        
+        /**
+         * gets var 
+         * 
+         * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+         * 
+         * @param string $name
+         * @param string $format
+         * @return mixed
+         */
+        public function getVar($name, $format = 's') {
+            if ($name == 'visiblein') {
+                return $this->visiblein;
+            } else {
+                return parent::getVar($name, $format);
+            }
+        }
+        
+        /**
+         * sets var 
+         * 
+         * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+         * 
+         * @param string $name
+         * @param string $format
+         * @return mixed
+         */
+        public function setVar($name, $value, $options = null) {            
+            if ($name == 'visiblein') {
+                $this->visiblein = $value;
+            } else {
+                parent::setVar($name, $value, $options);
+            }
+        }        
 
 	// The next Methods are for backward Compatibility
 
