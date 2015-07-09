@@ -308,7 +308,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @param bool $as_object whether to return an object or an array
      * @return mixed reference to the {@link icms_ipf_Object}, FALSE if failed
      */
-    public function &get($id, $as_object = true, $debug = false, $criteria = false) {
+    public function &get($id, $as_object = true, $debug = false, $criteria = false) {        
         if (is_array($this->keyName)) {
             if (!$criteria)
                 $criteria = new icms_db_criteria_Compo();
@@ -322,7 +322,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             }
         } else {
             if (!$criteria) {
-                $criteria = new icms_db_criteria_SQLItem($this->keyName . ' = %s', $id);
+                $criteria = new icms_db_criteria_Item($this->keyName, $id);
             } else {
                 //$criteria = new icms_db_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
                 /**
@@ -334,18 +334,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         }
 
         $criteria->setLimit(1);
-
-
-        if ($debug) {
-            $obj_array = $this->getObjectsD($criteria, false, $as_object);
-        } else {
-            $obj_array = $this->getObjects($criteria, false, $as_object);
-            //patch : weird bug of indexing by id even if id_as_key = false;
-            if (count($obj_array) && !isset($obj_array[0]) && is_object($obj_array[$id])) {
-                $obj_array[0] = $obj_array[$id];
-                unset($obj_array[$id]);
-                $obj_array[0]->unsetNew();
-            }
+        
+        $obj_array = $this->getObjects($criteria, false, $as_object);
+        //patch : weird bug of indexing by id even if id_as_key = false;
+        if (count($obj_array) && !isset($obj_array[0]) && is_object($obj_array[$id])) {
+            $obj_array[0] = $obj_array[$id];
+            unset($obj_array[$id]);
+            $obj_array[0]->unsetNew();
         }
 
         if (count($obj_array) != 1) {
@@ -961,12 +956,12 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         }
         if (!empty($url_links)) {
             $urllink_handler = icms::handler("icms_data_urllink");
-            $urllink_handler->deleteAll(new icms_db_criteria_SQLItem($urllink_handler->keyName . ' IN (%a)', $url_links));
+            $urllink_handler->deleteAll(new icms_db_criteria_Item($urllink_handler->keyName, $url_links, ' IN '));
             unset($urllink_handler);
         }
         if (!empty($url_files)) {
             $urllink_handler = icms::handler("icms_data_file");
-            $urllink_handler->deleteAll(new icms_db_criteria_SQLItem($urllink_handler->keyName . ' IN (%a)', $url_files));
+            $urllink_handler->deleteAll(new icms_db_criteria_Item($urllink_handler->keyName, $url_files, ' IN '));
             unset($urllink_handler);
         }
 
