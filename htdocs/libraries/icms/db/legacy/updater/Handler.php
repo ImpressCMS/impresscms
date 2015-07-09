@@ -43,7 +43,7 @@ icms_loadLanguageFile('core', 'databaseupdater');
  */
 class icms_db_legacy_updater_Handler {
 
-	var $_dbTypesArray;
+
 
 	/**
 	 * xoopsDB database object
@@ -58,30 +58,10 @@ class icms_db_legacy_updater_Handler {
 	 * @var array of messages
 	 */
 	var $_messages = array();
-
 	function __construct() {
 		// backward compat
 		$this->_db = icms::$xoopsDB;
 		$this->db = icms::$xoopsDB;
-
-		$this->_dbTypesArray[XOBJ_DTYPE_TXTBOX] = 'varchar(255)';
-		$this->_dbTypesArray[XOBJ_DTYPE_TXTAREA] = 'text';
-		$this->_dbTypesArray[XOBJ_DTYPE_INT] = 'int(11)';
-		$this->_dbTypesArray[XOBJ_DTYPE_URL] = 'varchar(255)';
-		$this->_dbTypesArray[XOBJ_DTYPE_EMAIL] = 'varchar(255)';
-		$this->_dbTypesArray[XOBJ_DTYPE_ARRAY] = 'text';
-		$this->_dbTypesArray[XOBJ_DTYPE_OTHER] = 'text';
-		$this->_dbTypesArray[XOBJ_DTYPE_SOURCE] = 'text';
-		$this->_dbTypesArray[XOBJ_DTYPE_STIME] = 'int(11)';
-		$this->_dbTypesArray[XOBJ_DTYPE_MTIME] = 'int(11)';
-		$this->_dbTypesArray[XOBJ_DTYPE_LTIME] = 'int(11)';
-		$this->_dbTypesArray[XOBJ_DTYPE_SIMPLE_ARRAY] = 'text';
-		$this->_dbTypesArray[XOBJ_DTYPE_CURRENCY] = 'text';
-		$this->_dbTypesArray[XOBJ_DTYPE_FLOAT] = 'float';
-		$this->_dbTypesArray[XOBJ_DTYPE_TIME_ONLY] = 'int(11)';
-		$this->_dbTypesArray[XOBJ_DTYPE_URLLINK] = 'int(11)';
-		$this->_dbTypesArray[XOBJ_DTYPE_FILE] = 'int(11)';
-		$this->_dbTypesArray[XOBJ_DTYPE_IMAGE] = 'varchar(255)';
 	}
 
 	/**
@@ -210,8 +190,70 @@ class icms_db_legacy_updater_Handler {
 	 * @return string type of the field
 	 */
 	function getFieldTypeFromVar($var) {
-		$ret = isset($this->_dbTypesArray[$var['data_type']]) ? $this->_dbTypesArray[$var['data_type']] : 'text';
-		return $ret;
+            switch ($var[icms_properties_Handler::VARCFG_TYPE]) {
+                case icms_properties_Handler::DTYPE_BOOLEAN:
+                    return 'TINYINT(1) UNSIGNED';
+                break;
+                case icms_properties_Handler::DTYPE_ARRAY:
+                    return 'TEXT';
+                break;
+                case icms_properties_Handler::DTYPE_OBJECT:
+                    return 'MEDIUMTEXT';
+                break;
+                case icms_properties_Handler::DTYPE_LIST:
+                    return 'VARCHAR(100)';
+                break;
+                case icms_properties_Handler::DTYPE_DATETIME:
+                    return 'DATETIME';
+                break;
+                case icms_properties_Handler::DTYPE_FILE:
+                    return 'BLOB';
+                break;
+                case icms_properties_Handler::DTYPE_FLOAT:
+                    if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
+                        return 'FLOAT('.icms_properties_Handler::VARCFG_MAX_LENGTH.')';
+                    } else {
+                        return 'FLOAT';
+                    }
+                break;
+                case icms_properties_Handler::DTYPE_INTEGER:
+                    if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
+                        if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 4) {
+                            return 'TINYINT';
+                        } elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 5) {
+                            return 'SMALLINT';
+                        } elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 7) {
+                            return 'MEDIUMINT';
+                        } elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 11) {
+                            return 'INT';
+                        } else {
+                            return 'BIGINT';
+                        }
+                    } else {
+                        return 'INT';
+                    }
+                break;
+                case icms_properties_Handler::DTYPE_LIST:
+                    return 'TEXT';
+                break;
+                case icms_properties_Handler::DTYPE_STRING:
+                    if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH])) {
+                        if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 500) {
+                            return 'VARCHAR(' . $var[icms_properties_Handler::VARCFG_MAX_LENGTH] . ')';
+                        } elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 8000) {
+                            return 'TEXT';
+                        } elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 2097000) {
+                            return 'MEDIUMTEXT';
+                        } else {
+                            return 'LONGTEXT';
+                        }
+                    } else {
+                        return 'VARCHAR(255)';
+                    }
+                break;
+                default:
+                    return 'TEXT';
+            }
 	}
 
 	/**
@@ -222,34 +264,65 @@ class icms_db_legacy_updater_Handler {
 	 * @return string default value
 	 */
 	function getFieldDefaultFromVar($var, $key = false) {
-		if (in_array($var['data_type'], array(
-				XOBJ_DTYPE_TXTAREA,
-				XOBJ_DTYPE_SOURCE,
-				XOBJ_DTYPE_OTHER,
-				XOBJ_DTYPE_SIMPLE_ARRAY,
-				XOBJ_DTYPE_CURRENCY,
-				XOBJ_DTYPE_ARRAY,
-		))) {
-			return 'nodefault';
-		} elseif ($var['value']) {
-			return $var['value'];
-		} else {
-			if (in_array($var['data_type'], array(
-				XOBJ_DTYPE_INT,
-				XOBJ_DTYPE_STIME,
-				XOBJ_DTYPE_MTIME,
-				XOBJ_DTYPE_LTIME,
-				XOBJ_DTYPE_TIME_ONLY,
-				XOBJ_DTYPE_URLLINK,
-				XOBJ_DTYPE_FILE,
-				XOBJ_DTYPE_FLOAT,
-			))) {
-				return '0';
-			} else {
-				return '';
-			}
-		}
+            if (in_array($var[icms_properties_Handler::VARCFG_TYPE], array(
+                icms_properties_Handler::DTYPE_DATETIME,
+                icms_properties_Handler::DTYPE_OBJECT,
+                icms_properties_Handler::DTYPE_LIST,
+                icms_properties_Handler::DTYPE_ARRAY
+            )))
+                return null;
+            elseif (isset($var[icms_properties_Handler::VARCFG_DEFAULT_VALUE]))
+                return $var[icms_properties_Handler::VARCFG_DEFAULT_VALUE];
+            else
+                return null;
 	}
+
+        /**
+         * Remove table or some rows if table is used for other object
+         *
+         * @param string $dirname
+         * @param string $item
+         * @param array $reservedTables
+         *
+         * @return boolean
+         */
+        function uninstallObjectItem($dirname, $item, $reservedTables = array()) {
+            $module_handler = icms_getModuleHandler($item, $dirname);
+            if (!$module_handler) {
+                return false;
+            }
+
+            $object = $module_handler->create();
+            $class = new ReflectionClass($object);
+            $isExtention = false;
+            if ($pclass = $class->getParentClass()) {
+                if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object'))) {
+                    $pclass_instance = $pclass->newInstanceArgs(array(&$module_handler));
+                    $parentObjectVars = $pclass_instance->getVars();
+                    unset($pclass_instance);
+                    $isExtention = $pclass->getName();
+                }
+            }
+            unset($class, $pclass);
+
+            if (isset($parentObjectVars)) {
+                $objectVars = $object->getVars();
+                $sql = '';
+                $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
+                foreach (array_keys($objectVars) as $var) {
+                    if (!isset($parentObjectVars[$var]))
+                        $table->addDropedField($var);
+                }
+                $ret = $table->dropFields();
+            } else {
+                if (in_array($module_handler->table, $reservedTables))
+                    return false;
+                $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
+                $ret = $table->dropTable();
+            }
+            $this->_messages = array_merge($this->_messages, $table->_messages);
+            return $ret;
+        }
 
 	/*
 	 * Upgrades the object
@@ -263,19 +336,42 @@ class icms_db_legacy_updater_Handler {
 
 		$table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
 		$object = $module_handler->create();
-		$objectVars = $object->getVars();
+                $class = new ReflectionClass($object);
+                $isExtention = false;
+                if ($pclass = $class->getParentClass()) {
+                    if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object'))) {
+                        $pclass_instance = $pclass->newInstanceArgs(array(&$module_handler));
+                        $parentObjectVars = $pclass_instance->getVars();
+                        unset($pclass_instance);
+                        $isExtention = $pclass->getName();
+                    }
+                }
+                unset($class, $pclass);
+
+        $objectVars = $object->getVars();
+                if (isset($parentObjectVars)) {
+                    foreach ($parentObjectVars as $var => $info) {
+                        if (isset($objectVars[$var]))
+                            unset($objectVars[$var]);
+                    }
+                }
 
 		if (!$table->exists()) {
+                        if ($isExtention) {
+                            Throw new Exception(sprintf('%s for %s module is extention for %s', $item, $dirname, $isExtention));
+                            return false;
+                        }
+
 			// table was never created, let's do it
 			$structure = "";
 			foreach($objectVars as $key=>$var) {
-				if ($var['persistent']) {
+                if (!isset($var['persistent']) || $var['persistent']) {
 					$type = $this->getFieldTypeFromVar($var);
 					if ($key == $module_handler->keyName) {
 						$extra = "auto_increment";
 					} else {
-						$default =  $this->getFieldDefaultFromVar($var);
-						if ($default != 'nodefault') {
+                        $default =  $this->getFieldDefaultFromVar($var, $key);
+                        if ($default != null) {
 							$extra = "default '$default'";
 						} else {
 							$extra = false;
@@ -312,12 +408,12 @@ class icms_db_legacy_updater_Handler {
 		} else {
 			$existingFieldsArray = $table->getExistingFieldsArray();
 			foreach($objectVars as $key=>$var) {
-				if ($var['persistent']) {
+                if (!isset($var['persistent']) || $var['persistent']) {
 					if (!isset($existingFieldsArray[$key])) {
 						// the fiels does not exist, let's create it
 						$type = $this->getFieldTypeFromVar($var);
 						$default =  $this->getFieldDefaultFromVar($var);
-						if ($default != 'nodefault') {
+                        if ($default != null) {
 							$extra = "default '$default'";
 						} else {
 							$extra = false;
@@ -332,7 +428,7 @@ class icms_db_legacy_updater_Handler {
 							$extra = "auto_increment";
 						} else {
 							$default =  $this->getFieldDefaultFromVar($var, $key);
-							if ($default != 'nodefault') {
+                            if ($default != null) {
 								$extra = "default '$default'";
 							} else {
 								$extra = false;
@@ -351,7 +447,7 @@ class icms_db_legacy_updater_Handler {
 
 			// check to see if there are some unused fields left in the table
 			foreach ($existingFieldsArray as $key=>$v) {
-				if (!isset($objectVars[$key]) || !$objectVars[$key]['persistent']) {
+                if ((!isset($objectVars[$key]) && !isset($parentObjectVars[$key])) || !(!isset($objectVars[$key]['persistent']) || $objectVars[$key]['persistent'])) {
 					$table->addDropedField($key);
 				}
 			}
