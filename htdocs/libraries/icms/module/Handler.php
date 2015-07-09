@@ -80,20 +80,22 @@ class icms_module_Handler
 
 	/**
 	 * Load a module by its dirname
+         * 
+         * @todo Make caching work!
 	 *
 	 * @param	string	$dirname
 	 * @param	bool	$loadConfig	set to TRUE in case you want to load the module config in addition
 	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 */
-	public function getByDirname($dirname, $loadConfig = FALSE) {
-                if (!($module = $this->getFromCache('dirname', $dirname))) {
+	public function getByDirname($dirname, $loadConfig = FALSE) {                
+                //if (!($module = $this->getFromCache('dirname', $dirname))) {
                     $criteria = new icms_db_criteria_Item('dirname', trim($dirname));
                     $criteria->setLimit(1);
                     $objs = $this->getObjects($criteria);                    
                     if (isset($objs[0])) {
                         $module = $objs[0];
                     }
-                }
+                //}
                 if ($module && $loadConfig)
                     $this->loadConfig($module);                
                 return $module;
