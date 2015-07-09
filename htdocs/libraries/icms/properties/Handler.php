@@ -7,7 +7,7 @@
  * @category            ICMS
  * @package		Ipf
  * @subpackage          Properties
- * @since		1.0
+ * @since		2.0
  * @author		i.know@mekdrop.name
  */
 
