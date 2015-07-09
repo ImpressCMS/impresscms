@@ -23,7 +23,7 @@ class icms_ipf_form_elements_User extends icms_form_elements_Select {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		$size = isset($var['size']) ? $var['size'] : ($this->_multiple ? 5 : 1);
 
 		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'), $size, $this->_multiple);

@@ -60,15 +60,15 @@ class icms_image_Object extends icms_core_Object {
 	 **/
 	public function __construct() {
 		parent::__construct();
-		$this->initVar('image_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('image_name', XOBJ_DTYPE_OTHER, null, false, 30);
-		$this->initVar('image_nicename', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('image_mimetype', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('image_created', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('image_display', XOBJ_DTYPE_INT, 1, false);
-		$this->initVar('image_weight', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('image_body', XOBJ_DTYPE_SOURCE, null, true);
-		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('image_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('image_name', self::DTYPE_DEP_OTHER, null, false, 30);
+		$this->initVar('image_nicename', self::DTYPE_DEP_TXTBOX, null, true, 100);
+		$this->initVar('image_mimetype', self::DTYPE_DEP_OTHER, null, false);
+		$this->initVar('image_created', self::DTYPE_INTEGER, null, false);
+		$this->initVar('image_display', self::DTYPE_INTEGER, 1, false);
+		$this->initVar('image_weight', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('image_body', self::DTYPE_DEP_SOURCE, null, true);
+		$this->initVar('imgcat_id', self::DTYPE_INTEGER, 0, false);
 	}
 
 	/**

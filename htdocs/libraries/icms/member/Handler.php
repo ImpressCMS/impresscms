@@ -47,7 +47,6 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
  * @category	ICMS
  * @package		Member
  */

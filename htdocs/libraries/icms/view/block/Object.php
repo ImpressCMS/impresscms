@@ -61,15 +61,15 @@ class icms_view_block_Object extends icms_ipf_Object {
 
 		parent::__construct($handler);
 
-		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('bid', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('mid', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('func_num', XOBJ_DTYPE_INT);
-		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('content', XOBJ_DTYPE_TXTAREA);
-		$this->quickInitVar('side', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('weight', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 0);
-		$this->quickInitVar('visible', XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar('name', self::DTYPE_DEP_TXTBOX);
+		$this->quickInitVar('bid', self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar('mid', self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar('func_num', self::DTYPE_INTEGER);
+		$this->quickInitVar('title', self::DTYPE_DEP_TXTBOX);
+		$this->quickInitVar('content', self::DTYPE_STRING);
+		$this->quickInitVar('side', self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar('weight', self::DTYPE_INTEGER, TRUE, FALSE, FALSE, 0);
+		$this->quickInitVar('visible', self::DTYPE_INTEGER, TRUE);
 		/**
 		 * @var string $block_type Holds the type of block
 		 * 	S - System block
@@ -77,7 +77,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	C - Custom block (legacy type 'E')
 		 * 	K - block cloned from another block (legacy type 'D')
 		 */
-		$this->quickInitVar('block_type', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('block_type', self::DTYPE_DEP_TXTBOX);
 		/**
 		 * @var	string	$c_type	The type of content in the block
 		 * 	H - HTML
@@ -85,16 +85,17 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	S - Auto Format (smilies and HTML enabled)
 		 *  T - Auto Format (smilies and HTML disabled)
 		 */
-		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX, TRUE, FALSE, FALSE, "S");
-		$this->quickInitVar('isactive', XOBJ_DTYPE_INT);
-		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('func_file', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('show_func', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('edit_func', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('template', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('bcachetime', XOBJ_DTYPE_INT);
-		$this->quickInitVar('last_modified', XOBJ_DTYPE_INT);
-		$this->quickInitVar('options', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('c_type', self::DTYPE_DEP_TXTBOX, TRUE, FALSE, FALSE, "S");
+		$this->quickInitVar('isactive', self::DTYPE_INTEGER);
+		$this->quickInitVar('dirname', self::DTYPE_DEP_TXTBOX);
+		$this->quickInitVar('func_file', self::DTYPE_DEP_TXTBOX);
+		$this->quickInitVar('show_func', self::DTYPE_DEP_TXTBOX);
+		$this->quickInitVar('edit_func', self::DTYPE_DEP_TXTBOX);
+		$this->quickInitVar('template', self::DTYPE_DEP_TXTBOX);
+		$this->quickInitVar('bcachetime', self::DTYPE_INTEGER);
+		$this->quickInitVar('last_modified', self::DTYPE_INTEGER);
+		$this->quickInitVar('options', self::DTYPE_DEP_TXTBOX);
+        $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
 	}
 
 	// The next Methods are for backward Compatibility

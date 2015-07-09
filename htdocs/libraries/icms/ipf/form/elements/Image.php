@@ -22,7 +22,7 @@ class icms_ipf_form_elements_Image extends icms_form_elements_Tray {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		$control = $object->getControl($key);
 
 		$object_imageurl = $object->getImageDir();

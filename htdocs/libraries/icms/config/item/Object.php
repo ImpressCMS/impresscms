@@ -47,7 +47,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_config_item_Object extends icms_core_Object {
+class icms_config_Item_Object extends icms_ipf_Object {
 	/**
 	 * Config options
 	 *
@@ -55,30 +55,63 @@ class icms_config_item_Object extends icms_core_Object {
 	 * @access	private
 	 */
 	public $_confOptions = array();
+        
+        /**
+        * is it a newly created config object?
+        *
+        * @var bool
+        * @access protected
+        */
+        protected $_isNewConfig = false;
 
 	/**
 	 * Constructor
 	 *
 	 * @todo	Cannot set the data type of the conf_value on instantiation - the data type must be retrieved from the db.
 	 */
-	public function __construct() {
-		$this->initVar('conf_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('conf_modid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('conf_catid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('conf_name', XOBJ_DTYPE_OTHER);
-		$this->initVar('conf_title', XOBJ_DTYPE_TXTBOX);
-		$this->initVar('conf_value', XOBJ_DTYPE_TXTAREA);
-		$this->initVar('conf_desc', XOBJ_DTYPE_OTHER);
-		$this->initVar('conf_formtype', XOBJ_DTYPE_OTHER);
-		$this->initVar('conf_valuetype', XOBJ_DTYPE_OTHER);
-		$this->initVar('conf_order', XOBJ_DTYPE_INT);
+	public function __construct(&$handler, $data = array()) {
+		$this->initVar('conf_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('conf_modid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('conf_catid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('conf_name', self::DTYPE_DEP_OTHER);
+		$this->initVar('conf_title', self::DTYPE_DEP_TXTBOX);
+		$this->initVar('conf_value', self::DTYPE_STRING);
+		$this->initVar('conf_desc', self::DTYPE_DEP_OTHER);
+		$this->initVar('conf_formtype', self::DTYPE_DEP_OTHER);
+		$this->initVar('conf_valuetype', self::DTYPE_DEP_OTHER);
+		$this->initVar('conf_order', self::DTYPE_INTEGER);
+                
+                parent::__construct($handler, $data);
 	}
 
-	/**
-	 * Get a config value in a format ready for output
-	 *
-	 * @return	string
-	 */
+        /**
+         * #@+
+         * used for new config objects when installing/updating module(s)
+         *
+         * @access public
+         */
+
+        public function setNewConfig() {
+            $this->_isNewConfig = true;
+        }
+
+        public function unsetNewConfig() {
+            $this->_isNewConfig = false;
+        }
+
+        public function isNewConfig() {
+            return $this->_isNewConfig;
+        }
+
+        /*     * #@- */
+
+        /*     * #@+
+
+          /**
+         * Get a config value in a format ready for output
+         *
+         * @return	string
+         */
 	public function getConfValueForOutput() {
 		switch($this->getVar('conf_valuetype')) {
 			case 'int':
@@ -86,7 +119,10 @@ class icms_config_item_Object extends icms_core_Object {
 				break;
 
 			case 'array':
-				$value = @ $this->getVar('conf_value', 'N');
+                $value = $this->getVar('conf_value', 'N');
+                if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) != ':'))
+                	return array();                                
+                $value = @unserialize($value);
 				return $value ? $value : array();
 
 			case 'float':
@@ -177,17 +213,17 @@ class icms_config_item_Object extends icms_core_Object {
 	 */
 	public function setType($newType) {
 		$types = array(
-			'text' => XOBJ_DTYPE_TXTBOX,
-			'textarea' => XOBJ_DTYPE_TXTAREA,
-			'int' => XOBJ_DTYPE_INT,
-			'url' => XOBJ_DTYPE_URL,
-			'email' => XOBJ_DTYPE_EMAIL,
-			'array' => XOBJ_DTYPE_ARRAY,
-			'other' => XOBJ_DTYPE_OTHER,
-			'source' => XOBJ_DTYPE_SOURCE,
-			'float' => XOBJ_DTYPE_FLOAT,
+			'text' => self::DTYPE_DEP_TXTBOX,
+			'textarea' => self::DTYPE_STRING,
+			'int' => self::DTYPE_INTEGER,
+			'url' => self::DTYPE_DEP_URL,
+			'email' => self::DTYPE_DEP_EMAIL,
+			'array' => self::DTYPE_ARRAY,
+			'other' => self::DTYPE_DEP_OTHER,
+			'source' => self::DTYPE_DEP_SOURCE,
+			'float' => self::DTYPE_FLOAT,
 		);
 
-		$this->vars['conf_value']['data_type'] = $types[$newType];
+		$this->setVarInfo('conf_value', 'data_type',$types[$newType]);
 	}
 }

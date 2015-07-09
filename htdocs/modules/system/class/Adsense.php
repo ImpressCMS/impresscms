@@ -30,18 +30,18 @@ class mod_system_Adsense extends icms_ipf_Object {
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
-		$this->quickInitVar('adsenseid', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('description', XOBJ_DTYPE_TXTAREA, TRUE, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
-		$this->quickInitVar('client_id', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_CLIENT_ID, _CO_ICMS_ADSENSE_CLIENT_ID_DSC);
-		$this->quickInitVar('slot', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_SLOT, _CO_ICMS_ADSENSE_SLOT_DSC);
-		$this->quickInitVar('tag', XOBJ_DTYPE_TXTBOX, FALSE, _CO_ICMS_ADSENSE_TAG, _CO_ICMS_ADSENSE_TAG_DSC);
-		$this->quickInitVar('format', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_FORMAT, _CO_ICMS_ADSENSE_FORMAT_DSC);
-		$this->quickInitVar('color_border', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_BORDER, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
-		$this->quickInitVar('color_background', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_BACKGROUND, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
-		$this->quickInitVar('color_link', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_LINK, _CO_ICMS_ADSENSE_COLOR_LINK_DSC);
-		$this->quickInitVar('color_url', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_URL, _CO_ICMS_ADSENSE_COLOR_URL_DSC);
-		$this->quickInitVar('color_text', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_TEXT, _CO_ICMS_ADSENSE_COLOR_TEXT_DSC);
-		$this->quickInitVar('style', XOBJ_DTYPE_TXTAREA, FALSE, _CO_ICMS_ADSENSE_STYLE, _CO_ICMS_ADSENSE_STYLE_DSC);
+		$this->quickInitVar('adsenseid', self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar('description', self::DTYPE_STRING, TRUE, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
+		$this->quickInitVar('client_id', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_ADSENSE_CLIENT_ID, _CO_ICMS_ADSENSE_CLIENT_ID_DSC);
+		$this->quickInitVar('slot', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_ADSENSE_SLOT, _CO_ICMS_ADSENSE_SLOT_DSC);
+		$this->quickInitVar('tag', self::DTYPE_DEP_TXTBOX, FALSE, _CO_ICMS_ADSENSE_TAG, _CO_ICMS_ADSENSE_TAG_DSC);
+		$this->quickInitVar('format', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_ADSENSE_FORMAT, _CO_ICMS_ADSENSE_FORMAT_DSC);
+		$this->quickInitVar('color_border', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_BORDER, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
+		$this->quickInitVar('color_background', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_BACKGROUND, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
+		$this->quickInitVar('color_link', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_LINK, _CO_ICMS_ADSENSE_COLOR_LINK_DSC);
+		$this->quickInitVar('color_url', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_URL, _CO_ICMS_ADSENSE_COLOR_URL_DSC);
+		$this->quickInitVar('color_text', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_TEXT, _CO_ICMS_ADSENSE_COLOR_TEXT_DSC);
+		$this->quickInitVar('style', self::DTYPE_STRING, FALSE, _CO_ICMS_ADSENSE_STYLE, _CO_ICMS_ADSENSE_STYLE_DSC);
 
 		$this->setControl('format', array('method' => 'getFormats'));
 		$this->setControl('color_border', 'color');

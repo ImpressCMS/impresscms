@@ -49,20 +49,21 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @category	ICMS
  * @package     Notification
  */
-class icms_data_notification_Object extends icms_core_Object {
+class icms_data_notification_Object extends icms_ipf_Object {
 
 	/**
 	 * Constructor
 	 **/
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('not_id', XOBJ_DTYPE_INT, NULL, false);
-		$this->initVar('not_modid', XOBJ_DTYPE_INT, NULL, false);
-		$this->initVar('not_category', XOBJ_DTYPE_TXTBOX, null, false, 30);
-		$this->initVar('not_itemid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('not_event', XOBJ_DTYPE_TXTBOX, null, false, 30);
-		$this->initVar('not_uid', XOBJ_DTYPE_INT, 0, true);
-		$this->initVar('not_mode', XOBJ_DTYPE_INT, 0, false);
+	public function __construct(&$handler, $data = array()) {		
+		$this->initVar('not_id', self::DTYPE_INTEGER, NULL, false);
+		$this->initVar('not_modid', self::DTYPE_INTEGER, NULL, false);
+		$this->initVar('not_category', self::DTYPE_DEP_TXTBOX, null, false, 30);
+		$this->initVar('not_itemid', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('not_event', self::DTYPE_DEP_TXTBOX, null, false, 30);
+		$this->initVar('not_uid', self::DTYPE_INTEGER, 0, true);
+		$this->initVar('not_mode', self::DTYPE_INTEGER, 0, false);
+                
+        parent::__construct($handler, $data);
 	}
 
 	// FIXME:???

@@ -49,18 +49,19 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		View
  * @subpackage	Template
  **/
-class icms_view_template_set_Object extends icms_core_Object {
+class icms_view_template_set_Object extends icms_ipf_Object {
 
 	/**
 	 * constructor
 	 */
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('tplset_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('tplset_name', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('tplset_desc', XOBJ_DTYPE_TXTBOX, null, false, 255);
-		$this->initVar('tplset_credits', XOBJ_DTYPE_TXTAREA, null, false);
-		$this->initVar('tplset_created', XOBJ_DTYPE_INT, 0, false);
+	public function __construct(&$handler, $data = array()) {
+		$this->initVar('tplset_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('tplset_name', self::DTYPE_DEP_OTHER, null, false);
+		$this->initVar('tplset_desc', self::DTYPE_DEP_TXTBOX, null, false, 255);
+		$this->initVar('tplset_credits', self::DTYPE_STRING, null, false);
+		$this->initVar('tplset_created', self::DTYPE_INTEGER, 0, false);
+                
+                parent::__construct($handler, $data);
 	}
 }
 

@@ -28,15 +28,15 @@ class mod_system_Rating extends icms_ipf_Object {
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
-		$this->quickInitVar('ratingid', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_RATING_DIRNAME);
-		$this->quickInitVar('item', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_RATING_ITEM);
-		$this->quickInitVar('itemid', XOBJ_DTYPE_INT, TRUE, _CO_ICMS_RATING_ITEMID);
-		$this->quickInitVar('uid', XOBJ_DTYPE_INT, TRUE, _CO_ICMS_RATING_UID);
-		$this->quickInitVar('date', XOBJ_DTYPE_LTIME, TRUE, _CO_ICMS_RATING_DATE);
-		$this->quickInitVar('rate', XOBJ_DTYPE_INT, TRUE, _CO_ICMS_RATING_RATE);
+		$this->quickInitVar('ratingid', self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar('dirname', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_RATING_DIRNAME);
+		$this->quickInitVar('item', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_RATING_ITEM);
+		$this->quickInitVar('itemid', self::DTYPE_INTEGER, TRUE, _CO_ICMS_RATING_ITEMID);
+		$this->quickInitVar('uid', self::DTYPE_INTEGER, TRUE, _CO_ICMS_RATING_UID);
+		$this->quickInitVar('date', self::DTYPE_DATETIME, TRUE, _CO_ICMS_RATING_DATE);
+		$this->quickInitVar('rate', self::DTYPE_INTEGER, TRUE, _CO_ICMS_RATING_RATE);
 
-		$this->initNonPersistableVar('name', XOBJ_DTYPE_TXTBOX, 'user', _CO_ICMS_RATING_NAME);
+		$this->initNonPersistableVar('name', self::DTYPE_DEP_TXTBOX, 'user', _CO_ICMS_RATING_NAME);
 		$this->setControl('dirname', array('method' => 'getModuleList', 'onSelect' => 'submit'));
 		$this->setControl('item', array('object' => &$this, 'method' => 'getItemList'));
 		$this->setControl('uid', 'user');

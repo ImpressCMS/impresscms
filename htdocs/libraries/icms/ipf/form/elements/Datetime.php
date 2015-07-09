@@ -21,6 +21,6 @@ class icms_ipf_form_elements_Datetime extends icms_form_elements_Datetime {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		parent::__construct($object->vars[$key]['form_caption'], $key, 15, $object->getVar($key, 'e'));
+		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, 15, $object->getVar($key, 'e'));
 	}
 }

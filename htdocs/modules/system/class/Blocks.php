@@ -31,7 +31,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	public function __construct(& $handler) {
 		parent::__construct($handler);
 
-		$this->initNonPersistableVar('visiblein', XOBJ_DTYPE_OTHER, 'visiblein', FALSE, FALSE, FALSE, TRUE);
+		$this->initNonPersistableVar('visiblein', self::DTYPE_DEP_OTHER, 'visiblein', FALSE, FALSE, FALSE, TRUE);
 
 		$this->hideFieldFromForm('last_modified');
 		$this->hideFieldFromForm('func_file');

@@ -109,10 +109,12 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	public function render() {
 		$ret = '';
 		$count = count($this->criteriaElements);
-		if ($count > 0) {
+		if ($count > 0) {                    
 			$ret = '(' . $this->criteriaElements[0]->render();
 			for ($i = 1; $i < $count; $i++) {
-				$ret .= ' ' . $this->conditions[$i] . ' ' . $this->criteriaElements[$i]->render();
+s                $query = $this->criteriaElements[$i]->render();
+                if (!$query) continue;
+				$ret .= ' ' . $this->conditions[$i] . ' ' . $query;
 			}
 			$ret .= ')';
 		}

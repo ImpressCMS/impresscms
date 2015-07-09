@@ -92,14 +92,15 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 */
 	public function addElement(&$formElement, $key = FALSE, $var = FALSE, $required = 'notset'){
 		if ($key) {
-			if ($this->targetObject->vars[$key]['readonly']) {
+			if ($this->targetObject->getVarInfo($key, 'readonly')) {
 				$formElement->setExtra('disabled="disabled"');
 				$formElement->setName($key . '-readonly');
 				// Since this element is disabled, we still want to pass it's value in the form
-				$hidden = new icms_form_elements_Hidden($key, $this->targetObject->vars[$key]['value']);
+				$hidden = new icms_form_elements_Hidden($key, $this->targetObject->getVar($key, 'n'));
 				$this->addElement($hidden);
 			}
-			$formElement->setDescription($var['form_dsc']);
+                        if (isset($var['form_dsc']) && !empty($var['form_dsc']))
+                            $formElement->setDescription($var['form_dsc']);
 			if (isset($this->targetObject->controls[$key]['onSelect'])) {
 				$hidden = new icms_form_elements_Hidden('changedField', FALSE);
 				$this->addElement($hidden);
@@ -132,12 +133,13 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 */
 	private function createElements() {
 		$controls = $this->targetObject->controls;
-		$vars = $this->targetObject->vars;
+		$vars = $this->targetObject->getVars();
 		foreach ($vars as $key=>$var) {
 			// If $displayOnForm is FALSE OR this is the primary key, it doesn't
 			// need to be displayed, then we only create an hidden field
-			if ($key == $this->targetObject->handler->keyName || !$var['displayOnForm']) {
-				$elementToAdd = new icms_form_elements_Hidden($key, $var['value']);
+			if ($key == $this->targetObject->handler->keyName || (isset($var['displayOnForm']) && !$var['displayOnForm'])) {
+                $val = isset($var['value'])?$var['value']:null;
+				$elementToAdd = new icms_form_elements_Hidden($key, $val);
 				$this->addElement($elementToAdd, $key, $var, FALSE);
 				unset($elementToAdd);
 				// If not, the we need to create the proper form control for this fields
@@ -149,7 +151,18 @@ class icms_ipf_form_Base extends icms_form_Theme {
 					 * Why this ?
 					 */
 				}
-				if (isset($controls[$key])) {
+                                if (!isset($controls[$key])) {
+                                    $controls[$key] = $this->targetObject->getControl($key);                                    
+                                }
+                                
+                                if ($controls[$key] === null) {
+                                    $elementToAdd = new icms_form_elements_Hidden($key, isset($var['value'])?$var['value']:null);
+                                    $this->addElement($elementToAdd, $key, $var, FALSE);
+                                    unset($elementToAdd);
+                                    continue;
+                                }
+                                
+				//if (isset($controls[$key])) {
 					/* If the control has name, it's because it's an object already present in the script
 					 * for example, "user"
 					 * If the field does not have a name, than we will use a "select" (ie icms_form_elements_Select)
@@ -165,95 +178,96 @@ class icms_ipf_form_Base extends icms_form_Theme {
 					unset($form_select);
 
 					// If this field don't have a specific control, we will use the standard one, depending on its data type
-				} else {
-					switch ($var['data_type']) {
-						case XOBJ_DTYPE_TXTBOX:
+				//} else {
+                                    
+					/*switch ($var['data_type']) {
+						case self::DTYPE_DEP_TXTBOX:
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
 							unset($form_text);
 							break;
 
-						case XOBJ_DTYPE_INT:
+						case self::DTYPE_INTEGER:
 							$this->targetObject->setControl($key, array('name' => 'text', 'size' => '5'));
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
 							unset($form_text);
 							break;
 
-						case XOBJ_DTYPE_FLOAT:
+						case self::DTYPE_FLOAT:
 							$this->targetObject->setControl($key, array('name' => 'text', 'size' => '5'));
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
 							unset($form_text);
 							break;
 
-						case XOBJ_DTYPE_LTIME:
+						case self::DTYPE_DATETIME:
 							$form_datetime = $this->getControl('datetime', $key);
 							$this->addElement($form_datetime, $key, $var);
 							unset($form_datetime);
 							break;
 
-						case XOBJ_DTYPE_STIME:
+						case self::DTYPE_DEP_STIME:
 							$form_date = $this->getControl('date', $key);
 							$this->addElement($form_date, $key, $var);
 							unset($form_date);
 							break;
 
-						case XOBJ_DTYPE_TIME_ONLY:
+						case self::DTYPE_DEP_TIME_ONLY:
 							$form_time = $this->getControl('time', $key);
 							$this->addElement($form_time, $key, $var);
 							unset($form_time);
 							break;
 
-						case XOBJ_DTYPE_CURRENCY:
+						case self::DTYPE_DEP_CURRENCY:
 							$this->targetObject->setControl($key, array('name' => 'text', 'size' => '15'));
 							$form_currency = $this->getControl("text", $key);
 							$this->addElement($form_currency, $key, $var);
 							unset($form_currency);
 							break;
 
-						case XOBJ_DTYPE_URLLINK:
+						case self::DTYPE_DEP_URLLINK:
 							$form_urllink = $this->getControl("urllink", $key);
 							$this->addElement($form_urllink, $key, $var);
 							unset($form_urllink);
 							break;
 
-						case XOBJ_DTYPE_FILE:
+						case self::DTYPE_DEP_FILE:
 							$form_file = $this->getControl("richfile", $key);
 							$this->addElement($form_file, $key, $var);
 							unset($form_file);
 							break;
 
-						case XOBJ_DTYPE_TXTAREA:
+						case self::DTYPE_STRING:
 							$form_text_area = $this->getControl('textarea', $key);
 							$this->addElement($form_text_area, $key, $var);
 							unset($form_text_area);
 							break;
 
-						case XOBJ_DTYPE_ARRAY:
+						case self::DTYPE_ARRAY:
 							// TODO : To come...
 							break;
 
-						case XOBJ_DTYPE_SOURCE:
+						case self::DTYPE_DEP_SOURCE:
 							$form_source_editor = $this->getControl('source', $key);
 							$this->addElement($form_source_editor, $key, $var);
 							unset($form_source_editor);
 							break;
 
-						case XOBJ_DTYPE_FORM_SECTION:
+						case self::DTYPE_FORM_SECTION:
 							$section_control = $this->getControl('section', $key);
 							$this->addElement($section_control, $key, $var);
 							unset($section_control);
 							break;
 
-						case XOBJ_DTYPE_FORM_SECTION_CLOSE:
+						case self::DTYPE_FORM_SECTION_CLOSE:
 							$this->targetObject->setControl($key, array("close" => TRUE));
 							$section_control = $this->getControl('section', $key);
 							$this->addElement($section_control, $key, $var);
 							unset($section_control);
 							break;
-					}
-				}
+					}*/
+				//}
 			}
 		}
 		// Add a hidden field to store the URL of the page before this form
@@ -345,63 +359,63 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		switch ($controlName) {
 			case 'color':
 				$control = $this->targetObject->getControl($key);
-				$controlObj = new icms_form_elements_Colorpicker($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
+				$controlObj = new icms_form_elements_Colorpicker($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
 				return $controlObj;
 				break;
 
 			case 'label':
-				return new icms_form_elements_Label($this->targetObject->vars[$key]['form_caption'], $this->targetObject->getVar($key));
+				return new icms_form_elements_Label($this->targetObject->getVarInfo($key, 'form_caption'), $this->targetObject->getVar($key));
 				break;
 
 			case 'textarea' :
 				$form_rows = isset($this->targetObject->controls[$key]['rows']) ? $this->targetObject->controls[$key]['rows'] : 5;
 				$form_cols = isset($this->targetObject->controls[$key]['cols']) ? $this->targetObject->controls[$key]['cols'] : 60;
 
-				$editor = new icms_form_elements_Textarea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
-				if ($this->targetObject->vars[$key]['form_dsc']) {
-					$editor->setDescription($this->targetObject->vars[$key]['form_dsc']);
+				$editor = new icms_form_elements_Textarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
+				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
+					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
 				return $editor;
 				break;
 
 			case 'dhtmltextarea' :
-				$editor = new icms_form_elements_Dhtmltextarea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), 15, 50);
-				if ($this->targetObject->vars[$key]['form_dsc']) {
-					$editor->setDescription($this->targetObject->vars[$key]['form_dsc']);
+				$editor = new icms_form_elements_Dhtmltextarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), 15, 50);
+				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
+					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
 				return $editor;
 				break;
 
 			case 'theme':
-				return $this->getThemeSelect($key, $this->targetObject->vars[$key]);
+				return $this->getThemeSelect($key, $this->targetObject->getVarInfo($key));
 				break;
 
 			case 'theme_multi':
-				return $this->getThemeSelect($key, $this->targetObject->vars[$key], TRUE);
+				return $this->getThemeSelect($key, $this->targetObject->getVarInfo($key), TRUE);
 				break;
 
 			case 'timezone':
-				return new icms_form_elements_select_Timezone($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
+				return new icms_form_elements_select_Timezone($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
 				break;
 
 			case 'group':
-				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, FALSE, $this->targetObject->getVar($key, 'e'), 1, FALSE);
+				return new icms_form_elements_select_Group($this->targetObject->getVarInfo($key, 'form_caption'), $key, FALSE, $this->targetObject->getVar($key, 'e'), 1, FALSE);
 				break;
 
 			case 'group_multi':
-				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
+				return new icms_form_elements_select_Group($this->targetObject->getVarInfo($key, 'form_caption'), $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
 				break;
 
 			case 'user_multi':
-				return new icms_form_elements_select_User($this->targetObject->vars[$key]['form_caption'], $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
+				return new icms_form_elements_select_User($this->targetObject->getVarInfo($key, 'form_caption'), $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
 				break;
 
 			case 'password':
-				return new icms_form_elements_Password($this->targetObject->vars[$key]['form_caption'], $key, 50, 255, $this->targetObject->getVar($key, 'e'));
+				return new icms_form_elements_Password($this->targetObject->getVarInfo($key, 'form_caption'), $key, 50, 255, $this->targetObject->getVar($key, 'e'));
 				break;
 
 			case 'country':
-				return new icms_form_elements_select_Country($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
+				return new icms_form_elements_select_Country($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'));
 				break;
 
 			default:
@@ -525,7 +539,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			$elements[$n]['required'] = $ele->isRequired();
 			$elements[$n]['section'] = get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection();
 			$elements[$n]['section_close'] = get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection();
-			$elements[$n]['hide'] = isset($this->targetObject->vars[$n]['hide']) ? $this->targetObject->vars[$n]['hide'] : FALSE;
+			$elements[$n]['hide'] = $this->targetObject->getVarInfo($n, 'hide', false);
 
 			if ($ele->getDescription() != '') {
 				$elements[$n]['description']  = $ele->getDescription();

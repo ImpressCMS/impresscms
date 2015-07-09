@@ -59,7 +59,7 @@ class icms_ipf_view_Single {
 	public function render($fetchOnly = false, $debug = false) {
 
 		$this->_tpl = new icms_view_Tpl();
-		$vars = $this->_object->vars;
+		$vars = $this->_object->getVars();
 		$icms_object_array = array();
 
 		foreach ($this->_rows as $row) {
@@ -71,12 +71,12 @@ class icms_ipf_view_Single {
 				$value = $this->_object->getVar($row->getKeyName());
 			}
 			if ($row->isHeader()) {
-				$this->_tpl->assign('icms_single_view_header_caption', $this->_object->vars[$key]['form_caption']);
+				$this->_tpl->assign('icms_single_view_header_caption', $this->_object->getVarInfo($key, 'form_caption'));
 				$this->_tpl->assign('icms_single_view_header_value', $value);
 			} else {
 				$icms_object_array[$key]['value'] = $value;
 				$icms_object_array[$key]['header'] = $row->isHeader();
-				$icms_object_array[$key]['caption'] = $this->_object->vars[$key]['form_caption'];
+				$icms_object_array[$key]['caption'] = $this->_object->getVarInfo($key, 'form_caption');
 			}
 		}
 		$action_row = '';

@@ -215,6 +215,127 @@ class icms_file_MediaUploadHandler {
 
 		icms_loadLanguageFile('core', 'uploader');
 	}
+        
+        /**
+         * Do same as fetchMedia but from URL
+         *
+         * @param string $url 
+         */
+        public function fetchFromURL($url) {
+            if (empty($this->extensionToMime)) {
+                self::setErrors(_ER_UP_MIMETYPELOAD);
+                return false;
+            }            
+            //header('Content-Type: text/plain'); 
+            if (substr($url, 0, 5) == 'data:') {                
+                $headers = array(
+                    'charset' => 'US-ASCII',
+                    'content-type' => 'text/plain',
+                );
+                foreach(array_map('trim', explode(';', substr($url, 5))) as $part) {
+                    if (substr($part, 0, 8) == 'charset=')
+                        $headers['charset'] = trim(substr($part, 8));
+                    elseif (substr($part, 0, 7) == 'base64,') {
+                        $content =  base64_decode(rawurldecode(substr($part, 7)));
+                        //header('Content-Type: image/png');
+                       // echo $url;
+                       // echo "<br />";
+                       // echo (rawurldecode(substr($part, 7)));
+                       // die();
+                    } elseif (substr($part, 0, 1) == ',') {
+                        self::setErrors('Unsuported encyption in data url protocol');
+                        return false;
+                    } else
+                        $headers['content-type'] = $part;
+                }                
+                $headers['content-length'] = strlen($content);
+            } else {
+                if (!function_exists('curl_init')) {
+                    self::setErrors('cURL not found!');
+                    return false;
+                }
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_HEADER, true);            
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_VERBOSE, true);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                $data = curl_exec($ch);
+
+                $hsize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+                $headers = mb_substr($data, 0, $hsize);
+                $content = mb_substr($data, $hsize);
+
+                curl_close($ch);
+
+                $hdrs = array();
+                foreach (explode("\r\n", $headers) as $line) {
+                    $line = trim($line);
+                    $i = strpos($line, ':');
+                    if (!$i) {
+                        if (substr($line, 0, 5) == 'HTTP/')
+                           $hdrs['http'] = explode(' ', substr($line, 5));
+                        elseif (trim($line) != '')
+                            $hdrs['unknown-header'][] = $line;
+                    } else {
+                        $name = strtolower(trim(substr($line, 0, $i)));
+                        $value = trim(substr($line, $i + 1));
+                        switch ($name) {
+                            case 'content-disposition':
+                                preg_match_all('/([^;]+);\ *filename=(".+"|.+)/Ui', $value, $matches, PREG_SET_ORDER);
+                                if (mb_substr($matches[0][2], 0, 1) == '"')
+                                    $matches[0][2] = mb_substr($matches[0][2], 1, -1);
+                                $hdrs[$name] = array(
+                                     'type'     => $matches[0][1],
+                                     'filename' => $matches[0][2],
+                                );
+                            break;
+                            default:
+                                $hdrs[$name] = $value;
+                            break;
+                        }
+                        unset($name, $value);
+                    }
+                }
+                $headers = $hdrs;
+                unset($hdrs);
+                if (!isset($headers['http'][1]) || ($headers['http'][1] != 200))
+                    return false;            
+                if (!isset($headers['content-type'])) 
+                    $headers['content-type'] = 'application/octet-stream';
+            }
+            $this->mediaName = isset($headers['content-disposition']['filename'])?$headers['content-disposition']['filename']:basename(parse_url($url, PHP_URL_PATH));
+            $this->mediaType = $headers['content-type'];
+            $this->mediaSize = $headers['content-length'];
+            $this->mediaTmpName = tempnam(sys_get_temp_dir(), 'icms_media');
+            $this->mediaError = 0;
+            $fp = fopen( $this->mediaTmpName, 'w+');
+            fwrite($fp, $content);
+            fclose($fp);
+            if (strrpos($this->mediaName, '.') === false) {
+				$ext = explode('/', $this->mediaType);
+                $ext = next($ext);
+                $this->mediaName .= '.' . $ext;
+            } else {
+                $ext = strtolower(substr($this->mediaName, strrpos($this->mediaName, '.') + 1));
+            }            
+            if (isset($this->extensionToMime[$ext])) {
+                $this->mediaRealType = $this->extensionToMime[$ext];
+            }
+            $this->errors = array();
+            if ( (int) ($this->mediaSize) < 0) {
+		self::setErrors(_ER_UP_INVALIDFILESIZE);
+                return false;
+            }
+            if ($this->mediaName == '') {
+                self::setErrors(_ER_UP_FILENAMEEMPTY);
+                return false;
+            }
+            if ($this->mediaError > 0) {                
+                self::setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));               
+                return false;
+            }
+            return true;
+        }
 
 	/**
 	 * Fetch the uploaded file
@@ -439,10 +560,17 @@ class icms_file_MediaUploadHandler {
 			$this->savedFileName = strtolower($this->mediaName);
 		}
 		$this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
-		if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
-			self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
-			return false;
-		}
+        if (is_uploaded_file($this->mediaTmpName)) {
+            if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
+                self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
+                return false;
+            }
+        } else {
+            if (!rename($this->mediaTmpName, $this->savedDestination)) {
+                self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
+                return false;
+            }
+        }
 		// Check IE XSS before returning success
 		$ext = strtolower(substr(strrchr($this->savedDestination, '.'), 1));
 		if (in_array($ext, $this->imageExtensions)) {

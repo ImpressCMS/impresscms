@@ -33,16 +33,16 @@ class mod_system_Autotasks extends icms_ipf_Object {
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
-		$this->quickInitVar('sat_id', XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar('sat_lastruntime', XOBJ_DTYPE_INT, FALSE, _CO_ICMS_AUTOTASKS_LASTRUNTIME, NULL, 0);
-		$this->quickInitVar('sat_name', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_AUTOTASKS_NAME, _CO_ICMS_AUTOTASKS_NAME_DSC);
-		$this->quickInitVar('sat_code', XOBJ_DTYPE_SOURCE, TRUE, _CO_ICMS_AUTOTASKS_CODE, _CO_ICMS_AUTOTASKS_CODE_DSC);
-		$this->quickInitVar('sat_repeat', XOBJ_DTYPE_INT, TRUE, _CO_ICMS_AUTOTASKS_REPEAT, _CO_ICMS_AUTOTASKS_REPEAT_DSC, 0);
-		$this->quickInitVar('sat_interval', XOBJ_DTYPE_INT, TRUE, _CO_ICMS_AUTOTASKS_INTERVAL, _CO_ICMS_AUTOTASKS_INTERVAL_DSC, 24 * 60);
-		$this->quickInitVar('sat_onfinish', XOBJ_DTYPE_INT, TRUE, _CO_ICMS_AUTOTASKS_ONFINISH, _CO_ICMS_AUTOTASKS_ONFINISH_DSC, 0);
-		$this->quickInitVar('sat_enabled', XOBJ_DTYPE_INT, TRUE, _CO_ICMS_AUTOTASKS_ENABLED, _CO_ICMS_AUTOTASKS_ENABLED_DSC, 1);
-		$this->quickInitVar('sat_type', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_AUTOTASKS_TYPE, NULL, ':custom');
-		$this->quickInitVar('sat_addon_id', XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar('sat_id', self::DTYPE_INTEGER, FALSE);
+		$this->quickInitVar('sat_lastruntime', self::DTYPE_INTEGER, FALSE, _CO_ICMS_AUTOTASKS_LASTRUNTIME, NULL, 0);
+		$this->quickInitVar('sat_name', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_AUTOTASKS_NAME, _CO_ICMS_AUTOTASKS_NAME_DSC);
+		$this->quickInitVar('sat_code', self::DTYPE_DEP_SOURCE, TRUE, _CO_ICMS_AUTOTASKS_CODE, _CO_ICMS_AUTOTASKS_CODE_DSC);
+		$this->quickInitVar('sat_repeat', self::DTYPE_INTEGER, TRUE, _CO_ICMS_AUTOTASKS_REPEAT, _CO_ICMS_AUTOTASKS_REPEAT_DSC, 0);
+		$this->quickInitVar('sat_interval', self::DTYPE_INTEGER, TRUE, _CO_ICMS_AUTOTASKS_INTERVAL, _CO_ICMS_AUTOTASKS_INTERVAL_DSC, 24 * 60);
+		$this->quickInitVar('sat_onfinish', self::DTYPE_INTEGER, TRUE, _CO_ICMS_AUTOTASKS_ONFINISH, _CO_ICMS_AUTOTASKS_ONFINISH_DSC, 0);
+		$this->quickInitVar('sat_enabled', self::DTYPE_INTEGER, TRUE, _CO_ICMS_AUTOTASKS_ENABLED, _CO_ICMS_AUTOTASKS_ENABLED_DSC, 1);
+		$this->quickInitVar('sat_type', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_AUTOTASKS_TYPE, NULL, ':custom');
+		$this->quickInitVar('sat_addon_id', self::DTYPE_INTEGER, FALSE);
 
 		$this->setControl('sat_name', 'text');
 		$this->setControl('sat_onfinish', 'yesno');

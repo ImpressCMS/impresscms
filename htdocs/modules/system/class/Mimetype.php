@@ -33,11 +33,11 @@ class mod_system_Mimetype extends icms_ipf_Object {
 	function __construct(&$handler) {
 		parent::__construct($handler);
 
-		$this->quickInitVar('mimetypeid', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('extension', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC);
-		$this->quickInitVar('types', XOBJ_DTYPE_TXTAREA, TRUE, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC);
-		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC);
-		$this->quickInitVar('dirname', XOBJ_DTYPE_SIMPLE_ARRAY, TRUE, _CO_ICMS_MIMETYPE_DIRNAME);
+		$this->quickInitVar('mimetypeid', self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar('extension', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC);
+		$this->quickInitVar('types', self::DTYPE_STRING, TRUE, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC);
+		$this->quickInitVar('name', self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC);
+		$this->quickInitVar('dirname', self::DTYPE_LIST, TRUE, _CO_ICMS_MIMETYPE_DIRNAME);
 
 		$this->setControl('dirname', array(
 			'name' => 'selectmulti',

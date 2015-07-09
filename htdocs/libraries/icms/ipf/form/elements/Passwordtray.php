@@ -23,7 +23,7 @@ class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key){
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		$control = $object->controls[$key];
 
 		icms_loadLanguageFile('core', 'user');

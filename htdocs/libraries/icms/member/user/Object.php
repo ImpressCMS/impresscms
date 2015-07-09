@@ -47,7 +47,8 @@ defined('ICMS_ROOT_PATH') or exit();
  * @package		Member
  * @subpackage	User
  */
-class icms_member_user_Object extends icms_core_Object {
+class icms_member_user_Object 
+    extends icms_ipf_Object {
 	/**
 	 * Array of groups that user belongs to
 	 * @var array
@@ -70,59 +71,60 @@ class icms_member_user_Object extends icms_core_Object {
 	 * constructor
 	 * @param array $id Array of key-value-pairs to be assigned to the user. (for backward compatibility only)
 	 * @param int $id ID of the user to be loaded from the database.
+     * @param array $data Data to load into this object
 	 */
-	public function __construct($id = null) {
-		$this->initVar('uid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, false, 60);
-		$this->initVar('uname', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		$this->initVar('email', XOBJ_DTYPE_TXTBOX, null, true, 60);
-		$this->initVar('url', XOBJ_DTYPE_TXTBOX, null, false, 255);
-		$this->initVar('user_avatar', XOBJ_DTYPE_TXTBOX, null, false, 30);
-		$this->initVar('user_regdate', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('user_icq', XOBJ_DTYPE_TXTBOX, null, false, 15);
-		$this->initVar('user_from', XOBJ_DTYPE_TXTBOX, null, false, 100);
-		$this->initVar('user_sig', XOBJ_DTYPE_TXTAREA, null, false, null);
-		$this->initVar('user_viewemail', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('actkey', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('user_aim', XOBJ_DTYPE_TXTBOX, null, false, 18);
-		$this->initVar('user_yim', XOBJ_DTYPE_TXTBOX, null, false, 25);
-		$this->initVar('user_msnm', XOBJ_DTYPE_TXTBOX, null, false, 100);
-		$this->initVar('pass', XOBJ_DTYPE_TXTBOX, null, false, 255);
-		$this->initVar('posts', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('attachsig', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('rank', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('level', XOBJ_DTYPE_TXTBOX, 0, false);
-		$this->initVar('theme', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('timezone_offset', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('last_login', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('umode', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('uorder', XOBJ_DTYPE_INT, 1, false);
+	public function __construct(&$handler, $data = array()) {
+            //parent::__construct($handler, $data);
+            
+		$this->initVar('uid', self::DTYPE_INTEGER, null, false, null, null, null, 'User ID');
+		$this->initVar('name', self::DTYPE_DEP_TXTBOX, null, false, 60, null, null, _US_REALNAME);
+		$this->initVar('uname', self::DTYPE_DEP_TXTBOX, null, true, 255, null, null, 'User Name');
+		$this->initVar('email', self::DTYPE_DEP_TXTBOX, null, true, 60, null, null, _US_EMAIL);
+		$this->initVar('url', self::DTYPE_DEP_TXTBOX, null, false, 255, null, null, _US_WEBSITE);
+		$this->initVar('user_avatar', self::DTYPE_FILE, null, false, 30, null, null, _US_AVATAR);
+		$this->initVar('user_regdate', self::DTYPE_INTEGER, null, false, null, null, null, 'Registration date');
+		$this->initVar('user_icq', self::DTYPE_DEP_TXTBOX, null, false, 15, null, null, _US_ICQ);
+		$this->initVar('user_from', self::DTYPE_DEP_TXTBOX, null, false, 100, null, null, _US_LOCATION);
+		$this->initVar('user_sig', self::DTYPE_STRING, null, false, null, null, null, _US_SIGNATURE);
+		$this->initVar('user_viewemail', self::DTYPE_BOOLEAN, 0, false, null, null, null, _US_ALLOWVIEWEMAIL);
+		$this->initVar('actkey', self::DTYPE_DEP_TXTBOX, null, false, 100, null, null, 'Activation key');
+		$this->initVar('user_aim', self::DTYPE_DEP_TXTBOX, null, false, 18, null, null, _US_AIM);
+		$this->initVar('user_yim', self::DTYPE_DEP_TXTBOX, null, false, 25, null, null, _US_YIM);
+		$this->initVar('user_msnm', self::DTYPE_DEP_TXTBOX, null, false, 100, null, null, _US_MSNM);
+		$this->initVar('pass', self::DTYPE_DEP_TXTBOX, null, false, 255, null, null, _US_PASSWORD);
+		$this->initVar('posts', self::DTYPE_INTEGER, null, false, null, null, null, _US_POSTS);
+		$this->initVar('attachsig', self::DTYPE_BOOLEAN, 0, false, null, null, null, _US_SHOWSIG);
+		$this->initVar('rank', self::DTYPE_INTEGER, 0, false, null, null, null, _US_RANK);
+		$this->initVar('level', self::DTYPE_FLOAT, 0, false, null, null, null, 'Level');
+		$this->initVar('theme', self::DTYPE_STRING, null, false, null, null, null, _US_SELECT_THEME);
+		$this->initVar('timezone_offset', self::DTYPE_FLOAT, null, false, null, null, null, _US_TIMEZONE);
+		$this->initVar('last_login', self::DTYPE_INTEGER, 0, false, null, null, null, _US_LASTLOGIN);
+		$this->initVar('umode', self::DTYPE_INTEGER, null, false, null, null, null, _US_CDISPLAYMODE);
+		$this->initVar('uorder', self::DTYPE_INTEGER, 1, false, null, null, null, _US_CSORTORDER);
 		// RMV-NOTIFY
-		$this->initVar('notify_method', XOBJ_DTYPE_OTHER, 1, false);
-		$this->initVar('notify_mode', XOBJ_DTYPE_OTHER, 0, false);
-		$this->initVar('user_occ', XOBJ_DTYPE_TXTBOX, null, false, 100);
-		$this->initVar('bio', XOBJ_DTYPE_TXTAREA, null, false, null);
-		$this->initVar('user_intrest', XOBJ_DTYPE_TXTBOX, null, false, 150);
-		$this->initVar('user_mailok', XOBJ_DTYPE_INT, 1, false);
+		$this->initVar('notify_method', self::DTYPE_INTEGER, 1, false, null, null, null, _NOT_NOTIFYMETHOD);
+		$this->initVar('notify_mode', self::DTYPE_INTEGER, 0, false, null, null, null, _NOT_NOTIFYMODE);
+		$this->initVar('user_occ', self::DTYPE_DEP_TXTBOX, null, false, 100, null, null, _US_OCCUPATION);
+		$this->initVar('bio', self::DTYPE_STRING, null, false, null, null, null, null, _US_EXTRAINFO);
+		$this->initVar('user_intrest', self::DTYPE_DEP_TXTBOX, null, false, 150, null, null, _US_INTEREST);
+		$this->initVar('user_mailok', self::DTYPE_INTEGER, 1, false, null, null, null, _US_MAILOK);
 
-		$this->initVar('language', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('openid', XOBJ_DTYPE_TXTBOX, '', false, 255);
-		$this->initVar('user_viewoid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('pass_expired', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
-
-		// for backward compatibility
-		if (isset($id)) {
-			if (is_array($id)) {
-				$this->assignVars($id);
-			} else {
-				$member_handler = icms::handler('icms_member');
-				$user =& $member_handler->getUser($id);
-				foreach ($user->vars as $k => $v) {
-					$this->assignVar($k, $v['value']);
-				}
-			}
-		}
+		$this->initVar('language', self::DTYPE_STRING, null, false, null, null, null, _US_SELECT_LANG);
+		$this->initVar('openid', self::DTYPE_DEP_TXTBOX, '', false, 255, null, null, _US_OPENID_YOUR);
+		$this->initVar('user_viewoid', self::DTYPE_INTEGER, 0, false, null, null, null, _US_ALLOWVIEWEMAILOPENID);
+		$this->initVar('pass_expired', self::DTYPE_BOOLEAN, 0, false, null, null, null, 'Pass Expired?');
+		$this->initVar('login_name', self::DTYPE_DEP_TXTBOX, null, true, 255, null, null, _US_LOGINNAME);                
+                
+                if (isset($data['_rank'])) {
+                    $this->_rank = $data['_rank'];
+                    unset($data['_rank']);
+                }
+                if (isset($data['_groups'])) {
+                    $this->_groups = $data['_groups'];
+                    unset($data['_groups']);
+                }
+                
+                parent::__construct($handler, $data);                                
 	}
 
 	/**
@@ -134,7 +136,70 @@ class icms_member_user_Object extends icms_core_Object {
 		return false;
 	}
 
-	/**
+    public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
+        $this->hideFieldFromForm('pass');
+
+        $this->makeFieldReadOnly('posts');
+        $this->makeFieldReadOnly('user_regdate');
+        $this->makeFieldReadOnly('last_login');
+        $this->makeFieldReadOnly('uid');
+        $this->makeFieldReadOnly('actkey');
+
+        $this->setControl('theme', 'theme');
+        $this->setControl('language', 'language');
+        $this->setControl('uname', 'text');
+        $this->setControl('login_name', 'text');
+        $this->setControl('user_aim', 'text');
+        $this->setControl('actkey', 'text');
+        $this->setControl('name', 'text');
+        $this->setControl('url', 'text');
+        $this->setControl('email', 'text');
+        $this->setControl('user_msnm', 'text');
+        $this->setControl('user_yim', 'text');
+        $this->setControl('user_icq', 'text');
+        $this->setControl('timezone_offset', 'timezone');
+        $this->setControl('user_from', 'country');
+        $this->setControl('last_login', 'date');
+        $this->setControl('user_regdate', 'date');
+        $this->setControl('notify_method', 'notify_method');
+        $this->setControl('pass_expired', 'yesno');
+        $this->setControl('user_viewoid', 'yesno');
+        $this->setControl('user_mailok', 'yesno');
+        $this->setControl('attachsig', 'yesno');
+        $this->setControl('rank', array(
+            'name' => 'select',
+            'itemHandler' => 'member_rank',
+            'module' => 'icms',
+            'method' => 'getList'
+        ));
+        $this->setControl('notify_method', array(
+            'name' => 'select',
+            'options' => array(
+                XOOPS_NOTIFICATION_METHOD_DISABLE => _NOT_METHOD_DISABLE,
+                XOOPS_NOTIFICATION_METHOD_PM => _NOT_METHOD_PM,
+                XOOPS_NOTIFICATION_METHOD_EMAIL => _NOT_METHOD_EMAIL
+            )
+        ));
+        $this->setControl('notify_mode', array(
+            'name' => 'select',
+            'options' => array(
+                XOOPS_NOTIFICATION_MODE_SENDALWAYS => _NOT_MODE_SENDALWAYS,
+                XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE => _NOT_MODE_SENDONCE,
+                XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT => _NOT_MODE_SENDONCEPERLOGIN
+            )
+        ));
+        $this->setControl('umode', array(
+            'name' => 'select',
+            'options' => array("nest" => _NESTED, "flat" => _FLAT, "thread" => _THREADED)
+        ));
+        $this->setControl('uorder', array(
+            'name' => 'select',
+            'options' => array("0" => _OLDESTFIRST, "1" => _NEWESTFIRST)
+        ));
+        return parent::getForm($form_caption, $form_name, $form_action, $submit_button_caption, $cancel_js_action, $captcha);
+    }
+
+    /**
 	 * Updated by Catzwolf 11 Jan 2004
 	 * find the username for a given ID
 	 *
@@ -143,25 +208,9 @@ class icms_member_user_Object extends icms_core_Object {
 	 * @return string name of the user. name for "anonymous" if not found.
 	 */
 	static public function getUnameFromId($userid, $usereal = 0) {
-		$userid = (int) $userid;
-		$usereal = (int) $usereal;
-		if ($userid > 0) {
-			$member_handler = icms::handler('icms_member');
-			$user =& $member_handler->getUser($userid);
-			if (is_object($user)) {
-				if ($usereal) {
-					$name = $user->getVar('name');
-					if ($name != '') {
-						return icms_core_DataFilter::htmlSpecialChars($name);
-					} else {
-						return icms_core_DataFilter::htmlSpecialChars($user->getVar('uname'));
-					}
-				} else {
-					return icms_core_DataFilter::htmlSpecialChars($user->getVar('uname'));
-				}
-			}
-		}
-		return $GLOBALS['icmsConfig']['anonymous'];
+                trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
+		$handler = icms::handler('icms_member_user');
+                return $this->handler->getUnameFromId($userid, (bool)$usereal);
 	}
 
 	/**
@@ -244,7 +293,7 @@ class icms_member_user_Object extends icms_core_Object {
 	public function &getGroups() {
 		if (empty($this->_groups)) {
 			$member_handler = icms::handler('icms_member');
-			$this->_groups =& $member_handler->getGroupsByUser($this->getVar('uid'));
+			$this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
 		}
 		return $this->_groups;
 	}
@@ -279,7 +328,7 @@ class icms_member_user_Object extends icms_core_Object {
 	 */
 	public function rank() {
 		if (!isset($this->_rank)) {
-			$this->_rank = icms_getModuleHandler("userrank", "system")->getRank($this->getVar('rank'), $this->getVar('posts'));
+			$this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
 		}
 		return $this->_rank;
 	}
@@ -289,8 +338,7 @@ class icms_member_user_Object extends icms_core_Object {
 	 * @return bool
 	 */
 	public function isActive() {
-		if ($this->getVar('level') <= 0) {return false;}
-		return true;
+		return $this->getVar('level') > 0;
 	}
 
 	/**
@@ -330,4 +378,77 @@ class icms_member_user_Object extends icms_core_Object {
 		if ($border && $border != '') {$ret .= "&amp;border=" . $border;}
 		return $ret;
 	}
+
+
+        
+        public function setVar($name, $value, $options = null) {
+            parent::setVar($name, $value, $options);
+            if ($this->isSameAsLoggedInUser()) {
+                $_SESSION['icmsUser'][$name] = parent::getVar($name);
+            }
+        }
+        
+        /**
+         * Logs in current user
+         */
+        public function login() {
+            $this->setVar('last_login', time());
+            $this->store();
+            $data = $this->toArray();
+            $data['_rank'] = $this->rank();
+            $data['_groups'] = $this->getGroups();
+            unset($data['itemLink'], $data['itemUrl'], $data['editItemLink'], $data['deleteItemLink'], $data['printAndMailLink']);
+            $class = get_class($this->handler);
+            $_SESSION = array(
+                'icmsUser' => $data, 
+                'icmsUserHandler' => $class,
+                'icmsUserPaths' => array(
+                    icms_Autoloader::classPath($class),
+                    icms_Autoloader::classPath(get_class($this))
+                )
+            );
+        }
+        
+        /**
+         * Logs out current user
+         * 
+         * @return boolean
+         */
+        public function logout() {
+            if (!isset($_SESSION['icmsUser']['uid'])) 
+                return false;
+            if ($_SESSION['icmsUser']['uid'] != $this->getVar('uid')) 
+                return false;
+            $_SESSION = array();            
+        }
+        
+        /**
+         * Checks if this user is same as logged in user
+         * 
+         * @return boolean
+         */
+        public function isSameAsLoggedInUser() {
+            if (!icms::$user)
+                return false;
+            return icms::$user->getVar('uid') == $this->getVar('uid');
+        }
+        
+      /*  /**
+         * Converts user to array
+         * 
+         * @return array
+         */
+      /*  public function toArray() {           
+            $data = parent::toArray();
+            if ($this->isSameAsLoggedInUser()) {
+                if (!$data['user_viewoid'])
+                    unset($data['openid']);
+                unset($data['pass_expired'], $data['login_name'], $data['pass']);
+                foreach (array_keys($data) as $key) {
+                    if ($key == 'uid')
+                        continue;
+                }
+            }
+            return $data;
+        }*/
 }

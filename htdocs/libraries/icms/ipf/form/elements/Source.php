@@ -28,7 +28,7 @@ class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
 	public function __construct($object, $key) {
 		global $icmsConfig;
 
-		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e'));
+		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVar($key, 'e'));
 
 		$control = $object->getControl($key);
 

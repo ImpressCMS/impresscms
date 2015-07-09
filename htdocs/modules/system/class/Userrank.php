@@ -35,12 +35,12 @@ class mod_system_Userrank extends icms_ipf_Object {
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
-		$this->quickInitVar("rank_id", XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar("rank_title", XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
-		$this->quickInitVar("rank_min", XOBJ_DTYPE_INT, TRUE, _CO_ICMS_USERRANK_RANK_MIN, _CO_ICMS_USERRANK_RANK_MIN_DSC);
-		$this->quickInitVar("rank_max", XOBJ_DTYPE_INT, TRUE, _CO_ICMS_USERRANK_RANK_MAX, _CO_ICMS_USERRANK_RANK_MAX_DSC);
-		$this->quickInitVar("rank_special", XOBJ_DTYPE_INT, TRUE, _CO_ICMS_USERRANK_RANK_SPECIAL, _CO_ICMS_USERRANK_RANK_SPECIAL_DSC);
-		$this->quickInitVar("rank_image", XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
+		$this->quickInitVar("rank_id", self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar("rank_title", self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
+		$this->quickInitVar("rank_min", self::DTYPE_INTEGER, TRUE, _CO_ICMS_USERRANK_RANK_MIN, _CO_ICMS_USERRANK_RANK_MIN_DSC);
+		$this->quickInitVar("rank_max", self::DTYPE_INTEGER, TRUE, _CO_ICMS_USERRANK_RANK_MAX, _CO_ICMS_USERRANK_RANK_MAX_DSC);
+		$this->quickInitVar("rank_special", self::DTYPE_INTEGER, TRUE, _CO_ICMS_USERRANK_RANK_SPECIAL, _CO_ICMS_USERRANK_RANK_SPECIAL_DSC);
+		$this->quickInitVar("rank_image", self::DTYPE_DEP_TXTBOX, TRUE, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
 
 		$this->setControl("rank_special", "yesno");
 		$this->setControl("rank_image", "image");

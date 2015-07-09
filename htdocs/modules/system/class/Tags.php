@@ -56,10 +56,10 @@ class mod_system_Tags extends icms_ipf_seo_Object {
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
-		$this->quickInitVar("id", XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar("tag", XOBJ_DTYPE_TXTBOX, TRUE, _CO_SYSTEM_TAGS_TAG, _CO_SYSTEM_TAGS_TAG_DSC);
-		$this->quickInitVar("status", XOBJ_DTYPE_INT, TRUE, _CO_SYSTEM_TAGS_STATUS, _CO_SYSTEM_TAGS_STATUS_DSC);
-		$this->quickInitVar("count", XOBJ_DTYPE_INT, FALSE, _CO_SYSTEM_TAGS_COUNT, _CO_SYSTEM_TAGS_COUNT_DSC);
+		$this->quickInitVar("id", self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar("tag", self::DTYPE_DEP_TXTBOX, TRUE, _CO_SYSTEM_TAGS_TAG, _CO_SYSTEM_TAGS_TAG_DSC);
+		$this->quickInitVar("status", self::DTYPE_INTEGER, TRUE, _CO_SYSTEM_TAGS_STATUS, _CO_SYSTEM_TAGS_STATUS_DSC);
+		$this->quickInitVar("count", self::DTYPE_INTEGER, FALSE, _CO_SYSTEM_TAGS_COUNT, _CO_SYSTEM_TAGS_COUNT_DSC);
 
 		$this->setControl("status", "yesno");
 

@@ -21,7 +21,7 @@ class icms_ipf_form_elements_Language extends icms_form_elements_select_Lang {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		$control = $object->controls[$key];
 		$all = isset($control['all']) ? true : false;
 

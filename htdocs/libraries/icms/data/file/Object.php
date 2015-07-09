@@ -18,12 +18,14 @@ class icms_data_file_Object extends icms_ipf_Object {
 	/**
 	 * constructor
 	 */
-    public function __construct() {
-        $this->quickInitVar("fileid", XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar("mid", XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar("caption", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("description", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("url", XOBJ_DTYPE_TXTBOX, FALSE);
+    public function __construct(&$handler, $data = array()) {
+        $this->quickInitVar("fileid", self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar("mid", self::DTYPE_INTEGER, TRUE);
+		$this->quickInitVar("caption", self::DTYPE_DEP_TXTBOX, FALSE);
+		$this->quickInitVar("description", self::DTYPE_DEP_TXTBOX, FALSE);
+		$this->quickInitVar("url", self::DTYPE_STRING, FALSE);
+                
+        parent::__construct($handler, $data);
 	}
 
 	/**
