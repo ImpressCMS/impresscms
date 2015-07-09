@@ -413,8 +413,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $ret = $this->cacheHandler->get($this->className, $cache_key);
             if ($ret !== null)
                 return $ret;
-        }
-        
+        }                        
 
         if ($debug) {
             icms_core_Debug::message($sql);
@@ -423,8 +422,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         $result = $this->db->query($sql, $limit, $start);
 
         $ret = (!$result) ? array() : $this->convertResultSet($result, $id_as_key, $as_object);
-        
-               
 
         if ($this->cacheHandler !== null) {
             $this->cacheHandler->store($this->className, $cache_key, $ret);                    
@@ -655,6 +652,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         $ret = array();
         while ($myrow = $this->db->fetchArray($result)) {
             $kname = $myrow[$this->keyName];
+            
             if (isset(self::$_loadedItems[$this->className][$kname])) {
                 $iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
                 if ($as_object) {
@@ -668,10 +666,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $obj = new $this->className($this, $myrow);
             if (!$obj->isLoadedOnCreation()) {
                 $obj->setVars($myrow);
-                $obj->setVars(null, icms_properties_Handler::VARCFG_CHANGED, false);
+                $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
             }
             if (isset($fields_sk))
-                $obj->setVars($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+                $obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
             //if (!$obj->handler)
             //    $obj->handler = $this;
             if ($this->uploadEnabled)
@@ -686,6 +684,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             } else {
                 $ret[] = $as_object ? $obj : $obj->toArray();
             }
+            
+            
         }
         return $ret;
     }
@@ -710,10 +710,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $obj = new $this->className($this, $myrow);
                 if (!$obj->isLoadedOnCreation()) {
                     $obj->setVars($myrow);
-                    $obj->setVars(null, icms_properties_Handler::VARCFG_CHANGED, false);
+                    $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
                 }
                 if (isset($fields_sk))
-                    $obj->setVars($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+                    $obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
                 //if (!$obj->handler)
                 //    $obj->handler = $this;
                 if ($this->uploadEnabled)
@@ -746,10 +746,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $obj = new $this->className($this, $myrow);
                 if (!$obj->isLoadedOnCreation()) {
                     $obj->setVars($myrow);
-                    $obj->setVars(null, icms_properties_Handler::VARCFG_CHANGED, false);
+                    $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
                 }
                 if (isset($fields_sk))
-                    $obj->setVars($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+                    $obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
                 //if (!$obj->handler)
                 //    $obj->handler = $this;
                 if ($this->uploadEnabled)
