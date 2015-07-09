@@ -232,7 +232,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 				}
 			}
 		}
-
+ 
 		/**
 		 * In case nothing was found, the following fallback tries to read the template again.
 		 * This is the case for all non-block templates since blocks are prefetched before the
@@ -240,7 +240,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 		 * To avoid further queries for the same block, we're adding it to the cache
 		 */
 		$blocks = $this->find($tplset, null, null, null, $tpl_name, true);
-		array_merge($this->_prefetch_cache, $blocks);
+		$this->_prefetch_cache = array_merge($this->_prefetch_cache, $blocks);
                 return $blocks;
 	}
 }
