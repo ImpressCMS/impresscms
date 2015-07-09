@@ -8,3 +8,4 @@
 /htdocs/modules/*
 !/htdocs/modules/system/
 !/htdocs/modules/index.html
+htdocs/mainfile.php
