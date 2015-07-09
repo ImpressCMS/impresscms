@@ -112,7 +112,7 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 		if ($count > 0) {                    
 			$ret = '(' . $this->criteriaElements[0]->render();
 			for ($i = 1; $i < $count; $i++) {
-s                $query = $this->criteriaElements[$i]->render();
+                $query = $this->criteriaElements[$i]->render();
                 if (!$query) continue;
 				$ret .= ' ' . $this->conditions[$i] . ' ' . $query;
 			}
