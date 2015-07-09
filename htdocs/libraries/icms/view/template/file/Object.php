@@ -53,6 +53,8 @@ class icms_view_template_file_Object extends icms_ipf_Object {
 
 	/**
 	 * constructor
+         * 
+         * @todo: move here tpl_source
 	 */
 	public function __construct($handler, $data = array()) {		
 		$this->initVar('tpl_id', self::DTYPE_INTEGER, null, false);
@@ -64,7 +66,7 @@ class icms_view_template_file_Object extends icms_ipf_Object {
 		$this->initVar('tpl_lastimported', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('tpl_module', self::DTYPE_DEP_OTHER, null, false);
 		$this->initVar('tpl_type', self::DTYPE_DEP_OTHER, null, false);
-		$this->initVar('tpl_source', self::DTYPE_DEP_SOURCE, null, false);
+		//$this->initVar('tpl_source', self::DTYPE_DEP_SOURCE, null, false);
                 
                 parent::__construct($handler, $data);
 	}
