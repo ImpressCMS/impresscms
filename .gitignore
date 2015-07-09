@@ -3,3 +3,5 @@
 /.project
 /.idea
 /cfg_*/
+**/.svn/
+**/.git/
