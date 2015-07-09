@@ -395,13 +395,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return array
      */
     public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
-        $limit = $start = 0;
+        $limit = $start = 0;       
 
         if ($this->generalSQL) {
             $sql = $this->generalSQL;
         } elseif (!$sql) {
             $sql = 'SELECT ' . $this->getFields(true, true) . ' FROM ' . $this->table . " AS " . $this->_itemname;
-        }
+        }               
 
         if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
             $sql .= ' ' . $criteria->renderWhere();
@@ -410,7 +410,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             }
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
-        }
+        }        
+       
 
         if ($this->cacheHandler !== null) {
             $cache_key = sprintf('%d%d%d;%s', 1, $id_as_key, $as_object, $sql);
@@ -418,6 +419,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             if ($ret !== null)
                 return $ret;
         }
+        
 
         if ($debug) {
             icms_core_Debug::message($sql);
@@ -426,10 +428,14 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         $result = $this->db->query($sql, $limit, $start);
 
         $ret = (!$result) ? array() : $this->convertResultSet($result, $id_as_key, $as_object);
+        
+               
 
-        if ($this->cacheHandler !== null)
-            $this->cacheHandler->store($this->className, $cache_key, $ret);
-
+        if ($this->cacheHandler !== null) {
+            $this->cacheHandler->store($this->className, $cache_key, $ret);                    
+        }
+        
+        
         return $ret;
     }
 
@@ -667,10 +673,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $obj = new $this->className($this, $myrow);
             if (!$obj->isLoadedOnCreation()) {
                 $obj->setVars($myrow);
-                $this->setVars(null, icms_properties_Handler::VARCFG_CHANGED, false);
+                $obj->setVars(null, icms_properties_Handler::VARCFG_CHANGED, false);
             }
             if (isset($fields_sk))
-                $this->setVars($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+                $obj->setVars($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
             //if (!$obj->handler)
             //    $obj->handler = $this;
             if ($this->uploadEnabled)
@@ -745,10 +751,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $obj = new $this->className($this, $myrow);
                 if (!$obj->isLoadedOnCreation()) {
                     $obj->setVars($myrow);
-                    $this->setVars(null, icms_properties_Handler::VARCFG_CHANGED, false);
+                    $obj->setVars(null, icms_properties_Handler::VARCFG_CHANGED, false);
                 }
                 if (isset($fields_sk))
-                    $this->setVars($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+                    $obj->setVars($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
                 //if (!$obj->handler)
                 //    $obj->handler = $this;
                 if ($this->uploadEnabled)
@@ -795,6 +801,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $id_as_key = $this->keyName;
         elseif (($id_as_key == 'parent_id') && isset($this->parentName))
             $id_as_key = $this->parentName;
+        
+         if (defined('ICMS_DEBUG_MODE')) {
+           var_dump($id_as_key);
+        }
 
         if ($as_object === null) {
             return $id_as_key ? $this->convertResultSet_RAWWithKey($result, $id_as_key) : $this->convertResultSet_RAW($result);
