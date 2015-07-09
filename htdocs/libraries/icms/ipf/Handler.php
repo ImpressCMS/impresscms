@@ -197,11 +197,12 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $classname = 'mod_' . $this->_moduleName . '_' . ucfirst($itemname);
 
         if ($cacheHandler) {
-            if ($cacheHandler === true)
+            // Todo: make this part work!
+            /*if ($cacheHandler === true)
                 $cacheHandler = icms_cache_Handler::getDefault();
             if ($cacheHandler instanceof icms_cache_Object) {
                 $this->cacheHandler = $cacheHandler;
-            }
+            }*/
         }
 
         /**
