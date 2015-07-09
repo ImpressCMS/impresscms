@@ -40,6 +40,12 @@
 
 defined('ICMS_ROOT_PATH') or exit();
 
+icms_loadLanguageFile('core', 'user');
+icms_loadLanguageFile('core', 'notification');
+icms_loadLanguageFile('core', 'global');
+
+include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
+
 /**
  * User handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -280,7 +286,19 @@ class icms_member_user_Handler
 		return $GLOBALS['icmsConfig']['anonymous'];
 	}        
         
-	public function getList($criteria = NULL) {
+	public function getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) {            
+                if ($limit > 0) {
+                    if ($criteria === NULL) {
+                        $criteria = new icms_db_criteria_Item();
+                    }
+                    $criteria->setLimit($limit);
+                }
+                if ($start > 0) {
+                    if ($criteria === NULL) {
+                        $criteria = new icms_db_criteria_Item();
+                    }
+                    $criteria->setLimit($start);
+                }
 		$users = $this->getObjects($criteria, TRUE);
 		$ret = array();
 		foreach (array_keys($users) as $i) {
