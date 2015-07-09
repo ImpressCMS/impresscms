@@ -602,8 +602,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
     public function insert(&$obj, $force = false, $checkObject = true, $debug = false) {
-        icms_core_Debug::setDeprecated('save');
-        return $this->save($obj, $force);
+        icms_core_Debug::setDeprecated('save');        
+        return $this->save(array(&$obj), $force);
     }    
 
     /**
@@ -1045,6 +1045,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         if (!is_array($data))
             $data = array($data);
         $sql = 'INSERT INTO ' . $this->table . ' (`';
+        
         foreach ($data as $i => $obj) {
             $fieldsToStoreInDB = $obj->getVarsForSQL(false);
             if ($i == 0) {
@@ -1177,9 +1178,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
                 $for_update[] = &$data[$i];
             }
-        }
+        }                        
         
         if (($count = count($for_insert)) > 0) {
+            
             if ($count > 1) {
 
                 //$this->db->query('LOCK TABLES ' . $this->table . ' WRITE;');
@@ -1244,7 +1246,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                     continue;
                 }
             }
-        }
+        }        
 
         foreach ($data as $i => $obj) {
 
@@ -1254,9 +1256,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             }
 
             $this->executeEvent('afterSave', $data[$i]);
-        }
+        }            
 
-        return $scount;
+        return $scount > 0;
     }
 
     /**

@@ -62,9 +62,9 @@ abstract class icms_core_ObjectHandler {
 	 *
 	 * @var object
 	 * @see icms_db_legacy_Database
-	 * @access protected
+	 * @access public
 	 */
-	protected $db;
+	public $db;
 
 	//
 	/**

@@ -669,14 +669,17 @@ class icms_ipf_Object extends icms_core_Object {
     }
     
     /**
-     * Returns arary with changed vars
+     * Returns array with changed vars
      * 
      * @return array
      */
     public function getVarsForSQL($only_changed) {
         $fieldsToStoreInDB = array();
-        $db = &$this->handler->db;        
+        
+        $db = &$this->handler->db;      
+        
         $vars = $only_changed?$this->getChangedVars():array_keys($this->_values);
+        
         foreach ($vars as $k) {
             $persistent = $this->_vars[$k]['persistent'];
             if ($persistent === true || $persistent === null)

@@ -628,9 +628,11 @@ abstract class icms_properties_Handler implements Serializable {
      */
     public function getChangedVars() {
         $changed = array();
-        foreach ($this->_vars as $key => $format)
-            if (isset($format[self::VARCFG_CHANGED]) && $format[self::VARCFG_CHANGED])
+        foreach ($this->_vars as $key => $format) {
+            if (isset($format[self::VARCFG_CHANGED]) && $format[self::VARCFG_CHANGED]) {
                 $changed[] = $key;
+            }
+        }        
         return $changed;
     }
 
