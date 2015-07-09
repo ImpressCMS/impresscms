@@ -206,12 +206,14 @@ class icms_config_Item_Object extends icms_ipf_Object {
 	/**
 	 * This function will properly set the data type for each config item, overriding the
 	 * default in the __construct method
+         * 
+         * @todo        Remove param $dummy once after removing setType from icms_properties_Handler (this is hack to bypass PHP strict message)
 	 *
 	 * @since	1.3.3
 	 * @param	string	$newType	data type of the config item
 	 * @return	void
 	 */
-	public function setType($newType) {
+	public function setType($newType, $dummy = null) {
 		$types = array(
 			'text' => self::DTYPE_DEP_TXTBOX,
 			'textarea' => self::DTYPE_STRING,
