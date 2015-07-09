@@ -80,4 +80,3 @@ class icms_config_Item_Handler extends icms_ipf_Handler {
             parent::__construct($db, 'config_item', 'conf_id', 'conf_name', 'conf_value', 'icms', 'config', 'conf_id');
         }
 }
-

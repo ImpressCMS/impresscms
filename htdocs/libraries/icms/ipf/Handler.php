@@ -709,10 +709,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $obj = new $this->className($this, $myrow);
                 if (!$obj->isLoadedOnCreation()) {
                     $obj->setVars($myrow);
-                    $this->setVars(null, icms_properties_Handler::VARCFG_CHANGED, false);
+                    $obj->setVars(null, icms_properties_Handler::VARCFG_CHANGED, false);
                 }
                 if (isset($fields_sk))
-                    $this->setVars($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+                    $obj->setVars($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
                 //if (!$obj->handler)
                 //    $obj->handler = $this;
                 if ($this->uploadEnabled)
