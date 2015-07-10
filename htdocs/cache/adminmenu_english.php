@@ -369,6 +369,39 @@ array (
     array (
       0 => 
       array (
+        'link' => 'http://localhost:8888/modules/protector/admin/index.php',
+        'title' => 'Protector',
+        'dir' => 'protector',
+        'small' => 'http://localhost:8888/modules/protector/module_icon.php?file=iconsmall',
+        'iconbig' => 'http://localhost:8888/modules/protector/module_icon.php?file=iconbig',
+        'absolute' => 1,
+        'subs' => 
+        array (
+          0 => 
+          array (
+            'title' => 'Protect Center',
+            'link' => 'http://localhost:8888/modules/protector/admin/index.php',
+          ),
+          1 => 
+          array (
+            'title' => 'Security Advisory',
+            'link' => 'http://localhost:8888/modules/protector/admin/index.php?page=advisory',
+          ),
+          2 => 
+          array (
+            'title' => 'Prefix Manager',
+            'link' => 'http://localhost:8888/modules/protector/admin/index.php?page=prefix_manager',
+          ),
+          3 => 
+          array (
+            'title' => 'Preferences',
+            'link' => 'http://localhost:8888/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=2',
+          ),
+        ),
+        'hassubs' => 1,
+      ),
+      1 => 
+      array (
         'link' => 'http://localhost:8888/modules/system/admin.php',
         'title' => 'System',
         'dir' => 'system',
