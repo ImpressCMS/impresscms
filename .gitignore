@@ -13,3 +13,4 @@
 /htdocs/templates_c/*.php
 /htdocs/cache/*
 !/htdocs/cache/index.html
+htdocs/mainfile.php
