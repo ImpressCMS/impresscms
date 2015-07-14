@@ -73,8 +73,19 @@ icms_loadLanguageFile('core', 'moduleabout');
  *  that can be checked instead
  */
 $admin_dir = ICMS_MODULES_PATH . '/system/admin';
-$dirlist = icms_core_Filesystem::getDirList($admin_dir);
-if ($fct && !in_array($fct, $dirlist)) {redirect_header(ICMS_URL . '/', 3, _INVALID_ADMIN_FUNCTION);}
+if (!file_exists($admin_dir . '/' . $fct)) {
+    if ((strlen($fct) > 5) && (substr($fct, -5) == 'admin')) {
+        $fct = substr($fct, 0, -5);        
+    } else {
+        $fct .= 'admin';
+    }
+    if (!file_exists($admin_dir . '/' . $fct)) {
+        redirect_header(ICMS_URL . '/', 3, _INVALID_ADMIN_FUNCTION);
+    } else {
+        $_GET['fct'] = $_POST['fct'] = $_REQUEST['fct'] = $fct;
+    }
+}
+
 $admintest = 0;
 
 if (is_object(icms::$user)) {
