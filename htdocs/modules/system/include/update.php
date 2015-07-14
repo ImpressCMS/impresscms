@@ -166,7 +166,10 @@ function icms_module_update_system(&$module, $oldversion = NULL, $dbVersion = NU
 
         /* @todo Set the IPF property of the module to '1' here */
 
-
+            if (file_exists(ICMS_UPLOAD_PATH . '/system/userrank') ) {
+                mkdir(ICMS_UPLOAD_PATH . '/icms', 0775);
+                rename(ICMS_UPLOAD_PATH . '/system/userrank', ICMS_UPLOAD_PATH . '/icms/member_rank');
+            }
 
         /*
         $table = new icms_db_legacy_updater_Table('system_mimetype');
