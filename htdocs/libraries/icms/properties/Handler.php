@@ -354,10 +354,10 @@ abstract class icms_properties_Handler implements Serializable {
      * @deprecated since version 2.0
      */
     public function initCommonVar($varname, $displayOnForm = true, $default = 'notdefined') {
-        icms_core_Debug::setDeprecated("initCommonVar", sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+        icms_core_Debug::setDeprecated('', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         require_once __DIR__ . '/common/' . $varname . '.php';
         $this->hideFieldFromSingleView($varname);
-    }
+    }    
 
     /**
      * Magic function to get property value by accessing it by name
@@ -372,8 +372,8 @@ abstract class icms_properties_Handler implements Serializable {
                 if (isset($this->_vars[$name])) {
                     return $this->_values[$name];
                 } else {
-                    $callers = debug_backtrace();
-                    trigger_error(sprintf('Deprecached "vars" property use in %s (line %d)', $callers[1]['class'], $callers[1]['line']), E_USER_DEPRECATED);
+                    $callers = debug_backtrace();                    
+                    trigger_error(sprintf('Deprecached "vars" property use in %s (line %d)', $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
                     $ret = array_merge($this->_vars);
                     foreach ($ret as $key => $value)
                         $ret[$key][self::VARCFG_VALUE] = $this->_values[$key];
@@ -381,12 +381,12 @@ abstract class icms_properties_Handler implements Serializable {
                 }
             case 'cleanVars':
                 $callers = debug_backtrace();
-                trigger_error(sprintf('Deprecached "cleanVars" property use in %s (line %d)', $callers[1]['class'], $callers[1]['line']), E_USER_DEPRECATED);
+                trigger_error(sprintf('Deprecached "cleanVars" property use in %s (line %d)', $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
                 return $this->_values;
             default:
                 if (!isset($this->_vars[$name])) {
                     $callers = debug_backtrace();
-                    trigger_error(sprintf('%s undefined for %s (in line %d)', $name, $callers[1]['class'], $callers[1]['line']), E_USER_DEPRECATED);
+                    trigger_error(sprintf('%s undefined for %s (in line %d)', $name, $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
                     return;
                 }
                 else
@@ -1001,7 +1001,7 @@ abstract class icms_properties_Handler implements Serializable {
                 return $this->_vars[$key];
             else {
                 $callers = debug_backtrace();
-                trigger_error(sprintf('%s in %s on line %d doesn\'t exist', $key, $callers[1]['class'], $callers[1]['line']), E_USER_DEPRECATED);
+                trigger_error(sprintf('%s in %s on line %d doesn\'t exist', $key, $callers[0]['file'], $callers[0]['line']), E_USER_ERROR);
                 return $default;
             } elseif (isset($this->_vars[$key][$info]))
             return $this->_vars[$key][$info];
@@ -1052,7 +1052,7 @@ abstract class icms_properties_Handler implements Serializable {
      * @deprecated since version 2.0
      */
     public function setType($key, $type) {
-        trigger_error(sprintf('%s is deprecached method for %s', $name, get_class($this)), E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated("setVarInfo", sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         $this->setVarInfo($key, self::VARCFG_TYPE, $type);
     }
     
@@ -1065,7 +1065,7 @@ abstract class icms_properties_Handler implements Serializable {
      * @deprecated since version 2.0     
      */
     public function doSetFieldAsRequired($key, $is_required = true) {
-         trigger_error(sprintf('%s is deprecached method for %s', $name, get_class($this)), E_USER_DEPRECATED);
+         icms_core_Debug::setDeprecated("setVarInfo", sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
          $this->setVarInfo($key, self::VARCFG_REQUIRED, $is_required);
     }
     
@@ -1077,7 +1077,7 @@ abstract class icms_properties_Handler implements Serializable {
      * @deprecated since version 2.0
      */
     public function cleanVars() {
-        trigger_error(sprintf('%s is deprecached method for %s', 'cleanVars', get_class($this)), E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated("toArray", sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         return $this->toArray();
     }
 

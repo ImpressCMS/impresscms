@@ -101,7 +101,7 @@ class icms_view_template_file_Object extends icms_ipf_Object {
             if ($name == 'tpl_source') {
                 $this->tpl_source = $value;
             } else {
-                parent::assignVar($key, $value);
+                parent::assignVar($name, $value);
             }
         }
         
@@ -109,7 +109,7 @@ class icms_view_template_file_Object extends icms_ipf_Object {
             if ($name == 'tpl_source') {
                 $this->tpl_source = $value;
             } else {
-                parent::setVar($key, $value, $options);
+                parent::setVar($name, $value, $options);
             }
         }
 
