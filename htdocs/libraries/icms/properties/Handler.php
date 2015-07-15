@@ -738,6 +738,7 @@ abstract class icms_properties_Handler implements Serializable {
         $this->_vars[$key][self::VARCFG_TYPE] = $dataType;
         $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] = $this->_values[$key] = $defaultValue; //$this->cleanVar($key, $dataType, $defaultValue);
         $this->_vars[$key][self::VARCFG_REQUIRED] = $required;
+        $this->_vars[$key][self::VARCFG_VALUE] = &$this->_values[$key];
     }
 
     /**
@@ -1017,7 +1018,7 @@ abstract class icms_properties_Handler implements Serializable {
      */
     public function &getVars() {
         foreach (array_keys($this->_vars) as $key) {
-            $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] = $this->cleanVar($key, $this->_vars[$key][self::VARCFG_TYPE], isset($this->_vars[$key][self::VARCFG_DEFAULT_VALUE]) ? $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] : null);
+            $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] = $this->cleanVar($key, $this->_vars[$key][self::VARCFG_TYPE], isset($this->_vars[$key][self::VARCFG_DEFAULT_VALUE]) ? $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] : null);            
         }
         return $this->_vars;
     }
