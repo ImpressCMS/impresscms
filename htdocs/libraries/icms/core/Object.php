@@ -43,6 +43,7 @@
  *
  * */
 define('XOBJ_DTYPE_TXTBOX', icms_properties_Handler::DTYPE_DEP_TXTBOX);
+define('XOBJ_DTYPE_TXTAREA', icms_properties_Handler::DTYPE_STRING);
 define('XOBJ_DTYPE_STRING', icms_properties_Handler::DTYPE_STRING);
 define('XOBJ_DTYPE_INT', icms_properties_Handler::DTYPE_INTEGER); // shorthund
 define('XOBJ_DTYPE_INTEGER', icms_properties_Handler::DTYPE_INTEGER);
