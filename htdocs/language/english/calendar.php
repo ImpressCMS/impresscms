@@ -80,7 +80,7 @@ define('_CAL_DEY','Day');
 define('_CAL_BAHMAN','Bahman');
 define('_CAL_ESFAND','Esfand');
 define("_CAL_NUMS_ARRAY", "'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'"); // numeric values can differ in different languages
-define("_CAL_TT_DATE_FORMAT", "%a, %b %e");
+
 ############# added since 1.2 #############
 define("_CAL_SUFFIX", "th");
 define('_CAL_AM_LONG','before noon');

@@ -7,10 +7,12 @@
 	<echo msg="----------------------------------------------------"/>
 	<echo msg="exportrepo	  :	Checkout SVN branch ${core.version.branch}"/>
 	<echo msg="updaterepo	  :	Update SVN branch in test_branch_(branch_number) (branch requested) "/>
-	<echo msg="release        :	Create Full packages of version ${core.version.release}"/>
-	<echo msg="package.upgrade:	Create Full AND upgrade (xoops-to-icms) packages of a version (version requested)"/>
-	
-	</target>
+	<echo msg="core.export    :	Create Full packages of version ${core.version.release}"/>
+    <echo msg="core.upgrade   :	Create Full AND upgrade (xoops-to-icms) packages of a version (version requested)"/>
+    <echo msg="module.export  :	Create a full package of a module version (version and stage requested)"/>
+    <echo msg="module.upgrade   :	Create Full AND upgrade (xoops-to-icms) packages of a module version (version and stage requested)"/>
+</target>
+
   <target name="exportrepo">
   	<echo msg="Cleaning up previous install of ImpressCMS ${core.version.branch} test"/>
   	  	<delete dir="test_branch_${core.version.branch}"/>
@@ -28,18 +30,18 @@
 		<svnupdate todir="test_branch_${core.repo.base.version}"/>
 	</target>
 
-    <target name="package.export">
+    <target name="core.export">
         <echo msg="Checking out ImpressCMS ${core.version.release} ${core.version.stage} for package creation"/>
         <svnexport username="${username}" password="${password}" nocache="true" repositoryurl="${core.repo.base.version}" todir="${package.exportdir}"/>
         <echo msg="Checking out ImpressCMS core modules..."/>
         <!-- profile -->
-        <echo msg="Profile ${addon.version.profile}..."/>
+        <echo msg="Profile ${addon.version.profile} ${addon.stage.profile} ..."/>
         <svnexport username="${username}" password="${password}" nocache="true" repositoryurl="${addon.repo.profile}" todir="${package.exportdir}/coremodules/profile"/>
         <!-- content -->
-        <echo msg="Content ${addon.version.content}..."/>
+        <echo msg="Content ${addon.version.content} ${addon.stage.content} ..."/>
         <svnexport username="${username}" password="${password}" nocache="true" repositoryurl="${addon.repo.content}" todir="${package.exportdir}/coremodules/content"/>
         <!-- banners -->
-        <echo msg="Banners ${addon.version.banners}..."/>
+        <echo msg="Banners ${addon.version.banners}${addon.stage.banners} ..."/>
         <svnexport username="${username}" password="${password}" nocache="true" repositoryurl="${addon.repo.banners}" todir="${package.exportdir}/coremodules/banners"/>
         <echo msg="Moving core modules into the correct folder"/>
         <move file="${package.exportdir}/coremodules/profile" todir="${package.exportdir}/htdocs/modules/profile"/>
@@ -50,11 +52,22 @@
         <zip destfile="impresscms_${core.version.release}_${core.version.stage}.zip" basedir="${package.exportdir}"/>
         <tar destfile="impresscms_${core.version.release}_${core.version.stage}.tar.gz" compression="gzip" basedir="${package.exportdir}"/>
     </target>
-	<target name="package.upgrade" depends="package.export" />
+	<target name="core.upgrade" depends="core.export" />
 
     <target name="package.update" depends="package.upgrade">
 		
 		<svnexportdiff svnpath="" nocache="true" revision="${package.lastrevision}" repositoryurl="${repobase}"/>	
 	</target>
-	
+
+    <target name="module.export">
+        <input propertyName="addons.module.name" message="What module should be exported?" validArgs="profile,banner,content"/>
+        <input propertyName="addons.module.version" message="What version of the module?"/>
+        <input propertyName="addons.module.stage" message="What stage of the module do you want to export?" />
+
+        <!-- if the directory already exist, remove it so we can start over -->
+        <delete dir="modules/${addons.module.name}_${addons.module.version}_${addons.module.stage}"/>
+
+        <svnexport username="${username}" password="${password}" nocache="true" repositoryurl="${addon.repo.base}/${addons.module.name}/releases/${addons.module.name}_${addons.module.version}_${addons.module.stage}" todir="modules/${addons.module.name}_${addons.module.version}_${addons.module.stage}/modules/${addons.module.name}"/>
+        <zip destfile="impresscms_${addons.module.name}_${addons.module.version}_${addons.module.stage}.zip" basedir="modules/${addons.module.name}_${addons.module.version}_${addons.module.stage}"/>
+    </target>
 </project>

@@ -1,14 +1,3 @@
-6.2.6 (2015-01-28)
-	- Bug #1008 "UTC offset sing breaks PDF/A-1b compliance" was fixed.
-
-6.2.5 (2015-01-24)
-	- Bug #1019 "$this in static context" was fixed.
-	- Bug #1015 "Infinite loop in getIndirectObject method of parser" was fixed.
-
-6.2.4 (2015-01-08)
-	- fix warning related to empty K_PATH_URL.
-	- fix error when a $table_colwidths key is not set.
-
 6.2.3 (2014-12-18)
 	- New comment.
 	- Moved the K_PATH_IMAGES definition in tcpdf_autoconfig.

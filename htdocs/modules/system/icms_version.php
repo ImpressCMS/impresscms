@@ -1,5 +1,5 @@
 <?php
-// $Id: icms_version.php 12455 2014-06-24 09:30:49Z sato-san $
+// $Id: icms_version.php 12500 2015-06-15 20:03:56Z fiammy $
 //  ------------------------------------------------------------------------ //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -39,7 +39,7 @@
  *
  * @package		core
  * @since		1.2
- * @version		SVN: $Id: icms_version.php 12455 2014-06-24 09:30:49Z sato-san $
+ * @version		SVN: $Id: icms_version.php 12500 2015-06-15 20:03:56Z fiammy $
  */
 
 defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
@@ -47,12 +47,12 @@ defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
-	'version'=> 1.37,
+	'version'=> 1.38,
 	'description'=> _MI_SYSTEM_DESC,
 	'author'=> "",
 	'credits'=> "The ImpressCMS Project",
 	'help'=> "",
-	'license'=> "GNU General Public License (GPL)",
+	'license'=> "GNU General Public License v2 (GPL2)",
 	'official'=> TRUE,
 	'dirname'=> basename(dirname(__FILE__ )),
 	'modname' => 'system',
@@ -63,11 +63,11 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Final",
-	'status'=> "Final",
-	'date'=> "18 June 2014",
+	'status_version'=> "Beta",
+	'status'=> "Beta",
+	'date'=> "15 June 2015",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_FINAL,
+	'warning'=>_CO_ICMS_WARNING_BETA,
 
 /** Contributors */
 	'developer_website_url' => "http://www.impresscms.org",

@@ -1,5 +1,5 @@
 <?php
-// $Id: user.php 12313 2013-09-15 21:14:35Z skenow $
+// $Id: user.php 12474 2014-11-08 14:18:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -36,7 +36,7 @@
  * @author      skenow <skenow@impresscms.org>
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id: user.php 12313 2013-09-15 21:14:35Z skenow $
+ * @version		SVN: $Id: user.php 12474 2014-11-08 14:18:35Z skenow $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -46,25 +46,33 @@ $op = (isset($_GET['op']))
 	? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
 	: ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
 
+$redirect = isset($_GET['xoops_redirect'])
+		? $_GET['xoops_redirect']
+		: isset($_POST['xoops_redirect'])
+			? $_POST['xoops_redirect']
+			: FALSE;
+if ($redirect) {
+	$redirect = htmlspecialchars(trim($redirect), ENT_QUOTES);
+	$isExternal = FALSE;
+	$pos = strpos($redirect, '://');
+	if ($pos !== FALSE) {
+		$icmsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
+		if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
+			$redirect = ICMS_URL;
+		} elseif (substr($redirect, $pos + 3, strlen($icmsLocation) + 1) == $icmsLocation . '.') {
+			$redirect = ICMS_URL;
+		}
+	}
+}
+
+if ($redirect && $redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) $redirect = ICMS_URL;
+
 switch ($op) {
 	default:
 	case 'main':
 		if (!icms::$user) {
 			$xoopsOption['template_main'] = 'system_userform.html';
 			include 'header.php';
-			$redirect = FALSE;
-			if (isset($_GET['xoops_redirect'])) {
-				$redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
-				$isExternal = FALSE;
-				if ($pos = strpos($redirect, '://')) {
-					$icmsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
-					if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
-						$redirect = ICMS_URL;
-					} elseif (substr($redirect, $pos + 3, strlen($icmsLocation)+1) == $icmsLocation . '.') {
-						$redirect = ICMS_URL;
-					}
-				}
-			}
 			icms_makeSmarty(array(
 	            'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']]) ? $_COOKIE[$icmsConfig['usercookie']] : FALSE,
 	            'lang_login' => _LOGIN,
@@ -87,17 +95,7 @@ switch ($op) {
 	            'icms_pagetitle' => _LOGIN
 			));
 			include 'footer.php';
-		} elseif (!empty($_GET['xoops_redirect'])) {
-			$redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
-			$isExternal = FALSE;
-			if ($pos = strpos($redirect, '://')) {
-				$icmsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
-				if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
-					$redirect = ICMS_URL;
-				} elseif (substr($redirect, $pos + 3, strlen($icmsLocation)+1) == $icmsLocation . '.') {
-					$redirect = ICMS_URL;
-				}
-			}
+		} elseif ($redirect) {
 			header('Location: ' . $redirect);
 			exit();
 		} else {
@@ -111,19 +109,6 @@ switch ($op) {
 		if (icms::$user) {
 			$xoopsOption['template_main'] = 'system_userform.html';
 			include 'header.php';
-			$redirect = FALSE;
-			if (isset($_GET['xoops_redirect'])) {
-				$redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
-				$isExternal = FALSE;
-				if ($pos = strpos( $redirect, '://' )) {
-					$icmsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
-					if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
-						$redirect = ICMS_URL;
-					} elseif (substr($redirect, $pos + 3, strlen($icmsLocation)+1) == $icmsLocation . '.') {
-						$redirect = ICMS_URL;
-					}
-				}
-			}
 			icms_makeSmarty(array(
 	            'redirect_page' => $redirect,
 	            'lang_reset' => 1,
@@ -141,17 +126,7 @@ switch ($op) {
 	            'icms_pagetitle' => _LOGIN
 			));
 			include 'footer.php';
-		} elseif (!empty($_GET['xoops_redirect'])) {
-			$redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
-			$isExternal = FALSE;
-			if ($pos = strpos($redirect, '://')) {
-				$icmsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
-				if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
-					$redirect = ICMS_URL;
-				} elseif (substr($redirect, $pos + 3, strlen($icmsLocation)+1) == $icmsLocation . '.') {
-					$redirect = ICMS_URL;
-				}
-			}
+		} elseif ($redirect) {
 			header('Location: ' . $redirect);
 			exit();
 		} else {

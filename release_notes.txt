@@ -1,3 +1,46 @@
+ImpressCMS 1.3.7
+======================
+This release improves validation and sanitizing input for the image manager search feature. It is highly recommended you
+update to the latest version of ImpressCMS. 
+
+ImpressCMS 1.3.6.1
+======================
+This release fixes issues that have manifested themselves with the PDO driver: during installation and within some modules.
+Also, a further security enhancement was added in the image manager code for an edge case vulnerability.
+
+The milestone details are at https://impresscmsdev.assembla.com/spaces/impresscms/milestones/5358993-impresscms-1-3-6-1
+
+ImpressCMS 1.3.6
+======================
+This release introduces PDO as the default database connector and tightens security in a few areas
+
+This milestone is detailed at https://www.assembla.com/spaces/impresscms/milestones/4129593-impresscms-1-3-6
+
+ImpressCMS 1.3.5
+======================
+This release focused on updating 3rd party libraries and usability improvements
+
+Main Usability Improvements
+----------------------------
+* Searching for images in the image manager now works properly
+* System wide search now reflects the proper results based on the config option for modules without matches
+* Several multi-language improvements: date string definitions, language select in TinyMCE, enabling gzip in preferences does not break ML
+
+
+3rd Party Library updates
+----------------------------
+* jQuery 			1.9.1
+* jQuery UI 		1.10.3
+* jQuery Colorbox 	1.3.31
+* TCPDF 			5.9.204
+* HTMLPurifier 		4.5.0
+* TinyMCE 			3.5.8
+* Smarty            2.6.27
+
+Licensing and Copyrights
+-----------------------------
+For clarity, the original copyright and license header from XOOPS 2.0.17.1 were restored
+
 ImpressCMS 1.3.4
 ======================
 This release fixes a regression in custom PHP blocks, and also some problems with the safe iFrame functionality.
@@ -45,7 +88,7 @@ wget http://www.impresscms.org/download/
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-http://subversion.assembla.com/svn/impresscms/releases/impresscms_1.3.3_beta/
+http://subversion.assembla.com/svn/impresscms/releases/impresscms_1.3.6_final/
 
 If you feel like getting the latest "edge" version of the 1.3 release, you can checkout the core impresscms_1.3 branch at :
 

@@ -1,9 +1,21 @@
 Upgrade script instructions
 --------------------------------------------
-See below the procedures to migrate your XOOPS or ImpressCMS site for the newest version of ImpressCMS.
-We strongly recommend that you follow all the steps faithfully for your site is updated with security.
+See below the procedures to migrate your XOOPS 2.0.x or ImpressCMS site to the newest version of ImpressCMS.
+We strongly recommend that you follow all the steps faithfully so your site is updated in a secure manner.
 
-1. Get the xoops-or-impresscms_1.0-to-impresscms-1.1 package from the sourceforge file repository.
+BEWARE : do not upgrade your production site without making backups first! The upgrade procedure is
+part of the tests of a new release, but it is impossible for us to test all different server configurations
+and site setups, so a small risk still exists. Always test a site upgrade on a copy of your site.
+
+Upgrading From ImpressCMS Long-Term Support (LTS) release (v 1.2.x)
+--------------------------------------------------------------------------------------
+1. Get the upgrade-to-impresscms-1.3.5 package from the website
+2. copy the content of the /htdocs folder over your existing files
+
+Upgrading from XOOPS 2.0.x or ImpressCMS < 1.2.0
+------------------------------------------------
+
+1. Get the xoops-or-impresscms_1.0-to-impresscms-1.3.5 package from the website at http://.
 2. Copy the content of htdocs/ over your existing files.
 3. On your server, delete the file cache/adminmenu.php
 4. Access <your.site.url>/upgrade/ with a browser.
