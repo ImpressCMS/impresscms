@@ -377,7 +377,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$admin = (!icms::$user->isAdmin(1)) ? FALSE : TRUE;
 	}
 
-	$query = isset($query) ? $query : NULL;
+	$query = !empty($query) ? $query : NULL;
 
 	if ($imgcat_id <= 0) {
 		redirect_header('admin.php?fct=images', 1, '');
