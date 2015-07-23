@@ -510,7 +510,7 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
                 return $this->_values[$name];            
             case self::DTYPE_LIST; // XOBJ_DTYPE_SIMPLE_ARRAY
-                return nl2br(implode("\n", $this->_values[$name]));
+                return $this->_values[$name];//nl2br(implode("\n", $this->_values[$name]));
             default:
                 return (string)$this->_values[$name];
         }
