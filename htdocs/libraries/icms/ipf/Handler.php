@@ -799,14 +799,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
-
-        if ($this->cacheHandler !== null) {
-            $cache_key = sprintf('%d%d%d;%s', 3, 0, 0, $sql);
-            $ret = $this->cacheHandler->get($this->className, $cache_key);
-            if ($ret !== null)
-                return $ret;
-        }
-
+        
         if ($debug) {
             icms_core_Debug::message($sql);
         }
@@ -820,10 +813,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             //identifiers should be textboxes, so sanitize them like that
             $ret[$myrow[$this->keyName]] = empty($this->identifierName) ? 1 : icms_core_DataFilter::checkVar($myrow[$this->identifierName], 'text', 'output');
         }
-
-        if ($this->cacheHandler !== null)
-            $this->cacheHandler->store($this->_itemname, $cache_key, $ret);
-
+        
         return $ret;
     }
 
@@ -859,13 +849,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             }
         }
 
-        if ($this->cacheHandler !== null) {
-            $cache_key = sprintf('%d%d%d;%s', 4, 0, 0, $sql);
-            $ret = $this->cacheHandler->get($this->className, $cache_key);
-            if ($ret !== null)
-                return $ret;
-        }
-
         $result = $this->db->query($sql);
         if (!$result) {
             return 0;
@@ -877,10 +860,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             while (list($id, $count) = $this->db->fetchRow($result)) {
                 $ret[$id] = (int) $count;
             }
-        }
-
-        if ($this->cacheHandler !== null) {
-            $this->cacheHandler->store($this->className, $cache_key, $ret);
         }
 
         return $ret;

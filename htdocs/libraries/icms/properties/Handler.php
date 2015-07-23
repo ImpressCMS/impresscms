@@ -355,6 +355,12 @@ abstract class icms_properties_Handler implements Serializable {
      */
     public function initCommonVar($varname, $displayOnForm = true, $default = 'notdefined') {
         icms_core_Debug::setDeprecated('', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+        switch ($varname) {
+            case 'docxode':
+                trigger_error('You should use doxcode in code. Not docxode.', E_USER_WARNING);
+                $varname = 'doxcode';
+            break;
+        }
         require_once __DIR__ . '/common/' . $varname . '.php';
         $this->hideFieldFromSingleView($varname);
     }    
