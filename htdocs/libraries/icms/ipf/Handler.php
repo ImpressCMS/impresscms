@@ -117,13 +117,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
     public $_maxWidth = 500;
     public $_maxHeight = 500;
     public $highlightFields = array();
-
-    /**
-     * Cache handler used for cache data
-     *
-     * @var icms_cache_Object 
-     */
-    public $cacheHandler = null;
     public $visibleColumns = array();
 
     /**
@@ -164,54 +157,42 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @param bool/object $cacheHandler IDs for caching 
      * @return object
      */
-    public function __construct(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename = null, $table = null, $cacheHandler = false) {
+    public function __construct(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename = null, $table = null, $cacheHandler = false) {       
 
         parent::__construct($db);
 
-        $this->_itemname = $itemname;
         // Todo: Autodect module
         switch ($modulename) {
             case null:
+            case 'icms':
                 $this->_moduleName = 'icms';
+                $classname = $this->_moduleName . '_' . $itemname . '_Object';
+                if ($table == null) {
+                    $table = $itemname;
+                }
                 break;
             /* case 'system':
               $this->_moduleName = 'icms';
               break; */
             default:
                 $this->_moduleName = $modulename;
-        }
-
-        if ($table == null) {
-            if ($this->_moduleName == 'icms')
-                $table = $itemname;
-            else
-                $table = $this->_moduleName . '_' . $itemname;
-        }
-        $this->table = $db->prefix($table);
-
-        $this->keyName = $keyname;
-
-        if ($this->_moduleName == 'icms')
-            $classname = $this->_moduleName . '_' . $itemname . '_Object';
-        else
-            $classname = 'mod_' . $this->_moduleName . '_' . ucfirst($itemname);
-
-        if ($cacheHandler) {
-            // Todo: make this part work!
-            /*if ($cacheHandler === true)
-                $cacheHandler = icms_cache_Handler::getDefault();
-            if ($cacheHandler instanceof icms_cache_Object) {
-                $this->cacheHandler = $cacheHandler;
-            }*/
+                $classname = substr(get_class($this), 0, -7);                
+                if ($table == null) {
+                    $table = $this->_moduleName . '_' . $itemname;
+                }
         }
 
         /**
          * @todo this could probably be removed after refactopring is completed
          * to be evaluated...
          */
-        if (!class_exists($classname))
+        if (!class_exists($classname)) {
             $classname = ucfirst($this->_moduleName) . ucfirst($itemname);
+        }
 
+        $this->table = $db->prefix($table);
+        $this->_itemname = $itemname;        
+        $this->keyName = $keyname;
         $this->className = $classname;
         $this->identifierName = $idenfierName;
         $this->summaryName = $summaryName;
@@ -271,8 +252,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      *
      * @return object {@link icms_ipf_Object}
      */
-    public function &create($isNew = true) {
-        $obj = new $this->className($this);
+    public function &create($isNew = true) {    
+        
+        $obj = new $this->className($this);        
 
         if ($isNew)
             $obj->setNew();
@@ -405,15 +387,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             }
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
-        }        
-       
-
-        if ($this->cacheHandler !== null) {
-            $cache_key = sprintf('%d%d%d;%s', 1, $id_as_key, $as_object, $sql);
-            $ret = $this->cacheHandler->get($this->className, $cache_key);
-            if ($ret !== null)
-                return $ret;
-        }                        
+        }                                   
 
         if ($debug) {
             icms_core_Debug::message($sql);
@@ -421,12 +395,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
         $result = $this->db->query($sql, $limit, $start);
 
-        $ret = (!$result) ? array() : $this->convertResultSet($result, $id_as_key, $as_object);
-
-        if ($this->cacheHandler !== null) {
-            $this->cacheHandler->store($this->className, $cache_key, $ret);                    
-        }
-        
+        $ret = (!$result) ? array() : $this->convertResultSet($result, $id_as_key, $as_object);        
         
         return $ret;
     }
@@ -458,14 +427,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             if ($criteria->getSort() != '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
-        }
-
-        if ($this->cacheHandler !== null) {
-            $cache_key = sprintf('%d%d%d;%s', 2, 0, 0, $sql);
-            $ret = $this->cacheHandler->get($this->className, $cache_key);
-            if ($ret !== null)
-                return $ret;
-        }
+        }        
 
         if ($debug)
             icms_core_Debug::message($sql);
@@ -476,9 +438,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             return $ret;
 
         $myrow = $this->db->fetchArray($result);
-
-        if ($this->cacheHandler !== null)
-            $this->cacheHandler->store($this->className, $cache_key, $myrow);
 
         return $myrow;
     }
