@@ -226,6 +226,8 @@ class icms_ipf_Object extends icms_core_Object {
 
     public function updateMetas() {
         // Auto create meta tags if empty
+        
+        
         $icms_metagen = new icms_ipf_Metagen($this->title(), $this->getVar('meta_keywords'), $this->summary());
 
         if (!isset($this->meta_keywords) || !isset($this->meta_description)) {
@@ -241,7 +243,7 @@ class icms_ipf_Object extends icms_core_Object {
 
         // Auto create short_url if empty
         if (!isset($this->short_url)) {
-            $this->setVar('short_url', $icms_metagen->generateSeoTitle($obj->title('n'), false));
+            $this->setVar('short_url', $icms_metagen->generateSeoTitle($this->title('n'), false));
         }
     }
 
