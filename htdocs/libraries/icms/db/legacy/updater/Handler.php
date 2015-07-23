@@ -340,7 +340,7 @@ class icms_db_legacy_updater_Handler {
         $class = new ReflectionClass($object);        
         $isExtention = false;
         if ($pclass = $class->getParentClass()) {
-            if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object'))) {
+            if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object', 'icms_ipf_seo_Object'))) {
                 $pclass_instance = $pclass->newInstanceArgs(array(&$module_handler));
                 $parentObjectVars = $pclass_instance->getVars();
                 unset($pclass_instance);
@@ -359,7 +359,7 @@ class icms_db_legacy_updater_Handler {
 
         if (!$table->exists()) {
             if ($isExtention) {
-                Throw new Exception(sprintf('%s for %s module is extention for %s', $item, $dirname, $isExtention));
+                Throw new Exception(sprintf('%s for %s module is extention for %s, but module isn\'t installed yet', $item, $dirname, $isExtention));
                 return false;
             }
 
