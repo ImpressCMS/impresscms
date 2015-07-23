@@ -1082,7 +1082,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $data = &$obj_instances;
         } else {
             $data = array(&$obj_instances);
-        }
+        }        
         $scount = 0;
         $for_insert = array();
         $for_update = array();
@@ -1096,8 +1096,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $scount++;
                 continue;
             }
-            if ($obj->seoEnabled)
+            if ($obj->seoEnabled) {
                 $obj->updateMetas();
+            }
             if (!$this->executeEvent('beforeSave', $data[$i]))
                 continue;
             if ($obj->isNew()) {
