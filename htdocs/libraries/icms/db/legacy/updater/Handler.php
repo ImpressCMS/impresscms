@@ -268,7 +268,8 @@ class icms_db_legacy_updater_Handler {
                     icms_properties_Handler::DTYPE_DATETIME,
                     icms_properties_Handler::DTYPE_OBJECT,
                     icms_properties_Handler::DTYPE_LIST,
-                    icms_properties_Handler::DTYPE_ARRAY
+                    icms_properties_Handler::DTYPE_ARRAY,
+                    icms_properties_Handler::DTYPE_DEP_TXTBOX
                 )))
             return null;
         elseif (isset($var[icms_properties_Handler::VARCFG_DEFAULT_VALUE]))
