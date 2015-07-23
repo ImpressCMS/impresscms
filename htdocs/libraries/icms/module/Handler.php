@@ -94,10 +94,13 @@ class icms_module_Handler
                     $objs = $this->getObjects($criteria);                    
                     if (isset($objs[0])) {
                         $module = $objs[0];
+                    } else {
+                        $module = null;
                     }
                 //}
-                if ($module && $loadConfig)
-                    $this->loadConfig($module);                
+                if ($module && $loadConfig) {
+                    $this->loadConfig($module);
+                }
                 return $module;
 	}
 
