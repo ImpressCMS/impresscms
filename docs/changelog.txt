@@ -1,4 +1,5 @@
 ImpressCMS ChangeLog
+
 === ImpressCMS 2.0.0 Alpha 6 ===
 Release date: 
 DB Version: 44
