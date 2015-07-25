@@ -10,6 +10,7 @@ Improvements:
 
 Fixes:
 
+
 === ImpressCMS 2.0.0 Alpha 5 ===
 Release date: 7 April 2015
 DB Version: 44
