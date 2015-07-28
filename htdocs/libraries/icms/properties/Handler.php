@@ -312,14 +312,7 @@ abstract class icms_properties_Handler implements Serializable {
      *
      * @var array 
      */
-    protected $_vars = array();
-    
-    /**
-     * Values of all vars
-     *
-     * @var array 
-     */
-    protected $_values = array();
+    protected $_vars = array();        
     
     /**
      * Changed vars count
@@ -334,14 +327,10 @@ abstract class icms_properties_Handler implements Serializable {
      * @param array $values     Assoc arary with keys and values to assign
      */
     public function assignVars($values) {
-        $this->_values = array();
-        foreach ($values as $key => $value)
-           if (isset($this->_vars[$key][self::VARCFG_TYPE]))
-                $this->_values[$key] = $this->cleanVar($key, $this->_vars[$key][self::VARCFG_TYPE], $value);
-           else {
-               trigger_error('Undefined type in ' . get_class($this) . ' for ' . $key, E_USER_NOTICE);
-               $this->_values[$key] = $value;
-           }
+        foreach ($this->_vars as $key => $var) {
+            $value = (!isset($values[$key]))?null:$values[$key];
+            $this->_vars[$key][self::VARCFG_VALUE] = $this->cleanVar($key, $this->_vars[$key][self::VARCFG_TYPE], $value);
+        }
     }
 
     /**
@@ -374,21 +363,20 @@ abstract class icms_properties_Handler implements Serializable {
      */
     public function __get($name) {
         switch ($name) {
+            case '_vars':
             case 'vars':
                 if (isset($this->_vars[$name])) {
-                    return $this->_values[$name];
+                    return $this->_vars[$name][self::VARCFG_VALUE];
                 } else {
                     $callers = debug_backtrace();                    
                     trigger_error(sprintf('Deprecached "vars" property use in %s (line %d)', $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
                     $ret = array_merge($this->_vars);
-                    foreach ($ret as $key => $value)
-                        $ret[$key][self::VARCFG_VALUE] = $this->_values[$key];
                     return $ret;
                 }
             case 'cleanVars':
                 $callers = debug_backtrace();
                 trigger_error(sprintf('Deprecached "cleanVars" property use in %s (line %d)', $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
-                return $this->_values;
+                return $this->toArray();
             default:
                 if (!isset($this->_vars[$name])) {
                     $callers = debug_backtrace();
@@ -396,7 +384,7 @@ abstract class icms_properties_Handler implements Serializable {
                     return;
                 }
                 else
-                    return $this->_values[$name];
+                    return $this->_vars[$name][self::VARCFG_VALUE];
         }
     }
 
@@ -415,9 +403,9 @@ abstract class icms_properties_Handler implements Serializable {
             return trigger_error('Option not in array for variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
         $clean = $this->cleanVar($name, $this->_vars[$name][self::VARCFG_TYPE], $value);
                 
-        if ($clean == $this->_values[$name])                      
+        if ($clean == $this->_vars[$name][self::VARCFG_VALUE])
             return;
-        $this->_values[$name] = $clean;
+        $this->_vars[$name][self::VARCFG_VALUE] = $clean;
         $this->setVarInfo($name, self::VARCFG_CHANGED, true);
         if (isset($this->_vars[$name][self::VARCFG_NOTLOADED]) && $this->_vars[$name][self::VARCFG_NOTLOADED])
             $this->_vars[$name][self::VARCFG_NOTLOADED] = false;
@@ -479,17 +467,17 @@ abstract class icms_properties_Handler implements Serializable {
                 if (!isset($this->_vars[$name][self::VARCFG_AF_DISABLED]) || !$this->_vars[$name][self::VARCFG_AF_DISABLED]) {
                     $ts = icms_core_Textsanitizer::getInstance();
                     $html = !empty($this->_vars['dohtml']) ? 1 : 0;
-                    $xcode = (!isset($this->_vars['doxcode']) || $this->_values['doxcode'] == 1) ? 1 : 0;
-                    $smiley = (!isset($this->_vars['dosmiley']) || $this->_values['dosmiley'] == 1) ? 1 : 0;
-                    $image = (!isset($this->_vars['doimage']) || $this->_values['doimage'] == 1) ? 1 : 0;
-                    $br = (!isset($this->_vars['dobr']) || $this->_values['dobr'] == 1) ? 1 : 0;
+                    $xcode = (!isset($this->_vars['doxcode']) || $this->_vars['doxcode'][self::VARCFG_VALUE] == 1) ? 1 : 0;
+                    $smiley = (!isset($this->_vars['dosmiley']) || $this->_vars['dosmiley'][self::VARCFG_VALUE] == 1) ? 1 : 0;
+                    $image = (!isset($this->_vars['doimage']) || $this->_vars['doimage'][self::VARCFG_VALUE] == 1) ? 1 : 0;
+                    $br = (!isset($this->_vars['dobr']) || $this->_vars['dobr'][self::VARCFG_VALUE] == 1) ? 1 : 0;
                     if ($html) {
-                        return $ts->displayTarea($this->_values[$name], $html, $smiley, $xcode, $image, $br);
+                        return $ts->displayTarea($this->_vars[$name][self::VARCFG_VALUE], $html, $smiley, $xcode, $image, $br);
                     } else {
-                        return $this->_values[$name]; //icms_core_DataFilter::checkVar($this->_values[$name], 'text', 'output');
+                        return $this->_vars[$name][self::VARCFG_VALUE]; //icms_core_DataFilter::checkVar($this->_vars[$name][self::VARCFG_VALUE], 'text', 'output');
                     }
                 } else {
-                    $ret = str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _CHARSET)); //icms_core_DataFilter::htmlSpecialchars($this->_values[$name]);
+                    $ret = str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET)); //icms_core_DataFilter::htmlSpecialchars($this->_vars[$name][self::VARCFG_VALUE]);
                     if (method_exists($this, 'formatForML')) {
                         return $this->formatForML($ret);
                     } else {
@@ -498,21 +486,21 @@ abstract class icms_properties_Handler implements Serializable {
                     return $ret;
                 }
             case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
-                return $this->_values[$name];
+                return $this->_vars[$name][self::VARCFG_VALUE];
             case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
-                return sprintf(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : '%d', $this->_values[$name]);
+                return sprintf(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : '%d', $this->_vars[$name][self::VARCFG_VALUE]);
             case self::DTYPE_BOOLEAN:
-                return $this->_values[$name] ? _YES : _NO;
+                return $this->_vars[$name][self::VARCFG_VALUE] ? _YES : _NO;
             case self::DTYPE_FILE: // XOBJ_DTYPE_FILE                    
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _CHARSET));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
-                return date(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : 'r', $this->_values[$name]);
+                return date(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : 'r', $this->_vars[$name][self::VARCFG_VALUE]);
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
-                return $this->_values[$name];            
+                return $this->_vars[$name][self::VARCFG_VALUE];            
             case self::DTYPE_LIST; // XOBJ_DTYPE_SIMPLE_ARRAY
-                return $this->_values[$name];//nl2br(implode("\n", $this->_values[$name]));
+                return $this->_vars[$name][self::VARCFG_VALUE];//nl2br(implode("\n", $this->_vars[$name][self::VARCFG_VALUE]));
             default:
-                return (string)$this->_values[$name];
+                return (string)$this->_vars[$name][self::VARCFG_VALUE];
         }
     }
     
@@ -532,7 +520,7 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY            
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _CHARSET));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
                 return $this->getVar($name, 'n');
                 break;
@@ -559,7 +547,7 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _CHARSET));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_OTHER: // XOBJ_DTYPE_OTHER
             case self::DTYPE_OBJECT:
             default:
@@ -595,7 +583,7 @@ abstract class icms_properties_Handler implements Serializable {
      */
     public function assignVar($key, &$value) {
         if (isset($value) && isset($this->_vars[$key])) {
-            $this->_values[$key] = $value;
+            $this->_vars[$key][self::VARCFG_VALUE] = $value;
         }
     }
 
@@ -636,17 +624,17 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_LIST:
             case self::DTYPE_ARRAY:
             case self::DTYPE_FILE:
-                return (isset($this->_values[$key]['filename']) && !empty($this->_values[$key]['filename']));
+                return (isset($this->_vars[$key][self::VARCFG_VALUE]['filename']) && !empty($this->_vars[$key][self::VARCFG_VALUE]['filename']));
             case self::DTYPE_BOOLEAN:
             case self::DTYPE_INTEGER:
             case self::DTYPE_FLOAT:
                 return true;
             case self::DTYPE_OBJECT:
-                return is_object($this->_values[$key]);
+                return is_object($this->_vars[$key][self::VARCFG_VALUE]);
             case self::DTYPE_STRING:
-                return strlen($this->_values[$key]) > 0;
+                return strlen($this->_vars[$key][self::VARCFG_VALUE]) > 0;
             case self::DTYPE_DATETIME:
-                return is_int($this->_values[$key]) && ($this->_values[$key] > 0);
+                return is_int($this->_vars[$key][self::VARCFG_VALUE]) && ($this->_vars[$key][self::VARCFG_VALUE] > 0);
         }
     }
 
@@ -714,9 +702,9 @@ abstract class icms_properties_Handler implements Serializable {
         if (!isset($this->_vars[$key][self::VARCFG_LOCKED]))
             $this->_vars[$key][self::VARCFG_LOCKED] = false;
         $this->_vars[$key][self::VARCFG_TYPE] = $dataType;
-        $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] = $this->_values[$key] = $defaultValue; //$this->cleanVar($key, $dataType, $defaultValue);
+        $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] = $defaultValue; //$this->cleanVar($key, $dataType, $defaultValue);
         $this->_vars[$key][self::VARCFG_REQUIRED] = $required;
-        $this->_vars[$key][self::VARCFG_VALUE] = &$this->_values[$key];
+        $this->_vars[$key][self::VARCFG_VALUE] = $defaultValue;
     }
 
     /**
@@ -897,7 +885,7 @@ abstract class icms_properties_Handler implements Serializable {
                 if (isset($this->_vars[$key][self::VARCFG_NOT_GPC]) && !$this->_vars[$key][self::VARCFG_NOT_GPC] && get_magic_quotes_gpc()) {
                     $value = stripslashes($value);
                 }                
-                if (!empty($this->_values[$key]) && isset($this->_vars[$key][self::VARCFG_VALIDATE_RULE]) && !empty($this->_vars[$key][self::VARCFG_VALIDATE_RULE])) {
+                if (!empty($this->_vars[$key][self::VARCFG_VALUE]) && isset($this->_vars[$key][self::VARCFG_VALIDATE_RULE]) && !empty($this->_vars[$key][self::VARCFG_VALIDATE_RULE])) {
                     if (!preg_match($this->_vars[$key][self::VARCFG_VALIDATE_RULE], $value)) {
                         trigger_error(sprintf('Bad format for %s var (%s)', $key, $value), E_USER_ERROR);
                     } elseif (!isset($this->_vars[$key][self::VARCFG_SOURCE_FORMATING]) || empty($this->_vars[$key][self::VARCFG_SOURCE_FORMATING])) {
@@ -947,13 +935,14 @@ abstract class icms_properties_Handler implements Serializable {
     public function toArray() {
         $ret = array();
         foreach (array_keys($this->_vars) as $name) {
-            if (isset($this->_vars[$name][self::VARCFG_NOTLOADED]) && $this->_vars[$name][self::VARCFG_NOTLOADED])
+            if (isset($this->_vars[$name][self::VARCFG_NOTLOADED]) && $this->_vars[$name][self::VARCFG_NOTLOADED]) {
                 continue;
+            }
             
-            if (is_object($this->_values[$name])) {
-                $ret[$name] = serialize($this->_values[$name]);
+            if (is_object($this->_vars[$name][self::VARCFG_VALUE])) {
+                $ret[$name] = serialize($this->_vars[$name][self::VARCFG_VALUE]);
             } else {
-                $ret[$name] = $this->_values[$name];
+                $ret[$name] = $this->_vars[$name][self::VARCFG_VALUE];
             }            
         }
         return $ret;
@@ -1085,7 +1074,7 @@ abstract class icms_properties_Handler implements Serializable {
         $this->_vars[$key][$info] = $value;
         switch ($info) {
             case self::VARCFG_TYPE:
-                $this->$key = $this->_values[$key];
+                $this->$key = $this->_vars[$key][self::VARCFG_VALUE];
                 break;
         }
     }
@@ -1111,7 +1100,7 @@ abstract class icms_properties_Handler implements Serializable {
             $this->__construct();
         }
         foreach ($data['vars'] as $key => $value) {
-            $this->_values[$key] = $value;
+            $this->_vars[$key][self::VARCFG_VALUE] = $value;
         }
     }
 
