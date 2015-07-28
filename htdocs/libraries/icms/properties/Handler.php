@@ -665,10 +665,9 @@ abstract class icms_properties_Handler implements Serializable {
             $this->_vars[$key] = $otherCfg;
             if (isset($this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS]) && is_string($this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS]))
                 $this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS] = explode('|', $this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS]);
-        } else
-            $this->_vars[$key] = array();       
-        if (file_exists(__DIR__ . '/deprecached/' . $dataType . '.php'))
-            include(__DIR__ . '/deprecached/' . $dataType . '.php');
+        } else {
+            $this->_vars[$key] = array();     
+        }
         switch ($dataType) {
             case self::DTYPE_FILE:
                 if (!isset($this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES]))
