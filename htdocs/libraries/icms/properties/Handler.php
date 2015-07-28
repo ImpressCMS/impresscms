@@ -663,39 +663,48 @@ abstract class icms_properties_Handler implements Serializable {
     protected function initVar($key, $dataType, $defaultValue = null, $required = false, $otherCfg = null) {
         if ($otherCfg !== null) {
             $this->_vars[$key] = $otherCfg;
-            if (isset($this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS]) && is_string($this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS]))
+            if (isset($this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS]) && is_string($this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS])) {
                 $this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS] = explode('|', $this->_vars[$key][self::VARCFG_POSSIBLE_OPTIONS]);
+            }
         } else {
             $this->_vars[$key] = array();     
         }
         switch ($dataType) {
             case self::DTYPE_FILE:
-                if (!isset($this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES]))
+                if (!isset($this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES])) {
                     $this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES] = 0;
-                elseif (is_string($this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES]))
+                } elseif (is_string($this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES])) {
                     $this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES] = array($this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES]);
-                if (!isset($this->_vars[$key][self::VARCFG_MAX_FILESIZE]))
+                }
+                if (!isset($this->_vars[$key][self::VARCFG_MAX_FILESIZE])) {
                     $this->_vars[$key][self::VARCFG_MAX_FILESIZE] = 1000000;
-                elseif (!is_int($this->_vars[$key][self::VARCFG_MAX_FILESIZE]))
+                } elseif (!is_int($this->_vars[$key][self::VARCFG_MAX_FILESIZE])) {
                     $this->_vars[$key][self::VARCFG_MAX_FILESIZE] = intval($this->_vars[$key][self::VARCFG_MAX_FILESIZE]);
-                if (!isset($this->_vars[$key][self::VARCFG_MAX_WIDTH]))
+                }
+                if (!isset($this->_vars[$key][self::VARCFG_MAX_WIDTH])) {
                     $this->_vars[$key][self::VARCFG_MAX_WIDTH] = 500;
-                elseif (!is_int($this->_vars[$key][self::VARCFG_MAX_WIDTH]))
+                } elseif (!is_int($this->_vars[$key][self::VARCFG_MAX_WIDTH])) {
                     $this->_vars[$key][self::VARCFG_MAX_WIDTH] = intval($this->_vars[$key][self::VARCFG_MAX_WIDTH]);
-                if (!isset($this->_vars[$key][self::VARCFG_MAX_HEIGHT]))
+                }
+                if (!isset($this->_vars[$key][self::VARCFG_MAX_HEIGHT])) {
                     $this->_vars[$key][self::VARCFG_MAX_HEIGHT] = 500;
-                elseif (!is_int($this->_vars[$key][self::VARCFG_MAX_HEIGHT]))
+                } elseif (!is_int($this->_vars[$key][self::VARCFG_MAX_HEIGHT])) {
                     $this->_vars[$key][self::VARCFG_MAX_HEIGHT] = intval($this->_vars[$key][self::VARCFG_MAX_HEIGHT]);
-                if (!isset($this->_vars[$key][self::VARCFG_PATH]) || empty($this->_vars[$key][self::VARCFG_PATH]))
+                }
+                if (!isset($this->_vars[$key][self::VARCFG_PATH]) || empty($this->_vars[$key][self::VARCFG_PATH])) {
                     $this->_vars[$key][self::VARCFG_PATH] = ICMS_UPLOAD_PATH;
-                if (!isset($this->_vars[$key][self::VARCFG_PREFIX]))
+                }
+                if (!isset($this->_vars[$key][self::VARCFG_PREFIX])) {
                     $this->_vars[$key][self::VARCFG_PREFIX] = str_replace(array('icms_ipf_', 'mod_'), '', get_class($this));
-                if (!isset($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION]))
+                }
+                if (!isset($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
                     $this->_vars[$key][self::VARCFG_FILENAME_FUNCTION] = null;
+                }
                 break;
             case self::DTYPE_LIST:
-                if (!isset($this->_vars[$key][self::VARCFG_SEPARATOR]))
+                if (!isset($this->_vars[$key][self::VARCFG_SEPARATOR])) {
                     $this->_vars[$key][self::VARCFG_SEPARATOR] = ';';
+                }
                 break;
         }
         if (!isset($this->_vars[$key][self::VARCFG_LOCKED]))
