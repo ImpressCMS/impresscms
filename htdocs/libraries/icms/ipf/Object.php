@@ -680,30 +680,30 @@ class icms_ipf_Object extends icms_core_Object {
         
         $db = &$this->handler->db;      
         
-        $vars = $only_changed?$this->getChangedVars():array_keys($this->_values);
+        $vars = $only_changed?$this->getChangedVars():array_keys($this->_vars);
         
-        foreach ($vars as $k) {
+        foreach ($vars as $k) {            
             $persistent = $this->_vars[$k]['persistent'];
             if ($persistent === true || $persistent === null)
                 switch ($this->_vars[$k][icms_properties_Handler::VARCFG_TYPE]) {
                     case icms_properties_Handler::DTYPE_FLOAT:
-                        $fieldsToStoreInDB[$k] = (float) $this->_values[$k];
+                    case icms_properties_Handler::DTYPE_INTEGER:
+                        $fieldsToStoreInDB[$k] = $this->_vars[$k][self::VARCFG_VALUE];
                         break;
                     case icms_properties_Handler::DTYPE_DATETIME:
-                        $fieldsToStoreInDB[$k] = 'FROM_UNIXTIME(' .  intval($this->_values[$k]) . ')';
-                        break;
-                    case icms_properties_Handler::DTYPE_INTEGER:
+                        $fieldsToStoreInDB[$k] = 'FROM_UNIXTIME(' .  intval($this->_vars[$k][self::VARCFG_VALUE]) . ')';
+                        break;                    
                     case icms_properties_Handler::DTYPE_BOOLEAN:
-                        $fieldsToStoreInDB[$k] = (int) $this->_values[$k];
+                        $fieldsToStoreInDB[$k] = (int) $this->_vars[$k][self::VARCFG_VALUE];
                         break;
                     case icms_properties_Handler::DTYPE_ARRAY:
-                        $value = json_encode($this->_values[$k]);
+                        $value = json_encode($this->_vars[$k][self::VARCFG_VALUE]);
                         $fieldsToStoreInDB[$k] = $db->quoteString($value);
                         break;                    
                     case icms_properties_Handler::DTYPE_LIST:
                         $separator = $this->_vars[$k][icms_properties_Handler::VARCFG_SEPARATOR];
-                        if (is_array($this->_values[$k]))  {
-                            $value = array_map('strval', $this->_values[$k]);
+                        if (is_array($this->_vars[$k][self::VARCFG_VALUE]))  {
+                            $value = array_map('strval', $this->_vars[$k][self::VARCFG_VALUE]);
                             $value = implode($separator, $value);
                         } elseif (!is_string($value))
                             $value = strval($value);
@@ -711,7 +711,7 @@ class icms_ipf_Object extends icms_core_Object {
                         break;
                     default:
                         //var_dump(array($k, $this->getVar($k, 'n')));
-                        $fieldsToStoreInDB[$k] = $db->quoteString($this->_values[$k]);
+                        $fieldsToStoreInDB[$k] = $db->quoteString($this->_vars[$k][self::VARCFG_VALUE]);
                 }
         }        
         return $fieldsToStoreInDB;
