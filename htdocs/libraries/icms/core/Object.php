@@ -55,6 +55,8 @@ define('XOBJ_DTYPE_SOURCE', icms_properties_Handler::DTYPE_DEP_SOURCE);
 define('XOBJ_DTYPE_STIME', icms_properties_Handler::DTYPE_DEP_STIME);
 define('XOBJ_DTYPE_MTIME', icms_properties_Handler::DTYPE_DEP_MTIME);
 define('XOBJ_DTYPE_DATETIME', icms_properties_Handler::DTYPE_DATETIME);
+define('XOBJ_DTYPE_LTIME', icms_properties_Handler::DTYPE_DATETIME);
+
 
 define('XOBJ_DTYPE_SIMPLE_ARRAY', icms_properties_Handler::DTYPE_LIST);
 define('XOBJ_DTYPE_CURRENCY', icms_properties_Handler::DTYPE_DEP_CURRENCY);
