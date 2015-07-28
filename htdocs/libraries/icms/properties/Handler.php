@@ -765,17 +765,15 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_BOOLEAN:
                 if (is_bool($value))
                     return $value;
-                if (is_numeric($value))
-                    return (bool) intval($value);
                 if (!is_string($value))
-                    return (bool) $value;
+                    return (bool) intval($value);
                 $value = strtolower($value);
                 return ($value == 'yes') || ($value == 'true');
             case self::DTYPE_LIST:
+                if ((array) ($value) === $value)
+                    return $value;                
                 if (empty($value))
                     return array();
-                if ((array) ($value) === $value)
-                    return $value;
                 if (is_string($value))
                     return explode($this->_vars[$key][self::VARCFG_SEPARATOR], strval($value));
                 else
@@ -915,7 +913,7 @@ abstract class icms_properties_Handler implements Serializable {
         $vars = array();
         foreach ($keys as $key) {
             if (isset($this->_vars[$key])) {
-                if (is_object($this->_vars[$key]) && ($this->_vars[$key] instanceof icms_properties_Handler)) {
+                if (is_object($this->_vars[$key][self::VARCFG_VALUE]) && ($this->_vars[$key][self::VARCFG_VALUE] instanceof icms_properties_Handler)) {
                     if ($maxDepth) {
                         $vars[$key] = $this->_vars[$key]->getValues(null, $format, $maxDepth - 1);
                     }
