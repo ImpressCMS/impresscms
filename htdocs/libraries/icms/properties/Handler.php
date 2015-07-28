@@ -515,34 +515,6 @@ abstract class icms_properties_Handler implements Serializable {
                 return (string)$this->_values[$name];
         }
     }
-
-    /**
-      if ($this->vars[$key]['options'] != '' && $ret != '') {
-      switch (strtolower($format)) {
-      case 's':
-      case 'show':
-      $selected = explode('|', $ret);
-      $options = explode('|', $this->vars[$key]['options']);
-      $i = 1;
-      $ret = array();
-      foreach ($options as $op) {
-      if (in_array($i, $selected)) {
-      $ret[] = $op;
-      }
-      $i++;
-      }
-      return implode(', ', $ret);
-      case 'e':
-      case 'edit':
-      $ret = explode('|', $ret);
-      break 1;
-
-      default:
-      break 1;
-      }
-
-      }
-     */
     
     /**
      * Gets var value for editing
@@ -840,22 +812,14 @@ abstract class icms_properties_Handler implements Serializable {
                         $ret = unserialize($value);
                         if ($ret !== false)
                             return $ret;
-                    } elseif ($value == '')
+                    } elseif ($value == '') {
                         return array();
+                    }
                     return array($value);
                 } elseif (is_null($value) && empty($value))
                     return array();
                 elseif (!is_object($value))
                     return array($value);
-                elseif ($value instanceOf icms_action_Response) {
-                    $data = $value->toArray();
-                    if (isset($data['isOK']))
-                        unset($data['isOK']);
-                    return $data;
-                } elseif (($value instanceOf icms_properties_Handler) || (method_exists($value, 'toArray')))
-                    return $value->toArray();
-                elseif (method_exists($value, 'toResponse'))
-                    return $value->toResponse()->toArray();
                 else
                     return (array) $value;
             case self::DTYPE_FILE:
@@ -912,13 +876,13 @@ abstract class icms_properties_Handler implements Serializable {
                 }
                 return null;
             case self::DTYPE_DATETIME:
-                if ($value === null)
-                    return 0;
                 if (is_int($value))
                     return $value;
+                if ($value === null)
+                    return 0;                
                 if (is_numeric($value))
                     return intval($value);
-                if (is_array($value))
+                if (!is_string($value))
                     return 0;
                 if (preg_match('/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/ui', $value, $ret))
                     $time = gmmktime($ret[4], $ret[5], $ret[6], $ret[2], $ret[3], $ret[1]);
@@ -927,15 +891,19 @@ abstract class icms_properties_Handler implements Serializable {
                 return ($time < 0) ? 0 : $time;
             case self::DTYPE_STRING:
             default:
-                if (!empty($this->_values[$key]) && isset($this->_vars[$key][self::VARCFG_VALIDATE_RULE]) && !empty($this->_vars[$key][self::VARCFG_VALIDATE_RULE]))
-                    if (!preg_match($this->_vars[$key][self::VARCFG_VALIDATE_RULE], $value))
-                        trigger_error(sprintf('Bad format for %s var (%s)', $key, $value), E_USER_ERROR);
-                    elseif (!isset($this->_vars[$key][self::VARCFG_SOURCE_FORMATING]) || empty($this->_vars[$key][self::VARCFG_SOURCE_FORMATING]))
-                        $value = icms_core_DataFilter::censorString($value);
-                if (isset($this->_vars[$key][self::VARCFG_NOT_GPC]) && !$this->_vars[$key][self::VARCFG_NOT_GPC] && get_magic_quotes_gpc())
-                    $value = stripslashes($value);
-                if (!is_string($value))
+                if (!is_string($value)) {
                     $value = strval($value);
+                }
+                if (isset($this->_vars[$key][self::VARCFG_NOT_GPC]) && !$this->_vars[$key][self::VARCFG_NOT_GPC] && get_magic_quotes_gpc()) {
+                    $value = stripslashes($value);
+                }                
+                if (!empty($this->_values[$key]) && isset($this->_vars[$key][self::VARCFG_VALIDATE_RULE]) && !empty($this->_vars[$key][self::VARCFG_VALIDATE_RULE])) {
+                    if (!preg_match($this->_vars[$key][self::VARCFG_VALIDATE_RULE], $value)) {
+                        trigger_error(sprintf('Bad format for %s var (%s)', $key, $value), E_USER_ERROR);
+                    } elseif (!isset($this->_vars[$key][self::VARCFG_SOURCE_FORMATING]) || empty($this->_vars[$key][self::VARCFG_SOURCE_FORMATING])) {
+                        $value = icms_core_DataFilter::censorString($value);
+                    }
+                }
                 if (isset($this->_vars[$key][self::VARCFG_MAX_LENGTH]) && ($this->_vars[$key][self::VARCFG_MAX_LENGTH] > 0) && (mb_strlen($value) > $this->_vars[$key][self::VARCFG_MAX_LENGTH])) {
                     trigger_error(sprintf(_XOBJ_ERR_SHORTERTHAN, $key, (int) $this->_vars[$key][self::VARCFG_MAX_LENGTH]), E_USER_WARNING);
                     $value = mb_substr($value, 0, $this->_vars[$key][self::VARCFG_MAX_LENGTH]);
@@ -1001,19 +969,21 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarInfo($key = null, $info = null, $default = null) {
-        if (!$key)
+        if (!$key) {
             return $this->_vars;
-        elseif (!$info)
+        } elseif (!$info) {
             if (isset($this->_vars[$key]))
                 return $this->_vars[$key];
             else {
                 $callers = debug_backtrace();
                 trigger_error(sprintf('%s in %s on line %d doesn\'t exist', $key, $callers[0]['file'], $callers[0]['line']), E_USER_ERROR);
                 return $default;
-            } elseif (isset($this->_vars[$key][$info]))
+            }
+        } elseif (isset($this->_vars[$key][$info])) {
             return $this->_vars[$key][$info];
-        else
+        } else {
             return $default;
+        }
     }
 
     /**
@@ -1046,8 +1016,9 @@ abstract class icms_properties_Handler implements Serializable {
      * @param bool $not_gpc
      */
     public function setVars($var_arr, $not_gpc = false) {
-        foreach ($var_arr as $key => $value)
+        foreach ($var_arr as $key => $value) {
             $this->setVar($key, $value, $not_gpc);
+        }
     }
     
     /**
@@ -1096,17 +1067,20 @@ abstract class icms_properties_Handler implements Serializable {
      * @param mixed $value      Options value
      */
     public function setVarInfo($key, $info, $value) {        
-        if ($key === null)
+        if ($key === null) {
             $key = array_keys($this->_vars);
+        }
         
         if (is_array($key)) {           
-            foreach ($key as $k)
+            foreach ($key as $k) {
                 $this->setVarInfo($k, $info, $value);
+            }
             return;
         } 
         
-        if (!isset($this->_vars[$key]))
+        if (!isset($this->_vars[$key])) {
             return trigger_error('Variable ' . get_class($this) . '::$' . $key . ' not found', E_USER_WARNING);
+        }
         
         $this->_vars[$key][$info] = $value;
         switch ($info) {
@@ -1133,10 +1107,12 @@ abstract class icms_properties_Handler implements Serializable {
      */
     public function unserialize($serialized) {
         $data = unserialize($serialized);
-        if (method_exists($this, '__construct'))
+        if (method_exists($this, '__construct')) {
             $this->__construct();
-        foreach ($data['vars'] as $key => $value)
+        }
+        foreach ($data['vars'] as $key => $value) {
             $this->_values[$key] = $value;
+        }
     }
 
 }
