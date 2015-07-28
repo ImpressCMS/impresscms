@@ -835,7 +835,7 @@ abstract class icms_properties_Handler implements Serializable {
                             'mimetype' => $this->getFileMimeType($value),
                         );
                     }
-                    $uploader = new icms_file_MediaUploadHandler($this->_vars[$key]['path'], $this->_vars[$key]['allowedMimeTypes'], $this->_vars[$key]['maxFileSize'], $this->_vars[$key]['maxWidth'], $this->_vars[$key]['maxHeight']);
+                    $uploader = new icms_file_MediaUploadHandler($this->_vars[$key][self::VARCFG_PATH], $this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES], $this->_vars[$key][self::VARCFG_MAX_FILESIZE], $this->_vars[$key][self::VARCFG_MAX_WIDTH], $this->_vars[$key][self::VARCFG_MAX_HEIGHT]);
                     if ($uploader->fetchFromURL($value)) {
                         if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
                             $filename = call_user_func($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION], 'post', $uploader->getMediaType(), $uploader->getMediaName());
