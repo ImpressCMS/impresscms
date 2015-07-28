@@ -680,20 +680,22 @@ class icms_ipf_Object extends icms_core_Object {
         
         $db = &$this->handler->db;      
         
-        $vars = $only_changed?$this->getChangedVars():array_keys($this->_vars);
+        $vars = $only_changed?$this->getChangedVars():array_keys($this->_vars);        
         
-        foreach ($vars as $k) {            
-            $persistent = $this->_vars[$k]['persistent'];
-            if ($persistent === true || $persistent === null)
+        foreach ($vars as $k) {
+            if ($this->handler->keyName == $k) {
+                continue; // Skipping ID
+            }
+            if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null)
                 switch ($this->_vars[$k][icms_properties_Handler::VARCFG_TYPE]) {
-                    case icms_properties_Handler::DTYPE_FLOAT:
-                    case icms_properties_Handler::DTYPE_INTEGER:
-                        $fieldsToStoreInDB[$k] = $this->_vars[$k][self::VARCFG_VALUE];
+                    case icms_properties_Handler::DTYPE_FLOAT:                    
+                        $fieldsToStoreInDB[$k] = (float)$this->_vars[$k][self::VARCFG_VALUE];
                         break;
                     case icms_properties_Handler::DTYPE_DATETIME:
                         $fieldsToStoreInDB[$k] = 'FROM_UNIXTIME(' .  intval($this->_vars[$k][self::VARCFG_VALUE]) . ')';
                         break;                    
                     case icms_properties_Handler::DTYPE_BOOLEAN:
+                    case icms_properties_Handler::DTYPE_INTEGER:
                         $fieldsToStoreInDB[$k] = (int) $this->_vars[$k][self::VARCFG_VALUE];
                         break;
                     case icms_properties_Handler::DTYPE_ARRAY:
@@ -713,7 +715,7 @@ class icms_ipf_Object extends icms_core_Object {
                         //var_dump(array($k, $this->getVar($k, 'n')));
                         $fieldsToStoreInDB[$k] = $db->quoteString($this->_vars[$k][self::VARCFG_VALUE]);
                 }
-        }        
+        }                
         return $fieldsToStoreInDB;
     }
 
