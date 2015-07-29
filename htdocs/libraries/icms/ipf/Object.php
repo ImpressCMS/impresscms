@@ -356,6 +356,7 @@ class icms_ipf_Object extends icms_core_Object {
                     return array('name' => 'yesno');
                 //case self::DTYPE_DEP_CURRENCY:
                 case icms_properties_Handler::DTYPE_DEP_MTIME:
+                case icms_properties_Handler::DTYPE_DATETIME;
                 case self::DTYPE_DEP_STIME:
                     return array('name' => 'datetime');
                 case icms_properties_Handler::DTYPE_DEP_TIME_ONLY:
