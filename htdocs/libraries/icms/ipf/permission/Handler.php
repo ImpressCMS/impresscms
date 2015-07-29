@@ -121,7 +121,7 @@ class icms_ipf_permission_Handler {
 
 		if (!isset($permissions[$gperm_name]) || ($id != null && !isset($permissions[$gperm_name][$id]))) {
 
-			$icmsModule =& $this->handler->getModuleInfo();
+			$icmsModule = $this->handler->getModuleInfo();
 
 			if (is_object($icmsModule)) {
 
