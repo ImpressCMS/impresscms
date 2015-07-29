@@ -522,7 +522,6 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarForEdit($name) {
-         var_dump($this->_vars[$name][self::VARCFG_TYPE], $name);
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
             case self::DTYPE_STRING:
             case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
