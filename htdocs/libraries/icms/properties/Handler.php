@@ -350,7 +350,7 @@ abstract class icms_properties_Handler implements Serializable {
                 $varname = 'doxcode';
             break;
         }
-        require_once __DIR__ . '/common/' . $varname . '.php';
+        include __DIR__ . '/common/' . $varname . '.php';
         $this->hideFieldFromSingleView($varname);
     }    
 
