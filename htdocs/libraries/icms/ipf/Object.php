@@ -355,22 +355,22 @@ class icms_ipf_Object extends icms_core_Object {
                 case self::DTYPE_BOOLEAN:
                     return array('name' => 'yesno');
                 //case self::DTYPE_DEP_CURRENCY:
-                case icms_properties_Handler::DTYPE_DEP_MTIME:
-                case icms_properties_Handler::DTYPE_DATETIME;
+                case self::DTYPE_DEP_MTIME:
+                case self::DTYPE_DATETIME;
                 case self::DTYPE_DEP_STIME:
                     return array('name' => 'datetime');
-                case icms_properties_Handler::DTYPE_DEP_TIME_ONLY:
+                case self::DTYPE_DEP_TIME_ONLY:
                     return array('name' => 'time');
-                case icms_properties_Handler::DTYPE_DEP_URL:
-                case icms_properties_Handler::DTYPE_DEP_URLLINK:
+                case self::DTYPE_DEP_URL:
+                case self::DTYPE_DEP_URLLINK:
                     return array('name' => 'urllink');
-                case icms_properties_Handler::DTYPE_DEP_SOURCE:
+                case self::DTYPE_DEP_SOURCE:
                     return array('name' => 'source');
-                case icms_properties_Handler::DTYPE_DEP_EMAIL:
+                case self::DTYPE_DEP_EMAIL:
                     return array('name' => 'email');
-                case icms_properties_Handler::DTYPE_DEP_TXTBOX:
+                case self::DTYPE_DEP_TXTBOX:
                     return array('name' => 'text');
-                case icms_properties_Handler::DTYPE_DEP_IMAGE:
+                case self::DTYPE_DEP_IMAGE:
                     return array('name' => 'image');
                 case self::DTYPE_FILE:
                     return array('name' => 'richfile');
@@ -688,23 +688,23 @@ class icms_ipf_Object extends icms_core_Object {
                 continue; // Skipping ID
             }
             if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null)
-                switch ($this->_vars[$k][icms_properties_Handler::VARCFG_TYPE]) {
-                    case icms_properties_Handler::DTYPE_FLOAT:                    
+                switch ($this->_vars[$k][self::VARCFG_TYPE]) {
+                    case self::DTYPE_FLOAT:                    
                         $fieldsToStoreInDB[$k] = (float)$this->_vars[$k][self::VARCFG_VALUE];
                         break;
-                    case icms_properties_Handler::DTYPE_DATETIME:
+                    case self::DTYPE_DATETIME:
                         $fieldsToStoreInDB[$k] = 'FROM_UNIXTIME(' .  intval($this->_vars[$k][self::VARCFG_VALUE]) . ')';
                         break;                    
-                    case icms_properties_Handler::DTYPE_BOOLEAN:
-                    case icms_properties_Handler::DTYPE_INTEGER:
+                    case self::DTYPE_BOOLEAN:
+                    case self::DTYPE_INTEGER:
                         $fieldsToStoreInDB[$k] = (int) $this->_vars[$k][self::VARCFG_VALUE];
                         break;
-                    case icms_properties_Handler::DTYPE_ARRAY:
+                    case self::DTYPE_ARRAY:
                         $value = json_encode($this->_vars[$k][self::VARCFG_VALUE]);
                         $fieldsToStoreInDB[$k] = $db->quoteString($value);
                         break;                    
-                    case icms_properties_Handler::DTYPE_LIST:
-                        $separator = $this->_vars[$k][icms_properties_Handler::VARCFG_SEPARATOR];
+                    case self::DTYPE_LIST:
+                        $separator = $this->_vars[$k][self::VARCFG_SEPARATOR];
                         if (is_array($this->_vars[$k][self::VARCFG_VALUE]))  {
                             $value = array_map('strval', $this->_vars[$k][self::VARCFG_VALUE]);
                             $value = implode($separator, $value);
