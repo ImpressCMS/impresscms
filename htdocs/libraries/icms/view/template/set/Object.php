@@ -56,8 +56,8 @@ class icms_view_template_set_Object extends icms_ipf_Object {
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('tplset_id', self::DTYPE_INTEGER, null, false);
-		$this->initVar('tplset_name', self::DTYPE_DEP_OTHER, null, false);
-		$this->initVar('tplset_desc', self::DTYPE_DEP_TXTBOX, null, false, 255);
+		$this->initVar('tplset_name', self::DTYPE_STRING, null, false, 50);
+		$this->initVar('tplset_desc', self::DTYPE_STRING, null, false, 255);
 		$this->initVar('tplset_credits', self::DTYPE_STRING, null, false);
 		$this->initVar('tplset_created', self::DTYPE_INTEGER, 0, false);
                 

@@ -55,9 +55,9 @@ class icms_member_group_Object extends icms_ipf_Object {
 	 */
 	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('groupid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('name', self::DTYPE_DEP_TXTBOX, null, true, 100);
+		$this->initVar('name', self::DTYPE_STRING, null, true, 50);
 		$this->initVar('description', self::DTYPE_STRING, null, false);
-		$this->initVar('group_type', self::DTYPE_DEP_OTHER, null, false);
+		$this->initVar('group_type', self::DTYPE_STRING, null, false, 10);
                 
                 parent::__construct($handler, $data);
 	}

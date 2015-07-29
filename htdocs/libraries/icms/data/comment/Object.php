@@ -58,28 +58,29 @@ class icms_data_comment_Object extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 **/
-	public function __construct(&$handler, $data = array()) {
-		parent::__construct($handler, $data);
+	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('com_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('com_pid', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('com_modid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('com_icon', self::DTYPE_DEP_OTHER, null, false);
-		$this->initVar('com_title', self::DTYPE_DEP_TXTBOX, null, true, 255, true);
+		$this->initVar('com_icon', self::DTYPE_STRING, null, false, 25);
+		$this->initVar('com_title', self::DTYPE_STRING, null, true, 255, true);
 		$this->initVar('com_text', self::DTYPE_STRING, null, true, null, true);
 		$this->initVar('com_created', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('com_modified', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('com_uid', self::DTYPE_INTEGER, 0, true);
-		$this->initVar('com_ip', self::DTYPE_DEP_OTHER, null, false);
+		$this->initVar('com_ip', self::DTYPE_STRING, null, false, 15);
 		$this->initVar('com_sig', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('com_itemid', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('com_rootid', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('com_status', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('com_exparams', self::DTYPE_DEP_OTHER, null, false, 255);
+		$this->initVar('com_exparams', self::DTYPE_STRING, null, false, 255);
 		$this->initVar('dohtml', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('dosmiley', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('doxcode', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('doimage', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('dobr', self::DTYPE_INTEGER, 0, false);
+                
+                parent::__construct($handler, $data);
 	}
 
 	/**

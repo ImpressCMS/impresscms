@@ -55,8 +55,8 @@ class icms_config_option_Object extends icms_ipf_Object {
 	 */
 	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('confop_id', self::DTYPE_INTEGER, null);
-		$this->initVar('confop_name', self::DTYPE_DEP_TXTBOX, null, true, 255);
-		$this->initVar('confop_value', self::DTYPE_DEP_TXTBOX, null, true, 255);
+		$this->initVar('confop_name', self::DTYPE_STRING, null, true, 255);
+		$this->initVar('confop_value', self::DTYPE_STRING, null, true, 255);
 		$this->initVar('conf_id', self::DTYPE_INTEGER, 0);
                 
                 parent::__construct($handler, $data);

@@ -73,12 +73,12 @@ class icms_config_Item_Object extends icms_ipf_Object {
 		$this->initVar('conf_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('conf_modid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('conf_catid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('conf_name', self::DTYPE_DEP_OTHER);
-		$this->initVar('conf_title', self::DTYPE_DEP_TXTBOX);
+		$this->initVar('conf_name',  self::DTYPE_STRING, false, '',  75);
+		$this->initVar('conf_title', self::DTYPE_STRING, false, '',  255);
 		$this->initVar('conf_value', self::DTYPE_STRING);
-		$this->initVar('conf_desc', self::DTYPE_DEP_OTHER);
-		$this->initVar('conf_formtype', self::DTYPE_DEP_OTHER);
-		$this->initVar('conf_valuetype', self::DTYPE_DEP_OTHER);
+		$this->initVar('conf_desc',  self::DTYPE_STRING, false, '',  255);
+		$this->initVar('conf_formtype',  self::DTYPE_STRING, false, '',  15);
+		$this->initVar('conf_valuetype',  self::DTYPE_STRING, false, '',  10);
 		$this->initVar('conf_order', self::DTYPE_INTEGER);
                 
                 parent::__construct($handler, $data);

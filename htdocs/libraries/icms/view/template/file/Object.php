@@ -61,13 +61,13 @@ class icms_view_template_file_Object extends icms_ipf_Object {
 	public function __construct($handler, $data = array()) {		
 		$this->initVar('tpl_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('tpl_refid', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('tpl_tplset', self::DTYPE_DEP_OTHER, null, false);
-		$this->initVar('tpl_file', self::DTYPE_DEP_TXTBOX, null, true, 100);
-		$this->initVar('tpl_desc', self::DTYPE_DEP_TXTBOX, null, false, 100);
+		$this->initVar('tpl_tplset', self::DTYPE_STRING, null, false, 50);
+		$this->initVar('tpl_file', self::DTYPE_STRING, null, true, 100);
+		$this->initVar('tpl_desc', self::DTYPE_STRING, null, false, 100);
 		$this->initVar('tpl_lastmodified', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('tpl_lastimported', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('tpl_module', self::DTYPE_DEP_OTHER, null, false);
-		$this->initVar('tpl_type', self::DTYPE_DEP_OTHER, null, false);
+		$this->initVar('tpl_module', self::DTYPE_STRING, null, false, 25);
+		$this->initVar('tpl_type', self::DTYPE_STRING, null, false, 20);
 		//$this->initVar('tpl_source', self::DTYPE_DEP_SOURCE, null, false);
                 
                 parent::__construct($handler, $data);

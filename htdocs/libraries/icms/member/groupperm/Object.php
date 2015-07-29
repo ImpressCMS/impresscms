@@ -63,7 +63,7 @@ class icms_member_groupperm_Object extends icms_ipf_Object {
 		$this->initVar('gperm_groupid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('gperm_itemid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('gperm_modid', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('gperm_name', self::DTYPE_DEP_OTHER, null, false);
+		$this->initVar('gperm_name', self::DTYPE_STRING, null, false, 50);
                 
                 parent::__construct($handler, $data);
 	}

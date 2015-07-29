@@ -157,10 +157,10 @@ class icms_ipf_Object extends icms_core_Object {
     /**
      *
      * @param string $key key of this field. This needs to be the name of the field in the related database table
-     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to self::DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
+     * @param int $data_type  set to one of self::DTYPE_XXX constants
      * @param mixed $value default value of this variable
      * @param bool $required set to TRUE if this variable needs to have a value set before storing the object in the table
-     * @param int $maxlength maximum length of this variable, for self::DTYPE_DEP_TXTBOX type only
+     * @param int $maxlength maximum length of this variable, for self::DTYPE_STRING and self::DTYPE_INTEGER types only
      * @param string $options does this data have any select options?
      * @param bool $multilingual is this field needs to support multilingual features (NOT YET IMPLEMENTED...)
      * @param string $form_caption caption of this variable in a {@link icms_ipf_form_Base} and title of a column in a  {@link icms_ipf_ObjectTable}
@@ -220,7 +220,7 @@ class icms_ipf_Object extends icms_core_Object {
      * @param mixed $value default value of this variable
      */
     public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
-        $maxlength = $data_type == 'self::DTYPE_DEP_TXTBOX' ? 255 : null;
+        $maxlength = $data_type == self::DTYPE_DEP_TXTBOX ? 255 : null;
         $this->initVar($key, $data_type, $value, $required, $maxlength, '', false, $form_caption, $form_dsc, false, true, true);
     }
 

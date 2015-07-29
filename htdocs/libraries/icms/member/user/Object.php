@@ -81,21 +81,21 @@ class icms_member_user_Object extends icms_ipf_Object {
         //parent::__construct($handler, $data);
 
         $this->initVar('uid', self::DTYPE_INTEGER, null, false, null, null, null, 'User ID');
-        $this->initVar('name', self::DTYPE_DEP_TXTBOX, null, false, 60, null, null, _US_REALNAME);
-        $this->initVar('uname', self::DTYPE_DEP_TXTBOX, null, true, 255, null, null, 'User Name');
-        $this->initVar('email', self::DTYPE_DEP_TXTBOX, null, true, 60, null, null, _US_EMAIL);
-        $this->initVar('url', self::DTYPE_DEP_TXTBOX, null, false, 255, null, null, _US_WEBSITE);
+        $this->initVar('name', self::DTYPE_STRING, null, false, 60, null, null, _US_REALNAME);
+        $this->initVar('uname', self::DTYPE_STRING, null, true, 255, null, null, 'User Name');
+        $this->initVar('email', self::DTYPE_STRING, null, true, 60, null, null, _US_EMAIL);
+        $this->initVar('url', self::DTYPE_STRING, null, false, 255, null, null, _US_WEBSITE);
         $this->initVar('user_avatar', self::DTYPE_FILE, null, false, 30, null, null, _US_AVATAR);
         $this->initVar('user_regdate', self::DTYPE_INTEGER, null, false, null, null, null, 'Registration date');
-        $this->initVar('user_icq', self::DTYPE_DEP_TXTBOX, null, false, 15, null, null, _US_ICQ);
-        $this->initVar('user_from', self::DTYPE_DEP_TXTBOX, null, false, 100, null, null, _US_LOCATION);
+        $this->initVar('user_icq', self::DTYPE_STRING, null, false, 15, null, null, _US_ICQ);
+        $this->initVar('user_from', self::DTYPE_STRING, null, false, 100, null, null, _US_LOCATION);
         $this->initVar('user_sig', self::DTYPE_STRING, null, false, null, null, null, _US_SIGNATURE);
         $this->initVar('user_viewemail', self::DTYPE_BOOLEAN, 0, false, null, null, null, _US_ALLOWVIEWEMAIL);
-        $this->initVar('actkey', self::DTYPE_DEP_TXTBOX, null, false, 100, null, null, 'Activation key');
-        $this->initVar('user_aim', self::DTYPE_DEP_TXTBOX, null, false, 18, null, null, _US_AIM);
-        $this->initVar('user_yim', self::DTYPE_DEP_TXTBOX, null, false, 25, null, null, _US_YIM);
-        $this->initVar('user_msnm', self::DTYPE_DEP_TXTBOX, null, false, 100, null, null, _US_MSNM);
-        $this->initVar('pass', self::DTYPE_DEP_TXTBOX, null, false, 255, null, null, _US_PASSWORD);
+        $this->initVar('actkey', self::DTYPE_STRING, null, false, 100, null, null, 'Activation key');
+        $this->initVar('user_aim', self::DTYPE_STRING, null, false, 18, null, null, _US_AIM);
+        $this->initVar('user_yim', self::DTYPE_STRING, null, false, 25, null, null, _US_YIM);
+        $this->initVar('user_msnm', self::DTYPE_STRING, null, false, 100, null, null, _US_MSNM);
+        $this->initVar('pass', self::DTYPE_STRING, null, false, 255, null, null, _US_PASSWORD);
         $this->initVar('posts', self::DTYPE_INTEGER, null, false, null, null, null, _US_POSTS);
         $this->initVar('attachsig', self::DTYPE_BOOLEAN, 0, false, null, null, null, _US_SHOWSIG);
         $this->initVar('rank', self::DTYPE_INTEGER, 0, false, null, null, null, _US_RANK);
@@ -108,16 +108,16 @@ class icms_member_user_Object extends icms_ipf_Object {
         // RMV-NOTIFY
         $this->initVar('notify_method', self::DTYPE_INTEGER, 1, false, null, null, null, _NOT_NOTIFYMETHOD);
         $this->initVar('notify_mode', self::DTYPE_INTEGER, 0, false, null, null, null, _NOT_NOTIFYMODE);
-        $this->initVar('user_occ', self::DTYPE_DEP_TXTBOX, null, false, 100, null, null, _US_OCCUPATION);
+        $this->initVar('user_occ', self::DTYPE_STRING, null, false, 100, null, null, _US_OCCUPATION);
         $this->initVar('bio', self::DTYPE_STRING, null, false, null, null, null, null, _US_EXTRAINFO);
-        $this->initVar('user_intrest', self::DTYPE_DEP_TXTBOX, null, false, 150, null, null, _US_INTEREST);
+        $this->initVar('user_intrest', self::DTYPE_STRING, null, false, 150, null, null, _US_INTEREST);
         $this->initVar('user_mailok', self::DTYPE_INTEGER, 1, false, null, null, null, _US_MAILOK);
 
         $this->initVar('language', self::DTYPE_STRING, null, false, null, null, null, _US_SELECT_LANG);
-        $this->initVar('openid', self::DTYPE_DEP_TXTBOX, '', false, 255, null, null, _US_OPENID_YOUR);
+        $this->initVar('openid', self::DTYPE_STRING, '', false, 255, null, null, _US_OPENID_YOUR);
         $this->initVar('user_viewoid', self::DTYPE_INTEGER, 0, false, null, null, null, _US_ALLOWVIEWEMAILOPENID);
         $this->initVar('pass_expired', self::DTYPE_BOOLEAN, 0, false, null, null, null, 'Pass Expired?');
-        $this->initVar('login_name', self::DTYPE_DEP_TXTBOX, null, true, 255, null, null, _US_LOGINNAME);
+        $this->initVar('login_name', self::DTYPE_STRING, null, true, 255, null, null, _US_LOGINNAME);
 
         if (isset($data['_rank'])) {
             $this->_rank = $data['_rank'];

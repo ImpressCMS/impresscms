@@ -57,9 +57,9 @@ class icms_data_notification_Object extends icms_ipf_Object {
 	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('not_id', self::DTYPE_INTEGER, NULL, false);
 		$this->initVar('not_modid', self::DTYPE_INTEGER, NULL, false);
-		$this->initVar('not_category', self::DTYPE_DEP_TXTBOX, null, false, 30);
+		$this->initVar('not_category', self::DTYPE_STRING, null, false, 30);
 		$this->initVar('not_itemid', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('not_event', self::DTYPE_DEP_TXTBOX, null, false, 30);
+		$this->initVar('not_event', self::DTYPE_STRING, null, false, 30);
 		$this->initVar('not_uid', self::DTYPE_INTEGER, 0, true);
 		$this->initVar('not_mode', self::DTYPE_INTEGER, 0, false);
                 

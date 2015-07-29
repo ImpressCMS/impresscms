@@ -64,7 +64,7 @@ class icms_image_set_Object extends XoopsObject
   	function __construct() {
   		$this->XoopsObject();
   		$this->initVar('imgset_id', self::DTYPE_INTEGER, null, false);
-  		$this->initVar('imgset_name', self::DTYPE_DEP_TXTBOX, null, true, 50);
+  		$this->initVar('imgset_name', self::DTYPE_STRING, null, true, 50);
   		$this->initVar('imgset_refid', self::DTYPE_INTEGER, 0, false);
   	}
 }

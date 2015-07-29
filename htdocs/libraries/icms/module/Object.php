@@ -83,7 +83,7 @@ class icms_module_Object
 	 */
 	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('mid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('name', self::DTYPE_DEP_TXTBOX, null, true, 150);
+		$this->initVar('name', self::DTYPE_STRING, null, true, 150);
 		$this->initVar('version', self::DTYPE_INTEGER, 100, false);
 		$this->initVar('last_update', self::DTYPE_INTEGER, null, false);
 		$this->initVar('weight', self::DTYPE_INTEGER, 0, false);

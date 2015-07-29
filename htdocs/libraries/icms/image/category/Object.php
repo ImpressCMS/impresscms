@@ -62,15 +62,15 @@ class icms_image_category_Object extends icms_core_Object {
 		parent::__construct();
 		$this->initVar('imgcat_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('imgcat_pid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('imgcat_name', self::DTYPE_DEP_TXTBOX, null, true, 100);
-		$this->initVar('imgcat_foldername', self::DTYPE_DEP_TXTBOX, null, true, 100);
+		$this->initVar('imgcat_name', self::DTYPE_STRING, null, true, 100);
+		$this->initVar('imgcat_foldername', self::DTYPE_STRING, null, true, 100);
 		$this->initVar('imgcat_display', self::DTYPE_INTEGER, 1, false);
 		$this->initVar('imgcat_weight', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('imgcat_maxsize', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('imgcat_maxwidth', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('imgcat_maxheight', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('imgcat_type', self::DTYPE_DEP_OTHER, null, false);
-		$this->initVar('imgcat_storetype', self::DTYPE_DEP_OTHER, null, false);
+		$this->initVar('imgcat_type', self::DTYPE_STRING, null, false, 1);
+		$this->initVar('imgcat_storetype', self::DTYPE_STRING, null, false, 5);
 	}
 
 	/**

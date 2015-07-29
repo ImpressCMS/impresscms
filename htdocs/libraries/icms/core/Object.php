@@ -141,10 +141,10 @@ class icms_core_Object extends icms_properties_Handler {
      *
      * @access public
      * @param string $key
-     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
+     * @param int $data_type  set to one of self::DTYPE_XXX constants
      * @param mixed
      * @param bool $required  require html form input?
-     * @param int $maxlength  for XOBJ_DTYPE_DEP_TXTBOX type only
+     * @param int $maxlength  for self::DTYPE_STRING, self::DTYPE_INTERGER types only
      * @param string $option  does this data have any select options?
      */
     public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
@@ -280,10 +280,11 @@ class icms_core_Object extends icms_properties_Handler {
      */
     public function getHtmlErrors() {
         $ret = '<h4>' . _ERROR . '</h4>';
-        if (empty($this->_errors))
+        if (empty($this->_errors)) {
             $ret .= _NONE . '<br />';
-        else
+        } else {
             $ret .= implode('<br />', $this->_errors);
+        }
         return $ret;
     }
 

@@ -57,7 +57,7 @@ class icms_config_category_Object extends icms_ipf_Object {
 	 */
 	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('confcat_id', self::DTYPE_INTEGER, null);
-		$this->initVar('confcat_name', self::DTYPE_DEP_OTHER, null);
+		$this->initVar('confcat_name', self::DTYPE_STRING, null, true, 255);
 		$this->initVar('confcat_order', self::DTYPE_INTEGER, 0);
                 
                 parent::__construct($handler, $data);
