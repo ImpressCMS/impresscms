@@ -306,6 +306,16 @@ abstract class icms_properties_Handler implements Serializable {
      * Is var not loaded?
      */
     const VARCFG_NOTLOADED = 'not_loaded';
+    
+    /**
+     * Validation rule for emails
+     */
+    const VALIDATE_RULE_EMAIL = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
+    
+    /**
+     * Validation rule for links
+     */
+    const VALIDATE_RULE_LINKS = '#^http(s)?://[a-z0-9-_.]+\.[a-z]{2,4}#i';
 
     /**
      * Vars configuration
@@ -382,9 +392,9 @@ abstract class icms_properties_Handler implements Serializable {
                     $callers = debug_backtrace();
                     trigger_error(sprintf('%s undefined for %s (in line %d)', $name, $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
                     return;
-                }
-                else
+                } else {
                     return $this->_vars[$name][self::VARCFG_VALUE];
+                }
         }
     }
 
@@ -512,6 +522,7 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarForEdit($name) {
+         var_dump($this->_vars[$name][self::VARCFG_TYPE], $name);
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
             case self::DTYPE_STRING:
             case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
@@ -706,9 +717,90 @@ abstract class icms_properties_Handler implements Serializable {
                     $this->_vars[$key][self::VARCFG_SEPARATOR] = ';';
                 }
                 break;
+            case self::DTYPE_DEP_CURRENCY:
+                icms_core_Debug::setDeprecated('DTYPE_FLOAT with VARCFG_FORMAT "%01.2f"', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_FORMAT] = '%01.2f';
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_FLOAT;
+                break;
+            case self::DTYPE_DEP_MTIME:
+                icms_core_Debug::setDeprecated('DTYPE_DATETIME with VARCFG_FORMAT _MEDIUMDATESTRING', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_FORMAT] = _MEDIUMDATESTRING;
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_DATETIME;
+                break;
+            case self::DTYPE_DEP_STIME:
+                icms_core_Debug::setDeprecated('DTYPE_DATETIME with VARCFG_FORMAT _SHORTDATESTRING', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_FORMAT] = _SHORTDATESTRING;
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_DATETIME;
+                break;
+            case self::DTYPE_DEP_TIME_ONLY:
+                icms_core_Debug::setDeprecated('DTYPE_DATETIME with VARCFG_FORMAT "s:i"', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_FORMAT] = 's:i';
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_DATETIME;
+                break;
+            case self::DTYPE_DEP_FORM_SECTION:
+            case self::DTYPE_DEP_FORM_SECTION_CLOSE:
+                icms_core_Debug::setDeprecated('', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_OTHER;
+                break;
+            case self::DTYPE_DEP_SOURCE:
+                icms_core_Debug::setDeprecated('DTYPE_STRING with specified VARCFG_SOURCE_FORMATING', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_SOURCE_FORMATING] = 'php';
+                $this->_vars[$key][self::VARCFG_AF_DISABLED] = true;
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_STRING;
+                break;
+            case self::DTYPE_DEP_URL:
+                icms_core_Debug::setDeprecated('DTYPE_STRING with specified VARCFG_VALIDATE_RULE VALIDATE_RULE_LINKS', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_VALIDATE_RULE] = self::VALIDATE_RULE_LINKS;
+                $this->_vars[$key][self::VARCFG_AF_DISABLED] = true;
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_STRING;
+                break;
+            case self::DTYPE_DEP_URLLINK:
+                icms_core_Debug::setDeprecated('DTYPE_INTEGER with VARCFG_DATA_HANDLER = "link"', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_VALIDATE_RULE] = self::VALIDATE_RULE_LINKS;
+                $this->_vars[$key][self::VARCFG_AF_DISABLED] = true;
+                $this->_vars[$key][self::VARCFG_DATA_HANDLER] = 'link';
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_INTEGER;
+                break;
+            case self::DTYPE_DEP_EMAIL:
+                icms_core_Debug::setDeprecated('DTYPE_STRING with specified VARCFG_VALIDATE_RULE VALIDATE_RULE_EMAIL', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_VALIDATE_RULE] = self::VALIDATE_RULE_EMAIL;
+                $this->_vars[$key][self::VARCFG_AF_DISABLED] = true;
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_STRING;
+                break;
+            case self::DTYPE_DEP_TXTBOX:
+                icms_core_Debug::setDeprecated('DTYPE_STRING with specified VARCFG_MAX_LENGTH = 255', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_MAX_LENGTH] = 255;
+                $this->_vars[$key][self::VARCFG_AF_DISABLED] = true;
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_STRING;
+                break;
+            case self::DTYPE_DEP_IMAGE:
+                icms_core_Debug::setDeprecated('DTYPE_INTEGER with VARCFG_DATA_HANDLER = "image"', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES] = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/svg+xml', 'image/tiff', 'image/vnd.microsoft.icon');
+                $this->_vars[$key][self::VARCFG_DATA_HANDLER] = 'image';
+                $this->_vars[$key][self::VARCFG_AF_DISABLED] = true;
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_INTEGER;
+            case self::DTYPE_DEP_FILE:
+                icms_core_Debug::setDeprecated('DTYPE_INTEGER with VARCFG_DATA_HANDLER = "file"', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+                $this->_vars[$key][self::VARCFG_DATA_HANDLER] = 'file';
+                $this->_vars[$key][self::VARCFG_AF_DISABLED] = true;
+                $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
+                $dataType = self::DTYPE_INTEGER;
+                break;
         }
-        if (!isset($this->_vars[$key][self::VARCFG_LOCKED]))
+        if (!isset($this->_vars[$key][self::VARCFG_LOCKED])) {
             $this->_vars[$key][self::VARCFG_LOCKED] = false;
+        }
         $this->_vars[$key][self::VARCFG_TYPE] = $dataType;
         $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] = $defaultValue; //$this->cleanVar($key, $dataType, $defaultValue);
         $this->_vars[$key][self::VARCFG_REQUIRED] = $required;
@@ -722,8 +814,9 @@ abstract class icms_properties_Handler implements Serializable {
      */
     public function getDefaultVars() {
         $ret = array();
-        foreach ($this->_vars as $key => $info)
+        foreach ($this->_vars as $key => $info) {
             $ret[$key] = $info[self::VARCFG_DEFAULT_VALUE];
+        }
         return $ret;
     }
 
