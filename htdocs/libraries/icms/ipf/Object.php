@@ -211,6 +211,8 @@ class icms_ipf_Object extends icms_core_Object {
      *
      * - $maxlength = 0 unless $data_type is a TEXTBOX, then $maxlength will be 255
      * - all other vars are NULL or '' depending of the parameter
+     * 
+     * @deprecated since version 2.1
      *
      * @param string $key key of this field. This needs to be the name of the field in the related database table
      * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to self::DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
@@ -220,6 +222,7 @@ class icms_ipf_Object extends icms_core_Object {
      * @param mixed $value default value of this variable
      */
     public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
+        icms_core_Debug::setDeprecated('initVar', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         $maxlength = $data_type == self::DTYPE_DEP_TXTBOX ? 255 : null;
         $this->initVar($key, $data_type, $value, $required, $maxlength, '', false, $form_caption, $form_dsc, false, true, true);
     }
@@ -348,9 +351,9 @@ class icms_ipf_Object extends icms_core_Object {
      * @param string $var
      */
     public function getControl($var) {
-        if (isset($this->controls[$var]))
+        if (isset($this->controls[$var])) {
             return $this->controls[$var];
-        else            
+        } else {
             switch (isset($this->_vars[$var][self::VARCFG_DEP_DATA_TYPE])?$this->_vars[$var][self::VARCFG_DEP_DATA_TYPE]:$this->_vars[$var][self::VARCFG_TYPE]) {
                 case self::DTYPE_BOOLEAN:
                     return array('name' => 'yesno');
@@ -377,7 +380,7 @@ class icms_ipf_Object extends icms_core_Object {
                 default:
                     return array('name' => 'text');
             }            
-            
+        }
     }
 
     /**
@@ -426,11 +429,11 @@ class icms_ipf_Object extends icms_core_Object {
             /**
              * Addition of some automatic value
              */
-       /*     $ret['itemLink'] = $controller->getItemLink($this);
+            $ret['itemLink'] = $controller->getItemLink($this);
             $ret['itemUrl'] = $controller->getItemLink($this, true);
             $ret['editItemLink'] = $controller->getEditItemLink($this, false, true);
             $ret['deleteItemLink'] = $controller->getDeleteItemLink($this, false, true);
-            $ret['printAndMailLink'] = $controller->getPrintAndMailLink($this);*/
+            $ret['printAndMailLink'] = $controller->getPrintAndMailLink($this);
         }
         /**
          * @todo implement this in ImpressCMS core
@@ -687,7 +690,7 @@ class icms_ipf_Object extends icms_core_Object {
             if ($this->handler->keyName == $k) {
                 continue; // Skipping ID
             }
-            if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null)
+            if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null) {
                 switch ($this->_vars[$k][self::VARCFG_TYPE]) {
                     case self::DTYPE_FLOAT:                    
                         $fieldsToStoreInDB[$k] = (float)$this->_vars[$k][self::VARCFG_VALUE];
@@ -716,6 +719,7 @@ class icms_ipf_Object extends icms_core_Object {
                         //var_dump(array($k, $this->getVar($k, 'n')));
                         $fieldsToStoreInDB[$k] = $db->quoteString($this->_vars[$k][self::VARCFG_VALUE]);
                 }
+            }
         }                
         return $fieldsToStoreInDB;
     }
@@ -888,7 +892,6 @@ class icms_ipf_Object extends icms_core_Object {
 
         if ($fetchOnly) {
             $ret = $singleview->render($fetchOnly);
-            ;
             return $ret;
         } else {
             $singleview->render($fetchOnly);
@@ -1056,10 +1059,11 @@ class icms_ipf_Object extends icms_core_Object {
     
     public function unserialize($serialized) {
         $data = unserialize($serialized);
-        if ($data['handler']['module'] == 'core' || $data['handler']['module'] == 'icms')
+        if ($data['handler']['module'] == 'core' || $data['handler']['module'] == 'icms') {
             $handler = icms::handler('icms_' . $data['handler']['itemname']);       
-        else
+        } else {
             $handler = icms_getModuleHandler($data['handler']['itemname'], $data['handler']['module']);
+        }
         $this->__construct($handler, $data['vars']);
     }   
 
