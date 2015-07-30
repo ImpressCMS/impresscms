@@ -10,24 +10,4 @@
  * @version		SVN $Id$
  */
 
-/**
- * Handler for modules
- * @category	ICMS
- * @package		Administration
- * @subpackage	Modules
- */
-class mod_system_ModulesHandler extends icms_module_Handler {
-
-	/**
-	 * Constructs the handler for modules
-	 *
-	 * @param obj $db
-	 */
-	public function __construct(&$db) {
-		parent::__construct($db);
-		/* overriding the table name
-		 * @todo	complete refactoring and use standard database table name
-		 */
-		$this->table = $this->db->prefix('modules');
-	}
-}
+class_alias('icms_module_Handler', 'mod_system_ModulesHandler', true);
