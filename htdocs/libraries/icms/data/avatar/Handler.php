@@ -100,7 +100,6 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-                var_dump($sql);
 		if (!$result) {
 			return $ret;
 		}                
