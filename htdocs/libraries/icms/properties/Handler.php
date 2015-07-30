@@ -655,8 +655,9 @@ abstract class icms_properties_Handler implements Serializable {
     public function getProblematicVars() {
         $names = array();
         foreach ($this->_vars as $key => $format)
-            if ($format[self::VARCFG_REQUIRED] && !$this->isVarSet($format[self::VARCFG_TYPE], $key))
+            if ($format[self::VARCFG_REQUIRED] && ($this->isVarSet($format[self::VARCFG_TYPE], $key) === false)) {
                 $names[] = $key;
+            }
         return $names;
     }
 
@@ -1055,12 +1056,12 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarInfo($key = null, $info = null, $default = null) {
-        if (!$key) {
+        if ($key === null) {
             return $this->_vars;
-        } elseif (!$info) {
-            if (isset($this->_vars[$key]))
+        } elseif ($info === null) {
+            if (isset($this->_vars[$key])) {
                 return $this->_vars[$key];
-            else {
+            } else {
                 $callers = debug_backtrace();
                 trigger_error(sprintf('%s in %s on line %d doesn\'t exist', $key, $callers[0]['file'], $callers[0]['line']), E_USER_ERROR);
                 return $default;

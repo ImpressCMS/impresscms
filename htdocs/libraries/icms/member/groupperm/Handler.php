@@ -198,6 +198,7 @@ class icms_member_groupperm_Handler extends icms_ipf_Handler {
                 $criteria->add(new icms_db_criteria_Item('gperm_itemid', (int) $gperm_itemid));
                 $criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
                 $perms = $this->getObjects($criteria, true);
+                $ret = array();
 		foreach (array_keys($perms) as $i) {
 			$ret[] = $perms[$i]->getVar('gperm_groupid');
 		}

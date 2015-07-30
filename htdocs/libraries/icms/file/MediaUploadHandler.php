@@ -232,10 +232,11 @@ class icms_file_MediaUploadHandler {
                     'charset' => 'US-ASCII',
                     'content-type' => 'text/plain',
                 );
+                $content = '';
                 foreach(array_map('trim', explode(';', substr($url, 5))) as $part) {
-                    if (substr($part, 0, 8) == 'charset=')
+                    if (substr($part, 0, 8) == 'charset=') {
                         $headers['charset'] = trim(substr($part, 8));
-                    elseif (substr($part, 0, 7) == 'base64,') {
+                    } elseif (substr($part, 0, 7) == 'base64,') {
                         $content =  base64_decode(rawurldecode(substr($part, 7)));
                         //header('Content-Type: image/png');
                        // echo $url;
@@ -245,8 +246,9 @@ class icms_file_MediaUploadHandler {
                     } elseif (substr($part, 0, 1) == ',') {
                         self::setErrors('Unsuported encyption in data url protocol');
                         return false;
-                    } else
+                    } else {
                         $headers['content-type'] = $part;
+                    }
                 }                
                 $headers['content-length'] = strlen($content);
             } else {

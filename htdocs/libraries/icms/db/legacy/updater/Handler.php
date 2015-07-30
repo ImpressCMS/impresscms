@@ -295,24 +295,24 @@ class icms_db_legacy_updater_Handler {
 
         $object = $module_handler->create();
         $class = new ReflectionClass($object);
-        $isExtention = false;
+        //$isExtention = false;
         if ($pclass = $class->getParentClass()) {
             if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object'))) {
                 $pclass_instance = $pclass->newInstanceArgs(array(&$module_handler));
                 $parentObjectVars = $pclass_instance->getVars();
                 unset($pclass_instance);
-                $isExtention = $pclass->getName();
+          //      $isExtention = $pclass->getName();
             }
         }
         unset($class, $pclass);
 
         if (isset($parentObjectVars)) {
             $objectVars = $object->getVars();
-            $sql = '';
             $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
             foreach (array_keys($objectVars) as $var) {
-                if (!isset($parentObjectVars[$var]))
+                if (!isset($parentObjectVars[$var])) {
                     $table->addDropedField($var);
+                }
             }
             $ret = $table->dropFields();
         } else {

@@ -214,7 +214,7 @@ class icms_member_user_Object extends icms_ipf_Object {
     static public function getUnameFromId($userid, $usereal = 0) {
         trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
         $handler = icms::handler('icms_member_user');
-        return $this->handler->getUnameFromId($userid, (bool) $usereal);
+        return $handler->getUnameFromId($userid, (bool) $usereal);
     }
 
     /**

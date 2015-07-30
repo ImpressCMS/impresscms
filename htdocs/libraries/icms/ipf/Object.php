@@ -142,14 +142,16 @@ class icms_ipf_Object extends icms_core_Object {
         return $form_caption;
     }
     
-    protected function getFormDescription($form_dsc) {
-        if ($form_dsc)
+    protected function getFormDescription($key, $form_dsc) {
+        if ($form_dsc) {
             return $form_dsc;
+        }
         $dyn_form_dsc = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);            
-        if (defined($dyn_form_dsc))
+        if (defined($dyn_form_dsc)) {
             $form_dsc = constant($dyn_form_dsc);
-        else
+        } else {
             $form_dsc = $dyn_form_dsc;
+        }
         parent::setVarInfo($key, 'form_dsc', $form_dsc);
         return $form_dsc;
     }
@@ -711,8 +713,10 @@ class icms_ipf_Object extends icms_core_Object {
                         if (is_array($this->_vars[$k][self::VARCFG_VALUE]))  {
                             $value = array_map('strval', $this->_vars[$k][self::VARCFG_VALUE]);
                             $value = implode($separator, $value);
-                        } elseif (!is_string($value))
+                        } 
+                        if (!is_string($value)) {
                             $value = strval($value);
+                        }
                         $fieldsToStoreInDB[$k] = $db->quoteString($value);
                         break;
                     default:

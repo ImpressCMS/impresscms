@@ -488,8 +488,7 @@ class icms_member_Handler {
 		}
 		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			if ($asobject) {
-				$user = new icms_member_user_Object();
-				$user->assignVars($myrow);
+				$user = new icms_member_user_Object($this, $myrow);
 				if (! $id_as_key) {
 					$ret[] =& $user;
 				} else {

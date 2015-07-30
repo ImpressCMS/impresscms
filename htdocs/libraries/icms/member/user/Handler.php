@@ -251,12 +251,12 @@ class icms_member_user_Handler
 	 * @return	string	A username matching the provided email address
 	 */
 	static public function getUnameFromEmail($email = '') {
-                $handler = icms::handler('icms_member_user');                
+                $handler = icms::handler('icms_member_user');                         
 		if ($email !== '') {
-			$sql = $db->query("SELECT uname, email FROM " . $handler->table
-				. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET)
-				. "'");
-			list($uname, $email) = $db->fetchRow($sql);
+			$sql = $handler->db->query("SELECT uname, email FROM " . $handler->table
+				. " WHERE email = '" . (!empty($email)?htmlspecialchars($email, ENT_QUOTES, _CHARSET):'')
+				. "'");                        
+			list($uname, $email) = $handler->db->fetchRow($sql);
 		} else {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
@@ -274,14 +274,15 @@ class icms_member_user_Handler
 		$userid = (int) $userid;
 		if ($userid > 0) {
                         $sql = $this->db->query(
-                                'SELECT '.($usereal?'name':'uname').' FROM ' . $handler->table
+                                'SELECT '.($usereal?'name':'uname').' FROM ' . $this->table
 				. " WHERE userid = '"
                                 . $userid
 				. "'"
                                );
 			list($name) = $this->db->fetchRow($sql);
-                        if ($name)
-                            return icms_core_DataFilter::htmlSpecialChars($name);			
+                        if ($name) {
+                            return icms_core_DataFilter::htmlSpecialChars($name);
+                        }
 		}
 		return $GLOBALS['icmsConfig']['anonymous'];
 	}        
@@ -289,13 +290,13 @@ class icms_member_user_Handler
 	public function getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) {            
                 if ($limit > 0) {
                     if ($criteria === NULL) {
-                        $criteria = new icms_db_criteria_Item();
+                        $criteria = new icms_db_criteria_Compo();
                     }
                     $criteria->setLimit($limit);
                 }
                 if ($start > 0) {
                     if ($criteria === NULL) {
-                        $criteria = new icms_db_criteria_Item();
+                        $criteria = new icms_db_criteria_Compo();
                     }
                     $criteria->setLimit($start);
                 }

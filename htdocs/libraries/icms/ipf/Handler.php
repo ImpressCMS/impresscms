@@ -162,21 +162,18 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         parent::__construct($db);
 
         // Todo: Autodect module
-        switch ($modulename) {
-            case null:
-            case 'icms':
-                $this->_moduleName = 'icms';
-                $classname = $this->_moduleName . '_' . $itemname . '_Object';
-                if ($table == null) {
-                    $table = $itemname;
-                }
-                break;
-            default:
-                $this->_moduleName = $modulename;
-                $classname = substr(get_class($this), 0, -7);                
-                if ($table == null) {
-                    $table = $this->_moduleName . '_' . $itemname;
-                }
+        if ($modulename === null || $modulename === 'icms') {
+            $this->_moduleName = 'icms';
+            $classname = $this->_moduleName . '_' . $itemname . '_Object';
+            if ($table == null) {
+                $table = $itemname;
+            }
+        } else {
+            $this->_moduleName = $modulename;
+            $classname = substr(get_class($this), 0, -7);
+            if ($table == null) {
+                $table = $this->_moduleName . '_' . $itemname;
+            }
         }
 
         /**
@@ -443,7 +440,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         $result = $this->db->query($sql);
 
         if (!$result) {
-            return $ret;
+            return null;
         }
 
         $myrow = $this->db->fetchArray($result);
@@ -607,6 +604,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
     }
 
     protected function convertResultSet_RAWWithKey($result, $key) {
+        $ret = array();
         if ($this->keyName == $key) {
             while ($myrow = $this->db->fetchArray($result)) {
                 $ret[$key] = $myrow;
@@ -627,7 +625,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $kname = $myrow[$this->keyName];
             
             if (isset(self::$_loadedItems[$this->className][$kname])) {
-                $iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
+                //$iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
                 if ($as_object) {
                     $ret[] = &self::$_loadedItems[$this->className][$kname];
                 } else {
@@ -713,7 +711,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $kname = $myrow[$this->keyName];
                 if (isset(self::$_loadedItems[$this->className][$kname])) {
                     $iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
-                    $cname = self::$_loadedItems[$this->className][$kname]->getVar($id_as_key, 'e');
+                    $cname = self::$_loadedItems[$this->className][$kname]->getVar($key, 'e');
                     if ($as_object) {
                         $ret[$cname][$iname] = &self::$_loadedItems[$this->className][$kname];
                     } else {
@@ -1186,7 +1184,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                     icms_core_Debug::message($sql);
                 }
 
-                $result = $force ? $this->db->queryF($sql) : $this->db->query($sql);
+                if ($force) {
+                    $this->db->queryF($sql);
+                } else {
+                    $this->db->query($sql);
+                }
                 $id = $this->db->getInsertId();
                 $for_insert[0]->setVar($this->keyName, $id);
                 $for_insert[0]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
