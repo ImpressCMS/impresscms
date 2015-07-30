@@ -713,7 +713,9 @@ class icms_ipf_Object extends icms_core_Object {
                         if (is_array($this->_vars[$k][self::VARCFG_VALUE]))  {
                             $value = array_map('strval', $this->_vars[$k][self::VARCFG_VALUE]);
                             $value = implode($separator, $value);
-                        } 
+                        } else {
+                            $value = $this->_vars[$k][self::VARCFG_VALUE];
+                        }
                         if (!is_string($value)) {
                             $value = strval($value);
                         }

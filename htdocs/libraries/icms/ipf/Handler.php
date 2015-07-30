@@ -597,6 +597,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
     }
 
     protected function convertResultSet_RAW($result) {
+        $ret = array();
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow;
         }
