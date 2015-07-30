@@ -59,17 +59,17 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * Constructor for the block object
 	 * @param $handler
 	 */
-	public function __construct(& $handler, $data = array()) {
+	public function __construct(& $handler, $data = array()) {                        
 
-		$this->quickInitVar('name', self::DTYPE_DEP_TXTBOX);
-		$this->quickInitVar('bid', self::DTYPE_INTEGER, TRUE);
-		$this->quickInitVar('mid', self::DTYPE_INTEGER, TRUE);
-		$this->quickInitVar('func_num', self::DTYPE_INTEGER);
-		$this->quickInitVar('title', self::DTYPE_DEP_TXTBOX);
-		$this->quickInitVar('content', self::DTYPE_STRING);
-		$this->quickInitVar('side', self::DTYPE_INTEGER, TRUE);
-		$this->quickInitVar('weight', self::DTYPE_INTEGER, TRUE, FALSE, FALSE, 0);
-		$this->quickInitVar('visible', self::DTYPE_INTEGER, TRUE);
+		$this->initVar('name', self::DTYPE_STRING, '', FALSE, 150);
+		$this->initVar('bid', self::DTYPE_INTEGER, 0, TRUE, 8);
+		$this->initVar('mid', self::DTYPE_INTEGER, 0, TRUE, 5);
+		$this->initVar('func_num', self::DTYPE_INTEGER, 0, FALSE, 3);
+		$this->initVar('title', self::DTYPE_STRING, '', FALSE, 255);
+		$this->initVar('content', self::DTYPE_STRING);
+		$this->initVar('side', self::DTYPE_INTEGER, 0, TRUE, 1);
+		$this->initVar('weight', self::DTYPE_INTEGER, 0, TRUE, 5);
+		$this->initVar('visible', self::DTYPE_INTEGER, 0, TRUE, 1);
 		/**
 		 * @var string $block_type Holds the type of block
 		 * 	S - System block
@@ -77,7 +77,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	C - Custom block (legacy type 'E')
 		 * 	K - block cloned from another block (legacy type 'D')
 		 */
-		$this->quickInitVar('block_type', self::DTYPE_DEP_TXTBOX);
+		$this->initVar('block_type', self::DTYPE_STRING, '', TRUE, 1);
 		/**
 		 * @var	string	$c_type	The type of content in the block
 		 * 	H - HTML
@@ -85,16 +85,16 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	S - Auto Format (smilies and HTML enabled)
 		 *  T - Auto Format (smilies and HTML disabled)
 		 */
-		$this->quickInitVar('c_type', self::DTYPE_DEP_TXTBOX, TRUE, FALSE, FALSE, "S");
-		$this->quickInitVar('isactive', self::DTYPE_INTEGER);
-		$this->quickInitVar('dirname', self::DTYPE_DEP_TXTBOX);
-		$this->quickInitVar('func_file', self::DTYPE_DEP_TXTBOX);
-		$this->quickInitVar('show_func', self::DTYPE_DEP_TXTBOX);
-		$this->quickInitVar('edit_func', self::DTYPE_DEP_TXTBOX);
-		$this->quickInitVar('template', self::DTYPE_DEP_TXTBOX);
-		$this->quickInitVar('bcachetime', self::DTYPE_INTEGER);
-		$this->quickInitVar('last_modified', self::DTYPE_INTEGER);
-		$this->quickInitVar('options', self::DTYPE_DEP_TXTBOX);
+		$this->initVar('c_type', self::DTYPE_STRING, 'S', TRUE, 1);
+		$this->initVar('isactive', self::DTYPE_INTEGER, 0, FALSE, 1);
+		$this->initVar('dirname', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('func_file', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('show_func', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('edit_func', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('template', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('bcachetime', self::DTYPE_INTEGER, 0, FALSE, 10);
+		$this->initVar('last_modified', self::DTYPE_INTEGER, 0, FALSE, 10);
+		$this->initVar('options', self::DTYPE_STRING, '', FALSE, 255);
                                 
       //  $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
                 parent::__construct($handler, $data);

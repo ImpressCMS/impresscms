@@ -28,15 +28,14 @@ class icms_view_block_position_Object extends icms_ipf_Object {
 	 */
 	public function __construct(& $handler) {
 
-		parent::__construct($handler);
-
-		$this->quickInitVar('id', self::DTYPE_INTEGER);
-		$this->quickInitVar('pname', self::DTYPE_DEP_TXTBOX, true);
-		$this->quickInitVar('title', self::DTYPE_DEP_TXTBOX, true);
-		$this->quickInitVar('description', self::DTYPE_STRING);
-		$this->quickInitVar('block_default', self::DTYPE_INTEGER);
-		$this->quickInitVar('block_type', self::DTYPE_DEP_TXTBOX);
-
+		$this->initVar('id', self::DTYPE_INTEGER);
+		$this->initVar('pname', self::DTYPE_STRING, '', true, 30);
+		$this->initVar('title', self::DTYPE_STRING, '', true, 90);
+		$this->initVar('description', self::DTYPE_STRING);
+		$this->initVar('block_default', self::DTYPE_INTEGER, 0);
+		$this->initVar('block_type', self::DTYPE_STRING, 'L', false, 1);
+                
+                parent::__construct($handler);
 	}
 }
 

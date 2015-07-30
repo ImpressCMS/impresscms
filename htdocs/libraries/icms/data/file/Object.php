@@ -20,9 +20,8 @@ class icms_data_file_Object extends icms_ipf_Object {
      * constructor
      */
     public function __construct(&$handler, $data = array()) {
-        $this->quickInitVar("fileid", self::DTYPE_INTEGER, TRUE);
-        $this->quickInitVar("mid", self::DTYPE_INTEGER, TRUE);
-        
+        $this->initVar("fileid", self::DTYPE_INTEGER, 0, TRUE);
+        $this->initVar("mid", self::DTYPE_INTEGER, 0, TRUE);
         $this->initVar("caption", self::DTYPE_STRING, '', false, 255);
         $this->initVar("description", self::DTYPE_STRING, '', false, 255);
         $this->initVar("url", self::DTYPE_STRING, '', false, 255);
