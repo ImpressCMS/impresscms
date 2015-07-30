@@ -380,8 +380,7 @@ abstract class icms_properties_Handler implements Serializable {
                 } else {
                     $callers = debug_backtrace();                    
                     trigger_error(sprintf('Deprecached "vars" property use in %s (line %d)', $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
-                    $ret = array_merge($this->_vars);
-                    return $ret;
+                    return $this->_vars;
                 }
             case 'cleanVars':
                 $callers = debug_backtrace();
