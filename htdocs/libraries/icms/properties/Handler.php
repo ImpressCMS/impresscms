@@ -378,18 +378,16 @@ abstract class icms_properties_Handler implements Serializable {
                 if (isset($this->_vars[$name])) {
                     return $this->_vars[$name][self::VARCFG_VALUE];
                 } else {
-                    $callers = debug_backtrace();                    
-                    trigger_error(sprintf('Deprecached "vars" property use in %s (line %d)', $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
+                    icms_core_Debug::setDeprecated('getVars()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
                     return $this->_vars;
                 }
             case 'cleanVars':
-                $callers = debug_backtrace();
-                trigger_error(sprintf('Deprecached "cleanVars" property use in %s (line %d)', $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
+                icms_core_Debug::setDeprecated('toArray()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
                 return $this->toArray();
             default:
                 if (!isset($this->_vars[$name])) {
                     $callers = debug_backtrace();
-                    trigger_error(sprintf('%s undefined for %s (in line %d)', $name, $callers[0]['file'], $callers[0]['line']), E_USER_DEPRECATED);
+                    trigger_error(sprintf('%s undefined for %s (in line %d)', $name, $callers[0]['file'], $callers[0]['line']), E_USER_WARNING);
                     return;
                 } else {
                     return $this->_vars[$name][self::VARCFG_VALUE];

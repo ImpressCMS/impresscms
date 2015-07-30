@@ -199,40 +199,40 @@ class icms_core_Object extends icms_properties_Handler {
      * 
      * @return object
      * 
-     * @deprecated since version 2.0
+     * @deprecated since version 2.1
      */
     public function xoopsClone() {
-        trigger_error('Deprecached method xoopsClone', E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated('php function clone', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         return clone $this;
     }
     
     /**
      * Sets object modified
      * 
-     * @deprecated since version 2.0
+     * @deprecated since version 2.1
      */
     public function setDirty() {
-        trigger_error('Deprecached method setDirty', E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated('setVarInfo with self::VARCFG_CHANGED', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         $this->setVarInfo(null, parent::VARCFG_CHANGED, true); 
     }
     
     /**
      * Sets object unmodified
      * 
-     * @deprecated since version 2.0
+     * @deprecated since version 2.1
      */
     public function unsetDirty() {
-        trigger_error('Deprecached method unsetDirty', E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated('setVarInfo with self::VARCFG_CHANGED', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         $this->setVarInfo(null, parent::VARCFG_CHANGED, false); 
     }
     
     /**
      * Is object modified?
      * 
-     * @deprecated since version 2.0
+     * @deprecated since version 2.1
      */
     public function isDirty() {
-        trigger_error('Deprecached method isDirty', E_USER_DEPRECATED);
+        icms_core_Debug::setDeprecated('count($this->getChangedVars()) > 0', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         return count($this->getChangedVars()) > 0;
     }
 
