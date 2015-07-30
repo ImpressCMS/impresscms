@@ -63,17 +63,21 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 	/**
 	 * Deletes an avatar
 	 * @see icms_core_ObjectHandler#delete($object)
+         * 
+         * @param icms_data_avatar_Object   $avatar Avatar to delete
+         * @param bool                      $force  Force deletion?
+         * 
 	 * @return boolean
 	 */
-	public function delete(&$avatar) {
-		if (!parent::delete($avatar)) {
+	public function delete(&$avatar, $force = false) {
+		if (!parent::delete($avatar, $force)) {
 			return false;
 		}
 		$sql = sprintf(
 			"DELETE FROM %s WHERE avatar_id = '%u'",
-			$this->db->prefix('avatar_user_link'), $id
+			$this->db->prefix('avatar_user_link'), $avatar->avatar_id
 		);
-		$result = $this->db->query($sql);
+		$this->db->query($sql);
 		return true;
 	}
 
@@ -96,12 +100,12 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
+                var_dump($sql);
 		if (!$result) {
 			return $ret;
-		}
-		while ($myrow = $this->db->fetchArray($result)) {
-			$avatar = new icms_data_avatar_Object();
-			$avatar->assignVars($myrow);
+		}                
+		while ($myrow = $this->db->fetchArray($result)) {                    
+			$avatar = new icms_data_avatar_Object($this, $myrow);
 			$avatar->setUserCount($myrow['count']);
 			if (!$id_as_key) {
 				$ret[] =& $avatar;
