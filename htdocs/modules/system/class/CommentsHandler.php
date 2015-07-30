@@ -10,26 +10,4 @@
  * @version		SVN $Id$
  */
 
-/**
- * Handler for comments
- *
- * @category	ICMS
- * @package		Administration
- * @subpackage	Comments
- */
-class mod_system_CommentsHandler extends icms_data_comment_Handler {
-
-	/**
-	 *
-	 * Constructs the comment handler
-	 *
-	 * @param obj $db	database instance (@see icms_db_Factory::instance)
-	 */
-	public function __construct(&$db) {
-		parent::__construct($db);
-		/* overriding the default table name
-		 * @todo	complete refactoring and use standard table name
-		 */
-		$this->table = $this->db->prefix('xoopscomments');
-	}
-}
+class_alias('icms_data_comment_Handler', 'mod_system_CommentsHandler', true);
