@@ -88,7 +88,7 @@ class icms_module_Object
 		$this->initVar('last_update', self::DTYPE_INTEGER, null, false);
 		$this->initVar('weight', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('isactive', self::DTYPE_INTEGER, 1, false);
-		$this->initVar('dirname', self::DTYPE_DEP_OTHER, null, true);
+		$this->initVar('dirname', self::DTYPE_STRING, null, true, 25);
 		$this->initVar('hasmain', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('hasadmin', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('hassearch', self::DTYPE_INTEGER, 0, false);
@@ -97,7 +97,7 @@ class icms_module_Object
 		// RMV-NOTIFY
 		$this->initVar('hasnotification', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('dbversion', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('modname', self::DTYPE_DEP_OTHER, null, true);
+		$this->initVar('modname', self::DTYPE_STRING, null, true, 25);
 		$this->initVar('ipf', self::DTYPE_INTEGER, 0, false);
                 
         parent::__construct($handler, $data);

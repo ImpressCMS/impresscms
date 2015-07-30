@@ -34,11 +34,11 @@ class icms_member_rank_Object extends icms_ipf_Object {
 	 */
 	public function __construct(&$handler) {
 		$this->initVar("rank_id", self::DTYPE_INTEGER, 0, TRUE, 5);
-		$this->initVar("rank_title", self::DTYPE_DEP_TXTBOX, '', TRUE, 50, null, null, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
+		$this->initVar("rank_title", self::DTYPE_STRING, '', TRUE, 50, null, null, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
 		$this->initVar("rank_min", self::DTYPE_INTEGER, 0, TRUE, 8, null, null, _CO_ICMS_USERRANK_RANK_MIN, _CO_ICMS_USERRANK_RANK_MIN_DSC);
 		$this->initVar("rank_max", self::DTYPE_INTEGER, 0, TRUE, 8, null, null, _CO_ICMS_USERRANK_RANK_MAX, _CO_ICMS_USERRANK_RANK_MAX_DSC);
 		$this->initVar("rank_special", self::DTYPE_INTEGER, 0, TRUE, 1, null, null, _CO_ICMS_USERRANK_RANK_SPECIAL, _CO_ICMS_USERRANK_RANK_SPECIAL_DSC);
-		$this->initVar("rank_image", self::DTYPE_DEP_TXTBOX, '', TRUE, 255, null, null, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
+		$this->initVar("rank_image", self::DTYPE_STRING, '', TRUE, 255, null, null, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
                 
                 parent::__construct($handler);
 

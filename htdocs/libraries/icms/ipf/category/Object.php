@@ -37,9 +37,9 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	public function __construct() {
 		$this->initVar('categoryid', self::DTYPE_INTEGER, '', true);
 		$this->initVar('parentid', self::DTYPE_INTEGER, '', false, null, '', false, _CO_ICMS_CATEGORY_PARENTID, _CO_ICMS_CATEGORY_PARENTID_DSC);
-		$this->initVar('name', self::DTYPE_DEP_TXTBOX, '', false, null, '', false, _CO_ICMS_CATEGORY_NAME, _CO_ICMS_CATEGORY_NAME_DSC);
+		$this->initVar('name', self::DTYPE_STRING, '', false, 255, '', false, _CO_ICMS_CATEGORY_NAME, _CO_ICMS_CATEGORY_NAME_DSC);
 		$this->initVar('description', self::DTYPE_STRING, '', false, null, '', false, _CO_ICMS_CATEGORY_DESCRIPTION, _CO_ICMS_CATEGORY_DESCRIPTION_DSC);
-		$this->initVar('image', self::DTYPE_DEP_TXTBOX, '', false, null, '',  false, _CO_ICMS_CATEGORY_IMAGE, _CO_ICMS_CATEGORY_IMAGE_DSC);
+		$this->initVar('image', self::DTYPE_STRING, '', false, 255, '',  false, _CO_ICMS_CATEGORY_IMAGE, _CO_ICMS_CATEGORY_IMAGE_DSC);
 
 		$this->initCommonVar('doxcode');
 
