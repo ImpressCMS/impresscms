@@ -38,7 +38,7 @@ class icms_ipf_form_elements_Section extends icms_form_Element {
 		$control = $object->getControl($key);
 
 		$this->setName($key);
-		$this->_value = $object->vars[$key]['value'];
+		$this->_value = $object->getVarInfo($key)['value'];
 		$this->_close = isset($control['close']) ? $control['close'] : FALSE;
 	}
 

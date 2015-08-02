@@ -35,11 +35,11 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 * @return icms_ipf_category_Object
 	 */
 	public function __construct() {
-		$this->initVar('categoryid', XOBJ_DTYPE_INT, '', true);
-		$this->initVar('parentid', XOBJ_DTYPE_INT, '', false, null, '', false, _CO_ICMS_CATEGORY_PARENTID, _CO_ICMS_CATEGORY_PARENTID_DSC);
-		$this->initVar('name', XOBJ_DTYPE_TXTBOX, '', false, null, '', false, _CO_ICMS_CATEGORY_NAME, _CO_ICMS_CATEGORY_NAME_DSC);
-		$this->initVar('description', XOBJ_DTYPE_TXTAREA, '', false, null, '', false, _CO_ICMS_CATEGORY_DESCRIPTION, _CO_ICMS_CATEGORY_DESCRIPTION_DSC);
-		$this->initVar('image', XOBJ_DTYPE_TXTBOX, '', false, null, '',  false, _CO_ICMS_CATEGORY_IMAGE, _CO_ICMS_CATEGORY_IMAGE_DSC);
+		$this->initVar('categoryid', self::DTYPE_INTEGER, '', true);
+		$this->initVar('parentid', self::DTYPE_INTEGER, '', false, null, '', false, _CO_ICMS_CATEGORY_PARENTID, _CO_ICMS_CATEGORY_PARENTID_DSC);
+		$this->initVar('name', self::DTYPE_STRING, '', false, 255, '', false, _CO_ICMS_CATEGORY_NAME, _CO_ICMS_CATEGORY_NAME_DSC);
+		$this->initVar('description', self::DTYPE_STRING, '', false, null, '', false, _CO_ICMS_CATEGORY_DESCRIPTION, _CO_ICMS_CATEGORY_DESCRIPTION_DSC);
+		$this->initVar('image', self::DTYPE_STRING, '', false, 255, '',  false, _CO_ICMS_CATEGORY_IMAGE, _CO_ICMS_CATEGORY_IMAGE_DSC);
 
 		$this->initCommonVar('doxcode');
 

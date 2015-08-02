@@ -44,7 +44,7 @@ class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text {
 	 * @param	string			$key	the form name
 	 */
 	public function __construct($object, $key) {
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		$control = $object->controls[$key];
 		$form_maxlength = isset($control['maxlength']) ? $control['maxlength'] : (isset($var['maxlength']) ? $var['maxlength'] : 255);
 		$form_size = isset($control['size']) ? $control['size'] : 50;

@@ -18,16 +18,18 @@ class icms_data_urllink_Object extends icms_ipf_Object {
 	/**
 	 * constructor
 	 */
-	public function __construct() {
-		$this->quickInitVar("urllinkid", XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar("mid", XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar("caption", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("description", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("url", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("target", XOBJ_DTYPE_TXTBOX, TRUE);
+	public function __construct(&$handler, $data = array()) {
+		$this->initVar("urllinkid", self::DTYPE_INTEGER, 0, TRUE);
+		$this->initVar("mid", self::DTYPE_INTEGER,0,  TRUE, 5);
+		$this->initVar("caption", self::DTYPE_STRING, '', FALSE, 255);
+		$this->initVar("description", self::DTYPE_STRING, '', FALSE, 255);
+		$this->initVar("url", self::DTYPE_STRING, '', FALSE, 255);
+		$this->initVar("target", self::DTYPE_STRING, '', TRUE, 6);
 
 		$this->setControl("target", array("options" => array("_self" => _CO_ICMS_URLLINK_SELF,
 			"_blank" => _CO_ICMS_URLLINK_BLANK)));
+                
+                parent::__construct($handler, $data);
 	}
 
 	/**

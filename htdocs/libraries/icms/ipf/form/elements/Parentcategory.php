@@ -30,7 +30,7 @@ class icms_ipf_form_elements_Parentcategory extends icms_form_elements_Select {
 		$categories = $category_handler->getObjects($criteria);
 
 		$mytree = new icms_ipf_Tree($categories, "category_id", "category_pid");
-		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e'));
+		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVar($key, 'e'));
 
 		$ret = array();
 		$options = $this->getOptionArray($mytree, $category_title_field, 0, $ret, "");

@@ -7,7 +7,7 @@
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
+//  the Free Softsware Foundation; either version 2 of the License, or        //
 //  (at your option) any later version.                                      //
 //                                                                           //
 //  You may not change or alter any portion of this comment or credits       //
@@ -72,7 +72,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * Constructor
 	 *
 	 * @param   string  $column
-	 * @param   string  $value
+	 * @param   mixed  $value
 	 * @param   string  $operator
 	 **/
 	public function __construct($column, $value='', $operator='=', $prefix = '', $function = '') {
@@ -96,16 +96,32 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 		if (in_array( strtoupper($this->_operator), array('IS NULL', 'IS NOT NULL'))) {
 			$clause .= ' ' . $this->_operator;
 		} else {
-			if ('' === ( $value = trim($this->_value) )) {
+                        if (is_bool($this->_value)) {
+                            $value = (int)$this->_value;
+                        } else if (is_object($this->_value)) {
+                            $value = (string)$this->_value;
+                        } else if (is_array($this->_value)) {
+                            if (!empty($this->_value)) {                                
+                                $value = '(\'' . implode('\', \'', $this->_value) . '\')';
+                            } else {
+                                $value = '()';
+                            }
+                        } else if (is_null($this->_value)) {
+                            $value = 'NULL';
+                        } else {
+                            if ('' === ($value = trim($this->_value))) {
 				return '';
-			}
-			if (!in_array(strtoupper($this->_operator), array('IN', 'NOT IN'))) {
-				if (( substr($value, 0, 1) != '`' ) && ( substr($value, -1) != '`' )) {
-					$value = "'$value'";
-				} elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
-					$value = '``';
-				}
-			}
+                            }
+                            if (!in_array(strtoupper($this->_operator), array('IN', 'NOT IN'))) {
+                                    if (( substr($value, 0, 1) != '`' ) && ( substr($value, -1) != '`' )) {
+                                            $value = "'$value'";
+                                    } elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
+                                            $value = '``';
+                                    }
+                            }
+                        }
+                    
+			
 			$clause .= " {$this->_operator} $value";
 		}
 		return $clause;

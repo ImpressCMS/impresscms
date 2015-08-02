@@ -49,31 +49,69 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		View
  * @subpackage	Template
  **/
-class icms_view_template_file_Object extends icms_core_Object {
+class icms_view_template_file_Object extends icms_ipf_Object {
 
+        public $tpl_source = false;    
+    
 	/**
 	 * constructor
+         * 
+         * @todo: move here tpl_source
 	 */
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('tpl_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('tpl_refid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('tpl_tplset', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('tpl_file', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('tpl_desc', XOBJ_DTYPE_TXTBOX, null, false, 100);
-		$this->initVar('tpl_lastmodified', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('tpl_lastimported', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('tpl_module', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('tpl_type', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('tpl_source', XOBJ_DTYPE_SOURCE, null, false);
+	public function __construct($handler, $data = array()) {		
+		$this->initVar('tpl_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('tpl_refid', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('tpl_tplset', self::DTYPE_STRING, null, false, 50);
+		$this->initVar('tpl_file', self::DTYPE_STRING, null, true, 100);
+		$this->initVar('tpl_desc', self::DTYPE_STRING, null, false, 100);
+		$this->initVar('tpl_lastmodified', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('tpl_lastimported', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('tpl_module', self::DTYPE_STRING, null, false, 25);
+		$this->initVar('tpl_type', self::DTYPE_STRING, null, false, 20);
+		//$this->initVar('tpl_source', self::DTYPE_DEP_SOURCE, null, false);
+                
+                parent::__construct($handler, $data);
 	}
 
 	/**
 	 * Gets Template Source
 	 */
 	public function getSource()	{
-		return $this->getVar('tpl_source');
+		$sql = "SELECT tpl_source FROM " . $this->handler->db->prefix('tplsource')
+				. " WHERE tpl_id='" . $this->getVar('tpl_id') . "'";
+		if (!$result = $this->handler->db->query($sql)) {
+                    return false;
+		}
+                $myrow = $this->handler->db->fetchArray($result);
+                return $myrow['tpl_source'];
 	}
+        
+        public function getVar($name, $format = 's') {
+            if ($name == 'tpl_source') {
+                if ($this->tpl_source === false) {
+                    $this->tpl_source = $this->getSource();
+                }
+                return $this->tpl_source;
+            } else {
+                return parent::getVar($name, $format);
+            }
+        }
+        
+        public function assignVar($name, &$value) {            
+            if ($name == 'tpl_source') {
+                $this->tpl_source = $value;
+            } else {
+                parent::assignVar($name, $value);
+            }
+        }
+        
+        public function setVar($name, $value, $options = null) {
+            if ($name == 'tpl_source') {
+                $this->tpl_source = $value;
+            } else {
+                parent::setVar($name, $value, $options);
+            }
+        }
 
 	/**
 	 * Gets Last Modified timestamp

@@ -27,21 +27,21 @@ class mod_system_Adsense extends icms_ipf_Object {
 	 * 
 	 * @param object $handler
 	 */
-	public function __construct(&$handler) {
+	public function __construct(&$handler) {                
+                $this->initVar('adsenseid', self::DTYPE_INTEGER, 0, true);
+                $this->initVar('description', self::DTYPE_STRING, '', true, null, null, null, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
+                $this->initVar('client_id', self::DTYPE_STRING, '', true, 100, null, null, _CO_ICMS_ADSENSE_CLIENT_ID, _CO_ICMS_ADSENSE_CLIENT_ID_DSC);
+                $this->initVar('slot', self::DTYPE_STRING, '', true, 12, null, null, _CO_ICMS_ADSENSE_SLOT, _CO_ICMS_ADSENSE_SLOT_DSC);
+                $this->initVar('tag', self::DTYPE_STRING, '', false, 50, null, null, _CO_ICMS_ADSENSE_TAG, _CO_ICMS_ADSENSE_TAG_DSC);
+                $this->initVar('format', self::DTYPE_STRING, '', true, 100, null, null, _CO_ICMS_ADSENSE_FORMAT, _CO_ICMS_ADSENSE_FORMAT_DSC);
+                $this->initVar('color_border', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_BORDER, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
+                $this->initVar('color_background', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_BACKGROUND, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
+                $this->initVar('color_link', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_LINK, _CO_ICMS_ADSENSE_COLOR_LINK_DSC);
+                $this->initVar('color_url', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_URL, _CO_ICMS_ADSENSE_COLOR_URL_DSC);
+                $this->initVar('color_text', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_TEXT, _CO_ICMS_ADSENSE_COLOR_TEXT_DSC);
+                $this->initVar('style', self::DTYPE_STRING, '', false, null, null, null, _CO_ICMS_ADSENSE_STYLE, _CO_ICMS_ADSENSE_STYLE_DSC);
+            
 		parent::__construct($handler);
-
-		$this->quickInitVar('adsenseid', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('description', XOBJ_DTYPE_TXTAREA, TRUE, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
-		$this->quickInitVar('client_id', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_CLIENT_ID, _CO_ICMS_ADSENSE_CLIENT_ID_DSC);
-		$this->quickInitVar('slot', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_SLOT, _CO_ICMS_ADSENSE_SLOT_DSC);
-		$this->quickInitVar('tag', XOBJ_DTYPE_TXTBOX, FALSE, _CO_ICMS_ADSENSE_TAG, _CO_ICMS_ADSENSE_TAG_DSC);
-		$this->quickInitVar('format', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_FORMAT, _CO_ICMS_ADSENSE_FORMAT_DSC);
-		$this->quickInitVar('color_border', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_BORDER, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
-		$this->quickInitVar('color_background', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_BACKGROUND, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
-		$this->quickInitVar('color_link', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_LINK, _CO_ICMS_ADSENSE_COLOR_LINK_DSC);
-		$this->quickInitVar('color_url', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_URL, _CO_ICMS_ADSENSE_COLOR_URL_DSC);
-		$this->quickInitVar('color_text', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_ADSENSE_COLOR_TEXT, _CO_ICMS_ADSENSE_COLOR_TEXT_DSC);
-		$this->quickInitVar('style', XOBJ_DTYPE_TXTAREA, FALSE, _CO_ICMS_ADSENSE_STYLE, _CO_ICMS_ADSENSE_STYLE_DSC);
 
 		$this->setControl('format', array('method' => 'getFormats'));
 		$this->setControl('color_border', 'color');

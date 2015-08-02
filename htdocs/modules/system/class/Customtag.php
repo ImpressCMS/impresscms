@@ -30,19 +30,20 @@ class mod_system_Customtag extends icms_ipf_Object {
 	 * Constructor
 	 * @param object $handler
 	 */
-	public function __construct(&$handler) {
+	public function __construct(&$handler) {           
+                $this->initVar('customtagid', self::DTYPE_INTEGER, 0, TRUE);
+                $this->initVar('name', self::DTYPE_STRING, '', TRUE, 255, null, null, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC);
+                $this->initVar('description', self::DTYPE_STRING, '', FALSE, null, null, null, _CO_ICMS_CUSTOMTAG_DESCRIPTION, _CO_ICMS_CUSTOMTAG_DESCRIPTION_DSC);
+                $this->initVar('customtag_content', self::DTYPE_STRING, '', TRUE, null, null, null, _CO_ICMS_CUSTOMTAG_CONTENT, _CO_ICMS_CUSTOMTAG_CONTENT_DSC);
+                $this->initVar('language', self::DTYPE_STRING, '', TRUE, 100, null, null, _CO_ICMS_CUSTOMTAG_LANGUAGE, _CO_ICMS_CUSTOMTAG_LANGUAGE_DSC);
+                $this->initVar('customtag_type', self::DTYPE_INTEGER, ICMS_CUSTOMTAG_TYPE_XCODES, TRUE, 1, null, null, _CO_ICMS_CUSTOMTAG_TYPE, _CO_ICMS_CUSTOMTAG_TYPE_DSC);
+                
+                $this->initNonPersistableVar('dohtml', self::DTYPE_INTEGER, 'class', 'dohtml', '', TRUE);
+		$this->initNonPersistableVar('doimage', self::DTYPE_INTEGER, 'class', 'doimage', '', TRUE);
+		$this->initNonPersistableVar('doxcode', self::DTYPE_INTEGER, 'class', 'doxcode', '', TRUE);
+		$this->initNonPersistableVar('dosmiley', self::DTYPE_INTEGER, 'class', 'dosmiley', '', TRUE);
+                
 		parent::__construct($handler);
-
-		$this->quickInitVar('customtagid', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC);
-		$this->quickInitVar('description', XOBJ_DTYPE_TXTAREA, FALSE, _CO_ICMS_CUSTOMTAG_DESCRIPTION, _CO_ICMS_CUSTOMTAG_DESCRIPTION_DSC);
-		$this->quickInitVar('customtag_content', XOBJ_DTYPE_TXTAREA, TRUE, _CO_ICMS_CUSTOMTAG_CONTENT, _CO_ICMS_CUSTOMTAG_CONTENT_DSC);
-		$this->quickInitVar('language', XOBJ_DTYPE_TXTBOX, TRUE, _CO_ICMS_CUSTOMTAG_LANGUAGE, _CO_ICMS_CUSTOMTAG_LANGUAGE_DSC);
-		$this->quickInitVar('customtag_type', XOBJ_DTYPE_INT, TRUE, _CO_ICMS_CUSTOMTAG_TYPE, _CO_ICMS_CUSTOMTAG_TYPE_DSC, ICMS_CUSTOMTAG_TYPE_XCODES);
-		$this->initNonPersistableVar('dohtml', XOBJ_DTYPE_INT, 'class', 'dohtml', '', TRUE);
-		$this->initNonPersistableVar('doimage', XOBJ_DTYPE_INT, 'class', 'doimage', '', TRUE);
-		$this->initNonPersistableVar('doxcode', XOBJ_DTYPE_INT, 'class', 'doxcode', '', TRUE);
-		$this->initNonPersistableVar('dosmiley', XOBJ_DTYPE_INT, 'class', 'dosmiley', '', TRUE);
 
 		$this->setControl('customtag_content', array('name' => 'textarea', 'form_editor' => 'textarea', 'form_rows' => 25));
 		$this->setControl('language', array('name' => 'language', 'all' => TRUE));

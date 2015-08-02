@@ -58,9 +58,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	private $modules_name;
 
 	public function __construct(& $db) {
-		parent::__construct($db, 'block', 'bid', 'title', 'content', 'icms');
-		$this->className = 'icms_view_block_Object';
-		$this->table = $this->db->prefix('newblocks');
+		parent::__construct($db, 'view_block', 'bid', 'title', 'content', 'icms', 'newblocks');
 	}
 
 	// The next methods are for backwards compatibility

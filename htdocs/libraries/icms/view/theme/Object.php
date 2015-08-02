@@ -577,7 +577,7 @@ class icms_view_theme_Object {
 					/* new js refactoring will change how we do this */
 					foreach ($this->metas[$zone][$type] as $attrs) {
 						$str .= '<script' . $this->renderAttributes($attrs['value']) . ">";
-						if (@$attrs['value']['_']) {
+						if (!empty($attrs['value']['_'])) {
 							$str .= "\n" . $attrs['value']['_'] . "\n";
 						}
 						$str .= "</script>\n";
@@ -605,7 +605,7 @@ class icms_view_theme_Object {
 					}
 
 					foreach ($this->metas[$zone][$type] as $attrs) {
-						if (@$attrs['value']['_']) {
+						if (!empty($attrs['value']['_'])) {
 							$str .= '<style' . $this->renderAttributes($attrs['value']) . ">\n" . $attrs['value']['_'] . "\n</style>";
 						} elseif (!$combine) {
 							$str .= '<link rel="stylesheet"' . $this->renderAttributes($attrs['value']) . " />\n";

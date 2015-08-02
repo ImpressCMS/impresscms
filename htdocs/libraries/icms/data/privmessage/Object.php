@@ -48,22 +48,24 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @category	ICMS
  * @package		Privmessage
+ * @author		Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_data_privmessage_Object extends icms_core_Object {
+class icms_data_privmessage_Object extends icms_ipf_Object {
 
 	/**
 	 * constructor
 	 **/
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('msg_image', XOBJ_DTYPE_OTHER, 'icon1.gif', false, 100);
-		$this->initVar('subject', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		$this->initVar('from_userid', XOBJ_DTYPE_INT, null, true);
-		$this->initVar('to_userid', XOBJ_DTYPE_INT, null, true);
-		$this->initVar('msg_time', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('msg_text', XOBJ_DTYPE_TXTAREA, null, true);
-		$this->initVar('read_msg', XOBJ_DTYPE_INT, 0, false);
+	public function __construct(&$handler, $data = array()) {		
+		$this->initVar('msg_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('msg_image', self::DTYPE_STRING, 'icon1.gif', false, 100);
+		$this->initVar('subject', self::DTYPE_STRING, null, true, 255);
+		$this->initVar('from_userid', self::DTYPE_INTEGER, null, true);
+		$this->initVar('to_userid', self::DTYPE_INTEGER, null, true);
+		$this->initVar('msg_time', self::DTYPE_DATETIME, null, false);
+		$this->initVar('msg_text', self::DTYPE_STRING, null, true);
+		$this->initVar('read_msg', self::DTYPE_INTEGER, 0, false);
+                
+                parent::__construct($handler, $data);
 	}
 }
 

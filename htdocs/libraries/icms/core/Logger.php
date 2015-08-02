@@ -59,6 +59,8 @@ class icms_core_Logger {
 		if (!isset($instance)) {
 			$instance = new icms_core_Logger();
 			// Always catch errors, for security reasons
+                        error_reporting(E_ALL);
+                        ini_set('display_errors', 1);
 			set_error_handler(array($instance, "handleError"));
 		}
 		return $instance;

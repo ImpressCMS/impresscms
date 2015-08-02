@@ -40,6 +40,12 @@
 
 defined('ICMS_ROOT_PATH') or exit();
 
+icms_loadLanguageFile('core', 'user');
+icms_loadLanguageFile('core', 'notification');
+icms_loadLanguageFile('core', 'global');
+
+include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
+
 /**
  * User handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -51,164 +57,15 @@ defined('ICMS_ROOT_PATH') or exit();
  * @package		Member
  * @subpackage	User
  */
-class icms_member_user_Handler extends icms_core_ObjectHandler {
-	/**
-	 * create a new user
-	 *
-	 * @param bool $isNew flag the new objects as "new"?
-	 * @return object icms_member_user_Object
-	 */
-	public function &create($isNew = TRUE) {
-		$user = new icms_member_user_Object();
-		if ($isNew) {
-			$user->setNew();
-		}
-		return $user;
-	}
-
-	/**
-	 * retrieve a user from ID
-	 *
-	 * @param int $id UID of the user
-	 * @return mixed reference to the {@link icms_member_user_Object} object, FALSE if failed
-	 */
-	public function &get($id) {
-		$id = (int) $id;
-		$user = FALSE;
-		if ($id > 0) {
-			$sql = "SELECT * FROM " . $this->db->prefix('users') . " WHERE uid = '" . $id . "'";
-			if (!$result = $this->db->query($sql)) {return $user;}
-			$numrows = $this->db->getRowsNum($result);
-			if ($numrows == 1) {
-				$user = new icms_member_user_Object();
-				$user->assignVars($this->db->fetchArray($result));
-			}
-		}
-		return $user;
-	}
-
-	/**
-	 * insert a new user in the database
-	 *
-	 * @param object $user reference to the {@link icms_member_user_Object} object
-	 * @param bool $force
-	 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
-	 */
-	public function insert(&$user, $force = FALSE) {
-		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if (!is_a($user, 'icms_member_user_Object')) {return FALSE;}
-		if (!$user->isDirty()) {return TRUE;}
-		if (!$user->cleanVars()) {return FALSE;}
-		foreach ($user->cleanVars as $k => $v) {${$k} = $v;}
-
-		// RMV-NOTIFY
-		if ($user->isNew()) {
-			$uid = $this->db->genId($this->db->prefix('users') . '_uid_seq');
-			$sql = sprintf(
-				"INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq,
-				user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts,
-				attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method,
-				notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, user_viewoid,
-                pass_expired, login_name)
-				VALUES ('%u', %s, %s, %s, %s, %s, '%u',
-				%s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u',
-				'%u', '%u', %s, %s, %s, '%u', %s, %s, '%u', '%u', %s)",
-				$this->db->prefix('users'),
-				(int) $uid,
-				$this->db->quoteString($uname),
-				$this->db->quoteString($name),
-				$this->db->quoteString($email),
-				$this->db->quoteString($url),
-				$this->db->quoteString($user_avatar),
-				time(),
-				$this->db->quoteString($user_icq),
-				$this->db->quoteString($user_from),
-				$this->db->quoteString($user_sig),
-				(int) $user_viewemail,
-				$this->db->quoteString($actkey),
-				$this->db->quoteString($user_aim),
-				$this->db->quoteString($user_yim),
-				$this->db->quoteString($user_msnm),
-				$this->db->quoteString($pass),
-				(int) $posts,
-				(int) $attachsig,
-				(int) $rank,
-				(int) $level,
-				$this->db->quoteString($theme),
-				$this->db->quoteString((float) $timezone_offset),
-				0,
-				$this->db->quoteString($umode),
-				(int) $uorder,
-				(int) $notify_method,
-				(int) $notify_mode,
-				$this->db->quoteString($user_occ),
-				$this->db->quoteString($bio),
-				$this->db->quoteString($user_intrest),
-				(int) $user_mailok,
-				$this->db->quoteString($language),
-				$this->db->quoteString($openid),
-				(int) $user_viewoid,
-				(int) $pass_expired,
-				$this->db->quoteString($login_name)
-			);
-		} else {
-			$sql = sprintf(
-				"UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s,
-				user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s,
-				user_yim = %s, user_msnm = %s, posts = %d, pass = %s, attachsig = '%u', rank = '%u',
-				level= '%s', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u',
-				uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s,
-				user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, user_viewoid = '%u',
-                pass_expired = '%u', login_name = %s WHERE uid = '%u'",
-				$this->db->prefix('users'),
-				$this->db->quoteString($uname),
-				$this->db->quoteString($name),
-				$this->db->quoteString($email),
-				$this->db->quoteString($url),
-				$this->db->quoteString($user_avatar),
-				$this->db->quoteString($user_icq),
-				$this->db->quoteString($user_from),
-				$this->db->quoteString($user_sig),
-				$user_viewemail,
-				$this->db->quoteString($user_aim),
-				$this->db->quoteString($user_yim),
-				$this->db->quoteString($user_msnm),
-				(int) $posts,
-				$this->db->quoteString($pass),
-				(int) $attachsig,
-				(int) $rank,
-				(int) $level,
-				$this->db->quoteString($theme),
-				$this->db->quoteString((float) $timezone_offset),
-				$this->db->quoteString($umode),
-				(int) $last_login,
-				(int) $uorder,
-				(int) $notify_method,
-				(int) $notify_mode,
-				$this->db->quoteString($user_occ),
-				$this->db->quoteString($bio),
-				$this->db->quoteString($user_intrest),
-				(int) $user_mailok,
-				$this->db->quoteString($language),
-				$this->db->quoteString($openid),
-				(int) $user_viewoid,
-				(int) $pass_expired,
-				$this->db->quoteString($login_name),
-				(int) $uid
-			);
-		}
-		if (FALSE != $force) {
-			$result = $this->db->queryF($sql);
-		} else {
-			$result = $this->db->query($sql);
-		}
-		if (!$result) {return FALSE;}
-		if ($user->isNew()) {
-			$uid = $this->db->getInsertId();
-			$user->assignVar('uid', $uid);
-		}
-		return TRUE;
-	}
+class icms_member_user_Handler 
+    extends icms_ipf_Handler {
+    
+        public function __construct(&$db, $module = 'icms') {
+            if (!$module)
+                $module = 'icms_member';
+            $objName = ($module == 'icms')?'member_user':'user';
+            parent::__construct($db, $objName, 'uid', 'uname', 'email', $module, 'users');
+        }
 
 	/**
 	 * delete a user from the database
@@ -219,71 +76,20 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @TODO we need some kind of error message instead of just a FALSE return to inform whether user was deleted aswell as PM messages.
 	 */
 	public function delete(&$user, $force = FALSE) {
-		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if (!is_a($user, 'icms_member_user_Object')) {return FALSE;}
-		$pass = substr(md5(time()), 0, 8);
+                if (!($user instanceof icms_member_user_Object))
+                    return;
 		$sql = sprintf(
 			"UPDATE %s SET level = '-1', pass = '%s' WHERE uid = '%u'",
-			$this->db->prefix('users'), $pass, (int) $user->getVar('uid')
+			$this->table, 
+                        substr(md5(time()), 0, 8), 
+                        (int) $user->getVar('uid')
 		);
 		if (FALSE != $force) {
 			$result = $this->db->queryF($sql);
 		} else {
 			$result = $this->db->query($sql);
 		}
-		if (!$result) {
-			return FALSE;
-		}
-		return TRUE;
-	}
-
-	/**
-	 * retrieve users from the database
-	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
-	 * @param bool $id_as_key use the UID as key for the array?
-	 * @return array array of {@link icms_member_user_Object} objects
-	 */
-	public function getObjects($criteria = NULL, $id_as_key = FALSE) {
-		$ret = array();
-		$limit = $start = 0;
-		$sql = "SELECT * FROM " . $this->db->prefix('users');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= " " . $criteria->renderWhere();
-			if ($criteria->getSort() != '') {
-				$sql .= " ORDER BY " . $criteria->getSort() . " " . $criteria->getOrder();
-			}
-			$limit = $criteria->getLimit();
-			$start = $criteria->getStart();
-		}
-		$result = $this->db->query($sql, $limit, $start);
-		if (!$result) {return $ret;}
-		while ($myrow = $this->db->fetchArray($result)) {
-			$user = new icms_member_user_Object();
-			$user->assignVars($myrow);
-			if (!$id_as_key) {
-				$ret[] =& $user;
-			} else {
-				$ret[$myrow['uid']] =& $user;
-			}
-			unset($user);
-		}
-		return $ret;
-	}
-
-	/**
-	 * count users matching a condition
-	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} to match
-	 * @return int count of users
-	 */
-	public function getCount($criteria = NULL) {
-		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('users');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
-		$result = $this->db->query($sql);
-		if (!$result) {return 0;}
-		list($count) = $this->db->fetchRow($result);
-		return $count;
+                return (bool)$result;
 	}
 
 	/**
@@ -293,29 +99,13 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @return bool FALSE if deletion failed
 	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
 	 */
-	public function deleteAll($criteria = NULL) {
-		$pass = substr(md5(time()), 0, 8);
-		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), $pass);
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= " " . $criteria->renderWhere();}
-		if (!$result = $this->db->query($sql)) {return FALSE;}
-		return TRUE;
-	}
-
-	/**
-	 * Change a value for users with a certain criteria
-	 *
-	 * @param   string  $fieldname  Name of the field
-	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
-	 *
-	 * @return  bool
-	 **/
-	public function updateAll($fieldname, $fieldvalue, $criteria = NULL) {
-		$set_clause = is_numeric($fieldvalue) ? $fieldname . ' = ' . $fieldvalue : $fieldname . ' = ' . $this->db->quoteString($fieldvalue);
-		$sql = 'UPDATE ' . $this->db->prefix('users') . ' SET ' . $set_clause;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
-		if (!$result = $this->db->query($sql)) {return FALSE;}
-		return TRUE;
+	public function deleteAll($criteria = NULL, $quick = false) {
+            if ($quick)
+                throw new Exception ('quick variable not supported!');
+            $sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
+            if ($criteria instanceof icms_db_criteria_Element)
+                $sql .= ' ' . $criteria->renderWhere();
+            return (bool)$this->db->query($sql);
 	}
 
 	/**
@@ -461,25 +251,55 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @return	string	A username matching the provided email address
 	 */
 	static public function getUnameFromEmail($email = '') {
-		$db = icms_db_Factory::instance();
+                $handler = icms::handler('icms_member_user');                         
 		if ($email !== '') {
-			$sql = $db->query("SELECT uname, email FROM " . $db->prefix('users')
-				. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET)
-				. "'");
-			list($uname, $email) = $db->fetchRow($sql);
+			$sql = $handler->db->query("SELECT uname, email FROM " . $handler->table
+				. " WHERE email = '" . (!empty($email)?htmlspecialchars($email, ENT_QUOTES, _CHARSET):'')
+				. "'");                        
+			list($uname, $email) = $handler->db->fetchRow($sql);
 		} else {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 		return $uname;
 	}
-
-	/**
-	 * Retrieve a list of users based on passed criteria
+        
+        /**
+	 * find the username for a given ID
 	 *
-	 * @param	object	$criteria criteria for finding users (@see icms_db_criteria_Compo)
-	 * @return	array	An array of usernames, with the userid as the key
+	 * @param int $userid ID of the user to find
+	 * @param bool $usereal switch for usename or realname
+	 * @return string name of the user. name for "anonymous" if not found.
 	 */
-	public function getList($criteria = NULL) {
+	public function getUnameFromId($userid, $usereal = false) {
+		$userid = (int) $userid;
+		if ($userid > 0) {
+                        $sql = $this->db->query(
+                                'SELECT '.($usereal?'name':'uname').' FROM ' . $this->table
+				. " WHERE userid = '"
+                                . $userid
+				. "'"
+                               );
+			list($name) = $this->db->fetchRow($sql);
+                        if ($name) {
+                            return icms_core_DataFilter::htmlSpecialChars($name);
+                        }
+		}
+		return $GLOBALS['icmsConfig']['anonymous'];
+	}        
+        
+	public function getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) {            
+                if ($limit > 0) {
+                    if ($criteria === NULL) {
+                        $criteria = new icms_db_criteria_Compo();
+                    }
+                    $criteria->setLimit($limit);
+                }
+                if ($start > 0) {
+                    if ($criteria === NULL) {
+                        $criteria = new icms_db_criteria_Compo();
+                    }
+                    $criteria->setLimit($start);
+                }
 		$users = $this->getObjects($criteria, TRUE);
 		$ret = array();
 		foreach (array_keys($users) as $i) {

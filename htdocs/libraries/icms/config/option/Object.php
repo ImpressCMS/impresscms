@@ -49,16 +49,17 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     Config
  * @subpackage	Option
  */
-class icms_config_option_Object extends icms_core_Object {
+class icms_config_option_Object extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('confop_id', XOBJ_DTYPE_INT, null);
-		$this->initVar('confop_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		$this->initVar('confop_value', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		$this->initVar('conf_id', XOBJ_DTYPE_INT, 0);
+	public function __construct(&$handler, $data = array()) {		
+		$this->initVar('confop_id', self::DTYPE_INTEGER, null);
+		$this->initVar('confop_name', self::DTYPE_STRING, null, true, 255);
+		$this->initVar('confop_value', self::DTYPE_STRING, null, true, 255);
+		$this->initVar('conf_id', self::DTYPE_INTEGER, 0);
+                
+                parent::__construct($handler, $data);
 	}
 }
 

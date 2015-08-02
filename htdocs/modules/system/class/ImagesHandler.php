@@ -10,24 +10,4 @@
  * @version		$Id$
  */
 
-/**
- * Handler for managing images
-
- * @category	ICMS
- * @package		Administration
- * @subpackage	Images
- */
-class mod_system_ImagesHandler extends icms_image_Handler {
-
-	/**
-	 * Construct the handler
-	 * @@param  obj $db	database instance (@see icms_db_Factory::instance)
-	 */
-	public function __construct(&$db) {
-		parent::__construct($db);
-		/* overriding the default table name
-		 * @todo	complete refactoring and use standard table name
-		 */
-		$this->table = $this->db->prefix('images');
-	}
-}
+class_alias('icms_image_Handler', 'mod_system_ImagesHandler', true);

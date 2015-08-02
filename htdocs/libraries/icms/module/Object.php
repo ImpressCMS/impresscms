@@ -48,7 +48,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  **/
-class icms_module_Object extends icms_core_Object {
+class icms_module_Object 
+    extends icms_ipf_Object {
 	/**
 	 * Module configuration
 	 * @var array
@@ -80,25 +81,26 @@ class icms_module_Object extends icms_core_Object {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('mid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
-		$this->initVar('version', XOBJ_DTYPE_INT, 100, false);
-		$this->initVar('last_update', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('weight', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('isactive', XOBJ_DTYPE_INT, 1, false);
-		$this->initVar('dirname', XOBJ_DTYPE_OTHER, null, true);
-		$this->initVar('hasmain', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('hasadmin', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('hassearch', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('hasconfig', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('hascomments', XOBJ_DTYPE_INT, 0, false);
+	public function __construct(&$handler, $data = array()) {		
+		$this->initVar('mid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('name', self::DTYPE_STRING, null, true, 150);
+		$this->initVar('version', self::DTYPE_INTEGER, 100, false);
+		$this->initVar('last_update', self::DTYPE_INTEGER, null, false);
+		$this->initVar('weight', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('isactive', self::DTYPE_INTEGER, 1, false);
+		$this->initVar('dirname', self::DTYPE_STRING, null, true, 25);
+		$this->initVar('hasmain', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('hasadmin', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('hassearch', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('hasconfig', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('hascomments', self::DTYPE_INTEGER, 0, false);
 		// RMV-NOTIFY
-		$this->initVar('hasnotification', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('dbversion', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('modname', XOBJ_DTYPE_OTHER, null, true);
-		$this->initVar('ipf', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('hasnotification', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('dbversion', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('modname', self::DTYPE_STRING, null, true, 25);
+		$this->initVar('ipf', self::DTYPE_INTEGER, 0, false);
+                
+        parent::__construct($handler, $data);
 	}
 
 	/**

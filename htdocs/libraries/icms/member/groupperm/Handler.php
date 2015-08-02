@@ -54,194 +54,11 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono  <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
-	static public $_cachedRights;
-
-	/**
-	 * Create a new {@link icms_member_groupperm_Object}
-	 *
-	 * @return	bool    $isNew  Flag the object as "new"?
-	 */
-	public function &create($isNew = true) {
-		$perm = new icms_member_groupperm_Object();
-		if ($isNew) {
-			$perm->setNew();
-		}
-		return $perm;
-	}
-
-	/**
-	 * Retrieve a group permission
-	 *
-	 * @param	int $id ID
-	 *
-	 * @return	object  {@link icms_member_groupperm_Object}, FALSE on fail
-	 */
-	public function &get($id) {
-		$id = (int) $id;
-		$perm = false;
-		if ($id > 0) {
-			$sql = sprintf("SELECT * FROM %s WHERE gperm_id = '%u'", icms::$xoopsDB->prefix('group_permission'), $id);
-			if (!$result = icms::$xoopsDB->query($sql)) {
-				return $perm;
-			}
-			$numrows = icms::$xoopsDB->getRowsNum($result);
-			if ($numrows == 1) {
-				$perm = new icms_member_groupperm_Object();
-				$perm->assignVars(icms::$xoopsDB->fetchArray($result));
-			}
-		}
-		return $perm;
-	}
-
-	/**
-	 * Store a {@link icms_member_groupperm_Object}
-	 *
-	 * @param	object  &$perm  {@link icms_member_groupperm_Object} object
-	 *
-	 * @return	bool    TRUE on success
-	 *
-	 */
-	public function insert(&$perm) {
-		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if (!is_a($perm, 'icms_member_groupperm_Object')) {
-			return false;
-		}
-		if (!$perm->isDirty()) {
-			return true;
-		}
-		if (!$perm->cleanVars()) {
-			return false;
-		}
-		foreach ( $perm->cleanVars as $k => $v) {
-			${$k} = $v;
-		}
-		if ($perm->isNew()) {
-			$gperm_id = icms::$xoopsDB->genId('group_permission_gperm_id_seq');
-			$sql = sprintf(
-				"INSERT INTO %s (gperm_id, gperm_groupid, gperm_itemid, gperm_modid, gperm_name)
-				VALUES ('%u', '%u', '%u', '%u', %s)",
-				icms::$xoopsDB->prefix('group_permission'),
-				(int) $gperm_id,
-				(int) $gperm_groupid,
-				(int) $gperm_itemid,
-				(int) $gperm_modid,
-				icms::$xoopsDB->quoteString($gperm_name)
-				);
-		} else {
-			$sql = sprintf(
-				"UPDATE %s SET gperm_groupid = '%u', gperm_itemid = '%u', gperm_modid = '%u' WHERE gperm_id = '%u'",
-				icms::$xoopsDB->prefix('group_permission'),
-				(int) $gperm_groupid,
-				(int) $gperm_itemid,
-				(int) $gperm_modid,
-				(int) $gperm_id
-				);
-		}
-		if (!$result = icms::$xoopsDB->query($sql)) {
-			return false;
-		}
-		if (empty($gperm_id)) {
-			$gperm_id = icms::$xoopsDB->getInsertId();
-		}
-		$perm->assignVar('gperm_id', $gperm_id);
-		return true;
-	}
-
-	/**
-	 * Delete a {@link icms_member_groupperm_Object}
-	 *
-	 * @param	object  &$perm
-	 *
-	 * @return	bool    TRUE on success
-	 */
-	public function delete(&$perm) {
-		/* As of PHP5.3.0, is_a() is no longer deprecated and does not need to be replaced */
-		if (!is_a($perm, 'icms_member_groupperm_Object')) {
-			return false;
-		}
-		$sql = sprintf(
-			"DELETE FROM %s WHERE gperm_id = '%u'",
-			icms::$xoopsDB->prefix('group_permission'),
-			(int) ($perm->getVar('gperm_id'))
-		);
-		if (!$result = icms::$xoopsDB->query($sql)) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Retrieve multiple {@link icms_member_groupperm_Object}s
-	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
-	 * @param	bool    $id_as_key  Use IDs as array keys?
-	 *
-	 * @return	array   Array of {@link icms_member_groupperm_Object}s
-	 */
-	public function getObjects($criteria = null, $id_as_key = false) {
-		$ret = array();
-		$limit = $start = 0;
-		$sql = 'SELECT * FROM '.icms::$xoopsDB->prefix('group_permission');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' ' . $criteria->renderWhere();
-			$limit = $criteria->getLimit();
-			$start = $criteria->getStart();
-		}
-		$result = icms::$xoopsDB->query($sql, $limit, $start);
-		if (!$result) {
-			return $ret;
-		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
-			$perm = new icms_member_groupperm_Object();
-			$perm->assignVars($myrow);
-			if (!$id_as_key) {
-				$ret[] =& $perm;
-			} else {
-				$ret[$myrow['gperm_id']] =& $perm;
-			}
-			unset($perm);
-		}
-		return $ret;
-	}
-
-	/**
-	 * Count some {@link icms_member_groupperm_Object}s
-	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
-	 *
-	 * @return	int
-	 */
-	public function getCount($criteria = null) {
-		$sql = 'SELECT COUNT(*) FROM '.icms::$xoopsDB->prefix('group_permission');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' ' . $criteria->renderWhere();
-		}
-		$result = icms::$xoopsDB->query($sql);
-		if (!$result) {
-			return 0;
-		}
-		list($count) = icms::$xoopsDB->fetchRow($result);
-		return $count;
-	}
-
-	/**
-	 * Delete all permissions by a certain criteria
-	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
-	 *
-	 * @return	bool    TRUE on success
-	 */
-	public function deleteAll($criteria = null) {
-		$sql = sprintf("DELETE FROM %s", icms::$xoopsDB->prefix('group_permission'));
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' ' . $criteria->renderWhere();
-		}
-		if (!$result = icms::$xoopsDB->query($sql)) {
-			return false;
-		}
-		return true;
-	}
+class icms_member_groupperm_Handler extends icms_ipf_Handler {
+    
+        public function __construct(&$db) {
+            parent::__construct($db, 'member_groupperm', 'gperm_id', 'gperm_itemid', 'gperm_name', 'icms', 'group_permission', array('gperm_id', array('gperm_name', 'gperm_itemid', 'gperm_modid')));
+        }	
 
 	/**
 	 * Delete all module specific permissions assigned for a group
@@ -377,19 +194,11 @@ class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
 	 * @return  array   array of group IDs
 	 */
 	public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1) {
-		$ret = array();
-		$perms = array();
-		if (isset($this::$_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid])) {
-  			$perms = $this::$_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid];
-		} else {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', $gperm_name));
-			$criteria->add(new icms_db_criteria_Item('gperm_itemid', (int) $gperm_itemid));
-			$criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
-			$perms = $this->getObjects($criteria, true);
-			foreach ($perms as $perm) {
-		  		$this::$_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid][] = $perm;
-	  		}
-		}
+                $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', $gperm_name));
+                $criteria->add(new icms_db_criteria_Item('gperm_itemid', (int) $gperm_itemid));
+                $criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
+                $perms = $this->getObjects($criteria, true);
+                $ret = array();
 		foreach (array_keys($perms) as $i) {
 			$ret[] = $perms[$i]->getVar('gperm_groupid');
 		}

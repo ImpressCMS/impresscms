@@ -23,7 +23,7 @@ class icms_ipf_form_elements_Select extends icms_form_elements_Select {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		$size = isset($var['size']) ? $var['size'] : ($this->_multiple ? 5 : 1);
 
 		// Adding the options inside this SelectBox
@@ -51,6 +51,8 @@ class icms_ipf_form_elements_Select extends icms_form_elements_Select {
 					if (!isset($control['module'])) {
 						// Creating the specified core object handler
 						$control_handler = icms::handler($control['itemHandler']);
+                    } elseif ($control['module'] == 'icms') {
+                    	$control_handler = icms::handler($control['module'] . '_' . $control['itemHandler']);
 					} else {
 						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}

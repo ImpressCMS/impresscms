@@ -53,23 +53,23 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class icms_view_block_Object extends icms_ipf_Object {
 
+        public $visiblein = [];
+    
 	/**
 	 * Constructor for the block object
 	 * @param $handler
 	 */
-	public function __construct(& $handler) {
+	public function __construct(& $handler, $data = array()) {                        
 
-		parent::__construct($handler);
-
-		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('bid', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('mid', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('func_num', XOBJ_DTYPE_INT);
-		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('content', XOBJ_DTYPE_TXTAREA);
-		$this->quickInitVar('side', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('weight', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 0);
-		$this->quickInitVar('visible', XOBJ_DTYPE_INT, TRUE);
+		$this->initVar('name', self::DTYPE_STRING, '', FALSE, 150);
+		$this->initVar('bid', self::DTYPE_INTEGER, 0, TRUE, 8);
+		$this->initVar('mid', self::DTYPE_INTEGER, 0, TRUE, 5);
+		$this->initVar('func_num', self::DTYPE_INTEGER, 0, FALSE, 3);
+		$this->initVar('title', self::DTYPE_STRING, '', FALSE, 255);
+		$this->initVar('content', self::DTYPE_STRING);
+		$this->initVar('side', self::DTYPE_INTEGER, 0, TRUE, 1);
+		$this->initVar('weight', self::DTYPE_INTEGER, 0, TRUE, 5);
+		$this->initVar('visible', self::DTYPE_INTEGER, 0, TRUE, 1);
 		/**
 		 * @var string $block_type Holds the type of block
 		 * 	S - System block
@@ -77,7 +77,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	C - Custom block (legacy type 'E')
 		 * 	K - block cloned from another block (legacy type 'D')
 		 */
-		$this->quickInitVar('block_type', XOBJ_DTYPE_TXTBOX);
+		$this->initVar('block_type', self::DTYPE_STRING, '', TRUE, 1);
 		/**
 		 * @var	string	$c_type	The type of content in the block
 		 * 	H - HTML
@@ -85,17 +85,55 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	S - Auto Format (smilies and HTML enabled)
 		 *  T - Auto Format (smilies and HTML disabled)
 		 */
-		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX, TRUE, FALSE, FALSE, "S");
-		$this->quickInitVar('isactive', XOBJ_DTYPE_INT);
-		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('func_file', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('show_func', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('edit_func', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('template', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('bcachetime', XOBJ_DTYPE_INT);
-		$this->quickInitVar('last_modified', XOBJ_DTYPE_INT);
-		$this->quickInitVar('options', XOBJ_DTYPE_TXTBOX);
+		$this->initVar('c_type', self::DTYPE_STRING, 'S', TRUE, 1);
+		$this->initVar('isactive', self::DTYPE_INTEGER, 0, FALSE, 1);
+		$this->initVar('dirname', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('func_file', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('show_func', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('edit_func', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('template', self::DTYPE_STRING, '', FALSE, 50);
+		$this->initVar('bcachetime', self::DTYPE_INTEGER, 0, FALSE, 10);
+		$this->initVar('last_modified', self::DTYPE_INTEGER, 0, FALSE, 10);
+		$this->initVar('options', self::DTYPE_STRING, '', FALSE, 255);
+                                
+      //  $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
+                parent::__construct($handler, $data);
+                
 	}
+        
+        /**
+         * gets var 
+         * 
+         * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+         * 
+         * @param string $name
+         * @param string $format
+         * @return mixed
+         */
+        public function getVar($name, $format = 's') {
+            if ($name == 'visiblein') {
+                return $this->visiblein;
+            } else {
+                return parent::getVar($name, $format);
+            }
+        }
+        
+        /**
+         * sets var 
+         * 
+         * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+         * 
+         * @param string $name
+         * @param string $format
+         * @return mixed
+         */
+        public function setVar($name, $value, $options = null) {            
+            if ($name == 'visiblein') {
+                $this->visiblein = $value;
+            } else {
+                parent::setVar($name, $value, $options);
+            }
+        }        
 
 	// The next Methods are for backward Compatibility
 

@@ -21,7 +21,7 @@ class icms_ipf_form_elements_Urllink extends icms_form_elements_Tray {
 	 * @param	string			$key	the key
 	 */
 	public function __construct($object, $key) {
-		parent::__construct($object->vars[$key]['form_caption'], "&nbsp;");
+		parent::__construct($object->getVarInfo($key, 'form_caption'), "&nbsp;");
 		$urllinkObj = $object->getUrlLinkObj($key);
 		$module_handler = icms::handler("icms_module");
 		$module = $module_handler->getByDirname($object->handler->_moduleName);

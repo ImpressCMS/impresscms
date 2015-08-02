@@ -21,7 +21,7 @@ class icms_ipf_form_elements_Signature extends icms_form_elements_Tray {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key){
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		parent::__construct($var['form_caption'], '<br /><br />', $key . '_signature_tray');
 
 		icms_loadLanguageFile('core', 'user');

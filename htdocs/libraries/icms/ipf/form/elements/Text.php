@@ -21,7 +21,7 @@ class icms_ipf_form_elements_Text extends icms_form_elements_Text {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		if (isset($object->vars[$key])) $var = $object->vars[$key];
+		 $var = $object->getVarInfo($key);
 
 		if (isset($object->controls[$key])) {
 			$control = $object->controls[$key];

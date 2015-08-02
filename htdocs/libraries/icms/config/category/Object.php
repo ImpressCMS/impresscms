@@ -50,16 +50,17 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package     Config
  * @subpackage	Category
  */
-class icms_config_category_Object extends icms_core_Object {
+class icms_config_category_Object extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 *
 	 */
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('confcat_id', XOBJ_DTYPE_INT, null);
-		$this->initVar('confcat_name', XOBJ_DTYPE_OTHER, null);
-		$this->initVar('confcat_order', XOBJ_DTYPE_INT, 0);
+	public function __construct(&$handler, $data = array()) {		
+		$this->initVar('confcat_id', self::DTYPE_INTEGER, null);
+		$this->initVar('confcat_name', self::DTYPE_STRING, null, true, 255);
+		$this->initVar('confcat_order', self::DTYPE_INTEGER, 0);
+                
+                parent::__construct($handler, $data);
 	}
 }
 

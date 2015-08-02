@@ -10,25 +10,4 @@
  * @version		SVN $Id$
  */
 
-/**
- * Handler for comments
- *
- * @category	ICMS
- * @package		Administration
- * @subpackage	Users
- */
-class mod_system_UsersHandler extends icms_member_user_Handler {
-
-	/**
-	 * Constructs the comment handler
-	 *
-	 * @param obj $db	database instance (@see icms_db_Factory::instance)
-	 */
-	public function __construct(&$db) {
-		parent::__construct($db);
-		/* overriding the default table name
-		 * @todo	complete refactoring and use standard table name
-		 */
-		$this->table = $this->db->prefix('users');
-	}
-}
+class_alias('icms_member_user_Handler', 'mod_system_UsersHandler', true);

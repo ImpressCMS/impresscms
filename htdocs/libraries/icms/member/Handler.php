@@ -47,7 +47,6 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
  * @category	ICMS
  * @package		Member
  */
@@ -489,8 +488,7 @@ class icms_member_Handler {
 		}
 		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			if ($asobject) {
-				$user = new icms_member_user_Object();
-				$user->assignVars($myrow);
+				$user = new icms_member_user_Object($this, $myrow);
 				if (! $id_as_key) {
 					$ret[] =& $user;
 				} else {

@@ -107,7 +107,7 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 		$criteria->setLimit(1);
 		$criteria->setSort('weight');
 		$criteria->setOrder('DESC');
-		$criteria->add(new icms_db_criteria_Item('side', $blockObj->vars['side']['value']));
+		$criteria->add(new icms_db_criteria_Item('side', $blockObj->getVar('side')));
 		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '<'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1)
@@ -124,7 +124,7 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 		$criteria->setLimit(1);
 		$criteria->setSort('weight');
 		$criteria->setOrder('ASC');
-		$criteria->add(new icms_db_criteria_Item('side', $blockObj->vars['side']['value']));
+		$criteria->add(new icms_db_criteria_Item('side', $blockObj->getVar('side')));
 		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '>'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1)
