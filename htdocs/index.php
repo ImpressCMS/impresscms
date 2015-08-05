@@ -39,42 +39,55 @@
  * @version		AVN: $Id: index.php 12313 2013-09-15 21:14:35Z skenow $
  **/
 
-
-if (!file_exists("mainfile.php")) {
-	header("Location: install/index.php");
-}
 /** mainfile is required, if it doesn't exist - installation is needed */
-require "mainfile.php";
+try {    
+    require "mainfile.php";
+} catch (Exception $ex) {
+    header("Location: install/index.php");
+}
 
 $member_handler = icms::handler('icms_member');
 $group = $member_handler->getUserBestGroup((@is_object(icms::$user) ? icms::$user->getVar('uid') : 0));
-$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 
-if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != "" && $icmsConfig['startpage'] != "--") {
-	$arr = explode('-', $icmsConfig['startpage']);
-	if (count($arr) > 1) {
-		$page_handler = icms::handler('icms_data_page');
-		$page = $page_handler->get($arr[1]);
-		if (is_object($page)) {
-			$url =(substr($page->getVar('page_url'), 0, 7) == 'http://')
-				? $page->getVar('page_url') : ICMS_URL . '/' . $page->getVar('page_url');
-			header('Location: ' . $url);
-		} else {
-			$icmsConfig['startpage'] = '--';
-			$xoopsOption['show_cblock'] = 1;
-			/** Included to start page rendering */
-			include "header.php";
-			/** Included to complete page rendering */
-			include "footer.php";
-		}
-	} else {
-		header('Location: ' . ICMS_MODULES_URL . '/' . $icmsConfig['startpage'] . '/');
-	}
-	exit();
+$path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+$path = preg_replace('/[^a-zA-Z0-9\/]/', '', $path);
+
+if ($path === '') {
+    $icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
+
+    if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != "" && $icmsConfig['startpage'] != "--") {
+        $arr = explode('-', $icmsConfig['startpage']);
+        if (count($arr) > 1) {
+            $page_handler = icms::handler('icms_data_page');
+            $page = $page_handler->get($arr[1]);
+            if (is_object($page)) {
+                header('Location: ' . $page->getURL());
+            } else {
+                $icmsConfig['startpage'] = '--';
+                new icms_response_DefaultEmptyPage();
+            }
+        } else {
+            header('Location: ' . ICMS_MODULES_URL . '/' . $icmsConfig['startpage'] . '/');
+        }
+        exit();
+    } else {
+        new icms_response_DefaultEmptyPage();
+    }
 } else {
-	$xoopsOption['show_cblock'] = 1;
-	/** Included to start page rendering */
-	include "header.php";
-	/** Included to complete page rendering */
-	include "footer.php";
+    $handler = icms::handler('icms_controller');
+    $parts = explode('/', $path);
+    $module = $parts[0];
+    $controller_name = $parts[1];
+    $action = strtolower($_SERVER['REQUEST_METHOD']) . ucfirst(isset($parts[2])?$parts[2]:'index');
+    $parts = array_slice($parts, 3);
+    $params = [];
+    $count = count($parts);
+    for($i = 0; $i < $count; $i+=2) {
+        $params[$parts[$i]] = $parts[$i+1];
+    }
+    try {
+        $handler->exec($module, $controller_name, $action, $params);
+    } catch (Exception $ex) {
+        header('Location: /error.php?e=404');
+    }
 }
