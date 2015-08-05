@@ -5,8 +5,43 @@
  *
  * @author Raimondas Rimkevičius <mekdrop@impresscms.org>
  */
-class icms_controller_Handler {        
+class icms_controller_Handler {
     
+    /**
+     * Current controller type
+     *
+     * @var string
+     */
+    private $type = '';
+    
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        switch (PHP_SAPI) {
+            case 'embed':
+                $this->type = 'embed';
+            break;
+            case 'cli':
+                $this->type = 'command';
+            break;
+            default:
+                $this->type = 'controller';
+            break;
+        }
+    }
+    
+    /**
+     * Magic getter
+     * 
+     * @param string $name
+     * 
+     * @return mixed
+     */
+    public function __get($name) {
+        return $this->$name;
+    }
+        
     /**
      * Gets controller
      * 
@@ -16,9 +51,36 @@ class icms_controller_Handler {
      * 
      * @return icms_controller_base
      */
-    public function get($module, $type, $controller_name) {        
-        require_once $this->getPath($module, $type) . DIRECTORY_SEPARATOR . $controller_name . '.php';
-        return new $controller_name();
+    public function get($module, $controller_name) {        
+        include_once $this->getControllersPath($module, $this->type) . DIRECTORY_SEPARATOR . $controller_name . '.php';
+        $class = '\\ImpressCMS\\Modules\\' . $module . '\\' . ucfirst($this->type) . '\\' . $controller_name;
+        return new $class();
+    }
+    
+    /**
+     * Gets controller
+     * 
+     * @param string $module
+     * @param string $controller_name
+     * @param string $action
+     * @param array  $params
+     * 
+     * @return icms_response_Text
+     */    
+    public function exec($module, $controller_name, $action, array $params) {
+        $controller = $this->get($module, $this->type, $controller_name);
+        $controller->assignVars($params);
+        $reflector = new ReflectionClass($controller);
+        if (!$reflector->hasMethod($action)) {
+            throw new Exception($action . ' is not defined');            
+        }
+        $method = $reflector->getMethod($action);
+        $args = [];
+        foreach ($method->getParameters() as $param) {
+            $name = $param->getName();
+            $args[$name] = $controller->$name;
+        }
+        call_user_func_array([$controller, $action], $args);
     }
     
     /**
@@ -29,28 +91,29 @@ class icms_controller_Handler {
      * 
      * @return string
      */
-    public function getPath($module, $type) {
-        $base_class = 'icms_controller_' . $type;
-        return ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $base_class::getFolder();
+    public function getControllersPath($module, $type) {
+        static $paths = [];
+        if (!isset($paths[$module]) || !isset($paths[$module][$type])) {
+            $paths[$module][$type] = ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $type;
+        }
+        return $paths[$module][$type];
     }
     
     /**
      * Gets controllers of type list for module
      * 
      * @param string $module
-     * @param string $type
      * 
      * @return array
      */
-    public function getList($module, $type) {
+    public function getList($module) {
         $pwd = getcwd();
-        chdir($this->getPath($module, $type));
+        chdir($this->getControllersPath($module, $this->type));
         $ret = [];
-        $base_class = 'icms_controller_' . $type;
         foreach (glob('*.php') as $file) {
             $class = substr($file, 0, -4);
             $reflection = new ReflectionClass($class);
-            if (!$reflection->isSubclassOf($base_class)) {
+            if (!$reflection->isSubclassOf('icms_controller_Object')) {
                 continue;
             }
             $ret[$class] = [];
