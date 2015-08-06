@@ -49,12 +49,12 @@ class icms_controller_Handler {
      * @param string $type
      * @param string $controller_name
      * 
-     * @return icms_controller_base
+     * @return icms_controller_base|null
      */
     public function get($module, $type, $controller_name) {        
-        include_once $this->getControllersPath($module, $type) . DIRECTORY_SEPARATOR . $controller_name . '.php';
+        include_once $this->getControllersPath($module, $type) . DIRECTORY_SEPARATOR . $controller_name . '.php'; 
         $class = '\\ImpressCMS\\Modules\\' . $module . '\\' . ucfirst($type) . '\\' . $controller_name;
-        return new $class();
+        return class_exists($class)?new $class():null;
     }
     
     /**
@@ -90,14 +90,15 @@ class icms_controller_Handler {
      * Gets controller
      * 
      * @param string $module
+     * @param string $type
      * @param string $controller_name
      * @param string $action
      * @param array  $params
      * 
      * @return icms_response_Text
      */    
-    public function exec($module, $controller_name, $action, array $params) {
-        $controller = $this->get($module, $this->type, $controller_name);
+    public function exec($module, $type, $controller_name, $action, array $params) {        
+        $controller = $this->get($module, $type, $controller_name);
         $reflector = new ReflectionClass($controller);
         if (!$reflector->hasMethod($action)) {
             throw new Exception($action . ' is not defined');            
@@ -138,35 +139,49 @@ class icms_controller_Handler {
      * Gets controllers of type list for module
      * 
      * @param string $module
+     * @param string $type
      * 
      * @return array
      */
-    public function getList($module) {
+    public function getAvailable($module, $type) {
         $pwd = getcwd();
-        chdir($this->getControllersPath($module, $this->type));
+        $path = $this->getControllersPath($module, $type);
+        if (!is_dir($path)) {
+            return [];
+        }
+        chdir($path);
         $ret = [];
+        $prefix = '\\ImpressCMS\\Modules\\' . $module . '\\' . ucfirst($type) . '\\';
         foreach (glob('*.php') as $file) {
-            $class = substr($file, 0, -4);
-            $reflection = new ReflectionClass($class);
-            if (!$reflection->isSubclassOf('icms_controller_Object')) {
+            include_once $file;
+            $class = $prefix . substr($file, 0, -4);
+            try {
+                $reflection = new ReflectionClass($class);
+            } catch (\Exception $ex) {
                 continue;
             }
+            if (!$reflection->isSubclassOf('\icms_controller_Object')) {
+                continue;
+            }
+            $class = $reflection->getShortName();
             $ret[$class] = [];
             foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
                 $params = [];
                 foreach ($method->getParameters() as $param) {
-                    if ($param->isPassedByReference() || $param->isCallable()) {
+                    if ($param->isPassedByReference() || $param->isCallable() || $param->isVariadic()) {
                         continue;
                     }
                     $params[$param->getName()] = [
                         'optional' => $param->isOptional(),
-                        'variadic' => $param->isVariadic(),
-                        'default' => $param->getDefaultValue()
+                        'default' => $param->isDefaultValueAvailable()?$param->getDefaultValue():null
                     ];
-                }                
-                $ret[$class][$method->getName()] = $params;
-            }    
-            if (count($ret[$class]) > 0) {
+                }                          
+                $ret[$class][$method->getShortName()] = [
+                    'params' => $params,
+                    'description' => $method->getDocComment() // TODO: Add actual parsing
+                ];
+            }                
+            if (count($ret[$class]) === 0) {
                 unset($ret[$class]);
                 continue;
             }

@@ -58,6 +58,7 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
     try {
         $handler->exec(
             $module,
+            $handler->type,
             $controller_name,
             strtolower($_SERVER['REQUEST_METHOD']) . ucfirst($action),
             $handler->parseParamsStringToArray($module, $controller_name, $params)
