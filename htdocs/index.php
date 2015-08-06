@@ -40,10 +40,11 @@
  **/
 
 /** mainfile is required, if it doesn't exist - installation is needed */
-try {    
-    require "mainfile.php";
-} catch (Exception $ex) {
-    header("Location: install/index.php");
+
+include 'mainfile.php';
+
+if (!defined('ICMS_MODULES_URL')) {
+    header("Location: /install/index.php");
 }
 
 $member_handler = icms::handler('icms_member');
