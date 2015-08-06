@@ -71,8 +71,14 @@ class icms_controller_Handler {
         $reflector = new ReflectionClass($controller);
         if (preg_match_all($reflector->getConstant('REGEX_PARAMS_PARSER'), $string, $matches, PREG_SET_ORDER) > 0) {
             $ret = [];
-            foreach($matches as $match) {
-                $ret[$match[1]] = $match[2];
+            if (isset($matches[0][2])) {
+                foreach($matches as $match) {
+                    $ret[$match[1]] = $match[2];
+                }
+            } else {
+                foreach($matches as $match) {
+                    $ret[] = $match[1];
+                }
             }
             return $ret;
         } else {
@@ -92,18 +98,24 @@ class icms_controller_Handler {
      */    
     public function exec($module, $controller_name, $action, array $params) {
         $controller = $this->get($module, $this->type, $controller_name);
-        $controller->assignVars($params);
         $reflector = new ReflectionClass($controller);
         if (!$reflector->hasMethod($action)) {
             throw new Exception($action . ' is not defined');            
         }
         $method = $reflector->getMethod($action);
-        $args = [];
-        foreach ($method->getParameters() as $param) {
-            $name = $param->getName();
-            $args[$name] = $controller->$name;
-        }
-        call_user_func_array([$controller, $action], $args);
+        if (empty($params)) {
+            $controller->$action();
+        } else {            
+            if (is_int(key($params))) {
+                $args = &$params;
+            } else {
+                $args = [];                
+                foreach ($method->getParameters() as $param) {
+                    $args[] = $params[$param->getName()];
+                }
+            }
+            call_user_func_array([$controller, $action], $args);
+        }            
     }
     
     /**

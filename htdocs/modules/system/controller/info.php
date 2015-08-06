@@ -10,10 +10,6 @@ namespace ImpressCMS\Modules\System\Controller;
 class info 
     extends \icms_controller_Object {
     
-    public function __construct() {
-        $this->initVar('msg', self::DTYPE_STRING);
-    }
-    
     /**
      * Returns version of ImpressCMS
      * 

@@ -5,8 +5,7 @@
  *
  * @author Raimondas Rimkevičius <mekdrop@impresscms.org>
  */
-abstract class icms_controller_Object
-    extends icms_properties_Handler {
+abstract class icms_controller_Object {
     
     const REGEX_PARAMS_PARSER = '/([^\/]+)\/([^\/]+)/';
     

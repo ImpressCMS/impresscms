@@ -55,19 +55,17 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
     list(, $module, $controller_name, $action, $params) = $params[0];
     $handler = icms::handler('icms_controller');
     
-    $action = strtolower($_SERVER['REQUEST_METHOD']) . ucfirst($action);
-    $params = $handler->parseParamsStringToArray($module, $controller_name, $params);
     try {
-        $handler->exec($module, $controller_name, $action, $params);
+        $handler->exec(
+            $module,
+            $controller_name,
+            strtolower($_SERVER['REQUEST_METHOD']) . ucfirst($action),
+            $handler->parseParamsStringToArray($module, $controller_name, $params)
+        );
     } catch (Exception $ex) {
         header('Location: /error.php?e=404');
     }
-}
-
-var_dump($params);
-die();
-
-if ($path === '') {
+} else {
     $icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 
     if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != "" && $icmsConfig['startpage'] != "--") {
