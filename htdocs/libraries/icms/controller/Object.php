@@ -8,4 +8,6 @@
 abstract class icms_controller_Object
     extends icms_properties_Handler {
     
+    const REGEX_PARAMS_PARSER = '/([^\/]+)\/([^\/]+)/';
+    
 }

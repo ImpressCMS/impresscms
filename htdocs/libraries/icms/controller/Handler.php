@@ -51,10 +51,33 @@ class icms_controller_Handler {
      * 
      * @return icms_controller_base
      */
-    public function get($module, $controller_name) {        
-        include_once $this->getControllersPath($module, $this->type) . DIRECTORY_SEPARATOR . $controller_name . '.php';
-        $class = '\\ImpressCMS\\Modules\\' . $module . '\\' . ucfirst($this->type) . '\\' . $controller_name;
+    public function get($module, $type, $controller_name) {        
+        include_once $this->getControllersPath($module, $type) . DIRECTORY_SEPARATOR . $controller_name . '.php';
+        $class = '\\ImpressCMS\\Modules\\' . $module . '\\' . ucfirst($type) . '\\' . $controller_name;
         return new $class();
+    }
+    
+    /**
+     * Parses params string to array
+     * 
+     * @param string $module
+     * @param string $controller_name
+     * @param string $string
+     * 
+     * @return string
+     */
+    public function parseParamsStringToArray($module, $controller_name, $string) {
+        $controller = $this->get($module, $this->type, $controller_name);
+        $reflector = new ReflectionClass($controller);
+        if (preg_match_all($reflector->getConstant('REGEX_PARAMS_PARSER'), $string, $matches, PREG_SET_ORDER) > 0) {
+            $ret = [];
+            foreach($matches as $match) {
+                $ret[$match[1]] = $match[2];
+            }
+            return $ret;
+        } else {
+            return [];
+        }
     }
     
     /**

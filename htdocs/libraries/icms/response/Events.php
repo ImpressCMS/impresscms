@@ -20,10 +20,6 @@ class icms_response_Events
     
     /**
      * Constructor
-     * 
-     * @param string|null   $msg
-     * @param int|null      $http_status    If not null sets http status on sending response
-     * @param array         $headers        Here You can place some additional headers 
      */
     public function __construct() {
         parent::__construct(null, null, [

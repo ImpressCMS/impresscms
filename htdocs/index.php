@@ -49,8 +49,23 @@ try {
 $member_handler = icms::handler('icms_member');
 $group = $member_handler->getUserBestGroup((@is_object(icms::$user) ? icms::$user->getVar('uid') : 0));
 
-$path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-$path = preg_replace('/[^a-zA-Z0-9\/]/', '', $path);
+$path = preg_replace('/[^a-zA-Z0-9\/]/', '', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+
+if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
+    list(, $module, $controller_name, $action, $params) = $params[0];
+    $handler = icms::handler('icms_controller');
+    
+    $action = strtolower($_SERVER['REQUEST_METHOD']) . ucfirst($action);
+    $params = $handler->parseParamsStringToArray($module, $controller_name, $params);
+    try {
+        $handler->exec($module, $controller_name, $action, $params);
+    } catch (Exception $ex) {
+        header('Location: /error.php?e=404');
+    }
+}
+
+var_dump($params);
+die();
 
 if ($path === '') {
     $icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
@@ -72,22 +87,5 @@ if ($path === '') {
         exit();
     } else {
         new icms_response_DefaultEmptyPage();
-    }
-} else {
-    $handler = icms::handler('icms_controller');
-    $parts = explode('/', $path);
-    $module = $parts[0];
-    $controller_name = $parts[1];
-    $action = strtolower($_SERVER['REQUEST_METHOD']) . ucfirst(isset($parts[2])?$parts[2]:'index');
-    $parts = array_slice($parts, 3);
-    $params = [];
-    $count = count($parts);
-    for($i = 0; $i < $count; $i+=2) {
-        $params[$parts[$i]] = $parts[$i+1];
-    }
-    try {
-        $handler->exec($module, $controller_name, $action, $params);
-    } catch (Exception $ex) {
-        header('Location: /error.php?e=404');
     }
 }
