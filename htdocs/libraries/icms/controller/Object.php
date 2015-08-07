@@ -7,6 +7,6 @@
  */
 abstract class icms_controller_Object {
     
-    const REGEX_PARAMS_PARSER = '/([^\/]+)\/([^\/]+)/';
+    const PARAMS_FORMAT = '/{@param}/{@value}';
     
 }

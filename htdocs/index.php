@@ -55,7 +55,6 @@ $path = preg_replace('/[^a-zA-Z0-9\/]/', '', trim(parse_url($_SERVER['REQUEST_UR
 if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
     list(, $module, $controller_name, $action, $params) = $params[0];
     $handler = icms::handler('icms_controller');
-    
     try {
         $handler->exec(
             $module,

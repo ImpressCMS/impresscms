@@ -41,6 +41,47 @@ class icms_controller_Handler {
     public function __get($name) {
         return $this->$name;
     }
+    
+    /**
+     * Creates url for action
+     * 
+     * @param string $module
+     * @param string $controller_name
+     * @param string $action
+     * @param array $params
+     * 
+     * @return string
+     */
+    public function makeURL($module, $controller_name, $action, array $params = []) {
+        $controller = $this->get($module, $this->type, $controller_name);         
+        
+        $reflector = new ReflectionClass($controller);
+        $format = $reflector->getConstant('PARAMS_FORMAT');        
+        if (strpos($format, '{@') !== false) {
+            $args = '';
+            foreach ($params as $key => $value) {
+                $args .= str_replace(
+                    [
+                        '{@param}',
+                        '{@value}'
+                    ],
+                    [
+                        $key,
+                        $value
+                    ],
+                    $format
+                );
+            }
+        } else {            
+            $replace_with = array_values($params);
+            $replace_what = array_map(function ($item) {
+                return '{' . $item . '}';
+            }, array_keys($params));
+            $args = str_replace($replace_what, $replace_with, $format);
+        }       
+        
+        return ICMS_URL . '/' . $module . '/' . $controller_name . '/' . $action;
+    }
         
     /**
      * Gets controller
@@ -69,15 +110,28 @@ class icms_controller_Handler {
     public function parseParamsStringToArray($module, $controller_name, $string) {
         $controller = $this->get($module, $this->type, $controller_name);
         $reflector = new ReflectionClass($controller);
-        if (preg_match_all($reflector->getConstant('REGEX_PARAMS_PARSER'), $string, $matches, PREG_SET_ORDER) > 0) {
-            $ret = [];
-            if (isset($matches[0][2])) {
-                foreach($matches as $match) {
-                    $ret[$match[1]] = $match[2];
-                }
-            } else {
-                foreach($matches as $match) {
-                    $ret[] = $match[1];
+        
+        $vars = [];
+        $regex = '/' . str_replace('/', '\/', preg_replace_callback('/{([@a-zA-Z0-9]+)}/', function ($matches) use (&$vars) {
+            $vars[] = $matches[1];
+            return '(.+)';
+        }, $reflector->getConstant('PARAMS_FORMAT'))) . '/';
+        
+        if (preg_match_all($regex, $string, $matches, PREG_SET_ORDER) > 0) {
+            $name = null;
+            foreach($matches as $match) {                
+                foreach ($vars as $o => $var) {
+                    if ($var === '@param') {
+                        $name = $match[$o + 1];
+                    } elseif ($var === '@value') {
+                        if ($name === null) {
+                            $ret[] = $match[$o + 1];
+                        } else {
+                            $ret[$name] = $match[$o + 1];
+                        }
+                    } else {
+                        $ret[$var] = $match[$o + 1];
+                    }
                 }
             }
             return $ret;
