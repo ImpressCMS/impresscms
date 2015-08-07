@@ -104,7 +104,7 @@ class icms_response_Text {
     public function __construct($msg = null, $http_status = null, $headers = []) {
         header('Content-Type: ' . static::CONTENT_TYPE);
         header('Content-Generator: ImpressCMS ' .  ICMS_VERSION);
-        if ($http_status) {
+        if ($http_status !== null) {
             http_response_code($http_status);
         }
         if (!empty($headers)) {
