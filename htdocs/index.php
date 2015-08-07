@@ -53,6 +53,7 @@ $group = $member_handler->getUserBestGroup((@is_object(icms::$user) ? icms::$use
 $path = preg_replace('/[^a-zA-Z0-9\/]/', '', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
 
 if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
+    icms::$logger->disableRendering();
     list(, $module, $controller_name, $action, $params) = $params[0];
     $handler = icms::handler('icms_controller');
     try {
