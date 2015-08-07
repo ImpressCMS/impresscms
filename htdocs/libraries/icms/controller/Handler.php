@@ -80,7 +80,7 @@ class icms_controller_Handler {
             $args = str_replace($replace_what, $replace_with, $format);
         }       
         
-        return ICMS_URL . '/' . $module . '/' . $controller_name . '/' . $action;
+        return ICMS_URL . '/' . $module . '/' . $controller_name . '/' . $action . $args;
     }
         
     /**
@@ -119,6 +119,7 @@ class icms_controller_Handler {
         
         if (preg_match_all($regex, $string, $matches, PREG_SET_ORDER) > 0) {
             $name = null;
+            $ret = [];
             foreach($matches as $match) {                
                 foreach ($vars as $o => $var) {
                     if ($var === '@param') {
