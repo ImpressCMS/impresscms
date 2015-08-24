@@ -66,7 +66,7 @@ $modversion = array(
 	'status_version'=> "Final",
 	'status'=> "Final",
 	'date'=> "21 July 2015",
-	'author_word'=> "Red Devils",
+	'author_word'=> "",
 	'warning'=>_CO_ICMS_WARNING_FINAL,
 
 /** Contributors */
