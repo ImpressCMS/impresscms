@@ -1,0 +1,29 @@
+{
+    "name": "impresscms/impresscms",
+    "type": "project",
+    "description": "ImpressCMS is an open source content management system with a focus on security and speed",
+    "minimum-stability": "dev",
+    "license": "GPL-2",
+    "authors": [
+      {
+        "name": "marcan"
+      },
+      {
+        "name": "skenow"
+      },
+      {
+        "name": "mekdrop"
+      },
+      {
+        "name": "fiammybe"
+      }
+    ],
+    "require": {
+      "php": ">=5.3.8"
+    },
+    "autoload": {
+        "classmap": [ "libraries/icms/", "modules",
+          "libraries/icms.php"
+        ]
+    }
+}

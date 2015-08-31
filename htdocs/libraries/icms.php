@@ -114,7 +114,7 @@ abstract class icms {
 		self::buildRelevantUrls();
 		// Initialize the autoloader
 		require_once dirname(__FILE__ ) . '/icms/Autoloader.php';
-		icms_Autoloader::setup();
+	//	icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
 	}
 
