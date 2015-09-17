@@ -372,6 +372,12 @@ switch ($op) {
 						
 				case 'select_geshi' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+
+					/* now that we use composer, we can no longer be certain about the location of the geshi class. Hardcoding this isn't a good idea anyway :-)
+					 * TODO: either get the full path of the file that contains the GeSHi class from composer, or get the plugin location from GeSHi itself (newer
+					 * version?) or create a GeSHi instance via composer, and read out the path constant there.
+					*/
+
 					$dirlist = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH . '/geshi/geshi/', '', array('php')));
 					if (! empty($dirlist)) {
 						asort($dirlist);

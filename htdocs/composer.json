@@ -19,7 +19,13 @@
       }
     ],
     "require": {
-      "php": ">=5.3.8"
+      "php": ">=5.3.8",
+        "geshi/geshi": "dev-master",
+        "smarty/smarty": "2.6.*",
+        "tecnickcom/tcpdf": "6.2.*",
+        "ckeditor/ckeditor": "4.5.*",
+        "impresscms/composer-module-installer-plugin": "dev-master",
+        "tinymce/tinymce": "4.2.*"
     },
     "autoload": {
         "classmap": [ "libraries/icms/", "modules",
