@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = function(config) {
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
 	config.resize_minWidth = 450;
-	config.skin = 'moono';
+	config.skin = 'bootstrapck';
 	/*
 	 * // Protect PHP code tags (<?...?>) so CKEditor will not break them when //
 	 * switching from Source to WYSIWYG. // Uncommenting this line doesn't mean
