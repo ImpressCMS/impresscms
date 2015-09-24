@@ -42,7 +42,7 @@ define('ICMS_MODULES_URL', ICMS_URL . '/modules');
 
 // ################# Creation of the ImpressCMS Libraries ##############
 /**
- * @todo The definition of the library path needs to be in mainfile
+ * @todo The definition of the library path needs to be in mainfile - DJA 17sept2015 : with composer these definitions should be reviewed
  */
 // ImpressCMS Third Party Libraries folder
 define('ICMS_LIBRARIES_PATH', ICMS_ROOT_PATH . '/libraries');
@@ -71,6 +71,7 @@ define('XOOPS_MATCH_END', 1);
 define('XOOPS_MATCH_EQUAL', 2);
 define('XOOPS_MATCH_CONTAIN', 3);
 
+// TODO: the kernel path needs to be removed for 2.0 - DJA 17sept2015
 define('ICMS_KERNEL_PATH', ICMS_ROOT_PATH . '/kernel/');
 define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
 define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH . '/include');

@@ -10,6 +10,9 @@
  * @author		Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
  * @version		$Id$
  */
+
+include_once ICMS_ROOT_PATH . "/vendor/autoload.php";
+
 class icms_Autoloader {
 	/**
 	 * Paths of known global repositories
@@ -39,9 +42,9 @@ class icms_Autoloader {
 	 */
 	static public function setup() {
 		if (!self::$initialized) {
-			self::register(dirname(dirname(__FILE__)));
-			spl_autoload_register(array('icms_Autoloader', 'autoload'));
-			spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));
+			//self::register(dirname(dirname(__FILE__)));
+			//spl_autoload_register(array('icms_Autoloader', 'autoload'));
+			//spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));
 			self::$initialized = TRUE;
 		}
 	}
