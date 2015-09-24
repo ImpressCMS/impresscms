@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="UwAmp">
+  <component name="PublishConfigData" autoUpload="Always" serverName="AMPPS validate">
     <serverData>
-      <paths name="UwAmp">
+      <paths name="AMPPS validate">
         <serverdata>
           <mappings>
-            <mapping deploy="gitcore" local="$PROJECT_DIR$/htdocs" web="/gitcore" />
+            <mapping deploy="composer-validate" local="$PROJECT_DIR$/htdocs" web="/composer-validate" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/htdocs/mainfile.php" />
-            <excludedPath path="gitcore/mainfile.php" />
           </excludedPaths>
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
-
