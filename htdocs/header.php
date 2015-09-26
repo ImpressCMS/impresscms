@@ -60,19 +60,20 @@ $xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
  */
 $icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
 $xoopsTpl = $icmsTpl =& $xoTheme->template;
-if ($icmsConfigMetaFooter['use_google_analytics'] === TRUE
-	&& isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
-	/* Legacy GA urchin code */
-	//$xoTheme->addScript('http://www.google-analytics.com/urchin.js',array('type' => 'text/javascript'),'_uacct = "UA-' . $icmsConfigMetaFooter['google_analytics'] . '";urchinTracker();');
-	$scheme = parse_url(ICMS_URL, PHP_URL_SCHEME);
-	if ($scheme == 'http') {
-		/* New GA code, http protocol */
-		$xoTheme->addScript('http://www.google-analytics.com/ga.js', array('type' => 'text/javascript'),'');
-	} elseif ($scheme == 'https') {
-		/* New GA code, https protocol */
-		$xoTheme->addScript('https://ssl.google-analytics.com/ga.js', array('type' => 'text/javascript'),'');
-	}
-}
+// no longer needed because of ticket #751
+//if ($icmsConfigMetaFooter['use_google_analytics'] === TRUE
+//	&& isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
+//	/* Legacy GA urchin code */
+//	//$xoTheme->addScript('http://www.google-analytics.com/urchin.js',array('type' => 'text/javascript'),'_uacct = "UA-' . $icmsConfigMetaFooter['google_analytics'] . '";urchinTracker();');
+//	$scheme = parse_url(ICMS_URL, PHP_URL_SCHEME);
+//	if ($scheme == 'http') {
+//		/* New GA code, http protocol */
+//		$xoTheme->addScript('http://www.google-analytics.com/ga.js', array('type' => 'text/javascript'),'');
+//	} elseif ($scheme == 'https') {
+//		/* New GA code, https protocol */
+//		$xoTheme->addScript('https://ssl.google-analytics.com/ga.js', array('type' => 'text/javascript'),'');
+//	}
+//}
 if (isset($icmsConfigMetaFooter['google_meta']) && $icmsConfigMetaFooter['google_meta'] != '') {
 	$xoTheme->addMeta('meta', 'verify-v1', $icmsConfigMetaFooter['google_meta']);
 	$xoTheme->addMeta('meta', 'google-site-verification', $icmsConfigMetaFooter['google_meta']);
