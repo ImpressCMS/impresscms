@@ -1,7 +1,8 @@
 <?php
 /**
-* CKEditor version file
+* CKEditor version file (legacy)
 *
+* @deprecated
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		LICENSE.txt
 * @package		Editors
@@ -10,4 +11,4 @@
 * @version		$Id$
 */
 
-require_once 'icms_version.php';
+require dirname(__FILE__) . '/icms_version.php';
