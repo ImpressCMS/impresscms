@@ -1,4 +1,8 @@
-Options Multiviews
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php
 
 # if you install in a subdirectory, be sure to include the entire path, relative to DocumentRoot
 # for example, ErrorDocument 404 /icms/error.php?e=404
