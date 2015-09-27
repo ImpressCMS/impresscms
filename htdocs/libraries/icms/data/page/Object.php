@@ -31,5 +31,15 @@ class icms_data_page_Object extends icms_ipf_Object {
         
             parent::__construct( $handler , $data);
 	}
+        
+        /**
+         * Gets page URL
+         * 
+         * @return string
+         */
+        public function getURL() {
+            return (substr($this->getVar('page_url'), 0, 7) == 'http://')
+				? $this->getVar('page_url') : ICMS_URL . '/' . $this->getVar('page_url');
+        }
 }
 

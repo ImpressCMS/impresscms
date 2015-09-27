@@ -296,7 +296,7 @@ abstract class icms {
 	 * @return 	array
 	 */
 	static protected function buildRelevantUrls() {
-		if (!self::$urls) {
+		if (isset($_SERVER['HTTP_HOST']) && !self::$urls) {
 			$http = strpos(ICMS_URL, "https://") === FALSE
 				? "http://"
 				: "https://";
