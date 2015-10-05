@@ -57,7 +57,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 *			HTMLPurifier, HTMLLawed etc, for now we just have HTMLPurifier.
 	 * @return   string
 	 **/
-	public function filterHTML($html) {
+	public static function filterHTML($html) {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
         
         $fcomment = '<!-- filtered with htmlpurifier -->';
