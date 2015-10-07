@@ -139,7 +139,7 @@ switch ($op) {
 		$icmsAdminTpl->assign("status", $status);
 		$icmsAdminTpl->assign("module", $module );
 		$icmsAdminTpl->assign("limit", $limit);
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/comments/system_adm_comments.html');
+		$icmsAdminTpl->display("db:admin/comments/system_adm_comments.html");
 		icms_cp_footer();
 		break;
 

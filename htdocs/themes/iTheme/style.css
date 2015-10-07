@@ -41,6 +41,7 @@ h6 {font-size:.8em;}
 /* lists */
 #xo-canvas-content ul {margin:5px;padding:2px;list-style:decimal inside;text-align:left;}
 #xo-canvas-content li {margin-left:5px;color:#000;background-color:inherit;line-height:1.4em;list-style:circle;}
+#xo-canvas-content ol li {background-color: inherit;color: #000;line-height: 1.4em;list-style: outside none decimal;margin-left: 5px;}
 #xo-page {}
 
 /* ---------- Module display rules ---------- */

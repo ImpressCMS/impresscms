@@ -1,17 +1,18 @@
 <{if $displaygroups}>
 	<div class="CPbigTitle" style="background-image: url(<{$icms_url}>/modules/system/admin/groups/images/groups_big.png)"><{$smarty.const._AM_EDITADG}>
-	</div><br />
-	<table class="outer" width="40%" cellpadding="4" cellspacing="1"><tr><th colspan="2"><{$smarty.const._AM_EDITADG}></th></tr>
+	</div><br>
+	<table class="table"><tr><th colspan="2"><{$smarty.const._AM_EDITADG}></th></tr>
 		<{foreach item=grouparray from=$grouparray}>	
 			<{if $grouprights}>
 				<tr>
 					<td class="head"><{$grouparray.name}></td>
+					<td class="odd"><{$grouparray.description}></td>
 					<td class="even"><a href="admin.php?fct=groups&amp;op=modify&amp;g_id=<{$grouparray.id}>"><{$smarty.const._AM_MODIFY}></a>
-				<{if $groups2}>
+				<{if $grouparray.permissions == false}>
 					</td>
 				</tr>
 				<{else}>
-					&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id=<{$grouparray.id}>"><{$smarty.const._AM_DELETE}></a>
+					&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id=<{$grouparray.id}>"><{$smarty.const._AM_DELETEADG}></a>
 					</td>
 				</tr>
 				<{/if}>
@@ -21,13 +22,13 @@
 <{/if}>
 <{if $modifygroups}>
 	<{if $usersless200}>
-		<table class="table table-bordered">
+		<table class="table">
 			<tr>
 				<th colspan="2"><{$smarty.const._AM_EDITMEMBER}></th>
 			</tr>
 			<tr>
 				<td>
-					<form action="admin.php" method="post">
+					<form action="admin.php" method="post" role="form">
 						<fieldset>
 							<div class="control-group">
 								<label><{$smarty.const._AM_NONMEMBERS}></label>

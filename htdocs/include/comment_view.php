@@ -191,9 +191,9 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		}
 
 		// assign comment nav bar
-		$navbar = '<form method="get" action="'
-		. $comment_config['pageName']
-		. '"><table width="95%" class="outer" cellspacing="1"><tr><td class="even" align="center"><select name="com_mode"><option value="flat"';
+		$navbar = '<form role="form" class="form-inline commentControls" method="get" action="' . $comment_config['pageName']. '">';
+		$navbar .= '<h2 class="pull-left commentHeader">' . _COMMENTS . '</h2>';
+		$navbar .= '<div class="pull-right commentFormControls"><select class="form-control input-sm" name="com_mode"><option value="flat"';
 		if ($com_mode == 'flat') {
 			$navbar .= ' selected="selected"';
 		}
@@ -205,7 +205,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		if ($com_mode == 'nest') {
 			$navbar .= ' selected="selected"';
 		}
-		$navbar .= '>'. _NESTED .'</option></select> <select name="com_order"><option value="' . XOOPS_COMMENT_OLD1ST . '"';
+		$navbar .= '>'. _NESTED .'</option></select> <select class="form-control input-sm" name="com_order"><option value="' . XOOPS_COMMENT_OLD1ST . '"';
 		if ($com_order == XOOPS_COMMENT_OLD1ST) {
 			$navbar .= ' selected="selected"';
 		}
@@ -214,7 +214,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$navbar .= ' selected="selected"';
 		}
 		unset($postcomment_link);
-		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="'. _CM_REFRESH .'" class="formButton" />';
+		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="'. _CM_REFRESH .'" class="formButton btn btn-default btn-sm" />';
 		if (!empty($icmsModuleConfig['com_anonpost']) || is_object(icms::$user)) {
 			$postcomment_link = 'comment_new.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode;
 
@@ -241,9 +241,9 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		}
 		if (isset($postcomment_link)) {
 			$navbar .= '&nbsp;<input type="button" onclick="self.location.href=\'' . $postcomment_link . ''
-				. $link_extra . '\'" class="formButton" value="' . _CM_POSTCOMMENT . '" />';
+				. $link_extra . '\'" class="formButton btn btn-default btn-sm" value="' . _CM_POSTCOMMENT . '" />';
 		}
-		$navbar .= '</td></tr></table></form>';
+		$navbar .= '</form></div>';
 		$xoopsTpl->assign(
 			array(
 				'commentsnav' => $navbar,

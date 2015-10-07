@@ -1,0 +1,42 @@
+<div id="clone_image<{$i}>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="clone_image" aria-hidden="true">
+	<div class="modal-dialog">		 
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title"><{$lang_imanager_cat_clone}></h4>
+			</div>
+		  <form role="form" id="clone_form<{$i}>" action="admin.php" method="post">
+			<table class="table outer">
+			  <tr>
+				<td class="head"><{$lang_image_name}></td>
+				<td class="odd"><input class="form-control" type="text" name="image_nicename" id="name<{$i}>" value="<{$smarty.const._MD_IMAGE_COPYOF}><{$image.nicename}>"></td>
+			  </tr>
+			  <tr>
+				<td class="head"><{$lang_image_weight}></td>
+				<td class="odd"><input class="form-control" type="text" name="image_weight" size="5" value="0"></td>
+			  </tr>
+			  <tr>
+				<td class="head"><{$lang_image_disp}></td>
+				<td class="odd">
+				  <{$lang_yes}> <input type="radio" name="image_display" value="1" checked> 
+				  <{$lang_no}> <input type="radio" name="image_display" value="0">
+				</td>
+			  </tr>
+			  <tr>
+				<td></td>
+				<td class="head">
+				  <input class="btn btn-primary btn-sm" type="submit" name="submit" value="<{$lang_submit}>"> 
+				</td>
+			  </tr>
+			</table>
+			<input type="hidden" name="image_id" value="<{$image.id}>">
+			<input type="hidden" name="imgcat_id" value="<{$image.categ_id}>">
+			<input type="hidden" name="op" value="cloneimg">
+			<input type="hidden" name="target" value="<{$target}>">
+			<input type="hidden" name="type" value="<{$type}>">
+			<{$image.clone_token}>
+		  </form>
+		</div>
+	</div>
+</div>

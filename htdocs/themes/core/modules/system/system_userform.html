@@ -1,0 +1,100 @@
+
+<{if $lang_reset !== 1}>
+	<div class="tabbable tabs-left">
+	  <ul class="nav nav-tabs" role="tablist" id="register">
+	    <li class="active">
+	      <a role="tab" data-toggle="tab" href="#login_form"><{$smarty.const._MB_SYSTEM_OPENID_NORMAL_LOGIN}></a>
+	    </li>
+    	<{if $auth_openid}>
+		    <li>
+		      <a role="tab" data-toggle="tab" href="#openid-form"><{$smarty.const._MB_SYSTEM_OPENID_LOGIN}></a>
+		    </li>
+		  <{/if}>
+	    <li>
+	    	<a role="tab" data-toggle="tab" href="#lostpass-form"><{$lang_lostpassword}></a>
+	    </li>
+	  </ul>
+	  <div class="tab-content">
+	    <div id="login_form" class="tab-pane">
+	      <form class="form-horizontal" action="<{$icms_url}>/user.php" method="post">
+			<div class="control-group">
+	        	<label class="control-label" for="userLoginName"><{$lang_username}></label>
+	        	<div class="controls">
+	          	<input type="text" id="userLoginName" class="uname" name="uname" value="<{$usercookie}>">
+	        	</div>
+	        </div>
+	        <div class="control-group">
+	        	<label class="control-label" for="userLoginPass"><{$lang_password}></label>
+	        	<div class="controls">
+	          	<input type="password" id="userLoginPass" name="pass" />
+	          </div>
+	        </div>
+			<{if $rememberme }>
+			<div class="control-group">
+				<label for="rememberme">
+					<input type="checkbox" name="rememberme" id="rememberme" value="On">
+					<{$lang_rememberme}>
+				</label>
+			</div>
+			<{/if}>  
+	        <div class="control-group">
+				<input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>">
+				<input type="hidden" name="op" value="login" />
+				<input class="btn btn-primary" type="submit" value="<{$lang_login}>">
+	          <{$sslloginlink}>
+	        </div>
+	      </form>
+	    </div>
+			<{if $auth_openid}>  
+		    <div id="openid-form" class="tab-pane">
+		      <form class="form-inline" role="form" method="get" action="<{$icms_url}>/try_auth.php">
+		        <div class="form-group">
+		          <{$smarty.const._MB_SYSTEM_OPENID_URL}>
+		          <input type="hidden" name="action" value="verify" />
+		          <input type="text" class="form-control openid_url" name="openid_identifier" size="12" value="">
+		          <input class="btn btn-primary" type="submit" value="<{$lang_login}>">          
+		        </div>
+		      </form>
+		    </div>
+		  <{/if}>
+		  <div id="lostpass-form" class="tab-pane">
+		  	<p><{$lang_noproblem}></p>
+				<form class="form-inline" action="<{$icms_url}>/lostpass.php" method="post">
+					<div>
+						<input type="text" name="email" size="26" maxlength="60" placeholder="<{$lang_youremail}>">
+						<input type="hidden" name="op" value="mailpasswd">
+						<input type="hidden" name="t" value="<{$mailpasswd_token}>">
+			     	<input class="btn btn-primary" type="submit" value="<{$lang_sendpassword}>">
+			     </div>
+				</form>		  	
+		  </div>
+	  </div>
+	</div>
+	<{if $allow_registration }>
+		<div id="allowRegistration" class="allowRegistration">
+			<{$lang_notregister}>
+		</div>
+	<{/if}>
+<{else}>
+	<div id="passwordResetWrapper" class="passwordResetWrapper">
+		<h2><{$smarty.const._US_RESETPASSTITLE}></h2>
+		<p><{$smarty.const._US_RESETPASSINFO}></p>
+		<form action="<{$icms_url}>/resetpass.php" method="post">
+			<div>
+				<input type="text" name="email" size="26" maxlength="100" placeholder="<{$lang_youremail}>" class="wide" /><br />
+				<input type="username" name="username" size="26" maxlength="60" value="<{$lang_uname}>" placeholder="<{$lang_username}>" class="wide" /><br />
+				<input type="password" name="c_password" size="26" maxlength="255" placeholder="<{$lang_currentpass}>" class="wide" /><br />
+				<input type="password" name="password" size="26" maxlength="255" placeholder="<{$lang_newpass}>" class="wide" /><br />
+				<input type="password" name="password2" size="26" maxlength="255" placeholder="<{$lang_newpass2}>" class="wide" /><br />
+				<input type="hidden" name="op" value="resetpass" />
+				<input type="hidden" name="t" value="<{$resetpassword_token}>" />
+	     	<input type="submit" value="<{$smarty.const._US_RESETPASSWORD}>" />
+	    </div>
+		</form>
+	</div>
+<{/if}>
+<script>
+  $(function () {
+    $('#register a:last').tab('show')
+  })
+</script>

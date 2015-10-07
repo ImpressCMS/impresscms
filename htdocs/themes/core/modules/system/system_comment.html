@@ -1,0 +1,64 @@
+<div class="media">
+  <h4 class="muted"><{$comment.image}><{$comment.title}> | <small><{$comment.poster.uname}></small></h4>
+  <a class="pull-left" href="#">
+    <img class="media-object img-thumbnail img-responsive" style="max-width:96px" src="<{$comment.poster.avatar}>" alt="">
+  </a>
+  <div class="media-body">
+    <div class="well">
+      <{$comment.text}>
+    </div>
+    <div class="postMeta alignleft muted">
+      <span class="dateCaption"><{$lang_posted}>:</span> <{$comment.date_posted}>
+      <{if $comment.date_modified !== $comment.date_posted}>
+        <span class="dateCaption"><{$lang_updated}>:</span> <{$comment.date_modified}>
+      <{/if}>
+    </div>
+    <div class="btn-group clearfix alignright">
+      <{if $xoops_iscommentadmin == true}>
+        <a class="btn btn-default btn-xs" href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><{$lang_edit}></a>
+        <a class="btn btn-default btn-xs" href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_delete}>"><{$lang_delete}></a>
+        <a class="btn btn-default btn-xs" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
+      <{elseif $xoops_isuser == true && $xoops_userid == $comment.poster.id}>
+        <a class="btn btn-default btn-xs" href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><{$lang_edit}></a>
+        <a class="btn btn-default btn-xs" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
+      <{elseif $xoops_isuser == true || $anon_canpost == true}>
+        <a class="btn btn-default btn-xs" href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><{$lang_reply}></a>
+      <{else}>
+        <a class="btn btn-default btn-xs" href="<{$icms_url}>/user.php" title="Register">Register to post</a>
+      <{/if}>
+    </div>
+    <{if $nested}>
+      <{foreach item=reply from=$comment.replies}>
+        <{include file="db:system_comment.html" comment=$reply}>
+      <{/foreach}>
+    <{/if}>
+
+    <{if $threaded}>
+      <div class="media">
+        <{if $show_threadnav == true}>
+          <div class="btn-group alignleft">
+            <a class="btn btn-default btn-sm" href="<{$comment_url}>" title="<{$lang_top}>"><{$lang_top}></a>
+            <a class="btn btn-default btn-sm" href="<{$comment_url}>&amp;com_id=<{$comment.pid}>&amp;com_rootid=<{$comment.rootid}>#newscomment<{$comment.pid}>" title="<{$lang_parent}>"><{$lang_parent}></a>
+          </div>
+        <{/if}>
+
+        <{if $comment.show_replies == true}>
+          <table class="table table-striped table-bordered table-hover table-condensed">
+            <tr>
+              <th><{$lang_subject}></th>
+              <th><{$lang_poster}></th>
+              <th><{$lang_posted}></th>
+            </tr>
+            <{foreach item=reply from=$comment.replies}>
+            <tr>
+              <td><{$reply.prefix}> <a href="<{$comment_url}>&amp;com_id=<{$reply.id}>&amp;com_rootid=<{$reply.root_id}>" title="<{$reply.simple_title}>"><{$reply.title}></a></td>
+              <td><{$reply.poster.uname}></td>
+              <td><{$reply.date_posted}></td>
+            </tr>
+            <{/foreach}>
+          </table>      
+        <{/if}>
+      </div>
+    <{/if}>
+  </div>
+</div>

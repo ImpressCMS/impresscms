@@ -1,0 +1,53 @@
+/* Bootstrap Pagination Style */
+.pagination.bootstrap {
+	margin: 20px 0;
+}
+div.pagination.bootstrap a, div.pagination.bootstrap span {
+	background-color: #FFFFFF;
+	border-color: #DDDDDD;
+	border-style: solid;
+	border-width: 1px 1px 1px 0;
+	float: left;
+	line-height: 38px;
+	padding: 0 14px;
+	text-decoration: none;
+}
+div.pagination.bootstrap a:hover, div.pagination.bootstrap a:active {
+	background-color: #F5F5F5;
+	cursor: pointer;
+}
+div.pagination.bootstrap span.current {
+	background-color: #f5f5f5;
+	border-color: #DDDDDD;
+	border-style: solid;
+	border-width: 1px 1px 1px 0;
+	line-height: 38px;
+	padding: 0 14px;
+	text-decoration: none;
+	color: #999999;
+	cursor: bootstrap;
+}
+div.pagination.bootstrap span.disabled {
+	background-color: transparent;
+	color: #999999;
+	cursor: bootstrap;
+	border: 1px solid #ddd;
+	border-left-width: 1px;
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+	color: #999999;
+	cursor: bootstrap;
+	background-color: transparent;
+}
+.pagination.bootstrap a:last-child {
+	-webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+}
+.pagination.bootstrap a:first-child {
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+	border-left-width: 1px;
+}

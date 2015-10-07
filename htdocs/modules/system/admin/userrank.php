@@ -118,7 +118,7 @@ switch ($op) {
 		$icmsAdminTpl->assign("icms_userrank_table", $objectTable->fetch());
 		$icmsAdminTpl->assign("icms_userrank_explain", TRUE);
 		$icmsAdminTpl->assign("icms_userrank_title", _CO_ICMS_USERRANKS_DSC);
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . "/system/templates/admin/userrank/system_adm_userrank.html");
+		$icmsAdminTpl->display("db:admin/userrank/system_adm_userrank.html");
 		break;
 }
 

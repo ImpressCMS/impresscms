@@ -79,7 +79,7 @@ function SmilesAdmin() {
 	$smiles['smile_form'] = _AM_ADDSMILE;
 	$smiles['op'] = 'SmilesAdd';
 	$smiles['id'] = '';
-	$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/smilies/system_adm_smilies.html');
+	$icmsAdminTpl->display('db:admin/smilies/system_adm_smilies.html');
 	include ICMS_MODULES_PATH . '/system/admin/smilies/smileform.php';
 	$smile_form->display();
 	icms_cp_footer();
