@@ -64,7 +64,7 @@ switch ($op) {
 		$cavatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'C'));
 		$icmsAdminTpl->assign("systemavatars", sprintf(_NUMIMAGES, '<b>' . icms_conv_nr2local($savatar_count) . '</b>'));	
 		$icmsAdminTpl->assign("usersavatars", sprintf(_NUMIMAGES, '<b>' . icms_conv_nr2local($cavatar_count) . '</b>'));	
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/avatars/system_adm_avatars.html');
+		$icmsAdminTpl->display('db:admin/avatars/system_adm_avatars.html');
 		$form = new icms_form_Theme(_MD_ADDAVT, 'avatar_form', 'admin.php', "post", TRUE);
 		$form->setExtra('enctype="multipart/form-data"');
 		$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'avatar_name', 50, 255), TRUE);
@@ -129,7 +129,7 @@ switch ($op) {
 			$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());	
 			}
 		}
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/avatars/system_adm_avatars.html');
+		$icmsAdminTpl->display('db:admin/avatars/system_adm_avatars.html');
 		icms_cp_footer();
 		break;
 

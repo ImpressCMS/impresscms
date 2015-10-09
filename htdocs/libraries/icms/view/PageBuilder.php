@@ -247,28 +247,19 @@ class icms_view_PageBuilder {
 		if ($icmsConfigPersona['editre_block'] == TRUE) {
 			if (icms::$user && count($this->uagroups) > 0) {
 				$url = base64_encode(str_replace(ICMS_URL, '', icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
-				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $bid . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT .' '. _BLOCK_ID .' '. $bid .'" alt="' . _EDIT . '"  /></a>'
-					. '<button style="display: none;"><div id="ed_block_' . $bid . '">'
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=visible&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png' alt='" . _INVISIBLE . "'  /> " . _INVISIBLE . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=clone&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png' alt='" . _CLONE . "'  /> " . _CLONE . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=mod&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' alt='" . _EDIT . "'  /> " . _EDIT . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=up&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/up.png' alt='" . _UP . "'  /> " . _UP . "</a><br />"
-					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=down&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/down.png' alt='" . _DOWN . "'  /> " . _DOWN . "</a>";
+				$titlebtns = '&nbsp;<span id="edit_block" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><span class="glyphicon glyphicon-cog" style="font-size: 16px;"></span></a>'
+					. '<ul id="ed_block_' . $bid . '" class="dropdown-menu add-arrow">'
+					. "<li><a>" . _EDIT ." ". _BLOCK_ID ." ". $bid ."</a></li>"
+					. "<li class='divider'></li>"
+					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=visible&amp;bid=" . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-eye-close'></span> " . _INVISIBLE . "</a></li>"
+					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=clone&amp;bid=" . $bid . "'> <span class='glyphicon glyphicon-new-window'></span> " . _CLONE . "</a></li>"
+					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=mod&amp;bid=" . $bid . "'> <span class='glyphicon glyphicon-edit'></span> " . _EDIT . "</a></li>"
+					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=up&amp;bid=" . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-arrow-up'></span> " . _UP . "</a></li>"
+					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=down&amp;bid=" . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-arrow-down'></span> " . _DOWN . "</a></li>";
 				if ($xobject->getVar('dirname') == '') {
-					$titlebtns .= "<br /><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=del&amp;bid=" . $bid . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt='" . _DELETE . "'  /> " . _DELETE . "</a>";
+					$titlebtns .= "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=del&amp;bid=" . $bid . "'> <span class='glyphicon glyphicon-remove'></span> " . _DELETE . "</a></li>";
 				}
-				$titlebtns .= '</div></button>';
-				$titlebtns .= '<script type="text/javascript">
-					$(function() {
-						$(\'#ed_block_' . $bid . '\').dialog({
-							bgiframe: true,
-							//height: 140,
-							autoOpen: false,
-							modal: true
-						});
-					});
-					</script>
-				';
+				$titlebtns .= '</ul></span>';
 			} else {
 				$titlebtns = '';
 			}

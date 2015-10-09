@@ -37,7 +37,7 @@ class icms_core_Message {
 	 * @param 		boolean $render
 	 */
 	static public function warning($msg, $title='', $render = FALSE) {
-		$ret = '<div class="warningMsg">';
+		$ret = '<div class="warningMsg alert alert-warning" role="alert">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';
 		}
@@ -66,7 +66,7 @@ class icms_core_Message {
 	 * @return	mixed
 	 */
 	static public function error($msg, $title = '', $render = true) {
-		$ret = '<div class="errorMsg">';
+		$ret = '<div class="errorMsg alert alert-danger" role="alert">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';
 		}
@@ -95,7 +95,7 @@ class icms_core_Message {
 	 * @return	void
 	 */
 	static public function result($msg, $title='') {
-		echo '<div class="resultMsg">';
+		echo 'div class="resultMsg alert alert-info" role="alert"';
 		if ($title != '') {
 			echo '<h4>' . $title . '</h4>';
 		}
@@ -124,7 +124,7 @@ class icms_core_Message {
 	 */
 	static public function confirm($hiddens, $action, $msg, $submit='', $addtoken = true) {
 	$submit = ($submit != '') ? trim($submit) : _SUBMIT;
-	echo '<div class="confirmMsg">
+	echo '<div class="confirmMsg alert alert-success" role="alert">
 			<h4>' . $msg . '</h4>
 			<form method="post" action="' . $action . '">';
 	foreach ($hiddens as $name => $value) {
@@ -142,8 +142,8 @@ class icms_core_Message {
 	if ($addtoken !== false) {
 		echo icms::$security->getTokenHTML();
 	}
-	echo '<input type="submit" name="confirm_submit" value="' . $submit
-		. '" /> <input type="button" name="confirm_back" value="' . _CANCEL
+	echo '<input class="btn btn-primary" type="submit" name="confirm_submit" value="' . $submit
+		. '" /> <input class="btn btn-danger" type="button" name="confirm_back" value="' . _CANCEL
 		.'" onclick="javascript:history.go(-1);" />
 	</form></div>';
 

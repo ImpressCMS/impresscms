@@ -531,3 +531,43 @@ $modversion['templates'][] = array(
 		'file' => 'system_viewmsgs.html',
 		'description' => ''
 );
+
+$modversion['templates'][] = array(
+		'file' => 'admin/groups/system_adm_groups.html',
+		'description' => ''
+);
+
+$modversion['templates'][] = array(
+		'file' => 'admin/comments/system_adm_comments.html',
+		'description' => ''
+);
+
+$modversion['templates'][] = array(
+		'file' => 'admin/system_adm_version.html',
+		'description' => ''
+);
+
+$modversion['templates'][] = array(
+		'file' => 'admin/smilies/system_adm_smilies.html',
+		'description' => ''
+);
+
+$modversion['templates'][] = array(
+		'file' => 'admin/avatars/system_adm_avatars.html',
+		'description' => ''
+);
+
+$modversion['templates'][] = array(
+		'file' => 'admin/findusers/system_adm_findusers.html',
+		'description' => ''
+);
+
+$modversion['templates'][] = array(
+		'file' => 'admin/system_adm_modulemenu.html',
+		'description' => ''
+);
+
+$modversion['templates'][] = array(
+		'file' => 'admin/system_adm_moduleabout.html',
+		'description' => ''
+);

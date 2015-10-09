@@ -1,0 +1,16 @@
+<div class="">
+	<form action="index.php" method="post" role="form">
+		<div>
+		<{if $block.imagenes}>
+		<div class="well">
+			<a href="#" class="thumbnail"><img src="<{$block.imagenesruta}>" alt='screenshot' id="icms_theme_img"></a>
+			<select class="form-control" id="theme_select" name="theme_select" onchange="showImgSelected('xoops_theme_img', 'theme_select', 'themes', '/screenshot.png',<{$icms_url}>)"><{$block.opciones}></select>
+			<button class="btn btn-primary" type="submit"><{$smarty.const._GO}></button>
+		</div>
+		<{else}>
+			<select class="form-control" id="theme_select" name="theme_select" onchange="submit();"><{$block.opciones}></select>
+		<{/if}>
+			<p style="text-align:center;margin-bottom:0"><{$block.numero}></p>
+		</div>
+	</form>
+</div>

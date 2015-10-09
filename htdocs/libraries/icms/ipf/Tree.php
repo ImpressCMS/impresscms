@@ -219,7 +219,7 @@ class icms_ipf_Tree {
 	 * @return  string  HTML select box
 	 **/
 	public function makeSelBox($name, $fieldName, $prefix = '-', $selected = '', $addEmptyOption = false, $key = 0) {
-		$ret = '<select name="' . $name . '" id="' . $name . '">';
+		$ret = '<select class="form-control" name="' . $name . '" id="' . $name . '">';
 		if (false != $addEmptyOption) {
 			$ret .= '<option value="0"></option>';
 		}

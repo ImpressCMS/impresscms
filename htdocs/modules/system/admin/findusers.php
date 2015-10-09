@@ -547,9 +547,9 @@ if ($op == "form") {
 	$icmsAdminTpl->assign("totalfound", sprintf(_AM_USERSFOUND, icms_conv_nr2local($total)));
 	$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());
 	$icmsAdminTpl->assign("total", $total);
-	$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/findusers/system_adm_findusers.html');
+	$icmsAdminTpl->display('db:admin/findusers/system_adm_findusers.html');
 
-} else {
+	} else {
 	redirect_header('admin.php?fct=findusers', 3, implode('<br />', icms::$security->getErrors()));
 }
 

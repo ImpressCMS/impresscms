@@ -582,7 +582,7 @@ function b_system_newmembers_edit($options) {
 }
 
 /**
- * Shows the form to edit the sysem info
+ * Shows the form to edit the system info
  *
  * @param array $options The block options
  * @return string $form The edit system info form HTML string
@@ -627,7 +627,7 @@ function b_system_themes_show($options) {
 	$block = array();
 	$block['imagenes'] = $options[0];
 	if ($options[0] == 1) {
-		$block['imagenesruta'] =  "" . ICMS_THEME_URL . "/" . $icmsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"". (int) $options[1] . "";
+		$block['imagenesruta'] =  "" . ICMS_THEME_URL . "/" . $icmsConfig['theme_set'] . "/screenshot.png\" alt=\"screenshot\" width=\"". (int) $options[1] . "";
 	}
 	$block['numero'] =   sprintf(_MB_SYSTEM_NUMTHEME, count($icmsConfig['theme_set_allowed']));
 	$block['opciones'] = $theme_options;

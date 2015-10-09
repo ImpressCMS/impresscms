@@ -108,7 +108,7 @@ switch ($op) {
 		$icmsAdminTpl->assign('icms_rating_explain', TRUE);
 		$icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_DSC);
 
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/rating/system_adm_rating.html');
+		$icmsAdminTpl->display('db:admin/rating/system_adm_rating.html');
 
 		break;
 }

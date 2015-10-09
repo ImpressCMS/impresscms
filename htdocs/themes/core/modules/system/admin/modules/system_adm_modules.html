@@ -1,0 +1,152 @@
+<div class="CPbigTitle" style="background-image: url(<{$icms_url}>/modules/system/admin/modules/images/modules_big.png)"><{$lang_madmin}></div>
+
+<div class="cpDashPanel Panel">
+  <div class="tabbable">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="active">
+        <a role="tab" data-toggle="tab" href="#installedPanel"><{$lang_installed}></a>
+      </li>
+      <li>
+        <a role="tab" data-toggle="tab" href="#uninstalledPanel"><{$lang_noninstall}></a>
+      </li>      
+    </ul>
+
+    <div class="tab-content">
+
+      <div id="installedPanel" class="tab-pane fade in active">
+        <form action="admin.php" method="post" name="moduleadmin" id="moduleadmin" role="form">
+          <div class="inner modulesAdminPanel">
+            <{foreach item=module from=$modules}>
+              <div class="cpPanelItem col-md-4 col-xs-6">
+                <div class="inner">
+                  <div class="clearfix moduleIcon">
+                    <{if $module.hasadmin == 1 && $module.isactive == '1'}>
+                    <a href="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.adminindex}>">
+                    <{else}>
+                    <a href="javascript: void(0);">
+                    <{/if}>
+                      <h4 class="originalModuleName"><{$module.name}> - <{$module.version}> <{$module.status}></h4>
+                      <img src="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" />
+                    </a><br />
+                    <small><strong><{$lang_lastup}>:</strong> <span><{$module.last_update}></span></small>
+                  </div>
+
+                  <div class="clearfix moduleInfo">
+                    <div class="clearfix moduleActive">
+                      <span class="moduleActiveTitle"><{$lang_active}>: </span>
+                      <{if $module.dirname == 'system'}>
+                        <input type="checkbox" id="newstatus_system_placeholder" name="newstatus_system_placeholder" value="1" checked="checked" disabled />
+                        <input type="hidden" name="newstatus[<{$module.mid}>]" value="1">
+                        <input type="hidden" name="oldstatus[<{$module.mid}>]" value="1">
+                      <{else}>
+                        <input type="checkbox" id="newstatus_<{$module.mid}>" name="newstatus[<{$module.mid}>]" value="<{if $module.isactive == '1'}>1<{else}>0<{/if}>"<{if $module.isactive == '1'}> checked<{/if}> />
+                        <input type="hidden" name="oldstatus[<{$module.mid}>]" value="<{if $module.isactive == '1'}>1<{else}>0<{/if}>">
+                      <{/if}>
+                    </div>
+
+                    <div class="clearfix newModuleName form-group">
+                      <label for="newname_<{$module.mid}>"><{$lang_moduletitle}></label>
+                      <input class="form-control" type="text" id="newname_<{$module.mid}>" name="newname[<{$module.mid}>]" placeholder="<{$module.title}>" value="<{$module.title}>">
+                      <input type="hidden" name="oldname[<{$module.mid}>]" value="<{$module.title}>">
+                    </div>
+                    <div class="clearfix moduleOrder form-group">
+                      
+                      <{if $module.hasmain == '1'}>
+					   <div class="form-inline form-group">
+						<span class="moduleOrderTitle"><{$lang_order}>: </span>
+                        <input type="hidden" name="oldweight[<{$module.mid}>]" value="<{$module.weight}>">
+                        <input class="form-control input-sm" style="width: 15%;" type="text" id="weight_<{$module.mid}>" name="weight[<{$module.mid}>]" placeholder="<{$module.weight}>" value="<{$module.weight}>">
+						</div>
+                      <{else}>
+					  <div class="form-inline disabled form-group">
+					  <span class="moduleOrderTitle"><{$lang_order}>: </span>
+                        <input type="hidden" name="oldweight[<{$module.mid}>]" value="0">
+                        <input class="form-control input-sm" style="width: 15%;" type="text" id="weight_<{$module.mid}>" name="weight[<{$module.mid}>]" placeholder="0" value="0" readonly><span class="moduleOrderInfo"><small>&nbsp;&nbsp;<{$lang_order0}></small></span>
+					  </div>
+                      <{/if}>
+                     
+                    </div>
+
+                    <div class="clearfix moduleActions">
+                      <{if $module.isactive == '1'}>
+                        <a class="btn btn-sm btn btn-primary" title="<{$lang_update}>" href="<{$icms_url}>/modules/system/admin.php?fct=modules&amp;op=update&amp;module=<{$module.dirname}>">
+                          <span class="glyphicon glyphicon-ok-sign"></span> <{$lang_update}></a>
+                      <{/if}>
+
+                      <{if $module.isactive != '1'}>
+                        <a class="btn btn-sm btn btn-danger" title="<{$lang_unistall}>" href="<{$icms_url}>/modules/system/admin.php?fct=modules&amp;op=uninstall&amp;module=<{$module.dirname}>">
+                         <span class="glyphicon glyphicon-remove-circle"></span> <{$lang_unistall}></a>
+                      <{/if}>  
+                      <a href="<{$icms_url}>/modules/system/admin.php?fct=version&amp;mid=<{$module.dirname}>" class="btn btn-sm bg-orange" title="<{$lang_info}>" data-toggle="modal" data-target="#Modal<{$module.mid}>">
+                        <span class="glyphicon glyphicon-question-sign"></span> <{$lang_info}></a>
+						  <div class="modal fade" id="Modal<{$module.mid}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-sm">
+								 <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">X</span></button>
+							  </div>
+								<div class="modal-content"></div>
+							</div>
+						</div>
+                      <{if $module.support_site_url != '' &&  $module.isactive == '1'}>
+                        <a class="btn btn-sm btn btn-info" title="<{$lang_support}>" href="<{$module.support_site_url}>" rel="external">
+                          <span class="glyphicon glyphicon-home"></span> <{$lang_support}></a>
+                      <{/if}>
+                      <input type="hidden" name="module[]" value="<{$module.mid}>">                      
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            <{/foreach}>
+
+            <div class="clearfix controlButtons">
+              <input type="hidden" name="fct" value="modules">
+              <input type="hidden" name="op" value="confirm">
+              <input class="btn btn-primary" type="submit" name="submit" value="<{$lang_submit}>">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div id="uninstalledPanel" style="display:table" class="tab-pane fade">
+        <div class="inner modulesAdminPanel">
+          <{if $avmodules}>
+            <{foreach item=module name=dashloop from=$avmodules}>
+              <div class="cpPanelItem col-md-4 col-xs-6">
+                <div class="inner">
+                  <div class="clearfix moduleIcon">
+                    <a href="javascript: void(0);">
+                      <h4 class="originalModuleName"><{$module.name}> - <{$module.version}> <{$module.status}></h4>
+                    </a>
+                    <img src="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" /><br />
+                  </div>      
+                  
+                  <div class="clearfix">
+                    <div class="clearfix moduleActions" style="margin-top:10px">
+                      <a style="float:none" class="btn btn-sm btn-primary" title="<{$lang_install}>" href="<{$icms_url}>/modules/system/admin.php?fct=modules&amp;op=install&amp;module=<{$module.dirname}>">
+                         <span class="glyphicon glyphicon glyphicon-log-in"></span> <{$lang_install}></a>  
+                      <a style="float:none" href="<{$icms_url}>/modules/system/admin.php?fct=version&amp;mid=<{$module.dirname}>" class="btn btn-sm bg-orange" title="<{$lang_info}>" data-toggle="modal" data-target="#Modal<{$module.dirname}>">
+                         <span class="glyphicon glyphicon-question-sign"></span> <{$lang_info}></a>
+						  <div class="modal fade" id="Modal<{$module.dirname}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-sm">
+								 <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">X</span></button>
+								</div>
+								<div class="modal-content"></div>
+							</div>
+						</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <{/foreach}>
+          <{else}>
+            <h3>No Modules available for Installation</h3>
+            <a class="smallButton modalButton" title="ImpressCMS Addons" data-scrolling="yes" data-width="1000" data-height="780" rel="external" href="http://addons.impresscms.org">Need a module?</a>
+          <{/if}>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
