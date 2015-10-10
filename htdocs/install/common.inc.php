@@ -12,7 +12,7 @@
  * @author		Skalpa Keo <skalpa@xoops.org>
 * @version		$Id: common.inc.php 12389 2014-01-17 16:58:21Z skenow $
  */
-
+include '../vendor/autoload.php';
 /**
  * If non-empty, only this user can access this installer
  */
@@ -45,8 +45,20 @@ include_once '../include/functions.php';
 require_once 'include/functions.php';
 
 /** Start the autoloader */
-require_once '../libraries/icms/Autoloader.php';
-icms_Autoloader::setup();
+if (!is_file('../vendor/autoload.php')) {
+    putenv('COMPOSER_HOME='. dirname(__DIR__) .'/vendor' );
+    $fp = popen('/usr/bin/env php composer.phar --no-interaction --working-dir=../ update 2>&1', 'r');
+    while(!feof($fp))
+    {
+       print '<!-- ' . fread($fp, 1024) . ' -->';
+       flush();
+    }
+    fclose($fp);
+    if (!is_file('../vendor/autoload.php')) {
+        die('You must create vendor folder in root writable first!');
+    }
+}
+require_once '../vendor/autoload.php';
 
 $errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
