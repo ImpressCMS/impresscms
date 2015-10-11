@@ -10,9 +10,6 @@
  * @author		Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
  * @version		$Id$
  */
-
-include_once ICMS_ROOT_PATH . '/vendor/autoload.php';
-
 class icms_Autoloader {
 	/**
 	 * Paths of known global repositories
