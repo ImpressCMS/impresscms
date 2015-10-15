@@ -45,7 +45,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  *
  * @property int    $confcat_id        Category ID
- * @property string $confcat_name      Category name
+  * @property string  $confcat_name      Category name
  * @property int    $confcat_order     Category display order
  */
 class icms_config_category_Object extends icms_ipf_Object {

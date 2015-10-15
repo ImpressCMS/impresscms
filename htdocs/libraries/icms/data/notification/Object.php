@@ -45,13 +45,13 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author	Michael van Dam	<mvandam@caltech.edu>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  *
- * @property INTEGER $not_id        Notification ID
- * @property INTEGER $not_modid     Module ID linked with this notification
- * @property STRING $not_category   Category
- * @property INTEGER $not_itemid    Item ID linked with this notification
- * @property STRING $not_event      Notification event
- * @property INTEGER $not_uid       User ID who receives this notification
- * @property INTEGER $not_mode      How this notification should be received?
+ * @property int $not_id        Notification ID
+ * @property int $not_modid     Module ID linked with this notification
+  * @property string  $not_category   Category
+ * @property int $not_itemid    Item ID linked with this notification
+  * @property string  $not_event      Notification event
+ * @property int $not_uid       User ID who receives this notification
+ * @property int $not_mode      How this notification should be received?
  */
 class icms_data_notification_Object extends icms_ipf_Object {
 

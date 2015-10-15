@@ -17,9 +17,9 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author		Kazumi Ono <onokazu@xoops.org>
  * 
- * @property INTEGER $linkid        Membership link ID
- * @property INTEGER $groupid       Group ID
- * @property INTEGER $uid           User ID
+ * @property int $linkid        Membership link ID
+ * @property int $groupid       Group ID
+ * @property int $uid           User ID
  */
 class icms_member_group_membership_Object extends icms_ipf_Object {
 	/**

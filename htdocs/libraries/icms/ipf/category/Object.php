@@ -20,11 +20,11 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Persistble category object
  *
- * @property INTEGER $categoryid    Category ID
- * @property INTEGER $parentid      Parent category ID
- * @property STRING $name           Name
- * @property STRING $description    Description
- * @property STRING $image          image
+ * @property int $categoryid    Category ID
+ * @property int $parentid      Parent category ID
+ * @property string  $name           Name
+ * @property string  $description    Description
+ * @property string  $image          image
  */
 class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	/** Path that corresponds to the category */

@@ -44,10 +44,10 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * 
- * @property INTEGER $confop_id     Config option id
- * @property STRING $confop_name    Name
- * @property STRING $confop_value   Value
- * @property INTEGER $conf_id       Config ID
+ * @property int $confop_id     Config option id
+  * @property string  $confop_name    Name
+  * @property string  $confop_value   Value
+ * @property int $conf_id       Config ID
  */
 class icms_config_option_Object extends icms_ipf_Object {
 	/**

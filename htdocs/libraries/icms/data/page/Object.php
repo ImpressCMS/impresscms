@@ -16,11 +16,11 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * ImpressCMS page class.
  *
- * @property INTEGER $page_id       Page ID
- * @property INTEGER $page_moduleid Module ID for what this page is it
- * @property STRING $page_title     Title of page
- * @property STRING $page_url       URL
- * @property INTEGER $page_status   Status
+ * @property int $page_id       Page ID
+ * @property int $page_moduleid Module ID for what this page is it
+  * @property string  $page_title     Title of page
+  * @property string  $page_url       URL
+ * @property int $page_status   Status
  */
 class icms_data_page_Object extends icms_ipf_Object {
 

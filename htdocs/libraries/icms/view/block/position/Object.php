@@ -15,12 +15,12 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * Block position
  * 
- * @property INTEGER $id            Block position id
- * @property STRING $pname          Name (used on codes)
- * @property STRING $title          Title (displayed for users)
- * @property STRING $description    Description
- * @property INTEGER $block_default Is default?
- * @property STRING $block_type     Type
+ * @property int $id            Block position id
+ * @property string  $pname          Name (used on codes)
+ * @property string  $title          Title (displayed for users)
+ * @property string  $description    Description
+ * @property int $block_default Is default?
+ * @property string  $block_type     Type
  */
 class icms_view_block_position_Object extends icms_ipf_Object {
 

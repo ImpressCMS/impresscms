@@ -48,14 +48,14 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono (aka onokazo)
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  *
- * @property INTEGER $avatar_id         Avatar ID
- * @property STRING $avatar_file        File used for avatar
- * @property STRING $avatar_name        Name
- * @property STRING $avatar_mimetype    Mimetype of avatar file
- * @property INTEGER $avatar_created    When avatar was created?
- * @property INTEGER $avatar_display    Do we need to show avatar?
- * @property INTEGER $avatar_weight     Weight (used for sorting avatars for user)
- * @property STRING $avatar_type        Type
+ * @property int $avatar_id         Avatar ID
+  * @property string  $avatar_file        File used for avatar
+  * @property string  $avatar_name        Name
+  * @property string  $avatar_mimetype    Mimetype of avatar file
+ * @property int $avatar_created    When avatar was created?
+ * @property int $avatar_display    Do we need to show avatar?
+ * @property int $avatar_weight     Weight (used for sorting avatars for user)
+  * @property string  $avatar_type        Type
  *
  */
 class icms_data_avatar_Object extends icms_ipf_Object {

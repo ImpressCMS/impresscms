@@ -18,12 +18,12 @@ icms_loadLanguageFile("system", "userrank", TRUE);
 /**
  * Ranks to assign members
  * 
- * @property INTEGER $rank_id       Rank ID
- * @property STRING $rank_title     Title
- * @property INTEGER $rank_min      Min required items count
- * @property INTEGER $rank_max      Max required items count
- * @property INTEGER $rank_special  Is this rank special?
- * @property STRING $rank_image     Image
+ * @property int $rank_id       Rank ID
+ * @property string  $rank_title     Title
+ * @property int $rank_min      Min required items count
+ * @property int $rank_max      Max required items count
+ * @property int $rank_special  Is this rank special?
+ * @property string  $rank_image     Image
  */
 class icms_member_rank_Object extends icms_ipf_Object {
 

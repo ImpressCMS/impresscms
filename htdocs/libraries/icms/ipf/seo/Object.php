@@ -18,9 +18,9 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * Base class representing a single icms_ipf_Object with "search engine optimisation" capabilities
  *
- * @property string $meta_keywords      Meta keywords
- * @property string $meta_description   Meta description
- * @property string $short_url          Short URL
+ * @property string  $meta_keywords      Meta keywords
+ * @property string  $meta_description   Meta description
+ * @property string  $short_url          Short URL
  */
 class icms_ipf_seo_Object extends icms_ipf_Object {
 

@@ -46,14 +46,14 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  *
- * @property INTEGER $msg_id        Message ID
- * @property STRING $msg_image      Image
- * @property STRING $subject        Subject
- * @property INTEGER $from_userid   From what User ID
- * @property INTEGER $to_userid     To what User ID
+ * @property int $msg_id        Message ID
+  * @property string  $msg_image      Image
+  * @property string  $subject        Subject
+ * @property int $from_userid   From what User ID
+ * @property int $to_userid     To what User ID
  * @property DATETIME $msg_time     Sending time
- * @property STRING $msg_text       Text (content)
- * @property INTEGER $read_msg      Is this message read?
+  * @property string  $msg_text       Text (content)
+ * @property int $read_msg      Is this message read?
  */
 class icms_data_privmessage_Object extends icms_ipf_Object {
 
