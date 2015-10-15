@@ -46,15 +46,15 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * 
- * @property int $image_id          Image ID
- * @property string  $image_name         Name
- * @property string  $image_nicename     Nice name
- * @property string  $image_mimetype     Mimetype
- * @property int $image_created     When was created?
- * @property int $image_display     Show be this image displayed on selection?
- * @property int $image_weight      Weight used for sorting for user
- * @property string  $image_body         Image contents
- * @property int $imgcat_id         Image category ID
+ * @property int    $image_id          Image ID
+ * @property string $image_name        Name
+ * @property string $image_nicename    Nice name
+ * @property string $image_mimetype    Mimetype
+ * @property int    $image_created     When was created?
+ * @property int    $image_display     Show be this image displayed on selection?
+ * @property int    $image_weight      Weight used for sorting for user
+ * @property string $image_body        Image contents
+ * @property int    $imgcat_id         Image category ID
  */
 class icms_image_Object extends icms_core_Object {
 	/**

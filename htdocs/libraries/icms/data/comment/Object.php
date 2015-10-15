@@ -46,26 +46,26 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  *
- * @property int $com_id        Comment ID
- * @property int $com_pid       Comment parent ID
- * @property int $com_modid     Module ID
-  * @property string  $com_icon       Icon
-  * @property string  $com_title      Title
-  * @property string  $com_text       Text (contents)
- * @property int $com_created   When was created?
- * @property int $com_modified  When was modified?
- * @property int $com_uid       Owner of comment
-  * @property string  $com_ip         IP of this comment author
- * @property int $com_sig       Display dignature
- * @property int $com_itemid    Linked item ID
- * @property int $com_rootid    Comment thread root ID
- * @property int $com_status    Status
-  * @property string  $com_exparams   Extended params
- * @property int $dohtml        Use HTML ?
- * @property int $dosmiley      Use smiles?
- * @property int $doxcode       Use xcodes?
- * @property int $doimage       Show images?
- * @property int $dobr          Do line breaks?
+ * @property int    $com_id        Comment ID
+ * @property int    $com_pid       Comment parent ID
+ * @property int    $com_modid     Module ID
+ * @property string $com_icon      Icon
+ * @property string $com_title     Title
+ * @property string $com_text      Text (contents)
+ * @property int    $com_created   When was created?
+ * @property int    $com_modified  When was modified?
+ * @property int    $com_uid       Owner of comment
+ * @property string $com_ip        IP of this comment author
+ * @property int    $com_sig       Display dignature
+ * @property int    $com_itemid    Linked item ID
+ * @property int    $com_rootid    Comment thread root ID
+ * @property int    $com_status    Status
+ * @property string $com_exparams  Extended params
+ * @property int    $dohtml        Use HTML ?
+ * @property int    $dosmiley      Use smiles?
+ * @property int    $doxcode       Use xcodes?
+ * @property int    $doimage       Show images?
+ * @property int    $dobr          Do line breaks?
  */
 class icms_data_comment_Object extends icms_ipf_Object {
 

@@ -45,23 +45,23 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * 
- * @property int $mid               Module ID
- * @property string  $name               Name displayed for users
- * @property int $version           Version
- * @property int $last_update       Last update
- * @property int $weight            Weigth used for sorting modules on lists
- * @property int $isactive          Is activated?
- * @property string  $dirname            Directory name
- * @property int $hasmain           Has main page?
- * @property int $hasadmin          Has admin?
- * @property int $hassearch         Has search?
- * @property int $hasconfig         Has config?
- * @property int $hascomments       Has comments?
- * @property int $hasnotification   Has notifications?
- * @property int $dbversion         Database version
- * @property string  $modname            Internal name
- * @property int $ipf               Is this module IPF based?
- * */
+ * @property int    $mid               Module ID
+ * @property string $name              Name displayed for users
+ * @property int    $version           Version
+ * @property int    $last_update       Last update
+ * @property int    $weight            Weigth used for sorting modules on lists
+ * @property int    $isactive          Is activated?
+ * @property string $dirname           Directory name
+ * @property int    $hasmain           Has main page?
+ * @property int    $hasadmin          Has admin?
+ * @property int    $hassearch         Has search?
+ * @property int    $hasconfig         Has config?
+ * @property int    $hascomments       Has comments?
+ * @property int    $hasnotification   Has notifications?
+ * @property int    $dbversion         Database version
+ * @property string $modname           Internal name
+ * @property int    $ipf               Is this module IPF based?
+ */
 class icms_module_Object 
     extends icms_ipf_Object {
 	/**

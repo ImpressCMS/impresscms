@@ -50,21 +50,24 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * These sets are managed through a {@link icms_image_set_Handler} object
  *
- * @package     kernel
- *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * 
+ * @property int    $imgset_id      Image set ID
+ * @property string $imgset_name    Name
+ * @property int    $imgset_refid   
  */
-class icms_image_set_Object extends XoopsObject
+class icms_image_set_Object extends icms_ipf_Object
 {
     /**
      * Constructor
      *
      */
-  	function __construct() {
-  		$this->XoopsObject();
+  	function __construct(&$handler, $data = array()) {
   		$this->initVar('imgset_id', self::DTYPE_INTEGER, null, false);
   		$this->initVar('imgset_name', self::DTYPE_STRING, null, true, 50);
   		$this->initVar('imgset_refid', self::DTYPE_INTEGER, 0, false);
+                
+                parent::__construct($handler, $data);
   	}
 }

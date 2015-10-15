@@ -48,17 +48,17 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * 
- * @property int $imgcat_id         Image category ID
- * @property int $imgcat_pid        Image category parent ID
- * @property string  $imgcat_name        Name
- * @property string  $imgcat_foldername  Foldername
- * @property int $imgcat_display    Shold be this category displayed?
- * @property int $imgcat_weight     Weight used for sorting categories
- * @property int $imgcat_maxsize    Max image size in this category
- * @property int $imgcat_maxwidth   Max image width in this category
- * @property int $imgcat_maxheight  Max image height in this category
- * @property string  $imgcat_type        Type
- * @property string  $imgcat_storetype   Storing type
+ * @property int    $imgcat_id         Image category ID
+ * @property int    $imgcat_pid        Image category parent ID
+ * @property string $imgcat_name       Name
+ * @property string $imgcat_foldername Foldername
+ * @property int    $imgcat_display    Shold be this category displayed?
+ * @property int    $imgcat_weight     Weight used for sorting categories
+ * @property int    $imgcat_maxsize    Max image size in this category
+ * @property int    $imgcat_maxwidth   Max image width in this category
+ * @property int    $imgcat_maxheight  Max image height in this category
+ * @property string $imgcat_type       Type
+ * @property string $imgcat_storetype  Storing type
  */
 class icms_image_category_Object extends icms_core_Object {
 	private $_imageCount;

@@ -43,18 +43,17 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * 
- * @property int $conf_id           Item ID
- * @property int $conf_modid        Module ID
- * @property int $conf_catid        Category ID
-  * @property string  $conf_name      Name (used for programmers)
-  * @property string  $conf_title     Title (shown on forms)
-  * @property string  $conf_value     Value
-  * @property string  $conf_desc      Description (shown on forms)
-  * @property string  $conf_formtype  What control use for displaying field on form?
-  * @property string  $conf_valuetype Type of value
- * @property int $conf_order    Order (used to sorting fields before displaying on form)
+ * @property int        $conf_id            Item ID
+ * @property int        $conf_modid         Module ID
+ * @property int        $conf_catid         Category ID
+ * @property string     $conf_name          Name (used for programmers)
+ * @property string     $conf_title         Title (shown on forms)
+ * @property string     $conf_value         Value
+ * @property string     $conf_desc          Description (shown on forms)
+ * @property string     $conf_formtype      What control use for displaying field on form?
+ * @property string     $conf_valuetype     Type of value
+ * @property int        $conf_order         Order (used to sorting fields before displaying on form)
  */
-
 class icms_config_Item_Object extends icms_ipf_Object {
 	/**
 	 * Config options

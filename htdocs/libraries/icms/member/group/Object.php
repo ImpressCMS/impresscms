@@ -46,7 +46,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * 
- * @property int $groupid       Group ID
+ * @property int     $groupid        Group ID
  * @property string  $name           Name
  * @property string  $description    Description
  * @property string  $group_type     Type

@@ -46,42 +46,42 @@ defined('ICMS_ROOT_PATH') or exit();
  * @author		Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * 
- * @property int $uid               User ID
- * @property string  $name               Name
- * @property string  $uname              Username
- * @property string  $email              Email
- * @property string  $url                Homepage URL
- * @property array $user_avatar          Avatar
- * @property int $user_regdate      Registration date
- * @property string  $user_icq           ICQ
- * @property string  $user_from          From
- * @property string  $user_sig           Signature
- * @property bool  $user_viewemail    Can others view email?
- * @property string  $actkey             Activation key
- * @property string  $user_aim           AIM
- * @property string  $user_yim           YIM
- * @property string  $user_msnm          MSN
- * @property string  $pass               Encoded password
- * @property int $posts             Post count written by this user
- * @property bool  $attachsig         Attach signature?
- * @property int $rank              Rank
- * @property float  $level               Level
- * @property string  $theme              Selected theme
- * @property float  $timezone_offset     Timezone offset
- * @property int $last_login        Last login time
- * @property int $umode             Comments display mode
- * @property int $uorder            Comments order mode
- * @property int $notify_method     Notification method
- * @property int $notify_mode       Notification mode
- * @property string  $user_occ           Occupation
- * @property string  $bio                BIO
- * @property string  $user_intrest       Interests
- * @property int $user_mailok       Are sending mails ok?
- * @property string  $language           Language
- * @property string  $openid             OpenID address
- * @property int $user_viewoid      Allow view OpenID email?
- * @property bool  $pass_expired      Is password expired?
- * @property string  $login_name         Login name
+ * @property int    $uid               User ID
+ * @property string $name              Name
+ * @property string $uname             Username
+ * @property string $email             Email
+ * @property string $url               Homepage URL
+ * @property array  $user_avatar       Avatar
+ * @property int    $user_regdate      Registration date
+ * @property string $user_icq          ICQ
+ * @property string $user_from         From
+ * @property string $user_sig          Signature
+ * @property bool   $user_viewemail    Can others view email?
+ * @property string $actkey            Activation key
+ * @property string $user_aim          AIM
+ * @property string $user_yim          YIM
+ * @property string $user_msnm         MSN
+ * @property string $pass              Encoded password
+ * @property int    $posts             Post count written by this user
+ * @property bool   $attachsig         Attach signature?
+ * @property int    $rank              Rank
+ * @property float  $level             Level
+ * @property string $theme             Selected theme
+ * @property float  $timezone_offset   Timezone offset
+ * @property int    $last_login        Last login time
+ * @property int    $umode             Comments display mode
+ * @property int    $uorder            Comments order mode
+ * @property int    $notify_method     Notification method
+ * @property int    $notify_mode       Notification mode
+ * @property string $user_occ          Occupation
+ * @property string $bio               BIO
+ * @property string $user_intrest      Interests
+ * @property int    $user_mailok       Are sending mails ok?
+ * @property string $language          Language
+ * @property string $openid            OpenID address
+ * @property int    $user_viewoid      Allow view OpenID email?
+ * @property bool   $pass_expired      Is password expired?
+ * @property string $login_name        Login name
  */
 class icms_member_user_Object extends icms_ipf_Object {
 

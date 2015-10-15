@@ -47,26 +47,26 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since		ImpressCMS 1.2
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * 
- * @property string  $name       Name
- * @property int $bid       Block ID
- * @property int $mid       Module ID
- * @property int $func_num  
- * @property string  $title      Title
- * @property string  $content    Content
- * @property int $side      Side
- * @property int $weight    Weight used for sorting positions
- * @property int $visible   Is visible?
- * @property string  $block_type Type
- * @property string  $c_type 
- * @property int $isactive  Is active?
- * @property string  $dirname    Directory name
- * @property string  $func_file  Function file
- * @property string  $show_func  Show function
- * @property string  $edit_func  Edit function
- * @property string  $template   Template
- * @property int $bcachetime Cache time
- * @property int $last_modified When it was last modified?
- * @property string  $options    Options
+ * @property string $name           Name
+ * @property int    $bid            Block ID
+ * @property int    $mid            Module ID
+ * @property int    $func_num  
+ * @property string $title          Title
+ * @property string $content        Content
+ * @property int    $side           Side
+ * @property int    $weight         Weight used for sorting positions
+ * @property int    $visible        Is visible?
+ * @property string $block_type     Type
+ * @property string $c_type 
+ * @property int    $isactive       Is active?
+ * @property string $dirname        Directory name
+ * @property string $func_file      Function file
+ * @property string $show_func      Show function
+ * @property string $edit_func      Edit function
+ * @property string $template       Template
+ * @property int    $bcachetime     Cache time
+ * @property int    $last_modified  When it was last modified?
+ * @property string $options        Options
  */
 class icms_view_block_Object extends icms_ipf_Object {
 
