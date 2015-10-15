@@ -8,7 +8,6 @@
  * @subpackage	Users
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die ("ImpressCMS root path not defined");
@@ -19,8 +18,12 @@ icms_loadLanguageFile("system", "userrank", TRUE);
 /**
  * Ranks to assign members
  * 
- * @package		System
- * @subpackage	Users
+ * @property INTEGER $rank_id       Rank ID
+ * @property STRING $rank_title     Title
+ * @property INTEGER $rank_min      Min required items count
+ * @property INTEGER $rank_max      Max required items count
+ * @property INTEGER $rank_special  Is this rank special?
+ * @property STRING $rank_image     Image
  */
 class icms_member_rank_Object extends icms_ipf_Object {
 

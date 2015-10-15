@@ -46,11 +46,15 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * A group permission
  *
  * These permissions are managed through a {@link icms_member_groupperm_Handler} object
- * @category	ICMS
- * @package     Member
- * @subpackage	GroupPermission
+ * 
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
+ * 
+ * @property INTEGER $gperm_id      Group permission ID
+ * @property INTEGER $gperm_groupid Linked group ID
+ * @property INTEGER $gperm_itemid  Linked item ID
+ * @property INTEGER $gperm_modid   Linked module ID
+ * @property STRING $gperm_name     Name
  */
 class icms_member_groupperm_Object extends icms_ipf_Object {
 	/**

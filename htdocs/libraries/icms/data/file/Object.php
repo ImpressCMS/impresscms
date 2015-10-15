@@ -14,6 +14,15 @@
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
+/**
+ * File object
+ * 
+ * @property INTEGER $fileid        File ID
+ * @property INTEGER $mid           Module ID
+ * @property STRING $caption        Caption
+ * @property STRING $description    Description
+ * @property STRING $url            URL of file
+ */
 class icms_data_file_Object extends icms_ipf_Object {
 
     /**

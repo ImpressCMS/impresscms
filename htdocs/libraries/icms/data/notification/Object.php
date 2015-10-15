@@ -34,8 +34,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  *
  * @category	ICMS
- * @package		Notification
- * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @package	Notification
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -43,11 +42,16 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * A Notification
  *
- * @author	    Michael van Dam	<mvandam@caltech.edu>
+ * @author	Michael van Dam	<mvandam@caltech.edu>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  *
- * @category	ICMS
- * @package     Notification
+ * @property INTEGER $not_id        Notification ID
+ * @property INTEGER $not_modid     Module ID linked with this notification
+ * @property STRING $not_category   Category
+ * @property INTEGER $not_itemid    Item ID linked with this notification
+ * @property STRING $not_event      Notification event
+ * @property INTEGER $not_uid       User ID who receives this notification
+ * @property INTEGER $not_mode      How this notification should be received?
  */
 class icms_data_notification_Object extends icms_ipf_Object {
 

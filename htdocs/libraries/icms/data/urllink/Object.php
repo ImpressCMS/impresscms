@@ -14,6 +14,16 @@
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
+/**
+ * Url Link object
+ * 
+ * @property INTEGER $urllinkid     URL Link ID
+ * @property INTEGER $mid           Module ID
+ * @property STRING $caption        Caption
+ * @property STRING $description    Description
+ * @property STRING $url            URL
+ * @property STRING $target         Target
+ */
 class icms_data_urllink_Object extends icms_ipf_Object {
 	/**
 	 * constructor

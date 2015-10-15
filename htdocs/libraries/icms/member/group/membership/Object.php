@@ -8,7 +8,6 @@
  * @package		Member
  * @subpackage	GroupMembership
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -17,9 +16,10 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * membership of a user in a group
  *
  * @author		Kazumi Ono <onokazu@xoops.org>
- * @category	ICMS
- * @package		Member
- * @subpackage	Group
+ * 
+ * @property INTEGER $linkid        Membership link ID
+ * @property INTEGER $groupid       Group ID
+ * @property INTEGER $uid           User ID
  */
 class icms_member_group_membership_Object extends icms_ipf_Object {
 	/**

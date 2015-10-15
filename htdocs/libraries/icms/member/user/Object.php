@@ -42,11 +42,46 @@ defined('ICMS_ROOT_PATH') or exit();
 
 /**
  * Class for users
+ * 
  * @author		Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @category	ICMS
- * @package		Member
- * @subpackage	User
+ * 
+ * @property INTEGER $uid               User ID
+ * @property STRING $name               Name
+ * @property STRING $uname              Username
+ * @property STRING $email              Email
+ * @property STRING $url                Homepage URL
+ * @property FILE $user_avatar          Avatar
+ * @property INTEGER $user_regdate      Registration date
+ * @property STRING $user_icq           ICQ
+ * @property STRING $user_from          From
+ * @property STRING $user_sig           Signature
+ * @property BOOLEAN $user_viewemail    Can others view email?
+ * @property STRING $actkey             Activation key
+ * @property STRING $user_aim           AIM
+ * @property STRING $user_yim           YIM
+ * @property STRING $user_msnm          MSN
+ * @property STRING $pass               Encoded password
+ * @property INTEGER $posts             Post count written by this user
+ * @property BOOLEAN $attachsig         Attach signature?
+ * @property INTEGER $rank              Rank
+ * @property FLOAT $level               Level
+ * @property STRING $theme              Selected theme
+ * @property FLOAT $timezone_offset     Timezone offset
+ * @property INTEGER $last_login        Last login time
+ * @property INTEGER $umode             Comments display mode
+ * @property INTEGER $uorder            Comments order mode
+ * @property INTEGER $notify_method     Notification method
+ * @property INTEGER $notify_mode       Notification mode
+ * @property STRING $user_occ           Occupation
+ * @property STRING $bio                BIO
+ * @property STRING $user_intrest       Interests
+ * @property INTEGER $user_mailok       Are sending mails ok?
+ * @property STRING $language           Language
+ * @property STRING $openid             OpenID address
+ * @property INTEGER $user_viewoid      Allow view OpenID email?
+ * @property BOOLEAN $pass_expired      Is password expired?
+ * @property STRING $login_name         Login name
  */
 class icms_member_user_Object extends icms_ipf_Object {
 

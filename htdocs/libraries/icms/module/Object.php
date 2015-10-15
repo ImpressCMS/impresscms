@@ -35,7 +35,6 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Module
- * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
@@ -43,10 +42,25 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
 /**
  * A Module
  *
- * @category	ICMS
- * @package		Module
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
+ * 
+ * @property INTEGER $mid               Module ID
+ * @property STRING $name               Name displayed for users
+ * @property INTEGER $version           Version
+ * @property INTEGER $last_update       Last update
+ * @property INTEGER $weight            Weigth used for sorting modules on lists
+ * @property INTEGER $isactive          Is activated?
+ * @property STRING $dirname            Directory name
+ * @property INTEGER $hasmain           Has main page?
+ * @property INTEGER $hasadmin          Has admin?
+ * @property INTEGER $hassearch         Has search?
+ * @property INTEGER $hasconfig         Has config?
+ * @property INTEGER $hascomments       Has comments?
+ * @property INTEGER $hasnotification   Has notifications?
+ * @property INTEGER $dbversion         Database version
+ * @property STRING $modname            Internal name
+ * @property INTEGER $ipf               Is this module IPF based?
  **/
 class icms_module_Object 
     extends icms_ipf_Object {
