@@ -45,9 +45,12 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author		Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @category	ICMS
- * @package		View
- * @subpackage	Template
+ * 
+ * @property INTEGER $tplset_id     Template set ID
+ * @property STRING $tplset_name    Name
+ * @property STRING $tplset_desc    Description
+ * @property STRING $tplset_credits Credits
+ * @property INTEGER $tplset_created When it was created?
  **/
 class icms_view_template_set_Object extends icms_ipf_Object {
 
