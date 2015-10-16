@@ -16,37 +16,12 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * The tag object - for tagging content
  *
- * @property int    $id     ID
- * @property string $tag    Tag
- * @property int    $status Status
- * @property int    $count  Count
+ * @property int    $id     Unique identifier for the tag
+ * @property string $tag    Text of the tag
+ * @property int    $status Status of the tag - enabled, disabled
+ * @property int    $count  The number of occurrences of the tag across the site
  */
 class mod_system_Tags extends icms_ipf_seo_Object {
-
-	/**
-	 * Unique identifier for the tag
-	 *
-	 * @var integer
-	 */
-	public $id;
-	/**
-	 * Text of the tag
-	 *
-	 * @var string
-	 */
-	public $tag;
-	/**
-	 * Status of the tag - enabled, disabled
-	 *
-	 * @var boolean
-	 */
-	public $status;
-	/**
-	 * The number of occurrences of the tag across the site
-	 *
-	 * @var integer
-	 */
-	public $count;
 
 	/**
 	 * Construct the tag object
