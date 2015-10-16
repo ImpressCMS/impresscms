@@ -18,8 +18,16 @@ icms_loadLanguageFile("system", "autotasks", TRUE);
 /**
  * Task objects
  *
- * @package		Administration
- * @subpackage	Autotasks
+ * @property int    $sat_id             Task ID
+ * @property int    $sat_lastruntime    Last run time 
+ * @property string $sat_name           Name dispalyed in admin
+ * @property string $sat_code           Code to execute
+ * @property int    $sat_repeat         How many times to repeat (0 - always)
+ * @property int    $sat_interval       Interval in minutes
+ * @property int    $sat_onfinish       Auto delete? 
+ * @property int    $sat_enabled        Is enabled?
+ * @property string $sat_type           Type (custom or module)
+ * @property int    $sat_addon_id       Module ID
  */
 class mod_system_Autotasks extends icms_ipf_Object {
 

@@ -19,8 +19,18 @@ defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
 
 /**
  * Custom tags
- * @package		Administration
- * @subpackage	Custom Tags
+ * 
+ * @property int    $customtagid        CustomTag ID
+ * @property string $name               Name
+ * @property string $description        Description
+ * @property string $customtag_content  Content
+ * @property string $language           Language
+ * @property int    $customtag_type     Type
+ * 
+ * @property int    $dohtml
+ * @property int    $doimage
+ * @property int    $doxcode
+ * @property int    $dosmiley
  */
 class mod_system_Customtag extends icms_ipf_Object {
 	public $content = FALSE;

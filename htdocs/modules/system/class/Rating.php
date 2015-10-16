@@ -13,8 +13,16 @@
 
 /**
  * Rating object
- * @package		System
- * @subpackage	Ratings
+ * 
+ * @property int    $ratingid   Rating ID
+ * @property string $dirname    Module dirname
+ * @property string $item       Item type
+ * @property int    $itemid     Item ID
+ * @property int    $uid        User ID
+ * @property int    $date       Date
+ * @property int    $rate       Rate
+ * 
+ * @property string $name       Name
  */
 class mod_system_Rating extends icms_ipf_Object {
 

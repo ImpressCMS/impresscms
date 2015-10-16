@@ -19,8 +19,11 @@ icms_loadLanguageFile('system', 'mimetype', TRUE);
 /**
  * Mimetype management for file handling
  * 
- * @package		System
- * @subpackage	Mimetypes
+ * @property int        $mimetypeid    Mimetype ID
+ * @property string     $extension     File extention
+ * @property string     $types         Mimetypes
+ * @property string     $name          Name
+ * @property string[]   $dirname       Modules allowed to use this mimetype
  */
 class mod_system_Mimetype extends icms_ipf_Object {
 	public $content = FALSE;

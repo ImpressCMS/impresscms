@@ -16,10 +16,10 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * The tag object - for tagging content
  *
- * @category	ICMS
- * @package		Administration
- * @subpackage	Tags
- *
+ * @property int    $id     ID
+ * @property string $tag    Tag
+ * @property int    $status Status
+ * @property int    $count  Count
  */
 class mod_system_Tags extends icms_ipf_seo_Object {
 

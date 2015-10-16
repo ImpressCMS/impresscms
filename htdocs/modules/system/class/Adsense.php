@@ -8,16 +8,25 @@
  * @subpackage	AdSense
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * AdSense object - Google AdSense 
- *  
- * @package		Administration
- * @subpackage	AdSense
+ * 
+ * @property int    $adsenseid          Adsense ID
+ * @property string $description        Description
+ * @property string $client_id          Client ID
+ * @property string $slot               Slot
+ * @property string $tag                Tag
+ * @property string $format             Format
+ * @property string $color_border       Border color
+ * @property string $color_background   Background color
+ * @property string $color_link         Link color
+ * @property string $color_url          URL color
+ * @property string $color_text         Text color
+ * @property string $style              Styles
  */
 class mod_system_Adsense extends icms_ipf_Object {
 	public $content = FALSE;
