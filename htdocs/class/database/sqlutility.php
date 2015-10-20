@@ -14,6 +14,10 @@
  * This file is deprecated. Including the real file and that's it.
  */
 // handle instances when XOOPS_DB_TYPE includes 'pdo.'
-if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') $driver = substr(XOOPS_DB_TYPE, 4);
+if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
+	$driver = substr(XOOPS_DB_TYPE, 4);
+} else {
+	$driver = XOOPS_DB_TYPE;
+}
 include_once ICMS_ROOT_PATH.'/class/database/drivers/'.$driver.'/sqlutility.php';
 ?>
