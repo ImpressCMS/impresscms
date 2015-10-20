@@ -14,12 +14,8 @@
  * This file is deprecated. Including the real file and that's it.
  */
 // For backwards compatibility
-if (!isset($driver)) {
-	$driver = XOOPS_DB_TYPE;
-}
+if (!isset($driver)) $driver = XOOPS_DB_TYPE;
 // handle instances when XOOPS_DB_TYPE includes 'pdo.'
-if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
-	$driver = substr(XOOPS_DB_TYPE, 4);
-}
+if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') $driver = substr(XOOPS_DB_TYPE, 4);
 include_once ICMS_ROOT_PATH.'/class/database/drivers/'.$driver.'/sqlutility.php';
 ?>
