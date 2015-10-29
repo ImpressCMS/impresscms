@@ -64,8 +64,8 @@ class AuthTest extends \PHPUnit_Framework_TestCase {
     */
    private function doDefaultAuthTest($name) {
        $provider = \icms_auth_Factory::getAuthConnection($name);
-       $this->assertInternalType('object', $provider, "$name auth doesn't exists");
-       $this->assertTrue($provider instanceof \icms_auth_Object, 'No public static getAuthConnection method');
+       $this->assertInternalType('object', $provider, "$name auth method doesn't exists");
+       $this->assertTrue($provider instanceof \icms_auth_Object, 'Auth method $name is not correct');
    }
     
 }
