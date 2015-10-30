@@ -37,7 +37,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($service instanceof \icms_config_Handler, 'service method can\'t create good instance');
         foreach ([ 'createConfig', 'getConfig', 'insertConfig', 'deleteConfig', 'getConfigs', 'getConfigCount', 'getConfigsByCat', 'createConfigOption', 'getConfigOption', 'getConfigOptions', 'getConfigOptionsCount', 'getConfigList' ] as $method) {
             $this->assertTrue(method_exists($service, $method), $method . ' doesm\'t exists');
-        }        
+        }
     }
     
     /**
