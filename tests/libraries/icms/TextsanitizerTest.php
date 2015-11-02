@@ -33,7 +33,7 @@ class TextsanitizerTest extends \PHPUnit_Framework_TestCase {
      * Checks if all required variables are available
      */
     public function testVariables() {
-        $instance = \icms_core_Textsanitizer::service();
+        $instance = \icms_core_Textsanitizer::getInstance();
         $this->assertInternalType('array', $instance->displaySmileys, 'displaySmileys must be array');
         $this->assertInternalType('array', $instance->allSmileys, 'allSmileys must be array');
     }       
