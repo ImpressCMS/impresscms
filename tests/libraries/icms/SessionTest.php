@@ -20,7 +20,7 @@ class SecurityTest extends \PHPUnit_Framework_TestCase {
     }
     
     /**
-     * Checks if all required methods are available
+     * Checks if all required variables are available
      */
     public function testVariables() {
         $instance = \icms_core_Session::service();
