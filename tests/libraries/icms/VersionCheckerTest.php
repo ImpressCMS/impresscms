@@ -41,7 +41,7 @@ class VersionCheckerTest extends \PHPUnit_Framework_TestCase {
         $this->assertInternalType('int', $instance->latest_build, '$latest_build must be int');
         $this->assertInternalType('int', $instance->latest_status, '$latest_status must be int');
         $this->assertInternalType('string', $instance->latest_url, '$latest_url must be string');
-        $this->assertInternalType('latest_changelog', $instance->latest_changelog, '$latest_changelog must be string');
+        $this->assertInternalType('string', $instance->latest_changelog, '$latest_changelog must be string');
     }       
     
 }
