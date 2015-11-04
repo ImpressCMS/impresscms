@@ -2,7 +2,7 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-class FileTest extends \PHPUnit_Framework_TestCase {
+class DataFileTest extends \PHPUnit_Framework_TestCase {
     
     /**
      * Test if icms_core_DataFilter is available

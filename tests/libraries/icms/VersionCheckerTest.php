@@ -5,7 +5,7 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 class VersionCheckerTest extends \PHPUnit_Framework_TestCase {
     
     /**
-     * Test if icms_core_DataFilter is available
+     * Test if is available
      */
     public function testAvailability() {
         $this->assertTrue(class_exists('icms_core_Versionchecker', true), "icms_core_Versionchecker class doesn't exist");        
