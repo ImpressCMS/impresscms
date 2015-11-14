@@ -9,9 +9,9 @@ class PreloadTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-            'icms_preload_Handler' => null,
-            'icms_preload_Item' => null,
-            'icms_preload_LibrariesHandler' => null
+            'icms_preload_Handler',
+            'icms_preload_Item',
+            'icms_preload_LibrariesHandler'
         ] as $class) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
         }                
