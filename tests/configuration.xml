@@ -45,6 +45,7 @@
             <file>libraries/icms/PreloadTest.php</file>
             <file>libraries/icms/PluginsTest.php</file>
             <file>libraries/icms/MessagingTest.php</file>
+            <file>libraries/icms/IPFTest.php</file>
         </testsuite>
     </testsuites>
     
