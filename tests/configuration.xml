@@ -39,8 +39,12 @@
             <file>libraries/icms/PasswordTest.php</file>
             <file>libraries/icms/PrivMessageTest.php</file>
             <file>libraries/icms/UrllinkTest.php</file>
+            <file>libraries/icms/ViewTest.php</file>
             <file>libraries/icms/VersionCheckerTest.php</file>
             <file>libraries/icms/FormTest.php</file>
+            <file>libraries/icms/PreloadTest.php</file>
+            <file>libraries/icms/PluginsTest.php</file>
+            <file>libraries/icms/MessagingTest.php</file>
         </testsuite>
     </testsuites>
     
