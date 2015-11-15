@@ -9,6 +9,7 @@
     
     <testsuites>
         <testsuite name="libraries_icms">
+            <file>libraries/icms/UtilsTest.php</file>
             <file>libraries/icms/AutoloaderTest.php</file>
             <file>libraries/icms/EventsTest.php</file>
             <file>libraries/icms/DebugTest.php</file>
