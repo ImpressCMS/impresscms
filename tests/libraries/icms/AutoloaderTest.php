@@ -15,9 +15,8 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase {
      * Checks if all required static methods are available
      */
     public function testStaticMethodsAvailability() {
-         $mock = $this->getMockForAbstractClass('icms_Autoloader');
          foreach ([ 'setup', 'split', 'register', 'import', 'autoload', 'classPath', 'registerLegacy' ] as $method) {
-             $this->assertTrue(method_exists($mock, $method), $method . ' doesn\'t exists for icms_Autoloader');
+             $this->assertTrue(method_exists('icms_Autoloader', $method), $method . ' doesn\'t exists for icms_Autoloader');
          }
     }
     
