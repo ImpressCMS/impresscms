@@ -3,16 +3,15 @@
  * ImpressCMS Ratings
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Ratings
- * @since		1.2
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 /**
  * Rating object
+ * 
+ * @package     ImpressCMS\Modules\System\Class\Rating
  * 
  * @property int    $ratingid   Rating ID
  * @property string $dirname    Module dirname

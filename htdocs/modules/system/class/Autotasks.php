@@ -3,12 +3,9 @@
  * ImpressCMS AUTOTASKS
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
- * @subpackage	Autotasks
- * @since		1.2 alpha 2
- * @author		MekDrop <mekdrop@gmail.com>
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2 alpha 2
+ * @author	MekDrop <mekdrop@gmail.com>
  */
 defined('ICMS_ROOT_PATH') || die('ImpressCMS root path not defined');
 
@@ -17,6 +14,8 @@ icms_loadLanguageFile("system", "autotasks", TRUE);
 
 /**
  * Task objects
+ * 
+ * @package ImpressCMS\Modules\System\Class\Autotasks
  *
  * @property int    $sat_id             Task ID
  * @property int    $sat_lastruntime    Last run time 

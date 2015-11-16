@@ -2,19 +2,14 @@
 /**
  * Autotask object handler
  *
- * @category	ICMS
- * @package		Administration
- * @subpackage	Autotasks
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		license.txt
- * @version		SVN: $Id$
+ * @license	license.txt
  */
 
 /**
  * Handler for the autotask objects
  * 
- * @package		Administration
- * @subpackage	Autotasks
+ * @package ImpressCMS\Modules\System\Class\Autotasks
  */
 class mod_system_AutotasksHandler extends icms_ipf_Handler {
 
