@@ -15,7 +15,9 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-/*
+/**
+ * CAPTCHA form element
+ * 
  * Usage
  *
  * For form creation:
@@ -27,9 +29,6 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *   echo $icmsCaptcha->getMessage();
  *   ...
  * }
- */
-/**
- * CAPTCHA form element
  *
  * @package	ICMS\Form\Elements
  */

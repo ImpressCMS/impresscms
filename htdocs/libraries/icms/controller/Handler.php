@@ -4,7 +4,7 @@
  * This is a handler for controllers
  *
  * @author          Raimondas Rimkevičius <mekdrop@impresscms.org>
- * @package         ICMS/Controller
+ * @package         ICMS\Controller
  * @copyright       http://www.impresscms.org/ The ImpressCMS Project 
  * 
  * @property-read   string  $type   Type of current controller instance.

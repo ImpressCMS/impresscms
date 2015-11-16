@@ -31,16 +31,11 @@
  * Creates a form object (Base Class)
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @author		modified by UnderDog <underdog@impresscms.org>
- */
-
-/**
- * Abstract base class for forms
- *
- * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @author  	Taiwen Jiang    <phppp@users.sourceforge.net>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @package	ICMS\Form

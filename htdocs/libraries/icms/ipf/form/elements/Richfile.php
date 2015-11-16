@@ -1,4 +1,7 @@
 <?php
+
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+
 /**
  * Form control creating a rich file element for an object derived from icms_ipf_Object
  *
@@ -7,12 +10,6 @@
  * @package	ICMS\IPF\Form\Elements
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
- */
-
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
-/**
- * Please note that this form element will only work if the uploader is enabled in the handler!
  */
 class icms_ipf_form_elements_Richfile extends icms_form_elements_Tray {
 	/**

@@ -7,21 +7,11 @@
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since		XOOPS
- *
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @version		SVN: $Id: Image.php 12340 2013-09-22 04:11:09Z skenow $
- */
-
-/**
- * The captcha image
- *
+ * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since	XOOPS
+ * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @package	ICMS\Form\Elements/Captcha
+ * @package	ICMS\Form\Elements\Captcha
  */
 class icms_form_elements_captcha_Image {
 	//var $config	= array();

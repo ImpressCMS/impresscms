@@ -1,4 +1,7 @@
 <?php
+
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+
 /**
  * IcmsPermission
  *
@@ -8,14 +11,7 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
- */
-
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
-/**
- *
  * @package	ICMS\IPF\Permission
- *
  */
 class icms_ipf_permission_Handler {
 

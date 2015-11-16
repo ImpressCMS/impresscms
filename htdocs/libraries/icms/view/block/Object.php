@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @package     ICMS/View/Block
+ * @package     ICMS\View\Block
  * 
  * @property string $name           Name
  * @property int    $bid            Block ID

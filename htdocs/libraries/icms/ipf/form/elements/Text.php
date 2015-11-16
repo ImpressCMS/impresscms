@@ -1,4 +1,7 @@
 <?php
+
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 /**
  * Form control creating a textbox for an object derived from icms_ipf_Object
  *
@@ -8,9 +11,6 @@
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 class icms_ipf_form_elements_Text extends icms_form_elements_Text {
 	/**
 	 * Constructor

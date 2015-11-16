@@ -9,13 +9,8 @@
  * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since	XOOPS
- */
-
-/**
- * Creates text version of Captcha element
- *
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @package	ICMS\Form\Elements/Captcha
+ * @package	ICMS\Form\Elements\Captcha
  */
 class icms_form_elements_captcha_Text {
 

@@ -31,7 +31,7 @@
  * Creates a form field for selecting a user group or groups
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -39,7 +39,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * A field with a choice of available groups
  *
- * @package	ICMS\Form\Elements/Select
+ * @package	ICMS\Form\Elements\Select
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

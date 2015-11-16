@@ -1,4 +1,7 @@
 <?php
+
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 /**
  * Form control creating an advanced file upload element
  *
@@ -8,9 +11,6 @@
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\IPF\Form\Elements
  */
-
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 class icms_ipf_form_elements_File extends icms_form_elements_File {
 	private $_object;
 	private $_key;

@@ -31,13 +31,8 @@
  * Creates a form attribute which is able to select an editor
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- */
-
-/**
- * A select box with available editors
- *
- * @package	ICMS\Form\Elements/Select
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS\Form\Elements\Select
  * @author	phppp (D.J.)
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

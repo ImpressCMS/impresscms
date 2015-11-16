@@ -7,8 +7,8 @@
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since		XOOPS
+ * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since	XOOPS
  * @package	ICMS\Form\Elements/Captcha
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
