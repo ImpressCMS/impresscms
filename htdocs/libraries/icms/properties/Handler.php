@@ -858,6 +858,8 @@ abstract class icms_properties_Handler implements Serializable {
                         return unserialize($value);
                     } elseif (class_exists($value, true)) {
                         return new $value();
+                    } else {
+                        return null;
                     }
                 }
                 return (object)$value;
