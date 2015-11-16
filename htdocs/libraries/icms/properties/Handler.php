@@ -848,7 +848,7 @@ abstract class icms_properties_Handler implements Serializable {
     protected function cleanVar($key, $type, $value) {
         switch ($type) {            
             case self::DTYPE_OBJECT:
-                if ($value == null || is_object($value)) {
+                if ($value === null || is_object($value)) {
                     return $value;
                 }
                 if (is_string($value)) {
