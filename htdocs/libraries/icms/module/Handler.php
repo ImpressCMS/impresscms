@@ -31,10 +31,7 @@
  * Manage modules
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Module
- * @version	$Id$
+ * @license	LICENSE.txt
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
@@ -45,8 +42,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
  * This class is responsible for providing data access mechanisms to the data source
  * of module class objects.
  *
- * @category	ICMS
- * @package		Module
+ * @package	ICMS/Module
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */

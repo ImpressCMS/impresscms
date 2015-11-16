@@ -33,11 +33,7 @@
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @category	ICMS
- * @package		Data
- * @subpackage	Avatar
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -45,8 +41,9 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * Avatar class
  *
- * @author		Kazumi Ono (aka onokazo)
+ * @author	Kazumi Ono (aka onokazo)
  * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @package	ICMS/Data/Avatar 
  *
  * @property int        $avatar_id         Avatar ID
  * @property string     $avatar_file       File used for avatar

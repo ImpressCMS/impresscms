@@ -3,13 +3,9 @@
  * Contains the basis classes for managing any objects derived from icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Object
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -21,11 +17,9 @@ icms_loadLanguageFile('system', 'common');
  *
  * Base class representing a single icms_ipf_Object
  *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Object
- * @author marcan <marcan@smartfactory.ca>
- * @todo		Properly identify and declare the visibility of vars and functions
+ * @package	ICMS/IPF
+ * @author      marcan <marcan@smartfactory.ca>
+ * @todo	Properly identify and declare the visibility of vars and functions
  */
 class icms_ipf_Object extends icms_core_Object {
 

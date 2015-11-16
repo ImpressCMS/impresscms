@@ -33,10 +33,6 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
- *
- * @category	ICMS
- * @package	Data
- * @subpackage	Comment
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -45,6 +41,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * A Comment
  *
  * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @package	ICMS/Data/Comment
  *
  * @property int    $com_id        Comment ID
  * @property int    $com_pid       Comment parent ID

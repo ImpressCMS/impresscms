@@ -5,13 +5,9 @@
  * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	View
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -20,12 +16,10 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * icms_ipf_view_Column class
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	View
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS/IPF/View
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 class icms_ipf_view_Column {
 

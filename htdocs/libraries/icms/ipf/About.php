@@ -4,11 +4,8 @@
  *
  * @copyright		http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @category	ICMS
- * @package		Ipf
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -19,14 +16,12 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * Simple class that lets you build an about page
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @since		1.0
- * @author		marcan <marcan@impresscms.org>
- * @todo		Properly set visibility of vars
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.0
+ * @author	marcan <marcan@impresscms.org>
+ * @todo	Properly set visibility of vars
+ * @package	ICMS/IPF
  */
-
 class icms_ipf_About {
 	public $_lang_aboutTitle;
 	public $_lang_author_info;

@@ -1,7 +1,4 @@
 <?php
-/**
- *
- */
 /*
  package::i.tools
 
@@ -86,9 +83,7 @@
  *
  * @author	Josh Barger <joshb@npt.com>
  * @copyright	Copyright (C) 2002  Josh Barger
- * @category	ICMS
- * @package     File
- *
+ * @package	ICMS/File
  */
 class icms_file_TarFileHandler {
 	/**#@+

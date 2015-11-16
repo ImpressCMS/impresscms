@@ -38,15 +38,9 @@
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package     Database
- * @subpackage  Criteria
- *
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since		1.3
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Compo.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -54,11 +48,8 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Collection of multiple {@link icms_db_criteria_Element}s
  *
- * @category	ICMS
- * @package     Database
- * @subpackage  Criteria
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @package	ICMS/Database/Criteria
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class icms_db_criteria_Compo extends icms_db_criteria_Element {

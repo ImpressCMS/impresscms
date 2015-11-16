@@ -32,16 +32,9 @@
  *
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- *
- * @category	ICMS
- * @package		Privmessage
- * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
-/**
- */
 
 /**
  * Private message handler class.
@@ -51,9 +44,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- *
- * @category	ICMS
- * @package     Privmessage
+ * @package	ICMS/Data/Privmessage
  */
 class icms_data_privmessage_Handler extends icms_ipf_Handler {
     

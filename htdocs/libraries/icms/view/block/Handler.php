@@ -31,12 +31,8 @@
  * ImpressCMS Block Persistable Class
  *
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id$
+ * @license	GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -45,12 +41,10 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * ImpressCMS Core Block Object Handler Class
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU GPL v2
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- * @since		ImpressCMS 1.2
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @license	GNU GPL v2
+ * @package	ICMS/View/Block
+ * @since	ImpressCMS 1.2
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class icms_view_block_Handler extends icms_ipf_Handler {
 

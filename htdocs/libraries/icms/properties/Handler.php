@@ -4,9 +4,6 @@
  *
  * @copyright           The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category            ICMS
- * @package		Ipf
- * @subpackage          Properties
  * @since		2.0
  * @author		i.know@mekdrop.name
  */
@@ -16,9 +13,7 @@
  *
  * Base class to dealing with object properties
  *
- * @category            ICMS
- * @package		Ipf
- * @subpackage          Properties
+ * @package		ICMS/Properties
  * @author              i.know@mekdrop.name
  * @todo		Properly identify and declare the visibility of vars and functions
  */

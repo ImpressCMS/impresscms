@@ -32,21 +32,13 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Forms
- * @subpackage	Elements
- * @version		SVN: $Id: formselecteditor.php 19892 2010-07-27 00:12:10Z skenow $
  */
 
 /**
  * A select box with available editors
  *
- * @category	ICMS
- * @package     Form
- * @subpackage  Elements
- *
- * @author	    phppp (D.J.)
+ * @package	ICMS/Form/Elements/Select
+ * @author	phppp (D.J.)
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_elements_select_Editor extends icms_form_elements_Tray {

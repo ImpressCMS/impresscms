@@ -3,23 +3,12 @@
  * Class to Clean & Filter HTML for various uses.
  * Class uses external HTML Purifier for filtering.
  *
- * @category	ICMS
- * @package		Core
- * @subpackage  Filters
- * @since		1.3
- * @author		vaughan montgomery (vaughan@impresscms.org)
- * @author		ImpressCMS Project
+ * @package	ICMS/Core
+ * @since	1.3
+ * @author	vaughan montgomery (vaughan@impresscms.org)
+ * @author	ImpressCMS Project
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version		$Id: HTMLFilter.php 12112 2012-11-09 02:15:50Z skenow $
 **/
-/**
- *
- * HTML Purifier filters
- *
- * @category	ICMS
- * @package		Core
- *
- */
 class icms_core_HTMLFilter extends icms_core_DataFilter {
 
 	/**

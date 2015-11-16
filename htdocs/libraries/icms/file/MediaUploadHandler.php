@@ -32,10 +32,6 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		File
- * @version		SVN: $Id$
  */
 /*!
  Example
@@ -79,9 +75,8 @@
  *   echo $uploader->getErrors();
  * }
  * </code>
- * @category	ICMS
- * @package		File
- *
+ * 
+ * @package	ICMS/File
  * @author      Kazumi Ono     <onokazu@xoops.org>
  * @author      phppp
  * @copyright	copyright (c) 2000-2007 XOOPS.org

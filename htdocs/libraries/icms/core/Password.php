@@ -2,23 +2,13 @@
 /**
  * Class to encrypt User Passwords.
  *
- * @category	ICMS
- * @package		Core
  * @since		1.2
  * @author		vaughan montgomery (vaughan@impresscms.org)
  * @author		ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version		SVN: $Id$
+ * @package	ICMS/Core
  **/
-/**
- * Password generation and validation
- *
- * @category	ICMS
- * @package		Core
- * @subpackage  Password
- *
- */
 final class icms_core_Password {
 	
 	private $pass, $salt, $mainSalt = XOOPS_DB_SALT, $uname;

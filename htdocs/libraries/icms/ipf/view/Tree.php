@@ -3,13 +3,9 @@
  * Contains the classes responsible for displaying a tree table filled with icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		ipf
- * @subpackage  View
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistabletreetable.php 19651 2010-06-26 06:15:15Z malanciault $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
@@ -20,13 +16,10 @@ defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
  * Base class representing a table for displaying icms_ipf_Object tree objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage  View
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistabletreetable.php 19651 2010-06-26 06:15:15Z malanciault $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS/IPF/View
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 class icms_ipf_view_Tree extends icms_ipf_view_Table {
 

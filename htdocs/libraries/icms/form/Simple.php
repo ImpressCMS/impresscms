@@ -31,12 +31,8 @@
  * Creates a simple form
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-
- * @category	ICMS
- * @package		Form
- * @version		SVN: $Id$
- * @todo		this class is not used by the core; we will probably remove it in 1.4
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @todo	this class is not used by the core; we will probably remove it in 1.4
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -44,9 +40,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * Form that will output as a simple HTML form with minimum formatting
  *
- * @category	ICMS
- * @package     Form
- *
+ * @package	ICMS/Form
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

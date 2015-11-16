@@ -5,18 +5,11 @@
  * Using a static class instead of a include file with global functions, along with
  * autoloading of classes, reduces the memory usage and only includes files when needed.
  *
- * @category	ICMS
- * @package     Core
- * @subpackage	Filesystem
- * @author		Steve Kenow <skenow@impresscms.org>
+ * @package	ICMS/Core
+ * @author	Steve Kenow <skenow@impresscms.org>
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id: Filesystem.php 12049 2012-10-03 13:38:00Z skenow $
- * @since		1.3
- */
-
-/**
- * Perform filesystem actions
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.3
  */
 class icms_core_Filesystem {
 

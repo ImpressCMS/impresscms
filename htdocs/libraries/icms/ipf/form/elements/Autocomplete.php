@@ -3,13 +3,9 @@
  * Form control creating an autocomplete select box for an object derived from icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		ipf
- * @subpackage	form
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -34,6 +30,8 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *    autocomplete function starts to work (default: 3)
  *  - use control parameter "delay" to specify the delay before the autocomplete function starts
  *    to work. Use with caution since it can result in high server load! (default: 500)
+ * 
+ * @package	ICMS/IPF/Form/Elements
  */
 class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text {
 	private $_file;

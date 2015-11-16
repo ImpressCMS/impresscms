@@ -29,20 +29,17 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @category	ICMS
- * @package		Authentication
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
  */
 
 /**
  * Authentification class factory
+ * 
  * @copyright   http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license     http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since       XOOPS
- * @category	ICMS
- * @package     Authentication
+ * @package     ICMS/Authentication
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_Factory {

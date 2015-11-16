@@ -3,12 +3,9 @@
  * Contains the basis classes for managing any SEO-enabled objects derived from icms_ipf_Objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	SeoObject
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -21,6 +18,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @property string  $meta_keywords      Meta keywords
  * @property string  $meta_description   Meta description
  * @property string  $short_url          Short URL
+ * 
+ * @package	ICMS/IPF/SEO
  */
 class icms_ipf_seo_Object extends icms_ipf_Object {
 

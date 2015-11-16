@@ -30,21 +30,18 @@
 /**
  * ImpressCMS Database Factory Class
  *
- * @category	ICMS
- * @package		Database
  * @author      Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
- *
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 /**
  * Creates a database connection
  *
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
  * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @package	ICMS/Database/Legacy
  */
 class icms_db_legacy_Factory extends icms_db_Factory {
 	/**

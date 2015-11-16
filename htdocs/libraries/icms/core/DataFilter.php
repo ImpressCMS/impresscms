@@ -27,25 +27,16 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+
 /**
-* Class to filter Data
-* @category		ICMS
-* @package		Core
-* @subpackage	Filters
-* @since        1.3
-* @author       vaughan montgomery (vaughan@impresscms.org)
-* @author       ImpressCMS Project
-* @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
-* @version      SVN: $Id: DataFilter.php 12052 2012-10-06 14:29:08Z skenow $
-**/
-/**
- *
- *
- * @category	ICMS
- * @package		Core
- * @subpackage	Filters
- *
- */
+ * Class to filter Data
+ * 
+ * @package	ICMS/Core
+ * @since        1.3
+ * @author       vaughan montgomery (vaughan@impresscms.org)
+ * @author       ImpressCMS Project
+ * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+ **/
 class icms_core_DataFilter {
 
 	/**

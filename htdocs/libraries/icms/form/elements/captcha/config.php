@@ -16,11 +16,8 @@
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  *
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @author		modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: config.php 12340 2013-09-22 04:11:09Z skenow $
+ * @package	ICMS/Form/Elements/Captcha
+ * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 $config = array(

@@ -3,12 +3,8 @@
  * Navigation breadcrumbs
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		View
- * @subpackage	Breadcrumb
- * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -19,11 +15,9 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * Managing page breadcrumb
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		View
- * @subpackage	Breadcrumb
- * @author		marcan <marcan@impresscms.org>
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author	marcan <marcan@impresscms.org>
+ * @package	ICMS/View
  */
 class icms_view_Breadcrumb {
 

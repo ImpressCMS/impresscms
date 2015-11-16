@@ -31,11 +31,7 @@
  * Creates a form file field
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @version		$Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL) 
  */
 
 defined('ICMS_ROOT_PATH')or die("ImpressCMS root path not defined");
@@ -43,11 +39,8 @@ defined('ICMS_ROOT_PATH')or die("ImpressCMS root path not defined");
 /**
  * Create a field for uploading a file
  *
- * @category	ICMS
- * @package     Form
- * @subpackage	Elements
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @package	ICMS/Form/Elements
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_elements_File extends icms_form_Element {

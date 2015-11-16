@@ -31,12 +31,8 @@
  * The templates class that extends Smarty
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		View
- * @subpackage	Templates
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
+ * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
 if (!defined('SMARTY_DIR')) {
@@ -50,10 +46,8 @@ require_once SMARTY_DIR . 'Smarty.class.php';
 /**
  * Template engine
  *
- * @category	ICMS
- * @package		View
- * @subpackage	Templates
- * @author		Kazumi Ono 	<onokazu@xoops.org>
+ * @package	ICMS/View
+ * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class icms_view_Tpl extends Smarty {

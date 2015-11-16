@@ -8,10 +8,6 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Core
- * @subpackage	Logger
- * @version	$Id: Logger.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 /**
@@ -24,9 +20,7 @@
  * @author		Kazumi Ono  <onokazu@xoops.org>
  * @author		Skalpa Keo <skalpa@xoops.org>
  *
- * @category	ICMS
- * @package		Core
- * @subpackage	Logger
+ * @package	ICMS/Core
  */
 class icms_core_Logger {
 

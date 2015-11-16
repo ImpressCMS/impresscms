@@ -3,17 +3,16 @@
  * Block Positions manager for the Impress Persistable Framework
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- * @since		1.0
+ * @license	LICENSE.txt
+ * @since	1.0
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * Block position
+ * 
+ * @package	ICMS/View/Block/Position
  * 
  * @property int    $id            Block position id
  * @property string $pname         Name (used on codes)

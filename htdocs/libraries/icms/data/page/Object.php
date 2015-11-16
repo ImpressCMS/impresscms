@@ -4,8 +4,6 @@
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license	LICENSE.txt
- * @category	ICMS
- * @package	Page
  * @since	ImpressCMS 1.1
  * @author	modified by UnderDog <underdog@impresscms.org>
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
@@ -21,6 +19,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @property string $page_title    Title of page
  * @property string $page_url      URL
  * @property int    $page_status   Status
+ * 
+ * @package	ICMS/Data/Page 
  */
 class icms_data_page_Object extends icms_ipf_Object {
 

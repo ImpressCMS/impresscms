@@ -37,14 +37,8 @@
  * Criteria Base Class for composing Where clauses in SQL Queries
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Database
- * @subpackage	Criteria
- *
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: Element.php 12313 2013-09-15 21:14:35Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -55,9 +49,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * Abstract base class should never be instantiated directly.
  *
  * @abstract
- * @category	ICMS
- * @package     Database
- * @subpackage  Criteria
+ * @package	ICMS/Database/Criteria
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org

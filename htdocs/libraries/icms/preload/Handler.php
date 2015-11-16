@@ -3,13 +3,10 @@
  * ICMS Preload Handler
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Preload
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -20,11 +17,10 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * Class handling preload events automatically detect from the files in ICMS_PRELOAD_PATH
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Preload
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS/Preload
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 class icms_preload_Handler {
 

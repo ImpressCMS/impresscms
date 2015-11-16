@@ -31,11 +31,7 @@
  * Image categories
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Image
- * @subpackage	Category
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -45,8 +41,9 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * These categories are managed through a {@link icms_image_category_Handler} object
  *  
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package	ICMS/Image/Category
  * 
  * @property int    $imgcat_id         Image category ID
  * @property int    $imgcat_pid        Image category parent ID

@@ -32,19 +32,16 @@
  * Manage users
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Member
- * @subpackage	User
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
  */
 defined('ICMS_ROOT_PATH') or exit();
 
 /**
  * Class for users
  * 
- * @author		Kazumi Ono <onokazu@xoops.org>
+ * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package	ICMS/Member/User
  * 
  * @property int    $uid               User ID
  * @property string $name              Name

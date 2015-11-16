@@ -9,9 +9,6 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Authentication
- * @subpackage	Openid
  * @since		1.1
  * @author		malanciault <marcan@impresscms.org)
  * @credits		Sakimura <http://www.sakimura.org/> Evan Prodromou <http://evan.prodromou.name/>
@@ -28,9 +25,7 @@ define('OPENID_STEP_USER_FOUND', 5);
 /**
  * OpenID authentication class
  *
- * @category	ICMS
- * @package		Authentication
- * @subpackage	Openid
+ * @package     ICMS/Authentication/Method
  */
 class icms_auth_method_Openid extends icms_auth_Object {
 

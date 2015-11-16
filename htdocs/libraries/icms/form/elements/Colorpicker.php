@@ -36,11 +36,6 @@
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @version		$Id: Colorpicker.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -48,13 +43,10 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * Color Picker
  *
- * @category	ICMS
- * @package     Form
- * @subpackage	Elements
- *
- * @since		Xoops 2.0.15
- * @author		Zoullou <webmaster@zoullou.org>
- * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @package	ICMS/Form/Elements
+ * @since	Xoops 2.0.15
+ * @author	Zoullou <webmaster@zoullou.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_elements_Colorpicker extends icms_form_elements_Text {

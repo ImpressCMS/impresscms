@@ -4,12 +4,8 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package	    Feeds
- * @subpackage	RSS
- * @since		1.1
- * @author		Ignacio Segura, "Nachenko"
- * @version		$Id$
+ * @since	1.1
+ * @author	Ignacio Segura, "Nachenko"
  */
 
 defined('ICMS_ROOT_PATH') or exit();
@@ -17,10 +13,7 @@ defined('ICMS_ROOT_PATH') or exit();
 /**
  * Generates the data necessary for an RSS feed and assigns it to a smarty template
  *
- * @category	ICMS
- * @package		Feeds
- * @subpackage	RSS
- *
+ * @package	ICMS/Feeds
  */
 class icms_feeds_Rss {
 

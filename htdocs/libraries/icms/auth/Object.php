@@ -30,9 +30,6 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @category	ICMS
- * @package		Authentication
- * @version		SVN: $Id$
  */
 
 /**
@@ -41,8 +38,7 @@
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @since       XOOPS
- * @category	ICMS
- * @package     Authentication
+ * @package     ICMS/Authentication
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_Object {

@@ -4,12 +4,8 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	icms
- * @package		data
- * @subpackage	urllink
  * @since		1.3
  * @author		Phoenyx
- * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -23,6 +19,8 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @property string $description   Description
  * @property string $url           URL
  * @property string $target        Target
+ * 
+ * @package	ICMS/Data/UrlLink 
  */
 class icms_data_urllink_Object extends icms_ipf_Object {
 	/**

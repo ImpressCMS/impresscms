@@ -29,10 +29,6 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @category	ICMS
- * @package		Authentication
- * @subpackage	ActiveDirectory
- * @version		SVN: $Id: Ads.php 11730 2012-06-17 01:00:09Z skenow $
  */
 
 /**
@@ -42,9 +38,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license     http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since       XOOPS
- * @category	ICMS
- * @package     Authentication
- * @subpackage	ActiveDirectory
+ * @package     ICMS/Authentication/Method
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_method_Ads extends icms_auth_method_Ldap {

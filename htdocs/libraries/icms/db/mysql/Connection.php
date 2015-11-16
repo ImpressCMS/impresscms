@@ -5,19 +5,7 @@
  * @copyright	The ImpressCMS Project - http://www.impresscms.org/
  * @license		GNU General Public License (GPL) - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @since		2.0
- * @category	ICMS
- * @package		Database
- * @subpackage	MySQL
- */
-
-/**
- *
- *
- * @copyright	The ImpressCMS Project - http://www.impresscms.org/
- *
- * @category	ICMS
- * @package		Database
- * @subpackage	MySQL
+ * @package	ICMS/Database/MySQL
  */
 class icms_db_mysql_Connection extends PDO implements icms_db_IConnection {
 

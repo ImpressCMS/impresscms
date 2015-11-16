@@ -3,15 +3,11 @@
  * This class is responsible for some members functions
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Member
- * @since		1.2
- * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
- * @author		marcan <marcan@impresscms.org>
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
+ * @author	marcan <marcan@impresscms.org>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -21,9 +17,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * This class provides simple interface (a facade class) for handling groups/users/
  * membership data.
  *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Member
+ * @package	ICMS/IPF/Member
  */
 class icms_ipf_member_Handler extends icms_member_Handler {
 

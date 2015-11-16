@@ -30,12 +30,8 @@
 /**
  * Private messages
  *
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- *
- * @category	ICMS
- * @package		Privmessage
- * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -43,8 +39,9 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * A handler for Private Messages
  *
- * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @package	ICMS/Data/Privmessage 
  *
  * @property int    $msg_id       Message ID
  * @property string $msg_image    Image

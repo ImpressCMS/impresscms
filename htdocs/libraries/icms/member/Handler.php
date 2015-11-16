@@ -31,11 +31,8 @@
  * Management of members
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Member
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
+ * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -45,10 +42,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * This class provides simple interface (a facade class) for handling groups/users/
  * membership data.
  *
- *
- * @author  Kazumi Ono <onokazu@xoops.org>
- * @category	ICMS
- * @package		Member
+ * @author      Kazumi Ono <onokazu@xoops.org>
+ * @package	ICMS/Member
  */
 class icms_member_Handler {
 

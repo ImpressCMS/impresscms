@@ -35,13 +35,9 @@
  * @copyright       http://www.xoops.org/ The XOOPS Project
  * @copyright       http://www.impresscms.org/ The ImpressCMS Project
  * @license	    LICENSE.txt
- * @category	    ICMS
- * @package         Image
- * @subpackage      Set
  * @since	    XOOPS
  * @author	    http://www.xoops.org The XOOPS Project
  * @author	    modified by UnderDog <underdog@impresscms.org>
- * @version	    $Id: imageset.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
@@ -52,6 +48,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright       copyright (c) 2000-2003 XOOPS.org
+ * @package         ICMS/Image/Set
  * 
  * @property int    $imgset_id      Image set ID
  * @property string $imgset_name    Name

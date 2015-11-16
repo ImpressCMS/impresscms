@@ -32,11 +32,8 @@
  * This is a highly rewritten class for defining blocks
  *
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @license	GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -44,8 +41,9 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * ImpressCMS Core Block Object Class
  *
- * @since		ImpressCMS 1.2
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @since	ImpressCMS 1.2
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @package     ICMS/View/Block
  * 
  * @property string $name           Name
  * @property int    $bid            Block ID

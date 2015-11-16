@@ -4,26 +4,10 @@
  * Contains the classes for updating database tables
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Database
- *
- * @author marcan <marcan@smartfactory.ca>
- * @version $Id: Handler.php 12310 2013-09-13 21:33:58Z skenow $
- * @link http://www.smartfactory.ca The SmartFactory
- */
-/**
- * icms_db_legacy_updater_Table class
- *
- * Information about an individual table
- *
- * @category	ICMS
- * @package		Database
- * @subpackage	Updater
- *
- * @author marcan <marcan@smartfactory.ca>
- * @link http://www.smartfactory.ca The SmartFactory
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author      marcan <marcan@smartfactory.ca>
+ * @link        http://www.smartfactory.ca The SmartFactory
+ * @package	ICMS/Database/Legacy/Updater
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 

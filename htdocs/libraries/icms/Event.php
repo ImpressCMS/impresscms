@@ -2,13 +2,10 @@
 /**
  * icms_Event class definition
  *
- * @category	ICMS
- *
+ * @package	ICMS
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-
 class icms_Event {
 	/**
 	 * Registered event handlers

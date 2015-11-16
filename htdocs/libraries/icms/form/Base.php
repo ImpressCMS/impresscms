@@ -32,15 +32,9 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category    ICMS
- * @package	    Form
- * @subpackage  Base
- *
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		$Id: form.php 19813 2010-07-13 23:49:13Z malanciault $
  */
 
 /**
@@ -49,12 +43,7 @@
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @author  	Taiwen Jiang    <phppp@users.sourceforge.net>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- *
- *
- * @category    ICMS
- * @package  	Form
- * @subpackage	Base
- *
+ * @package	ICMS/Form
  */
 abstract class icms_form_Base {
 

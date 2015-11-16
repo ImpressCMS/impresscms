@@ -3,14 +3,10 @@
  * Handles all functions related to 3rd party libraries within ImpressCMS
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Preload
- * @subpackage	Libraries
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -21,12 +17,10 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * Class handling third party libraries within ImpressCMS
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Preload
- * @subpackage	Libraries
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS/Preload
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 class icms_preload_LibrariesHandler {
 	/**

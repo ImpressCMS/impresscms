@@ -33,10 +33,8 @@
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Core
- * @version		SVN: $Id: Object.php 12112 2012-11-09 02:15:50Z skenow $
+ * @license	LICENSE.txt
+ * @package	ICMS/Core
  */
 /* * #@+
  * Object datatype
@@ -75,11 +73,10 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_properties_Handler::DTYPE_DEP_FORM_
  *
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @category	ICMS
- * @package		Core
+ * @package	ICMS/Core
  *
- * @since		XOOPS
- * @author		Kazumi Ono (AKA onokazu)
+ * @since	XOOPS
+ * @author	Kazumi Ono (AKA onokazu)
  * */
 class icms_core_Object extends icms_properties_Handler {
 

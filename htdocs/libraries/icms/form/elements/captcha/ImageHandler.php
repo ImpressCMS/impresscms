@@ -9,19 +9,13 @@
  * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		XOOPS
- *
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
-  */
+ **/
 
 /**
  * Captcha Image Handler
  *
- * @author		modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
+ * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package	ICMS/Form/Elements/Captcha
  */
 class icms_form_elements_captcha_ImageHandler {
 	//var $mode = "gd"; // GD or bmp

@@ -32,21 +32,13 @@
  *
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- *
- * @category	ICMS
- * @package		Data
- * @subpackage	Comment
- * @version		SVN: $Id$
  */
 
 /**
  * Display comments
  *
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- *
- * @category	ICMS
- * @package		data
- * @subpackage	comment
+ * @package	ICMS/Data/Comment
  */
 class icms_data_comment_Renderer {
 

@@ -32,12 +32,6 @@
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @category	ICMS
- * @package     Core
- * @subpackage	Template
- *
- * @version		SVN: $Id$
- *
  */
 
 /**
@@ -48,9 +42,7 @@ defined('ICMS_ROOT_PATH') or exit();
 /**
  * icms_view_PageBuilder main class
  *
- * @category	ICMS
- * @package     Core
- * @subpackage  Template
+ * @package	ICMS/View
  * @author      Skalpa Keo <skalpa@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @author      Gustavo Pilla (aka nekro) <nekro@impresscms.org>

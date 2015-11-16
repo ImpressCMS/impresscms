@@ -29,11 +29,7 @@
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Config
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -43,14 +39,12 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * This class acts as an interface for handling general configurations
  * and its modules.
  *
- * @category	ICMS
- * @package 	Config
- * @author		Kazumi Ono <webmaster@myweb.ne.jp>
+ * @package	ICMS/Config
+ * @author	Kazumi Ono <webmaster@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- *
- * @todo		Tests that need to be made:
- * 				- error handling
- * @access		public
+ * @todo	Tests that need to be made:
+ *                  - error handling
+ * @access	public
  */
 class icms_config_Handler {
 	static protected $instance;

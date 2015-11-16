@@ -31,9 +31,6 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @category	ICMS
- * @package	Config
- * @subpackage	Category
  * @author	Kazumi Ono (aka onokazo)
  */
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -43,6 +40,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @package	ICMS/Config/Category
  *
  * @property int    $confcat_id        Category ID
  * @property string $confcat_name      Category name

@@ -31,13 +31,8 @@
  * Manage group permissions
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		LICENSE.txt
- *
- * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
- * @category	ICMS
- * @package		Member
- * @subpackage	GroupPermission
- * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license	LICENSE.txt 
+ * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -47,11 +42,10 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of group permission class objects.
- * @category	ICMS
- * @package		Member
- * @subpackage	GroupPermission
- * @see			icms_member_groupperm_Object
- * @author		Kazumi Ono  <onokazu@xoops.org>
+ * 
+ * @package	ICMS/Member/GroupPermission
+ * @see		icms_member_groupperm_Object
+ * @author	Kazumi Ono  <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class icms_member_groupperm_Handler extends icms_ipf_Handler {

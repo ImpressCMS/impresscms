@@ -32,10 +32,8 @@
  * Manage of original Objects
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Core
- * @version		SVN: $Id: ObjectHandler.php 12112 2012-11-09 02:15:50Z skenow $
+ * @license	LICENSE.txt
+ * @package	ICMS/Core
  */
 
 /**
@@ -46,11 +44,10 @@
  *
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @category	ICMS
- * @package		Core
+ * @package	ICMS/Core
  *
- * @since		XOOPS
- * @author		Kazumi Ono <onokazu@xoops.org>
+ * @since	XOOPS
+ * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  *
  * @abstract

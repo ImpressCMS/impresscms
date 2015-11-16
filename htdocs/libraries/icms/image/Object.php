@@ -31,10 +31,8 @@
  * Manage images
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Image
- * @author		Kazumi Ono 	<onokazu@xoops.org>
+ * @license	LICENSE.txt
+ * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org 
  */
 
@@ -43,8 +41,9 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * An Image Object
  *
- * @author		Kazumi Ono 	<onokazu@xoops.org>
+ * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package	ICMS/Image
  * 
  * @property int    $image_id          Image ID
  * @property string $image_name        Name

@@ -6,12 +6,9 @@
  * autoloading of classes, reduces the memory usage and only includes files when needed.
  *
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Core
- * @subpackage	Message
- * @since		1.3
- * @version	SVN: $Id: Message.php 12112 2012-11-09 02:15:50Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS/Core
+ * @since	1.3
  */
 
 /**

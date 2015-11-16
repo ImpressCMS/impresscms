@@ -32,10 +32,6 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Core
- * @subpackage	Session
- * @version	SVN: $Id: Session.php 12112 2012-11-09 02:15:50Z skenow $
  */
 /**
  * Handler for a session
@@ -44,10 +40,9 @@
  * Written by Vagharshak Tozalakyan <vagh@armdex.com>
  * Released under GNU Public License
  * 
- * @category	ICMS
- * @package	Session
+ * @package	ICMS/Core
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_core_Session {

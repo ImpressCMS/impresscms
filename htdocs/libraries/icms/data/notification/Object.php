@@ -30,11 +30,8 @@
 /**
  * Manage Notifications
  *
- * @license		LICENSE.txt
+ * @license	LICENSE.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- *
- * @category	ICMS
- * @package	Notification
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -44,6 +41,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * @author	Michael van Dam	<mvandam@caltech.edu>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @package	ICMS/Data/Notification 
  *
  * @property int    $not_id        Notification ID
  * @property int    $not_modid     Module ID linked with this notification

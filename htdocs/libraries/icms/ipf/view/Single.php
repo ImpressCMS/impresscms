@@ -3,13 +3,9 @@
  * Contains the basis classes for displaying a single icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Object
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: icmspersistablesingleview.php 19623 2010-06-25 14:59:15Z malanciault $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -19,10 +15,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * Base class handling the display of a single object
  *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	View
- * @author marcan <marcan@smartfactory.ca>
+ * @package	ICMS/IPF/View
+ * @author      marcan <marcan@smartfactory.ca>
  */
 class icms_ipf_view_Single {
 

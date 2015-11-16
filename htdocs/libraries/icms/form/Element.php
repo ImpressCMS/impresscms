@@ -32,11 +32,6 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Form
- * @subpackage	Element
- * @version	$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -44,12 +39,9 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * Abstract base class for form elements
  *
- * @category	ICMS
- * @package     Form
- * @subpackage	Elements
- *
- * @author		Kazumi Ono	<onokazu@xoops.org>
- * @author		Taiwen Jiang    <phppp@users.sourceforge.net>
+ * @package	ICMS/Form
+ * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @author	Taiwen Jiang    <phppp@users.sourceforge.net>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 abstract class icms_form_Element {

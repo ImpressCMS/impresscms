@@ -4,10 +4,6 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Core
- * @version		SVN: $Id$
  */
 
 /**
@@ -32,9 +28,8 @@
  *
  * @copyright	(c)	2002 - www.ipunkt.biz (rok)
  *
- * @access		public
- * @category	ICMS
- * @package     Core
+ * @access	public
+ * @package	ICMS/File
  */
 class icms_file_ZipFileHandler {
 	/**
