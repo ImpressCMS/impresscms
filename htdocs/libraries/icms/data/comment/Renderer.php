@@ -38,7 +38,7 @@
  * Display comments
  *
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS/Data/Comment
+ * @package	ICMS\Data\Comment
  */
 class icms_data_comment_Renderer {
 

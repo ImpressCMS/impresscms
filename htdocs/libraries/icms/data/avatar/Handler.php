@@ -45,7 +45,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author  	Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  *
- * @package	ICMS/Data/Avatar
+ * @package	ICMS\Data\Avatar
  */
 class icms_data_avatar_Handler extends icms_ipf_Handler {
     

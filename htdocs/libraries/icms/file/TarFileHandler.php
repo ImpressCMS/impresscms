@@ -83,7 +83,7 @@
  *
  * @author	Josh Barger <joshb@npt.com>
  * @copyright	Copyright (C) 2002  Josh Barger
- * @package	ICMS/File
+ * @package	ICMS\File
  */
 class icms_file_TarFileHandler {
 	/**#@+

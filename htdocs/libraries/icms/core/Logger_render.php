@@ -9,7 +9,7 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	ICMS/Core
+ * @package	ICMS\Core
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 

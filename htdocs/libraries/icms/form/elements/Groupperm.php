@@ -37,7 +37,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * Renders checkbox options for a group permission form
  *
- * @package	ICMS/Form/Elements
+ * @package	ICMS\Form\Elements
  * @author	Kazumi Ono <onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

@@ -45,7 +45,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * of comment class objects.
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @package	ICMS/Data/Comment 
+ * @package	ICMS\Data\Comment 
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * 				You should have received a copy of XOOPS_copyrights.txt with
  * 				this file. If not, you may obtain a copy from xoops.org

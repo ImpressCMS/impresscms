@@ -33,7 +33,7 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @package	ICMS/Core
+ * @package	ICMS\Core
  */
 
 /**
@@ -44,7 +44,7 @@
  *
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @package	ICMS/Core
+ * @package	ICMS\Core
  *
  * @since	XOOPS
  * @author	Kazumi Ono <onokazu@xoops.org>

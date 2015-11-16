@@ -49,7 +49,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * Abstract base class should never be instantiated directly.
  *
  * @abstract
- * @package	ICMS/Database/Criteria
+ * @package	ICMS\Database\Criteria
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org

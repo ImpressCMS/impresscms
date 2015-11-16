@@ -3,8 +3,8 @@
  * Configuration settings for local authentication store
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @package     ICMS/Authentication/Stores
+ * @license	LICENSE.txt
+ * @package     ICMS\Authentication\Stores
  */
 
 /*

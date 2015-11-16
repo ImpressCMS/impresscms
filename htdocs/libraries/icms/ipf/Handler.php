@@ -19,7 +19,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Persistable Object Handlder
  * 
- * @package	ICMS/IPF
+ * @package	ICMS\IPF
  * @since	1.1
  * @todo	Properly name the vars using the naming conventions
  */

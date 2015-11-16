@@ -42,7 +42,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * This extends the icms_form_elements_Tray class because this field actually contains
  * 2 different elements - the date and the time
  *
- * @package	ICMS/Form/Elements
+ * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

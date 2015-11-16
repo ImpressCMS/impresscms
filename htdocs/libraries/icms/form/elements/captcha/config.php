@@ -16,7 +16,7 @@
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  *
- * @package	ICMS/Form/Elements/Captcha
+ * @package	ICMS\Form\Elements\Captcha
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 

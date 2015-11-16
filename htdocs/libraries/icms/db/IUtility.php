@@ -11,7 +11,7 @@
  *
  * @copyright	The ImpressCMS Project - http://www.impresscms.org/
  *
- * @package	ICMS/Database
+ * @package	ICMS\Database
  * @since	2.0
  */
 interface icms_db_IUtility {

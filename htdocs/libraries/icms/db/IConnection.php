@@ -13,7 +13,7 @@
  * All the methods in this class are PDO methods, with the exception of escape, which is a legacy method
  *
  * @since 1.4
- * @package	ICMS/Database
+ * @package	ICMS\Database
  */
 interface icms_db_IConnection {
 

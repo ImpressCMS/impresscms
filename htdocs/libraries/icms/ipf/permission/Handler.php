@@ -14,7 +14,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  *
- * @package	ICMS/IPF/Permission
+ * @package	ICMS\IPF\Permission
  *
  */
 class icms_ipf_permission_Handler {

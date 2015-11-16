@@ -20,7 +20,7 @@
  * @author		Kazumi Ono  <onokazu@xoops.org>
  * @author		Skalpa Keo <skalpa@xoops.org>
  *
- * @package	ICMS/Core
+ * @package	ICMS\Core
  */
 class icms_core_Logger {
 

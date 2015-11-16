@@ -16,7 +16,7 @@ icms_loadLanguageFile("system", "userrank", TRUE);
 /**
  * Ranks to assign members
  * 
- * @package	ICMS/Member/Rank
+ * @package	ICMS\Member\Rank
  * 
  * @property int    $rank_id       Rank ID
  * @property string $rank_title    Title

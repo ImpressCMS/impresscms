@@ -31,7 +31,7 @@
  * Establishes database class and connection
  *
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	ICMS/Database
+ * @package	ICMS\Database
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  *

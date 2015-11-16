@@ -14,7 +14,7 @@
  * Create and interact with a database connection using PDO
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @package	ICMS/Database/Legacy
+ * @package	ICMS\Database\Legacy
  */
 class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 

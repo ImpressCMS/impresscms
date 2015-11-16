@@ -41,7 +41,7 @@ defined( 'ICMS_ROOT_PATH' ) or die();
 /**
  * Abstract base class for Database access classes
  *
- * @package	ICMS/Database/Legacy
+ * @package	ICMS\Database\Legacy
  * @author	Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @author	Gustavo Pilla  (aka nekro) <nekro@impresscms.org>

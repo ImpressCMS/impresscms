@@ -43,7 +43,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * of group class objects.
  *
  * @author      Kazumi Ono <onokazu@xoops.org>
- * @package	ICMS/Member/Group
+ * @package	ICMS\Member\Group
  */
 class icms_member_group_Handler extends icms_ipf_Handler {
     

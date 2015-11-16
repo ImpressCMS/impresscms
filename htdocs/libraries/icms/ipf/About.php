@@ -20,7 +20,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since	1.0
  * @author	marcan <marcan@impresscms.org>
  * @todo	Properly set visibility of vars
- * @package	ICMS/IPF
+ * @package	ICMS\IPF
  */
 class icms_ipf_About {
 	public $_lang_aboutTitle;

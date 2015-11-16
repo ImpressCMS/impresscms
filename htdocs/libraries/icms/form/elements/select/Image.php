@@ -24,7 +24,7 @@ defined('ICMS_ROOT_PATH') or die();
 /**
  * Create a form element to select an image
  *
- * @package	ICMS/Form/Elements/Select
+ * @package	ICMS\Form\Elements\Select
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 class icms_form_elements_select_Image extends icms_form_elements_Select {

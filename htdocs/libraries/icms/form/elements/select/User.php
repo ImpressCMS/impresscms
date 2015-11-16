@@ -42,7 +42,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * user select with page navigation
  *
- * @package	ICMS/Form/Elements/Select
+ * @package	ICMS\Form\Elements\Select
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org

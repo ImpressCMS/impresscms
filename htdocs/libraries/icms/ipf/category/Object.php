@@ -21,7 +21,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @property string $description   Description
  * @property string $image         image
  * 
- * @package	ICMS/IPF/Category
+ * @package	ICMS\IPF\Category
  */
 class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	/** Path that corresponds to the category */

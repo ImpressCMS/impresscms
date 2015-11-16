@@ -30,7 +30,7 @@
 /**
  * Class for handling email, extending PHPMailer to email the users
  *
- * @package	ICMS/Messaging/Email
+ * @package	ICMS\Messaging
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
@@ -45,7 +45,7 @@ require_once ICMS_LIBRARIES_PATH . '/phpmailer/class.phpmailer.php';
  *
  * @author	Jochen B��nagel	<jb@buennagel.com>
  * @copyright	copyright (c) 2000-2003 The XOOPS Project (http://www.xoops.org)
- * @package	ICMS/Messaging
+ * @package	ICMS\Messaging
  */
 class icms_messaging_EmailHandler extends PHPMailer {
 

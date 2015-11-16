@@ -43,7 +43,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @since	XOOPS
  * @author	D.J.
  * @copyright	copyright (c) 2000-2005 XOOPS.org
- * @package	ICMS/Form/Elements
+ * @package	ICMS\Form\Elements
  *
  * @todo	To be removed as this is not used anywhere in the core
  */

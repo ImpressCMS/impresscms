@@ -14,7 +14,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 /**
  * Class to manage a printer friendly page
  * 
- * @package	ICMS/View
+ * @package	ICMS\View
  * @author      The IcmsFactory <www.smartfactory.ca>
  */
 class icms_view_Printerfriendly {

@@ -37,7 +37,7 @@
 /**
  * Class for managing security aspects such as checking referers, applying tokens and checking global variables for contamination
  *
- * @package	ICMS/Core
+ * @package	ICMS\Core
  *
  * @author	Jan Pedersen <mithrandir@xoops.org>
  * @copyright	(c) 2000-2005 The Xoops Project - www.xoops.org

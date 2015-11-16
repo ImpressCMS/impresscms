@@ -44,7 +44,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * A single criteria
  *
- * @package	ICMS/Database/Criteria
+ * @package	ICMS\Database\Criteria
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */

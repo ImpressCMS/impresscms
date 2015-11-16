@@ -46,8 +46,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author  	Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @package	ICMS/Config/Category
- *
+ * @package	ICMS\Config\Category
  */
 class icms_config_category_Handler extends icms_ipf_Handler {
     

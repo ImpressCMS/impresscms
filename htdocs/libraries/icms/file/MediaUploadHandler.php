@@ -76,7 +76,7 @@
  * }
  * </code>
  * 
- * @package	ICMS/File
+ * @package	ICMS\File
  * @author      Kazumi Ono     <onokazu@xoops.org>
  * @author      phppp
  * @copyright	copyright (c) 2000-2007 XOOPS.org

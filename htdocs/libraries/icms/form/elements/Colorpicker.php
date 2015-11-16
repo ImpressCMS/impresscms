@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * Color Picker
  *
- * @package	ICMS/Form/Elements
+ * @package	ICMS\Form\Elements
  * @since	Xoops 2.0.15
  * @author	Zoullou <webmaster@zoullou.org>
  * @author	Kazumi Ono	<onokazu@xoops.org>

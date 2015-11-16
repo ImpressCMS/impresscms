@@ -37,7 +37,7 @@
 /**
  * A select box with available editors
  *
- * @package	ICMS/Form/Elements/Select
+ * @package	ICMS\Form\Elements/Select
  * @author	phppp (D.J.)
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

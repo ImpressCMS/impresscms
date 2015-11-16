@@ -6,7 +6,7 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @package	ICMS/View/Block/Position
+ * @package	ICMS\View\Block\Position
  * @since	1.0
  */
 
@@ -16,7 +16,7 @@ icms_loadLanguageFile('system', 'positions', TRUE);
 /**
  * icms_view_block_position_Handler
  * 
- * @package	ICMS/View/Block/Position
+ * @package	ICMS\View\Block\Position
  */
 class icms_view_block_position_Handler extends icms_ipf_Handler {
 

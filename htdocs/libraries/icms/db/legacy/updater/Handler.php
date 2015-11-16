@@ -7,7 +7,7 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @author      marcan <marcan@smartfactory.ca>
  * @link        http://www.smartfactory.ca The SmartFactory
- * @package	ICMS/Database/Legacy/Updater
+ * @package	ICMS\Database\Legacy\Updater
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 

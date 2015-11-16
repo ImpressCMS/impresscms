@@ -38,7 +38,7 @@
  * 
  * @author      Skalpa Keo <skalpa@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS/View/Theme
+ * @package	ICMS\View\Theme
  */
 class icms_view_theme_Object {
 	/**

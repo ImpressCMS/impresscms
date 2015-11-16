@@ -7,7 +7,7 @@
  * @since	1.2
  * @author	ImpressCMS
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @package	ICMS/Plugins
+ * @package	ICMS\Plugins
  */
 class icms_plugins_Handler {
 

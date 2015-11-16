@@ -21,7 +21,7 @@
  * The captcha image
  *
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @package	ICMS/Form/Elements/Captcha
+ * @package	ICMS\Form\Elements/Captcha
  */
 class icms_form_elements_captcha_Image {
 	//var $config	= array();

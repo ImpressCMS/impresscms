@@ -29,7 +29,7 @@
  * @copyright	(c)	2002 - www.ipunkt.biz (rok)
  *
  * @access	public
- * @package	ICMS/File
+ * @package	ICMS\File
  */
 class icms_file_ZipFileHandler {
 	/**

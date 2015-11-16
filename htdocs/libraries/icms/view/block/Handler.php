@@ -42,7 +42,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org>
  * @license	GNU GPL v2
- * @package	ICMS/View/Block
+ * @package	ICMS\View\Block
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */

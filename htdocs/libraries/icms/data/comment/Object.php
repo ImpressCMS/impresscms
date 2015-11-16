@@ -41,7 +41,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * A Comment
  *
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS/Data/Comment
+ * @package	ICMS\Data\Comment
  *
  * @property int    $com_id        Comment ID
  * @property int    $com_pid       Comment parent ID

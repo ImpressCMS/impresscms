@@ -13,7 +13,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * membership of a user in a group
  *
  * @author	Kazumi Ono <onokazu@xoops.org>
- * @package	ICMS/Member/Group/Membership
+ * @package	ICMS\Member\Group\Membership
  * 
  * @property int $linkid        Membership link ID
  * @property int $groupid       Group ID

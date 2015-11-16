@@ -28,9 +28,8 @@
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author	Kazumi Ono (aka onokazo)
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -42,7 +41,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author  	Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @package	ICMS/Config/Option
+ * @package	ICMS\Config\Option
  */
 class icms_config_option_Handler extends icms_ipf_Handler {
     

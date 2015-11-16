@@ -32,7 +32,7 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @package	ICMS/Member/User
+ * @package	ICMS\Member\User
  */
 
 defined('ICMS_ROOT_PATH') or exit();
@@ -50,7 +50,7 @@ include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
  *
  * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS/Member/User
+ * @package	ICMS\Member\User
  */
 class icms_member_user_Handler 
     extends icms_ipf_Handler {

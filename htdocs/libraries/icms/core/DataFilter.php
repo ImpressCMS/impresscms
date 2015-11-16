@@ -31,11 +31,11 @@
 /**
  * Class to filter Data
  * 
- * @package	ICMS/Core
- * @since        1.3
- * @author       vaughan montgomery (vaughan@impresscms.org)
- * @author       ImpressCMS Project
- * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+ * @package     ICMS\Core
+ * @since       1.3
+ * @author      vaughan montgomery (vaughan@impresscms.org)
+ * @author      ImpressCMS Project
+ * @copyright   (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  **/
 class icms_core_DataFilter {
 

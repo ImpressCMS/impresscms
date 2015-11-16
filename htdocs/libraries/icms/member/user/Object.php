@@ -41,7 +41,7 @@ defined('ICMS_ROOT_PATH') or exit();
  * 
  * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS/Member/User
+ * @package	ICMS\Member\User
  * 
  * @property int    $uid               User ID
  * @property string $name              Name

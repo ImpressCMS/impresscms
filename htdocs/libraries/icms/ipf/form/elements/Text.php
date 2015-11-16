@@ -4,7 +4,7 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	ICMS/IPF/Form/Elements
+ * @package	ICMS\IPF\Form\Elements
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */

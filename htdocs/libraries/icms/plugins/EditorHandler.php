@@ -33,7 +33,7 @@
  * @license	http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS/Plugins
+ * @package	ICMS\Plugins
  */
 class icms_plugins_EditorHandler {
 	private $root_path = "";

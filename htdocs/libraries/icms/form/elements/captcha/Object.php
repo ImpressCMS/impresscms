@@ -16,7 +16,7 @@
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  *
- * @package	ICMS/Form/Elements/Captcha
+ * @package	ICMS\Form\Elements\Captcha
  */
 
 icms_loadLanguageFile('core', 'captcha');
@@ -24,7 +24,7 @@ icms_loadLanguageFile('core', 'captcha');
  * Creates the captcha object
  *
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @package	ICMS/Form/Elements/Captcha
+ * @package	ICMS\Form\Elements\Captcha
  */
 class icms_form_elements_captcha_Object {
 

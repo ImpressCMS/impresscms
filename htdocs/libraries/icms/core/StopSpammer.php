@@ -7,7 +7,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @package	ICMS/Core
+ * @package	ICMS\Core
  * @since	1.2
  * @author	marcan <marcan@impresscms.org>
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>

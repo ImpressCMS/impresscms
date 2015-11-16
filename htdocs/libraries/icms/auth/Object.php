@@ -29,7 +29,7 @@
  * defines abstract authentification wrapper class
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license	LICENSE.txt
  */
 
 /**
@@ -38,8 +38,8 @@
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @since       XOOPS
- * @package     ICMS/Authentication
- * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
+ * @package     ICMS\Authentication
+ * @author	Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_Object {
 

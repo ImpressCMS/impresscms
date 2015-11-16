@@ -44,7 +44,7 @@ icms_loadLanguageFile('core', 'mail');
  *
  * @author	Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS/Messaging
+ * @package	ICMS\Messaging
  */
 class icms_messaging_Handler {
 	/**

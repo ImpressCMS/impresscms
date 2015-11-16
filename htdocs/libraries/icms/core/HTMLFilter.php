@@ -3,7 +3,7 @@
  * Class to Clean & Filter HTML for various uses.
  * Class uses external HTML Purifier for filtering.
  *
- * @package	ICMS/Core
+ * @package	ICMS\Core
  * @since	1.3
  * @author	vaughan montgomery (vaughan@impresscms.org)
  * @author	ImpressCMS Project

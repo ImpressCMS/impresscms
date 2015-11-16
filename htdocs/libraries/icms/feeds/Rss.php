@@ -13,7 +13,7 @@ defined('ICMS_ROOT_PATH') or exit();
 /**
  * Generates the data necessary for an RSS feed and assigns it to a smarty template
  *
- * @package	ICMS/Feeds
+ * @package	ICMS\Feeds
  */
 class icms_feeds_Rss {
 

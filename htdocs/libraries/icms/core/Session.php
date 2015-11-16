@@ -40,7 +40,7 @@
  * Written by Vagharshak Tozalakyan <vagh@armdex.com>
  * Released under GNU Public License
  * 
- * @package	ICMS/Core
+ * @package	ICMS\Core
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org

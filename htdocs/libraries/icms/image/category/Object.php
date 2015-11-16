@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *  
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS/Image/Category
+ * @package	ICMS\Image\Category
  * 
  * @property int    $imgcat_id         Image category ID
  * @property int    $imgcat_pid        Image category parent ID

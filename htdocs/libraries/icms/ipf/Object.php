@@ -17,7 +17,7 @@ icms_loadLanguageFile('system', 'common');
  *
  * Base class representing a single icms_ipf_Object
  *
- * @package	ICMS/IPF
+ * @package	ICMS\IPF
  * @author      marcan <marcan@smartfactory.ca>
  * @todo	Properly identify and declare the visibility of vars and functions
  */

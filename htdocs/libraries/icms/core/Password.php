@@ -2,12 +2,12 @@
 /**
  * Class to encrypt User Passwords.
  *
- * @since		1.2
- * @author		vaughan montgomery (vaughan@impresscms.org)
- * @author		ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	vaughan montgomery (vaughan@impresscms.org)
+ * @author	ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @package	ICMS/Core
+ * @package	ICMS\Core
  **/
 final class icms_core_Password {
 	

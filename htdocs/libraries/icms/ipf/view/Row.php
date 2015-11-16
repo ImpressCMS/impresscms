@@ -11,7 +11,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * Class representing a single row of a icms_ipf_view_Single
  *
- * @package	ICMS/IPF/View
+ * @package	ICMS\IPF\View
  * @author	marcan <marcan@smartfactory.ca>
  * @todo	Properly determine visibility of vars and methods and follow naming convention
  */

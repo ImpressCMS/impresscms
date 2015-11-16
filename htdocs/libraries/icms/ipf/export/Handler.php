@@ -7,7 +7,7 @@
  * @since	1.2
  * @author	marcan <marcan@impresscms.org>
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @package	ICMS/IPF/Export
+ * @package	ICMS\IPF\Export
  */
 class icms_ipf_export_Handler {
 

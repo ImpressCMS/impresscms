@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author	Kazumi Ono (aka onokazo)
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS/Data/Avatar 
+ * @package	ICMS\Data\Avatar 
  *
  * @property int        $avatar_id         Avatar ID
  * @property string     $avatar_file       File used for avatar

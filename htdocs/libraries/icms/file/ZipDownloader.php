@@ -37,7 +37,7 @@ defined('ICMS_ROOT_PATH') or exit();
 /**
  * Handles compression of files in zip format and sending to the browser for download
  *
- * @package	ICMS/File
+ * @package	ICMS\File
  * @author	xoops.org
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */

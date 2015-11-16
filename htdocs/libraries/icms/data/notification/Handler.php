@@ -33,7 +33,7 @@
  * @license		LICENSE.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  *
- * @package	ICMS/Data/Notification
+ * @package	ICMS\Data\Notification
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -49,7 +49,7 @@ include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
  *
  * @author	    Michael van Dam <mvandam@caltech.edu>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS/Data/Notification
+ * @package	ICMS\Data\Notification
  */
 class icms_data_notification_Handler extends icms_ipf_Handler {
     

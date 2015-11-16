@@ -15,7 +15,7 @@
  * Captcha Image Handler
  *
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @package	ICMS/Form/Elements/Captcha
+ * @package	ICMS\Form\Elements/Captcha
  */
 class icms_form_elements_captcha_ImageHandler {
 	//var $mode = "gd"; // GD or bmp

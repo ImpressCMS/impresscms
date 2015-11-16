@@ -43,7 +43,7 @@
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @author  	Taiwen Jiang    <phppp@users.sourceforge.net>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS/Form
+ * @package	ICMS\Form
  */
 abstract class icms_form_Base {
 

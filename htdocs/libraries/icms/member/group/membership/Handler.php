@@ -44,7 +44,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * of group membership class objects.
  *
  * @author      Kazumi Ono <onokazu@xoops.org> 
- * @package	ICMS/Member/Group/Membership
+ * @package	ICMS\Member\Group\Membership
  */
 class icms_member_group_membership_Handler extends icms_ipf_Handler {
     

@@ -7,7 +7,7 @@
  * @since	1.2
  * @author	marcan <marcan@impresscms.org>
  * @author	phoenyx
- * @package	ICMS/IPF/Form/Elements
+ * @package	ICMS\IPF\Form\Elements
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");

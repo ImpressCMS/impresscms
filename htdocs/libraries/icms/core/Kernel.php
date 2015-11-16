@@ -41,7 +41,7 @@
  * This class has been replaced by the static "icms" class, to prevent pollution of the global
  *  namespace. Please use icms::method() now, instead of $GLOBALS["impresscms"]->method();
  *
- * @package	ICMS/Core
+ * @package	ICMS\Core
  * @since 	1.1
  *
  * @copyright	copyright (c) 2000-2003 XOOPS.org

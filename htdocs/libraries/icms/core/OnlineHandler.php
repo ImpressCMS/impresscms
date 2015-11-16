@@ -37,7 +37,7 @@
 /**
  * A handler for "Who is Online?" information
  *
- * @package	ICMS/Core
+ * @package	ICMS\Core
  *
  * @since	XOOPS
  * @author	Kazumi Ono	<onokazu@xoops.org>

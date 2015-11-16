@@ -28,7 +28,7 @@
  * Authentication classes, Active Directory class file
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license	LICENSE.txt
  */
 
 /**
@@ -38,8 +38,8 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license     http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since       XOOPS
- * @package     ICMS/Authentication/Method
- * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
+ * @package     ICMS\Authentication\Method
+ * @author	Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_method_Ads extends icms_auth_method_Ldap {
 

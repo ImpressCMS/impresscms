@@ -46,7 +46,7 @@ require_once SMARTY_DIR . 'Smarty.class.php';
 /**
  * Template engine
  *
- * @package	ICMS/View
+ * @package	ICMS\View
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */

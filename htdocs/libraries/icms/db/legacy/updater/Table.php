@@ -13,7 +13,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  *
  * Information about an individual table
  *
- * @package	ICMS/Database/Legacy/Updater
+ * @package	ICMS\Database\Legacy\Updater
  * @author marcan <marcan@smartfactory.ca>
  * @link http://www.smartfactory.ca The SmartFactory
  */

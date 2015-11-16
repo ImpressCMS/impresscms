@@ -41,7 +41,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS/Database/Legacy
+ * @package	ICMS\Database\Legacy
  */
 class icms_db_legacy_Factory extends icms_db_Factory {
 	/**

@@ -16,7 +16,7 @@ icms_loadLanguageFile("system", "userrank", TRUE);
 /**
  * Handler for the user ranks object
  * 
- * @package	ICMS/Member/Rank
+ * @package	ICMS\Member\Rank
  */
 class icms_member_rank_Handler extends icms_ipf_Handler {
 	

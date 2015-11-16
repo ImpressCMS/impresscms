@@ -42,7 +42,7 @@ defined('ICMS_ROOT_PATH') or exit();
 /**
  * icms_view_PageBuilder main class
  *
- * @package	ICMS/View
+ * @package	ICMS\View
  * @author      Skalpa Keo <skalpa@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @author      Gustavo Pilla (aka nekro) <nekro@impresscms.org>

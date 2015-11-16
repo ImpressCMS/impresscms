@@ -47,7 +47,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS imageset class objects.
  *
- * @package	ICMS/Image/Set
+ * @package	ICMS\Image\Set
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */

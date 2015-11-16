@@ -37,7 +37,7 @@
 /**
  * Class to facilitate navigation in a multi page document/list
  *
- * @package	ICMS/View
+ * @package	ICMS\View
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */

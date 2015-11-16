@@ -41,7 +41,7 @@ defined('ICMS_ROOT_PATH') or exit();
  *
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS/File
+ * @package	ICMS\File
  */
 class icms_file_TarDownloader extends icms_file_DownloadHandler {
 

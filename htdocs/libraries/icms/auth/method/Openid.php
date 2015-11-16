@@ -8,12 +8,11 @@
  * consideration $icmsConfigPersonaUser['activation_type'].
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.1
- * @author		malanciault <marcan@impresscms.org)
- * @credits		Sakimura <http://www.sakimura.org/> Evan Prodromou <http://evan.prodromou.name/>
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Openid.php 11730 2012-06-17 01:00:09Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	malanciault <marcan@impresscms.org)
+ * @credits	Sakimura <http://www.sakimura.org/> Evan Prodromou <http://evan.prodromou.name/>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 define('OPENID_STEP_BACK_FROM_SERVER', 1);
@@ -25,7 +24,7 @@ define('OPENID_STEP_USER_FOUND', 5);
 /**
  * OpenID authentication class
  *
- * @package     ICMS/Authentication/Method
+ * @package     ICMS\Authentication\Method
  */
 class icms_auth_method_Openid extends icms_auth_Object {
 

@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * membership data.
  *
  * @author      Kazumi Ono <onokazu@xoops.org>
- * @package	ICMS/Member
+ * @package	ICMS\Member
  */
 class icms_member_Handler {
 

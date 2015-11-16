@@ -1,5 +1,7 @@
 <?php
 
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 /**
  * This class is responsible for providing operations to an object for managing the object's manipulation
  *
@@ -9,14 +11,7 @@
  * @author	Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author	marcan <marcan@impresscms.org>
  * @todo	Use language constants for messages
- */
-
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
-/**
- *
- *
- * @package	ICMS/IPF
+ * @package	ICMS\IPF
  */
 class icms_ipf_Controller {
 

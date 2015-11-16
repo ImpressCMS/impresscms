@@ -20,7 +20,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @property string $page_url      URL
  * @property int    $page_status   Status
  * 
- * @package	ICMS/Data/Page 
+ * @package	ICMS\Data\Page 
  */
 class icms_data_page_Object extends icms_ipf_Object {
 

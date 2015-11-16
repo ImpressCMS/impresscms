@@ -33,7 +33,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @package	ICMS/View
+ * @package	ICMS\View
  * @author      Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
  */

@@ -40,7 +40,7 @@
  *
  * <b>Singleton</b>
  *
- * @package	ICMS/Core
+ * @package	ICMS\Core
  *
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @author	Goghs Cheng

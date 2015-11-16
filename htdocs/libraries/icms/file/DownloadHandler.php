@@ -38,7 +38,7 @@
 /**
  * Sends non HTML files through a http socket
  *
- * @package	ICMS/File
+ * @package	ICMS\File
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */

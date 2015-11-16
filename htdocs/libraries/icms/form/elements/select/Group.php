@@ -39,7 +39,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * A field with a choice of available groups
  *
- * @package	ICMS/Form/Elements/Select
+ * @package	ICMS\Form\Elements/Select
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

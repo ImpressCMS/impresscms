@@ -15,7 +15,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * Base class handling the display of a single object
  *
- * @package	ICMS/IPF/View
+ * @package	ICMS\IPF\View
  * @author      marcan <marcan@smartfactory.ca>
  */
 class icms_ipf_view_Single {

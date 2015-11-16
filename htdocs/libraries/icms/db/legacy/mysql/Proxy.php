@@ -41,7 +41,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * This class allows only SELECT queries to be performed through its
  * {@link query()} method for security reasons.
  *
- * @package	ICMS/Database/Legacy/MySQL
+ * @package	ICMS\Database\Legacy\MySQL
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */

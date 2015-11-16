@@ -65,7 +65,7 @@ define('ICMS_CONF_PURIFIER', 14);
  *
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @package	ICMS/Config/Item
+ * @package	ICMS\Config\Item
  */
 class icms_config_Item_Handler extends icms_ipf_Handler {
 

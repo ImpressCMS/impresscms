@@ -17,7 +17,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * This class provides simple interface (a facade class) for handling groups/users/
  * membership data.
  *
- * @package	ICMS/IPF/Member
+ * @package	ICMS\IPF\Member
  */
 class icms_ipf_member_Handler extends icms_member_Handler {
 

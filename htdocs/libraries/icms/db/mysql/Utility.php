@@ -9,7 +9,7 @@
  * ImpressCMS.org
  *
  * @copyright	The ImpressCMS Project - http://www.impresscms.org/
- * @package	ICMS/Database/MySQL
+ * @package	ICMS\Database\MySQL
  */
 abstract class icms_db_mysql_Utility implements icms_db_IUtility {
 

@@ -39,7 +39,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * Renders a form for setting module specific group permissions
  *
- * @package	ICMS/Form
+ * @package	ICMS\Form
  * @author	Kazumi Ono <onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

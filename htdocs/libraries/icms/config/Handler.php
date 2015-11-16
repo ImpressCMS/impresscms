@@ -39,7 +39,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * This class acts as an interface for handling general configurations
  * and its modules.
  *
- * @package	ICMS/Config
+ * @package	ICMS\Config
  * @author	Kazumi Ono <webmaster@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @todo	Tests that need to be made:

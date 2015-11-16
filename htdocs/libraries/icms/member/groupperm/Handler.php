@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * This class is responsible for providing data access mechanisms to the data source
  * of group permission class objects.
  * 
- * @package	ICMS/Member/GroupPermission
+ * @package	ICMS\Member\GroupPermission
  * @see		icms_member_groupperm_Object
  * @author	Kazumi Ono  <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org

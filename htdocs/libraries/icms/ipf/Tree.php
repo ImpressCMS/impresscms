@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
  *
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
- * @package	ICMS/IPF
+ * @package	ICMS\IPF
  */
 class icms_ipf_Tree {
 

@@ -30,7 +30,7 @@
 /**
  * Manage private messages
  *
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 
@@ -42,9 +42,9 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * This class is responsible for providing data access mechanisms to the data source
  * of private message class objects.
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS/Data/Privmessage
+ * @package	ICMS\Data\Privmessage
  */
 class icms_data_privmessage_Handler extends icms_ipf_Handler {
     

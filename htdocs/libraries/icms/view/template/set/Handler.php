@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS/View/Template/Set
+ * @package	ICMS\View\Template\Set
  */
 class icms_view_template_set_Handler extends icms_ipf_Handler {
 

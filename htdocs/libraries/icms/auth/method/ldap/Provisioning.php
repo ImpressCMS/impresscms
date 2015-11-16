@@ -3,15 +3,15 @@
  * Authentication classes, provisioning class file
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @license	LICENSE.txt
  */
 
 /**
  * Authentication provisioning class. This class is responsible to
  * provide synchronisation method to the user Database
  *
- * @package     ICMS/Authentication/Method/LDAP
- * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
+ * @package     ICMS\Authentication\Method\LDAP
+ * @author	Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_method_ldap_Provisioning {
 

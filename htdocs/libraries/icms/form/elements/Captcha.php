@@ -31,7 +31,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * CAPTCHA form element
  *
- * @package	ICMS/Form/Elements
+ * @package	ICMS\Form\Elements
  */
 class icms_form_elements_Captcha extends icms_form_Element {
 	private $_captchaHandler;

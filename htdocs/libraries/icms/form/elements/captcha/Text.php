@@ -15,7 +15,7 @@
  * Creates text version of Captcha element
  *
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @package	ICMS/Form/Elements/Captcha
+ * @package	ICMS\Form\Elements/Captcha
  */
 class icms_form_elements_captcha_Text {
 

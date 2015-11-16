@@ -2,7 +2,7 @@
 /**
  * This class highlight the chosen keywords in the current output buffer
  *
- * @package	ICMS/IPF
+ * @package	ICMS\IPF
  * @author	Setec Astronomy
  * @version 	1.0
  * @abstract	Highlight specific keywords.

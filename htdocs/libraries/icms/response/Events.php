@@ -3,8 +3,8 @@
 /**
 * Creates response of server sent events type
  *
- * @author Raimondas Rimkevičius <mekdrop@impresscms.org>
- * @package	ICMS/Response
+ * @author      Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * @package	ICMS\Response
  */
 class icms_response_Events
     extends icms_response_Text {
