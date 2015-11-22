@@ -3,24 +3,19 @@
  * Class To make printer friendly texts.
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		View
- * @subpackage	PrinterFriendly
- * @since		1.2
- * @author		ImpressCMS
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	ImpressCMS
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 /**
  * Class to manage a printer friendly page
- * @category	ICMS
- * @package		View
- * @subpackage	PrinterFriendly
- * @author The IcmsFactory <www.smartfactory.ca>
+ * 
+ * @package	ICMS\View
+ * @author      The IcmsFactory <www.smartfactory.ca>
  */
 class icms_view_Printerfriendly {
 

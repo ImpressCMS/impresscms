@@ -3,12 +3,8 @@
  * Manage memberships
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Member
- * @subpackage	GroupMembership
- * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
+ * @author	Kazumi Ono (aka onokazo)
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -16,10 +12,12 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * membership of a user in a group
  *
- * @author		Kazumi Ono <onokazu@xoops.org>
- * @category	ICMS
- * @package		Member
- * @subpackage	Group
+ * @author	Kazumi Ono <onokazu@xoops.org>
+ * @package	ICMS\Member\Group\Membership
+ * 
+ * @property int $linkid        Membership link ID
+ * @property int $groupid       Group ID
+ * @property int $uid           User ID
  */
 class icms_member_group_membership_Object extends icms_ipf_Object {
 	/**

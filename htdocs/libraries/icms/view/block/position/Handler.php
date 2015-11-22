@@ -5,12 +5,9 @@
  * Longer description about this page
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- * @since		1.0
- * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license	LICENSE.txt
+ * @package	ICMS\View\Block\Position
+ * @since	1.0
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -18,10 +15,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 icms_loadLanguageFile('system', 'positions', TRUE);
 /**
  * icms_view_block_position_Handler
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- *
+ * 
+ * @package	ICMS\View\Block\Position
  */
 class icms_view_block_position_Handler extends icms_ipf_Handler {
 

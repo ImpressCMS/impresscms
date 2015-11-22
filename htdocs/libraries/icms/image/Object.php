@@ -31,10 +31,9 @@
  * Manage images
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Image
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
+ * @author	Kazumi Ono 	<onokazu@xoops.org>
+ * @copyright	Copyright (c) 2000 XOOPS.org 
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -42,10 +41,19 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * An Image Object
  *
- * @category	ICMS
- * @package		Image
- * @author		Kazumi Ono 	<onokazu@xoops.org>
+ * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package	ICMS\Image
+ * 
+ * @property int    $image_id          Image ID
+ * @property string $image_name        Name
+ * @property string $image_nicename    Nice name
+ * @property string $image_mimetype    Mimetype
+ * @property int    $image_created     When was created?
+ * @property int    $image_display     Show be this image displayed on selection?
+ * @property int    $image_weight      Weight used for sorting for user
+ * @property string $image_body        Image contents
+ * @property int    $imgcat_id         Image category ID
  */
 class icms_image_Object extends icms_core_Object {
 	/**

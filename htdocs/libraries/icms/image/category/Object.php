@@ -31,11 +31,7 @@
  * Image categories
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Image
- * @subpackage	Category
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -44,12 +40,22 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * An image category
  *
  * These categories are managed through a {@link icms_image_category_Handler} object
-
- * @category	ICMS
- * @package     Image
- * @subpackage	Category
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ *  
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package	ICMS\Image\Category
+ * 
+ * @property int    $imgcat_id         Image category ID
+ * @property int    $imgcat_pid        Image category parent ID
+ * @property string $imgcat_name       Name
+ * @property string $imgcat_foldername Foldername
+ * @property int    $imgcat_display    Shold be this category displayed?
+ * @property int    $imgcat_weight     Weight used for sorting categories
+ * @property int    $imgcat_maxsize    Max image size in this category
+ * @property int    $imgcat_maxwidth   Max image width in this category
+ * @property int    $imgcat_maxheight  Max image height in this category
+ * @property string $imgcat_type       Type
+ * @property string $imgcat_storetype  Storing type
  */
 class icms_image_category_Object extends icms_core_Object {
 	private $_imageCount;

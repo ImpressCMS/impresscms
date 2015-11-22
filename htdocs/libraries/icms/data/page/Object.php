@@ -3,13 +3,10 @@
  * Classes responsible for managing core page objects
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Page
- * @since		ImpressCMS 1.1
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license	LICENSE.txt
+ * @since	ImpressCMS 1.1
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -17,8 +14,13 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * ImpressCMS page class.
  *
- * @since	ImpressCMS 1.2
- * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ * @property int    $page_id       Page ID
+ * @property int    $page_moduleid Module ID for what this page is it
+ * @property string $page_title    Title of page
+ * @property string $page_url      URL
+ * @property int    $page_status   Status
+ * 
+ * @package	ICMS\Data\Page 
  */
 class icms_data_page_Object extends icms_ipf_Object {
 

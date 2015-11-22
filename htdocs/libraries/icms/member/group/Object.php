@@ -31,11 +31,7 @@
  * Manage groups
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Member
- * @subpackage	Group
- * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
+ * @license	LICENSE.txt
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -43,11 +39,14 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * a group of users
  *
- * @author		Kazumi Ono <onokazu@xoops.org>
+ * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @category	ICMS
- * @package		Member
- * @subpackage	Group
+ * @package	ICMS\Member\Group
+ * 
+ * @property int     $groupid        Group ID
+ * @property string  $name           Name
+ * @property string  $description    Description
+ * @property string  $group_type     Type
  */
 class icms_member_group_Object extends icms_ipf_Object {
 	/**

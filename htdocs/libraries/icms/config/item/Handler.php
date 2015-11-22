@@ -30,10 +30,6 @@
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @package      Config
- * @subpackage   Item
- *
  * @since        XOOPS
  * @author       Kazumi Ono (aka onokazo)
  * @author       http://www.xoops.org The XOOPS Project
@@ -69,10 +65,7 @@ define('ICMS_CONF_PURIFIER', 14);
  *
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- *
- * @category	ICMS
- * @package     Config
- * @subpackage  Item
+ * @package	ICMS\Config\Item
  */
 class icms_config_Item_Handler extends icms_ipf_Handler {
 

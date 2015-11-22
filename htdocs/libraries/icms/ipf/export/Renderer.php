@@ -3,20 +3,9 @@
  * icms_ipf_export_Renderer class
  *
  * Class that renders a set of data into a specific export format
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Export
- * @author		marcan <marcan@smartfactory.ca>
- * @version		SVN: $Id$
- */
-
-/**
- * renders a set of data into a specific export format
- *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Export
- *
+ * 
+ * @author	marcan <marcan@smartfactory.ca>
+ * @package	ICMS\IPF\Export
  */
 class icms_ipf_export_Renderer {
 

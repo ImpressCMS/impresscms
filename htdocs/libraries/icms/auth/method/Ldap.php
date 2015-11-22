@@ -29,10 +29,6 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @category	ICMS
- * @package		Authentication
- * @subpackage	LDAP
- * @version		SVN: $Id: Ldap.php 11730 2012-06-17 01:00:09Z skenow $
  */
 
 /**
@@ -40,13 +36,11 @@
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	    LICENSE.txt
- * @author	    http://www.xoops.org The XOOPS Project
+ * @license	LICENSE.txt
+ * @author	http://www.xoops.org The XOOPS Project
  * @since       XOOPS
- * @category	ICMS
- * @package     Authentication
- * @subpackage  LDAP
- * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
+ * @package     ICMS\Authentication\Method
+ * @author	Pierre-Eric MENUET	<pemphp@free.fr>
  */
 class icms_auth_method_Ldap extends icms_auth_Object {
 

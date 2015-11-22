@@ -31,11 +31,7 @@
  * Creates a checkbox form attribut
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @version	$Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -44,10 +40,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * One or more Checkbox(es)
  *
- * @category	ICMS
- * @package     Form
- * @subpackage  Elements
- *
+ * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

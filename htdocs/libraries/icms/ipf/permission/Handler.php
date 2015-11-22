@@ -1,27 +1,17 @@
 <?php
+
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+
 /**
  * IcmsPermission
  *
  * This class easily manage the permission affected to an IcmsPersistablebject
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Permission
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
- */
-
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
-/**
- *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Permission
- *
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @package	ICMS\IPF\Permission
  */
 class icms_ipf_permission_Handler {
 

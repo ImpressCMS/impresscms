@@ -32,12 +32,8 @@
  * This is a highly rewritten class for defining blocks
  *
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id$
+ * @license	GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -45,11 +41,30 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * ImpressCMS Core Block Object Class
  *
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- * @since		ImpressCMS 1.2
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @since	ImpressCMS 1.2
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @package     ICMS\View\Block
+ * 
+ * @property string $name           Name
+ * @property int    $bid            Block ID
+ * @property int    $mid            Module ID
+ * @property int    $func_num  
+ * @property string $title          Title
+ * @property string $content        Content
+ * @property int    $side           Side
+ * @property int    $weight         Weight used for sorting positions
+ * @property int    $visible        Is visible?
+ * @property string $block_type     Type
+ * @property string $c_type 
+ * @property int    $isactive       Is active?
+ * @property string $dirname        Directory name
+ * @property string $func_file      Function file
+ * @property string $show_func      Show function
+ * @property string $edit_func      Edit function
+ * @property string $template       Template
+ * @property int    $bcachetime     Cache time
+ * @property int    $last_modified  When it was last modified?
+ * @property string $options        Options
  */
 class icms_view_block_Object extends icms_ipf_Object {
 

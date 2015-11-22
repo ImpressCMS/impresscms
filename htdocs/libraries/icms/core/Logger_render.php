@@ -8,12 +8,9 @@
  * 				this file. If not, you may obtain a copy from xoops.org
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Core
- * @subpackage	Logger
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: Logger_render.php 12310 2013-09-13 21:33:58Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS\Core
+ * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die();

@@ -4,8 +4,6 @@
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license		LICENSE.txt
- * @category	ICMS
- * @package		Page
  * @since		ImpressCMS 1.1
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
@@ -19,6 +17,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ * @package	ICMS\Data\Page
  */
 class icms_data_page_Handler extends icms_ipf_Handler {
 

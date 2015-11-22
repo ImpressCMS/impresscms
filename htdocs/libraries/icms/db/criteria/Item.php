@@ -38,23 +38,14 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Database
- * @subpackage	Criteria
- *
- * @version		SVN: $Id: Item.php 12313 2013-09-15 21:14:35Z skenow $
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * A single criteria
  *
- * @category	ICMS
- * @package     Database
- * @subpackage  Criteria
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @package	ICMS\Database\Criteria
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
 class icms_db_criteria_Item extends icms_db_criteria_Element {

@@ -9,17 +9,15 @@
  * 3 Else, take "text"
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-/*
+/**
+ * CAPTCHA form element
+ * 
  * Usage
  *
  * For form creation:
@@ -31,14 +29,8 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *   echo $icmsCaptcha->getMessage();
  *   ...
  * }
- */
-/**
- * CAPTCHA form element
  *
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- *
+ * @package	ICMS\Form\Elements
  */
 class icms_form_elements_Captcha extends icms_form_Element {
 	private $_captchaHandler;

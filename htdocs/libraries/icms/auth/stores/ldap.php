@@ -3,11 +3,8 @@
  * Configuration settings for LDAP authentication store
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Authentication
- * @subpackage	LDAP
- * @version		SVN: $Id: Factory.php 10809 2010-11-20 22:28:44Z phoenyx $
+ * @license	LICENSE.txt
+ * @package     ICMS\Authentication\Stores
  */
 
 /*

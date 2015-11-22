@@ -31,21 +31,14 @@
  * icms_view_theme_Object component class file
  *
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @category	ICMS
- * @package 	View
- * @subpackage 	Theme
- * @version		SVN: $Id$
  */
 
 /**
  * icms_view_theme_Factory
  *
- * @author		Skalpa Keo <skalpa@xoops.org>
+ * @author	Skalpa Keo <skalpa@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- *
- * @category	ICMS
- * @package		View
- * @subpackage	Theme
+ * @package	ICMS\View\Theme
  */
 class icms_view_theme_Factory {
 

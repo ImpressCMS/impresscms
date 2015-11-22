@@ -31,11 +31,7 @@
  * Manage template sets
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		View
- * @subpackage	Template
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -43,12 +39,16 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * Base class for all template sets
  *
- * @author		Kazumi Ono (AKA onokazu)
+ * @author	Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @category	ICMS
- * @package		View
- * @subpackage	Template
- **/
+ * @package	ICMS\View\Template\Set
+ * 
+ * @property int    $tplset_id      Template set ID
+ * @property string $tplset_name    Name
+ * @property string $tplset_desc    Description
+ * @property string $tplset_credits Credits
+ * @property int    $tplset_created When it was created?
+ * */
 class icms_view_template_set_Object extends icms_ipf_Object {
 
 	/**

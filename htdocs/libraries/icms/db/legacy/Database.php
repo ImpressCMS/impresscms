@@ -33,26 +33,18 @@
  * Defines abstract database wrapper class
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Database
- * @subpackage	Legacy
- *
- * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
 
 defined( 'ICMS_ROOT_PATH' ) or die();
 /**
  * Abstract base class for Database access classes
  *
- * @package Database
- * @subpackage  Legacy
- *
- * @author		Kazumi Ono  <onokazu@xoops.org>
+ * @package	ICMS\Database\Legacy
+ * @author	Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @author		Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
+ * @author	Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
  */
 abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	/**

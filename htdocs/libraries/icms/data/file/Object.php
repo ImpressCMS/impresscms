@@ -4,16 +4,23 @@
  * Richfile Object
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	icms
- * @package		data
- * @subpackage	richfile
- * @since		1.3
- * @author		Phoenyx
- * @version		$Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.3
+ * @author	Phoenyx
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
+/**
+ * File object
+ * 
+ * @property int    $fileid        File ID
+ * @property int    $mid           Module ID
+ * @property string $caption       Caption
+ * @property string $description   Description
+ * @property string $url           URL of file
+ * 
+ * @package	ICMS\Data\File
+ */
 class icms_data_file_Object extends icms_ipf_Object {
 
     /**

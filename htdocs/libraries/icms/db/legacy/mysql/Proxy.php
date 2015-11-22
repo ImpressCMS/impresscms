@@ -32,11 +32,6 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package	Database
- * @subpackage	Legacy
- * @version	SVN: $Id: Proxy.php 12313 2013-09-15 21:14:35Z skenow $
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
@@ -46,10 +41,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * This class allows only SELECT queries to be performed through its
  * {@link query()} method for security reasons.
  *
- * @category	ICMS
- * @package     Database
- * @subpackage  Legacy
- *
+ * @package	ICMS\Database\Legacy\MySQL
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */

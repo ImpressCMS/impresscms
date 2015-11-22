@@ -1,25 +1,13 @@
 <?php
 /**
- * This file contains the keyhighlighter class that highlights the chosen keyword in the current output buffer.
- *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Keyhighlighter
- */
-
-/**
- * keyhighlighter class
- *
  * This class highlight the chosen keywords in the current output buffer
  *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Keyhighlighter
- * @author		Setec Astronomy
+ * @package	ICMS\IPF
+ * @author	Setec Astronomy
  * @version 	1.0
  * @abstract	Highlight specific keywords.
  * @copyright	2004
- * @link 		http://setecastronomy.stufftoread.com
+ * @link 	http://setecastronomy.stufftoread.com
  */
 class icms_ipf_Highlighter {
 
