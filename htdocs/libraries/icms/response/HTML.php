@@ -4,6 +4,8 @@
  * Creates response of HTML type
  *
  * @author Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * 
+ * @method null assign(string $name, mixed $value)   Assigns var to template
  */
 class icms_response_HTML extends icms_response_Text {
 
@@ -37,6 +39,7 @@ class icms_response_HTML extends icms_response_Text {
             $themeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
             $themeFactory->defaultTheme = $icmsConfig['theme_set'];
         }
+       
         
         return $themeFactory;
     }   
@@ -77,6 +80,21 @@ class icms_response_HTML extends icms_response_Text {
         parent::__construct(null, $http_status, $headers);
     }
     
+    /**
+     * Magic function to call work directly with template
+     * 
+     * @param string $name          Function name to call
+     * @param array  $arguments     Array with arguments
+     * 
+     * @return mixed
+     */
+    public function __call($name, $arguments) {
+        return call_user_func_array([$this->theme->template, $name], $arguments);
+    }
+    
+    /**
+     * Renders response
+     */
     public function render() {
         /* check if the module is cached and retrieve it, otherwise, render the page */
         if (!$this->theme->checkCache()) {
