@@ -45,11 +45,6 @@ if (!defined('ICMS_MODULES_URL')) {
     header("Location: /install/index.php");
 }
 
-$member_handler = \icms::handler('icms_member');
-$group = $member_handler->getUserBestGroup(
-    (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
-);
-
 $path = preg_replace('/[^a-zA-Z0-9\/]/', '', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
 
 if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
@@ -68,9 +63,14 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
         header('Location: /error.php?e=404');
     }
 } else {
+    $member_handler = \icms::handler('icms_member');
+    $group = $member_handler->getUserBestGroup(
+        (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
+    );        
+    
     $icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 
-    if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != "" && $icmsConfig['startpage'] != "--") {
+    if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != "--") {
         $arr = explode('-', $icmsConfig['startpage']);
         if (count($arr) > 1) {
             $page_handler = \icms::handler('icms_data_page');
@@ -86,6 +86,7 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
         }
         exit();
     } else {
-        new \icms_response_DefaultEmptyPage();
+        $icmsResponse = new \icms_response_DefaultEmptyPage();
+        $icmsResponse->render();
     }
 }

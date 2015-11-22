@@ -136,46 +136,42 @@ class icms_response_HTML extends icms_response_Text {
         $jgrowl_css = ICMS_LIBRARIES_URL . '/jquery/jgrowl'
                 . (( defined('_ADM_USE_RTL') && _ADM_USE_RTL ) ? '_rtl' : '') . '.css';
         
-        $this->theme->metas = [
-            'head' => [
-                'stylesheet' => [
-                    ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css' => [
-                        'value' => [
-                            'type' => 'text/css',
-                            'src' => ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css',
-                            'media' => 'screen'
-                        ],
-                        'weight' => 0
-                    ],
+        $this->theme->metas['head']['stylesheet'] = [
                     ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css' => [
                         'value' => [
                             'type' => 'text/css',
-                            'src' => ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css',
+                            'href' => ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css',
+                            'media' => 'screen'
+                        ],
+                        'weight' => 0
+                    ],            
+                    ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css' => [
+                        'value' => [
+                            'type' => 'text/css',
+                            'href' => ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css',
                             'media' => 'screen'
                         ],
                         'weight' => 0
                     ],
                     $jgrowl_css => [
                         'value' => [
-                            'src' => $jgrowl_css,
-                            'type' => 'text/css',
+                            'type' => 'text/css',                            
+                            'href' => $jgrowl_css,                            
                             'media' => 'screen'
                         ],
                         'weight' => 0
                     ],
                     ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css' => [
                         'value' => [
-                            'src' => ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css',
-                            'type' => 'text/css',
+                            'type' => 'text/css',                            
+                            'href' => ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css',                            
                             'media' => 'screen'                            
                         ],
                         'weight' => 0
                     ]
-                ]
-            ],
-            'foot' => [
-                'script' => [
-                    [
+                ];
+        
+        $this->theme->metas['module']['script'] = [
                         ICMS_URL . '/include/xoops.js' => [
                             'value' => [
                                 'type' => 'text/javascript',
@@ -218,10 +214,8 @@ class icms_response_HTML extends icms_response_Text {
                             ],
                             'weight' => 0                            
                         ]
-                    ]
-                ]
-            ]
         ];
+        
     }
 
     /**
