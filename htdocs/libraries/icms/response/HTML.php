@@ -54,10 +54,10 @@ class icms_response_HTML extends icms_response_Text {
      */
     public function __construct($config = array(), $http_status = null, $headers = array()) {
                 
-        $this->setThemeFromConfig($config);        
+        $this->setThemeFromConfig($config);    
         $this->setGoogleMeta();                
-       
-        icms::$preload->triggerEvent('startOutputInit');                
+               
+        \icms::$preload->triggerEvent('startOutputInit');                
 
         $this->setDefaultMetas();                        
         $this->addSanitizerPlugins();       
