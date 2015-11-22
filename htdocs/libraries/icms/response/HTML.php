@@ -3,7 +3,8 @@
 /**
  * Creates response of HTML type
  *
- * @author Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * @author      Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * @package	ICMS\Response
  * 
  * @method null assign(string $name, mixed $value)   Assigns var to template
  */
