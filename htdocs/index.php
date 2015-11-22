@@ -1,5 +1,4 @@
 <?php
-// $Id: index.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -31,12 +30,11 @@
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
- * @since		XOOPS
- * @author		skalpa <psk@psykaos.net>
- * @author	    Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		AVN: $Id: index.php 12313 2013-09-15 21:14:35Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ImpressCMS\Core
+ * @since	XOOPS
+ * @author	skalpa <psk@psykaos.net>
+ * @author	Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
  **/
 
 /** mainfile is required, if it doesn't exist - installation is needed */
@@ -49,7 +47,7 @@ if (!defined('ICMS_MODULES_URL')) {
 
 $member_handler = \icms::handler('icms_member');
 $group = $member_handler->getUserBestGroup(
-    (!empty(\icms::$user) && is_object(\icms::$user) ? \icms::$user->uid : 0)
+    (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
 );
 
 $path = preg_replace('/[^a-zA-Z0-9\/]/', '', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
