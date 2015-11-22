@@ -3,7 +3,8 @@
 /**
 * Creates response of PHP serialize type
  *
- * @author Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * @author      Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * @package	ICMS\Response
  */
 class icms_response_DefaultEmptyPage
     extends icms_response_HTML {    

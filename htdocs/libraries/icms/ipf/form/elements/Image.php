@@ -1,20 +1,17 @@
 <?php
-/**
- * Form control creating an hidden field for an object derived from icms_ipf_Object
- * @todo		Remove the hardcoded height attribute, line breaks, styles
- *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		ipf
- * @subpackage	form
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
- */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
+/**
+ * Form control creating an hidden field for an object derived from icms_ipf_Object
+ * @todo	Remove the hardcoded height attribute, line breaks, styles
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @package	ICMS\IPF\Form\Elements
+ */
 class icms_ipf_form_elements_Image extends icms_form_elements_Tray {
 	/**
 	 * Constructor

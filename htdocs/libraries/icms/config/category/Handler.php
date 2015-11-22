@@ -32,8 +32,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
  * @category	ICMS
- * @package		Config
- * @subpackage	Category
  * @author		Kazumi Ono (aka onokazo)
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
@@ -48,10 +46,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author  	Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- *
- * @category	ICMS
- * @package     Config
- * @subpackage  Category
+ * @package	ICMS\Config\Category
  */
 class icms_config_category_Handler extends icms_ipf_Handler {
     

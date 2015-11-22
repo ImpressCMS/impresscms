@@ -32,9 +32,6 @@
 *
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		LICENSE.txt
-* @category		ICMS
-* @package		Form
-* @version		SVN: $Id$
 */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -42,10 +39,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * Renders a form for setting module specific group permissions
  *
- * @category	ICMS
- * @package		Form
- *
- * @author		Kazumi Ono <onokazu@myweb.ne.jp>
+ * @package	ICMS\Form
+ * @author	Kazumi Ono <onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_Groupperm extends icms_form_Base {

@@ -31,21 +31,14 @@
  * Create a field for setting group permissions
  *
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
  */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * Renders checkbox options for a group permission form
  *
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- *
- * @author		Kazumi Ono <onokazu@myweb.ne.jp>
+ * @package	ICMS\Form\Elements
+ * @author	Kazumi Ono <onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_elements_Groupperm extends icms_form_Element {

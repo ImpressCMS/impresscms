@@ -3,7 +3,8 @@
 /**
 * Creates response of json type
  *
- * @author Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * @author      Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * @package	ICMS\Response
  */
 class icms_response_HTML
     extends icms_response_Text {

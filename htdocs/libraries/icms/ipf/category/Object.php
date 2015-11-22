@@ -3,16 +3,11 @@
  * Contains the basic classe for managing a category object based on icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Category
- * @since		1.2
- * @author		marcan <marcan@impresscms.org>
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
- *
- * @todo		Properly set visibility of variables - in version 1.4
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	marcan <marcan@impresscms.org>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @todo	Properly set visibility of variables - in version 1.4
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -20,12 +15,13 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Persistble category object
  *
- * @category	ICMS
- * @package 	Ipf
- * @subpackage 	Category
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since 		1.1
+ * @property int    $categoryid    Category ID
+ * @property int    $parentid      Parent category ID
+ * @property string $name          Name
+ * @property string $description   Description
+ * @property string $image         image
+ * 
+ * @package	ICMS\IPF\Category
  */
 class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	/** Path that corresponds to the category */

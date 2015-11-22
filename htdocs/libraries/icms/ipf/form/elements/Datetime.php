@@ -1,19 +1,16 @@
 <?php
+
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 /**
  * Form control creating a DateTime Picker element for an object derived from icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		ipf
- * @subpackage	form
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL) 
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @package	ICMS\IPF\Form\Elements
  */
-
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 class icms_ipf_form_elements_Datetime extends icms_form_elements_Datetime {
 	/**
 	 * Constructor

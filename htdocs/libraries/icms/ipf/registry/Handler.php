@@ -3,13 +3,9 @@
  * Persistable object registry
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Registry
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license	LICENSE.txt
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -20,12 +16,10 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * Class responsible of caching objects to make them easily reusable without querying the database
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Object
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS\IPF\Registry
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 class icms_ipf_registry_Handler {
 

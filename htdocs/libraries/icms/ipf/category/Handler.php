@@ -3,26 +3,21 @@
  * Contains the basic classe for managing a category object based on icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Category
- * @since		1.2
- * @author		marcan <marcan@impresscms.org>
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	marcan <marcan@impresscms.org>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * Provides data access mechanisms to the icms_ipf_category_Object object
+ * 
  * @copyright 	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Category
- * @since 		1.1
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS\IPF\Category
+ * @since 	1.1
  */
 class icms_ipf_category_Handler extends icms_ipf_Handler {
 	/** */

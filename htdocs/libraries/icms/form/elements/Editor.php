@@ -31,13 +31,8 @@
  * Creates a form editor object
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- *
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		$Id: Editor.php 12313 2013-09-15 21:14:35Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -45,11 +40,12 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 /**
  * XoopsEditor hanlder
  *
- * @since		XOOPS
+ * @since	XOOPS
  * @author	D.J.
  * @copyright	copyright (c) 2000-2005 XOOPS.org
+ * @package	ICMS\Form\Elements
  *
- * @todo		To be removed as this is not used anywhere in the core
+ * @todo	To be removed as this is not used anywhere in the core
  */
 class icms_form_elements_Editor extends icms_form_elements_Textarea {
 	var $editor;

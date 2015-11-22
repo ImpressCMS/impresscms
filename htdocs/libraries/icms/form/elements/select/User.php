@@ -32,13 +32,9 @@
  *
  * limit: Only works with javascript enabled
  *
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @version		SVN: $Id$
+ * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -46,12 +42,9 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * user select with page navigation
  *
- * @category	ICMS
- * @package		Form
- * @subpackage  Elements
- *
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @package	ICMS\Form\Elements\Select
+ * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_elements_select_User extends icms_form_elements_Tray {

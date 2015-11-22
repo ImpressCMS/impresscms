@@ -7,19 +7,14 @@
  * It does not (and should not) introduce any new methods
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category    ICMS
- * @package	    Database
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 /**
  * Create and interact with a database connection using PDO
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @category    ICMS
- * @package	    Database
- * @subpackage	PDO
+ * @package	ICMS\Database\Legacy
  */
 class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 

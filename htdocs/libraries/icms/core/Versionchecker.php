@@ -11,13 +11,10 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * Class used to check if the ImpressCMS install is up to date
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Core
- * @subpackage	VersionChecker
- * @since		1.0
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS\Core
+ * @since	1.0
+ * @author	marcan <marcan@impresscms.org>
  */
 class icms_core_Versionchecker {
 

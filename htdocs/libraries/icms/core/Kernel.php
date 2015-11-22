@@ -31,12 +31,8 @@
  * ICMS kernel Base Class
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Core
- * @subpackage	Kernel
- * @since		1.1
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
+ * @since	1.1
  */
 
 /**
@@ -45,9 +41,8 @@
  * This class has been replaced by the static "icms" class, to prevent pollution of the global
  *  namespace. Please use icms::method() now, instead of $GLOBALS["impresscms"]->method();
  *
- * @category	ICMS
- * @package		core
- * @since 		1.1
+ * @package	ICMS\Core
+ * @since 	1.1
  *
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  *

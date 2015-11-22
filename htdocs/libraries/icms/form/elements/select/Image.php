@@ -15,12 +15,8 @@
  ### www.mastop.com.br
  ### =============================================================
  *
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		$Id: Image.php 12340 2013-09-22 04:11:09Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die();
@@ -28,10 +24,7 @@ defined('ICMS_ROOT_PATH') or die();
 /**
  * Create a form element to select an image
  *
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- *
+ * @package	ICMS\Form\Elements\Select
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 class icms_form_elements_select_Image extends icms_form_elements_Select {

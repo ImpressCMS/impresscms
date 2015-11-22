@@ -31,11 +31,8 @@
  * Manage users
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Member
- * @subpackage	User
- * @version		SVN: $Id: Handler.php 12074 2012-10-18 18:13:03Z skenow $
+ * @license	LICENSE.txt
+ * @package	ICMS\Member\User
  */
 
 defined('ICMS_ROOT_PATH') or exit();
@@ -51,11 +48,9 @@ include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
  * This class is responsible for providing data access mechanisms to the data source
  * of user class objects.
  *
- * @author		Kazumi Ono <onokazu@xoops.org>
+ * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @category	ICMS
- * @package		Member
- * @subpackage	User
+ * @package	ICMS\Member\User
  */
 class icms_member_user_Handler 
     extends icms_ipf_Handler {

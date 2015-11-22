@@ -4,22 +4,9 @@
  *
  * @copyright           The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category            ICMS
- * @package		Ipf
- * @subpackage          Properties
  * @since		2.0
  * @author		i.know@mekdrop.name
- */
-
-/**
- * icms_properties_Handler base class
- *
- * Base class to dealing with object properties
- *
- * @category            ICMS
- * @package		Ipf
- * @subpackage          Properties
- * @author              i.know@mekdrop.name
+ * @package		ICMS\Properties
  * @todo		Properly identify and declare the visibility of vars and functions
  */
 abstract class icms_properties_Handler implements Serializable {

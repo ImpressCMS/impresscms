@@ -3,10 +3,6 @@
  * Class representing a single row of a icms_ipf_view_Single
  *
  * @license		LICENSE.txt
- * @category	ICMS
- * @package		Ipf
- * @subpackage	View
- * @version		SVH: $Id$
  */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
@@ -15,11 +11,9 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * Class representing a single row of a icms_ipf_view_Single
  *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	View
- * @author		marcan <marcan@smartfactory.ca>
- * @todo		Properly determine visibility of vars and methods and follow naming convention
+ * @package	ICMS\IPF\View
+ * @author	marcan <marcan@smartfactory.ca>
+ * @todo	Properly determine visibility of vars and methods and follow naming convention
  */
 class icms_ipf_view_Row {
 

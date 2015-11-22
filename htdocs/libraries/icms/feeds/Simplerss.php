@@ -1,4 +1,7 @@
 <?php
+include_once ICMS_LIBRARIES_PATH . '/simplepie/autoloader.php';
+include_once ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php';
+
 /**
  * Class handling RSS feeds, using SimplePie class
  *
@@ -7,18 +10,11 @@
  * standards compliance.
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Feeds
- * @subpackage	RSS
- * @since		1.2
- * @author		malanciault <marcan@impresscms.org)
- * @version		$Id: Simplerss.php 12108 2012-11-08 22:24:04Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	malanciault <marcan@impresscms.org)
+ * @package	ICMS\Feeds 
  */
-
-include_once ICMS_LIBRARIES_PATH . '/simplepie/autoloader.php';
-include_once ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php';
-
 class icms_feeds_Simplerss extends SimplePie {
 
 	/**
