@@ -102,8 +102,15 @@ class icms_response_Text {
      * @param array         $headers        Here You can place some additional headers 
      */
     public function __construct($msg = null, $http_status = null, $headers = []) {
-        header('Content-Type: ' . static::CONTENT_TYPE);
-        header('Content-Generator: ImpressCMS ' .  ICMS_VERSION);
+        
+        if (!headers_sent()) {
+            header('Content-Type: ' . static::CONTENT_TYPE . '; charset=' . _CHARSET);
+            header('X-Powered-By: ImpressCMS ' .  ICMS_VERSION);
+            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+            header('Cache-Control: private, no-cache');
+            header('Pragma: no-cache');
+        }
+        
         if ($http_status !== null) {
             http_response_code($http_status);
         }

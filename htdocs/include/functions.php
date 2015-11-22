@@ -115,17 +115,6 @@ function xoops_header($closehead=true) {
 }
 
 /**
- * The footer
- *
- * Implements all functions that are executed in the footer
- */
-function xoops_footer() {
-	global $icmsConfigMetaFooter;
-	echo htmlspecialchars($icmsConfigMetaFooter['google_analytics']).'</body></html>';
-	ob_end_flush();
-}
-
-/**
  * Get the timestamp based on the user settings
  *
  * @param string  $time  String with time
