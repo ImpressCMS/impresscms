@@ -130,7 +130,7 @@ class icms_view_theme_Factory {
      * @return	array
      */
     static public function getThemesList() {
-        $dirtyList = $cleanList = array();
+        $cleanList = array();
         $dirtyList = icms_core_Filesystem::getDirList(ICMS_THEME_PATH . '/');
         foreach ($dirtyList as $item) {
             if (file_exists(ICMS_THEME_PATH . '/' . $item . '/theme.html')) {
