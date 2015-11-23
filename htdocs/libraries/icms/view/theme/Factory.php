@@ -58,8 +58,28 @@ class icms_view_theme_Factory {
 	 * @public bool
 	 */
 	public $allowUserSelection = true;
+        
+        /**
+     * Gets theme factory for existing configuration
+     * 
+     * @global      array                    $icmsConfig    ICMS Configuration array
+     * @staticvar   \icms_view_theme_Factory $themeFactory  Current instance of theme factory
+     * @return      \icms_view_theme_Factory                Returns preconfigured icms_view_theme_Factory object
+     */
+    public static function getInstance() {
+        static $themeFactory = null;
 
-	/**
+        if ($themeFactory === null) {
+            global $icmsConfig;
+            $themeFactory = new \icms_view_theme_Factory();
+            $themeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
+            $themeFactory->defaultTheme = $icmsConfig['theme_set'];
+        }
+
+        return $themeFactory;
+    }
+
+        /**
 	 * Instanciate the specified theme
 	 */
 	public function &createInstance($options = array(), $initArgs = array()) {
