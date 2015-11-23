@@ -58,56 +58,18 @@ define('XOOPS_CPFUNC_LOADED', 1);
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header() {
-	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule,
-		$xoopsModule, $xoopsTpl, $xoopsOption, $icmsTheme, $xoTheme,
-		$icmsConfigMultilang, $icmsAdminTpl;
-
-	icms::$logger->stopTime('Module init');
+        icms::$logger->stopTime('Module init');
 	icms::$logger->startTime('ImpressCMS CP Output Init');
+        
+        global $icmsResponse, $xoopsOption;
+        $xoopsOption['isAdminSide'] = true;
+        $icmsResponse = new \icms_response_HTML($xoopsOption);   
 
-	/** @todo	Move to a separate class::method - HTTP */
-	if (!headers_sent()) {
-		header('Content-Type:text/html; charset='._CHARSET);
-		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		header('Cache-Control: no-store, no-cache, must-revalidate');
-		header("Cache-Control: post-check=0, pre-check=0", false);
-		header("Pragma: no-cache");
-		header('X-Powered-By: ImpressCMS');
-	}
-
-	$icmsAdminTpl = new icms_view_Tpl();
-
-	$icmsAdminTpl->assign('xoops_url', ICMS_URL);
-	$icmsAdminTpl->assign('icms_sitename', $icmsConfig['sitename']);
-
-	if (@$xoopsOption['template_main']) {
-		if (false === strpos($xoopsOption['template_main'], ':')) {
-			$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];
-		}
-	}
-
-	$xoopsThemeFactory = new icms_view_theme_Factory();
-	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
-
-	// The next 2 lines are for compatibility only... to implement the admin theme ;)
-	// TODO: Remove all this after a few versions!!
-	if (isset($icmsConfig['theme_admin_set']))
-		$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_admin_set'];
-
-	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array(
-		'contentTemplate'	=> @$xoopsOption['template_main'],
-		'canvasTemplate'	=> 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')
-			|| file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')) ?'_admin':'') . '.html',
-		'plugins' 			=> array('icms_view_PageBuilder'),
-		'folderName'		=> $icmsConfig['theme_admin_set']
-	));
 	$icmsAdminTpl = $xoTheme->template;
 
 	// ################# Preload Trigger startOutputInit ##############
 	icms::$preload->triggerEvent('adminHeader');
 
-	$xoTheme->addScript(ICMS_URL . '/include/xoops.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript('' , array('type' => 'text/javascript') , 'startList = function() {
 						if (document.all&&document.getElementById) {
 							navRoot = document.getElementById("nav");
@@ -125,84 +87,6 @@ function icms_cp_header() {
 						}
 					}
 					window.onload=startList;');
-
-	// JQuery UI Dialog
-	$xoTheme->addScript(ICMS_URL . '/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
-if (! empty($_SESSION['redirect_message'])) {
-	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jgrowl.js', array('type' => 'text/javascript'));
-	$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/jgrowl'.((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?'_rtl':'').'.css', array('media' => 'screen'));
-	$xoTheme->addScript('', array('type' => 'text/javascript'), '
-	if (!window.console || !console.firebug) {
-		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
-		window.console = {};
-
-		for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
-	}
-
-	(function($) {
-		$(document).ready(function() {
-			$.jGrowl("'.$_SESSION['redirect_message'].'", {  life:5000 , position: "center", speed: "slow" });
-		});
-	})(jQuery);
-	');
-	unset($_SESSION['redirect_message']) ;
-}
-	$xoTheme->addScript(ICMS_URL . '/libraries/jquery/ui/ui.min.js', array('type' => 'text/javascript'));
-	$xoTheme->addStylesheet(ICMS_URL . '/libraries/jquery/ui/css/ui-smoothness/ui.css', array('media' => 'screen'));
-	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.js', array( 'type' => 'text/javascript'));
-	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css', array('media' => 'screen'));
-	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
-	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/jquery.colorbox-min.js');
-
-	/*	$jscript = '';
-	 if(class_exists('icms_form_elements_Dhtmltextarea')) {
-		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-		if(empty($key))
-		continue;
-		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')) {
-		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
-		}else{
-		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-		$func = 'render_'.$key;
-		if (function_exists($func)) {
-		@list($encode, $jscript) = $func($ele_name);
-		if (!empty($jscript)) {
-		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)) {
-		$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
-		}else{
-		$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
-		}
-		}
-		}
-		}
-		}
-		}
-		*/
-	$style_info = '';
-	if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
-		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-			if (empty($key)) continue;
-			if (file_exists(ICMS_ROOT_PATH . '/plugins/textsanitizer/' . $key . '/' . $key . '.css')) {
-				$xoTheme->addStylesheet(
-					ICMS_URL . '/plugins/textsanitizer/' . $key . '/' . $key . '.css',
-					array('media' => 'screen')
-				);
-			} else {
-				$extension = include_once ICMS_ROOT_PATH . '/plugins/textsanitizer/' . $key . '/' . $key . '.php';
-				$func = 'style_' . $key;
-				if (function_exists($func)) {
-					$style_info = $func();
-					if (!empty($style_info)) {
-						if (!file_exists(ICMS_ROOT_PATH . '/' . $style_info)) {
-							$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
-						} else {
-							$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
-						}
-					}
-				}
-			}
-		}
-	}
 
 	/**
 	 * Loading admin dropdown menus
@@ -286,17 +170,9 @@ if (! empty($_SESSION['redirect_message'])) {
 		}
 		$icmsAdminTpl->append('navitems', $navitem);
 	}
-
-	if (count($sysprefs) > 0) {
-		$icmsAdminTpl->assign('systemadm', 1);
-	} else {
-		$icmsAdminTpl->assign('systemadm', 0);
-	}
-	if (count($mods) > 0) {
-		$icmsAdminTpl->assign('modulesadm', 1);
-	} else {
-		$icmsAdminTpl->assign('modulesadm', 0);
-	}
+        
+        $icmsAdminTpl->assign('systemadm', empty($sysprefs)?0:1 );
+        $icmsAdminTpl->assign('modulesadm', empty($mods)?0:1 );
 
 	/**
 	 * Loading options of the current module.
@@ -356,41 +232,6 @@ if (! empty($_SESSION['redirect_message'])) {
 		$icmsAdminTpl->assign('lang_prefs', _PREFERENCES);
 	}
 
-	if (@is_object($xoTheme->plugins['icms_view_PageBuilder'])) {
-		$aggreg =& $xoTheme->plugins['icms_view_PageBuilder'];
-
-		$icmsAdminTpl->assign_by_ref('xoAdminBlocks', $aggreg->blocks);
-
-		// Backward compatibility code for pre 2.0.14 themes
-		$icmsAdminTpl->assign_by_ref('xoops_lblocks', $aggreg->blocks['canvas_left']);
-		$icmsAdminTpl->assign_by_ref('xoops_rblocks', $aggreg->blocks['canvas_right']);
-		$icmsAdminTpl->assign_by_ref('xoops_ccblocks', $aggreg->blocks['page_topcenter']);
-		$icmsAdminTpl->assign_by_ref('xoops_clblocks', $aggreg->blocks['page_topleft']);
-		$icmsAdminTpl->assign_by_ref('xoops_crblocks', $aggreg->blocks['page_topright']);
-
-		$icmsAdminTpl->assign('xoops_showlblock', !empty($aggreg->blocks['canvas_left']));
-		$icmsAdminTpl->assign('xoops_showrblock', !empty($aggreg->blocks['canvas_right']));
-		$icmsAdminTpl->assign(
-			'xoops_showcblock',
-			!empty($aggreg->blocks['page_topcenter'])
-			|| !empty($aggreg->blocks['page_topleft'])
-			|| !empty($aggreg->blocks['page_topright'])
-		);
-
-		/**
-		 * Send to template some ml infos
-		 */
-		$icmsAdminTpl->assign('lang_prefs', _PREFERENCES);
-		$icmsAdminTpl->assign('ml_is_enabled', $icmsConfigMultilang ['ml_enable']);
-		$icmsAdminTpl->assign('adm_left_logo', $icmsConfigPersona['adm_left_logo']);
-		$icmsAdminTpl->assign('adm_left_logo_url', $icmsConfigPersona['adm_left_logo_url']);
-		$icmsAdminTpl->assign('adm_left_logo_alt', $icmsConfigPersona['adm_left_logo_alt']);
-		$icmsAdminTpl->assign('adm_right_logo', $icmsConfigPersona['adm_right_logo']);
-		$icmsAdminTpl->assign('adm_right_logo_url', $icmsConfigPersona['adm_right_logo_url']);
-		$icmsAdminTpl->assign('adm_right_logo_alt', $icmsConfigPersona['adm_right_logo_alt']);
-		$icmsAdminTpl->assign('show_impresscms_menu', $icmsConfigPersona['show_impresscms_menu']);
-
-	}
 }
 
 /**
@@ -662,13 +503,14 @@ function impresscms_sort_adminmenu_modules($a, $b) {
 function xoops_module_write_admin_menu($content) {
 	global $icmsConfig;
 	$filename = ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php';
-	if (! $file = fopen($filename, "w")) {
-		echo 'failed open file';
-		return false;
+	if (!$file = fopen($filename, "w")) {
+            trigger_error('Failed to open admin menu cache file for writing', E_USER_WARNING);
+            return false;
 	}
-	if (fwrite($file, var_export($content, true)) == FALSE) {
-		echo 'failed write file';
-		return false;
+	if (fwrite($file, '<?php return ' . var_export($content, true) . ';') === FALSE) {
+            trigger_error('Failed to write admin menu cache file', E_USER_WARNING);
+            fclose($file);
+            return false;
 	}
 	fclose($file);
 
