@@ -39,7 +39,7 @@
 
 /** mainfile is required, if it doesn't exist - installation is needed */
 
-include 'mainfile.php';
+include_once __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 if (!defined('ICMS_MODULES_URL')) {
     header("Location: /install/index.php");
@@ -60,9 +60,15 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
             $handler->parseParamsStringToArray($module, $controller_name, $params)
         );
     } catch (Exception $ex) {
-        header('Location: /error.php?e=404');
+        $icmsResponse = new \icms_response_Error();
+        $icmsResponse->errorNo = 404;
+        $icmsResponse->render();
     }
-} else {
+} elseif (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != '/')) {
+    $icmsResponse = new \icms_response_Error();
+    $icmsResponse->errorNo = 404;
+    $icmsResponse->render();
+} else {    
     $member_handler = \icms::handler('icms_member');
     $group = $member_handler->getUserBestGroup(
         (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
@@ -70,7 +76,7 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
     
     $icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 
-    if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != "--") {
+    if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != '--') {
         $arr = explode('-', $icmsConfig['startpage']);
         if (count($arr) > 1) {
             $page_handler = \icms::handler('icms_data_page');

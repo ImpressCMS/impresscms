@@ -28,6 +28,8 @@ class icms_response_Error
         
         parent::__construct($config, $http_status, $headers);
         
+        icms_loadLanguageFile('core', 'error');
+        
         global $icmsConfig;
         $this->assign('lang_found_contact', sprintf(_ERR_CONTACT, $icmsConfig['adminmail']));
         $this->assign('lang_search', _ERR_SEARCH);
@@ -42,7 +44,7 @@ class icms_response_Error
      * @global array $icmsConfig        Site configuration array
      */
     public function render() {
-        global $icmsConfig;
+        global $icmsConfig;                
         
         $siteName = $icmsConfig['sitename'];
         $lang_error_no = sprintf(_ERR_NO, $this->errorNo);

@@ -7,10 +7,10 @@ global $icmsResponse;
 
 $_SESSION['ad_sess_regen'] = FALSE;
 if (isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
-	icms::$session->sessionOpen(TRUE);
+	\icms::$session->sessionOpen(TRUE);
 	$_SESSION['sess_regen'] = FALSE;
 } else {
-	icms::$session->sessionOpen();
+	\icms::$session->sessionOpen();
 }
 
 // ################# Preload Trigger beforeFooter ##############
