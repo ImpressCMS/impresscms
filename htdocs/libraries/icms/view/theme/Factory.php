@@ -145,8 +145,8 @@ class icms_view_theme_Factory {
      * @return	array
      */
     static public function getAdminThemesList() {
-        $dirtyList1 = $cleanList1 = array();
-        $dirtyList2 = $cleanList2 = array();
+        $cleanList1 = array();
+        $cleanList2 = array();
         $dirtyList1 = icms_core_Filesystem::getDirList(ICMS_THEME_PATH . '/');
         $dirtyList2 = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/system/themes/');
         foreach ($dirtyList1 as $item1) {
