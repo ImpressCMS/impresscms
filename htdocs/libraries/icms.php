@@ -21,51 +21,61 @@
  * @since 	1.3
  */
 final class icms {
+        
 	/**
 	 * Preload handler
 	 * @var icms_preload_Handler
 	 */
 	static public $preload;
+        
 	/**
 	 * Security service
 	 * @var icms_core_Security
 	 */
 	static public $security;
+        
 	/**
 	 * Logger
 	 * @var icms_core_Logger
 	 */
 	static public $logger;
+        
 	/**
 	 * Database connection
 	 * @var icms_db_IConnection
 	 */
 	static public $db;
+        
 	/**
 	 * Legacy database connection
 	 * @var icms_db_legacy_Database
 	 */
 	static public $xoopsDB;
+        
 	/**
 	 * Configuration service
 	 * @var icms_config_Handler
 	 */
 	static public $config;
+        
 	/**
 	 * Session service
 	 * @var icms_core_Session
 	 */
 	static public $session;
+        
 	/**
 	 * Current user
 	 * @var icms_member_user_Object
 	 */
 	static public $user;
+        
 	/**
 	 * Current module / application
 	 * @var icms_module_Object
 	 */
 	static public $module;
+        
 	/**
 	 * Registered services definition
 	 * @var array
