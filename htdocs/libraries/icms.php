@@ -3,12 +3,10 @@
  * ICMS Services manager class definition
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		icms
- * @subpackage	icms
- * @since		1.3
- * @version		SVN: $Id: Kernel.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license	LICENSE.txt
+ * @package	ImpressCMS/core
+ * @since	1.3
+ * 
  * @internal	This class should normally be "icms_Kernel", marcan and I agreed on calling it "icms"
  * @internal	for convenience, as we are not targetting php 5.3+ yet
  */
@@ -19,12 +17,10 @@
  * The icms services manager handles the core bootstrap process, and paths/urls generation.
  * Global services are made available as static properties of this class.
  *
- * @category	ICMS
- * @package		icms
- * @subpackage	icms
- * @since 		1.3
+ * @package	ImpressCMS/core
+ * @since 	1.3
  */
-abstract class icms {
+final class icms {
 	/**
 	 * Preload handler
 	 * @var icms_preload_Handler
@@ -323,4 +319,13 @@ abstract class icms {
 		}
 		return self::$urls;
 	}
+        
+        /**
+         * Constructor is private so nobody can create an instance of this class
+         * 
+         * Use all static methods instead!
+         */
+        private function __construct() {
+            // ^_^
+        }
 }
