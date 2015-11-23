@@ -60,14 +60,14 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
             $handler->parseParamsStringToArray($module, $controller_name, $params)
         );
     } catch (Exception $ex) {
-        $icmsResponse = new \icms_response_Error();
-        $icmsResponse->errorNo = 404;
-        $icmsResponse->render();
+        \icms::$response = new \icms_response_Error();
+        \icms::$response->errorNo = 404;
+        \icms::$response->render();
     }
 } elseif (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != '/')) {
-    $icmsResponse = new \icms_response_Error();
-    $icmsResponse->errorNo = 404;
-    $icmsResponse->render();
+    \icms::$response = new \icms_response_Error();
+    \icms::$response->errorNo = 404;
+    \icms::$response->render();
 } else {    
     $member_handler = \icms::handler('icms_member');
     $group = $member_handler->getUserBestGroup(
@@ -85,14 +85,15 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
                 header('Location: ' . $page->getURL());
             } else {
                 $icmsConfig['startpage'] = '--';
-                new icms_response_DefaultEmptyPage();
+                \icms::$response = new \icms_response_DefaultEmptyPage();
+                \icms::$response->render();
             }
         } else {
             header('Location: ' . ICMS_MODULES_URL . '/' . $icmsConfig['startpage'] . '/');
         }
         exit();
     } else {
-        $icmsResponse = new \icms_response_DefaultEmptyPage();
-        $icmsResponse->render();
+        \icms::$response = new \icms_response_DefaultEmptyPage();
+        \icms::$response->render();
     }
 }

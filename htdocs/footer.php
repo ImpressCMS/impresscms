@@ -2,8 +2,7 @@
 
 defined('ICMS_ROOT_PATH') || die('ICMS root path not defined');
 
-global $icmsResponse;
-($icmsResponse instanceof \icms_response_Text) || die('There are no unused response (Maybe you are trying to include footer.php twice?');
+(\icms::$response instanceof \icms_response_Text) || die('There are no unused response (Maybe you are trying to include footer.php twice?');
 
 $_SESSION['ad_sess_regen'] = FALSE;
 if (isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
@@ -18,6 +17,7 @@ if (isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
 
 \icms::$logger->stopTime('Module display');
 
-$icmsResponse->render();
+\icms::$response->render();
+\icms::$response = null;
 
 \icms::$logger->stopTime();

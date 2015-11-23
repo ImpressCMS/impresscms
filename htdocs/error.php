@@ -15,6 +15,6 @@ $xoopsOption['pagetype'] = 'error';
 
 include_once __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 
-$icmsResponse = new \icms_response_Error($xoopsOption);
-$icmsResponse->errorNo = isset($_REQUEST['e']) ? (int)$_REQUEST['e'] : 500;
-$icmsResponse->render();
+\icms::$response = new \icms_response_Error($xoopsOption);
+\icms::$response->errorNo = isset($_REQUEST['e']) ? (int)$_REQUEST['e'] : 500;
+\icms::$response->render();

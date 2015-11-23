@@ -21,6 +21,13 @@
  * @since 	1.3
  */
 final class icms {
+    
+        /**
+         * Current response
+         *
+         * @var \icms_response_Text 
+         */
+        static public $response;
         
 	/**
 	 * Preload handler
