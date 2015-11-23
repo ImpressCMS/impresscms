@@ -13,7 +13,7 @@ class icms_response_HTML extends icms_response_Text {
     /**
      * Mimetype for this response
      */
-    const CONTENT_TYPE = 'text/html';
+    const CONTENT_TYPE = 'text/html';    
     
     /**
      * Instance of current theme
@@ -51,7 +51,9 @@ class icms_response_HTML extends icms_response_Text {
         $this->updateCacheTime();
         
         global $icmsConfig;
-        $this->theme->template->assign('icmsLang', $icmsConfig['language']);
+        $this->theme->template->assign('icmsLang', $icmsConfig['language']);        
+        $this->theme->template->assign('xoops_url', ICMS_URL);
+        $this->theme->template->assign('icms_sitename', $icmsConfig['sitename']);
         
         $this->includeNotificationsSelection();
 
@@ -210,11 +212,24 @@ class icms_response_HTML extends icms_response_Text {
             $config['template_main'] = null;
         }        
         
-        $this->theme = \icms_view_theme_Factory::getInstance()->createInstance(
-            [
-                'contentTemplate' => $config['template_main']
-            ]
-        );        
+        if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
+            global $icmsConfig;
+            
+            $this->theme = \icms_view_theme_Factory::getInstance()->createInstance(array(
+                'contentTemplate' => $config['template_main'],
+                'canvasTemplate' => 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') || file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')) ? '_admin' : '') . '.html',
+                'plugins' => [
+                    'icms_view_PageBuilder'
+                ],
+                'folderName' => $icmsConfig['theme_admin_set']
+            ));
+        } else {
+            $this->theme = \icms_view_theme_Factory::getInstance()->createInstance(
+                    [
+                        'contentTemplate' => $config['template_main']
+                    ]
+            );
+        }
     }    
 
     /**
