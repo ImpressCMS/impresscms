@@ -52,223 +52,38 @@ define('XOOPS_CPFUNC_LOADED', 1);
  * Function icms_cp_header
  *
  * @since ImpressCMS 1.2
- * @version $Id$
  *
  * @author rowd (from the XOOPS Community)
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header() {
-        icms::$logger->stopTime('Module init');
-	icms::$logger->startTime('ImpressCMS CP Output Init');
-        
-        global $icmsResponse, $xoopsOption;
-        $xoopsOption['isAdminSide'] = true;
-        $icmsResponse = new \icms_response_HTML($xoopsOption);   
+    \icms::$logger->stopTime('Module init');
+    \icms::$logger->startTime('ImpressCMS CP Output Init');
 
-	$icmsAdminTpl = $xoTheme->template;
+    global $xoopsOption;
 
-	// ################# Preload Trigger startOutputInit ##############
-	icms::$preload->triggerEvent('adminHeader');
+    $xoopsOption['isAdminSide'] = true;
+    \icms::$response = new \icms_response_HTML($xoopsOption);
 
-	$xoTheme->addScript('' , array('type' => 'text/javascript') , 'startList = function() {
-						if (document.all&&document.getElementById) {
-							navRoot = document.getElementById("nav");
-							for (i=0; i<navRoot.childNodes.length; i++) {
-								node = navRoot.childNodes[i];
-								if (node.nodeName=="LI") {
-									node.onmouseover=function() {
-										this.className+=" over";
-									}
-									node.onmouseout=function() {
-										this.className=this.className.replace(" over", "");
-									}
-								}
-							}
-						}
-					}
-					window.onload=startList;');
-
-	/**
-	 * Loading admin dropdown menus
-	 */
-	if (! file_exists(ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php')) {
-		xoops_module_write_admin_menu(impresscms_get_adminmenu());
-	}
-
-	$file = file_get_contents(ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php");
-	$admin_menu = eval('return ' . $file . ';');
-
-	$moduleperm_handler = icms::handler('icms_member_groupperm');
-	$module_handler = icms::handler('icms_module');
-	foreach ($admin_menu as $k => $navitem) {
-		 //Getting array of allowed modules to use in admin home
-		if ($navitem ['id'] == 'modules') {
-			$perm_itens = array();
-			foreach ($navitem ['menu'] as $item) {
-				$module = $module_handler->getByDirname($item['dir']);
-				$admin_perm = $moduleperm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
-				if ($admin_perm) {
-					if ($item['dir'] != 'system') {
-						$perm_itens[] = $item;
-					}
-				}
-			}
-			$navitem['menu'] = $mods = $perm_itens;
-		}
-		//end
-		if ($navitem['id'] == 'opsystem') {
-			$groups = icms::$user->getGroups();
-			$all_ok = false;
-			if (! in_array(ICMS_GROUP_ADMIN, $groups)) {
-				$sysperm_handler = icms::handler('icms_member_groupperm');
-				$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
-			} else {
-				$all_ok = true;
-			}
-			$perm_itens = array();
-
-			/**
-			 * Allow easely change the order of system dropdown menu.
-			 * $adminmenuorder = 1; Alphabetically order;
-			 * $adminmenuorder = 0; Indice key order;
-			 * To change the order when using Indice key order just change the order of the array in the file modules/system/menu.php and after update the system module
-			 *
-			 * @todo: Create a preference option to set this value and improve the way to change the order.
-			 */
-			$adminmenuorder = 1;
-			$adminsubmenuorder = 1;
-			$adminsubsubmenuorder = 1;
-			if ($adminmenuorder == 1) {
-				foreach ($navitem ['menu'] as $k => $sortarray) {
-					$column[] = $sortarray['title'];
-					if (isset($sortarray['subs']) && count($sortarray['subs']) > 0 && $adminsubmenuorder) {
-						asort($navitem['menu'][$k]['subs']);
-					}
-					if (isset($sortarray['subs']) && count($sortarray['subs']) > 0) {
-						foreach ($sortarray['subs'] as $k2 => $sortarray2) {
-							if (isset($sortarray2['subs']) && count($sortarray2['subs']) > 0 && $adminsubsubmenuorder) {
-								asort($navitem['menu'][$k]['subs'][$k2]['subs']); //Sorting submenus of preferences
-							}
-						}
-					}
-				}
-				//sort arrays after loop
-				array_multisort($column, SORT_ASC, $navitem['menu']);
-			}
-			foreach ($navitem['menu'] as $item) {
-				foreach ($item['subs'] as $key => $subitem) {
-					if ($all_ok == false && !in_array($subitem['id'], $ok_syscats)) {
-						// remove the subitem
-						unset($item['subs'][$key]);
-					}
-				}
-				// only add the item (first layer: groups) if it has subitems
-				if (count($item['subs']) > 0) $perm_itens[] = $item;
-			}
-			//Getting array of allowed system prefs
-			$navitem['menu'] = $sysprefs = $perm_itens;
-		}
-		$icmsAdminTpl->append('navitems', $navitem);
-	}
-        
-        $icmsAdminTpl->assign('systemadm', empty($sysprefs)?0:1 );
-        $icmsAdminTpl->assign('modulesadm', empty($mods)?0:1 );
-
-	/**
-	 * Loading options of the current module.
-	 */
-	if ($icmsModule) {
-		if ($icmsModule->getVar('dirname') == 'system') {
-			if (isset($sysprefs) && count($sysprefs) > 0) {
-				// remove the grouping for the system module preferences (first layer)
-				$sysprefs_tmp = array();
-				foreach ($sysprefs as $pref) {
-					$sysprefs_tmp = array_merge($sysprefs_tmp, $pref['subs']);
-				}
-				$sysprefs = $sysprefs_tmp;
-				unset($sysprefs_tmp);
-				for ($i = count($sysprefs) - 1; $i >= 0; $i = $i - 1) {
-					if (isset($sysprefs [$i])) {
-						$reversed_sysprefs[] = $sysprefs[$i];
-					}
-				}
-				foreach ($reversed_sysprefs as $k) {
-					$icmsAdminTpl->append(
-						'mod_options',
-						array(
-							'title' => $k ['title'], 'link' => $k ['link'],
-							'icon' => (isset($k['icon']) && $k['icon'] != '' ? $k['icon'] : '')
-						)
-					);
-				}
-			}
-		} else {
-			foreach ($mods as $mod) {
-				if ($mod['dir'] == $icmsModule->getVar('dirname')) {
-					$m = $mod; //Getting info of the current module
-					break;
-				}
-			}
-			if (isset($m['subs']) && count($m['subs']) > 0) {
-				for($i = count($m['subs']) - 1; $i >= 0; $i = $i - 1) {
-					if (isset($m['subs'][$i])) {
-						$reversed_module_admin_menu[] = $m['subs'][$i];
-					}
-				}
-				foreach ($reversed_module_admin_menu as $k) {
-					$icmsAdminTpl->append(
-						'mod_options',
-						array('title' => $k ['title'], 'link' => $k ['link'],
-							'icon' => (isset($k['icon']) && $k['icon'] != '' ? $k['icon'] : '')
-						)
-					);
-				}
-			}
-		}
-		$icmsAdminTpl->assign('modpath', ICMS_URL . '/modules/' . $icmsModule->getVar('dirname'));
-		$icmsAdminTpl->assign('modname', $icmsModule->getVar('name'));
-		$icmsAdminTpl->assign('modid', $icmsModule->getVar('mid'));
-		$icmsAdminTpl->assign('moddir', $icmsModule->getVar('dirname'));
-		$icmsAdminTpl->assign('lang_prefs', _PREFERENCES);
-	}
-
+    // ################# Preload Trigger startOutputInit ##############
+    \icms::$preload->triggerEvent('adminHeader');
 }
 
 /**
  * Function icms_cp_footer
  *
  * @since ImpressCMS 1.2
- * @version $Id$
  * @author rowd (from XOOPS Community)
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer() {
-	global $xoopsOption, $xoTheme;
-	icms::$logger->stopTime('Module display');
+    \icms::$logger->stopTime('Module display');
+    \icms::$logger->stopTime('XOOPS output init');
+    \icms::$logger->startTime('Module display');
 
-	if (!headers_sent()) {
-		header('Content-Type:text/html; charset='._CHARSET);
-		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-		header('Cache-Control: private, no-cache');
-		header('Pragma: no-cache');
-		header("X-Powered-By: ImpressCMS");
-	}
-	if (isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate) {
-		trigger_error("xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING);
-		if (false === strpos($xoopsOption['template_main'], ':')) {
-			$xoTheme->contentTemplate = 'db:' . $xoopsOption['template_main'];
-		} else {
-			$xoTheme->contentTemplate = $xoopsOption['template_main'];
-		}
-	}
+    \icms::$response->render();
 
-	icms::$logger->stopTime('XOOPS output init');
-	icms::$logger->startTime('Module display');
-
-	$xoTheme->render();
-
-	icms::$logger->stopTime();
-	return;
+    \icms::$logger->stopTime();
 }
 
 function themecenterposts($title, $content) {
@@ -284,45 +99,35 @@ function themecenterposts($title, $content) {
  * @return array (content of admin panel dropdown menus)
  */
 function impresscms_get_adminmenu() {
-	$admin_menu = array();
-	$modules_menu = array();
-	$systemadm = false;
-
-	#########################################################################
-	# Control Panel Home menu
-	#########################################################################
-
-	$menu[0] = array(
-		'link' => ICMS_URL . '/admin.php',
-		'title' => _CPHOME,
-		'absolute' => 1,
-		'small' => ICMS_URL . '/modules/system/images/mini_cp.png',
-	);
-
-	$menu[] = array(
-		'link' => ICMS_URL,
-		'title' => _YOURHOME,
-		'absolute' => 1,
-		'small' => ICMS_URL . '/modules/system/images/home.png',
-	);
-
-	$menu[] = array(
-		'link' => ICMS_URL . '/user.php?op=logout',
-		'title' => _LOGOUT,
-		'absolute' => 1,
-		'small' => ICMS_URL . '/modules/system/images/logout.png',
-	);
-
-	$admin_menu[0] = array(
-		'id' => 'cphome',
-		'text' => _CPHOME,
-		'link' => '#',
-		'menu' => $menu,
-	);
-
-	#########################################################################
-	# end
-	#########################################################################
+	$admin_menu = [
+        [ // Control Panel Home menu
+            'id' => 'cphome',
+            'text' => _CPHOME,
+            'link' => '#',
+            'menu' => [
+                [
+                    'link' => ICMS_URL . '/admin.php',
+                    'title' => _CPHOME,
+                    'absolute' => 1,
+                    'small' => ICMS_URL . '/modules/system/images/mini_cp.png',
+                ],
+                [
+                    'link' => ICMS_URL,
+                    'title' => _YOURHOME,
+                    'absolute' => 1,
+                    'small' => ICMS_URL . '/modules/system/images/home.png',
+                ],
+                [
+                    'link' => ICMS_URL . '/user.php?op=logout',
+                    'title' => _LOGOUT,
+                    'absolute' => 1,
+                    'small' => ICMS_URL . '/modules/system/images/logout.png',
+                ]
+            ],
+        ]
+    ];
+    $modules_menu = array();
+	$systemadm = false;        
 
 	#########################################################################
 	# System Preferences menu
@@ -348,7 +153,6 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# Modules menu
 	#########################################################################
-	$module_handler = icms::handler('icms_module');
 	$criteria = new icms_db_criteria_Compo();
 	$criteria->add(new icms_db_criteria_Item('hasadmin', 1));
 	$criteria->add(new icms_db_criteria_Item('isactive', 1));
@@ -407,13 +211,12 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# ImpressCMS News Feed menu
 	#########################################################################
-	$menu = array();
-	$menu[] = array(
+	$menu = [[
 		'link' => 'http://www.impresscms.org',
 		'title' => _IMPRESSCMS_HOME,
 		'absolute' => 1,
 		//small' => ICMS_URL . '/images/impresscms.png',
-	);
+	]];
 
 
 	if (_LANGCODE != 'en') {
