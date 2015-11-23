@@ -20,30 +20,7 @@ class icms_response_HTML extends icms_response_Text {
      *
      * @var \icms_view_theme_Object 
      */
-    private $theme = null;
-    
-    /**
-     * Gets theme factory for existing configuration
-     * 
-     * @todo        Move this function as instance to \icms_view_theme_Factory
-     * 
-     * @global      array                    $icmsConfig    ICMS Configuration array
-     * @staticvar   \icms_view_theme_Factory $themeFactory  Current instance of theme factory
-     * @return      \icms_view_theme_Factory                Returns preconfigured icms_view_theme_Factory object
-     */
-    private static function getThemeFactory() {
-        static $themeFactory = null;
-        
-        if ($themeFactory === null) {        
-            global $icmsConfig;
-            $themeFactory = new \icms_view_theme_Factory();
-            $themeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
-            $themeFactory->defaultTheme = $icmsConfig['theme_set'];
-        }
-       
-        
-        return $themeFactory;
-    }   
+    private $theme = null;    
 
     /**
      * Constructor
@@ -233,7 +210,7 @@ class icms_response_HTML extends icms_response_Text {
             $config['template_main'] = null;
         }        
         
-        $this->theme = self::getThemeFactory()->createInstance(
+        $this->theme = \icms_view_theme_Factory::getInstance()->createInstance(
             [
                 'contentTemplate' => $config['template_main']
             ]
