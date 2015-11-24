@@ -43,6 +43,8 @@ class icms_response_HTML extends icms_response_Text {
         if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
             $this->addAdminMetas();
             $this->loadAdminMenu();
+            global $icmsAdminTpl;
+            $GLOBALS['icmsAdminTpl'] = $icmsAdminTpl = &$this->theme->template;
         }
 
         if (!empty($_SESSION['redirect_message'])) {
