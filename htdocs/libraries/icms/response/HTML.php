@@ -45,6 +45,8 @@ class icms_response_HTML extends icms_response_Text {
             $this->loadAdminMenu();
             global $icmsAdminTpl;
             $GLOBALS['icmsAdminTpl'] = $icmsAdminTpl = &$this->theme->template;
+        } else {
+            $GLOBALS['icmsTpl'] = $icmsTpl = &$this->theme->template;
         }
 
         if (!empty($_SESSION['redirect_message'])) {
