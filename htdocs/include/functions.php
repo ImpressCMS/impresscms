@@ -2200,9 +2200,9 @@ if (!function_exists("mod_constant")) {
 	function mod_constant($name)
 	{
 		global $icmsModule;
-		if (!empty($GLOBALS["VAR_PREFIXU"]) && @defined($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name))) {
+		if (!empty($GLOBALS["VAR_PREFIXU"]) && defined($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name))) {
 			return CONSTANT($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name));
-		} elseif (!empty($icmsModule) && @defined(strtoupper($icmsModule->getVar("dirname", "n")."_".$name))) {
+		} elseif (!empty($icmsModule) && defined(strtoupper($icmsModule->getVar("dirname", "n")."_".$name))) {
 			return CONSTANT(strtoupper($icmsModule->getVar("dirname", "n")."_".$name));
 		} elseif (defined(strtoupper($name))) {
 			return CONSTANT(strtoupper($name));
