@@ -2148,10 +2148,11 @@ function icms_getBreadcrumb($items) {
 }
 /**
  * Build a template assignement
+ * 
+ * @deprecated 2.0  Use icms_response_* classes instead
  *
  * @param array $items to build the smarty to be used in templates
  * @return smarty value for each item
- * @todo Move to a static class method - Template
  */
 function icms_makeSmarty($items) {
 	global $icmsTpl;
