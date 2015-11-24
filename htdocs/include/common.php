@@ -89,8 +89,14 @@ icms_loadLanguageFile('core', 'global');
 icms_loadLanguageFile('core', 'theme');
 icms_loadLanguageFile('core', 'core');
 icms_loadLanguageFile('system', 'common');
-@define('_GLOBAL_LEFT', @_ADM_USE_RTL == 1 ? 'right' : 'left');
-@define('_GLOBAL_RIGHT', @_ADM_USE_RTL == 1 ? 'left' : 'right');
+
+if (defined('_ADM_USE_RTL') && _ADM_USE_RTL == 1) {
+    define('_GLOBAL_LEFT', 'right');
+    define('_GLOBAL_RIGHT', 'left');
+} else {
+    define('_GLOBAL_LEFT', 'left');
+    define('_GLOBAL_RIGHT', 'right');
+}
 
 // -- Include page-specific lang file
 if (isset($xoopsOption['pagetype']) && FALSE === strpos($xoopsOption['pagetype'], '.')) {
