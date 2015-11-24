@@ -2120,6 +2120,17 @@ function icms_PasswordMeter($password_fieldclass = "password_adv", $username_fie
 ');
 }
 
+ /**
+ * The footer		
+ *		
+ * Implements all functions that are executed in the footer		
+ */		
+function xoops_footer() {		
+	global $icmsConfigMetaFooter;		
+	echo htmlspecialchars($icmsConfigMetaFooter['google_analytics']).'</body></html>';		
+	ob_end_flush();		
+}
+
 /**
  * Build criteria automatically from an array of key=>value
  *
