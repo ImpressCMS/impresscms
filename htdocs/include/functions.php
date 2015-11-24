@@ -2152,14 +2152,14 @@ function icms_getBreadcrumb($items) {
  * @deprecated 2.0  Use icms_response_* classes instead
  *
  * @param array $items to build the smarty to be used in templates
- * @return smarty value for each item
+ * @return bool
  */
-function icms_makeSmarty($items) {
-	global $icmsTpl;
-	if (!isset($icmsTpl) || !is_array($items))return false;
-	foreach ($items as $item => $value){
-		$icmsTpl->assign($item, $value);
-	}
+function icms_makeSmarty(array $items) {
+	if (!isset(\icms::$response)) {
+            return false;
+        } else {
+            \icms::$response->assign($items);
+        }
 	return true;
 }
 
