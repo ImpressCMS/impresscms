@@ -2155,12 +2155,12 @@ function icms_getBreadcrumb($items) {
  * @return bool
  */
 function icms_makeSmarty(array $items) {
-	if (!isset(\icms::$response)) {
-            return false;
-        } else {
-            \icms::$response->assign($items);
-        }
-	return true;
+    if (!isset(\icms::$response)) {
+        return false;
+    } else {
+        \icms::$response->assign($items);
+    }
+    return true;
 }
 
 /**
