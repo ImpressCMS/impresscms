@@ -6,7 +6,7 @@
  * @author      Raimondas Rimkevičius <mekdrop@impresscms.org>
  * @package	ICMS\Response
  * 
- * @method null assign(string $name, mixed $value)   Assigns var to template
+ * @method assign(string $name, mixed $value)   Assigns var to template
  */
 class icms_response_HTML extends icms_response_Text {
 
