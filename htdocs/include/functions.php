@@ -41,10 +41,14 @@
  * Implements all functions that are executed within the header of the page
  * (meta tags, header expiration, etc)
  * It will all be echoed, so no return in this function
+ * 
+ * @deprecated 2.0 Use icms_response_* classes instead!
  *
  * @param bool  $closehead  close the <head> tag
  */
 function xoops_header($closehead=true) {
+    trigger_error('xoops_header was deprecached from 2.0 use icms_response_* classes instead!', E_USER_DEPRECATED);
+    
     \icms::$response = new \icms_response_HTML([        
     ]);
 
@@ -94,11 +98,14 @@ function xoops_header($closehead=true) {
 }
 
 /**
- * The footer		
- *		
- * Implements all functions that are executed in the footer		
+ * The footer
+ *
+ * Implements all functions that are executed in the footer
+ * 
+ * @deprecated 2.0 Use icms_response_* classes instead!
  */		
 function xoops_footer() {    
+    trigger_error('xoops_footer was deprecached from 2.0 use icms_response_* classes instead!', E_USER_DEPRECATED);
     global $icmsConfigMetaFooter;
     ob_end_flush();
     echo htmlspecialchars($icmsConfigMetaFooter['google_analytics']);
