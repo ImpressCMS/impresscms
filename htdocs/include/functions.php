@@ -1,5 +1,4 @@
 <?php
-// $Id: functions.php 1032 2007-09-09 13:01:16Z dugris $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -31,11 +30,9 @@
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	core
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @author		modified by marcan <marcan@impresscms.org>
- * @version	$Id: functions.php 12074 2012-10-18 18:13:03Z skenow $
+ * @package	ImpressCMS/core
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by marcan <marcan@impresscms.org>
  */
 
 /**
@@ -48,70 +45,64 @@
  * @param bool  $closehead  close the <head> tag
  */
 function xoops_header($closehead=true) {
-	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
-	$myts =& icms_core_Textsanitizer::getInstance();
+    \icms::$response = new \icms_response_HTML([        
+    ]);
 
-	/** @todo	Move to a separate class::method - HTTP */
-	if(!headers_sent())
-	{
-		header('Content-Type:text/html; charset='._CHARSET);
-		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		header('Cache-Control: no-store, no-cache, max-age=1, s-maxage=1, must-revalidate, post-check=0, pre-check=0');
-		header("Pragma: no-cache");
-		header('X-Powered-By: ImpressCMS');
-	}
-	echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
-	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'._LANGCODE.'" lang="'._LANGCODE.'">
-	<head>
-	<meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
-	<meta http-equiv="content-language" content="'._LANGCODE.'" />
-	'.htmlspecialchars($icmsConfigMetaFooter['google_meta']).'
-	<meta name="robots" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_robots']).'" />
-	<meta name="keywords" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_keywords']).'" />
-	<meta name="description" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_description']).'" />
-	<meta name="rating" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_rating']).'" />
-	<meta name="author" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_author']).'" />
-	<meta name="copyright" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_copyright']).'" />
-	<meta name="generator" content="ImpressCMS" />
-	<title>'.htmlspecialchars($icmsConfig['sitename']).'</title>
-	<script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
-	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
+    ob_start(function ($buffer) {
+        $i = mb_strpos(strtoupper($buffer), '</HEAD>');
+        if ($i !== false) {
+            $head = mb_substr($buffer, 0, $i);
+        } else {
+            $head = '';
+        }        
+        preg_match('/<body([^>]*)>/mis', $buffer, $matches);
+        $i = mb_strpos($buffer, $matches[0]);
+        $buffer = mb_substr($buffer, $i + mb_strlen($matches[0]));
+        if (!empty($matches[1])) {
+            preg_match_all('/\h(([A-Za-z_][A-Za-z_0-9\-]*)=("([^"]+)"|\'([^\']+)\'))|([A-Za-z_][A-Za-z_0-9\-]*)/mis', $matches[1], $matches);
+            $attributes = [];
+            foreach ($matches[2] as $i => $value) {
+                if (!empty($value)) {
+                    if (empty($matches[4][$i])) {
+                        $attributes[$value] = $matches[5][$i];
+                    } else {
+                        $attributes[$value] = $matches[4][$i];
+                    }
+                } else {
+                    $attributes[$matches[6][$i]] = $matches[6][$i];
+                }
+            }
+            $head .= '<script type="text/javascript">' . PHP_EOL;                
+            $head .= "function icms_updateBody() {
+                        if (!jQuery) {
+                            return;
+                        }
+                        clearInterval(icms_updateBody.interval);
+                        alert('a');
+                        jQuery('body').attr(" . json_encode($attributes) . ");
+                        delete icms_updateBody;
+                    }
+                    icms_updateBody.interval = setInterval(icms_updateBody, 500);
+                    " . PHP_EOL;
+            $head .= '</script>';
+        }
+        if (!empty($head)) {
+            \icms::$response->assign('icms_module_header', \icms::$response->get_template_vars('icms_module_header') . $head);
+        }
+        return $buffer;
+    }); 
+}
 
-	$style_info = '';
-	if(!empty($icmsConfigPlugins['sanitizer_plugins'])){
-		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-			if( empty( $key ) )
-				continue;
-			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
-				echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
-			}else{
-				$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-				$func = 'style_'.$key;
-				if ( function_exists($func) ) {
-					$style_info = $func();
-					if (!empty($style_info)) {
-						if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
-							echo '<style media="screen" type="text/css">
-							'.$style_info.'
-							</style>';
-						}else{
-							echo '<link rel="stylesheet" media="screen" href="'.$style_info.'" type="text/css" />';
-						}
-					}
-				}
-			}
-		}
-	}
-
-	$themecss = xoops_getcss($icmsConfig['theme_set']);
-	if ($themecss) {
-		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
-	}
-	if ($closehead) {
-		echo '</head><body>';
-	}
+/**
+ * The footer		
+ *		
+ * Implements all functions that are executed in the footer		
+ */		
+function xoops_footer() {    
+    global $icmsConfigMetaFooter;
+    ob_end_flush();
+    echo htmlspecialchars($icmsConfigMetaFooter['google_analytics']);
+    \icms::$response->render();
 }
 
 /**
@@ -2118,17 +2109,6 @@ function icms_PasswordMeter($password_fieldclass = "password_adv", $username_fie
 				});
 			});
 ');
-}
-
- /**
- * The footer		
- *		
- * Implements all functions that are executed in the footer		
- */		
-function xoops_footer() {		
-	global $icmsConfigMetaFooter;		
-	echo htmlspecialchars($icmsConfigMetaFooter['google_analytics']).'</body></html>';		
-	ob_end_flush();		
 }
 
 /**
