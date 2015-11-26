@@ -86,7 +86,7 @@ class icms_view_theme_Object {
 	public $renderCount = 0;
 	/**
 	 * Pointer to the theme template engine
-	 * @public icms_view_Tpl
+	 * @var \icms_view_Tpl
 	 */
 	public $template = FALSE;
 
