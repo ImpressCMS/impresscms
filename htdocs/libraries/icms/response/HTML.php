@@ -393,26 +393,35 @@ class icms_response_HTML extends icms_response_Text {
             }
         } else {
             $config['template_main'] = null;
+        }        
+        
+        $tplConfig = [
+            'contentTemplate' => $config['template_main']
+        ];
+        
+        if (isset($config['template_folder'])) {
+            $tplConfig['folderName'] = $config['template_folder'];
+        }
+        
+        if (isset($config['template_canvas'])) {
+            $tplConfig['canvasTemplate'] = $config['template_canvas'];
         }
 
         if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
             global $icmsConfig;
-
-            $this->theme = \icms_view_theme_Factory::getInstance()->createInstance(array(
-                'contentTemplate' => $config['template_main'],
-                'canvasTemplate' => 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') || file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')) ? '_admin' : '') . '.html',
-                'plugins' => [
-                    'icms_view_PageBuilder'
-                ],
-                'folderName' => $icmsConfig['theme_admin_set']
-            ));
-        } else {
-            $this->theme = \icms_view_theme_Factory::getInstance()->createInstance(
-                    [
-                        'contentTemplate' => $config['template_main']
-                    ]
-            );
-        }
+            
+            $tplConfig['plugins'] = [ 'icms_view_PageBuilder' ];            
+                    
+            if (!isset($tplConfig['canvasTemplate'])) {
+                $tplConfig['canvasTemplate'] = 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') || 
+                                                file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')) ? '_admin' : '') . '.html';
+            }
+            
+            if (!isset($tplConfig['folderName'])) {
+                $tplConfig['folderName'] = $icmsConfig['theme_admin_set'];
+            }
+        } 
+        $this->theme = \icms_view_theme_Factory::getInstance()->createInstance($tplConfig);
     }
 
     /**
