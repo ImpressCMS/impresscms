@@ -32,14 +32,13 @@
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		XOOPS
-* @package		Core
-* @version		$Id: mainfile.php 11048 2011-02-27 02:34:57Z skenow $
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @since	XOOPS
+* @package	ImpressCMS\Core	
 */
 
 // ImpressCMS is not installed yet.
-if(! defined('XOOPS_INSTALL')){
+if (!defined('XOOPS_INSTALL')) {
     header('Location: install/index.php');
-	exit();
+    exit();
 }
