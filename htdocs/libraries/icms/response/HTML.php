@@ -393,7 +393,7 @@ class icms_response_HTML extends icms_response_Text {
             }
         } else {
             $config['template_main'] = null;
-        }        
+        }
         
         $tplConfig = [
             'contentTemplate' => $config['template_main']
