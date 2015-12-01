@@ -50,6 +50,8 @@ function xoops_header($closehead=true) {
     trigger_error('xoops_header was deprecached from 2.0 use icms_response_* classes instead!', E_USER_DEPRECATED);
     
     \icms::$response = new \icms_response_HTML([        
+        'template_canvas' => 'system_blank.html'
+        //'template_path' => ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'templates' 
     ]);
 
     ob_start(function ($buffer) {
