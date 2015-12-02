@@ -92,8 +92,9 @@ class icms_plugins_EditorHandler {
 	 * @return  array   $_list    list of available editors that are allowed (through admin config)
 	 */
 	public function &getList($noHtml = FALSE) {
-		$list = @include_once ICMS_CACHE_PATH . $this->_type . 'editor_list.php';
-		
+                $file = ICMS_CACHE_PATH . $this->_type . DIRECTORY_SEPARATOR . 'editor_list.php';
+                $list = file_exists($file)?include($file):[];
+               
 		if (empty($list)) {
 
 			$list = array();
@@ -101,15 +102,20 @@ class icms_plugins_EditorHandler {
 			$_list = icms_core_Filesystem::getDirList($this->root_path . '/');
 
 			foreach ($_list as $item) {
-				if (@include $this->root_path . '/' . $item . '/editor_registry.php') {
+                                $file = $this->root_path . '/' . $item . '/editor_registry.php';
+				if (file_exists($file)) {
+                                    include($file);
 					if (empty($config['order'])) continue;
 					$order[] = $config['order'];
-					$list[$item] = array("title" => $config["title"], "nohtml" => @$config["nohtml"]);
+					$list[$item] = [
+                                            'title' => $config['title'], 
+                                            'nohtml' => isset($config['nohtml'])?$config['nohtml']:0
+                                        ];
 				}
-			}
+			}                        
 
 			array_multisort($order, $list);
-			$contents = "<?php\n return " . var_export($list, TRUE) . "\n?>";
+			$contents = "<?php return " . var_export($list, TRUE) . ';';
 			icms_core_Filesystem::writeFile($contents, $this->_type . 'editor_list', 'php', ICMS_CACHE_PATH);
 		}
 
