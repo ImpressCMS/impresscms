@@ -291,10 +291,10 @@ function impresscms_get_adminmenu() {
 	return $admin_menu;
 }
 
-function impresscms_sort_adminmenu_modules($a, $b) {
-	$a = strtolower($a->getVar("name"));
-	$b = strtolower($b->getVar("name"));
-	return ($a == $b) ? 0 : ($a < $b) ? -1 : +1;
+function impresscms_sort_adminmenu_modules(\icms_module_Object $a, \icms_module_Object $b) {
+	$n1 = strtolower($a->name);
+	$n2 = strtolower($b->name);
+	return ($n1 == $n2) ? 0 : ($n1 < $n2) ? -1 : +1;
 }
 
 /**
