@@ -40,5 +40,3 @@ RewriteRule .* index.php [F,L]
 
 RewriteRule ^templates_c/(.*)$ index.php [F,L]
 RewriteRule ^themes/(.*)\.php$ index.php [F,L]
-RewriteRule ^plugins/autotasks/(.*)$ index.php [F,L]
-RewriteRule (^|/)language/(.*)$ index.php [F,L]
