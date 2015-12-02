@@ -367,6 +367,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				break;
 
 			case 'textarea' :
+                            
 				$form_rows = isset($this->targetObject->controls[$key]['rows']) ? $this->targetObject->controls[$key]['rows'] : 5;
 				$form_cols = isset($this->targetObject->controls[$key]['cols']) ? $this->targetObject->controls[$key]['cols'] : 60;
 
@@ -538,7 +539,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			$elements[$n]['required'] = $ele->isRequired();
 			$elements[$n]['section'] = get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection();
 			$elements[$n]['section_close'] = get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection();
-			$elements[$n]['hide'] = $this->targetObject->getVarInfo($n, 'hide', false);
+			$elements[$n]['hide'] = ($i == $n)?false:$this->targetObject->getVarInfo($n, 'hide', false);
 
 			if ($ele->getDescription() != '') {
 				$elements[$n]['description']  = $ele->getDescription();
