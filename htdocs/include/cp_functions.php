@@ -99,7 +99,7 @@ function themecenterposts($title, $content) {
  * @return array (content of admin panel dropdown menus)
  */
 function impresscms_get_adminmenu() {
-	$admin_menu = [
+    $admin_menu = [
         [ // Control Panel Home menu
             'id' => 'cphome',
             'text' => _CPHOME,
@@ -126,169 +126,102 @@ function impresscms_get_adminmenu() {
             ],
         ]
     ];
-    $modules_menu = array();
-	$systemadm = false;        
 
-	#########################################################################
-	# System Preferences menu
-	#########################################################################
-	$module_handler = icms::handler('icms_module');
-	$mod = & $module_handler->getByDirname('system');
-	$menu = array();
-	foreach ($mod->getAdminMenu() as $lkn) {
-		$lkn['dir'] = 'system';
-		$menu[] = $lkn;
-	}
+    #########################################################################
+    # System Preferences menu
+    #########################################################################
+    $module_handler = icms::handler('icms_module');
+    $mod = & $module_handler->getByDirname('system');
+    $menu = array();
+    foreach ($mod->getAdminMenu() as $lkn) {
+        $lkn['dir'] = 'system';
+        $menu[] = $lkn;
+    }
 
-	$admin_menu[] = array(
-		'id' => 'opsystem',
-		'text' => _SYSTEM,
-		'link' => ICMS_URL . '/modules/system/admin.php',
-		'menu' => $menu,
-	);
-	#########################################################################
-	# end
-	#########################################################################
+    $admin_menu[] = array(
+        'id' => 'opsystem',
+        'text' => _SYSTEM,
+        'link' => ICMS_URL . '/modules/system/admin.php',
+        'menu' => $menu,
+    );
+    #########################################################################
+    # end
+    #########################################################################
 
-	#########################################################################
-	# Modules menu
-	#########################################################################
-	$criteria = new icms_db_criteria_Compo();
-	$criteria->add(new icms_db_criteria_Item('hasadmin', 1));
-	$criteria->add(new icms_db_criteria_Item('isactive', 1));
-	$modules = $module_handler->getObjects($criteria);
-	usort($modules, 'impresscms_sort_adminmenu_modules');
-	foreach ($modules as $module) {
-		$rtn = array();
-		$inf = & $module->getInfo();
-		$rtn['link'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . (isset($inf['adminindex']) ? $inf['adminindex'] : '');
-		$rtn['title'] = $module->getVar('name');
-		$rtn['dir'] = $module->getVar('dirname');
-		if (isset($inf['iconsmall']) && $inf['iconsmall'] != '') {
-			$rtn['small'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $inf['iconsmall'];
-		}
-		if (isset($inf['iconbig']) && $inf['iconbig'] != '') {
-			$rtn['iconbig'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $inf['iconbig'];
-		}
-		$rtn['absolute'] = 1;
-		$rtn['subs'] = array();
-		$module->loadAdminMenu();
-		if (is_array($module->adminmenu) && count($module->adminmenu) > 0) {
-			foreach ($module->adminmenu as $item) {
-				$item['link'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $item ['link'];
-				$rtn['subs'][] = $item;
-			}
-		}
-		$hasconfig = $module->getVar('hasconfig');
-		$hascomments = $module->getVar('hascomments');
-		if ((isset($hasconfig) && $hasconfig == 1) || (isset($hascomments) && $hascomments == 1)) {
-			$subs = array(
-				'title' => _PREFERENCES,
-				'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod='
-						. $module->getVar('mid')
-			);
-			$rtn['subs'][] = $subs;
-		}
-		$rtn['hassubs'] = (count($rtn ['subs']) > 0) ? 1 : 0;
-		if ($rtn['hassubs'] == 0) unset($rtn ['subs']);
-		if ($module->getVar('dirname') == 'system') {
-			$systemadm = true;
-		}
-		$modules_menu[] = $rtn;
-	}
+    $admin_menu[] = [
+        'id' => 'modules',
+        'text' => _MODULES,
+        'link' => ICMS_URL . '/modules/system/admin.php?fct=modules',
+        'menu' => $module_handler->getAdminMenuItems()
+    ];
 
-	$admin_menu[] = array(
-		'id' => 'modules',
-		'text' => _MODULES,
-		'link' => ICMS_URL . '/modules/system/admin.php?fct=modules',
-		'menu' => $modules_menu,
-	);
+    $admin_menu[] = [
+        'id' => 'news',
+        'text' => _ABOUT,
+        'link' => '#',
+        'menu' => [
+            [
+                'link' => 'http://www.impresscms.org',
+                'title' => _IMPRESSCMS_HOME,
+                'absolute' => 1,
+            //small' => ICMS_URL . '/images/impresscms.png',
+            ],
+            [
+                'link' => 'http://community.impresscms.org',
+                'title' => _IMPRESSCMS_COMMUNITY,
+                'absolute' => 1,
+            //'small' = ICMS_URL . '/images/impresscms.png',
+            ],
+            [
+                'link' => 'http://addons.impresscms.org',
+                'title' => _IMPRESSCMS_ADDONS,
+                'absolute' => 1,
+            //'small' => ICMS_URL . '/images/impresscms.png',
+            ],
+            [
+                'link' => 'http://wiki.impresscms.org',
+                'title' => _IMPRESSCMS_WIKI,
+                'absolute' => 1,
+            //'small' = ICMS_URL . '/images/impresscms.png',
+            ],
+            [
+                'link' => 'http://blog.impresscms.org',
+                'title' => _IMPRESSCMS_BLOG,
+                'absolute' => 1,
+            //'small'] = ICMS_URL . '/images/impresscms.png',
+            ],
+            [
+                'link' => 'https://impresscmsdev.assembla.com/spaces/impresscms/new_dashboard',
+                'title' => _IMPRESSCMS_PROJECT,
+                'absolute' => 1,
+            //'small' = ICMS_URL . '/images/impresscms.png',
+            ],
+            [
+                'link' => 'http://www.impresscms.org/donations/',
+                'title' => _IMPRESSCMS_DONATE,
+                'absolute' => 1,
+            //'small' = ICMS_URL . '/images/impresscms.png',
+            ],
+            [
+                'link' => ICMS_URL . '/admin.php?rssnews=1',
+                'title' => _IMPRESSCMS_NEWS,
+                'absolute' => 1,
+            //'small' => ICMS_URL . '/images/impresscms.png',
+            ]
+        ]
+    ];
 
-	#########################################################################
-	# end
-	#########################################################################
-
-	#########################################################################
-	# ImpressCMS News Feed menu
-	#########################################################################
-	$menu = [[
-		'link' => 'http://www.impresscms.org',
-		'title' => _IMPRESSCMS_HOME,
-		'absolute' => 1,
-		//small' => ICMS_URL . '/images/impresscms.png',
-	]];
+    if (_LANGCODE != 'en') {
+        array_splice($admin_menu[count($admin_menu) - 1], 1, 0, [
+            'link' => _IMPRESSCMS_LOCAL_SUPPORT,
+            'title' => _IMPRESSCMS_LOCAL_SUPPORT_TITLE,
+            'absolute' => 1,
+                //'small' => ICMS_URL . '/images/impresscms.png',
+        ]);
+    }
 
 
-	if (_LANGCODE != 'en') {
-		$menu[] = array(
-			'link' => _IMPRESSCMS_LOCAL_SUPPORT,
-			'title' => _IMPRESSCMS_LOCAL_SUPPORT_TITLE,
-			'absolute' => 1,
-			//'small' => ICMS_URL . '/images/impresscms.png',
-		);
-	}
-
-	$menu[] = array(
-		'link' => 'http://community.impresscms.org',
-		'title' => _IMPRESSCMS_COMMUNITY,
-		'absolute' => 1,
-		//'small' = ICMS_URL . '/images/impresscms.png',
-	);
-
-	$menu[] = array(
-		'link' => 'http://addons.impresscms.org',
-		'title' => _IMPRESSCMS_ADDONS,
-		'absolute' => 1,
-		//'small' => ICMS_URL . '/images/impresscms.png',
-	);
-
-	$menu[] = array(
-		'link' => 'http://wiki.impresscms.org',
-		'title' => _IMPRESSCMS_WIKI,
-		'absolute' => 1,
-		//'small' = ICMS_URL . '/images/impresscms.png',
-	);
-
-	$menu[] = array(
-		'link' => 'http://blog.impresscms.org',
-		'title' => _IMPRESSCMS_BLOG,
-		'absolute' => 1,
-		//'small'] = ICMS_URL . '/images/impresscms.png',
-	);
-
-	$menu[] = array(
-		'link' => 'https://impresscmsdev.assembla.com/spaces/impresscms/new_dashboard',
-		'title' => _IMPRESSCMS_PROJECT,
-		'absolute' => 1,
-		//'small' = ICMS_URL . '/images/impresscms.png',
-	);
-
-	$menu[] = array(
-		'link' => 'http://www.impresscms.org/donations/',
-		'title' => _IMPRESSCMS_DONATE,
-		'absolute' => 1,
-		//'small' = ICMS_URL . '/images/impresscms.png',
-	);
-
-	$menu[] = array(
-	'link' => ICMS_URL . '/admin.php?rssnews=1',
-	'title' => _IMPRESSCMS_NEWS,
-	'absolute' => 1,
-	//'small' => ICMS_URL . '/images/impresscms.png',
-	);
-
-	$admin_menu[] = array(
-		'id' => 'news',
-		'text' => _ABOUT,
-		'link' => '#',
-		'menu' => $menu,
-	);
-
-	#########################################################################
-	# end
-	#########################################################################
-
-	return $admin_menu;
+    return $admin_menu;
 }
 
 function impresscms_sort_adminmenu_modules(\icms_module_Object $a, \icms_module_Object $b) {

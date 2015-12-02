@@ -353,8 +353,27 @@ class icms_module_Handler
 	public function getTemplate($dirname, $template, $block = FALSE) {
 
 	}
+        
+    /**
+     * Get all menu items of all activated modules
+     * 
+     * @return array
+     */
+    public function getAdminMenuItems() {
+        $criteria = new icms_db_criteria_Compo();
+        $criteria->add(new icms_db_criteria_Item('hasadmin', 1));
+        $criteria->add(new icms_db_criteria_Item('isactive', 1));
+        $criteria->setOrder('ASC');
+        $criteria->setSort('name');
+        $modules = $this->getObjects($criteria);
+        $modules_menu = [];
+        foreach ($modules as $module) {
+            $modules_menu[] = $module->getAdminMenuItems();
+        }
+        return $modules_menu;
+    }
 
-	/**
+    /**
 	 * Posts a notification of an install or update of the system module
 	 *
 	 * @todo	Add language constants
