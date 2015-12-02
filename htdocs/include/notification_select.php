@@ -41,11 +41,16 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
-	exit();
+	exit();       
 }
+
+
+
 include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
-$xoops_notification = array();
-$xoops_notification['show'] = isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline') ? 1 : 0;
+$xoops_notification = [
+    'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline')) ? 1 : 0
+];  
+
 if ($xoops_notification['show']) {
 	icms_loadLanguageFile('core', 'notification');
 	$notification_handler = icms::handler('icms_data_notification');
@@ -94,4 +99,3 @@ if ($xoops_notification['show']) {
 	}
 }
 $xoopsTpl->assign('xoops_notification', $xoops_notification);
-

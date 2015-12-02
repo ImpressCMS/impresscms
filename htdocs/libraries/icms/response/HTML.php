@@ -273,8 +273,10 @@ class icms_response_HTML extends icms_response_Text {
     private function includeNotificationsSelection() {
         global $icmsModule;
         // RMV-NOTIFY
-        if (is_object($icmsModule) && $icmsModule->hasnotification == 1 && is_object(\icms::$user)) {
+        if (($icmsModule instanceof \icms_module_Object) && ($icmsModule->hasnotification == 1) && is_object(\icms::$user)) {
             /** Require the notifications area */
+            global $xoTheme, $xoopsTpl;
+            $xoopsTpl = &$this;
             $xoTheme = &$this->theme;
             require_once ICMS_INCLUDE_PATH . '/notification_select.php';
         }
@@ -419,7 +421,7 @@ class icms_response_HTML extends icms_response_Text {
             
             if (!isset($tplConfig['folderName'])) {
                 $tplConfig['folderName'] = $icmsConfig['theme_admin_set'];
-            }
+            }            
         } 
         $this->theme = \icms_view_theme_Factory::getInstance()->createInstance($tplConfig);
     }
