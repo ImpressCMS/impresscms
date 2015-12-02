@@ -108,6 +108,7 @@ class icms_response_HTML extends icms_response_Text {
                     $ok_syscats = & $sysperm_handler->getItemIds('system_admin', $groups);
                 } else {
                     $all_ok = true;
+                    $ok_syscats = [];
                 }
                 $perm_itens = array();
 
@@ -175,6 +176,7 @@ class icms_response_HTML extends icms_response_Text {
                     }
                     $sysprefs = $sysprefs_tmp;
                     unset($sysprefs_tmp);
+                    $reversed_sysprefs = [];
                     for ($i = count($sysprefs) - 1; $i >= 0; $i = $i - 1) {
                         if (isset($sysprefs [$i])) {
                             $reversed_sysprefs[] = $sysprefs[$i];
@@ -468,13 +470,12 @@ class icms_response_HTML extends icms_response_Text {
      */
     private function addSanitizerPlugins() {
         global $icmsConfigPlugins;
-        $style_info = '';
         if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
             foreach (array_filter($icmsConfigPlugins['sanitizer_plugins']) as $key) {
                 if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
                     $this->theme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', array('media' => 'screen'));
                 } else {
-                    $extension = include_once ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.php';
+                    include_once ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.php';
                     $func = 'style_' . $key;
                     if (function_exists($func)) {
                         $style_info = $func();
