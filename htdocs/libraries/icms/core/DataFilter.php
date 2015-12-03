@@ -717,7 +717,7 @@ class icms_core_DataFilter {
 	 *
 	 */
 	static public function censorString(&$text) {
-		$icmsConfigCensor = icms::$config->getConfigsByCat(ICMS_CONF_CENSOR);
+		$icmsConfigCensor = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_CENSOR);
 		if ($icmsConfigCensor['censor_enable'] == TRUE) {
 			$replacement = $icmsConfigCensor['censor_replace'];
 			if (!empty($icmsConfigCensor['censor_words'])) {
