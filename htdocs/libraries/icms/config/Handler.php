@@ -128,22 +128,22 @@ class icms_config_Handler {
 		$instance = icms::handler('icms_config');
 		$configs = $instance->getConfigsByCat(
 			array(
-				ICMS_CONF, ICMS_CONF_USER, ICMS_CONF_METAFOOTER, ICMS_CONF_MAILER,
-				ICMS_CONF_AUTH, ICMS_CONF_MULILANGUAGE, ICMS_CONF_PERSONA, ICMS_CONF_PLUGINS,
-				ICMS_CONF_CAPTCHA, ICMS_CONF_SEARCH
+				self::CATEGORY_MAIN, self::CATEGORY_USER, self::CATEGORY_METAFOOTER, self::CATEGORY_MAILER,
+				self::CATEGORY_AUTH, self::CATEGORY_MULILANGUAGE, self::CATEGORY_PERSONA, self::CATEGORY_PLUGINS,
+				self::CATEGORY_CAPTCHA, self::CATEGORY_SEARCH
 			)
 		);
-		$GLOBALS['icmsConfig']			 = $configs[ICMS_CONF];
+		$GLOBALS['icmsConfig']			 = $configs[self::CATEGORY_MAIN];
 		$GLOBALS['xoopsConfig']			 =& $GLOBALS['icmsConfig'];
-		$GLOBALS['icmsConfigUser']       = $configs[ICMS_CONF_USER];
-		$GLOBALS['icmsConfigMetaFooter'] = $configs[ICMS_CONF_METAFOOTER];
-		$GLOBALS['icmsConfigMailer']     = $configs[ICMS_CONF_MAILER];
-		$GLOBALS['icmsConfigAuth']       = $configs[ICMS_CONF_AUTH];
-		$GLOBALS['icmsConfigMultilang']  = $configs[ICMS_CONF_MULILANGUAGE];
-		$GLOBALS['icmsConfigPersona']    = $configs[ICMS_CONF_PERSONA];
-		$GLOBALS['icmsConfigPlugins']    = $configs[ICMS_CONF_PLUGINS];
-		$GLOBALS['icmsConfigCaptcha']    = $configs[ICMS_CONF_CAPTCHA];
-		$GLOBALS['icmsConfigSearch']     = $configs[ICMS_CONF_SEARCH];
+		$GLOBALS['icmsConfigUser']       = $configs[self::CATEGORY_USER];
+		$GLOBALS['icmsConfigMetaFooter'] = $configs[self::CATEGORY_METAFOOTER];
+		$GLOBALS['icmsConfigMailer']     = $configs[self::CATEGORY_MAILER];
+		$GLOBALS['icmsConfigAuth']       = $configs[self::CATEGORY_AUTH];
+		$GLOBALS['icmsConfigMultilang']  = $configs[self::CATEGORY_MULILANGUAGE];
+		$GLOBALS['icmsConfigPersona']    = $configs[self::CATEGORY_PERSONA];
+		$GLOBALS['icmsConfigPlugins']    = $configs[self::CATEGORY_PLUGINS];
+		$GLOBALS['icmsConfigCaptcha']    = $configs[self::CATEGORY_CAPTCHA];
+		$GLOBALS['icmsConfigSearch']     = $configs[self::CATEGORY_SEARCH];
 		return self::$instance = $instance;
 	}
 
