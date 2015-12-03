@@ -126,8 +126,8 @@ switch ($op) {
 				echo $weight[$mid];
 			}
 			echo "<input type='hidden' name='module[]' value='". (int) $mid
-			."' /><input type='hidden' name='oldname[" . $mid . "]' value='" . htmlspecialchars($oldname[$mid], ENT_QUOTES)
-			."' /><input type='hidden' name='newname[" . $mid . "]' value='" . htmlspecialchars($newname[$mid], ENT_QUOTES)
+			."' /><input type='hidden' name='oldname[" . $mid . "]' value='" . htmlspecialchars($oldname[$mid], ENT_QUOTES, _CHARSET)
+			."' /><input type='hidden' name='newname[" . $mid . "]' value='" . htmlspecialchars($newname[$mid], ENT_QUOTES, _CHARSET)
 			."' /><input type='hidden' name='oldstatus[" . $mid . "]' value='" . (int) $oldstatus[$mid]
 			."' /><input type='hidden' name='newstatus[" . $mid . "]' value='" . (int) $newstatus[$mid]
 			."' /><input type='hidden' name='oldweight[" . $mid . "]' value='" . (int) $oldweight[$mid]
