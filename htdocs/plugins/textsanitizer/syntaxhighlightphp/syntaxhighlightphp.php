@@ -63,7 +63,7 @@ function render_syntaxhighlightphp($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodePHP(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERPHPCODE, ENT_QUOTES) . "\");'
+		onclick='javascript:icmsCodePHP(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERPHPCODE, ENT_QUOTES, _CHARSET) . "\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/php.png'
 		alt='php'

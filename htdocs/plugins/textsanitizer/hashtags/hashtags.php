@@ -51,7 +51,7 @@ function render_hashtags($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeHashtag(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTER_HASHTAG, ENT_QUOTES) . "\");'
+		onclick='javascript:icmsCodeHashtag(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTER_HASHTAG, ENT_QUOTES, _CHARSET) . "\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_PLUGINS_URL . "/textsanitizer/" . $dirname . "/" . $dirname . ".png'
 		alt='" . $dirname . "'

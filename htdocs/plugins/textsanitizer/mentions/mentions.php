@@ -57,7 +57,7 @@ function render_mentions($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeMention(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTER_MENTION, ENT_QUOTES) . "\");'
+		onclick='javascript:icmsCodeMention(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTER_MENTION, ENT_QUOTES, _CHARSET) . "\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_PLUGINS_URL . "/textsanitizer/" . $dirname . "/" . $dirname . ".png'
 		alt='" . $dirname . "'

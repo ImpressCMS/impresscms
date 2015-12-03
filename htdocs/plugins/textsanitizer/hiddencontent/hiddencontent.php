@@ -42,7 +42,7 @@ function render_hiddencontent($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeHidden(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES) . "\");'
+		onclick='javascript:icmsCodeHidden(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES, _CHARSET) . "\");'
 		onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/hide.gif'
 		alt='hide'
 		title='" . $dirname . "' />&nbsp;";
