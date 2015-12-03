@@ -106,7 +106,7 @@ class icms_response_Text {
         
         if (!headers_sent()) {
             header('Content-Type: ' . static::CONTENT_TYPE . '; charset=' . _CHARSET);
-            header('X-Powered-By: ImpressCMS ' .  ICMS_VERSION);
+            header('X-Powered-By: ImpressCMS ');
             header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
             header('Cache-Control: private, no-cache');
             header('Pragma: no-cache');
