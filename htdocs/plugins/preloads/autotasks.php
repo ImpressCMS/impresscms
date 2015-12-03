@@ -38,10 +38,10 @@ class IcmsPreloadAutotasks extends icms_preload_Item {
 	 * @param array config array
 	 */
 	function eventAfterSaveSystemAdminPreferencesItems($array) {
-		if (!isset($array[ICMS_CONF_AUTOTASKS])) return;
+		if (!isset($array[\icms_config_Handler::CATEGORY_AUTOTASKS])) return;
 		$handler = icms_getModuleHandler('autotasks', 'system');
 		$handler->virtual_config = array();
-		$array = &$array[ICMS_CONF_AUTOTASKS];
+		$array = &$array[\icms_config_Handler::CATEGORY_AUTOTASKS];
 		$vconfig1 = array();
 		$vconfig2 = array();
 		foreach ($array as $key => $values) {
