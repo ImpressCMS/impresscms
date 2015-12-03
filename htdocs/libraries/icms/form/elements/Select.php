@@ -118,7 +118,7 @@ class icms_form_elements_Select extends icms_form_Element {
 		}
 		$value = array();
 		foreach ($this->_value as $val) {
-			$value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
+			$value[] = $val ? htmlspecialchars($val, ENT_QUOTES, _CHARSET) : $val;
 		}
 		return $value;
 	}
@@ -179,8 +179,8 @@ class icms_form_elements_Select extends icms_form_Element {
 		}
 		$value = array();
 		foreach ($this->_options as $val => $name) {
-			$value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val]
-				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+			$value[$encode ? htmlspecialchars($val, ENT_QUOTES, _CHARSET) : $val]
+				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES, _CHARSET) : $name;
 		}
 		return $value;
 	}
@@ -201,7 +201,7 @@ class icms_form_elements_Select extends icms_form_Element {
 			$ret .= " name='" . $ele_name . "' id='" . $ele_name . "'>\n";
 		}
 		foreach ( $ele_options as $value => $name ) {
-			$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+			$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " selected='selected'";
 			}

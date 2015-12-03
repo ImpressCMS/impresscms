@@ -128,12 +128,12 @@ class icms_core_Message {
 		if (is_array($value)) {
 			foreach ($value as $caption => $newvalue) {
 				echo '<input type="radio" name="' . $name . '" value="'
-					. htmlspecialchars($newvalue) . '" /> ' . $caption;
+					. htmlspecialchars($newvalue, ENT_COMPAT | ENT_HTML401, _CHARSET) . '" /> ' . $caption;
 			}
 			echo '<br />';
 		} else {
 			echo '<input type="hidden" name="' . $name . '" value="'
-				. htmlspecialchars($value) . '" />';
+				. htmlspecialchars($value, ENT_COMPAT | ENT_HTML401, _CHARSET) . '" />';
 		}
 	}
 	if ($addtoken !== false) {

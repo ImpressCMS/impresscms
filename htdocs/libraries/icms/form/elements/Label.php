@@ -69,7 +69,7 @@ class icms_form_elements_Label extends icms_form_Element {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET) : $this->_value;
 	}
 
 	/**

@@ -87,7 +87,7 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 */
 	public function getValue($encode = false) {
 		return ($encode && $this->_value !== null)
-			? htmlspecialchars($this->_value, ENT_QUOTES)
+			? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET)
 			: $this->_value;
 	}
 
@@ -139,8 +139,8 @@ class icms_form_elements_Radio extends icms_form_Element {
 		}
 		$value = array();
 		foreach ($this->_options as $val => $name) {
-			$value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val]
-				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+			$value[$encode ? htmlspecialchars($val, ENT_QUOTES, _CHARSET) : $val]
+				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES, _CHARSET) : $name;
 		}
 		return $value;
 	}
@@ -152,7 +152,7 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 * @return	string  The delimiter
 	 */
 	public function getDelimeter($encode = false) {
-		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
+		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter), ENT_COMPAT | ENT_HTML401, _CHARSET) : $this->_delimeter;
 	}
 
 	/**
@@ -168,7 +168,7 @@ class icms_form_elements_Radio extends icms_form_Element {
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<input type='radio' name='" . $ele_name . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+			$ret .= "<input type='radio' name='" . $ele_name . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
 			if ($value == $ele_value) {
 				$ret .= " checked='checked'";
 			}

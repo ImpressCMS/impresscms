@@ -1265,7 +1265,7 @@ class icms_core_DataFilter {
 		foreach ($smileys as $smile) {
 			$message = str_replace(
 				$smile['code'],
-				'<img src="' . ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'])
+				'<img src="' . ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'], ENT_COMPAT | ENT_HTML401, _CHARSET)
 					. '" alt="" />',
 				$message
 			);
