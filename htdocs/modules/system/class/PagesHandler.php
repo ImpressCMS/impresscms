@@ -3,17 +3,13 @@
  * Administration of Symlinks
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @package		System
- * @subpackage	Symlinks
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
  */
 
 /**
  * Symlinks handler
  *
- * @package		System
- * @subpackage	Symlinks
+ * @package     ImpressCMS\Modules\System\Class\Pages
  */
 class mod_system_PagesHandler extends icms_data_page_Handler {
 

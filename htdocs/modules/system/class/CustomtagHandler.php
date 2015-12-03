@@ -3,12 +3,10 @@
  * ImpressCMS Customtags
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
- * @subpackage	Custom Tags
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @package     ImpressCMS\Modules\System\Class\CustomTag
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -20,6 +18,8 @@ defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
 
 /**
  * Handler for the custom tag object
+ * 
+ * @package     ImpressCMS\Modules\System\Class\CustomTag
  */
 class mod_system_CustomtagHandler extends icms_ipf_Handler {
 	private $_objects = FALSE;
