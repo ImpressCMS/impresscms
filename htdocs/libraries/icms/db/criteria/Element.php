@@ -50,7 +50,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @abstract
  * @package	ICMS\Database\Criteria
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono      <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
 abstract class icms_db_criteria_Element {
@@ -92,9 +92,6 @@ abstract class icms_db_criteria_Element {
 	 */
 	abstract public function render();
 
-	/**#@+
-	 * Accessor
-	 */
 	/**
 	 * @param	string  $sort
 	 */
@@ -113,9 +110,10 @@ abstract class icms_db_criteria_Element {
 	 * @param	string  $order
 	 */
 	public function setOrder($order) {
-		if ('DESC' == strtoupper($order)) {
-			$this->order = 'DESC';
-		}
+                $order = strtoupper($order);
+                if ($order == 'DESC' || $order == 'ASC') {
+                        $this->order = $order;
+                }
 	}
 
 	/**
@@ -166,6 +164,5 @@ abstract class icms_db_criteria_Element {
 	public function getGroupby() {
 		return ' GROUP BY ' . $this->groupby;
 	}
-	/**#@-*/
 }
 
