@@ -560,18 +560,18 @@ switch ($op) {
 
 				if (is_array($new_value) || $new_value != $config->getVar('conf_value')) {
 					// if language has been changed
-					if (!$lang_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'language') {
+					if (!$lang_updated && $config->getVar('conf_catid') == \icms_config_Handler::CATEGORY_MAIN && $config->getVar('conf_name') == 'language') {
 						$icmsConfig['language'] = ${$config->getVar('conf_name')};
 						$lang_updated = TRUE;
 					}
 					// if default theme has been changed
-					if (!$theme_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'theme_set') {
+					if (!$theme_updated && $config->getVar('conf_catid') == \icms_config_Handler::CATEGORY_MAIN && $config->getVar('conf_name') == 'theme_set') {
 						$member_handler = icms::handler('icms_member');
 						$member_handler->updateUsersByField('theme', ${$config->getVar('conf_name')});
 						$theme_updated = TRUE;
 					}
 					// if password encryption has been changed
-					if (!$encryption_updated && $config->getVar('conf_catid') == ICMS_CONF_USER && $config->getVar('conf_name') == 'enc_type') {
+					if (!$encryption_updated && $config->getVar('conf_catid') == \icms_config_Handler::CATEGORY_USER && $config->getVar('conf_name') == 'enc_type') {
 						if ($icmsConfig['closesite'] !== 1) {
 							$member_handler = icms::handler('icms_member');
 							$member_handler->updateUsersByField('pass_expired', 1);
@@ -582,7 +582,7 @@ switch ($op) {
 					}
 
 					if (!$purifier_style_updated
-						&& $config->getVar('conf_catid') == ICMS_CONF_PURIFIER
+						&& $config->getVar('conf_catid') == \icms_config_Handler::CATEGORY_PURIFIER
 						&& $config->getVar('conf_name') == 'purifier_Filter_ExtractStyleBlocks'
 						) {
 						if ($config->getVar('purifier_Filter_ExtractStyleBlocks') == 1) {
@@ -594,7 +594,7 @@ switch ($op) {
 					}
 
 					// if default template set has been changed
-					if (! $tpl_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'template_set') {
+					if (! $tpl_updated && $config->getVar('conf_catid') == \icms_config_Handler::CATEGORY_MAIN && $config->getVar('conf_name') == 'template_set') {
 						// clear cached/compiled files and regenerate them if default theme has been changed
 						if ($icmsConfig['template_set'] != ${$config->getVar('conf_name')}) {
 							$newtplset = ${$config->getVar('conf_name')};
@@ -624,7 +624,7 @@ switch ($op) {
 					}
 
 					// add read permission for the start module to all groups
-					if (! $startmod_updated && $new_value != '--' && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'startpage') {
+					if (! $startmod_updated && $new_value != '--' && $config->getVar('conf_catid') == \icms_config_Handler::CATEGORY_MAIN && $config->getVar('conf_name') == 'startpage') {
 						$moduleperm_handler = icms::handler('icms_member_groupperm');
 						$module_handler = icms::handler('icms_module');
 
