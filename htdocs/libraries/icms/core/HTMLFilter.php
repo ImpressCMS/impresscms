@@ -47,7 +47,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * @return   string
 	 **/
 	static public function filterHTML($html) {
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
 
         $fcomment = '<!-- filtered with htmlpurifier -->';
         
@@ -86,7 +86,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 */
 	static private function getCustomFilterList() {
 		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
 			$filterList = array();
 
@@ -111,7 +111,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * @return  array    $icmsPurifierConf
 	 **/
 	static protected function getHTMLFilterConfig() {
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
         
         $IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];
         if ($IframeRegExp !== '') {
