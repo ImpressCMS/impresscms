@@ -1164,6 +1164,27 @@ abstract class icms_properties_Handler implements Serializable {
                 break;
         }
     }
+    
+    /**
+     * Magic method that adds a possibility to use setVARNAME and getVARNAME methods
+     * 
+     * @param   string  $name           Name of function
+     * @param   array   $arguments      Arguments array
+     * 
+     * @return  mixed
+     * 
+     * @throws  Exception
+     */
+    public function __call($name, $arguments) {
+        switch (substr($name, 0, 3)) {
+                case 'get':
+                        return $this->getVar(strtolower(substr($name, 3)), isset($arguments[0])?$arguments[0]:'s');
+                case 'set':
+                        return $this->__set(strtolower(substr($name, 3)), $arguments[0]);
+                default:
+                        throw new Exception(sprintf('Method %s() in %s doesn\'t exist', $name, get_class($this)));
+        }
+    }
 
     /**
      * Serialize instance to string
