@@ -401,7 +401,7 @@ class icms_data_comment_Renderer {
 	 * @return  string  HTML IMG tag
 	 */
 	private function _getTitleIcon($icon_image) {
-		$icon_image = htmlspecialchars(trim($icon_image));
+		$icon_image = htmlspecialchars(trim($icon_image), ENT_COMPAT | ENT_HTML401, _CHARSET);
 		if ($icon_image != '') {
 			if (FALSE != $this->_doIconCheck) {
 				if (!file_exists(ICMS_URL . '/images/subject/' . $icon_image)) {

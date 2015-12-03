@@ -129,7 +129,7 @@ class icms_auth_method_Openid extends icms_auth_Object {
 				icms_core_Debug::vardump($sreg);
 			}
 
-			$esc_identity = htmlspecialchars($this->openid, ENT_QUOTES);
+			$esc_identity = htmlspecialchars($this->openid, ENT_QUOTES, _CHARSET);
 
 			$success = sprintf(_CORE_OID_SUCESSFULLYIDENTIFIED, $esc_identity, $this->displayid);
 

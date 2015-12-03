@@ -159,13 +159,13 @@ class icms_view_theme_Object {
 					? ICMS_MODULES_URL . '/system/themes/' . $this->folderName . '/'
 					: ICMS_THEME_URL . '/' . $this->folderName . '/',
 				'icms_themecss'=> xoops_getcss($this->folderName),
-				'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
-				'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
+				'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, _CHARSET),
+				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET),
+				'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
 				'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
 				'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
 						? $icmsModule->getVar('name')
-						: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES)
+						: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET)
 			)
 		);
 
@@ -345,8 +345,8 @@ class icms_view_theme_Object {
 		$old = array('robots', 'keywords', 'description', 'rating', 'author', 'copyright');
 		foreach ($this->metas['module']['meta'] as $name => $value) {
 			if (in_array($name, $old)) {
-				$this->template->assign("xoops_meta_$name", htmlspecialchars($value['value'], ENT_QUOTES));
-				$this->template->assign("icms_meta_$name", htmlspecialchars($value['value'], ENT_QUOTES));
+				$this->template->assign("xoops_meta_$name", htmlspecialchars($value['value'], ENT_QUOTES, _CHARSET));
+				$this->template->assign("icms_meta_$name", htmlspecialchars($value['value'], ENT_QUOTES, _CHARSET));
 				unset($this->metas['module']['meta'][$name]);
 			}
 		}
@@ -613,13 +613,13 @@ class icms_view_theme_Object {
 
 				case 'http':
 					foreach ($this->metas[$zone][$type] as $name => $content) {
-						$str .= '<meta http-equiv="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES) . "\" />\n";
+						$str .= '<meta http-equiv="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES, _CHARSET) . "\" />\n";
 					}
 					break;
 
 				default:
 					foreach ($this->metas[$zone][$type] as $name => $content) {
-						$str .= '<meta name="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content['value'], ENT_QUOTES) . "\" />\n";
+						$str .= '<meta name="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content['value'], ENT_QUOTES, _CHARSET) . "\" />\n";
 					}
 					break;
 			}
@@ -668,7 +668,7 @@ class icms_view_theme_Object {
 		$str = '';
 		foreach ($coll as $name => $val) {
 			if ($name != '_') {
-				$str .= ' ' . $name . '="' . htmlspecialchars($val, ENT_QUOTES) . '"';
+				$str .= ' ' . $name . '="' . htmlspecialchars($val, ENT_QUOTES, _CHARSET) . '"';
 			}
 		}
 		return $str;
