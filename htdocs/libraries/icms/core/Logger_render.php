@@ -141,9 +141,9 @@ if (empty($mode) || $mode == 'blocks') {
 	$ret .= '<div class="tab-pane fade" id="debug-blocks"><h4>' . _BLOCKS . '</h4>';
 	foreach ($this->blocks as $b) {
 		if ($b['cached']) {
-			$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($b['name'], ENT_COMPAT | ENT_HTML401, _CHARSET) . ':</strong> ' . _CACHED . ' : ' . icms_conv_nr2local(sprintf(_REGENERATES, (int) ($b['cachetime']))) . '</div>';
+			$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _CACHED . ' : ' . icms_conv_nr2local(sprintf(_REGENERATES, (int) ($b['cachetime']))) . '</div>';
 		} else {
-			$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($b['name'], ENT_COMPAT | ENT_HTML401, _CHARSET) . ':</strong> ' . _NOCACHE . '</div>';
+			$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _NOCACHE . '</div>';
 		}
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
@@ -154,7 +154,7 @@ if (empty($mode) || $mode == 'extra') {
 	$class = 'even';
 	$ret .= '<div class="tab-pane fade" id="debug-extra"><h4>' . _EXTRA . '</h4>';
 	foreach ($this->extra as $ex) {
-		$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($ex['name'], ENT_COMPAT | ENT_HTML401, _CHARSET) . ':</strong> ' . htmlspecialchars($ex['msg'], ENT_COMPAT | ENT_HTML401, _CHARSET) . '</div>';
+		$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($ex['name']) . ':</strong> ' . htmlspecialchars($ex['msg']) . '</div>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
 	$ret .= '</div>';
@@ -164,7 +164,7 @@ if (empty($mode) || $mode == 'timers') {
 	$class = 'even';
 	$ret .= '<div class="tab-pane fade" id="debug-timers"><h4>' . _TIMERS . '</h4>';
 	foreach ( $this->logstart as $k => $v) {
-		$ret .= '<div class="' . $class.'"><strong>' . htmlspecialchars($k, ENT_COMPAT | ENT_HTML401, _CHARSET) . '</strong> ' . sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>') . '</div>';
+		$ret .= '<div class="' . $class.'"><strong>' . htmlspecialchars($k) . '</strong> ' . sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>') . '</div>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
 	$ret .= '</div>';

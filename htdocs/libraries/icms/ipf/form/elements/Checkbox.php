@@ -84,7 +84,7 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 		}
 		foreach ($ele_options as $value => $name) {
 			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name 
-				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
+				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
 			}

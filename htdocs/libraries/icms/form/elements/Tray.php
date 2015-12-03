@@ -160,7 +160,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 * @return	string  The delimiter
 	 */
 	public function getDelimeter($encode = false) {
-		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter), ENT_COMPAT | ENT_HTML401, _CHARSET) : $this->_delimeter;
+		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
 	}
 
 	/**

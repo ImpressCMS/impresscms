@@ -144,7 +144,7 @@ abstract class icms_form_Element {
 	 */
 	public function getName($encode = true) {
 		if (false != $encode) {
-			return str_replace("&amp;", "&", htmlspecialchars($this->_name, ENT_QUOTES, _CHARSET));
+			return str_replace("&amp;", "&", htmlspecialchars($this->_name, ENT_QUOTES));
 		}
 		return $this->_name;
 	}
@@ -176,12 +176,12 @@ abstract class icms_form_Element {
 	public function getAccessString($str) {
 		$access = $this->getAccessKey();
 		if (!empty($access) && (false !== ($pos = strpos($str, $access)))) {
-			return htmlspecialchars(substr($str, 0, $pos), ENT_QUOTES, _CHARSET)
+			return htmlspecialchars(substr($str, 0, $pos), ENT_QUOTES)
 				. '<span style="text-decoration:underline">'
-				. htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES, _CHARSET)
-				. '</span>' . htmlspecialchars(substr($str, $pos+1), ENT_QUOTES, _CHARSET);
+				. htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES)
+				. '</span>' . htmlspecialchars(substr($str, $pos+1), ENT_QUOTES);
 		}
-		return htmlspecialchars($str, ENT_QUOTES, _CHARSET);
+		return htmlspecialchars($str, ENT_QUOTES);
 	}
 
 	/**
@@ -205,7 +205,7 @@ abstract class icms_form_Element {
 		if(empty($this->_class)) return '';
 		$class = array();
 		foreach ($this->_class as $class) {
-			$class[] = htmlspecialchars($class, ENT_QUOTES, _CHARSET);
+			$class[] = htmlspecialchars($class, ENT_QUOTES);
 		}
 		return implode(" ", $class);
 	}
@@ -226,7 +226,7 @@ abstract class icms_form_Element {
 	 * @return	string
 	 */
 	public function getCaption($encode = false) {
-		return $encode ? htmlspecialchars($this->_caption, ENT_QUOTES, _CHARSET) : $this->_caption;
+		return $encode ? htmlspecialchars($this->_caption, ENT_QUOTES) : $this->_caption;
 	}
 
 	/**
@@ -246,7 +246,7 @@ abstract class icms_form_Element {
 	 */
 	public function getDescription($encode = false) {
 		return $encode
-				? htmlspecialchars($this->_description, ENT_QUOTES, _CHARSET)
+				? htmlspecialchars($this->_description, ENT_QUOTES)
 				: $this->_description;
 	}
 

@@ -164,7 +164,7 @@ class icms_form_elements_Groupperm extends icms_form_Element {
 		if (in_array($option['id'], $this->_value)) {
 			$tree .= ' checked="checked"';
 		}
-		$tree .= " />" . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . "[parents][" . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . "[itemname][" . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name'], ENT_COMPAT | ENT_HTML401, _CHARSET) . "\" /><br />\n";
+		$tree .= " />" . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . "[parents][" . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . "[itemname][" . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br />\n";
 		if (isset ($option['children'])) {
 			foreach ($option['children'] as $child) {
 				array_push($parentIds, $option['id']);
