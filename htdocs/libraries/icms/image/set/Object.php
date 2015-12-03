@@ -59,7 +59,7 @@ class icms_image_set_Object extends \icms_ipf_Object {
     /**
      * Constructor
      */
-    public function __construct($handler, $data) {
+    public function __construct(&$handler, $data = array()) {
         $this->initVar('imgset_id', self::DTYPE_INTEGER, null, false);
         $this->initVar('imgset_name', self::DTYPE_STRING, null, true, 50);
         $this->initVar('imgset_refid', self::DTYPE_INTEGER, 0, false);
