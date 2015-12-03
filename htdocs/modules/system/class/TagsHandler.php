@@ -3,11 +3,7 @@
  * ImpressCMS Tag Handler
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Administration
- * @subpackage	Tags
- * @version		SVN $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -18,10 +14,7 @@ icms_loadLanguageFile('system', 'tags', TRUE);
 /**
  * Handler for all system tags
  *
- * @category	ICMS
- * @package		Administration
- * @subpackage	Tags
- *
+ * @package     ImpressCMS\Modules\System\Class\Tags
  */
 class mod_system_TagsHandler extends icms_ipf_Handler {
 
