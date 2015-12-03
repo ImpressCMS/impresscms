@@ -43,13 +43,13 @@ if (!$allowed) {
 		'icms_theme' => $icmsConfig['theme_set'],
 		'icms_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig['theme_set'] . '/',
 		'icms_themecss' => xoops_getcss($icmsConfig['theme_set']),
-		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
-		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
+		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, _CHARSET),
+		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET),
+		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
 		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
 		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
 			? $icmsModule->getVar('name')
-			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
+			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
 		'lang_login' => _LOGIN,
 		'lang_username' => _USERNAME,
 		'lang_password' => _PASSWORD,
@@ -58,7 +58,7 @@ if (!$allowed) {
 
 	foreach ($icmsConfigMetaFooter as $name => $value) {
 		if (substr($name, 0, 5) == 'meta_') {
-			$icmsTpl->assign("xoops_$name", htmlspecialchars($value, ENT_QUOTES));
+			$icmsTpl->assign("xoops_$name", htmlspecialchars($value, ENT_QUOTES, _CHARSET));
 		} else {
 			$icmsTpl->assign("xoops_$name", $value);
 		}

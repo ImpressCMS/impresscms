@@ -56,7 +56,7 @@ if (('system' != $icmsModule->getVar('dirname')
 
 icms_loadLanguageFile('core', 'comment');
 $com_id = isset($_GET['com_id']) ? (int) $_GET['com_id'] : 0;
-$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
+$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES, _CHARSET) : '';
 if ($com_mode == '') {
 	if (is_object(icms::$user)) {
 		$com_mode = icms::$user->getVar('umode');

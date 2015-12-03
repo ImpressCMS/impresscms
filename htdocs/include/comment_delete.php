@@ -49,11 +49,11 @@ include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 $op = 'delete';
 if (!empty($_POST)) {
 	extract($_POST);
-	$com_mode = isset($com_mode) ? htmlspecialchars(trim($com_mode), ENT_QUOTES) : 'flat';
+	$com_mode = isset($com_mode) ? htmlspecialchars(trim($com_mode), ENT_QUOTES, _CHARSET) : 'flat';
 	$com_order = isset($com_order) ? (int) $com_order : XOOPS_COMMENT_OLD1ST;
 	$com_id = isset($com_id) ? (int) $com_id : 0;
 } else {
-	$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : 'flat';
+	$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES, _CHARSET) : 'flat';
 	$com_order = isset($_GET['com_order']) ? (int) $_GET['com_order'] : XOOPS_COMMENT_OLD1ST;
 	$com_id = isset($_GET['com_id']) ? (int) $_GET['com_id'] : 0;
 

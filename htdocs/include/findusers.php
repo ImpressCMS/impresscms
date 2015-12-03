@@ -171,7 +171,7 @@ if (empty($_POST["user_submit"])) {
 
 	foreach ($modes as $_mode => $title) {
 		if ($mode == $_mode) continue;
-		$modes_switch[] = "<a href='findusers.php?target=".htmlspecialchars(@$_REQUEST["target"], ENT_QUOTES)."&amp;multiple=".htmlspecialchars(@$_REQUEST["multiple"], ENT_QUOTES)."&amp;token=".htmlspecialchars($token, ENT_QUOTES)."&amp;mode={$_mode}'>{$title}</a>";
+		$modes_switch[] = "<a href='findusers.php?target=".htmlspecialchars(@$_REQUEST["target"], ENT_QUOTES)."&amp;multiple=".htmlspecialchars(@$_REQUEST["multiple"], ENT_QUOTES)."&amp;token=".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."&amp;mode={$_mode}'>{$title}</a>";
 	}
 
 	echo "<h4>".implode(" | ", $modes_switch)."</h4>";
@@ -361,7 +361,7 @@ if (empty($_POST["user_submit"])) {
 	';
 
 	echo "</html><body>";
-	echo "<a href='findusers.php?target=".htmlspecialchars(@$_POST["target"], ENT_QUOTES)."&amp;multiple=". (int) (@$_POST["multiple"])."&amp;token=".htmlspecialchars($token, ENT_QUOTES)."'>". _MA_USER_FINDUS ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _MA_USER_RESULTS."<br /><br />";
+	echo "<a href='findusers.php?target=".htmlspecialchars(@$_POST["target"], ENT_QUOTES)."&amp;multiple=". (int) (@$_POST["multiple"])."&amp;token=".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."'>". _MA_USER_FINDUS ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _MA_USER_RESULTS."<br /><br />";
 	if (empty($start) && empty($foundusers)) {
 		echo "<h4>"._MA_USER_NOFOUND,"</h4>";
 		$hiddenform = "<form name='findnext' action='findusers.php' method='post'>";
@@ -382,7 +382,7 @@ if (empty($_POST["user_submit"])) {
 			$hiddenform .= "<input type='hidden' name='start' value='{$start}' />\n";
 		}
 
-		$hiddenform .= "<input type='hidden' name='token' value='".htmlspecialchars($token, ENT_QUOTES)."' />\n";
+		$hiddenform .= "<input type='hidden' name='token' value='".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."' />\n";
 		$hiddenform .= "</form>";
 
 		echo "<div>".$hiddenform;
@@ -446,7 +446,7 @@ if (empty($_POST["user_submit"])) {
 			} else {
 				echo "<input type='button' value='"._MA_USER_ADD_SELECTED."' onclick='addusers();' />";
 			}
-			echo "<input type='hidden' name='token' value='".htmlspecialchars($token, ENT_QUOTES)."' />\n";
+			echo "<input type='hidden' name='token' value='".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."' />\n";
 			echo "</td></tr></table></form>\n";
 		}
 
@@ -466,7 +466,7 @@ if (empty($_POST["user_submit"])) {
 		if (!isset($_POST['start'])) {
 			$hiddenform .= "<input type='hidden' name='start' value='".$start."' />\n";
 		}
-		$hiddenform .= "<input type='hidden' name='token' value='".htmlspecialchars($token, ENT_QUOTES)."' />\n";
+		$hiddenform .= "<input type='hidden' name='token' value='".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."' />\n";
 		if (!isset($total) || ( $totalpages = ceil($total / $limit) ) > 1) {
 			$prev = $start - $limit;
 			if ($start - $limit >= 0) {

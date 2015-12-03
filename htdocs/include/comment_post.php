@@ -101,7 +101,7 @@ if (!empty($_POST)) {
 		}
 	}
 
-	$com_mode = isset($_POST['com_mode']) ? htmlspecialchars(trim($_POST['com_mode']), ENT_QUOTES) : 'flat';
+	$com_mode = isset($_POST['com_mode']) ? htmlspecialchars(trim($_POST['com_mode']), ENT_QUOTES, _CHARSET) : 'flat';
 	$com_order = isset($_POST['com_order']) ? (int) $_POST['com_order'] : XOOPS_COMMENT_OLD1ST;
 	$com_itemid = isset($_POST['com_itemid']) ? (int) $_POST['com_itemid'] : 0;
 	$com_pid = isset($_POST['com_pid']) ? (int) $_POST['com_pid'] : 0;
