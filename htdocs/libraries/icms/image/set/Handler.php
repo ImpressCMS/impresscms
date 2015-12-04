@@ -76,12 +76,14 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
         }
 
     /**
-     * retrieve array of {@link icms_image_set_Object}s meeting certain conditions
+     * Retrieve array of {@link icms_image_set_Object}s meeting certain conditions
+     * 
      * @param object $criteria {@link CriteriaElement} with conditions for the imagesets
      * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
+     * 
      * @return array {@link icms_image_set_Object}s matching the conditions
-     * */
-    function &getObjects($criteria = NULL, $id_as_key = FALSE) {
+     **/
+    public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
         $ret = array();
         $limit = $start = 0;
         $sql = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
@@ -111,9 +113,10 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
      * Links a {@link icms_image_set_Object} to a themeset (tplset)
      * @param int $imgset_id image set id to link
      * @param int $tplset_name theme set to link
+     * 
      * @return bool TRUE if succesful FALSE if unsuccesful
-     * */
-    function linkThemeset($imgset_id, $tplset_name) {
+     **/
+    public function linkThemeset($imgset_id, $tplset_name) {
         $imgset_id = (int) $imgset_id;
         $tplset_name = trim($tplset_name);
         if ($imgset_id <= 0 || $tplset_name == '') {
@@ -135,9 +138,10 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
      *
      * @param int $imgset_id image set id to unlink
      * @param int $tplset_name theme set to unlink
+     * 
      * @return bool TRUE if succesful FALSE if unsuccesful
      * */
-    function unlinkThemeset($imgset_id, $tplset_name) {
+    public function unlinkThemeset($imgset_id, $tplset_name) {
         $imgset_id = (int) $imgset_id;
         $tplset_name = trim($tplset_name);
         if ($imgset_id <= 0 || $tplset_name == '') {
@@ -152,13 +156,13 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
     }
 
     /**
-     * get a list of {@link icms_image_set_Object}s matching certain conditions
+     * Get a list of {@link icms_image_set_Object}s matching certain conditions
      *
      * @param int $refid conditions to match
      * @param int $tplset conditions to match
      * @return array array of {@link icms_image_set_Object}s matching the conditions
      * */
-    function getList($refid = null, $tplset = null) {
+    public function getList($refid = null, $tplset = null) {
         $criteria = new CriteriaCompo();
         if (isset($refid)) {
             $criteria->add(new Criteria('imgset_refid', (int) $refid));
