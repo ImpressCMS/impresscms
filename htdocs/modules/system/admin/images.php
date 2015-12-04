@@ -493,11 +493,15 @@ function imanager_listimg($imgcat_id, $start = 0) {
 
 		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 			$src = ICMS_MODULES_URL . "/system/admin/images/preview.php?file=" . $images[$i]->getVar('image_name') . '&resize=0';
-			$img = WideImage::load($images[$i]->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH . '/' . $images[$i]->getVar('image_name'));
+                        if ($images[$i]->image_body) {
+                            $img = WideImage::load($images[$i]->image_body);
+                        } else {
+                            $img = WideImage::createTrueColorImage(1, 1);
+                        }
+                        $img->saveToFile(ICMS_IMANAGER_FOLDER_PATH . '/' . $images[$i]->getVar('image_name'));
 			$arrimg[$i]['size'] = icms_convert_size(filesize(ICMS_IMANAGER_FOLDER_PATH . '/' . $images[$i]->getVar('image_name')));
-			$img_info = WideImage::load(ICMS_IMANAGER_FOLDER_PATH . '/' . $images[$i]->getVar('image_name'));
-			$arrimg[$i]['width'] = $img_info->getWidth();
-			$arrimg[$i]['height'] = $img_info->getHeight();
+			$arrimg[$i]['width'] = $img->getWidth();
+			$arrimg[$i]['height'] = $img->getHeight();
 			@unlink(ICMS_IMANAGER_FOLDER_PATH . '/' . $images[$i]->getVar('image_name'));
 			$path = ICMS_IMANAGER_FOLDER_PATH . '/';
 		} else {
