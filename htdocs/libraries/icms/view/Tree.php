@@ -31,21 +31,10 @@
  * Handles all tree functions within ImpressCMS
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		View
- * @subpackage	Tree
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
- */
-
-/**
- * Class icms_view_Tree
- *
- * @category	ICMS
- * @package		View
- * @subpackage	Tree
- * @author Kazumi Ono (AKA onokazu)
+ * @license	LICENSE.txt
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @package	ICMS\View
+ * @author      Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class icms_view_Tree {

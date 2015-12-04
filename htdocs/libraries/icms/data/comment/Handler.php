@@ -34,12 +34,6 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
- *
- * @category	ICMS
- * @package		Data
- * @subpackage	Comment
- *
- * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -50,14 +44,11 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * This class is responsible for providing data access mechanisms to the data source
  * of comment class objects.
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @package	ICMS\Data\Comment 
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * 				You should have received a copy of XOOPS_copyrights.txt with
  * 				this file. If not, you may obtain a copy from xoops.org
- *
- * @category	ICMS
- * @package		Data
- * @subpackage  Comment
  */
 class icms_data_comment_Handler extends icms_ipf_Handler {
     

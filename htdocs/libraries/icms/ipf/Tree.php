@@ -31,13 +31,9 @@
  * icms_ipf_Tree
  *
  * @copyright	http://smartfactory.ca The SmartFactory
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.1
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Object
- * @author		marcan aka Marc-André Lanciault <marcan@smartfactory.ca>
- * @version		$Id:Tree.php 19775 2010-07-11 18:54:25Z malanciault $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1 
+ * @author	marcan aka Marc-André Lanciault <marcan@smartfactory.ca>
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
@@ -45,12 +41,9 @@ defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 /**
  * A tree structures with objects as nodes
  *
- * @author		Kazumi Ono 	<onokazu@xoops.org>
+ * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
- *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Tree
+ * @package	ICMS\IPF
  */
 class icms_ipf_Tree {
 

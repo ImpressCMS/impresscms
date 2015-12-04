@@ -31,20 +31,14 @@
  * icms_view_theme_Object component class file
  *
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
- * @version		$Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
- * @category	ICMS
- * @package		View
- * @subpackage 	Theme
  */
 
 /**
- *
  * Builds the theme components
- * @author       Skalpa Keo <skalpa@xoops.org>
+ * 
+ * @author      Skalpa Keo <skalpa@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @category	ICMS
- * @package		View
- * @subpackage	Theme
+ * @package	ICMS\View\Theme
  */
 class icms_view_theme_Object {
 	/**

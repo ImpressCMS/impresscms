@@ -31,11 +31,7 @@
  * Template file object
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		View
- * @subpackage	Template
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -43,12 +39,20 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * Base class for all templates
  *
- * @author Kazumi Ono (AKA onokazu)
+ * @author      Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @category	ICMS
- * @package		View
- * @subpackage	Template
- **/
+ * @package	ICMS\View\Template\File
+ * 
+ * @property int    $tpl_id            Template ID
+ * @property int    $tpl_refid         
+ * @property string $tpl_tplset        Template set
+ * @property string $tpl_file          Template filename
+ * @property string $tpl_desc          Description
+ * @property int    $tpl_lastmodified  When it was last modified?
+ * @property int    $tpl_lastimported  When it was last imported?
+ * @property string $tpl_module        Module
+ * @property string $tpl_type          Type
+ * */
 class icms_view_template_file_Object extends icms_ipf_Object {
 
         public $tpl_source = false;    

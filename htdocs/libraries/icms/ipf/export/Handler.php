@@ -3,21 +3,11 @@
  * Class to easily export data from IcmsPersistables
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Export
- * @since		1.2
- * @author		marcan <marcan@impresscms.org>
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
- */
-
-/**
- *
- * @category	ICMS
- * @package		Ipf
- * @subpackage	Export
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	marcan <marcan@impresscms.org>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package	ICMS\IPF\Export
  */
 class icms_ipf_export_Handler {
 

@@ -7,15 +7,11 @@
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since		XOOPS
- *
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @author		modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: img.php 12340 2013-09-22 04:11:09Z skenow $
+ * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since	XOOPS
+ * @package	ICMS\Form\Elements/Captcha
+ * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 include "../../../../../mainfile.php";

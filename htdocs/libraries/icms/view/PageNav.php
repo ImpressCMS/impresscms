@@ -32,19 +32,13 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		View
- * @subpackage	PageNav
- * @version	$Id$
  */
 
 /**
  * Class to facilitate navigation in a multi page document/list
  *
- * @category	ICMS
- * @package		View
- * @subpackage	PageNav
- * @author		Kazumi Ono 	<onokazu@xoops.org>
+ * @package	ICMS\View
+ * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class icms_view_PageNav {

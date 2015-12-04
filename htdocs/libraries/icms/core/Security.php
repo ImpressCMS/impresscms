@@ -32,20 +32,14 @@
  * Handles all security functions within ImpressCMS
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Core
- * @subpackage	Security
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 /**
  * Class for managing security aspects such as checking referers, applying tokens and checking global variables for contamination
  *
- * @category	ICMS
- * @package		Core
- * @subpackage	Security
+ * @package	ICMS\Core
  *
- * @author		Jan Pedersen <mithrandir@xoops.org>
+ * @author	Jan Pedersen <mithrandir@xoops.org>
  * @copyright	(c) 2000-2005 The Xoops Project - www.xoops.org
  */
 class icms_core_Security {

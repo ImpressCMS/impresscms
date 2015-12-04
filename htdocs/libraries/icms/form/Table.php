@@ -31,10 +31,7 @@
  * Creates a form styled by a table
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-
- * @package		Form
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -44,10 +41,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * No styles and no JavaScript to check for required fields.
  *
- * @category	ICMS
- * @package     Form
- *
- * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @package	ICMS\Form
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_Table extends icms_form_Base {

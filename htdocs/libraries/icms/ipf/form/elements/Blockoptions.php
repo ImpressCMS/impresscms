@@ -1,20 +1,17 @@
 <?php
+
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 /**
  * Form control creating the options of a block
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		ipf
- * @subpackage	form
- * @since		1.2
- * @author		marcan <marcan@impresscms.org>
- * @author		phoenyx
- * @version		$Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	marcan <marcan@impresscms.org>
+ * @author	phoenyx
+ * @package	ICMS\IPF\Form\Elements
  */
-
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 class icms_ipf_form_elements_Blockoptions extends icms_form_elements_Tray {
 	/**
 	 * Constructor

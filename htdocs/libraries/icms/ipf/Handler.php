@@ -6,25 +6,22 @@
  * of derived class objects as well as some basic operations inherant to objects manipulation
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
- * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id: Handler.php 12068 2012-10-14 21:28:13Z skenow $
- * @todo		Use language constants for messages
- * @todo		Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @author	This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
+ * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ * @todo	Use language constants for messages
+ * @todo	Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Persistable Object Handlder
- * @category	ICMS
- * @package		Ipf
- * @since		1.1
- * @todo		Properly name the vars using the naming conventions
+ * 
+ * @package	ICMS\IPF
+ * @since	1.1
+ * @todo	Properly name the vars using the naming conventions
  */
 class icms_ipf_Handler extends icms_core_ObjectHandler {
 

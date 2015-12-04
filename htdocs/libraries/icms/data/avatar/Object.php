@@ -33,11 +33,7 @@
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @category	ICMS
- * @package		Data
- * @subpackage	Avatar
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -45,13 +41,18 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 /**
  * Avatar class
  *
- * @author		Kazumi Ono (aka onokazo)
+ * @author	Kazumi Ono (aka onokazo)
  * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @package	ICMS\Data\Avatar 
  *
- * @category	ICMS
- * @package		Data
- * @subpackage	Avatar
- *
+ * @property int        $avatar_id         Avatar ID
+ * @property string     $avatar_file       File used for avatar
+ * @property string     $avatar_name       Name
+ * @property string     $avatar_mimetype   Mimetype of avatar file
+ * @property int        $avatar_created    When avatar was created?
+ * @property int        $avatar_display    Do we need to show avatar?
+ * @property int        $avatar_weight     Weight (used for sorting avatars for user)
+ * @property string     $avatar_type       Type
  */
 class icms_data_avatar_Object extends icms_ipf_Object {
 	/** @var integer */

@@ -31,13 +31,8 @@
  * Manage groups and memberships
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		LICENSE.txt
- *
- * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
- * @category	ICMS
- * @package		Member
- * @subpackage	Groupperm
- * @version		SVN: $Id$
+ * @license	LICENSE.txt
+ * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -46,11 +41,16 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * A group permission
  *
  * These permissions are managed through a {@link icms_member_groupperm_Handler} object
- * @category	ICMS
- * @package     Member
- * @subpackage	GroupPermission
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * 
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package	ICMS\Member\GroupPermission
+ * 
+ * @property int    $gperm_id      Group permission ID
+ * @property int    $gperm_groupid Linked group ID
+ * @property int    $gperm_itemid  Linked item ID
+ * @property int    $gperm_modid   Linked module ID
+ * @property string $gperm_name    Name
  */
 class icms_member_groupperm_Object extends icms_ipf_Object {
 	/**

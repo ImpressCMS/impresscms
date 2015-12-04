@@ -3,23 +3,18 @@
  * ImpressCMS Block Persistable Class for Configure
  *
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @since 		ImpressCMS 1.2
- * @category	ICMS
- * @package 	Administration
- * @subpackage	Blocks
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @author		Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
- * @version		SVN: $Id$
+ * @license	GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * @since 	ImpressCMS 1.2
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author	Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
  */
 
 /**
  * System Block Configuration Object Class
  *
- * @package		Administration
- * @subpackage	Blocks
- * @since 		ImpressCMS 1.2
- * @author 		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @package ImpressCMS\Modules\System\Class\Blocks
+ * @since   ImpressCMS 1.2
+ * @author  Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class mod_system_Blocks extends icms_view_block_Object {
 

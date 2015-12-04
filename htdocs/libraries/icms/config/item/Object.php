@@ -28,24 +28,28 @@
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category	ICMS
- * @package		Config
- * @subpackage	Item
- * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author	Kazumi Ono (aka onokazo)
  */
-
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
- * @category	ICMS
- * @package		Config
- * @subpackage	Item
+ * Config item
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @package	ICMS\Config\Item
+ * 
+ * @property int        $conf_id            Item ID
+ * @property int        $conf_modid         Module ID
+ * @property int        $conf_catid         Category ID
+ * @property string     $conf_name          Name (used for programmers)
+ * @property string     $conf_title         Title (shown on forms)
+ * @property string     $conf_value         Value
+ * @property string     $conf_desc          Description (shown on forms)
+ * @property string     $conf_formtype      What control use for displaying field on form?
+ * @property string     $conf_valuetype     Type of value
+ * @property int        $conf_order         Order (used to sorting fields before displaying on form)
  */
 class icms_config_Item_Object extends icms_ipf_Object {
 	/**

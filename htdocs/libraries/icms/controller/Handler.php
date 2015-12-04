@@ -3,7 +3,15 @@
 /**
  * This is a handler for controllers
  *
- * @author Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * @author          Raimondas Rimkevičius <mekdrop@impresscms.org>
+ * @package         ICMS\Controller
+ * @copyright       http://www.impresscms.org/ The ImpressCMS Project 
+ * 
+ * @property-read   string  $type   Type of current controller instance.
+ *                                      Possible values:
+ *                                          embed       - if all scripts are running in PHP Embeded mode
+ *                                          cli         - if all scripts are running from command line
+ *                                          controller  - any other mode
  */
 class icms_controller_Handler {
     

@@ -30,22 +30,10 @@
 /**
  * Editor framework
  *
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @copyright
- * @category	ICMS
- * @package		Plugins
- * @subpackage	Editor
- * @version		SVN: $Id: EditorHandler.php 12313 2013-09-15 21:14:35Z skenow $
- */
-
-/**
- * Handler for editors
- *
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @license	http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @category	ICMS
- * @package		Plugins
- * @subpackage	Editor
+ * @package	ICMS\Plugins
  */
 class icms_plugins_EditorHandler {
 	private $root_path = "";

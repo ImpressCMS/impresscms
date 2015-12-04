@@ -3,12 +3,9 @@
  * ImpressCMS Userranks
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Users
- * @since		1.2
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 defined("ICMS_ROOT_PATH") or die ("ImpressCMS root path not defined");
@@ -19,8 +16,14 @@ icms_loadLanguageFile("system", "userrank", TRUE);
 /**
  * Ranks to assign members
  * 
- * @package		System
- * @subpackage	Users
+ * @package	ICMS\Member\Rank
+ * 
+ * @property int    $rank_id       Rank ID
+ * @property string $rank_title    Title
+ * @property int    $rank_min      Min required items count
+ * @property int    $rank_max      Max required items count
+ * @property int    $rank_special  Is this rank special?
+ * @property string $rank_image    Image
  */
 class icms_member_rank_Object extends icms_ipf_Object {
 

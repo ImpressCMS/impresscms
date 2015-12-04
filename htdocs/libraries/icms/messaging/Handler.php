@@ -31,11 +31,8 @@
 /**
  * Class for handling messaging
  *
- * @category	ICMS
- * @package		Messaging
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -45,11 +42,9 @@ icms_loadLanguageFile('core', 'mail');
 /**
  * Class for sending messages.
  *
- * @author		Kazumi Ono (AKA onokazu)
+ * @author	Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
- *
- * @category	ICMS
- * @package		Messaging
+ * @package	ICMS\Messaging
  */
 class icms_messaging_Handler {
 	/**

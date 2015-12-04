@@ -3,50 +3,23 @@
  * ImpressCMS Tags
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICsMS
- * @package		Administration
- * @subpackage	Tags
- * @since		2.0
- * @version		SVN: $Id: Customtag.php 11583 2012-02-19 05:10:24Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	2.0
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * The tag object - for tagging content
+ * 
+ * @package     ImpressCMS\Modules\System\Class\Tags
  *
- * @category	ICMS
- * @package		Administration
- * @subpackage	Tags
- *
+ * @property int    $id     Unique identifier for the tag
+ * @property string $tag    Text of the tag
+ * @property int    $status Status of the tag - enabled, disabled
+ * @property int    $count  The number of occurrences of the tag across the site
  */
 class mod_system_Tags extends icms_ipf_seo_Object {
-
-	/**
-	 * Unique identifier for the tag
-	 *
-	 * @var integer
-	 */
-	public $id;
-	/**
-	 * Text of the tag
-	 *
-	 * @var string
-	 */
-	public $tag;
-	/**
-	 * Status of the tag - enabled, disabled
-	 *
-	 * @var boolean
-	 */
-	public $status;
-	/**
-	 * The number of occurrences of the tag across the site
-	 *
-	 * @var integer
-	 */
-	public $count;
 
 	/**
 	 * Construct the tag object

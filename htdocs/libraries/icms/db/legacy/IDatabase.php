@@ -3,17 +3,8 @@
  * Standard interface for database classes
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- *
- * @category    ICMS
- * @package	    Database
- */
-
-/**
- *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @category    ICMS
- * @package	    Database
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS\Database\Legacy
  */
 interface icms_db_legacy_IDatabase {
 	/**

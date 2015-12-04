@@ -1,25 +1,17 @@
 <?php
 /**
- * Local authentication class
+ * Authentication class for local database
+ * 
  * Authentication classes, local authentication class file
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Authentication
- * @subpackage	Local
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: Local.php 11730 2012-06-17 01:00:09Z skenow $
- */
-/**
- * Authentication class for local database
- * @category	ICMS
- * @package		Authentication
- * @subpackage	Local
- * @author		Pierre-Eric MENUET <pemphp@free.fr>
+ * @license	LICENSE.txt
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org> 
+ * @package     ICMS\Authentication\Method
+ * @author	Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_auth_method_Local extends icms_auth_Object {

@@ -4,22 +4,9 @@
  *
  * @copyright           The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category            ICMS
- * @package		Ipf
- * @subpackage          Properties
  * @since		2.0
  * @author		i.know@mekdrop.name
- */
-
-/**
- * icms_properties_Handler base class
- *
- * Base class to dealing with object properties
- *
- * @category            ICMS
- * @package		Ipf
- * @subpackage          Properties
- * @author              i.know@mekdrop.name
+ * @package		ICMS\Properties
  * @todo		Properly identify and declare the visibility of vars and functions
  */
 abstract class icms_properties_Handler implements Serializable {
@@ -848,18 +835,21 @@ abstract class icms_properties_Handler implements Serializable {
     protected function cleanVar($key, $type, $value) {
         switch ($type) {            
             case self::DTYPE_OBJECT:
-                if ($value == null || is_object($value))
+                if ($value === null || is_object($value)) {
                     return $value;
-                if (is_string($value)) {
-                    if (substr($value, 0, 1) == '{')
-                        return json_decode($value, false);
-                    elseif (substr($value, 0, 2) == 'O:')
-                        return unserialize($value);
-                    elseif (class_exists($value, true))
-                        return new $value();
                 }
-                trigger_error('Unknown object class specified', E_USER_WARNING);
-                return null;
+                if (is_string($value)) {
+                    if (substr($value, 0, 1) == '{') {
+                        return json_decode($value, false);
+                    } elseif (substr($value, 0, 2) == 'O:') {
+                        return unserialize($value);
+                    } elseif (class_exists($value, true)) {
+                        return new $value();
+                    } else {
+                        return null;
+                    }
+                }
+                return (object)$value;
             case self::DTYPE_BOOLEAN:
                 if (is_bool($value))
                     return $value;

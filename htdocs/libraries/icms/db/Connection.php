@@ -2,20 +2,10 @@
 /**
  * Database connection
  *
- * @category	ICMS
- * @package		Database
- *
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
- */
-
-/**
- * Database connection
- *
- * @category	ICMS
- * @package		Database
- */
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS\Database
+ **/
 class icms_db_Connection extends PDO implements icms_db_IConnection {
 
 	/**
