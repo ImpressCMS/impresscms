@@ -55,35 +55,35 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
          * 
 	 * @var	string
 	 */
-	public $prefix;
+	public $prefix = '';
         
         /**
          * Function used for column
          *
          * @var string
          */
-	public $function;
+	public $function = '';
         
         /**
          * Column name
          *
          * @var string
          */
-	public $column;
+	public $column = '';
         
         /**
          * Operator used in comparision
          *
          * @var string
          */
-	public $operator;
+	public $operator = '';
         
         /**
          * Value used in comparision
          *
          * @var mixed
          */
-	public $value;
+	public $value = null;
 
 	/**
 	 * Constructor
