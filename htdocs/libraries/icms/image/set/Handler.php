@@ -70,7 +70,7 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
          * @return boolean
          */
         protected function afterDelete($obj) {
-                $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), (int) $imgset->getVar('imgset_id'));
+                $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), $obj->imgset_id);
                 $this->db->query($sql);
                 return true;
         }
@@ -86,7 +86,7 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
     public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
         $ret = array();
         $limit = $start = 0;
-        $sql = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
+        $sql = 'SELECT DISTINCT i.* FROM ' . $this->table . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
@@ -97,8 +97,7 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
             return $ret;
         }
         while ($myrow = $this->db->fetchArray($result)) {
-            $imgset = new icms_image_set_Object();
-            $imgset->assignVars($myrow);
+            $imgset = new icms_image_set_Object($this, $myrow);
             if (!$id_as_key) {
                 $ret[] = & $imgset;
             } else {
