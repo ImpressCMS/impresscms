@@ -886,7 +886,7 @@ function imanager_addfile() {
 				$image->setVar('image_display', $image_display);
 				$image->setVar('image_weight', $image_weight);
 				$image->setVar('imgcat_id', $imgcat_id);
-				if ($imagecategory->getVar('imgcat_storetype') == 'db') {
+				if ($imagecategory->imgcat_storetype == 'db') {
 					$fp = @fopen($uploader->getSavedDestination(), 'rb');
 					$fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
 					@fclose($fp);
