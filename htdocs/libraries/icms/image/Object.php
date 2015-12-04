@@ -133,4 +133,20 @@ class icms_image_Object extends \icms_ipf_Object {
             }
             parent::setVars($var_arr, $not_gpc);
         }
+        
+        /**
+         * Returns a specific variable for the object in a proper format
+         * 
+         * @param string $name      Name of var
+         * @param string $format    Format
+         * 
+         * @return mixed
+         */
+        public function getVar($name, $format = 's') {
+            if ($name == 'image_body') {
+                return $this->image_body;
+            } else {                
+                return parent::getVar($name, $format);
+            }
+        }
 }

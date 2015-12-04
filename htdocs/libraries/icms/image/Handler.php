@@ -65,7 +65,7 @@ class icms_image_Handler extends \icms_ipf_Handler {
             $this->imagebody_handler = \icms::handler('icms_image_body');
             
             parent::__construct($db, 'image', 'image_id', 'image_name', 'image_nicename', 'icms', 'image');
-        }    
+        }
 
 	/**
 	 * Load a {@link icms_image_Object} object from the database
