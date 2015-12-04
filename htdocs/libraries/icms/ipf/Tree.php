@@ -47,15 +47,40 @@ defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
  */
 class icms_ipf_Tree {
 
-	/**#@+
-	 * @access	private
-	 */
+        /**
+         * Field name of parent object ID
+         *
+         * @var string 
+         */
 	private $_parentId;
-	public $_myId;
+        
+        /**
+         * Field name of object ID
+         *
+         * @var string 
+         */
+	public $_myId = '';
+        
+        /**
+         * Field name of root object ID
+         *
+         * @var string 
+         */
 	private $_rootId = null;
+        
+        /**
+         * Array of Tree
+         *
+         * @var array 
+         */
 	public $_tree = array ();
-	private $_objects;
-	/**#@-*/
+        
+        /**
+         * Array of {@link icms_core_Object}s
+         *
+         * @var array
+         */
+	private $_objects = array();
 
 	/**
 	 * Constructor

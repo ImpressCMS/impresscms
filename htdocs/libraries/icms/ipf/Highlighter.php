@@ -12,23 +12,39 @@
 class icms_ipf_Highlighter {
 
 	/**
-	 * @access private
+         * PREG keywords
+         * 
+	 * @var string
 	 */
 	private $preg_keywords = '';
+        
 	/**
-	 * @access private
+         * Keywords
+         * 
+	 * @var string
 	 */
 	private $keywords = '';
+        
 	/**
-	 * @access private
+         * Single words?
+         * 
+	 * @var bool
 	 */
 	private $singlewords = false;
+        
 	/**
-	 * @access private
+         * Replace callback
+         * 
+	 * @var null|callable
 	 */
 	private $replace_callback = null;
 
-	public $content;
+        /**
+         * Content
+         *
+         * @var string 
+         */
+	public $content = '';
 
 	/**
 	 * Main constructor

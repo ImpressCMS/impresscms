@@ -23,10 +23,39 @@ icms_loadLanguageFile('system', 'common');
  */
 class icms_ipf_Object extends icms_core_Object {
 
-    public $_image_path;
-    public $_image_url;
+    /**
+     * Image path
+     *
+     * @var string 
+     */
+    public $_image_path = '';
+    
+    /**
+     * Image URL
+     *
+     * @var string
+     */
+    public $_image_url = '';
+    
+    /**
+     * Is SEO enabled?
+     *
+     * @var bool
+     */
     public $seoEnabled = false;
-    public $titleField;
+    
+    /**
+     * Title field name
+     *
+     * @var string|null
+     */
+    public $titleField = null;
+    
+    /**
+     * Summary field name
+     *
+     * @var bool|null|string 
+     */
     public $summaryField = false;
 
     /**

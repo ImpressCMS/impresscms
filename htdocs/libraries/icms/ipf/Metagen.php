@@ -19,38 +19,70 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @todo	Properly set visibility of variables - in version 2.0
  */
 class icms_ipf_Metagen {
-	/** @var object */
+	
+        /**
+         * Instance of icms_core_Textsanitizer
+         * 
+         * @var \icms_core_Textsanitizer
+         */
 	public $_myts;
 
-	/** @var string */
-	public $_title;
+	/** 
+         * Title
+         * 
+         * @var string 
+         */
+	public $_title = '';
 
-	/** @var string */
-	public $_original_title;
+	/** 
+         * Original title
+         * 
+         * @var string 
+         */
+	public $_original_title = '';
 
-	/** @var string */
-	public $_keywords;
+	/** 
+         * Keywords
+         * 
+         * @var string 
+         */
+	public $_keywords = '';
 
-	/** @var string */
-	public $_meta_description;
+	/** 
+         * Meta description
+         * 
+         * @var string 
+         */
+	public $_meta_description = '';
 
-	/** @var string */
-	public $_categoryPath;
+	/** 
+         * Category path
+         * 
+         * @var string 
+         */
+	public $_categoryPath = '';
 
-	/** @var string */
-	public $_description;
+	/** 
+         * Description
+         * 
+         * @var string 
+         */
+	public $_description = '';
 
-	/** @var int */
+	/** 
+         * Min chars
+         * 
+         * @var int 
+         */
 	public $_minChar = 4;
 
 	/**
 	 * Constructor for icms_ipf_Metagen
 	 *
-	 * @param string $title Page title
-	 * @param string $keywords List of meta keywords
-	 * @param string $description Meta description
-	 * @param string $categoryPath
-	 *
+	 * @param string $title         Page title
+	 * @param string $keywords      List of meta keywords
+	 * @param string $description   Meta description
+	 * @param string $categoryPath  Category path
 	 */
 	public function __construct($title, $keywords=false, $description=false, $categoryPath=false) {
 		$this->_myts = icms_core_Textsanitizer::GetInstance();
