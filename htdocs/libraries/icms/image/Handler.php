@@ -65,25 +65,7 @@ class icms_image_Handler extends \icms_ipf_Handler {
             $this->imagebody_handler = \icms::handler('icms_image_body');
             
             parent::__construct($db, 'image', 'image_id', 'image_name', 'image_nicename', 'icms', 'image');
-        }
-
-	/**
-	 * Load a {@link icms_image_Object} object from the database
-	 *
-	 * @param   int                             $id             ID
-	 * @param   boolean                         $as_object      Get as object?
-         * @param   bool                            $debug          Enable debug mode
-         * @param   bool|\icms_db_criteria_Element  $criteria       A criteria used to filter data
-         * 
-	 * @return  object  {@link icms_image_Object}, FALSE on fail
-	 **/
-	public function &get($id, $as_object=true, $debug = false, $criteria = false) {            
-            $this->generalSQL = 'SELECT i.*, b.image_body FROM '
-				. $this->table . ' i LEFT JOIN '
-				. $this->imagebody_handler->table
-				. ' b ON b.image_id=i.image_id';
-            return parent::get($id, $as_object, $debug, $criteria);
-	}        
+        }   
         
         /**
          * This event is executed when saving
@@ -129,12 +111,14 @@ class icms_image_Handler extends \icms_ipf_Handler {
 		} else {
 			$this->generalSQL = '';
 		}
-		if (
-                        ($criteria instanceof \icms_db_criteria_Element) &&
-                        (!in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight')))
-                    ) {
-                    $criteria->setSort('image_weight');		
-		}		
+		if ($criteria instanceof \icms_db_criteria_Element) {
+                    if (!in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))) {
+                        $criteria->setSort('image_weight');
+                    }
+                    if (($criteria instanceof icms_db_criteria_Item) && (!$criteria->prefix)) {
+                         $criteria->prefix = 'i';
+                    }
+		}
 		return parent::getObjects($criteria, $id_as_key, true);
 	}
 
