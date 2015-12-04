@@ -130,7 +130,7 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 		if (isset($storetype)) {
 			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
 		}
-		$categories = &$this->getObjects($criteria, true);
+		$categories = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('imgcat_name');
@@ -172,7 +172,7 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
                     $imgcat_id = 0;
                 }
 		$criteria->add(new icms_db_criteria_Item('imgcat_pid', $imgcat_id));
-		$categories = &$this->getObjects($criteria, true);
+		$categories = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach ( array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('imgcat_name');
