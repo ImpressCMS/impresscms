@@ -9,20 +9,49 @@
  */
 class icms_ipf_export_Renderer {
 
-	public $data;
-	public $format;
-	public $filename;
-	public $filepath;
-	public $options;
+    /**
+     * Contains the data to be exported
+     *
+     * @var array
+     */
+	public $data = array();
+        
+        /**
+         * Format of the ouputed export. Currently only supports CSV
+         *
+         * @var string
+         */
+	public $format = 'csv';
+        
+        /**
+         * Name of the file in which the exported data will be saved
+         *
+         * @var string
+         */
+	public $filename = '';
+        
+        /**
+         * Path where the file will be saved
+         *
+         * @var string
+         */
+	public $filepath = '';
+        
+        /**
+         * Options of the format to be exported in
+         *
+         * @var array
+         */
+	public $options = array();
 
 	/**
 	 * Constructor
 	 *
-	 * @param array $data contains the data to be exported
-	 * @param string $format format of the ouputed export. Currently only supports CSV
-	 * @param string $filename name of the file in which the exported data will be saved
-	 * @param string $filepath path where the file will be saved
-	 * @param array $options options of the format to be exported in
+	 * @param array     $data       Contains the data to be exported
+	 * @param string    $format     Format of the ouputed export. Currently only supports CSV
+	 * @param string    $filename   Name of the file in which the exported data will be saved
+	 * @param string    $filepath   Path where the file will be saved
+	 * @param array     $options    Options of the format to be exported in
 	 */
 	public function __construct($data, $filename=false, $filepath=false, $format='csv', $options=array('separator'=>';')) {
 		$this->data = $data;

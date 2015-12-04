@@ -497,14 +497,14 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'options' => 'array'
             ],
             'icms_ipf_export_Handler' => [
-                'handler' => 'string',
-                'criteria' => 'string',
-                'fields' => 'array',
+                'handler' => 'null',
+                'criteria' => 'null',
+                'fields' => 'mixed',
                 'format' => 'string',
                 'filename' => 'string',
                 'filepath' => 'string',
                 'options' => 'array',
-                'outputMethods' => 'array',
+                'outputMethods' => 'mixed',
                 'notDisplayFields' => 'array'
             ],
             'icms_ipf_category_Handler' => [
