@@ -55,19 +55,26 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @property string $image_body        Image contents
  * @property int    $imgcat_id         Image category ID
  */
-class icms_image_Object extends icms_core_Object {
+class icms_image_Object extends \icms_ipf_Object {
+        
 	/**
 	 * Info of Image file (width, height, bits, mimetype)
 	 *
 	 * @var array
 	 */
 	public $image_info = array();
+        
+        /**
+         * Stores image body
+         *
+         * @var string 
+         */
+        public $image_body;
 
 	/**
 	 * Constructor
 	 **/
-	public function __construct() {
-		parent::__construct();
+	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('image_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('image_name', self::DTYPE_STRING, null, false, 30);
 		$this->initVar('image_nicename', self::DTYPE_STRING, null, true, 100);
@@ -75,20 +82,24 @@ class icms_image_Object extends icms_core_Object {
 		$this->initVar('image_created', self::DTYPE_INTEGER, null, false);
 		$this->initVar('image_display', self::DTYPE_INTEGER, 1, false);
 		$this->initVar('image_weight', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('image_body', self::DTYPE_STRING, null, true, array(
-                    self::VARCFG_SOURCE_FORMATING => 'binary'
-                ));
 		$this->initVar('imgcat_id', self::DTYPE_INTEGER, 0, false);
+                
+                if (isset($data['image_body'])) {
+                    $this->image_body = $data['image_body'];
+                    unset($data['image_body']);
+                }
+                
+                parent::__construct($handler, $data);
 	}
 
 	/**
 	 * Returns information
 	 *
-	 * @param string  $path  the path to search through
-	 * @param string  $type  the path type, url or other
-	 * @param bool  $ret  return the information or keep it stored
+	 * @param string    $path   The path to search through
+	 * @param string    $type   The path type, url or other
+	 * @param bool      $ret    Return the information or keep it stored
 	 *
-	 * @return array  the array of image information
+	 * @return array            The array of image information
 	 */
 	public function getInfo($path, $type = 'url', $ret = false) {
 		$path = (substr($path,-1) != '/') ? $path . '/' : $path;
@@ -108,4 +119,18 @@ class icms_image_Object extends icms_core_Object {
 			return $this->image_info;
 		}
 	}
+        
+        /**
+         * Overide setVar for loading also image_body on the fly
+         * 
+         * @param array $var_arr    Data
+         * @param bool  $not_gpc    Not GPC?
+         */
+        public function setVars($var_arr, $not_gpc = false) {
+            if (isset($var_arr['image_body'])) {
+                $this->image_body = $var_arr['image_body'];
+                unset($var_arr['image_body']);
+            }
+            parent::setVars($var_arr, $not_gpc);
+        }
 }
