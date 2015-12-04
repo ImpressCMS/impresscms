@@ -476,7 +476,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_view_Column' => [
                 '_keyname' => 'string',
                 '_align' => 'string',
-                '_width' => 'int',
+                '_width' => 'mixed',
                 '_customMethodForValue' => 'null',
                 '_extraParams' => 'string',
                 '_sortable' => 'bool',
@@ -513,7 +513,11 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
             foreach ($variables as $variable => $type) {
-                $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+                if ($type === 'mixed') {
+                    $this->assertTrue(property_exists($instance, $variable), '$' . $variable . ' doesn\'t exists in instance of ' . $class);
+                } else {
+                    $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+                }
             }
         }
     }    

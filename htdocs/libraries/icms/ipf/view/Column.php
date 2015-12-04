@@ -23,13 +23,55 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class icms_ipf_view_Column {
 
-	public $_keyname;
-	public $_align;
-	public $_width;
+    /**
+     * Keyname
+     *
+     * @var string 
+     */
+	public $_keyname = '';
+        
+        /**
+         * Align of text in column
+         *
+         * @var string 
+         */
+	public $_align = _GLOBAL_LEFT;
+        
+        /**
+         * Width
+         *
+         * @var bool|string|int
+         */
+	public $_width = false;
+        
+        /**
+         * Custom method that formats value
+         *
+         * @var callable|null 
+         */
 	public $_customMethodForValue;
-	public $_extraParams;
-	public $_sortable;
-	public $_customCaption;
+        
+        /**
+         * Extra params
+         *
+         * @var string
+         */
+	public $_extraParams = '';
+        
+        /**
+         * Column can be sortable?
+         *
+         * @var bool
+         */
+	public $_sortable = true;
+        
+        /**
+         * Custom caption for column
+         * Uf empty it tried to autodetect from property
+         *
+         * @var string
+         */
+	public $_customCaption = '';
 
 	/**
 	 * Constructor
