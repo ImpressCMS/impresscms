@@ -64,33 +64,19 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
          * 
 	 * @return array {@link icms_image_category_Object}s matching the conditions
 	 **/
-	public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
-		$ret = array();
-		$limit = $start = 0;
-		$sql = 'SELECT DISTINCT c.* FROM ' . $this->db->prefix('imagecategory') . ' c LEFT JOIN '
-			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$where = $criteria->render();
-			$sql .= ($where != '') ? ' AND ' . $where : '';
-			$limit = $criteria->getLimit();
-			$start = $criteria->getStart();
-		}
-		$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
-		$result = $this->db->query($sql, $limit, $start);
-		if (!$result) {
-			return $ret;
-		}
-		while ($myrow = $this->db->fetchArray($result)) {
-			$imgcat = new icms_image_category_Object();
-			$imgcat->assignVars($myrow);
-			if (!$id_as_key) {
-				$ret[] =& $imgcat;
-			} else {
-				$ret[$myrow['imgcat_id']] =& $imgcat;
-			}
-			unset($imgcat);
-		}
-		return $ret;
+	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
+            $this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
+			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id";
+            
+            $criteria_main = new \icms_db_criteria_Compo();
+            $criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
+            $criteria_main->setSort('imgcat_weight, imgcat_id');            
+            $criteria_main->setOrder('ASC');
+            
+            if ($criteria !== null) {
+                $criteria_main->add($criteria);
+            }
+            return parent::getObjects($criteria_main, $id_as_key, $as_object, $sql, $debug);
 	}
 
 	/**
@@ -101,17 +87,18 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	 * @return int number of {@link icms_image_category_Object}s matching the conditions
 	 **/
 	public function getCount($criteria = null) {
-		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('imagecategory') . ' i LEFT JOIN '
-			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$where = $criteria->render();
-			$sql .= ($where != '') ? ' AND ' . $where : '';
-		}
-		if (!$result = &$this->db->query($sql)) {
-			return 0;
-		}
-		list($count) = $this->db->fetchRow($result);
-		return $count;
+            $this->generalSQL = 'SELECT COUNT(*) FROM ' . $this->table . ' i LEFT JOIN '
+			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id";
+                            
+ 
+            $criteria_main = new \icms_db_criteria_Compo();
+            $criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
+            
+            if ($criteria !== null) {
+                $criteria_main->add($criteria);
+            }            
+
+            return parent::getCount($criteria_main);
 	}
         
         /**
@@ -181,7 +168,9 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 		if (isset($storetype)) {
 			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
 		}
-		if ($imgcat_id === NULL ) $imgcat_id = 0;
+		if ($imgcat_id === NULL ) {
+                    $imgcat_id = 0;
+                }
 		$criteria->add(new icms_db_criteria_Item('imgcat_pid', $imgcat_id));
 		$categories = &$this->getObjects($criteria, true);
 		$ret = array();
@@ -199,15 +188,15 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	/**
 	 * Get the folder path or url
 	 *
-	 * @param integer $imgcat_id - Category ID
+	 * @param integer $imgcat - Category ID
 	 * @param string $full - if true return the full path or url else the relative path
 	 * @param string $type - path or url
 	 *
 	 * @return string - full folder path or url
 	 */
-	function getCategFolder(\icms_image_category_Object &$imgcat, $full=true, $type='path') {
-		if ($imgcat->getVar('imgcat_pid') != 0) {
-			$sup = $this->get($imgcat->getVar('imgcat_pid'));
+	public function getCategFolder(\icms_image_category_Object &$imgcat, $full=true, $type='path') {
+		if ($imgcat->imgcat_pid != 0) {
+			$sup = $this->get($imgcat->imgcat_pid);
 			$supcateg = $this->getCategFolder($sup, false, $type);
 		} else {
 			$supcateg = 0;
