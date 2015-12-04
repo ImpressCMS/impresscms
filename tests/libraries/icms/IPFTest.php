@@ -466,14 +466,6 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 '_lang_by' => 'string',
                 '_tpl' => 'null'       
             ],
-            'icms_ipf_view_Single' => [
-                '_object' => 'null',
-                '_userSide' => 'bool',
-                '_tpl' => 'string',
-                '_rows' => 'array',
-                '_actions' => 'array',
-                '_headerAsRow' => 'bool'
-            ],
             'icms_ipf_view_Row' => [
                 '_keyname' => 'string',
                 '_align' => 'string',
