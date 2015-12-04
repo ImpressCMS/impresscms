@@ -992,8 +992,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return string
      */
     protected function generateInsertSQL($data) {
-        if (!is_array($data))
+        if (!is_array($data)) {
             $data = array($data);
+        }
         $sql = 'INSERT INTO ' . $this->table . ' (`';
         
         foreach ($data as $i => $obj) {
@@ -1136,7 +1137,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
                 $for_update[] = &$data[$i];
             }
-        }                        
+        }                         
         
         if (($count = count($for_insert)) > 0) {
             
@@ -1178,6 +1179,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 //$this->db->query('UNLOCK TABLES;');
             } else {
                 $sql = $this->generateInsertSQL($for_insert);
+                var_dump($sql);
                 if ($this->debugMode) {
                     icms_core_Debug::message($sql);
                 }
