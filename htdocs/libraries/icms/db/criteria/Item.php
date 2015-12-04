@@ -51,13 +51,39 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 class icms_db_criteria_Item extends icms_db_criteria_Element {
 
 	/**
+         * Prefix for column
+         * 
 	 * @var	string
 	 */
-	private $_prefix;
-	private $_function;
-	private $_column;
-	private $_operator;
-	private $_value;
+	public $prefix;
+        
+        /**
+         * Function used for column
+         *
+         * @var string
+         */
+	public $function;
+        
+        /**
+         * Column name
+         *
+         * @var string
+         */
+	public $column;
+        
+        /**
+         * Operator used in comparision
+         *
+         * @var string
+         */
+	public $operator;
+        
+        /**
+         * Value used in comparision
+         *
+         * @var mixed
+         */
+	public $value;
 
 	/**
 	 * Constructor
@@ -67,11 +93,11 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * @param   string  $operator
 	 **/
 	public function __construct($column, $value='', $operator='=', $prefix = '', $function = '') {
-		$this->_prefix = $prefix;
-		$this->_function = $function;
-		$this->_column = $column;
-		$this->_value = $value;
-		$this->_operator = $operator;
+		$this->prefix = $prefix;
+		$this->function = $function;
+		$this->column = $column;
+		$this->value = $value;
+		$this->operator = $operator;
 	}
 
 	/**
@@ -80,30 +106,30 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * @return  string
 	 **/
 	public function render() {
-		$clause = (!empty($this->_prefix) ? "{$this->_prefix}." : "") . $this->_column;
-		if (!empty($this->_function)) {
-			$clause = sprintf($this->_function, $clause);
+		$clause = (!empty($this->prefix) ? "{$this->prefix}." : "") . $this->column;
+		if (!empty($this->function)) {
+			$clause = sprintf($this->function, $clause);
 		}
-		if (in_array( strtoupper($this->_operator), array('IS NULL', 'IS NOT NULL'))) {
-			$clause .= ' ' . $this->_operator;
+		if (in_array( strtoupper($this->operator), array('IS NULL', 'IS NOT NULL'))) {
+			$clause .= ' ' . $this->operator;
 		} else {
-                        if (is_bool($this->_value)) {
-                            $value = (int)$this->_value;
-                        } else if (is_object($this->_value)) {
-                            $value = (string)$this->_value;
-                        } else if (is_array($this->_value)) {
-                            if (!empty($this->_value)) {                                
-                                $value = '(\'' . implode('\', \'', $this->_value) . '\')';
+                        if (is_bool($this->value)) {
+                            $value = (int)$this->value;
+                        } else if (is_object($this->value)) {
+                            $value = (string)$this->value;
+                        } else if (is_array($this->value)) {
+                            if (!empty($this->value)) {                                
+                                $value = '(\'' . implode('\', \'', $this->value) . '\')';
                             } else {
                                 $value = '()';
                             }
-                        } else if (is_null($this->_value)) {
+                        } else if (is_null($this->value)) {
                             $value = 'NULL';
                         } else {
-                            if ('' === ($value = trim($this->_value))) {
+                            if ('' === ($value = trim($this->value))) {
 				return '';
                             }
-                            if (!in_array(strtoupper($this->_operator), array('IN', 'NOT IN'))) {
+                            if (!in_array(strtoupper($this->operator), array('IN', 'NOT IN'))) {
                                     if (( substr($value, 0, 1) != '`' ) && ( substr($value, -1) != '`' )) {
                                             $value = "'$value'";
                                     } elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
@@ -113,7 +139,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
                         }
                     
 			
-			$clause .= " {$this->_operator} $value";
+			$clause .= " {$this->operator} $value";
 		}
 		return $clause;
 	}
@@ -125,28 +151,28 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * @author Nathan Dial ndial@trillion21.com, improved by Pierre-Eric MENUET pemen@sourceforge.net
 	 */
 	public function renderLdap() {
-		if ($this->_operator == '>') {
-			$this->_operator = '>=';
+		if ($this->operator == '>') {
+			$this->operator = '>=';
 		}
-		if ($this->_operator == '<') {
-			$this->_operator = '<=';
+		if ($this->operator == '<') {
+			$this->operator = '<=';
 		}
 
-		if ($this->_operator == '!=' || $this->_operator == '<>') {
+		if ($this->operator == '!=' || $this->operator == '<>') {
 			$operator = '=';
-			$clause = "(!(" . $this->_column . $operator . $this->_value . "))";
+			$clause = "(!(" . $this->column . $operator . $this->value . "))";
 		}
 		else {
-			if ($this->_operator == 'IN') {
-				$newvalue = str_replace(array('(', ')'), '', $this->_value);
+			if ($this->operator == 'IN') {
+				$newvalue = str_replace(array('(', ')'), '', $this->value);
 				$tab = explode(',', $newvalue);
 				foreach ($tab as $uid) {
-					$clause .= '(' . $this->_column . '=' . $uid
+					$clause .= '(' . $this->column . '=' . $uid
 					.')';
 				}
 				$clause = '(|' . $clause . ')';
 			} else {
-				$clause = "(" . $this->_column . $this->_operator . $this->_value . ")";
+				$clause = "(" . $this->column . $this->operator . $this->value . ")";
 			}
 		}
 		return $clause;
