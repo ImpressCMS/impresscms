@@ -401,7 +401,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'controls' => 'array'
             ],
             'icms_ipf_Metagen' => [
-                '_myts' => 'object',
+                '_myts' => 'null',
                 '_title' => 'string',
                 '_original_title' => 'string',
                 '_keywords' => 'string',
@@ -464,7 +464,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 '_lang_author_word' => 'string',
                 '_lang_version_history' => 'string',
                 '_lang_by' => 'string',
-                '_tpl' => 'string'       
+                '_tpl' => 'null'       
             ],           
             'icms_ipf_view_Table' => [
                 '_id' => 'string',
