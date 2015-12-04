@@ -149,4 +149,19 @@ class icms_image_Object extends \icms_ipf_Object {
                 return parent::getVar($name, $format);
             }
         }
+        
+    /**
+     * Sets var value
+     * 
+     * @param string $name      Var name
+     * @param mixed $value      New value
+     * @param array $options    Options to apply when settings values
+     */
+        public function setVar($name, $value, $options = null) {
+            if ($name == 'image_body') {
+                $this->image_body = $value;
+            } else {                
+                parent::setVar($name, $value, $options);
+            }
+        }
 }

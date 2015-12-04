@@ -77,6 +77,7 @@ class icms_image_Handler extends \icms_ipf_Handler {
         protected function afterSave(&$obj) {
             if ($obj->image_body) {
                 $body = $this->imagebody_handler->get($obj->image_id);
+                $body->image_id = $obj->image_id;
                 $body->image_body = $obj->image_body;
                 return $body->store();
             }
