@@ -3,14 +3,15 @@
  * ImpressCMS Userrank Handler
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Users
- * @since		1.2
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.2
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 defined("ICMS_ROOT_PATH") or die ("ImpressCMS root path not defined");
 
+/**
+ * @package     ImpressCMS\Modules\System\Class\Rank
+ * @see         \icms_member_rank_Handler
+ */
 class_alias('icms_member_rank_Handler', 'mod_system_UserrankHandler', true);
