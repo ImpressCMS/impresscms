@@ -683,7 +683,7 @@ class icms_ipf_Object extends icms_core_Object {
         $vars = $only_changed?$this->getChangedVars():array_keys($this->_vars);        
         
         foreach ($vars as $k) {
-            if ($this->handler->keyName == $k) {
+            if ($this->handler->keyName == $k && !$this->_vars[$k][self::VARCFG_VALUE]) {
                 continue; // Skipping ID
             }
             if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null) {
