@@ -1179,7 +1179,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 //$this->db->query('UNLOCK TABLES;');
             } else {
                 $sql = $this->generateInsertSQL($for_insert);
-                var_dump($sql);
+                
                 if ($this->debugMode) {
                     icms_core_Debug::message($sql);
                 }
