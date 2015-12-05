@@ -37,7 +37,7 @@ class icms_core_Versionchecker {
 	 * 
          * @todo set this to a day at least or make it configurable in System Admin > Preferences
          * 
-         * @var interger
+         * @var integer
 	 */
 	public $cache_time=1;
 
