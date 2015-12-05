@@ -48,6 +48,12 @@ class icms_ipf_Object extends icms_core_Object {
      */
     private $_loadedOnCreation = false;
 
+    /**
+     * Constructor
+     * 
+     * @param \icms_ipf_Handler $handler    Handler that linked to this object
+     * @param array		$data	    Data used when loading/creating object
+     */
     public function __construct(&$handler, $data = array()) {
         $this->handler = $handler;        
         if ($data === true) {
