@@ -46,8 +46,11 @@ class icms_response_HTML extends icms_response_Text {
             global $icmsAdminTpl;
             $GLOBALS['icmsAdminTpl'] = $icmsAdminTpl = &$this->theme->template;
         } else {
-            $GLOBALS['icmsTpl'] = $icmsTpl = &$this->theme->template;
+            global $icmsTpl;
+            $GLOBALS['icmsTpl'] = $icmsTpl = &$this->theme->template;            
         }
+        global $icmsTheme;
+        $GLOBALS['icmsTheme'] = $icmsTheme = &$this->theme;
 
         if (!empty($_SESSION['redirect_message'])) {
             $this->addRedirectMessageScripts();
