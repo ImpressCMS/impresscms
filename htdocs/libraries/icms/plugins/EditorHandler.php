@@ -36,15 +36,39 @@
  * @package	ICMS\Plugins
  */
 class icms_plugins_EditorHandler {
-	private $root_path = "";
+    
+    /**
+     * Path where is editor
+     *
+     * @var string 
+     */
+	private $root_path = '';
+	
+	/**
+	 * No HTML mode?
+	 *
+	 * @var bool 
+	 */
 	public $nohtml = FALSE;
+	
+	/**
+	 * What editors to allow?
+	 *
+	 * @var array 
+	 */
 	public $allowed_editors = array();
-	private $_type = "";
+	
+	/**
+	 * Editor type
+	 *
+	 * @var string 
+	 */
+	private $_type = '';
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string	type
+	 * @param   string  $type	Editor type
 	 */
 	public function __construct($type = '') {
 		$this->root_path = self::_getRootPath($type);
