@@ -950,19 +950,20 @@ abstract class icms_properties_Handler implements Serializable {
                 }
                 return null;
             case self::DTYPE_DATETIME:
-                if (is_int($value))
-                    return $value;
-                if ($value === null)
-                    return 0;                
-                if (is_numeric($value))
-                    return intval($value);
-                if (!is_string($value))
-                    return 0;
-                if (preg_match('/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/ui', $value, $ret))
-                    $time = gmmktime($ret[4], $ret[5], $ret[6], $ret[2], $ret[3], $ret[1]);
-                else
-                    $time = (int) strtotime($value);
-                return ($time < 0) ? 0 : $time;
+		if (($value instanceof \DateTimeInterface) || ($value === null)) {
+		    return $value;
+		}
+		if (is_numeric($value)) {
+		    return new \DateTime('@' . $value);
+		}
+                if (!is_string($value)) {
+                    return null;
+		}
+		try {
+		    return new \DateTime($value);
+		} catch (\Exception $ex) {
+		    return null;
+		}
             case self::DTYPE_STRING:
             default:
                 if (!is_string($value)) {
