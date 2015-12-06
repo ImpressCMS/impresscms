@@ -430,26 +430,22 @@ abstract class icms_properties_Handler implements Serializable {
             case 'show':
             case 'p':
             case 'preview':
-                $ret = $this->getVarForDisplay($name);
-                break;
+                return $this->getVarForDisplay($name);
             case 'e':
             case 'edit':
-                $ret = $this->getVarForEdit($name);
-                break;
+                return $this->getVarForEdit($name);
             case 'f':
             case 'formpreview':
-                $ret = $this->getVarForForm($name);
-                break;
+                return $this->getVarForForm($name);
             case 'n':
             case 'none':
             default:
 		if ($this->_vars[$name][self::VARCFG_TYPE] === self::DTYPE_DATETIME && $this->_vars[$name][self::VARCFG_TYPE] !== null) {
-		    $ret = $this->_vars[$name][self::VARCFG_VALUE]->getTimestamp();
+		    return $this->_vars[$name][self::VARCFG_VALUE]->getTimestamp();
 		} else {
-		    $ret = $this->__get($name);
+		    return $this->__get($name);
 		}
         }
-        return $ret;
     }
 
     /**
