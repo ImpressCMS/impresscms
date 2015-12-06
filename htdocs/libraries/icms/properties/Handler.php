@@ -443,7 +443,11 @@ abstract class icms_properties_Handler implements Serializable {
             case 'n':
             case 'none':
             default:
-                $ret = $this->__get($name);
+		if ($this->_vars[$name][self::VARCFG_TYPE] === self::DTYPE_DATETIME && $this->_vars[$name][self::VARCFG_TYPE] !== null) {
+		    $ret = $this->_vars[$name][self::VARCFG_VALUE]->getTimestamp();
+		} else {
+		    $ret = $this->__get($name);
+		}
         }
         return $ret;
     }
@@ -456,6 +460,9 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarForDisplay($name) {
+	if ($this->_vars[$name][self::VARCFG_VALUE] === null) {
+	    return '-';
+	}
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
             case self::DTYPE_STRING:
                 if (!isset($this->_vars[$name][self::VARCFG_AF_DISABLED]) || !$this->_vars[$name][self::VARCFG_AF_DISABLED]) {
@@ -488,14 +495,10 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_FILE: // XOBJ_DTYPE_FILE                    
                 return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
-		if ($this->_vars[$name][self::VARCFG_VALUE] instanceof \DateTimeInterface) {
-		    if (isset($this->_vars[$name][self::VARCFG_FORMAT]) === false) {
-			$this->_vars[$name][self::VARCFG_FORMAT] = 'r';
-		    }
-		    return $this->_vars[$name][self::VARCFG_VALUE]->format($this->_vars[$name][self::VARCFG_FORMAT]);
-		} else {
-		    return '-';
+		if (isset($this->_vars[$name][self::VARCFG_FORMAT]) === false) {
+		    $this->_vars[$name][self::VARCFG_FORMAT] = 'r';
 		}
+		return $this->_vars[$name][self::VARCFG_VALUE]->format($this->_vars[$name][self::VARCFG_FORMAT]);
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
                 return $this->_vars[$name][self::VARCFG_VALUE];            
             case self::DTYPE_LIST; // XOBJ_DTYPE_SIMPLE_ARRAY
