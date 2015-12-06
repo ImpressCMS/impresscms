@@ -891,7 +891,6 @@ abstract class icms_properties_Handler implements Serializable {
 			return $ret;
 		    }
                 }
-		var_export(['v' => $value, 'k' => array($value), (array)$value]);
                 return (array)$value;
             case self::DTYPE_FILE:
                 if (isset($_FILES[$key])) {
