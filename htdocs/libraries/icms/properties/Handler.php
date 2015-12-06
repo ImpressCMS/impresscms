@@ -488,7 +488,14 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_FILE: // XOBJ_DTYPE_FILE                    
                 return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
-                return date(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : 'r', $this->_vars[$name][self::VARCFG_VALUE]);
+		if ($this->_vars[$name][self::VARCFG_VALUE] instanceof \DateTimeInterface) {
+		    if (isset($this->_vars[$name][self::VARCFG_FORMAT]) === false) {
+			$this->_vars[$name][self::VARCFG_FORMAT] = 'r';
+		    }
+		    return $this->_vars[$name][self::VARCFG_VALUE]->format($this->_vars[$name][self::VARCFG_FORMAT]);
+		} else {
+		    return '-';
+		}
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
                 return $this->_vars[$name][self::VARCFG_VALUE];            
             case self::DTYPE_LIST; // XOBJ_DTYPE_SIMPLE_ARRAY
@@ -514,7 +521,7 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY            
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars((string)$this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
                 return $this->getVar($name, 'n');
                 break;
@@ -541,7 +548,7 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars((string)$this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_OTHER: // XOBJ_DTYPE_OTHER
             case self::DTYPE_OBJECT:
             default:
@@ -628,7 +635,7 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_STRING:
                 return strlen($this->_vars[$key][self::VARCFG_VALUE]) > 0;
             case self::DTYPE_DATETIME:
-                return is_int($this->_vars[$key][self::VARCFG_VALUE]) && ($this->_vars[$key][self::VARCFG_VALUE] > 0);
+                return $this->_vars[$key][self::VARCFG_VALUE] instanceof \DateTimeInterface;
         }
     }
 
