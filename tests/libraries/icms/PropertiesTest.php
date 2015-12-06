@@ -100,7 +100,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
         
         foreach ([[52], [59 => 'aaa'], true, 1, 1.0, -9, 'test', [], new \stdClass(), function () {}] as $v) {
             $mock->v = $v;
-            $this->assertTrue(is_int($mock->v) || (is_object($mock->v) && $mock->v instanceof \DateTime), 'DTYPE_DATETIME must convert all data');
+            $this->assertTrue(is_null($mock->v) || (is_object($mock->v) && $mock->v instanceof \DateTime), 'DTYPE_DATETIME must convert all data');
         }
     }    
     
