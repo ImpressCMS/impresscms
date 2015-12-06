@@ -513,13 +513,17 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarForEdit($name) {
+	if ($this->_vars[$name][self::VARCFG_VALUE] === null) {
+	    return '';
+	}	
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
+	    case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+		return $this->_vars[$name][self::VARCFG_VALUE]->getTimestamp();
             case self::DTYPE_STRING:
             case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
             case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
             case self::DTYPE_BOOLEAN:
-            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
-            case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE            
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY            
                 return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars((string)$this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
@@ -539,13 +543,17 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarForForm($name) {
+	if ($this->_vars[$name][self::VARCFG_VALUE] === null) {
+	    return '';
+	}
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
+	    case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+		return $this->_vars[$name][self::VARCFG_VALUE]->getTimestamp();
             case self::DTYPE_STRING:
             case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
             case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
             case self::DTYPE_BOOLEAN:
-            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
-            case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE            
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
                 return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars((string)$this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
