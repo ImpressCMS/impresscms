@@ -687,12 +687,15 @@ class icms_ipf_Object extends icms_core_Object {
                 continue; // Skipping ID
             }
             if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null) {
+		if ($this->_vars[$k][self::VARCFG_VALUE] === null) {
+		    $fieldsToStoreInDB[$k] = 'NULL';
+		}
                 switch ($this->_vars[$k][self::VARCFG_TYPE]) {
                     case self::DTYPE_FLOAT:                    
                         $fieldsToStoreInDB[$k] = (float)$this->_vars[$k][self::VARCFG_VALUE];
                         break;
                     case self::DTYPE_DATETIME:
-                        $fieldsToStoreInDB[$k] = 'FROM_UNIXTIME(' .  intval($this->_vars[$k][self::VARCFG_VALUE]) . ')';
+			$fieldsToStoreInDB[$k] = $db->quoteString($this->_vars[$k][self::VARCFG_VALUE]->format('Y-m-d H:i:s'));
                         break;                    
                     case self::DTYPE_BOOLEAN:
                     case self::DTYPE_INTEGER:
