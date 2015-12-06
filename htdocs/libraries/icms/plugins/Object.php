@@ -12,12 +12,29 @@
  */
 class icms_plugins_Object {
 
-	public $_infoArray;
+    /**
+     * Plugin information (storied as array)
+     *
+     * @var array 
+     */
+	public $_infoArray = array();
 
+	/**
+	 * Constructor
+	 * 
+	 * @param array $array	    data
+	 */
 	public function __construct($array) {
 		$this->_infoArray = $array;
 	}
 
+	/**
+	 * Gets info about item
+	 * 
+	 * @param string $item	    Item name
+	 * 
+	 * @return mixed
+	 */
 	public function getItemInfo($item) {
 		if (isset($this->_infoArray['items'][$item])) {
 			return $this->_infoArray['items'][$item];
@@ -26,14 +43,24 @@ class icms_plugins_Object {
 		}
 	}
 
+	/**
+	 * Gets items list
+	 * 
+	 * @return array
+	 */
 	public function getItemList() {
-		$itemsArray = $this->_infoArray['items'];
-		foreach ($itemsArray as $k=>$v) {
+		$ret = array();
+		foreach ($this->_infoArray['items'] as $k=>$v) {
 			$ret[$k] = $v['caption'];
 		}
 		return $ret;
 	}
 
+	/**
+	 * Get items
+	 * 
+	 * @return mixed
+	 */
 	public function getItem() {
 		$ret = false;
 		foreach($this->_infoArray['items'] as $k => $v) {
@@ -46,6 +73,13 @@ class icms_plugins_Object {
 		return $ret;
 	}
 
+	/**
+	 * Get item from request
+	 * 
+	 * @param string $item	    Item name
+	 * 
+	 * @return mixed
+	 */
 	public function getItemIdForItem($item) {
 		return $_REQUEST[$this->_infoArray['items'][$item]['request']];
 	}
