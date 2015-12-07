@@ -395,11 +395,11 @@ abstract class icms_properties_Handler implements Serializable {
             return trigger_error('Variable ' . get_class($this) . '::$' . $name . ' locked', E_USER_WARNING);
         if (isset($this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS]) && !in_array($value, $this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS]))
             return trigger_error('Option not in array for variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
-        $clean = $this->cleanVar($name, $this->_vars[$name][self::VARCFG_TYPE], $value);				
+        $clean = $this->cleanVar($name, $this->_vars[$name][self::VARCFG_TYPE], $value);
                 
         if ($clean === $this->_vars[$name][self::VARCFG_VALUE])
             return;
-        $this->_vars[$name][self::VARCFG_VALUE] = $clean;	
+        $this->_vars[$name][self::VARCFG_VALUE] = $clean;
         $this->setVarInfo($name, self::VARCFG_CHANGED, true);
         if (isset($this->_vars[$name][self::VARCFG_NOTLOADED]) && $this->_vars[$name][self::VARCFG_NOTLOADED])
             $this->_vars[$name][self::VARCFG_NOTLOADED] = false;
