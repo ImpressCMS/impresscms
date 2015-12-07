@@ -171,7 +171,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
             if (is_array($v)) {
                 $this->assertSame($v, $mock->v, 'Array must be unchanged');
             } else {
-                $this->assertSame([$v], array_values($mock->v), 'Simple values must be converted as array values without modifications');
+                $this->assertSame((array)$v, array_values($mock->v), 'Simple values must be converted as array values without modifications');
             }
         }
     }
