@@ -632,11 +632,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
                 continue;
             }
+	    
             $obj = new $this->className($this, $myrow);
             if (!$obj->isLoadedOnCreation()) {
-                $obj->setVars($myrow);
+                $obj->assignVars($myrow);
                 $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
             }
+	    
             if (isset($fields_sk)) {
                 $obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
             }
@@ -681,7 +683,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 }
                 $obj = new $this->className($this, $myrow);
                 if (!$obj->isLoadedOnCreation()) {
-                    $obj->setVars($myrow);
+                    $obj->assignVars($myrow);
                     $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
                 }
                 if (isset($fields_sk)) {
@@ -720,7 +722,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 }
                 $obj = new $this->className($this, $myrow);
                 if (!$obj->isLoadedOnCreation()) {
-                    $obj->setVars($myrow);
+                    $obj->assignVars($myrow);
                     $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
                 }
                 if (isset($fields_sk)) {
@@ -778,9 +780,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         }
 
         if ($as_object === null) {
-            return $id_as_key ? $this->convertResultSet_RAWWithKey($result, $id_as_key) : $this->convertResultSet_RAW($result);
+            return ($id_as_key !== false) ? $this->convertResultSet_RAWWithKey($result, $id_as_key) : $this->convertResultSet_RAW($result);
         } else {
-            return $id_as_key ? $this->convertResultSet_ObjectWithKey($result, $id_as_key, $as_object) : $this->convertResultSet_Object($result, $as_object);
+            return ($id_as_key !== false) ? $this->convertResultSet_ObjectWithKey($result, $id_as_key, $as_object) : $this->convertResultSet_Object($result, $as_object);
         }
     }
 
