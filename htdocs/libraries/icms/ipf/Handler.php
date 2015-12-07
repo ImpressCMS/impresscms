@@ -1013,9 +1013,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
     /**
      * Generates update SQL
      * 
-     * @param array/object $data
+     * @param array/object $data	Objects to process
      * 
-     * @return string
+     * @return string|null
      */
     protected function generateUpdateSQL($data) {
         if (is_array($data)) {
@@ -1036,6 +1036,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                         $when[$key][$i] = '    WHEN ' . $rendered_criteria . ' THEN ' . $value;
                     }
                 }
+		if (empty($when)) {
+		    return null;
+		}
                 $first = true;
                 foreach (array_keys($when) as $wdata) {
                     if (!$first) {
@@ -1061,6 +1064,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                     }
                     $ids[] = $id;
                 }
+		if (empty($when)) {
+		    return null;
+		}
                 $first = true;
                 foreach (array_keys($when) as $wdata) {
                     if (!$first) {
@@ -1074,6 +1080,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             }
         } else {
             $fieldsToStoreInDB = $data->getVarsForSQL(true);
+	    if (empty($fieldsToStoreInDB)) {
+		return null;
+	    }
 
             $sql = 'UPDATE ' . $this->table . ' SET';
             foreach ($fieldsToStoreInDB as $key => $value) {
@@ -1199,26 +1208,30 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         
         if (($count = count($for_update)) > 0) {
             $sql = ($count == 1) ? $this->generateUpdateSQL($for_update[0]) : $this->generateUpdateSQL($for_update);
+	    
+	    if ($sql !== null) {
 
-            if ($this->debugMode) {
-                icms_core_Debug::message($sql);
-            }
+		if ($this->debugMode === true) {
+		    icms_core_Debug::message($sql);
+		}	    
 
-            $force ? $this->db->queryF($sql) : $this->db->query($sql);
-            $scount += $this->db->getAffectedRows();
+		$force ? $this->db->queryF($sql) : $this->db->query($sql);
+		$scount += $this->db->getAffectedRows();
 
-            foreach ($for_update as $i => $obj) {
-                $for_update[$i]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
-                if (!$this->executeEvent('afterUpdate', $for_update[$i])) {
-                    $scount--;
-                    continue;
-                }
-            }
+		foreach ($for_update as $i => $obj) {
+		    $for_update[$i]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+		    if (!$this->executeEvent('afterUpdate', $for_update[$i])) {
+			$scount--;
+			continue;
+		    }
+		}
+	    
+	    }
         }        
 
         foreach ($data as $i => $obj) {
             $this->executeEvent('afterSave', $data[$i]);
-        }            
+        }
 
         return $scount > 0;
     }
