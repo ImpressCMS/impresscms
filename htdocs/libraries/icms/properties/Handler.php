@@ -871,9 +871,7 @@ abstract class icms_properties_Handler implements Serializable {
                     return $value;
                 return floatval($value);
             case self::DTYPE_INTEGER:
-                if (is_int($value))
-                    return $value;
-                return intval($value);
+                return (int)$value;
             case self::DTYPE_ARRAY:
                 if ((array) $value === $value)
                     return $value;
