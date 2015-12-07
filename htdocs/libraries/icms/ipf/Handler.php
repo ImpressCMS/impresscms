@@ -1217,12 +1217,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         }        
 
         foreach ($data as $i => $obj) {
-
-            if ($obj->handler->className != $this->className) {
-                $obj->setErrors(get_class($obj) . ' Differs from ' . $this->className);
-                continue;
-            }
-
             $this->executeEvent('afterSave', $data[$i]);
         }            
 
