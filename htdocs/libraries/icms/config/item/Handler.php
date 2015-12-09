@@ -67,7 +67,7 @@ define('ICMS_CONF_PURIFIER', 14);
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @package	ICMS\Config\Item
  */
-class icms_config_Item_Handler extends icms_ipf_Handler {
+class icms_config_item_Handler extends icms_ipf_Handler {
 
 	public function __construct(&$db) {
             parent::__construct($db, 'config_item', 'conf_id', 'conf_name', 'conf_value', 'icms', 'config', 'conf_id');

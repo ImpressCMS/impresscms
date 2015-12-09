@@ -51,7 +51,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @property string     $conf_valuetype     Type of value
  * @property int        $conf_order         Order (used to sorting fields before displaying on form)
  */
-class icms_config_Item_Object extends icms_ipf_Object {
+class icms_config_item_Object extends icms_ipf_Object {
 	/**
 	 * Config options
 	 *

@@ -2,18 +2,41 @@
 <project version="4">
   <component name="PublishConfigData" serverName="UwAmp">
     <serverData>
-      <paths name="UwAmp">
+      <paths name="Local WAMP">
         <serverdata>
           <mappings>
-            <mapping deploy="gitcore" local="$PROJECT_DIR$/htdocs" web="/gitcore" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
-          <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/htdocs/mainfile.php" />
-            <excludedPath path="gitcore/mainfile.php" />
-          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="Local Wamp Full">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="Local XAMPP">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="Local XAMPP Full">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="icms2test">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
         </serverdata>
       </paths>
     </serverData>
   </component>
 </project>
-

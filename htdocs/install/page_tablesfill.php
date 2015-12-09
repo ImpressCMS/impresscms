@@ -32,6 +32,10 @@ if (!$dbm->isConnectable()) {
 	$wizard->redirectToPage( 'dbsettings' );
 	exit();
 }
+
+icms::$db = &$dbm->db;
+icms::$xoopsDB = &$dbm->db;
+
 $res = $dbm->query( "SELECT COUNT(*) FROM " . $dbm->db->prefix( "users" ) );
 if (!$res) {
 	$wizard->redirectToPage( 'dbsettings' );
