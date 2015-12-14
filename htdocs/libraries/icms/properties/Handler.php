@@ -902,11 +902,12 @@ abstract class icms_properties_Handler implements Serializable {
                     if ($uploader->fetchMedia($key)) {
                         if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
                             $filename = call_user_func($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION], 'post', $uploader->getMediaType(), $uploader->getMediaName());
-                            if (!empty($this->_vars[$key]['prefix']))
-                                $filename = $this->_vars[$key]['prefix'] . $filename;
+                            if (!empty($this->_vars[$key][self::VARCFG_PREFIX])) {
+                                $filename = $this->_vars[$key][self::VARCFG_PREFIX] . $filename;
+							}
                             $uploader->setTargetFileName($filename);
-                        } elseif (!empty($this->_vars[$key]['prefix'])) {
-                            $uploader->setPrefix($this->_vars[$key]['prefix']);
+                        } elseif (!empty($this->_vars[$key][self::VARCFG_PREFIX])) {
+                            $uploader->setPrefix($this->_vars[$key][self::VARCFG_PREFIX]);
                         }
                         if ($uploader->upload()) {
                             return array(
@@ -927,11 +928,12 @@ abstract class icms_properties_Handler implements Serializable {
                     if ($uploader->fetchFromURL($value)) {
                         if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
                             $filename = call_user_func($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION], 'post', $uploader->getMediaType(), $uploader->getMediaName());
-                            if (!empty($this->_vars[$key]['prefix']))
-                                $filename = $this->_vars[$key]['prefix'] . $filename;
+                            if (!empty($this->_vars[$key][self::VARCFG_PREFIX])) {
+                                $filename = $this->_vars[$key][self::VARCFG_PREFIX] . $filename;
+							}
                             $uploader->setTargetFileName($filename);
-                        } elseif (!empty($this->_vars[$key]['prefix'])) {
-                            $uploader->setPrefix($this->_vars[$key]['prefix']);
+                        } elseif (!empty($this->_vars[$key][self::VARCFG_PREFIX])) {
+                            $uploader->setPrefix($this->_vars[$key][self::VARCFG_PREFIX]);
                         }
                         if ($uploader->upload()) {
                             return array(
@@ -944,8 +946,9 @@ abstract class icms_properties_Handler implements Serializable {
                     }
                     return null;
                 } elseif (isset($value['filename']) || isset($value['mimetype'])) {
-                    if (!isset($value['filename']) || !isset($value['mimetype']))
+                    if (!isset($value['filename']) || !isset($value['mimetype'])) {
                         return null;
+					}
                     return $value;
                 }
                 return null;
