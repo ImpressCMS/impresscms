@@ -41,17 +41,17 @@
  * Implements all functions that are executed within the header of the page
  * (meta tags, header expiration, etc)
  * It will all be echoed, so no return in this function
- * 
+ *
  * @deprecated 2.0 Use icms_response_* classes instead!
  *
  * @param bool  $closehead  close the <head> tag
  */
 function xoops_header($closehead=true) {
     trigger_error('xoops_header was deprecached from 2.0 use icms_response_* classes instead!', E_USER_DEPRECATED);
-    
+
     global $icmsConfig;
-    
-    \icms::$response = new \icms_response_HTML([        
+
+    \icms::$response = new \icms_response_HTML([
         'template_canvas' => 'db:system_blank.html'
     ]);
 
@@ -61,7 +61,7 @@ function xoops_header($closehead=true) {
             $head = mb_substr($buffer, 0, $i);
         } else {
             $head = '';
-        }        
+        }
         preg_match('/<body([^>]*)>/mis', $buffer, $matches);
         $i = mb_strpos($buffer, $matches[0]);
         $buffer = mb_substr($buffer, $i + mb_strlen($matches[0]));
@@ -79,7 +79,7 @@ function xoops_header($closehead=true) {
                     $attributes[$matches[6][$i]] = $matches[6][$i];
                 }
             }
-            $head .= '<script type="text/javascript">' . PHP_EOL;                
+            $head .= '<script type="text/javascript">' . PHP_EOL;
             $head .= "function icms_updateBody() {
                         if (!jQuery) {
                             return;
@@ -97,17 +97,17 @@ function xoops_header($closehead=true) {
             \icms::$response->assign('icms_module_header', \icms::$response->get_template_vars('icms_module_header') . $head);
         }
         return $buffer;
-    }); 
+    });
 }
 
 /**
  * The footer
  *
  * Implements all functions that are executed in the footer
- * 
+ *
  * @deprecated 2.0 Use icms_response_* classes instead!
- */		
-function xoops_footer() {    
+ */
+function xoops_footer() {
     trigger_error('xoops_footer was deprecached from 2.0 use icms_response_* classes instead!', E_USER_DEPRECATED);
     global $icmsConfigMetaFooter;
     ob_end_flush();
@@ -2149,7 +2149,7 @@ function icms_getBreadcrumb($items) {
 }
 /**
  * Build a template assignement
- * 
+ *
  * @deprecated 2.0  Use icms_response_* classes instead
  *
  * @param array $items to build the smarty to be used in templates

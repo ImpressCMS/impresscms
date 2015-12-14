@@ -68,12 +68,12 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
     \icms::$response = new \icms_response_Error();
     \icms::$response->errorNo = 404;
     \icms::$response->render();
-} else {    
+} else {
     $member_handler = \icms::handler('icms_member');
     $group = $member_handler->getUserBestGroup(
         (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
-    );        
-    
+    );
+
     $icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 
     if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != '--') {

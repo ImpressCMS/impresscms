@@ -38,8 +38,8 @@
 /** make sure mainfile is included, for security and functionality */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-/** 
- * @todo This funtion has been deprecated in PHP 5.3.0 - need to adjust in 2.0 ~skenow 
+/**
+ * @todo This funtion has been deprecated in PHP 5.3.0 - need to adjust in 2.0 ~skenow
  * @todo temp check added for PHP version to supress warnings. Need to remove in the future ~mekdrop
  */
 if(version_compare(PHP_VERSION, '5.3.0', '<')){

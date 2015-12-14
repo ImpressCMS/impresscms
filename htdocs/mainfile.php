@@ -34,7 +34,7 @@
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @since	XOOPS
-* @package	ImpressCMS\Core	
+* @package	ImpressCMS\Core
 */
 
 // ImpressCMS is not installed yet.
