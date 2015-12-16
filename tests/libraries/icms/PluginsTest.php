@@ -2,6 +2,11 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class PluginsTest extends \PHPUnit_Framework_TestCase {
     
     /**

@@ -2,6 +2,11 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class StopSpammerTest extends \PHPUnit_Framework_TestCase {
     
     /**
