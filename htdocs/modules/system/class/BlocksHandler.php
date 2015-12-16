@@ -3,14 +3,11 @@
  * ImpressCMS Block Persistable Class for Configure
  *
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @since 		ImpressCMS 1.2
- * @category	ICMS
- * @package 	Administration
- * @subpackage	Blocks
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @author		Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
- * @version		SVN: $Id$
+ * @license	GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * @since 	ImpressCMS 1.2
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author	Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
+ * @package ImpressCMS\Modules\System\Class\Blocks
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -23,6 +20,7 @@ icms_loadLanguageFile('system', 'blocks', TRUE);
  *
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @package ImpressCMS\Modules\System\Class\Blocks
  */
 class mod_system_BlocksHandler extends icms_view_block_Handler {
 
