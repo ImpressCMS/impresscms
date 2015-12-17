@@ -571,3 +571,8 @@ $modversion['templates'][] = array(
 		'file' => 'admin/system_adm_moduleabout.html',
 		'description' => ''
 );
+
+$modversion['templates'][] = array(
+		'file' => 'system_blank.html',
+		'description' => ''
+);

@@ -13,15 +13,17 @@ class icms_response_DefaultEmptyPage
      * Constructor
      */
     public function __construct() {    
-        global $xoopsOption;
-        ob_start();
+        global $xoopsOption;        
         $xoopsOption['show_cblock'] = 1;
-	/** Included to start page rendering */
-	include ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "header.php";
-	/** Included to complete page rendering */
-	include ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "footer.php";
-        $msg = ob_get_clean();
-        parent::__construct($msg);
+        parent::__construct($xoopsOption);
+    }
+    
+    /**
+     * Render data
+     */
+    public function render() {
+        $this->assign('icms_contents', ob_get_clean());
+        parent::render();
     }
     
 }

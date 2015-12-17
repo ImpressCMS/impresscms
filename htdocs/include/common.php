@@ -38,8 +38,13 @@
 /** make sure mainfile is included, for security and functionality */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-/** @todo This funtion has been deprecated in PHP 5.3.0 - need to adjust in 2.0 ~skenow */
-@set_magic_quotes_runtime(0);
+/**
+ * @todo This funtion has been deprecated in PHP 5.3.0 - need to adjust in 2.0 ~skenow
+ * @todo temp check added for PHP version to supress warnings. Need to remove in the future ~mekdrop
+ */
+if(version_compare(PHP_VERSION, '5.3.0', '<')){
+    set_magic_quotes_runtime(0);
+}
 
 // -- Include common functions and constants file
 require_once ICMS_ROOT_PATH . "/include/constants.php";
@@ -89,8 +94,14 @@ icms_loadLanguageFile('core', 'global');
 icms_loadLanguageFile('core', 'theme');
 icms_loadLanguageFile('core', 'core');
 icms_loadLanguageFile('system', 'common');
-@define('_GLOBAL_LEFT', @_ADM_USE_RTL == 1 ? 'right' : 'left');
-@define('_GLOBAL_RIGHT', @_ADM_USE_RTL == 1 ? 'left' : 'right');
+
+if (defined('_ADM_USE_RTL') && _ADM_USE_RTL == 1) {
+    define('_GLOBAL_LEFT', 'right');
+    define('_GLOBAL_RIGHT', 'left');
+} else {
+    define('_GLOBAL_LEFT', 'left');
+    define('_GLOBAL_RIGHT', 'right');
+}
 
 // -- Include page-specific lang file
 if (isset($xoopsOption['pagetype']) && FALSE === strpos($xoopsOption['pagetype'], '.')) {
