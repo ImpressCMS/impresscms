@@ -86,7 +86,7 @@ class icms_view_theme_Object {
 	public $renderCount = 0;
 	/**
 	 * Pointer to the theme template engine
-	 * @public icms_view_Tpl
+	 * @var \icms_view_Tpl
 	 */
 	public $template = FALSE;
 
@@ -398,7 +398,12 @@ class icms_view_theme_Object {
 
 		// Do not cache the main (theme.html) template output
 		$this->template->caching = 0;
-		$this->template->display($this->path . '/' . $this->canvasTemplate);
+                
+                if (FALSE === strpos($this->canvasTemplate, ':')) {
+                    $this->template->display($this->path . '/' . $this->canvasTemplate);
+                } else {
+                    $this->template->display($this->canvasTemplate);
+                }		
 
 		$this->renderCount++;
 		icms::$logger->stopTime('Page rendering');

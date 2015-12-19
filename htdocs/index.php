@@ -1,5 +1,4 @@
 <?php
-// $Id: index.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -31,31 +30,27 @@
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
- * @since		XOOPS
- * @author		skalpa <psk@psykaos.net>
- * @author	    Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		AVN: $Id: index.php 12313 2013-09-15 21:14:35Z skenow $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ImpressCMS\Core
+ * @since	XOOPS
+ * @author	skalpa <psk@psykaos.net>
+ * @author	Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
  **/
 
 /** mainfile is required, if it doesn't exist - installation is needed */
 
-include 'mainfile.php';
+include_once __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 if (!defined('ICMS_MODULES_URL')) {
     header("Location: /install/index.php");
 }
 
-$member_handler = icms::handler('icms_member');
-$group = $member_handler->getUserBestGroup((@is_object(icms::$user) ? icms::$user->getVar('uid') : 0));
-
 $path = preg_replace('/[^a-zA-Z0-9\/]/', '', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
 
 if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
-    icms::$logger->disableRendering();
+    \icms::$logger->disableRendering();
     list(, $module, $controller_name, $action, $params) = $params[0];
-    $handler = icms::handler('icms_controller');
+    $handler = new \icms_controller_Handler();
     try {
         $handler->exec(
             $module,
@@ -65,27 +60,40 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
             $handler->parseParamsStringToArray($module, $controller_name, $params)
         );
     } catch (Exception $ex) {
-        header('Location: /error.php?e=404');
+        \icms::$response = new \icms_response_Error();
+        \icms::$response->errorNo = 404;
+        \icms::$response->render();
     }
+} elseif (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != '/')) {
+    \icms::$response = new \icms_response_Error();
+    \icms::$response->errorNo = 404;
+    \icms::$response->render();
 } else {
+    $member_handler = \icms::handler('icms_member');
+    $group = $member_handler->getUserBestGroup(
+        (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
+    );
+
     $icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 
-    if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != "" && $icmsConfig['startpage'] != "--") {
+    if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != '--') {
         $arr = explode('-', $icmsConfig['startpage']);
         if (count($arr) > 1) {
-            $page_handler = icms::handler('icms_data_page');
+            $page_handler = \icms::handler('icms_data_page');
             $page = $page_handler->get($arr[1]);
             if (is_object($page)) {
                 header('Location: ' . $page->getURL());
             } else {
                 $icmsConfig['startpage'] = '--';
-                new icms_response_DefaultEmptyPage();
+                \icms::$response = new \icms_response_DefaultEmptyPage();
+                \icms::$response->render();
             }
         } else {
             header('Location: ' . ICMS_MODULES_URL . '/' . $icmsConfig['startpage'] . '/');
         }
         exit();
     } else {
-        new icms_response_DefaultEmptyPage();
+        \icms::$response = new \icms_response_DefaultEmptyPage();
+        \icms::$response->render();
     }
 }

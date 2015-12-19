@@ -351,8 +351,49 @@ class icms_module_Object
 		);
 		$tpl->display('db:admin/system_adm_modulemenu.html');
 	}
+        
+    /**
+     * Get admin menu items for current module
+     * 
+     * @return array
+     */
+    public function getAdminMenuItems() {
+        $inf = & $this->getInfo();
+        $url = ICMS_MODULES_URL . DIRECTORY_SEPARATOR . $this->dirname . DIRECTORY_SEPARATOR;
+        $rtn = [
+            'link' => $url . (isset($inf['adminindex']) ? $inf['adminindex'] : ''),
+            'title' => $this->getVar('name'),
+            'dir' => $this->dirname,
+            'absolute' => 1,
+            'subs' => []
+        ];
+        if (isset($inf['iconsmall']) && $inf['iconsmall'] != '') {
+            $rtn['small'] = $url . $inf['iconsmall'];
+        }
+        if (isset($inf['iconbig']) && $inf['iconbig'] != '') {
+            $rtn['iconbig'] = $url . $inf['iconbig'];
+        }
+        $this->loadAdminMenu();
+        if (is_array($this->adminmenu) && count($this->adminmenu) > 0) {
+            foreach ($this->adminmenu as $item) {
+                $item['link'] = $url . $item['link'];
+                $rtn['subs'][] = $item;
+            }
+        }
+        if ($this->hasconfig || $this->hascomments) {
+            $rtn['subs'][] = [
+                'title' => _PREFERENCES,
+                'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $this->mid
+            ];
+        }
+        $rtn['hassubs'] = (count($rtn['subs']) > 0) ? 1 : 0;
+        if ($rtn['hassubs'] == 0) {
+            unset($rtn['subs']);
+        }
+        return $rtn;
+    }
 
-	/**
+    /**
 	 * Modules Message Function
 	 *
 	 * @since ImpressCMS 1.2
