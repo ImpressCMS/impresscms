@@ -236,7 +236,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		else {$url .= '&amp;'.SID;
 		}
 	}
-	$url = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES));
+	$url = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES, _CHARSET));
 	$xoopsTpl->assign('url', $url);
 	$message = trim($message) != '' ? $message : _TAKINGBACK;
 	$xoopsTpl->assign('message', $message);

@@ -756,7 +756,7 @@ class icms_ipf_Object extends icms_core_Object {
                 $br = false;
                 $formatML = !$editor;
             } else {
-                return htmlspecialchars($ret, ENT_QUOTES);
+                return htmlspecialchars($ret, ENT_QUOTES, _CHARSET);
             }
         }
 

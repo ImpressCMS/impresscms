@@ -93,7 +93,7 @@ if (!empty($display_criteria)) {
 	$form->addElement($criteria_tray);
 }
 
-$fname_text = new icms_form_elements_Text(_AM_MAILFNAME, "mail_fromname", 30, 255, htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES));
+$fname_text = new icms_form_elements_Text(_AM_MAILFNAME, "mail_fromname", 30, 255, htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET));
 $fromemail = !empty($icmsConfig['adminmail']) ? $icmsConfig['adminmail'] : icms::$user->getVar("email", "E");
 $femail_text = new icms_form_elements_Text(_AM_MAILFMAIL, "mail_fromemail", 30, 255, $fromemail);
 //$subject_caption = _AM_MAILSUBJECT . "<br /><br /><span style='font-size:x-small;font-weight:bold;'>" . _AM_MAILTAGS . "</span><br /><span style='font-size:x-small;font-weight:normal;'>" . _AM_MAILTAGS1 . "<br />" . _AM_MAILTAGS2 . "<br />" . _AM_MAILTAGS3 . "</span>";
