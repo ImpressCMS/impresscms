@@ -187,7 +187,7 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 		}
 		//$old_handler_name = get_class($handler);
 		$config_handler = icms::handler('icms_config');
-		$config_atasks = $config_handler->getConfigsByCat(ICMS_CONF_AUTOTASKS);
+		$config_atasks = $config_handler->getConfigsByCat(\icms_config_Handler::CATEGORY_AUTOTASKS);
 		return $config_atasks;
 	}
 

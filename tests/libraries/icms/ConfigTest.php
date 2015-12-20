@@ -26,11 +26,11 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
            }
        }
         
-       $this->assertTrue(class_exists('icms_config_Handler', true), "icms_config_Handler auth method doesn't exists");
+       $this->assertTrue(class_exists('icms_config_Handler', true), "icms_config_Handler class doesn't exists");
        $instance = $this->getMockBuilder('icms_config_Handler')
                        ->disableOriginalConstructor()
                        ->getMock();
-       $this->assertInternalType('object', $instance, "icms_config_Handler auth method doesn't exists");
+       $this->assertInternalType('object', $instance, "icms_config_Handler can't be an instance");
     }
     
     /**
@@ -52,13 +52,13 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
         $class = new \ReflectionClass('icms_config_Handler');
         $cat_constants_count = 0;        
         foreach ($class->getConstants() as $name => $value) {
-            if (substr($name, 0, 4) != 'CAT_') {
+            if (substr($name, 0, 9) != 'CATEGORY_') {
                 continue;
             }
             $cat_constants_count++;  
             $this->assertInternalType('int', $value, $name . ' constant value is not of int type');
         }
-        $this->assertGreaterThan(1, $cat_constants_count, 'No CATEGORY_* constants found in icms_config_category_Handler');
+        $this->assertGreaterThan(1, $cat_constants_count, 'No CATEGORY_* constants found in icms_config_Handler');
     }
     
 }
