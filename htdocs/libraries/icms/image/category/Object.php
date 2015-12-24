@@ -57,15 +57,20 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @property string $imgcat_type       Type
  * @property string $imgcat_storetype  Storing type
  */
-class icms_image_category_Object extends icms_core_Object {
+class icms_image_category_Object extends \icms_ipf_Object {
+        
+        /**
+         * Image count
+         *
+         * @var int 
+         */
 	private $_imageCount;
 
 	/**
 	 * Constructor
 	 *
 	 */
-	public function __construct() {
-		parent::__construct();
+	public function __construct(&$handler, $data = array()) {
 		$this->initVar('imgcat_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('imgcat_pid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('imgcat_name', self::DTYPE_STRING, null, true, 100);
@@ -77,6 +82,8 @@ class icms_image_category_Object extends icms_core_Object {
 		$this->initVar('imgcat_maxheight', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('imgcat_type', self::DTYPE_STRING, null, false, 1);
 		$this->initVar('imgcat_storetype', self::DTYPE_STRING, null, false, 5);
+                
+                parent::__construct($handler, $data);
 	}
 
 	/**

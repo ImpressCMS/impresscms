@@ -257,6 +257,13 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'criteriaElements' => 'array',
                 'conditions' => 'array'
             ],
+            'icms_db_criteria_Item' => [
+                'prefix' => 'string',
+                'function' => 'string',
+                'column' => 'string',
+                'operator' => 'string',
+                'value' => 'mixed'
+            ],
             'icms_db_criteria_Element' => [
                 'order' => 'string',
                 'sort' => 'string',
@@ -285,7 +292,11 @@ class DBTest extends \PHPUnit_Framework_TestCase {
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
             foreach ($variables as $variable => $type) {
-                $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+                if ($type == 'mixed') {
+                    $this->assertTrue(property_exists($instance, $variable), '$' . $variable . ' is not defined in instance of ' . $class);
+                } else {
+                    $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+                }
             }
         }
     }
