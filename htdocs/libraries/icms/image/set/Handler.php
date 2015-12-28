@@ -51,118 +51,42 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_set_Handler extends \icms_core_ObjectHandler {
+class icms_image_set_Handler extends \icms_ipf_Handler {
 
-    /**
-     * Creates a new imageset
-     *
-     * @param bool $isNew is the new imageset new??
-     * @return object $imgset {@link icms_image_set_Object} reference to the new imageset
-     * */
-    function & create($isNew = true) {
-        $imgset = new icms_image_set_Object();
-        if ($isNew) {
-            $imgset->setNew();
-        }
-        return $imgset;
-    }
-
-    /**
-     * retrieve a specific {@link icms_image_set_Object}
-     *
-     * @see icms_image_set_Object
-     * @param integer $id imgsetID (imgset_id) of the imageset
-     * @return object icms_image_set_Object reference to the image set
-     * */
-    function & get($id) {
-        $id = (int) $id;
-        $imgset = false;
-        if ($id > 0) {
-            $sql = "SELECT * FROM " . $this->db->prefix('imgset') . " WHERE imgset_id='" . $id . "'";
-            if (!$result = $this->db->query($sql)) {
-                return $imgset;
-            }
-            $numrows = $this->db->getRowsNum($result);
-            if ($numrows == 1) {
-                $imgset = new icms_image_set_Object();
-                $imgset->assignVars($this->db->fetchArray($result));
-            }
-        }
-        return $imgset;
-    }
-
-    /**
-     * Insert a new {@link icms_image_set_Object} into the database
-     *
-     * @param object icms_image_set_Object $imgset reference to the imageset to insert
-     * @return bool TRUE if succesful
-     * */
-    function insert(& $imgset) {
         /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
+         * Constructor
+         * 
+         * @param \icms_db_IConnection $db              Database connection
          */
-        if (!is_a($imgset, 'xoopsimageset')) {
-            return false;
+        public function __construct(&$db) {                
+                parent::__construct($db, 'image_set', 'imgset_id', 'imgset_name', '', 'icms', 'imgset');
         }
 
-        if (!$imgset->isDirty()) {
-            return true;
-        }
-        if (!$imgset->cleanVars()) {
-            return false;
-        }
-        foreach ($imgset->cleanVars as $k => $v) {
-            ${ $k } = $v;
-        }
-        if ($imgset->isNew()) {
-            $imgset_id = $this->db->genId('imgset_imgset_id_seq');
-            $sql = sprintf("INSERT INTO %s (imgset_id, imgset_name, imgset_refid) VALUES ('%u', %s, '%u')", $this->db->prefix('imgset'), (int) $imgset_id, $this->db->quoteString($imgset_name), (int) $imgset_refid);
-        } else {
-            $sql = sprintf("UPDATE %s SET imgset_name = %s, imgset_refid = '%u' WHERE imgset_id = '%u'", $this->db->prefix('imgset'), $this->db->quoteString($imgset_name), (int) $imgset_refid, (int) $imgset_id);
-        }
-        if (!$result = $this->db->query($sql)) {
-            return false;
-        }
-        if (empty($imgset_id)) {
-            $imgset_id = $this->db->getInsertId();
-        }
-        $imgset->assignVar('imgset_id', $imgset_id);
-        return true;
-    }
-
-    /**
-     * delete an {@link icms_image_set_Object} from the database
-     *
-     * @param object icms_image_set_Object $imgset reference to the imageset to delete
-     * @return bool TRUE if succesful
-     * */
-    function delete(& $imgset) {
         /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
+         * This event executes after deletion
+         * 
+         * @param \icms_image_set_Object $obj           Instance of icms_image_set_Object
+         * 
+         * @return boolean
          */
-        if (!is_a($imgset, 'xoopsimageset')) {
-            return false;
+        protected function afterDelete($obj) {
+                $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), $obj->imgset_id);
+                $this->db->query($sql);
+                return true;
         }
-
-        $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset'), (int) $imgset->getVar('imgset_id'));
-        if (!$result = $this->db->query($sql)) {
-            return false;
-        }
-        $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), (int) $imgset->getVar('imgset_id'));
-        $this->db->query($sql);
-        return true;
-    }
 
     /**
-     * retrieve array of {@link icms_image_set_Object}s meeting certain conditions
+     * Retrieve array of {@link icms_image_set_Object}s meeting certain conditions
+     * 
      * @param object $criteria {@link CriteriaElement} with conditions for the imagesets
      * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
+     * 
      * @return array {@link icms_image_set_Object}s matching the conditions
-     * */
-    function &getObjects($criteria = NULL, $id_as_key = FALSE) {
+     **/
+    public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
         $ret = array();
         $limit = $start = 0;
-        $sql = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
+        $sql = 'SELECT DISTINCT i.* FROM ' . $this->table . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
@@ -173,8 +97,7 @@ class icms_image_set_Handler extends \icms_core_ObjectHandler {
             return $ret;
         }
         while ($myrow = $this->db->fetchArray($result)) {
-            $imgset = new icms_image_set_Object();
-            $imgset->assignVars($myrow);
+            $imgset = new icms_image_set_Object($this, $myrow);
             if (!$id_as_key) {
                 $ret[] = & $imgset;
             } else {
@@ -189,9 +112,10 @@ class icms_image_set_Handler extends \icms_core_ObjectHandler {
      * Links a {@link icms_image_set_Object} to a themeset (tplset)
      * @param int $imgset_id image set id to link
      * @param int $tplset_name theme set to link
+     * 
      * @return bool TRUE if succesful FALSE if unsuccesful
-     * */
-    function linkThemeset($imgset_id, $tplset_name) {
+     **/
+    public function linkThemeset($imgset_id, $tplset_name) {
         $imgset_id = (int) $imgset_id;
         $tplset_name = trim($tplset_name);
         if ($imgset_id <= 0 || $tplset_name == '') {
@@ -213,9 +137,10 @@ class icms_image_set_Handler extends \icms_core_ObjectHandler {
      *
      * @param int $imgset_id image set id to unlink
      * @param int $tplset_name theme set to unlink
+     * 
      * @return bool TRUE if succesful FALSE if unsuccesful
      * */
-    function unlinkThemeset($imgset_id, $tplset_name) {
+    public function unlinkThemeset($imgset_id, $tplset_name) {
         $imgset_id = (int) $imgset_id;
         $tplset_name = trim($tplset_name);
         if ($imgset_id <= 0 || $tplset_name == '') {
@@ -230,13 +155,13 @@ class icms_image_set_Handler extends \icms_core_ObjectHandler {
     }
 
     /**
-     * get a list of {@link icms_image_set_Object}s matching certain conditions
+     * Get a list of {@link icms_image_set_Object}s matching certain conditions
      *
      * @param int $refid conditions to match
      * @param int $tplset conditions to match
      * @return array array of {@link icms_image_set_Object}s matching the conditions
      * */
-    function getList($refid = null, $tplset = null) {
+    public function getList($refid = null, $tplset = null) {
         $criteria = new CriteriaCompo();
         if (isset($refid)) {
             $criteria->add(new Criteria('imgset_refid', (int) $refid));
