@@ -116,7 +116,7 @@ class icms_view_block_Object extends icms_ipf_Object {
                     $content = str_replace(XOOPS_DB_SALT, '', $content);
 					return $content;
 				} elseif ($c_type == 'S') {
-					$myts =& icms_core_Textsanitizer::getInstance();
+					$myts = icms_core_Textsanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 1, 1);
 				} else {

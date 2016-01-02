@@ -43,6 +43,12 @@ class IcmsDatabaseFactory extends icms_db_legacy_Factory {
  *
  * @deprecated
  */
-class XoopsDatabaseFactory extends IcmsDatabaseFactory { /* For backwards compatibility */ }
+class XoopsDatabaseFactory extends IcmsDatabaseFactory {
+	/* For backwards compatibility */
+	static public function getDatabaseConnection() {
+		$db = icms_db_Factory::instance();
+		return $db;
+	}
+}
 
 ?>

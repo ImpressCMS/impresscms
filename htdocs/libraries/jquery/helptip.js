@@ -17,9 +17,9 @@ jQuery("span.helptext").hide();
 
 jQuery('input.checkemall').click(function() {
   if(jQuery(this).is(":checked")) {
-   jQuery(this).parents(".grouped").find("input").attr("checked",true);
+   jQuery(this).parents(".grouped").find("input").prop("checked",true);
   } else {
-   jQuery(this).parents(".grouped").find("input").attr("checked",false);
+   jQuery(this).parents(".grouped").find("input").prop("checked",false);
   }
  });
 });
