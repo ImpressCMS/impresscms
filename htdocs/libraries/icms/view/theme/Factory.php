@@ -65,7 +65,7 @@ class icms_view_theme_Factory {
 
     /**
      * Gets theme factory for existing configuration
-     * 
+     *
      * @global      array                    $icmsConfig    ICMS Configuration array
      * @staticvar   \icms_view_theme_Factory $themeFactory  Current instance of theme factory
      * @return      \icms_view_theme_Factory                Returns preconfigured icms_view_theme_Factory object

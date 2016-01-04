@@ -40,27 +40,27 @@ class icms_ipf_Object extends icms_core_Object {
      * References to control objects, managing the form fields of this object
      */
     public $controls = array();
-    
+
     /**
      * Does object data loaded on creation?
      *
-     * @var bool 
+     * @var bool
      */
     private $_loadedOnCreation = false;
 
     public function __construct(&$handler, $data = array()) {
-        $this->handler = $handler;        
+        $this->handler = $handler;
         if ($data === true) {
             $this->setNew();
-        } elseif (!empty($data)) {            
+        } elseif (!empty($data)) {
             $this->assignVars($data);
             $this->_loadedOnCreation = true;
         }
     }
-    
+
     /**
      * Does object data loaded on creation?
-     * 
+     *
      * @return bool
      */
     public function isLoadedOnCreation() {
@@ -95,8 +95,8 @@ class icms_ipf_Object extends icms_core_Object {
      */
     public function closeFormSection($section_name) {
         $this->initVar('close_section_' . $section_name, self::DTYPE_FORM_SECTION_CLOSE, '', FALSE, NULL, '', FALSE, '', '', FALSE, FALSE, TRUE);
-    }   
-    
+    }
+
     public function getVarInfo($key = null, $info = null, $default = null) {
         if ($key == null) {
             $ret = parent::getVarInfo($key, $info, $default);
@@ -127,7 +127,7 @@ class icms_ipf_Object extends icms_core_Object {
     protected function getFormCaption($key, $form_caption) {
         if ($form_caption)
             return $form_caption;
-        $dyn_form_caption = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);            
+        $dyn_form_caption = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);
         if (defined($dyn_form_caption))
             $form_caption = constant($dyn_form_caption);
         else
@@ -135,12 +135,12 @@ class icms_ipf_Object extends icms_core_Object {
         parent::setVarInfo($key, 'form_caption', $form_caption);
         return $form_caption;
     }
-    
+
     protected function getFormDescription($key, $form_dsc) {
         if ($form_dsc) {
             return $form_dsc;
         }
-        $dyn_form_dsc = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);            
+        $dyn_form_dsc = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);
         if (defined($dyn_form_dsc)) {
             $form_dsc = constant($dyn_form_dsc);
         } else {
@@ -169,9 +169,9 @@ class icms_ipf_Object extends icms_core_Object {
         //url_ is reserved for files.
         if (substr($key, 0, 4) == 'url_')
             return trigger_error("Cannot use variable starting with 'url_'.");
-        
+
         parent::initVar($key, $data_type, $value, $required, $maxlength, $options);
-                
+
         $this->_vars[$key]['multilingual'] = $multilingual;
         $this->_vars[$key]['form_caption'] = $form_caption;
         $this->_vars[$key]['form_dsc'] = $form_dsc;
@@ -207,7 +207,7 @@ class icms_ipf_Object extends icms_core_Object {
      *
      * - $maxlength = 0 unless $data_type is a TEXTBOX, then $maxlength will be 255
      * - all other vars are NULL or '' depending of the parameter
-     * 
+     *
      * @deprecated since version 2.1
      *
      * @param string $key key of this field. This needs to be the name of the field in the related database table
@@ -225,8 +225,8 @@ class icms_ipf_Object extends icms_core_Object {
 
     public function updateMetas() {
         // Auto create meta tags if empty
-        
-        
+
+
         $icms_metagen = new icms_ipf_Metagen($this->title(), $this->getVar('meta_keywords'), $this->summary());
 
         if (!isset($this->meta_keywords) || !isset($this->meta_description)) {
@@ -375,7 +375,7 @@ class icms_ipf_Object extends icms_core_Object {
                     return array('name' => 'richfile');
                 default:
                     return array('name' => 'text');
-            }            
+            }
         }
     }
 
@@ -402,10 +402,10 @@ class icms_ipf_Object extends icms_core_Object {
 
         return $form;
     }
-    
+
     /**
      * Returns if data for this object has partial data
-     * 
+     *
      * @return bool
      */
     public function isPartial() {
@@ -666,34 +666,34 @@ class icms_ipf_Object extends icms_core_Object {
      * @param bool $force
      * @return bool true if successful, false if not
      */
-    public function store($force = false) {        
+    public function store($force = false) {
         return $this->handler->insert($this, $force);
     }
-    
+
     /**
      * Returns array with changed vars
-     * 
+     *
      * @return array
      */
     public function getVarsForSQL($only_changed) {
         $fieldsToStoreInDB = array();
-        
-        $db = &$this->handler->db;      
-        
-        $vars = $only_changed?$this->getChangedVars():array_keys($this->_vars);        
-        
+
+        $db = &$this->handler->db;
+
+        $vars = $only_changed?$this->getChangedVars():array_keys($this->_vars);
+
         foreach ($vars as $k) {
             if ($this->handler->keyName == $k && !$this->_vars[$k][self::VARCFG_VALUE]) {
                 continue; // Skipping ID
             }
             if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null) {
                 switch ($this->_vars[$k][self::VARCFG_TYPE]) {
-                    case self::DTYPE_FLOAT:                    
+                    case self::DTYPE_FLOAT:
                         $fieldsToStoreInDB[$k] = (float)$this->_vars[$k][self::VARCFG_VALUE];
                         break;
                     case self::DTYPE_DATETIME:
                         $fieldsToStoreInDB[$k] = 'FROM_UNIXTIME(' .  intval($this->_vars[$k][self::VARCFG_VALUE]) . ')';
-                        break;                    
+                        break;
                     case self::DTYPE_BOOLEAN:
                     case self::DTYPE_INTEGER:
                         $fieldsToStoreInDB[$k] = (int) $this->_vars[$k][self::VARCFG_VALUE];
@@ -701,7 +701,7 @@ class icms_ipf_Object extends icms_core_Object {
                     case self::DTYPE_ARRAY:
                         $value = json_encode($this->_vars[$k][self::VARCFG_VALUE]);
                         $fieldsToStoreInDB[$k] = $db->quoteString($value);
-                        break;                    
+                        break;
                     case self::DTYPE_LIST:
                         $separator = $this->_vars[$k][self::VARCFG_SEPARATOR];
                         if (is_array($this->_vars[$k][self::VARCFG_VALUE]))  {
@@ -720,7 +720,7 @@ class icms_ipf_Object extends icms_core_Object {
                         $fieldsToStoreInDB[$k] = $db->quoteString($this->_vars[$k][self::VARCFG_VALUE]);
                 }
             }
-        }                
+        }
         return $fieldsToStoreInDB;
     }
 
@@ -782,20 +782,20 @@ class icms_ipf_Object extends icms_core_Object {
             $this->_vars[$key]['displayOnForm'] = true;
         }
     }
-    
+
     /**
      * Returns criteria for selecting this element by id
-     * 
+     *
      * @return \icms_db_criteria_Item
      */
-    public function getCriteriaForSelectByID() {        
+    public function getCriteriaForSelectByID() {
         $criteria = new icms_db_criteria_Compo();
         if (is_array($this->handler->keyName)) {
-            foreach ($this->handler->keyName as $key) 
+            foreach ($this->handler->keyName as $key)
                 $criteria->add(new icms_db_criteria_Item($key, $this->getVar($key)));
         } else
             $criteria->add(new icms_db_criteria_Item($this->handler->keyName, $this->getVar($this->handler->keyName)));
-        
+
         return $criteria;
     }
 
@@ -1047,24 +1047,24 @@ class icms_ipf_Object extends icms_core_Object {
         $file_handler = icms::handler("icms_data_file");
         return $file_handler->insert($fileObj);
     }
-    
-    public function serialize() {        
-         $data = array('vars' => parent::getValues(), 
+
+    public function serialize() {
+         $data = array('vars' => parent::getValues(),
                        'handler' => array(
                            'module' => $this->handler->_moduleName,
                            'itemname' => $this->handler->_itemname
                        ));
          return serialize($data);
      }
-    
+
     public function unserialize($serialized) {
         $data = unserialize($serialized);
         if ($data['handler']['module'] == 'core' || $data['handler']['module'] == 'icms') {
-            $handler = icms::handler('icms_' . $data['handler']['itemname']);       
+            $handler = icms::handler('icms_' . $data['handler']['itemname']);
         } else {
             $handler = icms_getModuleHandler($data['handler']['itemname'], $data['handler']['module']);
         }
         $this->__construct($handler, $data['vars']);
-    }   
+    }
 
 }

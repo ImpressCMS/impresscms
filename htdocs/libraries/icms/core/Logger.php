@@ -158,10 +158,10 @@ class icms_core_Logger {
 			$this->deprecated[] = $msg;
 		}
 	}
-	
+
 	/**
 	 * Handles exception
-	 * 
+	 *
 	 * @param Throwable $ex
 	 */
 	public function handleException($ex) {
@@ -172,10 +172,10 @@ class icms_core_Logger {
 	   echo '<b>Message: </b>' . $ex->getMessage() . '<br />';
 	   echo '<b>Code: </b>' . $ex->getCode() . '<br />';
 	   echo '<b>File: </b>' . $ex->getFile() . '<br />';
-	   echo '<b>Line: </b>' . $ex->getLine() . '<br />';	   
+	   echo '<b>Line: </b>' . $ex->getLine() . '<br />';
 	   echo '<b>Trace: </b><pre>' . $ex->getTraceAsString() . '</pre>';
 	}
-	
+
 	/**
 	 * Error handling callback (called by the zend engine)
 	 * @param  string  $errno

@@ -7,17 +7,17 @@
  * @package	ICMS\Response
  */
 class icms_response_DefaultEmptyPage
-    extends icms_response_HTML {    
-    
+    extends icms_response_HTML {
+
     /**
      * Constructor
      */
-    public function __construct() {    
-        global $xoopsOption;        
+    public function __construct() {
+        global $xoopsOption;
         $xoopsOption['show_cblock'] = 1;
         parent::__construct($xoopsOption);
     }
-    
+
     /**
      * Render data
      */
@@ -25,5 +25,5 @@ class icms_response_DefaultEmptyPage
         $this->assign('icms_contents', ob_get_clean());
         parent::render();
     }
-    
+
 }
