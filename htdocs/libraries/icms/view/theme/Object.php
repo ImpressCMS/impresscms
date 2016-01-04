@@ -35,7 +35,7 @@
 
 /**
  * Builds the theme components
- *
+ * 
  * @author      Skalpa Keo <skalpa@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Theme
@@ -398,12 +398,12 @@ class icms_view_theme_Object {
 
 		// Do not cache the main (theme.html) template output
 		$this->template->caching = 0;
-
+                
                 if (FALSE === strpos($this->canvasTemplate, ':')) {
                     $this->template->display($this->path . '/' . $this->canvasTemplate);
                 } else {
                     $this->template->display($this->canvasTemplate);
-                }
+                }		
 
 		$this->renderCount++;
 		icms::$logger->stopTime('Page rendering');

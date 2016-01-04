@@ -20,17 +20,17 @@ table td {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
 
 body td , p , div {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
 
-a:link , a:active , a:visited {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
+a:link , a:active , a:visited {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
 
-a:hover {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
+a:hover {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
 
 h1 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}
 
 h2 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}
 
-h4 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}
+h4 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}  
 
-ul {text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;}
+ul {text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} 
 
 input , select , textarea {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align : right;}
 

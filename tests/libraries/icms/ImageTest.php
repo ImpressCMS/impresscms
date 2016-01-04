@@ -8,7 +8,7 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 */
 
 class ImageTest extends \PHPUnit_Framework_TestCase {
-
+    
     /**
      * Test if is available
      */
@@ -23,7 +23,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
                 'icms_image_body_Handler' => 'icms_ipf_Handler',
                 'icms_image_body_Object' => 'icms_ipf_Object'
             ] as $class => $must_be_instance_of) {
-                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
+                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");        
             if ($must_be_instance_of !== null) {
                 $instance = $this->getMockBuilder($class)
                     ->disableOriginalConstructor()
@@ -32,7 +32,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
+    
     /**
      * Tests image body functionality
      */
@@ -47,5 +47,5 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
         $image->setVar('image_body', $test_var);
         $this->assertSame($test_var, $image->getVar('image_body'), 'getVar for icms_image_Object doesn\'t work as expected (II)');
     }
-
+    
 }

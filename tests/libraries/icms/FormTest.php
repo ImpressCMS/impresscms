@@ -8,14 +8,14 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 */
 
 class FormTest extends \PHPUnit_Framework_TestCase {
-
+    
     /**
      * Test if is available
      */
     public function testAvailability() {
         foreach ([
             'icms_form_Element' => null,
-            'icms_form_Base' => null,
+            'icms_form_Base' => null,            
             'icms_form_Theme' => ['icms_form_Base'],
             'icms_form_Table' => ['icms_form_Base'],
             'icms_form_Simple' => ['icms_form_Base'],
@@ -25,7 +25,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
             'icms_form_elements_Text' => ['icms_form_Element'],
             'icms_form_elements_Select' => ['icms_form_Element'],
             'icms_form_elements_Radio' => ['icms_form_Element'],
-            'icms_form_elements_Radioyn' => ['icms_form_elements_Radio'],
+            'icms_form_elements_Radioyn' => ['icms_form_elements_Radio'],                        
             'icms_form_elements_Password' => ['icms_form_Element'],
             'icms_form_elements_Label' => ['icms_form_Element'],
             'icms_form_elements_Hiddentoken' => ['icms_form_elements_Hidden'],
@@ -35,9 +35,9 @@ class FormTest extends \PHPUnit_Framework_TestCase {
             'icms_form_elements_Editor' => ['icms_form_elements_Textarea'],
             'icms_form_elements_Dhtmltextarea' => ['icms_form_elements_Textarea'],
             'icms_form_elements_Datetime' => ['icms_form_elements_Tray'],
-            'icms_form_elements_Date' => ['icms_form_elements_Text'],
+            'icms_form_elements_Date' => ['icms_form_elements_Text'],            
             'icms_form_elements_Colorpicker' => ['icms_form_elements_Text'],
-            'icms_form_elements_Checkbox' => ['icms_form_Element'],
+            'icms_form_elements_Checkbox' => ['icms_form_Element'],            
             'icms_form_elements_Captcha' => ['icms_form_Element'],
             'icms_form_elements_Button' => ['icms_form_Element'],
             'icms_form_elements_select_Country' => ['icms_form_elements_Select'],
@@ -64,12 +64,12 @@ class FormTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
+    
     /**
      * Gets instance of class from classname
-     *
+     * 
      * @param string $class     ClassName
-     *
+     * 
      * @return object
      */
     private function getClassInstance($class) {
@@ -168,7 +168,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
             'icms_form_elements_Editor' => [
                 'render'
             ],
-
+            
             'icms_form_elements_File' => [
                 'getMaxFileSize',
                 'render'
@@ -303,7 +303,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
+    
     /**
      * Test static method availability
      */
@@ -320,18 +320,18 @@ class FormTest extends \PHPUnit_Framework_TestCase {
             ],
             'icms_form_elements_select_Country' => [
                 'getCountryList'
-            ],
+            ],            
             'icms_form_elements_select_Timezone' => [
                 'getTimeZoneList'
-            ]
+            ]      
         ] as $class => $methods) {
             $instance = $this->getClassInstance($class);
             foreach ($methods as $method) {
                 $this->assertTrue(method_exists($instance, $method), 'Method ' . $method . ' doesn\'t exists for class ' . $class);
             }
         }
-    }
-
+    }    
+    
     /**
      * Tests variables availability and types
      */
@@ -365,6 +365,6 @@ class FormTest extends \PHPUnit_Framework_TestCase {
                 $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
-    }
-
+    }    
+    
 }

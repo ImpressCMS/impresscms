@@ -194,7 +194,7 @@ switch ($op) {
 		}
 		exit();
 		break;
-
+		
 	case 'delete':
 		if (!icms::$user || $icmsConfigUser['self_delete'] != 1) {
 			redirect_header('index.php',5,_US_NOPERMISS);

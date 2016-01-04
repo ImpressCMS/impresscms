@@ -8,7 +8,7 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 */
 
 class DBTest extends \PHPUnit_Framework_TestCase {
-
+    
     /**
      * Test if is available
      */
@@ -17,7 +17,7 @@ class DBTest extends \PHPUnit_Framework_TestCase {
             'icms_db_legacy_Database' => ['icms_db_legacy_IDatabase'],
             'icms_db_Factory' => null,
             'icms_db_criteria_Element' => null,
-            'icms_db_criteria_Compo' => ['icms_db_criteria_Element'],
+            'icms_db_criteria_Compo' => ['icms_db_criteria_Element'],            
             'icms_db_criteria_Item' => ['icms_db_criteria_Element'],
             'icms_db_legacy_mysql_Database' => ['icms_db_legacy_Database'],
             'icms_db_legacy_mysql_Proxy' => ['icms_db_legacy_mysql_Database'],
@@ -50,12 +50,12 @@ class DBTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
+    
     /**
      * Gets instance of class from classname
-     *
+     * 
      * @param string $class     ClassName
-     *
+     * 
      * @return object
      */
     private function getClassInstance($class) {
@@ -214,7 +214,7 @@ class DBTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
+    
     /**
      * Test static method availability
      */
@@ -246,8 +246,8 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue(method_exists($instance, $method), 'Method ' . $method . ' doesn\'t exists for class ' . $class);
             }
         }
-    }
-
+    }    
+    
     /**
      * Tests variables availability and types
      */
@@ -300,7 +300,7 @@ class DBTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
+    
     /**
      * Test how criteria is working
      */
@@ -321,9 +321,9 @@ class DBTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(strpos($item->getGroupby(), $group_by) > -1, 'getGroupby returns bad result' );
         $item->setSort($sort_by);
         $this->assertSame($item->sort, $sort_by, 'When set with setSort function result is not modified $sort variable as should be');
-        $this->assertTrue(strpos($item->getSort(), $sort_by) > -1, 'getSort returns bad result' );
+        $this->assertTrue(strpos($item->getSort(), $sort_by) > -1, 'getSort returns bad result' );        
         $this->assertSame($item->order, $item->getOrder(), 'Variable and function getOrder returns not same data');
-
+        
         foreach ([
             'order' => ['DESC', 'ASC'],
             'start' => [mt_rand(0, PHP_INT_MAX), mt_rand(0, PHP_INT_MAX)],
@@ -337,7 +337,7 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 $this->assertSame($item->$data, $fvalue, 'Variable $' . $data . ' and function '.$method_get.' returns not same data');
                 $this->assertSame($value, $fvalue, 'Data for $' . $data . ' was unchangend');
             }
-        }
+        }        
     }
-
+    
 }

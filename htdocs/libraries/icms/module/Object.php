@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Module
- *
+ * 
  * @property int    $mid               Module ID
  * @property string $name              Name displayed for users
  * @property int    $version           Version
@@ -61,7 +61,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  * @property string $modname           Internal name
  * @property int    $ipf               Is this module IPF based?
  */
-class icms_module_Object
+class icms_module_Object 
     extends icms_ipf_Object {
 	/**
 	 * Module configuration
@@ -94,7 +94,7 @@ class icms_module_Object
 	/**
 	 * Constructor
 	 */
-	public function __construct(&$handler, $data = array()) {
+	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('mid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('name', self::DTYPE_STRING, null, true, 150);
 		$this->initVar('version', self::DTYPE_INTEGER, 100, false);
@@ -112,7 +112,7 @@ class icms_module_Object
 		$this->initVar('dbversion', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('modname', self::DTYPE_STRING, null, true, 25);
 		$this->initVar('ipf', self::DTYPE_INTEGER, 0, false);
-
+                
         parent::__construct($handler, $data);
 	}
 
@@ -351,10 +351,10 @@ class icms_module_Object
 		);
 		$tpl->display('db:admin/system_adm_modulemenu.html');
 	}
-
+        
     /**
      * Get admin menu items for current module
-     *
+     * 
      * @return array
      */
     public function getAdminMenuItems() {

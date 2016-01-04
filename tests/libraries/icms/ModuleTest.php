@@ -8,7 +8,7 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 */
 
 class ModuleTest extends \PHPUnit_Framework_TestCase {
-
+    
     /**
      * Test if is available
      */
@@ -17,7 +17,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
                 'icms_module_Handler' => 'icms_ipf_Handler',
                 'icms_module_Object' => 'icms_ipf_Object'
             ] as $class => $must_be_instance_of) {
-                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
+                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");        
             if ($must_be_instance_of !== null) {
                 $instance = $this->getMockBuilder($class)
                     ->disableOriginalConstructor()
@@ -25,8 +25,8 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue( $instance instanceof $must_be_instance_of, $class . " is not instanceof " . $must_be_instance_of);
             }
         }
-    }
-
+    }  
+    
     /**
      * Checks if all required methods are available
      */
@@ -42,7 +42,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
                 'activate',
                 'deactivate',
                 'change',
-                'getTemplate'
+                'getTemplate'                
             ],
             'icms_module_Object' => [
                 'launch',
@@ -68,8 +68,8 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue(method_exists($instance, $method), $method . ' doesn\'t exists for ' . $class);
             }
         }
-    }
-
+    }      
+        
     /**
      * Checks if all required static methods are available
      */
@@ -87,6 +87,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue(method_exists($class, $method), $method . ' doesn\'t exists for ' . $class);
             }
         }
-    }
-
+    }          
+    
 }
