@@ -8,14 +8,14 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 */
 
 class IPFTest extends \PHPUnit_Framework_TestCase {
-
+    
     /**
      * Test if is available
      */
     public function testAvailability() {
         foreach ([
             'icms_ipf_Tree' => null,
-            'icms_ipf_Object' => ['icms_core_Object'],
+            'icms_ipf_Object' => ['icms_core_Object'],            
             'icms_ipf_Metagen' => null,
             'icms_ipf_Highlighter' => null,
             'icms_ipf_Handler' => ['icms_core_ObjectHandler'],
@@ -25,7 +25,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_view_Row' => null,
             'icms_ipf_view_Single' => null,
             'icms_ipf_view_Table' => null,
-            'icms_ipf_view_Tree' => ['icms_ipf_view_Table'],
+            'icms_ipf_view_Tree' => ['icms_ipf_view_Table'],                        
             'icms_ipf_seo_Object' => ['icms_ipf_Object'],
             'icms_ipf_registry_Handler' => null,
             'icms_ipf_permission_Handler' => null,
@@ -73,12 +73,12 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
+    
     /**
      * Gets instance of class from classname
-     *
+     * 
      * @param string $class     ClassName
-     *
+     * 
      * @return object
      */
     private function getClassInstance($class) {
@@ -248,7 +248,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'addActionButton',
                 'addColumn',
                 'addIntroButton',
-                'addPrinterFriendlyLink',
+                'addPrinterFriendlyLink',                
                 'addQuickSearch',
                 'addHeader',
                 'addFooter',
@@ -306,7 +306,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'short_url',
                 'meta_keywords',
                 'meta_description'
-            ],
+            ],            
             'icms_ipf_registry_Handler' => [
                 'addObjectsFromHandler',
                 'addListFromHandler',
@@ -314,7 +314,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'addListFromItemName',
                 'getObjects',
                 'getList',
-                'getSingleObject'
+                'getSingleObject'               
             ],
             'icms_ipf_permission_Handler' => [
                 'getGrantedGroups',
@@ -351,7 +351,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'valToCsvHelper',
                 'execute',
                 'saveExportFile',
-                'saveCsv'
+                'saveCsv'                
             ],
             'icms_ipf_export_Handler' => [
                 'render',
@@ -362,7 +362,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'description',
                 'image',
                 'toArray',
-                'getCategoryPath'
+                'getCategoryPath'                
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
@@ -370,7 +370,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
+    
     /**
      * Test static method availability
      */
@@ -385,8 +385,8 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue(method_exists($instance, $method), 'Method ' . $method . ' doesn\'t exists for class ' . $class);
             }
         }
-    }
-
+    }    
+    
     /**
      * Tests variables availability and types
      */
@@ -469,8 +469,8 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 '_lang_author_word' => 'string',
                 '_lang_version_history' => 'string',
                 '_lang_by' => 'string',
-                '_tpl' => 'string'
-            ],
+                '_tpl' => 'string'       
+            ],           
             'icms_ipf_view_Table' => [
                 '_id' => 'string',
                 '_objectHandler' => 'string',
@@ -564,6 +564,6 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
-    }
-
+    }    
+    
 }

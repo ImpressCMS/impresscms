@@ -8,7 +8,7 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 */
 
 class PluginsTest extends \PHPUnit_Framework_TestCase {
-
+    
     /**
      * Test if is available
      */
@@ -19,14 +19,14 @@ class PluginsTest extends \PHPUnit_Framework_TestCase {
             'icms_plugins_Object'
         ] as $class) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
-        }
+        }                
     }
-
+    
     /**
      * Gets instance of class from classname
-     *
+     * 
      * @param string $class     ClassName
-     *
+     * 
      * @return object
      */
     private function getClassInstance($class) {
@@ -64,14 +64,14 @@ class PluginsTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
+    
     /**
      * Test static method availability
      */
     public function testStaticMethodsAvailability() {
         $this->assertTrue(method_exists('icms_plugins_EditorHandler', 'getListByType'), 'Method getListByType doesn\'t exists for class icms_plugins_EditorHandler');
-    }
-
+    }    
+    
     /**
      * Tests variables availability and types
      */
@@ -93,6 +93,6 @@ class PluginsTest extends \PHPUnit_Framework_TestCase {
                 $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
-    }
-
+    }    
+    
 }

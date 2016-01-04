@@ -5,7 +5,7 @@
  *
  * @author      Raimondas Rimkevičius <mekdrop@impresscms.org>
  * @package	ICMS\Response
- *
+ * 
  * @method assign(string $name, mixed $value)   Assigns var to template
  */
 class icms_response_HTML extends icms_response_Text {
@@ -18,13 +18,13 @@ class icms_response_HTML extends icms_response_Text {
     /**
      * Instance of current theme
      *
-     * @var \icms_view_theme_Object
+     * @var \icms_view_theme_Object 
      */
     private $theme = null;
 
     /**
      * Constructor
-     *
+     * 
      * @global  object  $icmsModule     Current loaded module
      * @param   array   $config         Configuration
      * @param   int     $http_status    HTTP Status code
@@ -47,7 +47,7 @@ class icms_response_HTML extends icms_response_Text {
             $GLOBALS['icmsAdminTpl'] = $icmsAdminTpl = &$this->theme->template;
         } else {
             global $icmsTpl;
-            $GLOBALS['icmsTpl'] = $icmsTpl = &$this->theme->template;
+            $GLOBALS['icmsTpl'] = $icmsTpl = &$this->theme->template;            
         }
         global $icmsTheme;
         $GLOBALS['icmsTheme'] = $icmsTheme = &$this->theme;
@@ -70,7 +70,7 @@ class icms_response_HTML extends icms_response_Text {
         $this->includeNotificationsSelection();
 
         parent::__construct(null, $http_status, $headers);
-    }
+    }    
 
     /**
      * Loading admin dropdown menus
@@ -158,7 +158,7 @@ class icms_response_HTML extends icms_response_Text {
                 //Getting array of allowed system prefs
                 $navitem['menu'] = $sysprefs = $perm_itens;
             }
-            // $icmsAdminTpl
+            // $icmsAdminTpl                                
             $this->theme->template->append('navitems', $navitem);
         }
 
@@ -251,10 +251,10 @@ class icms_response_HTML extends icms_response_Text {
 
     /**
      * Magic function to call work directly with template
-     *
+     * 
      * @param string $name          Function name to call
      * @param array  $arguments     Array with arguments
-     *
+     * 
      * @return mixed
      */
     public function __call($name, $arguments) {
@@ -272,7 +272,7 @@ class icms_response_HTML extends icms_response_Text {
     }
 
     /**
-     *
+     * 
      * @global object $icmsModule
      */
     private function includeNotificationsSelection() {
@@ -289,7 +289,7 @@ class icms_response_HTML extends icms_response_Text {
 
     /**
      * Update cache time for module
-     *
+     * 
      * @global object   $icmsModule    Current module
      * @global array    $icmsConfig    Configuration array
      */
@@ -390,7 +390,7 @@ class icms_response_HTML extends icms_response_Text {
 
     /**
      * Sets theme from config
-     *
+     * 
      * @param array $config     Current configuration
      */
     private function setThemeFromConfig(array &$config) {
@@ -401,39 +401,39 @@ class icms_response_HTML extends icms_response_Text {
         } else {
             $config['template_main'] = null;
         }
-
+        
         $tplConfig = [
             'contentTemplate' => $config['template_main']
         ];
-
+        
         if (isset($config['template_folder'])) {
             $tplConfig['folderName'] = $config['template_folder'];
         }
-
+        
         if (isset($config['template_canvas'])) {
             $tplConfig['canvasTemplate'] = $config['template_canvas'];
         }
 
         if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
             global $icmsConfig;
-
-            $tplConfig['plugins'] = [ 'icms_view_PageBuilder' ];
-
+            
+            $tplConfig['plugins'] = [ 'icms_view_PageBuilder' ];            
+                    
             if (!isset($tplConfig['canvasTemplate'])) {
-                $tplConfig['canvasTemplate'] = 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') ||
+                $tplConfig['canvasTemplate'] = 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') || 
                                                 file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')) ? '_admin' : '') . '.html';
             }
-
+            
             if (!isset($tplConfig['folderName'])) {
                 $tplConfig['folderName'] = $icmsConfig['theme_admin_set'];
-            }
-        }
+            }            
+        } 
         $this->theme = \icms_view_theme_Factory::getInstance()->createInstance($tplConfig);
     }
 
     /**
      * Sets google meta
-     *
+     * 
      * @global array $icmsConfigMetaFooter          Footer meta configuration array
      */
     private function setGoogleMeta() {
@@ -468,7 +468,7 @@ class icms_response_HTML extends icms_response_Text {
 
     /**
      * Adds all enabled santitizer plugins to the theme
-     *
+     * 
      * @global array $icmsConfigPlugins         Plugins configuration
      */
     private function addSanitizerPlugins() {

@@ -46,12 +46,12 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_module_Handler
+class icms_module_Handler 
     extends icms_ipf_Handler {
 
         /**
          * Constructor
-         *
+         * 
          * @param object $db
          */
         public function __construct(&$db, $module = 'icms') {
@@ -70,24 +70,24 @@ class icms_module_Handler
 	public function &get($id, $loadConfig = FALSE) {
                 $module = parent::get($id);
                 if ($loadConfig)
-                    $this->loadConfig($module);
+                    $this->loadConfig($module);        
 		return $module;
 	}
 
 	/**
 	 * Load a module by its dirname
-         *
+         * 
          * @todo Make caching work!
 	 *
 	 * @param	string	$dirname
 	 * @param	bool	$loadConfig	set to TRUE in case you want to load the module config in addition
 	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 */
-	public function getByDirname($dirname, $loadConfig = FALSE) {
+	public function getByDirname($dirname, $loadConfig = FALSE) {                
                 //if (!($module = $this->getFromCache('dirname', $dirname))) {
                     $criteria = new icms_db_criteria_Item('dirname', trim($dirname));
                     $criteria->setLimit(1);
-                    $objs = $this->getObjects($criteria);
+                    $objs = $this->getObjects($criteria);                    
                     if (isset($objs[0])) {
                         $module = $objs[0];
                     } else {
@@ -117,7 +117,7 @@ class icms_module_Handler
 		}
 		return TRUE;
 	}
-
+        
         public function beforeSave(icms_module_Object &$module) {
             $module->setVar('last_update', time());
             return true;
@@ -353,10 +353,10 @@ class icms_module_Handler
 	public function getTemplate($dirname, $template, $block = FALSE) {
 
 	}
-
+        
     /**
      * Get all menu items of all activated modules
-     *
+     * 
      * @return array
      */
     public function getAdminMenuItems() {

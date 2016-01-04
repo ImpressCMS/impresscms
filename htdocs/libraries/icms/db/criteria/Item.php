@@ -51,32 +51,32 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 
 	/**
          * Prefix for column
-         *
+         * 
 	 * @var	string
 	 */
 	public $prefix = '';
-
+        
         /**
          * Function used for column
          *
          * @var string
          */
 	public $function = '';
-
+        
         /**
          * Column name
          *
          * @var string
          */
 	public $column = '';
-
+        
         /**
          * Operator used in comparision
          *
          * @var string
          */
 	public $operator = '';
-
+        
         /**
          * Value used in comparision
          *
@@ -117,7 +117,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
                         } else if (is_object($this->value)) {
                             $value = (string)$this->value;
                         } else if (is_array($this->value)) {
-                            if (!empty($this->value)) {
+                            if (!empty($this->value)) {                                
                                 $value = '(\'' . implode('\', \'', $this->value) . '\')';
                             } else {
                                 $value = '()';
@@ -136,8 +136,8 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
                                     }
                             }
                         }
-
-
+                    
+			
 			$clause .= " {$this->operator} $value";
 		}
 		return $clause;

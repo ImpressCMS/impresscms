@@ -320,9 +320,9 @@ class icms_db_legacy_updater_Handler {
             return false;
         }
 
-        $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
+        $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));        
         $object = $module_handler->create();
-        $class = new ReflectionClass($object);
+        $class = new ReflectionClass($object);        
         $isExtention = false;
         if ($pclass = $class->getParentClass()) {
             if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object', 'icms_ipf_seo_Object'))) {

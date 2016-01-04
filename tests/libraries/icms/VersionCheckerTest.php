@@ -8,22 +8,22 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 */
 
 class VersionCheckerTest extends \PHPUnit_Framework_TestCase {
-
+    
     /**
      * Test if is available
      */
     public function testAvailability() {
-        $this->assertTrue(class_exists('icms_core_Versionchecker', true), "icms_core_Versionchecker class doesn't exist");
+        $this->assertTrue(class_exists('icms_core_Versionchecker', true), "icms_core_Versionchecker class doesn't exist");        
     }
-
+    
     /**
      * Tests getInstance method
      */
     public function testGetInstance() {
         $this->assertTrue(method_exists('icms_core_Versionchecker', 'getInstance'), 'static method getInstance doesn\'t exists for icms_core_Versionchecker');
         $this->assertTrue(\icms_core_Versionchecker::getInstance() instanceof \icms_core_Versionchecker, 'service method doesn\'t return instanceod icms_core_Versionchecker type');
-    }
-
+    }    
+    
     /**
      * Checks if all required methods are available
      */
@@ -33,7 +33,7 @@ class VersionCheckerTest extends \PHPUnit_Framework_TestCase {
             $this->assertTrue(method_exists($instance, $method), $method . ' doesn\'t exists');
         }
     }
-
+    
     /**
      * Checks if all required variables are available
      */
@@ -47,6 +47,6 @@ class VersionCheckerTest extends \PHPUnit_Framework_TestCase {
         $this->assertInternalType('int', $instance->latest_status, '$latest_status must be int');
         $this->assertInternalType('string', $instance->latest_url, '$latest_url must be string');
         $this->assertInternalType('string', $instance->latest_changelog, '$latest_changelog must be string');
-    }
-
+    }       
+    
 }
