@@ -9,7 +9,7 @@
  * @author	Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
  */
 
-include_once ICMS_ROOT_PATH . "/vendor/autoload.php"
+include_once ICMS_ROOT_PATH . "/vendor/autoload.php";
 
 class icms_Autoloader {
 	/**
@@ -177,7 +177,6 @@ class icms_Autoloader {
 		    "icmsdatabase" 					=> "/class/database/database.php",
 		    "xoopsdatabase" 				=> "/class/database/database.php",
 			"mytextsanitizer" 				=> "/class/module.textsanitizer.php",
-			"icmspreloadhandler"			=> "/kernel/icmspreloadhandler.php",
 			"xoopsmodule" 					=> "/kernel/module.php",
 			"xoopsmodulehandler"			=> "/kernel/module.php",
 			"xoopsmemberhandler"			=> "/kernel/member.php",
@@ -213,11 +212,9 @@ class icms_Autoloader {
 			"xoopsformselectuser"			=> "/class/xoopsform/formselectuser.php",
 			"xoopsformselecttheme"			=> "/class/xoopsform/formselecttheme.php",
 			"xoopsformselectmatchoption"	=> "/class/xoopsform/formselectmatchoption.php",
-			"xoopsformtext"					=> "/class/xoopsform/formtext.php",
 			"xoopsformtextarea"				=> "/class/xoopsform/formtextarea.php",
 			"xoopsformdhtmltextarea"		=> "/class/xoopsform/formdhtmltextarea.php",
 			"xoopsformelementtray"			=> "/class/xoopsform/formelementtray.php",
-			"xoopsthemeform"				=> "/class/xoopsform/themeform.php",
 			"xoopssimpleform"				=> "/class/xoopsform/simpleform.php",
 			"xoopsformtextdateselect"		=> "/class/xoopsform/formtextdateselect.php",
 			"xoopsformdatetime"				=> "/class/xoopsform/formdatetime.php",
