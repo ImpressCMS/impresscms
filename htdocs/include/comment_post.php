@@ -74,7 +74,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 		$extra_params = '';
 		foreach ($comment_config['extraParams'] as $extra_param) {
 			$extra_params .= isset($_POST[$extra_param])
-			? $extra_param . '=' . htmlspecialchars($_POST[$extra_param]) . '&amp;'
+			? $extra_param . '=' . icms_core_DataFilter::htmlSpecialChars(trim($_POST[$extra_param])) . '&amp;'
 			: $extra_param . '=&amp;';
 		}
 		$redirect_page .= $extra_params;
@@ -101,7 +101,7 @@ if (!empty($_POST)) {
 		}
 	}
 
-	$com_mode = isset($_POST['com_mode']) ? htmlspecialchars(trim($_POST['com_mode']), ENT_QUOTES) : 'flat';
+	$com_mode = isset($_POST['com_mode']) ? icms_core_DataFilter::htmlSpecialChars(trim($_POST['com_mode']), ENT_QUOTES) : 'flat';
 	$com_order = isset($_POST['com_order']) ? (int) $_POST['com_order'] : XOOPS_COMMENT_OLD1ST;
 	$com_itemid = isset($_POST['com_itemid']) ? (int) $_POST['com_itemid'] : 0;
 	$com_pid = isset($_POST['com_pid']) ? (int) $_POST['com_pid'] : 0;
@@ -138,7 +138,8 @@ switch ($op) {
 		}
 		$p_comment =& icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input');
 		$noname = isset($noname) ? (int) $noname : 0;
-		//$com_text = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_text']));
+		// without this, the comment text is empty when previewing the comment
+		$com_text = icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'output');
 		if ($icmsModule->getVar('dirname') != 'system') {
 			include ICMS_ROOT_PATH . '/header.php';
 			//themecenterposts($com_title, $p_comment);
@@ -288,7 +289,7 @@ switch ($op) {
 		$com_title = icms_core_DataFilter::icms_trim($_POST['com_title']);
 		$com_title = ($com_title == '') ? _NOTITLE : $com_title;
 		$comment->setVar('com_title', $com_title);
-		$comment->setVar('com_text', $_POST['com_text']);
+		$comment->setVar('com_text', icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input'));
 		$comment->setVar('dohtml', $dohtml);
 		$comment->setVar('dosmiley', $dosmiley);
 		$comment->setVar('doxcode', $doxcode);
@@ -397,7 +398,7 @@ switch ($op) {
 						$extra_params = '';
 						foreach ($com_config['extraParams'] as $extra_param) {
 							$extra_params .= isset($_POST[$extra_param])
-							? $extra_param . '=' . htmlspecialchars($_POST[$extra_param]) . '&amp;'
+							? $extra_param . '=' . icms_core_DataFilter::htmlSpecialChars(trim($_POST[$extra_param])) . '&amp;'
 							: $extra_param . '=&amp;';
 							//$extra_params .= isset($_GET[$extra_param]) ? $extra_param.'='.$_GET[$extra_param].'&amp;' : $extra_param.'=&amp;';
 						}
