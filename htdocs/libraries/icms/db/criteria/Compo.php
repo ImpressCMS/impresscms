@@ -1,5 +1,4 @@
 <?php
-// $Id: Compo.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -39,8 +38,8 @@
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.3
- * @author		marcan <marcan@impresscms.org>
+ * @since	1.3
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

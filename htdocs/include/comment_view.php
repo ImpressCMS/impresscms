@@ -225,7 +225,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			foreach ($comment_config['extraParams'] as $extra_param) {
 				if (isset(${$extra_param})) {
 					$link_extra .= '&amp;' . $extra_param . '=' . ${$extra_param};
-					$hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES);
+					$hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES, _CHARSET);
 					$extra_param_val = ${$extra_param};
 				} elseif (isset($_POST[$extra_param])) {
 					$extra_param_val = $_POST[$extra_param];
@@ -234,7 +234,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				}
 				if (isset($extra_param_val)) {
 					$link_extra .= '&amp;' . $extra_param . '=' . $extra_param_val;
-					$hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
+					$hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES, _CHARSET);
 					$navbar .= '<input type="hidden" name="' . $extra_param . '" value="' . $hidden_value . '" />';
 				}
 			}

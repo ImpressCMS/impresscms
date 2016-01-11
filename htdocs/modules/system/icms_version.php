@@ -37,7 +37,7 @@
  * @copyright	http://www.XOOPS.org/
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * 
+ *
  * @package		core
  * @since		1.2
  * @version		SVN: $Id$
@@ -569,5 +569,10 @@ $modversion['templates'][] = array(
 
 $modversion['templates'][] = array(
 		'file' => 'admin/system_adm_moduleabout.html',
+		'description' => ''
+);
+
+$modversion['templates'][] = array(
+		'file' => 'system_blank.html',
 		'description' => ''
 );

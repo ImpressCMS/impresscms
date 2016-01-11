@@ -12,7 +12,7 @@ class icms_response_Text {
      * Mimetype for this response
      */
     const CONTENT_TYPE = 'text/plain';
-    
+
     const HTTP_OK = 200;
     const HTTP_CONTINUE = 100;
     const HTTP_SWITCHING_PROTOCOLS = 101;
@@ -93,18 +93,25 @@ class icms_response_Text {
     const HTTP_UNKNOWN_ERROR = 520;
     const HTTP_ORIGIN_CONNECTION_TIME_OUT = 522;
     const HTTP_NETWORK_READ_TIMEOUT_ERROR = 598;
-    const HTTP_NETWORK_CONNECT_TIMEOUT_ERROR = 599;    
+    const HTTP_NETWORK_CONNECT_TIMEOUT_ERROR = 599;
 
     /**
      * Constructor
-     * 
+     *
      * @param string|null   $msg
      * @param int|null      $http_status    If not null sets http status on sending response
-     * @param array         $headers        Here You can place some additional headers 
+     * @param array         $headers        Here You can place some additional headers
      */
     public function __construct($msg = null, $http_status = null, $headers = []) {
-        header('Content-Type: ' . static::CONTENT_TYPE);
-        header('Content-Generator: ImpressCMS ' .  ICMS_VERSION);
+
+        if (!headers_sent()) {
+            header('Content-Type: ' . static::CONTENT_TYPE . '; charset=' . _CHARSET);
+            header('X-Powered-By: ImpressCMS ');
+            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+            header('Cache-Control: private, no-cache');
+            header('Pragma: no-cache');
+        }
+
         if ($http_status !== null) {
             http_response_code($http_status);
         }

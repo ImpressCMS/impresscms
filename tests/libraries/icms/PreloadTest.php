@@ -2,8 +2,13 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class PreloadTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Test if is available
      */
@@ -14,14 +19,14 @@ class PreloadTest extends \PHPUnit_Framework_TestCase {
             'icms_preload_LibrariesHandler'
         ] as $class) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
-        }                
+        }
     }
-    
+
     /**
      * Gets instance of class from classname
-     * 
+     *
      * @param string $class     ClassName
-     * 
+     *
      * @return object
      */
     private function getClassInstance($class) {
@@ -52,7 +57,7 @@ class PreloadTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-    
+
     /**
      * Test static method availability
      */
@@ -70,8 +75,8 @@ class PreloadTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue(method_exists($instance, $method), 'Method ' . $method . ' doesn\'t exists for class ' . $class);
             }
         }
-    }    
-    
+    }
+
     /**
      * Tests variables availability and types
      */
@@ -86,6 +91,6 @@ class PreloadTest extends \PHPUnit_Framework_TestCase {
                 $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
-    }    
-    
+    }
+
 }

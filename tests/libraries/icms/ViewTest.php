@@ -2,15 +2,20 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class ViewTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Test if is available
      */
     public function testAvailability() {
         foreach ([
             'icms_view_Tree' => null,
-            'icms_view_Tpl' => ['Smarty'],            
+            'icms_view_Tpl' => ['Smarty'],
             'icms_view_Printerfriendly' => null,
             'icms_view_PageNav' => null,
             'icms_view_PageBuilder' => null,
@@ -20,7 +25,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             'icms_view_template_set_Handler' => ['icms_ipf_Handler'],
             'icms_view_template_set_Object' => ['icms_ipf_Object'],
             'icms_view_template_file_Object' => ['icms_ipf_Object'],
-            'icms_view_template_file_Handler' => ['icms_ipf_Handler'],                        
+            'icms_view_template_file_Handler' => ['icms_ipf_Handler'],
             'icms_view_block_Object' => ['icms_ipf_Object'],
             'icms_view_block_Handler' => ['icms_ipf_Handler'],
             'icms_view_block_position_Handler' => ['icms_ipf_Handler'],
@@ -36,12 +41,12 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-    
+
     /**
      * Gets instance of class from classname
-     * 
+     *
      * @param string $class     ClassName
-     * 
+     *
      * @return object
      */
     private function getClassInstance($class) {
@@ -137,7 +142,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             'icms_view_Tpl' => [
                 'fetchFromData',
                 'touch'
-            ],            
+            ],
             'icms_view_Tree' => [
                 'getFirstChild',
                 'getFirstChildId',
@@ -148,7 +153,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
                 'getNicePathFromId',
                 'getIdPathFromId',
                 'getAllChild',
-                'getChildTreeArray'                
+                'getChildTreeArray'
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
@@ -156,7 +161,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-    
+
     /**
      * Test static method availability
      */
@@ -175,15 +180,15 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             'icms_view_theme_Factory' => [
                 'getThemesList',
                 'getAdminThemesList'
-            ]    
+            ]
         ] as $class => $methods) {
             $instance = $this->getClassInstance($class);
             foreach ($methods as $method) {
                 $this->assertTrue(method_exists($instance, $method), 'Method ' . $method . ' doesn\'t exists for class ' . $class);
             }
         }
-    }    
-    
+    }
+
     /**
      * Tests variables availability and types
      */
@@ -220,7 +225,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             'icms_view_PageBuilder' => [
                 'theme' => 'bool',
                 'blocks' => 'array',
-                'uagroups' => 'array'                
+                'uagroups' => 'array'
             ],
             'icms_view_theme_Object' => [
                 'folderName' => 'string',
@@ -239,7 +244,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
                 'types' => 'array',
                 'htmlHeadStrings' => 'array',
                 'templateVars' => 'array',
-                'use_extra_cache_id' => 'bool'                
+                'use_extra_cache_id' => 'bool'
             ],
             'icms_view_theme_Factory' => [
                 'xoBundleIdentifier' => 'string',
@@ -259,6 +264,6 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
                 $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
-    }    
-    
+    }
+
 }

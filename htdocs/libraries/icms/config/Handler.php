@@ -48,6 +48,77 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  */
 class icms_config_Handler {
 	static protected $instance;
+        
+        /**
+         * Main (default) category
+         */
+        const CATEGORY_MAIN = 1;
+        
+        /**
+         * User category
+         */
+        const CATEGORY_USER = 2;
+        
+        /**
+         * Meta & footer category
+         */
+        const CATEGORY_METAFOOTER = 3;
+        
+        /**
+         * Censorship category
+         */
+        const CATEGORY_CENSOR = 4;
+        
+        /**
+         * Search catageory
+         */
+        const CATEGORY_SEARCH = 5;
+        
+        /**
+         * Mailer category
+         */
+        const CATEGORY_MAILER = 6;
+        
+        /**
+         * Authentification category
+         */
+        const CATEGORY_AUTH = 7;
+        
+        /**
+         * Multilanguage configuration
+         */
+        const CATEGORY_MULILANGUAGE = 8;
+        
+        /**
+         * Content category
+         */
+        const CATEGORY_CONTENT = 9;
+        
+        /**
+         * Persona category
+         */
+        const CATEGORY_PERSONA = 10;
+        
+        /**
+         * Captcha category
+         */
+        const CATEGORY_CAPTCHA = 11;
+        
+        /**
+         * Plugins category
+         */
+        const CATEGORY_PLUGINS = 12;
+        
+        /**
+         * Autotasks category
+         */
+        const CATEGORY_AUTOTASKS = 13;
+        
+        /**
+         * Purifier category
+         */
+        const CATEGORY_PURIFIER = 14;
+                
 	/**
 	 * Initialize the config handler.
 	 * @param $db
@@ -57,22 +128,22 @@ class icms_config_Handler {
 		$instance = icms::handler('icms_config');
 		$configs = $instance->getConfigsByCat(
 			array(
-				ICMS_CONF, ICMS_CONF_USER, ICMS_CONF_METAFOOTER, ICMS_CONF_MAILER,
-				ICMS_CONF_AUTH, ICMS_CONF_MULILANGUAGE, ICMS_CONF_PERSONA, ICMS_CONF_PLUGINS,
-				ICMS_CONF_CAPTCHA, ICMS_CONF_SEARCH
+				self::CATEGORY_MAIN, self::CATEGORY_USER, self::CATEGORY_METAFOOTER, self::CATEGORY_MAILER,
+				self::CATEGORY_AUTH, self::CATEGORY_MULILANGUAGE, self::CATEGORY_PERSONA, self::CATEGORY_PLUGINS,
+				self::CATEGORY_CAPTCHA, self::CATEGORY_SEARCH
 			)
 		);
-		$GLOBALS['icmsConfig']			 = $configs[ICMS_CONF];
+		$GLOBALS['icmsConfig']			 = $configs[self::CATEGORY_MAIN];
 		$GLOBALS['xoopsConfig']			 =& $GLOBALS['icmsConfig'];
-		$GLOBALS['icmsConfigUser']       = $configs[ICMS_CONF_USER];
-		$GLOBALS['icmsConfigMetaFooter'] = $configs[ICMS_CONF_METAFOOTER];
-		$GLOBALS['icmsConfigMailer']     = $configs[ICMS_CONF_MAILER];
-		$GLOBALS['icmsConfigAuth']       = $configs[ICMS_CONF_AUTH];
-		$GLOBALS['icmsConfigMultilang']  = $configs[ICMS_CONF_MULILANGUAGE];
-		$GLOBALS['icmsConfigPersona']    = $configs[ICMS_CONF_PERSONA];
-		$GLOBALS['icmsConfigPlugins']    = $configs[ICMS_CONF_PLUGINS];
-		$GLOBALS['icmsConfigCaptcha']    = $configs[ICMS_CONF_CAPTCHA];
-		$GLOBALS['icmsConfigSearch']     = $configs[ICMS_CONF_SEARCH];
+		$GLOBALS['icmsConfigUser']       = $configs[self::CATEGORY_USER];
+		$GLOBALS['icmsConfigMetaFooter'] = $configs[self::CATEGORY_METAFOOTER];
+		$GLOBALS['icmsConfigMailer']     = $configs[self::CATEGORY_MAILER];
+		$GLOBALS['icmsConfigAuth']       = $configs[self::CATEGORY_AUTH];
+		$GLOBALS['icmsConfigMultilang']  = $configs[self::CATEGORY_MULILANGUAGE];
+		$GLOBALS['icmsConfigPersona']    = $configs[self::CATEGORY_PERSONA];
+		$GLOBALS['icmsConfigPlugins']    = $configs[self::CATEGORY_PLUGINS];
+		$GLOBALS['icmsConfigCaptcha']    = $configs[self::CATEGORY_CAPTCHA];
+		$GLOBALS['icmsConfigSearch']     = $configs[self::CATEGORY_SEARCH];
 		return self::$instance = $instance;
 	}
 

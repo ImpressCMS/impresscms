@@ -572,7 +572,7 @@ switch ($op) {
 						}
 						unset($newtpl);
 					}
-					$msgs[] = sprintf(_MD_TPLSET_CREATE_OK, '<strong>' . htmlspecialchars($newtheme, ENT_QUOTES) . '</strong>')
+					$msgs[] = sprintf(_MD_TPLSET_CREATE_OK, '<strong>' . htmlspecialchars($newtheme, ENT_QUOTES, _CHARSET) . '</strong>')
 					. ' (ID: <strong>' . $tplsetid . '</strong>)<br />';
 				} else {
 					$msgs[] = '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_FILE_NOTEXIST, $theme) . '</span>';
@@ -847,16 +847,16 @@ switch ($op) {
 					echo '<span style="color:#ff0000;">' . _ERROR . ': ' . _MD_TPLSET_INVALID_NAME . '</span><br />';
 				} else {
 					if ($tplset_handler->getCount(new icms_db_criteria_Item('tplset_name', $tplset_name)) > 0) {
-						echo '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_EXISTS, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES) . '</strong>') . '</span><br />';
+						echo '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_EXISTS, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>') . '</span><br />';
 					} else {
 						$tplset =& $tplset_handler->create();
 						$tplset->setVar('tplset_name', $tplset_name);
 						$tplset->setVar('tplset_created', time());
 						if (!$tplset_handler->insert($tplset)) {
-							echo '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_CREATE_FAILED, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES) . '</strong>') . '</span><br />';
+							echo '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_CREATE_FAILED, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>') . '</span><br />';
 						} else {
 							$tplsetid = $tplset->getVar('tplset_id');
-							echo sprintf(_MD_TPLSET_CREATE_OK, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES) . '</strong>')
+							echo sprintf(_MD_TPLSET_CREATE_OK, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>')
 								. '(ID: <strong>' . $tplsetid . '</strong>)</span><br />';
 							$tpltpl_handler = icms::handler('icms_view_template_file');
 							$themeimages = array();
@@ -910,10 +910,10 @@ switch ($op) {
 									echo '&nbsp;&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . _MD_TPLSET_IMGSET_CREATE_FAILED . '</span><br />';
 								} else {
 									$newimgsetid = $imgset->getVar('imgset_id');
-									echo '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_IMGSET_CREATED, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES) . '</strong>')
+									echo '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_IMGSET_CREATED, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>')
 										. '(ID: <strong>' . $newimgsetid . '</strong>)<br />';
 									if (!$imageset_handler->linktplset($newimgsetid, $tplset_name)) {
-										echo '&nbsp;&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_IMGSET_LINK_FAILED, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES) . '</strong>') . '</span><br />';
+										echo '&nbsp;&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_IMGSET_LINK_FAILED, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>') . '</span><br />';
 									}
 								}
 							}
@@ -978,13 +978,13 @@ switch ($op) {
 			fwrite($fp, $dummylayout);
 			fclose($fp);
 			$tplset= $tplfile->getVar('tpl_tplset');
-			$tform = array('tpl_tplset' => $tplset, 'tpl_id' => $id, 'tpl_file' => $tplfile->getVar('tpl_file'), 'tpl_desc' => $tplfile->getVar('tpl_desc'), 'tpl_lastmodified' => $tplfile->getVar('tpl_lastmodified'), 'tpl_source' => htmlspecialchars($html, ENT_QUOTES), 'tpl_module' => $moddir);
+			$tform = array('tpl_tplset' => $tplset, 'tpl_id' => $id, 'tpl_file' => $tplfile->getVar('tpl_file'), 'tpl_desc' => $tplfile->getVar('tpl_desc'), 'tpl_lastmodified' => $tplfile->getVar('tpl_lastmodified'), 'tpl_source' => htmlspecialchars($html, ENT_QUOTES, _CHARSET), 'tpl_module' => $moddir);
 			include_once ICMS_MODULES_PATH . '/system/admin/tplsets/tplform.php';
 			icms_cp_header();
 			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>'
 				. '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'
 				. '<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir=' . $moddir
-				. '&amp;tplset=' . urlencode($tplset) . '">' . htmlspecialchars($tplset, ENT_QUOTES) . '</a>'
+				. '&amp;tplset=' . urlencode($tplset) . '">' . htmlspecialchars($tplset, ENT_QUOTES, _CHARSET) . '</a>'
 				. '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _MD_EDITTEMPLATE
 				. '<br /><br />';
 			$form->display();

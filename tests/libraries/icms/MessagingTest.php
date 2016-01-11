@@ -2,8 +2,13 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class MessagingTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Test if is available
      */
@@ -21,14 +26,14 @@ class MessagingTest extends \PHPUnit_Framework_TestCase {
             foreach ($must_be_instances_of as $must_be_instance_of) {
                 $this->assertTrue($instance instanceof $must_be_instance_of, $class . ' must be instance of ' . $must_be_instance_of . ' but is not');
             }
-        }                
+        }
     }
-    
+
     /**
      * Gets instance of class from classname
-     * 
+     *
      * @param string $class     ClassName
-     * 
+     *
      * @return object
      */
     private function getClassInstance($class) {
@@ -77,8 +82,8 @@ class MessagingTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue(method_exists($class, $method), 'Static method ' . $method . ' doesn\'t exists for class ' . $class);
             }
         }
-    }  
-    
+    }
+
     /**
      * Tests variables availability and types
      */
@@ -102,6 +107,6 @@ class MessagingTest extends \PHPUnit_Framework_TestCase {
                 $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
-    }    
-    
+    }
+
 }

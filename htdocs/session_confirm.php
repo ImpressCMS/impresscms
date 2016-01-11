@@ -21,7 +21,7 @@ if (!isset($_SESSION['AUTOLOGIN_REQUEST_URI'])) exit;
 $url = $_SESSION['AUTOLOGIN_REQUEST_URI'];
 unset($_SESSION['AUTOLOGIN_REQUEST_URI']);
 if (preg_match('/javascript:/si', $url)) exit; // black list of url
-$url4disp = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES));
+$url4disp = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES, _CHARSET));
 
 if (isset($_SESSION['AUTOLOGIN_POST'])) {
 	// posting confirmation

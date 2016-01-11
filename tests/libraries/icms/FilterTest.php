@@ -2,8 +2,13 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class FilterTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Test if icms_core_DataFilter is available
      */
@@ -13,7 +18,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase {
         $instance = new \icms_core_HTMLFilter();
         $this->assertTrue( $instance instanceof \icms_core_DataFilter, "icms_core_HTMLFilter is not instanceof icms_core_DataFilter");
     }
-    
+
     /**
      * Tests if static variables has correct values
      */
@@ -21,7 +26,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase {
         $this->assertInternalType('array', \icms_core_DataFilter::$allSmileys, '$allSmileys must be an array');
         $this->assertInternalType('array', \icms_core_DataFilter::$displaySmileys, '$displaySmileys must be an array');
     }
-    
+
     /**
      * Checks if all required static methdos are available
      */
@@ -33,5 +38,5 @@ class FilterTest extends \PHPUnit_Framework_TestCase {
              $this->assertTrue(method_exists('icms_core_HTMLFilter', $method), $method . ' doesn\'t exists');
          }
     }
-    
+
 }

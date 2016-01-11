@@ -2,8 +2,13 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class MemberTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Test if is available
      */
@@ -21,7 +26,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase {
                 'icms_member_group_membership_Handler' => 'icms_ipf_Handler',
                 'icms_member_group_membership_Object' => 'icms_ipf_Object'
             ] as $class => $must_be_instance_of) {
-                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");        
+                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {
                 $instance = $this->getMockBuilder($class)
                     ->disableOriginalConstructor()
@@ -29,8 +34,8 @@ class MemberTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue( $instance instanceof $must_be_instance_of, $class . " is not instanceof " . $must_be_instance_of);
             }
         }
-    }  
-    
+    }
+
     /**
      * Checks if all required methods are available
      */
@@ -114,8 +119,8 @@ class MemberTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue(method_exists($instance, $method), $method . ' doesn\'t exists for ' . $class);
             }
         }
-    }      
-        
+    }
+
     /**
      * Checks if all required static methods are available
      */
@@ -133,6 +138,6 @@ class MemberTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue(method_exists($class, $method), $method . ' doesn\'t exists for ' . $class);
             }
         }
-    }          
-    
+    }
+
 }

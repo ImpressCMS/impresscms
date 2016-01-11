@@ -41,20 +41,62 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 /**#@+
  * Config type
  */
-define('ICMS_CONF', 1);
-define('ICMS_CONF_USER', 2);
-define('ICMS_CONF_METAFOOTER', 3);
-define('ICMS_CONF_CENSOR', 4);
-define('ICMS_CONF_SEARCH', 5);
-define('ICMS_CONF_MAILER', 6);
-define('ICMS_CONF_AUTH', 7);
-define('ICMS_CONF_MULILANGUAGE', 8);
-define('ICMS_CONF_CONTENT', 9);
-define('ICMS_CONF_PERSONA', 10);
-define('ICMS_CONF_CAPTCHA', 11);
-define('ICMS_CONF_PLUGINS', 12);
-define('ICMS_CONF_AUTOTASKS', 13);
-define('ICMS_CONF_PURIFIER', 14);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_MAIN instead!
+ */
+define('ICMS_CONF', \icms_config_Handler::CATEGORY_MAIN);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_USER instead!
+ */
+define('ICMS_CONF_USER', \icms_config_Handler::CATEGORY_USER);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_METAFOOTER instead!
+ */
+define('ICMS_CONF_METAFOOTER', \icms_config_Handler::CATEGORY_METAFOOTER);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_CENSOR instead!
+ */
+define('ICMS_CONF_CENSOR', \icms_config_Handler::CATEGORY_CENSOR);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_SEARCH instead!
+ */
+define('ICMS_CONF_SEARCH', \icms_config_Handler::CATEGORY_SEARCH);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_MAILER instead!
+ */
+define('ICMS_CONF_MAILER', \icms_config_Handler::CATEGORY_MAILER);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_AUTH instead!
+ */
+define('ICMS_CONF_AUTH', \icms_config_Handler::CATEGORY_AUTH);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_MULILANGUAGE instead!
+ */
+define('ICMS_CONF_MULILANGUAGE', \icms_config_Handler::CATEGORY_MULILANGUAGE);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_CONTENT instead!
+ */
+define('ICMS_CONF_CONTENT', \icms_config_Handler::CATEGORY_CONTENT);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_PERSONA instead!
+ */
+define('ICMS_CONF_PERSONA', \icms_config_Handler::CATEGORY_PERSONA);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_CAPTCHA instead!
+ */
+define('ICMS_CONF_CAPTCHA', \icms_config_Handler::CATEGORY_CAPTCHA);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_PLUGINS instead!
+ */
+define('ICMS_CONF_PLUGINS', \icms_config_Handler::CATEGORY_PLUGINS);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_AUTOTASKS instead!
+ */
+define('ICMS_CONF_AUTOTASKS', \icms_config_Handler::CATEGORY_AUTOTASKS);
+/**
+ * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_PURIFIER instead!
+ */
+define('ICMS_CONF_PURIFIER', \icms_config_Handler::CATEGORY_PURIFIER);
 /**#@-*/
 
 /**

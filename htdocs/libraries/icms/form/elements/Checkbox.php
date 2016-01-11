@@ -92,7 +92,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		}
 		$value = array();
 		foreach ($this->_value as $val) {
-			$value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
+			$value[] = $val ? htmlspecialchars($val, ENT_QUOTES, _CHARSET) : $val;
 		}
 		return $value;
 	}
@@ -153,10 +153,10 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		$value = array();
 		foreach ($this->_options as $val => $name) {
 			$value[$encode
-					? htmlspecialchars($val, ENT_QUOTES)
+					? htmlspecialchars($val, ENT_QUOTES, _CHARSET)
 					: $val]
 					= ($encode > 1)
-						? htmlspecialchars($name, ENT_QUOTES)
+						? htmlspecialchars($name, ENT_QUOTES, _CHARSET)
 						: $name;
 		}
 		return $value;
@@ -192,7 +192,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		}
 		foreach ($ele_options as $value => $name) {
 			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
-				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
 			}

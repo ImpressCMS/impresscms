@@ -144,11 +144,11 @@ function easiestml($s) {
 	if (empty($_SERVER['QUERY_STRING'])) {
 		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?lang=';
 	} else if (($pos = strpos($_SERVER['QUERY_STRING'], 'lang=')) === false) {
-		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?' . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES) . '&amp;lang=';
+		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?' . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES, _CHARSET) . '&amp;lang=';
 	} else if ($pos < 2) {
 		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?lang=';
 	} else {
-		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?' . htmlspecialchars(substr($_SERVER['QUERY_STRING'], 0, $pos-1), ENT_QUOTES) . '&amp;lang=';
+		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?' . htmlspecialchars(substr($_SERVER['QUERY_STRING'], 0, $pos-1), ENT_QUOTES, _CHARSET) . '&amp;lang=';
 	}
 	$langimage_html = '';
 	foreach ($easiestml_langs as $l => $lang) {

@@ -56,7 +56,7 @@ function render_wiki($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeWIKI(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES)."\");'
+		onclick='javascript:icmsCodeWIKI(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES, _CHARSET)."\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/wiki.png'
 		alt='wiki'
