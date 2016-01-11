@@ -44,7 +44,7 @@
 $form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', TRUE);
 /*
  * GET variables
- * 
+ *
  * POST variables
  * memberslist_id
  * memberslist_uname
@@ -56,8 +56,8 @@ if (!empty($_POST['memberslist_id'])) {
 	for ($i = 0; $i < $user_count; $i++) {
 		$uid_hidden = new icms_form_elements_Hidden("mail_to_user[]", $_POST['memberslist_id'][$i]);
 		$form->addElement($uid_hidden);
-		$display_names .= "<a href='" . ICMS_URL . "/userinfo.php?uid=" 
-			. $_POST['memberslist_id'][$i] . "' target='_blank'>" 
+		$display_names .= "<a href='" . ICMS_URL . "/userinfo.php?uid="
+			. $_POST['memberslist_id'][$i] . "' target='_blank'>"
 			. $_POST['memberslist_uname'][$_POST['memberslist_id'][$i]] . "</a>, ";
 		unset($uid_hidden);
 	}

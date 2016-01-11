@@ -151,16 +151,16 @@ class icms_ipf_form_Base extends icms_form_Theme {
 					 */
 				}
                                 if (!isset($controls[$key])) {
-                                    $controls[$key] = $this->targetObject->getControl($key);                                    
+                                    $controls[$key] = $this->targetObject->getControl($key);
                                 }
-                                
+
                                 if ($controls[$key] === null) {
                                     $elementToAdd = new icms_form_elements_Hidden($key, isset($var['value'])?$var['value']:null);
                                     $this->addElement($elementToAdd, $key, $var, FALSE);
                                     unset($elementToAdd);
                                     continue;
                                 }
-                                
+
 				//if (isset($controls[$key])) {
 					/* If the control has name, it's because it's an object already present in the script
 					 * for example, "user"
@@ -178,7 +178,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 
 					// If this field don't have a specific control, we will use the standard one, depending on its data type
 				//} else {
-                                    
+
 					/*switch ($var['data_type']) {
 						case self::DTYPE_DEP_TXTBOX:
 							$form_text = $this->getControl("text", $key);
@@ -367,7 +367,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				break;
 
 			case 'textarea' :
-                            
+
 				$form_rows = isset($this->targetObject->controls[$key]['rows']) ? $this->targetObject->controls[$key]['rows'] : 5;
 				$form_cols = isset($this->targetObject->controls[$key]['cols']) ? $this->targetObject->controls[$key]['cols'] : 60;
 

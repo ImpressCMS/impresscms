@@ -8,14 +8,14 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 */
 
 class EventTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        $this->assertTrue(class_exists('icms_Event', true), "icms_Event class doesn't exist");        
+        $this->assertTrue(class_exists('icms_Event', true), "icms_Event class doesn't exist");
     }
-    
+
     /**
      * Checks if all required static methods are available
      */
@@ -24,7 +24,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
              $this->assertTrue(method_exists('icms_Event', $method), $method . ' doesn\'t exists for icms_Event');
          }
     }
-    
+
     /**
      * Checks if all required variables are available
      */
@@ -36,7 +36,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
         $this->assertInternalType('array', $instance->parameters, 'parameters must be array');
         $this->assertInternalType('bool', $instance->canCancel, 'canCancel must be bool');
         $this->assertInternalType('bool', $instance->canceled, 'canceled must be bool');
-        
-    }            
-    
+
+    }
+
 }

@@ -46,33 +46,33 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class icms_image_category_Handler extends \icms_ipf_Handler {
-        
+
         /**
          * Constructor
-         * 
+         *
          * @param \icms_db_IConnection $db              Database connection
          */
-        public function __construct(&$db) {                
+        public function __construct(&$db) {
                 parent::__construct($db, 'image_category', 'imgcat_id', 'imgcat_name', '', 'icms', 'imagecategory');
         }
 
 	/**
 	 * Retrieve array of {@link icms_image_category_Object}s meeting certain conditions
-         * 
+         *
 	 * @param object $criteria {@link icms_db_criteria_Element} with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
-         * 
+         *
 	 * @return array {@link icms_image_category_Object}s matching the conditions
 	 **/
 	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
             $this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id";
-            
+
             $criteria_main = new \icms_db_criteria_Compo();
             $criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
-            $criteria_main->setSort('imgcat_weight, imgcat_id');            
+            $criteria_main->setSort('imgcat_weight, imgcat_id');
             $criteria_main->setOrder('ASC');
-            
+
             if ($criteria !== null) {
                 $criteria_main->add($criteria);
             }
@@ -83,32 +83,32 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	 * get number of {@link icms_image_category_Object}s matching certain conditions
 	 *
 	 * @param string $criteria conditions to match
-         * 
+         *
 	 * @return int number of {@link icms_image_category_Object}s matching the conditions
 	 **/
 	public function getCount($criteria = null) {
             $this->generalSQL = 'SELECT COUNT(*) FROM ' . $this->table . ' i LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id";
-                            
- 
+
+
             $criteria_main = new \icms_db_criteria_Compo();
             $criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
-            
+
             if ($criteria !== null) {
                 $criteria_main->add($criteria);
-            }            
+            }
 
             return parent::getCount($criteria_main);
 	}
-        
+
         /**
          * Get a list of {@link icms_image_category_Object}s matching certain conditions
-         * 
+         *
          * @param array         $groups         Groups list
          * @param string        $perm           Permission name
          * @param null|integer  $display        Do we need to list only visible or hidden items?
          * @param string|null   $storetype      How to store images of this category?
-         * 
+         *
          * @return array                        array of {@link icms_image_category_Object}s matching the conditions
          */
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
