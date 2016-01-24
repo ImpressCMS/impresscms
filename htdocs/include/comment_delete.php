@@ -88,7 +88,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 				$redirect_page .= $extra_param . '=' . icms_core_DataFilter::htmlSpecialChars(trim($_GET[$extra_param])) . '&amp;';
 
 				// for the confirmation page
-				$comment_confirm_extra [$extra_param] = icms_core_DataFilter::htmlSpecialChars(timr($_GET[$extra_param]));
+				$comment_confirm_extra [$extra_param] = icms_core_DataFilter::htmlSpecialChars(trim($_GET[$extra_param]));
 			}
 		}
 	}
