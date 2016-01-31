@@ -20,12 +20,12 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class icms_ipf_view_Single {
 
-	var $_object;
-	var $_userSide;
-	var $_tpl;
-	var $_rows;
-	var $_actions;
-	var $_headerAsRow = true;
+	protected $_object;
+	protected $_userSide;
+	protected $_tpl;
+	protected $_rows;
+	protected $_actions;
+	protected $_headerAsRow = true;
 
 	/**
 	 * Constructor
@@ -36,6 +36,24 @@ class icms_ipf_view_Single {
 		$this->_actions = $actions;
 		$this->_headerAsRow = $headerAsRow;
 	}
+        
+        /**
+         * Magic getter to make some variables for class read-only from outside
+         * 
+         * @param string $name  Variable name
+         * 
+         * @return mixed
+         * 
+         * @throws Exception
+         */
+        public function __get($name) {
+            if (isset($this->$name)) {
+                trigger_error(sprintf('Accessing variable %s from outside IPF View Single class was deprecated', $name), E_USER_DEPRECATED);
+                return $this->$name;
+            } else {
+                throw new Exception(sprintf('%s variable for %s doesn\'t exists', $name, __CLASS__));
+            }
+        }        
 
 	/**
 	 *

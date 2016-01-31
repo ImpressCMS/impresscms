@@ -26,12 +26,12 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 class icms_ipf_Handler extends icms_core_ObjectHandler {
 
     /**
-     *
      * The name of the IPF object
+     * 
      * @var string
      * @todo	Rename using the proper naming convention (this is a public var)
      */
-    public $_itemname;
+    public $_itemname = '';
 
     /**
      * Name of the table use to store this {@link icms_ipf_Object}
@@ -40,7 +40,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * For example "smartsection_categories"
      * @var string
      */
-    public $table;
+    public $table = '';
 
     /**
      * Name of the table key that uniquely identify each {@link icms_ipf_Object}
@@ -48,7 +48,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * For example : "categoryid"
      * @var string
      */
-    public $keyName;
+    public $keyName = '';
 
     /**
      * Name of the class derived from {@link icms_ipf_Object} and which this handler is handling
@@ -58,7 +58,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * For example : "smartsectioncategory"
      * @var string
      */
-    public $className;
+    public $className = '';
 
     /**
      * Name of the field which properly identify the {@link icms_ipf_Object}
@@ -66,7 +66,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * For example : "name" (this will be the category's name)
      * @var string
      */
-    public $identifierName;
+    public $identifierName = '';
 
     /**
      * Name of the field which will be use as a summary for the object
@@ -74,7 +74,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * For example : "summary"
      * @var string
      */
-    public $summaryName;
+    public $summaryName = '';
 
     /**
      * Page name use to basically manage and display the {@link icms_ipf_Object}
@@ -87,7 +87,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      *
      * @var string
      */
-    public $_page;
+    public $_page = '';
 
     /**
      * Full path of the module using this {@link icms_ipf_Object}
@@ -96,8 +96,14 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @todo this could probably be automatically deducted from the class name as it is always prefixed with the module name
      * @var string
      */
-    public $_modulePath;
-    public $_moduleUrl;
+    public $_modulePath = '';
+    
+    /**
+     * Module URL
+     *
+     * @var string 
+     */
+    public $_moduleUrl = '';
 
     /**
      *
@@ -105,15 +111,70 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @var string
      * @todo	Rename using the proper naming convention (This is a public var)
      */
-    public $_moduleName;
+    public $_moduleName = '';
+    
+    /**
+     * Is upload enabled?
+     *
+     * @var bool 
+     */
     public $uploadEnabled = false;
-    public $_uploadUrl;
-    public $_uploadPath;
-    public $_allowedMimeTypes = 0;
+    
+    /**
+     * Upload URL
+     *
+     * @var string
+     */
+    public $_uploadUrl = '';
+    
+    /**
+     * Upload Path
+     *
+     * @var string
+     */
+    public $_uploadPath = '';
+    
+    /**
+     * Allowed mimetypes
+     *
+     * @var array 
+     */
+    public $_allowedMimeTypes = [];
+    
+    /**
+     * Max allowed file size for upload
+     *
+     * @var int
+     */
     public $_maxFileSize = 1000000;
+    
+    /**
+     * Max allowed width for file upload
+     *
+     * @var int
+     */
     public $_maxWidth = 500;
+    
+    /**
+     * Max file height for upload
+     *
+     * @var int
+     */
     public $_maxHeight = 500;
+    
+    /**
+     * What fields to highlight?
+     *
+     * @var array
+     */
     public $highlightFields = array();
+    
+    /**
+     * What columns should be viisble. 
+     * Empty array means all.
+     *
+     * @var array
+     */
     public $visibleColumns = array();
 
     /**
@@ -121,17 +182,41 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      *
      * @var array
      */
-    public $eventArray = null;
+    public $eventArray = array();
 
     /**
      * Array containing the permissions that this handler will manage on the objects
      *
      * @var array
      */
-    public $permissionsArray = false;
-    public $generalSQL = false;
+    public $permissionsArray = array();
+    
+    /**
+     * Some SQL that will be used as base for all operations for this handler
+     *
+     * @var string|false|null
+     */
+    public $generalSQL = '';
+    
+    /**
+     * Events hooks
+     *
+     * @var array
+     */
     public $_eventHooks = array();
+    
+    /**
+     * Disabled events
+     *
+     * @var array
+     */
     public $_disabledEvents = array();
+    
+    /**
+     * Loaded items cache
+     *
+     * @var array 
+     */
     protected static $_loadedItems = array();
 
     /**

@@ -22,44 +22,44 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @package	ICMS\IPF\View
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
- * @todo	Properly declare all vars with their visibility (private, protected, public) and follow naming convention
+ * @todo	Properly declare all protected s with their visibility (private, protected, public) and follow naming convention
  */
 class icms_ipf_view_Table {
 
-	var $_id;
-	var $_objectHandler;
-	var $_columns;
-	var $_criteria;
-	var $_actions;
-	var $_objects = false;
-	var $_aObjects;
-	var $_custom_actions;
-	var $_sortsel;
-	var $_ordersel;
-	var $_limitsel;
-	var $_filtersel;
-	var $_filterseloptions;
-	var $_filtersel2;
-	var $_filtersel2options;
-	var $_filtersel2optionsDefault;
+	protected  $_id;
+	protected  $_objectHandler;
+	protected  $_columns;
+	protected  $_criteria;
+	protected  $_actions;
+	protected  $_objects = false;
+	protected  $_aObjects;
+	protected  $_custom_actions;
+	protected  $_sortsel;
+	protected  $_ordersel;
+	protected  $_limitsel;
+	protected  $_filtersel;
+	protected  $_filterseloptions;
+	protected  $_filtersel2;
+	protected  $_filtersel2options;
+	protected  $_filtersel2optionsDefault;
 
-	var $_tempObject;
-	var $_tpl;
-	var $_introButtons;
-	var $_quickSearch = false;
-	var $_actionButtons = false;
-	var $_head_css_class = 'bg3';
-	var $_hasActions = false;
-	var $_userSide = false;
-	var $_printerFriendlyPage = false;
-	var $_tableHeader = false;
-	var $_tableFooter = false;
-	var $_showActionsColumnTitle = true;
-	var $_isTree = false;
-	var $_showFilterAndLimit = true;
-	var $_enableColumnsSorting = true;
-	var $_customTemplate = false;
-	var $_withSelectedActions = array();
+	protected  $_tempObject;
+	protected  $_tpl;
+	protected  $_introButtons;
+	protected  $_quickSearch = false;
+	protected  $_actionButtons = false;
+	protected  $_head_css_class = 'bg3';
+	protected  $_hasActions = false;
+	protected  $_userSide = false;
+	protected  $_printerFriendlyPage = false;
+	protected  $_tableHeader = false;
+	protected  $_tableFooter = false;
+	protected  $_showActionsColumnTitle = true;
+	protected  $_isTree = false;
+	protected  $_showFilterAndLimit = true;
+	protected  $_enableColumnsSorting = true;
+	protected  $_customTemplate = false;
+	protected  $_withSelectedActions = array();
 
 	/**
 	 * Constructor
@@ -86,6 +86,24 @@ class icms_ipf_view_Table {
 			$this->_head_css_class = 'head';
 		}
 	}
+        
+        /**
+         * Magic getter to make some variables for class read-only from outside
+         * 
+         * @param string $name  Variable name
+         * 
+         * @return mixed
+         * 
+         * @throws Exception
+         */
+        public function __get($name) {
+            if (isset($this->$name)) {
+                trigger_error(sprintf('Accessing variable %s from outside IPF Table class was deprecated', $name), E_USER_DEPRECATED);
+                return $this->$name;
+            } else {
+                throw new Exception(sprintf('%s variable for %s doesn\'t exists', $name, __CLASS__));
+            }
+        }
 
 	/**
 	 *
@@ -592,7 +610,7 @@ class icms_ipf_view_Table {
 		$this->_tpl = new icms_view_Tpl();
 
 		/**
-		 * We need access to the vars of the icms_ipf_Object for a few things in the table creation.
+		 * We need access to the protected s of the icms_ipf_Object for a few things in the table creation.
 		 * Since we may not have an icms_ipf_Object to look into now, let's create one for this purpose
 		 * and we will free it after
 		 */

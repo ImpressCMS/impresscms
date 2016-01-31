@@ -406,7 +406,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'controls' => 'array'
             ],
             'icms_ipf_Metagen' => [
-                '_myts' => 'object',
+                '_myts' => 'null',
                 '_title' => 'string',
                 '_original_title' => 'string',
                 '_keywords' => 'string',
@@ -469,50 +469,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 '_lang_author_word' => 'string',
                 '_lang_version_history' => 'string',
                 '_lang_by' => 'string',
-                '_tpl' => 'string'       
-            ],           
-            'icms_ipf_view_Table' => [
-                '_id' => 'string',
-                '_objectHandler' => 'string',
-                '_columns' => 'string',
-                '_criteria' => 'string',
-                '_actions' => 'string',
-                '_objects = false' => 'string',
-                '_aObjects' => 'string',
-                '_custom_actions' => 'string',
-                '_sortsel' => 'string',
-                '_ordersel' => 'string',
-                '_limitsel' => 'string',
-                '_filtersel' => 'string',
-                '_filterseloptions' => 'string',
-                '_filtersel2' => 'string',
-                '_filtersel2options' => 'string',
-                '_filtersel2optionsDefault' => 'string',
-                '_tempObject' => 'string',
-                '_tpl' => 'string',
-                '_introButtons' => 'string',
-                '_quickSearch' => 'bool',
-                '_actionButtons' => 'array',
-                '_head_css_class' => 'string',
-                '_hasActions' => 'bool',
-                '_userSide' => 'bool',
-                '_printerFriendlyPage' => 'bool',
-                '_tableHeader = false' => 'string',
-                '_tableFooter = false' => 'string',
-                '_showActionsColumnTitle' => 'bool',
-                '_isTree' => 'bool',
-                '_showFilterAndLimit' => 'bool',
-                '_enableColumnsSorting' => 'bool',
-                '_customTemplate' => 'bool',
-                '_withSelectedActions' => 'array'
-            ],
-            'icms_ipf_view_Single' => [
-                '_object' => 'null',
-                '_userSide' => 'bool',
-                '_tpl' => 'string',
-                '_rows' => 'array',
-                '_actions' => 'array',
-                '_headerAsRow' => 'bool'
+                '_tpl' => 'null'       
             ],
             'icms_ipf_view_Row' => [
                 '_keyname' => 'string',
@@ -524,7 +481,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_view_Column' => [
                 '_keyname' => 'string',
                 '_align' => 'string',
-                '_width' => 'int',
+                '_width' => 'mixed',
                 '_customMethodForValue' => 'null',
                 '_extraParams' => 'string',
                 '_sortable' => 'bool',
@@ -545,14 +502,14 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'options' => 'array'
             ],
             'icms_ipf_export_Handler' => [
-                'handler' => 'string',
-                'criteria' => 'string',
-                'fields' => 'array',
+                'handler' => 'null',
+                'criteria' => 'null',
+                'fields' => 'mixed',
                 'format' => 'string',
                 'filename' => 'string',
                 'filepath' => 'string',
                 'options' => 'array',
-                'outputMethods' => 'array',
+                'outputMethods' => 'mixed',
                 'notDisplayFields' => 'array'
             ],
             'icms_ipf_category_Handler' => [
@@ -561,7 +518,11 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
             foreach ($variables as $variable => $type) {
-                $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+                if ($type === 'mixed') {
+                    $this->assertTrue(property_exists($instance, $variable), '$' . $variable . ' doesn\'t exists in instance of ' . $class);
+                } else {
+                    $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+                }
             }
         }
     }    
