@@ -8,6 +8,9 @@
  * @since	1.3
  * @author	Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
  */
+
+include_once ICMS_ROOT_PATH . "/vendor/autoload.php";
+
 class icms_Autoloader {
 	/**
 	 * Paths of known global repositories
@@ -37,9 +40,9 @@ class icms_Autoloader {
 	 */
 	static public function setup() {
 		if (!self::$initialized) {
-			self::register(dirname(dirname(__FILE__)));
-			spl_autoload_register(array('icms_Autoloader', 'autoload'));
-			spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));
+			//self::register(dirname(dirname(__FILE__)));
+			//spl_autoload_register(array('icms_Autoloader', 'autoload'));
+			//spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));
 			self::$initialized = TRUE;
 		}
 	}
@@ -174,7 +177,6 @@ class icms_Autoloader {
 		    "icmsdatabase" 					=> "/class/database/database.php",
 		    "xoopsdatabase" 				=> "/class/database/database.php",
 			"mytextsanitizer" 				=> "/class/module.textsanitizer.php",
-			"icmspreloadhandler"			=> "/kernel/icmspreloadhandler.php",
 			"xoopsmodule" 					=> "/kernel/module.php",
 			"xoopsmodulehandler"			=> "/kernel/module.php",
 			"xoopsmemberhandler"			=> "/kernel/member.php",
@@ -210,11 +212,9 @@ class icms_Autoloader {
 			"xoopsformselectuser"			=> "/class/xoopsform/formselectuser.php",
 			"xoopsformselecttheme"			=> "/class/xoopsform/formselecttheme.php",
 			"xoopsformselectmatchoption"	=> "/class/xoopsform/formselectmatchoption.php",
-			"xoopsformtext"					=> "/class/xoopsform/formtext.php",
 			"xoopsformtextarea"				=> "/class/xoopsform/formtextarea.php",
 			"xoopsformdhtmltextarea"		=> "/class/xoopsform/formdhtmltextarea.php",
 			"xoopsformelementtray"			=> "/class/xoopsform/formelementtray.php",
-			"xoopsthemeform"				=> "/class/xoopsform/themeform.php",
 			"xoopssimpleform"				=> "/class/xoopsform/simpleform.php",
 			"xoopsformtextdateselect"		=> "/class/xoopsform/formtextdateselect.php",
 			"xoopsformdatetime"				=> "/class/xoopsform/formdatetime.php",

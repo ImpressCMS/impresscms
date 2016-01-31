@@ -13,6 +13,8 @@
 * @version		$Id: common.inc.php 12389 2014-01-17 16:58:21Z skenow $
  */
 
+include '../vendor/autoload.php';
+
 /**
  * If non-empty, only this user can access this installer
  */
