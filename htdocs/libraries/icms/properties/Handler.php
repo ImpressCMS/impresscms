@@ -602,7 +602,7 @@ abstract class icms_properties_Handler implements Serializable {
      * @return bool
      */
     public function isChanged() {
-        return count($this->getChangedVars());
+        return empty($this->getChangedVars()) === false;
     }
 
     /**
