@@ -135,7 +135,7 @@ if ('system' != $icmsModule->getVar('dirname')) {
 			} else {
 				$hidden_value = '';
 			}
-			$cform->addElement(new icms_form_elements_Hidden($extra_param, $hidden_value));
+			$cform->addElement(new icms_form_elements_Hidden($extra_param, icms_core_DataFilter::checkVar($hidden_value, 'str')));
 		}
 	}
 }
