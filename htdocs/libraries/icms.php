@@ -6,7 +6,7 @@
  * @license	LICENSE.txt
  * @package	ImpressCMS/core
  * @since	1.3
- * 
+ *
  * @internal	This class should normally be "icms_Kernel", marcan and I agreed on calling it "icms"
  * @internal	for convenience, as we are not targetting php 5.3+ yet
  */
@@ -21,68 +21,68 @@
  * @since 	1.3
  */
 final class icms {
-    
+
         /**
          * Current response
          *
-         * @var \icms_response_Text 
+         * @var \icms_response_Text
          */
         static public $response;
-        
+
 	/**
 	 * Preload handler
 	 * @var icms_preload_Handler
 	 */
 	static public $preload;
-        
+
 	/**
 	 * Security service
 	 * @var icms_core_Security
 	 */
 	static public $security;
-        
+
 	/**
 	 * Logger
 	 * @var icms_core_Logger
 	 */
 	static public $logger;
-        
+
 	/**
 	 * Database connection
 	 * @var icms_db_IConnection
 	 */
 	static public $db;
-        
+
 	/**
 	 * Legacy database connection
 	 * @var icms_db_legacy_Database
 	 */
 	static public $xoopsDB;
-        
+
 	/**
 	 * Configuration service
 	 * @var icms_config_Handler
 	 */
 	static public $config;
-        
+
 	/**
 	 * Session service
 	 * @var icms_core_Session
 	 */
 	static public $session;
-        
+
 	/**
 	 * Current user
 	 * @var icms_member_user_Object
 	 */
 	static public $user;
-        
+
 	/**
 	 * Current module / application
 	 * @var icms_module_Object
 	 */
 	static public $module;
-        
+
 	/**
 	 * Registered services definition
 	 * @var array
@@ -336,10 +336,10 @@ final class icms {
 		}
 		return self::$urls;
 	}
-        
+
         /**
          * Constructor is private so nobody can create an instance of this class
-         * 
+         *
          * Use all static methods instead!
          */
         private function __construct() {

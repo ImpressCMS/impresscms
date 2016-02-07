@@ -47,7 +47,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class icms_image_Handler extends \icms_ipf_Handler {
-    
+
     /**
      * Handler for image bodies
      *
@@ -58,20 +58,20 @@ class icms_image_Handler extends \icms_ipf_Handler {
 
     /**
          * Constructor
-         * 
+         *
          * @param \icms_db_IConnection $db              Database connection
          */
         public function __construct(&$db) {
             $this->imagebody_handler = \icms::handler('icms_image_body');
-            
+
             parent::__construct($db, 'image', 'image_id', 'image_name', 'image_nicename', 'icms', 'image');
-        }   
-        
+        }
+
         /**
          * This event is executed when saving
-         * 
+         *
          * @param   \icms_image_body_Object $obj        Saving object
-         * 
+         *
          * @return  boolean
          */
         protected function afterSave(&$obj) {
@@ -82,13 +82,13 @@ class icms_image_Handler extends \icms_ipf_Handler {
                 return $body->store();
             }
             return true;
-        }    
-        
+        }
+
         /**
          * This event executes after deletion
-         * 
+         *
          * @param \icms_image_body_Object $obj      Deleted object
-         * 
+         *
          * @return boolean
          */
         protected function afterDelete(&$obj) {
@@ -103,7 +103,7 @@ class icms_image_Handler extends \icms_ipf_Handler {
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
 	 * @param   boolean $getbinary  Get binary image?
-         * 
+         *
 	 * @return  array   Array of {@link icms_image_Object} objects
 	 **/
 	public function getObjects($criteria = NULL, $id_as_key = FALSE, $getbinary = FALSE) {
@@ -128,7 +128,7 @@ class icms_image_Handler extends \icms_ipf_Handler {
 	 *
 	 * @param   int         $imgcat_id      Image category ID
 	 * @param   bool|null   $image_display  List only displaed images?
-         * 
+         *
 	 * @return  array                       Array of {@link icms_image_Object} objects
 	 **/
 	public function getList($imgcat_id, $image_display = NULL) {

@@ -8,7 +8,7 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 */
 
 class FilesTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Test if is available
      */
@@ -21,19 +21,19 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
                 'icms_file_ZipDownloader' => 'icms_file_DownloadHandler',
                 'icms_file_ZipFileHandler' => null
             ] as $class => $must_be_instance_of) {
-                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");        
+                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {
                 $instance = $this->getClassInstance($class);
                 $this->assertTrue( $instance instanceof $must_be_instance_of, $class . " is not instanceof " . $must_be_instance_of);
             }
         }
-    }      
-    
+    }
+
     /**
      * Gets instance of class from classname
-     * 
+     *
      * @param string $class     ClassName
-     * 
+     *
      * @return object
      */
     private function getClassInstance($class) {
@@ -46,8 +46,8 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
                     ->getMock();
         }
         return $instance;
-    }       
-    
+    }
+
     /**
      * Test methods availability
      */
@@ -106,7 +106,7 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-    
+
     /**
      * Tests variables availability and types
      */
@@ -115,13 +115,13 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
             'icms_file_TarFileHandler' => [
                 'numFiles' => 'null', // int
                 'files' => 'null' // array
-            ]            
+            ]
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
             foreach ($variables as $variable => $type) {
                 $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
-    }    
-    
+    }
+
 }
