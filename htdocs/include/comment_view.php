@@ -111,7 +111,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 					} elseif (isset($_POST[$extra_param])) {
 						$extra_params .= $extra_param . '=' . $_POST[$extra_param] . '&amp;';
 					} elseif (isset($_GET[$extra_param])) {
-						$extra_params .= $extra_param . '=' . $_GET[$extra_param] . '&amp;';
+						$extra_params .= $extra_param . '=' . icms_core_DataFilter::htmlSpecialChars(trim($_GET[$extra_param])) . '&amp;';
 					} else {
 						$extra_params .= $extra_param . '=&amp;';
 					}
@@ -208,7 +208,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				}
 				if (isset($extra_param_val)) {
 					$link_extra .= '&amp;' . $extra_param . '=' . $extra_param_val;
-					$hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
+					$hidden_value = icms_core_DataFilter::htmlSpecialChars($extra_param_val, ENT_QUOTES);
 					$navbar .= '<input type="hidden" name="' . $extra_param . '" value="' . $hidden_value . '" />';
 				}
 			}

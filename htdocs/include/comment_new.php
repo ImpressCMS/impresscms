@@ -70,7 +70,7 @@ if ($com_itemid > 0) {
 	} else {
 		$com_title = '';
 	}
-	$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
+	$com_mode = isset($_GET['com_mode']) ? icms_core_DataFilter::htmlSpecialChars(trim($_GET['com_mode']), ENT_QUOTES) : '';
 	if ($com_mode == '') {
 		if (is_object(icms::$user)) {
 			$com_mode = icms::$user->getVar('umode');
