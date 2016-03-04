@@ -1,5 +1,19 @@
 ImpressCMS ChangeLog
 ====================
+ImpressCMS 1.3.10
+-------------------------------
+Date: TBD
+DB Version: 
+Build Version: 
+
+##Improvements
+
+##Fixes
+
+##Updates
+
+** Complete list of tickets addressed in the 1.3.10 Milestone - 
+
 ImpressCMS 1.3.9
 -------------------------------
 Date: 2 March 2016
