@@ -36,15 +36,39 @@
  * @package	ICMS\Plugins
  */
 class icms_plugins_EditorHandler {
-	private $root_path = "";
+
+    /**
+     * Path where is editor
+     *
+     * @var string
+     */
+	private $root_path = '';
+
+	/**
+	 * No HTML mode?
+	 *
+	 * @var bool
+	 */
 	public $nohtml = FALSE;
+
+	/**
+	 * What editors to allow?
+	 *
+	 * @var array
+	 */
 	public $allowed_editors = array();
-	private $_type = "";
+
+	/**
+	 * Editor type
+	 *
+	 * @var string
+	 */
+	private $_type = '';
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string	type
+	 * @param   string  $type	Editor type
 	 */
 	public function __construct($type = '') {
 		$this->root_path = self::_getRootPath($type);
@@ -94,7 +118,7 @@ class icms_plugins_EditorHandler {
 	public function &getList($noHtml = FALSE) {
                 $file = ICMS_CACHE_PATH . $this->_type . DIRECTORY_SEPARATOR . 'editor_list.php';
                 $list = file_exists($file)?include($file):[];
-               
+
 		if (empty($list)) {
 
 			$list = array();
@@ -108,11 +132,11 @@ class icms_plugins_EditorHandler {
 					if (empty($config['order'])) continue;
 					$order[] = $config['order'];
 					$list[$item] = [
-                                            'title' => $config['title'], 
+                                            'title' => $config['title'],
                                             'nohtml' => isset($config['nohtml'])?$config['nohtml']:0
                                         ];
 				}
-			}                        
+			}
 
 			array_multisort($order, $list);
 			$contents = "<?php return " . var_export($list, TRUE) . ';';
@@ -196,7 +220,7 @@ class icms_plugins_EditorHandler {
 			return ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
 		}
 	}
-	
+
 	/**
 	 * Retrieve a list of the available editors, by type
 	 * @param	string	$type

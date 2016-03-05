@@ -50,9 +50,9 @@ if (isset($_POST)) {
 	if (is_array($post_vars)) extract($post_vars);
 }
 $icmsAdminTpl = new icms_view_Tpl();
-$op = (isset($_GET['op'])) 
+$op = (isset($_GET['op']))
 	? trim(filter_input(INPUT_GET, 'op'))
-	: ((isset($_POST['op'])) 
+	: ((isset($_POST['op']))
 		? trim(filter_input(INPUT_POST, 'op'))
 		: 'list');
 
@@ -125,7 +125,7 @@ switch ($op) {
 						$ele = new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					}
 					break;
-						
+
 				case 'textarea' :
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
 						// this is exceptional.. only when value type is array, need a smarter way for this
@@ -136,7 +136,7 @@ switch ($op) {
 						$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					}
 					break;
-						
+
 				case 'autotasksystem':
 					$handler = icms_getModuleHandler('autotasks', 'system');
 					$options = $handler->getSystemHandlersList(TRUE);
@@ -146,7 +146,7 @@ switch ($op) {
 					}
 					unset($handler, $options, $option);
 					break;
-						
+
 				case 'select' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'),  $config[$i]->getConfValueForOutput());
 					$options = $config_handler->getConfigOptions(new icms_db_criteria_Item('conf_id', $config[$i]->getVar('conf_id')));
@@ -157,7 +157,7 @@ switch ($op) {
 						$ele->addOption($optval, $optkey);
 					}
 					break;
-						
+
 				case 'select_multi' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, TRUE);
 					$options = $config_handler->getConfigOptions(new icms_db_criteria_Item('conf_id', $config[$i]->getVar('conf_id')));
@@ -172,11 +172,11 @@ switch ($op) {
 						$ele->addOption($optval, $optkey);
 					}
 					break;
-						
+
 				case 'yesno' :
 					$ele = new icms_form_elements_Radioyn($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), _YES, _NO);
 					break;
-						
+
 				case 'theme' :
 				case 'theme_multi' :
 				case 'theme_admin' :
@@ -224,7 +224,7 @@ switch ($op) {
 						$ele->addOptionArray($dirlist);
 					}
 					break;
-						
+
 				case 'select_plugin' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 8, TRUE);
 					$dirlist = icms_core_Filesystem::getDirList(ICMS_PLUGINS_PATH . '/textsanitizer/');
@@ -233,7 +233,7 @@ switch ($op) {
 						$ele->addOptionArray($dirlist);
 					}
 					break;
-						
+
 				case 'tplset' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					$tplset_handler = icms::handler('icms_view_template_set');
@@ -245,15 +245,15 @@ switch ($op) {
 					// old theme value is used to determine whether to update cache or not. kind of dirty way
 					$form->addElement(new icms_form_elements_Hidden('_old_theme', $config[$i]->getConfValueForOutput()));
 					break;
-						
+
 				case 'timezone' :
 					$ele = new icms_form_elements_select_Timezone($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					break;
-						
+
 				case 'language' :
 					$ele = new icms_form_elements_select_Lang($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					break;
-						
+
 				case 'startpage' :
 					$member_handler = icms::handler('icms_member');
 					$grps = $member_handler->getGroupList();
@@ -293,23 +293,23 @@ switch ($op) {
 						unset($f);
 					}
 					break;
-						
+
 				case 'group' :
 					$ele = new icms_form_elements_select_Group($title, $config[$i]->getVar('conf_name'), TRUE, $config[$i]->getConfValueForOutput(), 1, FALSE);
 					break;
-						
+
 				case 'group_multi' :
 					$ele = new icms_form_elements_select_Group($title, $config[$i]->getVar('conf_name'), TRUE, $config[$i]->getConfValueForOutput(), 5, TRUE);
 					break;
-						
+
 				case 'user' :
 					$ele = new icms_form_elements_select_User($title, $config[$i]->getVar('conf_name'), FALSE, $config[$i]->getConfValueForOutput(), 1, FALSE);
 					break;
-						
+
 				case 'user_multi' :
 					$ele = new icms_form_elements_select_User($title, $config[$i]->getVar('conf_name'), FALSE, $config[$i]->getConfValueForOutput(), 5, TRUE);
 					break;
-						
+
 				case 'module_cache' :
 					$module_handler = icms::handler('icms_module');
 					$modules = $module_handler->getObjects(new icms_db_criteria_Item('hasmain', 1), TRUE);
@@ -328,35 +328,35 @@ switch ($op) {
 						$ele = new icms_form_elements_Label($title, _MD_AM_NOMODULE);
 					}
 					break;
-						
+
 				case 'site_cache' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					$ele->addOptionArray(array('0' => _NOCACHE, '30' => sprintf(_SECONDS, 30), '60' => _MINUTE, '300' => sprintf(_MINUTES, 5), '1800' => sprintf(_MINUTES, 30), '3600' => _HOUR, '18000' => sprintf(_HOURS, 5), '86400' => _DAY, '259200' => sprintf(_DAYS, 3), '604800' => _WEEK));
 					break;
-						
+
 				case 'password' :
 					$ele = new icms_form_elements_Password($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), FALSE, ($icmsConfigUser['pass_level']?'password_adv':''));
 					break;
-						
+
 				case 'color' :
 					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
-						
+
 				case 'hidden' :
 					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
-						
+
 				case 'select_pages' :
 					$content_handler = & icms_getModuleHandler('content', 'content');
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					$ele->addOptionArray($content_handler->getContentList());
 					break;
-						
+
 				# Added by Fábio Egas in XTXM version
 				case 'select_image' :
 					$ele = new icms_form_elements_select_Image($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					break;
-						
+
 				case 'select_paginati' :
 					if (file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php')) {
 						include ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php';
@@ -369,7 +369,7 @@ switch ($op) {
 						$ele->addOptionArray($arr);
 					}
 					break;
-						
+
 				case 'select_geshi' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					$dirlist = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH . '/geshi/geshi/', '', array('php')));
@@ -378,7 +378,7 @@ switch ($op) {
 						$ele->addOptionArray($dirlist);
 					}
 					break;
-						
+
 				case 'textbox' :
 				default :
 					$ele = new icms_form_elements_Text($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
@@ -437,7 +437,7 @@ switch ($op) {
 						$ele = new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 					}
 					break;
-						
+
 				case 'textarea' :
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
 						// this is exceptional.. only when value type is array need a smarter way for this
@@ -446,7 +446,7 @@ switch ($op) {
 						$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 					}
 					break;
-						
+
 				case 'select' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 
@@ -458,7 +458,7 @@ switch ($op) {
 						$ele->addOption($optval, $optkey);
 					}
 					break;
-						
+
 				case 'select_multi' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, TRUE);
 					$options = & $config_handler->getConfigOptions(new icms_db_criteria_Item('conf_id', $config[$i]->getVar('conf_id')));
@@ -469,45 +469,45 @@ switch ($op) {
 						$ele->addOption($optval, $optkey);
 					}
 					break;
-						
+
 				case 'yesno' :
 					$ele = new icms_form_elements_Radioyn($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), _YES, _NO);
 					break;
-						
+
 				case 'group' :
 					$ele = new icms_form_elements_select_Group($title, $config[$i]->getVar('conf_name'), TRUE, $config[$i]->getConfValueForOutput(), 1, FALSE);
 					break;
-						
+
 				case 'group_multi' :
 					$ele = new icms_form_elements_select_Group($title, $config[$i]->getVar('conf_name'), TRUE, $config[$i]->getConfValueForOutput(), 5, TRUE);
 					break;
-						
+
 				case 'user' :
 					$ele = new icms_form_elements_select_User($title, $config[$i]->getVar('conf_name'), FALSE, $config[$i]->getConfValueForOutput(), 1, FALSE);
 					break;
-						
+
 				case 'user_multi' :
 					$ele = new icms_form_elements_select_User($title, $config[$i]->getVar('conf_name'), FALSE, $config[$i]->getConfValueForOutput(), 5, TRUE);
 					break;
-						
+
 				case 'password' :
 					$ele = new icms_form_elements_Password($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
-						
+
 				case 'color' :
 					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
-						
+
 				case 'hidden' :
 					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
-						
+
 				case 'select_pages' :
 					$content_handler = & icms_getModuleHandler('content', 'content');
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					$ele->addOptionArray($content_handler->getContentList());
 					break;
-						
+
 				case 'textbox' :
 				default :
 					$ele = new icms_form_elements_Text($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));

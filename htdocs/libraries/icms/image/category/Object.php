@@ -40,11 +40,11 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * An image category
  *
  * These categories are managed through a {@link icms_image_category_Handler} object
- *  
+ *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Image\Category
- * 
+ *
  * @property int    $imgcat_id         Image category ID
  * @property int    $imgcat_pid        Image category parent ID
  * @property string $imgcat_name       Name
@@ -58,11 +58,11 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @property string $imgcat_storetype  Storing type
  */
 class icms_image_category_Object extends \icms_ipf_Object {
-        
+
         /**
          * Image count
          *
-         * @var int 
+         * @var int
          */
 	private $_imageCount;
 
@@ -82,7 +82,7 @@ class icms_image_category_Object extends \icms_ipf_Object {
 		$this->initVar('imgcat_maxheight', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('imgcat_type', self::DTYPE_STRING, null, false, 1);
 		$this->initVar('imgcat_storetype', self::DTYPE_STRING, null, false, 5);
-                
+
                 parent::__construct($handler, $data);
 	}
 
