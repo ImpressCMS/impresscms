@@ -22,8 +22,7 @@
     "php": ">=5.4.8"
   },
   "autoload": {
-    "classmap": [ "libraries/icms/", "modules",
-      "libraries/icms.php"
-    ]
+    "psr-0" : {"" : "libraries/"},
+    "classmap": [ "modules"]
   }
 }
