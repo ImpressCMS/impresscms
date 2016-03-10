@@ -177,29 +177,22 @@ class icms_db_legacy_updater_Handler {
         switch ($var[icms_properties_Handler::VARCFG_TYPE]) {
             case icms_properties_Handler::DTYPE_BOOLEAN:
                 return 'TINYINT(1) UNSIGNED';
-                break;
             case icms_properties_Handler::DTYPE_ARRAY:
                 return 'TEXT';
-                break;
             case icms_properties_Handler::DTYPE_OBJECT:
                 return 'MEDIUMTEXT';
-                break;
             case icms_properties_Handler::DTYPE_LIST:
                 return 'VARCHAR(100)';
-                break;
             case icms_properties_Handler::DTYPE_DATETIME:
                 return 'DATETIME';
-                break;
             case icms_properties_Handler::DTYPE_FILE:
                 return 'BLOB';
-                break;
             case icms_properties_Handler::DTYPE_FLOAT:
                 if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
                     return 'FLOAT(' . icms_properties_Handler::VARCFG_MAX_LENGTH . ')';
                 } else {
                     return 'FLOAT';
                 }
-                break;
             case icms_properties_Handler::DTYPE_INTEGER:
                 if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
                     if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 4) {
@@ -216,10 +209,8 @@ class icms_db_legacy_updater_Handler {
                 } else {
                     return 'INT';
                 }
-                break;
             case icms_properties_Handler::DTYPE_LIST:
                 return 'TEXT';
-                break;
             case icms_properties_Handler::DTYPE_STRING:
                 if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH])) {
                     if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 500) {
@@ -234,7 +225,6 @@ class icms_db_legacy_updater_Handler {
                 } else {
                     return 'VARCHAR(255)';
                 }
-                break;
             default:
                 return 'TEXT';
         }

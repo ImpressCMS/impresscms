@@ -430,22 +430,22 @@ abstract class icms_properties_Handler implements Serializable {
             case 'show':
             case 'p':
             case 'preview':
-                $ret = $this->getVarForDisplay($name);
-                break;
+                return $this->getVarForDisplay($name);
             case 'e':
             case 'edit':
-                $ret = $this->getVarForEdit($name);
-                break;
+                return $this->getVarForEdit($name);
             case 'f':
             case 'formpreview':
-                $ret = $this->getVarForForm($name);
-                break;
+                return $this->getVarForForm($name);
             case 'n':
             case 'none':
             default:
-                $ret = $this->__get($name);
+		if ($this->_vars[$name][self::VARCFG_TYPE] === self::DTYPE_DATETIME && $this->_vars[$name][self::VARCFG_TYPE] !== null) {
+		    return $this->_vars[$name][self::VARCFG_VALUE]->getTimestamp();
+		} else {
+		    return $this->__get($name);
+		}
         }
-        return $ret;
     }
 
     /**
@@ -456,6 +456,9 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarForDisplay($name) {
+	if ($this->_vars[$name][self::VARCFG_VALUE] === null) {
+	    return '-';
+	}
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
             case self::DTYPE_STRING:
                 if (!isset($this->_vars[$name][self::VARCFG_AF_DISABLED]) || !$this->_vars[$name][self::VARCFG_AF_DISABLED]) {
@@ -488,7 +491,10 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_FILE: // XOBJ_DTYPE_FILE                    
                 return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
-                return date(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : 'r', $this->_vars[$name][self::VARCFG_VALUE]);
+		if (isset($this->_vars[$name][self::VARCFG_FORMAT]) === false) {
+		    $this->_vars[$name][self::VARCFG_FORMAT] = 'r';
+		}
+		return $this->_vars[$name][self::VARCFG_VALUE]->format($this->_vars[$name][self::VARCFG_FORMAT]);
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
                 return $this->_vars[$name][self::VARCFG_VALUE];            
             case self::DTYPE_LIST; // XOBJ_DTYPE_SIMPLE_ARRAY
@@ -506,15 +512,19 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarForEdit($name) {
+	if ($this->_vars[$name][self::VARCFG_VALUE] === null) {
+	    return '';
+	}	
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
+	    case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+		return $this->_vars[$name][self::VARCFG_VALUE]->getTimestamp();
             case self::DTYPE_STRING:
             case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
             case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
             case self::DTYPE_BOOLEAN:
-            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
-            case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE            
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY            
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars((string)$this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
                 return $this->getVar($name, 'n');
                 break;
@@ -532,16 +542,20 @@ abstract class icms_properties_Handler implements Serializable {
      * @return mixed
      */
     public function getVarForForm($name) {
+	if ($this->_vars[$name][self::VARCFG_VALUE] === null) {
+	    return '';
+	}
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
+	    case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+		return $this->_vars[$name][self::VARCFG_VALUE]->getTimestamp();
             case self::DTYPE_STRING:
             case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
             case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
             case self::DTYPE_BOOLEAN:
-            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
-            case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE            
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars((string)$this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
             case self::DTYPE_OTHER: // XOBJ_DTYPE_OTHER
             case self::DTYPE_OBJECT:
             default:
@@ -628,7 +642,7 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_STRING:
                 return strlen($this->_vars[$key][self::VARCFG_VALUE]) > 0;
             case self::DTYPE_DATETIME:
-                return is_int($this->_vars[$key][self::VARCFG_VALUE]) && ($this->_vars[$key][self::VARCFG_VALUE] > 0);
+                return $this->_vars[$key][self::VARCFG_VALUE] instanceof \DateTimeInterface;
         }
     }
 
@@ -950,19 +964,20 @@ abstract class icms_properties_Handler implements Serializable {
                 }
                 return null;
             case self::DTYPE_DATETIME:
-                if (is_int($value))
-                    return $value;
-                if ($value === null)
-                    return 0;                
-                if (is_numeric($value))
-                    return intval($value);
-                if (!is_string($value))
-                    return 0;
-                if (preg_match('/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/ui', $value, $ret))
-                    $time = gmmktime($ret[4], $ret[5], $ret[6], $ret[2], $ret[3], $ret[1]);
-                else
-                    $time = (int) strtotime($value);
-                return ($time < 0) ? 0 : $time;
+		if (($value instanceof \DateTimeInterface) || ($value === null)) {
+		    return $value;
+		}
+		if (is_numeric($value)) {
+		    return new \DateTime('@' . $value);
+		}
+                if (!is_string($value)) {
+                    return null;
+		}
+		try {
+		    return new \DateTime($value);
+		} catch (\Exception $ex) {
+		    return null;
+		}
             case self::DTYPE_STRING:
             default:
                 if (!is_string($value)) {
