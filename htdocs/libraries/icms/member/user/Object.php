@@ -117,7 +117,7 @@ class icms_member_user_Object extends icms_ipf_Object {
         $this->initVar('email', self::DTYPE_STRING, null, true, 60, null, null, _US_EMAIL);
         $this->initVar('url', self::DTYPE_STRING, null, false, 255, null, null, _US_WEBSITE);
         $this->initVar('user_avatar', self::DTYPE_FILE, null, false, 30, null, null, _US_AVATAR);
-        $this->initVar('user_regdate', self::DTYPE_INTEGER, date('U'), false, null, null, null,
+        $this->initVar('user_regdate', self::DTYPE_INTEGER, null, false, null, null, null,
 			'Registration date');
         $this->initVar('user_icq', self::DTYPE_STRING, null, false, 15, null, null, _US_ICQ);
         $this->initVar('user_from', self::DTYPE_STRING, null, false, 100, null, null, _US_LOCATION);
