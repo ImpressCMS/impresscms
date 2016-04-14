@@ -6,18 +6,18 @@
   <tr align="center">
     <td>
     <{if $icms_isadmin == true}>
-    <input type="button" value="<{$lang_administration}>" onclick="location='admin.php'" />
+    <input type="button" value="<{$lang_administration}>" onclick="location='admin.php'" id="userinfo_admin" />
     <{/if}>
-    <input type="button" value="<{$lang_editprofile}>" onclick="location='edituser.php'" />
-    <input type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'" />
-    <input type="button" value="<{$lang_notifications}>" onclick="location='notifications.php'" />
-    <input type="button" value="<{$lang_inbox}><{xoInboxCount assign=pmcount}><{if $pmcount}> (<{$pmcount}>) <{/if}>" onclick="location='viewpmsg.php'" />
+    <input type="button" value="<{$lang_editprofile}>" onclick="location='edituser.php'" id="userinfo_edit" />
+    <input type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'" id="userinfo_avatar" />
+    <input type="button" value="<{$lang_notifications}>" onclick="location='notifications.php'" id="userinfo_notify" />
+    <input type="button" value="<{$lang_inbox}><{xoInboxCount assign=pmcount}><{if $pmcount}> (<{$pmcount}>) <{/if}>" onclick="location='viewpmsg.php'" id="userinfo_inbox" />
 
     <{if $user_candelete == true}>
     <input type="button" value="<{$lang_deleteaccount}>" onclick="location='user.php?op=delete'" />
     <{/if}>
 
-    <input type="button" value="<{$lang_logout}>" onclick="location='user.php?op=logout'" /></td>
+    <input type="button" value="<{$lang_logout}>" onclick="location='user.php?op=logout'" id="userinfo_logout" /></td>
   </tr>
 </table>
 </form>
@@ -39,59 +39,59 @@
     <td>
       <table class="outer" cellpadding="4px" cellspacing="1px" width="100%">
         <tr>
-          <th colspan="2" align="center"><{$lang_allaboutuser}></th>
+          <th colspan="2" align="center" id="userinfo_allabout"><{$lang_allaboutuser}></th>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_avatar}></td>
-          <td align="center" class="even"><img src="<{$user_avatarurl}>" alt="Avatar" /></td>
+          <td align="center" class="even"><img src="<{$user_avatarurl}>" alt="Avatar" id="userinfo_avatar_image" /></td>
         </tr>
         <tr>
           <td class="head"><{$lang_realname}></td>
-          <td align="center" class="odd"><{$user_realname}></td>
+          <td align="center" class="odd" id="userinfo_realname"><{$user_realname}></td>
         </tr>
         <tr>
           <td class="head"><{$lang_website}></td>
-          <td class="even"><{$user_websiteurl}></td>
+          <td class="even" id="userinfo_website"><{$user_websiteurl}></td>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_email}></td>
-          <td class="odd"><{$user_email}></td>
+          <td class="odd" id="userinfo_email"><{$user_email}></td>
         </tr>
     <{if $user_alwopenid == true}>
         <tr valign="top">
           <td class="head"><{$lang_openid}></td>
-          <td class="odd"><{$user_openid}></td>
+          <td class="odd" id="userinfo_openid"><{$user_openid}></td>
         </tr>
     <{/if}>
 	<{if $user_ownpage != true}>
 		<tr valign="top">
           <td class="head"><{$lang_privmsg}></td>
-          <td class="even"><{$user_pmlink}></td>
+          <td class="even" id="userinfo_priv_message"><{$user_pmlink}></td>
         </tr>
     <{/if}>
         <tr valign="top">
           <td class="head"><{$lang_icq}></td>
-          <td class="odd"><{$user_icq}></td>
+          <td class="odd" id="userinfo_icq"><{$user_icq}></td>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_aim}></td>
-          <td class="even"><{$user_aim}></td>
+          <td class="even" id="userinfo_aim"><{$user_aim}></td>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_yim}></td>
-          <td class="odd"><{$user_yim}></td>
+          <td class="odd" id="userinfo_yim"><{$user_yim}></td>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_msnm}></td>
-          <td class="even"><{$user_msnm}></td>
+          <td class="even" id="userinfo_msnm"><{$user_msnm}></td>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_location}></td>
-          <td class="odd"><{$user_location}></td>
+          <td class="odd"id="userinfo_location"><{$user_location}></td>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_occupation}></td>
-          <td class="even"><{$user_occupation}></td>
+          <td class="even" id="userinfo_occupation"><{$user_occupation}></td>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_interest}></td>
@@ -99,26 +99,26 @@
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_extrainfo}></td>
-          <td class="even"><{$user_extrainfo}></td>
+          <td class="even" id="userinfo_interest"><{$user_extrainfo}></td>
         </tr>
         <tr valign="top">
           <th colspan="2" align="center"><{$lang_statistics}></th>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_membersince}></td>
-          <td align="center" class="even"><{$user_joindate}></td>
+          <td align="center" class="even" id="userinfo_member_since"><{$user_joindate}></td>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_rank}></td>
-          <td align="center" class="odd"><{if $user_rankimage}><{$user_rankimage}><br /><{/if}><{$user_ranktitle}></td>
+          <td align="center" class="odd" id="userinfo_rank"><{if $user_rankimage}><{$user_rankimage}><br /><{/if}><{$user_ranktitle}></td>
         </tr>
         <tr valign="top">
           <td class="head"><{$lang_posts}></td>
-          <td align="center" class="even"><{$user_posts}></td>
+          <td align="center" class="even" id="userinfo_posts"><{$user_posts}></td>
         </tr>
 	<tr valign="top">
           <td class="head"><{$lang_lastlogin}></td>
-          <td align="center" class="odd"><{$user_lastlogin}></td>
+          <td align="center" class="odd" id="userinfo_last_login"><{$user_lastlogin}></td>
         </tr>
     <{if $user_showsignature == true}>
       <table class="outer" cellpadding="4px" cellspacing="1px" width="100%">
@@ -126,7 +126,7 @@
           <th colspan="2" align="center"><{$lang_signature}></th>
         </tr>
         <tr valign="top">
-          <td class="even"><{$user_signature}></td>
+          <td class="even" id="userinfo_signature"><{$user_signature}></td>
         </tr>
       </table>
     <{/if}>
