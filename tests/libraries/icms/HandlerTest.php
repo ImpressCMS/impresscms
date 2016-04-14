@@ -2,15 +2,20 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class HandlerTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Tests availability
      */
-    public function testAvailability() {    
+    public function testAvailability() {
         $this->assertTrue(class_exists('icms_core_ObjectHandler', true), "icms_core_Object class doesn't exist");
-    }    
-    
+    }
+
     /**
      * Checks if all required variables are available
      */
@@ -19,8 +24,8 @@ class HandlerTest extends \PHPUnit_Framework_TestCase {
          foreach ([ 'db' ] as $variable) {
              $this->assertTrue(property_exists($mock, $variable), '$' . $variable . ' doesn\'t exists for icms_core_ObjectHandler');
          }
-    }    
-    
+    }
+
     /**
      * Checks if all required methods are available
      */
@@ -30,5 +35,5 @@ class HandlerTest extends \PHPUnit_Framework_TestCase {
              $this->assertTrue(method_exists($mock, $method), $method . ' doesn\'t exists for icms_core_ObjectHandler');
          }
     }
-    
+
 }

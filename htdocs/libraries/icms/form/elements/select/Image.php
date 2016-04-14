@@ -173,7 +173,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 			$ret .= '\n<optgroup id="img_cat_' . $optIds[$nome] . '" label="' . $nome . '">';
 			if (is_array($valores)) {
 				foreach ($valores as $value => $name) {
-					$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+					$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
 					if (count($this->getValue()) > 0 && in_array($value, $this->getValue())) {
 						$ret .= " selected='selected'";
 						$imagem = $value;
@@ -192,4 +192,3 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 		return $ret;
 	}
 }
-

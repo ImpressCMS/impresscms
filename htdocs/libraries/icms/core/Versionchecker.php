@@ -18,44 +18,51 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  */
 class icms_core_Versionchecker {
 
-	/*
-	 * errors
-	 * @public $errors array
+	/**
+	 * Errors
+         *
+	 * @var array
 	 */
 	public $errors = array();
 
-	/*
+	/**
 	 * URL of the XML containing version information
-	 * @public $version_xml string
+         *
+	 * @var string
 	 */
 	public $version_xml = "http://www.impresscms.org/impresscms_version_branch13.xml";
 
-	/*
+	/**
 	 * Time before fetching the $version_xml again and store it in $cache_version_xml
-	 * @public $cache_time integer
-	 * @todo set this to a day at least or make it configurable in System Admin > Preferences
+	 *
+         * @todo set this to a day at least or make it configurable in System Admin > Preferences
+         *
+         * @var integer
 	 */
 	public $cache_time=1;
 
-	/*
+	/**
 	 * Name of the latest version
-	 * @public $latest_version_name string
+         *
+         * @var string
 	 */
-	public $latest_version_name;
+	public $latest_version_name = '';
 
-	/*
+	/**
 	 * Name of installed version
-	 * @private $installed_version_name string
+         *
+	 * @var $installed_version_name string
 	 */
-	public $installed_version_name;
+	public $installed_version_name = ICMS_VERSION_NAME;
 
-	/*
+	/**
 	 * Number of the latest build
-	 * @public $latest_build integer
+         *
+	 * @var integer
 	 */
-	public $latest_build;
+	public $latest_build = 0;
 
-	/*
+	/**
 	 * Status of the latest build
 	 *
 	 * 1  = Alpha
@@ -63,31 +70,23 @@ class icms_core_Versionchecker {
 	 * 3  = RC
 	 * 10 = Final
 	 *
-	 * @public $latest_status integer
+	 * @var integer
 	 */
-	public $latest_status;
-
-	/*
-	 * URL of the latest release
-	 * @public $latest_url string
-	 */
-	public $latest_url;
-
-	/*
-	 * Changelog of the latest release
-	 * @public $latest_changelog string
-	 */
-	public $latest_changelog;
+	public $latest_status = 0;
 
 	/**
-	 * Constructor
-	 *
-	 * @return	void
-	 *
+	 * URL of the latest release
+         *
+	 * @var string
 	 */
-	public function __construct() {
-		$this->installed_version_name = ICMS_VERSION_NAME;
-	}
+	public $latest_url = '';
+
+	/**
+	 * Changelog of the latest release
+         *
+	 * @var string
+	 */
+	public $latest_changelog = '';
 
 	/**
 	 * Access the only instance of this class
@@ -96,7 +95,6 @@ class icms_core_Versionchecker {
 	 * @staticvar object
 	 *
 	 * @return	object
-	 *
 	 */
 	static public function &getInstance() {
 		static $instance;
@@ -110,7 +108,6 @@ class icms_core_Versionchecker {
 	 * Check for a newer version of ImpressCMS
 	 *
 	 * @return	TRUE if there is an update, FALSE if no update OR errors occured
-	 *
 	 */
 	public function check() {
 
@@ -157,6 +154,7 @@ class icms_core_Versionchecker {
 	 * Gets all the error messages
 	 *
 	 * @param	$ashtml	bool	return as html?
+         *
 	 * @return	mixed
 	 */
 	public function getErrors($ashtml=true) {

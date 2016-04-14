@@ -2,8 +2,13 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class NotificationTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Test if icms_core_DataFilter is available
      */
@@ -11,18 +16,18 @@ class NotificationTest extends \PHPUnit_Framework_TestCase {
         foreach (['Handler' => 'icms_ipf_Handler', 'Object' => 'icms_ipf_Object'] as $type => $instanecOfType) {
                $class = 'icms_data_notification_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
-               
+
                $instance = $this->getInstanceWithoutConstructor($class);
                $this->assertInternalType('object', $instance, $class. " is not an object");
                $this->assertTrue($instance instanceof $instanecOfType, $class . ' doesn\'t extend ' . $instanecOfType);
         }
     }
-    
+
     /**
      * Create instance without constructor
-     * 
+     *
      * @param string $class     Class name
-     * 
+     *
      * @return object
      */
     private function getInstanceWithoutConstructor($class) {
@@ -30,7 +35,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase {
                        ->disableOriginalConstructor()
                        ->getMock();
     }
-    
+
     /**
      * Checks if all required methods are available
      */
@@ -50,7 +55,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase {
                 'unsubscribeByModule',
                 'unsubscribeByItem',
                 'doLoginMaintenance',
-                'updateByField'           
+                'updateByField'
             ],
             'icms_data_notification_Object' => [
                 'notifyUser'
@@ -64,6 +69,6 @@ class NotificationTest extends \PHPUnit_Framework_TestCase {
         foreach (['generateConfig', 'subscribableCategoryInfo', 'eventInfo', 'eventEnabled', 'categoryEvents', 'commentCategoryInfo', 'categoryInfo', 'isEnabled'] as $method) {
             $this->assertTrue(method_exists('icms_data_notification_Handler', $method), 'static ' . $method . ' doesn\'t exists for icms_data_notification_Handler');
         }
-    }  
-    
+    }
+
 }

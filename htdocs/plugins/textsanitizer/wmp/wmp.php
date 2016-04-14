@@ -43,7 +43,7 @@ function render_wmp($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeWmp(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERMEDIAURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERHEIGHT, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWIDTH, ENT_QUOTES)."\");'
+		onclick='javascript:icmsCodeWmp(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERMEDIAURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERHEIGHT, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWIDTH, ENT_QUOTES, _CHARSET)."\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/wmp.gif'
 		alt='wmp'

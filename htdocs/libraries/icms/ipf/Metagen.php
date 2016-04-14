@@ -14,43 +14,75 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * Generates META tags
- * 
+ *
  * @package	ICMS\IPF
  * @todo	Properly set visibility of variables - in version 2.0
  */
 class icms_ipf_Metagen {
-	/** @var object */
+
+        /**
+         * Instance of icms_core_Textsanitizer
+         *
+         * @var \icms_core_Textsanitizer
+         */
 	public $_myts;
 
-	/** @var string */
-	public $_title;
+	/**
+         * Title
+         *
+         * @var string
+         */
+	public $_title = '';
 
-	/** @var string */
-	public $_original_title;
+	/**
+         * Original title
+         *
+         * @var string
+         */
+	public $_original_title = '';
 
-	/** @var string */
-	public $_keywords;
+	/**
+         * Keywords
+         *
+         * @var string
+         */
+	public $_keywords = '';
 
-	/** @var string */
-	public $_meta_description;
+	/**
+         * Meta description
+         *
+         * @var string
+         */
+	public $_meta_description = '';
 
-	/** @var string */
-	public $_categoryPath;
+	/**
+         * Category path
+         *
+         * @var string
+         */
+	public $_categoryPath = '';
 
-	/** @var string */
-	public $_description;
+	/**
+         * Description
+         *
+         * @var string
+         */
+	public $_description = '';
 
-	/** @var int */
+	/**
+         * Min chars
+         *
+         * @var int
+         */
 	public $_minChar = 4;
 
 	/**
 	 * Constructor for icms_ipf_Metagen
 	 *
-	 * @param string $title Page title
-	 * @param string $keywords List of meta keywords
-	 * @param string $description Meta description
-	 * @param string $categoryPath
-	 *
+	 * @param string $title         Page title
+	 * @param string $keywords      List of meta keywords
+	 * @param string $description   Meta description
+	 * @param string $categoryPath  Category path
 	 */
 	public function __construct($title, $keywords=false, $description=false, $categoryPath=false) {
 		$this->_myts = icms_core_Textsanitizer::GetInstance();
@@ -363,7 +395,7 @@ class icms_ipf_Metagen {
 	public function createMetaTags() {
 		global $xoopsTpl, $xoTheme;
         $this->_keywords = preg_replace("(<!--.*?-->)", '', $this->_keywords); // stops html comments appearing in meta key
-        
+
 		if (is_object($xoTheme)) {
 			$xoTheme->addMeta('meta', 'keywords', $this->_keywords);
 			$xoTheme->addMeta('meta', 'description', $this->_description);
@@ -376,4 +408,3 @@ class icms_ipf_Metagen {
 	}
 
 }
-

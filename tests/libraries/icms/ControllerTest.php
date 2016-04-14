@@ -2,8 +2,13 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 class ControllerTest extends \PHPUnit_Framework_TestCase {
-    
+
     /**
      * Tests all needed public methods
      */
@@ -13,7 +18,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
             $this->assertTrue(method_exists($obj, $method), 'No public ' . $method . ' method');
         }
     }
-    
+
     /**
      * Checks if type is correct one
      */
@@ -29,17 +34,17 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
             default:
                 $this->assertSame('controller', $obj->type, 'Bad type detected');
             break;
-        }        
+        }
     }
-    
+
     /**
      * Checks if PARAMS_FORMAT is available and is string
      */
     public function testObjectAvailability() {
          $mock = $this->getMockForAbstractClass('icms_controller_Object');
          $class = new \ReflectionClass($mock);
-         
+
          $this->assertInternalType('string', $class->getConstant('PARAMS_FORMAT'), 'PARAMS_FORMAT constant must be defined as string');
     }
-    
+
 }

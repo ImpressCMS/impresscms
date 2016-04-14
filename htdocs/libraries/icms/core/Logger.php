@@ -55,7 +55,8 @@ class icms_core_Logger {
 			// Always catch errors, for security reasons
                         error_reporting(E_ALL);
                         ini_set('display_errors', 1);
-			set_error_handler(array($instance, "handleError"));
+			set_error_handler(array($instance, 'handleError'));
+			set_exception_handler(array($instance, 'handleException'));
 		}
 		return $instance;
 	}
@@ -157,6 +158,24 @@ class icms_core_Logger {
 			$this->deprecated[] = $msg;
 		}
 	}
+
+	/**
+	 * Handles exception
+	 *
+	 * @param Throwable $ex
+	 */
+	public function handleException($ex) {
+	   if (!headers_sent()) {
+	       header('HTTP/1.0 500 ' . $ex->getMessage(), true, 500);
+	   }
+	   echo '<h1>Uncaught exception</h1>';
+	   echo '<b>Message: </b>' . $ex->getMessage() . '<br />';
+	   echo '<b>Code: </b>' . $ex->getCode() . '<br />';
+	   echo '<b>File: </b>' . $ex->getFile() . '<br />';
+	   echo '<b>Line: </b>' . $ex->getLine() . '<br />';
+	   echo '<b>Trace: </b><pre>' . $ex->getTraceAsString() . '</pre>';
+	}
+
 	/**
 	 * Error handling callback (called by the zend engine)
 	 * @param  string  $errno

@@ -30,7 +30,7 @@
 
 /**
  * Class to filter Data
- * 
+ *
  * @package     ICMS\Core
  * @since       1.3
  * @author      vaughan montgomery (vaughan@impresscms.org)
@@ -146,7 +146,7 @@ class icms_core_DataFilter {
 
 	/**
 	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
-	 * @todo 	Remove magic_quotes_gpc and magic_quotes_runtime - 
+	 * @todo 	Remove magic_quotes_gpc and magic_quotes_runtime -
 	 * 			they will always return FALSE in PHP 5.4
 	 *
 	 * Add slashes to the text if magic_quotes_gpc is turned off.
@@ -255,7 +255,7 @@ class icms_core_DataFilter {
 	*					'input' = Filters HTML for input to DB
 	*					'output' = Filters HTML for rendering output
 	*					'print' = Filters HTML for output to Printer
-    *                   'edit' = used for edit content forms 
+    *                   'edit' = used for edit content forms
 	*				TEXT:
 	*					'input' = Filters plain text for input to DB
 	*					'output' = Filters plain text for rendering output
@@ -397,13 +397,13 @@ class icms_core_DataFilter {
 	static public function checkVarArray(array $input, array $filters, $strict = TRUE) {
 		foreach (array_intersect_key($input, $filters) as $key => $value) {
 			$options[0] = $options[1] = '';
-			if (isset($filters[$key]['options']) 
+			if (isset($filters[$key]['options'])
 					&& is_array($filters[$key]['options'])
 					&& isset($filters[$key]['options'][0])
 			) {
 				$options[0] = $filters[$key]['options'][0];
 			}
-			if (isset($filters[$key]['options']) 
+			if (isset($filters[$key]['options'])
 					&& is_array($filters[$key]['options'])
 					&& isset($filters[$key]['options'][1])
 			) {
@@ -449,7 +449,7 @@ class icms_core_DataFilter {
 		$text = self::stripSlashesGPC($text);
 
 		icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
-        
+
 		return $text;
 	}
 
@@ -488,7 +488,7 @@ class icms_core_DataFilter {
 			$text = self::nl2Br($text);
 		}
 		$text = self::codeConv($text, $icode, $image);
-        
+
 		icms::$preload->triggerEvent('afterFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 		return $text;
 	}
@@ -509,7 +509,7 @@ class icms_core_DataFilter {
 		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 
         $html = str_replace('<!-- input filtered -->', '', $html);
-        
+
 		$html = self::codePreConv($html, 1);
 		$html = self::smiley($html);
 		$html = self::codeDecode($html);
@@ -542,7 +542,7 @@ class icms_core_DataFilter {
 	 **/
 	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
 		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
-        
+
         $ifiltered = strpos($html, '<!-- input filtered -->');
         if ($ifiltered === FALSE) {
             $html = self::codePreConv($html, 1);
@@ -551,18 +551,18 @@ class icms_core_DataFilter {
             $html = self::codeConv($html, 1, 1);
 
             $html = icms_core_HTMLFilter::filterHTML($html);
-            
+
             $html .= '<!-- warning! output filtered only -->';
-        
+
             $purified = strpos($html, '<!-- filtered with htmlpurifier -->');
             if ($purified === FALSE || $br = 1) {
             	$html = self::nl2Br($html);
             }
         }
-        
+
         $html = self::makeClickable($html);
         $html = self::censorString($html);
-        
+
 //        $html = str_replace('<!-- input filtered -->', '', $html);
 //        $html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
 
@@ -717,7 +717,7 @@ class icms_core_DataFilter {
 	 *
 	 */
 	static public function censorString(&$text) {
-		$icmsConfigCensor = icms::$config->getConfigsByCat(ICMS_CONF_CENSOR);
+		$icmsConfigCensor = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_CENSOR);
 		if ($icmsConfigCensor['censor_enable'] == TRUE) {
 			$replacement = $icmsConfigCensor['censor_replace'];
 			if (!empty($icmsConfigCensor['censor_words'])) {

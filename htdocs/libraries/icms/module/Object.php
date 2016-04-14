@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Module
- * 
+ *
  * @property int    $mid               Module ID
  * @property string $name              Name displayed for users
  * @property int    $version           Version
@@ -61,7 +61,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  * @property string $modname           Internal name
  * @property int    $ipf               Is this module IPF based?
  */
-class icms_module_Object 
+class icms_module_Object
     extends icms_ipf_Object {
 	/**
 	 * Module configuration
@@ -94,7 +94,7 @@ class icms_module_Object
 	/**
 	 * Constructor
 	 */
-	public function __construct(&$handler, $data = array()) {		
+	public function __construct(&$handler, $data = array()) {
 		$this->initVar('mid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('name', self::DTYPE_STRING, null, true, 150);
 		$this->initVar('version', self::DTYPE_INTEGER, 100, false);
@@ -112,7 +112,7 @@ class icms_module_Object
 		$this->initVar('dbversion', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('modname', self::DTYPE_STRING, null, true, 25);
 		$this->initVar('ipf', self::DTYPE_INTEGER, 0, false);
-                
+
         parent::__construct($handler, $data);
 	}
 
@@ -352,7 +352,48 @@ class icms_module_Object
 		$tpl->display('db:admin/system_adm_modulemenu.html');
 	}
 
-	/**
+    /**
+     * Get admin menu items for current module
+     *
+     * @return array
+     */
+    public function getAdminMenuItems() {
+        $inf = & $this->getInfo();
+        $url = ICMS_MODULES_URL . DIRECTORY_SEPARATOR . $this->dirname . DIRECTORY_SEPARATOR;
+        $rtn = [
+            'link' => $url . (isset($inf['adminindex']) ? $inf['adminindex'] : ''),
+            'title' => $this->getVar('name'),
+            'dir' => $this->dirname,
+            'absolute' => 1,
+            'subs' => []
+        ];
+        if (isset($inf['iconsmall']) && $inf['iconsmall'] != '') {
+            $rtn['small'] = $url . $inf['iconsmall'];
+        }
+        if (isset($inf['iconbig']) && $inf['iconbig'] != '') {
+            $rtn['iconbig'] = $url . $inf['iconbig'];
+        }
+        $this->loadAdminMenu();
+        if (is_array($this->adminmenu) && count($this->adminmenu) > 0) {
+            foreach ($this->adminmenu as $item) {
+                $item['link'] = $url . $item['link'];
+                $rtn['subs'][] = $item;
+            }
+        }
+        if ($this->hasconfig || $this->hascomments) {
+            $rtn['subs'][] = [
+                'title' => _PREFERENCES,
+                'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $this->mid
+            ];
+        }
+        $rtn['hassubs'] = (count($rtn['subs']) > 0) ? 1 : 0;
+        if ($rtn['hassubs'] == 0) {
+            unset($rtn['subs']);
+        }
+        return $rtn;
+    }
+
+    /**
 	 * Modules Message Function
 	 *
 	 * @since ImpressCMS 1.2

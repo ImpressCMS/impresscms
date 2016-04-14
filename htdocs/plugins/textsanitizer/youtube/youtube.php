@@ -37,7 +37,7 @@ function render_youtube($ele_name) {
 		array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeYoutube(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERYOUTUBEURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERHEIGHT, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWIDTH, ENT_QUOTES)."\");'
+		onclick='javascript:icmsCodeYoutube(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERYOUTUBEURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERHEIGHT, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWIDTH, ENT_QUOTES, _CHARSET)."\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/youtube.gif'
 		alt='YouTube'

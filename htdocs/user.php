@@ -52,7 +52,7 @@ $redirect = isset($_GET['xoops_redirect'])
 			? $_POST['xoops_redirect']
 			: FALSE;
 if ($redirect) {
-	$redirect = htmlspecialchars(trim($redirect), ENT_QUOTES);
+	$redirect = htmlspecialchars(trim($redirect), ENT_QUOTES, _CHARSET);
 				$isExternal = FALSE;
 	$pos = strpos($redirect, '://');
 	if ($pos !== FALSE) {
@@ -194,7 +194,7 @@ switch ($op) {
 		}
 		exit();
 		break;
-		
+
 	case 'delete':
 		if (!icms::$user || $icmsConfigUser['self_delete'] != 1) {
 			redirect_header('index.php',5,_US_NOPERMISS);

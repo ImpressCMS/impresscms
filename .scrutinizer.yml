@@ -161,7 +161,7 @@ coding_style:
     php:
         indentation:
             general:
-                use_tabs: false
+                use_tabs: true
                 size: 4
             switch:
                 indent_case: true

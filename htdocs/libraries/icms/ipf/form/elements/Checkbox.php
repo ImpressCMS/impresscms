@@ -12,23 +12,23 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package	ICMS\IPF\Form\Elements
  */
 class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
-	
+
 	private $_delimeter = "&nbsp;";
-	
+
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		
+
 		$control = $object->getControl($key);
 		if(isset($control['delimeter'])) {
 			$this->_delimeter = $control['delimeter'];
 		}
-		
+
 		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVar($key), $this->_delimeter);
-		
+
 		if (isset($control['options'])) {
 			$this->addOptionArray($control['options']);
 		} else {
@@ -83,16 +83,16 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 			$this->setName($ele_name);
 		}
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name 
-				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
+				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
 			}
 			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . "</label></span>" . $ele_delimeter;
 		}
 		if (count($ele_options) > 1) {
-			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='" 
-				. $ele_name	. "_checkemall' class='checkemall' /><label for='" 
+			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
+				. $ele_name	. "_checkemall' class='checkemall' /><label for='"
 				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
 		}
 		$ret .= "</div>";

@@ -23,26 +23,151 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @package	ICMS\IPF
  */
 class icms_ipf_About {
-	public $_lang_aboutTitle;
-	public $_lang_author_info;
-	public $_lang_developer_lead;
-	public $_lang_developer_contributor;
-	public $_lang_developer_website;
-	public $_lang_developer_email;
-	public $_lang_developer_credits;
-	public $_lang_module_info;
-	public $_lang_module_status;
-	public $_lang_module_release_date;
-	public $_lang_module_demo;
-	public $_lang_module_support;
-	public $_lang_module_bug;
-	public $_lang_module_submit_bug;
-	public $_lang_module_feature;
-	public $_lang_module_submit_feature;
-	public $_lang_module_disclaimer;
-	public $_lang_author_word;
-	public $_lang_version_history;
-	public $_lang_by;
+
+    /**
+     * Title
+     *
+     * @var string
+     */
+	public $_lang_aboutTitle = '';
+
+        /**
+         * Author info
+         *
+         * @var string
+         */
+	public $_lang_author_info = '';
+
+        /**
+         * Lead developer
+         *
+         * @var string
+         */
+	public $_lang_developer_lead = '';
+
+        /**
+         * Contributor(s)
+         *
+         * @var string
+         */
+	public $_lang_developer_contributor = '';
+
+        /**
+         * Developer's website
+         *
+         * @var string
+         */
+	public $_lang_developer_website = '';
+
+        /**
+         * Developer's email
+         *
+         * @var string
+         */
+	public $_lang_developer_email = '';
+
+        /**
+         *
+         * @var string
+         */
+	public $_lang_developer_credits = '';
+
+        /**
+         * Module info
+         *
+         * @var string
+         */
+	public $_lang_module_info = '';
+
+        /**
+         * Module status (alfa, beta...)
+         *
+         * @var string
+         */
+	public $_lang_module_status = '';
+
+        /**
+         * Release date
+         *
+         * @var string
+         */
+	public $_lang_module_release_date = '';
+
+        /**
+         * Demn
+         *
+         * @var string
+         */
+	public $_lang_module_demo = '';
+
+        /**
+         * Support address
+         *
+         * @var string
+         */
+	public $_lang_module_support = '';
+
+        /**
+         * Bug text
+         *
+         * @var string
+         */
+	public $_lang_module_bug = '';
+
+        /**
+         * Bug address
+         *
+         * @var string
+         */
+	public $_lang_module_submit_bug = '';
+
+        /**
+         * Feature(s)
+         *
+         * @var string
+         */
+	public $_lang_module_feature = '';
+
+        /**
+         * Submit feature link
+         *
+         * @var string
+         */
+	public $_lang_module_submit_feature = '';
+
+        /**
+         * Disclaimer
+         *
+         * @var string
+         */
+	public $_lang_module_disclaimer = '';
+
+        /**
+         * Author word
+         *
+         * @var string
+         */
+	public $_lang_author_word = '';
+
+        /**
+         * Version history
+         *
+         * @var string
+         */
+	public $_lang_version_history = '';
+
+        /**
+         * Credits
+         *
+         * @var string
+         */
+	public $_lang_by = '';
+
+        /**
+         * Template
+         *
+         * @var \icms_view_Tpl|null
+         */
 	public $_tpl;
 
 	/**
@@ -53,7 +178,6 @@ class icms_ipf_About {
 	 * @param string $aboutTitle text used in the extreme right caption of the menu
 	 * @return icms_ipf_About
 	 */
-
 	public function __construct($aboutTitle = _MODABOUT_ABOUT) {
 		global $icmsModule, $icmsConfig;
 
@@ -217,10 +341,9 @@ class icms_ipf_About {
 			$this->_tpl->assign('module_license_txt', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
 			fclose($handle);
 		}
-	
+
 		$this->_tpl->display('db:admin/system_adm_moduleabout.html');
 
 		icms_cp_footer();
 	}
 }
-
