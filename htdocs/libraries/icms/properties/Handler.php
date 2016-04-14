@@ -397,7 +397,7 @@ abstract class icms_properties_Handler implements Serializable {
             return trigger_error('Option not in array for variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
         $clean = $this->cleanVar($name, $this->_vars[$name][self::VARCFG_TYPE], $value);
                 
-        if ($clean == $this->_vars[$name][self::VARCFG_VALUE])
+        if ($clean === $this->_vars[$name][self::VARCFG_VALUE])
             return;
         $this->_vars[$name][self::VARCFG_VALUE] = $clean;
         $this->setVarInfo($name, self::VARCFG_CHANGED, true);
@@ -875,27 +875,23 @@ abstract class icms_properties_Handler implements Serializable {
                     return $value;
                 return intval($value);
             case self::DTYPE_ARRAY:
-                if ((array) $value === $value)
+                if (((array)$value) === $value) {
                     return $value;
-                elseif (is_string($value) && !empty($value)) {
+		}
+		if (empty($value)) {
+		    return array();
+		}				    
+		if (is_string($value)) {
                     if (in_array(substr($value, 0, 1), array('{', '['))) {
                         $ret = json_decode($value, true);
-                        if ($ret !== null)
-                            return $ret;
                     } elseif (substr($value, 0, 2) == 'a:') {
                         $ret = unserialize($value);
-                        if ($ret !== false)
-                            return $ret;
-                    } elseif ($value == '') {
-                        return array();
-                    }
-                    return array($value);
-                } elseif (is_null($value) && empty($value))
-                    return array();
-                elseif (!is_object($value))
-                    return array($value);
-                else
-                    return (array) $value;
+                    } 
+                    if (isset($ret) && ($ret !== null)) {
+			return $ret;
+		    }
+                }
+                return (array)$value;
             case self::DTYPE_FILE:
                 if (isset($_FILES[$key])) {
                     $uploader = new icms_file_MediaUploadHandler($this->_vars[$key]['path'], $this->_vars[$key]['allowedMimeTypes'], $this->_vars[$key]['maxFileSize'], $this->_vars[$key]['maxWidth'], $this->_vars[$key]['maxHeight']);
