@@ -316,9 +316,9 @@ final class icms {
 			
 			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
 			$filters = array(
-					'SCRIPT_NAME' => '',
-					'HTTP_HOST' => '',
-					'QUERY_STRING' => '',
+					'SCRIPT_NAME' => 'str',
+					'HTTP_HOST' => 'str',
+					'QUERY_STRING' => 'str',
 					'HTTP_REFERER' => 'url',
 			);
 			
