@@ -111,11 +111,11 @@ abstract class icms {
 		self::$paths['www']		= array(ICMS_ROOT_PATH, ICMS_URL);
 		self::$paths['modules']	= array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
 		self::$paths['themes']	= array(ICMS_THEME_PATH, ICMS_THEME_URL);
-		self::buildRelevantUrls();
 		// Initialize the autoloader
 		require_once dirname(__FILE__ ) . '/icms/Autoloader.php';
 		icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
+		self::buildRelevantUrls();
 	}
 
 	/**
@@ -303,9 +303,9 @@ abstract class icms {
 			
 			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
 			$filters = array(
-					'SCRIPT_NAME' => '',
-					'HTTP_HOST' => '',
-					'QUERY_STRING' => '',
+					'SCRIPT_NAME' => 'str',
+					'HTTP_HOST' => 'str',
+					'QUERY_STRING' => 'str',
 					'HTTP_REFERER' => 'url',
 			);
 			
