@@ -1247,7 +1247,9 @@ function icms_getCookieVar($name, $default = '')
 function icms_get_page_before_form()
 {
 	global $impresscms;
-	return isset($_POST['icms_page_before_form']) ? $_POST['icms_page_before_form'] : $impresscms->urls['previouspage'];
+	return isset($_POST['icms_page_before_form'])
+			? icms_core_DataFilter::checkVar($_POST['icms_page_before_form'], 'url')
+			: $impresscms->urls['previouspage'];
 }
 
 /**
