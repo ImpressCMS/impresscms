@@ -22,7 +22,7 @@ if (!icms::$user) {
 $icmsTpl = new icms_view_Tpl();
 /*
  * GET variables
- * (str) op:		list, listimg, addcat,
+ * (str) op:		list (default), listimg, addcat,
  * 					addfile, save, delfile, delfileok, cloneimg
  * 					save_edit_ok
  * (int) limit
@@ -41,6 +41,37 @@ $icmsTpl = new icms_view_Tpl();
  * (int) image_id
  * (str) query
  */
+/* default values */
+$op = 'list';
+$limit = 15;
+$start = 0;
+$type = 'ibrow';
+//$target = null;
+
+$filter_get = array(
+	'limit' => 'int',
+	'start' => 'int',
+	'imgcat_id' => 'int', //null
+	'image_id' => 'int',  //null
+);
+
+$filter_post = array(
+	'limit' => 'int',
+	'start' => 'int',
+	'imgcat_id' => 'int',
+	'image_id' => 'int',
+);
+
+/* filter the user input */
+if (!empty($_GET)) {
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	extract($clean_GET);
+}
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	extract($clean_POST);
+}
+ /*
 $op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : 'list');
 $imgcat_id = (isset($_GET['imgcat_id'])) ? (int) $_GET['imgcat_id'] : ((isset($_POST['imgcat_id'])) ? (int) $_POST['imgcat_id'] : NULL);
 $image_id = (isset($_GET['image_id'])) ? (int) $_GET['image_id'] : ((isset($_POST['image_id'])) ? (int) $_POST['image_id'] : NULL);
@@ -48,6 +79,7 @@ $target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target') : ((isset
 $limit = (isset($_GET['limit'])) ? (int) $_GET['limit'] : ((isset($_POST['limit'])) ? (int) $_POST['limit'] : 15);
 $start = (isset($_GET['start'])) ? (int) $_GET['start'] : ((isset($_POST['start'])) ? (int) $_POST['start'] : 0);
 $type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type') : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type') : 'ibrow');
+*/
 
 global $icmsConfig;
 // Adding language files
