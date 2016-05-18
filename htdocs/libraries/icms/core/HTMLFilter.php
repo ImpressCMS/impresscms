@@ -57,8 +57,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
         }
 
         if ($icmsConfigPurifier['enable_purifier'] !== 0) {
-//			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
-//			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
+
 			if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
 				require_once ICMS_PLUGINS_PATH . '/csstidy/class.csstidy.php';
 			}
