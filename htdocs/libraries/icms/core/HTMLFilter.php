@@ -87,7 +87,6 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	static private function getCustomFilterList() {
 		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
 		$test = new HTMLPurifier();
-		$test->config->def[]
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
 			$filterList = array();
