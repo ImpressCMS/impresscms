@@ -50,15 +50,14 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
 
         $fcomment = '<!-- filtered with htmlpurifier -->';
-        
+
         $purified = strpos($html, $fcomment);
         if ($purified !== FALSE) {
             $html = str_replace($fcomment, '', $html);
         }
 
         if ($icmsConfigPurifier['enable_purifier'] !== 0) {
-			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
-			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
+
 			if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
 				require_once ICMS_PLUGINS_PATH . '/csstidy/class.csstidy.php';
 			}
@@ -66,13 +65,13 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			$icmsPurifyConf = self::getHTMLFilterConfig();
 			// uncomment for specific config debug info
 			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
-            
+
             $purifier = new HTMLPurifier($icmsPurifyConf);
 			$html = $purifier->purify($html);
-            
+
             $html .= $fcomment;
 		}
-        
+
 		return $html;
 	}
 
@@ -105,14 +104,14 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 
 		return $filterList;
 	}
-	
+
 	/**
 	 * Gets Custom Purifier configurations ** this function will improve in time **
 	 * @return  array    $icmsPurifierConf
 	 **/
 	static protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
-        
+
         $IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];
         if ($IframeRegExp !== '') {
             $pos = strpos( $IframeRegExp, '|' );
@@ -122,7 +121,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
                 $IframeRegExp = '%^(' . $IframeRegExp . ')%';
             }
         }
- 
+
 		$icmsPurifierConf = array(
             'HTML.DefinitionID' => $icmsConfigPurifier['purifier_HTML_DefinitionID'],
             'HTML.DefinitionRev' => $icmsConfigPurifier['purifier_HTML_DefinitionRev'],
