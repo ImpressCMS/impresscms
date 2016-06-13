@@ -5,13 +5,9 @@
  * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	View
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Table.php 12013 2012-09-11 17:41:40Z m0nty $
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -22,13 +18,11 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * Base class representing a table for displaying icms_ipf_Object objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	ICMS
- * @package		Ipf
- * @subpackage	View
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @todo		Properly declare all vars with their visibility (private, protected, public) and follow naming convention
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	ICMS\IPF\View
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @todo	Properly declare all protected s with their visibility (private, protected, public) and follow naming convention
  */
 class icms_ipf_view_Table {
 
@@ -92,8 +86,8 @@ class icms_ipf_view_Table {
 			$this->_head_css_class = 'head';
 		}
 	}
-
-	/**
+        
+        /**
 	 *
 	 * @param $op
 	 * @param $caption
@@ -191,7 +185,7 @@ class icms_ipf_view_Table {
 	}
 
 	/**
-	 *
+	 * @todo	change to dependency injection methods
 	 */
 	public function getDefaultSort() {
 		if ($this->_sortsel) {
@@ -210,7 +204,7 @@ class icms_ipf_view_Table {
 	}
 
 	/**
-	 *
+	 * @todo	change to dependency injection methods
 	 */
 	public function getDefaultOrder() {
 		if ($this->_ordersel) {
@@ -265,6 +259,7 @@ class icms_ipf_view_Table {
 
 	/**
 	 *
+	 * @todo	Switch to dependency injection
 	 */
 	public function setSortOrder() {
 		$this->_sortsel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] : $this->getDefaultSort();
@@ -412,7 +407,7 @@ class icms_ipf_view_Table {
 	}
 
 	/**
-	 *
+	 * @todo	change to dependency injection methods
 	 */
 	public function getDefaultFilter() {
 		if ($this->_filtersel) {
@@ -461,7 +456,7 @@ class icms_ipf_view_Table {
 	}
 
 	/**
-	 *
+	 * @todo	change to dependency injection methods
 	 */
 	public function getDefaultFilter2() {
 		if ($this->_filtersel2) {
@@ -588,6 +583,10 @@ class icms_ipf_view_Table {
 	}
 
 	/**
+	 * Render the table of records for an IPF object
+	 *
+	 * @todo	change to dependency injection methods
+	 * @todo	remove the rest of the HTML and move it to the templates
 	 *
 	 * @param $fetchOnly
 	 * @param $debug
@@ -595,33 +594,80 @@ class icms_ipf_view_Table {
 	public function render($fetchOnly = false, $debug = false) {
 		global $impresscms;
 
+		/* Filters. First, some variable variables */
+		$start = 'start' . $this->_objectHandler->keyName;
+		$sortsel = $this->_objectHandler->_itemname . '_' . 'sortsel';
+		$ordersel = $this->_objectHandler->_itemname . '_' . 'ordersel';
+		$quicksearch = 'quicksearch_' . $this->_id;
+				
+		$filter_get = array(
+				$start => 'int',
+				'limitsel' => 'int',
+				'filtersel' => 'str',
+				'filtersel2' => 'str',
+				$sortsel => 'str',
+				$ordersel => 'str',
+				$quicksearch => 'special',
+		);
+		
+		$filter_post = array(
+				'limitsel' => 'int',
+				'filtersel' => 'str',
+				'filtersel2' => 'str',
+				$quicksearch => 'special',
+		);
+		
+		$filter_server = array(
+				'SCRIPT_NAME' => 'str',
+		);
+		/* default values */
+		$$start = 0;
+		$limitsel = 15;
+		$filtersel = $this->getDefaultFilter();
+		$filtersel2 = $this->getDefaultFilter2();
+		$$sortsel = $$ordersel = '';
+		$$quicksearch = '';
+		
+		/* filter the user input - only allow specified variables */
+		if (!empty($_GET)) {
+			$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, true);
+			extract($clean_GET);
+		}
+		if (!empty($_POST)) {
+			$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
+			extract($clean_POST);
+		}
+		
+		$server_vars = icms_core_DataFilter::checkVarArray($_SERVER, $filter_server, true);
+		$script_name = $server_vars['SCRIPT_NAME'];
+		
 		$this->_tpl = new icms_view_Tpl();
 
 		/**
-		 * We need access to the vars of the icms_ipf_Object for a few things in the table creation.
+		 * We need access to the protected vars of the icms_ipf_Object for a few things in the table creation.
 		 * Since we may not have an icms_ipf_Object to look into now, let's create one for this purpose
 		 * and we will free it after
 		 */
 		$this->_tempObject =& $this->_objectHandler->create();
-
-		$this->_criteria->setStart(isset($_GET['start' . $this->_objectHandler->keyName]) ? (int) ($_GET['start' . $this->_objectHandler->keyName]) : 0);
+		
+		$this->_criteria->setStart($$start);
 
 		$this->setSortOrder();
 
-		if (!$this->_isTree) {
-			$this->_limitsel = isset($_GET['limitsel']) ? $_GET['limitsel'] : icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_limitsel', '15');
-		} else {
+		$this->_limitsel = !empty($limitsel) ? $limitsel : icms_getCookieVar($script_name . '_limitsel', '15');
+
+		if ($this->_isTree) {
 			$this->_limitsel = 'all';
 		}
+		
+		icms_setCookieVar($script_name . '_limitsel', $this->_limitsel);
 
-		$this->_limitsel = isset($_POST['limitsel']) ? $_POST['limitsel'] : $this->_limitsel;
-		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_limitsel', $this->_limitsel);
 		$limitsArray = $this->getLimitsArray();
 		$this->_criteria->setLimit($this->_limitsel);
+		
+		$this->_filtersel = $filtersel;
 
-		$this->_filtersel = isset($_GET['filtersel']) ? $_GET['filtersel'] : $this->getDefaultFilter();
-		$this->_filtersel = isset($_POST['filtersel']) ? $_POST['filtersel'] : $this->_filtersel;
-		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_filtersel', $this->_filtersel);
+		icms_setCookieVar($script_name . '_' . $this->_id . '_filtersel', $this->_filtersel);
 		$filtersArray = $this->getFiltersArray();
 
 		if ($filtersArray) {
@@ -629,7 +675,7 @@ class icms_ipf_view_Table {
 		}
 
 		// Check if the selected filter is defined and if so, create the selfilter2
-		if (isset($this->_filterseloptions[$this->_filtersel])) {
+		if (!empty($this->_filterseloptions[$this->_filtersel])) {
 			// check if method associate with this filter exists in the handler
 			if (is_array($this->_filterseloptions[$this->_filtersel])) {
 				$filter = $this->_filterseloptions[$this->_filtersel];
@@ -641,13 +687,12 @@ class icms_ipf_view_Table {
 					$method = $this->_filterseloptions[$this->_filtersel];
 					$this->_filtersel2options = $this->_objectHandler->$method();
 
-					$this->_filtersel2 = isset($_GET['filtersel2']) ? $_GET['filtersel2'] : $this->getDefaultFilter2();
-					$this->_filtersel2 = isset($_POST['filtersel2']) ? $_POST['filtersel2'] : $this->_filtersel2;
+					$this->_filtersel2 = $filtersel2;
 
 					$filters2Array = $this->getFilters2Array();
 					$this->_tpl->assign('icms_optionssel_filters2Array', $filters2Array);
 
-					icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_filtersel2', $this->_filtersel2);
+					icms_setCookieVar($script_name . '_filtersel2', $this->_filtersel2);
 					if ($this->_filtersel2 != 'default') {
 						$this->_criteria->add(new icms_db_criteria_Item($this->_filtersel, $this->_filtersel2));
 					}
@@ -656,14 +701,14 @@ class icms_ipf_view_Table {
 		}
 		// Check if we have a quicksearch
 
-		if (isset($_POST['quicksearch_' . $this->_id]) && $_POST['quicksearch_' . $this->_id] != '') {
+		if (!empty($$quicksearch)) {
 			$quicksearch_criteria = new icms_db_criteria_Compo();
 			if (is_array($this->_quickSearch['fields'])) {
 				foreach ($this->_quickSearch['fields'] as $v) {
-					$quicksearch_criteria->add(new icms_db_criteria_Item($v, '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'), 'OR');
+					$quicksearch_criteria->add(new icms_db_criteria_Item($v, '%' . $$quicksearch . '%', 'LIKE'), 'OR');
 				}
 			} else {
-				$quicksearch_criteria->add(new icms_db_criteria_Item($this->_quickSearch['fields'], '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'));
+				$quicksearch_criteria->add(new icms_db_criteria_Item($this->_quickSearch['fields'], '%' . $$quicksearch . '%', 'LIKE'));
 			}
 			$this->_criteria->add($quicksearch_criteria);
 		}
@@ -685,7 +730,7 @@ class icms_ipf_view_Table {
 			$new_get_array = array();
 
 			$not_needed_params = array('sortsel', 'limitsel', 'ordersel', 'start' . $this->_objectHandler->keyName);
-			foreach ($_GET as $k => $v) {
+			foreach ($clean_GET as $k => $v) {
 				if (!in_array($k, $not_needed_params)) {
 					$new_get_array[] = "$k=$v";
 					$params_of_the_options_sel[] = "$k=$v";
@@ -740,14 +785,14 @@ class icms_ipf_view_Table {
 			} elseif ($column->getCustomCaption()) {
 				$aColumn['caption'] = $column->getCustomCaption();
 			} else {
-				$aColumn['caption'] = isset($this->_tempObject->vars[$column->getKeyName()]['form_caption']) ? $this->_tempObject->vars[$column->getKeyName()]['form_caption'] : $column->getKeyName();
+				$aColumn['caption'] = $this->_tempObject->getVarInfo($column->getKeyName(), 'form_caption') ? $this->_tempObject->getVarInfo($column->getKeyName(), 'form_caption') : $column->getKeyName();
 			}
 			// Are we doing a GET sort on this column ?
-			$getSort = (isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) && $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] == $column->getKeyName()) || ($this->_sortsel == $column->getKeyName());
-			$order = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] : 'DESC';
+			$getSort = (!empty($$sortsel) && $$sortsel == $column->getKeyName()) || ($this->_sortsel == $column->getKeyName());
+			$order = !empty($$ordersel) ? $$ordersel : 'DESC';
 
-			if (isset($_REQUEST['quicksearch_' . $this->_id]) && $_REQUEST['quicksearch_' . $this->_id] != '') {
-				$filter = isset($_POST['quicksearch_' . $this->_id]) ? INPUT_POST : INPUT_GET;
+			if (!empty($$quicksearch)) {
+				$filter = !empty($$quicksearch) ? INPUT_POST : INPUT_GET;
 				$qs_param = "&amp;quicksearch_".$this->_id."=".filter_input($filter, 'quicksearch_' . $this->_id, FILTER_SANITIZE_SPECIAL_CHARS);
 			} else {
 				$qs_param = '';
