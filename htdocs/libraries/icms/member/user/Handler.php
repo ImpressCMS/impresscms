@@ -52,9 +52,9 @@ include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Member\User
  */
-class icms_member_user_Handler 
+class icms_member_user_Handler
     extends icms_ipf_Handler {
-    
+
         public function __construct(&$db, $module = 'icms') {
             if (!$module)
                 $module = 'icms_member';
@@ -62,6 +62,15 @@ class icms_member_user_Handler
             parent::__construct($db, $objName, 'uid', 'uname', 'email', $module, 'users');
         }
 
+	/**
+	 * Make sure the registration date of a user is set.
+	 * @param $obj the user object
+	 */
+	protected function beforeInsert(&$obj) {
+			if (!$obj->user_regdate) {
+				$obj->user_regdate = time();
+			}
+		}
 	/**
 	 * delete a user from the database
 	 *
@@ -75,8 +84,8 @@ class icms_member_user_Handler
                     return;
 		$sql = sprintf(
 			"UPDATE %s SET level = '-1', pass = '%s' WHERE uid = '%u'",
-			$this->table, 
-                        substr(md5(time()), 0, 8), 
+			$this->table,
+                        substr(md5(time()), 0, 8),
                         (int) $user->getVar('uid')
 		);
 		if (FALSE != $force) {
@@ -246,18 +255,18 @@ class icms_member_user_Handler
 	 * @return	string	A username matching the provided email address
 	 */
 	static public function getUnameFromEmail($email = '') {
-                $handler = icms::handler('icms_member_user');                         
+                $handler = icms::handler('icms_member_user');
 		if ($email !== '') {
 			$sql = $handler->db->query("SELECT uname, email FROM " . $handler->table
 				. " WHERE email = '" . (!empty($email)?htmlspecialchars($email, ENT_QUOTES, _CHARSET):'')
-				. "'");                        
+				. "'");
 			list($uname, $email) = $handler->db->fetchRow($sql);
 		} else {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 		return $uname;
 	}
-        
+
         /**
 	 * find the username for a given ID
 	 *
@@ -280,9 +289,9 @@ class icms_member_user_Handler
                         }
 		}
 		return $GLOBALS['icmsConfig']['anonymous'];
-	}        
-        
-	public function getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) {            
+	}
+
+	public function getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) {
                 if ($limit > 0) {
                     if ($criteria === NULL) {
                         $criteria = new icms_db_criteria_Compo();
