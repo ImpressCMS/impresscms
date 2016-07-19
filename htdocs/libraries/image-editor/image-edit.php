@@ -26,18 +26,48 @@ icms_loadLanguageFile('system', 'images', true);
 
 $icmsTpl = new icms_view_Tpl();
 
+/* set get and post filters, if not strings */
+$filter_get = array(
+		'image_id' => 'int',
+		'uniq' => 'str',
+		'type' => 'str',
+		'target' => 'str',
+		'op' => 'str',
+		'image_path' => 'str',
+		'image_name' => 'str',
+		'image_weight' => 'int',
+		'image_display' => 'int',
+		'image_temp' => 'str',
+		'overwrite' => 'int',
+);
+
+$filter_post = array(
+		'image_id' => 'int',
+		'uniq' => 'str',
+		'type' => 'str',
+		'target' => 'str',
+		'op' => 'str',
+);
+
+/* set default values for variables */
+
+
+/* filter the user input */
+if (!empty($_GET)) {
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	extract($clean_GET);
+}
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	extract($clean_POST);
+}
+
 $icmsTpl->assign('icms_url', ICMS_URL);
 $icmsTpl->assign('icms_root_path', ICMS_ROOT_PATH);
 $icmsTpl->assign('icms_lib_path', ICMS_LIBRARIES_PATH);
 $icmsTpl->assign('icms_lib_url', ICMS_LIBRARIES_URL);
 $icmsTpl->assign('icms_imanager_temp_path', ICMS_IMANAGER_FOLDER_PATH . '/temp');
 $icmsTpl->assign('icms_imanager_temp_url', ICMS_IMANAGER_FOLDER_URL . '/temp');
-
-$image_id = (isset($_GET['image_id'])) ? (int) $_GET['image_id'] : ((isset($_POST['image_id'])) ? (int) $_POST['image_id'] : null);
-$uniq = (isset($_GET ['uniq'])) ? filter_input(INPUT_GET,'uniq') : ((isset($_POST['uniq'])) ? filter_input(INPUT_POST, 'uniq') : null);
-$type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type') : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type') : null);
-$target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target') : ((isset($_POST['target'])) ? filter_input(INPUT_POST, 'target') : null);
-$op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : null);
 
 if (!file_exists(ICMS_IMANAGER_FOLDER_PATH . '/temp/')) {
 	if(!@mkdir(ICMS_IMANAGER_FOLDER_PATH . '/temp', 0777)) {
@@ -46,7 +76,7 @@ if (!file_exists(ICMS_IMANAGER_FOLDER_PATH . '/temp/')) {
 	}
 }
 
-if (!is_null($target) && !is_null($type)) {
+if (!empty($target) && !empty($type)) {
 	if (!isset($_SESSION['icms_imanager'])) {
 		session_start();
 		$_SESSION['icms_imanager'] = array();
@@ -59,11 +89,11 @@ if (!is_null($target) && !is_null($type)) {
 	}
 }
 
-if (!is_null($op) && $op == 'cancel') {
+if (!empty($op) && $op == 'cancel') {
 	/* make sure the file is in the temp folder and prevent arbitrary deletes of any file */
 	$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-	if (isset($_GET['image_path']) && strncmp(realpath($_GET ['image_path']), strlen($valid_path)) == 0) {
-		$image_path = realpath($_GET['image_path']);
+	if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
+		$image_path = realpath($image_path);
 	} else {
 		$image_path = NULL;
 	}
@@ -95,13 +125,13 @@ if (!is_null($op) && $op == 'cancel') {
 	echo 'window.close();';
 	exit ();
 }
-if (!is_null($op) && $op == 'save') {
-	$simage_id = isset($_GET['image_id']) ? (int) $_GET['image_id'] : null;
-	$simage_name = isset($_GET['image_name']) ? filter_input(INPUT_GET, 'image_name') : null;
-	$simage_weight = isset($_GET['image_weight']) ? (int) $_GET['image_weight'] : null;
-	$simage_display = isset($_GET['image_display']) ? (int) $_GET['image_display'] : null;
-	$simage_temp = isset($_GET['image_temp']) ? filter_input(INPUT_GET, 'image_temp') : null;
-	$soverwrite = isset($_GET['overwrite']) ? (int) $_GET['overwrite'] : 1;
+if (!empty($op) && $op == 'save') {
+	$simage_id = $image_id;
+	$simage_name = $image_name;
+	$simage_weight = $image_weight;
+	$simage_display = $image_display;
+	$simage_temp = $image_temp;
+	$soverwrite = $overwrite;
 
 	$image_handler = icms::handler('icms_image');
 	$simage = & $image_handler->get($simage_id);
