@@ -1,23 +1,58 @@
 <?php
+/**
+ * Images Manager - Image Filter Tool
+ *
+ * Applies filters to an image
+ *
+ * @copyright The ImpressCMS Project http://www.impresscms.org/
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package core
+ * @since 1.2
+ */
 $xoopsOption['nodebug'] = 1;
-if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
+require_once '../../../../mainfile.php';
 
-if (isset($_GET['image_path']) && isset($_GET['image_url'])) {
+/* 3 critical parameters must exist - and must be safe */
+$image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
+$image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
+$filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
+
+
+/* prevent remote file inclusion */
+$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
+if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
+	$image_path = realpath($image_path);
+} else {
+	$image_path = null;
+}
+
+/* compare URL to ICMS_URL - it should be a full URL and within the domain, without traversal */
+$submitted_url = parse_url($image_url);
+$base_url = parse_url(ICMS_URL); // icms::$urls not available?
+if ($submitted_url['scheme'] != $base_url['scheme']) $image_url = null;
+if ($submitted_url['host'] != $base_url['host']) $image_url = null;
+if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . basename($image_path), PHP_URL_PATH)) $image_url = null;
+
+if (!isset($image_path) || !isset($image_url)) {
+	echo "alert('" . _ERROR . "');";
+} else {
+	include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
+
+
+/*	if (isset($_GET['image_path']) && isset($_GET['image_url'])) {
 	$image_path = isset($_GET['image_path']) ? filter_input(INPUT_GET, 'image_path') : null;
 	$image_url = isset($_GET['image_url']) ? filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL) : null;
-	$filter = isset($_GET['filter']) ? $_GET['filter'] : null;
+	$filter = isset($_GET['filter']) ? $_GET['filter'] : null;*/
 
 	$args = array();
 	if (isset($_GET['arg1'])) {
-		$args[] = $_GET['arg1'];
+		$args[] = filter_input(INPUT_GET, 'arg1', FILTER_SANITIZE_STRING);
 	}
 	if (isset($_GET['arg2'])) {
-		$args[] = $_GET['arg2'];
+		$args[] = filter_input(INPUT_GET, 'arg2', FILTER_SANITIZE_STRING);
 	}
 	if (isset($_GET['arg3'])) {
-		$args[] = $_GET['arg3'];
+		$args[] = filter_input(INPUT_GET, 'arg3', FILTER_SANITIZE_STRING);
 	}
 	$save = isset($_GET['save']) ? (int) $_GET['save'] : 0;
 	$del  = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
