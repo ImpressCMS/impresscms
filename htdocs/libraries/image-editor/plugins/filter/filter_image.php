@@ -33,33 +33,48 @@ if ($submitted_url['scheme'] != $base_url['scheme']) $image_url = null;
 if ($submitted_url['host'] != $base_url['host']) $image_url = null;
 if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . basename($image_path), PHP_URL_PATH)) $image_url = null;
 
+/* possible filter entries */
+$filters = array(
+		'IMG_FILTER_NEGATE',
+		'IMG_FILTER_GRAYSCALE',
+		'IMG_FILTER_BRIGHTNESS',
+		'IMG_FILTER_CONTRAST',
+		'IMG_FILTER_COLORIZE',
+		'IMG_FILTER_EDGEDETECT',
+		'IMG_FILTER_EMBOSS',
+		'IMG_FILTER_GAUSSIAN_BLUR',
+		'IMG_FILTER_SELECTIVE_BLUR',
+		'IMG_FILTER_MEAN_REMOVAL',
+		'IMG_FILTER_SMOOTH',
+		'IMG_FILTER_SEPIA'
+);
+
+$filter = isset($_GET['filter']) ? filter_var($_GET['filter'], FILTER_SANITIZE_STRING) : null;
+if (!in_array($filter, $filters)) $filter = null;
+
 if (!isset($image_path) || !isset($image_url)) {
 	echo "alert('" . _ERROR . "');";
 } else {
+	/* this goes here instead of the initial conditions
+	 * because errors occur when previewing the filter effect */
+	if (!isset($filter)) exit;
+
 	include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 
-
-/*	if (isset($_GET['image_path']) && isset($_GET['image_url'])) {
-	$image_path = isset($_GET['image_path']) ? filter_input(INPUT_GET, 'image_path') : null;
-	$image_url = isset($_GET['image_url']) ? filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL) : null;
-	$filter = isset($_GET['filter']) ? $_GET['filter'] : null;*/
-
 	$args = array();
+
 	if (isset($_GET['arg1'])) {
-		$args[] = filter_input(INPUT_GET, 'arg1', FILTER_SANITIZE_STRING);
+		$args[] = (int) $_GET['arg1'];
 	}
 	if (isset($_GET['arg2'])) {
-		$args[] = filter_input(INPUT_GET, 'arg2', FILTER_SANITIZE_STRING);
+		$args[] = (int) $_GET['arg2'];
 	}
 	if (isset($_GET['arg3'])) {
-		$args[] = filter_input(INPUT_GET, 'arg3', FILTER_SANITIZE_STRING);
+		$args[] = (int) $_GET['arg3'];
 	}
+
 	$save = isset($_GET['save']) ? (int) $_GET['save'] : 0;
 	$del  = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
-
-	if (is_null($filter) || $filter == '') {
-		exit;
-	}
 
 	$img = WideImage::load($image_path);
 	$arr = explode('/', $image_path);
@@ -74,12 +89,10 @@ if (!isset($image_path) || !isset($image_url)) {
 		exit;
 	}
 
-	if (!is_null($filter)) {
-		if ($filter == 'IMG_FILTER_SEPIA') {
-			$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->saveToFile($temp_img_path);
-		}else{
-			$img->applyFilter(constant($filter), implode(',', $args))->saveToFile($temp_img_path);
-		}
+	if ($filter == 'IMG_FILTER_SEPIA') {
+		$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->saveToFile($temp_img_path);
+	}else{
+		$img->applyFilter(constant($filter), implode(',', $args))->saveToFile($temp_img_path);
 	}
 
 	if ($save) {
