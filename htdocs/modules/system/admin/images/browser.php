@@ -161,6 +161,11 @@ function imanager_index($imgcat_id = NULL) {
 		echo '<br />';
 	}
 
+	if (!is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
+		icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH)));
+		echo '<br />';
+	}
+
 	$imgcat_handler = icms::handler('icms_image_category');
 
 	$criteriaRead = new icms_db_criteria_Compo();

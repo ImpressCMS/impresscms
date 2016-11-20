@@ -5,9 +5,9 @@
  * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since	1.1
- * @author	marcan <marcan@impresscms.org>
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -18,11 +18,11 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * Base class representing a table for displaying icms_ipf_Object objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	ICMS\IPF\View
- * @since	1.1
- * @author	marcan <marcan@impresscms.org>
- * @todo	Properly declare all protected s with their visibility (private, protected, public) and follow naming convention
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @todo		Properly declare all vars with their visibility (private, protected, public) and follow naming convention
  */
 class icms_ipf_view_Table {
 
@@ -86,8 +86,8 @@ class icms_ipf_view_Table {
 			$this->_head_css_class = 'head';
 		}
 	}
-        
-        /**
+
+	/**
 	 *
 	 * @param $op
 	 * @param $caption
@@ -649,7 +649,7 @@ class icms_ipf_view_Table {
 		 * and we will free it after
 		 */
 		$this->_tempObject =& $this->_objectHandler->create();
-		
+
 		$this->_criteria->setStart($$start);
 
 		$this->setSortOrder();
@@ -659,12 +659,12 @@ class icms_ipf_view_Table {
 		if ($this->_isTree) {
 			$this->_limitsel = 'all';
 		}
-		
+
 		icms_setCookieVar($script_name . '_limitsel', $this->_limitsel);
 
 		$limitsArray = $this->getLimitsArray();
 		$this->_criteria->setLimit($this->_limitsel);
-		
+
 		$this->_filtersel = $filtersel;
 
 		icms_setCookieVar($script_name . '_' . $this->_id . '_filtersel', $this->_filtersel);
