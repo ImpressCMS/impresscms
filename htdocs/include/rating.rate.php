@@ -42,8 +42,7 @@ if ($pluginObj) {
 		} else {
 			$icmsTpl->assign('icms_rating_dirname', $module_dirname);
 			$icmsTpl->assign('icms_rating_itemid', $rating_itemid);
-			$urls = icms_getCurrentUrls();
-			$icmsTpl->assign('icms_rating_current_page', $urls['full']);
+			$icmsTpl->assign('icms_rating_current_page', \icms::$urls['full']);
 			/*			if (isset($xoTheme) && is_object($xoTheme)) {
 				$xoTheme->addStylesheet(ICMS_URL . '/module.css');
 				} else {

@@ -58,6 +58,17 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 * @param bool $isNew flag the new objects as "new"?
 	 * @return object icms_member_user_Object
 	 */
+
+	/**
+	 * Make sure the registration date of a user is set.
+	 * @param $obj the user object
+	 */
+	protected function beforeInsert(&$obj) {
+		if (!$obj->user_regdate) {
+			$obj->user_regdate = time();
+		}
+	}
+
 	public function &create($isNew = TRUE) {
 		$user = new icms_member_user_Object();
 		if ($isNew) {

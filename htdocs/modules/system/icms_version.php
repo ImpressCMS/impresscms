@@ -47,7 +47,7 @@ defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
-	'version'=> 1.39,
+	'version'=> 1.310,
 	'description'=> _MI_SYSTEM_DESC,
 	'author'=> "",
 	'credits'=> "The ImpressCMS Project",
@@ -63,11 +63,11 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Final",
-	'status'=> "Final",
-	'date'=> "2 March 2016",
+	'status_version'=> "Alpha",
+	'status'=> "Alpha",
+	'date'=> "",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_FINAL,
+	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
 /** Contributors */
 	'developer_website_url' => "http://www.impresscms.org",
@@ -99,7 +99,7 @@ $modversion['autotasks'][] = array(
 );
 
 /** Manual */
-$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Extended_Profile/"._LANGCODE."' target='_blank'>"._LANGNAME."</a>";
+$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/modules/wiki/index.php?page=Administration" . _LANGCODE . "' target='_blank'>" . _LANGNAME . "</a>";
 
 /** Administrative information */
 $modversion['hasAdmin'] = TRUE;
@@ -491,4 +491,3 @@ $modversion['templates'][] = array(
 	'file' => 'admin/autotasks/system_adm_autotasks.html',
 	'description' => ''
 	);
-
