@@ -7,12 +7,14 @@ Build Version:
 Changes:
 
 Improvements:
-* #884 - further PHP 5.4 Strict compliance (from 1.3.9)
-* #751 - switch to Google Analytics universal (from 1.3.9)
+* #884, #653 - further PHP 5.4 Strict compliance (from 1.3.9)
+* #751, #929 - switch to Google Analytics universal (from 1.3.9)
 * #868 - removed duplicate value URI.AllowedSchemes in HTMLPurifier configuration (from 1.3.9)
 
 Fixes:
 
+Security Fixes:
+* #927 - SSRF vulnerability in image editor resolved (from 1.3.10)
 
 === ImpressCMS 2.0.0 Alpha 5 ===
 Release date: 7 April 2015
