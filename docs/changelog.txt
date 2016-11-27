@@ -7,7 +7,9 @@ Build Version:
 Changes:
 
 Improvements:
-
+* #884 - further PHP 5.4 Strict compliance (from 1.3.9)
+* #751 - switch to Google Analytics universal (from 1.3.9)
+* #868 - removed duplicate value URI.AllowedSchemes in HTMLPurifier configuration (from 1.3.9)
 
 Fixes:
 

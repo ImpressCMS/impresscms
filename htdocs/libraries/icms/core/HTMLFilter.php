@@ -172,7 +172,6 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
             'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
             'URI.DefinitionID' => $icmsConfigPurifier['purifier_URI_DefinitionID'],
             'URI.DefinitionRev' => $icmsConfigPurifier['purifier_URI_DefinitionRev'],
-            'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
             'URI.SafeIframeRegexp' => $IframeRegExp,
             'Attr.AllowedFrameTargets' => $icmsConfigPurifier['purifier_Attr_AllowedFrameTargets'],
             'Attr.AllowedRel' => $icmsConfigPurifier['purifier_Attr_AllowedRel'],
