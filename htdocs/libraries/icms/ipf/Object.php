@@ -21,54 +21,54 @@ icms_loadLanguageFile('system', 'common');
  * @todo Properly identify and declare the visibility of vars and functions
  */
 class icms_ipf_Object extends icms_core_Object {
-	
+
 	/**
 	 * Image path
 	 *
 	 * @var string
 	 */
 	public $_image_path = '';
-	
+
 	/**
 	 * Image URL
 	 *
 	 * @var string
 	 */
 	public $_image_url = '';
-	
+
 	/**
 	 * Is SEO enabled?
 	 *
 	 * @var bool
 	 */
 	public $seoEnabled = false;
-	
+
 	/**
 	 * Title field name
 	 *
 	 * @var string|null
 	 */
 	public $titleField = null;
-	
+
 	/**
 	 * Summary field name
 	 *
 	 * @var bool|null|string
 	 */
 	public $summaryField = false;
-	
+
 	/**
 	 * Reference to the handler managing this object
 	 *
 	 * @var icms_ipf_Handler
 	 */
 	public $handler;
-	
+
 	/**
 	 * References to control objects, managing the form fields of this object
 	 */
 	public $controls = array ();
-	
+
 	/**
 	 * Does object data loaded on creation?
 	 *
@@ -215,9 +215,9 @@ class icms_ipf_Object extends icms_core_Object {
 	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $multilingual = false, $form_caption = '', $form_dsc = '', $sortby = false, $persistent = true, $displayOnForm = true) {
 		// url_ is reserved for files.
 		if (substr($key, 0, 4) == 'url_') return trigger_error("Cannot use variable starting with 'url_'.");
-		
+
 		parent::initVar($key, $data_type, $value, $required, $maxlength, $options);
-		
+
 		$this->_vars[$key]['multilingual'] = $multilingual;
 		$this->_vars[$key]['form_caption'] = $form_caption;
 		$this->_vars[$key]['form_dsc'] = $form_dsc;
@@ -277,15 +277,15 @@ class icms_ipf_Object extends icms_core_Object {
 	public function updateMetas() {
 		// Auto create meta tags if empty
 		$icms_metagen = new icms_ipf_Metagen($this->title(), $this->getVar('meta_keywords'), $this->summary());
-		
+
 		if (empty($this->meta_keywords)) {
 			$this->setVar('meta_keywords', $icms_metagen->_keywords);
 		}
-		
+
 		if (empty($this->meta_description)) {
 			$this->setVar('meta_description', $icms_metagen->_meta_description);
 		}
-		
+
 		// Auto create short_url if empty
 		if (empty($this->short_url)) {
 			$this->setVar('short_url', $icms_metagen->generateSeoTitle($this->title('n'), false));
@@ -457,7 +457,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function getSecureForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
 		$form = new icms_ipf_form_Secure($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
-		
+
 		return $form;
 	}
 
@@ -559,10 +559,10 @@ class icms_ipf_Object extends icms_core_Object {
 			$this->setError("Trying to access a permission that does not exists for this object's handler");
 			return false;
 		}
-		
+
 		$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
 		$ret = $icmspermissions_handler->getGrantedGroups($group_perm, $this->id());
-		
+
 		if (count($ret) == 0) {
 			return false;
 		} else {
@@ -699,14 +699,14 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function getFieldsForSorting($sortsel) {
 		$ret = array ();
-		
+
 		foreach ($this->_vars as $key => $field_info) {
 			if ($field_info['sortby']) {
 				$ret[$key]['caption'] = $field_info['form_caption'];
 				$ret[$key]['selected'] = $key == $sortsel ? "selected='selected'" : '';
 			}
 		}
-		
+
 		if (count($ret) > 0) {
 			return $ret;
 		} else {
@@ -731,11 +731,11 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function getVarsForSQL($only_changed) {
 		$fieldsToStoreInDB = array ();
-		
+
 		$db = &$this->handler->db;
-		
+
 		$vars = $only_changed ? $this->getChangedVars() : array_keys($this->_vars);
-		
+
 		foreach ($vars as $k) {
 			if ($this->handler->keyName == $k && !$this->_vars[$k][self::VARCFG_VALUE]) {
 				continue; // Skipping ID
@@ -785,25 +785,25 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function getValueFor($key, $editor = true) {
 		global $icmsModuleConfig;
-		
+
 		$ret = $this->getVar($key, 'n');
 		$myts = icms_core_Textsanitizer::getInstance();
-		
+
 		$control = isset($this->controls[$key]) ? $this->controls[$key] : false;
 		$form_editor = isset($control['form_editor']) ? $control['form_editor'] : 'textarea';
-		
+
 		$html = isset($this->_vars['dohtml']) ? $this->getVar('dohtml') : true;
 		$smiley = true;
 		$xcode = true;
 		$image = true;
 		$br = isset($this->_vars['dobr']) ? $this->getVar('dobr') : true;
 		$formatML = true;
-		
+
 		if ($form_editor == 'default') {
 			global $icmsModuleConfig;
 			$form_editor = isset($icmsModuleConfig['default_editor']) ? $icmsModuleConfig['default_editor'] : 'textarea';
 		}
-		
+
 		if ($editor) {
 			if (defined('XOOPS_EDITOR_IS_HTML') && !(in_array($form_editor, array ('formtextarea','textarea','dhtmltextarea'
 			)))) {
@@ -813,7 +813,7 @@ class icms_ipf_Object extends icms_core_Object {
 				return htmlspecialchars($ret, ENT_QUOTES, _CHARSET);
 			}
 		}
-		
+
 		if (method_exists($myts, 'formatForML')) {
 			return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br, $formatML);
 		} else {
@@ -848,7 +848,7 @@ class icms_ipf_Object extends icms_core_Object {
 				$criteria->add(new icms_db_criteria_Item($key, $this->getVar($key)));
 		} else
 			$criteria->add(new icms_db_criteria_Item($this->handler->keyName, $this->getVar($this->handler->keyName)));
-		
+
 		return $criteria;
 	}
 
@@ -941,7 +941,7 @@ class icms_ipf_Object extends icms_core_Object {
 				$singleview->addRow(new icms_ipf_view_Row($key, false, $is_header));
 			}
 		}
-		
+
 		if ($fetchOnly) {
 			$ret = $singleview->render($fetchOnly);
 			return $ret;
@@ -1052,7 +1052,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function getUrlLinkObj($key) {
 		$urllink_handler = icms::handler("icms_data_urllink");
-		
+
 		$urllinkid = $this->getVar($key, 'n');
 		if ($urllinkid != 0) {
 			return $urllink_handler->get($urllinkid);
@@ -1101,7 +1101,7 @@ class icms_ipf_Object extends icms_core_Object {
 	}
 
 	public function serialize() {
-         $data = array('vars' => parent::getValues(), 
+         $data = array('vars' => parent::getValues(),
                        'handler' => array(
                            'module' => $this->handler->_moduleName,
                            'itemname' => $this->handler->_itemname

@@ -55,18 +55,18 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
 
         /**
          * Constructor
-         * 
+         *
          * @param \icms_db_IConnection $db              Database connection
          */
-        public function __construct(&$db) {                
+        public function __construct(&$db) {
                 parent::__construct($db, 'image_set', 'imgset_id', 'imgset_name', '', 'icms', 'imgset');
         }
 
         /**
          * This event executes after deletion
-         * 
+         *
          * @param \icms_image_set_Object $obj           Instance of icms_image_set_Object
-         * 
+         *
          * @return boolean
          */
         protected function afterDelete($obj) {
@@ -77,10 +77,10 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
 
     /**
      * Retrieve array of {@link icms_image_set_Object}s meeting certain conditions
-     * 
+     *
      * @param object $criteria {@link CriteriaElement} with conditions for the imagesets
      * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
-     * 
+     *
      * @return array {@link icms_image_set_Object}s matching the conditions
      **/
     public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
@@ -112,7 +112,7 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
      * Links a {@link icms_image_set_Object} to a themeset (tplset)
      * @param int $imgset_id image set id to link
      * @param int $tplset_name theme set to link
-     * 
+     *
      * @return bool TRUE if succesful FALSE if unsuccesful
      **/
     public function linkThemeset($imgset_id, $tplset_name) {
@@ -137,7 +137,7 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
      *
      * @param int $imgset_id image set id to unlink
      * @param int $tplset_name theme set to unlink
-     * 
+     *
      * @return bool TRUE if succesful FALSE if unsuccesful
      * */
     public function unlinkThemeset($imgset_id, $tplset_name) {

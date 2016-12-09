@@ -32,7 +32,7 @@
  *
  * @copyright	http://smartfactory.ca The SmartFactory
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since	1.1 
+ * @since	1.1
  * @author	marcan aka Marc-André Lanciault <marcan@smartfactory.ca>
  */
 
@@ -50,31 +50,31 @@ class icms_ipf_Tree {
         /**
          * Field name of parent object ID
          *
-         * @var string 
+         * @var string
          */
 	private $_parentId;
-        
+
         /**
          * Field name of object ID
          *
-         * @var string 
+         * @var string
          */
 	public $_myId = '';
-        
+
         /**
          * Field name of root object ID
          *
-         * @var string 
+         * @var string
          */
 	private $_rootId = null;
-        
+
         /**
          * Array of Tree
          *
-         * @var array 
+         * @var array
          */
 	public $_tree = array ();
-        
+
         /**
          * Array of {@link icms_core_Object}s
          *

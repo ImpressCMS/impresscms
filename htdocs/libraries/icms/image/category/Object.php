@@ -102,4 +102,3 @@ class icms_image_category_Object extends \icms_ipf_Object {
 		return $this->_imageCount;
 	}
 }
-
