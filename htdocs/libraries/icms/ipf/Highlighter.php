@@ -13,28 +13,28 @@ class icms_ipf_Highlighter {
 
 	/**
          * PREG keywords
-         * 
+         *
 	 * @var string
 	 */
 	private $preg_keywords = '';
-        
+
 	/**
          * Keywords
-         * 
+         *
 	 * @var string
 	 */
 	private $keywords = '';
-        
+
 	/**
          * Single words?
-         * 
+         *
 	 * @var bool
 	 */
 	private $singlewords = false;
-        
+
 	/**
          * Replace callback
-         * 
+         *
 	 * @var null|callable
 	 */
 	private $replace_callback = null;
@@ -42,7 +42,7 @@ class icms_ipf_Highlighter {
         /**
          * Content
          *
-         * @var string 
+         * @var string
          */
 	public $content = '';
 
@@ -112,4 +112,3 @@ class icms_ipf_Highlighter {
 		return $buffer;
 	}
 }
-

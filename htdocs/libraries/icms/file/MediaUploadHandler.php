@@ -222,30 +222,17 @@ class icms_file_MediaUploadHandler {
                 return false;
             }            
             //header('Content-Type: text/plain'); 
-            if (substr($url, 0, 5) == 'data:') {                
-                $headers = array(
-                    'charset' => 'US-ASCII',
-                    'content-type' => 'text/plain',
+            if (substr($url, 0, 5) == 'data:') {
+				$fp   = fopen($url, 'r');
+				$meta = stream_get_meta_data($fp);				
+				$content = stream_get_contents($fp);
+				$headers = array(
+                    'content-type' => isset($meta['mediatype'])?$meta['mediatype']:'text/plain',
+					'base64' => isset($meta['base64'])?$meta['base64']:true,
+					'content-length' => strlen($content),
+					'charset' => isset($meta['charset'])?$meta['charset']:'US-ASCII',
                 );
-                $content = '';
-                foreach(array_map('trim', explode(';', substr($url, 5))) as $part) {
-                    if (substr($part, 0, 8) == 'charset=') {
-                        $headers['charset'] = trim(substr($part, 8));
-                    } elseif (substr($part, 0, 7) == 'base64,') {
-                        $content =  base64_decode(rawurldecode(substr($part, 7)));
-                        //header('Content-Type: image/png');
-                       // echo $url;
-                       // echo "<br />";
-                       // echo (rawurldecode(substr($part, 7)));
-                       // die();
-                    } elseif (substr($part, 0, 1) == ',') {
-                        self::setErrors('Unsuported encyption in data url protocol');
-                        return false;
-                    } else {
-                        $headers['content-type'] = $part;
-                    }
-                }                
-                $headers['content-length'] = strlen($content);
+				fclose($fp);
             } else {
                 if (!function_exists('curl_init')) {
                     self::setErrors('cURL not found!');
@@ -300,27 +287,29 @@ class icms_file_MediaUploadHandler {
                 if (!isset($headers['content-type'])) 
                     $headers['content-type'] = 'application/octet-stream';
             }
-            $this->mediaName = isset($headers['content-disposition']['filename'])?$headers['content-disposition']['filename']:basename(parse_url($url, PHP_URL_PATH));
+			if (empty($headers['content-disposition']['filename']) === false) {
+				$this->mediaName = $headers['content-disposition']['filename'];
+				$ext = pathinfo($this->mediaName, PATHINFO_EXTENSION);
+			} else {
+				$this->mediaName = preg_replace('([^A-Za-z0-9])', '_', basename(parse_url($url, PHP_URL_PATH)));
+				if (strpos($this->mediaName, '.') === false) {
+					$ext = substr($headers['content-type'], strpos($headers['content-type'], '/') + 1);
+					$this->mediaName .= '.';
+				} else {
+					$ext = pathinfo($this->mediaName, PATHINFO_EXTENSION);
+				}
+			}			
             $this->mediaType = $headers['content-type'];
-            $this->mediaSize = $headers['content-length'];
+            $this->mediaSize = (int)$headers['content-length'];
             $this->mediaTmpName = tempnam(sys_get_temp_dir(), 'icms_media');
             $this->mediaError = 0;
+			$this->mediaRealType = isset($this->extensionToMime[$ext])?$this->extensionToMime[$ext]:$this->mediaType;
             $fp = fopen( $this->mediaTmpName, 'w+');
             fwrite($fp, $content);
             fclose($fp);
-            if (strrpos($this->mediaName, '.') === false) {
-				$ext = explode('/', $this->mediaType);
-                $ext = next($ext);
-                $this->mediaName .= '.' . $ext;
-            } else {
-                $ext = strtolower(substr($this->mediaName, strrpos($this->mediaName, '.') + 1));
-            }            
-            if (isset($this->extensionToMime[$ext])) {
-                $this->mediaRealType = $this->extensionToMime[$ext];
-            }
             $this->errors = array();
-            if ( (int) ($this->mediaSize) < 0) {
-		self::setErrors(_ER_UP_INVALIDFILESIZE);
+            if ($this->mediaSize < 0) {
+				self::setErrors(_ER_UP_INVALIDFILESIZE);
                 return false;
             }
             if ($this->mediaName == '') {

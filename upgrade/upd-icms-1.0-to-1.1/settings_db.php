@@ -25,7 +25,7 @@ $vars =& $_SESSION['settings'];
 function getDbCharsets()
 {
     $charsets = array();
-    
+
     $charsets["utf8"] = array();
     $ut8_available = false;
     if ($result = $GLOBALS["xoopsDB"]->queryF("SHOW CHARSET")) {
@@ -39,7 +39,7 @@ function getDbCharsets()
     if (!$ut8_available) {
         unset($charsets["utf8"]);
     }
-    
+
     return $charsets;
 }
 
@@ -47,31 +47,31 @@ function getDbCollations()
 {
     $collations = array();
     $charsets = getDbCharsets();
-    
+
     if ($result = $GLOBALS["xoopsDB"]->queryF("SHOW COLLATION")) {
 	    while ($row = $GLOBALS["xoopsDB"]->fetchArray($result)) {
     	    $charsets[$row["Charset"]]["collation"][] = $row["Collation"];
 	    }
     }
-    
+
     return $charsets;
 }
 
 function xoFormFieldCollation( $name, $value, $label, $help = '' )
 {
     $collations = getDbCollations();
-    
+
 	$label = htmlspecialchars( $label );
 	$name = htmlspecialchars( $name, ENT_QUOTES );
 	$value = htmlspecialchars( $value, ENT_QUOTES );
-	
+
 	$field = "<label for='$name'>$label</label>\n";
 	if ($help) {
 		$field .= '<div class="xoform-help1">' . $help . "</div>\n";
 	}
 	$field .= "<select name='$name' id='$name'\">";
 	$field .= "<option value=''>None</option>";
-    
+
     $collation_default = "";
     $options = "";
     foreach ($collations as $key => $charset) {
@@ -82,7 +82,7 @@ function xoFormFieldCollation( $name, $value, $label, $help = '' )
     	$field .= "</optgroup>";
     }
 	$field .= "</select>";
-	
+
 	return $field;
 }
 
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'db') {
 	foreach ( $params as $name) {
 		$vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";
 	}
-	
+
 	return $vars;
 }
 
@@ -107,11 +107,11 @@ if (!isset( $vars['DB_COLLATION'] )) {
 <fieldset>
 	<legend><?php echo LEGEND_DATABASE; ?></legend>
 	<?php echo xoFormFieldCollation( 'DB_COLLATION',	$vars['DB_COLLATION'],	DB_COLLATION_LABEL, DB_COLLATION_HELP ); ?>
-	
+
 </fieldset>
 <input type="hidden" name="action" value="next" />
 <input type="hidden" name="task" value="db" />
-    
+
 <div class="xo-formbuttons">
     <button type="submit"><?php echo _SUBMIT; ?></button>
 </div>

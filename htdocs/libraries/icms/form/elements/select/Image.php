@@ -192,4 +192,3 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 		return $ret;
 	}
 }
-
