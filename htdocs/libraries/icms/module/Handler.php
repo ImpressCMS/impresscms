@@ -224,12 +224,22 @@ class icms_module_Handler
 	 * This method is necessary to be able to use a static method
 	 *
 	 * @since	1.3
+	 *
+	 * @param null|bool $hasMain Has main
+	 *
 	 * @return	array	List of active modules
 	 */
-	static public function getActive() {
+	static public function getActive($hasMain = null) {
 		$module_handler = new self(icms::$xoopsDB);
-		$criteria = new icms_db_criteria_Item('isactive', 1);
-		return $module_handler->getList($criteria, TRUE);
+		$criteria = new icms_db_criteria_Compo(
+			new icms_db_criteria_Item('isactive', 1)
+		);
+		if ($hasMain !== null) {
+			$criteria->add(
+				new icms_db_criteria_Item('hasmain', (bool)$hasMain)
+			);
+		}
+		return $module_handler->getCustomList('dirname', 'name', $criteria);
 	}
 
 	/**

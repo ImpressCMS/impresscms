@@ -265,11 +265,8 @@ switch ($op) {
 							$value[$k] = $config[$i]->getConfValueForOutput();
 						}
 					}
-
-					$module_handler = icms::handler('icms_module');
-					$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hasmain', 1));
-					$criteria->add(new icms_db_criteria_Item('isactive', 1));
-					$moduleslist = $module_handler->getList($criteria, TRUE);
+					
+					$moduleslist = icms_module_Handler::getActive(true);
 					$moduleslist['--'] = _MD_AM_NONE;
 
 					//Adding support to select custom links to be the start page
@@ -278,7 +275,7 @@ switch ($op) {
 					$criteria->add(new icms_db_criteria_Item('page_url', '%*', 'NOT LIKE'));
 					$pagelist = $page_handler->getList($criteria);
 
-					$list = array_merge($moduleslist, $pagelist);
+					$list = $moduleslist + $pagelist;
 					asort($list);
 
 					$ele = new icms_form_elements_Tray($title, '<br />');
