@@ -212,6 +212,7 @@ switch ($op) {
 				$newuser->setVar('email', $email);
 				$newuser->setVar('url', formatURL($url));
 				$newuser->setVar('user_avatar', 'blank.gif');
+				$newuser->setVar('user_regdate', date('U'));
 				$newuser->setVar('user_icq', $user_icq);
 				$newuser->setVar('user_from', $user_from);
 				$newuser->setVar('user_sig', $user_sig);

@@ -124,11 +124,11 @@ final class icms {
 		self::$paths['www']		= array(ICMS_ROOT_PATH, ICMS_URL);
 		self::$paths['modules']	= array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
 		self::$paths['themes']	= array(ICMS_THEME_PATH, ICMS_THEME_URL);
-		self::buildRelevantUrls();
 		// Initialize the autoloader
 		require_once dirname(__FILE__ ) . '/icms/Autoloader.php';
 		icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
+		self::buildRelevantUrls();
 	}
 
 	/**
@@ -313,9 +313,20 @@ final class icms {
 			$http = strpos(ICMS_URL, "https://") === FALSE
 				? "http://"
 				: "https://";
-			$phpself = $_SERVER['SCRIPT_NAME'];
-			$httphost = $_SERVER['HTTP_HOST'];
-			$querystring = $_SERVER['QUERY_STRING'];
+			
+			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
+			$filters = array(
+					'SCRIPT_NAME' => 'str',
+					'HTTP_HOST' => 'str',
+					'QUERY_STRING' => 'str',
+					'HTTP_REFERER' => 'url',
+			);
+			
+			$clean_SERVER = icms_core_DataFilter::checkVarArray($_SERVER, $filters, false);
+			
+			$phpself = $clean_SERVER['SCRIPT_NAME'];
+			$httphost = $clean_SERVER['HTTP_HOST'];
+			$querystring = $clean_SERVER['QUERY_STRING'];
 			if ($querystring != '' ) {
 				$querystring = '?' . $querystring;
 			}
@@ -330,7 +341,7 @@ final class icms {
 
 			$previouspage = '';
 			if (array_key_exists('HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER'])) {
-				self::$urls['previouspage'] = $_SERVER['HTTP_REFERER'];
+				self::$urls['previouspage'] = $clean_SERVER['HTTP_REFERER'];
 			}
 			//self::$urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
 		}

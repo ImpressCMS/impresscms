@@ -77,4 +77,3 @@ $search_form->addElement(new icms_form_elements_Hidden("action", "results"));
 $search_form->addElement(new icms_form_elements_Hiddentoken('id'));
 $search_form->addElement(new icms_form_elements_Button("", "submit", _SR_SEARCH, "submit"));
 return $search_form->render();
-

@@ -36,7 +36,7 @@ class upgrade_impcms06 {
 		}
 		return empty($_SESSION[__CLASS__]) ? true : false;
 	}
-	
+
 	private function apply() {
 		$tasks = $_SESSION[__CLASS__];
 		foreach ($tasks as $task) {
@@ -86,7 +86,7 @@ class upgrade_impcms06 {
 		}
 		unset ($table);
 	}
-	
+
 	private function check_table2() {
 		$table = new IcmsDatabasetable('icmscontent');
 		return $table->exists();
@@ -116,7 +116,7 @@ class upgrade_impcms06 {
 		}
 		unset ($table);
 	}
-	
+
 	private function check_table3() {
 		$table = new IcmsDatabasetable('invites');
 		return $table->exists();
@@ -142,7 +142,7 @@ class upgrade_impcms06 {
 		}
 		unset ($table);
 	}
-	
+
 	private function check_table4() {
 		$table = new IcmsDatabasetable('system_customtag');
 		return $table->exists();
@@ -373,7 +373,7 @@ class upgrade_impcms06 {
 		$table->addNewField('dbversion', 'INT(11) unsigned NOT NULL DEFAULT 1');
 		return $this->updater->updateTable($table, true);
 	}
-	
+
 	private function check_trust_path() {
 		$lines = file(XOOPS_ROOT_PATH . '/mainfile.php');
 		foreach ($lines as $line) {
@@ -388,7 +388,7 @@ class upgrade_impcms06 {
 	private function apply_trust_path() {
 		return $this->update_configs('trust_path');
 	}
-	
+
 	private function check_db() {
 		$lines = file(XOOPS_ROOT_PATH . '/mainfile.php');
 		foreach ($lines as $line) {
@@ -523,7 +523,7 @@ class upgrade_impcms06 {
 		// Time to return.
 		return $final_querys;
 	}
-	
+
 	private function write_mainfile($vars) {
 		if (empty($vars)) {
 			return false;
@@ -570,7 +570,7 @@ class upgrade_impcms06 {
 			return true;
 		}
 	}
-	
+
 	private function set_configs($task) {
 		$ret = array();
 		$configs = include dirname(__FILE__) . "/settings_{$task}.php";

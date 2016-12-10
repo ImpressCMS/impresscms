@@ -20,44 +20,44 @@ class icms_core_Versionchecker {
 
 	/**
 	 * Errors
-         * 
+         *
 	 * @var array
 	 */
 	public $errors = array();
 
 	/**
 	 * URL of the XML containing version information
-         * 
+         *
 	 * @var string
 	 */
 	public $version_xml = "http://www.impresscms.org/impresscms_version_branch13.xml";
 
 	/**
 	 * Time before fetching the $version_xml again and store it in $cache_version_xml
-	 * 
+	 *
          * @todo set this to a day at least or make it configurable in System Admin > Preferences
-         * 
+         *
          * @var integer
 	 */
 	public $cache_time=1;
 
 	/**
 	 * Name of the latest version
-         * 
+         *
          * @var string
 	 */
 	public $latest_version_name = '';
 
 	/**
 	 * Name of installed version
-         * 
+         *
 	 * @var $installed_version_name string
 	 */
 	public $installed_version_name = ICMS_VERSION_NAME;
 
 	/**
 	 * Number of the latest build
-         * 
+         *
 	 * @var integer
 	 */
 	public $latest_build = 0;
@@ -76,14 +76,14 @@ class icms_core_Versionchecker {
 
 	/**
 	 * URL of the latest release
-         * 
+         *
 	 * @var string
 	 */
 	public $latest_url = '';
 
 	/**
 	 * Changelog of the latest release
-         * 
+         *
 	 * @var string
 	 */
 	public $latest_changelog = '';
@@ -154,7 +154,7 @@ class icms_core_Versionchecker {
 	 * Gets all the error messages
 	 *
 	 * @param	$ashtml	bool	return as html?
-         * 
+         *
 	 * @return	mixed
 	 */
 	public function getErrors($ashtml=true) {

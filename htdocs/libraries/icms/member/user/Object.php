@@ -38,11 +38,11 @@ defined('ICMS_ROOT_PATH') or exit();
 
 /**
  * Class for users
- * 
+ *
  * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Member\User
- * 
+ *
  * @property int    $uid               User ID
  * @property string $name              Name
  * @property string $uname             Username
@@ -111,14 +111,14 @@ class icms_member_user_Object extends icms_ipf_Object {
      */
     public function __construct(&$handler, $data = array()) {
         //parent::__construct($handler, $data);
-
         $this->initVar('uid', self::DTYPE_INTEGER, null, false, null, null, null, 'User ID');
         $this->initVar('name', self::DTYPE_STRING, null, false, 60, null, null, _US_REALNAME);
         $this->initVar('uname', self::DTYPE_STRING, null, true, 255, null, null, 'User Name');
         $this->initVar('email', self::DTYPE_STRING, null, true, 60, null, null, _US_EMAIL);
         $this->initVar('url', self::DTYPE_STRING, null, false, 255, null, null, _US_WEBSITE);
         $this->initVar('user_avatar', self::DTYPE_FILE, null, false, 30, null, null, _US_AVATAR);
-        $this->initVar('user_regdate', self::DTYPE_INTEGER, null, false, null, null, null, 'Registration date');
+        $this->initVar('user_regdate', self::DTYPE_INTEGER, null, false, null, null, null,
+			'Registration date');
         $this->initVar('user_icq', self::DTYPE_STRING, null, false, 15, null, null, _US_ICQ);
         $this->initVar('user_from', self::DTYPE_STRING, null, false, 100, null, null, _US_LOCATION);
         $this->initVar('user_sig', self::DTYPE_STRING, null, false, null, null, null, _US_SIGNATURE);
@@ -429,12 +429,12 @@ class icms_member_user_Object extends icms_ipf_Object {
             $_SESSION['icmsUser'][$name] = parent::getVar($name);
         }
     }
-    
+
     /**
      * Returns uid of user
-     * 
+     *
      * @deprecated since version 2.1
-     * 
+     *
      * @return int
      */
     public function uid() {
@@ -465,7 +465,7 @@ class icms_member_user_Object extends icms_ipf_Object {
 
     /**
      * Logs out current user
-     * 
+     *
      * @return boolean
      */
     public function logout() {
@@ -478,7 +478,7 @@ class icms_member_user_Object extends icms_ipf_Object {
 
     /**
      * Checks if this user is same as logged in user
-     * 
+     *
      * @return boolean
      */
     public function isSameAsLoggedInUser() {
@@ -489,10 +489,10 @@ class icms_member_user_Object extends icms_ipf_Object {
 
     /*  /**
      * Converts user to array
-     * 
+     *
      * @return array
      */
-    /*  public function toArray() {           
+    /*  public function toArray() {
       $data = parent::toArray();
       if ($this->isSameAsLoggedInUser()) {
       if (!$data['user_viewoid'])
