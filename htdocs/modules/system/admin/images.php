@@ -148,7 +148,7 @@ switch ($op) {
 		break;
 
 	case 'save_edit_ok':
-		$msg = isset($_GET['msg']) ? urldecode($_GET['msg']) : NULL;
+		$msg = !empty($msg) ? urldecode($msg) : '';
 		redir($imgcat_id, filter_var($msg, FILTER_SANITIZE_ENCODED));
 		break;
 

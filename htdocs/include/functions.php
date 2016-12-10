@@ -956,8 +956,9 @@ function icms_getCookieVar($name, $default = '')
  */
 function icms_get_page_before_form()
 {
-	global $impresscms;
-	return isset($_POST['icms_page_before_form']) ? $_POST['icms_page_before_form'] : $impresscms->urls['previouspage'];
+	return isset($_POST['icms_page_before_form'])
+			? icms_core_DataFilter::checkVar($_POST['icms_page_before_form'], 'url')
+			: \icms::$urls['previouspage'];
 }
 
 /**
@@ -1767,9 +1768,8 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
  * @todo Move to a static class method - HTTP or URI
  */
 function icms_getPreviousPage($default=false) {
-	global $impresscms;
-	if (isset($impresscms->urls['previouspage'])) {
-		return $impresscms->urls['previouspage'];
+	if (isset(\icms::$urls['previouspage'])) {
+		return \icms::$urls['previouspage'];
 	} elseif($default) {
 		return $default;
 	} else {
@@ -1834,26 +1834,10 @@ function icms_getImageSize($url, & $width, & $height) {
  *
  * @return array The array of urls
  * @todo Move to a static class method - HTTP or URI
+ * @deprecated	Use icms::$urls
  */
 function icms_getCurrentUrls() {
-	$urls = array();
-	$http = ((strpos(ICMS_URL, "https://")) === false) ? ("http://") : ("https://");
-	$phpself = $_SERVER['PHP_SELF'];
-	$httphost = $_SERVER['HTTP_HOST'];
-	$querystring = $_SERVER['QUERY_STRING'];
-	if ($querystring != '') {
-		$querystring = '?' . $querystring;
-	}
-	$currenturl = $http . $httphost . $phpself . $querystring;
-	$urls = array ();
-	$urls['http'] = $http;
-	$urls['httphost'] = $httphost;
-	$urls['phpself'] = $phpself;
-	$urls['querystring'] = $querystring;
-	$urls['full_phpself'] = $http . $httphost . $phpself;
-	$urls['full'] = $currenturl;
-	$urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
-	return $urls;
+	return \icms::$urls;
 }
 
 /**
@@ -1986,10 +1970,10 @@ function icms_loadCommonLanguageFile() {
  *
  * @return string The URL of the current page
  * @todo Move to a static class method - HTTP or URI
+ * @deprecated
  */
 function icms_getCurrentPage() {
-	$urls = icms_getCurrentUrls();
-	return $urls['full'];
+	return \icms::$urls['full'];
 }
 
 /**
@@ -2278,8 +2262,7 @@ echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display
  * @todo Move to a static class method
  */
 function icms_openclose_collapsable($name) {
-	$urls = icms_getCurrentUrls();
-	$path = $urls['phpself'];
+	$path = \icms::$urls['phpself'];
 	$cookie_name = $path . '_icms_collaps_' . $name;
 	$cookie_name = str_replace('.', '_', $cookie_name);
 	$cookie = icms_getCookieVar($cookie_name, '');
