@@ -1,0 +1,8 @@
+Version 1.01
+-----------
+Addressed install errors - improper default value for database field
+Addressed create_date and updated_date errors
+
+Version 1.0
+-----------
+First public release

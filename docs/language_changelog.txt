@@ -1,0 +1,1877 @@
+ImpressCMS Language ChangeLog
+=============================
+
+This is the changelog documenting the changes in the language constant for every release of ImpressCMS.
+
+Legend :
+  +  a constant was added or in some case, a whole new file was added
+  +- a constant was modified
+  -  a constant was removed OR a whole file was removed
+  #  Directory / Folders guide
+
+ImpressCMS 1.2 (changes from ImpressCMS 1.1.1)
+==============================================
+
+=====================
+# Directory: language
+=====================
+language/english/global.php
+---------------------------
+-  define('_IMPRESSCMS_PREFS','Preferences');
+
+===================================================
+# Directory: modules/system/language/english/
+===================================================
+modinfo.php
+---------------------------
++    define('_MI_SYSTEM_BNAME19', "Content Tags");
++    define("_MI_SYSTEM_ADMENU22", "Adsense");
++    define("_MI_SYSTEM_ADMENU23", "Ratings");
++    define("_MI_SYSTEM_ADMENU24", "MimeTypes");
+    
++    define('_MI_SYSTEM_BNAME101', "System Warnings");
++    define('_MI_SYSTEM_BNAME102', "Control Panel");
++    define('_MI_SYSTEM_BNAME103', "Modules Installed");
++    define('_MI_SYSTEM_BLOCK_BOOKMARKS','My Bookmarks');
++    define('_MI_SYSTEM_BLOCK_BOOKMARKS_DESC','Things I have bookmarked');
+
+ImpressCMS 1.1.1 (changes from ImpressCMS 1.1)
+=========================================
+
+===================================================
+# Directory: modules/system/language/english/admin/
+===================================================
+
+modules/system/language/english/admin/preferences.php
+-----------------------------------------------------
+
++  define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
+
+language/english/global.php
+-----------------------------------------------------
++  define("_NONE_LOGGER", "None");
+
+
+
+
+
+
+
+ImpressCMS 1.1 (changes from ImpressCMS 1.0)
+=========================================
+
+====================
+# Directory: install
+====================
+
+install/language/english/install.php
+------------------------------------
+
++  define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
++  define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L97
++  define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
++  define( "DATABASE_CONNECTION", "Database connection" );
++  define( "DATABASE_CONNECTION_TITLE", "Database connection" );
++  define( "DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default." );
++  define( "DB_CHARSET_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
++  define( "DB_COLLATION_LABEL", "Database collation" );
++  define( "DB_COLLATION_HELP",  "A collation is a set of rules for comparing characters in a character set.");
++  define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
++  define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
++  define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
++  define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
++  define("_DEF_LANG_TAGS",'en,fr'); //Add local translation
++  define("_DEF_LANG_NAMES",'english,french'); //Add local translation
++  define("_LOCAL_LANG_NAMES",'English,Fran�ais'); //Add local translation
++  define("_EXT_DATE_FUNC","0"); // change 0 to 1 if this language has an extended date function
++  define( "NO_PHP5_TITLE", "No PHP 5" );
++  define( "NO_PHP5_CONTENT","PHP 5 is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to PHP5 before attempting to install again.");
++  define( "SAFE_MODE", "Safe Mode On" );
++  define( "SAFE_MODE_TITLE", "Safe Mode On" );
++  define( "SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again." );
+
+install/language/english/install2.php
+-------------------------------------
+
++  define("_WELCOME_MSG_CONTENT", "Welcome {UNAME},
+
+Your account has been successfully activated on {X_SITENAME}. As a member of our site, you will benefit from all the features reserved to registered members !
+
+Once again, welcome to our site. Visit us often !
+
+If you did not registered to our site, please contact us at the following address {X_ADMINMAIL}, and we will fix the situation.
+
+-----------
+Yours truly,
+{X_SITENAME}
+{X_SITEURL}");
+
+
+install/language/english/welcome.php
+------------------------------------
+
++- $content .=  (Changed for external links) rel="external"
+
+<p>
+	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for
+	developing small to large dynamic community websites, intra company portals, corporate portals, weblogs and much more.
+</p>
+<p>
+	ImpressCMS is released under the terms of the
+	<a href="http://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a>
+	and is free to use and modify.
+	It is free to redistribute as long as you abide by the distribution terms of the GPL.
+</p>
+<h3>Requirements</h3>
+<ul>
+	<li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc)</li>
+	<li><a href="http://www.php.net/" rel="external">PHP</a> 5.1 or higher (5.2 or higher recommended)</li>
+	<li><a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 or higher</li>
+</ul>
+<h3>Before you install</h3>
+<ul>
+	<li>Setup the web server, PHP and database server properly.</li>
+	<li>Prepare a database for ImpressCMS. This can be an existing database as well as a newly created one.</li>
+	<li>Prepare a user account and grant this user access to the database (all rights).</li>
+	<li>Make the directories of uploads/, cache/, templates_c/, writable (chmod 777 or 755 - depending on servers).</li>
+	<li>Make the file mainfile.php writable (chmod 666 depending on server).</li>
+	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>
+</ul>
+
+install/language/english/mysql.lang.data.php
+------------------------------------
+#
+# Dumping data for table `icmscontent`
+#
+INSERT INTO icmscontent VALUES (1, 1, 0, 1, 'Welcome to ImpressCMS', 'What is ImpressCMS?', '<h1>What is ImpressCMS?</h1>\r\n<p>ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool. ImpressCMS is a powerful system that gets outstanding results and it is free!</p>\r\n<p><strong>What can you do with it?</strong></p>\r\n<p>ImpressCMS can be used for many types of web sites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company. The system is extremely useful for managing online communities because it has the ability to create user groups and assign permissions for managing content to each different group.</p>\r\n<p>For each type of website ImpressCMS offers different functionality with a collection of hundreds of free modules that will be available shortly on http://addons.impresscms.org. A few examples of what you can do with them:</p>\r\n<div id="xo-content">\r\n<li>Publish news of your organization</li>\r\n<li>Let visitors contact you through a state of the art customizable contact form</li>\r\n<li>Create and manage articles</li>\r\n<li>Add a forum to your site</li>\r\n<li>Sell products through your web site using an online store</li>\r\n<li>...and many more</li>\r\n<p><strong>List of key features:</strong></p>\r\n<table style="border-color: #000000; padding: 2pt; background-color: #ffeeee;" border="0">\r\n<tbody>\r\n<tr>\r\n<td>\r\n<p><strong>Database-driven </strong></p>\r\n<p>ImpressCMS uses a database to store the data required for running your ImpressCMS site. MySQL is currently supported. Support for other DBMS''s is coming soon.</p>\r\n<p><strong>Fully modularized </strong></p>\r\n<p>Website content is managed by separate content modules/web applications. Simply install the module which has the features you need: a news module, forum module, photo album module, there are many many third party modules to choose from.</p>\r\n<p><strong>User Management</strong></p>\r\n<li style="list-style-type: circle; list-style-image: none; list-style-position: inside; margin-left: 24px;"><strong>Optional user registration</strong>: Registered users are authenticated using the standard ImpressCMS system, or by using LDAP.</li>\r\n<li style="list-style-type: circle; list-style-image: none; list-style-position: inside; margin-left: 24px;"><strong>Security</strong>: IP banning, restricting content by group, backend security features for database manipulation, security token system for form validation and more.</li>\r\n<li style="list-style-type: circle; list-style-image: none; list-style-position: inside; margin-left: 24px;"><strong>Personalization</strong>: Registered users can edit their profiles, select site themes, upload custom avatars, and much more!</li>\r\n<li style="list-style-type: circle; list-style-image: none; list-style-position: inside; margin-left: 24px;"><strong>Versatile Group Permissions System</strong>: Powerful and user-friendly permissions system which enables administrators to set permissions by group.</li>\r\n<p><strong>Supported World-wide</strong></p>\r\n<p>ImpressCMS was created and is maintained by a team of hard-working volunteers working from all over the world. The ImpressCMS community has support sites around the world for support of non-English speaking users.</p>\r\n<p><strong>Multi-byte Language Support</strong></p>\r\n<p>Fully supports multi-byte languages, including Japanese, Simplified and Traditional Chinese, Korean, etc.</p>\r\n<p><strong>Theme-based skinnable interface</strong></p>\r\n<p>ImpressCMS is driven by a powerful theme system. Both admins and users can change the look of the entire web site with just a click of a mouse. There are also hundreds of quality themes available for download!</p>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>', '.content_nav {\r\n    padding:3px;\r\n}\r\n\r\n#content_header {\r\n    padding: 0;\r\n    margin:0;\r\n}\r\n\r\n.content_title_admlinks {\r\n    padding: 0;\r\n    padding-bottom:2px;\r\n    margin:0;\r\n    font-size: 18px;\r\n    float:right;\r\n}\r\n\r\nh1.content_title {\r\n    padding: 0;\r\n    padding-bottom:2px;\r\n    margin:0;\r\n    font-size: 18px;\r\n    border-bottom: 1px solid #333333;\r\n}\r\n\r\nh2.content_title_info {\r\n    height: 15px;\r\n    padding: 2px;\r\n    margin: 0;\r\n    background: #efefef;\r\n    font-size: 11px;\r\n    font-style:italic;\r\n    font-weight:normal;\r\n    text-align: right;\r\n}\r\n\r\n.content_body {\r\n   padding:5px;\r\n}\r\n\r\n#content_subs {\r\n   margin-top: 5px;\r\n}\r\n\r\n.content_subs_header {\r\n    padding: 0;\r\n    margin:0;\r\n    font-size: 14px;\r\n    font-weight: bold;\r\n}\r\n\r\n.content_subs_item {}\r\n.content_subs_item even {}\r\n.content_subs_item odd {}\r\nh3.content_subs_item_title {}\r\n.content_subs_item_teaser{\r\n    font-style:italic;\r\n}', 3, 1213474318, 1213474318, 0, 0, 1);
+#
+# Dumping data for table `icmspage`
+#
+INSERT INTO icmspage VALUES (1, 1, 'Welcome to ImpressCMS', 'content.php?page=What_is_ImpressCMS?', 1);
+
+
+
+=====================
+# Directory: editors
+=====================
+
++  editors/tinymce/jscript/plugins/xoopsemotions/langs/*.* (added)
++  editors/tinymce/jscript/plugins/xoopsimagemanager/langs/*.* (added)
++  editors/tinymce/jscript/plugins/xoopsquotecode/langs/*.* (added)
+
+=====================
+# Directory: language
+=====================
+
++  language/english/captcha.php (added)
+--------------------------------------
+
++  language/english/databaseupdater.php  (added)
+------------------------------------------------
+
++  language/english/theme.php  (added)
+------------------------------------------------
+
++ language/english/captcha.php
+---------------------------
+
+language/english/global.php
+---------------------------
+
++  define('_CT_NAV','Home');
++  define('_CT_RELATEDS','Related pages');
++  define("_SECURITYIMAGE_CODE","Security code");
++  define("_SECURITYIMAGE_GETCODE","Enter the security code");
++- define('_CHARSET', 'utf-8');
++  define('_IMPRESSCMS_ADMIN','Administration of');
++  define('_ABOUT','About');
++  define('_IMPRESSCMS_HOME','Home');
++  define('_IMPRESSCMS_COMMUNITY','Community');
++  define('_IMPRESSCMS_ADDONS','Addons');
++  define('_IMPRESSCMS_WIKI','Wiki');
++  define('_IMPRESSCMS_BLOG','Blog');
++  define('_IMPRESSCMS_DONATE','Donate!');
++  define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
++  define("_IMPRESSCMS_Support","Support the project !");
++  define("_ADM_USE_RTL","0");
++  define("_EXT_DATE_FUNC","0");
++  define('_HIDDENC', 'Hidden Content:');
++  define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
++  define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
++  define('_BRDCRMB_SEP','&nbsp;:&nbsp;')
++  //Content Manager
++  define('_CT_NAV','Home');
++  define('_CT_RELATEDS','Related pages');
++  //Security image (captcha)
++  define("_SECURITYIMAGE_CODE","Security code");
++  define("_SECURITYIMAGE_GETCODE","Enter the security code");
++  /*
++  define("_SECURITYIMAGE_ERROR","Invalid security code");
++  define("_SECURITYIMAGE_GDERROR","<b><font color='#CC0000'>Library GD not installed</font> : <a target='php' href='http://fr2.php.net/manual/fr/ref.image.php'>Manual PHP</a></b><br>");
++  define("_SECURITYIMAGE_FONTERROR","<b><font color='#CC0000'>No true type fonts found</font>, verify your installation</b><br>");
++  */
++  define("_QUERIES", "Queries");
++  define("_BLOCKS", "Blocks");
++  define("_EXTRA", "Extra");
++  define("_TIMERS", "Timers");
++  define("_CACHED", "Cached");
++  define("_REGENERATES", "Regenerates every %s seconds");
++  define("_TOTAL", "Total :");
++  define("_ERR_NR", "Error number:");
++  define("_ERR_MSG", "Error message:");
++  define("_NOTICE", "Notice");
++  define("_WARNING", "Warning");
++  define("_STRICT", "Strict");
++  define("_ERROR", "Error");
++  define("_TOOKXLONG", " took %s seconds to load.");
++  define("_BLOCK", "Block(s)");
+
+language/english/moduleabout.php
+--------------------------------
+
++  define('_MODABOUT_DEVELOPER_CONTRIBUTOR', 'Contributor(s)');
++  define('_MODABOUT_DEVELOPER_CREDITS', 'Credits');
++  define('_MODABOUT_DEVELOPER_EMAIL', 'Email');
++  define('_MODABOUT_DEVELOPER_WEBSITE', 'Website');
++  define('_MODABOUT_GOTOMODULE', 'Go to module');
++  define('_MODABOUT_MODULE_BUG', 'Report a bug for this module');
++  define('_MODABOUT_MODULE_DEMO', 'Demo Site');
++  define('_MODABOUT_MODULE_DISCLAIMER', 'Disclaimer');
++  define('_MODABOUT_MODULE_FEATURE', 'Suggest a new feature for this module');
++  define('_MODABOUT_MODULE_INFO', 'Module Development Informations');
++  define('_MODABOUT_MODULE_RELEASE_DATE', 'Release date');
++  define('_MODABOUT_MODULE_STATUS', 'Status');
++  define('_MODABOUT_MODULE_SUBMIT_BUG', 'Submit a bug');
++  define('_MODABOUT_MODULE_SUBMIT_FEATURE', 'Request a feature');
++  define('_MODABOUT_MODULE_SUPPORT', 'Official support site');
++  define('_MODABOUT_UPDATE_MODULE', 'Update module');
++  define('_MODABOUT_VERSION_HISTORY', 'Version History');
++  define('_MODABOUT_WARNING_BETA', "This module comes as is, without any guarantees whatsoever. This module is BETA, meaning it is still under active development. This release is meant for <b>testing purposes only</b> and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
++  define('_MODABOUT_WARNING_FINAL', "This module comes as is, without any guarantees whatsoever. Although this module is not beta, it is still under active development. This release can be used in a live website or a production environment, but its use is under your own responsibility, which means the author is not responsible.");
++  define('_MODABOUT_WARNING_RC', "This module comes as is, without any guarantees whatsoever. This module is a Release Candidate and should not be used on a production web site. The module is still under active development and its use is under your own responsibility, which means the author is not responsible.");
++  define('_MODABOUT_BY', 'By');
++  define('_MODABOUT_PEOPLE_DEVELOPERS', 'Developers');
++  define('_MODABOUT_PEOPLE_TESTERS', 'Testers');
++  define('_MODABOUT_PEOPLE_DOCUMENTERS', 'Documenters');
++  define('_MODABOUT_PEOPLE_TRANSLATERS', 'Translators');
++  define('_MODABOUT_PEOPLE_OTHER', 'Other contributors');
++  define('_MODABOUT_AUTHOR_INFO', 'Contributors information');
+
+
+language/english/user.php
+----------------------------
+
++  define('_US_YOURREGISTRATION', 'Your registration at %s');
++  define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
++  define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
++  define('_US_REGFORM_NOJAVASCRIPT', 'To log in at the site it\'s necessary that your browser has javascript enabled.');
++  define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
++  define('_US_CHANGE_PASSWORD', 'Change Password?');
++ define('_US_POSTSNOTENOUGH','Sorry, at least you need to have <b>%s</b> posts, to be able to upload your avatar.');
++ define('_US_UNCHOOSEAVT', 'Until you reach this amount you can choose avatar from the list below.');
++ // openid
++ define('_US_OPENID_NOPERM', 'No permission.');
++ define('_US_OPENID_FORM_CAPTION', 'OpenID');
++ define('_US_OPENID_FORM_DSC', '');
++ define('_US_OPENID_EXISTING_USER', 'Existing user');
++ define('_US_OPENID_EXISTING_USER_LOGIN_BELOW', 'If you are an existing user, login below with your username and password in order to associate your user account with this OpenID.');
++ define('_US_OPENID_NOM_MEMBER', 'No account yet ?');
++ define('_US_OPENID_NON_MEMBER_DSC', 'If you do not yet have an account on this site, please enter the username you would like to use and we will create an account for you, associated with this OpenID.');
++ define('_US_OPENID_YOUR', 'Your OpenID');
++ define('_US_OPENID_LINKED_AUTH_FAILED', 'The username and password you entered did not match a valid user. Please try again.');
++ define('_US_OPENID_LINKED_AUTH_NOT_ACTIVATED', 'The user account which your are loging in with has not been activated. Please activate your account and then try again.');
++ define('_US_OPENID_LINKED_AUTH_CANNOT_SAVE', 'Sorry, an error occured. It was not possible to update this user account with the authenticated OpenID.');
++ define('_US_OPENID_NEW_USER_UNAME_TOO_SHORT', 'The username you have inputed is too short. Please try again.');
++ define('_US_OPENID_NEW_USER_UNAME_EXISTS', 'The username your have inputed is already used. Please try again.');
++ define('_US_OPENID_NEW_USER_CANNOT_INSERT', 'Sorry, an error occured. It was not possible to create the new user. Please try again.');
++ define('_US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP', 'Sorry, an error occured. It was not possible to add the new user in the proper groups. Please contact the administrator of the site.');
++ define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', 'The newly created user has not been activated.');
++ define('_US_OPENID_NEW_USER_CREATED', 'A new user was created with the username %s. Automatically logging you in...');
++ define('_US_OPENID_LINKED_DONE', 'Your OpenID has been linked with the user %S. Logging you in...');
++ define('_US_ALREADY_LOGED_IN', 'You already are logged in, we are sorry but, you can\'t register while you\'re logged in the site');
++ /*
++ define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled');
++ define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.');
++ */
+
+
+============================================
+# Directory: language/english/mail_template/
+============================================
+
++ welcome.tpl
+-------------
+
+newuser_notify.tpl
+--------------------
+
++- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
+
+
+=============================================
+# Directory: modules/system/language/english/
+=============================================
+
+modules/system/language/english/admin.php
+------------------------------------------
+
++- define('_MD_AM_VRSN','Version Checker');
++  define('_MD_AM_CONTENT', 'Content Manager');
++  define('_MD_AM_BKPOSAD','Block Positions');
++  define('_MD_AM_PAGES','Symlink Manager');
++  define('_INVALID_ADMIN_FUNCTION', 'Invalid Admin Function');
+
+modules/system/language/english/blocks.php
+-------------------------------------------
+
++  define("_MB_SYSTEM_SHOWSUBS", "Show sub-pages?");
++  define("_MB_SYSTEM_SHOWNAV", "Show navigation menu?");
++  define("_MB_SYSTEM_SHOWPINFO", "Show poster and published infos?");
++  define("_MB_SYSTEM_SORT", "Sort");
++  define("_MB_SYSTEM_ORDER", "Order");
++  define("_MB_SYSTEM_SELCOLOR", "Background color of the selected item: ");
++  define("_MB_SYSTEM_PAGE", "Page to show");
++  if (!defined('_CT_EDIT_CONTENT')){define('_CT_EDIT_CONTENT','Edit Content');}
++  if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Delete Content');}
++  if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','Published by');}
++  if (!defined('_CT_READS')){define('_CT_READS','reads');}
++  if (!defined('_CT_ON')){define('_CT_ON','on');}
++  // openid
++  define("_MB_SYSTEM_OPENID_LOGIN", "Login with your OpenID");
++  define("_MB_SYSTEM_OPENID_URL", "Your OpenID URL:");
++  define("_MB_SYSTEM_OPENID_NORMAL_LOGIN", "Go back to normal login");
+
+modules/system/language/english/modinfo.php
+-----------------------------------------------
+
++  define("_MI_SYSTEM_ADMENU17", "Version");
++  define("_MI_SYSTEM_ADMENU18", "Content Manager");
++  define("_MI_SYSTEM_ADMENU19", "Block Positions");
++  define("_MI_SYSTEM_ADMENU20", "Symlink Manager");
++  define("_MI_SYSTEM_ADMENU21", "Custom Tags");
+
+==================================================
+# Directory: modules/system/language/english/admin
+==================================================
+
+
++ modules/system/language/english/admin/social_bookmarks_links.php
+---------------------------------------------------------
+
+modules/system/language/english/admin/users.php
+---------------------------------------------------------
+
++  define("_AM_OPENID","OpenID");
++  define("_AM_AOUTVTOIAD","Allow other users to view this OpenID address");
++  define('_AM_BADPWD','Bad Password, Password can not contain username.');
+
+
+modules/system/language/english/admin/modulesadmin.php
+---------------------------------------------------------
+
++  define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
++  define('_MD_AM_MODULESADMIN_STATUS', 'Status');
++  define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
++  define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
+
+
+modules/system/language/english/admin/preferences.php
+-----------------------------------------------------
+-  define("_MD_AM_USE_SHA256","Use SHA256 Encryption for Passwords (Recommended)");
+-  define("_MD_AM_USE_SHA256DSC","Select 'yes' for SHA256. Select 'no' for MD5 (not recommended).<br />Changing this will render all passwords invalid!");
+
++  define("_MD_AM_ENC_TYPE","Change Password Encryption (default is SHA256)");
++  define("_MD_AM_ENC_TYPEDSC","Changes the Algorithm used for encrypting user passwords.<br />Changing this will render all passwords invalid! all users will need to reset their passwords after changing this preference");
++  define("_MD_AM_ENC_MD5","MD5 (not recommended)");
++  define("_MD_AM_ENC_SHA256","SHA 256 (recommended)");
++  define("_MD_AM_ENC_SHA384","SHA 384");
++  define("_MD_AM_ENC_SHA512","SHA 512");
++  define("_MD_AM_ENC_RIPEMD128","RIPEMD 128");
++  define("_MD_AM_ENC_RIPEMD160","RIPEMD 160");
++  define("_MD_AM_ENC_WHIRLPOOL","WHIRLPOOL");
++  define("_MD_AM_ENC_HAVAL1284","HAVAL 128,4");
++  define("_MD_AM_ENC_HAVAL1604","HAVAL 160,4");
++  define("_MD_AM_ENC_HAVAL1924","HAVAL 192,4");
++  define("_MD_AM_ENC_HAVAL2244","HAVAL 224,4");
++  define("_MD_AM_ENC_HAVAL2564","HAVAL 256,4");
++  define("_MD_AM_ENC_HAVAL1285","HAVAL 128,5");
++  define("_MD_AM_ENC_HAVAL1605","HAVAL 160,5");
++  define("_MD_AM_ENC_HAVAL1925","HAVAL 192,5");
++  define("_MD_AM_ENC_HAVAL2245","HAVAL 224,5");
++  define("_MD_AM_ENC_HAVAL2565","HAVAL 256,5");
+
++  define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow anonymous users to users profiles");
++  define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depeding the browser configuration");
++  define("_MD_AM_WELCOMEMSG","Send a welcome message to newly registered user");
++  define("_MD_AM_WELCOMEMSGDSC","Send a welcome message to new user when their account gets activated. The content of this message can be configured in the following option.");
++  define("_MD_AM_WELCOMEMSG_CONTENT","Content of the welcome message");
++  define("_MD_AM_WELCOMEMSG_CONTENTDSC","You can edit the message that is sent to the new user. Note that you can use the following tags: <br /><br />- {UNAME} = username of the user<br />- {X_UEMAIL} = email of the user<br />- {X_ADMINMAIL} = admin email address<br />- {X_SITENAME} = name of the site<br />- {X_SITEURL} = URL of the site");
++  define("_MD_AM_EXT_DATE","Do you want to use an extended/local date function?");
++  define("_MD_AM_EXT_DATEDSC","Note: by activating this option, ImpressCMS will use an extended calendar script <b>ONLY</b> if you have this script running on your site.<br />Please visit <a href='http://wiki.impresscms.org/index.php?title=Extended_date_function'>extended date function</a> for more info.");
++  define("_MD_AM_SEARCH_USERDATE","Show user and date in search results");
++  define("_MD_AM_SEARCH_NO_RES_MOD","Show modules with no match in search results");
++  define("_MD_AM_SEARCH_NO_RES_MODDSC","");
++  define("_MD_AM_SEARCH_PER_PAGE","Item per page in search results");
++  define("_MD_AM_SEARCH_PER_PAGEDSC","");
++  define("_MD_AM_EDITOR_DEFAULT","Default Editor");
++  define("_MD_AM_EDITOR_DEFAULT_DESC","Select the default Editor for all the site.");
++  define("_MD_AM_EDITOR_ENABLED_LIST","Enabled Editors");
++  define("_MD_AM_EDITOR_ENABLED_LIST_DESC","Select the selectable editors by the modules (If the module has a configuration to select the editor.)");
++- define("_MD_AM_STARTPAGE","Module or Page for your start page");
++  define("_MD_CONTENTMAN","Content Manager");
++  define("_MD_AM_CONTMANAGER","Content Manager");
++  define("_MD_AM_DEFAULT_CONTPAGE","Default Page");
++  define("_MD_AM_DEFAULT_CONTPAGEDSC","Select the default page to be displayed to the user in Content Manager. Leave blank to have Content Manager default to the most recently created page.");
++  define("_MD_AM_CONT_SHOWNAV","Display navigation menu on user side?");
++  define("_MD_AM_CONT_SHOWNAVDSC","Select yes to display the Content Manager navigation menu.");
++  define("_MD_AM_CONT_SHOWSUBS","Display Related Pages?");
++  define("_MD_AM_CONT_SHOWSUBSDSC","Select yes to display related pages links on Content Manager pages.");
++  define("_MD_AM_CONT_SHOWPINFO","Show poster and published info?");
++  define("_MD_AM_CONT_SHOWPINFODSC","Select yes to show in the page informations about the poster and publish of the page.");
++  define("_MD_AM_CONT_ACTSEO","Use menu title instead the id in the url (improve seo)?");
++  define("_MD_AM_CONT_ACTSEODSC","Select yes to the value of menu title instead of the id in the url of the page.");
++  define('_MD_AM_USECAPTCHA', 'Do you want to use CAPTCHA on registration form?');+
++  define('_MD_AM_USECAPTCHADSC', 'Select yes to CAPTCHA (anti-spam) up on registration form.');
++  define('_MD_AM_USECAPTCHAFORM', 'Do you want to use CAPTCHA on comment forms?');
++  define('_MD_AM_USECAPTCHAFORMDSC', 'Select yes to add CAPTCHA (anti-spam) to the comments form, in order to avoid spamming.');
++  define('_MD_AM_ALLWHTSIG', 'Allow to dipslay external images and HTML in the signature?');
++  define('_MD_AM_ALLWHTSIGDSC', 'If some attackers post an external image using [img], he can know IPs or User-Agents of users visited your site.<br />Allowing HTML can cause Script Insertion vulnerability if malicious user change his/her signature.');
++  define('_MD_AM_ALLWSHOWSIG', 'Do you want to allow your users to use a signature on their profile/posts, in your site?');
++  define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to use a personal signature which will be added (on their own choice) after their posts.');
++  define("_MD_AM_PERSON","Personalization");
++  define("_MD_AM_GOOGLE_ANA","Google Analytics");
++  define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
++- define("_MD_AM_LLOGOADM","Admin Logo");
++- define("_MD_AM_LLOGOADM_DESC"," URL for admin logo. <br /><b> Maximum size:</b><br />  Width  170x. <br /> Height : 80px.<br /><b><i> To select or send an image create at least one image cateory under system --> images.</b></i> ");
++  define("_MD_AM_LLOGOADM_URL","Admin Left Logo Link Url");
++  define("_MD_AM_LLOGOADM_ALT","Admin Left Logo Link Title");
++  define("_MD_AM_RLOGOADM","Admin Right Logo");
++  define("_MD_AM_RLOGOADM_DESC"," Select an image to use in the top right corner of the admin panel. <br /><b><i> To select or send an image create at least one image cateory under system --> images.</b></i> ");
++  define("_MD_AM_RLOGOADM_URL","Admin Right Logo Link Url");
++  define("_MD_AM_RLOGOADM_ALT","Admin Right Logo Link Title");
++  define("_MD_AM_METAGOOGLE","Google Meta Tag");
++  define("_MD_AM_METAGOOGLE_DESC","Code generated by Google to confirm ownership about a site so you can see the complete error page stats. Further information at http://www.google.com/webmasters");
++  define("_MD_AM_RSSLOCAL","RSS URL for admin");
++  define("_MD_AM_RSSLOCAL_DESC","WEB Address where the rss is located to be shown under the admin page.");
++  define("_MD_AM_FOOTADM","Admin Footer");
++  define("_MD_AM_FOOTADM_DESC","Content to be shown at footer at the admin pages.");
++  define("_MD_AM_EMAILTTF","Source font for email image");
++  define("_MD_AM_EMAILTTF_DESC","Choose one of the Fonts from the list below to be used by the email image generator.<br /><br /><i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
++  define("_MD_AM_EMAILLEN","Font Size");
++  define("_MD_AM_EMAILLEN_DESC","Type in the number to show the text with this size.");
++  define("_MD_AM_EMAILCOLOR","Font color for the email image");
++  define("_MD_AM_EMAILCOLOR_DESC","<i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
++  define("_MD_AM_EMAILSOMBRA","Shadow color for the email image");
++  define("_MD_AM_EMAILSOMBRA_DESC","Choose a color for the shadow of the email address protection.Leave it blank if you don't wish to use any.<br /><i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
++  define("_MD_AM_SOMBRAX","X offset for shadow");
++  define("_MD_AM_SOMBRAX_DESC","Type in a value that will represent the horizontal offset of the email shadow email in pixels.<br />Note: This resource will only be applyable if the option <b><i>Shadow color for email image</i></b> is not blank.");
++  define("_MD_AM_SOMBRAY","Y offset for shadow");
++  define("_MD_AM_SOMBRAY_DESC","Type in a value that will represent the vertical offset of the email shadow email in pixels.<br />Note: This resource will only be applyable if the option <b><i>Shadow color for email image</i></b> is not blank.");
++  define("_MD_AM_EDITREMOVEBLOCK","Edit & Remove blocks from user side?");
++  define("_MD_AM_EDITREMOVEBLOCKDSC","By enabling this option, you'll see two icons on block titles with a direct access to remove or edit your block.");
+
++  define("_MD_AM_EMAILPROTECT","Protect Emails against SPAM?");
++  define("_MD_AM_EMAILPROTECTDSC","By selecting \"Yes\" all the emails that are part of the site's content will be automatically converted in images to avoid SPAM");
++  define("_MD_AM_MULTLOGINPREVENT","Enable multilogin prohibition?");
++  define("_MD_AM_MULTLOGINPREVENTDSC","With this option enabled, if a user is already logged in at the site he won't be able to log in twice until the current login is finished. This is useful to prevent that someone conects himself/herself at the site with the same username.");
++  define("_MD_AM_MULTLOGINMSG","Multilogin redirection message:");
++  define("_MD_AM_MULTLOGINMSG_DESC","Mensage that will be shown to the user that tries to login with an already in use login. <br><i>This option will only be applyable if the option above is selected.</i>");
++  define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
++  define("_MD_AM_GRAVATARALWDSC","Show account images from members are hosted by <a href='http://www.gravatar.com/' target='_blank'>Gravatar</a>, a free avatar service. ImpressCMS will automatically display any Gravatar-hosted image linked to the email address from the members.");
+
++  define("_MD_AM_SHOW_ICMSMENU","Show ImpressCMS Project drop down menu?");
++  define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and YES to show it.");
+
++  define("_MD_AM_SHORTURL"," Truncating url's?");
++  define("_MD_AM_SHORTURLDSC","By selecting \"Yes\" all url&links committed in your site will have a shorter length");
++  define("_MD_AM_URLLEN","Max Length");
++  define("_MD_AM_URLLEN_DESC","The maximum amount of characteres to be ignored for truncating, url's larger than this will be shorten.");
++  define("_MD_AM_PRECHARS","Pre Characters");
++  define("_MD_AM_PRECHARS_DESC","How many characteres do you want to be shown in begin of truncated url's.");
++  define("_MD_AM_LASTCHARS","Last Characters");
++  define("_MD_AM_LASTCHARS_DESC","How many characteres do you want to be shown at the end of truncated url's.");
++  define("_MD_AM_HIDDENCONTENT","Use Hide content tag?");
++  define("_MD_AM_HIDDENCONTENTDSC","Set this option to Yes if you want use a tag to hide some content of your site for Anonymous users.<br /> Anonymous users will need to register to be able to see that content.<br /><i>If you disable this option, all contents between this tag will show as usual</i>");
++  define("_MD_AM_SIGMAXLENGTH","Maximum amount of characters in users signatures?");
++  define("_MD_AM_SIGMAXLENGTHDSC","Here you can choose the length of your users signatures.<br /> any character longer than this amount will be ignored.<br /><i>Be careful, long signatures can often break the design...</i>");
++  /*
++  define("_MD_AM_AUTORESIZE","Auto resize larger avatars?");
++  define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or height greater than that set will be automatically resized (keeping the ratio of the image) and the upload will be allowed. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.");
++  */
++  define("_MD_AM_AUTHOPENID","Enable OpenID authentication");
++  define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
+
+
+modules/system/language/english/admin/groups.php
+-------------------------------------------------
++  define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
++  define("_AM_DEBUG_PERM","Can see the Debug Mode in the following modules");
++  define("_AM_GROUPMANAGER_PERM","Can change permissions on these groups");
+
+
+modules/system/language/english/admin/blocksadmin.php
+---------------------------------------------------------
++  define('_AM_CHANGESTS', 'Change the block visibility');
+-   define('_AM_BPCOD',"ID");
+-   define('_AM_BPNAME',"Name of Position");
+-   define('_AM_BPDESC',"Description of Position");
+-   define('_AM_ADDPBLOCK',"Add new Block Position");
+-   define('_AM_EDITPBLOCK',"Edit Block Position");
+-   define('_AM_PBNAME_DESC',"Name of Block Position, it is with this name that will have to be created the Loop in the theme for the exhibition of blocks.<br/>Use a name with small_caption letters, without spaces and special characters.");
+-   define('_AM_BPMSG1',"Successfully carried through operation!");
+-   define('_AM_BPMSG2',"Problems had occurred to carry through them the operations.");
+-   define('_AM_BPMSG3',"Are you sure you wish to deleted this block position ?");
+-   define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.
+<div style="border: 1px dashed #AABBCC; padding:10px; width:86%;">
+<{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks</b>"}><br /><{/foreach}>
+</div>
+');
+
++  modules/system/language/english/admin/content_css_doc.html
+---------------------------------------------------------
+
++  modules/system/language/english/admin/pages.php
+---------------------------------------------------------
+
++  modules/system/language/english/admin/content.php
+---------------------------------------------------------
+
++-define('_MD_CONTENT_MENU','SEO ID');
++-define('_MD_CONTENT_MENU_DSC','Use a short phrase or word related to the content of the page. The content of this field will be used in place of the page ID to improve the indexing in search engines.');
+
+
++  modules/system/language/english/admin/blockspadmin.php
+---------------------------------------------------------
+
++  modules/system/language/english/admin/version.php
+---------------------------------------------------------
+
++define("_AM_VERSION_TITLE", 'ImpressCMS Version Checker');
++define("_AM_VERSION_NO_UPDATE", 'You are running the latest version of ImpressCMS !');
++define("_AM_VERSION_UPDATE_NEEDED", 'There is a new version of ImpressCMS ! The ImpressCMS Project strongly recommends always using the latest release.');
++define("_AM_VERSION_MOREINFO", 'Click on the following link to get more information on the latest release: ');
+
++define("_AM_VERSION_CHECK_RSSDATA_EMPTY", 'No information was available to check for an updated release.');
++define("_AM_VERSION_CHANGELOG", 'Changelog');
++define("_AM_VERSION_WARNING", 'Warning');
++define("_AM_VERSION_WARNING_NOT_A_FINAL", 'Please note that you are currently running a "Final" version of ImpressCMS and the proposed updated release is not a "Final" release. All releases other then "Final" should not be used on a production environment. If your install of ImpressCMS is running on a production environment, we recommend you wait for a final release. More info can be found: <a href="http://wiki.impresscms.org/index.php?title=Final_release">here</a>.');
+
+
+======================================
+# Directory: upgrade/language/english/
+======================================
+
++- upgrade/language/english/upgrade.php
+------------------------------------
+
++  define( "LEGEND_DATABASE", "Database Character Set" );
++  define( "DB_COLLATION_LABEL", "Database character set and collation" );
++  define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />We <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default.");
++  define( "_SYS_NEED_UPGRADE", "In order to Complete the upgrade proccess, please click here, and upgrade system module." );
+
+
+==========================================
+ImpressCMS 1.0 (changes from XOOPS 2.0.17)
+==========================================
+
+
+
++  new_pm.tpl
+
+language/english/admin.php
+--------------------------
+
++  define('_AD_SYSOPTIONS','System Options');
++  define('_AD_INSTALLEDMODULES','Installed Modules');
+-  define('_AD_PRESSGEN', 'This is your first time to enter the administration section. Press the button below to proceed.');
+
+language/english/auth.php
+--------------------------
+
++- define('_AUTH_LDAP_XOOPS_USER_NOTFOUND',"Sorry no corresponding user information has been found in the ImpressCMS database for connection: %s <br>Please verify your user datas or set on the automatic provisionning");
+
++  language/english/banners.php
+-------------------------------
+
++- language/english/findusers.php
+------------------------------
+
++- define("_MA_USER_QUERY", "Query");
++  define("_MA_USER_SENDMAIL","Send Email");
+
+
++- language/english/global.php
+------------------------------
+
++  define('_MODULES','Modules');
++  define('_IMPRESSCMS_PREFS','Preferences');
++  define('_SYSTEM','System');
++  define('_IMPRESSCMS_NEWS','News');
+
+language/english/pmsg.php
+--------------------------
+
++  define("_PM_MESSAGEPOSTED_EMAILSUBJ","[%s] Private Message Notification");
+
++  language/english/privpolicy.php
+----------------------------------
+
+language/english/search.php
+---------------------------
+
++- define('_SR_SEARCHRULE', 'Search Rule');
+
+language/english/timezone.php
+-----------------------------
+
++- define("_TZ_GMTP55", "(GMT+5:30) Mumbai, Kolkata, Chennai, New Delhi");
+
+language/english/user.php
+--------------------------
+
++  define('_US_REMEMBERME', 'Remember me');
++  define('_US_SELECT_THEME', 'Default Theme');
++  define('_US_USERINVITE', 'Membership invitation');
++  define('_US_INVITENONE','ERROR: Registration is by invitation only.');
++  define('_US_INVITEINVALID','ERROR: Incorrect invitation code.');
++  define('_US_INVITEEXPIRED','ERROR: Invitation code is already used or expired.');
++  define('_US_INVITEBYMEMBER','Only an existing member can invite new members; please request an invitation email from some registered member.');
++  define('_US_INVITEMAILERR','We were unable to send the mail with registration link to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
++  define('_US_INVITEDBERR','We were unable to process your registration request due to an internal error. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
++  define('_US_INVITESENT','An email containing registration link has been sent to the email account you provided. Please follow the instructions in the mail to register your account. This could take few minutes so please be patient.');
++  // %s is your site name
++  define('_US_INVITEREGLINK','Registration invitation from %s');
+
+modules/system/language/english/admin/blocksadmin.php
+--------------------------
+
++  define('_AM_BPADMIN',"Blocks Positions Administration");
++  define('_AM_BPCOD',"ID");
++  define('_AM_BPNAME',"Name of Position");
++  define('_AM_BPDESC',"Description of Position");
++  define('_AM_ADDPBLOCK',"Add new Block Position");
++  define('_AM_EDITPBLOCK',"Edit Block Position");
++  define('_AM_PBNAME_DESC',"Name of Block Position, it is with this name that will have to be created the Loop in the theme for the exhibition of blocks.<br/>Use a name with small_caption letters, without spaces and special characters.");
++  define('_AM_BPMSG1',"Successfully carried through operation!");
++  define('_AM_BPMSG2',"Problems had occurred to carry through them the operations.");
++  define('_AM_BPMSG3',"It is certain that it desires to exclude this block position?<br /><b>Warning:</b> This operation cannot be insult!");
++  define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.');
+
+modules/system/language/english/admin/groups.php
+--------------------------
+
++  define("_AM_SBLEFT","Side Block - Left");
++  define("_AM_SBRIGHT","Side Block - Right");
++  define("_AM_CBLEFT","Center Block - Left");
++  define("_AM_CBRIGHT","Center Block - Right");
++  define("_AM_CBCENTER","Center Block - Center");
++  define("_AM_CBBOTTOMLEFT","Center Block - Bottom left");
++  define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
++  define("_AM_CBBOTTOM","Center Block - Bottom");
+
+modules/system/language/english/admin/preferences.php
+--------------------------
+
++  define("_MD_AM_LDAP_USERS_BYPASS", " Xoops User(s) bypass LDAP Authentication");
++  define("_MD_AM_LDAP_USERS_BYPASS_DESC", "Xoops User(s) allow to bypass the LDAP login. Login directly in XOOPS<br>Separate each loginname with a |");
++- define("_MD_AM_LDAP_LOGINLDAP_ATTR_D","When Login name use in the DN option is set to yes, must correspond to the login name impressCMS");
++- define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The impressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br>The entry is directly read in the LDAP Server without search");
++  define("_MD_AM_RANKW","Rank image max width (pixel)");
++  define("_MD_AM_RANKH","Rank image max height (pixel)");
++  define("_MD_AM_RANKMAX","Rank image max filesize (byte)");
++  define("_MD_AM_MULTILANGUAGE","Multilanguage settings");
++  define("_MD_AM_ML_ENABLE","Enable Multilanguage");
++  define("_MD_AM_ML_ENABLEDSC","Set to Yes in order to enable multilanguage throughout the site.");
++  define("_MD_AM_ML_TAGS","Multilanguage tags");
++  define("_MD_AM_ML_TAGSDSC","Enter the tags to be used on this site, separated by a comma. For example, this would be used to define the tages to be used for english and french : en,fr");
++  define("_MD_AM_ML_NAMES","Language names");
++  define("_MD_AM_ML_NAMESDSC","Enter the names of the language to use, separated by a comma");
++  define("_MD_AM_ML_CAPTIONS","Language captions");
++  define("_MD_AM_ML_CAPTIONSDSC","Enter the captions you would like to use for these languages");
++  define("_MD_AM_ML_CHARSET","Charsets");
++  define("_MD_AM_ML_CHARSETDSC","Enter the charsets of these languages");
++  define("_MD_AM_REMEMBERME","Enable the 'Remember Me' feature in the login.");
++  define("_MD_AM_REMEMBERMEDSC","The 'Remember Me' feature is not totally secure, use it under your own risk.");
++  define("_MD_AM_PRIVDPOLICY","Enable the sites 'Privacy Policy'.");
++  define("_MD_AM_PRIVDPOLICYDSC","The 'Privacy Policy' should be tailored to your site & active whenever you are allowing registrations to your site.");
++  define("_MD_AM_PRIVPOLICY","Enter your site 'Privacy Policy'.");
++  define("_MD_AM_PRIVPOLICYDSC","");
++  define("_MD_AM_REGINVITE","Register by invitation");
+
+modules/system/language/english/admin/userrank.php
+--------------------------
+
++  define("_AM_RANKW","Max width %s pixels");
++  define("_AM_RANKH","Max height %s pixels");
++  define("_AM_RANKMAX","Max filesize %s bytes");
+
+modules/system/language/english/blocks.php
+--------------------------
+
++- define('_MB_SYSTEM_REMEMBERME', 'Remember me');
++  define("_MB_SYSTEM_PRIVPOLICY", "Privacy Policy");
++  define("_MB_SYSTEM_SHOWSUBS", "Show sub-pages?");
++  define("_MB_SYSTEM_SHOWNAV", "Show navigation menu?");
++  define("_MB_SYSTEM_SHOWPINFO", "Show poster and published infos?");
++  define("_MB_SYSTEM_SORT", "Sort");
++  define("_MB_SYSTEM_ORDER", "Order");
++  define("_MB_SYSTEM_SELCOLOR", "Background color of the selected item: ");
++  define("_MB_SYSTEM_PAGE", "Page to show");
++  if (!defined('_CT_EDIT_CONTENT')){define('_CT_EDIT_CONTENT','Edit Content');}
++  if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Delete Content');}
++  if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','Published by');}
++  if (!defined('_CT_ON')){define('_CT_ON','on');}
+
+
+modules/system/language/english/modinfo.php
+--------------------------
+
++  define('_MI_SYSTEM_BNAME14', "Language Selection");
++  define('_MI_SYSTEM_BNAME15', "Content");
++  define('_MI_SYSTEM_BNAME16', "Content Menu");
++  define('_MI_SYSTEM_BNAME17', "Related Content");
++  define("_MI_SYSTEM_ADMENU18", "Content Manager");
++  define("_MI_SYSTEM_ADMENU19", "Block Positions");
++  define("_MI_SYSTEM_ADMENU20", "Symlink Manager");
+
+
+install/language/english/install.php
+--------------------------
+
+-  define("_INSTALL_L0","Welcome to the Install Wizard for XOOPS 2.0");
+-  define("_INSTALL_L70","Please change the file permission for mainfile.php so that it is writeable by the server (i.e. chmod 777 mainfile.php on a UNIX/LINUX server, or check the properties of the file and make sure the read-only flag is not set on a Windows server ). Reload this page once you have changed the permission setting.");
+-  //define("_INSTALL_L71","Click on the button below to begin the installation.");
+-  define("_INSTALL_L1","Open mainfile.php with your text editor and find the following codes on line 31:");
+-  define("_INSTALL_L2","Now, change this line to:");
+-  define("_INSTALL_L3","Next, on line 35, change %s to %s");
+-  define("_INSTALL_L4","OK, I have set the above setings, let me try again!");
+-  define("_INSTALL_L5","WARNING!");
+-  define("_INSTALL_L6","There is a mismatch between your XOOPS_ROOT_PATH configuration on line 31 of mainfile.php and the root path info we have detected.");
+-  define("_INSTALL_L7","Your setting: ");
+-  define("_INSTALL_L8","We detected: ");
+-  define("_INSTALL_L9","( On MS platforms, you may receive this error message even when your configuration is correct. If that is the case, please press the button below to continue)");
+-  define("_INSTALL_L10","Plesae press the button below to continue if this is really ok.");
+-  define("_INSTALL_L11","The server path to your XOOPS root directory: ");
+-  define("_INSTALL_L12","URL to your XOOPS root directory: ");
+-  define("_INSTALL_L13","If the above setting is correct, press the button below to continue.");
+-  define("_INSTALL_L14","Next");
+-  define("_INSTALL_L15","Please open mainfile.php and enter required DB settings data");
+-  define("_INSTALL_L16","%s is the hostname of your database server.");
+-  define("_INSTALL_L17","%s is the username of your database account.");
+-  define("_INSTALL_L18","%s is the password required to access your database.");
+-  define("_INSTALL_L19","%s is the name of your database in which XOOPS tables will be created.");
+-  define("_INSTALL_L20","%s is the prefix for tables that will be made during the installation.");
+-  define("_INSTALL_L21","The following database was not found on the server:");
+-  define("_INSTALL_L22","Attempt to create it?");
+-  define("_INSTALL_L23","Yes");
+-  define("_INSTALL_L24","No");
+-  define("_INSTALL_L25","We have detected the following database information from your configuration in mainfile.php. Please fix it now if this is not correct.");
+-  define("_INSTALL_L26","Database Configuration");
+-  define("_INSTALL_L51","Database");
+-  define("_INSTALL_L66","Choose the database to be used");
+-  define("_INSTALL_L27","Database Hostname");
+-  define("_INSTALL_L67","Hostname of the database server. If you are unsure, 'localhost' works in most cases.");
+-  define("_INSTALL_L28","Database Username");
+-  define("_INSTALL_L65","Your database user account on the host");
+-  define("_INSTALL_L29","Database Name");
+-  define("_INSTALL_L64","The name of database on the host. The installer will attempt to create the database if not exist");
+-  define("_INSTALL_L52","Database Password");
+-  define("_INSTALL_L68","Password for your database user account");
+-  define("_INSTALL_L30","Table Prefix");
+-  define("_INSTALL_L63","This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'xoops'.");
+-  define("_INSTALL_L54","Use persistent connection?");
+-  define("_INSTALL_L69","Default is 'NO'. Choose 'NO' if you are unsure.");
+-  define("_INSTALL_L55","XOOPS Physical Path");
+-  define("_INSTALL_L59","Physical path to your main XOOPS directory WITHOUT trailing slash");
+-  define("_INSTALL_L56","XOOPS Virtual Path (URL)");
+-  define("_INSTALL_L58","Virtual path to your main XOOPS directory WITHOUT trailing slash");
+
++  define( "SHOW_HIDE_HELP", "Show/hide help text" );
++  // Configuration check page
++  define( "SERVER_API", "Server API" );
++  define( "PHP_EXTENSION", "%s extension" );
++  define( "CHAR_ENCODING", "Character encoding" );
++  define( "XML_PARSING", "XML parsing" );
++  define( "REQUIREMENTS", "Requirements" );
++  define( "_PHP_VERSION", "PHP version" );
++  define( "RECOMMENDED_SETTINGS", "Recommended settings" );
++  define( "RECOMMENDED_EXTENSIONS", "Recommended extensions" );
++  define( "SETTING_NAME", "Setting name" );
++  define( "RECOMMENDED", "Recommended" );
++  define( "CURRENT", "Current" );
++  define( "RECOMMENDED_EXTENSIONS_MSG", "These extensions are not required for normal use, but may be necessary to exploit
++	some specific features (like the multi-language or RSS support). Thus, it is recommended to have them installed." );
++  define( "NONE", "None" );
++  define( "SUCCESS", "Success" );
++  define( "WARNING", "Warning" );
++  define( "FAILED", "Failed" );
+
+
+-  define("_INSTALL_L31","Could not create database. Contact the server administrator for details.");
+-  define("_INSTALL_L32","Installation Complete");
+-  define("_INSTALL_L33","Click <a href='../index.php'>HERE</a> to see the home page of your site.");
+-  define("_INSTALL_L35","If you had any errors, please contact the dev team at <a href='http://www.xoops.org/' target='_blank'>XOOPS.org</a>");
+-  define("_INSTALL_L36","Please choose your site admin's name and password.");
+-  define("_INSTALL_L37","Admin Name");
+-  define("_INSTALL_L38","Admin Email");
+-  define("_INSTALL_L39","Admin Password");
+-  define("_INSTALL_L74","Confirm Password");
+-  define("_INSTALL_L40","Create Tables");
+-  define("_INSTALL_L41","Please go back and type in all the required info.");
+-  define("_INSTALL_L42","Back");
+-  define("_INSTALL_L57","Please enter %s");
++  // Titles (main and pages)
++  define( "XOOPS_INSTALL_WIZARD", "ImpressCMS installation wizard" );
++  define( "INSTALL_STEP", "Step" );
++  define( "INSTALL_OUTOF", " out of " );
++  define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007%s <a href=\"http://www.impresscms.org\">ImpressCMS</a>" );
+
+-  // %s is database name
+-  define("_INSTALL_L43","Database %s created!");
++  define( "LANGUAGE_SELECTION", "Language selection" );
++  define( "LANGUAGE_SELECTION_TITLE", "Choose your language");		// L128
++  define( "INTRODUCTION", "Introduction" );
++  define( "INTRODUCTION_TITLE", "Welcome to the ImpressCMS installation assistant" );		// L0
++  define( "CONFIGURATION_CHECK", "Configuration check" );
++  define( "CONFIGURATION_CHECK_TITLE", "Checking your server configuration" );
++  define( "PATHS_SETTINGS", "Paths settings" );
++  define( "PATHS_SETTINGS_TITLE", "Paths settings" );
++  define( "DATABASE_CONFIG", "Database configuration" );
++  define( "DATABASE_CONFIG_TITLE", "Database configuration" );
++  define( "CONFIG_SAVE", "Configuration save" );
++  define( "CONFIG_SAVE_TITLE", "Saving your system configuration" );
++  define( "TABLES_CREATION", "Tables creation" );
++  define( "TABLES_CREATION_TITLE", "Database tables creation" );
++  define( "INITIAL_SETTINGS", "Initial settings" );
++  define( "INITIAL_SETTINGS_TITLE", "Please enter your initial settings" );
++  define( "DATA_INSERTION", "Data insertion" );
++  define( "DATA_INSERTION_TITLE", "Saving your settings to the database" );
++  define( "WELCOME", "Welcome" );
++  define( "WELCOME_TITLE", "Installation of ImpressCMS completed" );		// L0
++  define( "MODULES_INSTALL", "Install modules" );
++  define( "MODULES_INSTALL_TITLE", "Installation of modules " );
+
++  // Settings (labels and help text)
++  define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55
++  define( "XOOPS_ROOT_PATH_HELP", "Physical path of the ImpressCMS documents folder" ); // L59
++  define( "_INSTALL_TRUST_PATH_HELP", "Physical path of the ImpressCMS trust path (outside of web root)" ); // L59
+
++  define( "XOOPS_URL_LABEL", "Website location (URL)" ); // L56
++  define( "XOOPS_URL_HELP", "Main URL that will be used to access your ImpressCMS installation" ); // L58
+
+-  // %s is table name
+-  define("_INSTALL_L44","Unable to make %s");
+-  define("_INSTALL_L45","Table %s created.");
++  define( "LEGEND_CONNECTION", "Server connection" );
++  define( "LEGEND_DATABASE", "Database" ); // L51
+
+-  define("_INSTALL_L46","In order for the modules included in the package to work correctly, the following files must be writeable by the server. Please change the permission setting for these files. (i.e. 'chmod 666 file_name' and 'chmod 777 dir_name' on a UNIX/LINUX server, or check the properties of the file and make sure the read-only flag is not set on a Windows server)");
+-  define("_INSTALL_L47","Next");
++  define( "DB_HOST_LABEL", "Server hostname" );	// L27
++  define( "DB_HOST_HELP",  "Hostname of the database server. If you are unsure, <em>localhost</em> works in most cases"); // L67
++  define( "DB_USER_LABEL", "User name" );	// L28
++  define( "DB_USER_HELP",  "Name of the user account that will be used to connect to the database server"); // L65
++  define( "DB_PASS_LABEL", "Password" );	// L52
++  define( "DB_PASS_HELP",  "Password of your database user account"); // L68
++  define( "DB_NAME_LABEL", "Database name" );	// L29
++  define( "DB_NAME_HELP",  "The name of database on the host. The installer will attempt to create the database if not exist"); // L64
++  define( "DB_PREFIX_LABEL", "Table prefix" );	// L30
++  define( "DB_PREFIX_HELP",  "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
++  define( "DB_PCONNECT_LABEL", "Use persistent connection" );	// L54
++  define( "DB_PCONNECT_HELP",  "Default is 'NO'. Choose 'NO' if you are unsure"); // L69
+
+-  define("_INSTALL_L53","Please confirm the following submitted data:");
++  define( "LEGEND_ADMIN_ACCOUNT", "Administrator account" );
++  define( "ADMIN_LOGIN_LABEL", "Admin login" ); // L37
++  define( "ADMIN_EMAIL_LABEL", "Admin e-mail" ); // L38
++  define( "ADMIN_PASS_LABEL", "Admin password" ); // L39
++  define( "ADMIN_CONFIRMPASS_LABEL", "Confirm password" ); // L74
+
+-  define("_INSTALL_L60","Could not write into mainfile.php. Please check the file permission and try again.");
+-  define("_INSTALL_L61","Could not write to mainfile.php. Contact the server administrator for details.");
+-  define("_INSTALL_L62","Configuration data has been saved successfully to mainfile.php.");
+-  define("_INSTALL_L72","The following directories must be created with the write permission by the server. (i.e. 'chmod 777 directory_name' on a UNIX/LINUX server)");
+-  define("_INSTALL_L73","Invalid Email");
++  // Buttons
++  define( "BUTTON_PREVIOUS", "Previous" ); // L42
++  define( "BUTTON_NEXT", "Next" ); // L47
++  define( "BUTTON_FINISH", "Finish" );
++  define( "BUTTON_REFRESH", "Refresh" );
++  define( "BUTTON_SHOW_SITE", "Show my site" );
+
+-  // add by haruki
+-  define("_INSTALL_L80","introduction");
+-  define("_INSTALL_L81","check file permissions");
+-  define("_INSTALL_L82","Checking file and directory permissions..");
+-  define("_INSTALL_L83","File %s is NOT writable.");
+-  define("_INSTALL_L84","File %s is writable.");
+-  define("_INSTALL_L85","Directory %s is NOT writable.");
+-  define("_INSTALL_L86","Directory %s is writable.");
+-  define("_INSTALL_L87","No errors detected.");
+-  define("_INSTALL_L89","general settings");
+-  define("_INSTALL_L90","General configuration");
+-  define("_INSTALL_L91","confirm");
+-  define("_INSTALL_L92","save settings");
+-  define("_INSTALL_L93","modify settings");
+-  define("_INSTALL_L88","Saving configuration data..");
+-  define("_INSTALL_L94","check path & URL");
+-  define("_INSTALL_L127","Checking file path & URL settings..");
+-  define("_INSTALL_L95","Could not detect the physical path to your XOOPS directory.");
+-  define("_INSTALL_L96","There is a conflict between the detected physical path (%s) and the one you input.");
+-  define("_INSTALL_L97","<b>Physical path</b> is correct.");
++  // Messages
++  define( "XOOPS_FOUND", "%s found" );
++  define( "CHECKING_PERMISSIONS", "Checking file and directory permissions..." ); // L82
++  define( "IS_NOT_WRITABLE", "%s is NOT writable." ); // L83
++  define( "IS_WRITABLE", "%s is writable." ); // L84
++  define( "ALL_PERM_OK", "All Permissions are correct." );
+
+-  define("_INSTALL_L99","<b>Physical path</b> must be a directory.");
+-  define("_INSTALL_L100","<b>Virtual path</b> is a valid URL.");
+-  define("_INSTALL_L101","<b>Virtual path</b> is not a valid URL.");
+-  define("_INSTALL_L102","confirm database settings");
+-  define("_INSTALL_L103","restart from the beginning");
+-  define("_INSTALL_L104","check database");
+-  define("_INSTALL_L105","atempt to create database");
+-  define("_INSTALL_L106","Could not connect to the database server.");
+-  define("_INSTALL_L107","Please check the database server and its configuration.");
+-  define("_INSTALL_L108","Connection to database server is OK.");
+-  define("_INSTALL_L109","Database %s does not exists.");
+-  define("_INSTALL_L110","Database %s exists and connectable.");
+-  define("_INSTALL_L111","Database connection is OK.<br />Press the button below to create database tables.");
+-  define("_INSTALL_L112","admin user setting");
+-  define("_INSTALL_L113","Table %s deleted.");
+-  define("_INSTALL_L114","Failed creating database tables.");
+-  define("_INSTALL_L115","Database tables created.");
+-  define("_INSTALL_L116","insert data");
+-  define("_INSTALL_L117","finish");
++  define( "READY_CREATE_TABLES", "No ImpressCMS tables were detected.<br />The installer is now ready to create the ImpressCMS system tables.<br />Press <em>next</em> to proceed." );
++  define( "XOOPS_TABLES_FOUND", "The ImpressCMS system tables already exists in your database.<br />Press <em>next</em> to go to the next step." ); // L131
++  define( "READY_INSERT_DATA", "The installer is now ready to insert initial data into your database." );
++  define( "READY_SAVE_MAINFILE", "The installer is now ready to save the specified settings to <em>mainfile.php</em>.<br />Press <em>next</em> to proceed." );
++  define( "DATA_ALREADY_INSERTED", "ImpressCMS data is stored in your database already. No further data will be stored by this action.<br />Press <em>next</em> to go to the next step." );
+
+-  define("_INSTALL_L118","Failed creating table %s.");
+-  define("_INSTALL_L119","%d entries inserted to table %s.");
+-  define("_INSTALL_L120","Failed inserting %d entries to table %s.");
+
+-  define("_INSTALL_L121","Constant %s written to %s.");
+-  define("_INSTALL_L122","Failed writing constant %s.");
++  // %s is database name
++  define( "DATABASE_CREATED", "Database %s created!" ); // L43
++  // %s is table name
++  define( "TABLE_NOT_CREATED", "Unable to create table %s" ); // L118
++  define( "TABLE_CREATED", "Table %s created." ); // L45
++  define( "ROWS_INSERTED", "%d entries inserted to table %s." ); // L119
++  define( "ROWS_FAILED", "Failed inserting %d entries to table %s." ); // L120
++  define( "TABLE_ALTERED", "Table %s updated."); // L133
++  define( "TABLE_NOT_ALTERED", "Failed updating table %s."); // L134
++  define( "TABLE_DROPPED", "Table %s dropped."); // L163
++  define( "TABLE_NOT_DROPPED", "Failed deleting table %s."); // L164
+
+-  define("_INSTALL_L123","File %s stored in cache/ directory.");
+-  define("_INSTALL_L124","Failed storing file %s to cache/ directory.");
++  // Error messages
++  define( "ERR_COULD_NOT_ACCESS", "Could not access the specified folder. Please verify that it exists and is readable by the server." );
++  define( "ERR_NO_XOOPS_FOUND", "No ImpressCMS installation could be found in the specified folder." );
++  define( "ERR_INVALID_EMAIL", "Invalid Email" ); // L73
++  define( "ERR_REQUIRED", "Please enter all the required info." ); // L41
++  define( "ERR_PASSWORD_MATCH", "The two passwords do not match" );
++  define( "ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folder<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)" ); // L72
++  define( "ERR_NO_DATABASE", "Could not create database. Contact the server administrator for details." ); // L31
++  define( "ERR_NO_DBCONNECTION", "Could not connect to the database server." ); // L106
++  define( "ERR_WRITING_CONSTANT", "Failed writing constant %s." ); // L122
+
+-  define("_INSTALL_L125","File %s overwritten by %s.");
+-  define("_INSTALL_L126","Could not write to file %s.");
++  define( "ERR_COPY_MAINFILE", "Could not copy the distribution file to mainfile.php" );
++  define( "ERR_WRITE_MAINFILE", "Could not write into mainfile.php. Please check the file permission and try again.");
++  define( "ERR_READ_MAINFILE", "Could not open mainfile.php for reading" );
+
+-  define("_INSTALL_L130","The installer has detected tables for XOOPS 1.3.x in your database.<br />The installer will now attempt to upgrade your database to XOOPS2.");
+-  define("_INSTALL_L131","Tables for XOOPS2 already exist in your database.");
+-  define("_INSTALL_L132","update tables");
+-  define("_INSTALL_L133","Table %s updated.");
+-  define("_INSTALL_L134","Failed updating table %s.");
+-  define("_INSTALL_L135","Failed updating database tables.");
+-  define("_INSTALL_L136","Database tables updated.");
+-  define("_INSTALL_L137","update modules");
+-  define("_INSTALL_L138","update comments");
+-  define("_INSTALL_L139","update avatars");
+-  define("_INSTALL_L140","update smilies");
+-  define("_INSTALL_L141","The installer will now update each module to work with XOOPS2.<br />Make sure that you have uploaded all files in XOOPS2 package to your server.<br />This may take a while to complete.");
+-  define("_INSTALL_L142","Updating modules..");
+-  define("_INSTALL_L143","The installer will now update configuration data of XOOPS 1.3.x to be used with XOOPS2.");
+-  define("_INSTALL_L144","update config");
+-  define("_INSTALL_L145","Comment (ID: %s) inserted to the database.");
+-  define("_INSTALL_L146","Could not insert comment (ID: %s) to the database.");
+-  define("_INSTALL_L147","Updating comments..");
+-  define("_INSTALL_L148","Update complete.");
+-  define("_INSTALL_L149","The installer will now update comment posts in XOOPS 1.3.x to be used in XOOPS2.<br />This may take a while to complete.");
+-  define("_INSTALL_L150","The installer will now update the smiley and user rank images to be used with XOOPS2.<br />This may take a while to complete.");
+-  define("_INSTALL_L151","The installer will now update the user avatar images to be used in XOOPS2.<br />This may take a while to complete.");
+-  define("_INSTALL_L155","Updating smiley/rank images..");
+-  define("_INSTALL_L156","Updating user avatar images..");
+-  define("_INSTALL_L157","Select the default user group for each group type");
+-  define("_INSTALL_L158","Groups in 1.3.x");
+-  define("_INSTALL_L159","Webmasters");
+-  define("_INSTALL_L160","Register Users");
+-  define("_INSTALL_L161","Anonymous Users");
+-  define("_INSTALL_L162","You must select a default group for each group type.");
+-  define("_INSTALL_L163","Table %s dropped.");
+-  define("_INSTALL_L164","Failed deleting table %s.");
+-  define("_INSTALL_L165","The site is currently closed for maintenance. Please come back later.");
++  //
++  define("_INSTALL_SELECT_MODS_INTRO", "In the selection box on the left side, please select the modules that
++  you wish to install on this site.
++  All the installed modules are accessible by the admin group and the registered users.
++  In case you would like to give visitors to the site (unregistered users or users who are not logged in) access to one or more of the
++  installed modules please select these modules in the selection box on the right.");
+
+-  // %s is filename
+-  define("_INSTALL_L152","Could not open %s.");
+-  define("_INSTALL_L153","Could not update %s.");
+-  define("_INSTALL_L154","%s updated.");
++  define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
++  define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
++  define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Module %s could not be installed.");
++  define("_INSTALL_ERRORS", 'Errors');
++  define("_INSTALL_MOD_ALREADY_INSTALLED", "Module %s has already been installed");
++  define("_INSTALL_FAILED_TO_EXECUTE", "Failed to execute ");
++  define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
+
+-  define('_INSTALL_L128', 'Choose language to be used for the installation process');
+-  define('_INSTALL_L200', 'Reload');
++  define("_INSTALL_MOD_INSTALL_SUCCESSFULLY", "Module %s has been installed succesfully.");
++  define("_INSTALL_MOD_INSTALL_FAILED", "The wizard could not install module %s.");
++  define("_INSTALL_NO_PLUS_MOD", "No modules were selected for installation. Please continue the installation by clicking next.");
++  define("_INSTALL_INSTALLING", "Installing %s module");
+
++  define("_INSTALL_TRUST_PATH", "Trust path");
++  define("_INSTALL_TRUST_PATH_LABEL", "Location of the trust path (must be outside web root)");
++  define("_INSTALL_WEB_LOCATIONS", "Web locations");
++  define("_INSTALL_WEB_LOCATIONS_LABEL", "Web locations");
+
++  define("_INSTALL_TRUST_PATH_FOUND", "Trust path found.");
++  define("_INSTALL_ERR_NO_TRUST_PATH_FOUND", "Trust path was not found.");
+
++  define("_INSTALL_COULD_NOT_INSERT", "The wizard was unable to install module %s the database.");
++-  define("_INSTALL_CHARSET","ISO-8859-1");
+
+install/language/english/finish.php
+--------------------------
+
+-  "<u><b>Your site</b></u>
+-  <p>Click <a href='../index.php'>HERE</a> to see the home page of your site.</p>
+-  <u><b>Way to use</b></u>
+-  <p>[not yet]</p>
+-  <u><b>Support</b></u>
+-  <p>Visit <a href='http://www.xoops.org/' target='_blank'>XOOPS.org</a></p>
+-  ";
+
++  "<h3>Your site</h3>
++  <p>You can now access the <a href='../index.php'>home page of your site</a>.</p>
++  <h3>Support</h3>
++  <ul class=\"diags\">
++  <li class=\"success\"><a href='http://www.impresscms.org/' target='_blank'>www.impresscms.org</a> - Project Homepage</p></li>" .
++  "<li class=\"success\"><a href='http://community.impresscms.org/' target='_blank'>community.impresscms.org</a> - Support</li>" .
++  "<li class=\"success\"><a href='http://addons.impresscms.org/' target='_blank'>addons.impresscms.org</a> - Modules & Themes</li>" .
++  "<li class=\"success\"><a href='http://wiki.impresscms.org/' target='_blank'>wiki.impresscms.org</a> - Community Documentation</li>".
++  "</ul>";
+
+install/language/english/install2.php
+--------------------------
+
+-  define("_INSTALL_DISCLMR", "While the administrators and moderators of this site will attempt to remove
+-  or edit any generally objectionable material as quickly as possible, it is
+-  impossible to review every message. Therefore you acknowledge that all posts
+-  made to this site express the views and opinions of the author and not the
+-  administrators, moderators or webmaster (except for posts by these people)
+-  and hence will not be held liable.
++  define("_INSTALL_DISCLMR", "While the administrators and moderators of this site will attempt to remove or edit any generally objectionable material as quickly as possible, it is impossible to review every message. Therefore you acknowledge that all posts made to this site express the views and opinions of the author and not the administrators, moderators or webmaster (except for posts by these people) and hence will not be held liable.
+
+-  You agree not to post any abusive, obscene, vulgar, slanderous, hateful,
+-  threatening, sexually-orientated or any other material that may violate any
+-  applicable laws. Doing so may lead to you being immediately and permanently
+-  banned (and your service provider being informed). The IP address of all
+-  posts is recorded to aid in enforcing these conditions. Creating multiple
+-  accounts for a single user is not allowed. You agree that the webmaster,
+-  administrator and moderators of this site have the right to remove, edit,
+-  move or close any topic at any time should they see fit. As a user you agree
+-  to any information you have entered above being stored in a database. While
+-  this information will not be disclosed to any third party without your
+-  consent the webmaster, administrator and moderators cannot be held
+-  responsible for any hacking attempt that may lead to the data being
+-  compromised.
++  You agree not to post any abusive, obscene, vulgar, slanderous, hateful, threatening, sexually-orientated or any other material that may violate any applicable laws. Doing so may lead to you being immediately and permanently banned (and your service provider being informed). The IP address of all posts is recorded to aid in enforcing these conditions. Creating multiple accounts for a single user is not allowed. You agree that the webmaster, administrator and moderators of this site have the right to remove, edit, move or close any topic at any time should they see fit. As a user you agree to any information you have entered above being stored in a database. While this information will not be disclosed to any third party without your consent the webmaster, administrator and moderators cannot be held responsible for any hacking attempt that may lead to the data being compromised.
+
+-  This site system uses cookies to store information on your local computer.
+-  These cookies do not contain any of the information you have entered above,
+-  they serve only to improve your viewing pleasure. The email address is used
+-  only for confirming your registration details and password (and for sending
+-  new passwords should you forget your current one).
++  This site system uses cookies to store information on your local computer. These cookies do not contain any of the information you have entered above, they serve only to improve your viewing pleasure. The email address is used only for confirming your registration details and password (and for sending new passwords should you forget your current one).
+
+ By clicking Register below you agree to be bound by these conditions.");
++
++    define("_INSTALL_PRIVPOLICY", "<p>This privacy policy sets out how [website name] uses and protects any information that you give [website name] when you use this website. [website name] is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. [website name] may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
++  </p><p>
++  This policy is effective from [date].
++  </p>
++  <h2>What we collect</h2>
++  <p>
++  We may collect the following information:
++  <ul>
++  <li>name and job title</li>
++  <li>contact information including email address</li>
++  <li>demographic information such as postcode, preferences and interests</li>
++  <li>other information relevant to customer surveys and/or offers</li></ul>
++  </p>
++  <h2>What we do with the information we gather</h2>
++  <p>
++  We require this information to understand your needs and provide you with a better service, and in particular for the following reasons:
++  <ul>
++  <li>Internal record keeping.</li>
++  <li>We may use the information to improve our products and services.</li>
++  <li>We may periodically send promotional email about new products, special offers or other information which we think you may find interesting using the email address which you have provided.</li>
++  <li>From time to time, we may also use your information to contact you for market research purposes. We may contact you by email.</li>
++  <li>We may use the information to customise the website according to your interests.</li></ul>
++  </p>
++  <h2>Security</h2>
++  <p>
++  We are committed to ensuring that your information is secure. In order to prevent unauthorised access or disclosure we have put in place suitable physical, electronic and managerial procedures to safeguard and secure the information we collect online.
++  </p>
++  <h2>How we use cookies</h2>
++  <p>
++  A cookie is a small file which asks permission to be placed on your computer's hard drive. Once you agree, the file is added and the cookie helps analyse web traffic or lets you know when you visit a particular site. Cookies allow web applications to respond to you as an individual. The web application can tailor its operations to your needs, likes and dislikes by gathering and remembering information about your preferences.
++  </p><p>
++  We use traffic log cookies to identify which pages are being used & for authenticating you as a registered member. This helps us analyse data about web page traffic and improve our website in order to tailor it to customer needs. We only use this information for statistical analysis purposes and then the data is removed from the system. Overall, cookies help us provide you with a better website, by enabling us to monitor which pages you find useful and which you do not. A cookie in no way gives us access to your computer or any information about you, other than the data you choose to share with us.
++  </p><p>
++  You can choose to accept or decline cookies. Most web browsers automatically accept cookies, but you can usually modify your browser setting to decline cookies if you prefer. This may prevent you from taking full advantage of the website including registration and logging in.
++  </p>
++  <h2>Links to other websites</h2>
++  <p>
++  Our website may contain links to enable you to visit other websites of interest easily. However, once you have used these links to leave our site, you should note that we do not have any control over that other website. Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst visiting such sites and such sites are not governed by this privacy statement. You should exercise caution and look at the privacy statement applicable to the website in question.
++  </p>
++  <h2>Controlling your personal information</h2>
++  <p>
++  You may choose to restrict the collection or use of your personal information in the following ways:
++  <ul>
++  <li>whenever you are asked to fill in a form on the website, look for the box that you can click to indicate that you do not want the information to be used by anybody for direct marketing purposes</li>
++  <li>if you have previously agreed to us using your personal information for direct marketing purposes, you may change your mind at any time by writing to or emailing us at [email address]</li></ul>
++  </p><p>
++  We will not sell, distribute or lease your personal information to third parties unless we have your permission or are required by law to do so. We may use your personal information to send you promotional information about third parties which we think you may find interesting if you tell us that you wish this to happen. You may request details of personal information which we hold about you under the Data Protection Act 1998. A small fee will be payable. If you would like a copy of the information held on you please write to [address].
++  </p><p>
++  If you believe that any information we are holding on you is incorrect or incomplete, please write to or email us as soon as possible, at the above address. We will promptly correct any information found to be incorrect.
++  </p>");
+
+install/language/english/welcome.php
+--------------------------
+ <?php
+-  // $Id: welcome.php 2 2005-11-02 18:23:29Z skalpa $
+-  $content .=
+-  "<u><b>What is it?</b></u>
++  // $Id: welcome.php 565 2006-06-23 06:39:22Z skalpa $
++  $content .= '
+ <p>
+-  <b>XOOPS</b> is a dynamic OO (Object Oriented) based open source portal script written in PHP.
+-  XOOPS supports a number of databases,
+-  making XOOPS an ideal tool for developing small to large dynamic community websites,
+-  intra company portals, corporate portals, weblogs and much more.
++	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for
++	developing small to large dynamic community websites, intra company portals, corporate portals, weblogs and much more.
+ </p>
+ <p>
+-  XOOPS is released under the terms of the <a href='http://www.gnu.org/copyleft/gpl.html' target='_blank'>GNU General Public License (GPL)</a> and is free to use and modify.
+-  It is free to redistribute as long as you abide by the distribution terms of the GPL.
++	ImpressCMS is released under the terms of the
++	<a href="http://www.gnu.org/copyleft/gpl.html" target="_blank">GNU General Public License (GPL)</a>
++	and is free to use and modify.
++	It is free to redistribute as long as you abide by the distribution terms of the GPL.
+ </p>
+-  <u><b>Requirements</b></u>
+-  <p>
++  <h3>Requirements</h3>
+ <ul>
+-  <li>WWW Server (<a href='http://www.apache.org/' target='_blank'>Apache</a>, IIS, Roxen, etc)</li>
+-  <li><a href='http://www.php.net/' target='_blank'>PHP</a> 4.0.5 and higher (4.1.1 or higher recommended)</li>
+-  <li><a href='http://www.mysql.com/' target='_blank'>MySQL</a> Database 3.23.XX</li>
++	<li>WWW Server (<a href="http://www.apache.org/" target="_blank">Apache</a>, IIS, Roxen, etc)</li>
++	<li><a href="http://www.php.net/" target="_blank">PHP</a> 4.3.0 or higher (5.1 or higher recommended)</li>
++	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> 3.23 or higher (4.1 or higher recommended)</li>
+ </ul>
+-  </p>
+-  <u><b>Before you install</b></u>
++  <h3>Before you install</h3>
+ <ul>
+-  <li>Setup WWW server, PHP and database server properly.</li>
+-  <li>Prepare a database for your XOOPS site.</li>
+-  <li>Prepare user account and grant the user the access to the database.</li>
+-  <li>Make the directories of uploads/, cache/ and templates_c/ and the files of mainfile.php writabale.</li>
+-  <li>Turn cookie and JavaScript of your browser on.</li>
++	<li>Setup the web server, PHP and database server properly.</li>
++	<li>Prepare a database for ImpressCMS. This can be an existing database as well as a newly created one.</li>
++	<li>Prepare a user account and grant this user access to the database (all rights).</li>
++-	<li>Make the directories of uploads/, cache/, templates_c/, writable (chmod 777 or 755 - depending on servers).</li>
++       <li>Make the file mainfile.php writable (chmod 666 depending on server).</li>
++	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>
+ </ul>
+-  <u><b>Installation</b></u>
+-  <p>
+-  Follow this install wizard.
+-  </p>
+-  "
++  ';
+
++ language/english/content.php
+-------------------------------------------------
+
+modules/system/language/english/admin.php
+-------------------------------------------------
++ define('_MD_AM_CONTENT', 'Content Manager');
++ define('_MD_AM_BKPOSAD','Block Positions');
++ define('_MD_AM_PAGES','Links Manager');
+
++ modules/system/language/english/admin/blockspadmin.php
+-------------------------------------------------
++ modules/system/language/english/admin/content.php
+-------------------------------------------------
++ modules/system/language/english/admin/pages.php
+-------------------------------------------------
+
+ImpressCMS 1.0 (changes from XOOPS 2.0.17)
+=========================================
+
+
+
+modules/system/language/english/admin/version.php
+-------------------------------------------------
+
++  define("_AM_VERSION_YOUR_VERSION", 'Your ImpressCMS Version:');
++  define("_AM_VERSION_LATEST_VERSION", 'Latest ImpressCMS Version:');
+
+
+modules/system/language/english/admin/preferences.php
+------------------------------------------------------
+
++  _MD_AM_REGINVITE (line 72)
+
+
+language/english/mail_template/
+------------------------------
+
++  new_pm.tpl
+
+language/english/admin.php
+--------------------------
+
++  define('_AD_SYSOPTIONS','System Options');
++  define('_AD_INSTALLEDMODULES','Installed Modules');
+
+language/english/auth.php
+--------------------------
+
++- define('_AUTH_LDAP_XOOPS_USER_NOTFOUND',"Sorry no corresponding user information has been found in the ImpressCMS database for connection: %s <br>Please verify your user datas or set on the automatic provisionning");
+
++  language/english/banners.php
+--------------------------
+
+language/english/findusers.php
+--------------------------
+
++- define("_MA_USER_QUERY", "Query");
++  define("_MA_USER_SENDMAIL","Send Email");
+
+
+language/english/global.php
+--------------------------
+
++  define('_MODULES','Modules');
++  define('_IMPRESSCMS_PREFS','Preferences');
++  define('_SYSTEM','System');
++  define('_IMPRESSCMS_NEWS','News');
+
+language/english/pmsg.php
+--------------------------
+
++  define("_PM_MESSAGEPOSTED_EMAILSUBJ","[%s] Private Message Notification");
+
++  language/english/privpolicy.php
+--------------------------
+
+language/english/search.php
+--------------------------
+
++- define('_SR_SEARCHRULE', 'Search Rule');
+
+language/english/timezone.php
+--------------------------
+
++- define("_TZ_GMTP55", "(GMT+5:30) Mumbai, Kolkata, Chennai, New Delhi");
+
+language/english/user.php
+--------------------------
+
++  define('_US_REMEMBERME', 'Remember me');
++  define('_US_SELECT_THEME', 'Default Theme');
+
+modules/system/language/english/admin/blocksadmin.php
+--------------------------
+
++  define('_AM_BPADMIN',"Blocks Positions Administration");
++  define('_AM_BPCOD',"ID");
++  define('_AM_BPNAME',"Name of Position");
++  define('_AM_BPDESC',"Description of Position");
++  define('_AM_ADDPBLOCK',"Add new Block Position");
++  define('_AM_EDITPBLOCK',"Edit Block Position");
++  define('_AM_PBNAME_DESC',"Name of Block Position, it is with this name that will have to be created the Loop in the theme for the exhibition of blocks.<br/>Use a name with small_caption letters, without spaces and special characters.");
++  define('_AM_BPMSG1',"Successfully carried through operation!");
++  define('_AM_BPMSG2',"Problems had occurred to carry through them the operations.");
++  define('_AM_BPMSG3',"It is certain that it desires to exclude this block position?<br /><b>Warning:</b> This operation cannot be insult!");
++  define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.');
+
+modules/system/language/english/admin/groups.php
+--------------------------
+
++  define("_AM_SBLEFT","Side Block - Left");
++  define("_AM_SBRIGHT","Side Block - Right");
++  define("_AM_CBLEFT","Center Block - Left");
++  define("_AM_CBRIGHT","Center Block - Right");
++  define("_AM_CBCENTER","Center Block - Center");
++  define("_AM_CBBOTTOMLEFT","Center Block - Bottom left");
++  define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
++  define("_AM_CBBOTTOM","Center Block - Bottom");
+
+modules/system/language/english/admin/preferences.php
+--------------------------
+
++  define("_MD_AM_LDAP_USERS_BYPASS", " Xoops User(s) bypass LDAP Authentication");
++  define("_MD_AM_LDAP_USERS_BYPASS_DESC", "Xoops User(s) allow to bypass the LDAP login. Login directly in XOOPS<br>Separate each loginname with a |");
++- define("_MD_AM_LDAP_LOGINLDAP_ATTR_D","When Login name use in the DN option is set to yes, must correspond to the login name impressCMS");
++- define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The impressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br>The entry is directly read in the LDAP Server without search");
++  define("_MD_AM_RANKW","Rank image max width (pixel)");
++  define("_MD_AM_RANKH","Rank image max height (pixel)");
++  define("_MD_AM_RANKMAX","Rank image max filesize (byte)");
++  define("_MD_AM_MULTILANGUAGE","Multilanguage settings");
++  define("_MD_AM_ML_ENABLE","Enable Multilanguage");
++  define("_MD_AM_ML_ENABLEDSC","Set to Yes in order to enable multilanguage throughout the site.");
++  define("_MD_AM_ML_TAGS","Multilanguage tags");
++  define("_MD_AM_ML_TAGSDSC","Enter the tags to be used on this site, separated by a comma. For example, this would be used to define the tages to be used for english and french : en,fr");
++  define("_MD_AM_ML_NAMES","Language names");
++  define("_MD_AM_ML_NAMESDSC","Enter the names of the language to use, separated by a comma");
++  define("_MD_AM_ML_CAPTIONS","Language captions");
++  define("_MD_AM_ML_CAPTIONSDSC","Enter the captions you would like to use for these languages");
++  define("_MD_AM_ML_CHARSET","Charsets");
++  define("_MD_AM_ML_CHARSETDSC","Enter the charsets of these languages");
++  define("_MD_AM_REMEMBERME","Enable the 'Remember Me' feature in the login.");
++  define("_MD_AM_REMEMBERMEDSC","The 'Remember Me' feature is not totally secure, use it under your own risk.");
++  define("_MD_AM_PRIVDPOLICY","Enable the sites 'Privacy Policy'.");
++  define("_MD_AM_PRIVDPOLICYDSC","The 'Privacy Policy' should be tailored to your site & active whenever you are allowing registrations to your site.");
++  define("_MD_AM_PRIVPOLICY","Enter your site 'Privacy Policy'.");
++  define("_MD_AM_PRIVPOLICYDSC","");
+
+modules/system/language/english/admin/userrank.php
+--------------------------
+
++  define("_AM_RANKW","Max width %s pixels");
++  define("_AM_RANKH","Max height %s pixels");
++  define("_AM_RANKMAX","Max filesize %s bytes");
+
+modules/system/language/english/blocks.php
+--------------------------
+
++- define('_MB_SYSTEM_REMEMBERME', 'Remember me');
++  define("_MB_SYSTEM_PRIVPOLICY", "Privacy Policy");
+
+modules/system/language/english/modinfo.php
+--------------------------
+
++  define('_MI_SYSTEM_BNAME14', "Language Selection");
+
+install/language/english/install.php
+--------------------------
+
+-  define("_INSTALL_L0","Welcome to the Install Wizard for XOOPS 2.0");
+-  define("_INSTALL_L70","Please change the file permission for mainfile.php so that it is writeable by the server (i.e. chmod 777 mainfile.php on a UNIX/LINUX server, or check the properties of the file and make sure the read-only flag is not set on a Windows server ). Reload this page once you have changed the permission setting.");
+-  //define("_INSTALL_L71","Click on the button below to begin the installation.");
+-  define("_INSTALL_L1","Open mainfile.php with your text editor and find the following codes on line 31:");
+-  define("_INSTALL_L2","Now, change this line to:");
+-  define("_INSTALL_L3","Next, on line 35, change %s to %s");
+-  define("_INSTALL_L4","OK, I have set the above setings, let me try again!");
+-  define("_INSTALL_L5","WARNING!");
+-  define("_INSTALL_L6","There is a mismatch between your XOOPS_ROOT_PATH configuration on line 31 of mainfile.php and the root path info we have detected.");
+-  define("_INSTALL_L7","Your setting: ");
+-  define("_INSTALL_L8","We detected: ");
+-  define("_INSTALL_L9","( On MS platforms, you may receive this error message even when your configuration is correct. If that is the case, please press the button below to continue)");
+-  define("_INSTALL_L10","Plesae press the button below to continue if this is really ok.");
+-  define("_INSTALL_L11","The server path to your XOOPS root directory: ");
+-  define("_INSTALL_L12","URL to your XOOPS root directory: ");
+-  define("_INSTALL_L13","If the above setting is correct, press the button below to continue.");
+-  define("_INSTALL_L14","Next");
+-  define("_INSTALL_L15","Please open mainfile.php and enter required DB settings data");
+-  define("_INSTALL_L16","%s is the hostname of your database server.");
+-  define("_INSTALL_L17","%s is the username of your database account.");
+-  define("_INSTALL_L18","%s is the password required to access your database.");
+-  define("_INSTALL_L19","%s is the name of your database in which XOOPS tables will be created.");
+-  define("_INSTALL_L20","%s is the prefix for tables that will be made during the installation.");
+-  define("_INSTALL_L21","The following database was not found on the server:");
+-  define("_INSTALL_L22","Attempt to create it?");
+-  define("_INSTALL_L23","Yes");
+-  define("_INSTALL_L24","No");
+-  define("_INSTALL_L25","We have detected the following database information from your configuration in mainfile.php. Please fix it now if this is not correct.");
+-  define("_INSTALL_L26","Database Configuration");
+-  define("_INSTALL_L51","Database");
+-  define("_INSTALL_L66","Choose the database to be used");
+-  define("_INSTALL_L27","Database Hostname");
+-  define("_INSTALL_L67","Hostname of the database server. If you are unsure, 'localhost' works in most cases.");
+-  define("_INSTALL_L28","Database Username");
+-  define("_INSTALL_L65","Your database user account on the host");
+-  define("_INSTALL_L29","Database Name");
+-  define("_INSTALL_L64","The name of database on the host. The installer will attempt to create the database if not exist");
+-  define("_INSTALL_L52","Database Password");
+-  define("_INSTALL_L68","Password for your database user account");
+-  define("_INSTALL_L30","Table Prefix");
+-  define("_INSTALL_L63","This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'xoops'.");
+-  define("_INSTALL_L54","Use persistent connection?");
+-  define("_INSTALL_L69","Default is 'NO'. Choose 'NO' if you are unsure.");
+-  define("_INSTALL_L55","XOOPS Physical Path");
+-  define("_INSTALL_L59","Physical path to your main XOOPS directory WITHOUT trailing slash");
+-  define("_INSTALL_L56","XOOPS Virtual Path (URL)");
+-  define("_INSTALL_L58","Virtual path to your main XOOPS directory WITHOUT trailing slash");
+
++  define( "SHOW_HIDE_HELP", "Show/hide help text" );
++  // Configuration check page
++  define( "SERVER_API", "Server API" );
++  define( "PHP_EXTENSION", "%s extension" );
++  define( "CHAR_ENCODING", "Character encoding" );
++  define( "XML_PARSING", "XML parsing" );
++  define( "REQUIREMENTS", "Requirements" );
++  define( "_PHP_VERSION", "PHP version" );
++  define( "RECOMMENDED_SETTINGS", "Recommended settings" );
++  define( "RECOMMENDED_EXTENSIONS", "Recommended extensions" );
++  define( "SETTING_NAME", "Setting name" );
++  define( "RECOMMENDED", "Recommended" );
++  define( "CURRENT", "Current" );
++  define( "RECOMMENDED_EXTENSIONS_MSG", "These extensions are not required for normal use, but may be necessary to exploit
++	some specific features (like the multi-language or RSS support). Thus, it is recommended to have them installed." );
++  define( "NONE", "None" );
++  define( "SUCCESS", "Success" );
++  define( "WARNING", "Warning" );
++  define( "FAILED", "Failed" );
+
+
+-  define("_INSTALL_L31","Could not create database. Contact the server administrator for details.");
+-  define("_INSTALL_L32","Installation Complete");
+-  define("_INSTALL_L33","Click <a href='../index.php'>HERE</a> to see the home page of your site.");
+-  define("_INSTALL_L35","If you had any errors, please contact the dev team at <a href='http://www.xoops.org/' target='_blank'>XOOPS.org</a>");
+-  define("_INSTALL_L36","Please choose your site admin's name and password.");
+-  define("_INSTALL_L37","Admin Name");
+-  define("_INSTALL_L38","Admin Email");
+-  define("_INSTALL_L39","Admin Password");
+-  define("_INSTALL_L74","Confirm Password");
+-  define("_INSTALL_L40","Create Tables");
+-  define("_INSTALL_L41","Please go back and type in all the required info.");
+-  define("_INSTALL_L42","Back");
+-  define("_INSTALL_L57","Please enter %s");
++  // Titles (main and pages)
++  define( "XOOPS_INSTALL_WIZARD", "ImpressCMS installation wizard" );
++  define( "INSTALL_STEP", "Step" );
++  define( "INSTALL_OUTOF", " out of " );
++  define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007%s <a href=\"http://www.impresscms.org\">ImpressCMS</a>" );
+
+-  // %s is database name
+-  define("_INSTALL_L43","Database %s created!");
++  define( "LANGUAGE_SELECTION", "Language selection" );
++  define( "LANGUAGE_SELECTION_TITLE", "Choose your language");		// L128
++  define( "INTRODUCTION", "Introduction" );
++  define( "INTRODUCTION_TITLE", "Welcome to the ImpressCMS installation assistant" );		// L0
++  define( "CONFIGURATION_CHECK", "Configuration check" );
++  define( "CONFIGURATION_CHECK_TITLE", "Checking your server configuration" );
++  define( "PATHS_SETTINGS", "Paths settings" );
++  define( "PATHS_SETTINGS_TITLE", "Paths settings" );
++  define( "DATABASE_CONFIG", "Database configuration" );
++  define( "DATABASE_CONFIG_TITLE", "Database configuration" );
++  define( "CONFIG_SAVE", "Configuration save" );
++  define( "CONFIG_SAVE_TITLE", "Saving your system configuration" );
++  define( "TABLES_CREATION", "Tables creation" );
++  define( "TABLES_CREATION_TITLE", "Database tables creation" );
++  define( "INITIAL_SETTINGS", "Initial settings" );
++  define( "INITIAL_SETTINGS_TITLE", "Please enter your initial settings" );
++  define( "DATA_INSERTION", "Data insertion" );
++  define( "DATA_INSERTION_TITLE", "Saving your settings to the database" );
++  define( "WELCOME", "Welcome" );
++  define( "WELCOME_TITLE", "Installation of ImpressCMS completed" );		// L0
++  define( "MODULES_INSTALL", "Install modules" );
++  define( "MODULES_INSTALL_TITLE", "Installation of modules " );
+
++  // Settings (labels and help text)
++  define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55
++  define( "XOOPS_ROOT_PATH_HELP", "Physical path of the ImpressCMS documents folder" ); // L59
++  define( "_INSTALL_TRUST_PATH_HELP", "Physical path of the ImpressCMS trust path (outside of web root)" ); // L59
+
++  define( "XOOPS_URL_LABEL", "Website location (URL)" ); // L56
++  define( "XOOPS_URL_HELP", "Main URL that will be used to access your ImpressCMS installation" ); // L58
+
+-  // %s is table name
+-  define("_INSTALL_L44","Unable to make %s");
+-  define("_INSTALL_L45","Table %s created.");
++  define( "LEGEND_CONNECTION", "Server connection" );
++  define( "LEGEND_DATABASE", "Database" ); // L51
+
+-  define("_INSTALL_L46","In order for the modules included in the package to work correctly, the following files must be writeable by the server. Please change the permission setting for these files. (i.e. 'chmod 666 file_name' and 'chmod 777 dir_name' on a UNIX/LINUX server, or check the properties of the file and make sure the read-only flag is not set on a Windows server)");
+-  define("_INSTALL_L47","Next");
++  define( "DB_HOST_LABEL", "Server hostname" );	// L27
++  define( "DB_HOST_HELP",  "Hostname of the database server. If you are unsure, <em>localhost</em> works in most cases"); // L67
++  define( "DB_USER_LABEL", "User name" );	// L28
++  define( "DB_USER_HELP",  "Name of the user account that will be used to connect to the database server"); // L65
++  define( "DB_PASS_LABEL", "Password" );	// L52
++  define( "DB_PASS_HELP",  "Password of your database user account"); // L68
++  define( "DB_NAME_LABEL", "Database name" );	// L29
++  define( "DB_NAME_HELP",  "The name of database on the host. The installer will attempt to create the database if not exist"); // L64
++  define( "DB_PREFIX_LABEL", "Table prefix" );	// L30
++  define( "DB_PREFIX_HELP",  "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
++  define( "DB_PCONNECT_LABEL", "Use persistent connection" );	// L54
++  define( "DB_PCONNECT_HELP",  "Default is 'NO'. Choose 'NO' if you are unsure"); // L69
+
+-  define("_INSTALL_L53","Please confirm the following submitted data:");
++  define( "LEGEND_ADMIN_ACCOUNT", "Administrator account" );
++  define( "ADMIN_LOGIN_LABEL", "Admin login" ); // L37
++  define( "ADMIN_EMAIL_LABEL", "Admin e-mail" ); // L38
++  define( "ADMIN_PASS_LABEL", "Admin password" ); // L39
++  define( "ADMIN_CONFIRMPASS_LABEL", "Confirm password" ); // L74
+
+-  define("_INSTALL_L60","Could not write into mainfile.php. Please check the file permission and try again.");
+-  define("_INSTALL_L61","Could not write to mainfile.php. Contact the server administrator for details.");
+-  define("_INSTALL_L62","Configuration data has been saved successfully to mainfile.php.");
+-  define("_INSTALL_L72","The following directories must be created with the write permission by the server. (i.e. 'chmod 777 directory_name' on a UNIX/LINUX server)");
+-  define("_INSTALL_L73","Invalid Email");
++  // Buttons
++  define( "BUTTON_PREVIOUS", "Previous" ); // L42
++  define( "BUTTON_NEXT", "Next" ); // L47
++  define( "BUTTON_FINISH", "Finish" );
++  define( "BUTTON_REFRESH", "Refresh" );
++  define( "BUTTON_SHOW_SITE", "Show my site" );
+
+-  // add by haruki
+-  define("_INSTALL_L80","introduction");
+-  define("_INSTALL_L81","check file permissions");
+-  define("_INSTALL_L82","Checking file and directory permissions..");
+-  define("_INSTALL_L83","File %s is NOT writable.");
+-  define("_INSTALL_L84","File %s is writable.");
+-  define("_INSTALL_L85","Directory %s is NOT writable.");
+-  define("_INSTALL_L86","Directory %s is writable.");
+-  define("_INSTALL_L87","No errors detected.");
+-  define("_INSTALL_L89","general settings");
+-  define("_INSTALL_L90","General configuration");
+-  define("_INSTALL_L91","confirm");
+-  define("_INSTALL_L92","save settings");
+-  define("_INSTALL_L93","modify settings");
+-  define("_INSTALL_L88","Saving configuration data..");
+-  define("_INSTALL_L94","check path & URL");
+-  define("_INSTALL_L127","Checking file path & URL settings..");
+-  define("_INSTALL_L95","Could not detect the physical path to your XOOPS directory.");
+-  define("_INSTALL_L96","There is a conflict between the detected physical path (%s) and the one you input.");
+-  define("_INSTALL_L97","<b>Physical path</b> is correct.");
++  // Messages
++  define( "XOOPS_FOUND", "%s found" );
++  define( "CHECKING_PERMISSIONS", "Checking file and directory permissions..." ); // L82
++  define( "IS_NOT_WRITABLE", "%s is NOT writable." ); // L83
++  define( "IS_WRITABLE", "%s is writable." ); // L84
++  define( "ALL_PERM_OK", "All Permissions are correct." );
+
+-  define("_INSTALL_L99","<b>Physical path</b> must be a directory.");
+-  define("_INSTALL_L100","<b>Virtual path</b> is a valid URL.");
+-  define("_INSTALL_L101","<b>Virtual path</b> is not a valid URL.");
+-  define("_INSTALL_L102","confirm database settings");
+-  define("_INSTALL_L103","restart from the beginning");
+-  define("_INSTALL_L104","check database");
+-  define("_INSTALL_L105","atempt to create database");
+-  define("_INSTALL_L106","Could not connect to the database server.");
+-  define("_INSTALL_L107","Please check the database server and its configuration.");
+-  define("_INSTALL_L108","Connection to database server is OK.");
+-  define("_INSTALL_L109","Database %s does not exists.");
+-  define("_INSTALL_L110","Database %s exists and connectable.");
+-  define("_INSTALL_L111","Database connection is OK.<br />Press the button below to create database tables.");
+-  define("_INSTALL_L112","admin user setting");
+-  define("_INSTALL_L113","Table %s deleted.");
+-  define("_INSTALL_L114","Failed creating database tables.");
+-  define("_INSTALL_L115","Database tables created.");
+-  define("_INSTALL_L116","insert data");
+-  define("_INSTALL_L117","finish");
++  define( "READY_CREATE_TABLES", "No ImpressCMS tables were detected.<br />The installer is now ready to create the ImpressCMS system tables.<br />Press <em>next</em> to proceed." );
++  define( "XOOPS_TABLES_FOUND", "The ImpressCMS system tables already exists in your database.<br />Press <em>next</em> to go to the next step." ); // L131
++  define( "READY_INSERT_DATA", "The installer is now ready to insert initial data into your database." );
++  define( "READY_SAVE_MAINFILE", "The installer is now ready to save the specified settings to <em>mainfile.php</em>.<br />Press <em>next</em> to proceed." );
++  define( "DATA_ALREADY_INSERTED", "ImpressCMS data is stored in your database already. No further data will be stored by this action.<br />Press <em>next</em> to go to the next step." );
+
+-  define("_INSTALL_L118","Failed creating table %s.");
+-  define("_INSTALL_L119","%d entries inserted to table %s.");
+-  define("_INSTALL_L120","Failed inserting %d entries to table %s.");
+
+-  define("_INSTALL_L121","Constant %s written to %s.");
+-  define("_INSTALL_L122","Failed writing constant %s.");
++  // %s is database name
++  define( "DATABASE_CREATED", "Database %s created!" ); // L43
++  // %s is table name
++  define( "TABLE_NOT_CREATED", "Unable to create table %s" ); // L118
++  define( "TABLE_CREATED", "Table %s created." ); // L45
++  define( "ROWS_INSERTED", "%d entries inserted to table %s." ); // L119
++  define( "ROWS_FAILED", "Failed inserting %d entries to table %s." ); // L120
++  define( "TABLE_ALTERED", "Table %s updated."); // L133
++  define( "TABLE_NOT_ALTERED", "Failed updating table %s."); // L134
++  define( "TABLE_DROPPED", "Table %s dropped."); // L163
++  define( "TABLE_NOT_DROPPED", "Failed deleting table %s."); // L164
+
+-  define("_INSTALL_L123","File %s stored in cache/ directory.");
+-  define("_INSTALL_L124","Failed storing file %s to cache/ directory.");
++  // Error messages
++  define( "ERR_COULD_NOT_ACCESS", "Could not access the specified folder. Please verify that it exists and is readable by the server." );
++  define( "ERR_NO_XOOPS_FOUND", "No ImpressCMS installation could be found in the specified folder." );
++  define( "ERR_INVALID_EMAIL", "Invalid Email" ); // L73
++  define( "ERR_REQUIRED", "Please enter all the required info." ); // L41
++  define( "ERR_PASSWORD_MATCH", "The two passwords do not match" );
++  define( "ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folder<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)" ); // L72
++  define( "ERR_NO_DATABASE", "Could not create database. Contact the server administrator for details." ); // L31
++  define( "ERR_NO_DBCONNECTION", "Could not connect to the database server." ); // L106
++  define( "ERR_WRITING_CONSTANT", "Failed writing constant %s." ); // L122
+
+-  define("_INSTALL_L125","File %s overwritten by %s.");
+-  define("_INSTALL_L126","Could not write to file %s.");
++  define( "ERR_COPY_MAINFILE", "Could not copy the distribution file to mainfile.php" );
++  define( "ERR_WRITE_MAINFILE", "Could not write into mainfile.php. Please check the file permission and try again.");
++  define( "ERR_READ_MAINFILE", "Could not open mainfile.php for reading" );
+
+-  define("_INSTALL_L130","The installer has detected tables for XOOPS 1.3.x in your database.<br />The installer will now attempt to upgrade your database to XOOPS2.");
+-  define("_INSTALL_L131","Tables for XOOPS2 already exist in your database.");
+-  define("_INSTALL_L132","update tables");
+-  define("_INSTALL_L133","Table %s updated.");
+-  define("_INSTALL_L134","Failed updating table %s.");
+-  define("_INSTALL_L135","Failed updating database tables.");
+-  define("_INSTALL_L136","Database tables updated.");
+-  define("_INSTALL_L137","update modules");
+-  define("_INSTALL_L138","update comments");
+-  define("_INSTALL_L139","update avatars");
+-  define("_INSTALL_L140","update smilies");
+-  define("_INSTALL_L141","The installer will now update each module to work with XOOPS2.<br />Make sure that you have uploaded all files in XOOPS2 package to your server.<br />This may take a while to complete.");
+-  define("_INSTALL_L142","Updating modules..");
+-  define("_INSTALL_L143","The installer will now update configuration data of XOOPS 1.3.x to be used with XOOPS2.");
+-  define("_INSTALL_L144","update config");
+-  define("_INSTALL_L145","Comment (ID: %s) inserted to the database.");
+-  define("_INSTALL_L146","Could not insert comment (ID: %s) to the database.");
+-  define("_INSTALL_L147","Updating comments..");
+-  define("_INSTALL_L148","Update complete.");
+-  define("_INSTALL_L149","The installer will now update comment posts in XOOPS 1.3.x to be used in XOOPS2.<br />This may take a while to complete.");
+-  define("_INSTALL_L150","The installer will now update the smiley and user rank images to be used with XOOPS2.<br />This may take a while to complete.");
+-  define("_INSTALL_L151","The installer will now update the user avatar images to be used in XOOPS2.<br />This may take a while to complete.");
+-  define("_INSTALL_L155","Updating smiley/rank images..");
+-  define("_INSTALL_L156","Updating user avatar images..");
+-  define("_INSTALL_L157","Select the default user group for each group type");
+-  define("_INSTALL_L158","Groups in 1.3.x");
+-  define("_INSTALL_L159","Webmasters");
+-  define("_INSTALL_L160","Register Users");
+-  define("_INSTALL_L161","Anonymous Users");
+-  define("_INSTALL_L162","You must select a default group for each group type.");
+-  define("_INSTALL_L163","Table %s dropped.");
+-  define("_INSTALL_L164","Failed deleting table %s.");
+-  define("_INSTALL_L165","The site is currently closed for maintenance. Please come back later.");
++  //
++  define("_INSTALL_SELECT_MODS_INTRO", "In the selection box on the left side, please select the modules that
+you wish to install on this site.
+All the installed modules are accessible by the admin group and the registered users.
+In case you would like to give visitors to the site (unregistered users or users who are not logged in) access to one or more of the
+installed modules please select these modules in the selection box on the right.");
+
+-  // %s is filename
+-  define("_INSTALL_L152","Could not open %s.");
+-  define("_INSTALL_L153","Could not update %s.");
+-  define("_INSTALL_L154","%s updated.");
++  define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
++  define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
++  define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Module %s could not be installed.");
++  define("_INSTALL_ERRORS", 'Errors');
++  define("_INSTALL_MOD_ALREADY_INSTALLED", "Module %s has already been installed");
++  define("_INSTALL_FAILED_TO_EXECUTE", "Failed to execute ");
++  define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
+
+-  define('_INSTALL_L128', 'Choose language to be used for the installation process');
+-  define('_INSTALL_L200', 'Reload');
++  define("_INSTALL_MOD_INSTALL_SUCCESSFULLY", "Module %s has been installed succesfully.");
++  define("_INSTALL_MOD_INSTALL_FAILED", "The wizard could not install module %s.");
++  define("_INSTALL_NO_PLUS_MOD", "No modules were selected for installation. Please continue the installation by clicking next.");
++  define("_INSTALL_INSTALLING", "Installing %s module");
+
++  define("_INSTALL_TRUST_PATH", "Trust path");
++  define("_INSTALL_TRUST_PATH_LABEL", "Location of the trust path (must be outside web root)");
++  define("_INSTALL_WEB_LOCATIONS", "Web locations");
++  define("_INSTALL_WEB_LOCATIONS_LABEL", "Web locations");
+
++  define("_INSTALL_TRUST_PATH_FOUND", "Trust path found.");
++  define("_INSTALL_ERR_NO_TRUST_PATH_FOUND", "Trust path was not found.");
+
++  define("_INSTALL_COULD_NOT_INSERT", "The wizard was unable to install module %s the database.");
++-  define("_INSTALL_CHARSET","ISO-8859-1");
+
+install/language/english/finish.php
+--------------------------
+
+-  "<u><b>Your site</b></u>
+-  <p>Click <a href='../index.php'>HERE</a> to see the home page of your site.</p>
+-  <u><b>Way to use</b></u>
+-  <p>[not yet]</p>
+-  <u><b>Support</b></u>
+-  <p>Visit <a href='http://www.xoops.org/' target='_blank'>XOOPS.org</a></p>
+-  ";
+
++  "<h3>Your site</h3>
++  <p>You can now access the <a href='../index.php'>home page of your site</a>.</p>
++  <h3>Support</h3>
++  <ul class=\"diags\">
++  <li class=\"success\"><a href='http://www.impresscms.org/' target='_blank'>www.impresscms.org</a> - Project Homepage</p></li>" .
++  "<li class=\"success\"><a href='http://community.impresscms.org/' target='_blank'>community.impresscms.org</a> - Support</li>" .
++  "<li class=\"success\"><a href='http://addons.impresscms.org/' target='_blank'>addons.impresscms.org</a> - Modules & Themes</li>" .
++  "<li class=\"success\"><a href='http://wiki.impresscms.org/' target='_blank'>wiki.impresscms.org</a> - Community Documentation</li>".
++  "</ul>";
+
+install/language/english/install2.php
+--------------------------
+
+-  define("_INSTALL_DISCLMR", "While the administrators and moderators of this site will attempt to remove
+-  or edit any generally objectionable material as quickly as possible, it is
+-  impossible to review every message. Therefore you acknowledge that all posts
+-  made to this site express the views and opinions of the author and not the
+-  administrators, moderators or webmaster (except for posts by these people)
+-  and hence will not be held liable.
++  define("_INSTALL_DISCLMR", "While the administrators and moderators of this site will attempt to remove or edit any generally objectionable material as quickly as possible, it is impossible to review every message. Therefore you acknowledge that all posts made to this site express the views and opinions of the author and not the administrators, moderators or webmaster (except for posts by these people) and hence will not be held liable.
+
+-  You agree not to post any abusive, obscene, vulgar, slanderous, hateful,
+-  threatening, sexually-  orientated or any other material that may violate any
+-  applicable laws. Doing so may lead to you being immediately and permanently
+-  banned (and your service provider being informed). The IP address of all
+-  posts is recorded to aid in enforcing these conditions. Creating multiple
+-  accounts for a single user is not allowed. You agree that the webmaster,
+-  administrator and moderators of this site have the right to remove, edit,
+-  move or close any topic at any time should they see fit. As a user you agree
+-  to any information you have entered above being stored in a database. While
+-  this information will not be disclosed to any third party without your
+-  consent the webmaster, administrator and moderators cannot be held
+-  responsible for any hacking attempt that may lead to the data being
+-  compromised.
++  You agree not to post any abusive, obscene, vulgar, slanderous, hateful, threatening, sexually-orientated or any other material that may violate any applicable laws. Doing so may lead to you being immediately and permanently banned (and your service provider being informed). The IP address of all posts is recorded to aid in enforcing these conditions. Creating multiple accounts for a single user is not allowed. You agree that the webmaster, administrator and moderators of this site have the right to remove, edit, move or close any topic at any time should they see fit. As a user you agree to any information you have entered above being stored in a database. While this information will not be disclosed to any third party without your consent the webmaster, administrator and moderators cannot be held responsible for any hacking attempt that may lead to the data being compromised.
+
+-  This site system uses cookies to store information on your local computer.
+-  These cookies do not contain any of the information you have entered above,
+-  they serve only to improve your viewing pleasure. The email address is used
+-  only for confirming your registration details and password (and for sending
+-  new passwords should you forget your current one).
++  This site system uses cookies to store information on your local computer. These cookies do not contain any of the information you have entered above, they serve only to improve your viewing pleasure. The email address is used only for confirming your registration details and password (and for sending new passwords should you forget your current one).
+
+ By clicking Register below you agree to be bound by these conditions.");
++
++    define("_INSTALL_PRIVPOLICY", "<p>This privacy policy sets out how [website name] uses and protects any information that you give [website name] when you use this website. [website name] is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. [website name] may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
++  </p><p>
++  This policy is effective from [date].
++  </p>
++  <h2>What we collect</h2>
++  <p>
++  We may collect the following information:
++  <ul>
++  <li>name and job title</li>
++  <li>contact information including email address</li>
++  <li>demographic information such as postcode, preferences and interests</li>
++  <li>other information relevant to customer surveys and/or offers</li></ul>
++  </p>
++  <h2>What we do with the information we gather</h2>
++  <p>
++  We require this information to understand your needs and provide you with a better service, and in particular for the following reasons:
++  <ul>
++  <li>Internal record keeping.</li>
++  <li>We may use the information to improve our products and services.</li>
++  <li>We may periodically send promotional email about new products, special offers or other information which we think you may find interesting using the email address which you have provided.</li>
++  <li>From time to time, we may also use your information to contact you for market research purposes. We may contact you by email.</li>
++  <li>We may use the information to customise the website according to your interests.</li></ul>
++  </p>
++  <h2>Security</h2>
++  <p>
++  We are committed to ensuring that your information is secure. In order to prevent unauthorised access or disclosure we have put in place suitable physical, electronic and managerial procedures to safeguard and secure the information we collect online.
++  </p>
++  <h2>How we use cookies</h2>
++  <p>
++  A cookie is a small file which asks permission to be placed on your computer's hard drive. Once you agree, the file is added and the cookie helps analyse web traffic or lets you know when you visit a particular site. Cookies allow web applications to respond to you as an individual. The web application can tailor its operations to your needs, likes and dislikes by gathering and remembering information about your preferences.
++  </p><p>
++  We use traffic log cookies to identify which pages are being used & for authenticating you as a registered member. This helps us analyse data about web page traffic and improve our website in order to tailor it to customer needs. We only use this information for statistical analysis purposes and then the data is removed from the system. Overall, cookies help us provide you with a better website, by enabling us to monitor which pages you find useful and which you do not. A cookie in no way gives us access to your computer or any information about you, other than the data you choose to share with us.
++  </p><p>
++  You can choose to accept or decline cookies. Most web browsers automatically accept cookies, but you can usually modify your browser setting to decline cookies if you prefer. This may prevent you from taking full advantage of the website including registration and logging in.
++  </p>
++  <h2>Links to other websites</h2>
++  <p>
++  Our website may contain links to enable you to visit other websites of interest easily. However, once you have used these links to leave our site, you should note that we do not have any control over that other website. Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst visiting such sites and such sites are not governed by this privacy statement. You should exercise caution and look at the privacy statement applicable to the website in question.
++  </p>
++  <h2>Controlling your personal information</h2>
++  <p>
++  You may choose to restrict the collection or use of your personal information in the following ways:
++  <ul>
++  <li>whenever you are asked to fill in a form on the website, look for the box that you can click to indicate that you do not want the information to be used by anybody for direct marketing purposes</li>
++  <li>if you have previously agreed to us using your personal information for direct marketing purposes, you may change your mind at any time by writing to or emailing us at [email address]</li></ul>
++  </p><p>
++  We will not sell, distribute or lease your personal information to third parties unless we have your permission or are required by law to do so. We may use your personal information to send you promotional information about third parties which we think you may find interesting if you tell us that you wish this to happen. You may request details of personal information which we hold about you under the Data Protection Act 1998. A small fee will be payable. If you would like a copy of the information held on you please write to [address].
++  </p><p>
++  If you believe that any information we are holding on you is incorrect or incomplete, please write to or email us as soon as possible, at the above address. We will promptly correct any information found to be incorrect.
++  </p>");
+
+install/language/english/welcome.php
+--------------------------
+ <?php
+-  // $Id: welcome.php 2 2005-11-02 18:23:29Z skalpa $
+-  $content .=
+-  "<u><b>What is it?</b></u>
++    // $Id: welcome.php 565 2006-06-23 06:39:22Z skalpa $
++  $content .= '
+ <p>
+-  <b>XOOPS</b> is a dynamic OO (Object Oriented) based open source portal script written in PHP.
+-  XOOPS supports a number of databases,
+-  making XOOPS an ideal tool for developing small to large dynamic community websites,
+-  intra company portals, corporate portals, weblogs and much more.
++  	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for
++  	developing small to large dynamic community websites, intra company portals, corporate portals, weblogs and much more.
+ </p>
+ <p>
+-  XOOPS is released under the terms of the <a href='http://www.gnu.org/copyleft/gpl.html' target='_blank'>GNU General Public License (GPL)</a> and is free to use and modify.
+-  It is free to redistribute as long as you abide by the distribution terms of the GPL.
++	ImpressCMS is released under the terms of the
++	<a href="http://www.gnu.org/copyleft/gpl.html" target="_blank">GNU General Public License (GPL)</a>
++	and is free to use and modify.
++	It is free to redistribute as long as you abide by the distribution terms of the GPL.
+ </p>
+-  <u><b>Requirements</b></u>
+-  <p>
++  <h3>Requirements</h3>
+ <ul>
+-  <li>WWW Server (<a href='http://www.apache.org/' target='_blank'>Apache</a>, IIS, Roxen, etc)</li>
+-  <li><a href='http://www.php.net/' target='_blank'>PHP</a> 4.0.5 and higher (4.1.1 or higher recommended)</li>
+-  <li><a href='http://www.mysql.com/' target='_blank'>MySQL</a> Database 3.23.XX</li>
++	<li>WWW Server (<a href="http://www.apache.org/" target="_blank">Apache</a>, IIS, Roxen, etc)</li>
++	<li><a href="http://www.php.net/" target="_blank">PHP</a> 4.3.0 or higher (5.1 or higher recommended)</li>
++	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> 3.23 or higher (4.1 or higher recommended)</li>
+ </ul>
+-  </p>
+-  <u><b>Before you install</b></u>
++  <h3>Before you install</h3>
+ <ul>
+-  <li>Setup WWW server, PHP and database server properly.</li>
+-  <li>Prepare a database for your XOOPS site.</li>
+-  <li>Prepare user account and grant the user the access to the database.</li>
+-  <li>Make the directories of uploads/, cache/ and templates_c/ and the files of mainfile.php writabale.</li>
+-  <li>Turn cookie and JavaScript of your browser on.</li>
++	<li>Setup the web server, PHP and database server properly.</li>
++	<li>Prepare a database for ImpressCMS. This can be an existing database as well as a newly created one.</li>
++	<li>Prepare a user account and grant this user access to the database (all rights).</li>
++-	<li>Make the directories of uploads/, cache/, templates_c/, writable (chmod 777 or 755 - depending on servers).</li>
++       <li>Make the file mainfile.php writable (chmod 666 depending on server).</li>
++	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>
+ </ul>
+-  <u><b>Installation</b></u>
+-  <p>
+-  Follow this install wizard.
+-  </p>
+-  "
++  ';

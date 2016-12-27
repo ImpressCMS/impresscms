@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<project name="DeployImpressCMS" default="test.svnexport12">
+  <property name="current_version" value="1.2.7"/>
+  <property name="upgrade_version" value="1.0.x"/>
+  <property name="test.exportdir"  value="test${current_version}" />
+  <property name="dist.exportdir"  value="impresscms_${current_version}" />
+  <property name="test.repo_impresscms12" value="http://subversion.assembla.com/svn/impresscms/branches/impresscms_1.2/htdocs" />
+  <property name="dist.repo_impresscms12" value="http://subversion.assembla.com/svn/impresscms/branches/impresscms_1.2" />
+  
+  <target name="test.export12clean">
+  	<echo msg="Cleaning up previous install of ImpressCMS ${current_version} test"/>
+  	<delete dir="${test.exportdir}"/>
+  </target>      
+  <target name="test.svnexport12" depends="test.export12clean">
+  	<echo msg="Checking out ImpressCMS ${current_version} for test"/>
+    <svnexport
+       username="${username}"
+       password="${password}"
+       nocache="true"
+       repositoryurl="${test.repo_impresscms12}"
+       todir="${test.exportdir}"/>
+  </target>
+  
+  <target name="dist.createarchive_full" depends="dist.svnexport12, dist.clean12">
+  	<zip destfile="impresscms_${current_version}.zip" basedir="${dist.exportdir}"/>
+  	<tar destfile="impresscms_${current_version}.tar.gz" compression="gzip" basedir="${dist.exportdir}"/>
+  </target>
+  
+  <target name="dist.svnexport12" depends="dist.clean12">
+  	<echo msg="Checking out ImpressCMS ${current_version} for distribution"/>
+    <svnexport
+       username="${username}"
+       password="${password}"
+       nocache="true"
+       repositoryurl="${dist.repo_impresscms12}"
+       todir="${dist.exportdir}"/>
+  </target>
+  <target name="dist.makeupgrade" depends="dist.createarchive_full">
+  	<echo msg="removing the files that are not present in upgrade packages"/>
+  	<delete dir="${dist.exportdir}/htdocs/install"/>
+  	<delete dir="${dist.exportdir}/htdocs/cache"/>
+  	<delete dir="${dist.exportdir}/htdocs/templates_c"/>
+  	<delete file="${dist.exportdir}/htdocs/favicon.ico"/>
+  	<delete file="${dist.exportdir}/htdocs/mainfile.php"/>
+  	<move file="${dist.exportdir}/upgrade" todir="${dist.exportdir}/htdocsupgrade" overwrite="true"/>
+  </target>
+  
+  <target name="dist.createarchive_upgrade" depends="dist.makeupgrade">
+  	<echo msg="building the upgrade packages"/>
+  	<zip destfile="impresscms_${upgrade_version}-to-${current_version}.zip" basedir="${dist.exportdir}"/>
+  	<tar destfile="impresscms_${upgrade_version}-to-${current_version}.tar.gz" compression="gzip" basedir="${dist.exportdir}"/>  	
+  </target>
+  <target name="dist.clean12">
+    <echo msg="Cleaning up previous install of ImpressCMS ${current_version} distribution"/>
+  	<delete dir="${dist.exportdir}"/>
+  	<delete file="impresscms_${current_version}.zip"/>
+  	<delete file="impresscms_${current_version}.tar.gz"/>
+  	<delete file="impresscms_${upgrade_version}-to-${current_version}.zip"/>
+  	<delete file="impresscms_${upgrade_version}-to-${current_version}.tar.gz"/>
+  </target>
+  <target name="dist.createarchives" depends="dist.createarchive_full, dist.createarchive_upgrade">
+  	<echo msg="Archives are created and ready to upload"/>
+  </target>  
+  <target name="cleanall" depends="dist.clean12, test.export12clean">
+  	<echo msg="cleaning the lot..."/>
+  </target>
+</project>
