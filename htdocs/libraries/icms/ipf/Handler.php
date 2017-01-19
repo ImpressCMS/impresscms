@@ -717,11 +717,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
                 continue;
             }
+	    
             $obj = new $this->className($this, $myrow);
             if (!$obj->isLoadedOnCreation()) {
-                $obj->setVars($myrow);
+                $obj->assignVars($myrow);
                 $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
             }
+	    
             if (isset($fields_sk)) {
                 $obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
             }
@@ -766,7 +768,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 }
                 $obj = new $this->className($this, $myrow);
                 if (!$obj->isLoadedOnCreation()) {
-                    $obj->setVars($myrow);
+                    $obj->assignVars($myrow);
                     $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
                 }
                 if (isset($fields_sk)) {
@@ -805,7 +807,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 }
                 $obj = new $this->className($this, $myrow);
                 if (!$obj->isLoadedOnCreation()) {
-                    $obj->setVars($myrow);
+                    $obj->assignVars($myrow);
                     $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
                 }
                 if (isset($fields_sk)) {
@@ -863,9 +865,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         }
 
         if ($as_object === null) {
-            return $id_as_key ? $this->convertResultSet_RAWWithKey($result, $id_as_key) : $this->convertResultSet_RAW($result);
+            return ($id_as_key !== false) ? $this->convertResultSet_RAWWithKey($result, $id_as_key) : $this->convertResultSet_RAW($result);
         } else {
-            return $id_as_key ? $this->convertResultSet_ObjectWithKey($result, $id_as_key, $as_object) : $this->convertResultSet_Object($result, $as_object);
+            return ($id_as_key !== false) ? $this->convertResultSet_ObjectWithKey($result, $id_as_key, $as_object) : $this->convertResultSet_Object($result, $as_object);
         }
     }
 
@@ -1113,9 +1115,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
     /**
      * Generates update SQL
      * 
-     * @param array/object $data
+     * @param array/object $data	Objects to process
      * 
-     * @return string
+     * @return string|null
      */
     protected function generateUpdateSQL($data) {
         if (is_array($data)) {
@@ -1136,6 +1138,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                         $when[$key][$i] = '    WHEN ' . $rendered_criteria . ' THEN ' . $value;
                     }
                 }
+		if (empty($when)) {
+		    return null;
+		}
                 $first = true;
                 foreach (array_keys($when) as $wdata) {
                     if (!$first) {
@@ -1161,6 +1166,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                     }
                     $ids[] = $id;
                 }
+		if (empty($when)) {
+		    return null;
+		}
                 $first = true;
                 foreach (array_keys($when) as $wdata) {
                     if (!$first) {
@@ -1174,6 +1182,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             }
         } else {
             $fieldsToStoreInDB = $data->getVarsForSQL(true);
+	    if (empty($fieldsToStoreInDB)) {
+		return null;
+	    }
 
             $sql = 'UPDATE ' . $this->table . ' SET';
             foreach ($fieldsToStoreInDB as $key => $value) {
@@ -1300,32 +1311,30 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         
         if (($count = count($for_update)) > 0) {
             $sql = ($count == 1) ? $this->generateUpdateSQL($for_update[0]) : $this->generateUpdateSQL($for_update);
+	    
+	    if ($sql !== null) {
 
-            if ($this->debugMode) {
-                icms_core_Debug::message($sql);
-            }
+		if ($this->debugMode === true) {
+		    icms_core_Debug::message($sql);
+		}	    
 
-            $force ? $this->db->queryF($sql) : $this->db->query($sql);
-            $scount += $this->db->getAffectedRows();
+		$force ? $this->db->queryF($sql) : $this->db->query($sql);
+		$scount += $this->db->getAffectedRows();
 
-            foreach ($for_update as $i => $obj) {
-                $for_update[$i]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
-                if (!$this->executeEvent('afterUpdate', $for_update[$i])) {
-                    $scount--;
-                    continue;
-                }
-            }
+		foreach ($for_update as $i => $obj) {
+		    $for_update[$i]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+		    if (!$this->executeEvent('afterUpdate', $for_update[$i])) {
+			$scount--;
+			continue;
+		    }
+		}
+	    
+	    }
         }        
 
         foreach ($data as $i => $obj) {
-
-            if ($obj->handler->className != $this->className) {
-                $obj->setErrors(get_class($obj) . ' Differs from ' . $this->className);
-                continue;
-            }
-
             $this->executeEvent('afterSave', $data[$i]);
-        }            
+        }
 
         return $scount > 0;
     }
