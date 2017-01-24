@@ -12,8 +12,11 @@
 /** make sure mainfile is included, for security and functionality */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-/** @todo This funtion has been deprecated in PHP 5.3.0 - need to adjust in 1.4 ~skenow */
-@set_magic_quotes_runtime(0);
+/** @todo This funtion has been deprecated in PHP 5.3.0 and removed in PHP7 - need to adjust in 2.0 ~skenow ~fiammybe */
+if(get_magic_quotes_runtime()) {
+    // Deactivate
+    set_magic_quotes_runtime(0);
+}
 
 // -- Include common functions and constants file
 require_once ICMS_ROOT_PATH . "/include/constants.php";
