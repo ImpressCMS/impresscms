@@ -352,15 +352,13 @@ class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$perms = array();
 		if (isset($this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid])) {
-  			$perms = array($this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid]);
+  			$perms = $this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid];
 		} else {
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', $gperm_name));
 			$criteria->add(new icms_db_criteria_Item('gperm_itemid', (int) $gperm_itemid));
 			$criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
 			$perms = $this->getObjects($criteria, true);
-			foreach ( $perms as $perm) {
-		  		$this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid] = $perm;
-	  		}
+	  		$this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid] = $perms;
 		}
 		foreach ( array_keys($perms) as $i) {
 			$ret[] = $perms[$i]->getVar('gperm_groupid');
