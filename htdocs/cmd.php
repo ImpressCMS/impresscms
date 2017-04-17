@@ -3,16 +3,16 @@
 
 $_SERVER['HTTP_HOST'] = null;
 try {    
-    require "mainfile.php";
+	require "mainfile.php";
 } catch (Exception $ex) {
-    echo "No mainfile exists. You must install first.";
-    exit(1);
+	echo "No mainfile exists. You must install first.";
+	exit(1);
 }
 
 $controller_handler = icms::handler('icms_controller');
 if ($controller_handler->type !== 'command') {
-    echo "This file can be runned only from console.";
-    exit(2);
+	echo "This file can be runned only from console.";
+	exit(2);
 }
 
 if ($argc < 2) {
@@ -59,13 +59,13 @@ if ($argc < 2) {
 	if ($argc > 2) {
 		unset($argv[0], $argv[1]);
 		$arg_n = null;
-		while($arg = array_shift($argv)) {
+		while ($arg = array_shift($argv)) {
 			if (substr($arg, 0, 2) === '--') {
 				if ($arg_n !== null) {
 					$args[$arg_n] = null;
 				}
 				if (($o = strpos($arg, '=')) !== false) {
-					$args[substr($arg, 2, $o - 2)] = substr($arg, $o  + 1);
+					$args[substr($arg, 2, $o - 2)] = substr($arg, $o + 1);
 					$arg_n = null;
 				} else {
 					$arg_n = substr($arg, 2);
@@ -99,6 +99,6 @@ if ($argc < 2) {
 	}
 	if ($successed === false) {
 		echo "ERROR: Command not found." .PHP_EOL;
-	    exit(3);
+		exit(3);
 	}
 }
