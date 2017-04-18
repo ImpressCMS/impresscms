@@ -242,6 +242,7 @@ switch ($op) {
 					$newuser->setVar('pass', $password);
 				}
 				$newuser->setVar('timezone_offset', $timezone_offset);
+				$newuser->setVar('user_regdate', date('U'));
 				$newuser->setVar('uorder', $uorder);
 				$newuser->setVar('umode', $umode);
 				$newuser->setVar('notify_method', $notify_method);
