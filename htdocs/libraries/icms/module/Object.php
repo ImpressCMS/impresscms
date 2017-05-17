@@ -83,7 +83,7 @@ class icms_module_Object extends icms_core_Object {
 		parent::__construct();
 		$this->initVar('mid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
-		$this->initVar('version', XOBJ_DTYPE_INT, 100, false);
+		$this->initVar('version', XOBJ_DTYPE_TXTBOX, null, false);
 		$this->initVar('last_update', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('weight', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('isactive', XOBJ_DTYPE_INT, 1, false);
@@ -146,7 +146,7 @@ class icms_module_Object extends icms_core_Object {
 	public function loadInfoAsVar($dirname, $verbose = true) {
 		if (!isset($this->modinfo)) {$this->loadInfo($dirname, $verbose);}
 		$this->setVar('name', $this->modinfo['name'], true);
-		$this->setVar('version', (int) (100 * ($this->modinfo['version'] + 0.001)), true);
+		$this->setVar('version', $this->modinfo['version'] , true);
 		$this->setVar('dirname', $this->modinfo['dirname'], true);
 		$hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
 		$hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;

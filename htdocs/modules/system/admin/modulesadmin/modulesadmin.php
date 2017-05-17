@@ -108,7 +108,7 @@ function xoops_module_list() {
 				'dirname' => $module->getInfo('dirname'),
 				'name' => $module->getInfo('name'),
 				'image' => $module->getInfo('image'),
-				'version' => $module->getVar('version'),
+				'version' => icms_conv_nr2local($module->getVar('version')),
 				'status' => $module->getInfo('status'),
 			);
 			$icmsAdminTpl->append('avmodules', $mod);
