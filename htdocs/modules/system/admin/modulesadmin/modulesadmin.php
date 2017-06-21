@@ -85,7 +85,7 @@ function xoops_module_list() {
 			'hasadmin' => $module->getVar('hasadmin'),
 			'hasmain' => $module->getVar('hasmain'),
 			'isactive' => $module->getVar('isactive'),
-			'version' => icms_conv_nr2local(round($module -> getVar('version') / 100, 2)),
+			'version' => $module->getVar('version'),
 			'status' => ($module->getInfo('status')) ? $module->getInfo('status') : '&nbsp;',
 			'last_update' => ($module->getVar('last_update') != 0) ? formatTimestamp($module->getVar('last_update'), 'm') : '&nbsp;',
 			'weight' => $module->getVar('weight'),
@@ -108,7 +108,7 @@ function xoops_module_list() {
 				'dirname' => $module->getInfo('dirname'),
 				'name' => $module->getInfo('name'),
 				'image' => $module->getInfo('image'),
-				'version' => icms_conv_nr2local(round($module->getInfo('version'), 2)),
+				'version' => icms_conv_nr2local($module->getVar('version')),
 				'status' => $module->getInfo('status'),
 			);
 			$icmsAdminTpl->append('avmodules', $mod);
@@ -154,7 +154,7 @@ function xoops_module_install($dirname) {
 		if ($module->getInfo('image') !== FALSE && trim($module->getInfo('image')) != '') {
 			$msgs[] ='<img src="' . ICMS_MODULES_URL . '/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
 		}
-		$msgs[] ='<strong>'._VERSION . ':</strong> ' . icms_conv_nr2local($module->getInfo('version'));
+		$msgs[] ='<strong>'._VERSION . ':</strong> ' . $module->getVar('version');
 		if ($module->getInfo('author') !== FALSE && trim($module->getInfo('author')) != '') {
 			$msgs[] ='<strong>' . _AUTHOR .':</strong> ' . trim($module->getInfo('author'));
 		}
