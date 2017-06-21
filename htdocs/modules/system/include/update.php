@@ -457,6 +457,19 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0 AND pass NOT LIKE '$%';";
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
+
+	}
+	if (!$abortUpdate) $newDbVersion = 44;
+	/* 1.3.11 release - change in module version storage type (smallint -> varchar)*/
+
+	if ($dbVersion < $newDbVersion) {
+
+		$table = new icms_db_legacy_updater_Table("modules");
+
+		/* Change formtype to textarea for Admin Footer */
+		$sql = "ALTER TABLE `" . $table->name() . "` MODIFY version VARCHAR(20);";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
 		unset($table);
 
 		/* Finish up this portion of the db update */
@@ -471,7 +484,6 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		 * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.*/
 		icms_module_Handler::installation_notify($newDbVersion, ICMS_URL);
 	}
-
 	/*
 	 * This portion of the upgrade must remain as the last section of code to execute
 	* Place all release upgrade steps above this point

@@ -378,7 +378,7 @@ class upgrade_220
 
 		$sql =  "   SELECT b.* " .
                 "   FROM " . $xoopsDB->prefix("newblocks_bak") . " AS b LEFT JOIN " . $xoopsDB->prefix('block_instance') . " AS i ON b.bid = i.bid " .
-                "   WHERE i.instanceid IS NULL";
+                "   WHERE i.instanceid IS NULL" .
                 "   GROUP BY b.dirname, b.bid";
 		$result = $xoopsDB->query($sql);
 		$dirname = '';
