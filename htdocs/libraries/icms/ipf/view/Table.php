@@ -599,7 +599,7 @@ class icms_ipf_view_Table {
 		$sortsel = $this->_objectHandler->_itemname . '_' . 'sortsel';
 		$ordersel = $this->_objectHandler->_itemname . '_' . 'ordersel';
 		$quicksearch = 'quicksearch_' . $this->_id;
-				
+
 		$filter_get = array(
 				$start => 'int',
 				'limitsel' => 'int',
@@ -608,15 +608,17 @@ class icms_ipf_view_Table {
 				$sortsel => 'str',
 				$ordersel => 'str',
 				$quicksearch => 'special',
+				'fct' => 'str',
 		);
-		
+
 		$filter_post = array(
 				'limitsel' => 'int',
 				'filtersel' => 'str',
 				'filtersel2' => 'str',
 				$quicksearch => 'special',
+				'fct' => 'str',
 		);
-		
+
 		$filter_server = array(
 				'SCRIPT_NAME' => 'str',
 		);
@@ -627,7 +629,7 @@ class icms_ipf_view_Table {
 		$filtersel2 = $this->getDefaultFilter2();
 		$$sortsel = $$ordersel = '';
 		$$quicksearch = '';
-		
+
 		/* filter the user input - only allow specified variables */
 		if (!empty($_GET)) {
 			$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, true);
@@ -637,10 +639,10 @@ class icms_ipf_view_Table {
 			$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
 			extract($clean_POST);
 		}
-		
+
 		$server_vars = icms_core_DataFilter::checkVarArray($_SERVER, $filter_server, true);
 		$script_name = $server_vars['SCRIPT_NAME'];
-		
+
 		$this->_tpl = new icms_view_Tpl();
 
 		/**
