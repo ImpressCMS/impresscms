@@ -1,5 +1,16 @@
 ImpressCMS ChangeLog
 ====================
+ImpressCMS 1.3.11
+-------------------------------
+Date: 21 july 2017
+DB Version: 44
+Build Version: 83
+
+##Fixes
+
+##Security
+##Update
+
 ImpressCMS 1.3.10
 -------------------------------
 Date: 30 december 2016

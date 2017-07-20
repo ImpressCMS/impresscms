@@ -1,6 +1,6 @@
-ImpressCMS 1.3.10
+ImpressCMS 1.3.11
 ======================
-This release fixes several security vulnerabilities, both in the ImpressCMS core and in external libraries (PHPMailer). It is highly recommended you update to this latest version 1.3.10 of ImpressCMS. 
+This is a maintenance release that fixes several issues that were found during the re-development of the main ImpressCMS.org site.
 
 Installation
 ------------
