@@ -106,7 +106,7 @@ class icms_view_theme_Object {
 	/**
 	 * Array of meta types - their order in the array determines their rendering sequence
 	 */
-	public $types = array('http', 'meta', 'link', 'stylesheet', 'script');
+	public $types = array('http', 'meta', 'link', 'stylesheet', 'script', 'property', 'itemprop');
 
 	/**
 	 * Array of strings to be inserted in the head tag of HTML documents
@@ -517,6 +517,30 @@ class icms_view_theme_Object {
 	}
 
 	/**
+	 * Set a meta property value, mostly used by Facebook Graph nowadays
+	 * @param	str	$zone	Area of the HTML page to place the property meta
+	 * @param 	int	$weight	Sort factor - lower weights are loaded first
+	 */
+	public function addPropertyMeta($name, $value = NULL, $zone = 'module', $weight = 0) {
+		if (isset($value)) {
+			return $this->addMeta('property', $name, $value, $zone, $weight);
+		}
+		unset($this->metas[$zone]['property'][$name]);
+	}
+
+	/**
+	 * Set a meta itemprop value, mostly used by Google+ nowadays
+	 * @param	str	$zone	Area of the HTML page to place the itemprop meta
+	 * @param 	int	$weight	Sort factor - lower weights are loaded first
+	 */
+	public function addItempropMeta($name, $value = NULL, $zone = 'module', $weight = 0) {
+		if (isset($value)) {
+			return $this->addMeta('itemprop', $name, $value, $zone, $weight);
+		}
+		unset($this->metas[$zone]['itemprop'][$name]);
+	}
+
+	/**
 	 * Change output page meta-information
 	 *
 	 * @param	str	$type	Type of meta tag: script, link, stylesheet, http
@@ -608,6 +632,19 @@ class icms_view_theme_Object {
 						$str .= '<meta http-equiv="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES) . "\" />\n";
 					}
 					break;
+
+				case 'property':
+					foreach ($this->metas[$zone][$type] as $name => $content) {
+						$str .= '<meta property="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES) . "\" />\n";
+					}
+					break;
+
+				case 'itemprop':
+					foreach ($this->metas[$zone][$type] as $name => $content) {
+						$str .= '<meta itemprop="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES) . "\" />\n";
+					}
+					break;
+
 
 				default:
 					foreach ($this->metas[$zone][$type] as $name => $content) {
