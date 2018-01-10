@@ -592,7 +592,7 @@ class icms_member_user_Object extends icms_core_Object {
 		if (!$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif') {
 			return ICMS_UPLOAD_URL . '/' . $this->getVar('user_avatar');
 		}
-		$ret = "http://www.gravatar.com/avatar/" . md5(strtolower($this->getVar('email', 'E'))) . "?d=identicon";
+		$ret =  icms::$urls['http'] . "www.gravatar.com/avatar/" . md5(strtolower($this->getVar('email', 'E'))) . "?d=identicon";
 		if ($rating && $rating != '') {$ret .= "&amp;rating=" . $rating;}
 		if ($size && $size != '') {$ret .="&amp;size=" . $size;}
 		if ($default && $default != '') {$ret .= "&amp;default=" . urlencode($default);}
