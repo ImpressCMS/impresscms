@@ -64,33 +64,33 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /*  Development information */
-	'status_version'=> "Alpha 5",
+	'status_version'=> "Alpha 6",
 	'status'=> "Alpha",
-	'date'=> "6 Apr 2015",
+	'date'=> "11 Jan 2018",
 	'author_word'=> "",
 	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
 /* Contributors */
-	'developer_website_url' => "http://www.impresscms.org",
+	'developer_website_url' => "https://www.impresscms.org",
 	'developer_website_name' => "ImpressCMS Core & Module developers",
 	'developer_email' => "contact@impresscms.org" );
 
-$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=168]marcan[/url] (Marc-Andr&eacute; Lanciault)";
-$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
-$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=106]TheRplima[/url]";
-$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=69]vaughan[/url]";
-$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=340]nekro[/url]";
-$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1168]phoenyx[/url]";
-$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
-$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
-$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=53]davidl2[/url]";
-$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
-$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=10]sato-san[/url]";
-$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=168]marcan[/url] (Marc-Andr&eacute; Lanciault)";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=106]TheRplima[/url]";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=69]vaughan[/url]";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=340]nekro[/url]";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=1168]phoenyx[/url]";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
+$modversion['people']['testers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=53]davidl2[/url]";
+$modversion['people']['testers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
+$modversion['people']['testers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=10]sato-san[/url]";
+$modversion['people']['testers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
 $modversion['people']['translators'][] = "";
 
-$modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=372]UnderDog[/url]";
-$modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
+$modversion['people']['documenters'][] = "[url=https://www.impresscms.org/userinfo.php?uid=372]UnderDog[/url]";
+$modversion['people']['documenters'][] = "[url=https://www.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
 
 //$modversion['people']['other'][] = "";
 
@@ -103,7 +103,7 @@ $modversion['autotasks'][] = array(
 );
 
 /* Manual */
-$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/modules/wiki/index.php?page=System/" . _LANGCODE . "' target='_blank'>" . _MI_SYSTEM_NAME . "</a>";
+$modversion['manual']['wiki'][] = "<a href='https://www.impresscms.org/modules/simplywiki/index.php?page=System' target='_blank'>" . _MI_SYSTEM_NAME . "</a>";
 
 /* Administrative information */
 $modversion['hasAdmin'] = TRUE;
