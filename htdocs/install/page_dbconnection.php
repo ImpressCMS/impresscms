@@ -58,7 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty( $vars['DB_HOST'] ) && !empty
 				$dbh = new pdo( 'mysql:host='.$vars['DB_HOST'],
 					$vars['DB_USER'],
 					$vars['DB_PASS'],
-					array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+					array(
+						PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+						PDO::ATTR_PERSISTENT => !empty( $vars['DB_PCONNECT'] )
+					));
 			} catch(PDOException $ex) {
 				$error = ERR_NO_DBCONNECTION;
 			}
