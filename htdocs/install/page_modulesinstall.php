@@ -67,18 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		} else {
 			$content .= _INSTALL_NO_PLUS_MOD;
 		}
-		//Install protector module by default if found.
-		//TODO: Insert Protector installation - leads to blank page as it is now.
-		if (file_exists(ICMS_ROOT_PATH.'/modules/protector/xoops_version.php')) {
-			$content .= xoops_module_install('protector');
-			/*        	include_once "./class/mainfilemanager.php";
-			 $mm = new mainfile_manager("../mainfile.php");
-			 $mm->setRewrite('PROTECTOR1', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/precheck.inc.php\')' ;
-			 $mm->setRewrite('PROTECTOR2', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/postcheck.inc.php\')' ;
-
-			 $result = $mm->doRewrite();
-			 $mm->report();*/
-		}
 
 		$tables = array();
 		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>".$dbm->report()."</div>";
@@ -94,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$content .= '<div id="modinstall" name="install_mods[]">';
 	$langarr = icms_module_Handler::getAvailable();
 	foreach ($langarr as $lang) {
-		if ($lang == 'system' || $lang == 'protector') {
+		if ($lang == 'system') {
 			continue;
 		}
 		$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../modules/$lang/images/icon_small.png\" alt=\"$lang\" /><br />$lang <br /><input type=\"checkbox\" checked=\"checked\" name=\"install_mods[]\" value=\"$lang\" /></a></div>";
