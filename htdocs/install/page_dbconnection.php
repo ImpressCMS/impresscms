@@ -46,9 +46,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty( $vars['DB_HOST'] ) && !empty( $vars['DB_USER'] )) {
-	$func_connect = empty( $vars['DB_PCONNECT'] ) ? "mysql_connect" : "mysql_pconnect";
-	if (! ( $link = @$func_connect( $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true ) )) {
-		$error = ERR_NO_DBCONNECTION;
+	switch ($vars['DB_TYPE']) {
+		case 'mysql':
+			$func_connect = empty( $vars['DB_PCONNECT'] ) ? "mysql_connect" : "mysql_pconnect";
+			if (! ( $link = @$func_connect( $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true ) )) {
+				$error = ERR_NO_DBCONNECTION;
+			}
+		break;
+		case 'pdo.mysql':
+			try {
+				$dbh = new pdo( 'mysql:host='.$vars['DB_HOST'],
+					$vars['DB_USER'],
+					$vars['DB_PASS'],
+					array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+			} catch(PDOException $ex) {
+				$error = ERR_NO_DBCONNECTION;
+			}
+		break;
 	}
 	if (empty( $error )) {
 		$wizard->redirectToPage( '+1' );
@@ -56,19 +70,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty( $vars['DB_HOST'] ) && !empty
 	}
 }
 
-if (@empty( $vars['DB_HOST'] )) {
-	//so far, mysql extenstion has to exist and be loaded
-	$connections = array(
-			'mysql' => array('type' => 'mysql', 'name' => 'MySQL', 'selected' => 'selected'),
-	);
+//so far, mysql extension has to exist and be loaded
+$connections = [];
+if (function_exists('mysql_connect') || function_exists('mysql_pconnect')) {
+	$connections['mysql'] = array('type' => 'mysql', 'name' => 'MySQL', 'selected' => 'selected');
 	$db_connection = $connections['mysql'];
-	// Fill with default values
-	// check for PDO MySQL and select it, if it is available
-	if (class_exists("PDO", FALSE)) {
-		$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
+}
+// Fill with default values
+// check for PDO MySQL and select it, if it is available
+if (class_exists("PDO", FALSE)) {
+	$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
+	if (isset($connections['mysql'])) {
 		$connections['mysql']['selected'] = '';
-		$connections['pdo'] = $db_connection;
 	}
+	$connections['pdo'] = $db_connection;
+}
+
+if (@empty( $vars['DB_HOST'] )) {
 	$vars = array_merge( $vars, array(
         'DB_TYPE'        => $db_connection['type'],
         'DB_HOST'        => 'localhost',
@@ -76,6 +94,7 @@ if (@empty( $vars['DB_HOST'] )) {
         'DB_PASS'        => '',
         'DB_PCONNECT'    => 0,
 	) );
+
 }
 
 
