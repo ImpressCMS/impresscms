@@ -29,7 +29,8 @@
     "ext-xml": "*",
     "ext-openssl": "*",
     "ext-json": "*",
-    "ext-PDO": "*"
+    "ext-PDO": "*",
+    "geshi/geshi": "^1.0"
   },
   "autoload": {
     "psr-0" : {"" : "libraries/"},
