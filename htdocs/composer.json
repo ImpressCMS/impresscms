@@ -29,7 +29,8 @@
     "ext-xml": "*",
     "ext-openssl": "*",
     "ext-json": "*",
-    "ext-PDO": "*"
+    "ext-PDO": "*",
+    "cerdic/css-tidy": "^1.5"
   },
   "autoload": {
     "psr-0" : {"" : "libraries/"},
