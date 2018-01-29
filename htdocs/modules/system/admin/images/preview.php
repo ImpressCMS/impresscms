@@ -11,8 +11,6 @@
 
 /** this file gets linked directly, so mainfile.php must be included here */
 include '../../../../mainfile.php' ;
-/** the library for handling the image manipulation */
-include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 /*
  * GET variarbles
  * file

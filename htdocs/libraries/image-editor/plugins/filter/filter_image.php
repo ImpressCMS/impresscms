@@ -59,11 +59,9 @@ if (!isset($image_path) || !isset($image_url)) {
 	 * because errors occur when previewing the filter effect
 	 */
 	if (!isset($filter)) exit();
-	
-	include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
-	
+
 	$args = array ();
-	
+
 	if (isset($_GET['arg1'])) {
 		$args[] = (int) $_GET['arg1'];
 	}
@@ -75,7 +73,7 @@ if (!isset($image_path) || !isset($image_url)) {
 	}
 	$save = isset($_GET['save']) ? (int) $_GET['save'] : 0;
 	$del = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
-	
+
 	$img = WideImage::load($image_path);
 	$arr = explode('/', $image_path);
 	$arr[count($arr) - 1] = 'filter_' . $arr[count($arr) - 1];
@@ -83,18 +81,18 @@ if (!isset($image_path) || !isset($image_url)) {
 	$arr = explode('/', $image_url);
 	$arr[count($arr) - 1] = 'filter_' . $arr[count($arr) - 1];
 	$temp_img_url = implode('/', $arr);
-	
+
 	if ($del) {
 		@unlink($temp_img_path);
 		exit();
 	}
-	
+
 	if ($filter == 'IMG_FILTER_SEPIA') {
 		$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->saveToFile($temp_img_path);
 	} else {
 		$img->applyFilter(constant($filter), implode(',', $args))->saveToFile($temp_img_path);
 	}
-	
+
 	if ($save) {
 		if (!@unlink($image_path)) {
 			echo "alert('" . _ERROR . "');";

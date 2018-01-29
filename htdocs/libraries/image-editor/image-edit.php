@@ -20,8 +20,6 @@ if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGr
 	exit(_NOPERM);
 }
 
-include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
-
 icms_loadLanguageFile('system', 'images', true);
 
 $icmsTpl = new icms_view_Tpl();
@@ -97,7 +95,7 @@ if (!empty($op) && $op == 'cancel') {
 	} else {
 		$image_path = NULL;
 	}
-	
+
 	if (file_exists($image_path)) {
 		@unlink($image_path);
 	}

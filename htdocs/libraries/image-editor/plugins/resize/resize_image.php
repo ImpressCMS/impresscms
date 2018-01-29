@@ -35,12 +35,10 @@ if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . ba
 if (!isset($image_path) || !isset($image_url)) {
 	echo "alert('" . _ERROR . "');";
 } else {
-	include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
-	
 	$fit = 'inside';
 	$width = null;
 	$height = null;
-	
+
 	if (isset($_GET['width'])) {
 		if (substr($_GET['width'], -1, 1) == '%') {
 			$width = (int) $_GET['width'] . "%";
@@ -49,7 +47,7 @@ if (!isset($image_path) || !isset($image_url)) {
 			$width = (int) $_GET['width'];
 		}
 	}
-	
+
 	if (isset($_GET['height'])) {
 		if (substr($_GET['height'], -1, 1) == '%') {
 			$height = (int) $_GET['height'] . "%";
@@ -58,10 +56,10 @@ if (!isset($image_path) || !isset($image_url)) {
 			$height = (int) $_GET['height'];
 		}
 	}
-	
+
 	$save = isset($_GET['save']) ? (int) $_GET['save'] : 0;
 	$del = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
-	
+
 	$img = WideImage::load($image_path);
 	$arr = explode('/', $image_path);
 	$arr[count($arr) - 1] = 'resize_' . $arr[count($arr) - 1];
@@ -69,14 +67,14 @@ if (!isset($image_path) || !isset($image_url)) {
 	$arr = explode('/', $image_url);
 	$arr[count($arr) - 1] = 'resize_' . $arr[count($arr) - 1];
 	$temp_img_url = implode('/', $arr);
-	
+
 	if ($del) {
 		@unlink($temp_img_path);
 		exit();
 	}
-	
+
 	$img->resize($width, $height, $fit)->saveToFile($temp_img_path);
-	
+
 	if ($save) {
 		if (!@unlink($image_path)) {
 			echo "alert('" . _ERROR . "');";
