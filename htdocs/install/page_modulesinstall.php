@@ -75,12 +75,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 } else {
+	$langarr = icms_module_Handler::getAvailable();
+	if (count($langarr) == 1 && in_array('system', $langarr)) {
+		$wizard->redirectToPage( '+1' );
+		exit();
+	}
 
 	$content .= '<div>'. _INSTALL_SELECT_MODS_INTRO .'</div>';
 	$content .= '<div class="dbconn_line">';
 	$content .= '<h3>'. _INSTALL_SELECT_MODULES.'</h3>';
 	$content .= '<div id="modinstall" name="install_mods[]">';
-	$langarr = icms_module_Handler::getAvailable();
+	
 	foreach ($langarr as $lang) {
 		if ($lang == 'system') {
 			continue;
