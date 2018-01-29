@@ -12,9 +12,6 @@
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
  * @version		$Id$
  */
-/**
- *
- */
 require_once 'common.inc.php';
 
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
