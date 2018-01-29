@@ -757,15 +757,6 @@
 
 	if (!$abortUpdate) $newDbVersion = 40;
 	if ($dbVersion < $newDbVersion) {
-		$file = ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php';
-		if (file_exists($file)) {
-			if(unlink($file)) {
-				echo sprintf(_FILE_DELETED, $file) . '<br />';
-			} else {
-				icms_core_Message::error(sprintf(_CSSTIDY_VULN, $file));
-			}
-		}
-
 		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
