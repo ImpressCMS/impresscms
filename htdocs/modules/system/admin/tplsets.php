@@ -822,7 +822,7 @@ switch ($op) {
 			if (!$uploader->upload()) {
 				icms_core_Message::error($uploader->getErrors());
 			} else {
-				$tar = new icms_file_TarFileHandler();
+				$tar = new Tar();
 				$tar->openTar($uploader->getSavedDestination());
 				@unlink($uploader->getSavedDestination());
 				$themefound = FALSE;

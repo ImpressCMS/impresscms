@@ -52,7 +52,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 * @param string $mimyType  Mimetype
 	 **/
 	public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip') {
-		$this->archiver = new icms_file_TarFileHandler();
+		$this->archiver = new Tar();
 		$this->ext = trim($ext);
 		$this->mimeType = trim($mimyType);
 	}
