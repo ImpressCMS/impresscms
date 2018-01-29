@@ -34,7 +34,7 @@
     "ext-xml": "*",
     "ext-openssl": "*",
     "ext-bcmath": "*",
-    "ext-PDO": "*"
+    "ext-PDO": "*",
     "ext-mysql": "*"
   },
   "autoload": {
