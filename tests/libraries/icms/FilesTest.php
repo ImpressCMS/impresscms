@@ -17,9 +17,7 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
                 'icms_file_DownloadHandler' => null,
                 'icms_file_MediaUploadHandler' => null,
                 'icms_file_TarDownloader' => 'icms_file_DownloadHandler',
-                'icms_file_TarFileHandler' => null,
-                'icms_file_ZipDownloader' => 'icms_file_DownloadHandler',
-                'icms_file_ZipFileHandler' => null
+                'icms_file_ZipDownloader' => 'icms_file_DownloadHandler'
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {
