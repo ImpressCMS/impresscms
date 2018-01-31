@@ -3,7 +3,7 @@
   "type": "project",
   "description": "ImpressCMS is an open source content management system with a focus on security and speed",
   "minimum-stability": "dev",
-  "license": "GPLv2",
+  "license": "GPL-2.0-only",
   "authors": [
     {
       "name": "marcan"
