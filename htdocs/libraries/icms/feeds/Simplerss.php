@@ -1,7 +1,4 @@
 <?php
-include_once ICMS_LIBRARIES_PATH . '/simplepie/autoloader.php';
-include_once ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php';
-
 /**
  * Class handling RSS feeds, using SimplePie class
  *
