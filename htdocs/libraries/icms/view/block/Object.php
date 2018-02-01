@@ -44,18 +44,18 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @package     ICMS\View\Block
- * 
+ *
  * @property string $name           Name
  * @property int    $bid            Block ID
  * @property int    $mid            Module ID
- * @property int    $func_num  
+ * @property int    $func_num
  * @property string $title          Title
  * @property string $content        Content
  * @property int    $side           Side
  * @property int    $weight         Weight used for sorting positions
  * @property int    $visible        Is visible?
  * @property string $block_type     Type
- * @property string $c_type 
+ * @property string $c_type
  * @property int    $isactive       Is active?
  * @property string $dirname        Directory name
  * @property string $func_file      Function file
@@ -74,7 +74,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 * Constructor for the block object
 	 * @param $handler
 	 */
-	public function __construct(& $handler, $data = array()) {                        
+	public function __construct(& $handler, $data = array()) {
 
 		$this->initVar('name', self::DTYPE_STRING, '', FALSE, 150);
 		$this->initVar('bid', self::DTYPE_INTEGER, 0, TRUE, 8);
@@ -117,10 +117,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 	}
         
         /**
-         * gets var 
-         * 
+         * gets var
+         *
          * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
-         * 
+         *
          * @param string $name
          * @param string $format
          * @return mixed
@@ -134,21 +134,21 @@ class icms_view_block_Object extends icms_ipf_Object {
         }
         
         /**
-         * sets var 
-         * 
+         * sets var
+         *
          * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
-         * 
+         *
          * @param string $name
          * @param string $format
          * @return mixed
          */
-        public function setVar($name, $value, $options = null) {            
+        public function setVar($name, $value, $options = null) {
             if ($name == 'visiblein') {
                 $this->visiblein = $value;
             } else {
                 parent::setVar($name, $value, $options);
             }
-        }        
+        }
 
 	// The next Methods are for backward Compatibility
 
@@ -169,7 +169,7 @@ class icms_view_block_Object extends icms_ipf_Object {
                     $content = str_replace(XOOPS_DB_SALT, '', $content);
 					return $content;
 				} elseif ($c_type == 'S') {
-					$myts =& icms_core_Textsanitizer::getInstance();
+					$myts = icms_core_Textsanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 1, 1);
 				} else {

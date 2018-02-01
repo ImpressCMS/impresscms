@@ -82,7 +82,7 @@ if (version_compare( phpversion(), '5.2', '>=')) {
 	src="img/<?php echo (isset($php_version_error) ? "no" : "yes") ?>.png"
 	alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf( PHP_EXTENSION, 'MySQL' ); ?>:&nbsp; <?php echo xoDiag( function_exists( 'mysql_connect' ) ? 1 : -1 ); ?>
+<h4><?php printf( PHP_EXTENSION, 'MySQL' ); ?>:&nbsp; <?php echo xoDiag( (function_exists( 'mysql_connect' ) || class_exists('PDO')) ? 1 : -1 ); ?>
 <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php printf( PHP_EXTENSION, 'Session' ); ?>:&nbsp; <?php echo xoDiag( extension_loaded( 'session' ) ? 1 : -1 ); ?>
@@ -158,5 +158,3 @@ if (empty($ext)) {
 	ob_end_clean();
 
 	include 'install_tpl.php';
-
-	?>

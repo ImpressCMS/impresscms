@@ -23,146 +23,146 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @package	ICMS\IPF
  */
 class icms_ipf_About {
-        
+
     /**
      * Title
      *
      * @var string
      */
 	public $_lang_aboutTitle = '';
-        
+
         /**
          * Author info
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_author_info = '';
-        
+
         /**
          * Lead developer
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_developer_lead = '';
-        
+
         /**
          * Contributor(s)
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_developer_contributor = '';
-        
+
         /**
          * Developer's website
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_developer_website = '';
-        
+
         /**
          * Developer's email
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_developer_email = '';
-        
+
         /**
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_developer_credits = '';
-        
+
         /**
          * Module info
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_info = '';
-        
+
         /**
          * Module status (alfa, beta...)
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_status = '';
-        
+
         /**
          * Release date
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_release_date = '';
-        
+
         /**
          * Demn
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_demo = '';
-        
+
         /**
          * Support address
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_support = '';
-        
+
         /**
          * Bug text
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_bug = '';
-        
+
         /**
          * Bug address
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_submit_bug = '';
-        
+
         /**
          * Feature(s)
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_feature = '';
-        
+
         /**
          * Submit feature link
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_submit_feature = '';
-        
+
         /**
          * Disclaimer
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_module_disclaimer = '';
-        
+
         /**
          * Author word
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_author_word = '';
-        
+
         /**
          * Version history
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_version_history = '';
-        
+
         /**
          * Credits
          *
-         * @var string 
+         * @var string
          */
 	public $_lang_by = '';
-        
+
         /**
          * Template
          *
@@ -341,10 +341,9 @@ class icms_ipf_About {
 			$this->_tpl->assign('module_license_txt', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
 			fclose($handle);
 		}
-	
+
 		$this->_tpl->display('db:admin/system_adm_moduleabout.html');
 
 		icms_cp_footer();
 	}
 }
-

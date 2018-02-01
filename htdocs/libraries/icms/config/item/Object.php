@@ -39,7 +39,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @package	ICMS\Config\Item
- * 
+ *
  * @property int        $conf_id            Item ID
  * @property int        $conf_modid         Module ID
  * @property int        $conf_catid         Category ID
@@ -59,7 +59,7 @@ class icms_config_item_Object extends icms_ipf_Object {
 	 * @access	private
 	 */
 	public $_confOptions = array();
-        
+
         /**
         * is it a newly created config object?
         *
@@ -84,7 +84,7 @@ class icms_config_item_Object extends icms_ipf_Object {
 		$this->initVar('conf_formtype',  self::DTYPE_STRING, false, '',  15);
 		$this->initVar('conf_valuetype',  self::DTYPE_STRING, false, '',  10);
 		$this->initVar('conf_order', self::DTYPE_INTEGER);
-                
+
                 parent::__construct($handler, $data);
 	}
 
@@ -125,7 +125,7 @@ class icms_config_item_Object extends icms_ipf_Object {
 			case 'array':
                 $value = $this->getVar('conf_value', 'N');
                 if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) != ':'))
-                	return array();                                
+                	return array();
                 $value = @unserialize($value);
 				return $value ? $value : array();
 
@@ -210,7 +210,7 @@ class icms_config_item_Object extends icms_ipf_Object {
 	/**
 	 * This function will properly set the data type for each config item, overriding the
 	 * default in the __construct method
-         * 
+         *
          * @todo        Remove param $dummy once after removing setType from icms_properties_Handler (this is hack to bypass PHP strict message)
 	 *
 	 * @since	1.3.3
