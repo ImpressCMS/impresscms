@@ -78,46 +78,10 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
                 'sanitizeMultipleExtensions',
                 'setErrors',
                 'getErrors'
-            ],
-            'icms_file_TarFileHandler' => [
-                'openTAR',
-                'appendTar',
-                'getFile',
-                'getDirectory',
-                'containsFile',
-                'containsDirectory',
-                'addDirectory',
-                'addFile',
-                'removeFile',
-                'removeDirectory',
-                'saveTar',
-                'toTar',
-                'toTarOutput'
-            ],
-            'icms_file_ZipFileHandler' => [
-                'addFile',
-                'file'
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
                 $this->assertTrue(method_exists($class, $method), 'Static method ' . $method . ' doesn\'t exists for class ' . $class);
-            }
-        }
-    }
-
-    /**
-     * Tests variables availability and types
-     */
-    public function testVariables() {
-        foreach ([
-            'icms_file_TarFileHandler' => [
-                'numFiles' => 'null', // int
-                'files' => 'null' // array
-            ]
-        ] as $class => $variables) {
-            $instance = $this->getClassInstance($class);
-            foreach ($variables as $variable => $type) {
-                $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
     }
