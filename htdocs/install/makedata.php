@@ -487,9 +487,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOMAILPROTECT', '0', $i)"
+	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOMAILPROTECT', '0', $i)"
 			. ", (" . $ci++ . ", '_MD_AM_GDMAILPROTECT', '1', $i)"
-			. ", (" . $ci++ . ", '_MD_AM_REMAILPROTECT', '2', $i)");
+			. ", (" . $ci++ . ", '_MD_AM_SCMAILPROTECT', '2', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'email_font_len', '_MD_AM_EMAILLEN', '10', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', " . $p++ . ")"
@@ -497,8 +497,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'shadow_x', '_MD_AM_SHADOWX', '2', '_MD_AM_SHADOWX_DESC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'max_url_long', '_MD_AM_URLLEN', '50', '_MD_AM_URLLEN_DESC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'pre_chars_left', '_MD_AM_PRECHARS', '35', '_MD_AM_PRECHARS_DESC', 'textbox', 'int', " . $p++ . ")"
