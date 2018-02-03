@@ -278,9 +278,8 @@ class icms_view_theme_Object {
 					$groups = icms::$user->getGroups();
 					sort($groups);
 					// Generate group string for non-anonymous groups,
-					// XOOPS_DB_PASS and XOOPS_DB_NAME (before we find better variables) are used to protect group sensitive contents
 					$extra_string .= '|' . implode(",", $groups)
-						. substr(md5(XOOPS_DB_PASS . XOOPS_DB_NAME), 0, strlen(XOOPS_DB_USER) * 2);
+						. crc32(ICMS_ROOT_PATH);
 				}
 			}
 			$extraString = $extra_string;
