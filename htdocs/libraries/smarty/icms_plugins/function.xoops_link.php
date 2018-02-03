@@ -44,7 +44,7 @@
  *			I.e: The template called by 'index.php?cid=5' calls this function with
  *				{xoops_link page="viewcat.php" urlvars="cid,orderby=titleA"}>
  *			Then the generated URL will be:
- *				XOOPS_URL/modules/MODULENAME/viewcat.php?cid=5&orderby=titleA
+ *				ICMS_URL/modules/MODULENAME/viewcat.php?cid=5&orderby=titleA
  * -------------------------------------------------------------
  */
 
