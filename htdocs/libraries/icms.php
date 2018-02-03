@@ -84,6 +84,13 @@ final class icms {
 	static public $module;
 
 	/**
+	 * Current enviroment settings
+	 *
+	 * @var \Dotenv\Dotenv
+	 */
+	static public $env;
+
+	/**
 	 * Registered services definition
 	 * @var array
 	 */
@@ -129,6 +136,9 @@ final class icms {
 		icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
 		self::buildRelevantUrls();
+		// Loads enviroment data
+		self::$env = new \Dotenv\Dotenv(ICMS_ROOT_PATH);
+		self::$env->load();
 	}
 
 	/**
@@ -313,7 +323,7 @@ final class icms {
 			$http = strpos(ICMS_URL, "https://") === FALSE
 				? "http://"
 				: "https://";
-			
+
 			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
 			$filters = array(
 					'SCRIPT_NAME' => 'str',
@@ -321,9 +331,9 @@ final class icms {
 					'QUERY_STRING' => 'str',
 					'HTTP_REFERER' => 'url',
 			);
-			
+
 			$clean_SERVER = icms_core_DataFilter::checkVarArray($_SERVER, $filters, false);
-			
+
 			$phpself = $clean_SERVER['SCRIPT_NAME'];
 			$httphost = $clean_SERVER['HTTP_HOST'];
 			$querystring = $clean_SERVER['QUERY_STRING'];
