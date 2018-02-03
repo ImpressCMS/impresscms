@@ -5,7 +5,7 @@
 define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH . '/plugins');
 define('ICMS_PLUGINS_URL', ICMS_URL . '/plugins');
 define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH . '/preloads');
-define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH . '/cache/htmlpurifier');
+define('ICMS_PURIFIER_CACHE', ICMS_CACHE_PATH . '/htmlpurifier');
 // ImpressCMS Modules path & url
 define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
 define('ICMS_MODULES_URL', ICMS_URL . '/modules');

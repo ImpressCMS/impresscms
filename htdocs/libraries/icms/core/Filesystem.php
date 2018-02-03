@@ -36,7 +36,7 @@ class icms_core_Filesystem {
 	 *
 	 * @param string	$target		path to the folder to be created
 	 * @param integer	$mode		permissions to set on the folder. This is affected by umask in effect
-	 * @param string	$base		root location for the folder, ICMS_ROOT_PATH or ICMS_TRUST_PATH, for example
+	 * @param string	$base		root location for the folder, ICMS_ROOT_PATH, for example
 	 * @param array		$metachars	Characters to exclude from a valid path name
 	 * @return boolean True if folder is created, False if it is not
 	 */
@@ -263,7 +263,7 @@ class icms_core_Filesystem {
 	static public function generateChecksum() {
 		$rootdir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
 		$dir = new RecursiveDirectoryIterator($rootdir);
-		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_TRUST_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
+		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
 
 		$file = new SplFileObject($checkfile, 'w');
 		$cache_dir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_CACHE_PATH);
@@ -298,7 +298,7 @@ class icms_core_Filesystem {
 	static public function validateChecksum() {
 		$rootdir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
 		$dir = new RecursiveDirectoryIterator($rootdir);
-		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_TRUST_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
+		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
 		$validationFile = new SplFileObject($checkfile);
 		if ($validationFile->isReadable()) {
 			$currentHash = $currentPerms = array();
@@ -431,7 +431,7 @@ class icms_core_Filesystem {
 	 * @param	boolean	$overwrite	If TRUE, overwrite any existing file. If FALSE, append to any existing file
 	 * @return	boolean				TRUE, if the operation was successful, FALSE if it fails
 	 */
-	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_TRUST_PATH, $overwrite = TRUE) {
+	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_ROOT_PATH, $overwrite = TRUE) {
 		if ($extension == '') $extension = 'php';
 		if (DIRECTORY_SEPARATOR !== "/") $location = str_replace(DIRECTORY_SEPARATOR, "/", $location);
 		$file = $location . '/' . $filename . '.' . $extension;

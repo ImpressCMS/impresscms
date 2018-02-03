@@ -60,7 +60,7 @@ function &getStore() {
      * script, you'll have to remove this directory manually.
      */
     //$store_path = "/tmp/_php_consumer_test";
-    $store_path = ICMS_TRUST_PATH . "/_php_consumer";
+    $store_path = ICMS_CACHE_PATH . "/_php_consumer";
 
     if (!file_exists($store_path)
     	&& !mkdir($store_path)
@@ -117,7 +117,7 @@ function getTrustRoot() {
  * you'll have to remove this directory manually.
  */
 
-$store_path = ICMS_TRUST_PATH . "/_php_consumer";
+$store_path = ICMS_CACHE_PATH . "/_php_consumer";
 if (!file_exists($store_path)
 	&& !mkdir($store_path)
 ) {

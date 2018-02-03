@@ -57,9 +57,9 @@ class icms_core_Debug {
 		array_shift($trace);
 		$level = $msg = $message = '';
 		$pre =  '<strong><em>(' . _CORE_DEPRECATED . ')</em></strong> - ';
-		if ($trace[0]['function'] != 'include' 
-			&& $trace[0]['function'] != 'include_once' 
-			&& $trace[0]['function'] != 'require' 
+		if ($trace[0]['function'] != 'include'
+			&& $trace[0]['function'] != 'include_once'
+			&& $trace[0]['function'] != 'require'
 			&& $trace[0]['function'] != 'require_once'
 		) {
 			$pre .= $trace[0]['function'] . ': ';
@@ -71,8 +71,8 @@ class icms_core_Debug {
 			    	$message .= $level . $msg
 						. (isset( $step['class'] ) ? $step['class'] : '')
 						. (isset( $step['type'] ) ? $step['type'] : '' )
-						. sprintf(_CORE_DEPRECATED_MSG, $step['function'], 
-							str_replace(array(ICMS_TRUST_PATH, ICMS_ROOT_PATH), array("TRUSTPATH", "ROOTPATH"), $step['file']), 
+						. sprintf(_CORE_DEPRECATED_MSG, $step['function'],
+							str_replace(ICMS_ROOT_PATH, "ROOTPATH", $step['file']),
 							$step['line']
 						);
 			}
