@@ -48,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (file_put_contents($vars['ROOT_PATH'] . '/.env', $rez, LOCK_EX) === false) {
 		$error = ERR_WRITE_ENV_DATA;
 	} elseif (ini_get('safe_mode') == 0 || strtolower(ini_get('safe_mode')) == 'off') {
-		// creating the required folders in trust_path
 		if (!icms_core_Filesystem::mkdir($vars['ROOT_PATH'] . '/cache/htmlpurifier', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))) {
 			/**
 			 * @todo trap error
