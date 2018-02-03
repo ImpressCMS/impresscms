@@ -36,7 +36,7 @@
  */
 
 /** make sure mainfile is included, for security and functionality */
-defined("XOOPS_MAINFILE_INCLUDED") or die();
+defined("ICMS_MAINFILE_INCLUDED") or die();
 
 /**
  * @todo This funtion has been deprecated in PHP 5.3.0 - need to adjust in 2.0 ~skenow

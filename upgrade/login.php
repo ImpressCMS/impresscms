@@ -3,7 +3,7 @@
 ?>
 <h2><?php echo _USER_LOGIN; ?></h2>
 
-<form action="<?php echo XOOPS_URL; ?>/user.php?op=login" method="post">
+<form action="<?php echo ICMS_URL; ?>/user.php?op=login" method="post">
 		<input type="hidden" name="xoops_redirect" value="<?php echo $_SERVER['PHP_SELF']; ?>" />
 		<div class="xo-formfield required">
 			<label><?php echo _USERNAME; ?></label>

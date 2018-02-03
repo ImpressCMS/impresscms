@@ -48,7 +48,7 @@ if ($needUpgrade && !empty( $files )) {
 		echo '<div class="x2-note"><td><img src="img/no.png" alt="'._NO.'" />' . ERR_NO_PHP5_CONTENT . '<br /></td><br /></div>';
 		return;
 	} elseif (!$needUpgrade) {
-		echo '<div class="x2-note">' . _NO_NEED_UPGRADE . '<br /><br /><a id="link-next" href="'. XOOPS_URL .'/modules/system/admin.php?fct=modules&op=update&module=system">' . _SYS_NEED_UPGRADE . "</a></div>";
+		echo '<div class="x2-note">' . _NO_NEED_UPGRADE . '<br /><br /><a id="link-next" href="'. ICMS_URL .'/modules/system/admin.php?fct=modules&op=update&module=system">' . _SYS_NEED_UPGRADE . "</a></div>";
 		return;
 	} else {
 		echo'<div class="x2-note"><input class="checkbox" type="checkbox" id="help_button" onclick="showHideHelp(this)" />
