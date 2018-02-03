@@ -149,13 +149,7 @@ define( "ERR_NEED_WRITE_ACCESS", "The server must be given write access to the f
 define( "ERR_NO_DATABASE", "Could not create database. Contact the server administrator for details." ); // L31
 define( "ERR_NO_DBCONNECTION", "Could not connect to the database server." ); // L106
 define( "ERR_WRITING_CONSTANT", "Failed writing constant %s." ); // L122
-
-define( "ERR_COPY_MAINFILE", "Could not copy the distribution file to mainfile.php" );
-define( "ERR_WRITE_MAINFILE", "Could not write into mainfile.php. Please check the file permission and try again.");
-define( "ERR_READ_MAINFILE", "Could not open mainfile.php for reading" );
-
-define( "ERR_WRITE_SDATA", "Could not write into sdata.php. Please check the file permission and try again.");
-define( "ERR_READ_SDATA", "Could not open sdata.php for reading" );
+define( 'ERR_WRITE_ENV_DATA', 'Error write .env data');
 define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
 define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
 define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
