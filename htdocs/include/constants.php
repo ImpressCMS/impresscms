@@ -1,33 +1,4 @@
 <?php
-/**
- * ImpressCMS core constants definition
- *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
- * @since		1.3
- * @version		SVN: $Id$
- */
-
-if (!defined('ICMS_ROOT_PATH')) {
-	define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-}
-if (!defined('ICMS_TRUST_PATH')) {
-	define('ICMS_TRUST_PATH', XOOPS_TRUST_PATH);
-}
-if (!defined('ICMS_URL')) {
-	define('ICMS_URL', XOOPS_URL);
-}
-if (!defined('ICMS_GROUP_ADMIN')) {
-	define('ICMS_GROUP_ADMIN', XOOPS_GROUP_ADMIN);
-}
-if (!defined('ICMS_GROUP_USERS')) {
-	define('ICMS_GROUP_USERS', XOOPS_GROUP_USERS);
-}
-if (!defined('ICMS_GROUP_ANONYMOUS')) {
-	define('ICMS_GROUP_ANONYMOUS', XOOPS_GROUP_ANONYMOUS);
-}
-
 /**#@+
  * Creating ICMS specific constants
  */
