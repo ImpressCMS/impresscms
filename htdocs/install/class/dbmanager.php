@@ -52,7 +52,9 @@ class db_manager {
 
 	function __construct() {
 		$this->db = icms_db_legacy_Factory::getDatabase();
-		$this->db->setPrefix(XOOPS_DB_PREFIX);
+		$this->db->setPrefix(
+			getenv('DB_PREFIX')
+		);
 		$this->db->setLogger(icms_core_Logger::instance());
 	}
 

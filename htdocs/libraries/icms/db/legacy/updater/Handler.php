@@ -292,7 +292,7 @@ class icms_db_legacy_updater_Handler {
 
         if (isset($parentObjectVars)) {
             $objectVars = $object->getVars();
-            $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
+            $table = new icms_db_legacy_updater_Table(str_replace(getenv('DB_PREFIX') . '_', '', $module_handler->table));
             foreach (array_keys($objectVars) as $var) {
                 if (!isset($parentObjectVars[$var])) {
                     $table->addDropedField($var);
@@ -302,7 +302,7 @@ class icms_db_legacy_updater_Handler {
         } else {
             if (in_array($module_handler->table, $reservedTables))
                 return false;
-            $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
+            $table = new icms_db_legacy_updater_Table(str_replace(getenv('DB_PREFIX') . '_', '', $module_handler->table));
             $ret = $table->dropTable();
         }
         $this->_messages = array_merge($this->_messages, $table->_messages);
@@ -320,9 +320,9 @@ class icms_db_legacy_updater_Handler {
             return false;
         }
 
-        $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));        
+        $table = new icms_db_legacy_updater_Table(str_replace(getenv('DB_PREFIX') . '_', '', $module_handler->table));
         $object = $module_handler->create();
-        $class = new ReflectionClass($object);        
+        $class = new ReflectionClass($object);
         $isExtention = false;
         if ($pclass = $class->getParentClass()) {
             if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object', 'icms_ipf_seo_Object'))) {

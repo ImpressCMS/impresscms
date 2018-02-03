@@ -74,22 +74,22 @@ if (empty( $mode )) {
 	$ret .= "\n<div id='xo-logger-output' class='tabbable'>\n";
 		$ret .= "<ul class=\"nav nav-tabs\">\n";
 			$ret .= "<li class='active'><a href='#debug-none' data-toggle='tab'>" . _NONE . "</a></li>\n";
-			
+
 			$count = count( $this->errors );
 			$ret .= "<li><a href='#debug-errors' data-toggle='tab'>" . _ERRORS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
-			
+
 			$count = count( $this->queries );
 			$ret .= "<li><a href='#debug-queries' data-toggle='tab'>" . _QUERIES . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
 
 			$count = count( $this->blocks );
 			$ret .= "<li><a href='#debug-blocks' data-toggle='tab'>" . _BLOCKS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
-			
+
 			$count = count( $this->extra );
 			$ret .= "<li><a href='#debug-extra' data-toggle='tab'>" . _EXTRA . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
-			
+
 			$count = count( $this->logstart );
 			$ret .= "<li><a href='#debug-timers' data-toggle='tab'>" . _TIMERS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
-			
+
 			$count = count($this->deprecated);
 			$ret .= "<li><a href='#debug-deprecated' data-toggle='tab'>" . _CORE_DEPRECATED . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
 		$ret .= "</ul>\n";
@@ -120,7 +120,7 @@ if (empty($mode) || $mode == 'errors') {
 	$ret .= "\n</table>\n</div>\n";
 }
 
-if (empty($mode) || $mode == 'queries') {	
+if (empty($mode) || $mode == 'queries') {
 	$class = 'even';
 	$ret .= '<div class="tab-pane fade" id="debug-queries"><h4>' . _QUERIES . '</h4>';
 	$sqlmessages ='';
@@ -132,7 +132,7 @@ if (empty($mode) || $mode == 'queries') {
 		}
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
-	$ret .= str_replace(XOOPS_DB_PREFIX . '_', '', $sqlmessages);
+	$ret .= str_replace(getenv('DB_PREFIX') . '_', '', $sqlmessages);
 	$ret .= '<div class="foot"><h5>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->queries)) . '</span> ' . _QUERIES . '</h5></div></div>';
 }
 
@@ -170,7 +170,7 @@ if (empty($mode) || $mode == 'timers') {
 	$ret .= '</div>';
 }
 
-/** 
+/**
  * @author		ImpressCMS
  * @since 		1.3
  */

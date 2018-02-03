@@ -78,11 +78,11 @@ abstract class icms_db_Factory {
 		}
 
 		// --> added by Claudia, ImpressCMS.org
-		$string_conn = "host=". XOOPS_DB_HOST . ";dbname=". XOOPS_DB_NAME;
-		if (defined ('ICMS_DB_PORT')) {
-			$string_conn .= ';port='. ICMS_DB_PORT;
+		$string_conn = "host=". getenv('DB_HOST') . ";dbname=". getenv('DB_NAME');
+		if (getenv ('DB_PORT')) {
+			$string_conn .= ';port='. getenv('DB_PORT');
 		}
-		$string_conn .= ';charset=' . XOOPS_DB_CHARSET;
+		$string_conn .= ';charset=' . getenv('DB_CHARSET');
 		define ('ICMS_DB_DSN', $string_conn);
 		// <--
 
@@ -107,11 +107,7 @@ abstract class icms_db_Factory {
 		* If you do, you will get segmentation faults during the PHP process shutdown.
 		* Please see this bug report for more information: https://bugs.php.net/bug.php?id=63176
 		*/
-		if (XOOPS_DB_PCONNECT == 1) {
-			$options[PDO::ATTR_PERSISTENT] = TRUE;
-		} else {
-			$options[PDO::ATTR_PERSISTENT] = FALSE;
-		}
+		$options[PDO::ATTR_PERSISTENT] = (getenv('DB_PCONNECT') == 1);
 
 		$driver = substr($type, 4);
 		$dsn = $driver . ':' . ICMS_DB_DSN;
@@ -119,7 +115,7 @@ abstract class icms_db_Factory {
 		if (!class_exists($class)) {
 			$class = "icms_db_Connection";
 		}
-		return self::$pdoInstance = new $class($dsn, XOOPS_DB_USER, XOOPS_DB_PASS, $options);
+		return self::$pdoInstance = new $class($dsn, getenv('DB_USER'), getenv('DB_PASS'), $options);
 	}
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
@@ -143,8 +139,8 @@ abstract class icms_db_Factory {
 			if (FALSE === self::$pdoInstance) self::pdoInstance();
 			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
 		} else {
-			if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
-				$class = XOOPS_DB_ALTERNATIVE;
+			if (getenv('DB_ALTERNATIVE') && class_exists(getenv('DB_ALTERNATIVE'))) {
+				$class = getenv('DB_ALTERNATIVE');
 			} else {
 				$class = 'icms_db_legacy_' . $type;
 				$class .= $allowWebChanges ? '_Safe' : '_Proxy';
@@ -160,7 +156,7 @@ abstract class icms_db_Factory {
 				trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
 			}
 		}
-		self::$xoopsInstance->setPrefix(XOOPS_DB_PREFIX);
+		self::$xoopsInstance->setPrefix(getenv('DB_PREFIX'));
 		return self::$xoopsInstance;
 	}
 }

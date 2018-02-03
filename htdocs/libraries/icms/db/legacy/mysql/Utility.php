@@ -294,8 +294,8 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 	 */
 	static public function checkSQL($sql) {
 		/* use Protector's db layer to prevent SQLi */
-		if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
-			$class = XOOPS_DB_ALTERNATIVE;
+		$class = getenv('DB_ALTERNATIVE');
+		if ($class && class_exists($class)) {
 			$protectorDB = new $class();
 
 			$sql4check = substr($sql , 7);

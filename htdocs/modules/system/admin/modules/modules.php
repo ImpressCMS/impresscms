@@ -791,7 +791,7 @@ function xoops_module_uninstall($dirname) {
 				$msgs[] = _MD_AM_MOD_TABLES_DELETE;
 				foreach ($modtables as $table) {
 					if ($is_IPF) {
-						$table = str_replace(XOOPS_DB_PREFIX . '_', '', $table);
+						$table = str_replace(getenv('DB_PREFIX') . '_', '', $table);
 					}
 					$prefix_table = $db->prefix($table);
 					// prevent deletion of reserved core tables!

@@ -57,10 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	extract( $_SESSION['siteconfig'], EXTR_SKIP );
 	$language = $wizard->language;
 
-	if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
-		$driver = substr(XOOPS_DB_TYPE, 4);
+	$type = getenv('DB_TYPE');
+	if (substr($type, 0, 4) == 'pdo.') {
+		$driver = substr($type, 4);
 	} else {
-		$driver = XOOPS_DB_TYPE;
+		$driver = $type;
 	}
 	$result = $dbm->queryFromFile('./sql/'. $driver .'.data.sql');
 	$result = $dbm->queryFromFile('./language/' . $language . '/'. $driver . '.lang.data.sql');

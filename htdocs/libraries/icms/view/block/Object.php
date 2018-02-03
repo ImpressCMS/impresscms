@@ -69,7 +69,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 class icms_view_block_Object extends icms_ipf_Object {
 
         public $visiblein = [];
-    
+
 	/**
 	 * Constructor for the block object
 	 * @param $handler
@@ -110,12 +110,12 @@ class icms_view_block_Object extends icms_ipf_Object {
 		$this->initVar('bcachetime', self::DTYPE_INTEGER, 0, FALSE, 10);
 		$this->initVar('last_modified', self::DTYPE_INTEGER, 0, FALSE, 10);
 		$this->initVar('options', self::DTYPE_STRING, '', FALSE, 255);
-                                
+
       //  $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
                 parent::__construct($handler, $data);
-                
+
 	}
-        
+
         /**
          * gets var
          *
@@ -132,7 +132,7 @@ class icms_view_block_Object extends icms_ipf_Object {
                 return parent::getVar($name, $format);
             }
         }
-        
+
         /**
          * sets var
          *
@@ -158,7 +158,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 				if ($c_type == 'H') {
                     $content = $this->getVar('content', 'n');
                     $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-                    $content = str_replace(XOOPS_DB_SALT, '', $content);
+                    $content = str_replace(getenv('DB_SALT'), '', $content);
 					return $content;
 				} elseif ($c_type == 'P') {
 					ob_start();
@@ -166,7 +166,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 					$content = ob_get_contents();
 					ob_end_clean();
                     $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-                    $content = str_replace(XOOPS_DB_SALT, '', $content);
+                    $content = str_replace(getenv('DB_SALT'), '', $content);
 					return $content;
 				} elseif ($c_type == 'S') {
 					$myts = icms_core_Textsanitizer::getInstance();

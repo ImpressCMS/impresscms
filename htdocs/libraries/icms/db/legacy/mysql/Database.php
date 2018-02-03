@@ -70,10 +70,10 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 			return false;
 		}
 
-		if (XOOPS_DB_PCONNECT == 1) {
-			$this->conn = @ mysql_pconnect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
+		if (getenv('DB_PCONNECT') == 1) {
+			$this->conn = @ mysql_pconnect(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'));
 		} else {
-			$this->conn = @ mysql_connect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
+			$this->conn = @ mysql_connect(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'));
 		}
 
 		if (!$this->conn) {
@@ -81,14 +81,14 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 			return false;
 		}
 		if ($selectdb != false) {
-			if (!mysql_select_db(XOOPS_DB_NAME)) {
+			if (!mysql_select_db(getenv('DB_NAME'))) {
 				$this->logger->addQuery('', $this->error(), $this->errno());
 				return false;
 			}
 		}
 
-		if (!isset ($db_charset_set) && defined('XOOPS_DB_CHARSET') && XOOPS_DB_CHARSET && XOOPS_DB_CHARSET !== 'ucs2') {
-			$this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
+		if (!isset ($db_charset_set) && getenv('DB_CHARSET') && getenv('DB_CHARSET') !== 'ucs2') {
+			$this->queryF("SET NAMES '" . getenv('DB_CHARSET') . "'");
 		}
 		$db_charset_set = 1;
 
@@ -259,7 +259,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 */
 	public function queryFromFile($file) {
 		if (false !== ($fp = fopen($file, 'r'))) {
-			
+
 			$sql_queries = trim(fread($fp, filesize($file)));
 			icms_db_legacy_mysql_Utility::splitSqlFile($pieces, $sql_queries);
 			foreach ($pieces as $query) {
@@ -306,7 +306,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	public function getFieldsNum($result) {
 		return mysql_num_fields($result);
 	}
-	
+
 	/**
 	 * Retrieve the MySQL server version information
 	 *

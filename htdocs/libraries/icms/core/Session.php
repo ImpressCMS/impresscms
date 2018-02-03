@@ -35,11 +35,11 @@
  */
 /**
  * Handler for a session
- * 
- * Based on SecureSession class 
+ *
+ * Based on SecureSession class
  * Written by Vagharshak Tozalakyan <vagh@armdex.com>
  * Released under GNU Public License
- * 
+ *
  * @package	ICMS\Core
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
@@ -95,7 +95,7 @@ class icms_core_Session {
 	 */
 	private $db;
 
-	private $mainSaltKey = XOOPS_DB_SALT;
+	private $mainSaltKey;
 
 	/**
 	 * Security checking level
@@ -143,6 +143,7 @@ class icms_core_Session {
 	 */
 	public function __construct(&$db) {
 		$this->db =& $db;
+		$this->mainSaltKey = getenv('DB_SALT');
 	}
 
 	/**
