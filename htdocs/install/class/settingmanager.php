@@ -54,7 +54,6 @@ class setting_manager {
 	var $dbname;
 	var $prefix;
 	var $db_pconnect;
-	var $root_path;
 	var $xoops_url;
 
 	var $sanitizer;
@@ -69,9 +68,6 @@ class setting_manager {
 			$this->dbhost = 'localhost';
 
 			$this->db_pconnect = 0;
-
-			$this->root_path = str_replace("\\","/",getcwd()); // "
-			$this->root_path = str_replace("/install", "", $this->root_path);
 
 			$filepath = (! empty($_SERVER['REQUEST_URI']))
 			? dirname($_SERVER['REQUEST_URI'])
@@ -107,31 +103,25 @@ class setting_manager {
 		$this->prefix = $this->sanitizer->stripSlashesGPC($_POST['prefix']);
 		if (isset($_POST['db_pconnect']))
 		$this->db_pconnect = (int) ($_POST['db_pconnect']) > 0 ? 1 : 0;
-		if (isset($_POST['root_path']))
-		$this->root_path = $this->sanitizer->stripSlashesGPC($_POST['root_path']);
 		if (isset($_POST['xoops_url']))
 		$this->xoops_url = $this->sanitizer->stripSlashesGPC($_POST['xoops_url']);
 	}
 
 	function readConstant() {
-		if (defined('XOOPS_DB_TYPE'))
-		$this->database = XOOPS_DB_TYPE;
-		if (defined('XOOPS_DB_HOST'))
-		$this->dbhost = XOOPS_DB_HOST;
-		if (defined('XOOPS_DB_USER'))
-		$this->dbuname = XOOPS_DB_USER;
-		if (defined('XOOPS_DB_PASS'))
-		$this->dbpass = XOOPS_DB_PASS;
-		if (defined('XOOPS_DB_NAME'))
-		$this->dbname = XOOPS_DB_NAME;
-		if (defined('XOOPS_DB_PREFIX'))
-		$this->prefix = XOOPS_DB_PREFIX;
-		if (defined('XOOPS_DB_PCONNECT'))
-		$this->db_pconnect = (int) (XOOPS_DB_PCONNECT) > 0 ? 1 : 0;
-		if (defined('XOOPS_ROOT_PATH'))
-		$this->root_path = XOOPS_ROOT_PATH;
-		if (defined('XOOPS_URL'))
-		$this->xoops_url = XOOPS_URL;
+		$env = new \Dotenv\Dotenv(
+			dirname(
+				dirname(__DIR__)
+			)
+		);
+		$env->safeLoad();
+		$this->database = getenv('DB_TYPE');
+		$this->dbhost = getenv('DB_HOST');
+		$this->dbuname = getenv('DB_USER');
+		$this->dbpass = getenv('DB_PASS');
+		$this->dbname = getenv('DB_NAME');
+		$this->prefix = getenv('DB_PREFIX');
+		$this->db_pconnect = ((int) getenv('DB_PCONNECT')) > 0 ? 1 : 0;
+		$this->xoops_url = getenv('URL');
 	}
 
 	function checkData() {
@@ -146,9 +136,6 @@ class setting_manager {
 		}
 		if (empty($this->prefix)) {
 			$error[] = sprintf(_INSTALL_L57, _INSTALL_L30);
-		}
-		if (empty($this->root_path)) {
-			$error[] = sprintf(_INSTALL_L57, _INSTALL_L55);
 		}
 		if (empty($this->xoops_url)) {
 			$error[] = sprintf(_INSTALL_L57, _INSTALL_L56);
@@ -259,10 +246,6 @@ class setting_manager {
                         <td class='bg1'>".$yesno."</td>
                     </tr>
                     <tr>
-                        <td class='bg3'><b>"._INSTALL_L55."</b></td>
-                        <td class='bg1'>".$this->sanitizer->htmlSpecialChars($this->root_path)."</td>
-                    </tr>
-                    <tr>
                         <td class='bg3'><b>"._INSTALL_L56."</b></td>
                         <td class='bg1'>".$this->sanitizer->htmlSpecialChars($this->xoops_url)."</td>
                     </tr>
@@ -274,8 +257,7 @@ class setting_manager {
             <input type='hidden' name='dbpass' value='".$this->sanitizer->htmlSpecialChars($this->dbpass)."' />
             <input type='hidden' name='dbname' value='".$this->sanitizer->htmlSpecialChars($this->dbname)."' />
             <input type='hidden' name='prefix' value='".$this->sanitizer->htmlSpecialChars($this->prefix)."' />
-            <input type='hidden' name='db_pconnect' value='". (int) ($this->db_pconnect)."' />
-            <input type='hidden' name='root_path' value='".$this->sanitizer->htmlSpecialChars($this->root_path)."' />
+            <input type='hidden' name='db_pconnect' value='". ((int) ($this->db_pconnect))."' />
             <input type='hidden' name='xoops_url' value='".$this->sanitizer->htmlSpecialChars($this->xoops_url)."' />
             ";
 		return $ret;
@@ -290,8 +272,7 @@ class setting_manager {
 	}
 
 	function generatePrefix() {
-		include_once $this->root_path."/include/functions.php";
+		include_once dirname(dirname(__DIR__))."/include/functions.php";
 		return xoops_makepass(5);
 	}
 }
-?>
