@@ -44,12 +44,12 @@ function xoops_module_install($dirname) {
 		$msgs[] = '';
 		$errs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
 		if ($sqlfile != false && is_array($sqlfile)) {
-			// handle instances when XOOPS_DB_TYPE includes 'pdo.'
-			
-			if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
-				$driver = substr(XOOPS_DB_TYPE, 4);
+			// handle instances when DB_TYPE includes 'pdo.'
+			$type = getenv('DB_TYPE');
+			if (substr($type, 0, 4) == 'pdo.') {
+				$driver = substr($type, 4);
 			} else {
-				$driver = XOOPS_DB_TYPE;
+				$driver = $type;
 			}
 			$sql_file_path = ICMS_ROOT_PATH."/modules/".$dirname."/".$sqlfile[$driver];
 			if (!file_exists($sql_file_path)) {
