@@ -41,3 +41,9 @@ RewriteRule .* index.php [F,L]
 
 RewriteRule ^templates_c/(.*)$ index.php [F,L]
 RewriteRule ^themes/(.*)\.php$ index.php [F,L]
+
+<Files ".env">
+	Order Allow,Deny
+	Deny from all
+	Allow from 127.0.0.1
+</Files>
