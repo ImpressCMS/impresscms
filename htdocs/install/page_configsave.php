@@ -52,24 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	@chmod($env_file, 0655);
 	if (file_put_contents($env_file, $rez, LOCK_EX) === false) {
 		$error = ERR_WRITE_ENV_DATA;
-	} elseif (ini_get('safe_mode') == 0 || strtolower(ini_get('safe_mode')) == 'off') {
-		if (!icms_core_Filesystem::mkdir($vars['ROOT_PATH'] . '/cache/htmlpurifier', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))) {
-			/**
-			 * @todo trap error
-			 */
-		}
-		if (is_dir($vars['ROOT_PATH'] . '/cache/htmlpurifier'))
-		{
-			if (!icms_core_Filesystem::mkdir($vars['ROOT_PATH'].'/cache/htmlpurifier/HTML', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))
-				&& !icms_core_Filesystem::mkdir($vars['ROOT_PATH'].'/cache/htmlpurifier/CSS', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))
-				&& !icms_core_Filesystem::mkdir($vars['ROOT_PATH'].'/cache/htmlpurifier/URI', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))
-				&& !icms_core_Filesystem::mkdir($vars['ROOT_PATH'].'/cache/htmlpurifier/Test', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' )))
-			{
-				/**
-				 * @todo trap error
-				 */
-			}
-		}
 	}
 
 	if (empty( $error )) {
