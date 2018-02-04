@@ -44,6 +44,13 @@ require_once 'include/functions.php';
 $errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
 
+$env = new \Dotenv\Dotenv(
+	dirname(
+		__DIR__
+	)
+);
+$env->safeLoad();
+
 class XoopsInstallWizard {
 
 	var $pages = array();
