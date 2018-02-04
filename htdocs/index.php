@@ -39,11 +39,13 @@
 
 /** mainfile is required, if it doesn't exist - installation is needed */
 
-include_once __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
-
-if (!defined('ICMS_MODULES_URL')) {
-    header("Location: /install/index.php");
+// ImpressCMS is not installed yet.
+if (is_dir('install') && !defined('XOOPS_INSTALL')) {
+	header('Location: install/index.php');
+	exit();
 }
+
+include_once __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 $path = preg_replace('/[^a-zA-Z0-9\/]/', '', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
 
@@ -76,9 +78,9 @@ if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORD
 
     // added failover to default startpage for the registered users group -- JULIAN EGELSTAFF Apr 3 2017
 	$groups = (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-	if(($icmsConfig['startpage'][$group] == "" OR $icmsConfig['startpage'][$group] == "--") 
-	AND in_array(ICMS_GROUP_USERS, $groups) 
-	AND $icmsConfig['startpage'][ICMS_GROUP_USERS] != "" 
+	if(($icmsConfig['startpage'][$group] == "" OR $icmsConfig['startpage'][$group] == "--")
+	AND in_array(ICMS_GROUP_USERS, $groups)
+	AND $icmsConfig['startpage'][ICMS_GROUP_USERS] != ""
 	AND $icmsConfig['startpage'][ICMS_GROUP_USERS] != "--") {
 		$icmsConfig['startpage'] = $icmsConfig['startpage'][ICMS_GROUP_USERS];
 	} else {

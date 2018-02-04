@@ -4,13 +4,6 @@
  *
  * Be careful if you are changing data's in this file.
  */
-
-// ImpressCMS is not installed yet.
-if (is_dir('install') && !defined('XOOPS_INSTALL')) {
-	header('Location: install/index.php');
-	exit();
-}
-
 if (!defined("ICMS_MAINFILE_INCLUDED")) {
 	define("ICMS_MAINFILE_INCLUDED", true);
 
