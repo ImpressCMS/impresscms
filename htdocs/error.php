@@ -13,7 +13,7 @@
 
 $xoopsOption['pagetype'] = 'error';
 
-include_once __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 \icms::$response = new \icms_response_Error($xoopsOption);
 \icms::$response->errorNo = isset($_REQUEST['e']) ? (int)$_REQUEST['e'] : 500;
