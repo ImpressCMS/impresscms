@@ -47,12 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 		$rez .= $cfg_name . '=' . $cfg_value . "\n";
 	}
-	$env_file = $vars['ROOT_PATH'] . '/.env';
+	$env_file = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . '.env';
 
-	@chmod($env_file, 0400);
+	@chmod($env_file, 0777);
 	if (file_put_contents($env_file, $rez, LOCK_EX) === false) {
 		$error = ERR_WRITE_ENV_DATA;
 	}
+	@chmod($env_file, 0400);
 
 	if (empty( $error )) {
 		$wizard->redirectToPage( '+1' );
