@@ -47,13 +47,14 @@ if (is_dir('install') && !defined('XOOPS_INSTALL')) {
 
 define('ICMS_PUBLIC_PATH', __DIR__);
 
-die('aaa');
-
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
-$path = preg_replace('/[^a-zA-Z0-9\/]/', '', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+$requested_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+$path = preg_replace('/[^a-zA-Z0-9\/]/', '', $requested_path);
 
-if (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
+if (!empty($requested_path) && file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path)) {
+	require ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path;
+} elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
     \icms::$logger->disableRendering();
     list(, $module, $controller_name, $action, $params) = $params[0];
     $handler = new \icms_controller_Handler();
