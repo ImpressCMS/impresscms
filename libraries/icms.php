@@ -138,7 +138,7 @@ final class icms {
 		self::buildRelevantUrls();
 		// Loads enviroment data
 		self::$env = new \Dotenv\Dotenv(
-			dirname(ICMS_ROOT_PATH)
+			ICMS_ROOT_PATH
 		);
 		self::$env->load();
 	}
