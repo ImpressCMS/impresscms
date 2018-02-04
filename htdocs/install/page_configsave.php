@@ -41,11 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$error = '';
 
 	$rez = '';
-	foreach (['DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME', 'DB_PREFIX', 'DB_SALT'] as $cfg_name) {
-		$rez .= $cfg_name . '=' . $vars[$cfg_name] . "\n";
+	foreach ($vars as $cfg_name => $cfg_value) {
+		if ($cfg_name == 'ROOT_PATH') {
+			continue;
+		}
+		$rez .= $cfg_name . '=' . $cfg_value . "\n";
 	}
+	$env_file = $vars['ROOT_PATH'] . '/.env';
 
-	if (file_put_contents($vars['ROOT_PATH'] . '/.env', $rez, LOCK_EX) === false) {
+	@chmod($env_file, 0655);
+	if (file_put_contents($env_file, $rez, LOCK_EX) === false) {
 		$error = ERR_WRITE_ENV_DATA;
 	} elseif (ini_get('safe_mode') == 0 || strtolower(ini_get('safe_mode')) == 'off') {
 		if (!icms_core_Filesystem::mkdir($vars['ROOT_PATH'] . '/cache/htmlpurifier', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))) {
