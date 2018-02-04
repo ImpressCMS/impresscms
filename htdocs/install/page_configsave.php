@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 		$rez .= $cfg_name . '=' . $cfg_value . "\n";
 	}
-	$env_file = $vars['ROOT_PATH'] . '/.env';
+	$env_file = dirname($vars['ROOT_PATH']) . '/.env';
 
 	@chmod($env_file, 0655);
 	if (file_put_contents($env_file, $rez, LOCK_EX) === false) {

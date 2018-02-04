@@ -137,9 +137,10 @@ final class icms {
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
 		self::buildRelevantUrls();
 		// Loads enviroment data
-		self::$env = new \Dotenv\Dotenv(ICMS_ROOT_PATH);
+		self::$env = new \Dotenv\Dotenv(
+			dirname(ICMS_ROOT_PATH)
+		);
 		self::$env->load();
-		define('ICMS_URL', getenv('URL'));
 	}
 
 	/**

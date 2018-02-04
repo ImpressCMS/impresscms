@@ -9,7 +9,7 @@
  * @author	Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
  */
 
-include_once ICMS_ROOT_PATH . "/vendor/autoload.php";
+include_once dirname(ICMS_ROOT_PATH) . "/vendor/autoload.php";
 
 class icms_Autoloader {
 	/**

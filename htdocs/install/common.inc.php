@@ -12,7 +12,7 @@
  * @author		Skalpa Keo <skalpa@xoops.org>
 * @version		$Id: common.inc.php 12389 2014-01-17 16:58:21Z skenow $
  */
-include '../vendor/autoload.php';
+include '../../vendor/autoload.php';
 
 /**
  * If non-empty, only this user can access this installer
@@ -46,7 +46,9 @@ error_reporting(E_ALL);
 
 $env = new \Dotenv\Dotenv(
 	dirname(
-		__DIR__
+		dirname(
+			__DIR__
+		)
 	)
 );
 $env->safeLoad();
