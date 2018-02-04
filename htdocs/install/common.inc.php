@@ -12,7 +12,6 @@
  * @author		Skalpa Keo <skalpa@xoops.org>
 * @version		$Id: common.inc.php 12389 2014-01-17 16:58:21Z skenow $
  */
-
 include '../vendor/autoload.php';
 
 /**
@@ -33,11 +32,7 @@ date_default_timezone_set(@date_default_timezone_get());
 
 /* we need this so we can use icms_core_Logger during the install to trap errors */
 if (!defined('ICMS_ROOT_PATH')) {
-	if (isset($vars) && $vars['ROOT_PATH']) {
-		define('ICMS_ROOT_PATH', $vars['ROOT_PATH']);
-	} else {
-		define('ICMS_ROOT_PATH', dirname(dirname(__FILE__)));
-	}
+	define('ICMS_ROOT_PATH', dirname(dirname(__DIR__)));
 }
 
 include_once '../include/version.php';
@@ -45,10 +40,6 @@ include_once '../include/version.php';
 include_once '../include/functions.php';
 // installer common functions
 require_once 'include/functions.php';
-
-/** Start the autoloader */
-require_once '../libraries/icms/Autoloader.php';
-icms_Autoloader::setup();
 
 $errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
@@ -238,12 +229,6 @@ class XoopsInstallWizard {
 		header( "Location: $location" );
 	}
 
-}
-
-if (ini_get( 'magic_quotes_gpc' )) {
-	@array_walk( $_GET, 'stripslashes' );
-	@array_walk( $_POST, 'stripslashes' );
-	@array_walk( $_REQUEST, 'stripslashes' );
 }
 
 $pageHasHelp = false;
