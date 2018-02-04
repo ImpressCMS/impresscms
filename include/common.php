@@ -41,10 +41,14 @@ defined("ICMS_MAINFILE_INCLUDED") or die();
 // Including libs with composer
 include_once dirname(__DIR__) . "/vendor/autoload.php";
 
+// Loads enviroment data
+$env_loader = new \Dotenv\Dotenv(ICMS_ROOT_PATH);
+$env_loader->load();
+
 // -- Include common functions and constants file
-include_once __DIR__ . "/functions.php";
-include_once __DIR__ . "/version.php";
-require_once __DIR__ . "/constants.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "constants.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "functions.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "version.php";
 
 if (!isset($xoopsOption)) $xoopsOption = array();
 

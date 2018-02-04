@@ -84,13 +84,6 @@ final class icms {
 	static public $module;
 
 	/**
-	 * Current enviroment settings
-	 *
-	 * @var \Dotenv\Dotenv
-	 */
-	static public $env;
-
-	/**
 	 * Registered services definition
 	 * @var array
 	 */
@@ -136,11 +129,6 @@ final class icms {
 		icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
 		self::buildRelevantUrls();
-		// Loads enviroment data
-		self::$env = new \Dotenv\Dotenv(
-			ICMS_ROOT_PATH
-		);
-		self::$env->load();
 	}
 
 	/**
