@@ -1,23 +1,13 @@
 <?php
 
 class PathStuffController {
-	var $xoopsRootPath = '';
 	var $xoopsUrl = '';
 
-	var $validRootPath = false;
 	var $validUrl = false;
 
 	var $permErrors = array();
 
 	public function __construct() {
-		if (isset( $_SESSION['settings']['ROOT_PATH'] )) {
-			$this->xoopsRootPath = $_SESSION['settings']['ROOT_PATH'];
-		} else {
-			$path = str_replace( "\\", "/", @realpath( '../' ) );
-			if (file_exists( "$path/libraries/icms.php" )) {
-				$this->xoopsRootPath = $path;
-			}
-		}
 		if (isset( $_SESSION['settings']['URL'] )) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
 		} else {
@@ -30,7 +20,6 @@ class PathStuffController {
 		$this->readRequest();
 		$valid = $this->validate();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$_SESSION['settings']['ROOT_PATH'] = $this->xoopsRootPath;
 			$_SESSION['settings']['URL'] = $this->xoopsUrl;
 			if ($valid) {
 				$GLOBALS['wizard']->redirectToPage( '+1' );
@@ -43,21 +32,6 @@ class PathStuffController {
 	function readRequest() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$request = $_POST;
-			/*
-			 $request = xo_input_get_args( INPUT_POST, array(
-				'ROOT_PATH'	=> FILTER_SANITIZE_STRING,
-				'URL'		=> array(
-				'filter'	=> FILTER_VALIDATE_URL,
-				'flags'		=> FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED,
-				),
-				) );*/
-			if (isset($request['ROOT_PATH'])) {
-				$request['ROOT_PATH'] = str_replace( "\\", "/", $request['ROOT_PATH'] );
-				if (substr( $request['ROOT_PATH'], -1 ) == '/') {
-					$request['ROOT_PATH'] = substr( $request['ROOT_PATH'], 0, -1 );
-				}
-				$this->xoopsRootPath = $request['ROOT_PATH'];
-			}
 			if (isset( $request['URL'] )) {
 				if (substr( $request['URL'], -1 ) == '/') {
 					$request['URL'] = substr( $request['URL'], 0, -1 );
@@ -68,32 +42,15 @@ class PathStuffController {
 	}
 
 	function validate() {
-		if ($this->checkRootPath()) {
-			$this->checkPermissions();
-		}
 		$this->validUrl = !empty($this->xoopsUrl);
-		return ( $this->validRootPath && $this->validUrl && empty( $this->permErrors ) );
-	}
-
-	/**
-	 * Check if the specified folder is a valid "XOOPS_ROOT_PATH" value
-	 * @return bool
-	 */
-	function checkRootPath() {
-		if (@is_dir( $this->xoopsRootPath ) && @is_readable( $this->xoopsRootPath )) {
-			@include_once "$this->xoopsRootPath/include/version.php";
-			if (file_exists( "$this->xoopsRootPath/libraries/icms.php" ) && defined('ICMS_VERSION_NAME')) {
-				return $this->validRootPath = true;
-			}
-		}
-		return $this->validRootPath = false;
+		return $this->checkPermissions() && ( $this->validUrl && empty( $this->permErrors ) );
 	}
 
 	function checkPermissions() {
 		$paths = array( '../.env', 'uploads', '../modules', '../cache' );
 		$errors = array();
 		foreach ( $paths as $path) {
-			$errors[$path] = $this->makeWritable( "$this->xoopsRootPath/$path" );
+			$errors[$path] = $this->makeWritable( ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $path );
 		}
 		if (in_array( false, $errors )) {
 			$this->permErrors = $errors;

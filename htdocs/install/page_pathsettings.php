@@ -27,14 +27,6 @@ $pageHasHelp = true;
 
 require __DIR__ . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'pathstuffcontroller.php';
 
-function genRootCheckHtml( $valid) {
-	if ($valid) {
-		return '<img src="img/yes.png" alt="Success" class="rootimg" />' .  sprintf( XOOPS_FOUND, XOOPS_VERSION);
-	}  else {
-		return '<img src="img/no.png" alt="Error" class="rootimg" />' .ERR_NO_XOOPS_FOUND;
-	}
-}
-
 $ctrl = new PathStuffController();
 
 $ctrl->execute();
@@ -62,8 +54,8 @@ ob_start();
 <div class="xoform-help"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
 <div class="clear">&nbsp;</div>
 <input type="text" name="ROOT_PATH" id="rootpath"
-	value="<?php echo $ctrl->xoopsRootPath; ?>" /> <span id="rootpathimg"><?php echo genRootCheckHtml( $ctrl->validRootPath ); ?></span>
-<?php if ($ctrl->validRootPath && !empty( $ctrl->permErrors )) { ?>
+	value="<?=htmlentities(ICMS_ROOT_PATH); ?>" readonly />
+<?php if ( !empty( $ctrl->permErrors )) { ?>
 <div id="rootperms"><?php echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
 <ul class="diags">
 <?php foreach ( $ctrl->permErrors as $path => $result) {
