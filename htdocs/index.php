@@ -47,6 +47,8 @@ if (is_dir('install') && !defined('XOOPS_INSTALL')) {
 
 define('ICMS_PUBLIC_PATH', __DIR__);
 
+die('aaa');
+
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 $path = preg_replace('/[^a-zA-Z0-9\/]/', '', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));

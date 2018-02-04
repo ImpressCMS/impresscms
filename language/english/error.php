@@ -17,6 +17,20 @@ define("_ERR_403_TITLE", "Forbidden");
 define("_ERR_403_DESC", "");
 define("_ERR_404_TITLE", "Not Found");
 define("_ERR_404_DESC", "The page you are trying to access could not be found.");
+define("_ERR_405_TITLE", "Method Not Allowed");
+define("_ERR_405_DESC", "");
+define("_ERR_406_TITLE", "Not Acceptable");
+define("_ERR_406_DESC", "");
+define("_ERR_407_TITLE", "Proxy Authentication Required");
+define("_ERR_407_DESC", "");
+define("_ERR_408_TITLE", "Request Timeout");
+define("_ERR_408_DESC", "");
+define("_ERR_409_TITLE", "Conflict");
+define("_ERR_409_DESC", "");
+define("_ERR_500_TITLE", "Internal Server Error");
+define("_ERR_500_DESC", "");
+
+define('_ERR_MSG_NO_MOD_REWRITE', 'No mod rewrite was installed on the server. Without it ICMS can\'t work');
 
 /*
  *  // TODO: Define all the other errors constants (4xx and 5xx). Can be found in "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
@@ -83,4 +97,3 @@ define("_ERR_404_DESC", "The page you are trying to access could not be found.")
  This status code, while used by many servers, is not an official HTTP status code.
  510 Not Extended (RFC 2774)
  */
-?>
