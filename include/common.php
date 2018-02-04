@@ -38,16 +38,18 @@
 /** make sure mainfile is included, for security and functionality */
 defined("ICMS_MAINFILE_INCLUDED") or die();
 
+// Including libs with composer
+include_once dirname(__DIR__) . "/vendor/autoload.php";
+
 // -- Include common functions and constants file
-require_once ICMS_ROOT_PATH . "/include/constants.php";
-include_once ICMS_INCLUDE_PATH . "/functions.php";
-include_once ICMS_INCLUDE_PATH . "/version.php";
+include_once __DIR__ . "/functions.php";
+include_once __DIR__ . "/version.php";
 
 if (!isset($xoopsOption)) $xoopsOption = array();
 
 // -- Initialize kernel and launch bootstrap
-require_once ICMS_LIBRARIES_PATH . "/icms.php";
 icms::setup();
+require_once ICMS_ROOT_PATH . "/include/constants.php";
 define('ICMS_URL', getenv('URL'));
 icms::boot();
 
