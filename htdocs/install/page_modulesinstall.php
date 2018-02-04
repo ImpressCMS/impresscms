@@ -23,6 +23,7 @@ $pageHasHelp = false;
 $vars =& $_SESSION['settings'];
 
 include_once "../mainfile.php";
+var_dump(ICMS_ROOT_PATH);
 include_once ICMS_ROOT_PATH . "/include/common.php";
 include_once "../include/cp_functions.php";
 include_once 'class/dbmanager.php';
@@ -82,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$content .= '<div class="dbconn_line">';
 	$content .= '<h3>'. _INSTALL_SELECT_MODULES.'</h3>';
 	$content .= '<div id="modinstall" name="install_mods[]">';
-	
+
 	foreach ($langarr as $lang) {
 		if ($lang == 'system') {
 			continue;

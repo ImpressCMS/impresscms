@@ -32,7 +32,7 @@ date_default_timezone_set(@date_default_timezone_get());
 
 /* we need this so we can use icms_core_Logger during the install to trap errors */
 if (!defined('ICMS_ROOT_PATH')) {
-	define('ICMS_ROOT_PATH', dirname(dirname(__DIR__)));
+	define('ICMS_ROOT_PATH', dirname(__DIR__));
 }
 
 include_once '../include/version.php';

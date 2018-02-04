@@ -9,7 +9,9 @@
 if (is_dir('install') && !defined('XOOPS_INSTALL')) {
 	header('Location: install/index.php');
 	exit();
-} elseif (!defined("ICMS_MAINFILE_INCLUDED")) {
+}
+
+if (!defined("ICMS_MAINFILE_INCLUDED")) {
 	define("ICMS_MAINFILE_INCLUDED", true);
 
 	// (optional) Physical path to script that logs database queries.
@@ -29,7 +31,7 @@ if (is_dir('install') && !defined('XOOPS_INSTALL')) {
 
 	define('ICMS_ROOT_PATH', __DIR__);
 
-	if (!isset($xoopsOption['nocommon']) && ICMS_ROOT_PATH != '') {
+	if (!isset($xoopsOption['nocommon'])) {
 		include ICMS_ROOT_PATH . "/include/common.php";
 	}
 }
