@@ -78,7 +78,7 @@ class icms_core_Filesystem {
 	 * @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
 	 * @author	modified by Vaughan <vaughan@impresscms.org>
 	 * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-	 * @param	string	$dir	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_COMPILE_PATH . "/");
+	 * @param	string	$dir	The folder path to cleaned. Must be an array like: array('cache' => ICMS_CACHE_PATH . "/");
 	 * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
 	 */
 	static public function cleanFolders($dir, $remove_admin_cache = FALSE) {
@@ -109,8 +109,7 @@ class icms_core_Filesystem {
 	static public function cleanWriteFolders() {
 		return self::cleanFolders(
 			array(
-				'templates_c' => ICMS_COMPILE_PATH . '/',
-				'cache' => ICMS_CACHE_PATH . '/',
+				'cache' => ICMS_CACHE_PATH . DIRECTORY_SEPARATOR,
 			)
 		);
 	}
@@ -267,14 +266,13 @@ class icms_core_Filesystem {
 
 		$file = new SplFileObject($checkfile, 'w');
 		$cache_dir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_CACHE_PATH);
-		$templates_dir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_COMPILE_PATH);
 		$newline = '';
 		foreach (new RecursiveIteratorIterator($dir) as $name=>$item) {
 			$itemPath = $item->getPath();
 			$itemFilename = $item->getBasename();
 			$itemPerms = $item->getPerms();
-			/* exclude cache and templates_c directories */
-			if ($itemPath != $cache_dir && $itemPath != $templates_dir) {
+			/* exclude cache and templates directories */
+			if ($itemPath != $cache_dir) {
 				$fileHash = sha1_file($name);
 				echo _CORE_CHECKSUM_ADDING . ': ' . $name . _CORE_CHECKSUM_CHECKSUM . ' : <em>'. $fileHash .'</em>, ' ._CORE_CHECKSUM_PERMISSIONS .' : '. $itemPerms . '<br />';
 				$file->fwrite($newline . $name . ';' .$fileHash . ';' . $itemPerms);
@@ -303,13 +301,12 @@ class icms_core_Filesystem {
 		if ($validationFile->isReadable()) {
 			$currentHash = $currentPerms = array();
 			$cache_dir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_CACHE_PATH);
-			$templates_dir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_COMPILE_PATH);
 			foreach (new RecursiveIteratorIterator($dir) as $name=>$item) {
 				$itemPath = $item->getPath();
 				$itemFilename = $item->getBasename();
 				$itemPerms = $item->getPerms();
-				/* exclude cache and templates_c directories */
-				if ($itemPath != $cache_dir && $itemPath != $templates_dir) {
+				/* exclude cache directories */
+				if ($itemPath != $cache_dir) {
 					$fileHash = sha1_file($name);
 					$currentHash[$name] = $fileHash;
 					$currentPerms[$name] = $itemPerms;

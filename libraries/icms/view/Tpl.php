@@ -151,8 +151,7 @@ class icms_view_Tpl extends Smarty {
 	}
 
 	/**
-	 * function to update compiled template file in templates_c folder
-
+	 * function to update compiled template file in cached templates folder
 	 * Prior to PHP5.3.0, when refering to the class with a variable, like $icmsAdminTpl, you
 	 * still need to use the arrow operator instead of ::
 	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php

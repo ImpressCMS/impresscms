@@ -224,5 +224,5 @@ function icms_module_update_system(&$module, $oldversion = NULL, $dbVersion = NU
 		echo $feedback;
 	}
 
-	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
+	return icms_core_Filesystem::cleanFolders(array('cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }
