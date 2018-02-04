@@ -2,16 +2,14 @@
 
 class PathStuffController {
 	var $xoopsRootPath = '';
-	var $xoopsTrustPath = '';
 	var $xoopsUrl = '';
 
 	var $validRootPath = false;
-	var $validTrustPath = false;
 	var $validUrl = false;
 
 	var $permErrors = array();
 
-	function PathStuffController() {
+	public function __construct() {
 		if (isset( $_SESSION['settings']['ROOT_PATH'] )) {
 			$this->xoopsRootPath = $_SESSION['settings']['ROOT_PATH'];
 		} else {
@@ -19,20 +17,6 @@ class PathStuffController {
 			if (file_exists( "$path/libraries/icms.php" )) {
 				$this->xoopsRootPath = $path;
 			}
-		}
-		if (isset( $_SESSION['settings']['TRUST_PATH'] )) {
-			$this->xoopsTrustPath = $_SESSION['settings']['TRUST_PATH'];
-		} else {
-			$web_root = dirname( $this->xoopsRootPath );
-			$arr = explode('/',$web_root);
-			$web_root = '';
-			for ($i = 0; $i < count($arr)-1; $i++) {
-				$web_root .= $arr[$i].'/';
-			}
-
-			$docroot = resolveDocumentRoot();
-
-			$this->xoopsTrustPath = $docroot . substr( md5( time() ), 0, 15);
 		}
 		if (isset( $_SESSION['settings']['URL'] )) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
@@ -47,7 +31,6 @@ class PathStuffController {
 		$valid = $this->validate();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$_SESSION['settings']['ROOT_PATH'] = $this->xoopsRootPath;
-			$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
 			$_SESSION['settings']['URL'] = $this->xoopsUrl;
 			if ($valid) {
 				$GLOBALS['wizard']->redirectToPage( '+1' );
@@ -75,13 +58,6 @@ class PathStuffController {
 				}
 				$this->xoopsRootPath = $request['ROOT_PATH'];
 			}
-			if (isset($request['TRUST_PATH'])) {
-				$request['TRUST_PATH'] = str_replace( "\\", "/", $request['TRUST_PATH'] );
-				if (substr( $request['TRUST_PATH'], -1 ) == '/') {
-					$request['TRUST_PATH'] = substr( $request['TRUST_PATH'], 0, -1 );
-				}
-				$this->xoopsTrustPath = $request['TRUST_PATH'];
-			}
 			if (isset( $request['URL'] )) {
 				if (substr( $request['URL'], -1 ) == '/') {
 					$request['URL'] = substr( $request['URL'], 0, -1 );
@@ -95,11 +71,8 @@ class PathStuffController {
 		if ($this->checkRootPath()) {
 			$this->checkPermissions();
 		}
-		if ($this->checkTrustPath()) {
-			$this->checkTrustPathPermissions();
-		}
 		$this->validUrl = !empty($this->xoopsUrl);
-		return ( $this->validRootPath && $this->validTrustPath && $this->validUrl && empty( $this->permErrors ) );
+		return ( $this->validRootPath && $this->validUrl && empty( $this->permErrors ) );
 	}
 
 	/**
@@ -116,29 +89,8 @@ class PathStuffController {
 		return $this->validRootPath = false;
 	}
 
-	/**
-	 * Check if the specified folder is a valid "XOOPS_ROOT_PATH" value
-	 * @return bool
-	 */
-	function checkTrustPath() {
-		if (@is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath )) {
-			return $this->validTrustPath = true;
-		}
-		return $this->validTrustPath = false;
-	}
-
-	function createTrustPath() {
-		if (@icms_core_Filesystem::mkdir($this->xoopsTrustPath, 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))) {
-			if (@is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath )) {
-				$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
-				return $this->validTrustPath = true;
-			}
-		}
-		return $this->validTrustPath = false;
-	}
-
 	function checkPermissions() {
-		$paths = array( 'mainfile.php', 'uploads', 'modules', 'templates_c', 'cache' );
+		$paths = array( '.env', 'uploads', 'modules', 'templates_c', 'cache' );
 		$errors = array();
 		foreach ( $paths as $path) {
 			$errors[$path] = $this->makeWritable( "$this->xoopsRootPath/$path" );
@@ -149,17 +101,6 @@ class PathStuffController {
 		}
 		return true;
 	}
-
-	function checkTrustPathPermissions() {
-		$errors = array();
-		$errors['trustpath'] = $this->makeWritable( "$this->xoopsTrustPath" );
-		if (in_array( false, $errors )) {
-			$this->permErrors = $errors;
-			return false;
-		}
-		return true;
-	}
-
 
 	/**
 	 * Write-enable the specified file/folder
