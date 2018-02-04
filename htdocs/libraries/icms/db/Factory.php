@@ -139,9 +139,8 @@ abstract class icms_db_Factory {
 			if (FALSE === self::$pdoInstance) self::pdoInstance();
 			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
 		} else {
-			if (getenv('DB_ALTERNATIVE') && class_exists(getenv('DB_ALTERNATIVE'))) {
-				$class = getenv('DB_ALTERNATIVE');
-			} else {
+			$class = getenv('DB_ALTERNATIVE');
+			if (!($class && class_exists($class))) {
 				$class = 'icms_db_legacy_' . $type;
 				$class .= $allowWebChanges ? '_Safe' : '_Proxy';
 			}
