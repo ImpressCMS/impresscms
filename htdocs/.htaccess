@@ -38,12 +38,3 @@ RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
 RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
 RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
 RewriteRule .* index.php [F,L]
-
-RewriteRule ^templates_c/(.*)$ index.php [F,L]
-RewriteRule ^themes/(.*)\.php$ index.php [F,L]
-
-<Files ".env">
-	Order Allow,Deny
-	Deny from all
-	Allow from 127.0.0.1
-</Files>
