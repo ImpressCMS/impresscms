@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$error = '';
 
 	$rez = '';
-	foreach ($vars as $cfg_name => $cfg_value) {
+	foreach (($vars + $_ENV) as $cfg_name => $cfg_value) {
 		if ($cfg_name == 'ROOT_PATH') {
 			continue;
 		}
