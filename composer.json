@@ -41,6 +41,6 @@
   },
   "autoload": {
     "psr-0" : {"" : "libraries/"},
-    "classmap": [ "htdocs/modules"]
+    "classmap": [ "modules/"]
   }
 }
