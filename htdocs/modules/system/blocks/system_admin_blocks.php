@@ -42,9 +42,6 @@ function b_system_admin_warnings_show() {
 	if (is_dir(ICMS_ROOT_PATH . '/upgrade/')) {
 		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINSTALL2, ICMS_ROOT_PATH . '/upgrade/'), '', FALSE));
 	}
-	if (!is_dir(XOOPS_TRUST_PATH)) {
-		array_push($block['msg'], icms_core_Message::error(_TRUST_PATH_HELP));
-	}
 	$sql1 = "SELECT conf_modid FROM `" . icms::$xoopsDB->prefix('config') . "` WHERE conf_name = 'dos_skipmodules'";
 	if ($result1 = icms::$xoopsDB->query($sql1)) {
 		list($modid) = icms::$xoopsDB->FetchRow($result1);

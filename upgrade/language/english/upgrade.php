@@ -81,11 +81,4 @@ define( "ERR_COULD_NOT_WRITE_MAINFILE", "Error writing content to mainfile.php, 
 define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
 define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password.<BR />Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
 define( '_I_AM_AWARE', '<p><span style="color: red;">You are about to upgrade your existing web site - your pride and joy, or maybe your livelihood. If you like to take risks, check the box and proceed without making any backups. Otherwise, it might be wise to make sure your backups are recent before going ahead. Either way, you have to check the box and take some responsibility to continue.</span></p>' );
-define("TRUST_PATH", "Trust path");
-define("TRUST_PATH_LABEL", "ImpressCMS physical trust path");
-define( "TRUST_PATH_HELP", "This is the physical location of your ImpressCMS trust path. The trust path is a folder where ImpressCMS and its modules will store some sensible code and information for more security. It is recommended that this folder be outside of the web root, making it not accessible by a browser. If the folder does not exist, ImpressCMS will try and create it. If this is not possible, you will need to create it.<br /><br /><a target='_blank' href='http://wiki.impresscms.org/index.php?title=Trust_Path'>Click here</a> to learn more about the Trust path." ); // L59
-define("ERR_INVALID_TRUST_PATH", "Trust path is invalid");
-define("ERR_WRONG_TRUST_PATH", "Trust path does not exist");
-define("ERR_NO_TRUST_PATH", "You have not entered any path !! ");
 define( "ERR_NO_PHP5_CONTENT","PHP 5.2.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.2.0 (5.2.8 + is recommended) before attempting to install again. For more information, read <a href='http://community.impresscms.org/modules/smartsection/item.php?itemid=122' >ImpressCMS on PHP5 </a>.");
-?>

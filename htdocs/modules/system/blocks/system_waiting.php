@@ -135,14 +135,7 @@ function b_system_waiting_edit($options) {
  * @return array $ret The plugin information array or an empty array
  */
 function system_get_plugin_info($dirname , $language = 'english') {
-	// get $mytrustdirname for D3 modules
-	$mytrustdirname = '' ;
-	if (defined('XOOPS_TRUST_PATH') && file_exists(ICMS_MODULES_PATH . "/" . $dirname . "/mytrustdirname.php")) {
-		@include ICMS_MODULES_PATH . "/" . $dirname . "/mytrustdirname.php" ;
-	}
-
 	$module_plugin_file = ICMS_MODULES_PATH . "/" . $dirname . "/include/waiting.plugin.php" ;
-	$d3module_plugin_file = XOOPS_TRUST_PATH . "/modules/" . $mytrustdirname . "/include/waiting.plugin.php" ;
 	$builtin_plugin_file = ICMS_PLUGINS_PATH . "/waiting/" . $dirname . ".php" ;
 
 	if (file_exists($module_plugin_file)) {
@@ -163,25 +156,6 @@ function system_get_plugin_info($dirname , $language = 'english') {
 			'langfile_path' => $langfile_path ,
 			'func' => 'b_waiting_' . $dirname ,
 			'type' => 'module' ,
-		) ;
-	} else if (! empty($mytrustdirname) && file_exists($d3module_plugin_file)) {
-		// D3 module's plugin under xoops_trust_path (2nd priority)
-		$lang_files = array(
-		XOOPS_TRUST_PATH . "/modules/$mytrustdirname/language/$language/waiting.php" ,
-		XOOPS_TRUST_PATH . "/modules/$mytrustdirname/language/english/waiting.php" ,
-		) ;
-		$langfile_path = '' ;
-		foreach ($lang_files as $lang_file) {
-			if (file_exists($lang_file)) {
-				$langfile_path = $lang_file ;
-				break ;
-			}
-		}
-		$ret = array(
-			'plugin_path' => $d3module_plugin_file ,
-			'langfile_path' => $langfile_path ,
-			'func' => 'b_waiting_' . $mytrustdirname ,
-			'type' => 'module (D3)' ,
 		) ;
 	} else if (file_exists($builtin_plugin_file)) {
 		// built-in plugin under modules/waiting (3rd priority)
