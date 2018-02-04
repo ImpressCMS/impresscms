@@ -180,11 +180,6 @@ define("_INSTALL_CHARSET","utf-8");
 
 define("_INSTALL_PHYSICAL_PATH","Physical path");
 
-define("TRUST_PATH_VALIDATE","A suggested name for the Trust path has been created above for you. If you wish to use an alternative name, please replace the above location with your choice of name.<br /><br />When done, please click on the Create Trust Path button.");
-define("TRUST_PATH_NEED_CREATED_MANUALLY","It was not possible to create the trust path. Please create it manually and click on the following Refresh button.");
-define("BUTTON_CREATE_TUST_PATH","Create Trust Path");
-define("TRUST_PATH_SUCCESSFULLY_CREATED", "The trust path was successfully created.");
-
 // welcome custom blocks
 define("WELCOME_WEBMASTER","Welcome Webmaster !");
 define("WELCOME_ANONYMOUS","Welcome to an ImpressCMS powered website !");
