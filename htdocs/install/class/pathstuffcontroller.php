@@ -47,7 +47,19 @@ class PathStuffController {
 	}
 
 	function checkPermissions() {
-		$paths = array( '../.env', 'uploads', '../modules', '../cache' );
+		$short_path = mb_substr(ICMS_PUBLIC_PATH, mb_strlen(ICMS_ROOT_PATH) + 1);
+		$paths = array(
+			'.env',
+			$short_path . DIRECTORY_SEPARATOR . 'uploads',
+			'modules',
+			'cache',
+			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier',
+			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'CSS',
+			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'HTML',
+			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'Test',
+			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'URI',
+			'cache' .  DIRECTORY_SEPARATOR . 'templates',
+		);
 		$errors = array();
 		foreach ( $paths as $path) {
 			$errors[$path] = $this->makeWritable( ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $path );

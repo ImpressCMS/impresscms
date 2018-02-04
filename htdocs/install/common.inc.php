@@ -34,6 +34,8 @@ if (!defined('ICMS_ROOT_PATH')) {
 	define('ICMS_ROOT_PATH', dirname(dirname(__DIR__)));
 }
 
+define('ICMS_PUBLIC_PATH', dirname(__DIR__));
+
 require_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'version.php';
