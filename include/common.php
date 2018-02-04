@@ -48,6 +48,7 @@ if (!isset($xoopsOption)) $xoopsOption = array();
 // -- Initialize kernel and launch bootstrap
 require_once ICMS_LIBRARIES_PATH . "/icms.php";
 icms::setup();
+define('ICMS_URL', getenv('URL'));
 icms::boot();
 
 // -- Easiest ML by Gijoe (no longer needed here)
