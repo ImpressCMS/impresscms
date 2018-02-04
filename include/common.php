@@ -44,13 +44,12 @@ include_once dirname(__DIR__) . "/vendor/autoload.php";
 // -- Include common functions and constants file
 include_once __DIR__ . "/functions.php";
 include_once __DIR__ . "/version.php";
+require_once __DIR__ . "/constants.php";
 
 if (!isset($xoopsOption)) $xoopsOption = array();
 
 // -- Initialize kernel and launch bootstrap
 icms::setup();
-require_once ICMS_ROOT_PATH . "/include/constants.php";
-define('ICMS_URL', getenv('URL'));
 icms::boot();
 
 // -- Easiest ML by Gijoe (no longer needed here)
