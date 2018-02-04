@@ -12,7 +12,6 @@
  * @author		Skalpa Keo <skalpa@xoops.org>
 * @version		$Id: common.inc.php 12389 2014-01-17 16:58:21Z skenow $
  */
-include '../../vendor/autoload.php';
 
 /**
  * If non-empty, only this user can access this installer
@@ -32,26 +31,26 @@ date_default_timezone_set(@date_default_timezone_get());
 
 /* we need this so we can use icms_core_Logger during the install to trap errors */
 if (!defined('ICMS_ROOT_PATH')) {
-	define('ICMS_ROOT_PATH', dirname(__DIR__));
+	define('ICMS_ROOT_PATH', dirname(dirname(__DIR__)));
 }
 
-include_once '../include/version.php';
+require_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'version.php';
 // including a few functions - relying more on the core, now
-include_once '../include/functions.php';
+include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'functions.php';
 // installer common functions
 require_once 'include/functions.php';
 
 $errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
 
-$env = new \Dotenv\Dotenv(
-	dirname(
-		dirname(
-			__DIR__
-		)
-	)
-);
-$env->safeLoad();
+try {
+	$env = new \Dotenv\Dotenv(ICMS_ROOT_PATH);
+	$env->load();
+} catch (Exception $ex) {
+	// Reading .env file failed but that is not out business
+}
 
 class XoopsInstallWizard {
 
