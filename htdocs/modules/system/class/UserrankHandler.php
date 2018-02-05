@@ -80,10 +80,7 @@ class mod_system_UserrankHandler extends icms_ipf_Handler {
 		$sql = "SELECT rank_image FROM " . $this->table;
 		$Query = $this->query($sql, FALSE);
 		foreach ($Query as $qitem) {
-			$values[] = $qitem["rank_image"];
-		}
-
-		foreach ($values as $value) {
+			$value = $qitem["rank_image"];
 			if (file_exists(ICMS_UPLOAD_PATH . "/" . $value)) {
 				icms_core_Filesystem::copyRecursive(ICMS_UPLOAD_PATH . "/" . $value, $this->getImagePath() . $value);
 			}
