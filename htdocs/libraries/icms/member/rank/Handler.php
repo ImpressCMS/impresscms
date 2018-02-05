@@ -77,8 +77,8 @@ class icms_member_rank_Handler extends icms_ipf_Handler {
 	public function MoveAllRanksImagesToProperPath() {
 		$sql = "SELECT rank_image FROM " . $this->table;
 		$Query = $this->query($sql, FALSE);
-		for ($i = 0; $i < count($Query); $i++) {
-			$values[] = $Query[$i]["rank_image"];
+		foreach ($Query as $qpart) {
+			$values[] = $qpart["rank_image"];
 		}
 
 		foreach ($values as $value) {
