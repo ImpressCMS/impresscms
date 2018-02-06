@@ -30,8 +30,8 @@
 /**
  * Manage template files
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -41,16 +41,18 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * This class is responsible for providing data access mechanisms to the data source
  * of template file class objects.
  *
- * @package	ICMS\View\Template\File
- * @author	Kazumi Ono <onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package    ICMS\View\Template\File
+ * @author    Kazumi Ono <onokazu@xoops.org>
+ * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class icms_view_template_file_Handler extends icms_ipf_Handler {
+class icms_view_template_file_Handler extends icms_ipf_Handler
+{
 	private $_prefetch_cache = array();
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'view_template_file', 'tpl_id', 'tpl_tplset', 'tpl_file', 'icms', 'tplfile', 'tpl_id');
-        }
+	public function __construct(&$db)
+	{
+		parent::__construct($db, 'view_template_file', 'tpl_id', 'tpl_tplset', 'tpl_file', 'icms', 'tplfile', 'tpl_id');
+	}
 
 	/**
 	 * Loads Template source from DataBase
@@ -59,7 +61,8 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * @param object $tplfile {@link icms_view_template_file_Object} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 **/
-	public function loadSource(icms_view_template_file_Object &$tplfile) {
+	public function loadSource(icms_view_template_file_Object &$tplfile)
+	{
 		if (!$tplfile->getVar('tpl_source')) {
 			$sql = "SELECT tpl_source FROM " . $this->table
 				. " WHERE tpl_id='" . $tplfile->getVar('tpl_id') . "'";
@@ -77,19 +80,21 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * @param object $tplfile {@link icms_view_template_file_Object} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 **/
-	public function forceUpdate(&$tplfile) {
-            if ($tplfile->isNew())
-                return false;
-            return $tplfile->store(true);
+	public function forceUpdate(&$tplfile)
+	{
+		if ($tplfile->isNew())
+			return false;
+		return $tplfile->store(true);
 	}
 
 	/**
 	 * Count some tplfiles for a module
 	 *
-	 * @param   string  $tplset Template Set
+	 * @param   string $tplset Template Set
 	 * @return  array $ret containing number of templates in the tpl_set or empty array if fails
 	 **/
-	public function getModuleTplCount($tplset) {
+	public function getModuleTplCount($tplset)
+	{
 		$ret = array();
 		$sql = "SELECT tpl_module, COUNT(tpl_id) AS count FROM " . $this->db->prefix('tplfile')
 			. " WHERE tpl_tplset='" . $tplset . "' GROUP BY tpl_module";
@@ -108,15 +113,16 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	/**
 	 * find tplfiles matching criteria
 	 *
-	 * @param   string  $tplset             template set
-	 * @param   string  $type               template type
-	 * @param   int     $refid              ref id
-	 * @param   string  $module             module
-	 * @param   string  $file               template file
-	 * @param   bool    $getsource = false  get source or not
+	 * @param   string $tplset template set
+	 * @param   string $type template type
+	 * @param   int $refid ref id
+	 * @param   string $module module
+	 * @param   string $file template file
+	 * @param   bool $getsource = false  get source or not
 	 * @return  array $ret containing number of templates in the tpl_set or empty array if fails
 	 **/
-	public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false) {
+	public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false)
+	{
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($tplset)) {
 			$criteria->add(new icms_db_criteria_Item('tpl_tplset', $tplset));
@@ -133,7 +139,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 		if (isset($type)) {
 			if (is_array($type)) {
 				$criteria2 = new icms_db_criteria_Compo();
-				foreach ( $type as $t) {
+				foreach ($type as $t) {
 					$criteria2->add(new icms_db_criteria_Item('tpl_type', $t), 'OR');
 				}
 				$criteria->add($criteria2);
@@ -147,11 +153,12 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	/**
 	 * Does the template exist in the database in the template set
 	 *
-	 * @param   string  $tplname        template name
-	 * @param   string  $tplset_name    template set name
+	 * @param   string $tplname template name
+	 * @param   string $tplset_name template set name
 	 * @return  bool true if exists, false if not
 	 **/
-	public function templateExists($tplname, $tplset_name) {
+	public function templateExists($tplname, $tplset_name)
+	{
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('tpl_file', trim($tplname)));
 		$criteria->add(new icms_db_criteria_Item('tpl_tplset', trim($tplset_name)));
 		if ($this->getCount($criteria) > 0) {
@@ -164,11 +171,12 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * Prefetch blocks to reduce the amount of queries required by Smarty to generate all blocks
 	 * This function is called exclusively in icms_view_PageBuilder
 	 *
-	 * @global	array	$icmsConfig		icms configuration array
-	 * @param	array	$block_arr		array of blocks to prefetch
-	 * @return	bool					false if there are no blocks to prefetch, otherwise true
+	 * @global    array $icmsConfig icms configuration array
+	 * @param    array $block_arr array of blocks to prefetch
+	 * @return    bool                    false if there are no blocks to prefetch, otherwise true
 	 */
-	public function prefetchBlocks(&$block_arr) {
+	public function prefetchBlocks(&$block_arr)
+	{
 		global $icmsConfig;
 
 		if (count($block_arr) == 0) return false;
@@ -201,7 +209,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 		$criteria->add(
 			new icms_db_criteria_Item(
 				'tpl_file',
-				'('.
+				'(' .
 				implode(
 					',',
 					array_map(
@@ -228,12 +236,13 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * Return a prefetched block. This function only works if prefetchBlocks was called in advance.
 	 * This function is used in the user function smarty_resource_db_tplinfo().
 	 *
-	 * @param	str		$tplset		template set that's currently in use
-	 * @param	str		$tpl_name	name of the template
-	 * @return	array				array of templates (just one item)
+	 * @param    str $tplset template set that's currently in use
+	 * @param    str $tpl_name name of the template
+	 * @return    array                array of templates (just one item)
 	 */
-	public function getPrefetchedBlock($tplset, $tpl_name) {
-		foreach($this->_prefetch_cache as $block) {
+	public function getPrefetchedBlock($tplset, $tpl_name)
+	{
+		foreach ($this->_prefetch_cache as $block) {
 			if ($block->getVar("tpl_tplset") == $tplset && $block->getVar("tpl_file") == $tpl_name) {
 				return array($block);
 			}
@@ -244,7 +253,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 		 * template set is different from default
 		 */
 		if ($tplset != 'default') {
-			foreach($this->_prefetch_cache as $block) {
+			foreach ($this->_prefetch_cache as $block) {
 				if ($block->getVar("tpl_tplset") == "default" && $block->getVar("tpl_file") == $tpl_name) {
 					return array($block);
 				}
@@ -259,6 +268,6 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 		 */
 		$blocks = $this->find($tplset, null, null, null, $tpl_name, true);
 		$this->_prefetch_cache = array_merge($this->_prefetch_cache, $blocks);
-                return $blocks;
+		return $blocks;
 	}
 }
