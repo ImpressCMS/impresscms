@@ -50,7 +50,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 
         public function __construct(&$db) {
             parent::__construct($db, 'view_template_file', 'tpl_id', 'tpl_tplset', 'tpl_file', 'icms', 'tplfile', 'tpl_id');
-        }        	
+        }
 
 	/**
 	 * Loads Template source from DataBase
@@ -80,7 +80,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	public function forceUpdate(&$tplfile) {
             if ($tplfile->isNew())
                 return false;
-            return $tplfile->store(true);		
+            return $tplfile->store(true);
 	}
 
 	/**
@@ -172,31 +172,55 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 		global $icmsConfig;
 
 		if (count($block_arr) == 0) return false;
+
 		$tplNames = array();
-
-		/**
-		 * @todo As soon as the criteria object is capable of rendering complex conditions,
-		 * this should be converted into the criteria approach
-		 */
-		$sql = "SELECT f.* FROM " . $this->table . " f "		     
-		     . "WHERE (tpl_tplset = '" . $icmsConfig["template_set"] . "' "
-		     // always load the default templates as a fallback
-		     . "OR tpl_tplset = 'default') AND (";
-
 		foreach ($block_arr as $block) {
-			$tplName = ($tplName = $block->getVar("template")) ? "$tplName" : "system_block_dummy.html";
-			$tplNames[] = "tpl_file = '" . $tplName . "'";
+			$tplNames[] = $block->template ? $block->template : "system_block_dummy.html";
 		}
-		$sql .= implode(" OR ", $tplNames);
-		$sql .= ") ORDER BY tpl_refid";
 
-		$result = $this->db->query($sql);
-		if (!$result) return false;
-		while ($myrow = $this->db->fetchArray($result)) {
-			$tplfile = new icms_view_template_file_Object($this, $myrow);
-			$this->_prefetch_cache[] =& $tplfile;
-			unset($tplfile);
+		$criteria = new icms_db_criteria_Compo(
+			new icms_db_criteria_Item(
+				'tpl_tplset',
+				'(' .
+				implode(
+					',',
+					array_map(
+						[$this->db, 'quoteString'],
+						array_unique(
+							[
+								$icmsConfig["template_set"],
+								'default'
+							]
+						)
+					)
+				) .
+				')',
+				'IN'
+			)
+		);
+		$criteria->add(
+			new icms_db_criteria_Item(
+				'tpl_file',
+				'('.
+				implode(
+					',',
+					array_map(
+						[$this->db, 'quoteString'],
+						array_unique(
+							$tplNames
+						)
+					)
+				) .
+				')',
+				'IN'
+			)
+		);
+		$criteria->setSort('tpl_refid');
+
+		foreach ($this->getObjects($criteria) as $tpl) {
+			$this->_prefetch_cache[$tpl->id] = $tpl;
 		}
+
 		return true;
 	}
 
@@ -226,7 +250,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 				}
 			}
 		}
- 
+
 		/**
 		 * In case nothing was found, the following fallback tries to read the template again.
 		 * This is the case for all non-block templates since blocks are prefetched before the
