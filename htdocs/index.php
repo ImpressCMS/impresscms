@@ -53,6 +53,7 @@ $requested_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 $path = preg_replace('/[^a-zA-Z0-9\/]/', '', $requested_path);
 
 if (!empty($requested_path) && file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path)) {
+	header('Content-Type: ' . mime_content_type($requested_path));
 	require ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path;
 } elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
     \icms::$logger->disableRendering();
@@ -76,7 +77,7 @@ if (!empty($requested_path) && file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR 
     \icms::$response->errorNo = 404;
     \icms::$response->render();
 } else {
-    $member_handler = \icms::handler('icms_member');
+	$member_handler = \icms::handler('icms_member');
     $group = $member_handler->getUserBestGroup(
         (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
     );
@@ -92,7 +93,8 @@ if (!empty($requested_path) && file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR 
 		$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 	}
 
-    if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != '--') {
+
+	if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != '--') {
         $arr = explode('-', $icmsConfig['startpage']);
         if (count($arr) > 1) {
             $page_handler = \icms::handler('icms_data_page');
