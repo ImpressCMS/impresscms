@@ -65,6 +65,7 @@ class icms_response_HTML extends icms_response_Text {
         global $icmsConfig;
         $this->theme->template->assign('icmsLang', $icmsConfig['language']);
         $this->theme->template->assign('xoops_url', ICMS_URL);
+		$this->theme->template->assign('icms_url', ICMS_URL);
         $this->theme->template->assign('icms_sitename', $icmsConfig['sitename']);
 
         $this->includeNotificationsSelection();
@@ -394,6 +395,7 @@ class icms_response_HTML extends icms_response_Text {
      * @param array $config     Current configuration
      */
     private function setThemeFromConfig(array &$config) {
+
         if (isset($config['template_main']) && is_string($config['template_main'])) {
             if (FALSE === strpos($config['template_main'], ':')) {
                 $config['template_main'] = 'db:' . $config['template_main'];

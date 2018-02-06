@@ -2,7 +2,6 @@
 /**#@+
  * Creating ICMS specific constants
  */
-define('ICMS_URL', getenv('URL'));
 define('ICMS_PLUGINS_PATH', ICMS_PUBLIC_PATH . '/plugins');
 define('ICMS_PLUGINS_URL', ICMS_URL . '/plugins');
 define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH . '/preloads');
@@ -47,7 +46,7 @@ define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
 define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH . '/include');
 define('ICMS_UPLOAD_PATH', ICMS_PUBLIC_PATH . '/uploads');
 define('ICMS_UPLOAD_URL', ICMS_URL . '/uploads');
-define('ICMS_THEME_PATH', ICMS_ROOT_PATH . '/themes');
+define('ICMS_THEME_PATH', ICMS_PUBLIC_PATH . '/themes');
 define('ICMS_THEME_URL', ICMS_URL . '/themes');
 define('ICMS_CACHE_PATH', ICMS_ROOT_PATH . '/cache');
 define('ICMS_PURIFIER_CACHE', ICMS_CACHE_PATH . '/htmlpurifier');
