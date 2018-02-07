@@ -72,6 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 } else {
+	$langarr = icms_module_Handler::getAvailable();
+
 	$content .= '<div>' . _INSTALL_SELECT_MODS_INTRO . '</div>';
 	$content .= '<div class="dbconn_line">';
 	$content .= '<h3>' . _INSTALL_SELECT_MODULES . '</h3>';
