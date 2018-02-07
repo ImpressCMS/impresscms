@@ -48,9 +48,19 @@ $path = preg_replace('/[^a-zA-Z0-9\/]/', '', $requested_path);
 if (
 	!empty($requested_path) &&
 	file_exists($full_path = dirname(__DIR__) . DIRECTORY_SEPARATOR . $requested_path) &&
-	pathinfo($full_path, PATHINFO_EXTENSION) != 'php'
+	($ext = pathinfo($full_path, PATHINFO_EXTENSION)) != 'php'
 ) {
-	header('Content-Type: ' . mime_content_type($full_path));
+	switch ($ext) {
+		case 'css':
+			$mimetype = 'text/css';
+		break;
+		case 'js':
+			$mimetype = 'text/javascript';
+		break;
+		default:
+			$mimetype = mime_content_type($full_path);
+	}
+	header('Content-Type: ' . $mimetype);
 	readfile($full_path);
 	exit(0);
 }
