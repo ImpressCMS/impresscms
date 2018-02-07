@@ -75,8 +75,8 @@ define('ICMS_PUBLIC_PATH', __DIR__);
 
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
-if (!empty($requested_path) && file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path)) {
-	require ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path;
+if (isset($ext)) {
+	require $full_path;
 } elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
     \icms::$logger->disableRendering();
     list(, $module, $controller_name, $action, $params) = $params[0];
