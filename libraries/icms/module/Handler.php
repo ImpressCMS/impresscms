@@ -238,11 +238,11 @@ class icms_module_Handler
 	 */
 	static public function service($inAdmin = FALSE) {
 		$module = NULL;
-		if ($inAdmin || file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
-			$url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-			if (isset($url_arr[2])) {
+		if (preg_match('/modules\/([^\/]+)/', $_SERVER['REQUEST_URI'], $matches)) {
+			$path = ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $matches[1];
+			if ($inAdmin || file_exists($path . '/xoops_version.php') || file_exists($path . '/icms_version.php')) {
 				/* @var $module icms_module_Object */
-				$module = icms::handler("icms_module")->getByDirname($url_arr[2], TRUE);
+				$module = icms::handler("icms_module")->getByDirname($matches[1], TRUE);
 				if (!$inAdmin && (!$module || !$module->getVar('isactive'))) {
 					include_once ICMS_ROOT_PATH . '/header.php';
 					echo "<h4>" . _MODULENOEXIST . "</h4>";
@@ -250,11 +250,13 @@ class icms_module_Handler
 					exit();
 				}
 			}
+		} else {
+			return null;
 		}
 		if (!self::checkModuleAccess($module, $inAdmin)) {
 			redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
 		}
-		if ($module) $module->launch();
+		$module->launch();
 		return $module ? $module : NULL;
 	}
 
