@@ -39,21 +39,32 @@
 
 /** mainfile is required, if it doesn't exist - installation is needed */
 
-// ImpressCMS is not installed yet.
-if (is_dir('install') && !defined('XOOPS_INSTALL')) {
-	header('Location: install/index.php');
-	exit();
+$requested_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+$path = preg_replace('/[^a-zA-Z0-9\/]/', '', $requested_path);
+
+/**
+ * @todo Remove this proxy once we migrate everything to normal assets system
+ */
+if (
+	!empty($requested_path) &&
+	file_exists($full_path = dirname(__DIR__) . DIRECTORY_SEPARATOR . $requested_path) &&
+	pathinfo($full_path, PATHINFO_EXTENSION) != 'php'
+) {
+	header('Content-Type: ' . mime_content_type($full_path));
+	readfile($full_path);
+	exit(0);
 }
 
 define('ICMS_PUBLIC_PATH', __DIR__);
 
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
-$requested_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-$path = preg_replace('/[^a-zA-Z0-9\/]/', '', $requested_path);
-
 if (!empty($requested_path) && file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path)) {
-	header('Content-Type: ' . mime_content_type($requested_path));
+	// ImpressCMS is not installed yet.
+	if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) {
+		header('Location: install/index.php');
+		exit();
+	}
 	require ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path;
 } elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
     \icms::$logger->disableRendering();
