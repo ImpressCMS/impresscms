@@ -55,16 +55,17 @@ if (
 	exit(0);
 }
 
+// ImpressCMS is not installed yet.
+if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) {
+	header('Location: install/index.php');
+	exit();
+}
+
 define('ICMS_PUBLIC_PATH', __DIR__);
 
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 if (!empty($requested_path) && file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path)) {
-	// ImpressCMS is not installed yet.
-	if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) {
-		header('Location: install/index.php');
-		exit();
-	}
 	require ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $requested_path;
 } elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
     \icms::$logger->disableRendering();
