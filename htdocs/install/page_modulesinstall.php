@@ -72,21 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 } else {
-	$langarr = icms_module_Handler::getAvailable();
-	if (count($langarr) == 1 && in_array('system', $langarr)) {
-		/**
-		 * Automatically updating the system module before installing the selected modules
-		 * @since 1.3
-		 */
-		$module_handler = icms::handler('icms_module');
-		$system_moduleObj = $module_handler->getByDirname('system');
-		include_once ICMS_ROOT_PATH . '/modules/system/include/update.php';
-		icms_module_update_system($system_moduleObj);
-
-		$wizard->redirectToPage('+1');
-		exit();
-	}
-
 	$content .= '<div>' . _INSTALL_SELECT_MODS_INTRO . '</div>';
 	$content .= '<div class="dbconn_line">';
 	$content .= '<h3>' . _INSTALL_SELECT_MODULES . '</h3>';
@@ -94,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	foreach ($langarr as $lang) {
 		if ($lang == 'system') {
+			$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../modules/$lang/images/icon_small.png\" alt=\"$lang\" /><br />$lang <br /><input type=\"checkbox\" checked=\"checked\" name=\"update_mods[]\" checked value=\"$lang\" disabled /></a></div>";
 			continue;
 		}
 		$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../modules/$lang/images/icon_small.png\" alt=\"$lang\" /><br />$lang <br /><input type=\"checkbox\" checked=\"checked\" name=\"install_mods[]\" value=\"$lang\" /></a></div>";
