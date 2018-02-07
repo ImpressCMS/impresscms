@@ -169,7 +169,6 @@ define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
 
 define("_INSTALL_MOD_INSTALL_SUCCESSFULLY", "Module %s has been installed succesfully.");
 define("_INSTALL_MOD_INSTALL_FAILED", "The wizard could not install module %s.");
-define("_INSTALL_NO_PLUS_MOD", "No modules were selected for installation. Please continue the installation by clicking next.");
 define("_INSTALL_INSTALLING", "Installing %s module");
 
 define("_INSTALL_WEB_LOCATIONS", "Web location");

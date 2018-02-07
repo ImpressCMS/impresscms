@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$module_handler = icms::handler('icms_module');
 		$system_moduleObj = $module_handler->getByDirname('system');
 		include_once ICMS_ROOT_PATH . '/modules/system/include/update.php';
-		icms_module_update_system($system_moduleObj);
+		$content .= icms_module_update_system($system_moduleObj);
 
 		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
 		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';
@@ -61,9 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$content .= xoops_module_install($install_mods[$i]);
 				impresscms_get_adminmenu();
 			}
-		} else {
-			$content .= _INSTALL_NO_PLUS_MOD;
-		}
+		} 
 
 		$tables = array();
 		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>" . $dbm->report() . "</div>";
