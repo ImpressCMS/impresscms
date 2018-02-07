@@ -36,29 +36,15 @@ function b_system_admin_warnings_show() {
 	if (getDbValue(icms::$xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE) {
 		array_push($block['msg'], icms_core_Message::error('<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=modules&amp;op=update&amp;module=system">' . _WARNINGUPDATESYSTEM . '</a>'));
 	}
-	if (is_writable(ICMS_ROOT_PATH . '/mainfile.php')) {
-		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINWRITEABLE, ICMS_ROOT_PATH . '/mainfile.php'), '', FALSE));
+	if (is_writable(ICMS_ROOT_PATH . '/.env')) {
+		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINWRITEABLE, ICMS_ROOT_PATH . '/.env'), '', FALSE));
 	}
 	if (is_dir(ICMS_ROOT_PATH . '/upgrade/')) {
 		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINSTALL2, ICMS_ROOT_PATH . '/upgrade/'), '', FALSE));
 	}
-	$sql1 = "SELECT conf_modid FROM `" . icms::$xoopsDB->prefix('config') . "` WHERE conf_name = 'dos_skipmodules'";
-	if ($result1 = icms::$xoopsDB->query($sql1)) {
-		list($modid) = icms::$xoopsDB->FetchRow($result1);
-		$protector_is_active = '0';
-		if (NULL !== $modid) {
-			$sql2 = "SELECT isactive FROM `" . icms::$xoopsDB->prefix('modules') . "` WHERE mid =" . $modid;
-			$result2 = icms::$xoopsDB->query($sql2);
-			list($protector_is_active) = icms::$xoopsDB->FetchRow($result2);
-		}
-	}
+
 	if (file_exists(ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php')) {
 		array_push($block['msg'], icms_core_Message::error(sprintf(_CSSTIDY_VULN, ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php'), FALSE));
-	}
-
-	if ($protector_is_active == 0) {
-		array_push($block['msg'], icms_core_Message::error(_PROTECTOR_NOT_FOUND, '', FALSE));
-		echo '<br />';
 	}
 
 	// ###### Output warn messages for correct functionality  ######
