@@ -88,9 +88,9 @@ class icms_core_Filesystem {
 			while ($file = readdir($dd)) {
 				$files_array = $remove_admin_cache
 					? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
-						&& $file != '.svn')
+						&& $file != '.gitignore')
 					: ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
-						&& $file != '.svn' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
+						&& $file != '.gitignore' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
 				if (is_file($d . $file) && $files_array) {
 					unlink($d . $file);
 				}
