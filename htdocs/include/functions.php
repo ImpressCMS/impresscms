@@ -877,7 +877,7 @@ function icms_html2text($document)
 			"'&(cent|#162);'i",
 			"'&(pound|#163);'i",
 			"'&(copy|#169);'i",
-			"'&#(\d+);'e");					// evaluate as php
+			);
 
 	$replace = array ("",
 			"",
@@ -892,9 +892,12 @@ function icms_html2text($document)
 			chr(162),
 			chr(163),
 			chr(169),
-			"chr(\\1)");
+			);
 
 	$text = preg_replace($search, $replace, $document);
+	$text = preg_replace_callback("'&#(\d+);'", function ($m) {
+		return chr($m[1]);
+	}, $text);
 	return $text;
 
 }
