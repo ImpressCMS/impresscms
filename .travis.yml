@@ -6,5 +6,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
-  
-script: phpunit --configuration tests/configuration.xml
+
+script:
+ - composer install
+ - phpunit --configuration tests/configuration.xml
