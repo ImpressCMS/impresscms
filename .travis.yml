@@ -9,4 +9,5 @@ php:
 
 script:
  - composer install
+ - composer dumpautoload
  - phpunit --configuration tests/configuration.xml

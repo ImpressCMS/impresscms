@@ -42,5 +42,8 @@
   "autoload": {
     "psr-0" : {"" : "libraries/"},
     "classmap": [ "modules/"]
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.0"
   }
 }
