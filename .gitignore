@@ -9,7 +9,6 @@
 !/htdocs/modules/system/
 /htdocs/mainfile.php
 /nbproject/
-/htdocs/templates_c/*.php
 /htdocs/cache/*
 htdocs/mainfile.php
 vendor/
