@@ -2,7 +2,6 @@
 /.buildpath
 /.project
 /.idea
-/cfg_*/
 **/.svn/
 **/.git/
 /htdocs/modules/*
