@@ -52,13 +52,14 @@ class PathStuffController {
 			'.env',
 			$short_path . DIRECTORY_SEPARATOR . 'uploads',
 			'modules',
-			'cache',
-			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier',
-			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'CSS',
-			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'HTML',
-			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'Test',
-			'cache' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'URI',
-			'cache' .  DIRECTORY_SEPARATOR . 'templates',
+			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier',
+			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'CSS',
+			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'HTML',
+			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'Test',
+			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'URI',
+			'storage' .  DIRECTORY_SEPARATOR . 'templates_c',
+			'storage' .  DIRECTORY_SEPARATOR . 'log',
+			'storage' .  DIRECTORY_SEPARATOR . 'cache'
 		);
 		$errors = array();
 		foreach ( $paths as $path) {
