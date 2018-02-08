@@ -23,7 +23,10 @@ if (!defined( 'XOOPS_INSTALL' ) )	exit();
 icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR  . 'modules', 0777);
 icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR  . '.env', 0777);
 icms_core_Filesystem::chmod("../uploads", 0777);
-icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR  . '.cache', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR  . 'storage' . DIRECTORY_SEPARATOR . 'htmlpurifier', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR  . 'storage' . DIRECTORY_SEPARATOR . 'log', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR  . 'storage' . DIRECTORY_SEPARATOR . 'cache', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR  . 'storage' . DIRECTORY_SEPARATOR . 'templates_c', 0777);
 $wizard->setPage( 'start' );
 $pageHasForm = false;
 

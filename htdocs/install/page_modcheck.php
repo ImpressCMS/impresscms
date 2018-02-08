@@ -143,7 +143,14 @@ if (empty($ext)) {
     	<tr><th>Path</th><th>Status</th></tr>
     </thead>
 	<?php
-		$paths = array("uploads/", "../cache/", "../.env");
+		$paths = array(
+			"uploads/",
+			"../storage/htmlpurifier",
+			"../storage/log",
+			"../storage/cache",
+			"../storage/templates_c",
+			"../.env"
+		);
 		foreach ( $paths as $path) {
 	?>
 	<tr>
