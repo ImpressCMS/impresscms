@@ -10,4 +10,4 @@ php:
 script:
  - composer install
  - composer dumpautoload
- - phpunit --configuration tests/configuration.xml
+ - phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php
