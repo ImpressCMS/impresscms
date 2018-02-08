@@ -17,7 +17,7 @@ if (!defined("ICMS_MAINFILE_INCLUDED")) {
 
 	// (optional) Physical path to script that logs database queries.
 	// Example: define('ICMS_LOGGING_HOOK', ICMS_ROOT_PATH . '/modules/foobar/logging_hook.php');
-	define('ICMS_LOGGING_HOOK', '');
+	define('ICMS_LOGGING_HOOK', getenv('LOGGING_HOOK'));
 
 	define('ICMS_GROUP_ADMIN', 1);
 	define('ICMS_GROUP_USERS', 2);
