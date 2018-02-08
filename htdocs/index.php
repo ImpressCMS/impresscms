@@ -83,40 +83,45 @@ define('ICMS_PUBLIC_PATH', __DIR__);
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 if (isset($ext)) {
+
+	// for backward compatibility
+	$_SERVER['SCRIPT_NAME'] = '/' . $requested_path;
+	$_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_NAME'];
+	
 	require $full_path;
 } elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
-    \icms::$logger->disableRendering();
-    list(, $module, $controller_name, $action, $params) = $params[0];
-    $handler = new \icms_controller_Handler();
-    try {
-        $handler->exec(
-            $module,
-            $handler->type,
-            $controller_name,
-            strtolower($_SERVER['REQUEST_METHOD']) . ucfirst($action),
-            $handler->parseParamsStringToArray($module, $controller_name, $params)
-        );
-    } catch (Exception $ex) {
-        \icms::$response = new \icms_response_Error();
-        \icms::$response->errorNo = 404;
-        \icms::$response->render();
-    }
+	\icms::$logger->disableRendering();
+	list(, $module, $controller_name, $action, $params) = $params[0];
+	$handler = new \icms_controller_Handler();
+	try {
+		$handler->exec(
+			$module,
+			$handler->type,
+			$controller_name,
+			strtolower($_SERVER['REQUEST_METHOD']) . ucfirst($action),
+			$handler->parseParamsStringToArray($module, $controller_name, $params)
+		);
+	} catch (Exception $ex) {
+		\icms::$response = new \icms_response_Error();
+		\icms::$response->errorNo = 404;
+		\icms::$response->render();
+	}
 } elseif (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != '/')) {
-    \icms::$response = new \icms_response_Error();
-    \icms::$response->errorNo = 404;
-    \icms::$response->render();
+	\icms::$response = new \icms_response_Error();
+	\icms::$response->errorNo = 404;
+	\icms::$response->render();
 } else {
 	$member_handler = \icms::handler('icms_member');
-    $group = $member_handler->getUserBestGroup(
-        (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
-    );
+	$group = $member_handler->getUserBestGroup(
+		(!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
+	);
 
-    // added failover to default startpage for the registered users group -- JULIAN EGELSTAFF Apr 3 2017
+	// added failover to default startpage for the registered users group -- JULIAN EGELSTAFF Apr 3 2017
 	$groups = (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	if(($icmsConfig['startpage'][$group] == "" OR $icmsConfig['startpage'][$group] == "--")
-	AND in_array(ICMS_GROUP_USERS, $groups)
-	AND $icmsConfig['startpage'][ICMS_GROUP_USERS] != ""
-	AND $icmsConfig['startpage'][ICMS_GROUP_USERS] != "--") {
+		AND in_array(ICMS_GROUP_USERS, $groups)
+		AND $icmsConfig['startpage'][ICMS_GROUP_USERS] != ""
+		AND $icmsConfig['startpage'][ICMS_GROUP_USERS] != "--") {
 		$icmsConfig['startpage'] = $icmsConfig['startpage'][ICMS_GROUP_USERS];
 	} else {
 		$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
@@ -124,23 +129,23 @@ if (isset($ext)) {
 
 
 	if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != '--') {
-        $arr = explode('-', $icmsConfig['startpage']);
-        if (count($arr) > 1) {
-            $page_handler = \icms::handler('icms_data_page');
-            $page = $page_handler->get($arr[1]);
-            if (is_object($page)) {
-                header('Location: ' . $page->getURL());
-            } else {
-                $icmsConfig['startpage'] = '--';
-                \icms::$response = new \icms_response_DefaultEmptyPage();
-                \icms::$response->render();
-            }
-        } else {
-            header('Location: ' . ICMS_MODULES_URL . '/' . $icmsConfig['startpage'] . '/');
-        }
-        exit();
-    } else {
-        \icms::$response = new \icms_response_DefaultEmptyPage();
-        \icms::$response->render();
-    }
+		$arr = explode('-', $icmsConfig['startpage']);
+		if (count($arr) > 1) {
+			$page_handler = \icms::handler('icms_data_page');
+			$page = $page_handler->get($arr[1]);
+			if (is_object($page)) {
+				header('Location: ' . $page->getURL());
+			} else {
+				$icmsConfig['startpage'] = '--';
+				\icms::$response = new \icms_response_DefaultEmptyPage();
+				\icms::$response->render();
+			}
+		} else {
+			header('Location: ' . ICMS_MODULES_URL . '/' . $icmsConfig['startpage'] . '/');
+		}
+		exit();
+	} else {
+		\icms::$response = new \icms_response_DefaultEmptyPage();
+		\icms::$response->render();
+	}
 }
