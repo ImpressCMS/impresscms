@@ -65,6 +65,13 @@ if (
 	exit(0);
 }
 
+foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'icmsConfig') as $bad_global) {
+	if (isset($_REQUEST[$bad_global])) {
+		http_response_code(400);
+		exit();
+	}
+}
+
 // ImpressCMS is not installed yet.
 if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) {
 	header('Location: install/index.php');
