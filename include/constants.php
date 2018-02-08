@@ -2,7 +2,7 @@
 /**#@+
  * Creating ICMS specific constants
  */
-define('ICMS_PLUGINS_PATH', ICMS_PUBLIC_PATH . '/plugins');
+define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH . '/plugins');
 define('ICMS_PLUGINS_URL', ICMS_URL . '/plugins');
 define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH . '/preloads');
 // ImpressCMS Modules path & url
