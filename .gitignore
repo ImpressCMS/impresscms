@@ -7,8 +7,6 @@
 **/.git/
 /htdocs/modules/*
 !/htdocs/modules/system/
-/htdocs/mainfile.php
 /nbproject/
-/htdocs/cache/*
-htdocs/mainfile.php
 vendor/
+/.env
