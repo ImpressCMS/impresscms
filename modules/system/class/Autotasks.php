@@ -7,23 +7,22 @@
  * @since	1.2 alpha 2
  * @author	MekDrop <mekdrop@gmail.com>
  */
-defined('ICMS_ROOT_PATH') || die('ImpressCMS root path not defined');
 
 /* this is needed because this class is loaded outside of the admin area, too */
 icms_loadLanguageFile("system", "autotasks", TRUE);
 
 /**
  * Task objects
- * 
+ *
  * @package ImpressCMS\Modules\System\Class\Autotasks
  *
  * @property int    $sat_id             Task ID
- * @property int    $sat_lastruntime    Last run time 
+ * @property int    $sat_lastruntime    Last run time
  * @property string $sat_name           Name dispalyed in admin
  * @property string $sat_code           Code to execute
  * @property int    $sat_repeat         How many times to repeat (0 - always)
  * @property int    $sat_interval       Interval in minutes
- * @property int    $sat_onfinish       Auto delete? 
+ * @property int    $sat_onfinish       Auto delete?
  * @property int    $sat_enabled        Is enabled?
  * @property string $sat_type           Type (custom or module)
  * @property int    $sat_addon_id       Module ID
@@ -37,7 +36,7 @@ class mod_system_Autotasks extends icms_ipf_Object {
 	 *
 	 * @param object $handler
 	 */
-	public function __construct(&$handler) {                
+	public function __construct(&$handler) {
                 $this->initVar('sat_id', self::DTYPE_INTEGER, 0, false);
                 $this->initVar('sat_lastruntime', self::DTYPE_INTEGER, 0, false, null, null, null, _CO_ICMS_AUTOTASKS_LASTRUNTIME);
                 $this->initVar('sat_name', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_AUTOTASKS_NAME, _CO_ICMS_AUTOTASKS_NAME_DSC);
@@ -48,7 +47,7 @@ class mod_system_Autotasks extends icms_ipf_Object {
                 $this->initVar('sat_enabled', self::DTYPE_INTEGER, 1, true, 1, null, null, _CO_ICMS_AUTOTASKS_ENABLED, _CO_ICMS_AUTOTASKS_ENABLED_DSC);
                 $this->initVar('sat_type', self::DTYPE_STRING, ':custom', true, 100, null, null, _CO_ICMS_AUTOTASKS_TYPE);
                 $this->initVar('sat_addon_id', self::DTYPE_INTEGER, 0, false);
-            
+
 		parent::__construct($handler);
 
 		$this->setControl('sat_name', 'text');

@@ -7,17 +7,14 @@
  * @since	1.2
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
-
-defined("ICMS_ROOT_PATH") or die ("ImpressCMS root path not defined");
-
 icms_loadLanguageFile("system", "common");
 icms_loadLanguageFile("system", "userrank", TRUE);
 
 /**
  * Ranks to assign members
- * 
+ *
  * @package	ICMS\Member\Rank
- * 
+ *
  * @property int    $rank_id       Rank ID
  * @property string $rank_title    Title
  * @property int    $rank_min      Min required items count
@@ -32,7 +29,7 @@ class icms_member_rank_Object extends icms_ipf_Object {
 
 	/**
 	 * Create a new instance of the userrank object
-	 * 
+	 *
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
@@ -42,7 +39,7 @@ class icms_member_rank_Object extends icms_ipf_Object {
 		$this->initVar("rank_max", self::DTYPE_INTEGER, 0, TRUE, 8, null, null, _CO_ICMS_USERRANK_RANK_MAX, _CO_ICMS_USERRANK_RANK_MAX_DSC);
 		$this->initVar("rank_special", self::DTYPE_INTEGER, 0, TRUE, 1, null, null, _CO_ICMS_USERRANK_RANK_SPECIAL, _CO_ICMS_USERRANK_RANK_SPECIAL_DSC);
 		$this->initVar("rank_image", self::DTYPE_STRING, '', TRUE, 255, null, null, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
-                
+
                 parent::__construct($handler);
 
 		$this->setControl("rank_special", "yesno");

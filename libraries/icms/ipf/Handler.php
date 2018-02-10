@@ -15,7 +15,6 @@
  * @todo	Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Persistable Object Handlder
  *

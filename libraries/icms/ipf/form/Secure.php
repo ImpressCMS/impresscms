@@ -1,6 +1,4 @@
 <?php
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 /**
  * Form control creating a secure form
  *

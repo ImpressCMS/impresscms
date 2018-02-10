@@ -6,8 +6,6 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /* This may be loaded by other modules - and not just through the cpanel */
 icms_loadLanguageFile('system', 'tags', TRUE);
 

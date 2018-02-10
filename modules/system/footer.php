@@ -10,8 +10,6 @@
  * @version		$Id$
  */
 
-defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
 $icmsTpl->assign("cpanel_adminpage", "<a href='" . ICMS_MODULES_URL . "/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_CPANEL_ADMIN_PAGE . "</a>");
 $icmsTpl->assign("cpanel_is_admin", icms_userIsAdmin(CPANEL_DIRNAME));
 $icmsTpl->assign('cpanel_url', CPANEL_URL);

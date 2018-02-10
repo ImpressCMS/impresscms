@@ -8,13 +8,11 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 /**
- * AdSense object - Google AdSense 
- * 
+ * AdSense object - Google AdSense
+ *
  * @package ImpressCMS\Modules\System\Class\Adsense
- * 
+ *
  * @property int    $adsenseid          Adsense ID
  * @property string $description        Description
  * @property string $client_id          Client ID
@@ -33,10 +31,10 @@ class mod_system_Adsense extends icms_ipf_Object {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param object $handler
 	 */
-	public function __construct(&$handler) {                
+	public function __construct(&$handler) {
                 $this->initVar('adsenseid', self::DTYPE_INTEGER, 0, true);
                 $this->initVar('description', self::DTYPE_STRING, '', true, null, null, null, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
                 $this->initVar('client_id', self::DTYPE_STRING, '', true, 100, null, null, _CO_ICMS_ADSENSE_CLIENT_ID, _CO_ICMS_ADSENSE_CLIENT_ID_DSC);
@@ -49,7 +47,7 @@ class mod_system_Adsense extends icms_ipf_Object {
                 $this->initVar('color_url', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_URL, _CO_ICMS_ADSENSE_COLOR_URL_DSC);
                 $this->initVar('color_text', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_TEXT, _CO_ICMS_ADSENSE_COLOR_TEXT_DSC);
                 $this->initVar('style', self::DTYPE_STRING, '', false, null, null, null, _CO_ICMS_ADSENSE_STYLE, _CO_ICMS_ADSENSE_STYLE_DSC);
-            
+
 		parent::__construct($handler);
 
 		$this->setControl('format', array('method' => 'getFormats'));
@@ -62,7 +60,7 @@ class mod_system_Adsense extends icms_ipf_Object {
 
 	/**
 	 * Override accessor for several properties
-	 * 
+	 *
 	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
 	 */
 	public function getVar($key, $format = 's') {
@@ -165,11 +163,11 @@ class mod_system_Adsense extends icms_ipf_Object {
 
 	/**
 	 * Generate the link HTML to clone a unit
-	 * @return	string 
+	 * @return	string
 	 */
 	public function getCloneLink() {
-		$ret = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=adsense&amp;op=clone&amp;adsenseid=' 
-			. $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' 
+		$ret = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=adsense&amp;op=clone&amp;adsenseid='
+			. $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="'
 			. _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
 		return $ret;
 	}

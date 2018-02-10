@@ -9,7 +9,6 @@
  * @link        http://www.smartfactory.ca The SmartFactory
  * @package	ICMS\Database\Legacy\Updater
  */
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * Include the language constants for the icms_db_legacy_updater_Handler

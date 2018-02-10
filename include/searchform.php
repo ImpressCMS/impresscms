@@ -36,8 +36,6 @@
  * @version		SVN: $Id$
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 // create form
 $search_form = new icms_form_Theme(_SR_SEARCH, "search", "search.php", 'get');
 

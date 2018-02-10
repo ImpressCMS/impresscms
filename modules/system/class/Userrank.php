@@ -8,14 +8,12 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-defined("ICMS_ROOT_PATH") or die ("ImpressCMS root path not defined");
-
 icms_loadLanguageFile("system", "common");
 icms_loadLanguageFile("system", "userrank", TRUE);
 
 /**
  * Ranks to assign members
- * 
+ *
  * @package		System
  * @subpackage	Users
  */
@@ -26,7 +24,7 @@ class mod_system_Userrank extends icms_ipf_Object {
 
 	/**
 	 * Create a new instance of the userrank object
-	 * 
+	 *
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {

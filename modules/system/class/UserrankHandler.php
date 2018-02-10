@@ -8,8 +8,6 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-defined("ICMS_ROOT_PATH") or die ("ImpressCMS root path not defined");
-
 icms_loadLanguageFile("system", "common");
 icms_loadLanguageFile("system", "userrank", TRUE);
 
@@ -20,7 +18,7 @@ icms_loadLanguageFile("system", "userrank", TRUE);
  * @subpackage	Users
  */
 class mod_system_UserrankHandler extends icms_ipf_Handler {
-	
+
 	/** */
 	public $objects = FALSE;
 

@@ -9,8 +9,6 @@
  * @package		sourceeditor
  */
 
-defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
 /**
  * Pseudo class
  *

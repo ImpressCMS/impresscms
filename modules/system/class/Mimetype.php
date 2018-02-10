@@ -9,16 +9,14 @@
  * @package     ImpressCMS\Modules\System\Class\Mimetype
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
-/* This may be loaded by other modules - and not just through the cpanel */ 
+/* This may be loaded by other modules - and not just through the cpanel */
 icms_loadLanguageFile('system', 'mimetype', TRUE);
 
 /**
  * Mimetype management for file handling
- * 
+ *
  * @package     ImpressCMS\Modules\System\Class\Mimetype
- * 
+ *
  * @property int        $mimetypeid    Mimetype ID
  * @property string     $extension     File extention
  * @property string     $types         Mimetypes
@@ -30,18 +28,18 @@ class mod_system_Mimetype extends icms_ipf_Object {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param object $handler
 	 */
-	function __construct(&$handler) {                
+	function __construct(&$handler) {
                 $this->initVar('mimetypeid', self::DTYPE_INTEGER, 0, TRUE);
                 $this->initVar('extension', self::DTYPE_STRING, '', TRUE, 60, null, null, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC);
                 $this->initVar('types', self::DTYPE_STRING, '', TRUE, null, null, null, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC);
                 $this->initVar('name', self::DTYPE_STRING, '', TRUE, 255, null, null, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC);
                 $this->initVar('dirname', self::DTYPE_LIST, null, TRUE, null, null, null, _CO_ICMS_MIMETYPE_DIRNAME);
-            
+
 		parent::__construct($handler);
-	
+
 		$this->setControl('dirname', array(
 			'name' => 'selectmulti',
 			'itemHandler' => 'icms_module',

@@ -9,8 +9,6 @@
 * @version		$Id$
 */
 
-defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
-
 define('_MD_AM_RATINGS', 'Ratings');
 define('_MD_AM_RATINGS_DSC', 'With using this tool, you can add a new rating method to your modules, and control the results through this section!');
 

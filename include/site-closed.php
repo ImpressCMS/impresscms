@@ -10,8 +10,6 @@
  * @version		SVN: $Id$
  */
 
-defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
-
 $allowed = FALSE;
 if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_site']) {
 	$allowed = TRUE;

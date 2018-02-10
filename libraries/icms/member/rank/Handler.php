@@ -7,25 +7,22 @@
  * @since	1.2
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
-
-defined("ICMS_ROOT_PATH") or die ("ImpressCMS root path not defined");
-
 icms_loadLanguageFile("system", "common");
 icms_loadLanguageFile("system", "userrank", TRUE);
 
 /**
  * Handler for the user ranks object
- * 
+ *
  * @package	ICMS\Member\Rank
  */
 class icms_member_rank_Handler extends icms_ipf_Handler {
-	
+
 	/** */
 	public $objects = FALSE;
 
 	/**
 	 * Create a new instance of the handler
-	 * 
+	 *
 	 * @param object $db
 	 */
 	public function __construct($db) {
@@ -35,8 +32,8 @@ class icms_member_rank_Handler extends icms_ipf_Handler {
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @param	int 	$rank_id
 	 * @param	int 	$posts
 	 * @return	array

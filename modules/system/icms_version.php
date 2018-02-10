@@ -43,8 +43,6 @@
  * @version		SVN: $Id$
  */
 
-defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
-
 /*  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,

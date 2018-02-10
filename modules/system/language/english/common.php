@@ -4,8 +4,6 @@
  * $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
 define('_CO_ICMS_FILTER', "Filter");
 define('_CO_ICMS_NONE', "None");
 define('_CO_ICMS_SHOW_ONLY', 'Show only');
@@ -191,4 +189,4 @@ define('_CO_ICMS_UPDATE_NEEDED','Your system module needs updating');
 define("_MD_AM_HELP_TIP","View help text");
 
 // added in 2.0 to replace _MD_AM_MODULE
-define("_CO_ICMS_MODULE", "Module"); 
+define("_CO_ICMS_MODULE", "Module");

@@ -1,7 +1,4 @@
 <?php
-
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 /**
  * IcmsPermission
  *

@@ -8,17 +8,16 @@
  * @since	1.3
  * @author	Phoenyx
  */
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * File object
- * 
+ *
  * @property int    $fileid        File ID
  * @property int    $mid           Module ID
  * @property string $caption       Caption
  * @property string $description   Description
  * @property string $url           URL of file
- * 
+ *
  * @package	ICMS\Data\File
  */
 class icms_data_file_Object extends icms_ipf_Object {

@@ -7,8 +7,6 @@
  * @since 1.1
  * @author marcan <marcan@impresscms.org>
  */
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 icms_loadLanguageFile('system', 'common');
 
 /**

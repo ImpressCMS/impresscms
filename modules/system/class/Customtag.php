@@ -9,24 +9,22 @@
  * @package     ImpressCMS\Modules\System\Class\CustomTag
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 defined('ICMS_CUSTOMTAG_TYPE_XCODES') || define('ICMS_CUSTOMTAG_TYPE_XCODES', 1);
 defined('ICMS_CUSTOMTAG_TYPE_HTML') || define('ICMS_CUSTOMTAG_TYPE_HTML', 2);
 defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
 
 /**
  * Custom tags
- * 
+ *
  * @package     ImpressCMS\Modules\System\Class\CustomTag
- * 
+ *
  * @property int    $customtagid        CustomTag ID
  * @property string $name               Name
  * @property string $description        Description
  * @property string $customtag_content  Content
  * @property string $language           Language
  * @property int    $customtag_type     Type
- * 
+ *
  * @property int    $dohtml
  * @property int    $doimage
  * @property int    $doxcode
@@ -40,19 +38,19 @@ class mod_system_Customtag extends icms_ipf_Object {
 	 * Constructor
 	 * @param object $handler
 	 */
-	public function __construct(&$handler) {           
+	public function __construct(&$handler) {
                 $this->initVar('customtagid', self::DTYPE_INTEGER, 0, TRUE);
                 $this->initVar('name', self::DTYPE_STRING, '', TRUE, 255, null, null, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC);
                 $this->initVar('description', self::DTYPE_STRING, '', FALSE, null, null, null, _CO_ICMS_CUSTOMTAG_DESCRIPTION, _CO_ICMS_CUSTOMTAG_DESCRIPTION_DSC);
                 $this->initVar('customtag_content', self::DTYPE_STRING, '', TRUE, null, null, null, _CO_ICMS_CUSTOMTAG_CONTENT, _CO_ICMS_CUSTOMTAG_CONTENT_DSC);
                 $this->initVar('language', self::DTYPE_STRING, '', TRUE, 100, null, null, _CO_ICMS_CUSTOMTAG_LANGUAGE, _CO_ICMS_CUSTOMTAG_LANGUAGE_DSC);
                 $this->initVar('customtag_type', self::DTYPE_INTEGER, ICMS_CUSTOMTAG_TYPE_XCODES, TRUE, 1, null, null, _CO_ICMS_CUSTOMTAG_TYPE, _CO_ICMS_CUSTOMTAG_TYPE_DSC);
-                
+
                 $this->initNonPersistableVar('dohtml', self::DTYPE_INTEGER, 'class', 'dohtml', '', TRUE);
 		$this->initNonPersistableVar('doimage', self::DTYPE_INTEGER, 'class', 'doimage', '', TRUE);
 		$this->initNonPersistableVar('doxcode', self::DTYPE_INTEGER, 'class', 'doxcode', '', TRUE);
 		$this->initNonPersistableVar('dosmiley', self::DTYPE_INTEGER, 'class', 'dosmiley', '', TRUE);
-                
+
 		parent::__construct($handler);
 
 		$this->setControl('customtag_content', array('name' => 'textarea', 'form_editor' => 'textarea', 'form_rows' => 25));
@@ -82,7 +80,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 					$ret = $this->getVar('customtag_content', 'N');
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 1);
 					break;
-					
+
 				case ICMS_CUSTOMTAG_TYPE_HTML:
 					$ret = $this->getVar('customtag_content', 'N');
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 0);
@@ -91,7 +89,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 				case ICMS_CUSTOMTAG_TYPE_PHP:
 					$ret = $this->renderWithPhp();
 					break;
-					
+
 				default:
 					break;
 			}

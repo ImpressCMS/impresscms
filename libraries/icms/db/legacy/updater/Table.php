@@ -7,7 +7,7 @@
  * @author marcan <marcan@smartfactory.ca>
  * @link http://www.smartfactory.ca The SmartFactory
  */
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+
 /**
  * icms_db_legacy_updater_Table class
  *

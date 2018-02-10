@@ -39,8 +39,6 @@
  * @version		SVN: $Id$
  */
 
-defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
-
 $cform = new icms_form_Theme(_CM_POSTCOMMENT, "commentform", "postcomment.php", "post", true);
 if (!preg_match("/^re:/i", $subject)) {
 	$subject = "Re: " . icms_core_DataFilter::icms_substr($subject,0,56);

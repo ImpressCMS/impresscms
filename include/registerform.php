@@ -37,8 +37,6 @@
  * @version		$Id$
  */
 
-defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
-
 $email_tray = new icms_form_elements_Tray(_US_EMAIL, "<br />");
 $email_text = new icms_form_elements_Text("", "email", 25, 60, icms_core_DataFilter::htmlSpecialChars($email));
 $email_option = new icms_form_elements_Checkbox("", "user_viewemail", $user_viewemail);

@@ -8,11 +8,9 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 /**
  * Handler for AdSense object
- * 
+ *
  * @package ImpressCMS\Modules\System\Class\Adsense
  */
 class mod_system_AdsenseHandler extends icms_ipf_Handler {
@@ -120,7 +118,7 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 
 	/**
 	 * Accessor for the list of formats
-	 * @return	array 
+	 * @return	array
 	 */
 	public function getFormats() {
 		return $this->_adFormatsList;
@@ -146,7 +144,7 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 
 	/**
 	 * Retrieve an AdSense unit by its tag
-	 * @return	array	Object array 
+	 * @return	array	Object array
 	 */
 	public function getAdsensesByTag() {
 		if (!$this->_objects) {

@@ -9,23 +9,21 @@
  * @package     ImpressCMS\Modules\System\Class\Mimetype
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
-/* This may be loaded by other modules - and not just through the cpanel */ 
+/* This may be loaded by other modules - and not just through the cpanel */
 icms_loadLanguageFile('system', 'mimetype', TRUE);
 
 /**
  * Handler for the mimetype object class
- * 
+ *
  * @package     ImpressCMS\Modules\System\Class\Mimetype
  */
 class mod_system_MimetypeHandler extends icms_ipf_Handler {
-	
+
 	public $objects = FALSE;
 
 	/**
 	 * Creates an instance of the mimetype handler
-	 * 
+	 *
 	 * @param object $db
 	 */
 	public function __construct($db) {
@@ -34,7 +32,7 @@ class mod_system_MimetypeHandler extends icms_ipf_Handler {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return	array
 	 */
 	public function UserCanUpload() {
@@ -70,8 +68,8 @@ class mod_system_MimetypeHandler extends icms_ipf_Handler {
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @param string $mimetype
 	 * @param string $module
 	 * @return	boolean

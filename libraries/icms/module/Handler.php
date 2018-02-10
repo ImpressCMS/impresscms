@@ -34,8 +34,6 @@
  * @license	LICENSE.txt
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
-
 /**
  * Module handler class.
  *

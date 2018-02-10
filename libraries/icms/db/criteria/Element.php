@@ -40,8 +40,6 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 /**
  * A criteria (grammar?) for a database query.
  *

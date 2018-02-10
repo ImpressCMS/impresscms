@@ -8,19 +8,17 @@
  * @author	Phoenyx
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 /**
  * Url Link object
- * 
+ *
  * @property int    $urllinkid     URL Link ID
  * @property int    $mid           Module ID
  * @property string $caption       Caption
  * @property string $description   Description
  * @property string $url           URL
  * @property string $target        Target
- * 
- * @package	ICMS\Data\UrlLink 
+ *
+ * @package	ICMS\Data\UrlLink
  */
 class icms_data_urllink_Object extends icms_ipf_Object {
 	/**
@@ -36,7 +34,7 @@ class icms_data_urllink_Object extends icms_ipf_Object {
 
 		$this->setControl("target", array("options" => array("_self" => _CO_ICMS_URLLINK_SELF,
 			"_blank" => _CO_ICMS_URLLINK_BLANK)));
-                
+
                 parent::__construct($handler, $data);
 	}
 

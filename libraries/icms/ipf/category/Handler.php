@@ -9,11 +9,9 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 /**
  * Provides data access mechanisms to the icms_ipf_category_Object object
- * 
+ *
  * @copyright 	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	ICMS\IPF\Category

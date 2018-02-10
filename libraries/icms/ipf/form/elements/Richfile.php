@@ -1,7 +1,4 @@
 <?php
-
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
-
 /**
  * Form control creating a rich file element for an object derived from icms_ipf_Object
  *
