@@ -8,8 +8,6 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * icms_ipf_Object base SEO-enabled class
  *
@@ -18,7 +16,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @property string  $meta_keywords      Meta keywords
  * @property string  $meta_description   Meta description
  * @property string  $short_url          Short URL
- * 
+ *
  * @package	ICMS\IPF\SEO
  */
 class icms_ipf_seo_Object extends icms_ipf_Object {

@@ -35,8 +35,6 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * Member handler class.
  * This class provides simple interface (a facade class) for handling groups/users/
@@ -341,7 +339,7 @@ class icms_member_Handler {
 		} */
 
         $pwd = $icmspass->verifyPass($pwd, $uname);
-		
+
 		$table = new icms_db_legacy_updater_Table('users');
 		if ($table->fieldExists('loginname')) {
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));

@@ -35,11 +35,6 @@
  */
 
 /**
- * This file cannot be requested directly
- */
-defined('ICMS_ROOT_PATH') or exit();
-
-/**
  * icms_view_PageBuilder main class
  *
  * @package	ICMS\View

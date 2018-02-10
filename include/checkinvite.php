@@ -10,10 +10,6 @@
  * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	exit();
-}
-
 /**
  * Loads the invite code
  *

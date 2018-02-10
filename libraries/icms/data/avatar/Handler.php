@@ -35,8 +35,6 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Avatar handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -48,7 +46,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package	ICMS\Data\Avatar
  */
 class icms_data_avatar_Handler extends icms_ipf_Handler {
-    
+
         public function __construct(&$db) {
             parent::__construct($db, 'data_avatar', 'avatar_id', 'avatar_name', 'avatar_file', 'icms', 'avatar', 'avatar_id');
         }
@@ -56,10 +54,10 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 	/**
 	 * Deletes an avatar
 	 * @see icms_core_ObjectHandler#delete($object)
-         * 
+         *
          * @param icms_data_avatar_Object   $avatar Avatar to delete
          * @param bool                      $force  Force deletion?
-         * 
+         *
 	 * @return boolean
 	 */
 	public function delete(&$avatar, $force = false) {
@@ -95,8 +93,8 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 		$result = $this->db->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
-		}                
-		while ($myrow = $this->db->fetchArray($result)) {                    
+		}
+		while ($myrow = $this->db->fetchArray($result)) {
 			$avatar = new icms_data_avatar_Object($this, $myrow);
 			$avatar->setUserCount($myrow['count']);
 			if (!$id_as_key) {

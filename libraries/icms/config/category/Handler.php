@@ -36,8 +36,6 @@
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Configuration category handler class.
  *
@@ -49,7 +47,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package	ICMS\Config\Category
  */
 class icms_config_category_Handler extends icms_ipf_Handler {
-    
+
         public function __construct(&$db) {
             parent::__construct($db, 'config_category', 'confcat_id', 'confcat_name', 'confcat_order', 'icms', 'configcategory', 'confcat_id');
         }

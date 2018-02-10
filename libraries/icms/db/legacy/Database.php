@@ -37,7 +37,6 @@
  * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
 
-defined( 'ICMS_ROOT_PATH' ) or die();
 /**
  * Abstract base class for Database access classes
  *
@@ -76,7 +75,7 @@ abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	public function __construct($connection = NULL, $allowWebChanges = FALSE) {
 		$this->allowWebChanges = $allowWebChanges;
 	}
-	
+
 	/**
 	 * Setter for the logging class
 	 * @see icms_db_legacy_IDatabase::setLogger()
@@ -85,7 +84,7 @@ abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	public function setLogger($logger) {
 		$this->logger = $logger;
 	}
-	
+
 	/**
 	 * Setter for the table prefix
 	 *
@@ -95,7 +94,7 @@ abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	public function setPrefix($value) {
 		$this->prefix = $value;
 	}
-	
+
 	/**
 	 * Prefix the database table name
 	 * @see icms_db_legacy_IDatabase::prefix()

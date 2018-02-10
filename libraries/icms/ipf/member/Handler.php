@@ -1,7 +1,4 @@
 <?php
-
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * Member handler class.
  * This class provides simple interface (a facade class) for handling groups/users/

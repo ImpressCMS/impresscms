@@ -34,8 +34,6 @@
  * @license	LICENSE.txt
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Template set handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -62,7 +60,7 @@ class icms_view_template_set_Handler extends icms_ipf_Handler {
                 $criteria = new icms_db_criteria_Item('tplset_name', trim($tplset_name));
                 $criteria->setLimit(1);
                 $objs = $this->getObjects($criteria);
-                return isset($objs[0])?$objs[0]:null;		
+                return isset($objs[0])?$objs[0]:null;
 	}
 
 	/**

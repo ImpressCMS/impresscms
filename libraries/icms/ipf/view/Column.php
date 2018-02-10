@@ -10,8 +10,6 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * icms_ipf_view_Column class
  *
@@ -26,45 +24,45 @@ class icms_ipf_view_Column {
     /**
      * Keyname
      *
-     * @var string 
+     * @var string
      */
 	public $_keyname = '';
-        
+
         /**
          * Align of text in column
          *
-         * @var string 
+         * @var string
          */
 	public $_align = _GLOBAL_LEFT;
-        
+
         /**
          * Width
          *
          * @var bool|string|int
          */
 	public $_width = false;
-        
+
         /**
          * Custom method that formats value
          *
-         * @var callable|null 
+         * @var callable|null
          */
 	public $_customMethodForValue;
-        
+
         /**
          * Extra params
          *
          * @var string
          */
 	public $_extraParams = '';
-        
+
         /**
          * Column can be sortable?
          *
          * @var bool
          */
 	public $_sortable = true;
-        
+
         /**
          * Custom caption for column
          * Uf empty it tried to autodetect from property

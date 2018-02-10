@@ -34,8 +34,6 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Private message handler class.
  *
@@ -47,7 +45,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package	ICMS\Data\Privmessage
  */
 class icms_data_privmessage_Handler extends icms_ipf_Handler {
-    
+
         public function __construct(&$db) {
             parent::__construct($db, 'data_privmessage', 'msg_id', 'subject', 'msg_text', 'icms', 'priv_msgs', 'msg_id');
         }

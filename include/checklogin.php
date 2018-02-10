@@ -43,9 +43,6 @@
  * @since		XOOPS
  * @version		$Id$
  */
-
-defined('ICMS_ROOT_PATH') || exit();
-
 icms_loadLanguageFile('core', 'user');
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
 $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
@@ -58,7 +55,7 @@ if (!isset($redirect)) {
 		: isset($_POST['xoops_redirect'])
 			? $_POST['xoops_redirect']
 			: ICMS_URL;
-	
+
 		$redirect = htmlspecialchars(trim($redirect));
 		if ($redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) $redirect = ICMS_URL;
 }
@@ -107,7 +104,7 @@ if (FALSE != $user) {
 		redirect_header(ICMS_URL . '/', 5, _US_NOACTTPADM);
 		exit();
 	}
-	
+
 	/* Check to see if logins from multiple locations is permitted.
 	 * If it is not, check for existing login and redirect if detected
 	 */
@@ -133,7 +130,7 @@ if (FALSE != $user) {
 			}
 		}
 	}
-	
+
 	/* Check if site is closed and verify user's group can access if it is */
 	if ($icmsConfig['closesite'] == 1) {
 		$allowed = FALSE;
@@ -148,7 +145,7 @@ if (FALSE != $user) {
 			exit();
 		}
 	}
-    
+
 	/* Continue with login - all negative checks have been passed */
 	$user->setVar('last_login', time());
 	if (!$member_handler->insertUser($user)) {}

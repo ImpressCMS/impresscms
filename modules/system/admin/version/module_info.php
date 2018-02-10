@@ -39,8 +39,6 @@
  * @since		1.0
  * @version		SVN: $Id$
  */
-defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
-
 if ((int) $_GET['mid']) {
 	$module_handler = icms::handler('icms_module');
 	$versioninfo =& $module_handler->get($_GET['mid']);
@@ -66,7 +64,7 @@ echo "<html>\n<head>\n"
 	<!--//
 	scrollID=0;
 	vPos=0;
-	
+
 	function onWard() {
 	   vPos+=2;
 	   window.scroll(0,vPos);

@@ -34,15 +34,13 @@
  * @license	LICENSE.txt
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * a group of users
  *
  * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Member\Group
- * 
+ *
  * @property int     $groupid        Group ID
  * @property string  $name           Name
  * @property string  $description    Description
@@ -52,12 +50,12 @@ class icms_member_group_Object extends icms_ipf_Object {
 	/**
 	 * constructor
 	 */
-	public function __construct(&$handler, $data = array()) {		
+	public function __construct(&$handler, $data = array()) {
 		$this->initVar('groupid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('name', self::DTYPE_STRING, null, true, 50);
 		$this->initVar('description', self::DTYPE_STRING, null, false);
 		$this->initVar('group_type', self::DTYPE_STRING, null, false, 10);
-                
+
                 parent::__construct($handler, $data);
 	}
 }

@@ -41,9 +41,6 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  * @version	$Id$
  */
-
-defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
-
 include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 $ph = icms::handler('icms_member_groupperm');
 

@@ -32,9 +32,6 @@
  *
  * @todo        Remove this file in the future
  */
-
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 \icms::$logger->stopTime('Module init');
 \icms::$logger->startTime('ICMS output init');
 

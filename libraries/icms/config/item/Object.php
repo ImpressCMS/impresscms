@@ -31,7 +31,6 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @author	Kazumi Ono (aka onokazo)
  */
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
  * Config item

@@ -34,8 +34,6 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * Form that will output as a theme-enabled HTML table
  *
@@ -97,7 +95,7 @@ class icms_form_Theme extends icms_form_Base {
 					$ret .= "<span class='caption-marker'> *</span>"
 						. "</div>";
 				}
-				
+
 				$ret .= "</td><td class='$class'>" . $ele->render() . "</td></tr>\n";
 			} else {
 				$hidden .= $ele->render();

@@ -8,8 +8,6 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
-
 /**
  * icms_ipf_view_Tree base class
  *

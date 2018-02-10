@@ -34,9 +34,6 @@
  * @license	LICENSE.txt
  * @package	ICMS\Member\User
  */
-
-defined('ICMS_ROOT_PATH') or exit();
-
 icms_loadLanguageFile('core', 'user');
 icms_loadLanguageFile('core', 'notification');
 icms_loadLanguageFile('core', 'global');

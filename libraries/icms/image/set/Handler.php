@@ -40,7 +40,6 @@
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * XOOPS imageset handler class.

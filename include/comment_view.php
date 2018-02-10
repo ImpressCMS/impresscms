@@ -42,7 +42,7 @@
  * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
+if (!is_object($icmsModule)) {
 	exit();
 }
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';

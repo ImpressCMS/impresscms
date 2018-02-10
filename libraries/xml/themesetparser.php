@@ -43,9 +43,6 @@
  * @version	$Id: themesetparser.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
 include_once ICMS_LIBRARIES_PATH . '/xml/saxparser.php';
 include_once ICMS_LIBRARIES_PATH . '/xml/xmltaghandler.php';
 

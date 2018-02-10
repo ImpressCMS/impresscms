@@ -4,7 +4,6 @@
  *
  * @license		LICENSE.txt
  */
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * icms_ipf_view_Row class
@@ -19,35 +18,35 @@ class icms_ipf_view_Row {
 
 	/**
          * Keyname
-         * 
+         *
 	 * @var string
 	 */
 	public $_keyname = '';
-        
+
 	/**
          * Align of text
-         * 
+         *
 	 * @var string
 	 */
 	public $_align = 'left';
-        
+
 	/**
          * Custom method for value
-         * 
+         *
 	 * @var callable|null
 	 */
 	public	$_customMethodForValue;
-        
+
 	/**
          * What do display in header?
-         * 
+         *
 	 * @var array
 	 */
 	public $_header = array();
-        
+
 	/**
          * Class
-         * 
+         *
 	 * @var string
 	 */
 	public $_class = '';

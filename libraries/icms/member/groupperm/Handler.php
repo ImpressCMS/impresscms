@@ -31,28 +31,26 @@
  * Manage group permissions
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license	LICENSE.txt 
+ * @license	LICENSE.txt
  * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  */
-
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * Group permission handler class.
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of group permission class objects.
- * 
+ *
  * @package	ICMS\Member\GroupPermission
  * @see		icms_member_groupperm_Object
  * @author	Kazumi Ono  <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class icms_member_groupperm_Handler extends icms_ipf_Handler {
-    
+
         public function __construct(&$db) {
             parent::__construct($db, 'member_groupperm', 'gperm_id', 'gperm_itemid', 'gperm_name', 'icms', 'group_permission', array('gperm_id', array('gperm_name', 'gperm_itemid', 'gperm_modid')));
-        }	
+        }
 
 	/**
 	 * Delete all module specific permissions assigned for a group

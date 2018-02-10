@@ -34,8 +34,6 @@
 * @license		LICENSE.txt
 */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * Renders a form for setting module specific group permissions
  *

@@ -38,7 +38,7 @@
  * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
+if (!is_object($icmsModule)) {
 	exit();
 }
 $com_modid = $icmsModule->getVar('mid');

@@ -37,8 +37,6 @@
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * user select with page navigation
  *
@@ -68,10 +66,10 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		}
 		$member_handler = icms::handler('icms_member');
 		$user_count = $member_handler->getUserCount();
-		$value = is_array($value) 
-			? $value 
-			: (empty ($value) 
-				? array () 
+		$value = is_array($value)
+			? $value
+			: (empty ($value)
+				? array ()
 				: array ($value)
 			);
 		if ($user_count > $limit && count($value) > 0) {
@@ -129,11 +127,11 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		$token = icms::$security->createToken();
 		$action_tray = new icms_form_elements_Tray("", " | ");
 		$action_tray->addElement(new icms_form_elements_Label('',
-			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name 
+			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name
 			. ($multiple ? "[]" : "") . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"
 			. _MA_USER_REMOVE . "</a>"));
 		$action_tray->addElement(new icms_form_elements_Label('',
-			"<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL 
+			"<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL
 			. "/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"
 			. _MA_USER_MORE . "</a>" . $js_addusers));
 

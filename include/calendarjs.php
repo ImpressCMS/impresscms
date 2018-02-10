@@ -9,9 +9,6 @@
  * @author    debianus
  * @version    $Id$
  */
-
-defined('ICMS_ROOT_PATH') or exit();
-
 global $icmsTheme;
 global $icmsConfig;
 icms_loadLanguageFile('core', 'calendar');

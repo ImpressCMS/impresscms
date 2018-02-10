@@ -1,7 +1,4 @@
 <?php
-
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * This class is responsible for providing operations to an object for managing the object's manipulation
  *
@@ -39,7 +36,7 @@ class icms_ipf_Controller {
             $data_type = $icmsObj->getVarInfo($key, icms_properties_Handler::VARCFG_DEP_DATA_TYPE);
             if (!$data_type)
                 $data_type = $icmsObj->getVarInfo($key, icms_properties_Handler::VARCFG_TYPE);
-            
+
 			switch ($data_type) {
 				case icms_properties_Handler::DTYPE_DEP_IMAGE:
 					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] !='') {
@@ -117,7 +114,7 @@ class icms_ipf_Controller {
 					}
 					$icmsObj->setVar($key, $value);
 					break;
-					
+
 				case icms_properties_Handler::DTYPE_DEP_URL:
 					if (isset($_POST[$key])) {
 						$icmsObj->setVar($key, filter_var($_POST[$key], FILTER_SANITIZE_URL));
@@ -211,7 +208,7 @@ class icms_ipf_Controller {
 
 			}
 		}
-        $ret = $icmsObj->toArray();        
+        $ret = $icmsObj->toArray();
 
 		if ($uploaderResult) {
 			if ($debug) {

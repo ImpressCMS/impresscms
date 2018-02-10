@@ -35,8 +35,6 @@
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * A Comment
  *
@@ -69,7 +67,7 @@ class icms_data_comment_Object extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 **/
-	public function __construct(&$handler, $data = array()) {		
+	public function __construct(&$handler, $data = array()) {
 		$this->initVar('com_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('com_pid', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('com_modid', self::DTYPE_INTEGER, null, false);
@@ -90,7 +88,7 @@ class icms_data_comment_Object extends icms_ipf_Object {
 		$this->initVar('doxcode', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('doimage', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('dobr', self::DTYPE_INTEGER, 0, false);
-                
+
                 parent::__construct($handler, $data);
 	}
 

@@ -19,8 +19,6 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-defined('ICMS_ROOT_PATH') or die();
-
 /**
  * Create a form element to select an image
  *

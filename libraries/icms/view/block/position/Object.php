@@ -7,13 +7,11 @@
  * @since	1.0
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * Block position
- * 
+ *
  * @package	ICMS\View\Block\Position
- * 
+ *
  * @property int    $id            Block position id
  * @property string $pname         Name (used on codes)
  * @property string $title         Title (displayed for users)
@@ -36,7 +34,7 @@ class icms_view_block_position_Object extends icms_ipf_Object {
 		$this->initVar('description', self::DTYPE_STRING);
 		$this->initVar('block_default', self::DTYPE_INTEGER, 0);
 		$this->initVar('block_type', self::DTYPE_STRING, 'L', false, 1);
-                
+
                 parent::__construct($handler);
 	}
 }

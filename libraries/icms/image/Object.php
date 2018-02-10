@@ -36,8 +36,6 @@
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * An Image Object
  *

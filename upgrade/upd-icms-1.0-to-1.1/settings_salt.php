@@ -9,11 +9,6 @@
  * @author	   Sina Asghari <pesian_stranger@users.sourceforge.net>
  * @version		$Id: setting_salt.php 1747 2008-04-20 19:42:15Z pesian_stranger $
  */
-
-if (!defined( 'ICMS_ROOT_PATH' )) {
-    die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
-}
-
 $vars =& $_SESSION['settings'];
 
 function xoFormField( $name, $value, $label, $maxlength, $help = '' )

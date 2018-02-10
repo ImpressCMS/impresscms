@@ -36,8 +36,6 @@
  * @author	marcan aka Marc-André Lanciault <marcan@smartfactory.ca>
  */
 
-defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
-
 /**
  * A tree structures with objects as nodes
  *

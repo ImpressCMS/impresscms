@@ -34,8 +34,6 @@
  * @license    LICENSE.txt
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Template file handler class.
  * This class is responsible for providing data access mechanisms to the data source

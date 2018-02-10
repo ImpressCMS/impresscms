@@ -35,22 +35,20 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Group membership handler class. (Singleton)
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of group membership class objects.
  *
- * @author      Kazumi Ono <onokazu@xoops.org> 
+ * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member\Group\Membership
  */
 class icms_member_group_membership_Handler extends icms_ipf_Handler {
-    
+
         public function __construct(&$db) {
             parent::__construct($db, 'member_group_membership', 'linkid', 'groupid', 'uid', 'icms', 'groups_users_link', 'linkid');
-        }	    
+        }
 
 	/**
 	 * retrieve groups for a user

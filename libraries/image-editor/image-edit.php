@@ -14,8 +14,6 @@
 $xoopsOption ['nodebug'] = 1;
 if (file_exists ( '../../mainfile.php' )) include_once '../../mainfile.php';
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {
 	exit(_NOPERM);
 }
@@ -97,7 +95,7 @@ if (!empty($op) && $op == 'cancel') {
 	} else {
 		$image_path = NULL;
 	}
-	
+
 	if (file_exists($image_path)) {
 		@unlink($image_path);
 	}

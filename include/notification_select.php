@@ -40,12 +40,6 @@
  * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	exit();
-}
-
-
-
 include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
 $xoops_notification = [
     'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline')) ? 1 : 0

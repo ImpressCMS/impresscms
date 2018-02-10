@@ -8,8 +8,6 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * To make the Autocomplete field work, the include file needs to look like the following
  * (in this example the Autocomplete field would use the conf_name field of the config table as a
@@ -30,7 +28,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *    autocomplete function starts to work (default: 3)
  *  - use control parameter "delay" to specify the delay before the autocomplete function starts
  *    to work. Use with caution since it can result in high server load! (default: 500)
- * 
+ *
  * @package	ICMS\IPF\Form\Elements
  */
 class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text {

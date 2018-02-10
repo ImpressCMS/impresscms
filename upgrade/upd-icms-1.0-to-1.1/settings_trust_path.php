@@ -10,10 +10,6 @@
  * @version		$Id: setting_trust_path.php 5547 2008-10-09 19:42:15Z pesian_stranger $
  */
 
-if (!defined( 'ICMS_ROOT_PATH' )) {
-    die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
-}
-
 $vars =& $_SESSION['settings'];
 
 function icmsFormField( $name, $value, $label, $maxlength, $help = '' )

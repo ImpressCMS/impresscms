@@ -1,6 +1,3 @@
-<?php
-	defined( 'ICMS_ROOT_PATH' ) or die();
-?>
 <h2><?php echo _USER_LOGIN; ?></h2>
 
 <form action="<?php echo ICMS_URL; ?>/user.php?op=login" method="post">

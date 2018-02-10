@@ -9,8 +9,6 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * icms_preload_Handler
  *

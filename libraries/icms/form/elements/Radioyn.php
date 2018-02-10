@@ -34,13 +34,11 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Yes/No radio buttons.
  *
  * A pair of radio buttons labeled _YES and _NO with values 1 and 0
- * 
+ *
  * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org

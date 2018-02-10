@@ -34,15 +34,13 @@
  * @license	LICENSE.txt
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Base class for all template sets
  *
  * @author	Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Template\Set
- * 
+ *
  * @property int    $tplset_id      Template set ID
  * @property string $tplset_name    Name
  * @property string $tplset_desc    Description
@@ -60,7 +58,7 @@ class icms_view_template_set_Object extends icms_ipf_Object {
 		$this->initVar('tplset_desc', self::DTYPE_STRING, null, false, 255);
 		$this->initVar('tplset_credits', self::DTYPE_STRING, null, false);
 		$this->initVar('tplset_created', self::DTYPE_INTEGER, 0, false);
-                
+
                 parent::__construct($handler, $data);
 	}
 }

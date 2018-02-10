@@ -10,8 +10,6 @@
  * @version		SVN: $Id$
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * ImpressCMS page handler class.
  *

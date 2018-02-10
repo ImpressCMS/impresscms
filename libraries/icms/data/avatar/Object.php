@@ -36,14 +36,12 @@
  * @author		Kazumi Ono (aka onokazo)
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Avatar class
  *
  * @author	Kazumi Ono (aka onokazo)
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS\Data\Avatar 
+ * @package	ICMS\Data\Avatar
  *
  * @property int        $avatar_id         Avatar ID
  * @property string     $avatar_file       File used for avatar
@@ -62,7 +60,7 @@ class icms_data_avatar_Object extends icms_ipf_Object {
 	 * Constructor for avatar class, initializing all the properties of the class object
 	 *
 	 */
-	public function __construct(&$handler, $data = array()) {		
+	public function __construct(&$handler, $data = array()) {
 		$this->initVar('avatar_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('avatar_file', self::DTYPE_STRING, null, false, 30);
 		$this->initVar('avatar_name', self::DTYPE_STRING, null, true, 100);
@@ -71,7 +69,7 @@ class icms_data_avatar_Object extends icms_ipf_Object {
 		$this->initVar('avatar_display', self::DTYPE_INTEGER, 1, false);
 		$this->initVar('avatar_weight', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('avatar_type', self::DTYPE_STRING, '', false, 1);
-                
+
                 parent::__construct($handler, $data);
 	}
 

@@ -34,7 +34,6 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
  */
-defined('ICMS_ROOT_PATH') or exit();
 
 /**
  * Class for users

@@ -1,6 +1,4 @@
 <?php
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
 $dirs = getDirList( "." );
 
 $results = array();

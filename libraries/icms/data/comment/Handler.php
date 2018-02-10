@@ -36,8 +36,6 @@
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Comment handler class.
  *
@@ -45,13 +43,13 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * of comment class objects.
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @package	ICMS\Data\Comment 
+ * @package	ICMS\Data\Comment
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * 				You should have received a copy of XOOPS_copyrights.txt with
  * 				this file. If not, you may obtain a copy from xoops.org
  */
 class icms_data_comment_Handler extends icms_ipf_Handler {
-    
+
         public function __construct(&$db) {
             parent::__construct($db, 'data_comment', 'com_id', 'com_title', 'com_text', 'icms', 'xoopscomments', 'com_id');
         }
@@ -63,9 +61,9 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 *
 	 * @return  array   Array of raw database records
 	 **/
-	public function getList($criteria = null, $limit, $start, $debug) {            
+	public function getList($criteria = null, $limit, $start, $debug) {
             $comments = parent::getList($criteria, $limit, $start, $debug);
-            return array_keys($comments);		
+            return array_keys($comments);
 	}
 
 	/**

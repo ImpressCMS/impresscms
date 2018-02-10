@@ -10,8 +10,6 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * icms_ipf_view_Table base class
  *
@@ -86,14 +84,14 @@ class icms_ipf_view_Table {
 			$this->_head_css_class = 'head';
 		}
 	}
-        
+
         /**
          * Magic getter to make some variables for class read-only from outside
-         * 
+         *
          * @param string $name  Variable name
-         * 
+         *
          * @return mixed
-         * 
+         *
          * @throws Exception
          */
         public function __get($name) {

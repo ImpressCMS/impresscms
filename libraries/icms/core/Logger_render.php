@@ -13,8 +13,6 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-defined('ICMS_ROOT_PATH') or die();
-
 $ret = '';
 
 if ($mode == 'popup') {

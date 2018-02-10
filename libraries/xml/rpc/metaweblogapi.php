@@ -41,9 +41,6 @@
  * @version	$Id: metaweblogapi.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
 require_once ICMS_LIBRARIES_PATH . '/xml/rpc/xmlrpcapi.php';
 
 class MetaWeblogApi extends XoopsXmlRpcApi

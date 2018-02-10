@@ -1,7 +1,6 @@
 <?php
 $xoopsOption['nodebug'] = 1;
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 $file = $_GET['file'];
 $width = isset($_GET['width']) ? (int) $_GET['width'] : null;

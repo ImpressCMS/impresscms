@@ -34,8 +34,6 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  **/
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * A text field with calendar popup
  *
@@ -69,13 +67,13 @@ class icms_form_elements_Date extends icms_form_elements_Text {
 		$jstime = formatTimestamp($ele_value, _SHORTDATESTRING);
 
 		include_once ICMS_ROOT_PATH . '/include/calendar' . ($icmsConfigPersona['use_jsjalali'] == true ? 'jalali' : '') . 'js.php';
-		
+
 	if ($icmsConfigPersona['use_jsjalali']) {
 			include_once ICMS_ROOT_PATH . '/include/jalali.php';
 		}
-		
+
 		$result = "<input type='text' class='datepick'  name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date(_SHORTDATESTRING, $ele_value)."'".$this->getExtra()." />";
-		
+
 		return $result;
 	}
 }

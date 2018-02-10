@@ -35,8 +35,6 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
 /**
  * XoopsEditor hanlder
  *

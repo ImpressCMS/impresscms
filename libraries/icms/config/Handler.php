@@ -32,8 +32,6 @@
  * @author		Kazumi Ono (aka onokazo)
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Configuration handling class.
  * This class acts as an interface for handling general configurations
@@ -48,77 +46,77 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  */
 class icms_config_Handler {
 	static protected $instance;
-        
+
         /**
          * Main (default) category
          */
         const CATEGORY_MAIN = 1;
-        
+
         /**
          * User category
          */
         const CATEGORY_USER = 2;
-        
+
         /**
          * Meta & footer category
          */
         const CATEGORY_METAFOOTER = 3;
-        
+
         /**
          * Censorship category
          */
         const CATEGORY_CENSOR = 4;
-        
+
         /**
          * Search catageory
          */
         const CATEGORY_SEARCH = 5;
-        
+
         /**
          * Mailer category
          */
         const CATEGORY_MAILER = 6;
-        
+
         /**
          * Authentification category
          */
         const CATEGORY_AUTH = 7;
-        
+
         /**
          * Multilanguage configuration
          */
         const CATEGORY_MULILANGUAGE = 8;
-        
+
         /**
          * Content category
          */
         const CATEGORY_CONTENT = 9;
-        
+
         /**
          * Persona category
          */
         const CATEGORY_PERSONA = 10;
-        
+
         /**
          * Captcha category
          */
         const CATEGORY_CAPTCHA = 11;
-        
+
         /**
          * Plugins category
          */
         const CATEGORY_PLUGINS = 12;
-        
+
         /**
          * Autotasks category
          */
         const CATEGORY_AUTOTASKS = 13;
-        
+
         /**
          * Purifier category
          */
         const CATEGORY_PURIFIER = 14;
-                
+
 	/**
 	 * Initialize the config handler.
 	 * @param $db

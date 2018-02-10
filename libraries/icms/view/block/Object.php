@@ -36,8 +36,6 @@
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * ImpressCMS Core Block Object Class
  *

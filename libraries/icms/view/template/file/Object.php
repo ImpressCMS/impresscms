@@ -34,17 +34,15 @@
  * @license	LICENSE.txt
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * Base class for all templates
  *
  * @author      Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Template\File
- * 
+ *
  * @property int    $tpl_id            Template ID
- * @property int    $tpl_refid         
+ * @property int    $tpl_refid
  * @property string $tpl_tplset        Template set
  * @property string $tpl_file          Template filename
  * @property string $tpl_desc          Description
@@ -55,14 +53,14 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * */
 class icms_view_template_file_Object extends icms_ipf_Object {
 
-        public $tpl_source = false;    
-    
+        public $tpl_source = false;
+
 	/**
 	 * constructor
-         * 
+         *
          * @todo: move here tpl_source
 	 */
-	public function __construct($handler, $data = array()) {		
+	public function __construct($handler, $data = array()) {
 		$this->initVar('tpl_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('tpl_refid', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('tpl_tplset', self::DTYPE_STRING, null, false, 50);
@@ -73,7 +71,7 @@ class icms_view_template_file_Object extends icms_ipf_Object {
 		$this->initVar('tpl_module', self::DTYPE_STRING, null, false, 25);
 		$this->initVar('tpl_type', self::DTYPE_STRING, null, false, 20);
 		//$this->initVar('tpl_source', self::DTYPE_DEP_SOURCE, null, false);
-                
+
                 parent::__construct($handler, $data);
 	}
 
@@ -89,7 +87,7 @@ class icms_view_template_file_Object extends icms_ipf_Object {
                 $myrow = $this->handler->db->fetchArray($result);
                 return $myrow['tpl_source'];
 	}
-        
+
         public function getVar($name, $format = 's') {
             if ($name == 'tpl_source') {
                 if ($this->tpl_source === false) {
@@ -100,15 +98,15 @@ class icms_view_template_file_Object extends icms_ipf_Object {
                 return parent::getVar($name, $format);
             }
         }
-        
-        public function assignVar($name, &$value) {            
+
+        public function assignVar($name, &$value) {
             if ($name == 'tpl_source') {
                 $this->tpl_source = $value;
             } else {
                 parent::assignVar($name, $value);
             }
         }
-        
+
         public function setVar($name, $value, $options = null) {
             if ($name == 'tpl_source') {
                 $this->tpl_source = $value;

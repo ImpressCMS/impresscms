@@ -42,8 +42,6 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @author 		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-/** Be sure this is accessed correctly */
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /** Creates constant indicating this file has been loaded */
 define('XOOPS_CPFUNC_LOADED', 1);
 /** Load the template class */

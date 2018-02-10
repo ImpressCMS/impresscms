@@ -34,14 +34,12 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-
 /**
  * A Notification
  *
  * @author	Michael van Dam	<mvandam@caltech.edu>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS\Data\Notification 
+ * @package	ICMS\Data\Notification
  *
  * @property int    $not_id        Notification ID
  * @property int    $not_modid     Module ID linked with this notification
@@ -56,7 +54,7 @@ class icms_data_notification_Object extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 **/
-	public function __construct(&$handler, $data = array()) {		
+	public function __construct(&$handler, $data = array()) {
 		$this->initVar('not_id', self::DTYPE_INTEGER, NULL, false);
 		$this->initVar('not_modid', self::DTYPE_INTEGER, NULL, false);
 		$this->initVar('not_category', self::DTYPE_STRING, null, false, 30);
@@ -64,7 +62,7 @@ class icms_data_notification_Object extends icms_ipf_Object {
 		$this->initVar('not_event', self::DTYPE_STRING, null, false, 30);
 		$this->initVar('not_uid', self::DTYPE_INTEGER, 0, true);
 		$this->initVar('not_mode', self::DTYPE_INTEGER, 0, false);
-                
+
         parent::__construct($handler, $data);
 	}
 

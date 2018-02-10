@@ -3,8 +3,6 @@
  * Class used to determine if the core, or modules, need to be updated
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
 /**
  * IcmsVersionChecker
  *

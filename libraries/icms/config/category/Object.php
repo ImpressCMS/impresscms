@@ -32,7 +32,6 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @author	Kazumi Ono (aka onokazo)
  */
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * A category of configs
@@ -50,11 +49,11 @@ class icms_config_category_Object extends icms_ipf_Object {
 	 * Constructor
 	 *
 	 */
-	public function __construct(&$handler, $data = array()) {		
+	public function __construct(&$handler, $data = array()) {
 		$this->initVar('confcat_id', self::DTYPE_INTEGER, null);
 		$this->initVar('confcat_name', self::DTYPE_STRING, null, true, 255);
 		$this->initVar('confcat_order', self::DTYPE_INTEGER, 0);
-                
+
                 parent::__construct($handler, $data);
 	}
 }
