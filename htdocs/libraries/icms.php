@@ -152,12 +152,14 @@ final class icms {
 			self::loadService($name, $factory, $args);
 		}
 
-		icms::$cache = Apix\Cache\Factory::getTaggablePool(
-			new Apix\Cache\Directory([
-					'directory' => ICMS_CACHE_PATH,
-					'locking' => true
-				]
-			)
+		icms::$cache = Apix\Cache\Factory::getPool(
+			'files',
+			[
+				'directory' => ICMS_CACHE_PATH,
+				'locking' => true,
+				'prefix_key' => 'icms'
+			],
+			true
 		);
 
 		//Cant do this here until common.php 100% refactored
