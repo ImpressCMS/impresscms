@@ -237,7 +237,7 @@ function impresscms_sort_adminmenu_modules(\icms_module_Object $a, \icms_module_
  */
 function xoops_module_write_admin_menu($content) {
 	global $icmsConfig;
-	
+
 	$item = icms::$cache->getItem('adminmenu-' . $icmsConfig['language']);
 	$item->set($content);
 	return icms::$cache->save($item);
