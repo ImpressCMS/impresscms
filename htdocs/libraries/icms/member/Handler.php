@@ -56,7 +56,7 @@ class icms_member_Handler {
 	/**
 	 * holds reference to user handler(DAO) class
 	 */
-	private $_uHandler;
+	protected $_uHandler;
 
 	/**
 	 * holds reference to membership handler(DAO) class
