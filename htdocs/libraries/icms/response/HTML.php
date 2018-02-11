@@ -43,6 +43,7 @@ class icms_response_HTML extends icms_response_Text {
         if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
             $this->addAdminMetas();
             $this->loadAdminMenu();
+			$this->setAdminDefaultVars();
             global $icmsAdminTpl;
             $GLOBALS['icmsAdminTpl'] = $icmsAdminTpl = &$this->theme->template;
         } else {
@@ -71,6 +72,19 @@ class icms_response_HTML extends icms_response_Text {
 
         parent::__construct(null, $http_status, $headers);
     }
+
+	/**
+	 * Sets default variables for admin
+	 */
+    private function setAdminDefaultVars() {
+		global $icmsConfigPersona;
+		$this->theme->template->assign('adm_left_logo', $icmsConfigPersona['adm_left_logo']);
+		$this->theme->template->assign('adm_left_logo_url', $icmsConfigPersona['adm_left_logo_url']);
+		$this->theme->template->assign('adm_left_logo_alt', $icmsConfigPersona['adm_left_logo_alt']);
+		$this->theme->template->assign('adm_right_logo', $icmsConfigPersona['adm_right_logo']);
+		$this->theme->template->assign('adm_right_logo_url', $icmsConfigPersona['adm_right_logo_url']);
+		$this->theme->template->assign('adm_right_logo_alt', $icmsConfigPersona['adm_right_logo_alt']);
+	}
 
     /**
      * Loading admin dropdown menus
