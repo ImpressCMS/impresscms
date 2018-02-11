@@ -234,24 +234,11 @@ function impresscms_sort_adminmenu_modules(\icms_module_Object $a, \icms_module_
  * Writes entire admin menu into cache
  * @param string  $content  content to write to the admin menu file
  * @return true
- * @todo create language constants for the error messages
  */
 function xoops_module_write_admin_menu($content) {
 	global $icmsConfig;
-	$filename = ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php';
-	if (!$file = fopen($filename, "w")) {
-            trigger_error('Failed to open admin menu cache file for writing', E_USER_WARNING);
-            return false;
-	}
-	if (fwrite($file, '<?php return ' . var_export($content, true) . ';') === FALSE) {
-            trigger_error('Failed to write admin menu cache file', E_USER_WARNING);
-            fclose($file);
-            return false;
-	}
-	fclose($file);
-
-	// write index.html file in cache folder
-	// file is delete after clear_cache (smarty)
-	icms_core_Filesystem::writeIndexFile(ICMS_CACHE_PATH);
-	return true;
+	
+	$item = icms::$cache->getItem('adminmenu-' . $icmsConfig['language']);
+	$item->set($content);
+	return icms::$cache->save($item);
 }

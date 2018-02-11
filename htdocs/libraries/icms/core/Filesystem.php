@@ -90,7 +90,7 @@ class icms_core_Filesystem {
 					? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
 						&& $file != '.svn')
 					: ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
-						&& $file != '.svn' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
+						&& $file != '.svn');
 				if (is_file($d . $file) && $files_array) {
 					unlink($d . $file);
 				}
