@@ -93,20 +93,6 @@ define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL . '/imagemanager');
 $icms_images_setname = 'kfaenza';
 define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
 
-/**#@+
- * @deprecated - for backward compatibility
- */
-define('XOOPS_INCLUDE_PATH', ICMS_INCLUDE_PATH);
-define('XOOPS_INCLUDE_URL', ICMS_INCLUDE_URL);
-define('XOOPS_UPLOAD_PATH', ICMS_UPLOAD_PATH);
-define('XOOPS_UPLOAD_URL', ICMS_UPLOAD_URL);
-define('XOOPS_THEME_PATH', ICMS_THEME_PATH);
-define('XOOPS_THEME_URL', ICMS_THEME_URL);
-define('XOOPS_COMPILE_PATH', ICMS_COMPILE_PATH);
-define('XOOPS_CACHE_PATH', ICMS_CACHE_PATH);
-define('XOOPS_EDITOR_PATH', ICMS_EDITOR_PATH);
-define('XOOPS_EDITOR_URL', ICMS_EDITOR_URL);
-/**#@-*/
 define('SMARTY_DIR', ICMS_LIBRARIES_PATH . '/smarty/');
 
 if (!defined('XOOPS_XMLRPC')) {
