@@ -153,8 +153,10 @@ final class icms {
 		}
 
 		icms::$cache = Apix\Cache\Factory::getTaggablePool(
-			new Apix\Cache\Directory(
-				ICMS_CACHE_PATH
+			new Apix\Cache\Directory([
+					'directory' => ICMS_CACHE_PATH,
+					'locking' => true
+				]
 			)
 		);
 
