@@ -39,8 +39,6 @@
  */
 
 $xoopsOption['pagetype'] = 'user';
-include 'mainfile.php';
-
 if (icms_get_module_status('profile') && file_exists(ICMS_MODULES_PATH . '/profile/edituser.php')) {
 	header('Location: ' . ICMS_MODULES_URL . '/profile/edituser.php');
 	exit();

@@ -41,8 +41,6 @@
 /* this will set which language file will load for this page */
 $xoopsOption['pagetype'] = "pmsg";
 
-require "mainfile.php";
-
 /* set filter types, if not strings */
 $filter_get = array(
 		'reply' => 'int',
@@ -154,7 +152,7 @@ if (!icms::$user) {
 				redirect_header(icms_getPreviousPage(), 5, _PM_MESSAGEPOSTED);
 			}
 		}
-		
+
 	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {
 		/* This section is for composing messages */
 		$theme = new icms_view_theme_Factory();

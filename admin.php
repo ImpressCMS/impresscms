@@ -46,7 +46,6 @@
 define('ICMS_IN_ADMIN', 1);
 
 $xoopsOption['pagetype'] = 'admin';
-include 'mainfile.php';
 include ICMS_ROOT_PATH . '/include/cp_functions.php';
 
 // test to see if the system module should be updated, added in 1.2

@@ -39,7 +39,6 @@
  * @version		SVN: $Id: viewpmsg.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 $xoopsOption['pagetype'] = 'pmsg';
-require_once 'mainfile.php';
 
 /* set filter types, if not strings */
 $filter_get = array(

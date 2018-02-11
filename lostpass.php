@@ -40,8 +40,6 @@
  */
 
 $xoopsOption['pagetype'] = 'user';
-/** Include mainfile.php - required */
-include 'mainfile.php';
 /* $_POST parameters
  *	email
  *

@@ -2,7 +2,7 @@
 /**
  * All functions for Password Expiry & Reset Password generator are going through here.
  * Form and process for resetting password and sending to user
- * 
+ *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
@@ -14,7 +14,6 @@
  */
 
 $xoopsOption['pagetype'] = 'user';
-include 'mainfile.php';
 /* the following are passed through $_POST/$_GET
  *	'c_password' => 'str',
  *	'password' => 'str',

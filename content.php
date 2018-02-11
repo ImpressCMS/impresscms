@@ -10,8 +10,6 @@
  * @version		$Id$
  */
 
-include_once 'mainfile.php';
-
 define ( "CONTENT_DIRNAME", 'content' );
 define ( "CONTENT_URL", ICMS_URL . '/modules/' . CONTENT_DIRNAME . '/' );
 define ( "CONTENT_ROOT_PATH", ICMS_ROOT_PATH . '/modules/' . CONTENT_DIRNAME . '/' );

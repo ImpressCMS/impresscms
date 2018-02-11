@@ -1,6 +1,5 @@
 <?php
 $xoopsOption['nodebug'] = 1;
-if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
 
 $file = $_GET['file'];
 $width = isset($_GET['width']) ? (int) $_GET['width'] : null;

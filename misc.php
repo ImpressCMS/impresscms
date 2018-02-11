@@ -38,7 +38,6 @@
  * @version	$Id: misc.php 12399 2014-01-25 17:02:01Z skenow $
  **/
 
-include 'mainfile.php';
 icms_loadLanguageFile('core', 'misc');
 /* set filter types, if not strings */
 $filter_post = array(

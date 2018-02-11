@@ -13,16 +13,6 @@
 // Make sure the kernel launches the module in admin mode and checks the correct permissions
 define('ICMS_IN_ADMIN', 1);
 
-/* if mainfile.php is loaded before this file, the icms::$module will not be loaded properly,
- * causing a fatal error when trying to access any property or method of $icmsModule,
- * $xoopsModule or icms::$module
- */
-if (defined('ICMS_MAINFILE_INCLUDED')) {
-	icms_core_Debug::setDeprecated('', 'mainfile.php should not be loaded before including cp_header.php');
-	icms::loadService('module', array('icms_module_Handler', 'service'), array(TRUE));
-}
-/** Load the mainfile */
-include_once '../../../mainfile.php';
 /** Load the admin functions */
 include_once ICMS_ROOT_PATH . '/include/cp_functions.php';
 

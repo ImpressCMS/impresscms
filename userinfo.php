@@ -38,7 +38,6 @@
  */
 
 $xoopsOption['pagetype'] = 'user';
-include 'mainfile.php';
 $uid = (int) $_GET['uid'];
 
 if (icms_get_module_status("profile")) {

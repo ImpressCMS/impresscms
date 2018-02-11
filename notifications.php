@@ -39,7 +39,6 @@
  */
 
 $xoopsOption['pagetype'] = 'notification';
-include 'mainfile.php';
 
 if (empty(icms::$user)) {
 	redirect_header('index.php', 3, _NOT_NOACCESS);
@@ -73,25 +72,25 @@ if (in_array($op, $valid_op)) {
 			// FIXME: does this always go back to correct location??
 			redirect_header('index.php');
 			break;
-	
+
 		case 'list':
 			// Do we allow other users to see our notifications?  Nope, but maybe
 			// see who else is monitoring a particular item (or at least how many)?
 			// Well, maybe admin can see all...
-	
+
 			// TODO: need to span over multiple pages...???
-	
+
 			// Get an array of all notifications for the selected user
-	
+
 			$criteria = new icms_db_criteria_Item('not_uid', $uid);
 			$criteria->setSort('not_modid,not_category,not_itemid');
 			$notification_handler = icms::handler('icms_data_notification');
 			$notifications =& $notification_handler->getObjects($criteria);
-	
+
 			// Generate the info for the template
-	
+
 			$module_handler = icms::handler('icms_module');
-	
+
 			$modules = array();
 			$prev_modid = -1;
 			$prev_category = -1;
@@ -112,7 +111,7 @@ if (in_array($op, $valid_op)) {
 					// still wouldn't give us all the required info... e.g. the
 					// topic ID doesn't give us the ID of the forum which is
 					// a required argument...
-	
+
 					// Get the lookup function, if exists
 					$not_config = $module->getInfo('notification');
 					$lookup_func = '';
@@ -177,24 +176,24 @@ if (in_array($op, $valid_op)) {
 			$xoopsTpl->assign('lang_activenotifications', _NOT_ACTIVENOTIFICATIONS);
 			$xoopsTpl->assign('notification_token', icms::$security->createToken());
 			include ICMS_ROOT_PATH . '/footer.php';
-	
+
 			// TODO: another display mode... instead of one notification per line,
 			// show one line per item_id, with checkboxes for the available options...
 			// and an update button to change them...  And still have the delete box
 			// to delete all notification for that item
-	
+
 			// How about one line per ID, showing category, name, id, and list of
 			// events...
-	
+
 			// TODO: it would also be useful to provide links to other available
 			// options so we can say switch from new_message to 'bookmark' if we
 			// are receiving too many emails.  OR, if we click on 'change options'
 			// we get a form for that page...
-	
+
 			// TODO: option to specify one-time??? or other modes??
-	
+
 			break;
-	
+
 		case 'delete_ok':
 			if (empty($_POST['del_not'])) {
 				redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
@@ -204,13 +203,13 @@ if (in_array($op, $valid_op)) {
 			print '<h4>' . _NOT_DELETINGNOTIFICATIONS . '</h4>';
 			icms_core_Message::confirm($hidden_vars, '', _NOT_RUSUREDEL);
 			include ICMS_ROOT_PATH . '/footer.php';
-	
+
 			// FIXME: There is a problem here... in icms_core_Message::confirm it treats arrays as
 			// optional radio arguments on the confirmation page... change this or
 			// write new function...
-	
+
 			break;
-	
+
 		case 'delete':
 			if (!icms::$security->check()) {
 				redirect_header('notifications.php', 2, implode('<br />', icms::$security->getErrors()));
@@ -229,10 +228,9 @@ if (in_array($op, $valid_op)) {
 			}
 			redirect_header('notifications.php', 2, _NOT_DELETESUCCESS);
 			break;
-	
+
 		default:
 			break;
 	}
 }
-	
-	
+

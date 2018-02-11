@@ -44,7 +44,6 @@ if (empty($image_id)) {
 	exit();
 }
 
-include "mainfile.php";
 icms::$logger->disableLogger();
 
 $criteria = icms_buildCriteria(array("i.image_display" => 1, "i.image_id" => $image_id));

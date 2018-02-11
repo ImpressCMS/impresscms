@@ -14,7 +14,6 @@
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-include "../../../../../mainfile.php";
 error_reporting(0);
 icms::$logger->activated = FALSE;
 

@@ -40,7 +40,6 @@
  */
 
 $xoopsOption['pagetype'] = 'user';
-include 'mainfile.php';
 
 $op = (isset($_GET['op']))
 	? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))

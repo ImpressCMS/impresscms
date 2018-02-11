@@ -12,8 +12,6 @@
  * @version		$Id$
  */
 
-include "mainfile.php";
-
 // security check
 if (!isset($_SESSION['AUTOLOGIN_REQUEST_URI'])) exit;
 

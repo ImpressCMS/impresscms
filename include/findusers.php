@@ -13,7 +13,6 @@
  * @version		$Id$
  */
 
-include "../mainfile.php";
 xoops_header(false);
 
 $denied = true;

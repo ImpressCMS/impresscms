@@ -41,7 +41,6 @@
 
 define('ICMS_IN_ADMIN', 1);
 
-include_once "../../mainfile.php";
 include_once dirname(__FILE__) . '/include/common.php';
 
 $fct = (isset($_GET['fct']))
@@ -75,7 +74,7 @@ icms_loadLanguageFile('core', 'moduleabout');
 $admin_dir = ICMS_MODULES_PATH . '/system/admin';
 if (!file_exists($admin_dir . '/' . $fct)) {
     if ((strlen($fct) > 5) && (substr($fct, -5) == 'admin')) {
-        $fct = substr($fct, 0, -5);        
+        $fct = substr($fct, 0, -5);
     } else {
         $fct .= 'admin';
     }

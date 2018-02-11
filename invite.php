@@ -13,8 +13,6 @@
 
 $xoopsOption['pagetype'] = 'user';
 
-include 'mainfile.php';
-
 // If not a user and invite needs one, redirect
 if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register'] == 0 && !is_object(icms::$user)) {
 	redirect_header('index.php', 6, _US_INVITEBYMEMBER);
@@ -81,7 +79,7 @@ switch ($op) {
 		}
 		include 'footer.php';
 		break;
-		
+
 	case 'invite':
 	default:
 		include 'header.php';

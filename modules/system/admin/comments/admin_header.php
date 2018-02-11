@@ -41,7 +41,6 @@
  * @version		SVN: $Id$
  */
 
-include '../../../../mainfile.php';
 include ICMS_ROOT_PATH.'/include/cp_functions.php';
 if (is_object(icms::$user)) {
 	$module_handler = icms::handler('icms_module');

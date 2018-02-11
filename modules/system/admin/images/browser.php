@@ -13,8 +13,6 @@
  * @version		SVN: $Id$
  */
 
-include_once "../../../../mainfile.php";
-
 if (!icms::$user) {
 	redirect_header(ICMS_URL . '/index.php', 6, _NOPERM);
 }

@@ -16,10 +16,6 @@
  * @var boolean
  */
 define('ICMS_INCLUDE_OPENID', TRUE);
-/**
- * mainfile.php starts the boot process
- */
-include_once 'mainfile.php';
 
 $_SESSION['frompage'] = isset($_SERVER['HTTP_REFERER'])
 	? $_SERVER['HTTP_REFERER']

@@ -17,8 +17,6 @@ $openid_debug = FALSE;
 
 define('ICMS_INCLUDE_OPENID', TRUE);
 $xoopsOption['pagetype'] = 'user';
-/** Including mainfile.php is required */
-include_once 'mainfile.php';
 
 $redirect_url = $_SESSION['frompage'];
 $member_handler = icms::handler('icms_member');

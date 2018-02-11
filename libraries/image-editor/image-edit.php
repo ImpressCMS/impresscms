@@ -12,7 +12,6 @@
  * @version		$Id: image-edit.php 1244 2008-03-18 17:09:11Z real_therplima $
  */
 $xoopsOption ['nodebug'] = 1;
-if (file_exists ( '../../mainfile.php' )) include_once '../../mainfile.php';
 
 if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {
 	exit(_NOPERM);

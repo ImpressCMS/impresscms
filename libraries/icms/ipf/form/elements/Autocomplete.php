@@ -13,7 +13,6 @@
  * (in this example the Autocomplete field would use the conf_name field of the config table as a
  * lookup):
  *
- * include "mainfile.php";
  * icms::$logger->disableLogger();
  * $sql = "SELECT * FROM " . icms::$xoopsDB->prefix("config") . " WHERE conf_name LIKE '%" . $_GET['term'] . "%'";
  * $result = icms::$xoopsDB->query($sql);

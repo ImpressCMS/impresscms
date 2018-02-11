@@ -43,11 +43,6 @@ define('EASIESTML_DEFAULT_LANG', 0);
 
 // CONFIGURATIONS END
 
-// Patch check
-//if (! defined( 'ICMS_ROOT_PATH') || ! defined( 'ICMS_URL') || defined( 'XOOPS_SIDEBLOCK_LEFT')) die( "You should patch just after define('ICMS_URL', ...) in mainfile.php") ;
-// moving the inclusing of easiest ml just after the xoopsDB creation because we need the db...
-if (! defined('ICMS_ROOT_PATH') || ! defined('ICMS_URL')) die("You should patch just after define('ICMS_URL', ...) in mainfile.php");
-
 // Target check
 if (! preg_match('?' . preg_quote(ICMS_ROOT_PATH, '?') . '(/common/)?', $_SERVER['SCRIPT_FILENAME'])) {
 	global $easiestml_lang;

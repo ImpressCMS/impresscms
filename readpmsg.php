@@ -38,7 +38,6 @@
  */
 
 $xoopsOption['pagetype'] = "pmsg";
-require_once "mainfile.php";
 
 /* check access permissions */
 if (!is_object(icms::$user)) {
