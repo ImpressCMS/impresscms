@@ -71,7 +71,6 @@ define('XOOPS_MATCH_END', 1);
 define('XOOPS_MATCH_EQUAL', 2);
 define('XOOPS_MATCH_CONTAIN', 3);
 
-define('ICMS_KERNEL_PATH', ICMS_ROOT_PATH . '/kernel/');
 define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
 define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH . '/include');
 define('ICMS_UPLOAD_PATH', ICMS_ROOT_PATH . '/uploads');
