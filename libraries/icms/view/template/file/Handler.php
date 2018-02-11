@@ -224,7 +224,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler
 		$criteria->setSort('tpl_refid');
 
 		foreach ($this->getObjects($criteria) as $tpl) {
-			$this->_prefetch_cache[$tpl->id] = $tpl;
+			$this->_prefetch_cache[$tpl->tpl_id] = $tpl;
 		}
 
 		return true;
