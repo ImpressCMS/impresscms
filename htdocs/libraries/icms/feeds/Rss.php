@@ -67,28 +67,63 @@ class icms_feeds_Rss {
 	public function render() {
 		icms::$logger->disableLogger();
 
-		//header ('Content-Type:text/xml; charset='._CHARSET);
-		$xoopsOption['template_main'] = "db:system_rss.html";
-		$tpl = new icms_view_Tpl();
-
-		$tpl->assign('channel_title', $this->title);
-		$tpl->assign('channel_link', $this->url);
-		$tpl->assign('channel_desc', $this->description);
-		$tpl->assign('channel_webmaster', $this->webMaster);
-		$tpl->assign('channel_editor', $this->channelEditor);
-		$tpl->assign('channel_category', $this->category);
-		$tpl->assign('channel_generator', $this->generator);
-		$tpl->assign('channel_language', $this->language);
-		$tpl->assign('channel_lastbuild', $this->lastbuild);
-		$tpl->assign('channel_copyright', $this->copyright);
-		$tpl->assign('channel_width', $this->width);
-		$tpl->assign('channel_height', $this->height);
-		$tpl->assign('channel_ttl', $this->ttl);
-		$tpl->assign('image_url', $this->image['url']);
-		foreach ($this->feeds as $feed) {
-			$tpl->append('items', $feed);
+		$feed = new \FeedWriter\RSS2();
+		$feed->setTitle($this->title);
+		$feed->setLink($this->url);
+		$feed->setDescription($this->description);
+		$feed->setChannelElementsFromArray([
+			'webMaster' => $this->webMaster,
+			'managingEditor' => $this->channelEditor,
+			'ttl' => $this->ttl,
+			'copyright' => $this->copyright,
+			'category' => $this->category,
+			'generator' => $this->generator,
+			'language' => $this->language,
+			'lastBuildDate' => $this->lastbuild
+		]);
+		if ($this->image['url']) {
+			$feed->setChannelElement('image', [
+				'url' => $this->image['url'],
+				'title' => $this->title,
+				'link' => $this->url,
+				'width' => $this->width,
+				'height' => $this->height
+			]);
 		}
-		$tpl->display('db:system_rss.html');
+
+		foreach ($this->feeds as $item) {
+			$feed->addItem(
+				$this->convertFeedItem(
+					$feed,
+					(array)$item
+				)
+			);
+		}
+
+		header('Content-Type: application/rss+xml');
+		echo $feed->generateFeed();
+		exit(0);
+	}
+
+	/**
+	 * Converts feed item from array to real item
+	 *
+	 * @param \FeedWriter\Feed $feed Feed
+	 * @param array $item Feed item data
+	 *
+	 * @return \FeedWriter\Item
+	 */
+	protected function convertFeedItem(\FeedWriter\Feed &$feed, array $item) {
+		$feed_item = $feed->createNewItem();
+		$feed_item->setAuthor($item['author']);
+		$feed_item->setDate($item['pubdate']);
+		$feed_item->setId($item['guid']);
+		$feed_item->setLink($item['link']);
+		$feed_item->setTitle($item['title']);
+		$feed_item->setDescription($item['description']);
+		$feed_item->addElement('category', $item['category']);
+		
+		return $feed_item;
 	}
 }
 
