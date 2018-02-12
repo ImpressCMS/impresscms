@@ -39,9 +39,9 @@ class icms_feeds_Rss {
 	 */
 	public function __construct() {
 		global $icmsConfig;
-		$this->title = htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET);
+		$this->title = $icmsConfig['sitename'];
 		$this->url = ICMS_URL;
-		$this->description = htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET);
+		$this->description = $icmsConfig['slogan'];
 		$this->language = _LANGCODE;
 		$this->charset = _CHARSET;
 		$this->pubDate = date('r', time());
@@ -50,7 +50,7 @@ class icms_feeds_Rss {
 		$this->channelEditor = $icmsConfig['adminmail'];
 		$this->generator = ICMS_VERSION_NAME;
 		$this->copyright = _COPYRIGHT . ' ' . formatTimestamp(time(), 'Y')
-			. ' ' . htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET);
+			. ' ' . $icmsConfig['sitename'];
 		$this->width  = 144;
 		$this->height = 50;
 		$this->ttl    = 60;
@@ -122,7 +122,7 @@ class icms_feeds_Rss {
 		$feed_item->setTitle($item['title']);
 		$feed_item->setDescription($item['description']);
 		$feed_item->addElement('category', $item['category']);
-		
+
 		return $feed_item;
 	}
 }
