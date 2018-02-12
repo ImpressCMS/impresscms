@@ -102,7 +102,6 @@ class icms_feeds_Rss {
 
 		header('Content-Type: application/rss+xml');
 		echo $feed->generateFeed();
-		exit(0);
 	}
 
 	/**
