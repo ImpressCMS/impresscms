@@ -82,6 +82,7 @@ class icms_response_HTML extends icms_response_Text {
 
 		if (!$cached_menu->isHit()) {
 			xoops_module_write_admin_menu(impresscms_get_adminmenu());
+			$cached_menu = icms::$cache->getItem('adminmenu-' . $icmsConfig['language']);
 		}
 
         $admin_menu = $cached_menu->get();
