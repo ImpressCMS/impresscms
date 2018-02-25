@@ -8,7 +8,7 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id: youtube.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		$Id$
  */
 
 /**
@@ -18,9 +18,9 @@
  * @param $text
  */
 function textsanitizer_youtube(&$ts, $text) {
-	$patterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/esU";
-	$replacements[] = "textsanitizer_youtube_decode( '\\4', '\\2', '\\3' )";
-	return preg_replace($patterns, $replacements, $text);
+	return preg_replace_callback("/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU", function ($matches) {
+		return textsanitizer_youtube_decode($matches[4], $matches[2], $matches[3]);
+	}, $text);
 }
 
 /**
@@ -37,7 +37,7 @@ function render_youtube($ele_name) {
 		array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeYoutube(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERYOUTUBEURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERHEIGHT, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWIDTH, ENT_QUOTES)."\");'
+		onclick='javascript:icmsCodeYoutube(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERYOUTUBEURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERHEIGHT, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWIDTH, ENT_QUOTES, _CHARSET)."\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/youtube.gif'
 		alt='YouTube'

@@ -8,7 +8,7 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id: wiki.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		$Id$
  */
 /**
  * Link to associated page on Wikipedia for the enclosed text
@@ -23,9 +23,9 @@ define('WIKI_LINK',	'http://'._LANGCODE.'.wikipedia.org/wiki/%s');
  * @param unknown_type $text
  */
 function textsanitizer_wiki(&$ts, $text) {
-	$patterns[] = "/\[\[([^\]]*)\]\]/esU";
-	$replacements[] = "wikiLink( '\\1' )";
-	return preg_replace($patterns, $replacements, $text);
+	return preg_replace_callback("/\[\[([^\]]*)\]\]/sU", function ($matches) {
+		return wikiLink($matches[1]);
+	}, $text);
 }
 
 /**
@@ -56,7 +56,7 @@ function render_wiki($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeWIKI(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES)."\");'
+		onclick='javascript:icmsCodeWIKI(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES, _CHARSET)."\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/wiki.png'
 		alt='wiki'

@@ -8,7 +8,7 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id: hiddencontent.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		$Id$
  */
 /**
  *
@@ -42,7 +42,7 @@ function render_hiddencontent($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeHidden(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES) . "\");'
+		onclick='javascript:icmsCodeHidden(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES, _CHARSET) . "\");'
 		onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/hide.gif'
 		alt='hide'
 		title='" . $dirname . "' />&nbsp;";
