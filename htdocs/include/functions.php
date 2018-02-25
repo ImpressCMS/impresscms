@@ -257,7 +257,7 @@ function userTimeToServerTime($timestamp, $userTZ=null)
 /**
  * Function to generate password
  * @deprecated	use icms_core_Password::createSalt
- * 
+ *
  * @return string  $makepass  The generated password
  * @todo Move to a static class method - password/user
  * or why not just remove and use icms_core_Password::createSalt($length); instead?
@@ -333,7 +333,7 @@ function CloseWaitBox()
  * Checks if email is of correct formatting
  *
  * @deprecated	use icms_core_DataFilter::checkVar
- * 
+ *
  * @param string     $email      The email address
  * @param string     $antispam   Generate an email address that is protected from spammers
  * @return string    $email      The generated email address
@@ -633,7 +633,7 @@ function xoops_substr($str, $start, $length, $trimmarker = '...') {
  * This function works fine with multi-byte characters if mb_* functions exist on the server.
  *
  * @deprecated	use icms_core_DataFilter::icms_substr()
- * 
+ *
  * @param	string	$str
  * @param	int	   $start
  * @param	int	   $length
@@ -808,7 +808,7 @@ function xoops_getLinkedUnameFromId($userid)
 
 /**
  * Trims certain text
- * 
+ *
  * @deprecated	use icms_core_DataFilter::icms_trim
  *
  * @param	string	$text	The Text to trim
@@ -1178,8 +1178,8 @@ function icms_html2text($document)
 	"'&(iexcl|#161);'i",
 	"'&(cent|#162);'i",
 	"'&(pound|#163);'i",
-	"'&(copy|#169);'i",
-	"'&#(\d+);'e");					// evaluate as php
+	"'&(copy|#169);'i"
+	);
 
 	$replace = array ("",
 	"",
@@ -1193,10 +1193,13 @@ function icms_html2text($document)
 	chr(161),
 	chr(162),
 	chr(163),
-	chr(169),
-	"chr(\\1)");
+	chr(169)
+	);
 
 	$text = preg_replace($search, $replace, $document);
+	$text = preg_replace_callback("'&#(\d+);'", function ($m) {
+				return chr($m[1]);
+	}, $text);
 	return $text;
 
 }
@@ -1550,7 +1553,7 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
 
 /**
  * Function to reverse given text with utf-8 character sets
- * 
+ *
  * @deprecated	use icms_core_DataFilter::utf8_strrev
  *
  * credit for this function should goto lwc courtesy of php.net.
@@ -2054,7 +2057,7 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
 
 /**
  * Get URL of previous page
- * 
+ *
  * @deprecated	use icms::$urls['previouspage']
  *
  * @param string $default default page if previous page is not found
@@ -2125,7 +2128,7 @@ function icms_getImageSize($url, & $width, & $height) {
 
 /**
  * Gets all types of urls in one array
- * 
+ *
  * @deprecated	use icms::$urls
  *
  * @return array The array of urls
@@ -2276,7 +2279,7 @@ function icms_loadCommonLanguageFile() {
 
 /**
  * Gets current page
- * 
+ *
  * @deprecated	use icms::$urls['full']
  *
  * @return string The URL of the current page
