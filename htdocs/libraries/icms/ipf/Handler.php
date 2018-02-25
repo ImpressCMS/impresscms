@@ -289,13 +289,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$criteria = new icms_db_criteria_Compo();
 		}
 		if (is_array($this->keyName)) {
-			for ($i = 0; $i < count($this->keyName); $i++) {
+			foreach ($this->keyName as $i => $keyName) {
 				/**
 				 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
 				//$criteria->add(new icms_db_criteria_Item($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
-				$criteria->add(new icms_db_criteria_Item($this->keyName[$i], $id[$i], '=', $this->_itemname));
+				$criteria->add(new icms_db_criteria_Item($keyName, $id[$i], '=', $this->_itemname));
 			}
 		} else {
 			//$criteria = new icms_db_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
