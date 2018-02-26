@@ -57,8 +57,8 @@ class mod_system_MimetypeHandler extends icms_ipf_Handler {
 			}
 			$sql .= $grantedItemValues[0] . "')";
 			$Qvalues = $this->query($sql, FALSE);
-			for ($i = 0; $i < count($Qvalues); $i++) {
-				$values[]= explode(' ', $Qvalues[$i]['types']);
+			foreach ($Qvalues as $Qvalue) {
+				$values[]= explode(' ', $Qvalue['types']);
 			}
 			foreach ($values as $item=>$value) {
 				$array = array_merge($array, $value);
