@@ -88,7 +88,11 @@ function b_system_waiting_show($options) {
 	}
 
 	if (empty($block) && $sql_cache_min > 0) {
-		$sql_cached_item->expiresAt(time() + $sql_cache_min * 60);
+		$time = new DateTime();
+		$time->add(
+			date_interval_create_from_date_string($sql_cache_min . ' minutes')
+		);
+		$sql_cached_item->expiresAt($time);
 		\icms::$cache->save($sql_cached_item);
 	}
 
