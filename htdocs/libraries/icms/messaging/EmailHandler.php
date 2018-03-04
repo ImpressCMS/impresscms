@@ -36,11 +36,6 @@
  */
 
 /**
- * load the base class
- */
-require_once ICMS_LIBRARIES_PATH . '/phpmailer/class.phpmailer.php';
-
-/**
  * Mailer Class.
  *
  * @author	Jochen B��nagel	<jb@buennagel.com>
@@ -169,8 +164,9 @@ class icms_messaging_EmailHandler extends PHPMailer {
 			$this->Host = implode(';', $icmsConfigMailer['smtphost']);
 		}
 		$this->CharSet = strtolower(_CHARSET);
-		$this->SetLanguage('en', ICMS_LIBRARIES_PATH . "/phpmailer/language/");
-		$this->PluginDir = ICMS_LIBRARIES_PATH . "/phpmailer/";
+		if (!$this->SetLanguage(_LANGCODE)) {
+			!$this->SetLanguage('en');
+		}
 	}
 
 	/**
