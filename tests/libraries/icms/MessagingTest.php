@@ -13,11 +13,10 @@ class MessagingTest extends \PHPUnit_Framework_TestCase {
      * Test if is available
      */
     public function testAvailability() {
-        require_once ICMS_LIBRARIES_PATH . '/phpmailer/class.phpmailer.php';
         foreach ([
             'icms_messaging_EmailHandler' => 'PHPMailer',
             'icms_messaging_Handler' => null
-        ] as $class => $must_be_instance_of) {
+        ] as $class => $must_be_instances_of) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
             if ($must_be_instances_of === null) {
                 continue;
