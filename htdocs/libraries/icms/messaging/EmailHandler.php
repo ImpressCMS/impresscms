@@ -165,7 +165,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 		}
 		$this->CharSet = strtolower(_CHARSET);
 		if (!$this->SetLanguage(_LANGCODE)) {
-			!$this->SetLanguage('en');
+			$this->SetLanguage('en');
 		}
 	}
 
