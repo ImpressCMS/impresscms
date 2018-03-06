@@ -118,6 +118,13 @@ final class icms {
 	static protected $handlers;
 
 	/**
+	 * Files accessing point
+	 *
+	 * @var \League\Flysystem\MountManager
+	 */
+	static public $filesystem;
+
+	/**
 	 * Initialize ImpressCMS before bootstrap
 	 */
 	static public function setup() {
@@ -146,6 +153,23 @@ final class icms {
 		}
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
+		icms::$filesystem = new League\Flysystem\MountManager([
+			'root' => new League\Flysystem\Filesystem(
+				new \League\Flysystem\Adapter\Local(ICMS_ROOT_PATH)
+			),
+			'cache' => new League\Flysystem\Filesystem(
+				new \League\Flysystem\Adapter\Local(ICMS_CACHE_PATH)
+			),
+			'modules' => new League\Flysystem\Filesystem(
+				new \League\Flysystem\Adapter\Local(ICMS_MODULES_PATH)
+			),
+			'uploads' => new League\Flysystem\Filesystem(
+				new \League\Flysystem\Adapter\Local(ICMS_UPLOAD_PATH)
+			),
+			'themes' => new League\Flysystem\Filesystem(
+				new \League\Flysystem\Adapter\Local(ICMS_THEME_PATH)
+			)
+		]);
 	}
 
 	/**
@@ -313,7 +337,7 @@ final class icms {
 			$http = strpos(ICMS_URL, "https://") === FALSE
 				? "http://"
 				: "https://";
-			
+
 			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
 			$filters = array(
 					'SCRIPT_NAME' => 'str',
@@ -321,9 +345,9 @@ final class icms {
 					'QUERY_STRING' => 'str',
 					'HTTP_REFERER' => 'url',
 			);
-			
+
 			$clean_SERVER = icms_core_DataFilter::checkVarArray($_SERVER, $filters, false);
-			
+
 			$phpself = $clean_SERVER['SCRIPT_NAME'];
 			$httphost = $clean_SERVER['HTTP_HOST'];
 			$querystring = $clean_SERVER['QUERY_STRING'];
