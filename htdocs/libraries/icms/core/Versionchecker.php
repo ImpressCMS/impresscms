@@ -106,7 +106,7 @@ class icms_core_Versionchecker {
 
 		if (version_compare(ICMS_VERSION, $data['tag_name'], '<')) {
 			// There is an update available
-			$this->latest_url = $data['url'];
+			$this->latest_url = $data['zipball_url'];
 			return true;
 		}
 		return false;
