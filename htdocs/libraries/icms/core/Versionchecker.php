@@ -5,9 +5,6 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-use Ciconia\Ciconia;
-use Ciconia\Extension\Gfm;
-
 /**
  * IcmsVersionChecker
  *
@@ -141,13 +138,7 @@ class icms_core_Versionchecker {
 	 * @return string
 	 */
 	private function render($code) {
-		$ciconia = new Ciconia();
-		$ciconia->addExtension(new Gfm\FencedCodeBlockExtension());
-		$ciconia->addExtension(new Gfm\TaskListExtension());
-		$ciconia->addExtension(new Gfm\InlineStyleExtension());
-		$ciconia->addExtension(new Gfm\WhiteSpaceExtension());
-		$ciconia->addExtension(new Gfm\TableExtension());
-		$ciconia->addExtension(new Gfm\UrlAutoLinkExtension());
-		return $ciconia->render($code);
+		$p = new Parsedown();
+		return $p->text($code);
 	}
 }
