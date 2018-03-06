@@ -450,16 +450,9 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		$size = $multiple ? 5 : 1;
 		$theme_select = new icms_form_elements_Select($var['form_caption'], $key, $this->targetObject->getVar($key), $size, $multiple);
 
-		$dirlist = [];
-		foreach (icms::$filesystem->listContents('themes://') as $fileInfo) {
-			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || $fileInfo['type'] != 'dir') {
-				continue;
-			}
-			$dirlist[$file] = $file;
-		}
-
-		$theme_select->addOptionArray($dirlist);
+		$theme_select->addOptionArray(
+			icms_view_theme_Factory::getThemesList()
+		);
 
 		return $theme_select;
 	}
