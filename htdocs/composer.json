@@ -23,6 +23,7 @@
     "simplepie/simplepie": "1.3.1",
     "ezyang/htmlpurifier": "4.6.*",
     "tecnickcom/tcpdf": "6.*",
+	"kzykhys/ciconia": "^1.1",
     "ext-curl": "*",
     "ext-gd": "*",
     "ext-json": "*",

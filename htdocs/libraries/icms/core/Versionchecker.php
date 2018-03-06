@@ -5,6 +5,9 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
+use Ciconia\Ciconia;
+use Ciconia\Extension\Gfm;
+
 /**
  * IcmsVersionChecker
  *
@@ -79,10 +82,15 @@ class icms_core_Versionchecker {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'ImpressCMS/' . ICMS_VERSION );
 		curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/ImpressCMS/impresscms/releases/latest');
 		$result = curl_exec($ch);
-		if (!$result) {
+		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE );
+		if ($result === false) {
 			$this->errors[] = curl_error($ch);
+			return false;
+		} elseif ($code > 299) {
+			$this->errors[] = $result;
 			return false;
 		}
 		curl_close($ch);
@@ -90,13 +98,13 @@ class icms_core_Versionchecker {
 		$data = json_decode($result, true);
 
 		$this->latest_version_name = $data['name'];
-		$this->latest_changelog = $data['body'];
+		$this->latest_changelog = $this->render($data['body']);
 
 		if (substr($data['tag_name'], 0, 1) == 'v') {
 			$data['tag_name'] = substr($data['tag_name'], 1);
 		}
 
-		if (version_compare(ICMS_VERSION, $data['tag_name'])) {
+		if (version_compare(ICMS_VERSION, $data['tag_name'], '<')) {
 			// There is an update available
 			$this->latest_url = $data['url'];
 			return true;
@@ -123,5 +131,23 @@ class icms_core_Versionchecker {
 			}
 			return $ret;
 		}
+	}
+
+	/**
+	 * Renders MarkDown code
+	 *
+	 * @param string $code
+	 *
+	 * @return string
+	 */
+	private function render($code) {
+		$ciconia = new Ciconia();
+		$ciconia->addExtension(new Gfm\FencedCodeBlockExtension());
+		$ciconia->addExtension(new Gfm\TaskListExtension());
+		$ciconia->addExtension(new Gfm\InlineStyleExtension());
+		$ciconia->addExtension(new Gfm\WhiteSpaceExtension());
+		$ciconia->addExtension(new Gfm\TableExtension());
+		$ciconia->addExtension(new Gfm\UrlAutoLinkExtension());
+		return $ciconia->render($code);
 	}
 }
