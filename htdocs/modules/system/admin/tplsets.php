@@ -64,88 +64,7 @@ if ($op == 'edittpl_go') {
 
 $icmsAdminTpl = new icms_view_Tpl();
 switch ($op) {
-	default:
-	case 'list':
-		$tplsets =& $tplset_handler->getObjects();
-		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url('. ICMS_MODULES_URL
-			. '/system/admin/tplsets/images/tplsets_big.png)">' . _MD_TPLMAIN
-			. '</div><br />';
-		$installed = array();
-		$tpltpl_handler =& icms::handler('icms_view_template_file');
-		$installed_mods = $tpltpl_handler->getModuleTplCount('default');
-		$tcount = count($tplsets);
-		if ($tcount == 1) icms_core_Message::warning(_MD_TPLSET_CREATE_OWN, "", TRUE);
-		echo '<table width="100%" cellspacing="1" class="outer"><tr align="center"><th width="25%">'
-			. _MD_THMSETNAME . '</th><th>' . _MD_CREATED . '</th><th>' . _MD_TEMPLATES
-			. '</th><th>' . _MD_TPLSET_ACTIONS . '</th><th>' . _MD_TPLSET_STATUS . '</th></tr>';
-		$class = 'even';
-		for ($i = 0; $i < $tcount; $i++) {
-			$tplsetname = $tplsets[$i]->getVar('tplset_name');
-			$installed_themes[] = $tplsetname;
-			$class = ($class == 'even') ? 'odd' : 'even';
-			echo '<tr class="' . $class . '" align="center"><td  style="vertical-align: middle;" class="head">'
-				. $tplsetname . '<br /><br /><span style="font-weight:normal;">'
-				. $tplsets[$i]->getVar('tplset_desc') . '</span></td><td style="vertical-align: middle;">'
-				. formatTimestamp($tplsets[$i]->getVar('tplset_created'), 's')
-				. '</td><td align="' . _GLOBAL_LEFT . '"><ul>';
-			$tplstats = $tpltpl_handler->getModuleTplCount($tplsetname);
-			if (count($tplstats) > 0) {
-				$module_handler = icms::handler('icms_module');
-				echo '<ul>';
-				foreach ($tplstats as $moddir => $filecount) {
-					$module =& $module_handler->getByDirname($moddir);
-					if (is_object($module)) {
-						if ($installed_mods[$moddir] > $filecount) {
-							$filecount = '<span style="color:#ff0000;">' . $filecount . '</span>';
-						}
-						echo '<li>' . $module->getVar('name')
-							. ' [<a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset=' . $tplsetname
-							. '&amp;moddir=' . $moddir . '">' . _LIST . '</a> (<strong>'
-							. icms_conv_nr2local($filecount) . '</strong>)]</li>';
-					}
-					unset($module);
-				}
-				$not_installed = array_diff(array_keys($installed_mods), array_keys($tplstats));
-			} else {
-				$not_installed =& array_keys($installed_mods);
-			}
-			foreach ($not_installed as $ni) {
-				$module =& $module_handler->getByDirname($ni);
-				echo '<li>' . $module->getVar('name')
-					. ' <a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset=' . $tplsetname
-					. '&amp;moddir=' . $ni . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/view_choose.png" alt="' . _LIST . '" title="' . _LIST . '" /></a> (<span style="color:#ff0000; font-weight: bold;">0</span>)'
-					. ' <a href="admin.php?fct=tplsets&amp;op=generatemod&amp;tplset=' . $tplsetname
-					. '&amp;moddir=' . $ni . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/filenew2.png" alt="' . _MD_GENERATE . '" title="' . _MD_GENERATE . '" /></a></li>';
-			}
-			echo '</ul></td><td style="vertical-align: middle;">'
-				. '<a href="admin.php?fct=tplsets&amp;op=download&amp;method=tar&amp;tplset=' . $tplsetname
-				. '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a>&nbsp;<a href="admin.php?fct=tplsets&amp;op=clone&amp;tplset=' . $tplsetname
-				. '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/editcopy.png" alt="' . _CLONE . '" title="' . _CLONE . '" /></a>';
-			if ($tplsetname != 'default' && $tplsetname != $icmsConfig['template_set']) {
-				echo '&nbsp;<a href="admin.php?fct=tplsets&amp;op=delete&amp;tplset=' . $tplsetname
-					. '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a>';
-			}
-			echo '</td>';
-			if ($tplsetname == $icmsConfig['template_set']) {
-				echo '<td style="vertical-align: middle;"><img src="'. ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="' . _MD_DEFAULTTHEME . '" title="' . _MD_DEFAULTTHEME . '" /></td>';
-			} else {
-				echo '<td>&nbsp;</td>';
-			}
-			echo '</tr>';
-		}
-		echo '</table><br />';
 
-		$form = new icms_form_Theme(_MD_UPLOADTAR, 'tplupload_form', 'admin.php', 'post', TRUE);
-		$form->setExtra('enctype="multipart/form-data"');
-		$form->addElement(new icms_form_elements_File(_MD_CHOOSETAR . '<br /><span style="color:#ff0000;">' . _MD_ONLYTAR . '</span>', 'tpl_upload', 1000000));
-		$form->addElement(new icms_form_elements_Text(_MD_NTHEMENAME . '<br /><span style="font-weight:normal;">' . _MD_ENTERTH . '</span>', 'tplset_name', 20, 50));
-		$form->addElement(new icms_form_elements_Hidden('op', 'uploadtar_go'));
-		$form->addElement(new icms_form_elements_Hidden('fct', 'tplsets'));
-		$form->addElement(new icms_form_elements_Button('', 'upload_button', _MD_UPLOAD, 'submit'));
-		$form->display();
-		icms_cp_footer();
-		break;
 
 	case 'listtpl':
 		if ($tplset == '') {
@@ -1133,6 +1052,86 @@ switch ($op) {
 		redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir=' . $tplfile->getVar('tpl_module') . '&amp;tplset=' . urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
 		break;
 
+	case 'list':
 	default:
+		$tplsets =& $tplset_handler->getObjects();
+		icms_cp_header();
+		echo '<div class="CPbigTitle" style="background-image: url('. ICMS_MODULES_URL
+			. '/system/admin/tplsets/images/tplsets_big.png)">' . _MD_TPLMAIN
+			. '</div><br />';
+		$installed = array();
+		$tpltpl_handler =& icms::handler('icms_view_template_file');
+		$installed_mods = $tpltpl_handler->getModuleTplCount('default');
+		$tcount = count($tplsets);
+		if ($tcount == 1) icms_core_Message::warning(_MD_TPLSET_CREATE_OWN, "", TRUE);
+		echo '<table width="100%" cellspacing="1" class="outer"><tr align="center"><th width="25%">'
+			. _MD_THMSETNAME . '</th><th>' . _MD_CREATED . '</th><th>' . _MD_TEMPLATES
+			. '</th><th>' . _MD_TPLSET_ACTIONS . '</th><th>' . _MD_TPLSET_STATUS . '</th></tr>';
+		$class = 'even';
+		for ($i = 0; $i < $tcount; $i++) {
+			$tplsetname = $tplsets[$i]->getVar('tplset_name');
+			$installed_themes[] = $tplsetname;
+			$class = ($class == 'even') ? 'odd' : 'even';
+			echo '<tr class="' . $class . '" align="center"><td  style="vertical-align: middle;" class="head">'
+				. $tplsetname . '<br /><br /><span style="font-weight:normal;">'
+				. $tplsets[$i]->getVar('tplset_desc') . '</span></td><td style="vertical-align: middle;">'
+				. formatTimestamp($tplsets[$i]->getVar('tplset_created'), 's')
+				. '</td><td align="' . _GLOBAL_LEFT . '"><ul>';
+			$tplstats = $tpltpl_handler->getModuleTplCount($tplsetname);
+			if (count($tplstats) > 0) {
+				$module_handler = icms::handler('icms_module');
+				echo '<ul>';
+				foreach ($tplstats as $moddir => $filecount) {
+					$module =& $module_handler->getByDirname($moddir);
+					if (is_object($module)) {
+						if ($installed_mods[$moddir] > $filecount) {
+							$filecount = '<span style="color:#ff0000;">' . $filecount . '</span>';
+						}
+						echo '<li>' . $module->getVar('name')
+							. ' [<a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset=' . $tplsetname
+							. '&amp;moddir=' . $moddir . '">' . _LIST . '</a> (<strong>'
+							. icms_conv_nr2local($filecount) . '</strong>)]</li>';
+					}
+					unset($module);
+				}
+				$not_installed = array_diff(array_keys($installed_mods), array_keys($tplstats));
+			} else {
+				$not_installed =& array_keys($installed_mods);
+			}
+			foreach ($not_installed as $ni) {
+				$module =& $module_handler->getByDirname($ni);
+				echo '<li>' . $module->getVar('name')
+					. ' <a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset=' . $tplsetname
+					. '&amp;moddir=' . $ni . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/view_choose.png" alt="' . _LIST . '" title="' . _LIST . '" /></a> (<span style="color:#ff0000; font-weight: bold;">0</span>)'
+					. ' <a href="admin.php?fct=tplsets&amp;op=generatemod&amp;tplset=' . $tplsetname
+					. '&amp;moddir=' . $ni . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/filenew2.png" alt="' . _MD_GENERATE . '" title="' . _MD_GENERATE . '" /></a></li>';
+			}
+			echo '</ul></td><td style="vertical-align: middle;">'
+				. '<a href="admin.php?fct=tplsets&amp;op=download&amp;method=tar&amp;tplset=' . $tplsetname
+				. '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a>&nbsp;<a href="admin.php?fct=tplsets&amp;op=clone&amp;tplset=' . $tplsetname
+				. '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/editcopy.png" alt="' . _CLONE . '" title="' . _CLONE . '" /></a>';
+			if ($tplsetname != 'default' && $tplsetname != $icmsConfig['template_set']) {
+				echo '&nbsp;<a href="admin.php?fct=tplsets&amp;op=delete&amp;tplset=' . $tplsetname
+					. '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a>';
+			}
+			echo '</td>';
+			if ($tplsetname == $icmsConfig['template_set']) {
+				echo '<td style="vertical-align: middle;"><img src="'. ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="' . _MD_DEFAULTTHEME . '" title="' . _MD_DEFAULTTHEME . '" /></td>';
+			} else {
+				echo '<td>&nbsp;</td>';
+			}
+			echo '</tr>';
+		}
+		echo '</table><br />';
+
+		$form = new icms_form_Theme(_MD_UPLOADTAR, 'tplupload_form', 'admin.php', 'post', TRUE);
+		$form->setExtra('enctype="multipart/form-data"');
+		$form->addElement(new icms_form_elements_File(_MD_CHOOSETAR . '<br /><span style="color:#ff0000;">' . _MD_ONLYTAR . '</span>', 'tpl_upload', 1000000));
+		$form->addElement(new icms_form_elements_Text(_MD_NTHEMENAME . '<br /><span style="font-weight:normal;">' . _MD_ENTERTH . '</span>', 'tplset_name', 20, 50));
+		$form->addElement(new icms_form_elements_Hidden('op', 'uploadtar_go'));
+		$form->addElement(new icms_form_elements_Hidden('fct', 'tplsets'));
+		$form->addElement(new icms_form_elements_Button('', 'upload_button', _MD_UPLOAD, 'submit'));
+		$form->display();
+		icms_cp_footer();
 		break;
 }

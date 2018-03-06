@@ -26,17 +26,6 @@ icms_core_Filesystem::chmod("../mainfile.php", 0444);
 if (defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != '') {
 	icms_core_Filesystem::chmod(XOOPS_TRUST_PATH, 0777);
 	icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0777);
-	icms_core_Filesystem::chmod("/modules/protector/root/modules/protector", 0777);
-	icms_core_Filesystem::chmod("/modules/protector/trust_path/modules", 0777);
-	if (!is_dir(XOOPS_ROOT_PATH.'/modules/protector')) {
-		icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/root/modules/protector',XOOPS_ROOT_PATH.'/modules/protector');
-	}
-	if (!is_dir(XOOPS_TRUST_PATH.'/modules')) {
-		icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules',XOOPS_TRUST_PATH.'/modules');
-	}
-	if (!is_dir(XOOPS_TRUST_PATH.'/modules/protector')) {
-		icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules/protector',XOOPS_TRUST_PATH.'/modules/protector');
-	}
 	icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0755);
 }
 $wizard->setPage( 'tablescreate' );
@@ -64,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 	$tables = array();
-	
+
 	if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
 		$driver = substr(XOOPS_DB_TYPE, 4);
 	} else {
@@ -92,4 +81,3 @@ if ($process == 'create') {
 $content = ob_get_contents();
 ob_end_clean();
 include 'install_tpl.php';
-?>
