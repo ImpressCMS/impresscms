@@ -23,9 +23,9 @@ define('WIKI_LINK',	'http://'._LANGCODE.'.wikipedia.org/wiki/%s');
  * @param unknown_type $text
  */
 function textsanitizer_wiki(&$ts, $text) {
-	$patterns[] = "/\[\[([^\]]*)\]\]/esU";
-	$replacements[] = "wikiLink( '\\1' )";
-	return preg_replace($patterns, $replacements, $text);
+	return preg_replace_callback("/\[\[([^\]]*)\]\]/sU", function ($matches) {
+		return wikiLink($matches[1]);
+	}, $text);
 }
 
 /**

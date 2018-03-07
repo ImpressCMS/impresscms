@@ -18,9 +18,9 @@
  * @param $text
  */
 function textsanitizer_youtube(&$ts, $text) {
-	$patterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/esU";
-	$replacements[] = "textsanitizer_youtube_decode( '\\4', '\\2', '\\3' )";
-	return preg_replace($patterns, $replacements, $text);
+	return preg_replace_callback("/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU", function ($matches) {
+		return textsanitizer_youtube_decode($matches[4], $matches[2], $matches[3]);
+	}, $text);
 }
 
 /**
