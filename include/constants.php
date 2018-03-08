@@ -17,9 +17,6 @@ define('ICMS_MODULES_URL', ICMS_URL . '/modules');
 // ImpressCMS Third Party Libraries folder
 define('ICMS_LIBRARIES_PATH', ICMS_ROOT_PATH . '/libraries');
 define('ICMS_LIBRARIES_URL', ICMS_URL . '/libraries');
-// ImpressCMS Third Party Library for PDF generator
-define('ICMS_PDF_LIB_PATH', ICMS_LIBRARIES_PATH . '/tcpdf');
-define('ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf');
 /**#@+
  * Constants
  */
