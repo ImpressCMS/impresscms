@@ -18,9 +18,9 @@ define('HASHTAG_LINK',	ICMS_URL . '/search.php?query=%s&amp;action=results'); //
  * @return	str	String with the pattern replaced by a link
  */
 function textsanitizer_hashtags(&$ts, $text) {
-	$patterns[] = "#([\s\R])\#(?|([\w\-]+)|\[([\w\s\-]+)\])#e";
-	$replacements[] = "hashtag('\\2', '\\1')";
-	return preg_replace($patterns, $replacements, $text);
+	return preg_replace_callback("#([\s\R])\#(?|([\w\-]+)|\[([\w\s\-]+)\])#", function ($matches) {
+		return hashtag($matches[2], $matches[1]);
+	}, $text);
 }
 
 /**

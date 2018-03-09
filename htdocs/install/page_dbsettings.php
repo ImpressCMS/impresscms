@@ -28,9 +28,28 @@ $pageHasHelp = true;
 
 $vars = & $_SESSION ['settings'];
 
-$func_connect = empty ( $vars ['DB_PCONNECT'] ) ? "mysql_connect" : "mysql_pconnect";
-if (! ($link = @$func_connect ( $vars ['DB_HOST'], $vars ['DB_USER'], $vars ['DB_PASS'], true ))) {
-	$error = ERR_NO_DBCONNECTION;
+switch ($vars['DB_TYPE']) {
+	case 'mysql':
+		$func_connect = empty( $vars['DB_PCONNECT'] ) ? "mysql_connect" : "mysql_pconnect";
+		if (! ( $link = @$func_connect( $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true ) )) {
+			$error = ERR_NO_DBCONNECTION;
+		}
+		break;
+	case 'pdo.mysql':
+		try {
+			$link = new PDO( 'mysql:host='.$vars['DB_HOST'],
+				$vars['DB_USER'],
+				$vars['DB_PASS'],
+				array(
+					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_PERSISTENT => !empty( $vars['DB_PCONNECT'] )
+				));
+		} catch(PDOException $ex) {
+			$error = ERR_NO_DBCONNECTION;
+		}
+		break;
+}
+if (isset($error)) {
 	$wizard->redirectToPage ( '-1', $error );
 	exit ();
 }
@@ -43,6 +62,31 @@ if (! isset ( $vars ['DB_NAME'] ) || false !== @strpos ( $_SERVER ['HTTP_CACHE_C
 	}
 }
 
+function exec_query($sql, $link) {
+	if ($link instanceof PDO) {
+		return $link->query($sql);
+	} else {
+		return mysql_query( $sql, $link );
+	}
+}
+
+function fetch_assoc($result) {
+	if ($result instanceof PDOStatement) {
+		return $result->fetch(PDO::FETCH_ASSOC);
+	} else {
+		return mysql_fetch_assoc ( $result );
+	}
+}
+
+function quote_sql($sql) {
+	global $link;
+	if ($link instanceof PDO) {
+		return $link->quote($sql);
+	} else {
+		return '\'' .mysql_real_escape_string($sql) . '\'';
+	}
+}
+
 function getDbCharsets($link) {
 	static $charsets = array ( );
 	if ($charsets)
@@ -50,8 +94,8 @@ function getDbCharsets($link) {
 
 	$charsets ["utf8"] = "UTF-8 Unicode";
 	$ut8_available = false;
-	if ($result = mysql_query ( "SHOW CHARSET", $link )) {
-		while ($row = mysql_fetch_assoc ( $result )) {
+	if ($result = exec_query ( "SHOW CHARSET", $link )) {
+		while ($row = fetch_assoc ( $result )) {
 			$charsets [$row ["Charset"]] = $row ["Description"];
 			if ($row ["Charset"] == "utf8") {
 				$ut8_available = true;
@@ -74,8 +118,8 @@ function getDbCharsets($link) {
 function getDbCollations($link, $charset) {
 	static $collations = array ( );
 
-	if ($result = mysql_query("SHOW COLLATION WHERE Charset='" . mysql_real_escape_string($charset) . "'", $link)) {
-		while ($row = mysql_fetch_assoc ( $result )) {
+	if ($result = exec_query("SHOW COLLATION WHERE Charset=" . quote_sql($charset), $link)) {
+		while ($row = fetch_assoc ( $result )) {
 			$collations [$charset] [$row ["Collation"]] = $row ["Default"] ? 1 : 0;
 		}
 	}
@@ -89,7 +133,7 @@ function validateDbCharset($link, &$charset, &$collation) {
 	if (empty ( $charset )) {
 		$collation = "";
 	}
-	if (version_compare ( mysql_get_server_info ( $link ), "4.1.0", "lt" )) {
+	if (version_compare ( getDBVersion( $link ), "4.1.0", "lt" )) {
 		$charset = $collation = "";
 	}
 	if (empty ( $charset ) && empty ( $collation )) {
@@ -109,8 +153,15 @@ function validateDbCharset($link, &$charset, &$collation) {
 	return $error;
 }
 
+function getDBVersion($link) {
+	if ($link instanceof PDO) {
+		return $link->getAttribute(PDO::ATTR_SERVER_VERSION);
+	}
+	return mysql_get_server_info( $link );
+}
+
 function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset) {
-	if (version_compare ( mysql_get_server_info ( $link ), "4.1.0", "lt" )) {
+	if (version_compare ( getDBVersion($link) , "4.1.0", "lt" )) {
 		return "";
 	}
 	if (empty ( $charset ) || ! $collations = getDbCollations ( $link, $charset )) {
@@ -153,6 +204,18 @@ function xoFormBlockCollation($name, $value, $label, $help = '', $link, $charset
 	return $block;
 }
 
+function select_db($db_name, $link) {
+	if ($link instanceof PDO) {
+		try {
+			$link->exec("use `" . $db_name . '`;');
+			return true;
+		} catch (PDOException $ex) {
+			return false;
+		}
+	}
+	return @mysql_select_db ( $db_name, $link );
+}
+
 if ($_SERVER ['REQUEST_METHOD'] == 'GET' && isset ( $_GET ['charset'] ) && @$_GET ['action'] == 'updateCollation') {
 	echo xoFormFieldCollation ( 'DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $_GET ['charset'] );
 	exit ();
@@ -170,9 +233,9 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && ! empty ( $vars ['DB_NAME'] )) {
 	$error = validateDbCharset ( $link, $vars ['DB_CHARSET'], $vars ['DB_COLLATION'] );
 	$db_exist = false;
 	if (empty ( $error )) {
-		if (! @mysql_select_db ( $vars ['DB_NAME'], $link )) {
+		if (! select_db ( $vars ['DB_NAME'], $link )) {
 			// Database not here: try to create it
-			$result = mysql_query ( "CREATE DATABASE `" . $vars ['DB_NAME'] . '`' );
+			$result = exec_query ( "CREATE DATABASE `" . $vars ['DB_NAME'] . '`' , $link);
 			if (! $result) {
 				$error = ERR_NO_DATABASE;
 			} else {
@@ -184,32 +247,32 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && ! empty ( $vars ['DB_NAME'] )) {
 		}
 		if ($db_exist && $vars['DB_CHARSET']) {
 			/* Attempt to set the character set and collation to the selected */
-			$sql = "ALTER DATABASE `" . $vars ['DB_NAME'] . "` DEFAULT CHARACTER SET " . mysql_real_escape_string ( $vars ['DB_CHARSET'] ) . ($vars ['DB_COLLATION'] ? " COLLATE " . mysql_real_escape_string ( $vars ['DB_COLLATION'] ) : "");
-			if (!mysql_query($sql)) {
+			$sql = "ALTER DATABASE `" . $vars ['DB_NAME'] . "` DEFAULT CHARACTER SET " . quote_sql ( $vars ['DB_CHARSET'] ) . ($vars ['DB_COLLATION'] ? " COLLATE " . quote_sql ( $vars ['DB_COLLATION'] ) : "");
+			if (!exec_query($sql, $link)) {
 				/* if the alter statement fails, set the constants to match existing */
-				$sql = "USE " . mysql_real_escape_string($vars["DB_NAME"]);
-				$result = mysql_query($sql);
-				
+				$sql = "USE " . quote_sql($vars["DB_NAME"]);
+				$result = exec_query($sql, $link);
+
 				/* get the character set variables for the current database */
 				$sql = "SHOW VARIABLES like 'character%'";
-				$result = mysql_query($sql); 
-				while ($row = mysql_fetch_assoc($result)) {
+				$result = exec_query($sql, $link);
+				while ($row = fetch_assoc($result)) {
 					$character_sets[$row["Variable_name"]] = $row["Value"];
 				}
 				$vars["DB_CHARSET"] = $character_sets["character_set_database"]
 					? $character_sets["character_set_database"]
 					: $character_sets["character_set_server"];
-				
+
 				/* get the collation for the current database */
 				$sql = "SHOW VARIABLES LIKE 'collation%'";
-				$result = mysql_query($sql);
-				while ($row = mysql_fetch_assoc($result)) {
+				$result = exec_query($sql, $link);
+				while ($row = fetch_assoc($result)) {
 					$collations[$row["Variable_name"]] = $row["Value"];
 				}
-				$vars["DB_COLLATION"] = $collations["collation_database"] 
+				$vars["DB_COLLATION"] = $collations["collation_database"]
 					? $collations["collation_database"]
 					: $collations["collation_server"];
-			} 
+			}
 		}
 	}
 	if (empty ( $error )) {
@@ -239,7 +302,7 @@ function xoFormField($name, $value, $label, $maxlength, $help = '') {
 }
 
 function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
-	if (version_compare ( mysql_get_server_info ( $link ), "4.1.0", "lt" )) {
+	if (version_compare ( getDBVersion($link), "4.1.0", "lt" )) {
 		return "";
 	}
 	if (! $chars = getDbCharsets ( $link )) {
