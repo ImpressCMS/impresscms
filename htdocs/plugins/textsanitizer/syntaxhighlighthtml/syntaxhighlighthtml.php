@@ -8,7 +8,7 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id: syntaxhighlighthtml.php 11185 2011-04-15 17:55:34Z m0nty_ $
+ * @version		$Id$
  */
 
 /**
@@ -18,9 +18,9 @@
  * @param string $text the search terms
  */
 function textsanitizer_syntaxhighlighthtml(&$ts, $text) {
-	$patterns[] = "/\[code_html](.*)\[\/code_html\]/esU";
-	$replacements[] = "textsanitizer_geshi_html_highlight( '\\1' )";
-	return preg_replace($patterns, $replacements, $text);
+	return preg_replace_callback("/\[code_html](.*)\[\/code_html\]/sU", function ($matches) {
+		return textsanitizer_geshi_html_highlight($matches[1]);
+	}, $text);
 }
 
 /**
@@ -63,7 +63,7 @@ function render_syntaxhighlighthtml($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeHTML(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERHTMLCODE, ENT_QUOTES) . "\");'
+		onclick='javascript:icmsCodeHTML(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERHTMLCODE, ENT_QUOTES, _CHARSET) . "\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/html.png'
 		alt='html'
