@@ -14,10 +14,9 @@
  *
  * Replaces text delimited with [hide][/hide] with appropriate values
  *
- * @param object $ts textsanitizer instance
  * @param string $text text to be marked as hidden
  */
-function textsanitizer_hiddencontent(&$ts, $text) {
+function textsanitizer_hiddencontent($text) {
 	$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
 	if (!empty($_SESSION['xoopsUserId']) && $_SESSION['xoopsUserId']) {
 		$replacements[] = _HIDDENC . '<div class="icmsHidden">\\1</div>';
