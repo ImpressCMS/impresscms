@@ -859,7 +859,7 @@ class icms_core_DataFilter {
 			return $text;
 		}
 		$args = array_slice(func_get_args(), 1);
-		return call_user_func_array($func, array_merge(array(&$this), $args));
+		return call_user_func_array($func, $args);
 	}
 
 	/**
