@@ -14,10 +14,10 @@
 /**
  *
  * Locates and replaces enclosed text with an embedded YouTube video
- * @param $ts
+ *
  * @param $text
  */
-function textsanitizer_youtube(&$ts, $text) {
+function textsanitizer_youtube($text) {
 	return preg_replace_callback("/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU", function ($matches) {
 		return textsanitizer_youtube_decode($matches[4], $matches[2], $matches[3]);
 	}, $text);
