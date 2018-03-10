@@ -21,7 +21,7 @@ class icms_auth_method_ldap_Provisioning {
 	 * Gets instance of {@link icms_auth_method_ldap_Provisioning}
 	 * @param   object $auth_instance
 	 * @return  object $provis_instance {@link icms_auth_method_ldap_Provisioning}
-	 **/
+	 */
 	static public function &getInstance(&$auth_instance) {
 		static $provis_instance;
 		if (!isset($provis_instance)) {
@@ -33,7 +33,7 @@ class icms_auth_method_ldap_Provisioning {
 	/**
 	 * Authentication Service constructor
 	 * @param object $auth_instance {@link icms_auth_method_ldap_Provisioning}
-	 **/
+	 */
 	public function __construct(&$auth_instance) {
 		$this->_auth_instance = &$auth_instance;
 		global $icmsConfig, $icmsConfigAuth;

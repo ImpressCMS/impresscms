@@ -8,12 +8,12 @@
  * @author	vaughan montgomery (vaughan@impresscms.org)
  * @author	ImpressCMS Project
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
-**/
+*/
 class icms_core_HTMLFilter extends icms_core_DataFilter {
 
 	/**
 	 * variable used by HTML Filter Library
-	 **/
+	 */
 	public $purifier;
 
 	/**
@@ -28,7 +28,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * @return      object
 	 * @static      $instance
 	 * @staticvar   object
-	 **/
+	 */
 	public static function getInstance() {
 		static $instance;
 		if (!isset($instance)) {
@@ -45,7 +45,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * @TODO	allow the webmasters to select which HTML Filter they want to use such as
 	 *			HTMLPurifier, HTMLLawed etc, for now we just have HTMLPurifier.
 	 * @return   string
-	 **/
+	 */
 	static public function filterHTML($html) {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
 
@@ -105,7 +105,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	/**
 	 * Gets Custom Purifier configurations ** this function will improve in time **
 	 * @return  array    $icmsPurifierConf
-	 **/
+	 */
 	static protected function getHTMLFilterConfig() {
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
 

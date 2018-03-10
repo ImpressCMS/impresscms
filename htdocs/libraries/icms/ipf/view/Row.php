@@ -18,36 +18,36 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 class icms_ipf_view_Row {
 
 	/**
-         * Keyname
-         * 
+        * Keyname
+        *
 	 * @var string
 	 */
 	public $_keyname = '';
-        
+
 	/**
-         * Align of text
-         * 
+        * Align of text
+        *
 	 * @var string
 	 */
 	public $_align = 'left';
-        
+
 	/**
-         * Custom method for value
-         * 
+        * Custom method for value
+        *
 	 * @var callable|null
 	 */
 	public	$_customMethodForValue;
-        
+
 	/**
-         * What do display in header?
-         * 
+        * What do display in header?
+        *
 	 * @var array
 	 */
 	public $_header = array();
-        
+
 	/**
-         * Class
-         * 
+        * Class
+        *
 	 * @var string
 	 */
 	public $_class = '';

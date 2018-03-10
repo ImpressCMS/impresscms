@@ -6,7 +6,6 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Images
- * @version		SVN: $Id$
  */
 
 /** this file gets linked directly, so mainfile.php must be included here */

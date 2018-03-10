@@ -37,7 +37,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	Comments
- * @version		SVN: $Id$
  */
 
 $modversion = array(

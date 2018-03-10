@@ -8,7 +8,6 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id$
  */
 /**
  * Link to associated page on Wikipedia for the enclosed text

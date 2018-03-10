@@ -12,38 +12,38 @@
 class icms_ipf_Highlighter {
 
 	/**
-         * PREG keywords
+        * PREG keywords
          *
 	 * @var string
 	 */
 	private $preg_keywords = '';
 
 	/**
-         * Keywords
+        * Keywords
          *
 	 * @var string
 	 */
 	private $keywords = '';
 
 	/**
-         * Single words?
+        * Single words?
          *
 	 * @var bool
 	 */
 	private $singlewords = false;
 
 	/**
-         * Replace callback
+        * Replace callback
          *
 	 * @var null|callable
 	 */
 	private $replace_callback = null;
 
         /**
-         * Content
+        * Content
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $content = '';
 
 	/**

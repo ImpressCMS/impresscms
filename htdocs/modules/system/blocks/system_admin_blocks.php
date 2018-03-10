@@ -7,7 +7,6 @@
  * @package		System
  * @subpackage	Blocks
  * @since		ImpressCMS 1.2
- * @version		SVN: $Id$
  */
 
 /**

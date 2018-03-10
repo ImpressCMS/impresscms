@@ -10,7 +10,6 @@
  * @package 	System
  * @subpackage	Symlinks
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */
@@ -70,7 +69,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case 'status' :
 			$icms_admin_handler->changeStatus($clean_page_id);
 			if (isset($rtn)) redirect_header(ICMS_URL . base64_decode($rtn));
-			
+
 			$rtn = '/modules/system/admin.php?fct=pages';
 			redirect_header(ICMS_URL . $rtn);
 			break;

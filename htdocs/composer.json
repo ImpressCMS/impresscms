@@ -27,6 +27,7 @@
     "tecnickcom/tcpdf": "6.*",
 	"erusev/parsedown": "^1.7.0",
 	"cerdic/css-tidy": "*",
+    "geshi/geshi": "^1.0",
     "ext-curl": "*",
     "ext-gd": "*",
     "ext-json": "*",

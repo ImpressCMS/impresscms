@@ -6,7 +6,6 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		4.00
- * @version		$Id$
  * @package		xoopseditor
  */
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -54,8 +53,8 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
 	}
 
   /**
-  * Initializes tinyMCE
-  **/
+ * Initializes tinyMCE
+  */
 	function initTinymce() {
 		$this->config ["elements"] = $this->getName() . '_tarea';
 		$this->config ["language"] = $this->getLanguage ();
@@ -125,8 +124,8 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
 	}
 
   /**
-  * Gets the fonts for tinymce
-  **/
+ * Gets the fonts for tinymce
+  */
 	function getFonts() {
 		if (empty ( $this->config ["fonts"] ) && defined ( "_XOOPS_EDITOR_TINYMCE_FONTS" )) {
 			$this->config ["fonts"] = constant ( "_XOOPS_EDITOR_TINYMCE_FONTS" );

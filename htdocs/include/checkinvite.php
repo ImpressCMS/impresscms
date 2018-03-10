@@ -7,7 +7,6 @@
  * @package	core
  * @since	1.1
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -18,7 +17,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * Loads the invite code
  *
  * @param	string	$code	 Invitation code
- **/
+ */
 function load_invite_code($code) {
 	// validate if code is of valid length.
 	if (empty($code) || strlen($code) != 8) {
@@ -63,7 +62,7 @@ function load_invite_code($code) {
  *
  * @param	string	$code	 Invitation code
  * @return   bool
- **/
+ */
 function check_invite_code($code) {
 	// validate if code is of valid length.
 	if (empty($code) || strlen($code) != 8) {
@@ -87,7 +86,7 @@ function check_invite_code($code) {
  * @param	string	$code	 Invitation code
  * @param	int	   $new_id   New registration id
  * @return   true
- **/
+ */
 function update_invite_code($code, $new_id) {
 	// update register_id
 	$sql = sprintf(

@@ -69,7 +69,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 class icms_view_block_Object extends icms_ipf_Object {
 
         public $visiblein = [];
-    
+
 	/**
 	 * Constructor for the block object
 	 * @param $handler
@@ -110,21 +110,21 @@ class icms_view_block_Object extends icms_ipf_Object {
 		$this->initVar('bcachetime', self::DTYPE_INTEGER, 0, FALSE, 10);
 		$this->initVar('last_modified', self::DTYPE_INTEGER, 0, FALSE, 10);
 		$this->initVar('options', self::DTYPE_STRING, '', FALSE, 255);
-                                
+
       //  $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
                 parent::__construct($handler, $data);
-                
+
 	}
-        
+
         /**
-         * gets var
+        * gets var
          *
-         * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+        * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
          *
-         * @param string $name
-         * @param string $format
-         * @return mixed
-         */
+        * @param string $name
+        * @param string $format
+        * @return mixed
+        */
         public function getVar($name, $format = 's') {
             if ($name == 'visiblein') {
                 return $this->visiblein;
@@ -132,16 +132,16 @@ class icms_view_block_Object extends icms_ipf_Object {
                 return parent::getVar($name, $format);
             }
         }
-        
+
         /**
-         * sets var
+        * sets var
          *
-         * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+        * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
          *
-         * @param string $name
-         * @param string $format
-         * @return mixed
-         */
+        * @param string $name
+        * @param string $format
+        * @return mixed
+        */
         public function setVar($name, $value, $options = null) {
             if ($name == 'visiblein') {
                 $this->visiblein = $value;
