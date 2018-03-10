@@ -10,13 +10,12 @@ filter:
         - 'htdocs/libraries/smarty/internals/*'
         - 'htdocs/editors/FCKeditor/*'
         - 'htdocs/libraries/image-editor/*'
-        - 'htdocs/libraries/smarty/icms_plugins/*'
         - 'htdocs/plugins/sourceeditors/*'
         - 'htdocs/plugins/csstidy/*'
+        - 'htdocs/libraries/htmlpurifier/*'
         - 'htdocs/libraries/phpopenid/admin/*'
         - 'htdocs/editors/dhtmltextarea/*'
         - 'htdocs/libraries/wideimage/lib/vendor/de77/*'
-        - htdocs/mainfile.php
         - 'htdocs/libraries/xml/rss/*'
         - 'htdocs/libraries/recaptcha/*'
         - 'htdocs/editors/tinymce/language/*'
@@ -28,8 +27,6 @@ filter:
         - htdocs/libraries/smarty/Config_File.class.php
         - htdocs/libraries/smarty/Smarty_Compiler.class.php 
         - htdocs/libraries/smarty/Smarty.class.php
-        - 'htdocs/libraries/smarty/plugins/*'
-        - 'extras/libraries/*'
         - 'htdocs/libraries/phpopenid/Auth/*'
         - 'extras/plugins/*'
         - 'htdocs/libraries/geshi/*'
@@ -42,33 +39,24 @@ filter:
         - 'htdocs/plugins/rating/*'
         - 'htdocs/plugins/autotasks/*'
         - 'htdocs/editors/dhtmltextarea/*'
-        - 'htdocs/libraries/icms/sys/*'
-        - 'htdocs/libraries/icms/db/mysql/*'
         - 'htdocs/libraries/wideimage/*'
         - htdocs/mainfile.php
         - 'htdocs/plugins/waiting/*'
         - 'htdocs/libraries/xml/rss/*'
-        - htdocs/include/jalali.php
         - htdocs/libraries/icms.php
         - 'htdocs/libraries/recaptcha/*'
-        - htdocs/install/page_start.php
+        - 'htdocs/install/*'
         - 'htdocs/libraries/icms/ipf/seo/*'
-        - htdocs/include/rating.rate.php
+        - 'htdocs/include/*'
         - 'htdocs/editors/tinymce/language/*'
-        - htdocs/install/page_no_php5.php
-        - htdocs/libraries/icms/Event.php
-        - htdocs/install/page_siteinit.php
-        - htdocs/install/page_safe_mode.php
+        - 'htdocs/libraries/icms/*'
         - 'htdocs/libraries/paginationstyles/*'
         - htdocs/editors/tinymce/tinymce.php
-        - 'htdocs/libraries/icms/ipf/registry/*'
-        - htdocs/libraries/icms/ipf/Tree.php
         - htdocs/libraries/xml/saxparser.php
         - 'htdocs/language/*'
-        - 'htdocs/modules/system/admin/mimetype/*'
+        - 'htdocs/modules/*'
         - htdocs/modules/system/admin/tags.php
         - htdocs/modules/system/class/Tags.php
-        - htdocs/libraries/icms/db/IUtility.php
         - htdocs/libraries/xml/rpc/xoopsapi.php
         - htdocs/plugins/preloads/bootstrap.php
         - 'htdocs/libraries/icms/auth/method/ldap/*'
