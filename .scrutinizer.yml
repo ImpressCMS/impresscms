@@ -25,6 +25,10 @@ filter:
         - htdocs/libraries/xml/rpc/xoopsapi.php
         - htdocs/libraries/xml/rpc/xmlrpcapi.php
     dependency_paths:
+        - htdocs/libraries/smarty/Config_File.class.php
+        - htdocs/libraries/smarty/Smarty_Compiler.class.php 
+        - htdocs/libraries/smarty/Smarty.class.php
+        - 'htdocs/libraries/smarty/plugins/*'
         - 'extras/libraries/*'
         - 'htdocs/libraries/phpopenid/Auth/*'
         - 'extras/plugins/*'
@@ -41,7 +45,6 @@ filter:
         - 'htdocs/libraries/icms/sys/*'
         - 'htdocs/libraries/icms/db/mysql/*'
         - 'htdocs/libraries/wideimage/*'
-        - 'upgrade/language/*'
         - htdocs/mainfile.php
         - 'htdocs/plugins/waiting/*'
         - 'htdocs/libraries/xml/rss/*'
@@ -55,25 +58,19 @@ filter:
         - htdocs/install/page_no_php5.php
         - htdocs/libraries/icms/Event.php
         - htdocs/install/page_siteinit.php
-        - htdocs/language/english/core.php
-        - htdocs/language/english/mail.php
         - htdocs/install/page_safe_mode.php
-        - htdocs/language/english/error.php
-        - htdocs/language/english/theme.php
         - 'htdocs/libraries/paginationstyles/*'
         - htdocs/editors/tinymce/tinymce.php
         - 'htdocs/libraries/icms/ipf/registry/*'
         - htdocs/libraries/icms/ipf/Tree.php
         - htdocs/libraries/xml/saxparser.php
-        - htdocs/language/english/captcha.php
-        - htdocs/language/english/uploader.php
+        - 'htdocs/language/*'
         - 'htdocs/modules/system/admin/mimetype/*'
         - htdocs/modules/system/admin/tags.php
         - htdocs/modules/system/class/Tags.php
         - htdocs/libraries/icms/db/IUtility.php
         - htdocs/libraries/xml/rpc/xoopsapi.php
         - htdocs/plugins/preloads/bootstrap.php
-        - htdocs/language/english/privpolicy.php
         - 'htdocs/libraries/icms/auth/method/ldap/*'
         - htdocs/libraries/xml/rpc/xmlrpcapi.php
 checks:
