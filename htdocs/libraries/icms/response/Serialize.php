@@ -7,17 +7,17 @@
  * @package	ICMS\Response
  */
 class icms_response_Serialize
-    extends icms_response_Text {    
-    
+    extends icms_response_Text {
+
     /**
-     * Constructor
-     * 
-     * @param string|null   $msg
-     * @param int|null      $http_status    If not null sets http status on sending response
-     * @param array         $headers        Here You can place some additional headers 
-     */
-    public function __construct($msg = null, $http_status = null, $headers = array()) {        
+    * Constructor
+     *
+    * @param string|null   $msg
+    * @param int|null      $http_status    If not null sets http status on sending response
+    * @param array         $headers        Here You can place some additional headers
+    */
+    public function __construct($msg = null, $http_status = null, $headers = array()) {
         parent::__construct(serialize($msg), $http_status, $headers);
     }
-    
+
 }

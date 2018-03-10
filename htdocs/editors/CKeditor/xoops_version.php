@@ -8,7 +8,6 @@
 * @package		Editors
 * @subpackage	CKEditor
 * @author		modified by MrTheme <mrtheme@impresscms.org>, Steve K <skenow@impresscms.org>
-* @version		$Id$
 */
 
 require dirname(__FILE__) . '/icms_version.php';

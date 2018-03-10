@@ -7,7 +7,6 @@
  * @package		libraries
  * @since		1.1
  * @author		TheRplima <therplima@impresscms.org>
- * @version		$Id$
  */
 /**
  *

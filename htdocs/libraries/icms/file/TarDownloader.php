@@ -50,7 +50,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 *
 	 * @param string $ext       file extension
 	 * @param string $mimyType  Mimetype
-	 **/
+	 */
 	public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip') {
 		$this->archiver = new icms_file_TarFileHandler();
 		$this->ext = trim($ext);
@@ -62,7 +62,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 *
 	 * @param   string  $filepath       Full path to the file
 	 * @param   string  $newfilename    Filename (if you don't want to use the original)
-	 **/
+	 */
 	public function addFile($filepath, $newfilename = null) {
 		$this->archiver->addFile($filepath);
 		if (isset($newfilename)) {
@@ -81,7 +81,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 *
 	 * @param   string  $filepath       Full path to the file
 	 * @param   string  $newfilename    Filename (if you don't want to use the original)
-	 **/
+	 */
 	public function addBinaryFile($filepath, $newfilename = null) {
 		$this->archiver->addFile($filepath, true);
 		if (isset($newfilename)) {
@@ -101,7 +101,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 * @param   string  $data       Data to write
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
-	 **/
+	 */
 	public function addFileData(&$data, $filename, $time=0) {
 		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
 		$fp = fopen($dummyfile, 'w');
@@ -128,7 +128,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 * @param   string  $data   Data to write
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
-	 **/
+	 */
 	public function addBinaryFileData(&$data, $filename, $time=0) {
 		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
 		$fp = fopen($dummyfile, 'wb');
@@ -154,7 +154,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 *
 	 * @param   string  $name   Filename
 	 * @param   boolean $gzip   Use GZ compression
-	 **/
+	 */
 	public function download($name, $gzip = true) {
 		$this->_header($name . $this->ext);
 		echo $this->archiver->toTarOutput($name . $this->ext, $gzip);

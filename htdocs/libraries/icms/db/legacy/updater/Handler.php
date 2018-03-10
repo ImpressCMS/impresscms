@@ -29,17 +29,17 @@ icms_loadLanguageFile('core', 'databaseupdater');
 class icms_db_legacy_updater_Handler {
 
     /**
-     * xoopsDB database object
+    * xoopsDB database object
      *
-     * @var @link XoopsDatabase object
-     */
+    * @var @link XoopsDatabase object
+    */
     var $_db;
     var $db;
 
     /**
      *
-     * @var array of messages
-     */
+    * @var array of messages
+    */
     var $_messages = array();
 
     function __construct() {
@@ -49,16 +49,16 @@ class icms_db_legacy_updater_Handler {
     }
 
     /**
-     * Use to execute a general query
+    * Use to execute a general query
      *
-     * @param string $query query that will be executed
-     * @param string $goodmsg message displayed on success
-     * @param string $badmsg message displayed on error
-     * @param bool 	$force force the query even in a GET process
+    * @param string $query query that will be executed
+    * @param string $goodmsg message displayed on success
+    * @param string $badmsg message displayed on error
+    * @param bool 	$force force the query even in a GET process
      *
-     * @return bool true if success, false if an error occured
+    * @return bool true if success, false if an error occured
      *
-     */
+    */
     function runQuery($query, $goodmsg, $badmsg, $force = false) {
         if ($force) {
             $ret = $this->_db->queryF($query);
@@ -76,14 +76,14 @@ class icms_db_legacy_updater_Handler {
     }
 
     /**
-     * Use to rename a table
+    * Use to rename a table
      *
-     * @param string $from name of the table to rename
-     * @param string $to new name of the renamed table
-     * @param bool 	$force force the query even in a GET process
+    * @param string $from name of the table to rename
+    * @param string $to new name of the renamed table
+    * @param bool 	$force force the query even in a GET process
      *
-     * @return bool true if success, false if an error occured
-     */
+    * @return bool true if success, false if an error occured
+    */
     function renameTable($from, $to, $force = false) {
         $from = $this->_db->prefix($from);
         $to = $this->_db->prefix($to);
@@ -103,15 +103,15 @@ class icms_db_legacy_updater_Handler {
     }
 
     /**
-     * Use to update a table
+    * Use to update a table
      *
-     * @param object $table {@link icms_db_legacy_updater_Table} that will be updated
-     * @param bool	$force force the query even in a GET process
+    * @param object $table {@link icms_db_legacy_updater_Table} that will be updated
+    * @param bool	$force force the query even in a GET process
      *
-     * @see icms_db_legacy_updater_Table
+    * @see icms_db_legacy_updater_Table
      *
-     * @return bool true if success, false if an error occured
-     */
+    * @return bool true if success, false if an error occured
+    */
     function updateTable($table, $force = false) {
         $ret = true;
         $table->force = $force;
@@ -148,15 +148,15 @@ class icms_db_legacy_updater_Handler {
     }
 
     /**
-     * Upgrade automaticaly an item of a module
+    * Upgrade automaticaly an item of a module
      *
-     * Note that currently, $item needs to represent the name of an object derived
-     * from SmartObject, for example, $item == 'invoice' wich will represent $dirnameInvoice
-     * for example SmartbillingInvoice which extends SmartObject class
+    * Note that currently, $item needs to represent the name of an object derived
+    * from SmartObject, for example, $item == 'invoice' wich will represent $dirnameInvoice
+    * for example SmartbillingInvoice which extends SmartObject class
      *
-     * @param string $dirname dirname of the module
-     * @param mixed $item name or array of names of the item to upgrade
-     */
+    * @param string $dirname dirname of the module
+    * @param mixed $item name or array of names of the item to upgrade
+    */
     function automaticUpgrade($dirname, $item) {
         if (is_array($item)) {
             foreach ($item as $v) {
@@ -168,11 +168,11 @@ class icms_db_legacy_updater_Handler {
     }
 
     /**
-     * Get the type of the field based on the info of the var
+    * Get the type of the field based on the info of the var
      *
-     * @param array $var array containing information about the var
-     * @return string type of the field
-     */
+    * @param array $var array containing information about the var
+    * @return string type of the field
+    */
     function getFieldTypeFromVar($var) {
         switch ($var[icms_properties_Handler::VARCFG_TYPE]) {
             case icms_properties_Handler::DTYPE_BOOLEAN:
@@ -241,12 +241,12 @@ class icms_db_legacy_updater_Handler {
     }
 
     /**
-     * Get the default value based on the info of the var
+    * Get the default value based on the info of the var
      *
-     * @param array $var array containing information about the var
-     * @param bool $key TRUE if the var is the primary key
-     * @return string default value
-     */
+    * @param array $var array containing information about the var
+    * @param bool $key TRUE if the var is the primary key
+    * @return string default value
+    */
     function getFieldDefaultFromVar($var, $key = false) {
         if (in_array($var[icms_properties_Handler::VARCFG_TYPE], array(
                     icms_properties_Handler::DTYPE_DATETIME,
@@ -263,14 +263,14 @@ class icms_db_legacy_updater_Handler {
     }
 
     /**
-     * Remove table or some rows if table is used for other object
+    * Remove table or some rows if table is used for other object
      *
-     * @param string $dirname
-     * @param string $item
-     * @param array $reservedTables
+    * @param string $dirname
+    * @param string $item
+    * @param array $reservedTables
      *
-     * @return boolean
-     */
+    * @return boolean
+    */
     function uninstallObjectItem($dirname, $item, $reservedTables = array()) {
         $module_handler = icms_getModuleHandler($item, $dirname);
         if (!$module_handler) {
@@ -310,9 +310,9 @@ class icms_db_legacy_updater_Handler {
     }
 
     /*
-     * Upgrades the object
-     * @param string $dirname
-     */
+    * Upgrades the object
+    * @param string $dirname
+    */
 
     function upgradeObjectItem($dirname, $item) {
         $module_handler = icms_getModuleHandler($item, $dirname);
@@ -320,9 +320,9 @@ class icms_db_legacy_updater_Handler {
             return false;
         }
 
-        $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));        
+        $table = new icms_db_legacy_updater_Table(str_replace(XOOPS_DB_PREFIX . '_', '', $module_handler->table));
         $object = $module_handler->create();
-        $class = new ReflectionClass($object);        
+        $class = new ReflectionClass($object);
         $isExtention = false;
         if ($pclass = $class->getParentClass()) {
             if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object', 'icms_ipf_seo_Object'))) {
@@ -384,8 +384,8 @@ class icms_db_legacy_updater_Handler {
             $table->setStructure($structure);
             if (!$this->updateTable($table)) {
                 /**
-                 * @todo trap the errors
-                 */
+                * @todo trap the errors
+                */
             }
             foreach ($table->_messages as $msg) {
                 $this->_messages[] = $msg;
@@ -439,24 +439,24 @@ class icms_db_legacy_updater_Handler {
 
             if (!$this->updateTable($table)) {
                 /**
-                 * @todo trap the errors
-                 */
+                * @todo trap the errors
+                */
             }
         }
     }
 
     /**
-     * Insert a config in System Preferences
+    * Insert a config in System Preferences
      *
-     * @param int $conf_catid
-     * @param string $conf_name
-     * @param string $conf_title
-     * @param mixed $conf_value
-     * @param string $conf_desc
-     * @param string $conf_formtype
-     * @param string $conf_valuetype
-     * @param int $conf_order
-     */
+    * @param int $conf_catid
+    * @param string $conf_name
+    * @param string $conf_title
+    * @param mixed $conf_value
+    * @param string $conf_desc
+    * @param string $conf_formtype
+    * @param string $conf_valuetype
+    * @param int $conf_order
+    */
     function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order) {
         global $dbVersion;
         $configitem_handler = icms::handler('icms_config_item');
@@ -479,10 +479,10 @@ class icms_db_legacy_updater_Handler {
     }
 
     /*
-     * Module Upgrade
-     * @param object reference to Module Object
-     * @return bool whether upgrade succeeded or not
-     */
+    * Module Upgrade
+    * @param object reference to Module Object
+    * @return bool whether upgrade succeeded or not
+    */
 
     function moduleUpgrade(&$module, $tables_first = false) {
         $dirname = $module->getVar('dirname');
@@ -520,7 +520,7 @@ class icms_db_legacy_updater_Handler {
           echo $feedback;
           }
           }
-         */
+        */
         if ($tables_first) {
             if ($newDbVersion > $dbVersion) {
                 for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
@@ -537,13 +537,13 @@ class icms_db_legacy_updater_Handler {
     }
 
     /**
-     * Update the DBVersion of a module
+    * Update the DBVersion of a module
      *
-     * @param int $newDVersion new database version
-     * @param string $dirname dirname of the module
+    * @param int $newDVersion new database version
+    * @param string $dirname dirname of the module
      *
-     * @return bool TRUE if success FALSE if not
-     */
+    * @return bool TRUE if success FALSE if not
+    */
     function updateModuleDBVersion($newDBVersion, $dirname) {
         if (!$dirname) {
             $dirname = icms_getCurrentModuleName();

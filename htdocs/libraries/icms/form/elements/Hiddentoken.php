@@ -46,11 +46,11 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 class icms_form_elements_Hiddentoken extends icms_form_elements_Hidden {
 
   /**
-   * Constructor
+  * Constructor
    *
-   * @param   string  $name       "name" attribute
-   * @param   int     $timeout    timeout variable for the createToken function
-   */
+  * @param   string  $name       "name" attribute
+  * @param   int     $timeout    timeout variable for the createToken function
+  */
   public function __construct($name = _CORE_TOKEN, $timeout = 0) {
       parent::__construct($name . '_REQUEST', icms::$security->createToken($timeout, $name));
   }

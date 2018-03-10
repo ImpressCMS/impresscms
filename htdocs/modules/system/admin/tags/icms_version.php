@@ -9,7 +9,6 @@
  * @package		Administration
  * @subpackage	Tags
  * @since		2.0
- * @version		$Id: icms_version.php 11547 2012-01-29 21:43:11Z skenow $
  */
 
 $modversion = array(

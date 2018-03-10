@@ -7,7 +7,6 @@
  * @package		installer
  * @author		marcan <marcan@impresscms.org>
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		$Id: functions.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 

@@ -4,7 +4,6 @@
  *
  * @license GNU
  * @author GIJOE
- * @version $Id$
  * @package core
  */
 

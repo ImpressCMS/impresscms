@@ -149,7 +149,7 @@ class icms_ipf_permission_Handler {
 	 * @param integer $categoryID : categoryID on which we are setting permissions for Categories and Forums
 	 * @param string $perm_name : name of the permission
 	 * @return boolean : TRUE if the no errors occured
-	 **/
+	 */
 	public function saveItem_Permissions($groups, $itemid, $perm_name) {
 		$icmsModule =& $this->handler->getModuleInfo();
 
@@ -176,7 +176,7 @@ class icms_ipf_permission_Handler {
 	 *
 	 * @param integer $itemid : id of the item for which to delete the permissions
 	 * @return boolean : TRUE if the no errors occured
-	 **/
+	 */
 
 	/**
 	 * @todo not completed....
@@ -202,7 +202,7 @@ class icms_ipf_permission_Handler {
 	 * @param string $gperm_name name of the permission to test
 	 * @param int $gperm_itemid id of the object to check
 	 * @return boolean : TRUE if user has access, FALSE if not
-	 **/
+	 */
 	public function accessGranted($gperm_name, $gperm_itemid) {
 		$gperm_groupid = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$icmsModule =& $this->handler->getModuleInfo();

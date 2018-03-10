@@ -10,7 +10,6 @@
  * @package		libraries
  * @since		1.3.6
  * @author		Steve Kenow <skenow@impresscms.org>
- * @version		$Id: protectEmail.php 12366 2013-11-15 03:11:33Z skenow $
  */
 /**
  *

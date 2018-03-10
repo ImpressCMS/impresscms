@@ -6,7 +6,6 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		plugins
- * @version		$Id$
  */
 define('HASHTAG_LINK',	ICMS_URL . '/search.php?query=%s&amp;action=results'); // The link to search results
 
@@ -37,11 +36,11 @@ function hashtag($text, $prefix) {
 }
 
  /**
-  * Generates the code to add a button to the DHTML editor
+ * Generates the code to add a button to the DHTML editor
   *
-  * @param unknown_type $ele_name
-  * @return	arr
-  */
+ * @param unknown_type $ele_name
+ * @return	arr
+ */
 function render_hashtags($ele_name) {
 	global $xoTheme;
 	$dirname = basename(dirname(__FILE__));

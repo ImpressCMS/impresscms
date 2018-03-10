@@ -7,7 +7,6 @@
  * @package		libraries
  * @since		1.1
  * @author		mekdrop <mekdrop@gmail.com>
- * @version		$Id$
  */
 /**
  *

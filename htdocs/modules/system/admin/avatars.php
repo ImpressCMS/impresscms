@@ -37,7 +37,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	Avatars
- * @version		SVN: $Id: avatars.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 /* set get and post filters before including admin_header, if not strings */
@@ -62,8 +61,8 @@ switch ($op) {
 		$icmsAdminTpl->assign("list", "1");
 		$savatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'S'));
 		$cavatar_count = $avt_handler->getCount(new icms_db_criteria_Item('avatar_type', 'C'));
-		$icmsAdminTpl->assign("systemavatars", sprintf(_NUMIMAGES, '<b>' . icms_conv_nr2local($savatar_count) . '</b>'));	
-		$icmsAdminTpl->assign("usersavatars", sprintf(_NUMIMAGES, '<b>' . icms_conv_nr2local($cavatar_count) . '</b>'));	
+		$icmsAdminTpl->assign("systemavatars", sprintf(_NUMIMAGES, '<b>' . icms_conv_nr2local($savatar_count) . '</b>'));
+		$icmsAdminTpl->assign("usersavatars", sprintf(_NUMIMAGES, '<b>' . icms_conv_nr2local($cavatar_count) . '</b>'));
 		$icmsAdminTpl->display('db:admin/avatars/system_adm_avatars.html');
 		$form = new icms_form_Theme(_MD_ADDAVT, 'avatar_form', 'admin.php', "post", TRUE);
 		$form->setExtra('enctype="multipart/form-data"');
@@ -115,7 +114,7 @@ switch ($op) {
 				$avatar[$i]['name'] = $avatars[$i]->getVar('avatar_name');
 				$avatar[$i]['file'] = $avatars[$i]->getVar('avatar_file');
 				$avatar[$i]['mimetype'] = $avatars[$i]->getVar('avatar_mimetype');
-				$avatar[$i]['id'] = $avatars[$i]->getVar('avatar_id') ;	
+				$avatar[$i]['id'] = $avatars[$i]->getVar('avatar_id') ;
 			}
 			$icmsAdminTpl->assign("avatararray", $avatar );
 		}
@@ -126,7 +125,7 @@ switch ($op) {
 			$icmsAdminTpl->assign("nav", $nav->renderImageNav());
 			}
 			if ($type == 'S') {
-			$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());	
+			$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());
 			}
 		}
 		$icmsAdminTpl->display('db:admin/avatars/system_adm_avatars.html');
