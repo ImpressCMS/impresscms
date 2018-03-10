@@ -912,8 +912,6 @@ class icms_core_DataFilter {
 	static public function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
 
-		if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') return FALSE;
-
 		$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
 
 		// Create the new GeSHi object, passing relevant stuff
