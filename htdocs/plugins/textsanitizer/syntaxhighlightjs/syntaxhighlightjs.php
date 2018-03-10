@@ -14,13 +14,12 @@
 /**
  * Locates and replaces passed text with JS highlighted code block
  *
- * @param object $ts textsanitizer instance
  * @param string $text the search terms
  */
-function textsanitizer_syntaxhighlightjs(&$ts, $text) {
-	$patterns[] = "/\[code_js](.*)\[\/code_js\]/esU";
-	$replacements[] = "textsanitizer_geshi_js_highlight( '\\1' )";
-	return preg_replace($patterns, $replacements, $text);
+function textsanitizer_syntaxhighlightjs($text) {
+	return preg_replace_callback("/\[code_js](.*)\[\/code_js\]/sU", function ($matches) {
+		return textsanitizer_geshi_js_highlight($matches[1]);
+	}, $text);
 }
 
 /**

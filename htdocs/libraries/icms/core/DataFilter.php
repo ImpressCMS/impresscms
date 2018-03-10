@@ -745,9 +745,10 @@ class icms_core_DataFilter {
 	 */
 	static public function codePreConv($text, $imcode = 1) {
 		if ($imcode != 0) {
-			$patterns = "/\[code](.*)\[\/code\]/esU";
-			$replacements = "'[code]' . base64_encode('$1') . '[/code]'";
-			$text = preg_replace($patterns, $replacements, $text);
+			$patterns = "/\[code](.*)\[\/code\]/sU";
+			$text = preg_replace_callback($patterns, function ($match) {
+				return base64_encode($match[1]);
+			}, $text);
 		}
 		return $text;
 	}
@@ -762,17 +763,11 @@ class icms_core_DataFilter {
 	 */
 	static public function codeConv($text, $imcode = 1, $image = 1) {
 		if ($imcode != 0) {
-			$patterns = "/\[code](.*)\[\/code\]/esU";
-			if ($image != 0) {
-				$replacements = "'<div class=\"icmsCode\">' .
-					icms_core_DataFilter::textsanitizer_syntaxhighlight(icms_core_DataFilter::codeSanitizer('$1')) .
-					'</div>'";
-			} else {
-				$replacements = "'<div class=\"icmsCode\">' .
-					icms_core_DataFilter::textsanitizer_syntaxhighlight(icms_core_DataFilter::codeSanitizer('$1',0)) .
-					'</div>'";
-			}
-			$text = preg_replace($patterns, $replacements, $text);
+			$patterns = "/\[code](.*)\[\/code\]/sU";
+			$text = preg_replace_callback($patterns, function ($matches) use ($image) {
+				$code = icms_core_DataFilter::codeSanitizer($matches[1],($image != 0)?1:0);
+				return '<div class=\"icmsCode\">' . $code . '</div>';
+			}, $text);
 		}
 		return $text;
 	}
@@ -839,7 +834,7 @@ class icms_core_DataFilter {
 			return $text;
 		}
 		$args = array_slice(func_get_args(), 1);
-		return call_user_func_array($func, array_merge(array(&$this), $args));
+		return call_user_func_array($func, $args);
 	}
 
 	/**

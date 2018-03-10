@@ -117,7 +117,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	 * moved this ahead of the inclusion of system/icms_version.php for a reason - not completely without consequence
 	 * $modversion is not yet defined ~skenow
 	 */
-	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 40, 'system', 1)");
+	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 44, 'system', 1)");
 
 
 	foreach ($modversion['templates'] as $tplfile) {
