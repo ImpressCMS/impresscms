@@ -11,9 +11,6 @@
 	        <br />
 	        <{$smarty.const._AM_VERSION_MOREINFO}><br />
 	        <h2><a href="<{$latest_url}>" rel="external"><{$latest_version}></a></h2>
-		<{if $not_a_final_comment}> 	 
-			<div><strong><{$smarty.const._AM_VERSION_WARNING}></strong>: <{$smarty.const._AM_VERSION_WARNING_NOT_A_FINAL}></div> 	 
-		<{/if}>
 	    </div>
     </div>
 
@@ -27,7 +24,7 @@
 			<div class="errorMsg">
 				<{$errors}>
 			</div>
-		<{else}>    
+		<{else}>
         	<div class="successMsg"><strong><{$smarty.const._AM_VERSION_NO_UPDATE}></strong></div>
         <{/if}>
     </div>
