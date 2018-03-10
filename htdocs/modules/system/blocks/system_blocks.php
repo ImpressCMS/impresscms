@@ -935,8 +935,8 @@ function b_system_social_edit($options) {
 	$form = '<strong>' . _MB_SYSTEM_SOCIAL_PROVIDER_SELECT . ':</strong><br /><br />';
 	$form .= '<table width="100%">';
 
-	for ($i = 0; $i < count($options); $i++) {
-		$yesno = new icms_form_elements_Radioyn('', 'options[' . $i . ']', $options[$i]);
+	foreach ($options as $i => $option) {
+		$yesno = new icms_form_elements_Radioyn('', 'options[' . $i . ']', $option);
 		$form .= '<tr><td width="25%">' . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i) . '</td><td>' . $yesno->render() . '</td></tr>';
 	}
 	$form .= '</table>';

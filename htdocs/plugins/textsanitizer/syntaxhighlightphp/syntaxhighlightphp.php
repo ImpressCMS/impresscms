@@ -14,13 +14,12 @@
 /**
  * Locates and replaces text with code block highlighted as PHP
  *
- * @param object $ts textsanitizer instance
  * @param string $text the search terms
  */
-function textsanitizer_syntaxhighlightphp(&$ts, $text) {
-	$patterns[] = "/\[code_php](.*)\[\/code_php\]/esU";
-	$replacements[] = "textsanitizer_geshi_php_highlight( '\\1' )";
-	return preg_replace($patterns, $replacements, $text);
+function textsanitizer_syntaxhighlightphp($text) {
+	return preg_replace_callback("/\[code_php](.*)\[\/code_php\]/sU", function ($matches) {
+		return textsanitizer_geshi_php_highlight($matches[1]);
+	}, $text);
 }
 
 /**
