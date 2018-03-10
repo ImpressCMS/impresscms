@@ -77,4 +77,3 @@ if (isset($_POST['icms_rating_submit'])) {
 	exit;
 }
 
-?>

@@ -15,4 +15,3 @@ function b_waiting_tutorials() {
 	return $block;
 }
 
-?>

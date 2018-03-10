@@ -51,4 +51,3 @@ function b_waiting_smartfaq() {
 	return $ret;
 }
 
-?>

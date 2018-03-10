@@ -71,4 +71,3 @@ ImagePNG($image);
 
 ImageDestroy($image);
 
-?>

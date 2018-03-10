@@ -53,4 +53,3 @@ define('_FILTER_SMOOTH_ARG_DESC', 'any float is accepted, large value (in practi
 
 define('_FILTER_SEPIA', 'Sepia');
 define('_FILTER_SEPIA_DESC', 'Apply sepia effects in the image');
-?>

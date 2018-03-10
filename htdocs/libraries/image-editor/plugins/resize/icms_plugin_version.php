@@ -25,4 +25,3 @@ $plugversion['file'] = 'resize_image.php';
 $plugversion['block_template'] = 'resize_image.html';
 $plugversion['init_js_function'] = 'resize_progressBar();';
 $plugversion['stop_js_function'] = 'resize_delpreview()';
-?>

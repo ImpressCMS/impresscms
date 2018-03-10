@@ -24,4 +24,3 @@ function b_waiting_yomi() {
 
 	return $block;
 }
-?>

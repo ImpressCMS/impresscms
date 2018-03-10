@@ -12,4 +12,3 @@ function b_waiting_piCal() {
 
 	return $block;
 }
-?>

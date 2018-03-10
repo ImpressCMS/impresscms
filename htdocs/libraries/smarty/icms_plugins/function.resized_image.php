@@ -194,4 +194,3 @@ function smarty_function_resized_image($params, &$smarty)
 	}
 }
 
-?>

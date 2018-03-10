@@ -26,4 +26,3 @@ function icms_plugin_smartsection() {
 	return $pluginInfo;
 }
 
-?>

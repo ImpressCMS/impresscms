@@ -19,4 +19,3 @@ function b_waiting_smartpartner() {
 	return $block;
 }
 
-?>

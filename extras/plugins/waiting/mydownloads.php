@@ -36,4 +36,3 @@ function b_waiting_mydownloads()
 	return $ret;
 }
 
-?>

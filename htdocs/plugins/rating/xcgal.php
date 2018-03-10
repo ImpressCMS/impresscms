@@ -23,4 +23,3 @@ function icms_plugin_xcgal() {
 	return $pluginInfo;
 }
 
-?>

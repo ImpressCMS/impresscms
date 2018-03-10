@@ -42,4 +42,3 @@ define('_CM_COULDNOTCHANGEPIDTOID', 'Could not change comment parent ID from <b>
 define('_CM_COULDNOTCHANGEROOTID', 'Could not change comment root ID from <b>%s</b> to <b>%s</b>.');
 define('_CM_COULDNOTCHANGEPAID', 'Could not change comment parent ID from <b>%s</b> to <b>%s</b>.');
 define('_CM_COULDNOTUPDATEPOSTS', 'Could not update user posts.');
-?>

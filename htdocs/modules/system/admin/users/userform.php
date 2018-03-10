@@ -236,4 +236,3 @@ if (!empty($uid_value)) {
 //$form->setRequired($email_text);
 $form->display();
 
-?>

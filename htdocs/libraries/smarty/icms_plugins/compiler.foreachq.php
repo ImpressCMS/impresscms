@@ -101,4 +101,3 @@ function smarty_compiler_foreachq( $argStr, &$comp ) {
 
 }
 
-?>

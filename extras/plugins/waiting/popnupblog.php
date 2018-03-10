@@ -10,4 +10,3 @@ function b_waiting_popnupblog() {
 	return $result;
 
 }
-?>

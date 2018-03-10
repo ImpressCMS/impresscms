@@ -44,4 +44,3 @@ function smarty_function_xoPageNav( $params, &$smarty ) {
 
 }
 
-?>

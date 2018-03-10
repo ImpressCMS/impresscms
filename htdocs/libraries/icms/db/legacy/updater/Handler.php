@@ -561,4 +561,3 @@ class icms_db_legacy_updater_Handler {
 
 }
 
-?>

@@ -38,4 +38,3 @@ return $config = array(
 		"title"	=>	_XOOPS_EDITOR_TINYMCE,
 		"order"	=>	3
 	);
-?>

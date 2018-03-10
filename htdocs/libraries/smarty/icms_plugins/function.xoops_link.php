@@ -99,4 +99,3 @@ function smarty_function_xoops_link($params, $smarty) {
 	}
 }
 
-?>

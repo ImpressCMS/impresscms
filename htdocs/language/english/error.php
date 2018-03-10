@@ -83,4 +83,3 @@ define("_ERR_404_DESC", "The page you are trying to access could not be found.")
  This status code, while used by many servers, is not an official HTTP status code.
  510 Not Extended (RFC 2774)
  */
-?>

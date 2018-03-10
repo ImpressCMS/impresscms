@@ -40,4 +40,3 @@ function smarty_compiler_xoImgUrl( $argStr, &$smarty ) {
 } 
 
 
-?>

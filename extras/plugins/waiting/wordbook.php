@@ -25,4 +25,3 @@ function b_waiting_wordbook() {
 	return $ret ;
 }
 
-?>

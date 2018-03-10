@@ -45,4 +45,3 @@ session_unset();
 session_destroy();
 
 include 'install_tpl.php';
-?>

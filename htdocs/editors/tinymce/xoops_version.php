@@ -368,4 +368,3 @@ $modversion['config'][36]['valuetype'] = 'array';
 $modversion['config'][36]['default'] = '1 2 3';
 $modversion['config'][36]['category'] = 'tiny_manager';
 */
-?>
