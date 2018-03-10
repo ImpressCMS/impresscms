@@ -1,42 +1,26 @@
 filter:
-    excluded_paths:
-        - 'htdocs/libraries/smarty/*.php'
-        - 'htdocs/libraries/smarty/plugins/*'
-        - 'htdocs/libraries/phpopenid/Auth/*'
-        - 'htdocs/libraries/geshi/*'
-        - 'htdocs/libraries/smarty/internals/*'
-        - 'htdocs/plugins/csstidy/*'
-        - 'htdocs/libraries/htmlpurifier/*'
-        - 'htdocs/libraries/phpopenid/admin/*'
-        - 'htdocs/libraries/wideimage/lib/vendor/de77/*'
-        - 'htdocs/libraries/xml/rss/*'
-        - 'htdocs/libraries/recaptcha/*'
-        - htdocs/libraries/xml/saxparser.php
-        - htdocs/libraries/xml/rpc/xoopsapi.php
-        - htdocs/libraries/xml/rpc/xmlrpcapi.php
-    dependency_paths:
-        - 'htdocs/libraries/smarty/*.php'
-        - htdocs/libraries/phpopenid/Auth/
-        - extras/plugins/
-        - htdocs/libraries/geshi/
-        - htdocs/libraries/icms/
-        - htdocs/libraries/icms/*.php
+    paths:
         - htdocs/modules/
         - htdocs/include/
         - htdocs/plugins/
-        - htdocs/libraries/smarty/internals/
+        - htdocs/libraries/icms/
+        - htdocs/libraries/icms.php
+        - htdocs/install/
+        - htdocs/mainfile.php
+        - extras/plugins/
+        - htdocs/libraries/phpopenid
+        - htdocs/libraries/recaptcha/
+    dependency_paths:
+        - htdocs/libraries/smarty/
+        - htdocs/libraries/phpopenid/Auth/
+        - htdocs/libraries/geshi/
         - htdocs/plugins/csstidy/
         - htdocs/libraries/phpopenid/admin/
         - htdocs/libraries/wideimage/
-        - htdocs/mainfile.php
         - htdocs/libraries/xml/rss/
         - htdocs/libraries/recaptcha/
-        - htdocs/install/
         - htdocs/libraries/paginationstyles/
-        - htdocs/libraries/xml/saxparser.php
-        - htdocs/libraries/xml/rpc/xoopsapi.php
-        - htdocs/libraries/icms/auth/method/ldap/
-        - htdocs/libraries/xml/rpc/xmlrpcapi.php
+        - htdocs/libraries/xml/
 checks:
     php:
         duplication: true
