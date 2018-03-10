@@ -83,21 +83,14 @@ class IcmsPreloadProtectEmail extends icms_preload_Item {
 				}
 				// @todo - this should be decoupled, too. This entire plugin could be more of a factory method, not knowing what types of changes to make
 				$protection_type = (int) $icmsConfigPersona['email_protect'];
-				if ($protection_type == 1  // uses gd protection method
-					&& (function_exists('gd_info'))
-				) {
+
+				if ($protection_type == 1  /* uses gd protection method */ ) {
 					$patterns[] = '/' . $email . '/';
 					$replacements[] = "<img style='vertical-align:middle;' class='email_protect' src='" . ICMS_URL . "/include/protection.php?p=" . base64_encode(urlencode($email)) . "'>";
-				} elseif ($protection_type == 2  // using reCaptcha method
-					&& function_exists ('mcrypt_encrypt')
-					&& isset($icmsConfigPersona['recprvkey'])
-					&& $icmsConfigPersona['recprvkey'] != ''
-					&& isset($icmsConfigPersona['recpubkey'])
-					&& $icmsConfigPersona['recpubkey'] != ''
-				) {
-					require_once ICMS_LIBRARIES_PATH . '/recaptcha/recaptchalib.php';
+				} elseif ($protection_type == 2  /* using script method */) {
+					$encoded_email = json_encode(array_map("urlencode", explode(PHP_EOL, chunk_split($email, 3, PHP_EOL))));
 					$patterns[] = '/' . $email . '/';
-					$replacements[] = recaptcha_mailhide_html($icmsConfigPersona['recpubkey'], $icmsConfigPersona['recprvkey'], $email);;
+					$replacements[] = '<script type="text/javascript">document.write(decodeURIComponent('.$encoded_email.'.join("")));</script>';
 				}
 			}
 			$_smarty_results = preg_replace($patterns, $replacements, $_smarty_results);
