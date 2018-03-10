@@ -20,70 +20,35 @@ class icms_core_Versionchecker {
 
 	/**
 	 * Errors
-         *
+	 *
 	 * @var array
 	 */
 	public $errors = array();
 
 	/**
-	 * URL of the XML containing version information
-         *
-	 * @var string
-	 */
-	public $version_xml = "http://www.impresscms.org/impresscms_version_branch13.xml";
-
-	/**
-	 * Time before fetching the $version_xml again and store it in $cache_version_xml
-	 *
-         * @todo set this to a day at least or make it configurable in System Admin > Preferences
-         *
-         * @var integer
-	 */
-	public $cache_time=1;
-
-	/**
 	 * Name of the latest version
-         *
-         * @var string
+	 *
+	 * @var string
 	 */
 	public $latest_version_name = '';
 
 	/**
 	 * Name of installed version
-         *
+	 *
 	 * @var $installed_version_name string
 	 */
 	public $installed_version_name = ICMS_VERSION_NAME;
 
 	/**
-	 * Number of the latest build
-         *
-	 * @var integer
-	 */
-	public $latest_build = 0;
-
-	/**
-	 * Status of the latest build
-	 *
-	 * 1  = Alpha
-	 * 2  = Beta
-	 * 3  = RC
-	 * 10 = Final
-	 *
-	 * @var integer
-	 */
-	public $latest_status = 0;
-
-	/**
 	 * URL of the latest release
-         *
+	 *
 	 * @var string
 	 */
 	public $latest_url = '';
 
 	/**
 	 * Changelog of the latest release
-         *
+	 *
 	 * @var string
 	 */
 	public $latest_changelog = '';
@@ -111,40 +76,34 @@ class icms_core_Versionchecker {
 	 */
 	public function check() {
 
-		// Create a new instance of the SimplePie object
-		$feed = new icms_feeds_Simplerss();
-		$feed->set_feed_url($this->version_xml);
-		$feed->set_cache_duration(0);
-		$feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_NONE);
-		$feed->init();
-		$feed->handle_content_type();
-
-		if (!$feed->error) {
-			$versionInfo['title'] = $feed->get_title();
-			$versionInfo['link'] = $feed->get_link();
-			$versionInfo['image_url'] = $feed->get_image_url();
-			$versionInfo['image_title'] = $feed->get_image_title();
-			$versionInfo['image_link'] = $feed->get_image_link();
-			$feed_item = $feed->get_item(0);
-			$versionInfo['description'] = $feed_item->get_description();
-			$versionInfo['permalink'] = $feed_item->get_permalink();
-			$versionInfo['title'] = $feed_item->get_title();
-			$versionInfo['content'] = $feed_item->get_content();
-			$guidArray = $feed_item->get_item_tags('', 'guid');
-			$versionInfo['guid'] = $guidArray[0]['data'];
-		} else {
-			$this->errors[] = _AM_VERSION_CHECK_RSSDATA_EMPTY;
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'ImpressCMS/' . ICMS_VERSION );
+		curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/ImpressCMS/impresscms/releases/latest');
+		$result = curl_exec($ch);
+		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE );
+		if ($result === false) {
+			$this->errors[] = curl_error($ch);
+			return false;
+		} elseif ($code > 299) {
+			$this->errors[] = $result;
 			return false;
 		}
-		$this->latest_version_name = $versionInfo['title'];
-		$this->latest_changelog = $versionInfo['description'];
-		$build_info = explode('|', $versionInfo['guid']);
-		$this->latest_build = $build_info[0];
-		$this->latest_status = $build_info[1];
+		curl_close($ch);
 
-		if ($this->latest_build > ICMS_VERSION_BUILD) {
+		$data = json_decode($result, true);
+
+		$this->latest_version_name = $data['name'];
+		$this->latest_changelog = $this->render($data['body']);
+
+		if (substr($data['tag_name'], 0, 1) == 'v') {
+			$data['tag_name'] = substr($data['tag_name'], 1);
+		}
+
+		if (version_compare(ICMS_VERSION, $data['tag_name'], '<')) {
 			// There is an update available
-			$this->latest_url = $versionInfo['link'];
+			$this->latest_url = $data['zipball_url'];
 			return true;
 		}
 		return false;
@@ -154,7 +113,7 @@ class icms_core_Versionchecker {
 	 * Gets all the error messages
 	 *
 	 * @param	$ashtml	bool	return as html?
-         *
+	 *
 	 * @return	mixed
 	 */
 	public function getErrors($ashtml=true) {
@@ -169,5 +128,17 @@ class icms_core_Versionchecker {
 			}
 			return $ret;
 		}
+	}
+
+	/**
+	 * Renders MarkDown code
+	 *
+	 * @param string $code
+	 *
+	 * @return string
+	 */
+	private function render($code) {
+		$p = new Parsedown();
+		return $p->text($code);
 	}
 }
