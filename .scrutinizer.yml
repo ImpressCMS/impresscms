@@ -1,65 +1,36 @@
 filter:
     excluded_paths:
-        - htdocs/libraries/smarty/Config_File.class.php
-        - htdocs/libraries/smarty/Smarty_Compiler.class.php 
-        - htdocs/libraries/smarty/Smarty.class.php
+        - 'htdocs/libraries/smarty/*.php'
         - 'htdocs/libraries/smarty/plugins/*'
         - 'htdocs/libraries/phpopenid/Auth/*'
-        - 'extras/plugins/*'
         - 'htdocs/libraries/geshi/*'
         - 'htdocs/libraries/smarty/internals/*'
-        - 'htdocs/editors/FCKeditor/*'
-        - 'htdocs/libraries/image-editor/*'
-        - 'htdocs/plugins/sourceeditors/*'
         - 'htdocs/plugins/csstidy/*'
         - 'htdocs/libraries/htmlpurifier/*'
         - 'htdocs/libraries/phpopenid/admin/*'
-        - 'htdocs/editors/dhtmltextarea/*'
         - 'htdocs/libraries/wideimage/lib/vendor/de77/*'
         - 'htdocs/libraries/xml/rss/*'
         - 'htdocs/libraries/recaptcha/*'
-        - 'htdocs/editors/tinymce/language/*'
-        - htdocs/editors/tinymce/tinymce.php
         - htdocs/libraries/xml/saxparser.php
         - htdocs/libraries/xml/rpc/xoopsapi.php
         - htdocs/libraries/xml/rpc/xmlrpcapi.php
     dependency_paths:
-        - htdocs/libraries/smarty/Config_File.class.php
-        - htdocs/libraries/smarty/Smarty_Compiler.class.php 
-        - htdocs/libraries/smarty/Smarty.class.php
-        - 'htdocs/libraries/phpopenid/Auth/*'
-        - 'extras/plugins/*'
-        - 'htdocs/libraries/geshi/*'
-        - 'htdocs/libraries/smarty/internals/*'
-        - 'htdocs/editors/FCKeditor/*'
-        - 'htdocs/libraries/image-editor/*'
-        - 'htdocs/libraries/smarty/icms_plugins/*'
-        - 'htdocs/plugins/csstidy/*'
-        - 'htdocs/libraries/phpopenid/admin/*'
-        - 'htdocs/plugins/rating/*'
-        - 'htdocs/plugins/autotasks/*'
-        - 'htdocs/editors/dhtmltextarea/*'
-        - 'htdocs/libraries/wideimage/*'
+        - 'htdocs/libraries/smarty/*.php'
+        - htdocs/libraries/phpopenid/Auth/
+        - extras/plugins/
+        - htdocs/libraries/geshi/
+        - htdocs/libraries/smarty/internals/
+        - htdocs/plugins/csstidy/
+        - htdocs/libraries/phpopenid/admin/
+        - htdocs/libraries/wideimage/
         - htdocs/mainfile.php
-        - 'htdocs/plugins/waiting/*'
-        - 'htdocs/libraries/xml/rss/*'
-        - htdocs/libraries/icms.php
-        - 'htdocs/libraries/recaptcha/*'
-        - 'htdocs/install/*'
-        - 'htdocs/libraries/icms/ipf/seo/*'
-        - 'htdocs/include/*'
-        - 'htdocs/editors/tinymce/language/*'
-        - 'htdocs/libraries/icms/*'
-        - 'htdocs/libraries/paginationstyles/*'
-        - htdocs/editors/tinymce/tinymce.php
+        - htdocs/libraries/xml/rss/
+        - htdocs/libraries/recaptcha/
+        - htdocs/install/
+        - htdocs/libraries/paginationstyles/
         - htdocs/libraries/xml/saxparser.php
-        - 'htdocs/language/*'
-        - 'htdocs/modules/*'
-        - htdocs/modules/system/admin/tags.php
-        - htdocs/modules/system/class/Tags.php
         - htdocs/libraries/xml/rpc/xoopsapi.php
-        - htdocs/plugins/preloads/bootstrap.php
-        - 'htdocs/libraries/icms/auth/method/ldap/*'
+        - htdocs/libraries/icms/auth/method/ldap/
         - htdocs/libraries/xml/rpc/xmlrpcapi.php
 checks:
     php:
