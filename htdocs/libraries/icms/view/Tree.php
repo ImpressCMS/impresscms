@@ -57,7 +57,7 @@ class icms_view_Tree {
 	 * @param string $table_name Name of table containing the parent-child structure
 	 * @param string $id_name Name of the unique id field in the table
 	 * @param $pid_name Name of the parent id field in the table
-	 **/
+	 */
 	public function __construct($table_name, $id_name, $pid_name) {
 		$this->db =& icms_db_Factory::instance();
 		$this->table = $table_name;
@@ -86,7 +86,7 @@ class icms_view_Tree {
 	 * @param integer $sel_id
 	 * @param string $order Sort field for the list
 	 * @return array $arr
-	 **/
+	 */
 	public function getFirstChild($sel_id, $order = '') {
 		$sel_id = (int) $sel_id;
 		$arr = array();
@@ -109,7 +109,7 @@ class icms_view_Tree {
 	 * Returns an array of all FIRST child ids of a given id($sel_id)
 	 * @param integer $sel_id
 	 * @return array $idarray
-	 **/
+	 */
 	public function getFirstChildId($sel_id) {
 		$sel_id = (int) $sel_id;
 		$idarray = array();
@@ -130,7 +130,7 @@ class icms_view_Tree {
 	 * @param string $order Sort field for the list
 	 * @param array $idarray
 	 * @return array $idarray
-	 **/
+	 */
 	public function getAllChildId($sel_id, $order = '', $idarray = array()) {
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
@@ -155,7 +155,7 @@ class icms_view_Tree {
 	 * @param string $order
 	 * @param array $idarray
 	 * @return array $idarray
-	 **/
+	 */
 	public function getAllParentId($sel_id, $order = '', $idarray = array()) {
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"';
@@ -204,7 +204,7 @@ class icms_view_Tree {
 	 * @param integer $none set to 1 to add an option with value 0
 	 * @param string $sel_name Name of the select element
 	 * @param string $onchange	Action to take when the selection is changed
-	 **/
+	 */
 	public function makeMySelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = "") {
 		if ($sel_name == "") {
 			$sel_name = $this->id;
@@ -251,7 +251,7 @@ class icms_view_Tree {
 	 * @param string $path
 	 * @param string $separator Allows custom designation of separator in linked path
 	 * $return string $path
-	 **/
+	 */
 	public function getNicePathFromId($sel_id, $title, $funcURL, $path = '', $separator = _BRDCRMB_SEP) {
 		$path = !empty($path) ? $separator . $path : $path;
 		$sel_id = (int) $sel_id;
@@ -276,7 +276,7 @@ class icms_view_Tree {
 	 * @param integer $sel_id
 	 * @param string $path
 	 * @return string $path
-	 **/
+	 */
 	public function getIdPathFromId($sel_id, $path = "") {
 		$sel_id = (int) $sel_id;
 		$result = $this->db->query('SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"');
@@ -297,7 +297,7 @@ class icms_view_Tree {
 	 * @param string $order
 	 * @param array $parray
 	 * @return array $parray
-	 **/
+	 */
 	public function getAllChild($sel_id = 0, $order = '', $parray = array()) {
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
@@ -322,7 +322,7 @@ class icms_view_Tree {
 	 * @param array $parray
 	 * @param string $r_prefix
 	 * @return array $parray
-	 **/
+	 */
 	public function getChildTreeArray($sel_id = 0, $order = '', $parray = array(), $r_prefix = '') {
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';

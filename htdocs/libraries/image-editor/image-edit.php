@@ -9,7 +9,6 @@
  * @package		core
  * @since		1.2
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
- * @version		$Id: image-edit.php 1244 2008-03-18 17:09:11Z real_therplima $
  */
 $xoopsOption ['nodebug'] = 1;
 if (file_exists ( '../../mainfile.php' )) include_once '../../mainfile.php';
@@ -97,7 +96,7 @@ if (!empty($op) && $op == 'cancel') {
 	} else {
 		$image_path = NULL;
 	}
-	
+
 	if (file_exists($image_path)) {
 		@unlink($image_path);
 	}

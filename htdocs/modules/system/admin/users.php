@@ -38,7 +38,6 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */

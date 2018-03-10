@@ -36,14 +36,13 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	Users
- * @version		SVN: $Id$
  * @todo	scrub the input arrays (GET and POST)
  */
 
-/* 
+/*
  * GET variables
  * --none--
- * 
+ *
  * POST variables
  * (str) op				send, form
  * (str) mail_send_to
@@ -61,7 +60,7 @@
  * (str) mail_fromname
  * (str) mail_subject
  * (str) mail_body
- * 
+ *
  */
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");

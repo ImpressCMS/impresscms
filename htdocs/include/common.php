@@ -32,7 +32,6 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
- * @version		$Id$
  */
 
 /** make sure mainfile is included, for security and functionality */

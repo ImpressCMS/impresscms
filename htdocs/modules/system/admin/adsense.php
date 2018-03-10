@@ -9,7 +9,6 @@
  * @subpackage	AdSense
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
  */
 /* set get and post filters before including admin_header, if not strings */
 $filter_post = array();
@@ -37,7 +36,7 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 	if (!$clone && !$adsenseObj->isNew()) {
 		$sform = $adsenseObj->getForm(_CO_ICMS_ADSENSES_EDIT, 'addadsense');
 		$sform->assign($icmsAdminTpl);
-		
+
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_EDIT_INFO);
 		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
 	} else {
@@ -81,11 +80,11 @@ switch ($op) {
 		$objectTable->addIntroButton('addadsense', 'admin.php?fct=adsense&amp;op=mod', _CO_ICMS_ADSENSES_CREATE);
 		$objectTable->addQuickSearch(array('title', 'summary', 'description'));
 		$objectTable->addCustomAction('getCloneLink');
-		
+
 		$icmsAdminTpl->assign('icms_adsense_table', $objectTable->fetch());
 		$icmsAdminTpl->assign('icms_adsense_explain', TRUE);
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_DSC);
-		
+
 		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
 		break;
 }

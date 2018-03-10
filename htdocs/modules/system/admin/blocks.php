@@ -40,7 +40,6 @@
  * @since		ImpressCMS 1.2
  * @package		Administration
  * @subpackage	Blocks
- * @version		$Id$
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 

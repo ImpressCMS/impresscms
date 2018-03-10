@@ -58,7 +58,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * @see icms_view_template_file_Object
 	 * @param object $tplfile {@link icms_view_template_file_Object} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
-	 **/
+	 */
 	public function loadSource(icms_view_template_file_Object &$tplfile) {
 		if (!$tplfile->getVar('tpl_source')) {
 			$sql = "SELECT tpl_source FROM " . $this->table
@@ -76,7 +76,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * forces Template source into the DataBase
 	 * @param object $tplfile {@link icms_view_template_file_Object} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
-	 **/
+	 */
 	public function forceUpdate(&$tplfile) {
             if ($tplfile->isNew())
                 return false;
@@ -88,7 +88,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 *
 	 * @param   string  $tplset Template Set
 	 * @return  array $ret containing number of templates in the tpl_set or empty array if fails
-	 **/
+	 */
 	public function getModuleTplCount($tplset) {
 		$ret = array();
 		$sql = "SELECT tpl_module, COUNT(tpl_id) AS count FROM " . $this->db->prefix('tplfile')
@@ -115,7 +115,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * @param   string  $file               template file
 	 * @param   bool    $getsource = false  get source or not
 	 * @return  array $ret containing number of templates in the tpl_set or empty array if fails
-	 **/
+	 */
 	public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($tplset)) {
@@ -150,7 +150,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * @param   string  $tplname        template name
 	 * @param   string  $tplset_name    template set name
 	 * @return  bool true if exists, false if not
-	 **/
+	 */
 	public function templateExists($tplname, $tplset_name) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('tpl_file', trim($tplname)));
 		$criteria->add(new icms_db_criteria_Item('tpl_tplset', trim($tplset_name)));

@@ -8,7 +8,6 @@
  * @subpackage	Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
- * @version		SVN: $Id$
  */
 
 $modversion = array(

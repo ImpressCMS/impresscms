@@ -36,7 +36,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		System
  * @subpackage	Smilies
- * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */

@@ -6,7 +6,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @since		1.3
- * @version		SVN: $Id: menu.php 12064 2012-10-10 14:37:53Z skenow $
  */
 
 // Loading System Configuration Links

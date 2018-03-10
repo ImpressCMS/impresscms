@@ -65,15 +65,15 @@ class icms_image_Object extends \icms_ipf_Object {
 	public $image_info = array();
 
         /**
-         * Stores image body
+        * Stores image body
          *
-         * @var string
-         */
+        * @var string
+        */
         public $image_body;
 
 	/**
 	 * Constructor
-	 **/
+	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('image_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('image_name', self::DTYPE_STRING, null, false, 30);
@@ -121,11 +121,11 @@ class icms_image_Object extends \icms_ipf_Object {
 	}
 
         /**
-         * Overide setVar for loading also image_body on the fly
+        * Overide setVar for loading also image_body on the fly
          *
-         * @param array $var_arr    Data
-         * @param bool  $not_gpc    Not GPC?
-         */
+        * @param array $var_arr    Data
+        * @param bool  $not_gpc    Not GPC?
+        */
         public function setVars($var_arr, $not_gpc = false) {
             if (isset($var_arr['image_body'])) {
                 $this->image_body = $var_arr['image_body'];
@@ -135,13 +135,13 @@ class icms_image_Object extends \icms_ipf_Object {
         }
 
         /**
-         * Returns a specific variable for the object in a proper format
+        * Returns a specific variable for the object in a proper format
          *
-         * @param string $name      Name of var
-         * @param string $format    Format
+        * @param string $name      Name of var
+        * @param string $format    Format
          *
-         * @return mixed
-         */
+        * @return mixed
+        */
         public function getVar($name, $format = 's') {
             if ($name == 'image_body') {
                 return $this->image_body;
@@ -151,12 +151,12 @@ class icms_image_Object extends \icms_ipf_Object {
         }
 
     /**
-     * Sets var value
+    * Sets var value
      *
-     * @param string $name      Var name
-     * @param mixed $value      New value
-     * @param array $options    Options to apply when settings values
-     */
+    * @param string $name      Var name
+    * @param mixed $value      New value
+    * @param array $options    Options to apply when settings values
+    */
         public function setVar($name, $value, $options = null) {
             if ($name == 'image_body') {
                 $this->image_body = $value;

@@ -40,7 +40,6 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
- * @version		SVN: $Id$
  */
 define('ICMS_IN_ADMIN', 1);
 

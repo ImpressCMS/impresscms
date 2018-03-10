@@ -36,16 +36,16 @@ class icms_ipf_view_Single {
 		$this->_actions = $actions;
 		$this->_headerAsRow = $headerAsRow;
 	}
-        
+
         /**
-         * Magic getter to make some variables for class read-only from outside
-         * 
-         * @param string $name  Variable name
-         * 
-         * @return mixed
-         * 
-         * @throws Exception
-         */
+        * Magic getter to make some variables for class read-only from outside
+         *
+        * @param string $name  Variable name
+         *
+        * @return mixed
+         *
+        * @throws Exception
+        */
         public function __get($name) {
             if (isset($this->$name)) {
                 trigger_error(sprintf('Accessing variable %s from outside IPF View Single class was deprecated', $name), E_USER_DEPRECATED);
@@ -53,7 +53,7 @@ class icms_ipf_view_Single {
             } else {
                 throw new Exception(sprintf('%s variable for %s doesn\'t exists', $name, __CLASS__));
             }
-        }        
+        }
 
 	/**
 	 *
