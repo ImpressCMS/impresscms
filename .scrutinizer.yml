@@ -19,6 +19,11 @@ filter:
         - htdocs/libraries/phpopenid/Auth/
         - extras/plugins/
         - htdocs/libraries/geshi/
+        - htdocs/libraries/icms/
+        - htdocs/libraries/icms/*.php
+        - htdocs/modules/
+        - htdocs/include/
+        - htdocs/plugins/
         - htdocs/libraries/smarty/internals/
         - htdocs/plugins/csstidy/
         - htdocs/libraries/phpopenid/admin/
