@@ -7,7 +7,6 @@
  * @license		LICENSE.txt
  * @package	core
  * @since		1.2
- * @version		$Id$
  */
 
 include '../mainfile.php';
@@ -25,7 +24,7 @@ $width = $emailAddressLength * ($fontSize-2.5);
 
 $image = imagecreate($width,$height);
 
-/********* COLORS ************/
+/********* COLORS ***********/
 $fg = $icmsConfigPersona['email_cor'];
 $red = 100;
 $green = 100;
@@ -52,7 +51,7 @@ if ($icmsConfigPersona['email_shadow']!="") {
 $white = ImageColorAllocate($image,255,255,255);
 $frente = imagecolorallocate($image, $red,$green,$blue);
 
-/*****************************/
+/****************************/
 
 ImageColorTransparent($image, $white);
 ImageFilledRectangle($image,0,0,$width,$height,$white);

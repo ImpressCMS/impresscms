@@ -12,7 +12,6 @@
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
 */
 
 // Database Hostname

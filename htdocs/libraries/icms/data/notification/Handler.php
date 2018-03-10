@@ -52,7 +52,7 @@ include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
  * @package	ICMS\Data\Notification
  */
 class icms_data_notification_Handler extends icms_ipf_Handler {
-    
+
         public function __construct(&$db) {
             parent::__construct($db, 'data_notification', 'not_id', 'not_event', 'not_itemid', 'icms', 'xoopsnotifications', 'not_id');
         }
@@ -69,7 +69,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	* @param   int     $user_id    user ID to get notification for
 	*
 	* @return  mixed   array of objects or false
-	**/
+	*/
 	public function &getNotification($module_id, $category, $item_id, $event, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int)$module_id));
@@ -119,7 +119,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 *                             (e.g. once_only) (default to current user preference)
 	 * @param  int    $module_id   ID of the module (default to current module)
 	 * @param  int    $user_id     ID of the user (default to current user)
-	 **/
+	 */
 	public function subscribe($category, $item_id, $events, $mode=null, $module_id=null, $user_id=null) {
 		if (!isset($user_id)) {
 			if (empty(icms::$user)) {
@@ -168,7 +168,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int  $user_id  ID of the user
 	 *
 	 * @return array  Array of {@link icms_data_notification_Object} objects
-	 **/
+	 */
 	public function getByUser($user_id) {
 		$criteria = new icms_db_criteria_Item('not_uid', $user_id);
 		return $this->getObjects($criteria, true);
@@ -182,7 +182,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	* @param  int      $module_id  ID of the module of the subscribed items
 	* @param  int      $user_id  ID of the user of the subscribed items
 	* @return array    Array of {@link icms_data_notification_Object} objects
-	**/
+	*/
 	public function getSubscribedEvents($category, $item_id, $module_id, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int) $module_id));
@@ -209,7 +209,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param   string  $status     status
 	 *
 	 * @return  array   Array of {@link icms_data_notification_Object} objects
-	 **/
+	 */
 	public function getByItemId($module_id, $item_id, $order = null, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
 		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
@@ -233,7 +233,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  array    $user_list    only notify the selected users
 	 * @param  int      $module_id    ID of the module
 	 * @param  int      $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
-	 **/
+	 */
 	// TODO:(?) - pass in an event LIST.  This will help to avoid
 	// problem of sending people multiple emails for similar events.
 	// BUT, then we need an array of mail templates, etc...  Unless
@@ -260,7 +260,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  array    $user_list    only notify the selected users
 	 * @param  int      $module_id    ID of the module
 	 * @param  int      $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
-	 **/
+	 */
 	public function triggerEvent($category, $item_id, $event, $extra_tags=array(), $user_list=array(), $module_id=null, $omit_user_id=null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
@@ -372,7 +372,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 *
 	 * @param   int $user_id  ID of the user
 	 * @return  bool
-	 **/
+	 */
 	public function unsubscribeByUser($user_id) {
 		$criteria = new icms_db_criteria_Item('not_uid', (int)$user_id);
 		return $this->deleteAll($criteria);
@@ -389,7 +389,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int     $user_id     UID of the user (default current user)
 	 *
 	 * @return bool
-	 **/
+	 */
 	public function unsubscribe($category, $item_id, $events, $module_id=null, $user_id=null) {
 		if (!isset($user_id)) {
 			if (empty(icms::$user)) {
@@ -428,7 +428,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 *
 	 * @param   int $module_id  ID of the module
 	 * @return  bool
-	 **/
+	 */
 	public function unsubscribeByModule($module_id) {
 		$criteria = new icms_db_criteria_Item('not_modid', (int)$module_id);
 		return $this->deleteAll($criteria);
@@ -442,7 +442,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int    $item_id    ID of the item
 	 *
 	 * @return bool
-	 **/
+	 */
 	public function unsubscribeByItem($module_id, $category, $item_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int) $module_id));
@@ -458,7 +458,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * switched to mode XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT.
 	 *
 	 * @param  int  $user_id  ID of the user being logged in
-	 **/
+	 */
 	public function doLoginMaintenance($user_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_uid', (int) $user_id));
@@ -479,7 +479,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param   mixed   $field_value    Value to write
 	 *
 	 * @return  bool
-	 **/
+	 */
 	public function updateByField(&$notification, $field_name, $field_value) {
 		$notification->unsetNew();
 		$notification->setVar($field_name, $field_value);
@@ -714,7 +714,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  array  $event	 Event info array
 	 * @param  object $module	Module
 	 * @return bool
-	 **/
+	 */
 	static public function eventEnabled(&$category, &$event, &$module) {
 		$mod_config = icms::$config->getConfigsByCat(0,$module->getVar('mid'));
 
@@ -811,7 +811,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  array  $event	 Array of event info
 	 * @param  string $type	  The particular name to generate
 	 * return string
-	 **/
+	 */
 	static public function generateConfig(&$category, &$event, $type) {
 		switch ($type) {
 			case 'option_value':

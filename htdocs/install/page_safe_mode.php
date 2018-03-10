@@ -10,7 +10,6 @@
  * @package		installer
  * @since        Xoops 2.3.0
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
  */
 /**
  *

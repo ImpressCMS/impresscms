@@ -50,38 +50,38 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 class icms_db_criteria_Item extends icms_db_criteria_Element {
 
 	/**
-         * Prefix for column
-         * 
+        * Prefix for column
+         *
 	 * @var	string
 	 */
 	public $prefix = '';
-        
+
         /**
-         * Function used for column
+        * Function used for column
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $function = '';
-        
+
         /**
-         * Column name
+        * Column name
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $column = '';
-        
+
         /**
-         * Operator used in comparision
+        * Operator used in comparision
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $operator = '';
-        
+
         /**
-         * Value used in comparision
+        * Value used in comparision
          *
-         * @var mixed
-         */
+        * @var mixed
+        */
 	public $value = null;
 
 	/**
@@ -90,7 +90,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * @param   string  $column
 	 * @param   mixed  $value
 	 * @param   string  $operator
-	 **/
+	 */
 	public function __construct($column, $value='', $operator='=', $prefix = '', $function = '') {
 		$this->prefix = $prefix;
 		$this->function = $function;
@@ -103,7 +103,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * Make a sql condition string
 	 *
 	 * @return  string
-	 **/
+	 */
 	public function render() {
 		$clause = (!empty($this->prefix) ? "{$this->prefix}." : "") . $this->column;
 		if (!empty($this->function)) {
@@ -117,7 +117,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
                         } else if (is_object($this->value)) {
                             $value = (string)$this->value;
                         } else if (is_array($this->value)) {
-                            if (!empty($this->value)) {                                
+                            if (!empty($this->value)) {
                                 $value = '(\'' . implode('\', \'', $this->value) . '\')';
                             } else {
                                 $value = '()';
@@ -136,8 +136,8 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
                                     }
                             }
                         }
-                    
-			
+
+
 			$clause .= " {$this->operator} $value";
 		}
 		return $clause;

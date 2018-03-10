@@ -62,7 +62,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return  array   Array of raw database records
-	 **/
+	 */
 	public function getList($criteria = null, $limit, $start, $debug) {            
             $comments = parent::getList($criteria, $limit, $start, $debug);
             return array_keys($comments);		
@@ -79,7 +79,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   int     $start      Start offset
 	 *
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
-	 **/
+	 */
 	public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
 		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
@@ -104,7 +104,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   int     $status     Status of the comment
 	 *
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
-	 **/
+	 */
 	public function getCountByItemId($module_id, $item_id, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
 		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
@@ -123,7 +123,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   int     $status
 	 *
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
-	 **/
+	 */
 	public function getTopComments($module_id, $item_id, $order, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
 		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
@@ -143,7 +143,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   int     $status
 	 *
 	 * @return  array   Array of {@link icms_data_comment_Object} objects
-	 **/
+	 */
 	public function getThread($comment_rootid, $comment_id, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_rootid', (int) $comment_rootid));
 		$criteria->add(new icms_db_criteria_Item('com_id', (int) $comment_id, '>='));
@@ -161,7 +161,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   mixed   $field_value    Value to write
 	 *
 	 * @return  bool
-	 **/
+	 */
 	public function updateByField(&$comment, $field_name, $field_value) {
 		$comment->unsetNew();
 		$comment->setVar($field_name, $field_value);
@@ -173,7 +173,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 *
 	 * @param   int $module_id  ID of the module
 	 * @return  bool
-	 **/
+	 */
 	public function deleteByModule($module_id) {
 		return $this->deleteAll(new icms_db_criteria_Item('com_modid', (int) $module_id));
 	}
@@ -186,7 +186,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return  bool
-	 **/
+	 */
 	/*
 	 function updateAll($fieldname, $fieldvalue, $criteria = null)
 	 {

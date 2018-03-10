@@ -3,7 +3,6 @@
  * CKeditor		adapter for ImpressCMS
  *
  * @license	http://www.fsf.org/copyleft/gpl.html GNU public license
- * @version	$Id: english.php 4709 2008-09-06 21:07:58Z skenow $
  */
 /*
  * Assocated with editor_registry.php

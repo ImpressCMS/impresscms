@@ -10,7 +10,6 @@
  * @subpackage	Images
  * @since		1.2
  * @author		Rodrigo Pereira Lima (aka TheRplima) <therplima@impresscms.org>
- * @version		SVN: $Id$
  */
 
 include_once "../../../../mainfile.php";

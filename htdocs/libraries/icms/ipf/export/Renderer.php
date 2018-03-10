@@ -3,45 +3,45 @@
  * icms_ipf_export_Renderer class
  *
  * Class that renders a set of data into a specific export format
- * 
+ *
  * @author	marcan <marcan@smartfactory.ca>
  * @package	ICMS\IPF\Export
  */
 class icms_ipf_export_Renderer {
 
     /**
-     * Contains the data to be exported
+    * Contains the data to be exported
      *
-     * @var array
-     */
+    * @var array
+    */
 	public $data = array();
-        
+
         /**
-         * Format of the ouputed export. Currently only supports CSV
+        * Format of the ouputed export. Currently only supports CSV
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $format = 'csv';
-        
+
         /**
-         * Name of the file in which the exported data will be saved
+        * Name of the file in which the exported data will be saved
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $filename = '';
-        
+
         /**
-         * Path where the file will be saved
+        * Path where the file will be saved
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $filepath = '';
-        
+
         /**
-         * Options of the format to be exported in
+        * Options of the format to be exported in
          *
-         * @var array
-         */
+        * @var array
+        */
 	public $options = array();
 
 	/**

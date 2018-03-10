@@ -84,7 +84,7 @@ abstract class icms_db_criteria_Element {
 
 	/**
 	 * Constructor
-	 **/
+	 */
 	public function __construct(){}
 
 	/**

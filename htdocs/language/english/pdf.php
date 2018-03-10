@@ -35,7 +35,6 @@
  * @package		core
  * @since		1.1
  * @author		stranger <stranger@impresscms.ir>
- * @version		$Id$
  */
 // ENGLISH
 

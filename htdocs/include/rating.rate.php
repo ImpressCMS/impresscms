@@ -8,7 +8,6 @@
  * @package		core
  * @since		1.2
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
  */
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");

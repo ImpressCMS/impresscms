@@ -12,7 +12,6 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
 */
 
 if (!defined("XOOPS_MAINFILE_INCLUDED")) {
@@ -60,7 +59,7 @@ if (!defined("XOOPS_MAINFILE_INCLUDED")) {
 	// Database
 	// Choose the database to be used
 	define('XOOPS_DB_TYPE', 'mysql');
- 
+
     // Set the database charset if applicable
     if (defined('XOOPS_DB_CHARSET')) die();
     define('XOOPS_DB_CHARSET', '');
@@ -89,7 +88,7 @@ if (!defined("XOOPS_MAINFILE_INCLUDED")) {
 	// This salt will be appended to passwords in the icms_encryptPass() function.
 	// Do NOT change this once your site is Live, doing so will invalidate everyones Password.
 	define('XOOPS_DB_SALT', '');
-	
+
 	// Use persistent connection? (Yes=1 No=0)
 	// Default is 'Yes'. Choose 'Yes' if you are unsure.
 	define('XOOPS_DB_PCONNECT', 0);

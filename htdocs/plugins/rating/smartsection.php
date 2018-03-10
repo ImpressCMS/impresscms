@@ -9,7 +9,6 @@
  * @since		1.2
  * @author		ImpressCMS
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
  */
 
 function icms_plugin_smartsection() {

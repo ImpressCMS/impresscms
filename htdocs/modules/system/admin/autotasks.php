@@ -9,7 +9,6 @@
  * @subpackage	Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
- * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */
@@ -24,7 +23,7 @@ include "admin_header.php";
 
 /**
  * Method for editing autotask entries
- * 
+ *
  * @param boolean	$showmenu		This parameter is not used - why is it here?
  * @param int		$autotasksid	The unique identifier for the autotask
  * @param boolean	$clone			Indicator if an autotask is being created from another
