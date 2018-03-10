@@ -17,7 +17,7 @@
  * @param object $ts textsanitizer instance
  * @param string $text the search terms
  */
-function textsanitizer_syntaxhighlightphp(&$ts, $text) {
+function textsanitizer_syntaxhighlightphp($text) {
 	return preg_replace_callback("/\[code_php](.*)\[\/code_php\]/sU", function ($matches) {
 		return textsanitizer_geshi_php_highlight($matches[1]);
 	}, $text);

@@ -14,10 +14,9 @@
 /**
  * Pattern replacements for snippets of css stylesheets
  *
- * @param object $ts textsanitizer instance
  * @param string $text the search terms
  */
-function textsanitizer_syntaxhighlightcss(&$ts, $text) {
+function textsanitizer_syntaxhighlightcss($text) {
 	return preg_replace_callback("/\[code_css](.*)\[\/code_css\]/sU", function ($matches) {
 		return textsanitizer_geshi_css_highlight($matches[1]);
 	}, $text);
