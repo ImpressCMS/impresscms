@@ -10,6 +10,33 @@ filter:
         - extras/plugins/
         - htdocs/libraries/phpopenid
         - htdocs/libraries/recaptcha/
+        - htdocs/admin.php
+        - htdocs/cmd.php
+        - htdocs/content.php
+        - htdocs/edituser.php
+        - htdocs/error.php
+        - htdocs/finish_auth.php
+        - htdocs/footer.php
+        - htdocs/header.php
+        - htdocs/image.php
+        - htdocs/index.php
+        - htdocs/invite.php
+        - htdocs/lostpass.php
+        - htdocs/mainfile.php
+        - htdocs/misc.php
+        - htdocs/notifications.php
+        - htdocs/pmlite.php
+        - htdocs/privpolicy.php
+        - htdocs/readpmsg.php
+        - htdocs/register.php
+        - htdocs/resetpass.php
+        - htdocs/search.php
+        - htdocs/session_confirm.php
+        - htdocs/suggest.php
+        - htdocs/try_auth.php
+        - htdocs/user.php
+        - htdocs/userinfo.php
+        - htdocs/viewpmsg.php
     dependency_paths:
         - htdocs/libraries/smarty/
         - htdocs/libraries/phpopenid/Auth/
