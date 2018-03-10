@@ -7,7 +7,6 @@
  * @package	core
  * @since	1.1
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
  */
 
 if (!defined("ICMS_ROOT_PATH")) {

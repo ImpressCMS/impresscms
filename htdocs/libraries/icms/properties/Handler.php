@@ -12,317 +12,317 @@
 abstract class icms_properties_Handler implements Serializable {
 
     /**
-     * Specifies property that a property stores a string
-     */
+    * Specifies property that a property stores a string
+    */
     const DTYPE_STRING = 2; // XOBJ_DTYPE_TXTBOX
 
     /**
-     * Specifies property that a property stores a integer
-     */
+    * Specifies property that a property stores a integer
+    */
     const DTYPE_INTEGER = 3; // XOBJ_DTYPE_INT
 
     /**
-     * Specifies property that a property stores a float number
-     */
+    * Specifies property that a property stores a float number
+    */
     const DTYPE_FLOAT = 201; // XOBJ_DTYPE_FLOAT
 
     /**
-     * Specifies property that a property stores a boolean
-     */
+    * Specifies property that a property stores a boolean
+    */
     const DTYPE_BOOLEAN = 105;
 
     /**
-     * Specifies property that a property stores a file
-     */
+    * Specifies property that a property stores a file
+    */
     const DTYPE_FILE = 104; //
 
     /**
-     * Specifies property that a property stores a date or/and time
-     */
+    * Specifies property that a property stores a date or/and time
+    */
     const DTYPE_DATETIME = 11; // XOBJ_DTYPE_LTIME
 
     /**
-     * Specifies property that a property stores an array
-     */
+    * Specifies property that a property stores an array
+    */
     const DTYPE_ARRAY = 6; // XOBJ_DTYPE_ARRAY
 
     /**
-     * Specifies property that a property stores a list
-     */
+    * Specifies property that a property stores a list
+    */
     const DTYPE_LIST = 101; // XOBJ_DTYPE_SIMPLE_ARRAY
 
     /**
-     * Specifies property that a property stores a object
-     */
+    * Specifies property that a property stores a object
+    */
     const DTYPE_OBJECT = 12;
 
     /**
-     * Specifies property that a property stores a unknown format data
+    * Specifies property that a property stores a unknown format data
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_OTHER = 7; // XOBJ_DTYPE_OTHER
 
     /**
-     * Specifies property that a property stores a file (old format)
+    * Specifies property that a property stores a file (old format)
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_FILE = 204; //XOBJ_DTYPE_FILE
 
     /**
-     * Specifies property that a property stores a long string)
+    * Specifies property that a property stores a long string)
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_TXTBOX = 1; // XOBJ_DTYPE_TXTBOX
 
     /**
-     * Specifies property that a property stores a url string
+    * Specifies property that a property stores a url string
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_URL = 4; // XOBJ_DTYPE_URL
 
     /**
-     * Specifies property that a property stores a email address
+    * Specifies property that a property stores a email address
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_EMAIL = 5; // XOBJ_DTYPE_EMAIL
 
     /**
-     * Specifies property that a property stores a source code
+    * Specifies property that a property stores a source code
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_SOURCE = 8; // XOBJ_DTYPE_SOURCE
 
     /**
-     * Specifies property that a property stores a short time
+    * Specifies property that a property stores a short time
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_STIME = 9; // XOBJ_DTYPE_STIME
 
     /**
-     * Specifies property that a property stores a middle time
+    * Specifies property that a property stores a middle time
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_MTIME = 10; // XOBJ_DTYPE_MTIME
 
     /**
-     * Specifies property that a property stores a currency
+    * Specifies property that a property stores a currency
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_CURRENCY = 200; // XOBJ_DTYPE_CURRENCY
 
     /**
-     * Specifies property that a property stores a time only data
+    * Specifies property that a property stores a time only data
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_TIME_ONLY = 202; // XOBJ_DTYPE_TIME_ONLY
 
     /**
-     * Specifies property that a property stores a urllink
+    * Specifies property that a property stores a urllink
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_URLLINK = 203; // XOBJ_DTYPE_URLLINK
 
     /**
-     * Specifies property that a property stores a image
+    * Specifies property that a property stores a image
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_IMAGE = 205; // XOBJ_DTYPE_IMAGE
 
     /**
-     * Specifies property that a property stores a form section opening
+    * Specifies property that a property stores a form section opening
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_FORM_SECTION = 210; // XOBJ_DTYPE_FORM_SECTION
 
     /**
-     * Specifies property that a property stores a form section closing
+    * Specifies property that a property stores a form section closing
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     const DTYPE_DEP_FORM_SECTION_CLOSE = 211; // XOBJ_DTYPE_FORM_SECTION_CLOSE
 
     /**
-     * Specifies allowed mimetypes for the var (only suported for DTYPE_FILE)
-     */
+    * Specifies allowed mimetypes for the var (only suported for DTYPE_FILE)
+    */
     const VARCFG_ALLOWED_MIMETYPES = 'allowedMimeTypes';
 
     /**
-     * Specifies max filesize for the var (only suported for DTYPE_FILE)
-     */
+    * Specifies max filesize for the var (only suported for DTYPE_FILE)
+    */
     const VARCFG_MAX_FILESIZE = 'maxFileSize';
 
     /**
-     * Specifies max width of image for the var (only suported for DTYPE_FILE)
-     */
+    * Specifies max width of image for the var (only suported for DTYPE_FILE)
+    */
     const VARCFG_MAX_WIDTH = 'maxWidth';
 
     /**
-     * Specifies max height for the var (only suported for DTYPE_FILE)
-     */
+    * Specifies max height for the var (only suported for DTYPE_FILE)
+    */
     const VARCFG_MAX_HEIGHT = 'maxHeight';
 
     /**
-     * Specifies prefix for the var (only suported for DTYPE_FILE, DTYPE_STRING)
-     */
+    * Specifies prefix for the var (only suported for DTYPE_FILE, DTYPE_STRING)
+    */
     const VARCFG_PREFIX = 'prefix';
 
     /**
-     * Specifies saving path for the var (only suported for DTYPE_FILE)
-     */
+    * Specifies saving path for the var (only suported for DTYPE_FILE)
+    */
     const VARCFG_PATH = 'path';
 
     /**
-     * Specifies filename generator function for the var (only suported for DTYPE_FILE)
-     */
+    * Specifies filename generator function for the var (only suported for DTYPE_FILE)
+    */
     const VARCFG_FILENAME_FUNCTION = 'filenameGenerator';
 
     /**
-     * Specifies list with options that can be used for the var
-     */
+    * Specifies list with options that can be used for the var
+    */
     const VARCFG_POSSIBLE_OPTIONS = 'possibleOptions';
 
     /**
-     * Specifies if this var is locked from changing?
-     */
+    * Specifies if this var is locked from changing?
+    */
     const VARCFG_LOCKED = 'locked';
 
     /**
-     * Specifies if this var is hidden from user
-     */
+    * Specifies if this var is hidden from user
+    */
     const VARCFG_HIDE = 'hide';
 
     /**
-     * Specifies how var should be rendered
-     */
+    * Specifies how var should be rendered
+    */
     const VARCFG_RENDER_TYPE = 'renderType';
 
     /**
-     * Specifies separator for saving list items for the var (only suported for DTYPE_LIST)
-     */
+    * Specifies separator for saving list items for the var (only suported for DTYPE_LIST)
+    */
     const VARCFG_SEPARATOR = 'separator';
 
     /**
-     * Specifies max text length for the var (only suported for DTYPE_STRING)
-     */
+    * Specifies max text length for the var (only suported for DTYPE_STRING)
+    */
     const VARCFG_MAX_LENGTH = 'maxLength';
 
     /**
-     * Specifies validation rule (REGEXP)
-     */
+    * Specifies validation rule (REGEXP)
+    */
     const VARCFG_VALIDATE_RULE = 'validateRule';
 
     /**
-     * Specifies source formating options (only usable for DTYPE_STRING)
-     */
+    * Specifies source formating options (only usable for DTYPE_STRING)
+    */
     const VARCFG_SOURCE_FORMATING = 'sourceFormating';
 
     /**
-     * Specifies outputing formating
-     */
+    * Specifies outputing formating
+    */
     const VARCFG_FORMAT = 'format';
 
     /**
-     * Is autoforating for this var disabled?
-     */
+    * Is autoforating for this var disabled?
+    */
     const VARCFG_AF_DISABLED = 'autoFormatingDisabled';
 
     /**
-     * Not GPC?
-     */
+    * Not GPC?
+    */
     const VARCFG_NOT_GPC = 'not_gpc';
 
     /**
-     * Is var changed?
-     */
+    * Is var changed?
+    */
     const VARCFG_CHANGED = 'changed';
 
     /**
-     * Value of var
-     */
+    * Value of var
+    */
     const VARCFG_VALUE = 'value';
 
     /**
-     * Var data type
-     */
+    * Var data type
+    */
     const VARCFG_TYPE = 'data_type';
 
     /**
-     * Is var required?
-     */
+    * Is var required?
+    */
     const VARCFG_REQUIRED = 'required';
 
     /**
-     * Data handler
-     */
+    * Data handler
+    */
     const VARCFG_DATA_HANDLER = 'data_handler';
 
     /**
-     * Deprecached data type
-     */
+    * Deprecached data type
+    */
     const VARCFG_DEP_DATA_TYPE = 'depDataType';
 
     /**
-     * Form caption for this var
-     */
+    * Form caption for this var
+    */
     const VARCFG_FORM_CAPTION = 'form_caption';
 
     /**
-     * Form description for this var
-     */
+    * Form description for this var
+    */
     const VARCFG_FORM_DESC = 'form_dsc';
 
     /**
-     * Default value of this var
-     */
+    * Default value of this var
+    */
     const VARCFG_DEFAULT_VALUE = 'default_value';
 
     /**
-     * Is var not loaded?
-     */
+    * Is var not loaded?
+    */
     const VARCFG_NOTLOADED = 'not_loaded';
 
     /**
-     * Validation rule for emails
-     */
+    * Validation rule for emails
+    */
     const VALIDATE_RULE_EMAIL = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
 
     /**
-     * Validation rule for links
-     */
+    * Validation rule for links
+    */
     const VALIDATE_RULE_LINKS = '#^http(s)?://[a-z0-9-_.]+\.[a-z]{2,4}#i';
 
     /**
-     * Vars configuration
+    * Vars configuration
      *
-     * @var array
-     */
+    * @var array
+    */
     protected $_vars = array();
 
     /**
-     * Changed vars count
+    * Changed vars count
      *
-     * @var int
-     */
+    * @var int
+    */
     protected $_changed = 0;
 
     /**
-     * Assigns values from array to vars
+    * Assigns values from array to vars
      *
-     * @param array $values     Assoc arary with keys and values to assign
-     */
+    * @param array $values     Assoc arary with keys and values to assign
+    */
     public function assignVars($values) {
         foreach ($this->_vars as $key => $var) {
             $value = (!isset($values[$key]))?null:$values[$key];
@@ -331,14 +331,14 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Inits common var
+    * Inits common var
      *
-     * @param	string		$varname            Var name
-     * @param	bool            $displayOnForm      Display on form
-     * @param	string		$default            Default value
+    * @param	string		$varname            Var name
+    * @param	bool            $displayOnForm      Display on form
+    * @param	string		$default            Default value
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     public function initCommonVar($varname, $displayOnForm = true, $default = 'notdefined') {
         icms_core_Debug::setDeprecated('', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         switch ($varname) {
@@ -352,12 +352,12 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Magic function to get property value by accessing it by name
+    * Magic function to get property value by accessing it by name
      *
-     * @param string $name
+    * @param string $name
      *
-     * @return mixed
-     */
+    * @return mixed
+    */
     public function __get($name) {
         switch ($name) {
             case '_vars':
@@ -383,11 +383,11 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Magic function to work with properties as class variables (set them)
+    * Magic function to work with properties as class variables (set them)
      *
-     * @param string $name      Var name
-     * @param mixed $value      New value
-     */
+    * @param string $name      Var name
+    * @param mixed $value      New value
+    */
     public function __set($name, $value) {
         if (!isset($this->_vars[$name]))
             return trigger_error('Variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
@@ -406,24 +406,24 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Checks if var exists
+    * Checks if var exists
      *
-     * @param string $name  Var name
+    * @param string $name  Var name
      *
-     * @return bool
-     */
+    * @return bool
+    */
     public function __isset($name) {
         return isset($this->_vars[$name]);
     }
 
     /**
-     * Returns a specific variable for the object in a proper format
+    * Returns a specific variable for the object in a proper format
      *
-     * @access public
-     * @param string $key key of the object's variable to be returned
-     * @param string $format format to use for the output
-     * @return mixed formatted value of the variable
-     */
+    * @access public
+    * @param string $key key of the object's variable to be returned
+    * @param string $format format to use for the output
+    * @return mixed formatted value of the variable
+    */
     public function getVar($name, $format = 's') {
         switch (strtolower($format)) {
             case 's':
@@ -449,12 +449,12 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Gets var value for displaying
+    * Gets var value for displaying
      *
-     * @param string $name
+    * @param string $name
      *
-     * @return mixed
-     */
+    * @return mixed
+    */
     public function getVarForDisplay($name) {
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
             case self::DTYPE_STRING:
@@ -499,12 +499,12 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Gets var value for editing
+    * Gets var value for editing
      *
-     * @param string $name
+    * @param string $name
      *
-     * @return mixed
-     */
+    * @return mixed
+    */
     public function getVarForEdit($name) {
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
             case self::DTYPE_STRING:
@@ -525,12 +525,12 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Gets var value for form
+    * Gets var value for form
      *
-     * @param string $name
+    * @param string $name
      *
-     * @return mixed
-     */
+    * @return mixed
+    */
     public function getVarForForm($name) {
         switch ($this->_vars[$name][self::VARCFG_TYPE]) {
             case self::DTYPE_STRING:
@@ -550,12 +550,12 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Sets var value
+    * Sets var value
      *
-     * @param string $name      Var name
-     * @param mixed $value      New value
-     * @param array $options    Options to apply when settings values
-     */
+    * @param string $name      Var name
+    * @param mixed $value      New value
+    * @param array $options    Options to apply when settings values
+    */
     public function setVar($name, $value, $options = null) {
         if ($options !== null) {
             if (is_bool($options)) {
@@ -569,12 +569,12 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * assign a value to a variable
+    * assign a value to a variable
      *
-     * @access public
-     * @param string $key name of the variable to assign
-     * @param mixed $value value to assign
-     */
+    * @access public
+    * @param string $key name of the variable to assign
+    * @param mixed $value value to assign
+    */
     public function assignVar($key, &$value) {
         if (isset($value) && isset($this->_vars[$key])) {
             $this->_vars[$key][self::VARCFG_VALUE] = $value;
@@ -582,10 +582,10 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Gets changes vars
+    * Gets changes vars
      *
-     * @return array
-     */
+    * @return array
+    */
     public function getChangedVars() {
         $changed = array();
         foreach ($this->_vars as $key => $format) {
@@ -597,22 +597,22 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * If is object variables has been changed?
+    * If is object variables has been changed?
      *
-     * @return bool
-     */
+    * @return bool
+    */
     public function isChanged() {
         return empty($this->getChangedVars()) === false;
     }
 
     /**
-     * Checks if var is set
+    * Checks if var is set
      *
-     * @param int $type
-     * @param string $key
+    * @param int $type
+    * @param string $key
      *
-     * @return boolean
-     */
+    * @return boolean
+    */
     private function isVarSet($type, $key) {
         switch ($type) {
             case self::DTYPE_LIST:
@@ -633,10 +633,10 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Gets an array with required but not specified vars
+    * Gets an array with required but not specified vars
      *
-     * @return array
-     */
+    * @return array
+    */
     public function getProblematicVars() {
         $names = array();
         foreach ($this->_vars as $key => $format)
@@ -647,14 +647,14 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Initialize var (property) for the object
+    * Initialize var (property) for the object
      *
-     * @param string $key           Var name
-     * @param int $dataType         Var data type (use constants DTYPE_* for specifing it!)
-     * @param mixed $defaultValue   Default value
-     * @param bool $required        Is Required?
-     * @param array/null $otherCfg  If there is, an assoc array with other configuration for var
-     */
+    * @param string $key           Var name
+    * @param int $dataType         Var data type (use constants DTYPE_* for specifing it!)
+    * @param mixed $defaultValue   Default value
+    * @param bool $required        Is Required?
+    * @param array/null $otherCfg  If there is, an assoc array with other configuration for var
+    */
     protected function initVar($key, $dataType, $defaultValue = null, $required = false, $otherCfg = null) {
         if ($otherCfg !== null) {
             $this->_vars[$key] = $otherCfg;
@@ -792,10 +792,10 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Gets default values for all vars
+    * Gets default values for all vars
      *
-     * @return array
-     */
+    * @return array
+    */
     public function getDefaultVars() {
         $ret = array();
         foreach ($this->_vars as $key => $info) {
@@ -805,12 +805,12 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Gets mymetype from filename
+    * Gets mymetype from filename
      *
-     * @param string $filename      Filename
+    * @param string $filename      Filename
      *
-     * @return string
-     */
+    * @return string
+    */
     private function getFileMimeType($filename) {
         if (function_exists('finfo_open')) {
             $info = finfo_open(FILEINFO_MIME_TYPE);
@@ -824,14 +824,14 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Cleans value for var
+    * Cleans value for var
      *
-     * @param string $key       Var name
-     * @param string $type      Var type
-     * @param string $value     new value
+    * @param string $key       Var name
+    * @param string $type      Var type
+    * @param string $value     new value
      *
-     * @return mixed
-     */
+    * @return mixed
+    */
     protected function cleanVar($key, $type, $value) {
         switch ($type) {
             case self::DTYPE_OBJECT:
@@ -982,13 +982,13 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Returns the values of the specified variables
+    * Returns the values of the specified variables
      *
-     * @param mixed $keys An array containing the names of the keys to retrieve, or null to get all of them
-     * @param string $format Format to use (see getVar)
-     * @param int $maxDepth Maximum level of recursion to use if some vars are objects themselves
-     * @return array associative array of key->value pairs
-     */
+    * @param mixed $keys An array containing the names of the keys to retrieve, or null to get all of them
+    * @param string $format Format to use (see getVar)
+    * @param int $maxDepth Maximum level of recursion to use if some vars are objects themselves
+    * @return array associative array of key->value pairs
+    */
     public function getValues($keys = null, $format = 's', $maxDepth = 1) {
         if (!isset($keys)) {
             $keys = array_keys($this->_vars);
@@ -1009,10 +1009,10 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Returns properties as key-value array
+    * Returns properties as key-value array
      *
-     * @return array
-     */
+    * @return array
+    */
     public function toArray() {
         $ret = array();
         foreach (array_keys($this->_vars) as $name) {
@@ -1030,14 +1030,14 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Returns array of vars or only one var (if name specified) with selected info field
+    * Returns array of vars or only one var (if name specified) with selected info field
      *
-     * @param string $key       Var name
-     * @param string $info      Var info to get
-     * @param mixed $default    Default response
+    * @param string $key       Var name
+    * @param string $info      Var info to get
+    * @param mixed $default    Default response
      *
-     * @return mixed
-     */
+    * @return mixed
+    */
     public function getVarInfo($key = null, $info = null, $default = null) {
         if ($key === null) {
             return $this->_vars;
@@ -1057,11 +1057,11 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * returns all variables for the object
+    * returns all variables for the object
      *
-     * @access public
-     * @return array associative array of key->value pairs
-     */
+    * @access public
+    * @return array associative array of key->value pairs
+    */
     public function &getVars() {
         foreach (array_keys($this->_vars) as $key) {
             $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] = $this->cleanVar($key, $this->_vars[$key][self::VARCFG_TYPE], isset($this->_vars[$key][self::VARCFG_DEFAULT_VALUE]) ? $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] : null);
@@ -1070,21 +1070,21 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Return array of properties names
+    * Return array of properties names
      *
-     * @return array
-     */
+    * @return array
+    */
     public function getVarNames() {
         return array_keys($this->_vars);
     }
 
     /**
-     * Assign values to multiple variables in a batch
+    * Assign values to multiple variables in a batch
      *
-     * @access public
-     * @param array $var_arr associative array of values to assign
-     * @param bool $not_gpc
-     */
+    * @access public
+    * @param array $var_arr associative array of values to assign
+    * @param bool $not_gpc
+    */
     public function setVars($var_arr, $not_gpc = false) {
         foreach ($var_arr as $key => $value) {
             $this->setVar($key, $value, $not_gpc);
@@ -1092,50 +1092,50 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Changes type for var
+    * Changes type for var
      *
-     * @param string $key   Var name
-     * @param int $type     Type
+    * @param string $key   Var name
+    * @param int $type     Type
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     public function setType($key, $type) {
         icms_core_Debug::setDeprecated("setVarInfo", sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         $this->setVarInfo($key, self::VARCFG_TYPE, $type);
     }
 
     /**
-     * Sets field as required
+    * Sets field as required
      *
-     * @param string $key   Var name
-     * @param bool $is_required     Is required?
+    * @param string $key   Var name
+    * @param bool $is_required     Is required?
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     public function doSetFieldAsRequired($key, $is_required = true) {
          icms_core_Debug::setDeprecated("setVarInfo", sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
          $this->setVarInfo($key, self::VARCFG_REQUIRED, $is_required);
     }
 
     /**
-     * Returns cleaned vars array
+    * Returns cleaned vars array
      *
-     * @return array
+    * @return array
      *
-     * @deprecated since version 2.0
-     */
+    * @deprecated since version 2.0
+    */
     public function cleanVars() {
         icms_core_Debug::setDeprecated("toArray", sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         return $this->toArray();
     }
 
     /**
-     * Sets var info
+    * Sets var info
      *
-     * @param string $key       Var name
-     * @param string $info      Var option
-     * @param mixed $value      Options value
-     */
+    * @param string $key       Var name
+    * @param string $info      Var option
+    * @param mixed $value      Options value
+    */
     public function setVarInfo($key, $info, $value) {
         if ($key === null) {
             $key = array_keys($this->_vars);
@@ -1161,20 +1161,20 @@ abstract class icms_properties_Handler implements Serializable {
     }
 
     /**
-     * Serialize instance to string
+    * Serialize instance to string
      *
-     * @return string
-     */
+    * @return string
+    */
     public function serialize() {
         $data = array('vars' => $this->getValues(null, 'n'));
         return serialize($data);
     }
 
     /**
-     * Used when using with unserialize function call
+    * Used when using with unserialize function call
      *
-     * @param mixed $serialized
-     */
+    * @param mixed $serialized
+    */
     public function unserialize($serialized) {
         $data = unserialize($serialized);
         if (method_exists($this, '__construct')) {

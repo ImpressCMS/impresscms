@@ -13,15 +13,15 @@
 class icms_plugins_Object {
 
     /**
-     * Plugin information (storied as array)
+    * Plugin information (storied as array)
      *
-     * @var array 
-     */
+    * @var array
+    */
 	public $_infoArray = array();
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param array $array	    data
 	 */
 	public function __construct($array) {
@@ -30,9 +30,9 @@ class icms_plugins_Object {
 
 	/**
 	 * Gets info about item
-	 * 
+	 *
 	 * @param string $item	    Item name
-	 * 
+	 *
 	 * @return mixed
 	 */
 	public function getItemInfo($item) {
@@ -45,7 +45,7 @@ class icms_plugins_Object {
 
 	/**
 	 * Gets items list
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getItemList() {
@@ -58,7 +58,7 @@ class icms_plugins_Object {
 
 	/**
 	 * Get items
-	 * 
+	 *
 	 * @return mixed
 	 */
 	public function getItem() {
@@ -75,9 +75,9 @@ class icms_plugins_Object {
 
 	/**
 	 * Get item from request
-	 * 
+	 *
 	 * @param string $item	    Item name
-	 * 
+	 *
 	 * @return mixed
 	 */
 	public function getItemIdForItem($item) {

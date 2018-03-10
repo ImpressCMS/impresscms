@@ -37,7 +37,6 @@
  * @package		Administration
  * @author		Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
  */
 
 $name_text = new icms_form_elements_Text(_NAME, "name", 30, 50, $name_value);

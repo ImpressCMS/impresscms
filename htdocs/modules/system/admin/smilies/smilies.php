@@ -37,7 +37,6 @@
  * @package		System
  * @subpackage	Smilies
  * @todo		Extract HTML and CSS to a template
- * @version		SVN: $Id$
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
@@ -45,7 +44,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 
 /**
  * Logic and rendering for Smilies administration
- * 
+ *
  */
 function SmilesAdmin() {
 	global $icmsAdminTpl;
@@ -67,7 +66,7 @@ function SmilesAdmin() {
 				$i++;
 				$icmsAdminTpl->assign("smilesarray", $smile);
 			}
-			$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());		
+			$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());
 		}
 	} else {
 		echo _AM_CNRFTSD;
@@ -87,7 +86,7 @@ function SmilesAdmin() {
 
 /**
  * Logic and rendering for editing a smilie
- * 
+ *
  * @param int $id
  */
 function SmilesEdit($id) {

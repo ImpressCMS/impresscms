@@ -8,7 +8,6 @@
  * @subpackage	Mimetypes
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: xoops_version.php 9853 2010-02-23 17:44:27Z skenow $
  */
 
 $modversion = array(

@@ -34,7 +34,6 @@
  * @package	core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");

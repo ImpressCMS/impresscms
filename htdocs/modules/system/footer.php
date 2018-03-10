@@ -7,7 +7,6 @@
  * @since		1.0
  * @author		Steve Kenow <skenow@impresscms.org>
  * @package		cpanel
- * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");

@@ -10,8 +10,8 @@ class icms_response_DefaultEmptyPage
     extends icms_response_HTML {
 
     /**
-     * Constructor
-     */
+    * Constructor
+    */
     public function __construct() {
         global $xoopsOption;
         $xoopsOption['show_cblock'] = 1;
@@ -19,8 +19,8 @@ class icms_response_DefaultEmptyPage
     }
 
     /**
-     * Render data
-     */
+    * Render data
+    */
     public function render() {
         $this->assign('icms_contents', ob_get_clean());
         parent::render();

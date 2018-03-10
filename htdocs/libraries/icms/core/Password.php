@@ -8,9 +8,9 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  * @package	ICMS\Core
- **/
+ */
 final class icms_core_Password {
-	
+
 	private $pass, $salt, $mainSalt = XOOPS_DB_SALT, $uname;
 
 	/**
@@ -197,7 +197,7 @@ final class icms_core_Password {
 	 * @since    1.1
 	 * @param    string  $uname      Username to find User Salt key for.
 	 * @return   string  returns the Salt key of the user.
-     * 
+    *
 	 * To be removed in future versions
 	 */
 	private function _getUserSalt($uname) {
@@ -222,12 +222,12 @@ final class icms_core_Password {
 	}
 
     /**
-     * This Private Function returns the User Encryption Type belonging to username.
-     * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-     * @since    1.2.3
-     * @param    string  $uname      Username to find Enc_type for.
-     * @return   string  returns the Encryption type of the user.
-     * 
+    * This Private Function returns the User Encryption Type belonging to username.
+    * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+    * @since    1.2.3
+    * @param    string  $uname      Username to find Enc_type for.
+    * @return   string  returns the Encryption type of the user.
+    *
 	 * To be removed in future versions
 	 */
 	private function _getUserEncType($uname) {
@@ -252,11 +252,11 @@ final class icms_core_Password {
     }
 
     /**
-     * This Private Function returns the User Password Hash belonging to username.
-     * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-     * @since    1.3.3
-     * @param    string  $uname      Username to find hash for.
-     * @return   string  returns the Password hash of the user.
+    * This Private Function returns the User Password Hash belonging to username.
+    * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+    * @since    1.3.3
+    * @param    string  $uname      Username to find hash for.
+    * @return   string  returns the Password hash of the user.
 	 */
 	private function _getUserHash($uname) {
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
@@ -291,7 +291,7 @@ final class icms_core_Password {
 	 * @param    string  $salt       unique user salt key used in encryption process
 	 * @param    int     $enc_type   encryption type to use (this is required & only used when passwords are expired)
 	 * @return   Hash of users password.
-     * 
+    *
 	 * To be removed in future versions, use _encryptPassword() instead
 	 */
 	private function _encryptPass($pass, $salt, $enc_type) {
@@ -319,7 +319,7 @@ final class icms_core_Password {
                                         15 => 'haval224,5',
                                         16 => 'haval256,5',
                                     );
-            
+
             return hash($type['encType'][$enc_type], $pass);
         }
     }
@@ -343,7 +343,7 @@ final class icms_core_Password {
 				self::_rehash($pass, $iterations) .
 				self::_rehash($this->mainSalt, $iterations),
                                         $iterations, $enc_type);
-            
+
             return $hash;
 		}
 	}
@@ -378,16 +378,16 @@ final class icms_core_Password {
                                     37 => 'ripemd256',
                                     38 => 'ripemd320',
                                     39 => 'snefru256',
-                                    40 => 'gost'            
+                                    40 => 'gost'
                                 );
 
         for ($i = 0; $i < $iterations; ++$i) {
             $hashed = hash($type['encType'][$enc_type], $hash . $hash);
         }
-        
+
         return $hashed;
     }
-    
+
 	/**
 	 * This Private Function verifies if the password is correct
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
@@ -399,23 +399,23 @@ final class icms_core_Password {
 	private function _verifyPassword($pass, $uname) {
 		$userSalt = self::_getUserSalt($uname); // to be deprecated in future versions
 		$userHash = self::_getUserHash($uname);
-        
+
         if(preg_match_all("/(\\$)(\\d+)(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
             $encType = (int) $matches[2][0];
             $iterations = (int) $matches[4][0];
             $userSalt = $matches[6][0];
-            
+
 			if (self::_encryptPassword($pass, $userSalt, $encType, $iterations) == $userHash) {
                 return $userHash;
             }
 		} else { // to be removed in future versions
 			$encType = self::_getUserEncType($uname);
-            
+
 			if (self::_encryptPass($pass, $userSalt, $encType) == $userHash) {
                 return $userHash;
             }
         }
-        
+
         return false;
     }
 }

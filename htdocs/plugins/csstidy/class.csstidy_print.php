@@ -39,32 +39,32 @@
 class csstidy_print
 {
     /**
-     * Saves the input CSS string
-     * @var string
-     * @access private
-     */
+    * Saves the input CSS string
+    * @var string
+    * @access private
+    */
     var $input_css = '';
 
     /**
-     * Saves the formatted CSS string
-     * @var string
-     * @access public
-     */
+    * Saves the formatted CSS string
+    * @var string
+    * @access public
+    */
     var $output_css = '';
 
     /**
-     * Saves the formatted CSS string (plain text)
-     * @var string
-     * @access public
-     */
+    * Saves the formatted CSS string (plain text)
+    * @var string
+    * @access public
+    */
     var $output_css_plain = '';
 
     /**
-     * Constructor
-     * @param array $css contains the class csstidy
-     * @access private
-     * @version 1.0
-     */
+    * Constructor
+    * @param array $css contains the class csstidy
+    * @access private
+    * @version 1.0
+    */
     function csstidy_print(&$css)
     {
         $this->parser    =& $css;
@@ -77,10 +77,10 @@ class csstidy_print
     }
 
     /**
-     * Resets output_css and output_css_plain (new css code)
-     * @access private
-     * @version 1.0
-     */
+    * Resets output_css and output_css_plain (new css code)
+    * @access private
+    * @version 1.0
+    */
     function _reset()
     {
         $this->output_css = '';
@@ -88,11 +88,11 @@ class csstidy_print
     }
 
     /**
-     * Returns the CSS code as plain text
-     * @return string
-     * @access public
-     * @version 1.0
-     */
+    * Returns the CSS code as plain text
+    * @return string
+    * @access public
+    * @version 1.0
+    */
     function plain()
     {
         $this->_print(true);
@@ -100,11 +100,11 @@ class csstidy_print
     }
 
     /**
-     * Returns the formatted CSS code
-     * @return string
-     * @access public
-     * @version 1.0
-     */
+    * Returns the formatted CSS code
+    * @return string
+    * @access public
+    * @version 1.0
+    */
     function formatted()
     {
         $this->_print(false);
@@ -112,11 +112,11 @@ class csstidy_print
     }
 
     /**
-     * Returns the formatted CSS Code and saves it into $this->output_css and $this->output_css_plain
-     * @param bool $plain plain text or not
-     * @access private
-     * @version 2.0
-     */
+    * Returns the formatted CSS Code and saves it into $this->output_css and $this->output_css_plain
+    * @param bool $plain plain text or not
+    * @access private
+    * @version 2.0
+    */
     function _print($plain = false)
     {
         if ($this->output_css && $this->output_css_plain) {
@@ -215,13 +215,13 @@ class csstidy_print
     }
 
     /**
-     * Gets the next token type which is $move away from $key, excluding comments
-     * @param integer $key current position
-     * @param integer $move move this far
-     * @return mixed a token type
-     * @access private
-     * @version 1.0
-     */
+    * Gets the next token type which is $move away from $key, excluding comments
+    * @param integer $key current position
+    * @param integer $move move this far
+    * @return mixed a token type
+    * @access private
+    * @version 1.0
+    */
     function _seeknocomment($key, $move) {
         $go = ($move > 0) ? 1 : -1;
         for ($i = $key + 1; abs($key-$i)-1 < abs($move); $i += $go) {
@@ -237,10 +237,10 @@ class csstidy_print
     }
 
     /**
-     * Converts $this->css array to a raw array ($this->tokens)
-     * @access private
-     * @version 1.0
-     */
+    * Converts $this->css array to a raw array ($this->tokens)
+    * @access private
+    * @version 1.0
+    */
     function _convert_raw_css()
     {
         $this->tokens = array();
@@ -273,14 +273,14 @@ class csstidy_print
     }
 
     /**
-     * Same as htmlspecialchars, only that chars are not replaced if $plain !== true. This makes  print_code() cleaner.
-     * @param string $string
-     * @param bool $plain
-     * @return string
-     * @see csstidy_print::_print()
-     * @access private
-     * @version 1.0
-     */
+    * Same as htmlspecialchars, only that chars are not replaced if $plain !== true. This makes  print_code() cleaner.
+    * @param string $string
+    * @param bool $plain
+    * @return string
+    * @see csstidy_print::_print()
+    * @access private
+    * @version 1.0
+    */
     function _htmlsp($string, $plain)
     {
         if (!$plain) {
@@ -290,11 +290,11 @@ class csstidy_print
     }
 
     /**
-     * Get compression ratio
-     * @access public
-     * @return float
-     * @version 1.2
-     */
+    * Get compression ratio
+    * @access public
+    * @return float
+    * @version 1.2
+    */
     function get_ratio()
     {
         if (!$this->output_css_plain) {
@@ -304,11 +304,11 @@ class csstidy_print
     }
 
     /**
-     * Get difference between the old and new code in bytes and prints the code if necessary.
-     * @access public
-     * @return string
-     * @version 1.1
-     */
+    * Get difference between the old and new code in bytes and prints the code if necessary.
+    * @access public
+    * @return string
+    * @version 1.1
+    */
     function get_diff()
     {
         if (!$this->output_css_plain) {
@@ -327,12 +327,12 @@ class csstidy_print
     }
 
     /**
-     * Get the size of either input or output CSS in KB
-     * @param string $loc default is "output"
-     * @access public
-     * @return integer
-     * @version 1.0
-     */
+    * Get the size of either input or output CSS in KB
+    * @param string $loc default is "output"
+    * @access public
+    * @return integer
+    * @version 1.0
+    */
     function size($loc = 'output')
     {
         if ($loc == 'output' && !$this->output_css) {
