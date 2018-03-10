@@ -36,7 +36,7 @@ filter:
         - 'htdocs/editors/dhtmltextarea/*'
         - 'htdocs/libraries/icms/sys/*'
         - 'htdocs/libraries/icms/db/mysql/*'
-        - 'htdocs/libraries/wideimage/lib/vendor/de77/*'
+        - 'htdocs/libraries/wideimage/*'
         - 'upgrade/language/*'
         - htdocs/mainfile.php
         - 'htdocs/plugins/waiting/*'
