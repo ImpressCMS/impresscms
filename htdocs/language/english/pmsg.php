@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 //%%%%%%	File Name readpmsg.php 	%%%%%
 define("_PM_DELETED","Your message(s) has been deleted");
 define("_PM_PRIVATEMESSAGE","Private Messages");

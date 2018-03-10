@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 // Blocks
 define("_MB_SYSTEM_ADMENU","Administration Menu");
 define("_MB_SYSTEM_RNOW","Register now!");

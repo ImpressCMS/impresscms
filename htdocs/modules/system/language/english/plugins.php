@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 // FILE		::	plugins.php
 // AUTHOR	::	Ryuji AMANO <info@ryus.biz>
 // WEB		::	Ryu's Planning <http://ryus.biz/>

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 // Module Info
 
 // The name of this module

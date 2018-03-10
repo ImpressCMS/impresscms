@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 define('_CM_TITLE','Title');
 define('_CM_MESSAGE','Message');
 define('_CM_DOSMILEY','Enable Smiley Icons');

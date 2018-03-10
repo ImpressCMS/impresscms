@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 $content .= '
 <p>
 	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for

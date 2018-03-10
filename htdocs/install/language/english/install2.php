@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 define("_INSTALL_WEBMASTER","Webmasters");
 define("_INSTALL_WEBMASTERD","Webmasters of this site");
 define("_INSTALL_REGUSERS","Registered Users");
