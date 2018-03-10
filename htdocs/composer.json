@@ -25,6 +25,7 @@
     "ezyang/htmlpurifier": "4.6.*",
     "phpmailer/phpmailer": "v5.*",
     "tecnickcom/tcpdf": "6.*",
+	"erusev/parsedown": "^1.7.0",
     "ext-curl": "*",
     "ext-gd": "*",
     "ext-json": "*",
