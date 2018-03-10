@@ -40,11 +40,8 @@ class VersionCheckerTest extends \PHPUnit_Framework_TestCase {
     public function testVariables() {
         $instance = \icms_core_Versionchecker::getInstance();
         $this->assertInternalType('array', $instance->errors, '$errors must be array');
-        $this->assertInternalType('string', $instance->version_xml, '$version_xml must be string');
         $this->assertInternalType('string', $instance->latest_version_name, '$latest_version_name must be string');
         $this->assertInternalType('string', $instance->installed_version_name, '$installed_version_name must be string');
-        $this->assertInternalType('int', $instance->latest_build, '$latest_build must be int');
-        $this->assertInternalType('int', $instance->latest_status, '$latest_status must be int');
         $this->assertInternalType('string', $instance->latest_url, '$latest_url must be string');
         $this->assertInternalType('string', $instance->latest_changelog, '$latest_changelog must be string');
     }

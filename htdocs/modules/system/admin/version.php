@@ -40,10 +40,6 @@ if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('latest_changelog', icms_core_DataFilter::makeClickable($icmsVersionChecker->latest_changelog));
 	$icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
 	$icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);
-	if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest_status < 10) {
-		// I'm running a final release so make sure to notify the user that the update is not a final
-		$icmsAdminTpl->assign('not_a_final_comment', TRUE);
-	}
 } else {
 	$checkerErrors = $icmsVersionChecker->getErrors(TRUE);
 	if ($checkerErrors) {
