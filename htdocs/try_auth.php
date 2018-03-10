@@ -9,7 +9,6 @@
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
  */
 /**
  * Has this file been included?

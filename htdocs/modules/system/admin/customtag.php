@@ -8,7 +8,6 @@
  * @subpackage	Custom Tags
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */

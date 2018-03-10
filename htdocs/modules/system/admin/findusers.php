@@ -37,7 +37,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	Users
- * @version		SVN: $Id$
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
@@ -186,19 +185,19 @@ if ($op == "form") {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('uname', icms_core_DataFilter::addSlashes(trim($user_uname)) . '%', 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_END:
 				$criteria->add(new icms_db_criteria_Item('uname', '%' . icms_core_DataFilter::addSlashes(trim($user_uname)), 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('uname', icms_core_DataFilter::addSlashes(trim($user_uname))));
 				break;
-				
+
 			case XOOPS_MATCH_CONTAIN:
 				$criteria->add(new icms_db_criteria_Item('uname', '%' . icms_core_DataFilter::addSlashes(trim($user_uname)) . '%', 'LIKE'));
 				break;
-				
+
 			default:
 				break;
 		}
@@ -209,19 +208,19 @@ if ($op == "form") {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('name', icms_core_DataFilter::addSlashes(trim($user_name)) . '%', 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_END:
 				$criteria->add(new icms_db_criteria_Item('name', '%' . icms_core_DataFilter::addSlashes(trim($user_name)), 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('name', icms_core_DataFilter::addSlashes(trim($user_name))));
 				break;
-				
+
 			case XOOPS_MATCH_CONTAIN:
 				$criteria->add(new icms_db_criteria_Item('name', '%' . icms_core_DataFilter::addSlashes(trim($user_name)) . '%', 'LIKE'));
 				break;
-				
+
 			default:
 				break;
 		}
@@ -232,19 +231,19 @@ if ($op == "form") {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('login_name', icms_core_DataFilter::addSlashes(trim($user_login_name)) . '%', 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_END:
 				$criteria->add(new icms_db_criteria_Item('login_name', '%' . icms_core_DataFilter::addSlashes(trim($user_login_name)), 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('login_name', icms_core_DataFilter::addSlashes(trim($user_login_name))));
 				break;
-				
+
 			case XOOPS_MATCH_CONTAIN:
 				$criteria->add(new icms_db_criteria_Item('login_name', '%' . icms_core_DataFilter::addSlashes(trim($user_login_name)) . '%', 'LIKE'));
 				break;
-				
+
 			default:
 				break;
 		}
@@ -255,19 +254,19 @@ if ($op == "form") {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('email', icms_core_DataFilter::addSlashes(trim($user_email)) . '%', 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_END:
 				$criteria->add(new icms_db_criteria_Item('email', '%' . icms_core_DataFilter::addSlashes(trim($user_email)), 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('email', icms_core_DataFilter::addSlashes(trim($user_email))));
 				break;
-				
+
 			case XOOPS_MATCH_CONTAIN:
 				$criteria->add(new icms_db_criteria_Item('email', '%' . icms_core_DataFilter::addSlashes(trim($user_email)) . '%', 'LIKE'));
 				break;
-				
+
 			default:
 				break;
 		}
@@ -282,19 +281,19 @@ if ($op == "form") {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_icq', icms_core_DataFilter::addSlashes(trim($user_icq)) . '%', 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_END:
 				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . icms_core_DataFilter::addSlashes(trim($user_icq)), 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . icms_core_DataFilter::addSlashes(trim($user_icq))));
 				break;
-				
+
 			case XOOPS_MATCH_CONTAIN:
 				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . icms_core_DataFilter::addSlashes(trim($user_icq)) . '%', 'LIKE'));
 				break;
-				
+
 			default:
 				break;
 		}
@@ -305,19 +304,19 @@ if ($op == "form") {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_aim', icms_core_DataFilter::addSlashes(trim($user_aim)) . '%', 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_END:
 				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . icms_core_DataFilter::addSlashes(trim($user_aim)), 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('user_aim', icms_core_DataFilter::addSlashes(trim($user_aim))));
 				break;
-				
+
 			case XOOPS_MATCH_CONTAIN:
 				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . icms_core_DataFilter::addSlashes(trim($user_aim)) . '%', 'LIKE'));
 				break;
-				
+
 			default:
 				break;
 		}
@@ -328,19 +327,19 @@ if ($op == "form") {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_yim', icms_core_DataFilter::addSlashes(trim($user_yim)) . '%', 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_END:
 				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . icms_core_DataFilter::addSlashes(trim($user_yim)), 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('user_yim', icms_core_DataFilter::addSlashes(trim($user_yim))));
 				break;
-				
+
 			case XOOPS_MATCH_CONTAIN:
 				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . icms_core_DataFilter::addSlashes(trim($user_yim)) . '%', 'LIKE'));
 				break;
-				
+
 			default:
 				break;
 		}
@@ -351,19 +350,19 @@ if ($op == "form") {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_msnm', icms_core_DataFilter::addSlashes(trim($user_msnm)) . '%', 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_END:
 				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . icms_core_DataFilter::addSlashes(trim($user_msnm)), 'LIKE'));
 				break;
-				
+
 			case XOOPS_MATCH_EQUAL:
 				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . icms_core_DataFilter::addSlashes(trim($user_msnm))));
 				break;
-				
+
 			case XOOPS_MATCH_CONTAIN:
 				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . icms_core_DataFilter::addSlashes(trim($user_msnm)) . '%', 'LIKE'));
 				break;
-				
+
 			default:
 				break;
 		}
@@ -445,9 +444,9 @@ if ($op == "form") {
 	$member_handler = icms::handler('icms_member');
 	$total = $member_handler->getUserCountByGroupLink($groups, $criteria);
 	if ($total == 0) {
-		
+
 	} elseif ($start < $total) {
-		
+
 		$criteria->setSort($sort);
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
@@ -470,10 +469,10 @@ if ($op == "form") {
 			$users[$j]['url'] = $foundusers[$j]->getVar("url", "E");
 			$users[$j]['posts'] = icms_conv_nr2local($foundusers[$j]->getVar("posts"));
 			$users[$j]['last_login_m'] = formatTimeStamp($foundusers[$j]->getVar("last_login"), "m");
-			
+
 			$icmsAdminTpl->assign("users", $users);
 		}
-		
+
 		$group = !empty($group) ? (int) $group : 0;
 		$icmsAdminTpl->assign("groupvalue", $group);
 		if ($group > 0) {
@@ -481,7 +480,7 @@ if ($op == "form") {
 			$add2group =& $member_handler->getGroup($group);
 			$icmsAdminTpl->assign("groupvalue_name", sprintf(_AM_ADD2GROUP, $add2group->getVar('name')));
 		}
-		
+
 		$totalpages = ceil($total / $limit);
 		if ($totalpages > 1) {
 			$hiddenform = "<form name='findnext' action='admin.php' method='post'>";
@@ -498,20 +497,20 @@ if ($op == "form") {
 					$hiddenform .= "<input type='hidden' name='" . icms_core_DataFilter::htmlSpecialChars($k) . "' value='" . icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v)) . "' />\n";
 				}
 			}
-			
+
 			if (!isset($limit)) {
 				$hiddenform .= "<input type='hidden' name='limit' value='" . $limit . "' />\n";
 			}
-			
+
 			if (!isset($start)) {
 				$hiddenform .= "<input type='hidden' name='start' value='" . $start . "' />\n";
 			}
-			
+
 			$prev = $start - $limit;
 			if ($start - $limit >= 0) {
 				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _AM_PREVIOUS . "</a>&nbsp;\n";
 			}
-			
+
 			$counter = 1;
 			$currentpage = ($start+$limit) / $limit;
 			while ($counter <= $totalpages) {
@@ -521,29 +520,29 @@ if ($op == "form") {
 					if ($counter == $totalpages && $currentpage < $totalpages-4) {
 						$hiddenform .= "... ";
 					}
-					
+
 					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter-1)*$limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 					if ($counter == 1 && $currentpage > 5) {
 						$hiddenform .= "... ";
 					}
-					
+
 				}
-				
+
 				$counter++;
 			}
-			
+
 			$next = $start+$limit;
 			if ($total > $next) {
 				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _AM_NEXT . "</a>\n";
 			}
-			
+
 			$hiddenform .= "</form>";
 			echo "<div style='text-align:center'>" . $hiddenform . "<br />";
 			printf(_AM_USERSFOUND, $total);
 			echo "</div>";
 		}
 	}
-	
+
 	$icmsAdminTpl->assign("totalfound", sprintf(_AM_USERSFOUND, icms_conv_nr2local($total)));
 	$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());
 	$icmsAdminTpl->assign("total", $total);

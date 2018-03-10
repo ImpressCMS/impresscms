@@ -11,25 +11,25 @@
 class icms_response_HTML extends icms_response_Text {
 
     /**
-     * Mimetype for this response
-     */
+    * Mimetype for this response
+    */
     const CONTENT_TYPE = 'text/html';
 
     /**
-     * Instance of current theme
+    * Instance of current theme
      *
-     * @var \icms_view_theme_Object
-     */
+    * @var \icms_view_theme_Object
+    */
     private $theme = null;
 
     /**
-     * Constructor
+    * Constructor
      *
-     * @global  object  $icmsModule     Current loaded module
-     * @param   array   $config         Configuration
-     * @param   int     $http_status    HTTP Status code
-     * @param   array   $headers        Headers array
-     */
+    * @global  object  $icmsModule     Current loaded module
+    * @param   array   $config         Configuration
+    * @param   int     $http_status    HTTP Status code
+    * @param   array   $headers        Headers array
+    */
     public function __construct($config = array(), $http_status = null, $headers = array()) {
 
         $this->setThemeFromConfig($config);
@@ -87,8 +87,8 @@ class icms_response_HTML extends icms_response_Text {
 	}
 
     /**
-     * Loading admin dropdown menus
-     */
+    * Loading admin dropdown menus
+    */
     private function loadAdminMenu() {
         global $icmsConfig;
 
@@ -132,13 +132,13 @@ class icms_response_HTML extends icms_response_Text {
                 $perm_itens = array();
 
                 /**
-                 * Allow easely change the order of system dropdown menu.
-                 * $adminmenuorder = 1; Alphabetically order;
-                 * $adminmenuorder = 0; Indice key order;
-                 * To change the order when using Indice key order just change the order of the array in the file modules/system/menu.php and after update the system module
+                * Allow easely change the order of system dropdown menu.
+                * $adminmenuorder = 1; Alphabetically order;
+                * $adminmenuorder = 0; Indice key order;
+                * To change the order when using Indice key order just change the order of the array in the file modules/system/menu.php and after update the system module
                  *
-                 * @todo: Create a preference option to set this value and improve the way to change the order.
-                 */
+                * @todo: Create a preference option to set this value and improve the way to change the order.
+                */
                 $adminmenuorder = 1;
                 $adminsubmenuorder = 1;
                 $adminsubsubmenuorder = 1;
@@ -183,8 +183,8 @@ class icms_response_HTML extends icms_response_Text {
         $this->theme->template->assign('modulesadm', empty($mods) ? 0 : 1 );
 
         /**
-         * Loading options of the current module.
-         */
+        * Loading options of the current module.
+        */
         if (\icms::$module !== null) {
             if (\icms::$module->getVar('dirname') == 'system') {
                 if (isset($sysprefs) && count($sysprefs) > 0) {
@@ -243,8 +243,8 @@ class icms_response_HTML extends icms_response_Text {
     }
 
     /**
-     * Ads admin metas
-     */
+    * Ads admin metas
+    */
     private function addAdminMetas() {
         $this->theme->addScript('', array('type' => 'text/javascript'), 'startList = function() {
 						if (document.all&&document.getElementById) {
@@ -266,20 +266,20 @@ class icms_response_HTML extends icms_response_Text {
     }
 
     /**
-     * Magic function to call work directly with template
+    * Magic function to call work directly with template
      *
-     * @param string $name          Function name to call
-     * @param array  $arguments     Array with arguments
+    * @param string $name          Function name to call
+    * @param array  $arguments     Array with arguments
      *
-     * @return mixed
-     */
+    * @return mixed
+    */
     public function __call($name, $arguments) {
         return call_user_func_array([$this->theme->template, $name], $arguments);
     }
 
     /**
-     * Renders response
-     */
+    * Renders response
+    */
     public function render() {
         /* check if the module is cached and retrieve it, otherwise, render the page */
         if (!$this->theme->checkCache()) {
@@ -289,8 +289,8 @@ class icms_response_HTML extends icms_response_Text {
 
     /**
      *
-     * @global object $icmsModule
-     */
+    * @global object $icmsModule
+    */
     private function includeNotificationsSelection() {
         global $icmsModule;
         // RMV-NOTIFY
@@ -304,11 +304,11 @@ class icms_response_HTML extends icms_response_Text {
     }
 
     /**
-     * Update cache time for module
+    * Update cache time for module
      *
-     * @global object   $icmsModule    Current module
-     * @global array    $icmsConfig    Configuration array
-     */
+    * @global object   $icmsModule    Current module
+    * @global array    $icmsConfig    Configuration array
+    */
     private function updateCacheTime() {
         global $icmsModule, $icmsConfig;
         if (!empty($icmsModule) && isset($icmsConfig['module_cache']) && isset($icmsConfig['module_cache'][$icmsModule->mid])) {
@@ -317,8 +317,8 @@ class icms_response_HTML extends icms_response_Text {
     }
 
     /**
-     * Set default metas for theme instance
-     */
+    * Set default metas for theme instance
+    */
     private function setDefaultMetas() {
         $jgrowl_css = ICMS_LIBRARIES_URL . '/jquery/jgrowl'
                 . (( defined('_ADM_USE_RTL') && _ADM_USE_RTL ) ? '_rtl' : '') . '.css';
@@ -405,10 +405,10 @@ class icms_response_HTML extends icms_response_Text {
     }
 
     /**
-     * Sets theme from config
+    * Sets theme from config
      *
-     * @param array $config     Current configuration
-     */
+    * @param array $config     Current configuration
+    */
     private function setThemeFromConfig(array &$config) {
         if (isset($config['template_main']) && is_string($config['template_main'])) {
             if (FALSE === strpos($config['template_main'], ':')) {
@@ -448,10 +448,10 @@ class icms_response_HTML extends icms_response_Text {
     }
 
     /**
-     * Sets google meta
+    * Sets google meta
      *
-     * @global array $icmsConfigMetaFooter          Footer meta configuration array
-     */
+    * @global array $icmsConfigMetaFooter          Footer meta configuration array
+    */
     private function setGoogleMeta() {
         global $icmsConfigMetaFooter;
         if (isset($icmsConfigMetaFooter['google_meta']) && $icmsConfigMetaFooter['google_meta'] != '') {
@@ -461,8 +461,8 @@ class icms_response_HTML extends icms_response_Text {
     }
 
     /**
-     * Adds scripts for redirect message
-     */
+    * Adds scripts for redirect message
+    */
     private function addRedirectMessageScripts() {
         $this->theme->addScript(ICMS_LIBRARIES_URL . '/jquery/jgrowl.js', array('type' => 'text/javascript'));
         $this->theme->addScript('', array('type' => 'text/javascript'), '
@@ -483,10 +483,10 @@ class icms_response_HTML extends icms_response_Text {
     }
 
     /**
-     * Adds all enabled santitizer plugins to the theme
+    * Adds all enabled santitizer plugins to the theme
      *
-     * @global array $icmsConfigPlugins         Plugins configuration
-     */
+    * @global array $icmsConfigPlugins         Plugins configuration
+    */
     private function addSanitizerPlugins() {
         global $icmsConfigPlugins;
         if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {

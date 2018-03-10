@@ -35,7 +35,6 @@
  * @package		core
  * @since		1.0
  * @author		malanciault <marcan@impresscms.org)
- * @version		$Id$
  */
 
 // this needs to be the latest db version.

@@ -38,10 +38,10 @@
 class icms_plugins_EditorHandler {
 
     /**
-     * Path where is editor
+    * Path where is editor
      *
-     * @var string
-     */
+    * @var string
+    */
 	private $root_path = '';
 
 	/**

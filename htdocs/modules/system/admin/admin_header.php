@@ -7,7 +7,6 @@
  * @subpackage	System
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @version		$Id$
  */
 
 if (!is_object(icms::$user)

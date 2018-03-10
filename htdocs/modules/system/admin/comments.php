@@ -37,7 +37,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	Comments
- * @version		SVN: $Id$
  */
 
 /* set filter types, if not strings */
@@ -133,7 +132,7 @@ switch ($op) {
 			$comment[$i]['id'] = $i;
 			$icmsAdminTpl->assign("commentsarray", $comment);
 		}
-		$icmsAdminTpl->assign("total", sprintf(_MD_AM_COMFOUND, '<b>' . icms_conv_nr2local($total) . '</b>'));	
+		$icmsAdminTpl->assign("total", sprintf(_MD_AM_COMFOUND, '<b>' . icms_conv_nr2local($total) . '</b>'));
 		$icmsAdminTpl->assign("otherorder",$otherorder);
 		$icmsAdminTpl->assign("start", $start);
 		$icmsAdminTpl->assign("status", $status);

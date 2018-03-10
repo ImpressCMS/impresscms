@@ -8,7 +8,6 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id$
  */
 
 /**
@@ -28,7 +27,6 @@ function textsanitizer_syntaxhighlighthtml($text) {
  * @param $source
  */
 function textsanitizer_geshi_html_highlight($source) {
-	if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
 	$source = icms_core_DataFilter::undoHtmlSpecialChars($source);
 
 	// Create the new GeSHi object, passing relevant stuff

@@ -11,7 +11,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * The tag object - for tagging content
- * 
+ *
  * @package     ImpressCMS\Modules\System\Class\Tags
  *
  * @property int    $id     Unique identifier for the tag
@@ -26,27 +26,27 @@ class mod_system_Tags extends icms_ipf_seo_Object {
 	 *
 	 * @param @mod_sys_TagsHandler $handler
 	 */
-	public function __construct(&$handler) {                
+	public function __construct(&$handler) {
                 $this->initVar('id', self::DTYPE_INTEGER, null, TRUE);
                 $this->initVar('tag', self::DTYPE_STRING, '', true, 255, null, null, _CO_SYSTEM_TAGS_TAG, _CO_SYSTEM_TAGS_TAG_DSC);
-                $this->initVar('status', self::DTYPE_INTEGER, null, true, null, null, null, _CO_SYSTEM_TAGS_STATUS, _CO_SYSTEM_TAGS_STATUS_DSC);                
+                $this->initVar('status', self::DTYPE_INTEGER, null, true, null, null, null, _CO_SYSTEM_TAGS_STATUS, _CO_SYSTEM_TAGS_STATUS_DSC);
                 $this->initVar('count', self::DTYPE_INTEGER, null, false, null, null, null, _CO_SYSTEM_TAGS_COUNT, _CO_SYSTEM_TAGS_COUNT_DSC);
 
-		$this->setControl("status", "yesno");               
-                
+		$this->setControl("status", "yesno");
+
                 parent::__construct($handler);
 
 		$this->initiateSEO();
 	}
 
    /**
-     * Overriding the icms_ipf_Object::getVar method to assign a custom method on some
-     * specific fields to handle the value before returning it
+    * Overriding the icms_ipf_Object::getVar method to assign a custom method on some
+    * specific fields to handle the value before returning it
      *
-     * @param str $key key of the field
-     * @param str $format format that is requested
-     * @return mixed value of the field that is requested
-     */
+    * @param str $key key of the field
+    * @param str $format format that is requested
+    * @return mixed value of the field that is requested
+    */
     function getVar($key, $format = 's') {
         if ($format == 's' && in_array($key, array())) {
             return call_user_func(array($this,$key));

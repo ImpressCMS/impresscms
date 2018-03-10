@@ -35,7 +35,6 @@
  * @subpackage	Users
  * @since		Xoops
  * @author		skalpa <psk@psykaos.net>
- * @version		SVN: $Id: edituser.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 $xoopsOption['pagetype'] = 'user';

@@ -7,7 +7,6 @@
  * @package		libraries
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
  */
 /**
  *

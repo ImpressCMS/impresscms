@@ -8,7 +8,6 @@
  * @package		Administration
  * @subpackage	Tags
  * @since		2.0
- * @version		SVN: $Id: customtag.php 11771 2012-07-03 02:31:48Z skenow $
  */
 
 /* set get and post filters before including admin_header, if not strings */
