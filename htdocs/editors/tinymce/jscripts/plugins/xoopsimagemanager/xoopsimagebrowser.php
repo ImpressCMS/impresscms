@@ -9,7 +9,6 @@
 * @package		core
 * @since		1.2
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		$Id$
 */
 
 if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';

@@ -206,7 +206,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	 * @param string $uname Username
 	 * @param string $pwd Password
 	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
-	 **/
+	 */
 	public function getMember($userdn, $uname, $pwd = NULL) {
 		$provisHandler = icms_auth_method_ldap_Provisioning::getInstance($this);
 		$sr = ldap_read($this->_ds, $userdn, '(objectclass=*)');

@@ -10,7 +10,6 @@
  * @package		installer
  * @since        1.0
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
- * @version		$Id$
  */
 require_once 'common.inc.php';
 
@@ -82,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$content .= '<div class="dbconn_line">';
 	$content .= '<h3>'. _INSTALL_SELECT_MODULES.'</h3>';
 	$content .= '<div id="modinstall" name="install_mods[]">';
-	
+
 	foreach ($langarr as $lang) {
 		if ($lang == 'system') {
 			continue;

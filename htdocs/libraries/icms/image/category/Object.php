@@ -60,10 +60,10 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 class icms_image_category_Object extends \icms_ipf_Object {
 
         /**
-         * Image count
+        * Image count
          *
-         * @var int
-         */
+        * @var int
+        */
 	private $_imageCount;
 
 	/**

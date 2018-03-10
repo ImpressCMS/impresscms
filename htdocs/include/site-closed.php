@@ -7,7 +7,6 @@
  * @author		phppp (infomax@gmail.com)
  * @since		Xoops 2.0.17
  * @package 	core
- * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");

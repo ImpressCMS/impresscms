@@ -6,7 +6,6 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		plugins
- * @version		$Id$
  */
 define('MENTIONS_LINK',	ICMS_URL . '/userinfo.php?uid=%u'); // The link to user profile
 
@@ -43,11 +42,11 @@ function mentions($text, $prefix) {
 }
 
  /**
-  * Generates the code to add a button to the DHTML editor
+ * Generates the code to add a button to the DHTML editor
   *
-  * @param unknown_type $ele_name
-  * @return	arr
-  */
+ * @param unknown_type $ele_name
+ * @return	arr
+ */
 function render_mentions($ele_name) {
 	global $xoTheme;
 	$dirname = basename(dirname(__FILE__));

@@ -83,32 +83,32 @@ defined('ICMS_ROOT_PATH') or exit();
 class icms_member_user_Object extends icms_ipf_Object {
 
     /**
-     * Array of groups that user belongs to
-     * @var array
-     */
+    * Array of groups that user belongs to
+    * @var array
+    */
     private $_groups = array();
 
     /**
-     * @var bool is the user admin?
-     */
+    * @var bool is the user admin?
+    */
     static private $_isAdmin = array();
 
     /**
-     * @var string user's rank
-     */
+    * @var string user's rank
+    */
     private $_rank = null;
 
     /**
-     * @var bool is the user online?
-     */
+    * @var bool is the user online?
+    */
     private $_isOnline = null;
 
     /**
-     * constructor
-     * @param array $id Array of key-value-pairs to be assigned to the user. (for backward compatibility only)
-     * @param int $id ID of the user to be loaded from the database.
-     * @param array $data Data to load into this object
-     */
+    * constructor
+    * @param array $id Array of key-value-pairs to be assigned to the user. (for backward compatibility only)
+    * @param int $id ID of the user to be loaded from the database.
+    * @param array $data Data to load into this object
+    */
     public function __construct(&$handler, $data = array()) {
         //parent::__construct($handler, $data);
         $this->initVar('uid', self::DTYPE_INTEGER, null, false, null, null, null, 'User ID');
@@ -164,10 +164,10 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * check if the user is a guest user
+    * check if the user is a guest user
      *
-     * @return bool returns false
-     */
+    * @return bool returns false
+    */
     public function isGuest() {
         return false;
     }
@@ -236,13 +236,13 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * Updated by Catzwolf 11 Jan 2004
-     * find the username for a given ID
+    * Updated by Catzwolf 11 Jan 2004
+    * find the username for a given ID
      *
-     * @param int $userid ID of the user to find
-     * @param int $usereal switch for usename or realname
-     * @return string name of the user. name for "anonymous" if not found.
-     */
+    * @param int $userid ID of the user to find
+    * @param int $usereal switch for usename or realname
+    * @return string name of the user. name for "anonymous" if not found.
+    */
     static public function getUnameFromId($userid, $usereal = 0) {
         trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
         $handler = icms::handler('icms_member_user');
@@ -250,10 +250,10 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * set the groups for the user
+    * set the groups for the user
      *
-     * @param array $groupsArr Array of groups that user belongs to
-     */
+    * @param array $groupsArr Array of groups that user belongs to
+    */
     public function setGroups($groupsArr) {
         if (is_array($groupsArr)) {
             $this->_groups = & $groupsArr;
@@ -261,10 +261,10 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * sends a welcome message to the user which account has just been activated
+    * sends a welcome message to the user which account has just been activated
      *
-     * return TRUE if success, FALSE if not
-     */
+    * return TRUE if success, FALSE if not
+    */
     public function sendWelcomeMessage() {
         global $icmsConfig, $icmsConfigUser;
 
@@ -290,13 +290,13 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * sends a notification to admins to inform them that a new user registered
+    * sends a notification to admins to inform them that a new user registered
      *
-     * This method first checks in the preferences if we need to send a notification to admins upon new user
-     * registration. If so, it sends the mail.
+    * This method first checks in the preferences if we need to send a notification to admins upon new user
+    * registration. If so, it sends the mail.
      *
-     * return TRUE if success, FALSE if not
-     */
+    * return TRUE if success, FALSE if not
+    */
     public function newUserNotifyAdmin() {
         global $icmsConfigUser, $icmsConfig;
 
@@ -323,10 +323,10 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * get the groups that the user belongs to
+    * get the groups that the user belongs to
      *
-     * @return array array of groups
-     */
+    * @return array array of groups
+    */
     public function &getGroups() {
         if (empty($this->_groups)) {
             $member_handler = icms::handler('icms_member');
@@ -336,16 +336,16 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * Is the user admin ?
+    * Is the user admin ?
      *
-     * This method will return true if this user has admin rights for the specified module.<br />
-     * - If you don't specify any module ID, the current module will be checked.<br />
-     * - If you set the module_id to -1, it will return true if the user has admin rights for at least one module
+    * This method will return true if this user has admin rights for the specified module.<br />
+    * - If you don't specify any module ID, the current module will be checked.<br />
+    * - If you set the module_id to -1, it will return true if the user has admin rights for at least one module
      *
-     * @param int $module_id check if user is admin of this module
-     * @staticvar array $buffer result buffer
-     * @return bool is the user admin of that module?
-     */
+    * @param int $module_id check if user is admin of this module
+    * @staticvar array $buffer result buffer
+    * @return bool is the user admin of that module?
+    */
     public function isAdmin($module_id = null) {
         static $buffer = array();
         if (is_null($module_id)) {
@@ -362,9 +362,9 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * get the user's rank
-     * @return array array of rank ID and title
-     */
+    * get the user's rank
+    * @return array array of rank ID and title
+    */
     public function rank() {
         if (!isset($this->_rank)) {
             $this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
@@ -373,17 +373,17 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * is the user activated?
-     * @return bool
-     */
+    * is the user activated?
+    * @return bool
+    */
     public function isActive() {
         return $this->getVar('level') > 0;
     }
 
     /**
-     * is the user currently logged in?
-     * @return bool
-     */
+    * is the user currently logged in?
+    * @return bool
+    */
     public function isOnline() {
         if (!isset($this->_isOnline)) {
             $onlinehandler = icms::handler('icms_core_Online');
@@ -393,16 +393,16 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * Gravatar plugin for ImpressCMS
-     * @author TheRplima
+    * Gravatar plugin for ImpressCMS
+    * @author TheRplima
      *
-     * @param string $rating
-     * @param integer $size (size in pixels of the image. Accept values between 1 to 80. Default 80)
-     * @param string $default (url of default avatar. Will be used if no gravatar are found)
-     * @param string $border (hexadecimal color)
+    * @param string $rating
+    * @param integer $size (size in pixels of the image. Accept values between 1 to 80. Default 80)
+    * @param string $default (url of default avatar. Will be used if no gravatar are found)
+    * @param string $border (hexadecimal color)
      *
-     * @return string (gravatar or ImpressCMS avatar)
-     */
+    * @return string (gravatar or ImpressCMS avatar)
+    */
     public function gravatar($rating = false, $size = false, $default = false, $border = false, $overwrite = false) {
         if (!$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif') {
             return ICMS_UPLOAD_URL . '/' . $this->getVar('user_avatar');
@@ -431,20 +431,20 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * Returns uid of user
+    * Returns uid of user
      *
-     * @deprecated since version 2.1
+    * @deprecated since version 2.1
      *
-     * @return int
-     */
+    * @return int
+    */
     public function uid() {
         icms_core_Debug::setDeprecated('->uid', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         return $this->uid;
     }
 
     /**
-     * Logs in current user
-     */
+    * Logs in current user
+    */
     public function login() {
         $this->setVar('last_login', time());
         $this->store();
@@ -464,10 +464,10 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * Logs out current user
+    * Logs out current user
      *
-     * @return boolean
-     */
+    * @return boolean
+    */
     public function logout() {
         if (!isset($_SESSION['icmsUser']['uid']))
             return false;
@@ -477,10 +477,10 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-     * Checks if this user is same as logged in user
+    * Checks if this user is same as logged in user
      *
-     * @return boolean
-     */
+    * @return boolean
+    */
     public function isSameAsLoggedInUser() {
         if (!icms::$user)
             return false;
@@ -488,10 +488,10 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /*  /**
-     * Converts user to array
+    * Converts user to array
      *
-     * @return array
-     */
+    * @return array
+    */
     /*  public function toArray() {
       $data = parent::toArray();
       if ($this->isSameAsLoggedInUser()) {

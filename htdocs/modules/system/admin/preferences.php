@@ -36,7 +36,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		System
  * @subpackage	Preferences
- * @version		SVN: $Id$
  */
 
 if (! is_object(icms::$user)
@@ -265,7 +264,7 @@ switch ($op) {
 							$value[$k] = $config[$i]->getConfValueForOutput();
 						}
 					}
-					
+
 					$moduleslist = icms_module_Handler::getActive(true);
 					$moduleslist['--'] = _MD_AM_NONE;
 

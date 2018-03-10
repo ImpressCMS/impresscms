@@ -62,7 +62,7 @@ class icms_core_Security {
 	/**
 	 * Constructor
 	 *
-	 **/
+	 */
 	public function __construct() {
 	}
 
@@ -110,7 +110,7 @@ class icms_core_Security {
 	 * @param string $name session name to validate
 	 *
 	 * @return bool
-	 **/
+	 */
 	public function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN) {
 		$token = ($token !== false) ? $token : ( isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '' );
 		if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
@@ -146,7 +146,7 @@ class icms_core_Security {
 	 * Clear all token values from user's session
 	 *
 	 * @param string $name session name
-	 **/
+	 */
 	public function clearTokens($name = _CORE_TOKEN) {
 		$_SESSION[$name . '_SESSION'] = array();
 	}
@@ -157,7 +157,7 @@ class icms_core_Security {
 	 * @param string $token
 	 *
 	 * @return bool
-	 **/
+	 */
 	public function filterToken($token) {
 		return (!empty($token['expire']) && $token['expire'] >= time());
 	}
@@ -168,7 +168,7 @@ class icms_core_Security {
 	 * @param string $name session name
 	 *
 	 * @return void
-	 **/
+	 */
 	public function garbageCollection($name = _CORE_TOKEN) {
 		if (isset($_SESSION[$name . '_SESSION']) && count($_SESSION[$name . '_SESSION']) > 0) {
 			$_SESSION[$name . '_SESSION'] = array_filter($_SESSION[$name . '_SESSION'], array($this, 'filterToken'));
@@ -180,7 +180,7 @@ class icms_core_Security {
 	 * @param int $docheck 0 to not check the referer (used with XML-RPC), 1 to actively check it
 	 *
 	 * @return bool
-	 **/
+	 */
 	public function checkReferer($docheck = 1) {
 		$ref = xoops_getenv('HTTP_REFERER');
 		if ($docheck == 0) {
@@ -199,7 +199,7 @@ class icms_core_Security {
 	 * Check superglobals for contamination
 	 *
 	 * @return void
-	 **/
+	 */
 	public function checkSuperglobals() {
 		foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS',
 						'_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', 
@@ -222,7 +222,7 @@ class icms_core_Security {
 	 * @todo : Should be changed to return bool and let the action be up to the calling script
 	 *
 	 * @return void
-	 **/
+	 */
 	public function checkBadips() {
 		global $icmsConfig;
 		if ($icmsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
@@ -241,7 +241,7 @@ class icms_core_Security {
 	 * Get the HTML code for a @link icms_form_elements_Hiddentoken object - used in forms that do not use XoopsForm elements
 	 *
 	 * @return string
-	 **/
+	 */
 	public function getTokenHTML($name = _CORE_TOKEN) {
 		$token = new icms_form_elements_Hiddentoken($name);
 		return $token->render();
@@ -251,7 +251,7 @@ class icms_core_Security {
 	 * Add an error
 	 *
 	 * @param   string  $error
-	 **/
+	 */
 	public function setErrors($error) {
 		$this->errors[] = trim($error);
 	}

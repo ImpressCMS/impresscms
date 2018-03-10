@@ -35,7 +35,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
  */
 
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
