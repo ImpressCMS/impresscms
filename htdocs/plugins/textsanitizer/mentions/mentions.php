@@ -15,14 +15,13 @@ define('MENTIONS_LINK',	ICMS_URL . '/userinfo.php?uid=%u'); // The link to user 
  *
  * The mention can be of the form @username or @[User Name] and the username must be the display name of the user
  *
- * @param	obj	$ts
  * @param	str	$text
  * @return	str	String with the pattern replaced by a link
  */
-function textsanitizer_mentions(&$ts, $text) {
-	$patterns[] = "#([\s\R])@(?|([\w\-]+)|\[([\w\s\-]+)\])#e";
-	$replacements[] = "mentions('\\2', '\\1')";
-	return preg_replace($patterns, $replacements, $text);
+function textsanitizer_mentions($text) {
+	return preg_replace_callback("#([\s\R])@(?|([\w\-]+)|\[([\w\s\-]+)\])#", function ($matches) {
+		return mentions($matches[2], $matches[1]);
+	}, $text);
 }
 
 /**

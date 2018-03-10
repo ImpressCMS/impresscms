@@ -14,13 +14,12 @@
 /**
  * Locates and replaces marked text with highlighted HTML text
  *
- * @param object $ts textsanitizer instance
  * @param string $text the search terms
  */
-function textsanitizer_syntaxhighlighthtml(&$ts, $text) {
-	$patterns[] = "/\[code_html](.*)\[\/code_html\]/esU";
-	$replacements[] = "textsanitizer_geshi_html_highlight( '\\1' )";
-	return preg_replace($patterns, $replacements, $text);
+function textsanitizer_syntaxhighlighthtml($text) {
+	return preg_replace_callback("/\[code_html](.*)\[\/code_html\]/sU", function ($matches) {
+		return textsanitizer_geshi_html_highlight($matches[1]);
+	}, $text);
 }
 
 /**
