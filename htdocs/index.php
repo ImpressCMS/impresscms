@@ -35,7 +35,7 @@
  * @since	XOOPS
  * @author	skalpa <psk@psykaos.net>
  * @author	Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
- **/
+ */
 
 /** mainfile is required, if it doesn't exist - installation is needed */
 

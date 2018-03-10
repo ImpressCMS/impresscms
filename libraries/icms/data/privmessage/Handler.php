@@ -54,7 +54,7 @@ class icms_data_privmessage_Handler extends icms_ipf_Handler {
 	 * Mark a message as read
 	 * @param 	object 	$pm 	{@link icms_data_privmessage_Object} object
 	 * @return 	bool
-	 **/
+	 */
 	public function setRead(&$pm) {
 		if (!is_a($pm, 'icms_data_privmessage_Object')) {
 			return false;

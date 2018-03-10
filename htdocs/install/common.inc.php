@@ -9,8 +9,7 @@
  * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
  * @package        installer
  * @since        Xoops 2.0.14
- * @author        Skalpa Keo <skalpa@xoops.org>
- * @version        $Id: common.inc.php 12389 2014-01-17 16:58:21Z skenow $
+ * @author		Skalpa Keo <skalpa@xoops.org>
  */
 
 /**

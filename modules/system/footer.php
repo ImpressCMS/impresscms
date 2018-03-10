@@ -7,7 +7,6 @@
  * @since		1.0
  * @author		Steve Kenow <skenow@impresscms.org>
  * @package		cpanel
- * @version		$Id$
  */
 
 $icmsTpl->assign("cpanel_adminpage", "<a href='" . ICMS_MODULES_URL . "/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_CPANEL_ADMIN_PAGE . "</a>");

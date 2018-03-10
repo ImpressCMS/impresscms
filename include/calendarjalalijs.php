@@ -7,8 +7,8 @@
  * @package	core
  * @since	1.1
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id:$
- **/
+ */
+
 global $icmsConfig, $icmsTheme;
 icms_loadLanguageFile('core', 'calendar');
 $icmsTheme->addScript(ICMS_URL . "/libraries/jalalijscalendar/jquery.ui.datepicker-cc-fa.js", array("type" => "text/javascript"));

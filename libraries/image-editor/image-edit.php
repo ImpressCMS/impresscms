@@ -9,7 +9,6 @@
  * @package		core
  * @since		1.2
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
- * @version		$Id: image-edit.php 1244 2008-03-18 17:09:11Z real_therplima $
  */
 $xoopsOption ['nodebug'] = 1;
 

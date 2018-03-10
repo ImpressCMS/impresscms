@@ -35,7 +35,6 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: pmlite.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 
 /* this will set which language file will load for this page */

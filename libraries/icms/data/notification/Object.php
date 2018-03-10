@@ -53,7 +53,7 @@ class icms_data_notification_Object extends icms_ipf_Object {
 
 	/**
 	 * Constructor
-	 **/
+	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('not_id', self::DTYPE_INTEGER, NULL, false);
 		$this->initVar('not_modid', self::DTYPE_INTEGER, NULL, false);
@@ -82,7 +82,7 @@ class icms_data_notification_Object extends icms_ipf_Object {
 	 * @param  array   $tags Array of substitutions for template variables
 	 *
 	 * @return  bool	true if success, false if error
-	 **/
+	 */
 	public function notifyUser($template_dir, $template, $subject, $tags) {
 		global $icmsConfigMailer;
 		// Check the user's notification preference.

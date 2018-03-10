@@ -115,14 +115,14 @@ class icms_view_block_Object extends icms_ipf_Object {
 	}
 
         /**
-         * gets var
+        * gets var
          *
-         * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+        * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
          *
-         * @param string $name
-         * @param string $format
-         * @return mixed
-         */
+        * @param string $name
+        * @param string $format
+        * @return mixed
+        */
         public function getVar($name, $format = 's') {
             if ($name == 'visiblein') {
                 return $this->visiblein;
@@ -132,14 +132,14 @@ class icms_view_block_Object extends icms_ipf_Object {
         }
 
         /**
-         * sets var
+        * sets var
          *
-         * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+        * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
          *
-         * @param string $name
-         * @param string $format
-         * @return mixed
-         */
+        * @param string $name
+        * @param string $format
+        * @return mixed
+        */
         public function setVar($name, $value, $options = null) {
             if ($name == 'visiblein') {
                 $this->visiblein = $value;

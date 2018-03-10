@@ -33,7 +33,6 @@
  *
  * @category	ICMS
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 /**

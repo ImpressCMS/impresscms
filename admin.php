@@ -40,7 +40,6 @@
  * @since		XOOPS
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author		modified by marcan <marcan@impresscms.org>
- * @version		$Id: admin.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 define('ICMS_IN_ADMIN', 1);

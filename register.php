@@ -37,7 +37,6 @@
  * @author      skenow <skenow@impresscms.org>
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id$
  */
 
 $xoopsOption['pagetype'] = 'user';

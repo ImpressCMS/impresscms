@@ -22,7 +22,7 @@ class icms_Utils {
 	 * mimetypes
 	 *
 	 * @return   array     array of mimetypes
-	 **/
+	 */
 	static public function mimetypes() {
 		return array(
 		     "hqx"		=> "application/mac-binhex40",

@@ -35,7 +35,6 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Templates
- * @version		SVN: $Id$
  */
 
 if ($tform['tpl_tplset'] != 'default') {

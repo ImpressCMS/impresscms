@@ -424,7 +424,7 @@ class icms_view_theme_Object {
 	 * @param 	int	$weight	Sort factor - lower weights are loaded first
 	 *
 	 * @return void
-	 **/
+	 */
 	public function addScript($src = '', $attributes = array(), $content = '', $zone = 'module', $weight = 0) {
 		global $xoops;
 		if (empty($attributes))	{
@@ -451,7 +451,7 @@ class icms_view_theme_Object {
 	 * @param 	int	$weight	Sort factor - lower weights are loaded first
 	 *
 	 * @return void
-	 **/
+	 */
 	public function addStylesheet($src = '', $attributes = array(), $content = '', $zone = 'module', $weight = 0) {
 		global $xoops;
 		if (empty($attributes)) {

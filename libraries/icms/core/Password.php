@@ -8,7 +8,7 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  * @package	ICMS\Core
- **/
+ */
 final class icms_core_Password {
 
 	private $pass, $salt, $mainSalt, $uname;

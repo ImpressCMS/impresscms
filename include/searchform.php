@@ -33,7 +33,6 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		core
- * @version		SVN: $Id$
  */
 
 // create form

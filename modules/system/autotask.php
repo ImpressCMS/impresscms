@@ -6,7 +6,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	Autotasks
- * @version		SVN: $Id$
  */
 
 /**
@@ -14,7 +13,7 @@
  *
  * To be used in ImpressCMS 1.2
  * @return mixed Did the query succeed or not? Returns nothing if succeeded, false if not succeeded
- **/
+ */
 function remove_usersxdays() {
 	$db =& icms_db_Factory::instance();
 	global $icmsConfigUser;

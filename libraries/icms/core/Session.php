@@ -179,7 +179,7 @@ class icms_core_Session {
 	 * @param   string  $sess_id
 	 * @param   string  $sess_data
 	 * @return  bool
-	 **/
+	 */
 	public function write($sess_id, $sess_data) {
 		return self::writeSession($sess_id, $sess_data);
 	}
@@ -188,7 +188,7 @@ class icms_core_Session {
 	 * Destroy a session
 	 * @param   string  $sess_id
 	 * @return  bool
-	 **/
+	 */
 	public function destroy($sess_id) {
 		return self::destroySession($sess_id);
 	}
@@ -197,14 +197,14 @@ class icms_core_Session {
 	 * Garbage Collector
 	 * @param   int $expire Time in seconds until a session expires
 	 * @return  bool
-	 **/
+	 */
 	public function gc($expire) {
 		return self::gcSession($expire);
 	}
 
 	/**
 	 * Force gc for situations where gc is registered but not executed
-	 **/
+	 */
 	public function gc_force() {
 		if (rand(1, 100) < 11) {
 			$expiration = empty($GLOBALS['icmsConfig']['session_expire'])
@@ -219,7 +219,7 @@ class icms_core_Session {
 	 * To be refactored
 	 * @param   bool $delete_old_session
 	 * @return  bool
-	 **/
+	 */
 	public function icms_sessionRegenerateId($regenerate = false) {
 		$old_session_id = session_id();
 		if ($regenerate) {
@@ -242,7 +242,7 @@ class icms_core_Session {
 	 * @param   string  $sess_id    session ID
 	 * @param   int     $expire     Time in seconds until a session expires
 	 * @return  bool
-	 **/
+	 */
 	public function update_cookie($sess_id = null, $expire = null) {
 		global $icmsConfig;
 		$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
@@ -260,7 +260,7 @@ class icms_core_Session {
 	 * Fingerprint stored in current $_SESSION['icms_fprint']
 	 * To be refactored
 	 * @return  string
-	 **/
+	 */
 	public function createFingerprint() {
 		$userAgent = $_SERVER['HTTP_USER_AGENT'];
 		$userIP = $_SERVER['REMOTE_ADDR'];
@@ -273,7 +273,7 @@ class icms_core_Session {
 	 * If they match, the Session is valid.
 	 * To be refactored
 	 * @return  bool
-	 **/
+	 */
 	public function checkFingerprint() {
 		$userAgent = $_SERVER['HTTP_USER_AGENT'];
 		$userIP = $_SERVER['REMOTE_ADDR'];
@@ -308,7 +308,7 @@ class icms_core_Session {
 	 * To be refactored
 	 * @param   string  $uid    User ID of user to close
 	 * @return
-	 **/
+	 */
 	public function sessionClose($uid) {
 		global $icmsConfig;
 
@@ -332,7 +332,7 @@ class icms_core_Session {
 	 * removes Expired Custom Sessions after session Start
 	 * @param   string  $sslpost_name    sets the session_id as ssl Name defined in preferences (if SSL enabled)
 	 * @return
-	 **/
+	 */
 	public function sessionStart($sslpost_name = '') {
 		global $icmsConfig;
 
@@ -447,7 +447,7 @@ class icms_core_Session {
 	 * @param   string  $sess_id
 	 * @param   string  $sess_data
 	 * @return  bool
-	 **/
+	 */
 	private function writeSession($sess_id, $sess_data) {
 		$sess_id = icms::$xoopsDB->quoteString($sess_id);
 		$sess_data = icms::$xoopsDB->quoteString($sess_data);
@@ -475,7 +475,7 @@ class icms_core_Session {
 	 * Destroy a session stored in DB
 	 * @param   string  $sess_id
 	 * @return  bool
-	 **/
+	 */
 	private function destroySession($sess_id) {
 		$sql = sprintf(
 			'DELETE FROM %s WHERE sess_id = %s',
@@ -491,7 +491,7 @@ class icms_core_Session {
 	 * Garbage Collector
 	 * @param   int $expire Time in seconds until a session expires
 	 * @return  bool
-	 **/
+	 */
 	private function gcSession($expire) {
 		if (empty($expire)) {
 			return true;

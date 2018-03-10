@@ -23,149 +23,149 @@
 class icms_ipf_About {
 
     /**
-     * Title
+    * Title
      *
-     * @var string
-     */
+    * @var string
+    */
 	public $_lang_aboutTitle = '';
 
         /**
-         * Author info
+        * Author info
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_author_info = '';
 
         /**
-         * Lead developer
+        * Lead developer
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_developer_lead = '';
 
         /**
-         * Contributor(s)
+        * Contributor(s)
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_developer_contributor = '';
 
         /**
-         * Developer's website
+        * Developer's website
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_developer_website = '';
 
         /**
-         * Developer's email
+        * Developer's email
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_developer_email = '';
 
         /**
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_developer_credits = '';
 
         /**
-         * Module info
+        * Module info
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_info = '';
 
         /**
-         * Module status (alfa, beta...)
+        * Module status (alfa, beta...)
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_status = '';
 
         /**
-         * Release date
+        * Release date
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_release_date = '';
 
         /**
-         * Demn
+        * Demn
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_demo = '';
 
         /**
-         * Support address
+        * Support address
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_support = '';
 
         /**
-         * Bug text
+        * Bug text
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_bug = '';
 
         /**
-         * Bug address
+        * Bug address
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_submit_bug = '';
 
         /**
-         * Feature(s)
+        * Feature(s)
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_feature = '';
 
         /**
-         * Submit feature link
+        * Submit feature link
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_submit_feature = '';
 
         /**
-         * Disclaimer
+        * Disclaimer
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_module_disclaimer = '';
 
         /**
-         * Author word
+        * Author word
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_author_word = '';
 
         /**
-         * Version history
+        * Version history
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_version_history = '';
 
         /**
-         * Credits
+        * Credits
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_lang_by = '';
 
         /**
-         * Template
+        * Template
          *
-         * @var \icms_view_Tpl|null
-         */
+        * @var \icms_view_Tpl|null
+        */
 	public $_tpl;
 
 	/**

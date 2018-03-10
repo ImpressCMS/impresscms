@@ -46,38 +46,38 @@
 class icms_ipf_Tree {
 
         /**
-         * Field name of parent object ID
+        * Field name of parent object ID
          *
-         * @var string
-         */
+        * @var string
+        */
 	private $_parentId;
 
         /**
-         * Field name of object ID
+        * Field name of object ID
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_myId = '';
 
         /**
-         * Field name of root object ID
+        * Field name of root object ID
          *
-         * @var string
-         */
+        * @var string
+        */
 	private $_rootId = null;
 
         /**
-         * Array of Tree
+        * Array of Tree
          *
-         * @var array
-         */
+        * @var array
+        */
 	public $_tree = array ();
 
         /**
-         * Array of {@link icms_core_Object}s
+        * Array of {@link icms_core_Object}s
          *
-         * @var array
-         */
+        * @var array
+        */
 	private $_objects = array();
 
 	/**
@@ -87,7 +87,7 @@ class icms_ipf_Tree {
 	 * @param   string	$myId       field name of object ID
 	 * @param   string	$parentId   field name of parent object ID
 	 * @param   string	$rootId     field name of root object ID
-	 **/
+	 */
 	public function __construct(& $objectArr, $myId, $parentId, $rootId = null) {
 		$this->_objects = & $objectArr;
 		$this->_myId = $myId;
@@ -102,7 +102,7 @@ class icms_ipf_Tree {
 	 * Initialize the object
 	 *
 	 * @access	private
-	 **/
+	 */
 	private function _initialize() {
 		foreach (array_keys($this->_objects) as $i) {
 			$key1 = $this->_objects[$i]->getVar($this->_myId);
@@ -120,7 +120,7 @@ class icms_ipf_Tree {
 	 * Get the tree
 	 *
 	 * @return  array   Associative array comprising the tree
-	 **/
+	 */
 	public function & getTree() {
 		return $this->_tree;
 	}
@@ -130,7 +130,7 @@ class icms_ipf_Tree {
 	 *
 	 * @param   string  $key    ID of the object to retrieve
 	 * @return  object  Object within the tree
-	 **/
+	 */
 	public function & getByKey($key) {
 		return $this->_tree[$key]['obj'];
 	}
@@ -140,7 +140,7 @@ class icms_ipf_Tree {
 	 *
 	 * @param   string  $key    ID of the parent object
 	 * @return  array   Array of children of the parent
-	 **/
+	 */
 	public function getFirstChild($key) {
 		$ret = array ();
 		if (isset ($this->_tree[$key]['child'])) {
@@ -157,7 +157,7 @@ class icms_ipf_Tree {
 	 * @param   string     $key    ID of the parent
 	 * @param   array   $ret    (Empty when called from client) Array of children from previous recursions.
 	 * @return  array   Array of child nodes.
-	 **/
+	 */
 	public function getAllChild($key, $ret = array ()) {
 		if (isset ($this->_tree[$key]['child'])) {
 			foreach ($this->_tree[$key]['child'] as $childkey) {
@@ -179,7 +179,7 @@ class icms_ipf_Tree {
 	 * @param   array   $ret    (empty when called from outside) Result from previous recursions
 	 * @param   int $uplevel (empty when called from outside) level of recursion
 	 * @return  array   Array of parent nodes.
-	 **/
+	 */
 	public function getAllParent($key, $ret = array (), $uplevel = 1) {
 		if (isset ($this->_tree[$key]['parent']) && isset ($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
 			$ret[$uplevel] = & $this->_tree[$this->_tree[$key]['parent']]['obj'];
@@ -204,7 +204,7 @@ class icms_ipf_Tree {
 	 * @return
 	 *
 	 * @access	private
-	 **/
+	 */
 	private function _makeSelBoxOptions($fieldName, $selected, $key, & $ret, $prefix_orig, $prefix_curr = '') {
 		if ($key > 0) {
 			$value = $this->_tree[$key]['obj']->getVar($this->_myId);
@@ -233,7 +233,7 @@ class icms_ipf_Tree {
 	 * @param   bool    $addEmptyOption  Set TRUE to add an empty option with value "0" at the top of the hierarchy
 	 * @param   integer $key             ID of the object to display as the root of select options
 	 * @return  string  HTML select box
-	 **/
+	 */
 	public function makeSelBox($name, $fieldName, $prefix = '-', $selected = '', $addEmptyOption = false, $key = 0) {
 		$ret = '<select class="form-control" name="' . $name . '" id="' . $name . '">';
 		if (false != $addEmptyOption) {

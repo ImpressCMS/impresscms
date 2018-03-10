@@ -8,7 +8,6 @@
  * @subpackage	Ratings
  * @since		1.2
  * @todo		Complete this feature? You cannot add a rating and there are no ratings to modify
- * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */

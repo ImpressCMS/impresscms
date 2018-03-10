@@ -66,7 +66,7 @@ class icms_data_comment_Object extends icms_ipf_Object {
 
 	/**
 	 * Constructor
-	 **/
+	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('com_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('com_pid', self::DTYPE_INTEGER, 0, false);
@@ -89,14 +89,14 @@ class icms_data_comment_Object extends icms_ipf_Object {
 		$this->initVar('doimage', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('dobr', self::DTYPE_INTEGER, 0, false);
 
-                parent::__construct($handler, $data);
+		parent::__construct($handler, $data);
 	}
 
 	/**
 	 * Is this comment on the root level?
 	 *
 	 * @return  bool
-	 **/
+	 */
 	public function isRoot() {
 		return ($this->getVar('com_id') == $this->getVar('com_rootid'));
 	}

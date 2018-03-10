@@ -9,7 +9,6 @@
  * @package		core
  * @since		1.0
  * @author		m0nty_
- * @version		$Id$
  */
 
 $xoopsOption['pagetype'] = 'privpolicy';

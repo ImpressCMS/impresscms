@@ -40,7 +40,6 @@
  *
  * @package		core
  * @since		1.2
- * @version		SVN: $Id$
  */
 
 /*  General Information  */
@@ -56,7 +55,7 @@ $modversion = array(
 	'dirname'=> basename(dirname(__FILE__ )),
 	'modname' => 'system',
 
-/*  Images information  */
+/*  Images information */
 	'iconsmall'=> "images/icon_small.png",
 	'iconbig'=> "images/system_big.png",
 	'image'=> "images/system_slogo.png", /* for backward compatibility */

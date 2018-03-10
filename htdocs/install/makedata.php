@@ -21,7 +21,6 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @version		$Id: makedata.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 include_once './class/dbmanager.php';

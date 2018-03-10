@@ -54,7 +54,7 @@ class icms_data_privmessage_Object extends icms_ipf_Object {
 
 	/**
 	 * constructor
-	 **/
+	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('msg_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('msg_image', self::DTYPE_STRING, 'icon1.gif', false, 100);
@@ -65,7 +65,7 @@ class icms_data_privmessage_Object extends icms_ipf_Object {
 		$this->initVar('msg_text', self::DTYPE_STRING, null, true);
 		$this->initVar('read_msg', self::DTYPE_INTEGER, 0, false);
 
-                parent::__construct($handler, $data);
+		parent::__construct($handler, $data);
 	}
 }
 

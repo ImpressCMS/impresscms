@@ -34,7 +34,6 @@
  * @author		http://www.xoops.org The XOOPS Project
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @package		core
- * @version		SVN: $Id: search.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 $xoopsOption['pagetype'] = "search";

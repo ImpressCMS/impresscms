@@ -38,13 +38,13 @@ class mod_system_Tags extends icms_ipf_seo_Object {
 	}
 
    /**
-     * Overriding the icms_ipf_Object::getVar method to assign a custom method on some
-     * specific fields to handle the value before returning it
+    * Overriding the icms_ipf_Object::getVar method to assign a custom method on some
+    * specific fields to handle the value before returning it
      *
-     * @param str $key key of the field
-     * @param str $format format that is requested
-     * @return mixed value of the field that is requested
-     */
+    * @param str $key key of the field
+    * @param str $format format that is requested
+    * @return mixed value of the field that is requested
+    */
     function getVar($key, $format = 's') {
         if ($format == 's' && in_array($key, array())) {
             return call_user_func(array($this,$key));

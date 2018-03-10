@@ -36,7 +36,7 @@
  * @author      vaughan montgomery (vaughan@impresscms.org)
  * @author      ImpressCMS Project
  * @copyright   (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- **/
+ */
 class icms_core_DataFilter {
 
 	/**
@@ -255,7 +255,7 @@ class icms_core_DataFilter {
 	*					'input' = Filters HTML for input to DB
 	*					'output' = Filters HTML for rendering output
 	*					'print' = Filters HTML for output to Printer
-    *                   'edit' = used for edit content forms
+   *                   'edit' = used for edit content forms
 	*				TEXT:
 	*					'input' = Filters plain text for input to DB
 	*					'output' = Filters plain text for rendering output
@@ -441,7 +441,7 @@ class icms_core_DataFilter {
 	 *
 	 * @param   string  $text
 	 * @return  string
-	 **/
+	 */
 	static public function filterTextareaInput($text) {
 		icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
@@ -463,7 +463,7 @@ class icms_core_DataFilter {
 	 * @param   bool	$image  allow inline images?
 	 * @param   bool	$br	 convert linebreaks?
 	 * @return  string
-	 **/
+	 */
 	static public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
 		icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
@@ -504,7 +504,7 @@ class icms_core_DataFilter {
 	 * @param   bool	$icode  allow icmscode?
 	 * @param   bool	$image  allow inline images?
 	 * @return  string
-	 **/
+	 */
 	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1, $br = 0) {
 		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 
@@ -539,7 +539,7 @@ class icms_core_DataFilter {
 	 * @param   string  $html
 	 * @param   bool	$icode  allow icmscode?
 	 * @return  string
-	 **/
+	 */
 	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
 		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
 
@@ -911,8 +911,6 @@ class icms_core_DataFilter {
 	 */
 	static public function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
-
-		if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') return FALSE;
 
 		$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
 

@@ -49,17 +49,17 @@
 class icms_db_criteria_Item extends icms_db_criteria_Element {
 
 	/**
-         * Prefix for column
-         *
+	 * Prefix for column
+	 *
 	 * @var	string
 	 */
 	public $prefix = '';
 
-        /**
-         * Function used for column
-         *
-         * @var string
-         */
+	/**
+     * Function used for column
+     *
+     * @var string
+     */
 	public $function = '';
 
         /**
@@ -89,7 +89,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * @param   string  $column
 	 * @param   mixed  $value
 	 * @param   string  $operator
-	 **/
+	 */
 	public function __construct($column, $value='', $operator='=', $prefix = '', $function = '') {
 		$this->prefix = $prefix;
 		$this->function = $function;
@@ -102,7 +102,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * Make a sql condition string
 	 *
 	 * @return  string
-	 **/
+	 */
 	public function render() {
 		$clause = (!empty($this->prefix) ? "{$this->prefix}." : "") . $this->column;
 		if (!empty($this->function)) {

@@ -37,7 +37,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
  */
 
 include_once ICMS_ROOT_PATH.'/include/notification_constants.php';

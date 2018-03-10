@@ -41,7 +41,6 @@
  * @package		Members
  * @subpackage	Users
  * @since		XOOPS
- * @version		$Id$
  */
 icms_loadLanguageFile('core', 'user');
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);

@@ -8,7 +8,6 @@
  * @subpackage	Users
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
  */
 
 $xoopsOption['pagetype'] = 'user';

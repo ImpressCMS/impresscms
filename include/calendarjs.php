@@ -7,7 +7,6 @@
  * @package    core
  * @since    ImpressCMS 1.3.8
  * @author    debianus
- * @version    $Id$
  */
 global $icmsTheme;
 global $icmsConfig;

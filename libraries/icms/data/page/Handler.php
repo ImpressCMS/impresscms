@@ -7,7 +7,6 @@
  * @since		ImpressCMS 1.1
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id$
  */
 
 /**

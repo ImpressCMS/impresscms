@@ -9,7 +9,6 @@
 * @package		libraries
 * @since		1.2
 * @author		TheRplima <therplima@impresscms.org>
-* @version		$Id: paginationstyles.php 1742 2008-04-20 14:46:20Z real_therplima $
 */
 
 $style_list = icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH . "/paginationstyles/css/", "", array("css"), TRUE);

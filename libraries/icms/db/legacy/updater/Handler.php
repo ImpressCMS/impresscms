@@ -308,7 +308,7 @@ class icms_db_legacy_updater_Handler {
         return $ret;
     }
 
-    /*
+    /**
      * Upgrades the object
      * @param string $dirname
      */

@@ -36,7 +36,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	System
- * @version		SVN: $Id: admin.php 12064 2012-10-10 14:37:53Z skenow $
  */
 
 define('ICMS_IN_ADMIN', 1);

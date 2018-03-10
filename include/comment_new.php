@@ -40,7 +40,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
  */
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 if (('system' != $icmsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])

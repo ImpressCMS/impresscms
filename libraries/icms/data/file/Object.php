@@ -23,8 +23,8 @@
 class icms_data_file_Object extends icms_ipf_Object {
 
     /**
-     * constructor
-     */
+    * constructor
+    */
     public function __construct(&$handler, $data = array()) {
         $this->initVar("fileid", self::DTYPE_INTEGER, 0, TRUE);
         $this->initVar("mid", self::DTYPE_INTEGER, 0, TRUE);
@@ -36,12 +36,12 @@ class icms_data_file_Object extends icms_ipf_Object {
     }
 
     /**
-     * get value for variable
+    * get value for variable
      *
-     * @param string $key field name
-     * @param string $format format
-     * @return mixed value
-     */
+    * @param string $key field name
+    * @param string $format format
+    * @return mixed value
+    */
     public function getVar($key, $format = "e") {
         if (substr($key, 0, 4) == "url_") {
             return parent::getVar("url", $format);

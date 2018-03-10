@@ -36,7 +36,6 @@
  * @package		Member
  * @subpackage	Users
  * @since		XOOPS
- * @version		SVN: $Id: lostpass.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 $xoopsOption['pagetype'] = 'user';

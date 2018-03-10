@@ -19,59 +19,59 @@
 class icms_ipf_Metagen {
 
         /**
-         * Instance of icms_core_Textsanitizer
+        * Instance of icms_core_Textsanitizer
          *
-         * @var \icms_core_Textsanitizer
-         */
+        * @var \icms_core_Textsanitizer
+        */
 	public $_myts;
 
 	/**
-         * Title
+        * Title
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_title = '';
 
 	/**
-         * Original title
+        * Original title
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_original_title = '';
 
 	/**
-         * Keywords
+        * Keywords
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_keywords = '';
 
 	/**
-         * Meta description
+        * Meta description
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_meta_description = '';
 
 	/**
-         * Category path
+        * Category path
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_categoryPath = '';
 
 	/**
-         * Description
+        * Description
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $_description = '';
 
 	/**
-         * Min chars
+        * Min chars
          *
-         * @var int
-         */
+        * @var int
+        */
 	public $_minChar = 4;
 
 	/**

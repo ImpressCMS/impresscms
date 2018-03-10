@@ -34,7 +34,6 @@
  * @package		core
  * @since		XOOPS
  * @author		skalpa <psk@psykaos.net>
- * @version		$Id: image.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 $image_id = isset($_GET["id"]) ? (int) $_GET["id"] : 0;

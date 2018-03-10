@@ -13,7 +13,6 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @version		$Id: page_end.php 12389 2014-01-17 16:58:21Z skenow $
  */
 /**
  *

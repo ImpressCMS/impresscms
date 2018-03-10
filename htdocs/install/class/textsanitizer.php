@@ -35,7 +35,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: textsanitizer.php 12329 2013-09-19 13:53:36Z skenow $
  */
 // This is subset and modified version of module.textsanitizer.php
 

@@ -36,7 +36,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id$
  */
 
 $cform = new icms_form_Theme(_CM_POSTCOMMENT, "commentform", "postcomment.php", "post", true);

@@ -53,12 +53,12 @@
  * */
 class icms_view_template_file_Object extends icms_ipf_Object {
 
-        public $tpl_source = false;
+	public $tpl_source = false;
 
 	/**
 	 * constructor
-         *
-         * @todo: move here tpl_source
+	 *
+	 * @todo: move here tpl_source
 	 */
 	public function __construct($handler, $data = array()) {
 		$this->initVar('tpl_id', self::DTYPE_INTEGER, null, false);

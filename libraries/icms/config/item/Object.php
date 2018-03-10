@@ -60,11 +60,11 @@ class icms_config_item_Object extends icms_ipf_Object {
 	public $_confOptions = array();
 
         /**
-        * is it a newly created config object?
+       * is it a newly created config object?
         *
-        * @var bool
-        * @access protected
-        */
+       * @var bool
+       * @access protected
+       */
         protected $_isNewConfig = false;
 
 	/**
@@ -88,11 +88,11 @@ class icms_config_item_Object extends icms_ipf_Object {
 	}
 
         /**
-         * #@+
-         * used for new config objects when installing/updating module(s)
+        * #@+
+        * used for new config objects when installing/updating module(s)
          *
-         * @access public
-         */
+        * @access public
+        */
 
         public function setNewConfig() {
             $this->_isNewConfig = true;
@@ -106,15 +106,15 @@ class icms_config_item_Object extends icms_ipf_Object {
             return $this->_isNewConfig;
         }
 
-        /*     * #@- */
+        /*    * #@- */
 
-        /*     * #@+
+        /*    * #@+
 
           /**
-         * Get a config value in a format ready for output
+        * Get a config value in a format ready for output
          *
-         * @return	string
-         */
+        * @return	string
+        */
 	public function getConfValueForOutput() {
 		switch($this->getVar('conf_valuetype')) {
 			case 'int':
@@ -210,7 +210,7 @@ class icms_config_item_Object extends icms_ipf_Object {
 	 * This function will properly set the data type for each config item, overriding the
 	 * default in the __construct method
          *
-         * @todo        Remove param $dummy once after removing setType from icms_properties_Handler (this is hack to bypass PHP strict message)
+        * @todo        Remove param $dummy once after removing setType from icms_properties_Handler (this is hack to bypass PHP strict message)
 	 *
 	 * @since	1.3.3
 	 * @param	string	$newType	data type of the config item

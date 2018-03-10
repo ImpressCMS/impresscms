@@ -34,7 +34,6 @@
  * @package	core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id$
  */
 
 $email_tray = new icms_form_elements_Tray(_US_EMAIL, "<br />");

@@ -37,7 +37,6 @@
  * @package		System
  * @subpackage	Modules
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: modulesadmin.php 12403 2014-01-26 21:35:08Z skenow $
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {

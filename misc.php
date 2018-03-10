@@ -34,9 +34,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	    $Id: misc.php 12399 2014-01-25 17:02:01Z skenow $
- * @version	$Id: misc.php 12399 2014-01-25 17:02:01Z skenow $
- **/
+ */
 
 icms_loadLanguageFile('core', 'misc');
 /* set filter types, if not strings */

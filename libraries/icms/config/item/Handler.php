@@ -33,7 +33,6 @@
  * @since        XOOPS
  * @author       Kazumi Ono (aka onokazo)
  * @author       http://www.xoops.org The XOOPS Project
- * @version      $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 /**#@+

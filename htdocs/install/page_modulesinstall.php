@@ -9,8 +9,7 @@
  * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
  * @package        installer
  * @since        1.0
- * @author        Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
- * @version        $Id$
+ * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
  */
 require_once 'common.inc.php';
 

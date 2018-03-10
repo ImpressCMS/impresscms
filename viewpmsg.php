@@ -36,7 +36,6 @@
  * @author      sato-san <sato-san@impresscms.org>
  * @package		core
  * @subpackage	Privmessage
- * @version		SVN: $Id: viewpmsg.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 $xoopsOption['pagetype'] = 'pmsg';
 

@@ -10,7 +10,6 @@
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		Xoops 1.00
  * @package core
- * @version		$Id$
  */
 
 xoops_header(false);

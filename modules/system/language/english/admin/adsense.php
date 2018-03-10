@@ -6,7 +6,6 @@
 * @license         LICENSE.txt
 * @package	adsense
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
 */
 
 define('_MD_AM_ADSENSES', 'Adsenses');

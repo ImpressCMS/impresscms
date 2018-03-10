@@ -12,7 +12,6 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_tablesfill.php 12398 2014-01-24 21:26:23Z skenow $
  */
 
 require_once 'common.inc.php';

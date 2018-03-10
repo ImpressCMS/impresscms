@@ -8,7 +8,6 @@
  * @category	icms
  * @package		Administration
  * @subpackage	System
- * @version		$Id$
  */
 
 if (!defined("CPANEL_DIRNAME")) define("CPANEL_DIRNAME", $modversion["dirname"] = basename(dirname(dirname(__FILE__))));

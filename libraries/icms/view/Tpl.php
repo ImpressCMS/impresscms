@@ -120,7 +120,7 @@ class icms_view_Tpl extends Smarty {
 	 * @param   string  $data		The template to render
 	 * @param	bool	$display	If rendered text should be output or returned
 	 * @return  string  			Rendered output if $display was false
-	 **/
+	 */
 	public function fetchFromData($tplSource, $display = false, $vars = null) {
 		if (!function_exists('smarty_function_eval')) {
 			require_once SMARTY_DIR . '/plugins/function.eval.php';
@@ -140,7 +140,7 @@ class icms_view_Tpl extends Smarty {
 	 *
 	 * @param   string  $resourcename	Resourcename to touch
 	 * @return  string  $result         Was the resource recompiled
-	 **/
+	 */
 	public function touch($resourceName) {
 		$isForced = $this->force_compile;
 		$this->force_compile = true;
@@ -163,7 +163,7 @@ class icms_view_Tpl extends Smarty {
 	 *
 	 * @param   string  $tpl_id
 	 * @return  boolean
-	 **/
+	 */
 	static public function template_touch($tpl_id) {
 		$tplfile_handler =& icms::handler('icms_view_template_file');
 		$tplfile =& $tplfile_handler->get($tpl_id);
@@ -190,7 +190,7 @@ class icms_view_Tpl extends Smarty {
 	 *
 	 * @param   int $mid    Module ID
 	 * @return
-	 **/
+	 */
 	static public function template_clear_module_cache($mid) {
 		$icms_block_handler = icms::handler('icms_view_block');
 		$block_arr = $icms_block_handler->getByModule($mid);

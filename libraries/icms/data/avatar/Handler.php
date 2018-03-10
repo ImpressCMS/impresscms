@@ -54,10 +54,10 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 	/**
 	 * Deletes an avatar
 	 * @see icms_core_ObjectHandler#delete($object)
-         *
-         * @param icms_data_avatar_Object   $avatar Avatar to delete
-         * @param bool                      $force  Force deletion?
-         *
+	 *
+     * @param icms_data_avatar_Object   $avatar Avatar to delete
+     * @param bool                      $force  Force deletion?
+     *
 	 * @return boolean
 	 */
 	public function delete(&$avatar, $force = false) {

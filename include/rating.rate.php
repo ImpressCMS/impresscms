@@ -8,7 +8,6 @@
  * @package		core
  * @since		1.2
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
  */
 
 include_once ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php" ;

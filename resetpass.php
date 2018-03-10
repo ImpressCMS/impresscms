@@ -10,7 +10,6 @@
  * @since		ImpressCMS 1.1
  * @author		Vaughan Montgomery <vaughan@impresscms.org>
  * @author		The ImpressCMS Project
- * @version		SVN: $Id$
  */
 
 $xoopsOption['pagetype'] = 'user';

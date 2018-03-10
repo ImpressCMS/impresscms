@@ -23,10 +23,10 @@
 final class icms {
 
         /**
-         * Current response
+        * Current response
          *
-         * @var \icms_response_Text
-         */
+        * @var \icms_response_Text
+        */
         static public $response;
 
 	/**
@@ -349,10 +349,10 @@ final class icms {
 	}
 
         /**
-         * Constructor is private so nobody can create an instance of this class
+        * Constructor is private so nobody can create an instance of this class
          *
-         * Use all static methods instead!
-         */
+        * Use all static methods instead!
+        */
         private function __construct() {
             // ^_^
         }

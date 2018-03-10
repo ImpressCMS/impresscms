@@ -48,73 +48,73 @@ class icms_config_Handler {
 	static protected $instance;
 
         /**
-         * Main (default) category
-         */
+        * Main (default) category
+        */
         const CATEGORY_MAIN = 1;
 
         /**
-         * User category
-         */
+        * User category
+        */
         const CATEGORY_USER = 2;
 
         /**
-         * Meta & footer category
-         */
+        * Meta & footer category
+        */
         const CATEGORY_METAFOOTER = 3;
 
         /**
-         * Censorship category
-         */
+        * Censorship category
+        */
         const CATEGORY_CENSOR = 4;
 
         /**
-         * Search catageory
-         */
+        * Search catageory
+        */
         const CATEGORY_SEARCH = 5;
 
         /**
-         * Mailer category
-         */
+        * Mailer category
+        */
         const CATEGORY_MAILER = 6;
 
         /**
-         * Authentification category
-         */
+        * Authentification category
+        */
         const CATEGORY_AUTH = 7;
 
         /**
-         * Multilanguage configuration
-         */
+        * Multilanguage configuration
+        */
         const CATEGORY_MULILANGUAGE = 8;
 
         /**
-         * Content category
-         */
+        * Content category
+        */
         const CATEGORY_CONTENT = 9;
 
         /**
-         * Persona category
-         */
+        * Persona category
+        */
         const CATEGORY_PERSONA = 10;
 
         /**
-         * Captcha category
-         */
+        * Captcha category
+        */
         const CATEGORY_CAPTCHA = 11;
 
         /**
-         * Plugins category
-         */
+        * Plugins category
+        */
         const CATEGORY_PLUGINS = 12;
 
         /**
-         * Autotasks category
-         */
+        * Autotasks category
+        */
         const CATEGORY_AUTOTASKS = 13;
 
         /**
-         * Purifier category
-         */
+        * Purifier category
+        */
         const CATEGORY_PURIFIER = 14;
 
 	/**

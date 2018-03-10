@@ -37,7 +37,6 @@
  * @package		System
  * @subpackage	Version
  * @since		1.0
- * @version		SVN: $Id$
  */
 if ((int) $_GET['mid']) {
 	$module_handler = icms::handler('icms_module');

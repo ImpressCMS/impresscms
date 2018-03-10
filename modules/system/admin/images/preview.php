@@ -6,7 +6,6 @@
  * @license		LICENSE.txt
  * @package		Administration
  * @subpackage	Images
- * @version		SVN: $Id$
  */
 
 /** the library for handling the image manipulation */

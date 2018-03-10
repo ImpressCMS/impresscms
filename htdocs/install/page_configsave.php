@@ -22,7 +22,6 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @version		$Id: page_configsave.php 12329 2013-09-19 13:53:36Z skenow $
  */
 /**
  *

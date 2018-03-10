@@ -6,8 +6,7 @@
  * @package	core
  * @since		2009
  * @author	Wiliam Hall (aka Mr. Theme) <mrtheme@impresscms.org>
- * @version	$Id$
- **/
+ */
 icms::$logger->disableLogger();
 if (isset($_POST['queryString'])) {
 	$queryString = icms::$xoopsDB->escape($_POST['queryString']);

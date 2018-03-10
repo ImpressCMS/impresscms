@@ -46,10 +46,10 @@
 class icms_image_category_Handler extends \icms_ipf_Handler {
 
         /**
-         * Constructor
+        * Constructor
          *
-         * @param \icms_db_IConnection $db              Database connection
-         */
+        * @param \icms_db_IConnection $db              Database connection
+        */
         public function __construct(&$db) {
                 parent::__construct($db, 'image_category', 'imgcat_id', 'imgcat_name', '', 'icms', 'imagecategory');
         }
@@ -61,7 +61,7 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
          *
 	 * @return array {@link icms_image_category_Object}s matching the conditions
-	 **/
+	 */
 	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
             $this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id";
@@ -83,7 +83,7 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	 * @param string $criteria conditions to match
          *
 	 * @return int number of {@link icms_image_category_Object}s matching the conditions
-	 **/
+	 */
 	public function getCount($criteria = null) {
             $this->generalSQL = 'SELECT COUNT(*) FROM ' . $this->table . ' i LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id";
@@ -100,15 +100,15 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	}
 
         /**
-         * Get a list of {@link icms_image_category_Object}s matching certain conditions
+        * Get a list of {@link icms_image_category_Object}s matching certain conditions
          *
-         * @param array         $groups         Groups list
-         * @param string        $perm           Permission name
-         * @param null|integer  $display        Do we need to list only visible or hidden items?
-         * @param string|null   $storetype      How to store images of this category?
+        * @param array         $groups         Groups list
+        * @param string        $perm           Permission name
+        * @param null|integer  $display        Do we need to list only visible or hidden items?
+        * @param string|null   $storetype      How to store images of this category?
          *
-         * @return array                        array of {@link icms_image_category_Object}s matching the conditions
-         */
+        * @return array                        array of {@link icms_image_category_Object}s matching the conditions
+        */
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
 		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
@@ -137,16 +137,16 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	}
 
 	/**
-         * Gets list of categories for that image
+        * Gets list of categories for that image
          *
-         * @param array         $groups         The usergroups to get the permissions for
-         * @param string        $perm           The permissions to retrieve
-         * @param string        $display        How display?
-         * @param string        $storetype      Storage type
-         * @param int           $imgcat_id      The image cat id
+        * @param array         $groups         The usergroups to get the permissions for
+        * @param string        $perm           The permissions to retrieve
+        * @param string        $display        How display?
+        * @param string        $storetype      Storage type
+        * @param int           $imgcat_id      The image cat id
          *
-         * @return array  list of categories
-         */
+        * @return array  list of categories
+        */
         public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id=null) {
 		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {

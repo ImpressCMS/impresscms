@@ -6,7 +6,6 @@
 * @license         LICENSE.txt
 * @package	ratings
 * @author		marcan <macrcan@impresscms.org>
-* @version		$Id$
 */
 
 define('_MD_AM_RATINGS', 'Ratings');
