@@ -97,7 +97,7 @@ coding_style:
                 use_tabs: true
                 size: 4
             switch:
-                indent_case: false
+                indent_case: true
         spaces:
             around_operators:
                 concatenation: true
