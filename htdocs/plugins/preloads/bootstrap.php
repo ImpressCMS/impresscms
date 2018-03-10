@@ -7,7 +7,6 @@
  * @package		libraries
  * @since		1.3
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id:$
  */
 
 class icms_BootstrapEventHandler {

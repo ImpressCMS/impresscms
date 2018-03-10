@@ -121,7 +121,7 @@ class icms_module_Object
 	 * This method is called during execution of icms::launchModule() to allow the module
 	 * to setup its global structures.
 	 * @return void
-	 **/
+	 */
 	public function launch() {
 	}
 
@@ -158,7 +158,7 @@ class icms_module_Object
 	 *
 	 * @param   string  $dirname    Directory Name
 	 * @param   boolean $verbose
-	 **/
+	 */
 	public function loadInfoAsVar($dirname, $verbose = true) {
 		if (!isset($this->modinfo)) {$this->loadInfo($dirname, $verbose);}
 		$this->setVar('name', $this->modinfo['name'], true);
@@ -189,7 +189,7 @@ class icms_module_Object
 	 * @param   string  	$name
 	 * @return  array|string	Array of module information.
 	 * If {@link $name} is set, returns a single module information item as string.
-	 **/
+	 */
 	public function &getInfo($name = null) {
 		if (!isset($this->modinfo)) {$this->loadInfo($this->getVar('dirname'));}
 		if (isset($name)) {
@@ -204,7 +204,7 @@ class icms_module_Object
 	 * Retreive the database version of this module
 	 *
 	 * @return int dbversion
-	 **/
+	 */
 	public function getDBVersion() {
 		$ret = $this->getVar('dbversion');
 		return $ret;
@@ -303,7 +303,7 @@ class icms_module_Object
 	 * @param   integer $offset
 	 * @param   integer $userid
 	 * @return  mixed   Search result or False if fail.
-	 **/
+	 */
 	public function search($term = '', $andor = 'AND', $limit = 0, $offset = 0, $userid = 0) {
 		if ($this->getVar('hassearch') != 1) {return false;}
 		$search = & $this->getInfo('search');
@@ -353,10 +353,10 @@ class icms_module_Object
 	}
 
     /**
-     * Get admin menu items for current module
+    * Get admin menu items for current module
      *
-     * @return array
-     */
+    * @return array
+    */
     public function getAdminMenuItems() {
         $inf = & $this->getInfo();
         $url = ICMS_MODULES_URL . DIRECTORY_SEPARATOR . $this->dirname . DIRECTORY_SEPARATOR;

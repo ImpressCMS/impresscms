@@ -52,7 +52,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 
 	/**
 	 * Initializes CKEditor
-	 **/
+	 */
 	protected function initCKEditor() {
 		$this->config = array(
 				"elements" => $this->getName (),
@@ -84,7 +84,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 
 	/**
 	 * Gets the fonts for CKEditor
-	 **/
+	 */
 	protected function getFonts() {
 		if (empty($this->config["fonts"]) && defined("_ICMS_EDITOR_CKEDITOR_FONTS")) {
 			$this->config["fonts"] = constant("_ICMS_EDITOR_CKEDITOR_FONTS");

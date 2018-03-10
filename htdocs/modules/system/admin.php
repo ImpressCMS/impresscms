@@ -36,7 +36,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	System
- * @version		SVN: $Id: admin.php 12064 2012-10-10 14:37:53Z skenow $
  */
 
 define('ICMS_IN_ADMIN', 1);
@@ -75,7 +74,7 @@ icms_loadLanguageFile('core', 'moduleabout');
 $admin_dir = ICMS_MODULES_PATH . '/system/admin';
 if (!file_exists($admin_dir . '/' . $fct)) {
     if ((strlen($fct) > 5) && (substr($fct, -5) == 'admin')) {
-        $fct = substr($fct, 0, -5);        
+        $fct = substr($fct, 0, -5);
     } else {
         $fct .= 'admin';
     }

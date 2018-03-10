@@ -36,7 +36,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Administration
  * @subpackage	Groups
- * @version		SVN: $Id$
  */
 
 /* set filter types, if not strings */

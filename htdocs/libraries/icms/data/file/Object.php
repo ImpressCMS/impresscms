@@ -12,20 +12,20 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * File object
- * 
+ *
  * @property int    $fileid        File ID
  * @property int    $mid           Module ID
  * @property string $caption       Caption
  * @property string $description   Description
  * @property string $url           URL of file
- * 
+ *
  * @package	ICMS\Data\File
  */
 class icms_data_file_Object extends icms_ipf_Object {
 
     /**
-     * constructor
-     */
+    * constructor
+    */
     public function __construct(&$handler, $data = array()) {
         $this->initVar("fileid", self::DTYPE_INTEGER, 0, TRUE);
         $this->initVar("mid", self::DTYPE_INTEGER, 0, TRUE);
@@ -37,12 +37,12 @@ class icms_data_file_Object extends icms_ipf_Object {
     }
 
     /**
-     * get value for variable
+    * get value for variable
      *
-     * @param string $key field name
-     * @param string $format format
-     * @return mixed value
-     */
+    * @param string $key field name
+    * @param string $format format
+    * @return mixed value
+    */
     public function getVar($key, $format = "e") {
         if (substr($key, 0, 4) == "url_") {
             return parent::getVar("url", $format);

@@ -35,7 +35,6 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: pmlite.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 
 /* this will set which language file will load for this page */
@@ -154,7 +153,7 @@ if (!icms::$user) {
 				redirect_header(icms_getPreviousPage(), 5, _PM_MESSAGEPOSTED);
 			}
 		}
-		
+
 	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {
 		/* This section is for composing messages */
 		$theme = new icms_view_theme_Factory();

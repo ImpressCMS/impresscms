@@ -8,7 +8,6 @@
  * @subpackage	Mimetypes
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */
@@ -24,7 +23,7 @@ include 'admin_header.php';
 
 /**
  * Logic and rendering for mimetypes management
- * 
+ *
  * @param bool	$showmenu	Doesn't appear to have any current functionality
  * @param int	$mimetypeid	Unique ID for mimetype entry
  */

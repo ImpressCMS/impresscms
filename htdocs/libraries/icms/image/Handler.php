@@ -49,18 +49,18 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 class icms_image_Handler extends \icms_ipf_Handler {
 
     /**
-     * Handler for image bodies
+    * Handler for image bodies
      *
-     * @var \icms_image_body_Handler
-     */
+    * @var \icms_image_body_Handler
+    */
     protected $imagebody_handler;
 
 
     /**
-         * Constructor
+        * Constructor
          *
-         * @param \icms_db_IConnection $db              Database connection
-         */
+        * @param \icms_db_IConnection $db              Database connection
+        */
         public function __construct(&$db) {
             $this->imagebody_handler = \icms::handler('icms_image_body');
 
@@ -68,12 +68,12 @@ class icms_image_Handler extends \icms_ipf_Handler {
         }
 
         /**
-         * This event is executed when saving
+        * This event is executed when saving
          *
-         * @param   \icms_image_body_Object $obj        Saving object
+        * @param   \icms_image_body_Object $obj        Saving object
          *
-         * @return  boolean
-         */
+        * @return  boolean
+        */
         protected function afterSave(&$obj) {
             if ($obj->image_body) {
                 $body = $this->imagebody_handler->get($obj->image_id);
@@ -85,12 +85,12 @@ class icms_image_Handler extends \icms_ipf_Handler {
         }
 
         /**
-         * This event executes after deletion
+        * This event executes after deletion
          *
-         * @param \icms_image_body_Object $obj      Deleted object
+        * @param \icms_image_body_Object $obj      Deleted object
          *
-         * @return boolean
-         */
+        * @return boolean
+        */
         protected function afterDelete(&$obj) {
             $sql = sprintf('DELETE FROM %s WHERE image_id = %d', $this->imagebody_handler->table, $obj->image_id);
             $this->db->query($sql);
@@ -105,7 +105,7 @@ class icms_image_Handler extends \icms_ipf_Handler {
 	 * @param   boolean $getbinary  Get binary image?
          *
 	 * @return  array   Array of {@link icms_image_Object} objects
-	 **/
+	 */
 	public function getObjects($criteria = NULL, $id_as_key = FALSE, $getbinary = FALSE) {
 		if ($getbinary) {
 			$this->generalSQL = "SELECT i.*, b.image_body FROM ".$this->table." i LEFT JOIN ".$this->imagebody_handler->table." b ON b.image_id=i.image_id";
@@ -130,7 +130,7 @@ class icms_image_Handler extends \icms_ipf_Handler {
 	 * @param   bool|null   $image_display  List only displaed images?
          *
 	 * @return  array                       Array of {@link icms_image_Object} objects
-	 **/
+	 */
 	public function getList($imgcat_id, $image_display = NULL) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id)));
 		if (isset($image_display)) {

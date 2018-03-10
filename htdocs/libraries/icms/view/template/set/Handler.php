@@ -57,7 +57,7 @@ class icms_view_template_set_Handler extends icms_ipf_Handler {
 	 * @see icms_view_template_set_Object
 	 * @param string $tplset_name of the tempateset to get
 	 * @return object icms_view_template_set_Object {@link icms_view_template_set_Object} reference to the new template
-	 **/
+	 */
 	public function &getByName($tplset_name) {
                 $criteria = new icms_db_criteria_Item('tplset_name', trim($tplset_name));
                 $criteria->setLimit(1);
@@ -71,7 +71,7 @@ class icms_view_template_set_Handler extends icms_ipf_Handler {
 	 * @see icms_view_template_set_Object
 	 * @param object $tplset {@link icms_view_template_set_Object} reference to the object of the tempateset to delete
 	 * @return object icms_view_template_set_Object {@link icms_view_template_set_Object} reference to the new template
-	 **/
+	 */
 	public function delete(&$tplset) {
 		if (!parent::delete($tplset))
 			return false;

@@ -34,7 +34,6 @@
  * @author      sato-san <sato-san@impresscms.org>
  * @package		Member
  * @subpackage	User
- * @version		SVN: $Id: userinfo.php 12363 2013-11-01 05:06:13Z sato-san $
  */
 
 $xoopsOption['pagetype'] = 'user';

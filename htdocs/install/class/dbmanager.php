@@ -34,16 +34,14 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: dbmanager.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 /**
  * database manager for XOOPS installer
  *
  * @author Haruki Setoyama  <haruki@planewave.org>
- * @version $Id: dbmanager.php 12329 2013-09-19 13:53:36Z skenow $
  * @access public
- **/
+ */
 class db_manager {
 
 	var $s_tables = array();
