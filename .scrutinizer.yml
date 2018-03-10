@@ -15,7 +15,7 @@ filter:
         - htdocs/mainfile.php
         - 'htdocs/libraries/xml/rss/*'
         - 'htdocs/libraries/recaptcha/*'
-        - 'htdocs/editors/tinymce/language/*
+        - 'htdocs/editors/tinymce/language/*'
         - htdocs/editors/tinymce/tinymce.php
         - htdocs/libraries/xml/saxparser.php
         - htdocs/libraries/xml/rpc/xoopsapi.php
@@ -29,7 +29,6 @@ filter:
         - 'htdocs/editors/FCKeditor/*'
         - 'htdocs/libraries/image-editor/*'
         - 'htdocs/libraries/smarty/icms_plugins/*'
-        - 'htdocs/plugins/sourceeditors/*'
         - 'htdocs/plugins/csstidy/*'
         - 'htdocs/libraries/phpopenid/admin/*'
         - 'htdocs/plugins/rating/*'
