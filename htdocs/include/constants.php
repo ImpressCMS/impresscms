@@ -6,7 +6,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @since		1.3
- * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) {

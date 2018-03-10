@@ -37,7 +37,6 @@
  * @author      skenow <skenow@impresscms.org>
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id$
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -102,19 +101,19 @@ switch ($op) {
 			}
 			$f_timezone = ($timezone_offset < 0) ? 'GMT ' . $timezone_offset : 'GMT +' . $timezone_offset;
 			echo _US_TIMEZONE . ": $f_timezone<br />";
-			echo "<form action='register.php' method='post'><input type='hidden' name='login_name' value='" 
-				. icms_core_DataFilter::htmlSpecialChars($login_name) 
-				. "' /><input type='hidden' name='uname' value='" . icms_core_DataFilter::htmlSpecialChars($uname) 
-				. "' /><input type='hidden' name='email' value='" . icms_core_DataFilter::htmlSpecialChars($email) 
-				. "' /><input type='hidden' name='user_viewemail' value='" . (int) $user_viewemail 
-				. "' /><input type='hidden' name='timezone_offset' value='" . $timezone_offset 
-				. "' /><input type='hidden' name='url' value='" . icms_core_DataFilter::htmlSpecialChars($url) 
-				. "' /><input type='hidden' name='pass' value='" . icms_core_DataFilter::htmlSpecialChars($pass) 
-				. "' /><input type='hidden' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass) 
-				. "' /><input type='hidden' name='user_mailok' value='" . (int) $user_mailok 
-				. "' /><input type='hidden' name='actkey' value='" . icms_core_DataFilter::htmlSpecialChars($actkey) 
-				. "' /><input type='hidden' name='agree_disc' value='" . (int) $agree_disc 
-				. "' /><br /><br /><input type='hidden' name='op' value='finish' />" . icms::$security->getTokenHTML() 
+			echo "<form action='register.php' method='post'><input type='hidden' name='login_name' value='"
+				. icms_core_DataFilter::htmlSpecialChars($login_name)
+				. "' /><input type='hidden' name='uname' value='" . icms_core_DataFilter::htmlSpecialChars($uname)
+				. "' /><input type='hidden' name='email' value='" . icms_core_DataFilter::htmlSpecialChars($email)
+				. "' /><input type='hidden' name='user_viewemail' value='" . (int) $user_viewemail
+				. "' /><input type='hidden' name='timezone_offset' value='" . $timezone_offset
+				. "' /><input type='hidden' name='url' value='" . icms_core_DataFilter::htmlSpecialChars($url)
+				. "' /><input type='hidden' name='pass' value='" . icms_core_DataFilter::htmlSpecialChars($pass)
+				. "' /><input type='hidden' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass)
+				. "' /><input type='hidden' name='user_mailok' value='" . (int) $user_mailok
+				. "' /><input type='hidden' name='actkey' value='" . icms_core_DataFilter::htmlSpecialChars($actkey)
+				. "' /><input type='hidden' name='agree_disc' value='" . (int) $agree_disc
+				. "' /><br /><br /><input type='hidden' name='op' value='finish' />" . icms::$security->getTokenHTML()
 				. "<input type='submit' value='". _US_FINISH ."' /></form>";
 		} else {
 			echo "<div id='registerstop' style='color:#ff0000;'>$stop</div>";
@@ -124,7 +123,7 @@ switch ($op) {
 		$xoopsTpl->assign('icms_pagetitle', _US_USERREG);
 		include 'footer.php';
 		break;
-		
+
 	case 'finish':
 		include 'header.php';
 		$stop = $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
@@ -243,7 +242,7 @@ switch ($op) {
 		$xoopsTpl->assign('icms_pagetitle', _US_USERREG);
 		include 'footer.php';
 		break;
-		
+
 	case 'register':
 	default:
 		$invite_code = isset($_GET['code']) ? filter_input(INPUT_GET, 'code') : NULL;

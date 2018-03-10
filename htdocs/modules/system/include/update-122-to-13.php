@@ -7,7 +7,6 @@
  * @category	ICMS
  * @package		Core
  * @subpackage
- * @version		SVN: $Id$
  */
 
 	if ($dbVersion < 40) include 'update-112-to-122.php';

@@ -7,7 +7,6 @@
  * @package		Administration
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
  */
 
 $modversion = array(

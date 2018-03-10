@@ -474,7 +474,7 @@ class icms_db_legacy_updater_Table {
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 *
 	 * @return  bool
-	 **/
+	 */
 	function updateAll()
 	{
 		$ret = true;

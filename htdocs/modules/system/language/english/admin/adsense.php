@@ -6,7 +6,6 @@
 * @license         LICENSE.txt
 * @package	adsense
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
 */
 
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");

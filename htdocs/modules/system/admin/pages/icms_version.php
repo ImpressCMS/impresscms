@@ -8,7 +8,6 @@
 * @subpackage	Symlinks
 * @since		1.1
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		SVN: $Id$
 */
 
 $modversion = array(

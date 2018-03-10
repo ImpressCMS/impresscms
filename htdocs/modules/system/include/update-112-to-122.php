@@ -7,7 +7,6 @@
  * @package		core
  * @since		1.3
  * @author		malanciault <marcan@impresscms.org)
- * @version		$Id$
  */
 
 	if ($dbVersion < 11) include 'update-to-112.php';

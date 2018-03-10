@@ -6,7 +6,6 @@
 * @license         LICENSE.txt
 * @package	ratings
 * @author		marcan <macrcan@impresscms.org>
-* @version		$Id$
 */
 
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");

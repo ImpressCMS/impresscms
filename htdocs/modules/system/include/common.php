@@ -8,7 +8,6 @@
  * @category	icms
  * @package		Administration
  * @subpackage	System
- * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");

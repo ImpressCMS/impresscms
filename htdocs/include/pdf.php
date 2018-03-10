@@ -9,7 +9,6 @@
  * @package	core
  * @since	1.1
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id$
  */
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();

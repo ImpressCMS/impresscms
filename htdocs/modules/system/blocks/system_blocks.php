@@ -35,7 +35,6 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Blocks
- * @version		SVN: $Id$
  */
 
 /**

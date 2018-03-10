@@ -8,7 +8,6 @@
  * @subpackage  Openid
  * @since		1.1
  * @author		malanciault <marcan@impresscms.org>
- * @version		SVN: $Id$
  */
 /**
  * Set this to TRUE to troubleshoot OpenID login

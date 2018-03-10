@@ -7,7 +7,6 @@
  * @package		core
  * @since		2.0 alpha 5
  * @author		Steve K <skenow@impresscms.org>
- * @version		$Id$
  */
 
 $editorversion = array(

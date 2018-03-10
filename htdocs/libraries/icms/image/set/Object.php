@@ -57,8 +57,8 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 class icms_image_set_Object extends \icms_ipf_Object {
 
     /**
-     * Constructor
-     */
+    * Constructor
+    */
     public function __construct(&$handler, $data = array()) {
         $this->initVar('imgset_id', self::DTYPE_INTEGER, null, false);
         $this->initVar('imgset_name', self::DTYPE_STRING, null, true, 50);

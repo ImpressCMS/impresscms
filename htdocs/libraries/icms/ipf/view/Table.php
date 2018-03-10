@@ -86,16 +86,16 @@ class icms_ipf_view_Table {
 			$this->_head_css_class = 'head';
 		}
 	}
-        
+
         /**
-         * Magic getter to make some variables for class read-only from outside
-         * 
-         * @param string $name  Variable name
-         * 
-         * @return mixed
-         * 
-         * @throws Exception
-         */
+        * Magic getter to make some variables for class read-only from outside
+         *
+        * @param string $name  Variable name
+         *
+        * @return mixed
+         *
+        * @throws Exception
+        */
         public function __get($name) {
             if (isset($this->$name)) {
                 trigger_error(sprintf('Accessing variable %s from outside IPF Table class was deprecated', $name), E_USER_DEPRECATED);
@@ -484,7 +484,7 @@ class icms_ipf_view_Table {
 	}
 	 /**
 	  *
-	  */
+	 */
 	public function getFilters2Array() {
 		$ret = array();
 

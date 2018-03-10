@@ -36,7 +36,6 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Users
- * @version		SVN: $Id$
  */
 
 $modversion = array(
