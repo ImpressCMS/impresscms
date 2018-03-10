@@ -100,7 +100,7 @@ coding_style:
                 use_tabs: true
                 size: 4
             switch:
-                indent_case: true
+                indent_case: false
         spaces:
             around_operators:
                 concatenation: true
