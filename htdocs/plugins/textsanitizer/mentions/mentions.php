@@ -6,7 +6,6 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		plugins
- * @version		$Id$
  */
 define('MENTIONS_LINK',	ICMS_URL . '/userinfo.php?uid=%u'); // The link to user profile
 
@@ -15,14 +14,13 @@ define('MENTIONS_LINK',	ICMS_URL . '/userinfo.php?uid=%u'); // The link to user 
  *
  * The mention can be of the form @username or @[User Name] and the username must be the display name of the user
  *
- * @param	obj	$ts
  * @param	str	$text
  * @return	str	String with the pattern replaced by a link
  */
-function textsanitizer_mentions(&$ts, $text) {
-	$patterns[] = "#([\s\R])@(?|([\w\-]+)|\[([\w\s\-]+)\])#e";
-	$replacements[] = "mentions('\\2', '\\1')";
-	return preg_replace($patterns, $replacements, $text);
+function textsanitizer_mentions($text) {
+	return preg_replace_callback("#([\s\R])@(?|([\w\-]+)|\[([\w\s\-]+)\])#", function ($matches) {
+		return mentions($matches[2], $matches[1]);
+	}, $text);
 }
 
 /**
@@ -44,11 +42,11 @@ function mentions($text, $prefix) {
 }
 
  /**
-  * Generates the code to add a button to the DHTML editor
+ * Generates the code to add a button to the DHTML editor
   *
-  * @param unknown_type $ele_name
-  * @return	arr
-  */
+ * @param unknown_type $ele_name
+ * @return	arr
+ */
 function render_mentions($ele_name) {
 	global $xoTheme;
 	$dirname = basename(dirname(__FILE__));

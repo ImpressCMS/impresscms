@@ -39,11 +39,11 @@
 class csstidy_optimise
 {
     /**
-     * Constructor
-     * @param array $css contains the class csstidy
-     * @access private
-     * @version 1.0
-     */
+    * Constructor
+    * @param array $css contains the class csstidy
+    * @access private
+    * @version 1.0
+    */
     function csstidy_optimise(&$css)
     {
         $this->parser    =& $css;
@@ -56,10 +56,10 @@ class csstidy_optimise
     }
 
     /**
-     * Optimises $css after parsing
-     * @access public
-     * @version 1.0
-     */
+    * Optimises $css after parsing
+    * @access public
+    * @version 1.0
+    */
     function postparse()
     {
         if ($this->parser->get_cfg('preserve_css')) {
@@ -96,10 +96,10 @@ class csstidy_optimise
     }
 
     /**
-     * Optimises values
-     * @access public
-     * @version 1.0
-     */
+    * Optimises values
+    * @access public
+    * @version 1.0
+    */
     function value()
     {
         $shorthands =& $GLOBALS['csstidy']['shorthands'];
@@ -123,10 +123,10 @@ class csstidy_optimise
     }
 
     /**
-     * Optimises shorthands
-     * @access public
-     * @version 1.0
-     */
+    * Optimises shorthands
+    * @access public
+    * @version 1.0
+    */
     function shorthands()
     {
         $shorthands =& $GLOBALS['csstidy']['shorthands'];
@@ -151,10 +151,10 @@ class csstidy_optimise
     }
 
     /**
-     * Optimises a sub-value
-     * @access public
-     * @version 1.0
-     */
+    * Optimises a sub-value
+    * @access public
+    * @version 1.0
+    */
     function subvalue()
     {
         $replace_colors =& $GLOBALS['csstidy']['replace_colors'];
@@ -214,12 +214,12 @@ class csstidy_optimise
     }
 
     /**
-     * Compresses shorthand values. Example: margin:1px 1px 1px 1px -> margin:1px
-     * @param string $value
-     * @access public
-     * @return string
-     * @version 1.0
-     */
+    * Compresses shorthand values. Example: margin:1px 1px 1px 1px -> margin:1px
+    * @param string $value
+    * @access public
+    * @return string
+    * @version 1.0
+    */
     function shorthand($value)
     {
         $important = '';
@@ -271,12 +271,12 @@ class csstidy_optimise
     }
 
     /**
-     * Removes unnecessary whitespace in ! important
-     * @param string $string
-     * @return string
-     * @access public
-     * @version 1.1
-     */
+    * Removes unnecessary whitespace in ! important
+    * @param string $string
+    * @return string
+    * @access public
+    * @version 1.1
+    */
     function compress_important(&$string)
     {
         if(csstidy::is_important($string))
@@ -287,11 +287,11 @@ class csstidy_optimise
     }
 
     /**
-     * Color compression function. Converts all rgb() values to #-values and uses the short-form if possible. Also replaces 4 color names by #-values.
-     * @param string $color
-     * @return string
-     * @version 1.1
-     */
+    * Color compression function. Converts all rgb() values to #-values and uses the short-form if possible. Also replaces 4 color names by #-values.
+    * @param string $color
+    * @return string
+    * @version 1.1
+    */
     function cut_color($color)
     {
         $replace_colors =& $GLOBALS['csstidy']['replace_colors'];
@@ -362,11 +362,11 @@ class csstidy_optimise
     }
 
     /**
-     * Compresses numbers (ie. 1.0 becomes 1 or 1.100 becomes 1.1 )
-     * @param string $subvalue
-     * @return string
-     * @version 1.2
-     */
+    * Compresses numbers (ie. 1.0 becomes 1 or 1.100 becomes 1.1 )
+    * @param string $subvalue
+    * @return string
+    * @version 1.2
+    */
     function compress_numbers($subvalue)
     {
         $units =& $GLOBALS['csstidy']['units'];
@@ -435,13 +435,13 @@ class csstidy_optimise
     }
 
     /**
-     * Merges selectors with same properties. Example: a{color:red} b{color:red} -> a,b{color:red}
-     * Very basic and has at least one bug. Hopefully there is a replacement soon.
-     * @param array $array
-     * @return array
-     * @access public
-     * @version 1.2
-     */
+    * Merges selectors with same properties. Example: a{color:red} b{color:red} -> a,b{color:red}
+    * Very basic and has at least one bug. Hopefully there is a replacement soon.
+    * @param array $array
+    * @return array
+    * @access public
+    * @version 1.2
+    */
     function merge_selectors(&$array)
     {
         $css = $array;
@@ -485,13 +485,13 @@ class csstidy_optimise
     }
 
     /**
-     * Dissolves properties like padding:10px 10px 10px to padding-top:10px;padding-bottom:10px;...
-     * @param string $property
-     * @param string $value
-     * @return array
-     * @version 1.0
-     * @see merge_4value_shorthands()
-     */
+    * Dissolves properties like padding:10px 10px 10px to padding-top:10px;padding-bottom:10px;...
+    * @param string $property
+    * @param string $value
+    * @return array
+    * @version 1.0
+    * @see merge_4value_shorthands()
+    */
     function dissolve_4value_shorthands($property,$value)
     {
         $shorthands =& $GLOBALS['csstidy']['shorthands'];
@@ -544,12 +544,12 @@ class csstidy_optimise
     }
 
     /**
-     * Explodes a string as explode() does, however, not if $sep is escaped or within a string.
-     * @param string $sep seperator
-     * @param string $string
-     * @return array
-     * @version 1.0
-     */
+    * Explodes a string as explode() does, however, not if $sep is escaped or within a string.
+    * @param string $sep seperator
+    * @param string $string
+    * @return array
+    * @version 1.0
+    */
     function explode_ws($sep,$string)
     {
         $status = 'st';
@@ -599,12 +599,12 @@ class csstidy_optimise
     }
 
     /**
-     * Merges Shorthand properties again, the opposite of dissolve_4value_shorthands()
-     * @param array $array
-     * @return array
-     * @version 1.2
-     * @see dissolve_4value_shorthands()
-     */
+    * Merges Shorthand properties again, the opposite of dissolve_4value_shorthands()
+    * @param array $array
+    * @return array
+    * @version 1.2
+    * @see dissolve_4value_shorthands()
+    */
     function merge_4value_shorthands($array)
     {
         $return = $array;
@@ -639,13 +639,13 @@ class csstidy_optimise
     }
 
     /**
-     * Dissolve background property
-     * @param string $str_value
-     * @return array
-     * @version 1.0
-     * @see merge_bg()
-     * @todo full CSS 3 compliance
-     */
+    * Dissolve background property
+    * @param string $str_value
+    * @return array
+    * @version 1.0
+    * @see merge_bg()
+    * @todo full CSS 3 compliance
+    */
     function dissolve_short_bg($str_value)
     {
         $background_prop_default =& $GLOBALS['csstidy']['background_prop_default'];
@@ -725,13 +725,13 @@ class csstidy_optimise
     }
 
     /**
-     * Merges all background properties
-     * @param array $input_css
-     * @return array
-     * @version 1.0
-     * @see dissolve_short_bg()
-     * @todo full CSS 3 compliance
-     */
+    * Merges all background properties
+    * @param array $input_css
+    * @return array
+    * @version 1.0
+    * @see dissolve_short_bg()
+    * @todo full CSS 3 compliance
+    */
     function merge_bg($input_css)
     {
         $background_prop_default =& $GLOBALS['csstidy']['background_prop_default'];

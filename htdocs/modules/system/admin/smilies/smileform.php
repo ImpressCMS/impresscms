@@ -36,7 +36,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		System
  * @subpackage	Smilies
- * @version		SVN: $Id$
  */
 
 $smile_form = new icms_form_Theme($smiles['smile_form'], 'smileform', 'admin.php', 'post', TRUE);

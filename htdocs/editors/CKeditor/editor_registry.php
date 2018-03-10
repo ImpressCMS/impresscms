@@ -3,7 +3,6 @@
  * CKeditor 	adapter for ICMS
  *
  * @license	http://www.fsf.org/copyleft/gpl.html GNU public license
- * @version	$Id: editor_registry.php 4709 2008-09-06 21:07:58Z skenow $
  */
 global $icmsConfig;
 

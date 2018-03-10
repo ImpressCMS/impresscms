@@ -38,7 +38,6 @@
  * @subpackage	Users
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id$
  */
 
 /* set get and post filters before including admin_header, if not strings */
@@ -53,7 +52,7 @@ include "admin_header.php";
 
 /**
  * Logic and rendering for editing user ranks
- * 
+ *
  * @param bool	$showmenu	Unnecessary? Not in any other location
  * @param int	$rank_id	Unique ID for the rank entry
  * @param bool	$clone		Are you cloning an existing rank?

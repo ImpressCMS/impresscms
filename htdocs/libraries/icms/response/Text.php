@@ -9,8 +9,8 @@
 class icms_response_Text {
 
     /**
-     * Mimetype for this response
-     */
+    * Mimetype for this response
+    */
     const CONTENT_TYPE = 'text/plain';
 
     const HTTP_OK = 200;
@@ -96,12 +96,12 @@ class icms_response_Text {
     const HTTP_NETWORK_CONNECT_TIMEOUT_ERROR = 599;
 
     /**
-     * Constructor
+    * Constructor
      *
-     * @param string|null   $msg
-     * @param int|null      $http_status    If not null sets http status on sending response
-     * @param array         $headers        Here You can place some additional headers
-     */
+    * @param string|null   $msg
+    * @param int|null      $http_status    If not null sets http status on sending response
+    * @param array         $headers        Here You can place some additional headers
+    */
     public function __construct($msg = null, $http_status = null, $headers = []) {
 
         if (!headers_sent()) {

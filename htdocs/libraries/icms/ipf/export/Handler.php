@@ -12,66 +12,66 @@
 class icms_ipf_export_Handler {
 
     /**
-     * Handler that can provide data
+    * Handler that can provide data
      *
-     * @var \icms_ipf_Handler 
-     */
+    * @var \icms_ipf_Handler
+    */
 	public $handler;
-        
+
         /**
-         * criteria how to filter exported data
+        * criteria how to filter exported data
          *
-         * @var \icms_db_criteria_Element
-         */
+        * @var \icms_db_criteria_Element
+        */
 	public $criteria;
-        
+
         /**
-         * Fields to be exported. If FALSE then all fields will be exported
+        * Fields to be exported. If FALSE then all fields will be exported
          *
-         * @var array|bool 
-         */
+        * @var array|bool
+        */
 	public $fields = false;
-        
+
         /**
-         * Format of the ouputed export. Currently only supports CSV
+        * Format of the ouputed export. Currently only supports CSV
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $format = 'csv';
-        
+
         /**
-         * Name of the file to be created
+        * Name of the file to be created
          *
-         * @var string
-         */
+        * @var string
+        */
 	public $filename = '';
-        
+
         /**
-         * Path where the file will be saved
+        * Path where the file will be saved
          *
-         * @var string 
-         */
+        * @var string
+        */
 	public $filepath = '';
-        
+
         /**
-         * Options of the format to be exported in
+        * Options of the format to be exported in
          *
-         * @var array 
-         */
+        * @var array
+        */
 	public $options = array();
-        
+
         /**
-         * Output methods used for formating exported data
+        * Output methods used for formating exported data
          *
-         * @var bool|array
-         */
+        * @var bool|array
+        */
 	public $outputMethods=false;
-        
+
         /**
-         * Fields data should not be included in generated result
+        * Fields data should not be included in generated result
          *
-         * @var array 
-         */
+        * @var array
+        */
 	public $notDisplayFields = array();
 
 	/**

@@ -8,19 +8,17 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id$
  */
 
 /**
  * Locates and replaces passed text with JS highlighted code block
  *
- * @param object $ts textsanitizer instance
  * @param string $text the search terms
  */
-function textsanitizer_syntaxhighlightjs(&$ts, $text) {
-	$patterns[] = "/\[code_js](.*)\[\/code_js\]/esU";
-	$replacements[] = "textsanitizer_geshi_js_highlight( '\\1' )";
-	return preg_replace($patterns, $replacements, $text);
+function textsanitizer_syntaxhighlightjs($text) {
+	return preg_replace_callback("/\[code_js](.*)\[\/code_js\]/sU", function ($matches) {
+		return textsanitizer_geshi_js_highlight($matches[1]);
+	}, $text);
 }
 
 /**
@@ -29,7 +27,6 @@ function textsanitizer_syntaxhighlightjs(&$ts, $text) {
  * @param $source
  */
 function textsanitizer_geshi_js_highlight( $source) {
-	if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
 	$source = icms_core_DataFilter::undoHtmlSpecialChars($source);
 
 	// Create the new GeSHi object, passing relevant stuff

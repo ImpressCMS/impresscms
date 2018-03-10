@@ -8,7 +8,6 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id$
  */
 
 /**
@@ -17,10 +16,10 @@
  * @param object $ts textsanitizer instance
  * @param string $text the search terms
  */
-function textsanitizer_syntaxhighlightcss(&$ts, $text) {
-	$patterns[] = "/\[code_css](.*)\[\/code_css\]/esU";
-	$replacements[] = "textsanitizer_geshi_css_highlight( '\\1' )";
-	return preg_replace($patterns, $replacements, $text);
+function textsanitizer_syntaxhighlightcss($text) {
+	return preg_replace_callback("/\[code_css](.*)\[\/code_css\]/sU", function ($matches) {
+		return textsanitizer_geshi_css_highlight($matches[1]);
+	}, $text);
 }
 
 /**
@@ -29,7 +28,6 @@ function textsanitizer_syntaxhighlightcss(&$ts, $text) {
  * @param $source
  */
 function textsanitizer_geshi_css_highlight( $source) {
-	if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
 	$source = icms_core_DataFilter::undoHtmlSpecialChars($source);
 
 	// Create the new GeSHi object, passing relevant stuff

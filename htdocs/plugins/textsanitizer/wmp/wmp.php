@@ -8,16 +8,15 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id$
  */
 
 /**
  *
  * Locates and replaces enclosed text as an embedded Windows Media Player object
- * @param $ts
+ *
  * @param $text
  */
-function textsanitizer_wmp(&$ts, $text) {
+function textsanitizer_wmp($text) {
 	$patterns[] = "/\[wmp=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/wmp\]/sU";
 	$rp  = "<object classid=\"clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6\" id=\"WindowsMediaPlayer\" width=\"\\2\" height=\"\\3\">\n";
 	$rp .= "<param name=\"URL\" value=\"\\4\">\n";

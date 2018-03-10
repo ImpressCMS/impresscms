@@ -8,12 +8,9 @@
     <div class="even">
 	    <div class="alert alert-warning" role="alert">
 	        <strong><{$smarty.const._AM_VERSION_UPDATE_NEEDED}></strong>
-	       
+
 	        <{$smarty.const._AM_VERSION_MOREINFO}>
 	        <h2><a href="<{$latest_url}>" rel="external"><{$latest_version}></a></h2>
-		<{if $not_a_final_comment}> 	 
-			<div  class="alert alert-warning" role="alert"><strong><{$smarty.const._AM_VERSION_WARNING}></strong>: <{$smarty.const._AM_VERSION_WARNING_NOT_A_FINAL}></div> 	 
-		<{/if}>
 	    </div>
     </div>
 
@@ -27,7 +24,7 @@
 			<div class="alert alert-danger" role="alert">
 				<{$errors}>
 			</div>
-		<{else}>    
+		<{else}>
         	<div class="alert alert-success" role="alert"><strong><{$smarty.const._AM_VERSION_NO_UPDATE}></strong></div>
         <{/if}>
     </div>

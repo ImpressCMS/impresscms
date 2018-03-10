@@ -177,8 +177,7 @@ class icms_view_theme_Object {
 			'xoops_requesturi' => $this->template->get_template_vars('icms_requesturi'),
 			'xoops_sitename' => $this->template->get_template_vars('icms_sitename'),
 			'xoops_slogan' => $this->template->get_template_vars('icms_slogan'),
-			'xoops_dirname' => $this->template->get_template_vars('icms_dirname'),
-			//'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
+			'xoops_dirname' => $this->template->get_template_vars('icms_dirname')
 		));
 		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
@@ -370,13 +369,7 @@ class icms_view_theme_Object {
 		$header = empty($xoopsOption['icms_module_header'])
 			? $this->template->get_template_vars('icms_module_header')
 			: $xoopsOption['icms_module_header'];
-		/** @todo	Remove xoops_module_header in 2.0 */
-		$xheader = empty($xoopsOption['xoops_module_header'])
-			? $this->template->get_template_vars('xoops_module_header')
-			: $xoopsOption['xoops_module_header'];
-		if ($xheader != "") icms_core_Debug::setDeprecated('icms_module_header', sprintf(_CORE_REMOVE_IN_VERSION, "2.0"));
-		$header = ($header != "") ? $header : $xheader;
-		$this->template->assign('xoops_module_header', $header . "\n" . $this->renderOldMetas(NULL, TRUE));
+		
 		$this->template->assign('icms_module_header', $header . "\n" . $this->renderOldMetas(NULL, TRUE));
 
 		/* create template vars for the new meta zones */
@@ -387,13 +380,7 @@ class icms_view_theme_Object {
 		$pagetitle = empty($xoopsOption['icms_pagetitle'])
 			? $this->template->get_template_vars('icms_pagetitle')
 			: $xoopsOption['icms_pagetitle'];
-		/** @todo	Remove xoops_pagetitle in 2.0 */
-		$xpagetitle = empty($xoopsOption['xoops_pagetitle'])
-			? $this->template->get_template_vars('xoops_pagetitle')
-			: $xoopsOption['xoops_pagetitle'];
-		if ($xpagetitle != "") icms_core_Debug::setDeprecated('icms_pagetitle', sprintf(_CORE_REMOVE_IN_VERSION, "2.0"));
-		$pagetitle = ($pagetitle != "") ? $pagetitle : $xpagetitle;
-		$this->template->assign('xoops_pagetitle', $pagetitle);
+	
 		$this->template->assign('icms_pagetitle', $pagetitle);
 
 		// Do not cache the main (theme.html) template output
@@ -438,7 +425,7 @@ class icms_view_theme_Object {
 	 * @param 	int	$weight	Sort factor - lower weights are loaded first
 	 *
 	 * @return void
-	 **/
+	 */
 	public function addScript($src = '', $attributes = array(), $content = '', $zone = 'module', $weight = 0) {
 		global $xoops;
 		if (empty($attributes))	{
@@ -465,7 +452,7 @@ class icms_view_theme_Object {
 	 * @param 	int	$weight	Sort factor - lower weights are loaded first
 	 *
 	 * @return void
-	 **/
+	 */
 	public function addStylesheet($src = '', $attributes = array(), $content = '', $zone = 'module', $weight = 0) {
 		global $xoops;
 		if (empty($attributes)) {

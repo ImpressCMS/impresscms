@@ -50,10 +50,10 @@ class icms_module_Handler
     extends icms_ipf_Handler {
 
         /**
-         * Constructor
+        * Constructor
          *
-         * @param object $db
-         */
+        * @param object $db
+        */
         public function __construct(&$db, $module = 'icms') {
             if (!$module)
                 $module = 'icms_member';
@@ -77,7 +77,7 @@ class icms_module_Handler
 	/**
 	 * Load a module by its dirname
          *
-         * @todo Make caching work!
+        * @todo Make caching work!
 	 *
 	 * @param	string	$dirname
 	 * @param	bool	$loadConfig	set to TRUE in case you want to load the module config in addition
@@ -355,10 +355,10 @@ class icms_module_Handler
 	}
 
     /**
-     * Get all menu items of all activated modules
+    * Get all menu items of all activated modules
      *
-     * @return array
-     */
+    * @return array
+    */
     public function getAdminMenuItems() {
         $criteria = new icms_db_criteria_Compo();
         $criteria->add(new icms_db_criteria_Item('hasadmin', 1));

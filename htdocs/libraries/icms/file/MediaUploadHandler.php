@@ -75,7 +75,7 @@
  *   echo $uploader->getErrors();
  * }
  * </code>
- * 
+ *
  * @package	ICMS\File
  * @author      Kazumi Ono     <onokazu@xoops.org>
  * @author      phppp
@@ -85,7 +85,7 @@ class icms_file_MediaUploadHandler {
 
 	/**
 	 * @var bool Flag indicating if unrecognized mimetypes should be allowed (use with precaution ! may lead to security issues )
-	 **/
+	 */
 	private $allowUnknownTypes = false;
 
 	/** @var string Name of the file to upload */
@@ -210,21 +210,21 @@ class icms_file_MediaUploadHandler {
 
 		icms_loadLanguageFile('core', 'uploader');
 	}
-        
+
         /**
-         * Do same as fetchMedia but from URL
+        * Do same as fetchMedia but from URL
          *
-         * @param string $url 
-         */
+        * @param string $url
+        */
         public function fetchFromURL($url) {
             if (empty($this->extensionToMime)) {
                 self::setErrors(_ER_UP_MIMETYPELOAD);
                 return false;
-            }            
-            //header('Content-Type: text/plain'); 
+            }
+            //header('Content-Type: text/plain');
             if (substr($url, 0, 5) == 'data:') {
 				$fp   = fopen($url, 'r');
-				$meta = stream_get_meta_data($fp);				
+				$meta = stream_get_meta_data($fp);
 				$content = stream_get_contents($fp);
 				$headers = array(
                     'content-type' => isset($meta['mediatype'])?$meta['mediatype']:'text/plain',
@@ -239,7 +239,7 @@ class icms_file_MediaUploadHandler {
                     return false;
                 }
                 $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_HEADER, true);            
+                curl_setopt($ch, CURLOPT_HEADER, true);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_VERBOSE, true);
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -283,8 +283,8 @@ class icms_file_MediaUploadHandler {
                 $headers = $hdrs;
                 unset($hdrs);
                 if (!isset($headers['http'][1]) || ($headers['http'][1] != 200))
-                    return false;            
-                if (!isset($headers['content-type'])) 
+                    return false;
+                if (!isset($headers['content-type']))
                     $headers['content-type'] = 'application/octet-stream';
             }
 			if (empty($headers['content-disposition']['filename']) === false) {
@@ -298,7 +298,7 @@ class icms_file_MediaUploadHandler {
 				} else {
 					$ext = pathinfo($this->mediaName, PATHINFO_EXTENSION);
 				}
-			}			
+			}
             $this->mediaType = $headers['content-type'];
             $this->mediaSize = (int)$headers['content-length'];
             $this->mediaTmpName = tempnam(sys_get_temp_dir(), 'icms_media');
@@ -316,8 +316,8 @@ class icms_file_MediaUploadHandler {
                 self::setErrors(_ER_UP_FILENAMEEMPTY);
                 return false;
             }
-            if ($this->mediaError > 0) {                
-                self::setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));               
+            if ($this->mediaError > 0) {
+                self::setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));
                 return false;
             }
             return true;
@@ -379,7 +379,7 @@ class icms_file_MediaUploadHandler {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Get Text messages for POST upload errors
 	 *

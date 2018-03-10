@@ -25,8 +25,8 @@ class IcmsSourceEditorCodeMirror extends icms_form_elements_Textarea {
 	/**
 	 * Constructor
 	 *
-     * @param	array   $configs  Editor Options
-     * @param	binary 	$checkCompatible  true - return false on failure
+    * @param	array   $configs  Editor Options
+    * @param	binary 	$checkCompatible  true - return false on failure
 	 */
 	function __construct($configs, $checkCompatible = false) {
 		$current_path = __FILE__;
@@ -56,7 +56,7 @@ class IcmsSourceEditorCodeMirror extends icms_form_elements_Textarea {
 	/**
 	 * Check if compatible
 	 *
-     * @return
+    * @return
 	 */
 	function isCompatible() {
 		return is_readable(ICMS_ROOT_PATH . $this->rootpath. "/codemirror.php");

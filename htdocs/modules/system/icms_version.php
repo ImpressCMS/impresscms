@@ -40,12 +40,11 @@
  *
  * @package		core
  * @since		1.2
- * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 
-/*  General Information  */
+/*  General Information */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
 	'version'=> 2.0,
@@ -58,7 +57,7 @@ $modversion = array(
 	'dirname'=> basename(dirname(__FILE__ )),
 	'modname' => 'system',
 
-/*  Images information  */
+/*  Images information */
 	'iconsmall'=> "images/icon_small.png",
 	'iconbig'=> "images/system_big.png",
 	'image'=> "images/system_slogo.png", /* for backward compatibility */

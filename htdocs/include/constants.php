@@ -6,7 +6,6 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @since		1.3
- * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -47,9 +46,6 @@ define('ICMS_MODULES_URL', ICMS_URL . '/modules');
 // ImpressCMS Third Party Libraries folder
 define('ICMS_LIBRARIES_PATH', ICMS_ROOT_PATH . '/libraries');
 define('ICMS_LIBRARIES_URL', ICMS_URL . '/libraries');
-// ImpressCMS Third Party Library for PDF generator
-define('ICMS_PDF_LIB_PATH', ICMS_LIBRARIES_PATH . '/tcpdf');
-define('ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf');
 /**#@+
  * Constants
  */
@@ -92,20 +88,6 @@ define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL . '/imagemanager');
 $icms_images_setname = 'kfaenza';
 define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
 
-/**#@+
- * @deprecated - for backward compatibility
- */
-define('XOOPS_INCLUDE_PATH', ICMS_INCLUDE_PATH);
-define('XOOPS_INCLUDE_URL', ICMS_INCLUDE_URL);
-define('XOOPS_UPLOAD_PATH', ICMS_UPLOAD_PATH);
-define('XOOPS_UPLOAD_URL', ICMS_UPLOAD_URL);
-define('XOOPS_THEME_PATH', ICMS_THEME_PATH);
-define('XOOPS_THEME_URL', ICMS_THEME_URL);
-define('XOOPS_COMPILE_PATH', ICMS_COMPILE_PATH);
-define('XOOPS_CACHE_PATH', ICMS_CACHE_PATH);
-define('XOOPS_EDITOR_PATH', ICMS_EDITOR_PATH);
-define('XOOPS_EDITOR_URL', ICMS_EDITOR_URL);
-/**#@-*/
 define('SMARTY_DIR', ICMS_LIBRARIES_PATH . '/smarty/');
 
 if (!defined('XOOPS_XMLRPC')) {

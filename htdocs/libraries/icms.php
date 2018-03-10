@@ -23,10 +23,10 @@
 final class icms {
 
         /**
-         * Current response
+        * Current response
          *
-         * @var \icms_response_Text
-         */
+        * @var \icms_response_Text
+        */
         static public $response;
 
 	/**
@@ -311,7 +311,7 @@ final class icms {
 			$http = strpos(ICMS_URL, "https://") === FALSE
 				? "http://"
 				: "https://";
-			
+
 			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
 			$filters = array(
 					'SCRIPT_NAME' => 'str',
@@ -319,9 +319,9 @@ final class icms {
 					'QUERY_STRING' => 'str',
 					'HTTP_REFERER' => 'url',
 			);
-			
+
 			$clean_SERVER = icms_core_DataFilter::checkVarArray($_SERVER, $filters, false);
-			
+
 			$phpself = $clean_SERVER['SCRIPT_NAME'];
 			$httphost = $clean_SERVER['HTTP_HOST'];
 			$querystring = $clean_SERVER['QUERY_STRING'];
@@ -347,10 +347,10 @@ final class icms {
 	}
 
         /**
-         * Constructor is private so nobody can create an instance of this class
+        * Constructor is private so nobody can create an instance of this class
          *
-         * Use all static methods instead!
-         */
+        * Use all static methods instead!
+        */
         private function __construct() {
             // ^_^
         }
