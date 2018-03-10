@@ -1,5 +1,9 @@
 filter:
     excluded_paths:
+        - htdocs/libraries/smarty/Config_File.class.php
+        - htdocs/libraries/smarty/Smarty_Compiler.class.php 
+        - htdocs/libraries/smarty/Smarty.class.php
+        - 'htdocs/libraries/smarty/plugins/*'
         - 'htdocs/libraries/phpopenid/Auth/*'
         - 'extras/plugins/*'
         - 'htdocs/libraries/geshi/*'
