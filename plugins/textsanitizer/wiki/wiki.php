@@ -16,13 +16,14 @@
  * @var unknown_type
  */
 define('WIKI_LINK',	'http://'._LANGCODE.'.wikipedia.org/wiki/%s');
+
 /**
  *
  * Locates and replaced marked text with a link to the wiki
- * @param unknown_type $ts
+ *
  * @param unknown_type $text
  */
-function textsanitizer_wiki(&$ts, $text) {
+function textsanitizer_wiki($text) {
 	return preg_replace_callback("/\[\[([^\]]*)\]\]/sU", function ($matches) {
 		return wikiLink($matches[1]);
 	}, $text);

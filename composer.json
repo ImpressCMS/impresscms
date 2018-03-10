@@ -26,6 +26,7 @@
 	"vlucas/phpdotenv": "^2.4@stable",
     "phpmailer/phpmailer": "v5.*",
     "tecnickcom/tcpdf": "6.*",
+	"erusev/parsedown": "^1.7.0",
     "ext-curl": "*",
     "ext-gd": "*",
     "ext-json": "*",
