@@ -26,6 +26,7 @@
     "phpmailer/phpmailer": "v5.*",
     "tecnickcom/tcpdf": "6.*",
     "geshi/geshi": "^1.0",
+	  "erusev/parsedown": "^1.7.0",
     "ext-curl": "*",
     "ext-gd": "*",
     "ext-json": "*",
