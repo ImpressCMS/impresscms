@@ -79,10 +79,10 @@ class icms_core_Versionchecker {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'ImpressCMS/' . ICMS_VERSION );
+		curl_setopt($ch, CURLOPT_USERAGENT, 'ImpressCMS/' . ICMS_VERSION);
 		curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/ImpressCMS/impresscms/releases/latest');
 		$result = curl_exec($ch);
-		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE );
+		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		if ($result === false) {
 			$this->errors[] = curl_error($ch);
 			return false;
@@ -116,14 +116,14 @@ class icms_core_Versionchecker {
 	 *
 	 * @return	mixed
 	 */
-	public function getErrors($ashtml=true) {
+	public function getErrors($ashtml = true) {
 		if (!$ashtml) {
 			return $this->errors;
 		} else {
 			$ret = '';
 			if (count($this->errors) > 0) {
 				foreach ($this->errors as $error) {
-					$ret .= $error.'<br />';
+					$ret .= $error . '<br />';
 				}
 			}
 			return $ret;
