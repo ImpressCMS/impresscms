@@ -49,7 +49,7 @@ function mentions($text, $prefix) {
  */
 function render_mentions($ele_name) {
 	global $xoTheme;
-	$dirname = basename(dirname(__FILE__));
+	$dirname = basename(__DIR__);
 	if (isset($xoTheme)) {
 		$xoTheme->addScript(ICMS_PLUGINS_URL . '/textsanitizer/' . $dirname . '/' . $dirname . '.js',
 			array('type' => 'text/javascript'));

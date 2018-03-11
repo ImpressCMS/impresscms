@@ -21,7 +21,7 @@ if (!is_object(icms::$user)
  * only include the things in cp_header not already included by admin.php - which is nothing!
  */
 
-$module_dir = basename(dirname(dirname(__FILE__)));
+$module_dir = basename(dirname(__DIR__));
 /** common constants for this module */
 include_once ICMS_MODULES_PATH . "/" . $module_dir . "/include/common.php";
 if (!defined("CPANEL_ADMIN_URL")) define("CPANEL_ADMIN_URL", CPANEL_URL . "admin/");

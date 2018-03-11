@@ -12,7 +12,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-if (!defined("CPANEL_DIRNAME")) define("CPANEL_DIRNAME", $modversion["dirname"] = basename(dirname(dirname(__FILE__))));
+if (!defined("CPANEL_DIRNAME")) define("CPANEL_DIRNAME", $modversion["dirname"] = basename(dirname(__DIR__)));
 if (!defined("CPANEL_URL")) define("CPANEL_URL", ICMS_MODULES_URL . "/" . CPANEL_DIRNAME . "/");
 if (!defined("CPANEL_ROOT_PATH")) define("CPANEL_ROOT_PATH", ICMS_MODULES_PATH . "/" . CPANEL_DIRNAME . "/");
 if (!defined("CPANEL_IMAGES_URL")) define("CPANEL_IMAGES_URL", CPANEL_URL . "images/");

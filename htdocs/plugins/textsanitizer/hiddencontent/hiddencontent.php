@@ -33,7 +33,7 @@ function textsanitizer_hiddencontent($text) {
 function render_hiddencontent($ele_name) {
 	global $xoTheme;
 	$javascript='';
-	$dirname = basename(dirname(__FILE__));
+	$dirname = basename(__DIR__);
 	if (isset($xoTheme)) {
 		$xoTheme->addScript(
 			ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
@@ -44,7 +44,7 @@ function render_hiddencontent($ele_name) {
 		onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/hide.gif'
 		alt='hide'
 		title='" . $dirname . "' />&nbsp;";
-	//$javascript = 'plugins/textsanitizer/'.basename(dirname(__FILE__)).'/hiddencontent.js';;
+	//$javascript = 'plugins/textsanitizer/'.basename(__DIR__).'/hiddencontent.js';;
 	return array($code, $javascript);
 }
 /**

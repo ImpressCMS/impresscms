@@ -35,7 +35,7 @@ function textsanitizer_wmp($text) {
 function render_wmp($ele_name) {
 	global $xoTheme;
 	$javascript='';
-	$dirname = basename(dirname(__FILE__));
+	$dirname = basename(__DIR__);
 	if (isset($xoTheme)) {
 		$xoTheme->addScript(
 			ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',

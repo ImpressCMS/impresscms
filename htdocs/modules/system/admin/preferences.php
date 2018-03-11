@@ -368,7 +368,13 @@ switch ($op) {
 
 				case 'select_geshi' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-					$dirlist = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH . '/geshi/geshi/', '', array('php')));
+					$reflector = new ReflectionClass("\\GeSHi");
+					$dir = dirname(
+						$reflector->getFileName()
+					) . DIRECTORY_SEPARATOR . 'geshi' . DIRECTORY_SEPARATOR;
+					$dirlist = str_replace('.php', '',
+						icms_core_Filesystem::getFileList($dir, '', array('php'))
+					);
 					if (! empty($dirlist)) {
 						asort($dirlist);
 						$ele->addOptionArray($dirlist);
