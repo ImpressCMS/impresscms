@@ -44,7 +44,7 @@
 define('ICMS_IN_ADMIN', 1);
 
 /** necessary files, since this is a direct POST target */
-require_once dirname(dirname(__FILE__)) . '/include/common.php';
+require_once dirname(__DIR__) . '/include/common.php';
 
 icms_loadLanguageFile('system', 'groups', TRUE);
 

@@ -38,7 +38,7 @@ class icms_Autoloader {
 	 */
 	static public function setup() {
 		if (!self::$initialized) {
-			//self::register(dirname(dirname(__FILE__)));
+			//self::register(dirname(__DIR__));
 			//spl_autoload_register(array('icms_Autoloader', 'autoload'));
 			//spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));
 			self::$initialized = TRUE;
