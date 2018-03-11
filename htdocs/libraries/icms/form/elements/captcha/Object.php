@@ -40,7 +40,7 @@ class icms_form_elements_captcha_Object {
 	 */
 	public function __construct() {
 		// Loading default preferences
-		$this->config = @include dirname(__FILE__) . "/config.php";
+		$this->config = @include __DIR__ . "/config.php";
 
 		global $icmsConfigCaptcha;
 		$this->setMode($icmsConfigCaptcha['captcha_mode']);

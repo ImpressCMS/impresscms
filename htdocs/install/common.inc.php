@@ -35,7 +35,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 	if (isset($vars) && $vars['ROOT_PATH']) {
 		define('ICMS_ROOT_PATH', $vars['ROOT_PATH']);
 	} else {
-		define('ICMS_ROOT_PATH', dirname(dirname(__FILE__)));
+		define('ICMS_ROOT_PATH', dirname(__DIR__));
 	}
 }
 

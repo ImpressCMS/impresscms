@@ -16,7 +16,7 @@ global $xoopsOption;
 $xoopsOption['ignore_closed_site'] = true;
 define('ICMS_AUTOTASKS_EXECMODE', true);
 
-chdir(dirname(__FILE__));
+chdir(__DIR__);
 require_once '../mainfile.php';
 
 ob_end_clean();
