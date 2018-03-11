@@ -43,7 +43,7 @@ function hashtag($text, $prefix) {
  */
 function render_hashtags($ele_name) {
 	global $xoTheme;
-	$dirname = basename(dirname(__FILE__));
+	$dirname = basename(__DIR__);
 	if (isset($xoTheme)) {
 		$xoTheme->addScript(ICMS_PLUGINS_URL . '/textsanitizer/' . $dirname . '/' . $dirname . '.js',
 			array('type' => 'text/javascript'));

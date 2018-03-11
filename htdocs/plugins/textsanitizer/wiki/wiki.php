@@ -49,7 +49,7 @@ function wikiLink($text) {
  */
 function render_wiki($ele_name) {
 	global $xoTheme;
-	$dirname = basename(dirname(__FILE__));
+	$dirname = basename(__DIR__);
 	if (isset($xoTheme)) {
 		$xoTheme->addScript(
 			ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
