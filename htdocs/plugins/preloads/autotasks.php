@@ -22,7 +22,7 @@ class IcmsPreloadAutotasks extends icms_preload_Item {
 	function eventFinishCoreBoot() {
 		$handler = &icms_getModuleHandler('autotasks', 'system');
 		if ($handler->needExecution()) {
-			$rez = $handler->execTasks();
+			$handler->execTasks();
 			$handler->startIfNeeded();
 			if ($handler->needExit()) {
 				exit(0);
