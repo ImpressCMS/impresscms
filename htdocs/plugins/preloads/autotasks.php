@@ -25,7 +25,6 @@ class IcmsPreloadAutotasks extends icms_preload_Item {
 			$rez = $handler->execTasks();
 			$handler->startIfNeeded();
 			if ($handler->needExit()) {
-				var_dump($rez);
 				exit(0);
 			}
 		}
