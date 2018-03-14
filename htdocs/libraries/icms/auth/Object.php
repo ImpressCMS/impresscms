@@ -49,8 +49,6 @@ class icms_auth_Object {
 
 	private $_dao;
 
-	private $_errors;
-
 	/**
 	 * Authentication Service constructor
 	 */
