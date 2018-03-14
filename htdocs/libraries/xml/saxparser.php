@@ -24,6 +24,8 @@
 
 class SaxParser
 {
+	use \Imponeer\ObjectErrors\ErrorsTrait;
+
 	var $level;
 	var $parser;
 
@@ -38,8 +40,6 @@ class SaxParser
 
 	/* Xml Source Input */
 	var $xmlInput;
-
-	var $errors = array();
 
 	/****************************************************************************
 	 Creates a SaxParser object using a FileInput to represent the stream
@@ -342,37 +342,6 @@ class SaxParser
 	 */
 	function handleCharacterDataDefault($parser, $data)
 	{
-	}
-
-	/**
-	 * Sets error messages
-	 *
-	 * @param	$error	string	an error message
-	 */
-	function setErrors($error)
-	{
-		$this->errors[] = trim($error);
-	}
-
-	/**
-	 * Gets all the error messages
-	 *
-	 * @param	$ashtml	bool	return as html?
-	 * @return	mixed
-	 */
-	function &getErrors($ashtml = true)
-	{
-		if (!$ashtml) {
-			return $this->errors;
-		} else {
-			$ret = '';
-			if (count($this->errors) > 0) {
-				foreach ($this->errors as $error) {
-					$ret .= $error.'<br />';
-				}
-			}
-			return $ret;
-		}
 	}
 }
 

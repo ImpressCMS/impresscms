@@ -44,7 +44,7 @@
  */
 class icms_core_Security {
 
-	public $errors = array();
+	use \Imponeer\ObjectErrors\ErrorsTrait;
 
 	/**
 	 * Initialize the icms::$security service
@@ -202,9 +202,9 @@ class icms_core_Security {
 	 */
 	public function checkSuperglobals() {
 		foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS',
-						'_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', 
-						'_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 
-						'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 
+						'_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS',
+						'_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES',
+						'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin',
 						'icmsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri',
 						'xoopsConfig', 'icmsOption', 'icmsConfigUser', 'icmsConfigMetaFooter', 'icmsConfigMailer',
 						'icmsConfigAuth', 'icmsConfigMultilang', 'icmsConfigPersona', 'icmsConfigPlugins',
@@ -245,36 +245,6 @@ class icms_core_Security {
 	public function getTokenHTML($name = _CORE_TOKEN) {
 		$token = new icms_form_elements_Hiddentoken($name);
 		return $token->render();
-	}
-
-	/**
-	 * Add an error
-	 *
-	 * @param   string  $error
-	 */
-	public function setErrors($error) {
-		$this->errors[] = trim($error);
-	}
-
-	/**
-	 * Get generated errors
-	 *
-	 * @param    bool    $ashtml Format using HTML?
-	 *
-	 * @return    array|string    Array of array messages OR HTML string
-	 */
-	public function &getErrors($ashtml = false) {
-		if (!$ashtml) {
-			return $this->errors;
-		} else {
-			$ret = '';
-			if (count($this->errors) > 0) {
-				foreach ($this->errors as $error) {
-					$ret .= $error.'<br />';
-				}
-			}
-			return $ret;
-		}
 	}
 }
 

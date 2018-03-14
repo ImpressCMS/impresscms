@@ -80,6 +80,10 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_properties_Handler::DTYPE_DEP_FORM_
  * */
 class icms_core_Object extends icms_properties_Handler {
 
+	use \Imponeer\ObjectErrors\ErrorsTrait {
+		getHtmlErrors as protected _getHtmlErrors;
+	}
+
     /**
     * is it a newly created object?
      *
@@ -87,14 +91,6 @@ class icms_core_Object extends icms_properties_Handler {
     * @access private
     */
     private $_isNew = false;
-
-    /**
-    * errors
-     *
-    * @var array
-    * @access private
-    */
-    private $_errors = array();
 
     /**
     * additional filters registered dynamically by a child class object
@@ -110,7 +106,7 @@ class icms_core_Object extends icms_properties_Handler {
     * @access public
     */
     public function __construct() {
-
+		$this->errors->mode = \Imponeer\ObjectErrors\ErrorsCollection::MODE_2_AS_PREFIX;
     }
 
     /*    * #@+
@@ -241,35 +237,6 @@ class icms_core_Object extends icms_properties_Handler {
     }
 
     /**
-    * add an error
-     *
-    * @param string $value error to add
-    * @access public
-    */
-    public function setErrors($err_str, $prefix = false) {
-        if (is_array($err_str)) {
-            foreach ($err_str as $str) {
-                $this->setErrors($str, $prefix);
-            }
-        } else {
-            if ($prefix) {
-                $err_str = "[" . $prefix . "] " . $err_str;
-            }
-            $this->_errors[] = trim($err_str);
-        }
-    }
-
-    /**
-    * return the errors for this object as an array
-     *
-    * @return array an array of errors
-    * @access public
-    */
-    public function getErrors() {
-        return $this->_errors;
-    }
-
-    /**
     * return the errors for this object as html
      *
     * @return string html listing the errors
@@ -277,10 +244,10 @@ class icms_core_Object extends icms_properties_Handler {
     */
     public function getHtmlErrors() {
         $ret = '<h4>' . _ERROR . '</h4>';
-        if (empty($this->_errors)) {
+        if ($this->errors->isEmpty()) {
             $ret .= _NONE . '<br />';
         } else {
-            $ret .= implode('<br />', $this->_errors);
+            $ret .= $this->_getHtmlErrors();
         }
         return $ret;
     }

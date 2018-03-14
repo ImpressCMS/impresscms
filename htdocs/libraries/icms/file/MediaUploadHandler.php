@@ -83,6 +83,10 @@
  */
 class icms_file_MediaUploadHandler {
 
+	use \Imponeer\ObjectErrors\ErrorsTrait {
+		getErrors as protected _getErrors;
+	}
+
 	/**
 	 * @var bool Flag indicating if unrecognized mimetypes should be allowed (use with precaution ! may lead to security issues )
 	 */
@@ -131,9 +135,6 @@ class icms_file_MediaUploadHandler {
 
 	/** @var string Prefix (for filename?) */
 	private $prefix;
-
-	/** @var array The errors that have occurred */
-	private $errors = array();
 
 	/** @var string Saved Destination after upload */
 	private $savedDestination;
@@ -697,17 +698,10 @@ class icms_file_MediaUploadHandler {
 	 * @return    array|string    Array of array messages OR HTML string
 	 */
 	public function getErrors($ashtml = true) {
-		if (!$ashtml) {
-			return $this->errors;
-		} else {
-			$ret = '';
-			if (count($this->errors) > 0) {
-				$ret = '<h4>' . _ER_UP_ERRORSRETURNED . '</h4>';
-				foreach ($this->errors as $error) {
-					$ret .= $error . '<br />';
-				}
-			}
-			return $ret;
+		$errors = $this->_getErrors($ashtml);
+		if ($ashtml && !$this->errors->isEmpty()) {
+			$errors = '<h4>' . _ER_UP_ERRORSRETURNED . '</h4>' . $errors;
 		}
+		return $errors;
 	}
 }

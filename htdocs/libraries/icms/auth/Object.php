@@ -43,6 +43,10 @@
  */
 class icms_auth_Object {
 
+	use \Imponeer\ObjectErrors\ErrorsTrait {
+		getHtmlErrors as protected _getHtmlErrors;
+	}
+
 	private $_dao;
 
 	private $_errors;
@@ -50,7 +54,9 @@ class icms_auth_Object {
 	/**
 	 * Authentication Service constructor
 	 */
-	public function __construct() {}
+	public function __construct() {
+		$this->errors->mode = \Imponeer\ObjectErrors\ErrorsCollection::MODE_2_PARAMS;
+	}
 
 	/**
 	 * authenticate
@@ -59,26 +65,8 @@ class icms_auth_Object {
 	 * @return bool whether user is authenticated
 	 * @todo	Cannot declare this as abstract until the OpenID method is compliant
 	 */
-	public function authenticate($uname, $pwd = null) {}
+	public function authenticate($uname, $pwd = null) {
 
-	/**
-	 * add an error
-	 *
-	 * @param string $value error to add
-	 * @access public
-	 */
-	public function setErrors($err_no, $err_str) {
-		$this->_errors[$err_no] = trim($err_str);
-	}
-
-	/**
-	 * return the errors for this object as an array
-	 *
-	 * @return array an array of errors
-	 * @access public
-	 */
-	public function getErrors() {
-		return $this->_errors;
 	}
 
 	/**
@@ -94,13 +82,11 @@ class icms_auth_Object {
 		if ($icmsConfigPersona['debug_mode'] < 3) {
 			$ret .= _US_INCORRECTLOGIN;
 		} else {
-			if (empty($this->_errors)) {
-				$ret .= _NONE . '<br />';
-			} else {
-				foreach ($this->_errors as $errno => $errstr) {
-					$ret .=  $errstr . '<br/>';
-				}
-			$ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $this->auth_method);
+			$errors = $this->_getHtmlErrors();
+			$ret .= $errors ? $errors : _NONE;
+			$ret .= '<br />';
+			if ($errors) {
+				$ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $this->auth_method);
 			}
 		}
 		return $ret;
