@@ -42,14 +42,6 @@ echo ($html);
 										<td>
 										<input name="src" type="text" id="src" value="" onchange="XoopsimagemanagerDialog.showPreviewImage(this.value);" />
 <?php
-/*
-$html = "<img
-	alt=\"image\"
-	src=\"".XOOPS_URL."/images/imgsrc.gif\"
-	onclick=\"javascript:xoopspopup=openWithSelfMain('".XOOPS_URL."/imagemanager.php?target=src','imgmanager',400,430,1);\"
-	onmouseover=\"style.cursor='hand'\"
-	style=\"\" />\n";
-*/
 $html = "<img
 	alt=\"image\"
 	src=\"".ICMS_URL."/images/imgsrc.gif\"
@@ -57,7 +49,6 @@ $html = "<img
 	onclick=\"javascript:xoopspopup=openWithSelfMain('xoopsimagebrowser.php?target=src&type=tiny','imgmanager',985,470,1);\"
 	onmouseover=\"style.cursor='hand'\"
 	style=\"\" />\n";
-//	onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/imagemanager.php?target=".$this->getName()."\",\"imgmanager\",400,430);'
 echo ($html);
 ?>
 										</td>
