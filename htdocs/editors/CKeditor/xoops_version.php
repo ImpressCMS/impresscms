@@ -10,4 +10,4 @@
 * @author		modified by MrTheme <mrtheme@impresscms.org>, Steve K <skenow@impresscms.org>
 */
 
-require dirname(__FILE__) . '/icms_version.php';
+require __DIR__ . '/icms_version.php';
