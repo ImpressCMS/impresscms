@@ -20,7 +20,7 @@
     }
   ],
   "require": {
-    "php": ">=5.5.0",
+    "php": ">=5.6.0",
     "simplepie/simplepie": "1.3.1",
     "ezyang/htmlpurifier": "4.6.*",
 	"imponeer/object-errors": "^1.0",
