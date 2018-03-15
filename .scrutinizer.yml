@@ -1,53 +1,53 @@
 filter:
     paths:
-        - htdocs/modules/
-        - htdocs/include/
-        - htdocs/plugins/
-        - htdocs/libraries/icms/
-        - htdocs/libraries/icms.php
+        - modules/
+        - include/
+        - plugins/
+        - libraries/icms/
+        - libraries/icms.php
         - htdocs/install/
-        - htdocs/mainfile.php
+        - mainfile.php
         - extras/plugins/
-        - htdocs/libraries/phpopenid
-        - htdocs/libraries/recaptcha/
-        - htdocs/admin.php
-        - htdocs/cmd.php
-        - htdocs/content.php
-        - htdocs/edituser.php
+        - libraries/phpopenid
+        - libraries/recaptcha/
+        - admin.php
+        - cmd.php
+        - content.php
+        - edituser.php
         - htdocs/error.php
-        - htdocs/finish_auth.php
-        - htdocs/footer.php
-        - htdocs/header.php
-        - htdocs/image.php
+        - finish_auth.php
+        - footer.php
+        - header.php
+        - image.php
         - htdocs/index.php
-        - htdocs/invite.php
-        - htdocs/lostpass.php
-        - htdocs/mainfile.php
-        - htdocs/misc.php
-        - htdocs/notifications.php
-        - htdocs/pmlite.php
-        - htdocs/privpolicy.php
-        - htdocs/readpmsg.php
-        - htdocs/register.php
-        - htdocs/resetpass.php
-        - htdocs/search.php
-        - htdocs/session_confirm.php
-        - htdocs/suggest.php
-        - htdocs/try_auth.php
-        - htdocs/user.php
-        - htdocs/userinfo.php
-        - htdocs/viewpmsg.php
+        - invite.php
+        - lostpass.php
+        - mainfile.php
+        - misc.php
+        - notifications.php
+        - pmlite.php
+        - privpolicy.php
+        - readpmsg.php
+        - register.php
+        - resetpass.php
+        - search.php
+        - session_confirm.php
+        - suggest.php
+        - try_auth.php
+        - user.php
+        - userinfo.php
+        - viewpmsg.php
     dependency_paths:
-        - htdocs/libraries/smarty/
-        - htdocs/libraries/phpopenid/Auth/
-        - htdocs/libraries/geshi/
-        - htdocs/plugins/csstidy/
-        - htdocs/libraries/phpopenid/admin/
-        - htdocs/libraries/wideimage/
-        - htdocs/libraries/xml/rss/
-        - htdocs/libraries/recaptcha/
-        - htdocs/libraries/paginationstyles/
-        - htdocs/libraries/xml/
+        - libraries/smarty/
+        - libraries/phpopenid/Auth/
+        - libraries/geshi/
+        - plugins/csstidy/
+        - libraries/phpopenid/admin/
+        - libraries/wideimage/
+        - libraries/xml/rss/
+        - libraries/recaptcha/
+        - libraries/paginationstyles/
+        - libraries/xml/
 checks:
     php:
         duplication: true
