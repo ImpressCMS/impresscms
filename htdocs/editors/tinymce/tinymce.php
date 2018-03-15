@@ -209,7 +209,7 @@ class TinyMCE {
 			$callback = "";
 		}
 
-		$ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tiny_mce.js"></script>';
+		$ret = '<script language="javascript" type="text/javascript" src="' . ICMS_URL . $this->rootpath . '/tiny_mce.js"></script>';
 		$ret .= '
             <script language="javascript" type="text/javascript">
                 tinyMCE.init({
