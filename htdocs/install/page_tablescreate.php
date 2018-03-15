@@ -12,7 +12,6 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_tablescreate.php 12398 2014-01-24 21:26:23Z skenow $
  */
 /**
  *
@@ -20,14 +19,11 @@
 require_once 'common.inc.php';
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
-include_once "../mainfile.php";
+include_once "../../mainfile.php";
 
-icms_core_Filesystem::chmod("../mainfile.php", 0444);
-if (defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != '') {
-	icms_core_Filesystem::chmod(XOOPS_TRUST_PATH, 0777);
-	icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0777);
-	icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0755);
-}
+icms_core_Filesystem::chmod("../.env", 0444);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH.'/modules', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH.'/modules', 0755);
 $wizard->setPage( 'tablescreate' );
 $pageHasForm = true;
 $pageHasHelp = false;
@@ -54,10 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	$tables = array();
 
-	if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
-		$driver = substr(XOOPS_DB_TYPE, 4);
+	$type = getenv('DB_TYPE');
+	if (substr($type, 0, 4) == 'pdo.') {
+		$driver = substr($type, 4);
 	} else {
-		$driver = XOOPS_DB_TYPE;
+		$driver = $type;
 	}
 	$result = $dbm->queryFromFile( './sql/' . $driver . '.structure.sql' );
 	$content = $dbm->report();

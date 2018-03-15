@@ -13,7 +13,6 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @version		$Id: page_modcheck.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 /**
@@ -143,7 +142,14 @@ if (empty($ext)) {
     	<tr><th>Path</th><th>Status</th></tr>
     </thead>
 	<?php
-		$paths = array("uploads/", "cache/", "templates_c/", "mainfile.php");
+		$paths = array(
+			"uploads/",
+			"../storage/htmlpurifier",
+			"../storage/log",
+			"../storage/cache",
+			"../storage/templates_c",
+			"../.env"
+		);
 		foreach ( $paths as $path) {
 	?>
 	<tr>

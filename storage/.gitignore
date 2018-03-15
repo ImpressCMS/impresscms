@@ -1,0 +1,6 @@
+/cache/*
+!/cache/.gitignore
+/log/*
+!/log/.gitignore
+/templates_c/*
+!/templates_c/.gitignore
