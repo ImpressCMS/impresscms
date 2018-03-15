@@ -1,43 +1,48 @@
-RewriteEngine on
+# Rewrite module exists
+<IfModule mod_rewrite.c>
+	RewriteEngine on
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /index.php
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ /index.php [NC,L,QSA]
 
-# if you install in a subdirectory, be sure to include the entire path, relative to DocumentRoot
-# for example, ErrorDocument 404 /icms/error.php?e=404
+	# if you install in a subdirectory, be sure to include the entire path, relative to DocumentRoot
+	# for example, ErrorDocument 404 /icms/error.php?e=404
 
-ErrorDocument 400 /error.php?e=400
-ErrorDocument 401 /error.php?e=401
-ErrorDocument 402 /error.php?e=402
-ErrorDocument 403 /error.php?e=403
-# Below line is commented because same functionality is handled by index.php
-# ErrorDocument 404 /error.php?e=404
-ErrorDocument 405 /error.php?e=405
-ErrorDocument 406 /error.php?e=406
-ErrorDocument 407 /error.php?e=407
-ErrorDocument 408 /error.php?e=408
-ErrorDocument 409 /error.php?e=409
-ErrorDocument 410 /error.php?e=410
-ErrorDocument 411 /error.php?e=411
-ErrorDocument 412 /error.php?e=412
-ErrorDocument 413 /error.php?e=413
-ErrorDocument 414 /error.php?e=414
-ErrorDocument 415 /error.php?e=415
-ErrorDocument 416 /error.php?e=416
-ErrorDocument 417 /error.php?e=417
-ErrorDocument 500 /error.php?e=500
-ErrorDocument 501 /error.php?e=501
-ErrorDocument 502 /error.php?e=502
-ErrorDocument 503 /error.php?e=503
-ErrorDocument 504 /error.php?e=504
-ErrorDocument 505 /error.php?e=505
+	ErrorDocument 400 /error.php?e=400
+	ErrorDocument 401 /error.php?e=401
+	ErrorDocument 402 /error.php?e=402
+	ErrorDocument 403 /error.php?e=403
+	# Below line is commented because same functionality is handled by index.php
+	# ErrorDocument 404 /error.php?e=404
+	ErrorDocument 405 /error.php?e=405
+	ErrorDocument 406 /error.php?e=406
+	ErrorDocument 407 /error.php?e=407
+	ErrorDocument 408 /error.php?e=408
+	ErrorDocument 409 /error.php?e=409
+	ErrorDocument 410 /error.php?e=410
+	ErrorDocument 411 /error.php?e=411
+	ErrorDocument 412 /error.php?e=412
+	ErrorDocument 413 /error.php?e=413
+	ErrorDocument 414 /error.php?e=414
+	ErrorDocument 415 /error.php?e=415
+	ErrorDocument 416 /error.php?e=416
+	ErrorDocument 417 /error.php?e=417
+	ErrorDocument 500 /error.php?e=500
+	ErrorDocument 501 /error.php?e=501
+	ErrorDocument 502 /error.php?e=502
+	ErrorDocument 503 /error.php?e=503
+	ErrorDocument 504 /error.php?e=504
+	ErrorDocument 505 /error.php?e=505
 
-RewriteCond %{QUERY_STRING} base64_encode[^(]*\([^)]*\) [OR]
-RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
-RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
-RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
-RewriteRule .* index.php [F,L]
+	RewriteCond %{QUERY_STRING} base64_encode[^(]*\([^)]*\) [OR]
+	RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
+	RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+	RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+	RewriteRule .* index.php [F,L]
+</IfModule>
 
-RewriteRule ^templates_c/(.*)$ index.php [F,L]
-RewriteRule ^themes/(.*)\.php$ index.php [F,L]
+# Rewrite module does not exists
+<IfModule !mod_rewrite.c>
+  RedirectMatch "^(?!error\.php).$" /error.php?msg=NO_MOD_REWRITE&e=500
+</IfModule>
