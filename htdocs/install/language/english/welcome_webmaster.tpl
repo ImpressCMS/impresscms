@@ -1,4 +1,4 @@
-Welcome to your new ImpressCMS powered website. If you haven't already, please delete the [b]install[/b] folder from the server and ensure that [b]mainfile.php[/b] is not writeable (chmod 444).
+Welcome to your new ImpressCMS powered website. If you haven't already, please delete the [b]install[/b] folder from the server and ensure that [b].env[/b] is not writeable (chmod 444).
 
 To begin administering your new ImpressCMS powered website you can click the [b]Administration[/b] Menu link located on the left of this page.
 
