@@ -54,7 +54,7 @@ $modversion = array(
 	'help'=> "",
 	'license'=> "GNU General Public License (GPL)",
 	'official'=> TRUE,
-	'dirname'=> basename(dirname(__FILE__ )),
+	'dirname'=> basename(__DIR__),
 	'modname' => 'system',
 
 /*  Images information */
