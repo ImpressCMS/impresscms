@@ -3,7 +3,7 @@
   "type": "project",
   "description": "ImpressCMS is an open source content management system with a focus on security and speed",
   "minimum-stability": "dev",
-  "prefer-stable": true,	
+  "prefer-stable": true,
   "license": "GPL-2.0-only",
   "authors": [
     {
@@ -25,8 +25,9 @@
     "ezyang/htmlpurifier": "4.6.*",
     "phpmailer/phpmailer": "v5.*",
     "tecnickcom/tcpdf": "6.*",
+	"erusev/parsedown": "^1.7.0",
+	"cerdic/css-tidy": "*",
     "geshi/geshi": "^1.0",
-	  "erusev/parsedown": "^1.7.0",
     "ext-curl": "*",
     "ext-gd": "*",
     "ext-json": "*",
