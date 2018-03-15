@@ -588,9 +588,6 @@ switch ($op) {
 						&& $config->getVar('conf_name') == 'purifier_Filter_ExtractStyleBlocks'
 						) {
 						if ($config->getVar('purifier_Filter_ExtractStyleBlocks') == 1) {
-							if (!file_exists(ICMS_PLUGINS_PATH . '/csstidy/class.csstidy.php')) {
-								redirect_header('admin.php?fct=preferences', 5, _MD_AM_UNABLECSSTIDY);
-							}
 							$purifier_style_updated = TRUE;
 						}
 					}
