@@ -1,3 +1,5 @@
+before_commands:
+    - "composer install --prefer-dist"
 filter:
     paths:
         - modules/
@@ -6,6 +8,7 @@ filter:
         - libraries/icms/
         - libraries/icms.php
         - htdocs/install/
+        - htdocs/editors/
         - mainfile.php
         - extras/plugins/
         - libraries/phpopenid
@@ -22,7 +25,6 @@ filter:
         - htdocs/index.php
         - invite.php
         - lostpass.php
-        - mainfile.php
         - misc.php
         - notifications.php
         - pmlite.php
@@ -41,13 +43,15 @@ filter:
         - libraries/smarty/
         - libraries/phpopenid/Auth/
         - libraries/geshi/
-        - plugins/csstidy/
         - libraries/phpopenid/admin/
         - libraries/wideimage/
         - libraries/xml/rss/
         - libraries/recaptcha/
         - libraries/paginationstyles/
         - libraries/xml/
+        - vendor/
+    excluded_paths:
+    	- vendor/
 checks:
     php:
         duplication: true
