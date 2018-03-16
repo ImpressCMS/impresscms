@@ -51,7 +51,7 @@ filter:
         - libraries/xml/
         - vendor/
     excluded_paths:
-    	- vendor/
+        - vendor/
 checks:
     php:
         duplication: true
