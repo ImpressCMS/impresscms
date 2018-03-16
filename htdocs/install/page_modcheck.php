@@ -70,12 +70,11 @@ ob_start();
 	src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php echo _PHP_VERSION; ?>:&nbsp; <?php
-if (version_compare( phpversion(), '5.2', '>=')) {
+if (version_compare( phpversion(), '5.6', '>=')) {
 	echo xoDiag( 1, phpversion() );
-} elseif (version_compare( phpversion(), '5.1', '>=')) {
-	echo xoDiag( 0, phpversion() );
 } else {
 	echo xoDiag( -1, phpversion() );
+	$php_version_error = true;
 }
 ?> <img
 	src="img/<?php echo (isset($php_version_error) ? "no" : "yes") ?>.png"
