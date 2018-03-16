@@ -41,6 +41,9 @@ class icms_response_HTML extends icms_response_Text {
         $this->addSanitizerPlugins();
 
         if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
+			if (\icms::$user === null) {
+				return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
+			}
 			$this->addAdminMetas();
 			$this->loadAdminMenu();
 			$this->setAdminDefaultVars();
