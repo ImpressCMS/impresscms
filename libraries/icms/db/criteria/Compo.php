@@ -78,12 +78,12 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	/**
 	 * Add an element
 	 *
-	 * @param   object  &$criteriaElement
+	 * @param   object  $criteriaElement
 	 * @param   string  $condition
 	 *
 	 * @return  object  reference to this collection
 	 */
-	public function &add(&$criteriaElement, $condition='AND') {
+	public function &add($criteriaElement, $condition='AND') {
 		$this->criteriaElements[] =& $criteriaElement;
 		$this->conditions[] = $condition;
 		return $this;
