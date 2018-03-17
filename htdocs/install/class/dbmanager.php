@@ -34,16 +34,14 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: dbmanager.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 /**
  * database manager for XOOPS installer
  *
  * @author Haruki Setoyama  <haruki@planewave.org>
- * @version $Id: dbmanager.php 12329 2013-09-19 13:53:36Z skenow $
  * @access public
- **/
+ */
 class db_manager {
 
 	var $s_tables = array();
@@ -52,7 +50,9 @@ class db_manager {
 
 	function __construct() {
 		$this->db = icms_db_legacy_Factory::getDatabase();
-		$this->db->setPrefix(XOOPS_DB_PREFIX);
+		$this->db->setPrefix(
+			getenv('DB_PREFIX')
+		);
 		$this->db->setLogger(icms_core_Logger::instance());
 	}
 

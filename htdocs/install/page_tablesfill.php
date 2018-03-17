@@ -12,7 +12,6 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_tablesfill.php 12398 2014-01-24 21:26:23Z skenow $
  */
 
 require_once 'common.inc.php';
@@ -24,7 +23,7 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once "../mainfile.php";
+include_once "../../mainfile.php";
 include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
@@ -57,10 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	extract( $_SESSION['siteconfig'], EXTR_SKIP );
 	$language = $wizard->language;
 
-	if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
-		$driver = substr(XOOPS_DB_TYPE, 4);
+	$type = getenv('DB_TYPE');
+	if (substr($type, 0, 4) == 'pdo.') {
+		$driver = substr($type, 4);
 	} else {
-		$driver = XOOPS_DB_TYPE;
+		$driver = $type;
 	}
 	$result = $dbm->queryFromFile('./sql/'. $driver .'.data.sql');
 	$result = $dbm->queryFromFile('./language/' . $language . '/'. $driver . '.lang.data.sql');

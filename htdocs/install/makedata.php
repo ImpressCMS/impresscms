@@ -1,9 +1,9 @@
 <?php
 /*
  You may not change or alter any portion of this comment or credits
- of supporting developers from this source code or any supporting source code 
+ of supporting developers from this source code or any supporting source code
  which is considered copyrighted (c) material of the original comment or credit authors.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -21,7 +21,6 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @version		$Id: makedata.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 include_once './class/dbmanager.php';
@@ -97,17 +96,17 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 	// system modules
 
-	if (file_exists('../modules/system/language/'.$language.'/modinfo.php')) {
-		include '../modules/system/language/'.$language.'/modinfo.php';
+	if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/'.$language.'/modinfo.php')) {
+		include ICMS_ROOT_PATH . '/modules/system/language/'.$language.'/modinfo.php';
 	} else {
-		include '../modules/system/language/english/modinfo.php';
+		include ICMS_ROOT_PATH . '/modules/system/language/english/modinfo.php';
 		$language = 'english';
 	}
 
 
 	$modversion = array();
-	include_once '../include/functions.php';
-	include_once '../modules/system/icms_version.php';
+	include_once ICMS_ROOT_PATH . '/include/functions.php';
+	include_once ICMS_ROOT_PATH . '/modules/system/icms_version.php';
 	$time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
@@ -117,20 +116,20 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	 * moved this ahead of the inclusion of system/icms_version.php for a reason - not completely without consequence
 	 * $modversion is not yet defined ~skenow
 	 */
-	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 40, 'system', 1)");
+	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 44, 'system', 1)");
 
 
 	foreach ($modversion['templates'] as $tplfile) {
-		if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
+		if ($fp = fopen(ICMS_ROOT_PATH . '/modules/system/templates/'.$tplfile['file'], 'r')) {
 			$newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '".addslashes($tplfile['file'])."', '".addslashes($tplfile['description'])."', ".$time.", ".$time.", 'module')");
-			$tplsource = fread($fp, filesize('../modules/system/templates/'.$tplfile['file']));
+			$tplsource = fread($fp, filesize(ICMS_ROOT_PATH . '/modules/system/templates/'.$tplfile['file']));
 			fclose($fp);
 			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (".$newtplid.", '".addslashes($tplsource)."')");
 		}
 	}
 
 	foreach ($modversion['blocks'] as $func_num => $newblock) {
-		if ($fp = fopen('../modules/system/templates/blocks/'.$newblock['template'], 'r')) {
+		if ($fp = fopen(ICMS_ROOT_PATH . '/modules/system/templates/blocks/'.$newblock['template'], 'r')) {
 			if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html','system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))) {
 				$visible = 1;
 			} else {
@@ -161,7 +160,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			$newbid = $dbm->insert('newblocks', " VALUES (0, 1, ".$func_num.", '".addslashes($options)."', '".addslashes($newblock['name'])."', '".addslashes($newblock['name'])."', '', ".$canvaspos.", 0, ".$visible.", 'S', 'H', 1, 'system', '".addslashes($newblock['file'])."', '".addslashes($newblock['show_func'])."', '".addslashes($edit_func)."', '".addslashes($newblock['template'])."', 0, ".$time.")");
 
 			$newtplid = $dbm->insert('tplfile', " VALUES (0, ".$newbid.", 'system', 'default', '".addslashes($newblock['template'])."', '".addslashes($newblock['description'])."', ".$time.", ".$time.", 'block')");
-			$tplsource = fread($fp, filesize('../modules/system/templates/blocks/'.$newblock['template']));
+			$tplsource = fread($fp, filesize(ICMS_ROOT_PATH . '/modules/system/templates/blocks/'.$newblock['template']));
 			fclose($fp);
 			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (".$newtplid.", '".addslashes($tplsource)."')");
 			$dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ADMIN'].", ".$newbid.", 1, 'block_read')"
@@ -487,9 +486,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOMAILPROTECT', '0', $i)"
+	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOMAILPROTECT', '0', $i)"
 			. ", (" . $ci++ . ", '_MD_AM_GDMAILPROTECT', '1', $i)"
-			. ", (" . $ci++ . ", '_MD_AM_REMAILPROTECT', '2', $i)");
+			. ", (" . $ci++ . ", '_MD_AM_SCMAILPROTECT', '2', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'email_font_len', '_MD_AM_EMAILLEN', '10', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', " . $p++ . ")"
@@ -497,8 +496,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'shadow_x', '_MD_AM_SHADOWX', '2', '_MD_AM_SHADOWX_DESC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'max_url_long', '_MD_AM_URLLEN', '50', '_MD_AM_URLLEN_DESC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'pre_chars_left', '_MD_AM_PRECHARS', '35', '_MD_AM_PRECHARS_DESC', 'textbox', 'int', " . $p++ . ")"

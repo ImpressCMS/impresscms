@@ -6,7 +6,6 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		4.00
- * @version		$Id: tinymce.php 11324 2011-08-22 02:41:00Z skenow $
  * @package		xoopseditor
  */
 class TinyMCE {
@@ -19,7 +18,7 @@ class TinyMCE {
 	 * PHP 5 Constructor
 	 *
 	 * @param    string    $config   The configuration
-	 **/
+	 */
 	function __construct($config) {
 		$this->setConfig($config);
 		$this->rootpath = $this->config["rootpath"] . "/jscripts";
@@ -30,7 +29,7 @@ class TinyMCE {
 	 *
 	 * @param    array     $config     The configuration
 	 * @return   object    $instance   The instance of tinyMCE object
-	 **/
+	 */
 	function &instance($config) {
 		static $instance;
 		if (!isset($instance)) {
@@ -47,7 +46,7 @@ class TinyMCE {
 	 *
 	 * @param    string  $element    The configuration element
 	 * @return   array   $elements   The array of configuration elements
-	 **/
+	 */
 	function getElements($element = null) {
 		static $elements = array();
 		if (!empty($element)) {
@@ -62,7 +61,7 @@ class TinyMCE {
 	 *
 	 * @param    string  $element    The configuration element
 	 * @return   array   $elements   The array of configuration elements
-	 **/
+	 */
 	function setConfig($config) {
 		$config["elements"] = implode(",", $this->getElements($config["elements"]));
 		foreach ($config as $key => $val) {
@@ -73,7 +72,7 @@ class TinyMCE {
 	/**
 	 * Initializes the tinyMCE
 	 * @return   true
-	 **/
+	 */
 	function init() {
 		global $icmsConfigMultilang, $icmsConfigPersona;
 		$configured = array();
@@ -194,7 +193,7 @@ class TinyMCE {
 	/**
 	 * Renders the tinyMCE
 	 * @return   string  $ret      The rendered HTML string
-	 **/
+	 */
 	function render() {
 		static $rendered;
 		if ($rendered) return null;
@@ -210,7 +209,7 @@ class TinyMCE {
 			$callback = "";
 		}
 
-		$ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tiny_mce.js"></script>';
+		$ret = '<script language="javascript" type="text/javascript" src="' . ICMS_URL . $this->rootpath . '/tiny_mce.js"></script>';
 		$ret .= '
             <script language="javascript" type="text/javascript">
                 tinyMCE.init({

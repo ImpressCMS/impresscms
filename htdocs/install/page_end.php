@@ -13,18 +13,17 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @version		$Id: page_end.php 12389 2014-01-17 16:58:21Z skenow $
  */
 /**
  *
  */
 require_once 'common.inc.php';
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
-include_once "../mainfile.php";
-$success = isset($_GET['success'])?trim($_GET['success']):false;
+include_once ICMS_ROOT_PATH  . DIRECTORY_SEPARATOR . "mainfile.php";
+$success = isset($_REQUEST['success'])?trim($_REQUEST['success']):false;
 if ($success) {
-	if (is_dir(ICMS_ROOT_PATH.'/install')) {
-		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH.'/install', true);
+	if (is_dir(__DIR__)) {
+		icms_core_Filesystem::deleteRecursive(__DIR__, true);
 		header('Location: '.ICMS_URL.'/');
 	}
 	$_SESSION = array();
@@ -37,12 +36,10 @@ include "./language/$wizard->language/finish.php";
 
 // destroy all the installation session
 unset($_SESSION);
-if(isset($_COOKIE[session_name()]))
-{
+if(isset($_COOKIE[session_name()])) {
 	setcookie(session_name(), '', time()-60);
 }
 session_unset();
 session_destroy();
 
 include 'install_tpl.php';
-?>

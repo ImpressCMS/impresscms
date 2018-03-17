@@ -13,7 +13,6 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @version		$Id: page_modcheck.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 /**
@@ -71,12 +70,11 @@ ob_start();
 	src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php echo _PHP_VERSION; ?>:&nbsp; <?php
-if (version_compare( phpversion(), '5.2', '>=')) {
+if (version_compare( phpversion(), '5.6', '>=')) {
 	echo xoDiag( 1, phpversion() );
-} elseif (version_compare( phpversion(), '5.1', '>=')) {
-	echo xoDiag( 0, phpversion() );
 } else {
 	echo xoDiag( -1, phpversion() );
+	$php_version_error = true;
 }
 ?> <img
 	src="img/<?php echo (isset($php_version_error) ? "no" : "yes") ?>.png"
@@ -143,7 +141,14 @@ if (empty($ext)) {
     	<tr><th>Path</th><th>Status</th></tr>
     </thead>
 	<?php
-		$paths = array("uploads/", "cache/", "templates_c/", "mainfile.php");
+		$paths = array(
+			"uploads/",
+			"../storage/htmlpurifier",
+			"../storage/log",
+			"../storage/cache",
+			"../storage/templates_c",
+			"../.env"
+		);
 		foreach ( $paths as $path) {
 	?>
 	<tr>

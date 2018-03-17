@@ -1,153 +1,61 @@
 filter:
-    excluded_paths:
-        - 'extras/libraries/*'
-        - 'htdocs/libraries/phpopenid/Auth/*'
-        - 'extras/plugins/*'
-        - 'htdocs/libraries/geshi/*'
-        - 'htdocs/libraries/smarty/internals/*'
-        - 'htdocs/editors/FCKeditor/*'
-        - 'htdocs/install/modules/protector/trust_path/modules/protector/filters_byconfig/*'
-        - 'htdocs/install/modules/protector/root/*'
-        - 'htdocs/libraries/image-editor/*'
-        - 'htdocs/libraries/smarty/icms_plugins/*'
-        - 'htdocs/plugins/sourceeditors/*'
-        - 'htdocs/plugins/csstidy/*'
-        - 'upgrade/upd-icms-1.0-to-1.1/*'
-        - 'htdocs/libraries/phpopenid/admin/*'
-        - 'htdocs/install/modules/protector/trust_path/modules/protector/class/*'
-        - 'htdocs/plugins/rating/*'
-        - 'htdocs/plugins/autotasks/*'
-        - 'htdocs/editors/dhtmltextarea/*'
-        - 'htdocs/install/modules/protector/trust_path/modules/protector/language/*'
-        - 'htdocs/libraries/wideimage/lib/vendor/de77/*'
-        - 'extras/ssl/*'
-        - 'upgrade/language/*'
-        - upgrade/index.php
-        - upgrade/login.php
-        - htdocs/mainfile.php
-        - 'htdocs/plugins/waiting/*'
-        - upgrade/upgrade_tpl.php
-        - 'htdocs/libraries/xml/rss/*'
-        - 'htdocs/libraries/recaptcha/*'
-        - 'upgrade/cnt-2.2.x-to-2.0.x/*'
-        - 'upgrade/cnt-2.3.x-to-2.0.x/*'
-        - 'upgrade/upd-2.0.13-to-2.0.14/*'
-        - 'upgrade/upd-2.0.15-to-2.0.16/*'
-        - 'upgrade/upd-2.0.16-to-2.0.17/*'
-        - 'upgrade/upd-2.0.17-to-2.0.18/*'
-        - htdocs/install/page_start.php
-        - 'htdocs/libraries/icms/ipf/seo/*'
-        - 'htdocs/libraries/simplepie/idn/*'
-        - 'htdocs/editors/tinymce/language/*'
-        - htdocs/install/page_no_php5.php
-        - htdocs/install/page_siteinit.php
-        - htdocs/language/english/core.php
-        - htdocs/language/english/mail.php
-        - htdocs/libraries/tcpdf/tcpdf.php
-        - htdocs/install/page_safe_mode.php
-        - htdocs/libraries/tcpdf/pdf417.php
-        - htdocs/libraries/tcpdf/qrcode.php
-        - htdocs/editors/tinymce/tinymce.php
-        - htdocs/libraries/xml/saxparser.php
-        - htdocs/libraries/tcpdf/barcodes.php
-        - 'upgrade/upd-2.0.18-to-impresscms-1.0/*'
-        - htdocs/libraries/icms/db/IUtility.php
-        - htdocs/libraries/tcpdf/2dbarcodes.php
-        - htdocs/libraries/tcpdf/datamatrix.php
-        - htdocs/libraries/tcpdf/htmlcolors.php
-        - htdocs/libraries/tcpdf/spotcolors.php
-        - htdocs/libraries/xml/rpc/xoopsapi.php
-        - htdocs/libraries/tcpdf/fonts/times.php
-        - htdocs/libraries/xml/rpc/xmlrpcapi.php
+    paths:
+        - modules/
+        - include/
+        - plugins/
+        - libraries/icms/
+        - libraries/icms.php
+        - htdocs/install/
+        - mainfile.php
+        - extras/plugins/
+        - libraries/phpopenid
+        - libraries/recaptcha/
+        - admin.php
+        - cmd.php
+        - content.php
+        - edituser.php
+        - htdocs/error.php
+        - finish_auth.php
+        - footer.php
+        - header.php
+        - image.php
+        - htdocs/index.php
+        - invite.php
+        - lostpass.php
+        - mainfile.php
+        - misc.php
+        - notifications.php
+        - pmlite.php
+        - privpolicy.php
+        - readpmsg.php
+        - register.php
+        - resetpass.php
+        - search.php
+        - session_confirm.php
+        - suggest.php
+        - try_auth.php
+        - user.php
+        - userinfo.php
+        - viewpmsg.php
     dependency_paths:
-        - 'extras/libraries/*'
-        - 'htdocs/libraries/phpopenid/Auth/*'
-        - 'extras/plugins/*'
-        - 'htdocs/libraries/geshi/*'
-        - 'htdocs/libraries/smarty/internals/*'
-        - 'htdocs/editors/FCKeditor/*'
-        - 'htdocs/install/modules/protector/trust_path/modules/protector/filters_byconfig/*'
-        - 'htdocs/install/modules/protector/root/*'
-        - 'htdocs/libraries/image-editor/*'
-        - 'htdocs/libraries/smarty/icms_plugins/*'
-        - 'htdocs/plugins/sourceeditors/*'
-        - 'htdocs/plugins/csstidy/*'
-        - 'upgrade/upd-icms-1.0-to-1.1/*'
-        - 'htdocs/libraries/phpopenid/admin/*'
-        - 'htdocs/install/modules/protector/trust_path/modules/protector/class/*'
-        - 'htdocs/plugins/rating/*'
-        - 'htdocs/plugins/autotasks/*'
-        - 'htdocs/editors/dhtmltextarea/*'
-        - 'htdocs/install/modules/protector/trust_path/modules/protector/language/*'
-        - 'htdocs/libraries/icms/sys/*'
-        - 'htdocs/libraries/icms/db/mysql/*'
-        - 'htdocs/libraries/wideimage/lib/vendor/de77/*'
-        - 'extras/ssl/*'
-        - 'upgrade/language/*'
-        - upgrade/index.php
-        - upgrade/login.php
-        - htdocs/mainfile.php
-        - 'htdocs/plugins/waiting/*'
-        - upgrade/upgrade_tpl.php
-        - 'htdocs/libraries/xml/rss/*'
-        - htdocs/include/jalali.php
-        - htdocs/libraries/icms.php
-        - upgrade/check_version.php
-        - 'htdocs/libraries/recaptcha/*'
-        - 'upgrade/cnt-2.2.x-to-2.0.x/*'
-        - 'upgrade/cnt-2.3.x-to-2.0.x/*'
-        - 'upgrade/upd-2.0.13-to-2.0.14/*'
-        - 'upgrade/upd-2.0.15-to-2.0.16/*'
-        - 'upgrade/upd-2.0.16-to-2.0.17/*'
-        - 'upgrade/upd-2.0.17-to-2.0.18/*'
-        - htdocs/install/page_start.php
-        - 'htdocs/libraries/icms/ipf/seo/*'
-        - htdocs/include/rating.rate.php
-        - 'htdocs/libraries/simplepie/idn/*'
-        - 'htdocs/editors/tinymce/language/*'
-        - htdocs/install/page_no_php5.php
-        - htdocs/libraries/icms/Event.php
-        - htdocs/install/page_siteinit.php
-        - htdocs/language/english/core.php
-        - htdocs/language/english/mail.php
-        - htdocs/libraries/tcpdf/tcpdf.php
-        - htdocs/install/page_safe_mode.php
-        - htdocs/language/english/error.php
-        - htdocs/language/english/theme.php
-        - 'htdocs/libraries/paginationstyles/*'
-        - htdocs/libraries/tcpdf/pdf417.php
-        - htdocs/libraries/tcpdf/qrcode.php
-        - htdocs/editors/tinymce/tinymce.php
-        - 'htdocs/libraries/icms/ipf/registry/*'
-        - htdocs/libraries/icms/ipf/Tree.php
-        - htdocs/libraries/xml/saxparser.php
-        - htdocs/language/english/captcha.php
-        - htdocs/libraries/tcpdf/barcodes.php
-        - htdocs/language/english/uploader.php
-        - 'htdocs/modules/system/admin/mimetype/*'
-        - htdocs/modules/system/admin/tags.php
-        - htdocs/modules/system/class/Tags.php
-        - 'upgrade/upd-2.0.18-to-impresscms-1.0/*'
-        - htdocs/libraries/icms/db/IUtility.php
-        - htdocs/libraries/tcpdf/2dbarcodes.php
-        - htdocs/libraries/tcpdf/datamatrix.php
-        - htdocs/libraries/tcpdf/htmlcolors.php
-        - htdocs/libraries/tcpdf/spotcolors.php
-        - htdocs/libraries/xml/rpc/xoopsapi.php
-        - htdocs/plugins/preloads/bootstrap.php
-        - htdocs/plugins/preloads/protector.php
-        - htdocs/language/english/privpolicy.php
-        - 'htdocs/libraries/icms/auth/method/ldap/*'
-        - htdocs/libraries/tcpdf/fonts/times.php
-        - htdocs/libraries/xml/rpc/xmlrpcapi.php
+        - libraries/smarty/
+        - libraries/phpopenid/Auth/
+        - libraries/geshi/
+        - plugins/csstidy/
+        - libraries/phpopenid/admin/
+        - libraries/wideimage/
+        - libraries/xml/rss/
+        - libraries/recaptcha/
+        - libraries/paginationstyles/
+        - libraries/xml/
 checks:
     php:
         duplication: true
         unused_methods: false
-        unused_parameters: false
+        unused_parameters: true
         argument_type_checks: false
         verify_property_names: false
-        method_calls_on_non_object: false
+        method_calls_on_non_object: true
         fix_doc_comments: false
         instanceof_class_exists: false
         catch_class_exists: false
@@ -195,3 +103,9 @@ coding_style:
                 general: lower
             constants:
                 true_false_null: lower
+build:
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run

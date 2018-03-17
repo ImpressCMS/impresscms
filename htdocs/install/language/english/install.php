@@ -6,7 +6,6 @@
  * @author       Skalpa Keo <skalpa@xoops.org>
  * @author       Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
  * @since        1.0
- * @version		$Id: install.php 12168 2013-05-22 13:25:59Z skenow $
  * @package 		installer
  */
 
@@ -73,7 +72,6 @@ define( "SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mod
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55
 define( "XOOPS_ROOT_PATH_HELP", "This is the physical path of the ImpressCMS documents folder, the very web root of your ImpressCMS application" ); // L59
-define( "_INSTALL_TRUST_PATH_HELP", "This is the physical location of your ImpressCMS trust path. The trust path is a folder where ImpressCMS and its modules will store some sensible code and information for more security. It is recommended that this folder be outside of the web root, making it not accessible by a browser. If the folder does not exist, ImpressCMS will try and create it. If this is not possible, you will need to create it.<br /><br /><a target='_blank' href='http://wiki.impresscms.org/index.php?title=Trust_Path'>Click here</a> to learn more about the Trust path." ); // L59
 
 define( "XOOPS_URL_LABEL", "Website location (URL)" ); // L56
 define( "XOOPS_URL_HELP", "Main URL that will be used to access your ImpressCMS installation" ); // L58
@@ -124,7 +122,7 @@ define( "ALL_PERM_OK", "All Permissions are correct." );
 define( "READY_CREATE_TABLES", "No ImpressCMS tables were detected.<br />The installer is now ready to create the ImpressCMS system tables.<br />Press <em>next</em> to proceed." );
 define( "XOOPS_TABLES_FOUND", "The ImpressCMS system tables already exists in your database.<br />Press <em>next</em> to go to the next step." ); // L131
 define( "READY_INSERT_DATA", "The installer is now ready to insert initial data into your database." );
-define( "READY_SAVE_MAINFILE", "The installer is now ready to save the specified settings to <em>mainfile.php</em>.<br />Press <em>next</em> to proceed." );
+define( "READY_SAVE_MAINFILE", "The installer is now ready to save the specified settings to <em>.env</em>.<br />Press <em>next</em> to proceed." );
 define( "DATA_ALREADY_INSERTED", "ImpressCMS data is stored in your database already. No further data will be stored by this action.<br />Press <em>next</em> to go to the next step." );
 
 // %s is database name
@@ -149,13 +147,7 @@ define( "ERR_NEED_WRITE_ACCESS", "The server must be given write access to the f
 define( "ERR_NO_DATABASE", "Could not create database. Contact the server administrator for details." ); // L31
 define( "ERR_NO_DBCONNECTION", "Could not connect to the database server." ); // L106
 define( "ERR_WRITING_CONSTANT", "Failed writing constant %s." ); // L122
-
-define( "ERR_COPY_MAINFILE", "Could not copy the distribution file to mainfile.php" );
-define( "ERR_WRITE_MAINFILE", "Could not write into mainfile.php. Please check the file permission and try again.");
-define( "ERR_READ_MAINFILE", "Could not open mainfile.php for reading" );
-
-define( "ERR_WRITE_SDATA", "Could not write into sdata.php. Please check the file permission and try again.");
-define( "ERR_READ_SDATA", "Could not open sdata.php for reading" );
+define( 'ERR_WRITE_ENV_DATA', 'Error write .env data');
 define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
 define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
 define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
@@ -176,26 +168,15 @@ define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
 
 define("_INSTALL_MOD_INSTALL_SUCCESSFULLY", "Module %s has been installed succesfully.");
 define("_INSTALL_MOD_INSTALL_FAILED", "The wizard could not install module %s.");
-define("_INSTALL_NO_PLUS_MOD", "No modules were selected for installation. Please continue the installation by clicking next.");
 define("_INSTALL_INSTALLING", "Installing %s module");
 
-define("_INSTALL_TRUST_PATH", "Trust path");
-define("_INSTALL_TRUST_PATH_LABEL", "ImpressCMS physical trust path");
 define("_INSTALL_WEB_LOCATIONS", "Web location");
 define("_INSTALL_WEB_LOCATIONS_LABEL", "Web location");
-
-define("_INSTALL_TRUST_PATH_FOUND", "Trust path found.");
-define("_INSTALL_ERR_NO_TRUST_PATH_FOUND", "Trust path was not found.");
 
 define("_INSTALL_COULD_NOT_INSERT", "The wizard was unable to install module %s the database.");
 define("_INSTALL_CHARSET","utf-8");
 
 define("_INSTALL_PHYSICAL_PATH","Physical path");
-
-define("TRUST_PATH_VALIDATE","A suggested name for the Trust path has been created above for you. If you wish to use an alternative name, please replace the above location with your choice of name.<br /><br />When done, please click on the Create Trust Path button.");
-define("TRUST_PATH_NEED_CREATED_MANUALLY","It was not possible to create the trust path. Please create it manually and click on the following Refresh button.");
-define("BUTTON_CREATE_TUST_PATH","Create Trust Path");
-define("TRUST_PATH_SUCCESSFULLY_CREATED", "The trust path was successfully created.");
 
 // welcome custom blocks
 define("WELCOME_WEBMASTER","Welcome Webmaster !");
