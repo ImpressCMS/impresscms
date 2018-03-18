@@ -28,7 +28,6 @@
 	ErrorDocument 428 error.php?e=428
 	ErrorDocument 429 error.php?e=429
 	ErrorDocument 431 error.php?e=431
-	ErrorDocument 451 error.php?e=451
 	ErrorDocument 500 error.php?e=500
 	ErrorDocument 501 error.php?e=501
 	ErrorDocument 502 error.php?e=502
