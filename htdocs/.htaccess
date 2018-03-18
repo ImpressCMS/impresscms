@@ -1,10 +1,9 @@
 # Rewrite module exists
 <IfModule mod_rewrite.c>
 	RewriteEngine on
-
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.*)$ /index.php [NC,L,QSA]
+	RewriteRule . index.php [L]
 
 	# if you install in a subdirectory, be sure to include the entire path, relative to DocumentRoot
 	# for example, ErrorDocument 404 /icms/error.php?e=404
@@ -34,12 +33,6 @@
 	ErrorDocument 503 /error.php?e=503
 	ErrorDocument 504 /error.php?e=504
 	ErrorDocument 505 /error.php?e=505
-
-	RewriteCond %{QUERY_STRING} base64_encode[^(]*\([^)]*\) [OR]
-	RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
-	RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
-	RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
-	RewriteRule .* index.php [F,L]
 </IfModule>
 
 # Rewrite module does not exists
