@@ -17,9 +17,11 @@
 /**
  *
  */
+define('INSTALLER_INCLUDE_MAIN', true);
 require_once 'common.inc.php';
+
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
-include_once ICMS_ROOT_PATH  . DIRECTORY_SEPARATOR . "mainfile.php";
+
 $success = isset($_REQUEST['success'])?trim($_REQUEST['success']):false;
 if ($success) {
 	if (is_dir(__DIR__)) {
