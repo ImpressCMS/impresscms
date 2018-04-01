@@ -45,8 +45,9 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . "version.php";
 if (!isset($xoopsOption)) $xoopsOption = array();
 
 // -- Initialize kernel and launch bootstrap
-icms::setup();
-icms::boot();
+$icms = new icms();
+$icms->setup();
+$icms->boot();
 
 // -- Easiest ML by Gijoe (no longer needed here)
 
@@ -115,7 +116,7 @@ if ($icmsConfig['closesite'] == 1) {
 	include ICMS_INCLUDE_PATH . '/site-closed.php';
 }
 
-icms::launchModule();
+$icms->get('module');
 
 if ($icmsConfigPersona['multi_login']) {
 	if (is_object(icms::$user)) {

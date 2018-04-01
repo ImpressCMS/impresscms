@@ -11,6 +11,8 @@
  * @internal	for convenience, as we are not targetting php 5.3+ yet
  */
 
+use \League\Container\Container;
+
 /**
  * ICMS Kernel / Services manager
  *
@@ -20,7 +22,8 @@
  * @package	ImpressCMS/core
  * @since 	1.3
  */
-final class icms {
+final class icms extends Container
+{
 
         /**
         * Current response
@@ -84,32 +87,16 @@ final class icms {
 	static public $module;
 
 	/**
-	 * Registered services definition
-	 * @var array
-	 */
-	static public $services = array(
-		'boot' => array(
-			'security'	=> array(array('icms_core_Security', 'service'), array()),
-			'logger'	=> array(array('icms_core_Logger', 'instance'), array()),
-			'db'		=> array(array('icms_db_Factory', 'pdoInstance'), array()),
-			'xoopsDB'	=> array(array('icms_db_Factory', 'instance'), array()),
-			'config'	=> array(array('icms_config_Handler', 'service'), array()),
-			'session'	=> array(array('icms_core_Session', 'service'), array()),
-		),
-		'optional' => array(),
-	);
-
-	/**
 	 * ImpressCMS paths locations
 	 *
 	 * @var array
 	 */
-	static public $paths = array(
+	public $paths = array(
 		'www' => array(), 'modules' => array(), 'themes' => array(),
 	);
 
 	/** @var array */
-	static public $urls = FALSE;
+	public $urls = FALSE;
 
 	/**
 	 * array of handlers
@@ -120,62 +107,33 @@ final class icms {
 	/**
 	 * Initialize ImpressCMS before bootstrap
 	 */
-	static public function setup() {
-		self::$paths['www']		= array(ICMS_ROOT_PATH, ICMS_URL);
-		self::$paths['modules']	= array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
-		self::$paths['themes']	= array(ICMS_THEME_PATH, ICMS_THEME_URL);
+	public function setup()
+	{
+		$this->paths['www'] = array(ICMS_ROOT_PATH, ICMS_URL);
+		$this->paths['modules'] = array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
+		$this->paths['themes'] = array(ICMS_THEME_PATH, ICMS_THEME_URL);
 		// Initialize the autoloader
 		require_once __DIR__ . '/icms/Autoloader.php';
 		icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
-		self::buildRelevantUrls();
+		$this->buildRelevantUrls();
 	}
 
 	/**
 	 * Launch bootstrap and instanciate global services
 	 * @return void
 	 */
-	static public function boot() {
-		// We just hardcode the preload first, as we need to trigger an event
-		self::$preload = icms_preload_Handler::getInstance();
-		self::$preload->triggerEvent('startCoreBoot');
-
-		foreach (self::$services['boot'] as $name => $definition) {
-			list($factory, $args) = $definition;
-			self::loadService($name, $factory, $args);
-		}
+	public function boot()
+	{
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\PreloadServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\LoggerServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\DatabaseServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\SecurityServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\SessionServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\ConfigServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\ModuleServiceProvider::class);
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
-	}
-
-	/**
-	 * Instanciate the specified service
-	 * @param string $name
-	 * @param mixed $factory
-	 * @param array $args
-	 * @return object
-	 */
-	static public function loadService($name, $factory, $args = array()) {
-			self::$$name = self::create($factory, $args);
-			icms_Event::trigger('icms', 'loadService', null, array('name' => $name, 'service' => self::$$name));
-			icms_Event::trigger('icms', 'loadService-' . $name, null, array('name' => $name, 'service' => self::$$name));
-	}
-
-	/**
-	 * Register module class repositories and load module service
-	 *
-	 * The system module is not excluded from getObjects to make sure it's already cached for later
-	 * use throughout the system. This function is one of the first functions called in the boot
-	 * process so it's the best place to cache the modules.
-	 * IPF based modules are definied in their own namespace.
-	 */
-	static public function launchModule() {
-		$module_handler = icms::handler("icms_module");
-		$modules = $module_handler->getObjects();
-		foreach ($modules as $module) $module->registerClassPath(TRUE);
-
-		$isAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
-		self::loadService('module', array('icms_module_Handler', 'service'), array($isAdmin));
 	}
 
 	/**
@@ -219,17 +177,18 @@ final class icms {
 	 * @param 	boolean	$virtual
 	 * @return 	string
 	 */
-	static public function path($url, $virtual = FALSE) {
+	public function path($url, $virtual = FALSE)
+	{
 		$path = '';
 		@list($root, $path) = explode('/', $url, 2);
-		if (!isset(self::$paths[$root])) {
+		if (!isset($this->paths[$root])) {
 			list($root, $path) = array('www', $url);
 		}
 		if (!$virtual) {
 			// Returns a physical path
-			return self::$paths[$root][0] . '/' . $path;
+			return $this->paths[$root][0] . '/' . $path;
 		}
-		return !isset(self::$paths[$root][1]) ? '' : (self::$paths[$root][1] . '/' . $path );
+		return !isset($this->paths[$root][1]) ? '' : ($this->paths[$root][1] . '/' . $path);
 	}
 
 	/**
@@ -308,8 +267,9 @@ final class icms {
 	 * Build URLs for global use throughout the application
 	 * @return 	array
 	 */
-	static protected function buildRelevantUrls() {
-		if (isset($_SERVER['HTTP_HOST']) && !self::$urls) {
+	protected function buildRelevantUrls()
+	{
+		if (isset($_SERVER['HTTP_HOST']) && !$this->urls) {
 			$http = strpos(ICMS_URL, "https://") === FALSE
 				? "http://"
 				: "https://";
@@ -331,29 +291,20 @@ final class icms {
 				$querystring = '?' . $querystring;
 			}
 			$currenturl = $http . $httphost . $phpself . $querystring;
-			self::$urls = array();
-			self::$urls['http'] = $http;
-			self::$urls['httphost'] = $httphost;
-			self::$urls['phpself'] = $phpself;
-			self::$urls['querystring'] = $querystring;
-			self::$urls['full_phpself'] = $http . $httphost . $phpself;
-			self::$urls['full'] = $currenturl;
+			$this->urls = array();
+			$this->urls['http'] = $http;
+			$this->urls['httphost'] = $httphost;
+			$this->urls['phpself'] = $phpself;
+			$this->urls['querystring'] = $querystring;
+			$this->urls['full_phpself'] = $http . $httphost . $phpself;
+			$this->urls['full'] = $currenturl;
 
 			$previouspage = '';
 			if (array_key_exists('HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER'])) {
-				self::$urls['previouspage'] = $clean_SERVER['HTTP_REFERER'];
+				$this->urls['previouspage'] = $clean_SERVER['HTTP_REFERER'];
 			}
-			//self::$urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
+			//$this->urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
 		}
-		return self::$urls;
+		return $this->urls;
 	}
-
-        /**
-        * Constructor is private so nobody can create an instance of this class
-         *
-        * Use all static methods instead!
-        */
-        private function __construct() {
-            // ^_^
-        }
 }
