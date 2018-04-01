@@ -66,6 +66,11 @@ final class icms extends Container
 	}
 
 	/**
+	 * Some vars for compatibility
+	 */
+	public static $db, $xoopsDB, $logger, $preload, $config, $security, $session;
+
+	/**
 	 * Launch bootstrap and instanciate global services
 	 * @return void
 	 */
@@ -78,6 +83,14 @@ final class icms extends Container
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\SessionServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\ConfigServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\ModuleServiceProvider::class);
+		// register links for compatibility
+		self::$db = $this->get('db');
+		self::$xoopsDB = $this->get('xoopsDB');
+		self::$logger = $this->get('logger');
+		self::$preload = $this->get('preload');
+		self::$config = $this->get('config');
+		self::$security = $this->get('security');
+		self::$session = $this->get('session');
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
 	}
