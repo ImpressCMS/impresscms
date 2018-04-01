@@ -24,13 +24,7 @@ class LoggerServiceProvider extends AbstractServiceProvider
 	public function register()
 	{
 		$this->getContainer()->add('logger', function () {
-			$instance = new icms_core_Logger();
-			// Always catch errors, for security reasons
-			error_reporting(E_ALL);
-			ini_set('display_errors', 1);
-			set_error_handler(array($instance, 'handleError'));
-			set_exception_handler(array($instance, 'handleException'));
-			return $instance;
+			return icms_core_Logger::instance();
 		});
 	}
 
