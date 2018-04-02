@@ -36,9 +36,8 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 	{
 		$this->getContainer()->add('session', function () {
 			global $icmsConfig;
-			$instance = new icms_core_Session(
-				$this->getContainer()->get('xoopsDB')
-			);
+			$db = $this->getContainer()->get('xoopsDB');
+			$instance = new icms_core_Session($db);
 			session_set_save_handler(
 				array($instance, 'open'), array($instance, 'close'), array($instance, 'read'),
 				array($instance, 'write'), array($instance, 'destroy'), array($instance, 'gc')
