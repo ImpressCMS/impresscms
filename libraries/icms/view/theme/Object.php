@@ -171,13 +171,13 @@ class icms_view_theme_Object {
 
 		// this is for backward compatibility only!
 		$this->template->assign(array(
-			'xoops_theme' => $this->template->get_template_vars('icms_theme'),
-			'xoops_imageurl' => $this->template->get_template_vars('icms_imageurl'),
-			'xoops_themecss' => $this->template->get_template_vars('icms_themecss'),
-			'xoops_requesturi' => $this->template->get_template_vars('icms_requesturi'),
-			'xoops_sitename' => $this->template->get_template_vars('icms_sitename'),
-			'xoops_slogan' => $this->template->get_template_vars('icms_slogan'),
-			'xoops_dirname' => $this->template->get_template_vars('icms_dirname')
+			'xoops_theme' => $this->template->getTemplateVars('icms_theme'),
+			'xoops_imageurl' => $this->template->getTemplateVars('icms_imageurl'),
+			'xoops_themecss' => $this->template->getTemplateVars('icms_themecss'),
+			'xoops_requesturi' => $this->template->getTemplateVars('icms_requesturi'),
+			'xoops_sitename' => $this->template->getTemplateVars('icms_sitename'),
+			'xoops_slogan' => $this->template->getTemplateVars('icms_slogan'),
+			'xoops_dirname' => $this->template->getTemplateVars('icms_dirname')
 		));
 		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
@@ -366,7 +366,7 @@ class icms_view_theme_Object {
 		$this->template->assign_by_ref('icms_contents', $this->content);
 
 		$header = empty($xoopsOption['icms_module_header'])
-			? $this->template->get_template_vars('icms_module_header')
+			? $this->template->getTemplateVars('icms_module_header')
 			: $xoopsOption['icms_module_header'];
 
 		$this->template->assign('icms_module_header', $header . "\n" . $this->renderOldMetas(NULL, TRUE));
@@ -377,7 +377,7 @@ class icms_view_theme_Object {
 		}
 
 		$pagetitle = empty($xoopsOption['icms_pagetitle'])
-			? $this->template->get_template_vars('icms_pagetitle')
+			? $this->template->getTemplateVars('icms_pagetitle')
 			: $xoopsOption['icms_pagetitle'];
 
 		$this->template->assign('icms_pagetitle', $pagetitle);

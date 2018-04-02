@@ -94,7 +94,7 @@ function xoops_header($closehead=true) {
             $head .= '</script>';
         }
         if (!empty($head)) {
-            \icms::$response->assign('icms_module_header', \icms::$response->get_template_vars('icms_module_header') . $head);
+			\icms::$response->assign('icms_module_header', \icms::$response->getTemplateVars('icms_module_header') . $head);
         }
         return $buffer;
     });
