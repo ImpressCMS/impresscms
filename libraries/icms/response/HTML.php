@@ -62,7 +62,7 @@ class icms_response_HTML extends icms_response_Text {
         }
 
         if (isset($this->theme->plugins['icms_view_PageBuilder']) && is_object($this->theme->plugins['icms_view_PageBuilder'])) {
-            $this->theme->template->assign_by_ref('xoBlocks', $this->theme->plugins['icms_view_PageBuilder']->blocks);
+			$this->theme->template->assignByRef('xoBlocks', $this->theme->plugins['icms_view_PageBuilder']->blocks);
         }
         $this->updateCacheTime();
 

@@ -362,8 +362,8 @@ class icms_view_theme_Object {
 			$this->content .= ob_get_contents();
 			ob_end_clean();
 		}
-		$this->template->assign_by_ref('xoops_contents', $this->content);
-		$this->template->assign_by_ref('icms_contents', $this->content);
+		$this->template->assignByRef('xoops_contents', $this->content);
+		$this->template->assignByRef('icms_contents', $this->content);
 
 		$header = empty($xoopsOption['icms_module_header'])
 			? $this->template->getTemplateVars('icms_module_header')
