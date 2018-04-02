@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<{$icms_langcode}>">       
+<html lang="<{$icms_langcode}>">
   <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Theme name -->
@@ -15,7 +15,7 @@
 	<meta name="rating" content="<{$icms_meta_rating}>">
 	<meta name="author" content="<{$icms_meta_author}>">
 	<meta name="dcterms.rightsHolder" content="<{$icms_meta_copyright}>">
-	<meta name="generator" content="ImpressCMS">  
+	  <meta name="generator" content="ImpressCMS">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Module Header -->
 	<{$icms_module_header}>
@@ -31,8 +31,8 @@
 	<link rel="icon" type="image/png" href="<{$icms_imageurl}>icon.png">
 	<script src="<{$icms_imageurl}>js/jquery.backTop.min.js"></script>
 	<script src="<{$icms_imageurl}>js/script.js"></script>
-</head>     
-<body> 
+  </head>
+  <body>
 <{if $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>
 <{assign var=right_blocks value='1'}><{/if}>
 <{if $xoBlocks.canvas_left and $right_blocks == "1"}>
@@ -49,12 +49,12 @@
 <{else}>
 <{assign var=columns_layout value='col-md-12 col-lg-12'}>
 <{assign var=block_layout value='col-md-6 col-lg-6'}>
-<{/if}>  
+<{/if}>
 <div class="container-fluid">
 <header class="container-fluid">
 	<div id="container" class="container">
 		<div class="row">
-			<div class="col-xs-10 col-sm-6 col-md-4" role="banner" id="logo">        
+			<div class="col-xs-10 col-sm-6 col-md-4" role="banner" id="logo">
 				<a class="logo" href="<{$icms_url}>" title="<{$icms_sitename}>">
 					<span class="logo_img" id="logo_img">
 						<img src="<{$icms_imageurl}>img/logo.png" class="img-responsive" alt="<{$icms_sitename}>">
@@ -63,17 +63,17 @@
 			</div>
 			<div id="slogan" class="hidden-xs col-xs-12 col-sm-6 col-md-4">
 				<span class="slogan"><{$icms_slogan}></span>
-			</div> 
+			</div>
 			<div class="hidden-print hidden-xs col-md-4" id="header_search">
 				<form action="<{$icms_url}>/search.php" class="form-inline" role="form">
 					<div class="form-group">
 						<input class="input-sm form-control" type="text" placeholder="<{$smarty.const.THEME_SEARCH}>&hellip;" name="query">
 						<input type="hidden" name="action" value="results">
-						<button type="submit" class="btn-sm btn btn-warning"><{$smarty.const.THEME_SEARCH}></button>		 
-					</div> 
+						<button type="submit" class="btn-sm btn btn-warning"><{$smarty.const.THEME_SEARCH}></button>
+					</div>
 				</form>
 			</div>
-			
+
 			<a class="col-xs-2 hidden-md hidden-sm hidden-lg" href="#" id="searchtoggle">
 				<span id="searchtoggle_span" class="pull-right btn btn-default btn-sm glyphicon glyphicon-search"></span>
 			</a>
@@ -82,8 +82,8 @@
 					<div class="input-group pull-right" style="width:100%">
 						<input class="form-control input-sm" type="text" placeholder="<{$smarty.const.THEME_SEARCH}>&hellip;" name="query">
 						<input type="hidden" name="action" value="results">
-						 <span class="input-group-btn"><button type="submit" class="btn-sm btn btn-warning"><{$smarty.const.THEME_SEARCH}></button></span>	 
-					</div> 
+						<span class="input-group-btn"><button type="submit" class="btn-sm btn btn-warning"><{$smarty.const.THEME_SEARCH}></button></span>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -98,7 +98,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-						
+
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
@@ -112,7 +112,7 @@
 							</ul>
 						</li>
 						<li><a href="<{$icms_url}>">Page</a></li>
-					<{if !$icms_isuser}> 
+						<{if !$icms_isuser}>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#"><{$smarty.const.THEME_PSEUDO}><b class="caret"></b></a>
 						<ul class="dropdown-menu add-arrow" style="min-width:220px">
@@ -147,7 +147,14 @@
 							<li><a href="<{$icms_url}>/edituser.php"><span class="glyphicon glyphicon-pencil" style="padding-right:5px;"></span> Edit Profile</a></li>
 							<li><a href="<{$icms_url}>/edituser.php?op=avatarform"><span class="glyphicon glyphicon-camera" style="padding-right:5px;"></span> My Avatar</a></li>
 							<li><a href="<{$icms_url}>/notifications.php"><span class="glyphicon glyphicon-envelope" style="padding-right:5px;"></span> <{$smarty.const.THEME_NOTIFICATION}></a></li>
-							<li><{xoInboxCount assign=pmcount}><{if $pmcount}><a href="<{xoAppUrl viewpmsg.php}>" title="<{$smarty.const.THEME_INBOX}> <{$pmcount}> <{$smarty.const.THEME_NOTREAD}>"><span class="glyphicon glyphicon-comment" style="padding-right:5px;"></span> <{$smarty.const.THEME_INBOX}> <span class="badge badge-info"><{$pmcount}></span></a><{else}><a href="<{xoAppUrl viewpmsg.php}>" title="<{$smarty.const.THEME_INBOX}>"><span class="glyphicon glyphicon-comment" style="padding-right:5px;"></span> <{$smarty.const.THEME_INBOX}></a><{/if}></li>
+							<li><{xoInboxCount assign=pmcount}><{if $pmcount}><a href="<{xoAppUrl 'viewpmsg.php'}>"
+																				 title="<{$smarty.const.THEME_INBOX}> <{$pmcount}> <{$smarty.const.THEME_NOTREAD}>"><span
+								class="glyphicon glyphicon-comment" style="padding-right:5px;"></span>
+								<{$smarty.const.THEME_INBOX}> <span class="badge badge-info"><{$pmcount}></span></a><{else}><a
+								href="<{xoAppUrl 'viewpmsg.php'}>" title="<{$smarty.const.THEME_INBOX}>"><span
+								class="glyphicon glyphicon-comment" style="padding-right:5px;"></span>
+								<{$smarty.const.THEME_INBOX}></a><{/if}>
+							</li>
 							<li class="divider"></li>
 							<li><a href="<{$icms_url}>/user.php?op=logout"><span class="glyphicon glyphicon-off" style="padding-right:5px;"></span> <{$smarty.const.THEME_LOGOUT}></a></li>
 						</ul>
@@ -158,7 +165,7 @@
 			</nav>	</div>
 	</div>
   <!-- End Nav-bar -->
-   
+
 </header>
 	<div class="container-fluid main">
 		<div class="hidden-print preface_wrapper container-fluid<{if $xoBlocks.slider}> slider<{/if}>" id="preface_wrapper">
@@ -179,7 +186,7 @@
 		</div>
 		<div class="content-main container">
 		<div class="row">
-			<div role="main" class="<{if $columns_layout}><{$columns_layout}><{/if}> col-xs-12"> 
+			<div role="main" class="<{if $columns_layout}><{$columns_layout}><{/if}> col-xs-12">
 				<{if $xoBlocks.page_topcenter}>
 					<{foreach item=block from=$xoBlocks.page_topcenter}>
 						<div class="row">
@@ -198,24 +205,25 @@
 					<div class="contnt"><{$block.content}></div></article>
 				</div>
 				<{/foreach}>
-				<{foreach item=block from=$xoBlocks.page_topright}>	             
+				<{foreach item=block from=$xoBlocks.page_topright}>
 					<div class="<{if $columns_layout}><{$block_layout}><{/if}>">
 						<article role="article"><header><h3 class="h3"><{$block.title}></h3></header>
 						<div class="contnt"><{$block.content}></div></article>
-					</div>            
-				<{/foreach}>   
+					</div>
+				<{/foreach}>
 				</div>
 			<{/if}>
 			<{if $icms_contents}>
 				<div class="row" id="icms-content"><div class="col-md-12"><{$icms_contents}></div></div>
-			<{/if}>  
+				<{/if}>
 				<{if $xoBlocks.page_bottomcenter}>
 				<{foreach item=block from=$xoBlocks.page_bottomcenter}>
 					<div class="row">
 						<div class="col-md-12">
-							<article role="article"><header><h2 class="h2"><{$block.title}></h2></header>           
+							<article role="article">
+								<header><h2 class="h2"><{$block.title}></h2></header>
 							<div class="contnt"><{$block.content}></div></article>
-						</div>    
+						</div>
 					</div>
 				<{/foreach}>
 				<{/if}>
@@ -225,7 +233,7 @@
 					<div class="<{if $columns_layout}><{$block_layout}><{/if}>">
 							<article role="article"><header><h3 class="h3"><{$block.title}></h3></header>
 					  <div class="contnt"><{$block.content}></div></article>
-					</div>            
+					</div>
 					<{/foreach}>
 							<{foreach item=block from=$xoBlocks.page_bottomright}>
 					<div class="<{if $columns_layout}><{$block_layout}><{/if}>">
@@ -237,9 +245,10 @@
 		<{/if}>
 		</div>
 		<{if $xoBlocks.canvas_left}>
-			<aside role="complementary" class="hidden-print col-xs-12 col-sm-6 col-md-3 col-lg-3<{if $left_column}> <{$left_column}><{/if}>">  
+			<aside role="complementary"
+				   class="hidden-print col-xs-12 col-sm-6 col-md-3 col-lg-3<{if $left_column}> <{$left_column}><{/if}>">
 				<div class="well">
-				<{foreach item=block from=$xoBlocks.canvas_left}>	             
+					<{foreach item=block from=$xoBlocks.canvas_left}>
 					<article role="article"><div class="infobox">
 						<header><h3 class="h3"><{$block.title}></h3></header>
 						<div class="contnt"><{$block.content}></div>
@@ -248,7 +257,7 @@
 				</div>
 			</aside>
 		<{/if}>
-		<{if $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>	
+			<{if $xoBlocks.canvas_right or $xoBlocks.tabs or $xoBlocks.accordion or $xoBlocks.menu}>
 			<aside role="complementary" class="hidden-print col-xs-12 col-sm-6 col-md-3 col-lg-3">
 				<div class="well_right">
 				<{if $xoBlocks.tabs}>
@@ -269,7 +278,7 @@
 				</div>
 			</aside>
 		<{/if}>
-	  </div>  
+		</div>
 		<{if $xoBlocks.prefoot}>
 			<hr>
 			<div class="row hidden-print">
@@ -287,12 +296,12 @@
 				</div>
 			</div>
 		<{/if}>
-	</div> 
+		</div>
 </div>
 <footer role="contentinfo" class="container-fluid">
 	<div class="container footer_wrapper">
 		<div class="clearfix footer">
-			<div class="row">                  
+			<div class="row">
 				<div class="footer_content">
 					<{$icms_footer}>
 				</div>
