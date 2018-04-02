@@ -34,7 +34,6 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 	 */
 	public function boot()
 	{
-		$this->getContainer()->add('user', null);
 		$this->getContainer()->add('session', function () {
 			global $icmsConfig;
 			$instance = new icms_core_Session(
@@ -53,6 +52,7 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 					// Regenerate a new session id and destroy old session
 					$instance->icms_sessionRegenerateId(true);
 					$_SESSION = array();
+					icms::$user = null;
 				} else {
 					if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
 						// we need to secure cookie when using SSL
@@ -66,7 +66,7 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 					if (!isset($_SESSION['UserLanguage']) || empty($_SESSION['UserLanguage'])) {
 						$_SESSION['UserLanguage'] = $user->getVar('language');
 					}
-					$this->getContainer()->add('user', $user);
+					icms::$user = $user;
 				}
 			}
 			return $instance;

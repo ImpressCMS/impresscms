@@ -70,7 +70,14 @@ final class icms extends Container
 	 *
 	 * @deprecated
 	 */
-	public static $db, $xoopsDB, $logger, $preload, $config, $security, $session, $user;
+	public static $db, $xoopsDB, $logger, $preload, $config, $security, $session;
+
+	/**
+	 * Current logged in user
+	 *
+	 * @var icms_member_user_Object|null
+	 */
+	public static $user;
 
 	/**
 	 * Launch bootstrap and instanciate global services
@@ -93,7 +100,6 @@ final class icms extends Container
 		self::$config = $this->get('config');
 		self::$security = $this->get('security');
 		self::$session = $this->get('session');
-		self::$user = $this->get('user');
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
 	}
