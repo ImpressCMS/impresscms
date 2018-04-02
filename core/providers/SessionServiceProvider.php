@@ -34,6 +34,7 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 	 */
 	public function boot()
 	{
+		$this->getContainer()->add('user', null);
 		$this->getContainer()->add('session', function () {
 			global $icmsConfig;
 			$instance = new icms_core_Session(
