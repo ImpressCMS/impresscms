@@ -35,14 +35,6 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-if (!defined('SMARTY_DIR')) {
-	exit();
-}
-/**
- * Base class: Smarty template engine
- */
-require_once SMARTY_DIR . 'Smarty.class.php';
-
 /**
  * Template engine
  *
@@ -65,19 +57,9 @@ class icms_view_Tpl extends Smarty {
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
 		$this->_compile_id = $this->compile_id;
 		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
-		$this->plugins_dir = array(
-			SMARTY_DIR . 'icms_plugins',
-			SMARTY_DIR . 'plugins',
-		);
+		$this->addPluginsDir(SMARTY_DIR . 'icms_plugins');
 
-		// For backwars compatibility...
-		if (file_exists(ICMS_ROOT_PATH . '/class/smarty/plugins')) {
-			$this->plugins_dir[] = ICMS_ROOT_PATH . '/class/smarty/plugins';
-		}
-
-		if (file_exists(ICMS_ROOT_PATH . '/class/smarty/xoops_plugins')) {
-			$this->plugins_dir[] = ICMS_ROOT_PATH . '/class/smarty/xoops_plugins';
-		}
+		parent::__construct();
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
@@ -88,7 +70,6 @@ class icms_view_Tpl extends Smarty {
 				$this->debugging = true;
 			}
 		}
-		$this->Smarty();
 		if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 			$this->assign('icms_rtl', true);
 		}
@@ -122,9 +103,6 @@ class icms_view_Tpl extends Smarty {
 	 * @return  string  			Rendered output if $display was false
 	 */
 	public function fetchFromData($tplSource, $display = false, $vars = null) {
-		if (!function_exists('smarty_function_eval')) {
-			require_once SMARTY_DIR . '/plugins/function.eval.php';
-		}
 		if (isset($vars)) {
 			$oldVars = $this->_tpl_vars;
 			$this->assign($vars);
@@ -196,11 +174,11 @@ class icms_view_Tpl extends Smarty {
 		$block_arr = $icms_block_handler->getByModule($mid);
 		$count = count($block_arr);
 		if ($count > 0) {
-			$xoopsTpl = new icms_view_Tpl();
-			$xoopsTpl->caching = 2;
+			$tpl = new self();
+			$tpl->caching = 2;
 			for ($i = 0; $i < $count; $i++) {
 				if ($block_arr[$i]->getVar('template') != '') {
-					$xoopsTpl->clear_cache('db:'.$block_arr[$i]->getVar('template'), 'blk_'.$block_arr[$i]->getVar('bid'));
+					$tpl->clear_cache('db:' . $block_arr[$i]->getVar('template'), 'blk_' . $block_arr[$i]->getVar('bid'));
 				}
 			}
 		}
