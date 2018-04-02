@@ -57,7 +57,7 @@ class icms_view_Tpl extends Smarty {
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
 		$this->_compile_id = $this->compile_id;
 		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
-		$this->addPluginsDir(SMARTY_DIR . 'icms_plugins');
+		$this->addPluginsDir(ICMS_PLUGINS_PATH . DIRECTORY_SEPARATOR . 'smarty');
 
 		parent::__construct();
 
