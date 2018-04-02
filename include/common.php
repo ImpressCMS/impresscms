@@ -116,7 +116,7 @@ if ($icmsConfig['closesite'] == 1) {
 	include ICMS_INCLUDE_PATH . '/site-closed.php';
 }
 
-$icms->get('module');
+icms::$module = $icms->get('module');
 
 if ($icmsConfigPersona['multi_login']) {
 	if (is_object(icms::$user)) {

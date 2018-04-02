@@ -70,7 +70,7 @@ final class icms extends Container
 	 *
 	 * @deprecated
 	 */
-	public static $db, $xoopsDB, $logger, $preload, $config, $security, $session;
+	public static $db, $xoopsDB, $logger, $preload, $config, $security, $session, $module;
 
 	/**
 	 * Current logged in user
