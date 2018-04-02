@@ -147,7 +147,7 @@ class icms_view_theme_Object {
 
 		$this->template = new icms_view_Tpl();
 		$this->template->currentTheme =& $this;
-		$this->template->assign_by_ref('xoTheme', $this);
+		$this->template->assignByRef('xoTheme', $this);
 
 		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule, $icmsConfigMultilang;
 		$this->template->assign(
@@ -368,7 +368,7 @@ class icms_view_theme_Object {
 		$header = empty($xoopsOption['icms_module_header'])
 			? $this->template->get_template_vars('icms_module_header')
 			: $xoopsOption['icms_module_header'];
-		
+
 		$this->template->assign('icms_module_header', $header . "\n" . $this->renderOldMetas(NULL, TRUE));
 
 		/* create template vars for the new meta zones */
@@ -379,7 +379,7 @@ class icms_view_theme_Object {
 		$pagetitle = empty($xoopsOption['icms_pagetitle'])
 			? $this->template->get_template_vars('icms_pagetitle')
 			: $xoopsOption['icms_pagetitle'];
-	
+
 		$this->template->assign('icms_pagetitle', $pagetitle);
 
 		// Do not cache the main (theme.html) template output
