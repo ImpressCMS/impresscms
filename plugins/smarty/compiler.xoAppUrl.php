@@ -67,7 +67,7 @@ function smarty_compiler_xoAppUrl($args, &$compiler)
 			$url = $xoops->buildUrl( $url, $params );
 		}
 		$url = $xoops->path( $url, true );
-		return "echo '" . addslashes( htmlspecialchars( $url ) ) . "';";
+		return htmlspecialchars($url);
 	}
 	// Dynamic URL generation
 	if ( $url == '.' ) {
@@ -82,7 +82,7 @@ function smarty_compiler_xoAppUrl($args, &$compiler)
 		}
 		$str .= ") )";
 	}
-	return "echo htmlspecialchars( $str );";
+	return "<?php echo htmlspecialchars( $str ); ?" . ">";
 }
 
 ?>

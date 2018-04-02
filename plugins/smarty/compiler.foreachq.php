@@ -39,63 +39,11 @@
  *   {$elt}
  * {/foreach}
  * </code>
+ *
+ * @deprecated
  */
-function smarty_compiler_foreachq($attrs, &$comp)
+class Smarty_Compiler_Foreachq extends Smarty_Internal_Compile_Foreach
 {
-
-	$comp->_push_tag('foreach');
-
-    $arg_list = array();
-
-    if (empty($attrs['from'])) {
-        return $comp->_syntax_error("foreachq: missing 'from' attribute", E_USER_ERROR, __FILE__, __LINE__);
-    }
-    $from = $attrs['from'];
-
-    if (empty($attrs['item'])) {
-        return $comp->_syntax_error("foreachq: missing 'item' attribute", E_USER_ERROR, __FILE__, __LINE__);
-    }
-    $item = $comp->_dequote($attrs['item']);
-    if (!preg_match('~^\w+$~', $item)) {
-        return $comp->_syntax_error("'foreachq: item' must be a variable name (literal string)", E_USER_ERROR, __FILE__, __LINE__);
-    }
-
-    if (isset($attrs['key'])) {
-        $key  = $comp->_dequote($attrs['key']);
-        if (!preg_match('~^\w+$~', $key)) {
-            return $comp->_syntax_error("foreachq: 'key' must to be a variable name (literal string)", E_USER_ERROR, __FILE__, __LINE__);
-        }
-        $key_part = "\$this->_tpl_vars['$key'] => ";
-    } else {
-        $key = null;
-        $key_part = '';
-    }
-
-    if (isset($attrs['name'])) {
-        $name = $attrs['name'];
-    } else {
-        $name = null;
-    }
-
-    $output = '';
-    //$output .= "\$_from = $from; if (!is_array(\$_from) && !is_object(\$_from)) { settype(\$_from, 'array'); }";
-    if (isset($name)) {
-        $foreach_props = "\$this->_foreach[$name]";
-        $output .= "{$foreach_props} = array('total' => count($from), 'iteration' => 0);\n";
-        //$output .= "{$foreach_props} = array('total' => count(\$_from), 'iteration' => 0);\n";
-        $output .= "if ({$foreach_props}['total'] > 0):\n";
-        $output .= "    foreach ($from as $key_part\$this->_tpl_vars['$item']):\n";
-        //$output .= "    foreach (\$_from as $key_part\$this->_tpl_vars['$item']):\n";
-        $output .= "        {$foreach_props}['iteration']++;\n";
-    } else {
-        $output .= "if (count($from)):\n";
-        $output .= "    foreach ($from as $key_part\$this->_tpl_vars['$item']):\n";
-        //$output .= "if (count(\$_from)):\n";
-        //$output .= "    foreach (\$_from as $key_part\$this->_tpl_vars['$item']):\n";
-    }
-    //$output .= '';
-
-    return $output;
 
 }
 
