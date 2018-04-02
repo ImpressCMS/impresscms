@@ -20,8 +20,7 @@ class OnlineHandlerTest extends \PHPUnit_Framework_TestCase {
      * Checks if all required methods are available
      */
     public function testMethodsAvailability() {
-		$db = null;
-		$mock = $this->getMockForAbstractClass('icms_core_OnlineHandler', [$db]);
+		$mock = $this->createMock('icms_core_OnlineHandler');
          foreach ([ 'write', 'destroy', 'gc', 'getAll', 'getCount' ] as $method) {
              $this->assertTrue(method_exists($mock, $method), $method . ' doesn\'t exists for icms_core_OnlineHandler');
          }
