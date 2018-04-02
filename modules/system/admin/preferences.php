@@ -553,6 +553,7 @@ switch ($op) {
 		$encryption_updated = FALSE;
 		$purifier_style_updated = FALSE;
 		$saved_config_items = array();
+		$config_handler = icms::handler('icms_config');
 		if ($count > 0) {
 			for ($i = 0; $i < $count; $i++) {
 				$config = & $config_handler->getConfig($conf_ids[$i]);
