@@ -853,7 +853,7 @@ function xoops_module_uninstall($dirname) {
 					for ($i = 0; $i < $confcount; $i++) {
 						if (!$config_handler->deleteConfig($configs[$i])) {
 							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIGOPTION_DELETE_FAIL .'</span>',
-								'<strong>' . icms_conv_nr2local($configs[$i]->getvar('conf_id')) . '</strong>');
+								'<strong>' . icms_conv_nr2local($configs[$i]->getVar('conf_id')) . '</strong>');
 						} else {
 							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_DELETED,
 								'<strong>' . icms_conv_nr2local($configs[$i]->getVar('conf_id')) . '</strong>');
@@ -1321,13 +1321,13 @@ function icms_module_update($dirname) {
 			for ($i = 0; $i < $confcount; $i++) {
 				if (!$config_handler->deleteConfig($configs[$i])) {
 					$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIGOPTION_DELETE_FAIL . '</span>',
-						'<strong>' . $configs[$i]->getvar('conf_id') . '</strong>');
+						'<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
 					// save the name of config failed to delete for later use
-					$config_delng[] = $configs[$i]->getvar('conf_name');
+					$config_delng[] = $configs[$i]->getVar('conf_name');
 				} else {
-					$config_old[$configs[$i]->getvar('conf_name')]['value'] = $configs[$i]->getvar('conf_value', 'N');
-					$config_old[$configs[$i]->getvar('conf_name')]['formtype'] = $configs[$i]->getvar('conf_formtype');
-					$config_old[$configs[$i]->getvar('conf_name')]['valuetype'] = $configs[$i]->getvar('conf_valuetype');
+					$config_old[$configs[$i]->getVar('conf_name')]['value'] = $configs[$i]->conf_value;
+					$config_old[$configs[$i]->getVar('conf_name')]['formtype'] = $configs[$i]->getVar('conf_formtype');
+					$config_old[$configs[$i]->getVar('conf_name')]['valuetype'] = $configs[$i]->getVar('conf_valuetype');
 					$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_DELETED,
 						'<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
 				}

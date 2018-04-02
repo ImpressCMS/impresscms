@@ -10,9 +10,9 @@
 
 /**
  * Rating object
- * 
+ *
  * @package     ImpressCMS\Modules\System\Class\Rating
- * 
+ *
  * @property int    $ratingid   Rating ID
  * @property string $dirname    Module dirname
  * @property string $item       Item type
@@ -20,7 +20,7 @@
  * @property int    $uid        User ID
  * @property int    $date       Date
  * @property int    $rate       Rate
- * 
+ *
  * @property string $name       Name
  */
 class mod_system_Rating extends icms_ipf_Object {
@@ -46,7 +46,7 @@ class mod_system_Rating extends icms_ipf_Object {
 		$this->setControl('item', array('object' => &$this, 'method' => 'getItemList'));
 		$this->setControl('uid', 'user');
 		$this->setControl('rate', array('method' => 'getRateList'));
-                
+
                 parent::__construct($handler);
 	}
 
@@ -78,7 +78,7 @@ class mod_system_Rating extends icms_ipf_Object {
 	 */
 	public function dirname() {
 		$moduleArray = $this->handler->getModuleList();
-		return $moduleArray[$this->getVar('dirname', 'n')];
+		return $moduleArray[$this->dirname];
 	}
 
 	/**
@@ -95,7 +95,7 @@ class mod_system_Rating extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function getItemValue() {
-		$moduleUrl = ICMS_MODULES_URL . '/' . $this->getVar('dirname', 'n') . '/';
+		$moduleUrl = ICMS_MODULES_URL . '/' . $this->dirname . '/';
 		$plugin = $this->getModulePlugin();
 		$pluginItemInfo = $plugin->getItemInfo($this->getVar('item'));
 		if (!$pluginItemInfo) {
@@ -129,7 +129,7 @@ class mod_system_Rating extends icms_ipf_Object {
 	 */
 	public function getModulePlugin() {
 		if (!$this->_modulePlugin) {
-			$this->_modulePlugin = $this->handler->pluginsObject->getPlugin('rating', $this->getVar('dirname', 'n'));
+			$this->_modulePlugin = $this->handler->pluginsObject->getPlugin('rating', $this->dirname);
 		}
 		return $this->_modulePlugin;
 	}

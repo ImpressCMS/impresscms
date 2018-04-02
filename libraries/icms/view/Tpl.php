@@ -169,7 +169,7 @@ class icms_view_Tpl extends Smarty {
 		$tplfile =& $tplfile_handler->get($tpl_id);
 
 		if (is_object($tplfile)) {
-			$file = $tplfile->getVar('tpl_file', 'n');
+			$file = $tplfile->tpl_file;
 			$tpl = new icms_view_Tpl();
 			return $tpl->touch("db:$file");
 		}

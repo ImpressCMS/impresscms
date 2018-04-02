@@ -154,7 +154,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 		switch ($format) {
 			case 'S':
 				if ($c_type == 'H') {
-                    $content = $this->getVar('content', 'n');
+					$content = $this->content;
                     $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
                     $content = str_replace(getenv('DB_SALT'), '', $content);
 					return $content;
@@ -168,10 +168,10 @@ class icms_view_block_Object extends icms_ipf_Object {
 					return $content;
 				} elseif ($c_type == 'S') {
 					$myts = icms_core_Textsanitizer::getInstance();
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
 					return $myts->displayTarea($content, 1, 1);
 				} else {
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
 					return icms_core_DataFilter::checkVar($content, 'text', 'output');
 				}
 				break;
@@ -181,7 +181,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 				break;
 
 			default:
-				return $this->getVar('content', 'n');
+				return $this->content;
 				break;
 		}
 	}
