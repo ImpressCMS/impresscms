@@ -70,12 +70,11 @@ ob_start();
 	src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php echo _PHP_VERSION; ?>:&nbsp; <?php
-if (version_compare( phpversion(), '5.2', '>=')) {
+if (version_compare( phpversion(), '5.6', '>=')) {
 	echo xoDiag( 1, phpversion() );
-} elseif (version_compare( phpversion(), '5.1', '>=')) {
-	echo xoDiag( 0, phpversion() );
 } else {
 	echo xoDiag( -1, phpversion() );
+	$php_version_error = true;
 }
 ?> <img
 	src="img/<?php echo (isset($php_version_error) ? "no" : "yes") ?>.png"
@@ -92,6 +91,50 @@ if (version_compare( phpversion(), '5.2', '>=')) {
 <div class="clear">&nbsp;</div>
 <h4>file_uploads:&nbsp; <?php echo xoDiagBoolSetting( 'file_uploads', true ); ?>
 <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<div class="clear">&nbsp;</div>
+	<h4>URL Rewrite:&nbsp; <span id="url-rewrite-check"></span>
+	<img src="" alt="Success" class="rootimg" />
+		<script type="text/javascript" defer>
+			$(
+				function () {
+					var loc = window.location.href;
+					var url = loc.substr(0, loc.indexOf('/install/'));
+					url += '/modules/system/images/icon_small.png';
+					function error() {
+						$('#url-rewrite-check').text('OFF');
+						$('#url-rewrite-check+img').attr({
+							'src': 'img/no.png'
+						});
+					};
+					function success() {
+						$('#url-rewrite-check').text('ON');
+						$('#url-rewrite-check+img').attr({
+							'src': 'img/yes.png'
+						});
+					};
+					function update() {
+						$.ajax({
+							url: url,
+							error: error,
+							success: function (response, status, xhr) {
+								var ct = xhr.getResponseHeader("content-type") || "";
+								if (ct == 'image/png') {
+									success();
+								} else {
+									error();
+								}
+							}
+						});
+					}
+					setInterval(
+						update,
+						5000
+					);
+					update();
+				}
+			);
+		</script>
+</h4>
 <div class="clear">&nbsp;</div>
 </fieldset>
 
@@ -142,7 +185,14 @@ if (empty($ext)) {
     	<tr><th>Path</th><th>Status</th></tr>
     </thead>
 	<?php
-		$paths = array("uploads/", "cache/", "templates_c/", "mainfile.php");
+		$paths = array(
+			"uploads/",
+			"../storage/htmlpurifier",
+			"../storage/log",
+			"../storage/cache",
+			"../storage/templates_c",
+			"../.env"
+		);
 		foreach ( $paths as $path) {
 	?>
 	<tr>

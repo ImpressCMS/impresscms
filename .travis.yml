@@ -6,5 +6,19 @@ php:
   - 7.0
   - 7.1
   - 7.2
-  
-script: phpunit --configuration tests/configuration.xml
+
+script:
+ - echo URL=http://192.168.2.99 > .env
+ - echo DB_TYPE=pdo.mysql >> .env
+ - echo DB_HOST=localhost >> .env
+ - echo DB_USER=icms >> .env
+ - echo DB_PASS=icms >> .env
+ - echo DB_PCONNECT=0 >> .env
+ - echo DB_NAME=icms >> .env
+ - echo DB_CHARSET=utf8 >> .env
+ - echo DB_COLLATION=utf8_general_ci >> .env
+ - echo DB_PREFIX=icms >> .env
+ - echo DB_SALT=icms >> .env
+ - composer install
+ - composer dumpautoload
+ - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php

@@ -7,7 +7,7 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 * @backupStaticAttributes disabled
 */
 
-class SecurityTest extends \PHPUnit_Framework_TestCase {
+class SessionTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * Test if icms_core_DataFilter is available

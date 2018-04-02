@@ -162,6 +162,9 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
 
         foreach ([[52], [59 => 'aaa'], true, 1, 1.0, -9, 'test', [], new \stdClass(), function () {}] as $v) {
             $mock->v = $v;
+			if ($mock->v === null) {
+				continue;
+			}
             $this->assertInternalType($itype, $mock->v, $name . ' must convert all data to ' . $itype);
         }
     }

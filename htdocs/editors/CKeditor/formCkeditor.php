@@ -21,7 +21,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 	 * @param	bool 	$checkCompatible  true - return false on failure
 	 */
 	public function __construct($configs, $checkCompatible = false) {
-		$current_path = dirname(__FILE__);
+		$current_path = __DIR__;
 		if (DIRECTORY_SEPARATOR != "/") {
 			$current_path = str_replace(strpos($current_path, "\\\\", 2) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
 		}
@@ -65,7 +65,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 				"filebrowserImageBrowseUrl" => ICMS_URL . '/editors/CKeditor/ceditfinder/browse.php?site=administrator',
 			);
 
-		require_once dirname(__FILE__) . "/ckeditor/ckeditor.php";
+		require_once __DIR__ . "/ckeditor/ckeditor.php";
 		$this->CKEditor = new CKEditor($this->rootpath);
 	}
 

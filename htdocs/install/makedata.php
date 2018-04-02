@@ -96,17 +96,17 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 	// system modules
 
-	if (file_exists('../modules/system/language/'.$language.'/modinfo.php')) {
-		include '../modules/system/language/'.$language.'/modinfo.php';
+	if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/'.$language.'/modinfo.php')) {
+		include ICMS_ROOT_PATH . '/modules/system/language/'.$language.'/modinfo.php';
 	} else {
-		include '../modules/system/language/english/modinfo.php';
+		include ICMS_ROOT_PATH . '/modules/system/language/english/modinfo.php';
 		$language = 'english';
 	}
 
 
 	$modversion = array();
-	include_once '../include/functions.php';
-	include_once '../modules/system/icms_version.php';
+	include_once ICMS_ROOT_PATH . '/include/functions.php';
+	include_once ICMS_ROOT_PATH . '/modules/system/icms_version.php';
 	$time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
@@ -120,16 +120,16 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 
 	foreach ($modversion['templates'] as $tplfile) {
-		if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
+		if ($fp = fopen(ICMS_ROOT_PATH . '/modules/system/templates/'.$tplfile['file'], 'r')) {
 			$newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '".addslashes($tplfile['file'])."', '".addslashes($tplfile['description'])."', ".$time.", ".$time.", 'module')");
-			$tplsource = fread($fp, filesize('../modules/system/templates/'.$tplfile['file']));
+			$tplsource = fread($fp, filesize(ICMS_ROOT_PATH . '/modules/system/templates/'.$tplfile['file']));
 			fclose($fp);
 			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (".$newtplid.", '".addslashes($tplsource)."')");
 		}
 	}
 
 	foreach ($modversion['blocks'] as $func_num => $newblock) {
-		if ($fp = fopen('../modules/system/templates/blocks/'.$newblock['template'], 'r')) {
+		if ($fp = fopen(ICMS_ROOT_PATH . '/modules/system/templates/blocks/'.$newblock['template'], 'r')) {
 			if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html','system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))) {
 				$visible = 1;
 			} else {
@@ -160,7 +160,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			$newbid = $dbm->insert('newblocks', " VALUES (0, 1, ".$func_num.", '".addslashes($options)."', '".addslashes($newblock['name'])."', '".addslashes($newblock['name'])."', '', ".$canvaspos.", 0, ".$visible.", 'S', 'H', 1, 'system', '".addslashes($newblock['file'])."', '".addslashes($newblock['show_func'])."', '".addslashes($edit_func)."', '".addslashes($newblock['template'])."', 0, ".$time.")");
 
 			$newtplid = $dbm->insert('tplfile', " VALUES (0, ".$newbid.", 'system', 'default', '".addslashes($newblock['template'])."', '".addslashes($newblock['description'])."', ".$time.", ".$time.", 'block')");
-			$tplsource = fread($fp, filesize('../modules/system/templates/blocks/'.$newblock['template']));
+			$tplsource = fread($fp, filesize(ICMS_ROOT_PATH . '/modules/system/templates/blocks/'.$newblock['template']));
 			fclose($fp);
 			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (".$newtplid.", '".addslashes($tplsource)."')");
 			$dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ADMIN'].", ".$newbid.", 1, 'block_read')"

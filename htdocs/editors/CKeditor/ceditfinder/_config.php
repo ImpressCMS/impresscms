@@ -12,7 +12,7 @@
 // Note that config parameters may be overridden in the _auth.php file depending upon the environment
 //
 defined('ceditFinder') or die('Restricted access');
-$mypath = dirname(__FILE__);
+$mypath = __DIR__;
 $path = '';
 $pathtrail = explode(DIRECTORY_SEPARATOR, $mypath);
 for ($i=0; $i<count($pathtrail)-3; $i++) {
