@@ -42,7 +42,8 @@
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_view_Tpl extends Smarty {
+class icms_view_Tpl extends SmartyBC
+{
 
 	public $left_delimiter = '<{';
 	public $right_delimiter = '}>';
@@ -97,20 +98,6 @@ class icms_view_Tpl extends Smarty {
 	}
 
 	/**
-	 * Assign by ref
-	 *
-	 * @param string $var Var name
-	 * @param mixed $ref Object
-	 * @param bool $nocache Cache?
-	 *
-	 * @deprecated Use assignByRef instead!
-	 */
-	public function assign_by_ref($var, &$ref, $nocache = false)
-	{
-		$this->assignByRef($var, $ref, $nocache);
-	}
-
-	/**
 	 * Renders output from template data
 	 *
 	 * @param   string  $data		The template to render
@@ -135,12 +122,7 @@ class icms_view_Tpl extends Smarty {
 	 * @return  string  $result         Was the resource recompiled
 	 */
 	public function touch($resourceName) {
-		$isForced = $this->force_compile;
-		$this->force_compile = true;
-		$this->clear_cache($resourceName);
-		$result = $this->_compile_resource($resourceName, $this->_get_compile_path($resourceName));
-		$this->force_compile = $isForced;
-		return $result;
+		return $this->clearCache($resourceName);
 	}
 
 	/**
