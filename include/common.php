@@ -121,7 +121,7 @@ if (!isset ($xoopsOption ['nodebug']) || !$xoopsOption ['nodebug']) {
 	if ($icmsConfig ['debug_mode'] == 1 || $icmsConfig ['debug_mode'] == 2) {
 		error_reporting(E_ALL);
 		$icms->get('logger')->enableRendering();
-		$logger->usePopup = ($icmsConfig ['debug_mode'] == 2);
+		$icms->get('logger')->usePopup = ($icmsConfig ['debug_mode'] == 2);
 		if ($icms->has('db')) {
 			icms_Event::attach('icms_db_IConnection', 'prepare', function ($params) use ($icms) {
 				$icms->get('logger')->addQuery('prepare: ' . $params ['sql']);
