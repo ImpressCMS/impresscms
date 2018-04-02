@@ -4,6 +4,7 @@ namespace ImpressCMS\Core\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use icms_core_Logger;
+use icms_Event;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**

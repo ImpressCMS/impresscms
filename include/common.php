@@ -116,6 +116,26 @@ if ($icmsConfig['closesite'] == 1) {
 	include ICMS_INCLUDE_PATH . '/site-closed.php';
 }
 
+global $xoopsOption, $icmsConfig;
+if (!isset ($xoopsOption ['nodebug']) || !$xoopsOption ['nodebug']) {
+	if ($icmsConfig ['debug_mode'] == 1 || $icmsConfig ['debug_mode'] == 2) {
+		error_reporting(E_ALL);
+		$icms->get('logger')->enableRendering();
+		$logger->usePopup = ($icmsConfig ['debug_mode'] == 2);
+		if ($icms->has('db')) {
+			icms_Event::attach('icms_db_IConnection', 'prepare', function ($params) use ($icms) {
+				$icms->get('logger')->addQuery('prepare: ' . $params ['sql']);
+			});
+			icms_Event::attach('icms_db_IConnection', 'execute', function ($params) use ($icms) {
+				$icms->get('logger')->addQuery('execute: ' . $params ['sql']);
+			});
+		}
+	} else {
+		error_reporting(0);
+		$icms->get('logger')->activated = false;
+	}
+}
+
 icms::$module = $icms->get('module');
 
 if ($icmsConfigPersona['multi_login']) {
