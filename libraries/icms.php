@@ -93,7 +93,7 @@ final class icms extends Container
 		self::$config = $this->get('config');
 		self::$security = $this->get('security');
 		self::$session = $this->get('session');
-		self::$session = $this->get('user');
+		self::$user = $this->get('user');
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
 	}
