@@ -57,9 +57,10 @@ class icms_view_Tpl extends Smarty {
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
 		$this->_compile_id = $this->compile_id;
 		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
-		$this->addPluginsDir(ICMS_PLUGINS_PATH . DIRECTORY_SEPARATOR . 'smarty');
 
 		parent::__construct();
+
+		$this->addPluginsDir(ICMS_PLUGINS_PATH . DIRECTORY_SEPARATOR . 'smarty');
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
@@ -93,6 +94,20 @@ class icms_view_Tpl extends Smarty {
 			'xoops_upload_url' => ICMS_UPLOAD_URL
 			)
 		);
+	}
+
+	/**
+	 * Assign by ref
+	 *
+	 * @param string $var Var name
+	 * @param mixed $ref Object
+	 * @param bool $nocache Cache?
+	 *
+	 * @deprecated Use assignByRef instead!
+	 */
+	public function assign_by_ref($var, &$ref, $nocache = false)
+	{
+		$this->assignByRef($var, $ref, $nocache);
 	}
 
 	/**
