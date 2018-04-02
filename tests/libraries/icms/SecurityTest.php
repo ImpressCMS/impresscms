@@ -2,6 +2,7 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 use ImpressCMS\Core\Providers\SecurityServiceProvider;
+use League\Container\Container;
 
 /**
 * @backupGlobals disabled
