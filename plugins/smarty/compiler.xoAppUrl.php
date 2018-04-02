@@ -46,19 +46,19 @@
  * ([xoAppUrl "modules/something/yourpage.php?order=`$sortby`"])
  * </code>
  */
-function smarty_compiler_xoAppUrl( $argStr, &$compiler ) {
+function smarty_compiler_xoAppUrl($args, &$compiler)
+{
 	global $xoops;
-	$argStr = trim( $argStr );
 
-	@list( $url, $params ) = explode( ' ', $argStr, 2 );
+	$url = trim($args[0]);
+	$params = array_slice($args, 1);
 
 	if ( substr( $url, 0, 1 ) == '/' ) {
 		$url = 'www' . $url;
 	}
 	// Static URL generation
-	if ( strpos( $argStr, '$' ) === false && $url != '.' ) {
+	if (strpos($url[0], '$') === false && $url != '.') {
 		if ( isset($params) ) {
-			$params = $compiler->_parse_attrs( $params, false );
 			foreach ( $params as $k => $v ) {
 				if ( in_array( substr( $v, 0, 1 ), array( '"', "'" ) ) ) {
 					$params[$k] = substr( $v, 1, -1 );
@@ -76,7 +76,6 @@ function smarty_compiler_xoAppUrl( $argStr, &$compiler ) {
 		$str = "\$GLOBALS['xoops']->path( '$url', true )";
 	}
 	if ( isset($params) ) {
-		$params = $compiler->_parse_attrs( $params, false );
 		$str = "\$GLOBALS['xoops']->buildUrl( $str, array(\n";
 		foreach ( $params as $k => $v ) {
 			$str .= var_export( $k, true ) . " => $v,\n";

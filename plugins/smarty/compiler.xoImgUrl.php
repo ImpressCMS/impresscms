@@ -29,10 +29,11 @@
  * on your themes configuration. Because of this, the use of the dynamic syntax with this plug-in
  * is not possible right now.
  */
-function smarty_compiler_xoImgUrl( $argStr, &$smarty ) {
+function smarty_compiler_xoImgUrl($args, &$smarty)
+{
 	global $xoops, $xoTheme;
 
-	$argStr = trim( $argStr );
+	$argStr = trim($args[0]);
 	$path = ( isset($xoTheme) && is_object( $xoTheme ) ) ? $xoTheme->resourcePath( $argStr ) : $argStr;
 	return "\necho '" . addslashes( $xoops->url( $path ) ) . "';";
 

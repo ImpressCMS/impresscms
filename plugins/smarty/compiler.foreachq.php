@@ -40,11 +40,10 @@
  * {/foreach}
  * </code>
  */
-function smarty_compiler_foreachq( $argStr, &$comp ) {
+function smarty_compiler_foreachq($attrs, &$comp)
+{
 
 	$comp->_push_tag('foreach');
-
-	$attrs = $comp->_parse_attrs( $argStr, false );
 
     $arg_list = array();
 

@@ -40,9 +40,9 @@
  * create problems in some cases (but you can prevent them most of the times, for example by always
  * using a <var>tmp_</var> prefix for the variables you create in included templates looping sections).
  */
-function smarty_compiler_includeq( $tag_args, &$comp ) {
+function smarty_compiler_includeq($attrs, &$comp)
+{
 
-	$attrs = $comp->_parse_attrs($tag_args);
     $arg_list = array();
 
     if (empty($attrs['file'])) {
