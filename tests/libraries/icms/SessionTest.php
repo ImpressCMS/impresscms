@@ -2,6 +2,7 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\Providers\DatabaseServiceProvider;
 use ImpressCMS\Core\Providers\SessionServiceProvider;
 use League\Container\Container;
 
@@ -24,6 +25,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
      */
     public function testService() {
 		$container = new Container();
+		$container->addServiceProvider(DatabaseServiceProvider::class);
 		$container->addServiceProvider(SessionServiceProvider::class);
 		$this->assertTrue($container->get('session') instanceof \icms_core_Session, 'service method doesn\'t return instanceod icms_core_Session type');
     }
@@ -33,6 +35,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
      */
     public function testVariables() {
 		$container = new Container();
+		$container->addServiceProvider(DatabaseServiceProvider::class);
 		$container->addServiceProvider(SessionServiceProvider::class);
 		$instance = $container->get('session');
         $this->assertInternalType('int', $instance->ipv6securityLevel, 'ipv6securityLevel must be int');
@@ -45,6 +48,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
      */
     public function testMethodsAvailability() {
 		$container = new Container();
+		$container->addServiceProvider(DatabaseServiceProvider::class);
 		$container->addServiceProvider(SessionServiceProvider::class);
 		$instance = $container->get('session');
         foreach ([ 'open', 'close', 'read', 'write', 'destroy', 'gc', 'gc_force', 'icms_sessionRegenerateId', 'update_cookie', 'createFingerprint', 'checkFingerprint', 'sessionOpen', 'removeExpiredCustomSession', 'sessionClose', 'sessionStart' ] as $method) {
