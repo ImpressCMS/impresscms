@@ -82,16 +82,14 @@
 class icms_member_user_Object extends icms_ipf_Object {
 
     /**
+	 * @var bool is the user admin?
+	 */
+	static private $_isAdmin = array();
+	/**
     * Array of groups that user belongs to
     * @var array
     */
     private $_groups = array();
-
-    /**
-    * @var bool is the user admin?
-    */
-    static private $_isAdmin = array();
-
     /**
     * @var string user's rank
     */
@@ -163,6 +161,21 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
+	 * Updated by Catzwolf 11 Jan 2004
+	 * find the username for a given ID
+	 *
+	 * @param int $userid ID of the user to find
+	 * @param int $usereal switch for usename or realname
+	 * @return string name of the user. name for "anonymous" if not found.
+	 */
+	static public function getUnameFromId($userid, $usereal = 0)
+	{
+		trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
+		$handler = icms::handler('icms_member_user');
+		return $handler->getUnameFromId($userid, (bool)$usereal);
+	}
+
+	/**
     * check if the user is a guest user
      *
     * @return bool returns false
@@ -235,31 +248,6 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-    * Updated by Catzwolf 11 Jan 2004
-    * find the username for a given ID
-     *
-    * @param int $userid ID of the user to find
-    * @param int $usereal switch for usename or realname
-    * @return string name of the user. name for "anonymous" if not found.
-    */
-    static public function getUnameFromId($userid, $usereal = 0) {
-        trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
-        $handler = icms::handler('icms_member_user');
-        return $handler->getUnameFromId($userid, (bool) $usereal);
-    }
-
-    /**
-    * set the groups for the user
-     *
-    * @param array $groupsArr Array of groups that user belongs to
-    */
-    public function setGroups($groupsArr) {
-        if (is_array($groupsArr)) {
-            $this->_groups = & $groupsArr;
-        }
-    }
-
-    /**
     * sends a welcome message to the user which account has just been activated
      *
     * return TRUE if success, FALSE if not
@@ -322,19 +310,6 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-    * get the groups that the user belongs to
-     *
-    * @return array array of groups
-    */
-    public function &getGroups() {
-        if (empty($this->_groups)) {
-            $member_handler = icms::handler('icms_member');
-            $this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
-        }
-        return $this->_groups;
-    }
-
-    /**
     * Is the user admin ?
      *
     * This method will return true if this user has admin rights for the specified module.<br />
@@ -361,17 +336,32 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
     /**
-    * get the user's rank
-    * @return array array of rank ID and title
+	 * get the groups that the user belongs to
+	 *
+	 * @return array array of groups
     */
-    public function rank() {
-        if (!isset($this->_rank)) {
-            $this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
+	public function &getGroups()
+	{
+		if (empty($this->_groups)) {
+			$member_handler = icms::handler('icms_member');
+			$this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
         }
-        return $this->_rank;
+		return $this->_groups;
     }
 
     /**
+	 * set the groups for the user
+	 *
+	 * @param array $groupsArr Array of groups that user belongs to
+	 */
+	public function setGroups($groupsArr)
+	{
+		if (is_array($groupsArr)) {
+			$this->_groups = &$groupsArr;
+		}
+	}
+
+	/**
     * is the user activated?
     * @return bool
     */
@@ -422,22 +412,14 @@ class icms_member_user_Object extends icms_ipf_Object {
         return $ret;
     }
 
-    public function setVar($name, $value, $options = null) {
-        parent::setVar($name, $value, $options);
-        if ($this->isSameAsLoggedInUser()) {
-            $_SESSION['icmsUser'][$name] = parent::getVar($name);
-        }
-    }
-
     /**
     * Returns uid of user
      *
-    * @deprecated since version 2.1
+	 * @deprecated Use $this->uid instead!
      *
     * @return int
     */
     public function uid() {
-        icms_core_Debug::setDeprecated('->uid', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
         return $this->uid;
     }
 
@@ -462,28 +444,50 @@ class icms_member_user_Object extends icms_ipf_Object {
         );
     }
 
+	public function setVar($name, $value, $options = null)
+	{
+		parent::setVar($name, $value, $options);
+		if ($this->isSameAsLoggedInUser()) {
+			$_SESSION['icmsUser'][$name] = parent::getVar($name);
+		}
+	}
+
     /**
-    * Logs out current user
+	 * Checks if this user is same as logged in user
      *
     * @return boolean
     */
-    public function logout() {
-        if (!isset($_SESSION['icmsUser']['uid']))
+	public function isSameAsLoggedInUser()
+	{
+		if (!icms::$user)
             return false;
-        if ($_SESSION['icmsUser']['uid'] != $this->getVar('uid'))
-            return false;
-        $_SESSION = array();
+		return icms::$user->getVar('uid') == $this->getVar('uid');
     }
 
     /**
-    * Checks if this user is same as logged in user
+	 * get the user's rank
+	 * @return array array of rank ID and title
+	 */
+	public function rank()
+	{
+		if (!isset($this->_rank)) {
+			$this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
+		}
+		return $this->_rank;
+	}
+
+	/**
+	 * Logs out current user
      *
     * @return boolean
     */
-    public function isSameAsLoggedInUser() {
-        if (!icms::$user)
+	public function logout()
+	{
+		if (!isset($_SESSION['icmsUser']['uid']))
             return false;
-        return icms::$user->getVar('uid') == $this->getVar('uid');
+		if ($_SESSION['icmsUser']['uid'] != $this->getVar('uid'))
+			return false;
+		$_SESSION = array();
     }
 
     /*  /**

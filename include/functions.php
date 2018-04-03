@@ -526,7 +526,6 @@ function xoops_convert_encoding(&$text) {
  */
 function xoops_getLinkedUnameFromId($userid)
 {
-	icms_core_Debug::setDeprecated("icms_member_user_Handler::getUserLink", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
 	return icms_member_user_Handler::getUserLink($userid);
 
 }
