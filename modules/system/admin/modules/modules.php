@@ -122,8 +122,6 @@ function xoops_module_list() {
 /**
  * Function and rendering for installation of a module
  *
- * @todo	add installation_notify()
- *
  * @param 	string	$dirname
  * @return	string	Results of the installation process
  */
@@ -942,8 +940,6 @@ function xoops_module_activate($mid) {
 
 /**
  * Logic for deactivating a module
- *
- * @todo	Add installation_notify() - send status change?
  *
  * @param	int	$mid
  * @return	string	Result message for deactivating the module

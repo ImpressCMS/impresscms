@@ -79,8 +79,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
                 'getAvailable',
                 'getActive',
                 'service',
-                'checkModuleAccess',
-                'installation_notify'
+				'checkModuleAccess'
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {

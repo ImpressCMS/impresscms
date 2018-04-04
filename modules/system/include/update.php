@@ -194,12 +194,6 @@ function icms_module_update_system(&$module, $oldversion = NULL, $dbVersion = NU
 			if (count($remnants)) {
 				icms_core_Message::warning($remnants, "Unable to remove these files - you can remove them manually", TRUE);
 			}
-
-			/* Add this as the last instruction of the last version update - outside of this and it will notify every time
-			 * they update the system module, even if there isn't an update being applied
-			 *
-			 * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.*/
-			icms_module_Handler::installation_notify($newDbVersion, ICMS_URL);
 		}
 	}
 

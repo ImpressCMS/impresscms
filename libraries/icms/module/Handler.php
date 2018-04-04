@@ -61,152 +61,6 @@ class icms_module_Handler
 	}
 
 	/**
-	 * Load a module from the database
-	 *
-	 * @param    int $id ID of the module
-	 * @param    bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @param    bool $debug Debug enabled for object?
-	 * @param   bool|object $criteria Criteria for getting object if needed
-	 *
-	 * @return    object  {@link icms_module_Object} FALSE on fail
-	 */
-	public function &get($id, $loadConfig = FALSE, $debug = false, $criteria = false)
-	{
-		$module = parent::get($id, true, $debug, $criteria);
-		if ($loadConfig)
-			$this->loadConfig($module);
-		return $module;
-	}
-
-	/**
-	 * Load a module by its dirname
-	 *
-	 * @todo Make caching work!
-	 *
-	 * @param    string $dirname
-	 * @param    bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @return    object  {@link icms_module_Object} FALSE on fail
-	 */
-	public function getByDirname($dirname, $loadConfig = FALSE)
-	{
-		//if (!($module = $this->getFromCache('dirname', $dirname))) {
-		$criteria = new icms_db_criteria_Item('dirname', trim($dirname));
-		$criteria->setLimit(1);
-		$objs = $this->getObjects($criteria);
-		if (isset($objs[0])) {
-			$module = $objs[0];
-		} else {
-			$module = null;
-		}
-		//}
-		if ($module && $loadConfig) {
-			$this->loadConfig($module);
-		}
-		return $module;
-	}
-
-	/**
-	 * load config for a module before caching it
-	 *
-	 * @param    icms_module_Object $module
-	 * @return    bool                TRUE
-	 */
-	private function loadConfig($module)
-	{
-		if ($module->config !== NULL) return TRUE;
-		icms_loadLanguageFile($module->getVar("dirname"), "main");
-		if ($module->getVar("hasconfig") == 1
-			|| $module->getVar("hascomments") == 1
-			|| $module->getVar("hasnotification") == 1
-		) {
-			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
-		}
-		return TRUE;
-	}
-
-	public function beforeSave(icms_module_Object &$module)
-	{
-		$module->setVar('last_update', time());
-		return true;
-	}
-
-	/**
-	 * Delete a module from the database
-	 *
-	 * @param   icms_module_Object &$module
-	 * @param   bool $force Force to delete?
-	 *
-	 * @return  bool
-	 */
-	public function delete(&$module, $force = false)
-	{
-		if (!parent::delete($module, $force))
-			return false;
-		// delete admin permissions assigned for this module
-		$sql = sprintf(
-			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
-		);
-		$this->db->query($sql);
-		// delete read permissions assigned for this module
-		$sql = sprintf(
-			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
-		);
-		$this->db->query($sql);
-
-		$sql = sprintf(
-			"SELECT block_id FROM %s WHERE module_id = '%u'",
-			$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
-		);
-		if ($result = $this->db->query($sql)) {
-			$block_id_arr = array();
-			while ($myrow = $this->db->fetchArray($result)) {
-				array_push($block_id_arr, $myrow['block_id']);
-			}
-		}
-
-		// loop through block_id_arr
-		if (isset($block_id_arr)) {
-			foreach ($block_id_arr as $i) {
-				$sql = sprintf(
-					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
-					$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
-				);
-				if ($result2 = $this->db->query($sql)) {
-					if (0 < $this->db->getRowsNum($result2)) {
-						// this block has other entries, so delete the entry for this module
-						$sql = sprintf(
-							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
-						);
-						$this->db->query($sql);
-					} else {
-						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
-						$sql = sprintf(
-							"UPDATE %s SET visible = '0' WHERE bid = '%u'",
-							$this->db->prefix('newblocks'), (int)$i
-						);
-						$this->db->query($sql);
-						$sql = sprintf(
-							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
-						);
-						$this->db->query($sql);
-					}
-				}
-			}
-		}
-		if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
-			unset($this->_cachedModule[$module->getVar('dirname')]);
-		}
-		if (!empty($this->_cachedModule_lookup[$module->getVar('mid')])) {
-			unset($this->_cachedModule_lookup[$module->getVar('mid')]);
-		}
-		return true;
-	}
-
-	/**
 	 * Returns an array of all available modules, based on folders in the modules directory
 	 *
 	 * The getList method cannot be used for this, because uninstalled modules are not listed
@@ -297,6 +151,152 @@ class icms_module_Handler
 		}
 		// We are in /something.php: let the page handle permissions
 		return TRUE;
+	}
+
+	/**
+	 * Load a module from the database
+	 *
+	 * @param    int $id ID of the module
+	 * @param    bool $loadConfig set to TRUE in case you want to load the module config in addition
+	 * @param    bool $debug Debug enabled for object?
+	 * @param   bool|object $criteria Criteria for getting object if needed
+	 *
+	 * @return    object  {@link icms_module_Object} FALSE on fail
+	 */
+	public function &get($id, $loadConfig = FALSE, $debug = false, $criteria = false)
+	{
+		$module = parent::get($id, true, $debug, $criteria);
+		if ($loadConfig)
+			$this->loadConfig($module);
+		return $module;
+	}
+
+	/**
+	 * load config for a module before caching it
+	 *
+	 * @param    icms_module_Object $module
+	 * @return    bool                TRUE
+	 */
+	private function loadConfig($module)
+	{
+		if ($module->config !== NULL) return TRUE;
+		icms_loadLanguageFile($module->getVar("dirname"), "main");
+		if ($module->getVar("hasconfig") == 1
+			|| $module->getVar("hascomments") == 1
+			|| $module->getVar("hasnotification") == 1
+		) {
+			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
+		}
+		return TRUE;
+	}
+
+	/**
+	 * Load a module by its dirname
+	 *
+	 * @todo Make caching work!
+	 *
+	 * @param    string $dirname
+	 * @param    bool $loadConfig set to TRUE in case you want to load the module config in addition
+	 * @return    object  {@link icms_module_Object} FALSE on fail
+	 */
+	public function getByDirname($dirname, $loadConfig = FALSE)
+	{
+		//if (!($module = $this->getFromCache('dirname', $dirname))) {
+		$criteria = new icms_db_criteria_Item('dirname', trim($dirname));
+		$criteria->setLimit(1);
+		$objs = $this->getObjects($criteria);
+		if (isset($objs[0])) {
+			$module = $objs[0];
+		} else {
+			$module = null;
+		}
+		//}
+		if ($module && $loadConfig) {
+			$this->loadConfig($module);
+		}
+		return $module;
+	}
+
+	public function beforeSave(icms_module_Object &$module)
+	{
+		$module->setVar('last_update', time());
+		return true;
+	}
+
+	/**
+	 * Delete a module from the database
+	 *
+	 * @param   icms_module_Object &$module
+	 * @param   bool $force Force to delete?
+	 *
+	 * @return  bool
+	 */
+	public function delete(&$module, $force = false)
+	{
+		if (!parent::delete($module, $force))
+			return false;
+		// delete admin permissions assigned for this module
+		$sql = sprintf(
+			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
+			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
+		);
+		$this->db->query($sql);
+		// delete read permissions assigned for this module
+		$sql = sprintf(
+			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
+			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
+		);
+		$this->db->query($sql);
+
+		$sql = sprintf(
+			"SELECT block_id FROM %s WHERE module_id = '%u'",
+			$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+		);
+		if ($result = $this->db->query($sql)) {
+			$block_id_arr = array();
+			while ($myrow = $this->db->fetchArray($result)) {
+				array_push($block_id_arr, $myrow['block_id']);
+			}
+		}
+
+		// loop through block_id_arr
+		if (isset($block_id_arr)) {
+			foreach ($block_id_arr as $i) {
+				$sql = sprintf(
+					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
+					$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+				);
+				if ($result2 = $this->db->query($sql)) {
+					if (0 < $this->db->getRowsNum($result2)) {
+						// this block has other entries, so delete the entry for this module
+						$sql = sprintf(
+							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
+							$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+						);
+						$this->db->query($sql);
+					} else {
+						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
+						$sql = sprintf(
+							"UPDATE %s SET visible = '0' WHERE bid = '%u'",
+							$this->db->prefix('newblocks'), (int)$i
+						);
+						$this->db->query($sql);
+						$sql = sprintf(
+							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
+							$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+						);
+						$this->db->query($sql);
+					}
+				}
+			}
+		}
+		if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
+			unset($this->_cachedModule[$module->getVar('dirname')]);
+		}
+		if (!empty($this->_cachedModule_lookup[$module->getVar('mid')])) {
+			unset($this->_cachedModule_lookup[$module->getVar('mid')]);
+		}
+		return true;
 	}
 
 	/**
@@ -395,63 +395,5 @@ class icms_module_Handler
 			$modules_menu[] = $module->getAdminMenuItems();
 		}
 		return $modules_menu;
-	}
-
-	/**
-	 * Posts a notification of an install or update of the system module
-	 *
-	 * @todo    Add language constants
-	 *
-	 * @param    string $versionstring A string representing the version of the module
-	 * @param    string $icmsroot A unique identifier for the site
-	 * @param    string $modulename The module being installed or updated, 'system' for the core
-	 * @param    string $action Action triggering the notification: install, uninstall, activate, deactivate, update
-	 */
-	public static function installation_notify($versionstring, $icmsroot, $modulename = 'system', $action = 'install')
-	{
-
-		$validActions = array('install', 'update', 'uninstall', 'activate', 'deactivate');
-		if (!in_array($action, $validActions)) $action = 'install';
-
-		// @todo: change the URL to an official ImpressCMS server
-		//set POST variables
-		$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
-		$fields = array(
-			'siteid' => hash('sha256', $icmsroot),
-			'version' => urlencode($versionstring),
-			'module' => urlencode($modulename),
-			'action' => urlencode($action),
-		);
-
-		//url-ify the data for the POST
-		$fields_string = "";
-		foreach ($fields as $key => $value) {
-			$fields_string .= $key . '=' . $value . '&';
-		}
-		rtrim($fields_string, '&');
-
-		try {
-			//open connection - this causes a fatal error if the extension is not loaded
-			if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
-			$ch = curl_init();
-
-			//set the url, number of POST vars, POST data
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_POST, count($fields));
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-			curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
-
-			//execute post
-			if (curl_exec($ch)) {
-				icms_core_Message::error($url . $fields_string, 'Notification Sent to');
-			} else {
-				throw new Exception("Unable to contact update server");
-			}
-
-			//close connection
-			curl_close($ch);
-		} catch (Exception $e) {
-			icms_core_Message::error(sprintf($e->getMessage()));
-		}
 	}
 }
