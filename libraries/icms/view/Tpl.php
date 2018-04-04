@@ -151,17 +151,10 @@ class icms_view_Tpl extends Smarty {
 	}
 
 	/**
-	 * function to update compiled template file in cached templates folder
-	 * Prior to PHP5.3.0, when refering to the class with a variable, like $icmsAdminTpl, you
-	 * still need to use the arrow operator instead of ::
-	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
-	 *
-	 * The proper way to use this would be
-	 * icms_view_Tpl::template_touch($tplid);
-	 * or
-	 * $icmsAdminTpl->template_touch($tplid);
+	 * Touch template by id
 	 *
 	 * @param   string  $tpl_id
+	 *
 	 * @return  boolean
 	 */
 	static public function template_touch($tpl_id) {

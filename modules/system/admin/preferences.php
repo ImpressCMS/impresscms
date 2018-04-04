@@ -605,17 +605,17 @@ switch ($op) {
 							$dtemplates = & $tplfile_handler->find('default', 'block');
 							$dcount = count($dtemplates);
 
-							// need to do this to pass to $icmsAdminTpl->template_touch function
+							// need to do this to pass to icms_view_Tpl::template_touch function
 							$GLOBALS['icmsConfig']['template_set'] = $newtplset;
 
 							for ($i = 0; $i < $dcount; $i++) {
 								$found = & $tplfile_handler->find($newtplset, 'block', $dtemplates[$i]->getVar('tpl_refid'), NULL);
 								if (count($found) > 0) {
 									// template for the new theme found, compile it
-									$icmsAdminTpl->template_touch($found[0]->getVar('tpl_id'));
+									icms_view_Tpl::template_touch($found[0]->getVar('tpl_id'));
 								} else {
 									// not found, so compile 'default' template file
-									$icmsAdminTpl->template_touch($dtemplates[$i]->getVar('tpl_id'));
+									icms_view_Tpl::template_touch($dtemplates[$i]->getVar('tpl_id'));
 								}
 							}
 						}

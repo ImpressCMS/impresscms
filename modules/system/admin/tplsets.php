@@ -315,7 +315,7 @@ switch ($op) {
 						}
 					}
 					if ($tplfile->getVar('tpl_tplset') == $icmsConfig['template_set']) {
-						$icmsAdminTpl->template_touch($id);
+						icms_view_Tpl::template_touch($id);
 					}
 				}
 			} else {
@@ -362,8 +362,7 @@ switch ($op) {
 					if ($tplfile->getVar('tpl_tplset') == $icmsConfig['template_set']) {
 						$defaulttpl =& $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), NULL, $tplfile->getVar('tpl_file'));
 						if (count($defaulttpl) > 0) {
-
-							$icmsAdminTpl->template_touch($defaulttpl[0]->getVar('tpl_id'), TRUE);
+							icms_view_Tpl::template_touch($defaulttpl[0]->getVar('tpl_id'));
 						}
 					}
 				}
@@ -634,7 +633,7 @@ switch ($op) {
 			} else {
 				if ($tplset == $icmsConfig['template_set']) {
 
-					$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
+					icms_view_Tpl::template_touch($newtpl->getVar('tpl_id'));
 				}
 			}
 		} else {
@@ -678,8 +677,7 @@ switch ($op) {
 					. _ERROR . ': ' . sprintf(_MD_TPLSET_INSERT_FAILED, '<strong>' . $file . '</strong>') . '</span><br />';
 				} else {
 					if ($tplset == $icmsConfig['template_set']) {
-
-						$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
+						icms_view_Tpl::template_touch($newtpl->getVar('tpl_id'));
 					}
 					echo '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_INSERT_OK, '<strong>' . $tplfiles[$i]->getVar('tpl_file') . '</strong>') . '<br />';
 				}
@@ -705,8 +703,7 @@ switch ($op) {
 					echo $newtpl->getHtmlErrors();
 				} else {
 					if ($tplset == $icmsConfig['template_set']) {
-
-						$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
+						icms_view_Tpl::template_touch($newtpl->getVar('tpl_id'));
 					}
 					echo '&nbsp;&nbsp;&nbsp;&nbsp;' . sprintf(_MD_TPLSET_BLOCK_INSERT_OK, '<strong>' . $tplfiles[$i]->getVar('tpl_file') . '</strong>') . '<br />';
 				}
@@ -966,7 +963,7 @@ switch ($op) {
 						$msg[] = sprintf(_MD_TPLSET_UPDATED, '<strong>' . $upload_file . '</strong>');
 						if ($tplset == $icmsConfig['template_set']) {
 
-							if ($icmsAdminTpl->template_touch($tpl->getVar('tpl_id'), TRUE)) {
+							if (icms_view_Tpl::template_touch($tpl->getVar('tpl_id'))) {
 								$msg[] = sprintf(_MD_TPLSET_COMPILED, '<strong>' . $upload_file . '</strong>');
 							}
 						}

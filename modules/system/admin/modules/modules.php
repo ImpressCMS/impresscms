@@ -262,7 +262,7 @@ function xoops_module_install($dirname) {
 								'<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 
 							// generate compiled file
-							if (!$icmsAdminTpl->template_touch($newtplid)) {
+							if (!icms_view_Tpl::template_touch($newtplid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_COMPILE_FAIL . '</span>',
 									'<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 							} else {
@@ -332,7 +332,7 @@ function xoops_module_install($dirname) {
 									$msgs[] = sprintf(_MD_AM_TEMPLATE_INSERTED, '<strong>' . $block['template'] . '</strong>',
 										'<strong>' . icms_conv_nr2local($newtplid) . '</strong>');
 									// generate compiled file
-									if (!$icmsAdminTpl->template_touch($newtplid)) {
+									if (!icms_view_Tpl::template_touch($newtplid)) {
 										$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_COMPILE_FAIL . '</span>',
 											'<strong>' . $block['template'] . '</strong>', '<strong>' . icms_conv_nr2local($newtplid) . '</strong>');
 									} else {
@@ -1108,7 +1108,7 @@ function icms_module_update($dirname) {
 						$newid = $tplfile->getVar('tpl_id');
 						$msgs[] = sprintf('&nbsp;&nbsp;<span>' . _MD_AM_TEMPLATE_INSERTED . '</span>', '<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newid . '</strong>');
 						if ($icmsConfig['template_set'] == 'default') {
-							if (!$icmsAdminTpl->template_touch($newid)) {
+							if (!icms_view_Tpl::template_touch($newid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'
 								. _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $tpl['file'] . '</strong>');
 							} else {
@@ -1190,7 +1190,7 @@ function icms_module_update($dirname) {
 								} else {
 									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_UPDATED, '<strong>' . $block['template'] . '</strong>');
 									if ($icmsConfig['template_set'] == 'default') {
-										if (!$icmsAdminTpl->template_touch($tplfile_new->getVar('tpl_id'))) {
+										if (!icms_view_Tpl::template_touch($tplfile_new->getVar('tpl_id'))) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'
 												. _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $block['template'] . '</strong>');
 										} else {
@@ -1255,7 +1255,7 @@ function icms_module_update($dirname) {
 									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_INSERTED,
 										'<strong>' . $block['template'] . '</strong>', '<strong>' . $newid . '</strong>');
 									if ($icmsConfig['template_set'] == 'default') {
-										if (!$icmsAdminTpl->template_touch($newid)) {
+										if (!icms_view_Tpl::template_touch($newid)) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>',
 												'<strong>' . $block['template'] . '</strong>');
 										} else {
