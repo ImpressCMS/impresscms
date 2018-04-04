@@ -1015,8 +1015,6 @@ function xoops_module_change($mid, $weight, $name) {
 /**
  * Logic for updating a module
  *
- * @todo	add installation_notify(), only if the version of the module changes
- *
  * @param 	str $dirname
  * @return	str	Result messages from the module update
  */
