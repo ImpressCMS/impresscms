@@ -272,7 +272,7 @@ function xoops_module_install($dirname) {
 						unset($tpldata);
 					}
 				}
-				$icmsAdminTpl->template_clear_module_cache($newmid);
+				icms_view_Tpl::template_clear_module_cache($newmid);
 				$blocks = $module->getInfo('blocks');
 				if ($blocks !== FALSE) {
 					$msgs[] = _MD_AM_BLOCKS_ADDING;
@@ -674,7 +674,7 @@ function xoops_module_uninstall($dirname) {
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->getByDirname($dirname);
 	$module->registerClassPath();
-	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
 	if ($module->getVar('dirname') == 'system') {
 		return "<p>" . sprintf(_MD_AM_FAILUNINS, "<strong>" . $module->getVar('name') . "</strong>")
 		. "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_SYSNO . "</p>";
@@ -923,7 +923,7 @@ function xoops_module_activate($mid) {
 	global $icms_block_handler, $icmsAdminTpl;
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->get($mid);
-	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
 	$module->setVar('isactive', 1);
 	if (!$module_handler->insert($module)) {
 		$ret = "<p>" . sprintf(_MD_AM_FAILACT, "<strong>" . $module->getVar('name') . "</strong>") . "&nbsp;"
@@ -956,7 +956,7 @@ function xoops_module_deactivate($mid) {
 
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->get($mid);
-	$icmsAdminTpl->template_clear_module_cache($mid);
+	icms_view_Tpl::template_clear_module_cache($mid);
 	$module->setVar('isactive', 0);
 	if ($module->getVar('dirname') == "system") {
 		return "<p>" . sprintf(_MD_AM_FAILDEACT, "<strong>" . $module->getVar('name') . "</strong>")
@@ -1038,11 +1038,8 @@ function icms_module_update($dirname) {
 	// Save current version for use in the update function
 	$prev_version = $module->getVar('version');
 	$prev_dbversion = $module->getVar('dbversion');
-	/**
-	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
-	 * @todo PHP5.3.0 supports $icmsAdminTpl::template_clear_module_cache($module->getVar('mid'));
-	 */
-	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
 	// we dont want to change the module name set by admin
 	$temp_name = $module->getVar('name');
 	$module->loadInfoAsVar($dirname);

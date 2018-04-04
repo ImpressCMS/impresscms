@@ -172,17 +172,7 @@ class icms_view_Tpl extends Smarty {
 	/**
 	 * Clear the module cache
 	 *
-	 * Prior to PHP5.3.0, when refering to the class with a variable, like $icmsAdminTpl, you
-	 * still need to use the arrow operator instead of ::
-	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
-	 *
-	 * The proper way to use this would be
-	 * icms_view_Tpl::template_clear_module_cache($tplid);
-	 * or
-	 * $icmsAdminTpl->template_clear_module_cache($tplid);
-	 *
 	 * @param   int $mid    Module ID
-	 * @return
 	 */
 	static public function template_clear_module_cache($mid) {
 		$icms_block_handler = icms::handler('icms_view_block');
