@@ -653,8 +653,6 @@ function &xoops_module_gettemplate($dirname, $template, $block = FALSE) {
 /**
  * Logic for uninstalling a module
  *
- * @todo	add installation_notify(), send status
- *
  * @param unknown_type $dirname
  * @return	string	Result messages for uninstallation
  */
