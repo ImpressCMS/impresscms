@@ -92,6 +92,50 @@ if (version_compare( phpversion(), '5.6', '>=')) {
 <h4>file_uploads:&nbsp; <?php echo xoDiagBoolSetting( 'file_uploads', true ); ?>
 <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
+	<h4>URL Rewrite:&nbsp; <span id="url-rewrite-check"></span>
+	<img src="" alt="Success" class="rootimg" />
+		<script type="text/javascript" defer>
+			$(
+				function () {
+					var loc = window.location.href;
+					var url = loc.substr(0, loc.indexOf('/install/'));
+					url += '/modules/system/images/icon_small.png';
+					function error() {
+						$('#url-rewrite-check').text('OFF');
+						$('#url-rewrite-check+img').attr({
+							'src': 'img/no.png'
+						});
+					};
+					function success() {
+						$('#url-rewrite-check').text('ON');
+						$('#url-rewrite-check+img').attr({
+							'src': 'img/yes.png'
+						});
+					};
+					function update() {
+						$.ajax({
+							url: url,
+							error: error,
+							success: function (response, status, xhr) {
+								var ct = xhr.getResponseHeader("content-type") || "";
+								if (ct == 'image/png') {
+									success();
+								} else {
+									error();
+								}
+							}
+						});
+					}
+					setInterval(
+						update,
+						5000
+					);
+					update();
+				}
+			);
+		</script>
+</h4>
+<div class="clear">&nbsp;</div>
 </fieldset>
 
 <fieldset>

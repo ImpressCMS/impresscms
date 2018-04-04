@@ -40,15 +40,26 @@
 /** mainfile is required, if it doesn't exist - installation is needed */
 
 $requested_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-$path = preg_replace('/[^a-zA-Z0-9\/]/', '', $requested_path);
+
+if (!empty($requested_path)) {
+	$folder_where_is_script = substr($_SERVER['PHP_SELF'], 1, -9);
+	$l = strlen($folder_where_is_script);
+	if (substr($requested_path, 0, $l) == $folder_where_is_script) {
+		$requested_path = substr($requested_path, $l);
+	}
+
+	$full_path = dirname(__DIR__) . DIRECTORY_SEPARATOR . $requested_path;
+}
 
 /**
  * @todo Remove this proxy once we migrate everything to normal assets system
  */
 if (
 	!empty($requested_path) &&
-	file_exists($full_path = dirname(__DIR__) . DIRECTORY_SEPARATOR . $requested_path) &&
-	($ext = pathinfo($full_path, PATHINFO_EXTENSION)) != 'php'
+	file_exists($full_path) &&
+	(
+	$ext = pathinfo($full_path, PATHINFO_EXTENSION)
+	) != 'php'
 ) {
 	if ($requested_path[0] == '.') { // protect hidden files
 		$_REQUEST['e'] = 403;
@@ -59,10 +70,10 @@ if (
 	switch ($ext) {
 		case 'css':
 			$mimetype = 'text/css';
-		break;
+			break;
 		case 'js':
 			$mimetype = 'text/javascript';
-		break;
+			break;
 		default:
 			$mimetype = mime_content_type($full_path);
 	}
@@ -97,7 +108,7 @@ if (isset($ext)) {
 	$_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_NAME'];
 
 	require $full_path;
-} elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', $path, $params, PREG_SET_ORDER) === 1) {
+} elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', preg_replace('/[^a-zA-Z0-9\-\._\/]/', '', $requested_path), $params, PREG_SET_ORDER) === 1) {
 	\icms::$logger->disableRendering();
 	list(, $module, $controller_name, $action, $params) = $params[0];
 	$handler = new \icms_controller_Handler();
