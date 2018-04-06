@@ -81,20 +81,20 @@ if (empty($getuser)) {
 	if ($code != '' && $areyou == $code) {
 		$newpass = $icmspass->createSalt(8);
 		$pass = $icmspass->encryptPass($newpass);
-		$xoopsMailer = new icms_messaging_Handler();
-		$xoopsMailer->useMail();
-		$xoopsMailer->setTemplate('lostpass2.tpl');
-		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-		$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-		$xoopsMailer->assign('SITEURL', ICMS_URL . '/');
-		$xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
-		$xoopsMailer->assign('NEWPWD', $newpass);
-		$xoopsMailer->setToUsers($getuser[0]);
-		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, ICMS_URL));
-		if (!$xoopsMailer->send()) {
-			echo $xoopsMailer->getErrors();
+		$mailer = new icms_messaging_Handler();
+		$mailer->useMail();
+		$mailer->setTemplate('lostpass2.tpl');
+		$mailer->assign('SITENAME', $icmsConfig['sitename']);
+		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+		$mailer->assign('SITEURL', ICMS_URL . '/');
+		$mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
+		$mailer->assign('NEWPWD', $newpass);
+		$mailer->setToUsers($getuser[0]);
+		$mailer->setFromEmail($icmsConfig['adminmail']);
+		$mailer->setFromName($icmsConfig['sitename']);
+		$mailer->setSubject(sprintf(_US_NEWPWDREQ, ICMS_URL));
+		if (!$mailer->send()) {
+			echo $mailer->getErrors();
 		}
 
 		// Next step: add the new password to the database
@@ -111,22 +111,22 @@ if (empty($getuser)) {
 		redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), FALSE);
 		// If no Code, send it
 	} else {
-		$xoopsMailer = new icms_messaging_Handler();
-		$xoopsMailer->useMail();
-		$xoopsMailer->setTemplate('lostpass1.tpl');
-		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-		$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-		$xoopsMailer->assign('SITEURL', ICMS_URL . '/');
-		$xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
-		$xoopsMailer->assign('NEWPWD_LINK', ICMS_URL . '/lostpass.php?email=' . $email . '&code=' . $areyou);
-		$xoopsMailer->setToUsers($getuser[0]);
-		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename']));
+		$mailer = new icms_messaging_Handler();
+		$mailer->useMail();
+		$mailer->setTemplate('lostpass1.tpl');
+		$mailer->assign('SITENAME', $icmsConfig['sitename']);
+		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+		$mailer->assign('SITEURL', ICMS_URL . '/');
+		$mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
+		$mailer->assign('NEWPWD_LINK', ICMS_URL . '/lostpass.php?email=' . $email . '&code=' . $areyou);
+		$mailer->setToUsers($getuser[0]);
+		$mailer->setFromEmail($icmsConfig['adminmail']);
+		$mailer->setFromName($icmsConfig['sitename']);
+		$mailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename']));
 		/** Include header.php to start page rendering */
 		include 'header.php';
-		if (!$xoopsMailer->send()) {
-			echo $xoopsMailer->getErrors();
+		if (!$mailer->send()) {
+			echo $mailer->getErrors();
 		}
 		echo '<h4>';
 		printf(_US_CONFMAIL, $getuser[0]->getVar('uname'));

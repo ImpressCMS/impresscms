@@ -178,25 +178,25 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('. ICMS_MODULES_URL . '/system/admin/mailusers/images/mailusers_big.png)">' . _MD_AM_MLUS . '</div><br />';
 		if ($added_count > 0) {
-			$xoopsMailer = new icms_messaging_Handler();
+			$mailer = new icms_messaging_Handler();
 			for ($i = 0; $i < $added_count; $i++) {
-				$xoopsMailer->setToUsers($added[$i]);
+				$mailer->setToUsers($added[$i]);
 			}
 
-			$xoopsMailer->setFromName(icms_core_DataFilter::stripSlashesGPC($_POST['mail_fromname']));
-			$xoopsMailer->setFromEmail(icms_core_DataFilter::stripSlashesGPC($_POST['mail_fromemail']));
-			$xoopsMailer->setSubject(icms_core_DataFilter::stripSlashesGPC($_POST['mail_subject']));
-			$xoopsMailer->setBody(icms_core_DataFilter::stripSlashesGPC($_POST['mail_body']));
+			$mailer->setFromName(icms_core_DataFilter::stripSlashesGPC($_POST['mail_fromname']));
+			$mailer->setFromEmail(icms_core_DataFilter::stripSlashesGPC($_POST['mail_fromemail']));
+			$mailer->setSubject(icms_core_DataFilter::stripSlashesGPC($_POST['mail_subject']));
+			$mailer->setBody(icms_core_DataFilter::stripSlashesGPC($_POST['mail_body']));
 			if (in_array("mail", $_POST['mail_send_to'])) {
-				$xoopsMailer->useMail();
+				$mailer->useMail();
 			}
 			if (in_array("pm", $_POST['mail_send_to']) && empty($_POST['mail_inactive'])) {
-				$xoopsMailer->usePM();
+				$mailer->usePM();
 			}
 
-			$xoopsMailer->send(TRUE);
-			echo $xoopsMailer->getSuccess();
-			echo $xoopsMailer->getErrors();
+			$mailer->send(TRUE);
+			echo $mailer->getSuccess();
+			echo $mailer->getErrors();
 
 			if ($count_criteria > $limit) {
 				$form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', TRUE);

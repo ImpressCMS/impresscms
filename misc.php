@@ -197,19 +197,19 @@ if ($action == 'showpopups') {
 						$errormessage = _MSC_INVALIDEMAIL1.'<br />'._MSC_INVALIDEMAIL2.'';
 						redirect_header(ICMS_URL.'/misc.php?action=showpopups&amp;type=friend&amp;op=sendform',2,$errormessage);
 					}
-					$xoopsMailer = new icms_messaging_Handler();
-					$xoopsMailer->setTemplate('tellfriend.tpl');
-					$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-					$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-					$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
-					$xoopsMailer->assign('YOUR_NAME', $yname);
-					$xoopsMailer->assign('FRIEND_NAME', $fname);
-					$xoopsMailer->setToEmails($fmail);
-					$xoopsMailer->setFromEmail($ymail);
-					$xoopsMailer->setFromName($yname);
-					$xoopsMailer->setSubject(sprintf(_MSC_INTSITE,$icmsConfig['sitename']));
+					$mailer = new icms_messaging_Handler();
+					$mailer->setTemplate('tellfriend.tpl');
+					$mailer->assign('SITENAME', $icmsConfig['sitename']);
+					$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+					$mailer->assign('SITEURL', ICMS_URL.'/');
+					$mailer->assign('YOUR_NAME', $yname);
+					$mailer->assign('FRIEND_NAME', $fname);
+					$mailer->setToEmails($fmail);
+					$mailer->setFromEmail($ymail);
+					$mailer->setFromName($yname);
+					$mailer->setSubject(sprintf(_MSC_INTSITE,$icmsConfig['sitename']));
 					//OpenTable();
-					if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
+					if (!$mailer->send()) {echo $mailer->getErrors();}
 					else {echo '<div><h4>'._MSC_REFERENCESENT.'</h4></div>';}
 					//CloseTable();
 				}

@@ -201,33 +201,33 @@ switch ($op) {
 
 			// Activation by user
 			if ($icmsConfigUser['activation_type'] == 0) {
-				$xoopsMailer = new icms_messaging_Handler();
-				$xoopsMailer->useMail();
-				$xoopsMailer->setTemplate('register.tpl');
-				$xoopsMailer->setToUsers(new icms_member_user_Object($newid));
-				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-				$xoopsMailer->setFromName($icmsConfig['sitename']);
-				$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
-				if (!$xoopsMailer->send()) {
+				$mailer = new icms_messaging_Handler();
+				$mailer->useMail();
+				$mailer->setTemplate('register.tpl');
+				$mailer->setToUsers(new icms_member_user_Object($newid));
+				$mailer->setFromEmail($icmsConfig['adminmail']);
+				$mailer->setFromName($icmsConfig['sitename']);
+				$mailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
+				if (!$mailer->send()) {
 					echo "<div id='yourregmailng'>" . _US_YOURREGMAILNG . "</div>";
 				} else {
 					echo "<div id='yourregistered'>" . _US_YOURREGISTERED . "</div>";
 				}
 				// activation by admin
 			} elseif ($icmsConfigUser['activation_type'] == 2) {
-				$xoopsMailer = new icms_messaging_Handler();
-				$xoopsMailer->useMail();
-				$xoopsMailer->setTemplate('adminactivate.tpl');
-				$xoopsMailer->assign('USERNAME', $uname);
-				$xoopsMailer->assign('USERLOGINNAME', $login_name);
-				$xoopsMailer->assign('USEREMAIL', $email);
-				$xoopsMailer->assign('USERACTLINK', ICMS_URL . '/user.php?op=actv&amp;id=' . $newid . '&amp;actkey=' . $newuser->getVar('actkey'));
+				$mailer = new icms_messaging_Handler();
+				$mailer->useMail();
+				$mailer->setTemplate('adminactivate.tpl');
+				$mailer->assign('USERNAME', $uname);
+				$mailer->assign('USERLOGINNAME', $login_name);
+				$mailer->assign('USEREMAIL', $email);
+				$mailer->assign('USERACTLINK', ICMS_URL . '/user.php?op=actv&amp;id=' . $newid . '&amp;actkey=' . $newuser->getVar('actkey'));
 				$member_handler = icms::handler('icms_member');
-				$xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['activation_group']));
-				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-				$xoopsMailer->setFromName($icmsConfig['sitename']);
-				$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
-				if (!$xoopsMailer->send()) {
+				$mailer->setToGroups($member_handler->getGroup($icmsConfigUser['activation_group']));
+				$mailer->setFromEmail($icmsConfig['adminmail']);
+				$mailer->setFromName($icmsConfig['sitename']);
+				$mailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
+				if (!$mailer->send()) {
 					echo "<div id='yourregmailng'>" . _US_YOURREGMAILNG . "</div>";
 				} else {
 					echo "<div id='yourregistered2'>" . _US_YOURREGISTERED2 . "</div>";

@@ -270,17 +270,17 @@ class icms_member_user_Object extends icms_ipf_Object {
         if (!$icmsConfigUser['welcome_msg'])
             return true;
 
-        $xoopsMailer = new icms_messaging_Handler();
-        $xoopsMailer->useMail();
-        $xoopsMailer->setBody($icmsConfigUser['welcome_msg_content']);
-        $xoopsMailer->assign('UNAME', $this->getVar('uname'));
+        $mailer = new icms_messaging_Handler();
+        $mailer->useMail();
+        $mailer->setBody($icmsConfigUser['welcome_msg_content']);
+        $mailer->assign('UNAME', $this->getVar('uname'));
         $user_email = $this->getVar('email');
-        $xoopsMailer->assign('X_UEMAIL', $user_email);
-        $xoopsMailer->setToEmails($user_email);
-        $xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-        $xoopsMailer->setFromName($icmsConfig['sitename']);
-        $xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, icms_core_DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
-        if (!$xoopsMailer->send(true)) {
+        $mailer->assign('X_UEMAIL', $user_email);
+        $mailer->setToEmails($user_email);
+        $mailer->setFromEmail($icmsConfig['adminmail']);
+        $mailer->setFromName($icmsConfig['sitename']);
+        $mailer->setSubject(sprintf(_US_YOURREGISTRATION, icms_core_DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
+        if (!$mailer->send(true)) {
             $this->setErrors(_US_WELCOMEMSGFAILED);
             return false;
         } else {
@@ -301,16 +301,16 @@ class icms_member_user_Object extends icms_ipf_Object {
 
         if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
             $member_handler = icms::handler('icms_member');
-            $xoopsMailer = new icms_messaging_Handler();
-            $xoopsMailer->useMail();
-            $xoopsMailer->setTemplate('newuser_notify.tpl');
-            $xoopsMailer->assign('UNAME', $this->getVar('uname'));
-            $xoopsMailer->assign('EMAIL', $this->getVar('email'));
-            $xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['new_user_notify_group']));
-            $xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-            $xoopsMailer->setFromName($icmsConfig['sitename']);
-            $xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT, $icmsConfig['sitename']));
-            if (!$xoopsMailer->send(true)) {
+            $mailer = new icms_messaging_Handler();
+            $mailer->useMail();
+            $mailer->setTemplate('newuser_notify.tpl');
+            $mailer->assign('UNAME', $this->getVar('uname'));
+            $mailer->assign('EMAIL', $this->getVar('email'));
+            $mailer->setToGroups($member_handler->getGroup($icmsConfigUser['new_user_notify_group']));
+            $mailer->setFromEmail($icmsConfig['adminmail']);
+            $mailer->setFromName($icmsConfig['sitename']);
+            $mailer->setSubject(sprintf(_US_NEWUSERREGAT, $icmsConfig['sitename']));
+            if (!$mailer->send(true)) {
                 $this->setErrors(_US_NEWUSERNOTIFYADMINFAIL);
                 return false;
             } else {
