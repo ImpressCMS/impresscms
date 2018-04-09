@@ -49,7 +49,7 @@
     "classmap": [ "modules/"]
   },
   "require-dev": {
-    "phpunit/phpunit": "4.*@stable"
+    "phpunit/phpunit": "7.*@stable"
   },
   "config": {
 	  "optimize-autoloader": true
