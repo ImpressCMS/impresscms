@@ -479,7 +479,8 @@ function icms_module_update($dirname) {
 	// Save current version for use in the update function
 	$prev_version = $module->getVar('version');
 	$prev_dbversion = $module->getVar('dbversion');
-	xoops_template_clear_module_cache($module->getVar('mid'));
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
+
 	// we dont want to change the module name set by admin
 	$temp_name = $module->getVar('name');
 	$module->loadInfoAsVar($dirname);
