@@ -235,7 +235,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('iTheme'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'template_set', '_MD_AM_DTPLSET', 'default', '_MD_AM_DTPLSETDSC', 'tplset', 'other', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'dhtmltextarea', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('dhtmltextarea', 'FCKeditor', 'tinymce')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '" . addslashes(serialize(array('dhtmltextarea', 'CKeditor', 'tinymce'))) . "', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'anonymous', '_MD_AM_ANONNAME', '".addslashes(_INSTALL_ANON)."', '_MD_AM_ANONNAMEDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'gzip_compression', '_MD_AM_USEGZIP', '0', '_MD_AM_USEGZIPDSC', 'yesno', 'int', " . $p++ . ")"
