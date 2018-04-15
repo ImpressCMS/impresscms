@@ -348,7 +348,7 @@ class icms_member_user_Object extends icms_ipf_Object {
     public function isAdmin($module_id = null) {
         static $buffer = array();
         if (is_null($module_id)) {
-            $module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
+			$module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->mid : 1;
         } elseif ((int) $module_id < 1) {
             $module_id = 0;
         }

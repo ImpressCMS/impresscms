@@ -297,7 +297,7 @@ class icms_view_theme_Object {
 
 		if ($_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime) {
 			$template = $this->contentTemplate ? $this->contentTemplate : 'db:system_dummy.html';
-			$dirname = $icmsModule->getVar('dirname', 'n');
+			$dirname = $icmsModule->dirname;
 
 			$this->template->caching = 2;
 			$this->template->cache_lifetime = $this->contentCacheLifetime;

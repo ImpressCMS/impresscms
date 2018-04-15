@@ -125,7 +125,7 @@ if (is_object($poster) == TRUE) { // no need to do this for deleted users
 	$icmsTpl->assign('anonymous', $icmsConfig['anonymous']);
 }
 
-$var = $pm_arr[0]->getVar('msg_text', 'N');
+$var = $pm_arr[0]->msg_text;
 
 // see if the sender had permission to use wysiwyg for the system module - in 2.0, everyone will
 /* @todo remove editor permission check in 2.0 */
