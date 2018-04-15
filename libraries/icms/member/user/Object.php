@@ -481,6 +481,7 @@ class icms_member_user_Object extends icms_ipf_Object {
     * @return boolean
     */
     public function isSameAsLoggedInUser() {
+		var_dump(icms::$user);
         if (!icms::$user)
             return false;
         return icms::$user->getVar('uid') == $this->getVar('uid');
