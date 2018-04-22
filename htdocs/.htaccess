@@ -23,7 +23,6 @@
 	ErrorDocument 415 error.php?e=415
 	ErrorDocument 416 error.php?e=416
 	ErrorDocument 417 error.php?e=417
-	ErrorDocument 421 error.php?e=421
 	ErrorDocument 426 error.php?e=426
 	ErrorDocument 428 error.php?e=428
 	ErrorDocument 429 error.php?e=429

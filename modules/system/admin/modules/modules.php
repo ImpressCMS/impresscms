@@ -260,7 +260,7 @@ function xoops_module_install($dirname) {
 								'<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 
 							// generate compiled file
-							if (!$icmsAdminTpl->template_touch($newtplid)) {
+							if (!icms_view_Tpl::template_touch($newtplid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_COMPILE_FAIL . '</span>',
 									'<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 							} else {
@@ -270,7 +270,7 @@ function xoops_module_install($dirname) {
 						unset($tpldata);
 					}
 				}
-				$icmsAdminTpl->template_clear_module_cache($newmid);
+				icms_view_Tpl::template_clear_module_cache($newmid);
 				$blocks = $module->getInfo('blocks');
 				if ($blocks !== FALSE) {
 					$msgs[] = _MD_AM_BLOCKS_ADDING;
@@ -330,7 +330,7 @@ function xoops_module_install($dirname) {
 									$msgs[] = sprintf(_MD_AM_TEMPLATE_INSERTED, '<strong>' . $block['template'] . '</strong>',
 										'<strong>' . icms_conv_nr2local($newtplid) . '</strong>');
 									// generate compiled file
-									if (!$icmsAdminTpl->template_touch($newtplid)) {
+									if (!icms_view_Tpl::template_touch($newtplid)) {
 										$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_COMPILE_FAIL . '</span>',
 											'<strong>' . $block['template'] . '</strong>', '<strong>' . icms_conv_nr2local($newtplid) . '</strong>');
 									} else {
@@ -670,7 +670,7 @@ function xoops_module_uninstall($dirname) {
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->getByDirname($dirname);
 	$module->registerClassPath();
-	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
 	if ($module->getVar('dirname') == 'system') {
 		return "<p>" . sprintf(_MD_AM_FAILUNINS, "<strong>" . $module->getVar('name') . "</strong>")
 		. "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_SYSNO . "</p>";
@@ -849,7 +849,7 @@ function xoops_module_uninstall($dirname) {
 					for ($i = 0; $i < $confcount; $i++) {
 						if (!$config_handler->deleteConfig($configs[$i])) {
 							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIGOPTION_DELETE_FAIL .'</span>',
-								'<strong>' . icms_conv_nr2local($configs[$i]->getvar('conf_id')) . '</strong>');
+								'<strong>' . icms_conv_nr2local($configs[$i]->getVar('conf_id')) . '</strong>');
 						} else {
 							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_DELETED,
 								'<strong>' . icms_conv_nr2local($configs[$i]->getVar('conf_id')) . '</strong>');
@@ -919,7 +919,7 @@ function xoops_module_activate($mid) {
 	global $icms_block_handler, $icmsAdminTpl;
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->get($mid);
-	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
 	$module->setVar('isactive', 1);
 	if (!$module_handler->insert($module)) {
 		$ret = "<p>" . sprintf(_MD_AM_FAILACT, "<strong>" . $module->getVar('name') . "</strong>") . "&nbsp;"
@@ -950,7 +950,7 @@ function xoops_module_deactivate($mid) {
 
 	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->get($mid);
-	$icmsAdminTpl->template_clear_module_cache($mid);
+	icms_view_Tpl::template_clear_module_cache($mid);
 	$module->setVar('isactive', 0);
 	if ($module->getVar('dirname') == "system") {
 		return "<p>" . sprintf(_MD_AM_FAILDEACT, "<strong>" . $module->getVar('name') . "</strong>")
@@ -1030,11 +1030,8 @@ function icms_module_update($dirname) {
 	// Save current version for use in the update function
 	$prev_version = $module->getVar('version');
 	$prev_dbversion = $module->getVar('dbversion');
-	/**
-	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
-	 * @todo PHP5.3.0 supports $icmsAdminTpl::template_clear_module_cache($module->getVar('mid'));
-	 */
-	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
 	// we dont want to change the module name set by admin
 	$temp_name = $module->getVar('name');
 	$module->loadInfoAsVar($dirname);
@@ -1100,7 +1097,7 @@ function icms_module_update($dirname) {
 						$newid = $tplfile->getVar('tpl_id');
 						$msgs[] = sprintf('&nbsp;&nbsp;<span>' . _MD_AM_TEMPLATE_INSERTED . '</span>', '<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newid . '</strong>');
 						if ($icmsConfig['template_set'] == 'default') {
-							if (!$icmsAdminTpl->template_touch($newid)) {
+							if (!icms_view_Tpl::template_touch($newid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'
 								. _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $tpl['file'] . '</strong>');
 							} else {
@@ -1182,7 +1179,7 @@ function icms_module_update($dirname) {
 								} else {
 									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_UPDATED, '<strong>' . $block['template'] . '</strong>');
 									if ($icmsConfig['template_set'] == 'default') {
-										if (!$icmsAdminTpl->template_touch($tplfile_new->getVar('tpl_id'))) {
+										if (!icms_view_Tpl::template_touch($tplfile_new->getVar('tpl_id'))) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'
 												. _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $block['template'] . '</strong>');
 										} else {
@@ -1247,7 +1244,7 @@ function icms_module_update($dirname) {
 									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_INSERTED,
 										'<strong>' . $block['template'] . '</strong>', '<strong>' . $newid . '</strong>');
 									if ($icmsConfig['template_set'] == 'default') {
-										if (!$icmsAdminTpl->template_touch($newid)) {
+										if (!icms_view_Tpl::template_touch($newid)) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>',
 												'<strong>' . $block['template'] . '</strong>');
 										} else {
@@ -1313,13 +1310,13 @@ function icms_module_update($dirname) {
 			for ($i = 0; $i < $confcount; $i++) {
 				if (!$config_handler->deleteConfig($configs[$i])) {
 					$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIGOPTION_DELETE_FAIL . '</span>',
-						'<strong>' . $configs[$i]->getvar('conf_id') . '</strong>');
+						'<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
 					// save the name of config failed to delete for later use
-					$config_delng[] = $configs[$i]->getvar('conf_name');
+					$config_delng[] = $configs[$i]->getVar('conf_name');
 				} else {
-					$config_old[$configs[$i]->getvar('conf_name')]['value'] = $configs[$i]->getvar('conf_value', 'N');
-					$config_old[$configs[$i]->getvar('conf_name')]['formtype'] = $configs[$i]->getvar('conf_formtype');
-					$config_old[$configs[$i]->getvar('conf_name')]['valuetype'] = $configs[$i]->getvar('conf_valuetype');
+					$config_old[$configs[$i]->getVar('conf_name')]['value'] = $configs[$i]->conf_value;
+					$config_old[$configs[$i]->getVar('conf_name')]['formtype'] = $configs[$i]->getVar('conf_formtype');
+					$config_old[$configs[$i]->getVar('conf_name')]['valuetype'] = $configs[$i]->getVar('conf_valuetype');
 					$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_DELETED,
 						'<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
 				}

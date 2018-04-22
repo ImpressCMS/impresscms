@@ -143,7 +143,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase {
         $logger->disableRendering();
         $this->assertInternalType('string', $logger->render('a'), 'Render must return string');
         $this->assertInternalType('string', $logger->dump(), 'dump must return string');
-        $this->assertInternalType('float', $logger->dumpTime(), 'dumpTime must return float');
+		$this->assertTrue(is_numeric($logger->dumpTime()), 'dumpTime must return numeric');
     }
 
 }

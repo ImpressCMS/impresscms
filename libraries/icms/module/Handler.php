@@ -99,35 +99,6 @@ class icms_module_Handler
 	}
 
 	/**
-	 * Finds and initializes the current module.
-	 * @param bool $inAdmin Whether we are on the admin side or not
-	 */
-	static public function service($inAdmin = FALSE)
-	{
-		$module = NULL;
-		if (preg_match('/modules\/([^\/]+)/', $_SERVER['REQUEST_URI'], $matches)) {
-			$path = ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $matches[1];
-			if ($inAdmin || file_exists($path . '/xoops_version.php') || file_exists($path . '/icms_version.php')) {
-				/* @var $module icms_module_Object */
-				$module = icms::handler("icms_module")->getByDirname($matches[1], TRUE);
-				if (!$inAdmin && (!$module || !$module->getVar('isactive'))) {
-					include_once ICMS_ROOT_PATH . '/header.php';
-					echo "<h4>" . _MODULENOEXIST . "</h4>";
-					include_once ICMS_ROOT_PATH . '/footer.php';
-					exit();
-				}
-			}
-		} else {
-			return null;
-		}
-		if (!self::checkModuleAccess($module, $inAdmin)) {
-			redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
-		}
-		$module->launch();
-		return $module ? $module : NULL;
-	}
-
-	/**
 	 * Checks if the current user can access the specified module
 	 * @param icms_module_Object $module
 	 * @param bool $inAdmin
