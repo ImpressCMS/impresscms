@@ -87,6 +87,7 @@ final class icms extends Container
 	{
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\PreloadServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\LoggerServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\FilesystemServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\DatabaseServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\SecurityServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\SessionServiceProvider::class);
