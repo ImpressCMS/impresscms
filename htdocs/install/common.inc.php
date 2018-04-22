@@ -29,10 +29,13 @@ define('XOOPS_INSTALL', 1);
 date_default_timezone_set(@date_default_timezone_get());
 
 /* we need this so we can use icms_core_Logger during the install to trap errors */
-if (!defined('ICMS_ROOT_PATH')) {
-	define('ICMS_ROOT_PATH', dirname(dirname(__DIR__)));
+if (!defined('INSTALLER_INCLUDE_MAIN')) {
+	if (!defined('ICMS_ROOT_PATH')) {
+		define('ICMS_ROOT_PATH', dirname(dirname(__DIR__)));
+	}
+} else {
+	require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "mainfile.php";
 }
-
 define('ICMS_PUBLIC_PATH', dirname(__DIR__));
 
 require_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
