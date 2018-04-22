@@ -141,7 +141,7 @@ icms_makeSmarty(array(
 	'lang_interest' => _US_INTEREST,
 	'user_interest' => $thisUser->getVar('user_intrest'),
 	'lang_extrainfo' => _US_EXTRAINFO,
-	'user_extrainfo' => icms_core_DataFilter::checkVar($thisUser->getVar('bio', 'N'), 'text', 'output'),
+	'user_extrainfo' => icms_core_DataFilter::checkVar($thisUser->bio, 'text', 'output'),
 	'lang_statistics' => _US_STATISTICS,
 	'lang_membersince' => _US_MEMBERSINCE,
 	'user_joindate' => formatTimestamp($thisUser->getVar('user_regdate'), 's'),
@@ -177,11 +177,11 @@ icms_makeSmarty(array(
 		: '&nbsp;'
 ));
 
-if ($icmsConfigUser['allwshow_sig'] == TRUE && strlen(trim($thisUser->getVar('user_sig', 'N'))) > 0) {
+if ($icmsConfigUser['allwshow_sig'] == TRUE && strlen(trim($thisUser->user_sig)) > 0) {
    	icms_makeSmarty(array(
 		'user_showsignature' => TRUE,
 		'lang_signature' => _US_SIGNATURE,
-		'user_signature' => icms_core_DataFilter::checkVar($thisUser->getVar('user_sig', 'N'), 'html', 'output')
+		'user_signature' => icms_core_DataFilter::checkVar($thisUser->user_sig, 'html', 'output')
 	));
 }
 
