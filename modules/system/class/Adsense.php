@@ -125,25 +125,25 @@ class mod_system_Adsense extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function render() {
-		if ($this->getVar('style', 'n') != '') {
-			$ret = '<div style="' . $this->getVar('style', 'n') . '">';
+		if ($this->style != '') {
+			$ret = '<div style="' . $this->style . '">';
 		} else {
 			$ret = '<div>';
 		}
 
 		$ret .= '<script type="text/javascript">'
-			. 'google_ad_client = "' . $this->getVar('client_id', 'n') . '";'
+			. 'google_ad_client = "' . $this->client_id . '";'
 			. 'google_ad_slot = "' . $this->getVar("slot", "n") . '";'
-			. 'google_ad_width = ' . $this->handler->adFormats[$this->getVar('format', 'n')]['width'] . ';'
-			. 'google_ad_height = ' . $this->handler->adFormats[$this->getVar('format', 'n')]['height'] . ';'
-			. 'google_ad_format = "' . $this->getVar('format', 'n') . '";'
+			. 'google_ad_width = ' . $this->handler->adFormats[$this->format]['width'] . ';'
+			. 'google_ad_height = ' . $this->handler->adFormats[$this->format]['height'] . ';'
+			. 'google_ad_format = "' . $this->format . '";'
 			. 'google_ad_type = "text";'
 			. 'google_ad_channel ="";'
-			. 'google_color_border = "' . $this->getVar('color_border', 'n') . '";'
-			. 'google_color_bg = "' . $this->getVar('color_background', 'n') . '";'
-			. 'google_color_link = "' . $this->getVar('color_link', 'n') . '";'
-			. 'google_color_url = "' . $this->getVar('color_url', 'n') . '";'
-			. 'google_color_text = "' . $this->getVar('color_text', 'n') . '";'
+			. 'google_color_border = "' . $this->color_border . '";'
+			. 'google_color_bg = "' . $this->color_background . '";'
+			. 'google_color_link = "' . $this->color_link . '";'
+			. 'google_color_url = "' . $this->color_url . '";'
+			. 'google_color_text = "' . $this->color_text . '";'
 			. '</script>'
 			. '<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">'
 			. '</script>'
@@ -157,7 +157,7 @@ class mod_system_Adsense extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function getXoopsCode() {
-		$ret = '[adsense]' . $this->getVar('tag', 'n') . '[/adsense]';
+		$ret = '[adsense]' . $this->tag . '[/adsense]';
 		return $ret;
 	}
 

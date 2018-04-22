@@ -1,18 +1,27 @@
 language: php
 
 php:
-  - 5.5
   - 5.6
   - 7.0
   - 7.1
   - 7.2
 
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+services:
+  - mysql
+
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
+
 script:
  - echo URL=http://192.168.2.99 > .env
  - echo DB_TYPE=pdo.mysql >> .env
  - echo DB_HOST=localhost >> .env
- - echo DB_USER=icms >> .env
- - echo DB_PASS=icms >> .env
+ - echo DB_USER=root >> .env
+ - echo DB_PASS= >> .env
  - echo DB_PCONNECT=0 >> .env
  - echo DB_NAME=icms >> .env
  - echo DB_CHARSET=utf8 >> .env

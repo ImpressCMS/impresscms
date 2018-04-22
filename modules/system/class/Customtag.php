@@ -77,12 +77,12 @@ class mod_system_Customtag extends icms_ipf_Object {
 		if (!$this->content) {
 			switch ($this->getVar('customtag_type')) {
 				case ICMS_CUSTOMTAG_TYPE_XCODES:
-					$ret = $this->getVar('customtag_content', 'N');
+					$ret = $this->customtag_content;
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 1);
 					break;
 
 				case ICMS_CUSTOMTAG_TYPE_HTML:
-					$ret = $this->getVar('customtag_content', 'N');
+					$ret = $this->customtag_content;
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 0);
 					break;
 
@@ -103,7 +103,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 	 */
 	public function renderWithPhp() {
 		if (!$this->content && !$this->evaluated) {
-			$ret = $this->getVar('customtag_content', 'N');
+			$ret = $this->customtag_content;
 
 			// check for PHP if we are not on admin side
 			if (!defined('XOOPS_CPFUNC_LOADED' ) && $this->getVar('customtag_type') == ICMS_CUSTOMTAG_TYPE_PHP) {
@@ -124,7 +124,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 	 * Generate a bbcode for the custom tag
 	 */
 	public function getXoopsCode() {
-		$ret = '[customtag]' . $this->getVar('name', 'n') . '[/customtag]';
+		$ret = '[customtag]' . $this->name . '[/customtag]';
 		return $ret;
 	}
 
