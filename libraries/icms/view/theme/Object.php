@@ -297,7 +297,7 @@ class icms_view_theme_Object {
 
 		if ($_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime) {
 			$template = $this->contentTemplate ? $this->contentTemplate : 'db:system_dummy.html';
-			$dirname = $icmsModule->getVar('dirname', 'n');
+			$dirname = $icmsModule->dirname;
 
 			$this->template->caching = 2;
 			$this->template->cache_lifetime = $this->contentCacheLifetime;
@@ -368,7 +368,7 @@ class icms_view_theme_Object {
 		$header = empty($xoopsOption['icms_module_header'])
 			? $this->template->get_template_vars('icms_module_header')
 			: $xoopsOption['icms_module_header'];
-		
+
 		$this->template->assign('icms_module_header', $header . "\n" . $this->renderOldMetas(NULL, TRUE));
 
 		/* create template vars for the new meta zones */
@@ -379,7 +379,7 @@ class icms_view_theme_Object {
 		$pagetitle = empty($xoopsOption['icms_pagetitle'])
 			? $this->template->get_template_vars('icms_pagetitle')
 			: $xoopsOption['icms_pagetitle'];
-	
+
 		$this->template->assign('icms_pagetitle', $pagetitle);
 
 		// Do not cache the main (theme.html) template output
@@ -431,7 +431,7 @@ class icms_view_theme_Object {
 			$attributes = array();
 		}
 		if (!empty($src)) {
-			$attributes['src'] = $xoops->url($this->resourcePath($src));
+			$attributes['src'] = icms::url($this->resourcePath($src));
 		}
 		if (!empty($content)) {
 			$attributes['_'] = $content;
@@ -458,7 +458,7 @@ class icms_view_theme_Object {
 			$attributes = array();
 		}
 		if (!empty($src)) {
-			$attributes['href'] = $xoops->url($this->resourcePath($src));
+			$attributes['href'] = icms::url($this->resourcePath($src));
 		}
 		if (!isset($attributes['type'])) {
 			$attributes['type'] = 'text/css';
