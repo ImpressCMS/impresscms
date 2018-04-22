@@ -132,7 +132,7 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 
 	public function changeVisible($bid) {
 		$blockObj = $this->get($bid);
-		if ($blockObj->getVar('visible' , 'n')) {
+		if ($blockObj->visible) {
 			$blockObj->setVar('visible', 0);
 		} else {
 			$blockObj->setVar('visible', 1);

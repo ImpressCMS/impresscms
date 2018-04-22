@@ -11,6 +11,7 @@
  * @since        1.0
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
  */
+define('INSTALLER_INCLUDE_MAIN', true);
 require_once 'common.inc.php';
 
 if (!defined('XOOPS_INSTALL')) exit();
@@ -20,12 +21,11 @@ $pageHasForm = true;
 $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
-
-include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "mainfile.php";
 include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "include" . DIRECTORY_SEPARATOR . "common.php";
 include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "include" . DIRECTORY_SEPARATOR . "cp_functions.php";
 include_once __DIR__ . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'dbmanager.php';
 include __DIR__ . DIRECTORY_SEPARATOR . "modulesadmin.php";
+
 $dbm = new db_manager();
 
 if (!$dbm->isConnectable()) {
@@ -50,8 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		 */
 		$module_handler = icms::handler('icms_module');
 		$system_moduleObj = $module_handler->getByDirname('system');
-		include_once ICMS_ROOT_PATH . '/modules/system/include/update.php';
-		icms_module_update_system($system_moduleObj);
 		$content .= $system_moduleObj->messages;
 
 		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';

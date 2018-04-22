@@ -66,7 +66,7 @@ class icms_auth_method_Ads extends icms_auth_method_Ldap {
 		$authenticated = FALSE;
 		if (in_array($uname, $icmsConfigAuth['ldap_users_bypass'])) {
 			/* use core authentication if user is bypassed for LDAP */
-			$auth = new icms_auth_method_Local(icms::$xoopsDB);
+			$auth = new icms_auth_method_Local();
 			return $auth->authenticate($uname, $pwd);
 		}
 		if (!extension_loaded('ldap')) {
@@ -115,7 +115,6 @@ class icms_auth_method_Ads extends icms_auth_method_Ldap {
 	 * @return userDN or false
 	 */
 	public function getUPN($uname) {
-		$userDN = FALSE;
 		$userDN = $uname . "@" . $this->ldap_domain_name;
 		return $userDN;
 	}

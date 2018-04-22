@@ -20,13 +20,15 @@
     }
   ],
   "require": {
-    "php": ">=5.5.0",
-    "simplepie/simplepie": "1.3.1",
+    "imponeer/composer-custom-commands": "*",
+    "php": ">=5.6.0",
+    "simplepie/simplepie": "1.5.1",
     "league/flysystem": "^1.0",
     "ezyang/htmlpurifier": "4.6.*",
 	"vlucas/phpdotenv": "^2.4@stable",
     "phpmailer/phpmailer": "v5.*",
     "tecnickcom/tcpdf": "6.*",
+    "league/container": "^2.4",
 	"erusev/parsedown": "^1.7.0",
 	"cerdic/css-tidy": "*",
     "geshi/geshi": "^1.0",
@@ -47,9 +49,24 @@
   },
   "autoload": {
     "psr-0" : {"" : "libraries/"},
-    "classmap": [ "modules/"]
+	  "classmap": [
+		  "modules/"
+	  ],
+	  "psr-4": {
+		  "ImpressCMS\\Core\\Providers\\": "core/providers/"
+	  }
   },
   "require-dev": {
-    "phpunit/phpunit": "4.*@stable"
+	  "phpunit/phpunit": "~5.4"
+  },
+	"extra": {
+		"custom-commands": {
+			"commands": [
+			],
+			"boot": "mainfile.php"
+		}
+  },
+  "config": {
+	  "optimize-autoloader": true
   }
 }

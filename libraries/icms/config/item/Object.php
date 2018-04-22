@@ -118,18 +118,18 @@ class icms_config_item_Object extends icms_ipf_Object {
 	public function getConfValueForOutput() {
 		switch($this->getVar('conf_valuetype')) {
 			case 'int':
-				return (int) ($this->getVar('conf_value', 'N'));
+				return (int)($this->conf_value);
 				break;
 
 			case 'array':
-                $value = $this->getVar('conf_value', 'N');
+				$value = $this->conf_value;
                 if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) != ':'))
                 	return array();
                 $value = @unserialize($value);
 				return $value ? $value : array();
 
 			case 'float':
-				$value = $this->getVar('conf_value', 'N');
+				$value = $this->conf_value;
 				return (float) $value;
 				break;
 
@@ -140,7 +140,7 @@ class icms_config_item_Object extends icms_ipf_Object {
 			case 'textarea':
 				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'html', 'output');
 			default:
-				return $this->getVar('conf_value', 'N');
+				return $this->conf_value;
 				break;
 		}
 	}
