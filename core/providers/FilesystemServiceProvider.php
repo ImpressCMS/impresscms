@@ -5,7 +5,6 @@ namespace ImpressCMS\Core\Providers;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 
 /**

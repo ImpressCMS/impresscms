@@ -125,9 +125,10 @@ class icms_view_theme_Factory {
 	 */
 	static public function getThemesList() {
 		$dirlist = [];
-		foreach (icms::$filesystem->listContents('themes://') as $fileInfo) {
+		$fs = icms::getInstance()->get('filesystem');
+		foreach ($fs->listContents('themes://') as $fileInfo) {
 			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || icms::$filesystem->has('themes://' . $file . '/theme.html') === false) {
+			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme.html') === false) {
 				continue;
 			}
 			$dirlist[$file] = $file;
@@ -141,17 +142,18 @@ class icms_view_theme_Factory {
 	 */
 	static public function getAdminThemesList() {
 		$items = [];
-		foreach (icms::$filesystem->listContents('themes://') as $fileInfo) {
+		$fs = icms::getInstance()->get('filesystem');
+		foreach ($fs->listContents('themes://') as $fileInfo) {
 			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || icms::$filesystem->has('themes://' . $file . '/theme_admin.html') === false) {
+			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme_admin.html') === false) {
 				continue;
 			}
 			$items[$file] = $file;
 		}
 
-		foreach (icms::$filesystem->listContents('modules://system/themes') as $fileInfo) {
+		foreach ($fs->listContents('modules://system/themes') as $fileInfo) {
 			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || icms::$filesystem->has('modules://system/themes/' . $file . '/theme.html') === false) {
+			if (substr($file, 0, 1) == '.' || $fs->has('modules://system/themes/' . $file . '/theme.html') === false) {
 				continue;
 			}
 			$items[$file] = $file;
