@@ -19,8 +19,9 @@ function b_system_waiting_show($options) {
 
 	$userlang = $icmsConfig['language'] ;
 
+	$cache = icms::getInstance()->get('cache');
 	$sql_cache_min = empty($options[1]) ? 0 : (int) $options[1] ;
-	$sql_cached_item = \icms::$cache->getItem('waiting_touch');
+	$sql_cached_item = $cache->getItem('waiting_touch');
 	if ($sql_cached_item->isHit()) {
 		return [];
 	}
@@ -92,7 +93,7 @@ function b_system_waiting_show($options) {
 			date_interval_create_from_date_string($sql_cache_min . ' minutes')
 		);
 		$sql_cached_item->expiresAt($time);
-		\icms::$cache->save($sql_cached_item);
+		$cache->save($sql_cached_item);
 	}
 
 	return $block ;

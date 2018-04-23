@@ -116,7 +116,8 @@ class icms_plugins_EditorHandler {
 	 * @return  array   $_list    list of available editors that are allowed (through admin config)
 	 */
 	public function &getList($noHtml = FALSE) {
-		$cached_item = icms::$cache->getItem('editors_list');
+		$cache = icms::getInstance()->get('cache');
+		$cached_item = $cache->getItem('editors_list');
 
 		if (!$cached_item->isHit()) {
 			$list = array();
@@ -139,7 +140,7 @@ class icms_plugins_EditorHandler {
 			array_multisort($order, $list);
 
 			$cached_item->set($list);
-			\icms::$cache->save($cached_item);
+			$cache->save($cached_item);
 		}
 
 		$list = $cached_item->get();

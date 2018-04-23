@@ -51,7 +51,7 @@ $op = isset($_GET['rssnews']) ? (int) ($_GET['rssnews']) : 0;
 if (!empty($_GET['op'])) {$op = (int) ($_GET['op']);}
 if (!empty($_POST['op'])) {$op = (int) ($_POST['op']);}
 
-if (!icms::$cache->getItem('adminmenu-' . $icmsConfig['language'])->isHit()) {
+if (!icms::getInstance()->get('cache')->getItem('adminmenu-' . $icmsConfig['language'])->isHit()) {
 	xoops_module_write_admin_menu(impresscms_get_adminmenu());
 }
 
