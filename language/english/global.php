@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 //%%%%%%	File Name mainfile.php 	%%%%%
 define('_PLEASEWAIT','Please Wait');
 define('_FETCHING','Loading...');
