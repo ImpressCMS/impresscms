@@ -902,4 +902,3 @@ function icms_module_update($dirname) {
 	return $ret;
 }
 
-?>

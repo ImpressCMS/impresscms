@@ -52,6 +52,8 @@ final class icms extends Container
 
 	/**
 	 * Initialize ImpressCMS before bootstrap
+	 *
+	 * @return $this
 	 */
 	public function setup()
 	{
@@ -63,6 +65,8 @@ final class icms extends Container
 		icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
 		$this->buildRelevantUrls();
+
+		return $this;
 	}
 
 	/**
@@ -81,12 +85,14 @@ final class icms extends Container
 
 	/**
 	 * Launch bootstrap and instanciate global services
-	 * @return void
+	 *
+	 * @return $this
 	 */
 	public function boot()
 	{
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\PreloadServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\LoggerServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\FilesystemServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\DatabaseServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\SecurityServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\SessionServiceProvider::class);
@@ -102,6 +108,8 @@ final class icms extends Container
 		self::$session = $this->get('session');
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
+
+		return $this;
 	}
 
 	/**
@@ -113,6 +121,19 @@ final class icms extends Container
 		if (session_id()) session_write_close();
 		// Ensure the logger can decorate output before objects are destroyed
 		while (@ob_end_flush()) ;
+	}
+
+	/**
+	 * Get instance
+	 *
+	 * @return icms|null
+	 */
+	public static function &getInstance() {
+		static $instance = null;
+		if ($instance === null) {
+			$instance = new self();
+		}
+		return $instance;
 	}
 
 	/**

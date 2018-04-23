@@ -34,4 +34,3 @@ return $config = array(
 		"order"	=>	1,
 		"nohtml"=>	1
 	);
-?>
