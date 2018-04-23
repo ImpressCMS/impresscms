@@ -128,6 +128,8 @@ abstract class icms_form_Base {
 	 * @deprecated The "name" attribute is not strict HTML
 	 */
 	public function getName($encode = true) {
+		trigger_error('The "name" attribute is not strict HTML', E_USER_DEPRECATED);
+
 		return $encode ? htmlspecialchars($this->_name, ENT_QUOTES, _CHARSET) : $this->_name;
 	}
 

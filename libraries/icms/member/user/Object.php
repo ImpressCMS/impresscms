@@ -432,13 +432,13 @@ class icms_member_user_Object extends icms_ipf_Object {
     /**
     * Returns uid of user
      *
-    * @deprecated since version 2.1
+	 * @deprecated Use $this->uid instead!
      *
     * @return int
     */
     public function uid() {
-        icms_core_Debug::setDeprecated('->uid', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        return $this->uid;
+		trigger_error('Use $this->uid instead!', E_USER_DEPRECATED);
+		return $this->uid;
     }
 
     /**
@@ -481,7 +481,6 @@ class icms_member_user_Object extends icms_ipf_Object {
     * @return boolean
     */
     public function isSameAsLoggedInUser() {
-		var_dump(icms::$user);
         if (!icms::$user)
             return false;
         return icms::$user->getVar('uid') == $this->getVar('uid');

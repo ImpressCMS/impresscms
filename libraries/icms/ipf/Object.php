@@ -246,7 +246,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * - $maxlength = 0 unless $data_type is a TEXTBOX, then $maxlength will be 255
 	 * - all other vars are NULL or '' depending of the parameter
 	 *
-	 * @deprecated since version 2.1
+	 * @deprecated Use initVar instead
 	 *
 	 * @param string $key
 	 *        key of this field. This needs to be the name of the field in the related database table
@@ -262,7 +262,8 @@ class icms_ipf_Object extends icms_core_Object {
 	 *        default value of this variable
 	 */
 	public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
-		icms_core_Debug::setDeprecated('initVar', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+		trigger_error('Use enableUpload() instead', E_USER_DEPRECATED);
+
 		$maxlength = $data_type == self::DTYPE_DEP_TXTBOX ? 255 : null;
 		$this->initVar($key, $data_type, $value, $required, $maxlength, '', false, $form_caption, $form_dsc, false, true, true);
 	}
