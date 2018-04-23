@@ -46,5 +46,3 @@ class Smarty_Compiler_Foreachq extends Smarty_Internal_Compile_Foreach
 {
 
 }
-
-?>
