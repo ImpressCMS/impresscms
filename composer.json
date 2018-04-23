@@ -24,7 +24,7 @@
     "php": ">=5.6.0",
     "simplepie/simplepie": "1.5.1",
     "league/flysystem": "^1.0",
-    "ezyang/htmlpurifier": "4.6.*",
+    "ezyang/htmlpurifier": "4.10.*",
 	"vlucas/phpdotenv": "^2.4@stable",
     "phpmailer/phpmailer": "v5.*",
     "tecnickcom/tcpdf": "6.*",
