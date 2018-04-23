@@ -383,7 +383,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * Here is a list of supported editor :
 	 * - tiny : TinyEditor
 	 * - dhtmltextarea : ImpressCMS DHTML Area
-	 * - fckeditor : FCKEditor
+	 * - ckeditor : CKeditor
 	 * - inbetween : InBetween
 	 * - koivi : Koivi
 	 * - spaw : Spaw WYSIWYG Editor

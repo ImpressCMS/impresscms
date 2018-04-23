@@ -39,4 +39,3 @@ function b_waiting_weblinks() {
 	return $ret;
 }
 
-?>

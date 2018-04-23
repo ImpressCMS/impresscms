@@ -104,7 +104,11 @@ include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 if (isset($ext)) {
 
 	// for backward compatibility
-	$_SERVER['SCRIPT_NAME'] = '/' . $requested_path;
+	if (isset($_SERVER['REDIRECT_URL'])) {
+		$_SERVER['SCRIPT_NAME'] = $_SERVER['REDIRECT_URL'];
+	} else {
+		$_SERVER['SCRIPT_NAME'] = '/' . $requested_path;
+	}
 	$_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_NAME'];
 
 	require $full_path;

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 // Blocks
 define("_MB_SYSTEM_ADMENU","Administration Menu");
 define("_MB_SYSTEM_RNOW","Register now!");
@@ -83,4 +83,3 @@ define("_MB_SYSTEM_SOCIAL_PROVIDER_28", "Propeller");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_29", "Buzz");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_30", "Sphinn");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_31", "Jumptags");
-?>

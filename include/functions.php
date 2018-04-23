@@ -2165,7 +2165,7 @@ function icms_moduleAction($dirname = 'system')
 	global $icmsModule;
 	$ret = @(
 			// action module 'system'
-			!empty($icmsModule) && 'system' == $icmsModule->getVar('dirname', 'n')
+		!empty($icmsModule) && 'system' == $icmsModule->dirname
 			&&
 			// current dirname
 			($dirname == $_POST['dirname'] || $dirname == $_POST['module'])
