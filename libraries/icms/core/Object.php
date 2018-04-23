@@ -186,7 +186,9 @@ class icms_core_Object extends icms_properties_Handler {
 	 * @deprecated Use php function clone
     */
     public function xoopsClone() {
-        return clone $this;
+		trigger_error('Use php function clone!', E_USER_DEPRECATED);
+
+		return clone $this;
     }
 
     /**
@@ -195,7 +197,9 @@ class icms_core_Object extends icms_properties_Handler {
 	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead
     */
     public function setDirty() {
-        $this->setVarInfo(null, parent::VARCFG_CHANGED, true);
+		trigger_error('Use setVarInfo with self::VARCFG_CHANGED instead', E_USER_DEPRECATED);
+
+		$this->setVarInfo(null, parent::VARCFG_CHANGED, true);
     }
 
     /**
@@ -204,7 +208,9 @@ class icms_core_Object extends icms_properties_Handler {
 	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead
     */
     public function unsetDirty() {
-        $this->setVarInfo(null, parent::VARCFG_CHANGED, false);
+		trigger_error('Use setVarInfo with self::VARCFG_CHANGED instead', E_USER_DEPRECATED);
+
+		$this->setVarInfo(null, parent::VARCFG_CHANGED, false);
     }
 
     /**
@@ -213,7 +219,9 @@ class icms_core_Object extends icms_properties_Handler {
 	 * @deprecated Use count($this->getChangedVars()) > 0 instead
     */
     public function isDirty() {
-        return count($this->getChangedVars()) > 0;
+		trigger_error('Use count($this->getChangedVars()) > 0 instead', E_USER_DEPRECATED);
+
+		return count($this->getChangedVars()) > 0;
     }
 
     /**

@@ -437,8 +437,8 @@ class icms_member_user_Object extends icms_ipf_Object {
     * @return int
     */
     public function uid() {
-        icms_core_Debug::setDeprecated('->uid', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        return $this->uid;
+		trigger_error('Use $this->uid instead!', E_USER_DEPRECATED);
+		return $this->uid;
     }
 
     /**

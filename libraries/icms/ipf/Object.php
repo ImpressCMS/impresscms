@@ -262,6 +262,8 @@ class icms_ipf_Object extends icms_core_Object {
 	 *        default value of this variable
 	 */
 	public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
+		trigger_error('Use enableUpload() instead', E_USER_DEPRECATED);
+
 		$maxlength = $data_type == self::DTYPE_DEP_TXTBOX ? 255 : null;
 		$this->initVar($key, $data_type, $value, $required, $maxlength, '', false, $form_caption, $form_dsc, false, true, true);
 	}

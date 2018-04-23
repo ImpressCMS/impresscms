@@ -355,6 +355,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      */
 	public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false)
 	{
+		trigger_error('Use getObjects() instead', E_USER_DEPRECATED);
+
 		return $this->getObjects($criteria, $id_as_key, $as_object, $sql, true);
 	}
 
@@ -659,6 +661,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &getD($id, $as_object = true)
 	{
+		trigger_error('Use get() instead', E_USER_DEPRECATED);
+
 		return $this->get($id, $as_object, true);
 	}
 
@@ -748,6 +752,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getListD($criteria = null, $limit = 0, $start = 0)
 	{
+		trigger_error('Use getList() instead', E_USER_DEPRECATED);
+
 		return $this->getList($criteria, $limit, $start, true);
 	}
 
@@ -841,6 +847,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public function insertD(&$obj, $force = false, $checkObject = true, $debug = false)
 	{
+		trigger_error('Use save() instead', E_USER_DEPRECATED);
+
 		return $this->save($obj, $force);
     }
 
@@ -1141,6 +1149,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      */
 	public function insert(&$obj, $force = false, $checkObject = true, $debug = false)
 	{
+		trigger_error('Use save() instead', E_USER_DEPRECATED);
+
 		return $this->save(array(&$obj), $force);
 	}
 
@@ -1504,7 +1514,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return VOID
      */
     public function setUploaderConfig($_uploadPath = false, $_allowedMimeTypes = false, $_maxFileSize = false, $_maxWidth = false, $_maxHeight = false) {
-        $this->uploadEnabled = true;
+		trigger_error('Use enableUpload() instead', E_USER_DEPRECATED);
+
+		$this->uploadEnabled = true;
         $this->_uploadPath = $_uploadPath ? $_uploadPath : $this->_uploadPath;
         $this->_allowedMimeTypes = $_allowedMimeTypes ? $_allowedMimeTypes : $this->_allowedMimeTypes;
         $this->_maxFileSize = $_maxFileSize ? $_maxFileSize : $this->_maxFileSize;

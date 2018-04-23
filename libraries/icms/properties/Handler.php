@@ -519,7 +519,8 @@ abstract class icms_properties_Handler implements Serializable {
 	 * @deprecated initCommonVar will be removed in the future
     */
     public function initCommonVar($varname, $displayOnForm = true, $default = 'notdefined') {
-        switch ($varname) {
+		trigger_error('initCommonVar will be removed in the future', E_USER_DEPRECATED);
+		switch ($varname) {
             case 'docxode':
                 trigger_error('You should use doxcode in code. Not docxode.', E_USER_WARNING);
                 $varname = 'doxcode';
@@ -766,6 +767,8 @@ abstract class icms_properties_Handler implements Serializable {
     */
 	public function setType($key, $type)
 	{
+		trigger_error('use setVarInfo with self::VARCFG_TYPE option instead', E_USER_DEPRECATED);
+
 		$this->setVarInfo($key, self::VARCFG_TYPE, $type);
     }
 
@@ -779,6 +782,8 @@ abstract class icms_properties_Handler implements Serializable {
 	 */
 	public function doSetFieldAsRequired($key, $is_required = true)
 	{
+		trigger_error('use setVarInfo with required option instead', E_USER_DEPRECATED);
+
 		$this->setVarInfo($key, self::VARCFG_REQUIRED, $is_required);
 	}
 
@@ -791,6 +796,8 @@ abstract class icms_properties_Handler implements Serializable {
 	 */
 	public function cleanVars()
 	{
+		trigger_error('use toArray instead!', E_USER_DEPRECATED);
+
 		return $this->toArray();
 	}
 

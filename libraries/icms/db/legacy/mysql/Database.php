@@ -61,6 +61,8 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	public function connect($selectdb = true) {
 		static $db_charset_set;
 
+		trigger_error('PHP is removing support for the mysql driver functions. Switch to PDO', E_USER_DEPRECATED);
+
 		$this->allowWebChanges = ($_SERVER['REQUEST_METHOD'] != 'GET');
 
 		if (!extension_loaded('mysql')) {
