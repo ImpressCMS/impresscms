@@ -7,7 +7,7 @@ use icms_core_Security;
 use icms_Event;
 
 /**
- * Session service provider
+ * Security service provider
  */
 class SecurityServiceProvider extends AbstractServiceProvider
 {
