@@ -10,4 +10,3 @@ define('_AUTH_LDAP_CANT_READ_ENTRY',"Can't read entry %s");
 define('_AUTH_LDAP_XOOPS_USER_NOTFOUND',"Sorry no corresponding user information has been found in the ImpressCMS database for connection: %s <br />" .
 		"Please verify your user datas or set on the automatic provisionning");
 define('_AUTH_LDAP_START_TLS_FAILED',"Failed to open a TLS connection");
-?>

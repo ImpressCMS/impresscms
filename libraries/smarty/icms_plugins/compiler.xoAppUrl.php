@@ -86,4 +86,3 @@ function smarty_compiler_xoAppUrl( $argStr, &$compiler ) {
 	return "echo htmlspecialchars( $str );";
 }
 
-?>

@@ -39,4 +39,3 @@ class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
 		parent::__construct(@$caption, $name, $value, $rows, $cols, $hiddentext,$configs);
 	}
 }
-?>
