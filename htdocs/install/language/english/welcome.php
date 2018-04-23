@@ -1,4 +1,5 @@
 <?php
+
 $content .= '
 <p>
 	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for
@@ -26,3 +27,4 @@ $content .= '
 	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>
 </ul>
 ';
+

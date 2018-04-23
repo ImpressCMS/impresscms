@@ -9,8 +9,8 @@
  * @author		phppp
  */
 
-define('ICMS_VERSION_NAME', 'ImpressCMS 2.0.0 Alpha 5');
-define("ICMS_VERSION", "2.0.0-alpha5");
+define('ICMS_VERSION_NAME', 'ImpressCMS 2.0.0 Alpha 6');
+define("ICMS_VERSION", "2.0.0-alpha6");
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);

@@ -40,7 +40,9 @@ class icms_core_Logger {
 	/**
 	 * Constructor
 	 */
-	private function __construct() { /* Empty! */ }
+	private function __construct()
+	{ /* Empty! */
+	}
 
 	/**
 	 * Get a reference to the only instance of this class
@@ -48,13 +50,14 @@ class icms_core_Logger {
 	 * @return  object icms_core_Logger  (@link icms_core_Logger) reference to the only instance
 	 * @static
 	 */
-	static public function &instance() {
+	static public function &instance()
+	{
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new icms_core_Logger();
 			// Always catch errors, for security reasons
-                        error_reporting(E_ALL);
-                        ini_set('display_errors', 1);
+			error_reporting(E_ALL);
+			ini_set('display_errors', 1);
 			set_error_handler(array($instance, 'handleError'));
 			set_exception_handler(array($instance, 'handleException'));
 		}
