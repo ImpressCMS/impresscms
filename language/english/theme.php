@@ -56,4 +56,3 @@ define("THEME_Community_DESC","Join the ImpressCMS Community");
 define("THEME_ImpressCMS_DESC","Visit the ImpressCMS main site");
 define("THEME_FEEDS","Feeds");
 define("THEME_PARTNERS","Partners");
-?>

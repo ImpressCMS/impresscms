@@ -126,17 +126,10 @@ class icms_view_Tpl extends SmartyBC
 	}
 
 	/**
-	 * function to update compiled template file in cached templates folder
-	 * Prior to PHP5.3.0, when refering to the class with a variable, like $icmsAdminTpl, you
-	 * still need to use the arrow operator instead of ::
-	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
-	 *
-	 * The proper way to use this would be
-	 * icms_view_Tpl::template_touch($tplid);
-	 * or
-	 * $icmsAdminTpl->template_touch($tplid);
+	 * Touch template by id
 	 *
 	 * @param   string  $tpl_id
+	 *
 	 * @return  boolean
 	 */
 	static public function template_touch($tpl_id) {
@@ -144,7 +137,7 @@ class icms_view_Tpl extends SmartyBC
 		$tplfile =& $tplfile_handler->get($tpl_id);
 
 		if (is_object($tplfile)) {
-			$file = $tplfile->getVar('tpl_file', 'n');
+			$file = $tplfile->tpl_file;
 			$tpl = new icms_view_Tpl();
 			return $tpl->touch("db:$file");
 		}
@@ -154,17 +147,7 @@ class icms_view_Tpl extends SmartyBC
 	/**
 	 * Clear the module cache
 	 *
-	 * Prior to PHP5.3.0, when refering to the class with a variable, like $icmsAdminTpl, you
-	 * still need to use the arrow operator instead of ::
-	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
-	 *
-	 * The proper way to use this would be
-	 * icms_view_Tpl::template_clear_module_cache($tplid);
-	 * or
-	 * $icmsAdminTpl->template_clear_module_cache($tplid);
-	 *
 	 * @param   int $mid    Module ID
-	 * @return
 	 */
 	static public function template_clear_module_cache($mid) {
 		$icms_block_handler = icms::handler('icms_view_block');

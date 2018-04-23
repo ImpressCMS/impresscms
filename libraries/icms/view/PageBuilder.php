@@ -119,7 +119,7 @@ class icms_view_PageBuilder {
 		$tplfile_handler = icms::handler('icms_view_template_file');
 		$tplfile_handler->prefetchBlocks($block_arr);
 		foreach ($block_arr as $block) {
-			$side = $oldzones[$block->getVar('side', 'n')];
+			$side = $oldzones[$block->side];
 			if ($var = $this->buildBlock($block, $template)) {
 				$this->blocks[$side][$var["id"]] = $var;
 			}
@@ -272,7 +272,7 @@ class icms_view_PageBuilder {
 		}
 		$tplName = ($tplName = $xobject->getVar('template')) ? "db:$tplName" : "db:system_block_dummy.html";
 		$cacheid = $this->generateCacheId(
-			'blk_' . $xobject->getVar('dirname', 'n') . '_'
+			'blk_' . $xobject->dirname . '_'
 			. $bid
 		);
 

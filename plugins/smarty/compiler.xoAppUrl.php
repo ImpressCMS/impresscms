@@ -66,17 +66,17 @@ function smarty_compiler_xoAppUrl($args, &$compiler)
 			}
 			$url = $xoops->buildUrl( $url, $params );
 		}
-		$url = $xoops->path( $url, true );
+		$url = icms::path( $url, true );
 		return htmlspecialchars($url);
 	}
 	// Dynamic URL generation
 	if ( $url == '.' ) {
 		$str = "\$_SERVER['REQUEST_URI']";
 	} else {
-		$str = "\$GLOBALS['xoops']->path( '$url', true )";
+		$str = "icms::path( '$url', true )";
 	}
 	if ( isset($params) ) {
-		$str = "\$GLOBALS['xoops']->buildUrl( $str, array(\n";
+		$str = "\\icms::buildUrl( $str, array(\n";
 		foreach ( $params as $k => $v ) {
 			$str .= var_export( $k, true ) . " => $v,\n";
 		}
@@ -85,4 +85,3 @@ function smarty_compiler_xoAppUrl($args, &$compiler)
 	return "<?php echo htmlspecialchars( $str ); ?" . ">";
 }
 
-?>

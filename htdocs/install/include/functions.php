@@ -97,4 +97,3 @@ function imcms_get_url_domain($url)
 	return $domain;
 }
 
-?>

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 define("_INSTALL_WEBMASTER","Webmasters");
 define("_INSTALL_WEBMASTERD","Webmasters of this site");
 define("_INSTALL_REGUSERS","Registered Users");
@@ -81,4 +81,4 @@ If you did not registered to our site, please contact us at the following addres
 Yours truly,
 {X_SITENAME}
 {X_SITEURL}");
-?>
+

@@ -45,8 +45,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . "version.php";
 if (!isset($xoopsOption)) $xoopsOption = array();
 
 // -- Initialize kernel and launch bootstrap
-icms::setup();
-icms::boot();
+icms::getInstance()->setup()->boot();
 
 // -- Easiest ML by Gijoe (no longer needed here)
 
@@ -115,7 +114,27 @@ if ($icmsConfig['closesite'] == 1) {
 	include ICMS_INCLUDE_PATH . '/site-closed.php';
 }
 
-icms::launchModule();
+global $xoopsOption, $icmsConfig;
+if (!isset ($xoopsOption ['nodebug']) || !$xoopsOption ['nodebug']) {
+	if ($icmsConfig ['debug_mode'] == 1 || $icmsConfig ['debug_mode'] == 2) {
+		error_reporting(E_ALL);
+		icms::getInstance()->get('logger')->enableRendering();
+		icms::getInstance()->get('logger')->usePopup = ($icmsConfig ['debug_mode'] == 2);
+		if (icms::getInstance()->has('db')) {
+			icms_Event::attach('icms_db_IConnection', 'prepare', function ($params) {
+				icms::getInstance()->get('logger')->addQuery('prepare: ' . $params ['sql']);
+			});
+			icms_Event::attach('icms_db_IConnection', 'execute', function ($params) {
+				icms::getInstance()->get('logger')->addQuery('execute: ' . $params ['sql']);
+			});
+		}
+	} else {
+		error_reporting(0);
+		icms::getInstance()->get('logger')->activated = false;
+	}
+}
+
+icms::$module = icms::getInstance()->get('module');
 
 if ($icmsConfigPersona['multi_login']) {
 	if (is_object(icms::$user)) {

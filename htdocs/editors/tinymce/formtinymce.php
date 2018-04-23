@@ -157,4 +157,3 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
 		return is_readable( ICMS_ROOT_PATH . $this->rootpath . "/tinymce.php" );
 	}
 }
-?>

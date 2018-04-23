@@ -67,11 +67,15 @@ class icms_view_template_set_Handler extends icms_ipf_Handler {
 	 * Deletes templateset from the database
 	 *
 	 * @see icms_view_template_set_Object
+	 *
 	 * @param object $tplset {@link icms_view_template_set_Object} reference to the object of the tempateset to delete
+	 * @param bool $force Force delete?
+	 *
 	 * @return object icms_view_template_set_Object {@link icms_view_template_set_Object} reference to the new template
 	 */
-	public function delete(&$tplset) {
-		if (!parent::delete($tplset))
+	public function delete(&$tplset, $force = false)
+	{
+		if (!parent::delete($tplset, $force))
 			return false;
 		$sql = sprintf(
 			"DELETE FROM %s WHERE tplset_name = %s",

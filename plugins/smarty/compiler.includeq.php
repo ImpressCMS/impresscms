@@ -42,9 +42,6 @@
  *
  * @deprecated
  */
-class Smarty_Compiler_Includeq extends Smarty_Internal_Compile_Include
-{
+class Smarty_Compiler_Includeq extends Smarty_Internal_Compile_Include {
 
 }
-
-?>
