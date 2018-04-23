@@ -1,6 +1,6 @@
 <?php
 /**
- * FCKeditor adapter for XOOPS
+ * DHTMLTextArea adapter
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -12,4 +12,3 @@
  * Assocated with editor_registry.php
  */
 define("_XOOPS_EDITOR_DHTMLTEXTAREA", "DHTML Form with xCode");
-?>

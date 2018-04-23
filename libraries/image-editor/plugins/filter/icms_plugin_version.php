@@ -24,4 +24,3 @@ $plugversion['file'] = 'filter_image.php';
 $plugversion['block_template'] = 'filter_image.html';
 $plugversion['init_js_function'] = 'filter_progressBar();';
 $plugversion['stop_js_function'] = 'filter_delpreview()';
-?>

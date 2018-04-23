@@ -27,4 +27,4 @@ $content .= '
 	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>
 </ul>
 ';
-?>
+

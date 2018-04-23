@@ -81,4 +81,4 @@ If you did not registered to our site, please contact us at the following addres
 Yours truly,
 {X_SITENAME}
 {X_SITEURL}");
-?>
+

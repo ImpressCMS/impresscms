@@ -131,9 +131,6 @@ $modversion['object_items'] = array(
 /* This will be the list of database tables for the above objects */
 $modversion['tables']  = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
 
-/* Install and update informations */
-$modversion['onUpdate'] = "include/update.php";
-
 /* Search information */
 $modversion['hasSearch'] = FALSE;
 
