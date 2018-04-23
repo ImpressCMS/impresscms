@@ -118,34 +118,6 @@ class icms_config_Handler {
         const CATEGORY_PURIFIER = 14;
 
 	/**
-	 * Initialize the config handler.
-	 * @param $db
-	 */
-	static public function service() {
-		if (isset(self::$instance)) return self::$instance;
-		$instance = icms::handler('icms_config');
-		$configs = $instance->getConfigsByCat(
-			array(
-				self::CATEGORY_MAIN, self::CATEGORY_USER, self::CATEGORY_METAFOOTER, self::CATEGORY_MAILER,
-				self::CATEGORY_AUTH, self::CATEGORY_MULILANGUAGE, self::CATEGORY_PERSONA, self::CATEGORY_PLUGINS,
-				self::CATEGORY_CAPTCHA, self::CATEGORY_SEARCH
-			)
-		);
-		$GLOBALS['icmsConfig']			 = $configs[self::CATEGORY_MAIN];
-		$GLOBALS['xoopsConfig']			 =& $GLOBALS['icmsConfig'];
-		$GLOBALS['icmsConfigUser']       = $configs[self::CATEGORY_USER];
-		$GLOBALS['icmsConfigMetaFooter'] = $configs[self::CATEGORY_METAFOOTER];
-		$GLOBALS['icmsConfigMailer']     = $configs[self::CATEGORY_MAILER];
-		$GLOBALS['icmsConfigAuth']       = $configs[self::CATEGORY_AUTH];
-		$GLOBALS['icmsConfigMultilang']  = $configs[self::CATEGORY_MULILANGUAGE];
-		$GLOBALS['icmsConfigPersona']    = $configs[self::CATEGORY_PERSONA];
-		$GLOBALS['icmsConfigPlugins']    = $configs[self::CATEGORY_PLUGINS];
-		$GLOBALS['icmsConfigCaptcha']    = $configs[self::CATEGORY_CAPTCHA];
-		$GLOBALS['icmsConfigSearch']     = $configs[self::CATEGORY_SEARCH];
-		return self::$instance = $instance;
-	}
-
-	/**
 	 * holds reference to config item handler(DAO) class
 	 *
 	 * @var     object

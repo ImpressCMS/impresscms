@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 //%%%%%%	File Name search.php 	%%%%%
 define("_SR_SEARCH","Search");
 define("_SR_PLZENTER","Please enter all required data!");
@@ -22,4 +22,3 @@ define('_SR_SEARCHRULE', 'Search Rule');
 define('_SR_IGNOREDWORDS', 'The following words are shorter than allowed minimum length (%u chars) and were not included in your search:');
 ############# added since 1.2 #############
 define('_SR_HITSRETURNED', 'hit(s) returned');
-?>

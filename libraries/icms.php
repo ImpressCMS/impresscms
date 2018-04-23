@@ -2,14 +2,16 @@
 /**
  * ICMS Services manager class definition
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	ImpressCMS/core
- * @since	1.3
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
+ * @package    ImpressCMS/core
+ * @since    1.3
  *
- * @internal	This class should normally be "icms_Kernel", marcan and I agreed on calling it "icms"
- * @internal	for convenience, as we are not targetting php 5.3+ yet
+ * @internal    This class should normally be "icms_Kernel", marcan and I agreed on calling it "icms"
+ * @internal    for convenience, as we are not targetting php 5.3+ yet
  */
+
+use \League\Container\Container;
 
 /**
  * ICMS Kernel / Services manager
@@ -17,106 +19,30 @@
  * The icms services manager handles the core bootstrap process, and paths/urls generation.
  * Global services are made available as static properties of this class.
  *
- * @package	ImpressCMS/core
- * @since 	1.3
+ * @package    ImpressCMS/core
+ * @since    1.3
  */
-final class icms {
-
-        /**
-        * Current response
-         *
-        * @var \icms_response_Text
-        */
-        static public $response;
+final class icms extends Container
+{
 
 	/**
-	 * Preload handler
-	 * @var icms_preload_Handler
-	 */
-	static public $preload;
-
-	/**
-	 * Security service
-	 * @var icms_core_Security
-	 */
-	static public $security;
-
-	/**
-	 * Logger
-	 * @var icms_core_Logger
-	 */
-	static public $logger;
-
-	/**
-	 * Database connection
-	 * @var icms_db_IConnection
-	 */
-	static public $db;
-
-	/**
-	 * Legacy database connection
-	 * @var icms_db_legacy_Database
-	 */
-	static public $xoopsDB;
-
-	/**
-	 * Configuration service
-	 * @var icms_config_Handler
-	 */
-	static public $config;
-
-	/**
-	 * Session service
-	 * @var icms_core_Session
-	 */
-	static public $session;
-
-	/**
-	 * Current user
-	 * @var icms_member_user_Object
-	 */
-	static public $user;
-
-	/**
-	 * Current module / application
-	 * @var icms_module_Object
-	 */
-	static public $module;
-
-	/**
-	 * Caches and retrieves cached data
+	 * Current response
 	 *
-	 * @var Psr\Cache\CacheItemPoolInterface
+	 * @var \icms_response_Text
 	 */
-	static public $cache;
-
-	/**
-	 * Registered services definition
-	 * @var array
-	 */
-	static public $services = array(
-		'boot' => array(
-			'security'	=> array(array('icms_core_Security', 'service'), array()),
-			'logger'	=> array(array('icms_core_Logger', 'instance'), array()),
-			'db'		=> array(array('icms_db_Factory', 'pdoInstance'), array()),
-			'xoopsDB'	=> array(array('icms_db_Factory', 'instance'), array()),
-			'config'	=> array(array('icms_config_Handler', 'service'), array()),
-			'session'	=> array(array('icms_core_Session', 'service'), array()),
-		),
-		'optional' => array(),
-	);
+	static public $response;
 
 	/**
 	 * ImpressCMS paths locations
 	 *
 	 * @var array
 	 */
-	static public $paths = array(
+	public static $paths = array(
 		'www' => array(), 'modules' => array(), 'themes' => array(),
 	);
 
 	/** @var array */
-	static public $urls = FALSE;
+	public static $urls = FALSE;
 
 	/**
 	 * array of handlers
@@ -126,84 +52,88 @@ final class icms {
 
 	/**
 	 * Initialize ImpressCMS before bootstrap
+	 *
+	 * @return $this
 	 */
-	static public function setup() {
-		self::$paths['www']		= array(ICMS_ROOT_PATH, ICMS_URL);
-		self::$paths['modules']	= array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
-		self::$paths['themes']	= array(ICMS_THEME_PATH, ICMS_THEME_URL);
+	public function setup()
+	{
+		self::$paths['www'] = array(ICMS_ROOT_PATH, ICMS_URL);
+		self::$paths['modules'] = array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
+		self::$paths['themes'] = array(ICMS_THEME_PATH, ICMS_THEME_URL);
 		// Initialize the autoloader
 		require_once __DIR__ . '/icms/Autoloader.php';
 		icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
-		self::buildRelevantUrls();
+		$this->buildRelevantUrls();
+
+		return $this;
 	}
+
+	/**
+	 * Some vars for compatibility
+	 *
+	 * @deprecated
+	 */
+	public static $db, $xoopsDB, $logger, $preload, $config, $security, $session, $module;
+
+	/**
+	 * Current logged in user
+	 *
+	 * @var icms_member_user_Object|null
+	 */
+	public static $user;
 
 	/**
 	 * Launch bootstrap and instanciate global services
-	 * @return void
+	 *
+	 * @return $this
 	 */
-	static public function boot() {
-		// We just hardcode the preload first, as we need to trigger an event
-		self::$preload = icms_preload_Handler::getInstance();
-		self::$preload->triggerEvent('startCoreBoot');
-
-		foreach (self::$services['boot'] as $name => $definition) {
-			list($factory, $args) = $definition;
-			self::loadService($name, $factory, $args);
-		}
-
-		icms::$cache = Apix\Cache\Factory::getPool(
-			'files',
-			[
-				'directory' => ICMS_CACHE_PATH,
-				'locking' => true,
-				'prefix_key' => 'icms'
-			],
-			true
-		);
-
+	public function boot()
+	{
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\PreloadServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\LoggerServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\FilesystemServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\DatabaseServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\SecurityServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\SessionServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\ConfigServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\ModuleServiceProvider::class);
+		// register links for compatibility
+		self::$db = $this->get('db');
+		self::$xoopsDB = $this->get('xoopsDB');
+		self::$logger = $this->get('logger');
+		self::$preload = $this->get('preload');
+		self::$config = $this->get('config');
+		self::$security = $this->get('security');
+		self::$session = $this->get('session');
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
-	}
 
-	/**
-	 * Instanciate the specified service
-	 * @param string $name
-	 * @param mixed $factory
-	 * @param array $args
-	 * @return object
-	 */
-	static public function loadService($name, $factory, $args = array()) {
-			self::$$name = self::create($factory, $args);
-			icms_Event::trigger('icms', 'loadService', null, array('name' => $name, 'service' => self::$$name));
-			icms_Event::trigger('icms', 'loadService-' . $name, null, array('name' => $name, 'service' => self::$$name));
-	}
-
-	/**
-	 * Register module class repositories and load module service
-	 *
-	 * The system module is not excluded from getObjects to make sure it's already cached for later
-	 * use throughout the system. This function is one of the first functions called in the boot
-	 * process so it's the best place to cache the modules.
-	 * IPF based modules are definied in their own namespace.
-	 */
-	static public function launchModule() {
-		$module_handler = icms::handler("icms_module");
-		$modules = $module_handler->getObjects();
-		foreach ($modules as $module) $module->registerClassPath(TRUE);
-
-		$isAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
-		self::loadService('module', array('icms_module_Handler', 'service'), array($isAdmin));
+		return $this;
 	}
 
 	/**
 	 * Finalizes all processes as the script exits
 	 */
-	static public function shutdown() {
+	static public function shutdown()
+	{
 		// Ensure the session service can write data before the DB connection is closed
 		if (session_id()) session_write_close();
 		// Ensure the logger can decorate output before objects are destroyed
-		while (@ob_end_flush());
+		while (@ob_end_flush()) ;
+	}
+
+	/**
+	 * Get instance
+	 *
+	 * @return icms|null
+	 */
+	public static function &getInstance() {
+		static $instance = null;
+		if ($instance === null) {
+			$instance = new self();
+		}
+		return $instance;
 	}
 
 	/**
@@ -216,8 +146,9 @@ final class icms {
 	 * @param array $args Factory/Constructor arguments
 	 * @return object
 	 */
-	static public function create($factory, $args = array()) {
-		if (is_string($factory) && substr($factory, 0, 1) == '\\') {	// Class name
+	static public function create($factory, $args = array())
+	{
+		if (is_string($factory) && substr($factory, 0, 1) == '\\') {    // Class name
 			$class = substr($factory, 1);
 			if (!isset($args)) {
 				$instance = new $class();
@@ -233,11 +164,12 @@ final class icms {
 
 	/**
 	 * Convert a ImpressCMS path to a physical one
-	 * @param	string	$url URL string to convert to a physical path
-	 * @param 	boolean	$virtual
-	 * @return 	string
+	 * @param    string $url URL string to convert to a physical path
+	 * @param    boolean $virtual
+	 * @return    string
 	 */
-	static public function path($url, $virtual = FALSE) {
+	public function path($url, $virtual = FALSE)
+	{
 		$path = '';
 		@list($root, $path) = explode('/', $url, 2);
 		if (!isset(self::$paths[$root])) {
@@ -247,25 +179,27 @@ final class icms {
 			// Returns a physical path
 			return self::$paths[$root][0] . '/' . $path;
 		}
-		return !isset(self::$paths[$root][1]) ? '' : (self::$paths[$root][1] . '/' . $path );
+		return !isset(self::$paths[$root][1]) ? '' : (self::$paths[$root][1] . '/' . $path);
 	}
 
 	/**
 	 * Convert a ImpressCMS path to an URL
-	 * @param 	string	$url
-	 * @return 	string
+	 * @param    string $url
+	 * @return    string
 	 */
-	static public function url($url) {
-		return (FALSE !== strpos($url, '://' ) ? $url : self::path($url, TRUE ));
+	static public function url($url)
+	{
+		return (FALSE !== strpos($url, '://') ? $url : self::path($url, TRUE));
 	}
 
 	/**
 	 * Build an URL with the specified request params
-	 * @param 	string 	$url
-	 * @param 	array	$params
-	 * @return 	string
+	 * @param    string $url
+	 * @param    array $params
+	 * @return    string
 	 */
-	static public function buildUrl($url, $params = array()) {
+	static public function buildUrl($url, $params = array())
+	{
 		if ($url == '.') {
 			$url = $_SERVER['REQUEST_URI'];
 		}
@@ -287,11 +221,12 @@ final class icms {
 	/**
 	 * Gets the handler for a class
 	 *
-	 * @param string  $name  The name of the handler to get
-	 * @param bool  $optional	Is the handler optional?
-	 * @return		object		$inst		The instance of the object that was created
+	 * @param string $name The name of the handler to get
+	 * @param bool $optional Is the handler optional?
+	 * @return        object        $inst        The instance of the object that was created
 	 */
-	static public function &handler($name, $optional = FALSE ) {
+	static public function &handler($name, $optional = FALSE)
+	{
 		if (!isset(self::$handlers[$name])) {
 			$class = $name . "Handler";
 			if (!class_exists($class)) {
@@ -300,9 +235,9 @@ final class icms {
 					// Try old style handler loading (should be removed later, in favor of the
 					// lookup table present in xoops_gethandler)
 					$lower = strtolower(trim($name));
-					if (file_exists($hnd_file = ICMS_ROOT_PATH.'/kernel/' . $lower . '.php')) {
+					if (file_exists($hnd_file = ICMS_ROOT_PATH . '/kernel/' . $lower . '.php')) {
 						require_once $hnd_file;
-					} elseif (file_exists($hnd_file = ICMS_ROOT_PATH.'/class/' . $lower . '.php')) {
+					} elseif (file_exists($hnd_file = ICMS_ROOT_PATH . '/class/' . $lower . '.php')) {
 						require_once $hnd_file;
 					}
 					if (!class_exists($class = 'Xoops' . ucfirst($lower) . 'Handler', FALSE)) {
@@ -324,9 +259,10 @@ final class icms {
 
 	/**
 	 * Build URLs for global use throughout the application
-	 * @return 	array
+	 * @return    array
 	 */
-	static protected function buildRelevantUrls() {
+	protected function buildRelevantUrls()
+	{
 		if (isset($_SERVER['HTTP_HOST']) && !self::$urls) {
 			$http = strpos(ICMS_URL, "https://") === FALSE
 				? "http://"
@@ -334,10 +270,10 @@ final class icms {
 
 			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
 			$filters = array(
-					'SCRIPT_NAME' => 'str',
-					'HTTP_HOST' => 'str',
-					'QUERY_STRING' => 'str',
-					'HTTP_REFERER' => 'url',
+				'SCRIPT_NAME' => 'str',
+				'HTTP_HOST' => 'str',
+				'QUERY_STRING' => 'str',
+				'HTTP_REFERER' => 'url',
 			);
 
 			$clean_SERVER = icms_core_DataFilter::checkVarArray($_SERVER, $filters, false);
@@ -345,7 +281,7 @@ final class icms {
 			$phpself = $clean_SERVER['SCRIPT_NAME'];
 			$httphost = $clean_SERVER['HTTP_HOST'];
 			$querystring = $clean_SERVER['QUERY_STRING'];
-			if ($querystring != '' ) {
+			if ($querystring != '') {
 				$querystring = '?' . $querystring;
 			}
 			$currenturl = $http . $httphost . $phpself . $querystring;
@@ -365,13 +301,4 @@ final class icms {
 		}
 		return self::$urls;
 	}
-
-        /**
-        * Constructor is private so nobody can create an instance of this class
-         *
-        * Use all static methods instead!
-        */
-        private function __construct() {
-            // ^_^
-        }
 }

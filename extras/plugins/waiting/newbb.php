@@ -18,4 +18,3 @@ function b_waiting_newbb() {
 
 	return $block;
 }
-?>

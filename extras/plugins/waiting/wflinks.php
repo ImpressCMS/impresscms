@@ -45,4 +45,3 @@ function b_waiting_wflinks() {
 }
 
 
-?>

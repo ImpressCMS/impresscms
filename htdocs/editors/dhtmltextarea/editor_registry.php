@@ -1,6 +1,6 @@
 <?php
 /**
- * FCKeditor adapter for XOOPS
+ * DHTMLTextArea adapter
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -34,4 +34,3 @@ return $config = array(
 		"order"	=>	1,
 		"nohtml"=>	1
 	);
-?>
