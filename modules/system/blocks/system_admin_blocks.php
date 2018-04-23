@@ -38,9 +38,6 @@ function b_system_admin_warnings_show() {
 	if (is_writable(ICMS_ROOT_PATH . '/.env')) {
 		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINWRITEABLE, ICMS_ROOT_PATH . '/.env'), '', FALSE));
 	}
-	if (is_dir(ICMS_ROOT_PATH . '/upgrade/')) {
-		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINSTALL2, ICMS_ROOT_PATH . '/upgrade/'), '', FALSE));
-	}
 
 	if (file_exists(ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php')) {
 		array_push($block['msg'], icms_core_Message::error(sprintf(_CSSTIDY_VULN, ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php'), FALSE));

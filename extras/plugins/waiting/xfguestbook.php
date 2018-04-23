@@ -11,4 +11,3 @@ function b_waiting_xfguestbook() {
 
 	return $block;
 }
-?>

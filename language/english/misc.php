@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 define("_MSC_YOURNAMEC","Your Name: ");
 define("_MSC_YOUREMAILC","Your Email: ");
 define("_MSC_FRIENDNAMEC","Friend Name: ");
@@ -21,4 +21,3 @@ define("_MSC_SMILIES","Smilies");
 define("_MSC_CLICKASMILIE","Click a smilie to insert it into your message.");
 define("_MSC_CODE","Code");
 define("_MSC_EMOTION","Emotion");
-?>

@@ -47,17 +47,6 @@ define('ICMS_IN_ADMIN', 1);
 $xoopsOption['pagetype'] = 'admin';
 include ICMS_ROOT_PATH . '/include/cp_functions.php';
 
-// test to see if the system module should be updated, added in 1.2
-$currentVer = icms_getModuleInfo('system')->getDBVersion();
-if ($currentVer < ICMS_SYSTEM_DBVERSION) {
-	// target changes in 2.0
-	if ($currentVer > 42) {
-		redirect_header('modules/system/admin.php?fct=modules&amp;op=update&amp;module=system', 1, _CO_ICMS_UPDATE_NEEDED);
-	} else {
-		redirect_header('modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system', 1, _CO_ICMS_UPDATE_NEEDED);
-	}
-}
-
 $op = isset($_GET['rssnews']) ? (int) ($_GET['rssnews']) : 0;
 if (!empty($_GET['op'])) {$op = (int) ($_GET['op']);}
 if (!empty($_POST['op'])) {$op = (int) ($_POST['op']);}

@@ -79,7 +79,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 * Custom accesser for weight property
 	 */
 	private function weight() {
-		$rtn = $this->getVar('weight', 'n');
+		$rtn = $this->weight;
 		return $rtn;
 	}
 
@@ -87,7 +87,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 * Custom accessor for visible property
 	 */
 	private function visible() {
-		if ($this->getVar('visible', 'n') == 1) {
+		if ($this->visible == 1) {
 			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=visible&bid='
 				. $this->getVar('bid') . '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL
 				. '/actions/button_ok.png" alt="' . _VISIBLE . '"/></a>';
@@ -102,7 +102,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 * Custom accessor for mid property
 	 */
 	private function mid() {
-		$rtn = $this->handler->getModuleName($this->getVar('mid', 'n'));
+		$rtn = $this->handler->getModuleName($this->mid);
 		return $rtn;
 	}
 
@@ -111,9 +111,9 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 */
 	private function side() {
 		$block_positions = $this->handler->getBlockPositions(TRUE);
-		$rtn = (defined($block_positions[$this->getVar('side', 'n')]['title']))
-			? constant($block_positions[$this->getVar('side', 'n')]['title'])
-			: $block_positions[$this->getVar('side', 'n')]['title'];
+		$rtn = (defined($block_positions[$this->side]['title']))
+			? constant($block_positions[$this->side]['title'])
+			: $block_positions[$this->side]['title'];
 		return $rtn;
 	}
 

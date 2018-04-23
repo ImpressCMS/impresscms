@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 //%%%%%%		File Name user.php 		%%%%%
 define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
 define('_US_LOSTPASSWORD','Lost your password?');

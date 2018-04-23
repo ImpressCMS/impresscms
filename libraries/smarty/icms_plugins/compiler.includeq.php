@@ -82,4 +82,3 @@ function smarty_compiler_includeq( $tag_args, &$comp ) {
 }
 
 
-?>

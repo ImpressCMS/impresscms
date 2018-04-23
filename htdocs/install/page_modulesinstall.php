@@ -50,8 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		 */
 		$module_handler = icms::handler('icms_module');
 		$system_moduleObj = $module_handler->getByDirname('system');
-		include_once ICMS_ROOT_PATH . '/modules/system/include/update.php';
-		icms_module_update_system($system_moduleObj);
 		$content .= $system_moduleObj->messages;
 
 		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
