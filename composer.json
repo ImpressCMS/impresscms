@@ -38,7 +38,8 @@
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-pcre": "*",
-    "ext-session": "*"
+    "ext-session": "*",
+    "keo/iso-639": ">=1.0"
   },
   "suggest": {
     "ext-iconv": "Iconv is needed to handle conversions between charsets",
