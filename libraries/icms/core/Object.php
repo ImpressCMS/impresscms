@@ -119,10 +119,6 @@ class icms_core_Object extends icms_properties_Handler {
     * @access public
     */
 
-    public function setNew() {
-        $this->_isNew = true;
-    }
-
     public function unsetNew() {
         $this->_isNew = false;
     }
@@ -130,8 +126,6 @@ class icms_core_Object extends icms_properties_Handler {
     public function isNew() {
         return $this->_isNew;
     }
-
-    /*    * #@- */
 
     /**
     * initialize variables for the object
@@ -151,6 +145,8 @@ class icms_core_Object extends icms_properties_Handler {
                 )
         );
     }
+
+	/*    * #@- */
 
     /**
     * Assign values to multiple variables in a batch
@@ -183,54 +179,49 @@ class icms_core_Object extends icms_properties_Handler {
     }
 
     /**
-    * load all additional filters that have been registered to the object
-     *
-    * @access private
-    */
-    private function _loadFilters() {
-
-    }
-
-    /**
     * Clone current instance
      *
     * @return object
      *
-    * @deprecated since version 2.1
+	 * @deprecated Use php function clone
     */
     public function xoopsClone() {
-        icms_core_Debug::setDeprecated('php function clone', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        return clone $this;
+		trigger_error('Use php function clone!', E_USER_DEPRECATED);
+
+		return clone $this;
     }
 
     /**
     * Sets object modified
      *
-    * @deprecated since version 2.1
+	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead
     */
     public function setDirty() {
-        icms_core_Debug::setDeprecated('setVarInfo with self::VARCFG_CHANGED', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        $this->setVarInfo(null, parent::VARCFG_CHANGED, true);
+		trigger_error('Use setVarInfo with self::VARCFG_CHANGED instead', E_USER_DEPRECATED);
+
+		$this->setVarInfo(null, parent::VARCFG_CHANGED, true);
     }
 
     /**
     * Sets object unmodified
      *
-    * @deprecated since version 2.1
+	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead
     */
     public function unsetDirty() {
-        icms_core_Debug::setDeprecated('setVarInfo with self::VARCFG_CHANGED', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        $this->setVarInfo(null, parent::VARCFG_CHANGED, false);
+		trigger_error('Use setVarInfo with self::VARCFG_CHANGED instead', E_USER_DEPRECATED);
+
+		$this->setVarInfo(null, parent::VARCFG_CHANGED, false);
     }
 
     /**
     * Is object modified?
      *
-    * @deprecated since version 2.1
+	 * @deprecated Use count($this->getChangedVars()) > 0 instead
     */
     public function isDirty() {
-        icms_core_Debug::setDeprecated('count($this->getChangedVars()) > 0', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        return count($this->getChangedVars()) > 0;
+		trigger_error('Use count($this->getChangedVars()) > 0 instead', E_USER_DEPRECATED);
+
+		return count($this->getChangedVars()) > 0;
     }
 
     /**
@@ -240,7 +231,23 @@ class icms_core_Object extends icms_properties_Handler {
         $this->setNew();
     }
 
+	public function setNew()
+	{
+		$this->_isNew = true;
+	}
+
     /**
+	 * return the errors for this object as an array
+	 *
+	 * @return array an array of errors
+	 * @access public
+	 */
+	public function getErrors()
+	{
+		return $this->_errors;
+	}
+
+	/**
     * add an error
      *
     * @param string $value error to add
@@ -257,16 +264,6 @@ class icms_core_Object extends icms_properties_Handler {
             }
             $this->_errors[] = trim($err_str);
         }
-    }
-
-    /**
-    * return the errors for this object as an array
-     *
-    * @return array an array of errors
-    * @access public
-    */
-    public function getErrors() {
-        return $this->_errors;
     }
 
     /**
@@ -290,6 +287,16 @@ class icms_core_Object extends icms_properties_Handler {
     */
     public function hasError() {
         return count($this->_errors) > 0;
+	}
+
+	/**
+	 * load all additional filters that have been registered to the object
+	 *
+	 * @access private
+	 */
+	private function _loadFilters()
+	{
+
     }
 
 }

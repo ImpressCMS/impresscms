@@ -348,7 +348,7 @@ class icms_member_user_Object extends icms_ipf_Object {
     public function isAdmin($module_id = null) {
         static $buffer = array();
         if (is_null($module_id)) {
-            $module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
+			$module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->mid : 1;
         } elseif ((int) $module_id < 1) {
             $module_id = 0;
         }
@@ -432,13 +432,13 @@ class icms_member_user_Object extends icms_ipf_Object {
     /**
     * Returns uid of user
      *
-    * @deprecated since version 2.1
+	 * @deprecated Use $this->uid instead!
      *
     * @return int
     */
     public function uid() {
-        icms_core_Debug::setDeprecated('->uid', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        return $this->uid;
+		trigger_error('Use $this->uid instead!', E_USER_DEPRECATED);
+		return $this->uid;
     }
 
     /**

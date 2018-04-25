@@ -209,7 +209,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		$sql = "SELECT DISTINCT gperm_itemid FROM " . $this->db->prefix('group_permission')
 			. " WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
 		if (is_array($groupid)) {
-			$gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
+			$gid = array_map('intval', $groupid);
 			$sql .= " AND gperm_groupid IN (" . implode(',', $gid) . ")";
 		} else {
 			if ((int) $groupid > 0) {
@@ -517,6 +517,8 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @todo		Remove in version 1.4
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject = TRUE, $side = NULL, $visible = NULL, $orderby = "b.weight,b.bid", $isactive = 1) {
+		trigger_error('Use getObjects() instead', E_USER_DEPRECATED);
+
 		$ret = array();
 
 		if (!$asobject) {
