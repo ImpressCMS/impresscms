@@ -146,30 +146,30 @@ switch ($op) {
 		if (empty($stop)) {
 			$member_handler = icms::handler('icms_member');
 			$newuser =& $member_handler->createUser();
-			$newuser->setVar('user_viewemail', $user_viewemail, TRUE);
-			$newuser->setVar('login_name', $login_name, TRUE);
-			$newuser->setVar('uname', $uname, TRUE);
-			$newuser->setVar('email', $email, TRUE);
+			$newuser->setVar('user_viewemail', $user_viewemail, true);
+			$newuser->setVar('login_name', $login_name, true);
+			$newuser->setVar('uname', $uname, true);
+			$newuser->setVar('email', $email, true);
 			if ($url != '') {
-				$newuser->setVar('url', formatURL($url), TRUE);
+				$newuser->setVar('url', formatURL($url), true);
 			}
-			$newuser->setVar('user_avatar', 'blank.gif', TRUE);
+			$newuser->setVar('user_avatar', 'blank.gif', true);
 			include_once 'include/checkinvite.php';
 			$valid_actkey = check_invite_code($actkey);
-			$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), TRUE);
+			$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), true);
 
 			$icmspass = new icms_core_Password();
 
 			$pass1 = $icmspass->encryptPass($pass);
-			$newuser->setVar('pass', $pass1, TRUE);
-			$newuser->setVar('timezone_offset', $timezone_offset, TRUE);
-			$newuser->setVar('user_regdate', time(), TRUE);
-			$newuser->setVar('uorder', $icmsConfig['com_order'], TRUE);
-			$newuser->setVar('umode', $icmsConfig['com_mode'], TRUE);
-			$newuser->setVar('user_mailok', $user_mailok, TRUE);
+			$newuser->setVar('pass', $pass1, true);
+			$newuser->setVar('timezone_offset', $timezone_offset, true);
+			$newuser->setVar('user_regdate', time(), true);
+			$newuser->setVar('uorder', $icmsConfig['com_order'], true);
+			$newuser->setVar('umode', $icmsConfig['com_mode'], true);
+			$newuser->setVar('user_mailok', $user_mailok, true);
 			$newuser->setVar('notify_method', 2);
 			if ($valid_actkey || $icmsConfigUser['activation_type'] == 1) {
-				$newuser->setVar('level', 1, TRUE);
+				$newuser->setVar('level', 1, true);
 			}
 			if (!$member_handler->insertUser($newuser)) {
 				echo "<div id='registerng'>" . _US_REGISTERNG . "</div>";
@@ -244,7 +244,7 @@ switch ($op) {
 
 	case 'register':
 	default:
-		$invite_code = isset($_GET['code']) ? filter_input(INPUT_GET, 'code') : NULL;
+		$invite_code = isset($_GET['code']) ? filter_input(INPUT_GET, 'code') : null;
 		if ($icmsConfigUser['activation_type'] == 3 || !empty($invite_code)) {
 			include 'include/checkinvite.php';
 			load_invite_code($invite_code);
