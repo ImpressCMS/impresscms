@@ -63,7 +63,7 @@ $modversion = array(
 /*  Development information */
 	'status_version'=> "Alpha 7",
 	'status'=> "Alpha",
-	'date'=> "30 April 2018",
+	'date'=> "26 April 2018",
 	'author_word'=> "",
 	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
