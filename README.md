@@ -6,9 +6,10 @@ ImpressCMS is a community developed Content Management System. With this tool ma
 
 ### What can you do with it?
 
-ImpressCMS can be used for many types of web sites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company. The system is extremely useful for managing online communities because it has the ability to create user groups and assign permissions for managing content to each different group.
+ImpressCMS can be used for many types of web sites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company. 
+The system is extremely useful for managing online communities because it has the ability to create user groups and assign permissions for managing content to each different group.
 
-For each type of website ImpressCMS offers different functionality with a collection of hundreds of free modules that are available on [http://addons.impresscms.org](http://addons.impresscms.org). A few examples of what you can do with them:
+For each type of website ImpressCMS offers different functionality with a collection of free modules that are available on [https://www.impresscms.org/modules/downloads/](https://www.impresscms.org/modules/downloads/). A few examples of what you can do with them:
 
 *   Publish news of your organization
 *   Let visitors contact you through a state of the art customizable contact form
@@ -74,9 +75,9 @@ For each type of website ImpressCMS offers different functionality with a collec
 
 ### Do you need any help?
 
-You can find our official documentation at [wiki.impresscms.org](http://wiki.impresscms.org/modules/wiki/). 
+You can find our official documentation at [our wiki](https://www.impresscms.org/modules/simplywiki/). 
 
-Also, help could be found on [our official forums](http://community.impresscms.org/modules/newbb/).
+Also, help could be found on [our official forums](https://www.impresscms.org/modules/iforum/).
 
 ### How to contribute?
 
