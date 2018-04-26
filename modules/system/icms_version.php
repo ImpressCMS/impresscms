@@ -1,4 +1,4 @@
-<?php
+7<?php
 // $Id: icms_version.php 12455 2014-06-24 09:30:49Z sato-san $
 //  ------------------------------------------------------------------------ //
 //  ------------------------------------------------------------------------ //
@@ -61,9 +61,9 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /*  Development information */
-	'status_version'=> "Alpha 6",
+	'status_version'=> "Alpha 7",
 	'status'=> "Alpha",
-	'date'=> "21 March 2018",
+	'date'=> "30 April 2018",
 	'author_word'=> "",
 	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
