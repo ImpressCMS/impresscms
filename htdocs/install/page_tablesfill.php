@@ -15,7 +15,9 @@
  */
 
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) ) {
+	exit();
+}
 
 $wizard->setPage( 'tablesfill' );
 $pageHasForm = false;
@@ -62,14 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} else {
 		$driver = $type;
 	}
-	$result = $dbm->queryFromFile('./sql/'. $driver .'.data.sql');
-	$result = $dbm->queryFromFile('./language/' . $language . '/'. $driver . '.lang.data.sql');
-	$group = make_groups( $dbm );
-	$result = make_data( $dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $group );
+	$result = $dbm->queryFromFile('./sql/' . $driver . '.data.sql');
+	$result = $dbm->queryFromFile('./language/' . $language . '/' . $driver . '.lang.data.sql');
+	$group = make_groups($dbm);
+	$result = make_data($dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $group);
 	$content = $dbm->report();
 } else {
-	$msg = $process ? READY_INSERT_DATA : DATA_ALREADY_INSERTED;
-	$pageHasForm = $process ? true : false;
+	$msg = $process? READY_INSERT_DATA : DATA_ALREADY_INSERTED;
+	$pageHasForm = $process? true : false;
 
 	$content = "<p class='x2-note'>$msg</p>";
 }

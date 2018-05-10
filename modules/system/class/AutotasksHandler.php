@@ -13,7 +13,7 @@
  */
 class mod_system_AutotasksHandler extends icms_ipf_Handler {
 
-	private $_use_virtual_config = FALSE;
+	private $_use_virtual_config = false;
 	private $_virtual_config = array();
 
 	/**
@@ -32,7 +32,7 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 */
 	public function enableVirtualConfig(&$array) {
 		$this->_virtual_config = $array;
-		$this->_use_virtual_config = TRUE;
+		$this->_use_virtual_config = true;
 	}
 
 	/**
@@ -48,7 +48,7 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 * Disable virtual configuration
 	 */
 	public function disableVirtualConfig() {
-		$this->_use_virtual_config = FALSE;
+		$this->_use_virtual_config = false;
 	}
 
 	/**
@@ -61,9 +61,9 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->setSort('sat_lastruntime');
 		$criteria->setOrder('ASC');
-		$criteria->add( new icms_db_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', NULL, "%s" ));
-		$criteria->add( new icms_db_criteria_Item('sat_repeat', 0, '>=', NULL, "'%s'"));
-		$criteria->add( new icms_db_criteria_Item('sat_enabled', 1));
+		$criteria->add(new icms_db_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', NULL, "%s"));
+		$criteria->add(new icms_db_criteria_Item('sat_repeat', 0, '>=', NULL, "'%s'"));
+		$criteria->add(new icms_db_criteria_Item('sat_enabled', 1));
 		$rez = $this->getObjects($criteria, FALSE);
 		return $rez;
 	}
@@ -75,7 +75,9 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 */
 	public function execTasks() {
 		$rez = array('all' => 0, 'ok' => 0);
-		if (!($tasks = $this->getTasks())) return $rez;
+		if (!($tasks = $this->getTasks())) {
+			return $rez;
+		}
 		foreach ($tasks as $task) {
 			if ($task->exec()) {
 				$rez['ok']++;
@@ -131,7 +133,7 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 		}
 		$data = $this->db->fetchArray($result);
 		$interval = (int) $data['INTV'];
-		return ($interval == 0) ? strtotime('60 minutes') : $interval;
+		return ($interval == 0)? strtotime('60 minutes'):$interval;
 	}
 
 	/**
@@ -198,9 +200,9 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @return AutomatedTasks
 	 */
-	public function getCurrentSystemHandler($forceUpdate = FALSE) {
-		static $handler = FALSE;
-		if ($forceUpdate || ($handler === FALSE)) {
+	public function getCurrentSystemHandler($forceUpdate = false) {
+		static $handler = false;
+		if ($forceUpdate || ($handler === false)) {
 			$config_atasks = $this->getConfig();
 			$handler = $this->getSelectedSystemHandler($config_atasks['autotasks_system']);
 		}
@@ -214,15 +216,17 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @return	array
 	 */
-	public function getSystemHandlersList($checkIfItIsAvaibleOnCurrentSystem = TRUE) {
-		static $ret = NULL;
-		if ($ret === NULL) {
+	public function getSystemHandlersList($checkIfItIsAvaibleOnCurrentSystem = true) {
+		static $ret = null;
+		if ($ret === null) {
 			$files = glob($this->getSystemHandlerFileName('*'));
-			$ret = FALSE;
+			$ret = false;
 			foreach ($files as $file) {
-				$name = (string)$this->getSystemHandlerNameFromFileName((string) $file);
+				$name = (string) $this->getSystemHandlerNameFromFileName((string) $file);
 				$handler = $this->getSelectedSystemHandler($name);
-				if (!$handler) continue;
+				if (!$handler) {
+					continue;
+				}
 				if ($checkIfItIsAvaibleOnCurrentSystem && (!$handler->canRun())) {
 					continue;
 				}

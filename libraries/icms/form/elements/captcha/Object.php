@@ -27,11 +27,11 @@ icms_loadLanguageFile('core', 'captcha');
  */
 class icms_form_elements_captcha_Object {
 
-	public $active	= TRUE;
+	public $active = TRUE;
 	/** potential values: image, text */
 	public $mode = "text";
 	/** */
-	public $config	= array();
+	public $config = array();
 	/** Logging error messages */
 	public $message = array();
 
@@ -72,7 +72,7 @@ class icms_form_elements_captcha_Object {
 		} else {
 			$this->config[$name] = $val;
 		}
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -82,7 +82,7 @@ class icms_form_elements_captcha_Object {
 	 *
 	 * @param string	$mode	if no mode is set, just verify current mode
 	 */
-	public function setMode($mode = NULL) {
+	public function setMode($mode = null) {
 		if (!empty($mode) && in_array($mode, array("text", "image"))) {
 			$this->mode = $mode;
 
@@ -122,8 +122,7 @@ class icms_form_elements_captcha_Object {
 	public function init(
 			$name = 'icmscaptcha', $skipmember = NULL, $num_chars = NULL,
 			$fontsize_min = NULL, $fontsize_max = NULL, $background_type = NULL,
-			$background_num = NULL)
-		{
+			$background_num = NULL) {
 		global $icmsConfigCaptcha;
 		// Loading RUN-TIME settings
 		foreach (array_keys($this->config) as $key) {
@@ -135,10 +134,10 @@ class icms_form_elements_captcha_Object {
 
 		// Skip CAPTCHA for group
 		//$gperm_handler = icms::handler('icms_member_groupperm');
-		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		$groups = is_object(icms::$user)? icms::$user->getGroups():array(XOOPS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$this->active = FALSE;
-		} elseif ($icmsConfigCaptcha['captcha_mode'] =='none') {
+		} elseif ($icmsConfigCaptcha['captcha_mode'] == 'none') {
 			$this->active = FALSE;
 		}
 	}
@@ -150,33 +149,33 @@ class icms_form_elements_captcha_Object {
 	public function verify($skipMember = NULL) {
 		global $icmsConfig, $icmsConfigCaptcha;
 		$sessionName	= @$_SESSION['icms_form_elements_captcha_Object_name'];
-		$skipMember		= ($skipMember === NULL) ? @$_SESSION['icms_form_elements_captcha_Object_skipmember'] : $skipMember;
+		$skipMember		= ($skipMember === NULL)?@$_SESSION['icms_form_elements_captcha_Object_skipmember']:$skipMember;
 		$maxAttempts	= (int) (@$_SESSION['icms_form_elements_captcha_Object_maxattempts']);
 
 		$is_valid = FALSE;
 
-		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		$groups = is_object(icms::$user)? icms::$user->getGroups():array(XOOPS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$is_valid = TRUE;
-		} elseif (!empty($maxAttempts) && $_SESSION['icms_form_elements_captcha_Object_attempt_'.$sessionName] > $maxAttempts) {
+		} elseif (!empty($maxAttempts) && $_SESSION['icms_form_elements_captcha_Object_attempt_' . $sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 			// Verify the code
 		} elseif (!empty($_SESSION['icms_form_elements_captcha_Object_sessioncode'])) {
-			$func = ($icmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
-			$is_valid = ! $func(trim(@$_POST[$sessionName]), $_SESSION['icms_form_elements_captcha_Object_sessioncode']);
+			$func = ($icmsConfigCaptcha['captcha_casesensitive'])?"strcmp":"strcasecmp";
+			$is_valid = !$func(trim(@$_POST[$sessionName]), $_SESSION['icms_form_elements_captcha_Object_sessioncode']);
 		}
 
 		if (!empty($maxAttempts)) {
 			if (!$is_valid) {
 				// Increase the attempt records on failure
-				$_SESSION['icms_form_elements_captcha_Object_attempt_'.$sessionName]++;
+				$_SESSION['icms_form_elements_captcha_Object_attempt_' . $sessionName]++;
 				// Log the error message
 				$this->message[] = ICMS_CAPTCHA_INVALID_CODE;
 
 			} else {
 				// reset attempt records on success
-				$_SESSION['icms_form_elements_captcha_Object_attempt_'.$sessionName] = NULL;
+				$_SESSION['icms_form_elements_captcha_Object_attempt_' . $sessionName] = NULL;
 			}
 		}
 
@@ -190,7 +189,7 @@ class icms_form_elements_captcha_Object {
 	 * @return string	The Caption Constant
 	 */
 	public function getCaption() {
-		return defined("ICMS_CAPTCHA_CAPTION") ? constant("ICMS_CAPTCHA_CAPTION") : "";
+		return defined("ICMS_CAPTCHA_CAPTION")? constant("ICMS_CAPTCHA_CAPTION"):"";
 	}
 
 	/**
@@ -206,7 +205,7 @@ class icms_form_elements_captcha_Object {
 	 * @param bool	$clearSession	also clear session variables?
 	 * @return bool True if destroying succeeded
 	 */
-	public function destroyGarbage($clearSession = FALSE) {
+	public function destroyGarbage($clearSession = false) {
 		$class = "icms_form_elements_captcha_" . ucfirst($this->mode);
 		$captcha_handler = new $class();
 		if (method_exists($captcha_handler, "destroyGarbage")) {
@@ -215,13 +214,13 @@ class icms_form_elements_captcha_Object {
 		}
 
 		if ($clearSession) {
-			$_SESSION['icms_form_elements_captcha_Object_name'] = NULL;
-			$_SESSION['icms_form_elements_captcha_Object_skipmember'] = NULL;
-			$_SESSION['icms_form_elements_captcha_Object_sessioncode'] = NULL;
-			$_SESSION['icms_form_elements_captcha_Object_maxattempts'] = NULL;
+			$_SESSION['icms_form_elements_captcha_Object_name'] = null;
+			$_SESSION['icms_form_elements_captcha_Object_skipmember'] = null;
+			$_SESSION['icms_form_elements_captcha_Object_sessioncode'] = null;
+			$_SESSION['icms_form_elements_captcha_Object_maxattempts'] = null;
 		}
 
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -241,7 +240,7 @@ class icms_form_elements_captcha_Object {
 		$_SESSION['icms_form_elements_captcha_Object_maxattempts'] = $maxAttempts;
 
 		 if (!empty($maxAttempts)) {
-			$_SESSION['icms_form_elements_captcha_Object_maxattempts_'. $_SESSION['icms_form_elements_captcha_Object_name']] = $maxAttempts;
+			$_SESSION['icms_form_elements_captcha_Object_maxattempts_' . $_SESSION['icms_form_elements_captcha_Object_name']] = $maxAttempts;
 		}
 
 

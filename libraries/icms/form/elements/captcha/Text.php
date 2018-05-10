@@ -41,7 +41,7 @@ class icms_form_elements_captcha_Text {
 	 */
 	public function loadConfig($config = array()) {
 		// Loading default preferences
-		$this->config =& $config;
+		$this->config = & $config;
 	}
 
 	/**

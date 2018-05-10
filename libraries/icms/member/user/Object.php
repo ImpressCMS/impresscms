@@ -267,8 +267,9 @@ class icms_member_user_Object extends icms_ipf_Object {
     public function sendWelcomeMessage() {
         global $icmsConfig, $icmsConfigUser;
 
-        if (!$icmsConfigUser['welcome_msg'])
-            return true;
+        if (!$icmsConfigUser['welcome_msg']) {
+                    return true;
+        }
 
         $xoopsMailer = new icms_messaging_Handler();
         $xoopsMailer->useMail();
@@ -348,7 +349,7 @@ class icms_member_user_Object extends icms_ipf_Object {
     public function isAdmin($module_id = null) {
         static $buffer = array();
         if (is_null($module_id)) {
-			$module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->mid : 1;
+			$module_id = isset($GLOBALS['xoopsModule'])?$GLOBALS['xoopsModule']->mid:1;
         } elseif ((int) $module_id < 1) {
             $module_id = 0;
         }
@@ -386,7 +387,7 @@ class icms_member_user_Object extends icms_ipf_Object {
     public function isOnline() {
         if (!isset($this->_isOnline)) {
             $onlinehandler = icms::handler('icms_core_Online');
-            $this->_isOnline = ($onlinehandler->getCount(new icms_db_criteria_Item('online_uid', $this->getVar('uid'))) > 0) ? true : false;
+            $this->_isOnline = ($onlinehandler->getCount(new icms_db_criteria_Item('online_uid', $this->getVar('uid'))) > 0)? true : false;
         }
         return $this->_isOnline;
     }
@@ -411,7 +412,7 @@ class icms_member_user_Object extends icms_ipf_Object {
             $ret .= "&amp;rating=" . $rating;
         }
         if ($size && $size != '') {
-            $ret .="&amp;size=" . $size;
+            $ret .= "&amp;size=" . $size;
         }
         if ($default && $default != '') {
             $ret .= "&amp;default=" . urlencode($default);
@@ -468,10 +469,12 @@ class icms_member_user_Object extends icms_ipf_Object {
     * @return boolean
     */
     public function logout() {
-        if (!isset($_SESSION['icmsUser']['uid']))
-            return false;
-        if ($_SESSION['icmsUser']['uid'] != $this->getVar('uid'))
-            return false;
+        if (!isset($_SESSION['icmsUser']['uid'])) {
+                    return false;
+        }
+        if ($_SESSION['icmsUser']['uid'] != $this->getVar('uid')) {
+                    return false;
+        }
         $_SESSION = array();
     }
 
@@ -481,8 +484,9 @@ class icms_member_user_Object extends icms_ipf_Object {
     * @return boolean
     */
     public function isSameAsLoggedInUser() {
-        if (!icms::$user)
-            return false;
+        if (!icms::$user) {
+                    return false;
+        }
         return icms::$user->getVar('uid') == $this->getVar('uid');
     }
 

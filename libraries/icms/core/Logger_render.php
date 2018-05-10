@@ -46,7 +46,7 @@ if ($mode == 'popup') {
 </script>';
 }
 
-if (empty( $mode )) {
+if (empty($mode)) {
 	$ret .= "<script type=\"text/javascript\">\n";
 	$ret .= "function($, cookie) {\n";
 	$ret .= "\n var app = {\n";
@@ -73,19 +73,19 @@ if (empty( $mode )) {
 		$ret .= "<ul class=\"nav nav-tabs\">\n";
 			$ret .= "<li class='active'><a href='#debug-none' data-toggle='tab'>" . _NONE . "</a></li>\n";
 
-			$count = count( $this->errors );
+			$count = count($this->errors);
 			$ret .= "<li><a href='#debug-errors' data-toggle='tab'>" . _ERRORS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
 
-			$count = count( $this->queries );
+			$count = count($this->queries);
 			$ret .= "<li><a href='#debug-queries' data-toggle='tab'>" . _QUERIES . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
 
-			$count = count( $this->blocks );
+			$count = count($this->blocks);
 			$ret .= "<li><a href='#debug-blocks' data-toggle='tab'>" . _BLOCKS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
 
-			$count = count( $this->extra );
+			$count = count($this->extra);
 			$ret .= "<li><a href='#debug-extra' data-toggle='tab'>" . _EXTRA . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
 
-			$count = count( $this->logstart );
+			$count = count($this->logstart);
 			$ret .= "<li><a href='#debug-timers' data-toggle='tab'>" . _TIMERS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
 
 			$count = count($this->deprecated);
@@ -108,12 +108,12 @@ if (empty($mode) || $mode == 'errors') {
 	$class = 'even';
 	$ret .= "<h3>\n" . _CORE_DEVELOPER_DASHBOARD . " </h3>\n";
 	$ret .= '<div class="tab-pane fade" id="debug-errors"><h4>' . _ERRORS . '</h4>';
-	foreach ( $this->errors as $error) {
+	foreach ($this->errors as $error) {
 		$ret .= "\n<div class='$class'>";
-		$ret .= isset( $types[ $error['errno'] ] ) ? $types[ $error['errno'] ] : 'Unknown';
-		$ret .= sprintf( ": %s in file %s line %s<br />\n", $error['errstr'], $error['errfile'], $error['errline'] );
+		$ret .= isset($types[$error['errno']])?$types[$error['errno']]:'Unknown';
+		$ret .= sprintf(": %s in file %s line %s<br />\n", $error['errstr'], $error['errfile'], $error['errline']);
 		$ret .= "</div>";
-		$class = ($class == 'odd') ? 'even' : 'odd';
+		$class = ($class == 'odd')?'even':'odd';
 	}
 	$ret .= "\n</table>\n</div>\n";
 }
@@ -121,14 +121,14 @@ if (empty($mode) || $mode == 'errors') {
 if (empty($mode) || $mode == 'queries') {
 	$class = 'even';
 	$ret .= '<div class="tab-pane fade" id="debug-queries"><h4>' . _QUERIES . '</h4>';
-	$sqlmessages ='';
+	$sqlmessages = '';
 	foreach ($this->queries as $q) {
 		if (isset($q['error'])) {
 			$sqlmessages .= '<div class="' . $class . '"><span style="color:#ff0000;">' . htmlentities($q['sql']) . '<br /><strong>' . _ERR_NR . '</strong> ' . $q['errno'] . '<br /><strong>' . _ERR_MSG . '</strong> ' . $q['error'] . '</span></div>';
 		} else {
 			$sqlmessages .= '<div class="' . $class . '">' . htmlentities($q['sql']) . '</div>';
 		}
-		$class = ($class == 'odd') ? 'even' : 'odd';
+		$class = ($class == 'odd')?'even':'odd';
 	}
 	$ret .= str_replace(getenv('DB_PREFIX') . '_', '', $sqlmessages);
 	$ret .= '<div class="foot"><h5>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->queries)) . '</span> ' . _QUERIES . '</h5></div></div>';
@@ -143,7 +143,7 @@ if (empty($mode) || $mode == 'blocks') {
 		} else {
 			$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _NOCACHE . '</div>';
 		}
-		$class = ($class == 'odd') ? 'even' : 'odd';
+		$class = ($class == 'odd')?'even':'odd';
 	}
 	$ret .= '<div class="foot"><h5>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->blocks)) . '</span> ' . _BLOCK . '</h5></div></div>';
 }
@@ -153,7 +153,7 @@ if (empty($mode) || $mode == 'extra') {
 	$ret .= '<div class="tab-pane fade" id="debug-extra"><h4>' . _EXTRA . '</h4>';
 	foreach ($this->extra as $ex) {
 		$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($ex['name']) . ':</strong> ' . htmlspecialchars($ex['msg']) . '</div>';
-		$class = ($class == 'odd') ? 'even' : 'odd';
+		$class = ($class == 'odd')?'even':'odd';
 	}
 	$ret .= '</div>';
 }
@@ -161,9 +161,9 @@ if (empty($mode) || $mode == 'extra') {
 if (empty($mode) || $mode == 'timers') {
 	$class = 'even';
 	$ret .= '<div class="tab-pane fade" id="debug-timers"><h4>' . _TIMERS . '</h4>';
-	foreach ( $this->logstart as $k => $v) {
-		$ret .= '<div class="' . $class.'"><strong>' . htmlspecialchars($k) . '</strong> ' . sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>') . '</div>';
-		$class = ($class == 'odd') ? 'even' : 'odd';
+	foreach ($this->logstart as $k => $v) {
+		$ret .= '<div class="' . $class . '"><strong>' . htmlspecialchars($k) . '</strong> ' . sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf("%.03f", $this->dumpTime($k))) . '</span>') . '</div>';
+		$class = ($class == 'odd')?'even':'odd';
 	}
 	$ret .= '</div>';
 }
@@ -175,13 +175,13 @@ if (empty($mode) || $mode == 'timers') {
 if (empty($mode) || $mode == 'deprecated') {
 	$class = 'even';
 	$ret .= '<div class="tab-pane fade" id="debug-deprecated"><h4>' . _CORE_DEPRECATED . '</h4>';
-	foreach ( $this->deprecated as $dep) {
-		$ret .= '<div class="' . $class.'">' . $dep . '</div>';
-		$class = ($class == 'odd') ? 'even' : 'odd';
+	foreach ($this->deprecated as $dep) {
+		$ret .= '<div class="' . $class . '">' . $dep . '</div>';
+		$class = ($class == 'odd')?'even':'odd';
 	}
 	$ret .= '</div>';
 }
 
-if (empty( $mode )) {
+if (empty($mode)) {
 	$ret .= "</div>\n</div>\n";
 }

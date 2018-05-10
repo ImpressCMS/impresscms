@@ -28,7 +28,7 @@ include "admin_header.php";
  * @param int		$autotasksid	The unique identifier for the autotask
  * @param boolean	$clone			Indicator if an autotask is being created from another
  */
-function editautotasks($showmenu = FALSE, $autotasksid = 0, $clone = FALSE) {
+function editautotasks($showmenu = false, $autotasksid = 0, $clone = false) {
 	global $icms_admin_handler, $icmsAdminTpl;
 
 	icms_cp_header();
@@ -47,47 +47,47 @@ function editautotasks($showmenu = FALSE, $autotasksid = 0, $clone = FALSE) {
 }
 
 switch ($op) {
-	case "mod":
+		case "mod":
 
-		$autotasksid = isset($sat_id) ? (int) ($sat_id) : 0;
-		editautotasks(TRUE, $autotasksid);
-		break;
+			$autotasksid = isset($sat_id) ? (int) ($sat_id) : 0;
+			editautotasks(TRUE, $autotasksid);
+			break;
 
-	case "clone":
-		$autotasksid = isset($sat_id) ? (int) ($sat_id) : 0;
-		editautotasks(TRUE, $autotasksid, TRUE);
-		break;
+		case "clone":
+			$autotasksid = isset($sat_id) ? (int) ($sat_id) : 0;
+			editautotasks(TRUE, $autotasksid, TRUE);
+			break;
 
-	case "addautotasks":
-		$controller = new icms_ipf_Controller($icms_admin_handler);
-		$controller->storeFromDefaultForm(_CO_ICMS_AUTOTASKS_CREATED, _CO_ICMS_AUTOTASKS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=autotasks');
-		break;
+		case "addautotasks":
+			$controller = new icms_ipf_Controller($icms_admin_handler);
+			$controller->storeFromDefaultForm(_CO_ICMS_AUTOTASKS_CREATED, _CO_ICMS_AUTOTASKS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=autotasks');
+			break;
 
-	case "del":
-		$controller = new icms_ipf_Controller($icms_admin_handler);
-		$controller->handleObjectDeletion();
-		break;
+		case "del":
+			$controller = new icms_ipf_Controller($icms_admin_handler);
+			$controller->handleObjectDeletion();
+			break;
 
-	default:
-		icms_cp_header();
+		default:
+			icms_cp_header();
 
-		$objectTable = new icms_ipf_view_Table($icms_admin_handler, FALSE, array('edit'));
-		$objectTable->addColumn(new icms_ipf_view_Column('sat_name', 'left', FALSE, 'getNameForDisplay'));
-		$objectTable->addColumn(new icms_ipf_view_Column('sat_repeat', 'center', 80, 'getRepeatForDisplay'));
-		$objectTable->addColumn(new icms_ipf_view_Column('sat_interval', 'center', 80, 'getIntervalForDisplay'));
-		$objectTable->addColumn(new icms_ipf_view_Column('sat_enabled', 'center', 80, 'getEnableForDisplay'));
-		$objectTable->addColumn(new icms_ipf_view_Column('sat_onfinish', 'center', 120, 'getOnFinishForDisplay'));
-		$objectTable->addColumn(new icms_ipf_view_Column('sat_type', 'center', 120, 'getTypeForDisplay'));
-		$objectTable->addColumn(new icms_ipf_view_Column('sat_lastruntime', 'center', 180, 'getLastRunTimeForDisplay'));
+			$objectTable = new icms_ipf_view_Table($icms_admin_handler, FALSE, array('edit'));
+			$objectTable->addColumn(new icms_ipf_view_Column('sat_name', 'left', FALSE, 'getNameForDisplay'));
+			$objectTable->addColumn(new icms_ipf_view_Column('sat_repeat', 'center', 80, 'getRepeatForDisplay'));
+			$objectTable->addColumn(new icms_ipf_view_Column('sat_interval', 'center', 80, 'getIntervalForDisplay'));
+			$objectTable->addColumn(new icms_ipf_view_Column('sat_enabled', 'center', 80, 'getEnableForDisplay'));
+			$objectTable->addColumn(new icms_ipf_view_Column('sat_onfinish', 'center', 120, 'getOnFinishForDisplay'));
+			$objectTable->addColumn(new icms_ipf_view_Column('sat_type', 'center', 120, 'getTypeForDisplay'));
+			$objectTable->addColumn(new icms_ipf_view_Column('sat_lastruntime', 'center', 180, 'getLastRunTimeForDisplay'));
 
-		$objectTable->addIntroButton('addautotasks', 'admin.php?fct=autotasks&amp;op=mod', _CO_ICMS_AUTOTASKS_CREATE);
-		$objectTable->addQuickSearch(array('title', 'summary', 'description'));
-		$objectTable->addCustomAction('getDeleteButtonForDisplay');
+			$objectTable->addIntroButton('addautotasks', 'admin.php?fct=autotasks&amp;op=mod', _CO_ICMS_AUTOTASKS_CREATE);
+			$objectTable->addQuickSearch(array('title', 'summary', 'description'));
+			$objectTable->addCustomAction('getDeleteButtonForDisplay');
 
-		$icmsAdminTpl->assign('icms_autotasks_table', $objectTable->fetch());
-		$icmsAdminTpl->display('db:admin/autotasks/system_adm_autotasks.html');
+			$icmsAdminTpl->assign('icms_autotasks_table', $objectTable->fetch());
+			$icmsAdminTpl->display('db:admin/autotasks/system_adm_autotasks.html');
 
-		break;
+			break;
 }
 
 icms_cp_footer();

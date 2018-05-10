@@ -52,7 +52,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
         $fcomment = '<!-- filtered with htmlpurifier -->';
 
         $purified = strpos($html, $fcomment);
-        if ($purified !== FALSE) {
+        if ($purified !== false) {
             $html = str_replace($fcomment, '', $html);
         }
 
@@ -91,7 +91,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			$fileList = array_values($fileList);
 
 			foreach ($fileList as &$val) {
-				$val = "HTMLPurifier_Filter_".substr($val, 0,strrpos($val,'.'));
+				$val = "HTMLPurifier_Filter_" . substr($val, 0, strrpos($val, '.'));
 				$newObject = new $val;
 				$filterList[] = $newObject;
 			}
@@ -111,7 +111,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 
         $IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];
         if ($IframeRegExp !== '') {
-            $pos = strpos( $IframeRegExp, '|' );
+            $pos = strpos($IframeRegExp, '|');
             if ($pos === FALSE) {
                 $IframeRegExp = '%^' . $IframeRegExp . '%';
             } else {

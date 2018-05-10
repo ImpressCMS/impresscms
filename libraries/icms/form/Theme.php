@@ -50,8 +50,8 @@ class icms_form_Theme extends icms_form_Base {
 	 * @param	string  $extra  HTML to be displayed in the empty row.
 	 * @param	string	$class	CSS class name for <td> tag
 	 */
-	public function insertBreak($extra = '', $class= '') {
-		$class = ($class != '') ? " class='$class'" : '';
+	public function insertBreak($extra = '', $class = '') {
+		$class = ($class != '')?" class='$class'":'';
 		//Fix for $extra tag not showing
 		if ($extra) {
 			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
@@ -87,7 +87,7 @@ class icms_form_Theme extends icms_form_Base {
 				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>";
 				if (($caption = $ele->getCaption()) != '') {
 					$ret .=
-				        "<div class='xoops-form-element-caption" . ($ele->isRequired() ? "-required" : "" ) . "'>"
+						"<div class='xoops-form-element-caption" . ($ele->isRequired() ? "-required" : "" ) . "'>"
 						. "<span class='caption-text'>{$caption}</span>";
 						if (($desc = $ele->getDescription()) != '') {
 							$ret .= "<div class='xoops-form-element-help'>{$desc}</div>";

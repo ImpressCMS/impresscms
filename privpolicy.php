@@ -17,13 +17,13 @@ if ($icmsConfigUser['priv_dpolicy'] == false) {
 }
 
 $xoopsOption['template_main'] = 'system_privpolicy.html';
-include ICMS_ROOT_PATH.'/header.php';
+include ICMS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign('priv_poltype', 'page');
-$priv = str_replace('{X_SITEURL}', ICMS_URL.'/', $icmsConfigUser['priv_policy']);
+$priv = str_replace('{X_SITEURL}', ICMS_URL . '/', $icmsConfigUser['priv_policy']);
 $priv = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $priv);
 $priv = icms_core_DataFilter::checkVar($priv, 'html', 'output');
 $xoopsTpl->assign('priv_policy', $priv);
 $xoopsTpl->assign('lang_privacy_policy', _PRV_PRIVACY_POLICY);
 
-include ICMS_ROOT_PATH.'/footer.php';
+include ICMS_ROOT_PATH . '/footer.php';

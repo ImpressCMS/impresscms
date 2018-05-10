@@ -253,12 +253,13 @@ class icms_db_legacy_updater_Handler {
                     icms_properties_Handler::DTYPE_LIST,
                     icms_properties_Handler::DTYPE_ARRAY,
                     icms_properties_Handler::DTYPE_DEP_TXTBOX
-                )))
-            return null;
-        elseif (isset($var[icms_properties_Handler::VARCFG_DEFAULT_VALUE]))
-            return $var[icms_properties_Handler::VARCFG_DEFAULT_VALUE];
-        else
-            return null;
+                ))) {
+                    return null;
+        } elseif (isset($var[icms_properties_Handler::VARCFG_DEFAULT_VALUE])) {
+                    return $var[icms_properties_Handler::VARCFG_DEFAULT_VALUE];
+        } else {
+                    return null;
+        }
     }
 
     /**
@@ -299,8 +300,9 @@ class icms_db_legacy_updater_Handler {
             }
             $ret = $table->dropFields();
         } else {
-            if (in_array($module_handler->table, $reservedTables))
-                return false;
+            if (in_array($module_handler->table, $reservedTables)) {
+                            return false;
+            }
             $table = new icms_db_legacy_updater_Table(str_replace(getenv('DB_PREFIX') . '_', '', $module_handler->table));
             $ret = $table->dropTable();
         }
@@ -336,14 +338,15 @@ class icms_db_legacy_updater_Handler {
         $objectVars = $object->getVars();
         if (isset($parentObjectVars)) {
             foreach ($parentObjectVars as $var => $info) {
-                if (isset($objectVars[$var]))
-                    unset($objectVars[$var]);
+                if (isset($objectVars[$var])) {
+                                    unset($objectVars[$var]);
+                }
             }
         }
 
         if (!$table->exists()) {
             if ($isExtention) {
-                Throw new Exception(sprintf('%s for %s module is extention for %s, but module isn\'t installed yet', $item, $dirname, $isExtention));
+                throw new Exception(sprintf('%s for %s module is extention for %s, but module isn\'t installed yet', $item, $dirname, $isExtention));
                 return false;
             }
 
@@ -374,7 +377,7 @@ class icms_db_legacy_updater_Handler {
             if (is_array($ModKeyNames)) {
                 $structure .= "`" . $ModKeyNames[0] . "`";
                 foreach ($ModKeyNames as $ModKeyName) {
-                    $structure .= ($ModKeyName != $ModKeyNames[0]) ? ", `" . $ModKeyName . "`" : "";
+                    $structure .= ($ModKeyName != $ModKeyNames[0])?", `" . $ModKeyName . "`":"";
                 }
             } else {
                 $structure .= "`" . $ModKeyNames . "`";
@@ -490,7 +493,7 @@ class icms_db_legacy_updater_Handler {
 
         $dbVersion = $module->getDbversion();
 
-        $newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
+        $newDbVersion = constant(strtoupper($dirname . '_db_version'))? constant(strtoupper($dirname . '_db_version')):0;
         $textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
         $textlatestversion = sprintf(_DATABASEUPDATER_LATESTVER, $newDbVersion);
         $this->_messages[] = $textcurrentversion;
@@ -520,43 +523,43 @@ class icms_db_legacy_updater_Handler {
           }
           }
          */
-        if ($tables_first) {
-            if ($newDbVersion > $dbVersion) {
-                for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
-                    $upgrade_function = $dirname . '_db_upgrade_' . $i;
-                    if (function_exists($upgrade_function)) {
-                        $upgrade_function();
-                    }
-                }
-            }
-        }
+		if ($tables_first) {
+			if ($newDbVersion > $dbVersion) {
+				for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
+					$upgrade_function = $dirname . '_db_upgrade_' . $i;
+					if (function_exists($upgrade_function)) {
+						$upgrade_function();
+					}
+				}
+			}
+		}
 
-        $this->updateModuleDBVersion($newDbVersion, $dirname);
-        return true;
-    }
+		$this->updateModuleDBVersion($newDbVersion, $dirname);
+		return true;
+	}
 
-    /**
-     * Update the DBVersion of a module
-     *
-     * @param int $newDVersion new database version
-     * @param string $dirname dirname of the module
-     *
-     * @return bool TRUE if success FALSE if not
-     */
-    function updateModuleDBVersion($newDBVersion, $dirname) {
-        if (!$dirname) {
-            $dirname = icms_getCurrentModuleName();
-        }
-        $module_handler = icms::handler('icms_module');
-        $module = $module_handler->getByDirname($dirname);
-        $module->setVar('dbversion', $newDBVersion);
+	/**
+	 * Update the DBVersion of a module
+	 *
+	 * @param int $newDVersion new database version
+	 * @param string $dirname dirname of the module
+	 *
+	 * @return bool TRUE if success FALSE if not
+	 */
+	function updateModuleDBVersion($newDBVersion, $dirname) {
+		if (!$dirname) {
+			$dirname = icms_getCurrentModuleName();
+		}
+		$module_handler = icms::handler('icms_module');
+		$module = $module_handler->getByDirname($dirname);
+		$module->setVar('dbversion', $newDBVersion);
 
-        if (!$module_handler->insert($module)) {
-            $module->setErrors(_DATABASEUPDATER_MSG_DB_VERSION_ERR);
-            return false;
-        }
-        return true;
-    }
+		if (!$module_handler->insert($module)) {
+			$module->setErrors(_DATABASEUPDATER_MSG_DB_VERSION_ERR);
+			return false;
+		}
+		return true;
+	}
 
 }
 

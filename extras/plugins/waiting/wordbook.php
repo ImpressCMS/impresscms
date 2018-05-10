@@ -1,27 +1,27 @@
 <?php
 
 function b_waiting_wordbook() {
-	$ret = array() ;
+	$ret = array();
 
 	// Waiting
 	$block = array();
-	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("wbentries")." WHERE submit=1 AND categoryID>0");
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("wbentries") . " WHERE submit=1 AND categoryID>0");
 	if ($result) {
-		$block['adminlink'] = ICMS_URL."/modules/wordbook/admin/index.php#esp." ;
+		$block['adminlink'] = ICMS_URL . "/modules/wordbook/admin/index.php#esp.";
 		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
-		$block['lang_linkname'] = _PI_WAITING_WAITINGS ;
+		$block['lang_linkname'] = _PI_WAITING_WAITINGS;
 	}
-	$ret[] = $block ;
+	$ret[] = $block;
 
 	// Request
-	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("wbentries")." WHERE submit=1 AND categoryID=0");
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("wbentries") . " WHERE submit=1 AND categoryID=0");
 	if ($result) {
-		$block['adminlink'] = ICMS_URL."/modules/wordbook/admin/index.php#sol." ;
+		$block['adminlink'] = ICMS_URL . "/modules/wordbook/admin/index.php#sol.";
 		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
-		$block['lang_linkname'] = _PI_WAITING_REQUESTS ;
+		$block['lang_linkname'] = _PI_WAITING_REQUESTS;
 	}
-	$ret[] = $block ;
+	$ret[] = $block;
 
-	return $ret ;
+	return $ret;
 }
 

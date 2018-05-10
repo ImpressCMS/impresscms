@@ -31,19 +31,19 @@ function Generate_PDF($content, $doc_title, $doc_keywords) {
 	$pdf->SetKeywords($doc_keywords);
 	$sitename = $icmsConfig['sitename'];
 	$siteslogan = $icmsConfig['slogan'];
-	$pdfheader = icms_core_DataFilter::undoHtmlSpecialChars($sitename.' - '.$siteslogan);
+	$pdfheader = icms_core_DataFilter::undoHtmlSpecialChars($sitename . ' - ' . $siteslogan);
 	$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $pdfheader, ICMS_URL);
 
 	//set margins
 	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 	//set auto page breaks
-	$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	$pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
 	$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 	$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //set image scale factor
 
-	$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-	$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+	$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+	$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 	$reflector = new ReflectionClass(TCPDF::class);
 	$base_path = dirname($reflector->getFileName());
@@ -69,7 +69,7 @@ function Generate_PDF($content, $doc_title, $doc_keywords) {
 	}
 	$pdf->setLanguageArray($l); //set language items
 	// set font
-	$TextFont = (defined('_PDF_LOCAL_FONT') && !empty(_PDF_LOCAL_FONT) && file_exists($fonts_path._PDF_LOCAL_FONT.'.php')) ? _PDF_LOCAL_FONT : 'dejavusans';
+	$TextFont = (defined('_PDF_LOCAL_FONT') && !empty(_PDF_LOCAL_FONT) && file_exists($fonts_path . _PDF_LOCAL_FONT . '.php'))? _PDF_LOCAL_FONT : 'dejavusans';
 	$pdf->SetFont($TextFont);
 
 	//initialize document

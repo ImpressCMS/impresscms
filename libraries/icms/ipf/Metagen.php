@@ -18,60 +18,60 @@
  */
 class icms_ipf_Metagen {
 
-        /**
-        * Instance of icms_core_Textsanitizer
-         *
-        * @var \icms_core_Textsanitizer
-        */
+		/**
+		 * Instance of icms_core_Textsanitizer
+		 *
+		 * @var \icms_core_Textsanitizer
+		 */
 	public $_myts;
 
 	/**
-        * Title
-         *
-        * @var string
-        */
+	 * Title
+	 *
+	 * @var string
+	 */
 	public $_title = '';
 
 	/**
-        * Original title
-         *
-        * @var string
-        */
+	 * Original title
+	 *
+	 * @var string
+	 */
 	public $_original_title = '';
 
 	/**
-        * Keywords
-         *
-        * @var string
-        */
+	 * Keywords
+	 *
+	 * @var string
+	 */
 	public $_keywords = '';
 
 	/**
-        * Meta description
-         *
-        * @var string
-        */
+	 * Meta description
+	 *
+	 * @var string
+	 */
 	public $_meta_description = '';
 
 	/**
-        * Category path
-         *
-        * @var string
-        */
+	 * Category path
+	 *
+	 * @var string
+	 */
 	public $_categoryPath = '';
 
 	/**
-        * Description
-         *
-        * @var string
-        */
+	 * Description
+	 *
+	 * @var string
+	 */
 	public $_description = '';
 
 	/**
-        * Min chars
-         *
-        * @var int
-        */
+	 * Min chars
+	 *
+	 * @var int
+	 */
 	public $_minChar = 4;
 
 	/**
@@ -82,14 +82,14 @@ class icms_ipf_Metagen {
 	 * @param string $description   Meta description
 	 * @param string $categoryPath  Category path
 	 */
-	public function __construct($title, $keywords=false, $description=false, $categoryPath=false) {
+	public function __construct($title, $keywords = false, $description = false, $categoryPath = false) {
 		$this->_myts = icms_core_Textsanitizer::GetInstance();
 		$this->setCategoryPath($categoryPath);
 		$this->setTitle($title);
 		$this->setDescription($description);
 
 		if (!$keywords) {
-            $keywords = $this->createMetaKeywords();
+			$keywords = $this->createMetaKeywords();
 		}
 
 		/*		$myts = icms_core_Textsanitizer::getInstance();
@@ -123,21 +123,21 @@ class icms_ipf_Metagen {
 	 * @var string $withExt do we add an html extension or not
 	 * @return string sort_url for the article
 	 */
-	public function generateSeoTitle($title='', $withExt=true) {
+	public function generateSeoTitle($title = '', $withExt = true) {
 		// Transformation de la chaine en minuscule
 		// Codage de la chaine afin d'�viter les erreurs 500 en cas de caract�res impr�vus
-		$title   = rawurlencode(strtolower($title));
+		$title = rawurlencode(strtolower($title));
 
 		// Transformation des ponctuations
 		//                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .
 		$pattern = array("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./");
-		$rep_pat = array(  "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  , "-100" ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,  "-"   ,   "-"  ,   "-"  ,   "-"  ,  "-"   ,   "-"  , "-at-" ,   "-"  ,   "-"   ,  "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-" );
+		$rep_pat = array("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-");
 		$title   = preg_replace($pattern, $rep_pat, $title);
 
 		// Transformation des caract�res accentu�s
 		//                  �        �        �        �        �        �        �        �        �        �        �        �        �        �        �        �
 		$pattern = array("/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/", "/%FC/", "/%FB/", "/%F4/", "/%F6/");
-		$rep_pat = array(  "-"  ,   "e"  ,   "e"  ,   "e"  ,   "e"  ,   "c"  ,   "a"  ,   "a"  ,   "a"  ,   "i"  ,   "i"  ,   "u"  ,   "u"  ,   "u"  ,   "o"  ,   "o"  );
+		$rep_pat = array("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o");
 		$title   = preg_replace($pattern, $rep_pat, $title);
 
 		$tableau = explode("-", $title); // Transforme la chaine de caract�res en tableau
@@ -149,9 +149,9 @@ class icms_ipf_Metagen {
 				$title .= '.html';
 			}
 			return $title;
+		} else {
+				return '';
 		}
-		else
-		return '';
 	}
 
 	/**
@@ -179,7 +179,7 @@ class icms_ipf_Metagen {
 		$titleTag = array();
 
 		$show_mod_name_breadcrumb = isset($icmsModuleConfig['show_mod_name_breadcrumb'])
-				? $icmsModuleConfig['show_mod_name_breadcrumb']
+				?$icmsModuleConfig['show_mod_name_breadcrumb']
 				: true;
 
 		if ($moduleName && $show_mod_name_breadcrumb) {
@@ -194,7 +194,7 @@ class icms_ipf_Metagen {
 			$titleTag['category'] = $this->_categoryPath;
 		}
 
-		$ret = isset($titleTag['title']) ? $titleTag['title'] : '';
+		$ret = isset($titleTag['title'])?$titleTag['title']:'';
 
 		if (isset($titleTag['category']) && $titleTag['category'] != '') {
 			if ($ret != '') {
@@ -290,7 +290,7 @@ class icms_ipf_Metagen {
 		$newWords = array();
 		$i = 0;
 
-		while ($i < $maxWords-1 && $i < count($words)) {
+		while ($i < $maxWords - 1 && $i < count($words)) {
 			$newWords[] = $words[$i];
 			$i++;
 		}
@@ -316,11 +316,11 @@ class icms_ipf_Metagen {
 		$text = preg_replace("/[ ]* [ ]*/", ' ', $text);
 		$text = icms_core_DataFilter::stripSlashesGPC($text);
 
-		$originalKeywords = preg_split ('/[^a-zA-Z\'"-]+/', $text, -1, PREG_SPLIT_NO_EMPTY);
+		$originalKeywords = preg_split('/[^a-zA-Z\'"-]+/', $text, -1, PREG_SPLIT_NO_EMPTY);
 
-		foreach ( $originalKeywords as $originalKeyword) {
+		foreach ($originalKeywords as $originalKeyword) {
 			$secondRoundKeywords = explode("'", $originalKeyword);
-			foreach ( $secondRoundKeywords as $secondRoundKeyword) {
+			foreach ($secondRoundKeywords as $secondRoundKeyword) {
 				if (strlen($secondRoundKeyword) >= $minChar) {
 					if (!in_array($secondRoundKeyword, $keywords)) {
 						$keywords[] = trim($secondRoundKeyword);
@@ -392,7 +392,7 @@ class icms_ipf_Metagen {
 	 */
 	public function createMetaTags() {
 		global $xoopsTpl, $xoTheme;
-        $this->_keywords = preg_replace("(<!--.*?-->)", '', $this->_keywords); // stops html comments appearing in meta key
+		$this->_keywords = preg_replace("(<!--.*?-->)", '', $this->_keywords); // stops html comments appearing in meta key
 
 		if (is_object($xoTheme)) {
 			$xoTheme->addMeta('meta', 'keywords', $this->_keywords);

@@ -8,7 +8,9 @@
  * @since		4.00
  * @package		xoopseditor
  */
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+	die("ImpressCMS root path not defined");
+}
 
 /**
  * Pseudo class
@@ -21,8 +23,8 @@ class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
 	/**
 	 * Constructor
 	 *
-  * @param	array   $configs  Editor Options
-  * @param	binary 	$checkCompatible  true - return false on failure
+	 * @param	array   $configs  Editor Options
+	 * @param	binary 	$checkCompatible  true - return false on failure
 	 */
 	function FormDhtmlTextArea($configs, $checkCompatible = false)
 	{
@@ -32,10 +34,10 @@ class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
 				$this->$key = $val;
 			}
 		}
-		$value = isset($value)? $value : "";
-		$rows = isset($rows)? $rows : 5;
-		$cols = isset($cols)? $cols : 50;
-		$hiddentext = empty($hiddentext)? "xoopsHiddenText" : $hiddentext;
-		parent::__construct(@$caption, $name, $value, $rows, $cols, $hiddentext,$configs);
+		$value = isset($value)?$value:"";
+		$rows = isset($rows)?$rows:5;
+		$cols = isset($cols)?$cols:50;
+		$hiddentext = empty($hiddentext)?"xoopsHiddenText":$hiddentext;
+		parent::__construct(@$caption, $name, $value, $rows, $cols, $hiddentext, $configs);
 	}
 }

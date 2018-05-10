@@ -24,7 +24,7 @@ class IcmsPreloadWideimage extends icms_preload_Item {
 	 */
 	function eventStartOutputInit() {
 		// just including the file... more to come
-		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 	}
 
 	/**
@@ -33,6 +33,6 @@ class IcmsPreloadWideimage extends icms_preload_Item {
 	 */
 	function eventAdminHeader() {
 		if (extension_loaded('gd'))
-			include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+			include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 	}
 }

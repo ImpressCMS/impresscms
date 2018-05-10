@@ -34,7 +34,7 @@ class icms_view_Breadcrumb {
 	 * Adds the breadcrumb items to the template
 	 * @param boolean $fetchOnly Whether to display the breadcrumbs, or not
 	 */
-	public function render($fetchOnly = FALSE) {
+	public function render($fetchOnly = false) {
 
 		$this->_tpl = new icms_view_Tpl();
 		$this->_tpl->assign('icms_breadcrumb_items', $this->items);

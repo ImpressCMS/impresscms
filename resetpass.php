@@ -25,12 +25,12 @@ $filter_post = array(
 	'email' => array('email', 'options' => array(0, 1)),
 );
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
-    extract($clean_GET);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
 }
 if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
-    extract($clean_POST);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
 }
 
 global $icmsConfigUser;
@@ -58,7 +58,7 @@ if (!icms::$user) {
 		$xoopsMailer->setTemplate('resetpass2.tpl');
 		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
 		$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-		$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
+		$xoopsMailer->assign('SITEURL', ICMS_URL . '/');
 		$xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
 	$xoopsMailer->setToUsers(icms::$user->getVar('uid'));
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);

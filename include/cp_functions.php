@@ -36,7 +36,7 @@
  *
  * @package		core
  * @since		XOOPS
-  *
+ *
  * @author		The XOOPS Project <http://www.xoops.org>
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @author 		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
@@ -54,16 +54,16 @@ define('XOOPS_CPFUNC_LOADED', 1);
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header() {
-    \icms::$logger->stopTime('Module init');
-    \icms::$logger->startTime('ImpressCMS CP Output Init');
+	\icms::$logger->stopTime('Module init');
+	\icms::$logger->startTime('ImpressCMS CP Output Init');
 
-    global $xoopsOption;
+	global $xoopsOption;
 
-    $xoopsOption['isAdminSide'] = true;
-    \icms::$response = new \icms_response_HTML($xoopsOption);
+	$xoopsOption['isAdminSide'] = true;
+	\icms::$response = new \icms_response_HTML($xoopsOption);
 
-    // ################# Preload Trigger startOutputInit ##############
-    \icms::$preload->triggerEvent('adminHeader');
+	// ################# Preload Trigger startOutputInit ##############
+	\icms::$preload->triggerEvent('adminHeader');
 }
 
 /**
@@ -74,13 +74,13 @@ function icms_cp_header() {
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer() {
-    \icms::$logger->stopTime('Module display');
-    \icms::$logger->stopTime('XOOPS output init');
-    \icms::$logger->startTime('Module display');
+	\icms::$logger->stopTime('Module display');
+	\icms::$logger->stopTime('XOOPS output init');
+	\icms::$logger->startTime('Module display');
 
-    \icms::$response->render();
+	\icms::$response->render();
 
-    \icms::$logger->stopTime();
+	\icms::$logger->stopTime();
 }
 
 function themecenterposts($title, $content) {
@@ -97,7 +97,7 @@ function themecenterposts($title, $content) {
  */
 function impresscms_get_adminmenu() {
     $admin_menu = [
-        [ // Control Panel Home menu
+        [// Control Panel Home menu
             'id' => 'cphome',
             'text' => _CPHOME,
             'link' => '#',
@@ -224,7 +224,7 @@ function impresscms_get_adminmenu() {
 function impresscms_sort_adminmenu_modules(\icms_module_Object $a, \icms_module_Object $b) {
 	$n1 = strtolower($a->name);
 	$n2 = strtolower($b->name);
-	return ($n1 == $n2) ? 0 : ($n1 < $n2) ? -1 : +1;
+	return ($n1 == $n2)?0:($n1 < $n2)? -1:+1;
 }
 
 /**

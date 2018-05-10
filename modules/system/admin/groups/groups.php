@@ -49,10 +49,10 @@ function displayGroups() {
 	global $icmsAdminTpl;
 	icms_cp_header();
 	$member_handler = icms::handler('icms_member');
-	$groups =& $member_handler->getGroups();
+	$groups = & $member_handler->getGroups();
 	$count = count($groups);
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$ugroups  = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+	$ugroups = (is_object(icms::$user))? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 	for ($i = 0; $i < $count; $i++) {
 		$id = $groups[$i]->getVar('groupid');
 		if ($gperm_handler->checkRight('group_manager', $id, $ugroups)) {
@@ -62,8 +62,8 @@ function displayGroups() {
 				$grouparray[$i]['permissions'] = true;
 			}
 		}
-		$grouparray[$i]['name'] =  $groups[$i]->getVar('name');
-		$grouparray[$i]['description'] =  $groups[$i]->getVar('description');
+		$grouparray[$i]['name'] = $groups[$i]->getVar('name');
+		$grouparray[$i]['description'] = $groups[$i]->getVar('description');
 		$grouparray[$i]['id'] = (int) $id;
 		$icmsAdminTpl->assign("grouparray", $grouparray);
 	}
@@ -106,10 +106,10 @@ function modifyGroup($g_id) {
 		$memstart = (int) $_GET['memstart'];
 	}
 	icms_cp_header();
-	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/groups/images/groups_big.png)"><a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG . '</div><br />';
+	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/groups/images/groups_big.png)"><a href="admin.php?fct=groups">' . _AM_GROUPSMAIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_MODIFYADG . '</div><br />';
 
 	$member_handler = icms::handler('icms_member');
-	$thisgroup =& $member_handler->getGroup($g_id);
+	$thisgroup = & $member_handler->getGroup($g_id);
 	$name_value = $thisgroup->getVar("name", "E");
 	$desc_value = $thisgroup->getVar("description", "E");
 
@@ -128,7 +128,7 @@ function modifyGroup($g_id) {
 	$type_value = $thisgroup->getVar("group_type", "E");
 	$form_title = _AM_MODIFYADG;
 	if (ICMS_GROUP_ADMIN == $g_id) {
-		$s_cat_disable = TRUE;
+		$s_cat_disable = true;
 	}
 
 	$s_cat_value = $gperm_handler->getItemIds('system_admin', $g_id);
@@ -141,7 +141,7 @@ function modifyGroup($g_id) {
 		$icmsAdminTpl->assign("groupid", $thisgroup->getVar("groupid"));
 		// do the old way only when counts are small
 		$mlist = array();
-		$members =& $member_handler->getUsersByGroup($g_id, FALSE);
+		$members = & $member_handler->getUsersByGroup($g_id, FALSE);
 		if (count($members) > 0) {
 			$member_criteria = new icms_db_criteria_Item('uid', "(" . implode(',', $members) . ")", "IN");
 			$member_criteria->setSort('uname');
@@ -152,17 +152,17 @@ function modifyGroup($g_id) {
 		$userslist = $member_handler->getUserList($criteria);
 		$users = array_diff($userslist, $mlist);
 				  foreach ($users as $u_id => $u_name) {
-					$usersarray[$u_id]['name'] =  $u_name;
+					$usersarray[$u_id]['name'] = $u_name;
 					$usersarray[$u_id]['id'] = (int) $u_id;
 					$icmsAdminTpl->assign("usersarray", $usersarray);
 				  }
 				foreach ($mlist as $m_id => $m_name) {
-					$multiple[$m_id]['name'] =  $m_name;
-					$multiple[$m_id]['id'] = (int) $m_id ;
+					$multiple[$m_id]['name'] = $m_name;
+					$multiple[$m_id]['id'] = (int) $m_id;
 					$icmsAdminTpl->assign("multiple", $multiple);
 				}
 		} else {
-			$members =& $member_handler->getUsersByGroup($g_id, FALSE, 200, $memstart);
+			$members = & $member_handler->getUsersByGroup($g_id, FALSE, 200, $memstart);
 			$mlist = array();
 			if (count($members) > 0) {
 				$member_criteria = new icms_db_criteria_Item('uid', "(" . implode(',', $members) . ")", "IN");
@@ -171,13 +171,13 @@ function modifyGroup($g_id) {
 			}
 			$nav = new icms_view_PageNav($membercount, 200, $memstart, "memstart", "fct=groups&amp;op=modify&amp;g_id=" . (int) $g_id);
 			foreach ($mlist as $m_id => $m_name) {
-				$multiple[$m_id]['name'] =  $m_name;
-				$multiple[$m_id]['id'] = (int) $m_id ;
+				$multiple[$m_id]['name'] = $m_name;
+				$multiple[$m_id]['id'] = (int) $m_id;
 				$icmsAdminTpl->assign("multiple", $multiple);
 			}
 			$icmsAdminTpl->assign("groupid", $thisgroup->getVar("groupid"));
-			$icmsAdminTpl->assign("g_id", (int) $g_id );
-			$icmsAdminTpl->assign("memstart",  $memstart );
+			$icmsAdminTpl->assign("g_id", (int) $g_id);
+			$icmsAdminTpl->assign("memstart", $memstart);
 			$icmsAdminTpl->assign("nav", $nav->renderNav(4));
 		}
 	$icmsAdminTpl->assign("security", icms::$security->getTokenHTML());

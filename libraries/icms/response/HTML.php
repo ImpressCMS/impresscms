@@ -10,77 +10,77 @@
  */
 class icms_response_HTML extends icms_response_Text {
 
-    /**
-    * Mimetype for this response
-    */
-    const CONTENT_TYPE = 'text/html';
+	/**
+	 * Mimetype for this response
+	 */
+	const CONTENT_TYPE = 'text/html';
 
-    /**
-    * Instance of current theme
-     *
-    * @var \icms_view_theme_Object
-    */
-    private $theme = null;
+	/**
+	 * Instance of current theme
+	 *
+	 * @var \icms_view_theme_Object
+	 */
+	private $theme = null;
 
-    /**
-    * Constructor
-     *
-    * @global  object  $icmsModule     Current loaded module
-    * @param   array   $config         Configuration
-    * @param   int     $http_status    HTTP Status code
-    * @param   array   $headers        Headers array
-    */
-    public function __construct($config = array(), $http_status = null, $headers = array()) {
+	/**
+	 * Constructor
+	 *
+	 * @global  object  $icmsModule     Current loaded module
+	 * @param   array   $config         Configuration
+	 * @param   int     $http_status    HTTP Status code
+	 * @param   array   $headers        Headers array
+	 */
+	public function __construct($config = array(), $http_status = null, $headers = array()) {
 
-        $this->setThemeFromConfig($config);
-        $this->setGoogleMeta();
+		$this->setThemeFromConfig($config);
+		$this->setGoogleMeta();
 
-        \icms::$preload->triggerEvent('startOutputInit');
+		\icms::$preload->triggerEvent('startOutputInit');
 
-        $this->setDefaultMetas();
-        $this->addSanitizerPlugins();
+		$this->setDefaultMetas();
+		$this->addSanitizerPlugins();
 
-        if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
+		if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
 			if (\icms::$user === null) {
-				return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
+				return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, false);
 			}
 			$this->addAdminMetas();
 			$this->loadAdminMenu();
 			$this->setAdminDefaultVars();
 			global $icmsAdminTpl;
 			$GLOBALS['icmsAdminTpl'] = $icmsAdminTpl = &$this->theme->template;
-        } else {
-            global $icmsTpl;
-            $GLOBALS['icmsTpl'] = $icmsTpl = &$this->theme->template;
-        }
-        global $icmsTheme;
-        $GLOBALS['icmsTheme'] = $icmsTheme = &$this->theme;
+		} else {
+			global $icmsTpl;
+			$GLOBALS['icmsTpl'] = $icmsTpl = &$this->theme->template;
+		}
+		global $icmsTheme;
+		$GLOBALS['icmsTheme'] = $icmsTheme = &$this->theme;
 
-        if (!empty($_SESSION['redirect_message'])) {
-            $this->addRedirectMessageScripts();
-            unset($_SESSION['redirect_message']);
-        }
+		if (!empty($_SESSION['redirect_message'])) {
+			$this->addRedirectMessageScripts();
+			unset($_SESSION['redirect_message']);
+		}
 
-        if (isset($this->theme->plugins['icms_view_PageBuilder']) && is_object($this->theme->plugins['icms_view_PageBuilder'])) {
-            $this->theme->template->assign_by_ref('xoBlocks', $this->theme->plugins['icms_view_PageBuilder']->blocks);
-        }
-        $this->updateCacheTime();
+		if (isset($this->theme->plugins['icms_view_PageBuilder']) && is_object($this->theme->plugins['icms_view_PageBuilder'])) {
+			$this->theme->template->assign_by_ref('xoBlocks', $this->theme->plugins['icms_view_PageBuilder']->blocks);
+		}
+		$this->updateCacheTime();
 
-        global $icmsConfig;
-        $this->theme->template->assign('icmsLang', $icmsConfig['language']);
-        $this->theme->template->assign('xoops_url', ICMS_URL);
+		global $icmsConfig;
+		$this->theme->template->assign('icmsLang', $icmsConfig['language']);
+		$this->theme->template->assign('xoops_url', ICMS_URL);
 		$this->theme->template->assign('icms_url', ICMS_URL);
-        $this->theme->template->assign('icms_sitename', $icmsConfig['sitename']);
+		$this->theme->template->assign('icms_sitename', $icmsConfig['sitename']);
 
-        $this->includeNotificationsSelection();
+		$this->includeNotificationsSelection();
 
-        parent::__construct(null, $http_status, $headers);
-    }
+		parent::__construct(null, $http_status, $headers);
+	}
 
 	/**
 	 * Sets default variables for admin
 	 */
-    private function setAdminDefaultVars() {
+	private function setAdminDefaultVars() {
 		global $icmsConfigPersona;
 		$this->theme->template->assign('adm_left_logo', $icmsConfigPersona['adm_left_logo']);
 		$this->theme->template->assign('adm_left_logo_url', $icmsConfigPersona['adm_left_logo_url']);
@@ -90,11 +90,11 @@ class icms_response_HTML extends icms_response_Text {
 		$this->theme->template->assign('adm_right_logo_alt', $icmsConfigPersona['adm_right_logo_alt']);
 	}
 
-    /**
-    * Loading admin dropdown menus
-    */
-    private function loadAdminMenu() {
-        global $icmsConfig;
+	/**
+	 * Loading admin dropdown menus
+	 */
+	private function loadAdminMenu() {
+		global $icmsConfig;
 
 		$cache = icms::getInstance()->get('cache');
 		$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
@@ -184,8 +184,8 @@ class icms_response_HTML extends icms_response_Text {
         }
 
         // $icmsAdminTpl
-        $this->theme->template->assign('systemadm', empty($sysprefs) ? 0 : 1 );
-        $this->theme->template->assign('modulesadm', empty($mods) ? 0 : 1 );
+        $this->theme->template->assign('systemadm', empty($sysprefs)?0:1);
+        $this->theme->template->assign('modulesadm', empty($mods)?0:1);
 
         /**
         * Loading options of the current module.
@@ -210,7 +210,7 @@ class icms_response_HTML extends icms_response_Text {
                         $this->theme->template->append(
                                 'mod_options', array(
                             'title' => $k ['title'], 'link' => $k ['link'],
-                            'icon' => (isset($k['icon']) && $k['icon'] != '' ? $k['icon'] : '')
+                            'icon' => (isset($k['icon']) && $k['icon'] != ''?$k['icon']:'')
                                 )
                         );
                     }
@@ -233,7 +233,7 @@ class icms_response_HTML extends icms_response_Text {
                                 'mod_options', [
                                     'title' => $k['title'],
                                     'link' => $k ['link'],
-                                    'icon' => (isset($k['icon']) && $k['icon'] != '' ? $k['icon'] : '')
+                                    'icon' => (isset($k['icon']) && $k['icon'] != ''?$k['icon']:'')
                                 ]
                         );
                     }
@@ -326,7 +326,7 @@ class icms_response_HTML extends icms_response_Text {
     */
     private function setDefaultMetas() {
         $jgrowl_css = ICMS_LIBRARIES_URL . '/jquery/jgrowl'
-                . (( defined('_ADM_USE_RTL') && _ADM_USE_RTL ) ? '_rtl' : '') . '.css';
+                . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?'_rtl':'') . '.css';
 
         $this->theme->metas['head']['stylesheet'] = [
             ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css' => [
@@ -417,7 +417,7 @@ class icms_response_HTML extends icms_response_Text {
     private function setThemeFromConfig(array &$config) {
 
         if (isset($config['template_main']) && is_string($config['template_main'])) {
-            if (FALSE === strpos($config['template_main'], ':')) {
+            if (false === strpos($config['template_main'], ':')) {
                 $config['template_main'] = 'db:' . $config['template_main'];
             }
         } else {
@@ -439,11 +439,11 @@ class icms_response_HTML extends icms_response_Text {
         if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
             global $icmsConfig;
 
-            $tplConfig['plugins'] = [ 'icms_view_PageBuilder' ];
+            $tplConfig['plugins'] = ['icms_view_PageBuilder'];
 
             if (!isset($tplConfig['canvasTemplate'])) {
                 $tplConfig['canvasTemplate'] = 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') ||
-                                                file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')) ? '_admin' : '') . '.html';
+                                                file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html'))?'_admin':'') . '.html';
             }
 
             if (!isset($tplConfig['folderName'])) {
@@ -486,35 +486,35 @@ class icms_response_HTML extends icms_response_Text {
 		});
 	})(jQuery);
 	');
-    }
+	}
 
-    /**
-    * Adds all enabled santitizer plugins to the theme
-     *
-    * @global array $icmsConfigPlugins         Plugins configuration
-    */
-    private function addSanitizerPlugins() {
-        global $icmsConfigPlugins;
-        if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
-            foreach (array_filter($icmsConfigPlugins['sanitizer_plugins']) as $key) {
-                if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
-                    $this->theme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', array('media' => 'screen'));
-                } else {
-                    include_once ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.php';
-                    $func = 'style_' . $key;
-                    if (function_exists($func)) {
-                        $style_info = $func();
-                        if (!empty($style_info)) {
-                            if (!file_exists(ICMS_ROOT_PATH . '/' . $style_info)) {
-                                $this->theme->addStylesheet('', array('media' => 'screen'), $style_info);
-                            } else {
-                                $this->theme->addStylesheet($style_info, array('media' => 'screen'));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+	/**
+	 * Adds all enabled santitizer plugins to the theme
+	 *
+	 * @global array $icmsConfigPlugins         Plugins configuration
+	 */
+	private function addSanitizerPlugins() {
+		global $icmsConfigPlugins;
+		if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
+			foreach (array_filter($icmsConfigPlugins['sanitizer_plugins']) as $key) {
+				if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
+					$this->theme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', array('media' => 'screen'));
+				} else {
+					include_once ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.php';
+					$func = 'style_' . $key;
+					if (function_exists($func)) {
+						$style_info = $func();
+						if (!empty($style_info)) {
+							if (!file_exists(ICMS_ROOT_PATH . '/' . $style_info)) {
+								$this->theme->addStylesheet('', array('media' => 'screen'), $style_info);
+							} else {
+								$this->theme->addStylesheet($style_info, array('media' => 'screen'));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 }

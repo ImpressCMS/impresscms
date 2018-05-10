@@ -65,7 +65,7 @@ $clean_op = $op;
  * @param int $bid ID of block to be edited
  * @param bool $clone Set to 'TRUE' if the block is being cloned
  */
-function editblock($bid = 0, $clone = FALSE) {
+function editblock($bid = 0, $clone = false) {
 	global $icms_admin_handler, $icmsAdminTpl, $op, $changedField;
 
 	$blockObj = $icms_admin_handler->get($bid);
@@ -83,7 +83,9 @@ function editblock($bid = 0, $clone = FALSE) {
 		$blockObj->setControl("content", "dhtmltextarea");
 	}
 
-	if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') $blockObj->showFieldOnForm('options');
+	if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') {
+		$blockObj->showFieldOnForm('options');
+	}
 	if (!$clone && !$blockObj->isNew()) {
 		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKS_EDIT, 'addblock');
 		$sform->assign($icmsAdminTpl);
@@ -130,10 +132,12 @@ $valid_op = array(
  * required
  */
 if (in_array($clean_op, $valid_op, TRUE)) {
-	switch($clean_op) {
+	switch ($clean_op) {
 		case 'visible' :
 			$icms_admin_handler->changeVisible($bid);
-			if (isset($rtn)) redirect_header(ICMS_URL . base64_decode($rtn));
+			if (isset($rtn)) {
+				redirect_header(ICMS_URL . base64_decode($rtn));
+			}
 
 			$return = '/modules/system/admin.php?fct=blocks';
 			if (isset($sortsel)) {
@@ -145,7 +149,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case "up" :
 			$icms_admin_handler->upWeight($bid);
-			if (isset($rtn)) redirect_header(ICMS_URL . base64_decode($rtn));
+			if (isset($rtn)) {
+				redirect_header(ICMS_URL . base64_decode($rtn));
+			}
 
 			$return = '/modules/system/admin.php?fct=blocks';
 			if (isset($sortsel)) {
@@ -157,7 +163,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case "down" :
 			$icms_admin_handler->downWeight($bid);
-			if (isset($rtn)) redirect_header(ICMS_URL . base64_decode($rtn));
+			if (isset($rtn)) {
+				redirect_header(ICMS_URL . base64_decode($rtn));
+			}
 
 			$return = '/modules/system/admin.php?fct=blocks';
 			if (isset($sortsel)) {
@@ -169,7 +177,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case "clone" :
 			icms_cp_header();
-			editblock($clean_bid, TRUE);
+			editblock($clean_bid, true);
 			break;
 
 		case "mod" :
@@ -191,23 +199,25 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case "change_blocks" :
 			foreach ($_POST['SystemBlocksadmin_objects'] as $k => $v) {
-				$changed = FALSE;
+				$changed = false;
 				$obj = $icms_admin_handler->get($v);
 
 				if ($obj->getVar('side', 'e') != $_POST['block_side'][$k]) {
 					$obj->setVar('side', (int) $_POST['block_side'][$k]);
-					$changed = TRUE;
+					$changed = true;
 				}
 				if ($obj->getVar('weight', 'e') != $_POST['block_weight'][$k]) {
 					$obj->setVar('weight', (int) $_POST['block_weight'][$k]);
-					$changed = TRUE;
+					$changed = true;
 				}
 				if ($changed) {
 					$icms_admin_handler->insert($obj);
 				}
 			}
 
-			if (isset($rtn)) redirect_header(ICMS_URL . base64_decode($rtn), 2, _AM_SYSTEM_BLOCKS_MODIFIED);
+			if (isset($rtn)) {
+				redirect_header(ICMS_URL . base64_decode($rtn), 2, _AM_SYSTEM_BLOCKS_MODIFIED);
+			}
 
 			$return = '/modules/system/admin.php?fct=blocks';
 			if (isset($sortsel)) {
@@ -221,10 +231,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable = new icms_ipf_view_Table($icms_admin_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column('visible', 'center'));
 			$objectTable->addColumn(new icms_ipf_view_Column('name'));
-			$objectTable->addColumn(new icms_ipf_view_Column('title', _GLOBAL_LEFT, FALSE, 'getAdminViewItemLink'));
+			$objectTable->addColumn(new icms_ipf_view_Column('title', _GLOBAL_LEFT, false, 'getAdminViewItemLink'));
 			$objectTable->addColumn(new icms_ipf_view_Column('mid'));
-			$objectTable->addColumn(new icms_ipf_view_Column('side', 'center', FALSE, 'getSideControl'));
-			$objectTable->addColumn(new icms_ipf_view_Column('weight', 'center', FALSE, 'getWeightControl'));
+			$objectTable->addColumn(new icms_ipf_view_Column('side', 'center', false, 'getSideControl'));
+			$objectTable->addColumn(new icms_ipf_view_Column('weight', 'center', false, 'getWeightControl'));
 
 			$objectTable->addIntroButton('addpost', 'admin.php?fct=blocks&amp;op=mod', _AM_SYSTEM_BLOCKS_CREATE);
 			$objectTable->addQuickSearch(array(
@@ -241,7 +251,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addCustomAction('getDownActionLink');
 			$objectTable->addCustomAction('getCloneActionLink');
 
-			$objectTable->addActionButton('change_blocks', FALSE, _SUBMIT);
+			$objectTable->addActionButton('change_blocks', false, _SUBMIT);
 
 			$icmsAdminTpl->assign('icms_block_table', $objectTable->fetch());
 

@@ -17,10 +17,10 @@
 function b_system_waiting_show($options) {
 	global $icmsConfig;
 
-	$userlang = $icmsConfig['language'] ;
+	$userlang = $icmsConfig['language'];
 
 	$cache = icms::getInstance()->get('cache');
-	$sql_cache_min = empty($options[1]) ? 0 : (int) $options[1] ;
+	$sql_cache_min = empty($options[1])?0:(int) $options[1];
 	$sql_cached_item = $cache->getItem('waiting_touch');
 	if ($sql_cached_item->isHit()) {
 		return [];
@@ -38,7 +38,9 @@ function b_system_waiting_show($options) {
 	foreach ($mod_lists as $dirname => $name) {
 
 		$plugin_info = system_get_plugin_info($dirname , $icmsConfig['language']) ;
-		if (empty($plugin_info) || empty($plugin_info['plugin_path'])) continue ;
+		if (empty($plugin_info) || empty($plugin_info['plugin_path'])) {
+			continue ;
+		}
 
 		if (! empty($plugin_info['langfile_path'])) {
 			include_once $plugin_info['langfile_path'] ;
@@ -77,7 +79,9 @@ function b_system_waiting_show($options) {
 					$block["modules"][$dirname]["pending"][] = $_tmp;
 				}
 				unset($_tmp);
-			} else break ;
+			} else {
+				break ;
+			}
 		}
 		// End of Hack
 
@@ -96,7 +100,7 @@ function b_system_waiting_show($options) {
 		$cache->save($sql_cached_item);
 	}
 
-	return $block ;
+	return $block;
 }
 
 /**
@@ -107,7 +111,7 @@ function b_system_waiting_show($options) {
  */
 function b_system_waiting_edit($options) {
 
-	$sql_cache_min = empty($options[1]) ? 0 : (int) $options[1] ;
+	$sql_cache_min = empty($options[1])?0:(int) $options[1];
 
 	$form = _MB_SYSTEM_NOWAITING_DISPLAY . ":&nbsp;<input type='radio' name='options[0]' value='1'";
 	if ($options[0] == 1) {
@@ -117,8 +121,8 @@ function b_system_waiting_edit($options) {
 	if ($options[0] == 0) {
 		$form .= " checked='checked'";
 	}
-	$form .=" />&nbsp;" . _NO . "<br />\n";
-	$form .= sprintf(_MINUTES , _MB_SYSTEM_SQL_CACHE . ":&nbsp;<input type='text' name='options[1]' value='$sql_cache_min' size='2' />") ;
+	$form .= " />&nbsp;" . _NO . "<br />\n";
+	$form .= sprintf(_MINUTES, _MB_SYSTEM_SQL_CACHE . ":&nbsp;<input type='text' name='options[1]' value='$sql_cache_min' size='2' />");
 
 	return $form;
 }
@@ -130,41 +134,41 @@ function b_system_waiting_edit($options) {
  * @param string $language The language for the plugin
  * @return array $ret The plugin information array or an empty array
  */
-function system_get_plugin_info($dirname , $language = 'english') {
-	$module_plugin_file = ICMS_MODULES_PATH . "/" . $dirname . "/include/waiting.plugin.php" ;
-	$builtin_plugin_file = ICMS_PLUGINS_PATH . "/waiting/" . $dirname . ".php" ;
+function system_get_plugin_info($dirname, $language = 'english') {
+	$module_plugin_file = ICMS_MODULES_PATH . "/" . $dirname . "/include/waiting.plugin.php";
+	$builtin_plugin_file = ICMS_PLUGINS_PATH . "/waiting/" . $dirname . ".php";
 
 	if (file_exists($module_plugin_file)) {
 		// module side (1st priority)
 		$lang_files = array(
-		ICMS_MODULES_PATH . "/$dirname/language/$language/waiting.php" ,
-		ICMS_MODULES_PATH . "/$dirname/language/english/waiting.php" ,
-		) ;
-		$langfile_path = '' ;
+		ICMS_MODULES_PATH . "/$dirname/language/$language/waiting.php",
+		ICMS_MODULES_PATH . "/$dirname/language/english/waiting.php",
+		);
+		$langfile_path = '';
 		foreach ($lang_files as $lang_file) {
 			if (file_exists($lang_file)) {
-				$langfile_path = $lang_file ;
-				break ;
+				$langfile_path = $lang_file;
+				break;
 			}
 		}
 		$ret = array(
-			'plugin_path' => $module_plugin_file ,
-			'langfile_path' => $langfile_path ,
-			'func' => 'b_waiting_' . $dirname ,
-			'type' => 'module' ,
-		) ;
+			'plugin_path' => $module_plugin_file,
+			'langfile_path' => $langfile_path,
+			'func' => 'b_waiting_' . $dirname,
+			'type' => 'module',
+		);
 	} else if (file_exists($builtin_plugin_file)) {
 		// built-in plugin under modules/waiting (3rd priority)
 		$ret = array(
-			'plugin_path' => $builtin_plugin_file ,
-			'langfile_path' => '' ,
-			'func' => 'b_waiting_' . $dirname ,
-			'type' => 'built-in' ,
-		) ;
+			'plugin_path' => $builtin_plugin_file,
+			'langfile_path' => '',
+			'func' => 'b_waiting_' . $dirname,
+			'type' => 'built-in',
+		);
 	} else {
-		$ret = array() ;
+		$ret = array();
 	}
 
-	return $ret ;
+	return $ret;
 }
 

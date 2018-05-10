@@ -18,11 +18,11 @@ class icms_ipf_form_elements_User extends icms_form_elements_Select {
 	 */
 	public function __construct($object, $key) {
 		$var = $object->getVarInfo($key);
-		$size = isset($var['size']) ? $var['size'] : ($this->_multiple ? 5 : 1);
+		$size = isset($var['size'])?$var['size']:($this->_multiple?5:1);
 
 		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'), $size, $this->_multiple);
 
-		$sql = "SELECT uid, uname FROM " . icms::$xoopsDB->prefix("users"). " ORDER BY uname ASC";
+		$sql = "SELECT uid, uname FROM " . icms::$xoopsDB->prefix("users") . " ORDER BY uname ASC";
 		$result = icms::$xoopsDB->query($sql);
 		if ($result) {
 			while ($myrow = icms::$xoopsDB->fetchArray($result)) {

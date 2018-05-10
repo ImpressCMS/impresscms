@@ -49,7 +49,8 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	 *
 	 * Makes nothing.
 	 */
-	protected function __construct() { /* Empty! */ }
+	protected function __construct() {
+/* Empty! */ }
 
 	/**
 	 * Get a reference to the only instance of database class and connects to DB

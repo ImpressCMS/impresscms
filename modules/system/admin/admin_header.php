@@ -24,7 +24,9 @@ if (!is_object(icms::$user)
 $module_dir = basename(dirname(__DIR__));
 /** common constants for this module */
 include_once ICMS_MODULES_PATH . "/" . $module_dir . "/include/common.php";
-if (!defined("CPANEL_ADMIN_URL")) define("CPANEL_ADMIN_URL", CPANEL_URL . "admin/");
+if (!defined("CPANEL_ADMIN_URL")) {
+	define("CPANEL_ADMIN_URL", CPANEL_URL . "admin/");
+}
 
 icms_loadLanguageFile($module_dir, 'common');
 
@@ -38,12 +40,12 @@ $fct = $op = "";
 
 /* filter the user input */
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
-    extract($clean_GET);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	extract($clean_GET);
 }
 if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
-    extract($clean_POST);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	extract($clean_POST);
 }
 
 if ($fct !== "") {

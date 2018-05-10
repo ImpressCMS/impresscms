@@ -52,8 +52,8 @@ class icms_form_elements_Date extends icms_form_elements_Text {
 	 * @param int		$size
 	 * @param mixed		$value
 	 */
-	public function __construct($caption, $name, $size = 15, $value= 0) {
-		$value = !is_numeric($value) ? time() : (int) ($value);
+	public function __construct($caption, $name, $size = 15, $value = 0) {
+		$value = !is_numeric($value)? time():(int) ($value);
 		parent::__construct($caption, $name, $size, 25, $value);
 	}
 

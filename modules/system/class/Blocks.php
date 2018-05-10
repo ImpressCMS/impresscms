@@ -26,7 +26,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	public function __construct(& $handler) {
 		parent::__construct($handler);
 
-		$this->initNonPersistableVar('visiblein', self::DTYPE_DEP_OTHER, 'visiblein', FALSE, FALSE, FALSE, TRUE);
+		$this->initNonPersistableVar('visiblein', self::DTYPE_DEP_OTHER, 'visiblein', false, false, false, true);
 
 		$this->hideFieldFromForm('last_modified');
 		$this->hideFieldFromForm('func_file');
@@ -110,7 +110,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 * Custom accessor for side property
 	 */
 	private function side() {
-		$block_positions = $this->handler->getBlockPositions(TRUE);
+		$block_positions = $this->handler->getBlockPositions(true);
 		$rtn = (defined($block_positions[$this->side]['title']))
 			? constant($block_positions[$this->side]['title'])
 			: $block_positions[$this->side]['title'];
@@ -170,7 +170,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 * Overrides parent method
 	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getAdminViewItemLink()
 	 */
-	public function getAdminViewItemLink($onlyUrl = FALSE) {
+	public function getAdminViewItemLink($onlyUrl = false) {
 		$rtn = $this->getVar('title');
 		return $rtn;
 	}
@@ -185,7 +185,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getDeleteItemLink($onlyUrl=FALSE, $withimage=TRUE, $userSide=FALSE) {
+	public function getDeleteItemLink($onlyUrl = FALSE, $withimage = TRUE, $userSide = FALSE) {
 		$ret = ICMS_MODULES_URL . "/system/admin.php?fct=blocks&op=del&"
 			. $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
 		if ($onlyUrl) {
@@ -214,7 +214,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
-	public function getForm($form_caption, $form_name, $form_action=FALSE, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=FALSE, $captcha=FALSE) {
+	public function getForm($form_caption, $form_name, $form_action = FALSE, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = FALSE, $captcha = FALSE) {
 		if (!$this->isNew() && $this->getVar('block_type') != 'C') {
 			$this->hideFieldFromForm('content');
 			$this->hideFieldFromForm('c_type');
@@ -229,7 +229,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 */
 	public function getSideControl() {
 		$control = new icms_form_elements_Select('', 'block_side[]', $this->getVar('side', 'e'));
-		$positions = $this->handler->getBlockPositions(TRUE);
+		$positions = $this->handler->getBlockPositions(true);
 		$block_positions = array();
 		foreach ($positions as $k=>$position) {
 			$block_positions[$k] = defined($position['title'])

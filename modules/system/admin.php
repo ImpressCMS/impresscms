@@ -52,8 +52,8 @@ if (isset($fct) && $fct == 'users') {
 	icms_loadLanguageFile('core', 'user');
 	// hook for profile module
 	if (icms_get_module_status('profile')) {
-		$op = isset($op) ? $op : '';
-		$uid = isset($uid) ? $uid : 0;
+		$op = isset($op)?$op:'';
+		$uid = isset($uid)?$uid:0;
 		if ($op == 'modifyUser' && $uid != 0) {
 			header("Location:" . ICMS_MODULES_URL . "/profile/admin/user.php?op=edit&id=" . $uid);
 		} else {
@@ -72,16 +72,16 @@ icms_loadLanguageFile('core', 'moduleabout');
  */
 $admin_dir = ICMS_MODULES_PATH . '/system/admin';
 if (!file_exists($admin_dir . '/' . $fct)) {
-    if ((strlen($fct) > 5) && (substr($fct, -5) == 'admin')) {
-        $fct = substr($fct, 0, -5);
-    } else {
-        $fct .= 'admin';
-    }
-    if (!file_exists($admin_dir . '/' . $fct)) {
-        redirect_header(ICMS_URL . '/', 3, _INVALID_ADMIN_FUNCTION);
-    } else {
-        $_GET['fct'] = $_POST['fct'] = $_REQUEST['fct'] = $fct;
-    }
+	if ((strlen($fct) > 5) && (substr($fct, -5) == 'admin')) {
+		$fct = substr($fct, 0, -5);
+	} else {
+		$fct .= 'admin';
+	}
+	if (!file_exists($admin_dir . '/' . $fct)) {
+		redirect_header(ICMS_URL . '/', 3, _INVALID_ADMIN_FUNCTION);
+	} else {
+		$_GET['fct'] = $_POST['fct'] = $_REQUEST['fct'] = $fct;
+	}
 }
 
 $admintest = 0;
@@ -92,34 +92,34 @@ if (is_object(icms::$user)) {
 		redirect_header(ICMS_URL . '/', 3, _NOPERM);
 	}
 	$admintest = 1;
-} else {redirect_header(ICMS_URL . '/', 3, _NOPERM);}
+} else {redirect_header(ICMS_URL . '/', 3, _NOPERM); }
 
 // include system category definitions
 include_once ICMS_MODULES_PATH . '/system/constants.php';
-$error = FALSE;
+$error = false;
 if ($admintest != 0) {
 	if (icms_getModuleInfo('system')->getDBVersion() < ICMS_SYSTEM_DBVERSION) {
-		icms_core_Message::warning(_CO_ICMS_UPDATE_NEEDED, "", TRUE);
+		icms_core_Message::warning(_CO_ICMS_UPDATE_NEEDED, "", true);
 	}
 	if (isset($fct) && $fct != '') {
 		if (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $fct . '/icms_version.php')) {
-			icms_loadLanguageFile('system', $fct, TRUE);
+			icms_loadLanguageFile('system', $fct, true);
 			include ICMS_MODULES_PATH . '/system/admin/' . $fct . '/icms_version.php';
 			$sysperm_handler = icms::handler('icms_member_groupperm');
-			$category = !empty($modversion['category']) ? (int) $modversion['category'] : 0;
+			$category = !empty($modversion['category'])?(int) $modversion['category']:0;
 			unset($modversion);
 			if ($category > 0) {
-				$groups =& icms::$user->getGroups();
+				$groups = & icms::$user->getGroups();
 				if (in_array(ICMS_GROUP_ADMIN, $groups)
 					|| FALSE !== $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid'))
 				) {
 					if (file_exists(ICMS_MODULES_PATH . "/system/admin/" . $fct . ".php")) {
 						include_once ICMS_MODULES_PATH . "/system/admin/" . $fct . ".php";
 					}
-				} else {$error = TRUE;}
-			} else {$error = TRUE;}
-		} else {$error = TRUE;}
-	} else {$error = TRUE;}
+				} else {$error = TRUE; }
+			} else {$error = TRUE; }
+		} else {$error = TRUE; }
+	} else {$error = TRUE; }
 }
 if ($error) {
 	header("Location:" . ICMS_URL . "/admin.php");

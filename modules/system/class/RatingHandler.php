@@ -16,7 +16,7 @@
 class mod_system_RatingHandler extends icms_ipf_Handler {
 
 	public $_rateOptions = array();
-	public $_moduleList = FALSE;
+	public $_moduleList = false;
 	public $pluginsObject;
 
 	/**
@@ -76,8 +76,8 @@ class mod_system_RatingHandler extends icms_ipf_Handler {
 			return 0;
 		}
 		list($average, $sum) = $this->db->fetchRow($result);
-		$ret['average'] = isset($average) ? $average : 0;
-		$ret['sum'] = isset($sum) ? $sum : 0;
+		$ret['average'] = isset($average)?$average:0;
+		$ret['sum'] = isset($sum)?$sum:0;
 		return $ret;
 	}
 
@@ -101,7 +101,7 @@ class mod_system_RatingHandler extends icms_ipf_Handler {
 		$ret = $this->getObjects($criteria);
 
 		if (!$ret) {
-			return FALSE;
+			return false;
 		} else {
 			return $ret[0];
 		}

@@ -69,13 +69,13 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	$limit = 100;
 
 	if (!empty($_POST['op']) && $_POST['op'] == "send") {
-		$op =  $_POST['op'];
+		$op = $_POST['op'];
 	}
 
 	if (!icms::$security->check() || $op == "form") {
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/mailusers/images/mailusers_big.png)">' . _MD_AM_MLUS . '</div><br />';
-		if ($op != "form" && $error_msg = icms::$security->getErrors(TRUE)) {
+		if ($op != "form" && $error_msg = icms::$security->getErrors(true)) {
 			echo "<div class='errorMsg'>{$error_msg}</div>";
 		}
 		$display_criteria = 1;
@@ -154,7 +154,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				$criteria_object->add($crit, 'AND');
 			}
 			$member_handler = icms::handler('icms_member');
-			$groups = empty($_POST['mail_to_group']) ? array() : array_map('intval', $_POST['mail_to_group']);
+			$groups = empty($_POST['mail_to_group'])?array():array_map('intval', $_POST['mail_to_group']);
 			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, TRUE);
 			$count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
 			foreach ($getusers as $getuser) {
@@ -176,7 +176,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 
 		$added_count = count($added);
 		icms_cp_header();
-		echo '<div class="CPbigTitle" style="background-image: url('. ICMS_MODULES_URL . '/system/admin/mailusers/images/mailusers_big.png)">' . _MD_AM_MLUS . '</div><br />';
+		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/mailusers/images/mailusers_big.png)">' . _MD_AM_MLUS . '</div><br />';
 		if ($added_count > 0) {
 			$xoopsMailer = new icms_messaging_Handler();
 			for ($i = 0; $i < $added_count; $i++) {
@@ -194,12 +194,12 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				$xoopsMailer->usePM();
 			}
 
-			$xoopsMailer->send(TRUE);
+			$xoopsMailer->send(true);
 			echo $xoopsMailer->getSuccess();
 			echo $xoopsMailer->getErrors();
 
 			if ($count_criteria > $limit) {
-				$form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', TRUE);
+				$form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', true);
 				if (!empty($_POST['mail_to_group'])) {
 					foreach ($_POST['mail_to_group'] as $mailgroup) {
 						$group_hidden = new icms_form_elements_Hidden("mail_to_group[]", $mailgroup);

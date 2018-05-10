@@ -85,7 +85,7 @@ $op = '';
 	'op' => 'str',
 */
 $filter_post = array(
-    'user_sig' => 'html',
+	'user_sig' => 'html',
 	'email' => array('email', 'options' => array(0, 1)),
 	'uid' => 'int',
 	'change_pass' => 'int',
@@ -98,16 +98,16 @@ $filter_post = array(
 );
 
 $filter_get = array(
-    'uid' => 'int',
+	'uid' => 'int',
 );
 
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
-    extract($clean_GET);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
 }
 if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
-    extract($clean_POST);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
 }
 
 switch ($op) {
@@ -127,7 +127,7 @@ switch ($op) {
 				$email = icms_core_DataFilter::stripSlashesGPC(trim($email));
 			}
 
-			if ($email == '' || !icms_core_DataFilter::checkVar($email, 'email', 0, 1))	{
+			if ($email == '' || !icms_core_DataFilter::checkVar($email, 'email', 0, 1)) {
 				$errors[] = _US_INVALIDMAIL;
 			}
 

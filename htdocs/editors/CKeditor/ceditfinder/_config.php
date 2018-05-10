@@ -15,22 +15,22 @@ defined('ceditFinder') or die('Restricted access');
 $mypath = __DIR__;
 $path = '';
 $pathtrail = explode(DIRECTORY_SEPARATOR, $mypath);
-for ($i=0; $i<count($pathtrail)-3; $i++) {
+for ($i = 0; $i < count($pathtrail) - 3; $i++) {
 	$path .= $pathtrail[$i] . DIRECTORY_SEPARATOR;
 }
 include_once $path . 'mainfile.php';
 
 if (!function_exists('removeFileRoot')) {
-	function removeFileRoot( $path ) {
+	function removeFileRoot($path) {
 		// Remove the fileroot from the given path to leave a relative path
-		$path = str_replace( "\\", "/", $path );  // Change Windows directory separator
+		$path = str_replace("\\", "/", $path); // Change Windows directory separator
 		return str_replace(ICMS_ROOT_PATH, "", $path);
 	}
 }
 $cfconfig = array(
-		'thumbwidth' => 100,									// Thumbnail width
-		'thumbheight' => 100,									// Thumbnail height
-		'imagefolder' => 'uploads/',							// Image folder (relative to fileroot and baseurl)
+		'thumbwidth' => 100, // Thumbnail width
+		'thumbheight' => 100, // Thumbnail height
+		'imagefolder' => 'uploads/', // Image folder (relative to fileroot and baseurl)
 		'baseurl' => ICMS_URL . '/',
 		'fileroot' => ICMS_ROOT_PATH . '/',
 		'imagecache' => removeFileRoot(ICMS_CACHE_PATH . '/imgcache/'),

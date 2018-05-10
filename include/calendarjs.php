@@ -12,15 +12,15 @@ global $icmsTheme;
 global $icmsConfig;
 icms_loadLanguageFile('core', 'calendar');
 function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
-    $chars = array(
-        // Day
-        'd' => 'dd', 'j' => 'd', 'l' => 'DD', 'D' => 'D',
-        // Month
-        'm' => 'mm', 'n' => 'm', 'F' => 'MM', 'M' => 'M',
-        // Year
-        'Y' => 'yy', 'y' => 'y',
-    );
-    return strtr((string)$dateFormat, $chars);
+	$chars = array(
+		// Day
+		'd' => 'dd', 'j' => 'd', 'l' => 'DD', 'D' => 'D',
+		// Month
+		'm' => 'mm', 'n' => 'm', 'F' => 'MM', 'M' => 'M',
+		// Year
+		'Y' => 'yy', 'y' => 'y',
+	);
+	return strtr((string)$dateFormat, $chars);
 }
 $dateFormatTojQueryUIDatePickerFormat = dateFormatTojQueryUIDatePickerFormat(_SHORTDATESTRING);
 define('_DATEFORMATCHANGED', $dateFormatTojQueryUIDatePickerFormat);
@@ -42,7 +42,7 @@ changeMonth: true,
 changeYear: true,
 showAnim: "slideDown"
 });
-$(".ui-datepicker-trigger").attr("alt", "' ._CALENDAR. '").attr("title", "' ._CALENDAR. '");
+$(".ui-datepicker-trigger").attr("alt", "' ._CALENDAR . '").attr("title", "' . _CALENDAR . '");
 });';
 
 $icmsTheme->addScript("", array("type" => "text/javascript"), $src);

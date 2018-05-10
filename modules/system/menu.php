@@ -17,7 +17,7 @@ if (is_object(icms::$user)) {
 $all_ok = FALSE;
 if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 	$sysperm_handler = icms::handler('icms_member_groupperm');
-	$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
+	$ok_syscats = & $sysperm_handler->getItemIds('system_admin', $groups);
 } else {
 	$all_ok = TRUE;
 }
@@ -34,10 +34,10 @@ foreach ($dirlist as $file) {
 	$mod_version_file = 'icms_version.php';
 	include $admin_dir . '/' . $file . '/' . $mod_version_file;
 	if ($modversion['hasAdmin']) {
-		$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
+		$category = isset($modversion['category'])?(int) ($modversion['category']):0;
 		if (FALSE != $all_ok || in_array($modversion['category'], $ok_syscats)) {
-			$adminmenu[$modversion['group']]['title']		= $modversion['group'];
-			$adminmenu[$modversion['group']]['link']		= "#";
+			$adminmenu[$modversion['group']]['title'] = $modversion['group'];
+			$adminmenu[$modversion['group']]['link'] = "#";
 			$adminmenu[$modversion['group']]['absolute']	= 1;
 			$adminmenu[$modversion['group']]['hassubs']		= 1;
 			if ($modversion['name'] == _MD_AM_PREF) {
@@ -49,7 +49,7 @@ foreach ($dirlist as $file) {
 				if ($catcount > 0) {
 					for ($x = 0; $x < $catcount; $x++) {
 						$subs[$x]['title'] = constant($confcats[$x]->getVar('confcat_name'));
-						$subs[$x]['link'] = ICMS_URL.'/modules/system/admin.php?fct=preferences'
+						$subs[$x]['link'] = ICMS_URL . '/modules/system/admin.php?fct=preferences'
 							. '&amp;op=show&amp;confcat_id=' . $confcats[$x]->getVar('confcat_id');
 					}
 					$adminmenu[$modversion['group']]['subs'][] = array(
