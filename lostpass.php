@@ -54,11 +54,11 @@ $filter_get = $filter_post = array('email' => array('email', 'options' => array(
 $code = '';
 
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
     extract($clean_GET);
 }
 if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
     extract($clean_POST);
 }
 if ($email == '') {
@@ -108,7 +108,7 @@ if (empty($getuser)) {
 			include 'footer.php';
 			exit();
 		}
-		redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), FALSE);
+		redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
 		// If no Code, send it
 	} else {
 		$xoopsMailer = new icms_messaging_Handler();
