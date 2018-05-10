@@ -2,6 +2,9 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\Providers\ConfigServiceProvider;
+use League\Container\Container;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
@@ -37,8 +40,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
      * Tests if config category is ok
      */
     public function testConfigHandler() {
-        $this->assertTrue(method_exists('icms_config_Handler', 'service'), 'service() method for config handler doesn\'t exist');
-        $service = \icms_config_Handler::service();
+		$container = new Container();
+		$container->addServiceProvider(ConfigServiceProvider::class);
+		$service = $container->get('config');
         $this->assertTrue($service instanceof \icms_config_Handler, 'service method can\'t create good instance');
         foreach ([ 'createConfig', 'getConfig', 'insertConfig', 'deleteConfig', 'getConfigs', 'getConfigCount', 'getConfigsByCat', 'createConfigOption', 'getConfigOption', 'getConfigOptions', 'getConfigOptionsCount', 'getConfigList' ] as $method) {
             $this->assertTrue(method_exists($service, $method), $method . ' doesm\'t exists');

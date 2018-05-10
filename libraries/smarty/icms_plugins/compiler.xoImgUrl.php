@@ -34,9 +34,8 @@ function smarty_compiler_xoImgUrl( $argStr, &$smarty ) {
 
 	$argStr = trim( $argStr );
 	$path = ( isset($xoTheme) && is_object( $xoTheme ) ) ? $xoTheme->resourcePath( $argStr ) : $argStr;
-	return "\necho '" . addslashes( $xoops->url( $path ) ) . "';";
+	return "\necho '" . addslashes(icms::url($path)) . "';";
 
 }
 
 
-?>

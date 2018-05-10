@@ -45,7 +45,7 @@ if (empty(icms::$user)) {
 }
 
 $uid = (int) icms::$user->getVar('uid');
-$valid_op = array('cancel', 'list', 'delete', 'delete_ok', '', NULL);
+$valid_op = array('cancel', 'list', 'delete', 'delete_ok', '', null);
 $op = 'list';
 
 if (isset($_POST['op'])) {

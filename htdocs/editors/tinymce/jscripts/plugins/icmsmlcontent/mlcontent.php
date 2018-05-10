@@ -74,4 +74,3 @@ if (is_object(icms::$user) && $easiestml_exist) {
 } else {
     die(_NOPERM);
 }
-?>

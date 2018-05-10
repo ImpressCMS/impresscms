@@ -117,7 +117,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 		$authenticated = FALSE;
 		if (in_array($uname, $icmsConfigAuth['ldap_users_bypass'])) {
 			/* use local authentication if user is bypassed for LDAP */
-			$auth = new icms_auth_method_Local(icms::$xoopsDB);
+			$auth = new icms_auth_method_Local();
 			return $auth->authenticate($uname, $pwd);
 		}
 		if (!extension_loaded('ldap')) {

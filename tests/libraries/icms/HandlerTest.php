@@ -20,7 +20,9 @@ class HandlerTest extends \PHPUnit_Framework_TestCase {
      * Checks if all required variables are available
      */
     public function testVariablesAvailability() {
-         $mock = $this->getMockForAbstractClass('icms_core_ObjectHandler');
+		$mock = $this->getMockBuilder('\\icms_core_ObjectHandler')
+			->disableOriginalConstructor()
+			->getMockForAbstractClass();
          foreach ([ 'db' ] as $variable) {
              $this->assertTrue(property_exists($mock, $variable), '$' . $variable . ' doesn\'t exists for icms_core_ObjectHandler');
          }
@@ -30,7 +32,9 @@ class HandlerTest extends \PHPUnit_Framework_TestCase {
      * Checks if all required methods are available
      */
     public function testMethodsAvailability() {
-         $mock = $this->getMockForAbstractClass('icms_core_ObjectHandler');
+		$mock = $this->getMockBuilder('\\icms_core_ObjectHandler')
+			->disableOriginalConstructor()
+			->getMockForAbstractClass();
          foreach ([ 'create', 'get', 'insert', 'delete' ] as $method) {
              $this->assertTrue(method_exists($mock, $method), $method . ' doesn\'t exists for icms_core_ObjectHandler');
          }

@@ -49,7 +49,8 @@
  */
 function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 {
-	icms_core_Debug::setDeprecated('icms_form_elements_Dhtmltextarea.', sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
+	trigger_error('This is not used anywhere in the core', E_USER_DEPRECATED);
+
 	$hiddentext = isset($suffix) ? 'xoopsHiddenText'.trim($suffix) : 'xoopsHiddenText';
 	//Hack for url, email ...., the anchor is for having a link on [_More...]
 	echo "<a name='moresmiley'></a><img src='".ICMS_URL."/images/url.gif' alt='url' onmouseover='style.cursor=\"pointer\"' onclick='xoopsCodeUrl(\"$textarea_id\", \"".htmlspecialchars(_ENTERURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES)."\");'/>&nbsp;<img src='".ICMS_URL."/images/email.gif' alt='email' onmouseover='style.cursor=\"pointer\"' onclick='xoopsCodeEmail(\"$textarea_id\", \"".htmlspecialchars(_ENTEREMAIL, ENT_QUOTES)."\");' />&nbsp;<img src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' onmouseover='style.cursor=\"pointer\"' onclick='xoopsCodeImg(\"$textarea_id\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' />&nbsp;<img src='".ICMS_URL."/images/image.gif' alt='image' onmouseover='style.cursor=\"pointer\"' onclick='openWithSelfMain(\"".ICMS_URL."/imagemanager.php?target=".$textarea_id."\",\"imgmanager\",800,430);' />&nbsp;<img src='".ICMS_URL."/images/code.gif' alt='code' onmouseover='style.cursor=\"pointer\"' onclick='xoopsCodeCode(\"$textarea_id\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES, _CHARSET)."\");' />&nbsp;<img src='".ICMS_URL."/images/quote.gif' alt='quote' onmouseover='style.cursor=\"pointer\"' onclick='xoopsCodeQuote(\"$textarea_id\");'/><br />\n";
@@ -97,7 +98,8 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
  */
 function xoopsSmilies($textarea_id)
 {
-	icms_core_Debug::setDeprecated('icms_form_elements_Dhtmltextarea.', sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
+	trigger_error('This is not used anywhere in the core', E_USER_DEPRECATED);
+
 	$smiles =& icms_core_DataFilter::getSmileys();
 	if (empty($smileys)) {
 		if ($result = icms::$xoopsDB->query("SELECT * FROM ".icms::$xoopsDB->prefix('smiles')." WHERE display='1'")) {

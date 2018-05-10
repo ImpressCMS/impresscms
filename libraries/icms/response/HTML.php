@@ -41,6 +41,9 @@ class icms_response_HTML extends icms_response_Text {
         $this->addSanitizerPlugins();
 
         if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
+			if (\icms::$user === null) {
+				return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
+			}
 			$this->addAdminMetas();
 			$this->loadAdminMenu();
 			$this->setAdminDefaultVars();
@@ -93,12 +96,15 @@ class icms_response_HTML extends icms_response_Text {
     private function loadAdminMenu() {
         global $icmsConfig;
 
-        $adminCacheFile = ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php';
-        if (!file_exists($adminCacheFile)) {
-            xoops_module_write_admin_menu(impresscms_get_adminmenu());
-        }
+		$cache = icms::getInstance()->get('cache');
+		$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
 
-        $admin_menu = include($adminCacheFile);
+		if (!$cached_menu->isHit()) {
+			xoops_module_write_admin_menu(impresscms_get_adminmenu());
+			$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
+		}
+
+        $admin_menu = $cached_menu->get();
 
         $moduleperm_handler = icms::handler('icms_member_groupperm');
         $module_handler = icms::handler('icms_module');

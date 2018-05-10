@@ -11,4 +11,3 @@ $data = file_get_contents(__DIR__ . '/editor/change_log.txt');
 $i = strpos($data, '**** v ') + strlen('**** v ');
 $editorversion['version'] = substr($data, $i, strpos($data, ' ', $i) - $i);
 
-?>
