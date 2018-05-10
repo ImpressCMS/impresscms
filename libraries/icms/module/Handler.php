@@ -61,6 +61,70 @@ class icms_module_Handler
 	}
 
 	/**
+	 * Returns an array of all available modules, based on folders in the modules directory
+	 *
+	 * The getList method cannot be used for this, because uninstalled modules are not listed
+	 * in the database
+	 *
+	 * @since    1.3
+	 * @return    array    List of folder names in the modules directory
+	 */
+	static public function getAvailable()
+	{
+		$dirtyList = $cleanList = array();
+		$dirtyList = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/');
+		foreach ($dirtyList as $item) {
+			if (file_exists(ICMS_MODULES_PATH . '/' . $item . '/icms_version.php')) {
+				$cleanList[$item] = $item;
+			} elseif (file_exists(ICMS_MODULES_PATH . '/' . $item . '/xoops_version.php')) {
+				$cleanList[$item] = $item;
+			}
+		}
+		return $cleanList;
+	}
+
+	/**
+	 * Get a list of active modules, with the folder name as the key
+	 *
+	 * This method is necessary to be able to use a static method
+	 *
+	 * @since    1.3
+	 * @return    array    List of active modules
+	 */
+	static public function getActive()
+	{
+		$module_handler = new self(icms::$xoopsDB);
+		$criteria = new icms_db_criteria_Item('isactive', 1);
+		return $module_handler->getList($criteria, TRUE);
+	}
+
+	/**
+	 * Checks if the current user can access the specified module
+	 * @param icms_module_Object $module
+	 * @param bool $inAdmin
+	 * @return bool
+	 */
+	static protected function checkModuleAccess($module, $inAdmin = FALSE)
+	{
+		if ($inAdmin && !icms::$user) return FALSE;
+		/* @var $perm_handler icms_member_groupperm_Handler */
+		$perm_handler = icms::handler('icms_member_groupperm');
+		if ($inAdmin) {
+			if (!$module) {
+				// We are in /admin.php
+				return icms::$user->isAdmin(-1);
+			} else {
+				return $perm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
+			}
+		} elseif ($module) {
+			$groups = (icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+			return $perm_handler->checkRight('module_read', $module->getVar('mid'), $groups);
+		}
+		// We are in /something.php: let the page handle permissions
+		return TRUE;
+	}
+
+	/**
 	 * Load a module from the database
 	 *
 	 * @param    int $id ID of the module
@@ -76,6 +140,25 @@ class icms_module_Handler
 		if ($loadConfig)
 			$this->loadConfig($module);
 		return $module;
+	}
+
+	/**
+	 * load config for a module before caching it
+	 *
+	 * @param    icms_module_Object $module
+	 * @return    bool                TRUE
+	 */
+	private function loadConfig($module)
+	{
+		if ($module->config !== NULL) return TRUE;
+		icms_loadLanguageFile($module->getVar("dirname"), "main");
+		if ($module->getVar("hasconfig") == 1
+			|| $module->getVar("hascomments") == 1
+			|| $module->getVar("hasnotification") == 1
+		) {
+			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
+		}
+		return TRUE;
 	}
 
 	/**
@@ -103,25 +186,6 @@ class icms_module_Handler
 			$this->loadConfig($module);
 		}
 		return $module;
-	}
-
-	/**
-	 * load config for a module before caching it
-	 *
-	 * @param    icms_module_Object $module
-	 * @return    bool                TRUE
-	 */
-	private function loadConfig($module)
-	{
-		if ($module->config !== NULL) return TRUE;
-		icms_loadLanguageFile($module->getVar("dirname"), "main");
-		if ($module->getVar("hasconfig") == 1
-			|| $module->getVar("hascomments") == 1
-			|| $module->getVar("hasnotification") == 1
-		) {
-			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
-		}
-		return TRUE;
 	}
 
 	public function beforeSave(icms_module_Object &$module)
@@ -204,70 +268,6 @@ class icms_module_Handler
 			unset($this->_cachedModule_lookup[$module->getVar('mid')]);
 		}
 		return true;
-	}
-
-	/**
-	 * Returns an array of all available modules, based on folders in the modules directory
-	 *
-	 * The getList method cannot be used for this, because uninstalled modules are not listed
-	 * in the database
-	 *
-	 * @since    1.3
-	 * @return    array    List of folder names in the modules directory
-	 */
-	static public function getAvailable()
-	{
-		$dirtyList = $cleanList = array();
-		$dirtyList = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/');
-		foreach ($dirtyList as $item) {
-			if (file_exists(ICMS_MODULES_PATH . '/' . $item . '/icms_version.php')) {
-				$cleanList[$item] = $item;
-			} elseif (file_exists(ICMS_MODULES_PATH . '/' . $item . '/xoops_version.php')) {
-				$cleanList[$item] = $item;
-			}
-		}
-		return $cleanList;
-	}
-
-	/**
-	 * Get a list of active modules, with the folder name as the key
-	 *
-	 * This method is necessary to be able to use a static method
-	 *
-	 * @since    1.3
-	 * @return    array    List of active modules
-	 */
-	static public function getActive()
-	{
-		$module_handler = new self(icms::$xoopsDB);
-		$criteria = new icms_db_criteria_Item('isactive', 1);
-		return $module_handler->getList($criteria, TRUE);
-	}
-
-	/**
-	 * Checks if the current user can access the specified module
-	 * @param icms_module_Object $module
-	 * @param bool $inAdmin
-	 * @return bool
-	 */
-	static public function checkModuleAccess($module, $inAdmin = FALSE)
-	{
-		if ($inAdmin && !icms::$user) return FALSE;
-		/* @var $perm_handler icms_member_groupperm_Handler */
-		$perm_handler = icms::handler('icms_member_groupperm');
-		if ($inAdmin) {
-			if (!$module) {
-				// We are in /admin.php
-				return icms::$user->isAdmin(-1);
-			} else {
-				return $perm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
-			}
-		} elseif ($module) {
-			$groups = (icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
-			return $perm_handler->checkRight('module_read', $module->getVar('mid'), $groups);
-		}
-		// We are in /something.php: let the page handle permissions
-		return TRUE;
 	}
 
 	/**
@@ -366,63 +366,5 @@ class icms_module_Handler
 			$modules_menu[] = $module->getAdminMenuItems();
 		}
 		return $modules_menu;
-	}
-
-	/**
-	 * Posts a notification of an install or update of the system module
-	 *
-	 * @todo    Add language constants
-	 *
-	 * @param    string $versionstring A string representing the version of the module
-	 * @param    string $icmsroot A unique identifier for the site
-	 * @param    string $modulename The module being installed or updated, 'system' for the core
-	 * @param    string $action Action triggering the notification: install, uninstall, activate, deactivate, update
-	 */
-	public static function installation_notify($versionstring, $icmsroot, $modulename = 'system', $action = 'install')
-	{
-
-		$validActions = array('install', 'update', 'uninstall', 'activate', 'deactivate');
-		if (!in_array($action, $validActions)) $action = 'install';
-
-		// @todo: change the URL to an official ImpressCMS server
-		//set POST variables
-		$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
-		$fields = array(
-			'siteid' => hash('sha256', $icmsroot),
-			'version' => urlencode($versionstring),
-			'module' => urlencode($modulename),
-			'action' => urlencode($action),
-		);
-
-		//url-ify the data for the POST
-		$fields_string = "";
-		foreach ($fields as $key => $value) {
-			$fields_string .= $key . '=' . $value . '&';
-		}
-		rtrim($fields_string, '&');
-
-		try {
-			//open connection - this causes a fatal error if the extension is not loaded
-			if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
-			$ch = curl_init();
-
-			//set the url, number of POST vars, POST data
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_POST, count($fields));
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-			curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
-
-			//execute post
-			if (curl_exec($ch)) {
-				icms_core_Message::error($url . $fields_string, 'Notification Sent to');
-			} else {
-				throw new Exception("Unable to contact update server");
-			}
-
-			//close connection
-			curl_close($ch);
-		} catch (Exception $e) {
-			icms_core_Message::error(sprintf($e->getMessage()));
-		}
 	}
 }

@@ -122,8 +122,6 @@ function xoops_module_list() {
 /**
  * Function and rendering for installation of a module
  *
- * @todo	add installation_notify()
- *
  * @param 	string	$dirname
  * @return	string	Results of the installation process
  */
@@ -655,8 +653,6 @@ function &xoops_module_gettemplate($dirname, $template, $block = FALSE) {
 /**
  * Logic for uninstalling a module
  *
- * @todo	add installation_notify(), send status
- *
  * @param unknown_type $dirname
  * @return	string	Result messages for uninstallation
  */
@@ -943,8 +939,6 @@ function xoops_module_activate($mid) {
 /**
  * Logic for deactivating a module
  *
- * @todo	Add installation_notify() - send status change?
- *
  * @param	int	$mid
  * @return	string	Result message for deactivating the module
  */
@@ -1020,8 +1014,6 @@ function xoops_module_change($mid, $weight, $name) {
 
 /**
  * Logic for updating a module
- *
- * @todo	add installation_notify(), only if the version of the module changes
  *
  * @param 	str $dirname
  * @return	str	Result messages from the module update

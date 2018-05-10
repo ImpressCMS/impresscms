@@ -102,11 +102,11 @@ $filter_get = array(
 );
 
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
     extract($clean_GET);
 }
 if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
     extract($clean_POST);
 }
 
@@ -203,8 +203,8 @@ switch ($op) {
 			}
 
 			if ($password == $username
-				|| $password == icms_core_DataFilter::utf8_strrev($username, TRUE)
-				|| strripos($password, $username) === TRUE
+				|| $password == icms_core_DataFilter::utf8_strrev($username, true)
+				|| strripos($password, $username) === true
 				) {
 				$errors[] = _US_BADPWD;
 			}
@@ -221,11 +221,11 @@ switch ($op) {
 			$edituser =& $member_handler->getUser($uid);
 			$edituser->setVar('name', $name);
 			if ($icmsConfigUser['allow_chgmail'] == 1) {
-				$edituser->setVar('email', $email, TRUE);
+				$edituser->setVar('email', $email, true);
 			}
 
 			if ($icmsConfigUser['allow_chguname'] == 1) {
-				$edituser->setVar('uname', $uname, TRUE);
+				$edituser->setVar('uname', $uname, true);
 			}
 
 			$edituser->setVar('url', formatURL($url));
@@ -252,7 +252,7 @@ switch ($op) {
 			if ($password != '') {
 				$icmspass = new icms_core_Password();
 				$pass = $icmspass->encryptPass($password);
-				$edituser->setVar('pass', $pass, TRUE);
+				$edituser->setVar('pass', $pass, true);
 			}
 
 			$attachsig = !empty($attachsig) ? 1 : 0;
@@ -304,7 +304,7 @@ switch ($op) {
 
 		echo '<a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;
 			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br /><br />';
-		$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', TRUE);
+		$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
 		$login_name_label = new icms_form_elements_Label(_US_LOGINNAME, icms::$user->getVar('login_name'));
 		$form->addElement($login_name_label);
 		$form->addElement(new icms_form_elements_Hidden("uname", icms::$user->getVar('login_name')));
@@ -398,7 +398,7 @@ switch ($op) {
 		$bio_tarea = new icms_form_elements_Textarea(_US_EXTRAINFO, 'bio', icms::$user->getVar('bio', 'E'));
 		$cookie_radio_value = empty($_COOKIE[$icmsConfig['usercookie']]) ? 0 : 1;
 		$cookie_radio = new icms_form_elements_Radioyn(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
-		$pwd_text = new icms_form_elements_Password('', 'password', 10, 255, "", FALSE, ($icmsConfigUser['pass_level']?'password_adv':''));
+		$pwd_text = new icms_form_elements_Password('', 'password', 10, 255, "", false, ($icmsConfigUser['pass_level']?'password_adv':''));
 		$pwd_text2 = new icms_form_elements_Password('', 'vpass', 10, 255);
 		$pwd_tray = new icms_form_elements_Tray(_US_PASSWORD . '<br />' . _US_TYPEPASSTWICE);
 		$pwd_tray->addElement($pwd_text);
@@ -462,18 +462,18 @@ switch ($op) {
 		}
 
 		if ($icmsConfigUser['avatar_allow_upload'] == 1 && icms::$user->getVar('posts') >= $icmsConfigUser['avatar_minposts']) {
-			$form = new icms_form_Theme(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', TRUE);
+			$form = new icms_form_Theme(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', true);
 			$form->setExtra('enctype="multipart/form-data"');
 			$form->addElement(new icms_form_elements_Label(_US_MAXPIXEL, icms_conv_nr2local($icmsConfigUser['avatar_width']) . ' x ' . icms_conv_nr2local($icmsConfigUser['avatar_height'])));
 			$form->addElement(new icms_form_elements_Label(_US_MAXIMGSZ, icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])));
-			$form->addElement(new icms_form_elements_File(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), TRUE);
+			$form->addElement(new icms_form_elements_File(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), true);
 			$form->addElement(new icms_form_elements_Hidden('op', 'avatarupload'));
 			$form->addElement(new icms_form_elements_Hidden('uid', (int) icms::$user->getVar('uid')));
 			$form->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
 			$form->display();
 		}
 		$avatar_handler = icms::handler('icms_data_avatar');
-		$form2 = new icms_form_Theme(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', TRUE);
+		$form2 = new icms_form_Theme(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
 		$avatar_select = new icms_form_elements_Select('', 'user_avatar', icms::$user->getVar('user_avatar'));
 		$avatar_select->addOptionArray($avatar_handler->getList('S'));
 		$avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"" . ICMS_URL . "\")'");

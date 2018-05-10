@@ -518,17 +518,19 @@ function xoops_convert_encoding(&$text) {
 
 /**
  * Gets Username from UserID and creates a link to the userinfo (!) page
+ *
  * @deprecated	icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact)
  *
  * @param	int	$userid	The User ID
+ *
  * @return	string	The linked username (from userID or "Anonymous")
+ *
  * @todo 	Remove in next major release
  */
-function xoops_getLinkedUnameFromId($userid)
-{
-	icms_core_Debug::setDeprecated("icms_member_user_Handler::getUserLink", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
-	return icms_member_user_Handler::getUserLink($userid);
+function xoops_getLinkedUnameFromId($userid) {
+	trigger_error('use icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact)', E_USER_DEPRECATED);
 
+	return icms_member_user_Handler::getUserLink($userid);
 }
 /**
  * Get the icmsModule object of a specified module
@@ -806,7 +808,8 @@ function icms_currency($var, $currencyObj=false)
  * @todo remove in version 2.1
  */
 function icms_float($var) {
-	icms_core_Debug::setDeprecated('icms_currency', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+	trigger_error('Use icms_currency', E_USER_DEPRECATED);
+
 	return icms_currency($var);
 }
 
@@ -1840,6 +1843,8 @@ function icms_getImageSize($url, & $width, & $height) {
  * @deprecated	Use icms::$urls
  */
 function icms_getCurrentUrls() {
+	trigger_error('Use \icms::$urls', E_USER_DEPRECATED);
+
 	return \icms::$urls;
 }
 
@@ -1973,9 +1978,11 @@ function icms_loadCommonLanguageFile() {
  *
  * @return string The URL of the current page
  * @todo Move to a static class method - HTTP or URI
- * @deprecated
+ * @deprecated Use \icms::$urls['full']
  */
 function icms_getCurrentPage() {
+	trigger_error('Use \icms::$urls[\'full\']', E_USER_DEPRECATED);
+
 	return \icms::$urls['full'];
 }
 
@@ -2143,7 +2150,8 @@ function icms_getBreadcrumb($items) {
  * @return bool
  */
 function icms_makeSmarty(array $items) {
-    if (!isset(\icms::$response)) {
+	trigger_error('Use icms_response_* classes instead', E_USER_DEPRECATED);
+	if (!isset(\icms::$response)) {
         return false;
     } else {
         \icms::$response->assign($items);

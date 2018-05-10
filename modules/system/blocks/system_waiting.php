@@ -19,16 +19,11 @@ function b_system_waiting_show($options) {
 
 	$userlang = $icmsConfig['language'] ;
 
+	$cache = icms::getInstance()->get('cache');
 	$sql_cache_min = empty($options[1]) ? 0 : (int) $options[1] ;
-	$sql_cache_file = ICMS_CACHE_PATH . '/waiting_touch' ;
-
-	// SQL cache check (you have to use this cache with block's cache by system)
-	if (file_exists($sql_cache_file)) {
-		$sql_cache_mtime = filemtime($sql_cache_file) ;
-		if (time() < $sql_cache_mtime + $sql_cache_min * 60) return array() ;
-		else {
-			unlink($sql_cache_file) ;
-		}
+	$sql_cached_item = $cache->getItem('waiting_touch');
+	if ($sql_cached_item->isHit()) {
+		return [];
 	}
 
 	// read language files for plugins
@@ -91,12 +86,14 @@ function b_system_waiting_show($options) {
 			$block["modules"][$dirname]["name"] = $name;
 		}
 	}
-	//print_r($block);
 
-	// SQL cache touch (you have to use this cache with block's cache by system)
 	if (empty($block) && $sql_cache_min > 0) {
-		$fp = fopen($sql_cache_file , "w") ;
-		fclose($fp) ;
+		$time = new DateTime();
+		$time->add(
+			date_interval_create_from_date_string($sql_cache_min . ' minutes')
+		);
+		$sql_cached_item->expiresAt($time);
+		$cache->save($sql_cached_item);
 	}
 
 	return $block ;

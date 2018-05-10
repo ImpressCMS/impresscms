@@ -215,6 +215,8 @@ class icms_member_Handler {
 	 * @return array associative array of user-IDs and names
 	 */
 	public function getUserList($criteria = null) {
+		trigger_error('This isn\'t really a membership method, but for the user handler', E_USER_DEPRECATED);
+
 		$users = $this->_uHandler->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($users) as $i) {

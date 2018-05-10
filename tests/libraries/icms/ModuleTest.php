@@ -78,8 +78,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
             'icms_module_Handler' => [
                 'getAvailable',
                 'getActive',
-                'checkModuleAccess',
-                'installation_notify'
+				'checkModuleAccess'
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {

@@ -98,6 +98,7 @@ final class icms extends Container
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\SessionServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\ConfigServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\ModuleServiceProvider::class);
+		$this->addServiceProvider(\ImpressCMS\Core\Providers\CacheServiceProvider::class);
 		// register links for compatibility
 		self::$db = $this->get('db');
 		self::$xoopsDB = $this->get('xoopsDB');

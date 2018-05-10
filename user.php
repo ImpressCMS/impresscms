@@ -48,12 +48,12 @@ $redirect = isset($_GET['xoops_redirect'])
 		? $_GET['xoops_redirect']
 		: isset($_POST['xoops_redirect'])
 			? $_POST['xoops_redirect']
-			: FALSE;
+			: false;
 if ($redirect) {
 	$redirect = htmlspecialchars(trim($redirect), ENT_QUOTES, _CHARSET);
-				$isExternal = FALSE;
+				$isExternal = false;
 	$pos = strpos($redirect, '://');
-	if ($pos !== FALSE) {
+	if ($pos !== false) {
 					$icmsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
 					if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
 						$redirect = ICMS_URL;
@@ -72,7 +72,7 @@ switch ($op) {
 			$xoopsOption['template_main'] = 'system_userform.html';
 			include 'header.php';
 			icms_makeSmarty(array(
-	            'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']]) ? $_COOKIE[$icmsConfig['usercookie']] : FALSE,
+	            'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']]) ? $_COOKIE[$icmsConfig['usercookie']] : false,
 	            'lang_login' => _LOGIN,
 	            'lang_username' => _USERNAME,
 	            'redirect_page' => $redirect,
@@ -160,9 +160,9 @@ switch ($op) {
 			redirect_header('index.php',5,_US_ACTKEYNOT);
 		} else {
 			if ($thisuser->getVar('level') > 0) {
-				redirect_header('user.php', 5, _US_ACONTACT, FALSE);
+				redirect_header('user.php', 5, _US_ACONTACT, false);
 			} else {
-				if (FALSE !== $member_handler->activateUser($thisuser)) {
+				if (false !== $member_handler->activateUser($thisuser)) {
 					if ($icmsConfigUser['activation_type'] == 2) {
 						$icmsMailer = new icms_messaging_Handler();
 						$icmsMailer->useMail();
@@ -183,7 +183,7 @@ switch ($op) {
 						include 'footer.php';
 					} else {
 						$thisuser->sendWelcomeMessage();
-						redirect_header('user.php', 3, _US_ACTLOGIN, FALSE);
+						redirect_header('user.php', 3, _US_ACTLOGIN, false);
 					}
 				} else {
 					redirect_header('index.php', 3, 'Activation failed!');
@@ -209,7 +209,7 @@ switch ($op) {
 			} else {
 				$del_uid = (int) icms::$user->getVar('uid');
 				$member_handler = icms::handler('icms_member');
-				if (FALSE != $member_handler->deleteUser(icms::$user)) {
+				if (false != $member_handler->deleteUser(icms::$user)) {
 					$online_handler = icms::handler('icms_core_Online');
 					$online_handler->destroy($del_uid);
 					xoops_notification_deletebyuser($del_uid);
