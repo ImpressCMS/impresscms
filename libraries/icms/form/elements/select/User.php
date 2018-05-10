@@ -58,7 +58,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 	 * @param	int		$size			Number or rows. "1" makes a drop-down-list.
 	 * @param	bool	$multiple	   Allow multiple selections?
 	 */
-	public function __construct($caption, $name, $include_anon = FALSE, $value = NULL, $size = 1, $multiple = FALSE, $showremovedusers = FALSE, $justremovedusers = FALSE) {
+	public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false, $showremovedusers = false, $justremovedusers = false) {
 		$limit = 200;
 		$select_element = new icms_form_elements_Select('', $name, $value, $size, $multiple);
 		if ($include_anon) {
@@ -67,10 +67,10 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		$member_handler = icms::handler('icms_member');
 		$user_count = $member_handler->getUserCount();
 		$value = is_array($value)
-			? $value
+			?$value
 			: (empty ($value)
-				? array ()
-				: array ($value)
+				?array()
+				: array($value)
 			);
 		if ($user_count > $limit && count($value) > 0) {
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("uid", "(" . implode(",", $value) . ")", "IN"));
@@ -99,7 +99,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 					function addusers(opts){
 						var num = opts.substring(0, opts.indexOf(\":\"));
 						opts = opts.substring(opts.indexOf(\":\")+1, opts.length);
-						var sel = xoopsGetElementById(\"" . $name . ($multiple ? "[]" : "") . "\");
+						var sel = xoopsGetElementById(\"" . $name . ($multiple?"[]":"") . "\");
 						var arr = new Array(num);
 						for (var n=0; n < num; n++) {
 							var nm = opts.substring(0, opts.indexOf(\":\"));
@@ -128,7 +128,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		$action_tray = new icms_form_elements_Tray("", " | ");
 		$action_tray->addElement(new icms_form_elements_Label('',
 			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name
-			. ($multiple ? "[]" : "") . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"
+			. ($multiple?"[]":"") . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"
 			. _MA_USER_REMOVE . "</a>"));
 		$action_tray->addElement(new icms_form_elements_Label('',
 			"<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL

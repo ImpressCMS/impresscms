@@ -64,7 +64,7 @@ class icms_view_Tpl extends Smarty {
 
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
 		$this->_compile_id = $this->compile_id;
-		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
+		$this->compile_check = ($icmsConfig['theme_fromfile'] == 1);
 		$this->plugins_dir = array(
 			SMARTY_DIR . 'icms_plugins',
 			SMARTY_DIR . 'plugins',
@@ -81,8 +81,8 @@ class icms_view_Tpl extends Smarty {
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
-			$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->getVar('mid') : 1;
+			$groups = (is_object(icms::$user))? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+			$moduleid = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('mid'):1;
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			if ($icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
@@ -132,7 +132,7 @@ class icms_view_Tpl extends Smarty {
 			$this->_tpl_vars = $oldVars;
 			return $out;
 		}
-		return smarty_function_eval(array('var' => $tplSource), $this );
+		return smarty_function_eval(array('var' => $tplSource), $this);
 	}
 
 	/**
@@ -158,8 +158,8 @@ class icms_view_Tpl extends Smarty {
 	 * @return  boolean
 	 */
 	static public function template_touch($tpl_id) {
-		$tplfile_handler =& icms::handler('icms_view_template_file');
-		$tplfile =& $tplfile_handler->get($tpl_id);
+		$tplfile_handler = & icms::handler('icms_view_template_file');
+		$tplfile = & $tplfile_handler->get($tpl_id);
 
 		if (is_object($tplfile)) {
 			$file = $tplfile->tpl_file;
@@ -183,7 +183,7 @@ class icms_view_Tpl extends Smarty {
 			$xoopsTpl->caching = 2;
 			for ($i = 0; $i < $count; $i++) {
 				if ($block_arr[$i]->getVar('template') != '') {
-					$xoopsTpl->clear_cache('db:'.$block_arr[$i]->getVar('template'), 'blk_'.$block_arr[$i]->getVar('bid'));
+					$xoopsTpl->clear_cache('db:' . $block_arr[$i]->getVar('template'), 'blk_' . $block_arr[$i]->getVar('bid'));
 				}
 			}
 		}

@@ -15,32 +15,32 @@ class XoopsInstallWizard {
 		if (!$this->checkAccess()) {
 			return false;
 		}
-		if (@empty( $_SERVER['REQUEST_URI'] )) {
+		if (@empty($_SERVER['REQUEST_URI'])) {
 			$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 		}
 
-		if (version_compare( phpversion(), '5', '<')) {
+		if (version_compare(phpversion(), '5', '<')) {
 			$this->no_php5 = true;
 		}
 
 		// Load the main language file
-		$this->initLanguage( !@empty( $_COOKIE['xo_install_lang'] ) ? $_COOKIE['xo_install_lang'] : 'english' );
+		$this->initLanguage(!@empty($_COOKIE['xo_install_lang'])?$_COOKIE['xo_install_lang']:'english');
 		// Setup pages
 		if ($this->no_php5) {
-			$this->pages[]= 'no_php5';
+			$this->pages[] = 'no_php5';
 		} else {
-			$this->pages[]= 'langselect';
-			$this->pages[]= 'start';
-			$this->pages[]= 'modcheck';
-			$this->pages[]= 'pathsettings';
-			$this->pages[]= 'dbconnection';
-			$this->pages[]= 'dbsettings';
-			$this->pages[]= 'configsave';
-			$this->pages[]= 'tablescreate';
-			$this->pages[]= 'siteinit';
-			$this->pages[]= 'tablesfill';
-			$this->pages[]= 'modulesinstall';
-			$this->pages[]= 'end';
+			$this->pages[] = 'langselect';
+			$this->pages[] = 'start';
+			$this->pages[] = 'modcheck';
+			$this->pages[] = 'pathsettings';
+			$this->pages[] = 'dbconnection';
+			$this->pages[] = 'dbsettings';
+			$this->pages[] = 'configsave';
+			$this->pages[] = 'tablescreate';
+			$this->pages[] = 'siteinit';
+			$this->pages[] = 'tablesfill';
+			$this->pages[] = 'modulesinstall';
+			$this->pages[] = 'end';
 		}
 
 		$this->lastpage = end($this->pages);
@@ -48,7 +48,7 @@ class XoopsInstallWizard {
 		if ($this->no_php5) {
 			$this->pagesNames[] = NO_PHP5;
 		} elseif ($this->safe_mode) {
-			$this->pagesNames[]= SAFE_MODE;
+			$this->pagesNames[] = SAFE_MODE;
 		} else {
 			$this->pagesNames[] = LANGUAGE_SELECTION;
 			$this->pagesNames[] = INTRODUCTION;
@@ -67,7 +67,7 @@ class XoopsInstallWizard {
 		if ($this->no_php5) {
 			$this->pagesTitles[] = NO_PHP5_TITLE;
 		} elseif ($this->safe_mode) {
-			$this->pagesTitles[]= SAFE_MODE_TITLE;
+			$this->pagesTitles[] = SAFE_MODE_TITLE;
 		} else {
 			$this->pagesTitles[] = LANGUAGE_SELECTION_TITLE;
 			$this->pagesTitles[] = INTRODUCTION_TITLE;
@@ -85,8 +85,8 @@ class XoopsInstallWizard {
 
 		$this->setPage(0);
 		// Prevent client caching
-		header( "Cache-Control: no-store, no-cache, must-revalidate", false );
-		header( "Pragma: no-cache" );
+		header("Cache-Control: no-store, no-cache, must-revalidate", false);
+		header("Pragma: no-cache");
 		return true;
 	}
 
@@ -112,23 +112,23 @@ class XoopsInstallWizard {
 		return true;
 	}
 
-	function loadLangFile( $file) {
-		if (file_exists( "./language/$this->language/$file.php" )) {
+	function loadLangFile($file) {
+		if (file_exists("./language/$this->language/$file.php")) {
 			include_once "./language/$this->language/$file.php";
 		} else {
 			include_once "./language/english/$file.php";
 		}
 	}
 
-	function initLanguage( $language) {
-		if (!file_exists( "./language/$language/install.php" )) {
+	function initLanguage($language) {
+		if (!file_exists("./language/$language/install.php")) {
 			$language = 'english';
 		}
 		$this->language = $language;
-		$this->loadLangFile( 'install' );
+		$this->loadLangFile('install');
 	}
 
-	function setPage( $page) {
+	function setPage($page) {
 		/**
 		 * If server is PHP 4, display the php4 page and stop the install
 		 */
@@ -144,10 +144,10 @@ class XoopsInstallWizard {
 			exit;
 		}
 
-		if ((int)$page && $page >= 0 && $page < count($this->pages)) {
-			$this->currentPageName = $this->pages[ $page ];
+		if ((int) $page && $page >= 0 && $page < count($this->pages)) {
+			$this->currentPageName = $this->pages[$page];
 			$this->currentPage = $page;
-		} elseif (false !== ( $index = array_search( $page, $this->pages ) )) {
+		} elseif (false !== ($index = array_search($page, $this->pages))) {
 			$this->currentPageName = $page;
 			$this->currentPage = $index;
 		} else {
@@ -157,32 +157,32 @@ class XoopsInstallWizard {
 	}
 
 	function baseLocation() {
-		$proto	= ( @$_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
+		$proto = (@$_SERVER['HTTPS'] == 'on')?'https':'http';
 		$host	= $_SERVER['HTTP_HOST'];
-		$base	= substr( $_SERVER['PHP_SELF'], 0, strrpos( $_SERVER['PHP_SELF'], '/' ) );
+		$base	= substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
 		return "$proto://$host$base";
 	}
 
-	function pageURI( $page) {
-		if (!(int)$page{0}) {
+	function pageURI($page) {
+		if (!(int) $page{0}) {
 			if ($page{0} == '+') {
-				$page = $this->currentPage + substr( $page, 1 );
+				$page = $this->currentPage + substr($page, 1);
 			} elseif ($page{0} == '-') {
-				$page = $this->currentPage - substr( $page, 1 );
+				$page = $this->currentPage - substr($page, 1);
 			} else {
-				$page = (int)array_search( $page, $this->pages );
+				$page = (int) array_search($page, $this->pages);
 			}
 		}
-		$page = $this->pages[$page ];
+		$page = $this->pages[$page];
 		return $this->baseLocation() . "/page_$page.php";
 	}
 
-	function redirectToPage( $page, $status = 303, $message = 'See other') {
-		$location = $this->pageURI( $page );
-		$proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
-		header( "$proto $status $message" );
+	function redirectToPage($page, $status = 303, $message = 'See other') {
+		$location = $this->pageURI($page);
+		$proto = !@empty($_SERVER['SERVER_PROTOCOL'])?$_SERVER['SERVER_PROTOCOL']:'HTTP/1.1';
+		header("$proto $status $message");
 		//header( "Status: $status $message" );
-		header( "Location: $location" );
+		header("Location: $location");
 	}
 
 }

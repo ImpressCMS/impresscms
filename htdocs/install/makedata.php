@@ -31,9 +31,9 @@ include_once './class/dbmanager.php';
 // of missing fields in install file, when add new fields to database)
 
 function make_groups(&$dbm) {
-	$gruops['XOOPS_GROUP_ADMIN'] = $dbm->insert('groups', " VALUES (0, '".addslashes(_INSTALL_WEBMASTER)."', '".addslashes(_INSTALL_WEBMASTERD)."', 'Admin')");
-	$gruops['XOOPS_GROUP_USERS'] = $dbm->insert('groups', " VALUES (0, '".addslashes(_INSTALL_REGUSERS)."', '".addslashes(_INSTALL_REGUSERSD)."', 'User')");
-	$gruops['XOOPS_GROUP_ANONYMOUS'] = $dbm->insert('groups', " VALUES (0, '".addslashes(_INSTALL_ANONUSERS)."', '".addslashes(_INSTALL_ANONUSERSD)."', 'Anonymous')");
+	$gruops['XOOPS_GROUP_ADMIN'] = $dbm->insert('groups', " VALUES (0, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
+	$gruops['XOOPS_GROUP_USERS'] = $dbm->insert('groups', " VALUES (0, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')");
+	$gruops['XOOPS_GROUP_ANONYMOUS'] = $dbm->insert('groups', " VALUES (0, '" . addslashes(_INSTALL_ANONUSERS) . "', '" . addslashes(_INSTALL_ANONUSERSD) . "', 'Anonymous')");
 
 	if (!$gruops['XOOPS_GROUP_ADMIN'] || !$gruops['XOOPS_GROUP_USERS'] || !$gruops['XOOPS_GROUP_ANONYMOUS']) {
 		return false;
@@ -44,60 +44,60 @@ function make_groups(&$dbm) {
 
 function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $gruops) {
 
-    $tables = array();
+	$tables = array();
 
 	// data for table 'groups_users_link'
-	$dbm->insert('groups_users_link', " VALUES (0, ".$gruops['XOOPS_GROUP_ADMIN'].", 1)"
-	. ", (0, ".$gruops['XOOPS_GROUP_USERS'].", 1)");
+	$dbm->insert('groups_users_link', " VALUES (0, " . $gruops['XOOPS_GROUP_ADMIN'] . ", 1)"
+	. ", (0, " . $gruops['XOOPS_GROUP_USERS'] . ", 1)");
 
 	// data for table 'group_permission'
-	$dbm->insert("group_permission", " VALUES (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'module_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1, 'module_read')"
-		. ", (0,".$gruops['XOOPS_GROUP_USERS'].",1,1,'module_read')"
-		. ", (0,".$gruops['XOOPS_GROUP_ANONYMOUS'].",1,1,'module_read')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",2,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",3,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",4,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",5,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",6,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",7,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",8,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",9,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",10,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",11,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",12,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",13,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",14,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",15,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",16,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",17,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",18,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",19,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",20,1,'system_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'group_manager')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",2,1,'group_manager')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",3,1,'group_manager')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'content_read')"
-		. ", (0,".$gruops['XOOPS_GROUP_USERS'].",1,1,'content_read')"
-		. ", (0,".$gruops['XOOPS_GROUP_ANONYMOUS'].",1,1,'content_read')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'content_admin')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'use_wysiwygeditor')");
+	$dbm->insert("group_permission", " VALUES (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'module_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1, 'module_read')"
+		. ", (0," . $gruops['XOOPS_GROUP_USERS'] . ",1,1,'module_read')"
+		. ", (0," . $gruops['XOOPS_GROUP_ANONYMOUS'] . ",1,1,'module_read')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",2,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",3,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",4,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",5,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",6,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",7,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",8,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",9,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",10,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",11,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",12,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",13,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",14,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",15,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",16,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",17,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",18,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",19,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",20,1,'system_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'group_manager')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",2,1,'group_manager')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",3,1,'group_manager')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'content_read')"
+		. ", (0," . $gruops['XOOPS_GROUP_USERS'] . ",1,1,'content_read')"
+		. ", (0," . $gruops['XOOPS_GROUP_ANONYMOUS'] . ",1,1,'content_read')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'content_admin')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'use_wysiwygeditor')");
 
 	//Image Category to admin Logos
 	$dbm->insert("imagecategory", " (imgcat_id, imgcat_pid, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype, imgcat_foldername) VALUES (1, 0, 'Logos', 358400, 350, 80, 1, 0, 'C', 'file', 'logos')");
-	$dbm->insert("group_permission", " VALUES(0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'imgcat_write')"
-		. ", (0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'imgcat_read')");
+	$dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'imgcat_write')"
+		. ", (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'imgcat_read')");
 	//Default logo used in the admin
-	$dbm->insert("image", " (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (1, 'img482278e29e81c.png', 'ImpressCMS', 'image/png', ".time().", 1, 0, 1)");
+	$dbm->insert("image", " (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (1, 'img482278e29e81c.png', 'ImpressCMS', 'image/png', " . time() . ", 1, 0, 1)");
 
 	$time = time();
-	$dbm->insert('tplset', " VALUES (1, 'default', 'ImpressCMS Default Template Set', '', ".$time.")");
+	$dbm->insert('tplset', " VALUES (1, 'default', 'ImpressCMS Default Template Set', '', " . $time . ")");
 
 	// system modules
 
-	if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/'.$language.'/modinfo.php')) {
-		include ICMS_ROOT_PATH . '/modules/system/language/'.$language.'/modinfo.php';
+	if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/' . $language . '/modinfo.php')) {
+		include ICMS_ROOT_PATH . '/modules/system/language/' . $language . '/modinfo.php';
 	} else {
 		include ICMS_ROOT_PATH . '/modules/system/language/english/modinfo.php';
 		$language = 'english';
@@ -116,21 +116,21 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	 * moved this ahead of the inclusion of system/icms_version.php for a reason - not completely without consequence
 	 * $modversion is not yet defined ~skenow
 	 */
-	$dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 44, 'system', 1)");
+	$dbm->insert("modules", " VALUES (1, '" . _MI_SYSTEM_NAME . "'," . $modversion['version'] * 100 . ", " . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 44, 'system', 1)");
 
 
 	foreach ($modversion['templates'] as $tplfile) {
-		if ($fp = fopen(ICMS_ROOT_PATH . '/modules/system/templates/'.$tplfile['file'], 'r')) {
-			$newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '".addslashes($tplfile['file'])."', '".addslashes($tplfile['description'])."', ".$time.", ".$time.", 'module')");
-			$tplsource = fread($fp, filesize(ICMS_ROOT_PATH . '/modules/system/templates/'.$tplfile['file']));
+		if ($fp = fopen(ICMS_ROOT_PATH . '/modules/system/templates/' . $tplfile['file'], 'r')) {
+			$newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ", " . $time . ", 'module')");
+			$tplsource = fread($fp, filesize(ICMS_ROOT_PATH . '/modules/system/templates/' . $tplfile['file']));
 			fclose($fp);
-			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (".$newtplid.", '".addslashes($tplsource)."')");
+			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (" . $newtplid . ", '" . addslashes($tplsource) . "')");
 		}
 	}
 
 	foreach ($modversion['blocks'] as $func_num => $newblock) {
-		if ($fp = fopen(ICMS_ROOT_PATH . '/modules/system/templates/blocks/'.$newblock['template'], 'r')) {
-			if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html','system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))) {
+		if ($fp = fopen(ICMS_ROOT_PATH . '/modules/system/templates/blocks/' . $newblock['template'], 'r')) {
+			if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html', 'system_admin_block_warnings.html', 'system_admin_block_cp.html', 'system_admin_block_modules.html', 'system_block_newusers.html', 'system_block_online.html', 'system_block_waiting.html', 'system_block_topusers.html'))) {
 				$visible = 1;
 			} else {
 				$visible = 0;
@@ -145,27 +145,27 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 				$canvaspos = 11;
 			} elseif (in_array($newblock['template'], array('system_admin_block_modules.html'))) {
 				$canvaspos = 13;
-			} elseif (in_array($newblock['template'], array('system_block_online.html','system_block_waiting.html'))) {
+			} elseif (in_array($newblock['template'], array('system_block_online.html', 'system_block_waiting.html'))) {
 				$canvaspos = 9;
-			} elseif (in_array($newblock['template'], array('system_block_newusers.html','system_block_topusers.html'))) {
+			} elseif (in_array($newblock['template'], array('system_block_newusers.html', 'system_block_topusers.html'))) {
 				$canvaspos = 10;
 			} else {
 				$canvaspos = 1;
 			}
-			$options = !isset($newblock['options']) ? '' : trim($newblock['options']);
-			$edit_func = !isset($newblock['edit_func']) ? '' : trim($newblock['edit_func']);
+			$options = !isset($newblock['options'])?'':trim($newblock['options']);
+			$edit_func = !isset($newblock['edit_func'])?'':trim($newblock['edit_func']);
 
 			# Adding dynamic block area/position system - TheRpLima - 2007-10-21
 			#$newbid = $dbm->insert('newblocks', " VALUES (0, 1, ".$func_num.", '".addslashes($options)."', '".addslashes($newblock['name'])."', '".addslashes($newblock['name'])."', '', 0, 0, ".$visible.", 'S', 'H', 1, 'system', '".addslashes($newblock['file'])."', '".addslashes($newblock['show_func'])."', '".addslashes($edit_func)."', '".addslashes($newblock['template'])."', 0, ".$time.")");
-			$newbid = $dbm->insert('newblocks', " VALUES (0, 1, ".$func_num.", '".addslashes($options)."', '".addslashes($newblock['name'])."', '".addslashes($newblock['name'])."', '', ".$canvaspos.", 0, ".$visible.", 'S', 'H', 1, 'system', '".addslashes($newblock['file'])."', '".addslashes($newblock['show_func'])."', '".addslashes($edit_func)."', '".addslashes($newblock['template'])."', 0, ".$time.")");
+			$newbid = $dbm->insert('newblocks', " VALUES (0, 1, " . $func_num . ", '" . addslashes($options) . "', '" . addslashes($newblock['name']) . "', '" . addslashes($newblock['name']) . "', '', " . $canvaspos . ", 0, " . $visible . ", 'S', 'H', 1, 'system', '" . addslashes($newblock['file']) . "', '" . addslashes($newblock['show_func']) . "', '" . addslashes($edit_func) . "', '" . addslashes($newblock['template']) . "', 0, " . $time . ")");
 
-			$newtplid = $dbm->insert('tplfile', " VALUES (0, ".$newbid.", 'system', 'default', '".addslashes($newblock['template'])."', '".addslashes($newblock['description'])."', ".$time.", ".$time.", 'block')");
-			$tplsource = fread($fp, filesize(ICMS_ROOT_PATH . '/modules/system/templates/blocks/'.$newblock['template']));
+			$newtplid = $dbm->insert('tplfile', " VALUES (0, " . $newbid . ", 'system', 'default', '" . addslashes($newblock['template']) . "', '" . addslashes($newblock['description']) . "', " . $time . ", " . $time . ", 'block')");
+			$tplsource = fread($fp, filesize(ICMS_ROOT_PATH . '/modules/system/templates/blocks/' . $newblock['template']));
 			fclose($fp);
-			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (".$newtplid.", '".addslashes($tplsource)."')");
-			$dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ADMIN'].", ".$newbid.", 1, 'block_read')"
-				. ", (0, ".$gruops['XOOPS_GROUP_USERS'].", ".$newbid.", 1, 'block_read')"
-				. ", (0, ".$gruops['XOOPS_GROUP_ANONYMOUS'].", ".$newbid.", 1, 'block_read')");
+			$dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (" . $newtplid . ", '" . addslashes($tplsource) . "')");
+			$dbm->insert("group_permission", " VALUES (0, " . $gruops['XOOPS_GROUP_ADMIN'] . ", " . $newbid . ", 1, 'block_read')"
+				. ", (0, " . $gruops['XOOPS_GROUP_USERS'] . ", " . $newbid . ", 1, 'block_read')"
+				. ", (0, " . $gruops['XOOPS_GROUP_ANONYMOUS'] . ", " . $newbid . ", 1, 'block_read')");
 		}
 	}
 	// adding welcome custom block visible for webmasters
@@ -176,8 +176,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	if ($fp = fopen($welcome_webmaster_filename, 'r')) {
 		$tplsource = fread($fp, filesize('language/' . $language . '/welcome_webmaster.tpl'));
 		fclose($fp);
-		$newbid = $dbm->insert('newblocks', " VALUES (0, 0, 0, '', 'Custom Block (Auto Format + smilies)', '" . addslashes(WELCOME_WEBMASTER) . "', '" . addslashes($tplsource) . "', 4, 0, 1, 'C', 'S', 1, '', '', '', '', '', 0, ".$time.")");
-		$dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ADMIN'].", ".$newbid.", 1, 'block_read')");
+		$newbid = $dbm->insert('newblocks', " VALUES (0, 0, 0, '', 'Custom Block (Auto Format + smilies)', '" . addslashes(WELCOME_WEBMASTER) . "', '" . addslashes($tplsource) . "', 4, 0, 1, 'C', 'S', 1, '', '', '', '', '', 0, " . $time . ")");
+		$dbm->insert("group_permission", " VALUES (0, " . $gruops['XOOPS_GROUP_ADMIN'] . ", " . $newbid . ", 1, 'block_read')");
 	}
 	// adding welcome custom block visible for anonymous
 	$welcome_anonymous_filename = 'language/' . $language . '/welcome_anonymous.tpl';
@@ -187,8 +187,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	if ($fp = fopen($welcome_anonymous_filename, 'r')) {
 		$tplsource = fread($fp, filesize('language/' . $language . '/welcome_anonymous.tpl'));
 		fclose($fp);
-		$newbid = $dbm->insert('newblocks', " VALUES (0, 0, 0, '', 'Custom Block (Auto Format + smilies)', '" . addslashes(WELCOME_ANONYMOUS) . "', '" . addslashes($tplsource) . "', 4, 0, 1, 'C', 'S', 1, '', '', '', '', '', 0, ".$time.")");
-		$dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ANONYMOUS'].", ".$newbid.", 1, 'block_read')");
+		$newbid = $dbm->insert('newblocks', " VALUES (0, 0, 0, '', 'Custom Block (Auto Format + smilies)', '" . addslashes(WELCOME_ANONYMOUS) . "', '" . addslashes($tplsource) . "', 4, 0, 1, 'C', 'S', 1, '', '', '', '', '', 0, " . $time . ")");
+		$dbm->insert("group_permission", " VALUES (0, " . $gruops['XOOPS_GROUP_ANONYMOUS'] . ", " . $newbid . ", 1, 'block_read')");
 	}
 
 	// data for table 'users'
@@ -204,7 +204,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 	while ($myrow = $dbm->fetchArray($result)) {
 		# Adding dynamic block area/position system - TheRpLima - 2007-10-21
-		if ($myrow['side'] == 1 OR $myrow['side'] == 2 OR $myrow['side'] == 7) {
+		if ($myrow['side'] == 1 or $myrow['side'] == 2 or $myrow['side'] == 7) {
 			$dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 0)");
 		} elseif (in_array($myrow['template'],array('system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))) {
 			$dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 1, 2)");
@@ -251,8 +251,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			. ", (" . $ci++ . ", '_MD_AM_DEBUGMODE3', 3, $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'closesite', '_MD_AM_CLOSESITE', '0', '_MD_AM_CLOSESITEDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'closesite_okgrp', '_MD_AM_CLOSESITEOK', '".addslashes(serialize(array('1')))."', '_MD_AM_CLOSESITEOKDSC', 'group_multi', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'closesite_text', '_MD_AM_CLOSESITETXT', '"._INSTALL_L165."', '_MD_AM_CLOSESITETXTDSC', 'textsarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'closesite_okgrp', '_MD_AM_CLOSESITEOK', '" . addslashes(serialize(array('1'))) . "', '_MD_AM_CLOSESITEOKDSC', 'group_multi', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'closesite_text', '_MD_AM_CLOSESITETXT', '" . _INSTALL_L165 . "', '_MD_AM_CLOSESITETXTDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'my_ip', '_MD_AM_MYIP', '127.0.0.1', '_MD_AM_MYIPDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'use_ssl', '_MD_AM_USESSL', '0', '_MD_AM_USESSLDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'sslpost_name', '_MD_AM_SSLPOST', 'icms_ssl', '_MD_AM_SSLPOSTDSC', 'textbox', 'text', " . $p++ . ")"
@@ -269,12 +269,12 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'use_captchaf', '_MD_AM_USECAPTCHAFORM', 1, '_MD_AM_USECAPTCHAFORMDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'enable_badips', '_MD_AM_DOBADIPS', '0', '_MD_AM_DOBADIPSDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'bad_ips', '_MD_AM_BADIPS', '".addslashes(serialize(array('127.0.0.1')))."', '_MD_AM_BADIPSDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'bad_ips', '_MD_AM_BADIPS', '" . addslashes(serialize(array('127.0.0.1'))) . "', '_MD_AM_BADIPSDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'module_cache', '_MD_AM_MODCACHE', '', '_MD_AM_MODCACHEDSC', 'module_cache', 'array', " . $p++ . ")");
 
 	// Data for Config Category 2 (User Preferences)
-	$c=2; // sets config category id
-	$p=0; // reset position increment to 0 for new category id
+	$c = 2; // sets config category id
+	$p = 0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'allow_register', '_MD_AM_ALLOWREG', 1, '_MD_AM_ALLOWREGDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'minpass', '_MD_AM_MINPASS', '5', '_MD_AM_MINPASSDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'pass_level', '_MD_AM_PASSLEVEL', '40', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', " . $p++ . ")");
@@ -290,14 +290,14 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'delusers', '_MD_AM_DELUSRES', '30', '_MD_AM_DELUSRESDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'use_captcha', '_MD_AM_USECAPTCHA', 1, '_MD_AM_USECAPTCHADSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'welcome_msg', '_MD_AM_WELCOMEMSG', '0', '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', '".addslashes(_WELCOME_MSG_CONTENT)."', '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textsarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', '" . addslashes(_WELCOME_MSG_CONTENT) . "', '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'allow_chgmail', '_MD_AM_ALLWCHGMAIL', '0', '_MD_AM_ALLWCHGMAILDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'allwshow_sig', '_MD_AM_ALLWSHOWSIG', '1', '_MD_AM_ALLWSHOWSIGDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'allow_htsig', '_MD_AM_ALLWHTSIG', '1', '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'new_user_notify', '_MD_AM_NEWUNOTIFY', '1', '_MD_AM_NEWUNOTIFYDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'new_user_notify_group', '_MD_AM_NOTIFYTO', ".$gruops['XOOPS_GROUP_ADMIN'].", '_MD_AM_NOTIFYTODSC', 'group', 'int', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'new_user_notify_group', '_MD_AM_NOTIFYTO', " . $gruops['XOOPS_GROUP_ADMIN'] . ", '_MD_AM_NOTIFYTODSC', 'group', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'activation_type', '_MD_AM_ACTVTYPE', '0', '_MD_AM_ACTVTYPEDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_USERACTV', '0', $i)"
@@ -305,7 +305,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			. ", (" . $ci++ . ", '_MD_AM_ADMINACTV', '2', $i)"
 			. ", (" . $ci++ . ", '_MD_AM_REGINVITE', '3', $i)");
 	// ----------
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'activation_group', '_MD_AM_ACTVGROUP', ".$gruops['XOOPS_GROUP_ADMIN'].", '_MD_AM_ACTVGROUPDSC', 'group', 'int', " . $p++ . ")"
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'activation_group', '_MD_AM_ACTVGROUP', " . $gruops['XOOPS_GROUP_ADMIN'] . ", '_MD_AM_ACTVGROUPDSC', 'group', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'uname_test_level', '_MD_AM_UNAMELVL', '0', '_MD_AM_UNAMELVLDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_STRICT', '0', $i)"
@@ -325,13 +325,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'rank_width', '_MD_AM_RANKW', '120', '_MD_AM_RANKWDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'rank_height', '_MD_AM_RANKH', '120', '_MD_AM_RANKHDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'rank_maxsize', '_MD_AM_RANKMAX', '35000', '_MD_AM_RANKMAXDSC', 'textbox', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'bad_unames', '_MD_AM_BADUNAMES', '".addslashes(serialize(array('webmaster', '^impresscms', '^admin')))."', '_MD_AM_BADUNAMESDSC', 'textsarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'bad_emails', '_MD_AM_BADEMAILS', '".addslashes(serialize(array('impresscms.org$')))."', '_MD_AM_BADEMAILSDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'bad_unames', '_MD_AM_BADUNAMES', '" . addslashes(serialize(array('webmaster', '^impresscms', '^admin'))) . "', '_MD_AM_BADUNAMESDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'bad_emails', '_MD_AM_BADEMAILS', '" . addslashes(serialize(array('impresscms.org$'))) . "', '_MD_AM_BADEMAILSDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'remember_me', '_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'reg_dispdsclmr', '_MD_AM_DSPDSCLMR', 1, '_MD_AM_DSPDSCLMRDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'reg_disclaimer', '_MD_AM_REGDSCLMR', '".addslashes(_INSTALL_DISCLMR)."', '_MD_AM_REGDSCLMRDSC', 'textsarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'reg_disclaimer', '_MD_AM_REGDSCLMR', '" . addslashes(_INSTALL_DISCLMR) . "', '_MD_AM_REGDSCLMRDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textsarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'priv_policy', '_MD_AM_PRIVPOLICY', '" . addslashes(_INSTALL_PRIVPOLICY) . "', '_MD_AM_PRIVPOLICYDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'enc_type', '_MD_AM_ENC_TYPE', '23', '_MD_AM_ENC_TYPEDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
@@ -355,8 +355,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// ----------
 
 	// Data for Config Category 3 (Meta & Footer Preferences)
-	$c=3; // sets config category id
-	$p=0; // reset position increment to 0 for new category id
+	$c = 3; // sets config category id
+	$p = 0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'meta_keywords', '_MD_AM_METAKEY', 'community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes', '_MD_AM_METAKEYDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'meta_description', '_MD_AM_METADESC', 'ImpressCMS is a dynamic Object Oriented based open source portal script written in PHP.', '_MD_AM_METADESCDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'meta_robots', '_MD_AM_METAROBOTS', 'index,follow', '_MD_AM_METAROBOTSDSC', 'select', 'text', " . $p++ . ")");
@@ -376,21 +376,21 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'meta_author', '_MD_AM_METAAUTHOR', 'ImpressCMS', '_MD_AM_METAAUTHORDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'meta_copyright', '_MD_AM_METACOPYR', 'Copyright &copy; 2007-" . date('Y', time()) . "', '_MD_AM_METACOPYRDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'google_meta', '_MD_AM_METAGOOGLE', '', '_MD_AM_METAGOOGLE_DESC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'footer', '_MD_AM_FOOTER', '"._LOCAL_FOOTER."', '_MD_AM_FOOTERDSC', 'textsarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'footer', '_MD_AM_FOOTER', '" . _LOCAL_FOOTER . "', '_MD_AM_FOOTERDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'use_google_analytics', '_MD_AM_USE_GOOGLE_ANA', 0, '_MD_AM_USE_GOOGLE_ANA_DESC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'footadm', '_MD_AM_FOOTADM', '"._LOCAL_FOOTER."', '_MD_AM_FOOTADM_DESC', 'textsarea', 'text', " . $p++ . ")");
+		. ", (" . ++$i . ", 0, $c, 'footadm', '_MD_AM_FOOTADM', '" . _LOCAL_FOOTER . "', '_MD_AM_FOOTADM_DESC', 'textsarea', 'text', " . $p++ . ")");
 
 	// Data for Config Category 4 (Badword Preferences)
-	$c=4; // sets config category id
-	$p=0; // reset position increment to 0 for new category id
+	$c = 4; // sets config category id
+	$p = 0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'censor_enable', '_MD_AM_DOCENSOR', '0', '_MD_AM_DOCENSORDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'censor_words', '_MD_AM_CENSORWRD', '".addslashes(serialize(array('fuck', 'shit', 'cunt', 'wanker', 'bastard')))."', '_MD_AM_CENSORWRDDSC', 'textsarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'censor_replace', '_MD_AM_CENSORRPLC', '"._LOCAL_SENSORTXT."', '_MD_AM_CENSORRPLCDSC', 'textbox', 'text', " . $p++ . ")");
+		. ", (" . ++$i . ", 0, $c, 'censor_words', '_MD_AM_CENSORWRD', '" . addslashes(serialize(array('fuck', 'shit', 'cunt', 'wanker', 'bastard'))) . "', '_MD_AM_CENSORWRDDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'censor_replace', '_MD_AM_CENSORRPLC', '" . _LOCAL_SENSORTXT . "', '_MD_AM_CENSORRPLCDSC', 'textbox', 'text', " . $p++ . ")");
 
 	// Data for Config Category 5 (Search Preferences)
-	$c=5; // sets config category id
-	$p=0; // reset position increment to 0 for new category id
+	$c = 5; // sets config category id
+	$p = 0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'enable_search', '_MD_AM_DOSEARCH', '1', '_MD_AM_DOSEARCHDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'enable_deep_search', '_MD_AM_DODEEPSEARCH', '1', '_MD_AM_DODEEPSEARCHDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'num_shallow_search', '_MD_AM_NUMINITSRCHRSLTS', '5', '_MD_AM_NUMINITSRCHRSLTSDSC', 'textbox', 'int', " . $p++ . ")"
@@ -400,8 +400,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'search_per_page', '_MD_AM_SEARCH_PER_PAGE', '20', '_MD_AM_SEARCH_PER_PAGEDSC', 'textbox', 'int', " . $p++ . ")");
 
 	// Data for Config Category 6 (Mail Settings)
-	$c=6; // sets config category id
-	$p=0; // reset position increment to 0 for new category id
+	$c = 6; // sets config category id
+	$p = 0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'from','_MD_AM_MAILFROM','','_MD_AM_MAILFROMDESC','textbox','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'fromname','_MD_AM_MAILFROMNAME','','_MD_AM_MAILFROMNAMEDESC','textbox','text', " . $p++ . ")"
 	// RMV-NOTIFY... Need to specify which user is sender of notification PM
@@ -426,8 +426,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ",0,$c,'sendmailpath','_MD_AM_SENDMAILPATH','/usr/sbin/sendmail','_MD_AM_SENDMAILPATHDESC','textbox','text', " . $p++ . ")");
 
 	// Data for Config Category 7 (Authentication Settings)
-	$c=7; // sets config category id
-	$p=0; // reset position increment to 0 for new category id
+	$c = 7; // sets config category id
+	$p = 0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'auth_method','_MD_AM_AUTHMETHOD','local','_MD_AM_AUTHMETHODDESC','select','text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_XOOPS', 'local', $i)"
@@ -441,7 +441,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ",0,$c,'ldap_manager_dn','_MD_AM_LDAP_MANAGER_DN','manager_dn','_MD_AM_LDAP_MANAGER_DN_DESC','textbox','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_manager_pass','_MD_AM_LDAP_MANAGER_PASS','manager_pass','_MD_AM_LDAP_MANAGER_PASS_DESC','password','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_version','_MD_AM_LDAP_VERSION','3','_MD_AM_LDAP_VERSION_DESC','textbox','text', " . $p++ . ")"
-		. ", (" . ++$i . ",0,$c,'ldap_users_bypass','_MD_AM_LDAP_USERS_BYPASS','".serialize(array('admin'))."','_MD_AM_LDAP_USERS_BYPASS_DESC','textsarea','array', " . $p++ . ")"
+		. ", (" . ++$i . ",0,$c,'ldap_users_bypass','_MD_AM_LDAP_USERS_BYPASS','" . serialize(array('admin')) . "','_MD_AM_LDAP_USERS_BYPASS_DESC','textsarea','array', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_loginname_asdn','_MD_AM_LDAP_LOGINNAME_ASDN','uid_asdn','_MD_AM_LDAP_LOGINNAME_ASDN_D','yesno','int', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_loginldap_attr', '_MD_AM_LDAP_LOGINLDAP_ATTR', 'uid', '_MD_AM_LDAP_LOGINLDAP_ATTR_D', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_filter_person','_MD_AM_LDAP_FILTER_PERSON','','_MD_AM_LDAP_FILTER_PERSON_DESC','textbox','text', " . $p++ . ")"
@@ -456,30 +456,30 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ",0,$c,'ldap_use_TLS','_MD_AM_LDAP_USETLS','0','_MD_AM_LDAP_USETLS_DESC','yesno','int', " . $p++ . ")");
 
 	// Data for Config Category 8 (Multi Language Settings)
-	$c=8; // sets config category id
-	$p=0; // reset position increment to 0 for new category id
+	$c = 8; // sets config category id
+	$p = 0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c,'ml_enable', '_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLEDEC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c,'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c,'ml_tags', '_MD_AM_ML_TAGS', '"._DEF_LANG_TAGS."', '_MD_AM_ML_TAGSDSC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c,'ml_names', '_MD_AM_ML_NAMES', '"._DEF_LANG_NAMES."', '_MD_AM_ML_NAMESDSC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c,'ml_captions', '_MD_AM_ML_CAPTIONS', '"._LOCAL_LANG_NAMES."', '_MD_AM_ML_CAPTIONSDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c,'ml_tags', '_MD_AM_ML_TAGS', '" . _DEF_LANG_TAGS . "', '_MD_AM_ML_TAGSDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c,'ml_names', '_MD_AM_ML_NAMES', '" . _DEF_LANG_NAMES . "', '_MD_AM_ML_NAMESDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c,'ml_captions', '_MD_AM_ML_CAPTIONS', '" . _LOCAL_LANG_NAMES . "', '_MD_AM_ML_CAPTIONSDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c,'ml_charset', '_MD_AM_ML_CHARSET', 'UTF-8,UTF-8', '_MD_AM_ML_CHARSETDSC', 'textbox', 'text', " . $p++ . ")");
 
 	// Data for Config Category 9 (Content Manager Settings)
-	$c=9; // sets config category id
-	$p=0;
+	$c = 9; // sets config category id
+	$p = 0;
 	/* These have been deprecated in 1.2 and should not be inserted. They are part of the content module now */
 
 	// Data for Config Category 10 (Personalization Settings)
-	$c=10; // sets config category id
-	$p=0;
+	$c = 10; // sets config category id
+	$p = 0;
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/imagemanager/logos/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '".XOOPS_URL."/', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '" . XOOPS_URL . "/', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_right_logo_alt', '_MD_AM_RLOGOADM_ALT', '', '_MD_AM_RLOGOADM_ALT_DESC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'rss_local', '_MD_AM_RSSLOCAL', '"._MD_AM_RSSLOCALLINK_DESC."', '_MD_AM_RSSLOCAL_DESC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'rss_local', '_MD_AM_RSSLOCAL', '" . _MD_AM_RSSLOCALLINK_DESC . "', '_MD_AM_RSSLOCAL_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'editre_block', '_MD_AM_EDITREMOVEBLOCK', '1', '_MD_AM_EDITREMOVEBLOCKDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '1', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', " . $p++ . ")");
@@ -505,17 +505,17 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', " . $p++ . ")");
 
 	// Data for Config Category 11 (CAPTCHA Settings)
-	$c=11; // sets config category id
-	$p=0;
+	$c = 11; // sets config category id
+	$p = 0;
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CAPTCHA_OFF', 'none', $i)"
 			. ", (" . $ci++ . ", '_MD_AM_CAPTCHA_IMG', 'image', $i)"
 			. ", (" . $ci++ . ", '_MD_AM_CAPTCHA_TXT', 'text', $i)");
 	// ----------
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '".addslashes(serialize(array('2')))."', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', " . $p++ . ")"
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '" . addslashes(serialize(array('2'))) . "', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '".addslashes(serialize(array('o', '0', 'i', 'l', '1')))."', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '" . addslashes(serialize(array('o', '0', 'i', 'l', '1'))) . "', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'captcha_num_chars', '_MD_AM_CAPTCHA_NUMCHARS', '4', '_MD_AM_CAPTCHA_NUMCHARSDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', " . $p++ . ")"
@@ -534,9 +534,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', " . $p++ . ")");
 
 	// Data for Config Category 12 (Text Sanitizer Plugin Settings)
-	$c=12; // sets config category id
-	$p=0;
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', '".addslashes(serialize(array('syntaxhighlightphp', 'hiddencontent')))."', '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', " . $p++ . ")"
+	$c = 12; // sets config category id
+	$p = 0;
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', '" . addslashes(serialize(array('syntaxhighlightphp', 'hiddencontent'))) . "', '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_HIGHLIGHTER_OFF', 'none', $i)"
@@ -546,8 +546,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', " . $p++ . ")");
 
 	// Data for Config Category 13 (AutoTasks)
-	$c=13;
-	$p=0; // reset position increment to 0 for new category id
+	$c = 13;
+	$p = 0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', " . $p++ . ")");
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'PHP-CGI', 'php -f %path%', $i)"
@@ -575,7 +575,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_MakeAbsolute', '_MD_AM_PURIFIER_URI_MAKEABS', '0', '_MD_AM_PURIFIER_URI_MAKEABSDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_HostBlacklist', '_MD_AM_PURIFIER_URI_BLACKLIST', '', '_MD_AM_PURIFIER_URI_BLACKLISTDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_AllowedSchemes', '_MD_AM_PURIFIER_URI_ALLOWSCHEME', '".addslashes(serialize(array('http','https','mailto','ftp','nntp','news')))."', '_MD_AM_PURIFIER_URI_ALLOWSCHEMEDSC', 'textsarea', 'array', " . $p++ . ")"
-    //$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_URI_SafeIframeRegexp', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP', '', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC', 'textsarea', 'array', " . $p++ . ")");
+	//$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_URI_SafeIframeRegexp', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP', '', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC', 'textsarea', 'array', " . $p++ . ")");
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_DefinitionID', '_MD_AM_PURIFIER_HTML_DEFID', 'system', '_MD_AM_PURIFIER_HTML_DEFIDDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_DefinitionRev', '_MD_AM_PURIFIER_HTML_DEFREV', '1', '_MD_AM_PURIFIER_HTML_DEFREVDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_Doctype', '_MD_AM_PURIFIER_HTML_DOCTYPE', 'XHTML 1.0 Transitional', '_MD_AM_PURIFIER_HTML_DOCTYPEDSC', 'select', 'text', " . $p++ . ")");
@@ -595,12 +595,12 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_AllowedElements', '_MD_AM_PURIFIER_HTML_ALLOWELE',
      '".addslashes(serialize(array('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl',
-                                   'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's',
-                                   'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var')))."',
+								   'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's',
+								   'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var')))."',
      '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textsarea', 'array', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_AllowedAttributes', '_MD_AM_PURIFIER_HTML_ALLOWATTR',
      '".addslashes(serialize(array('a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title',
-                                   'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style', 'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id', 'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan', 'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan', 'th.style', 'th.valign', 'ul.style')))."',
+								   'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style', 'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id', 'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan', 'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan', 'th.style', 'th.valign', 'ul.style')))."',
      '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_ForbiddenElements', '_MD_AM_PURIFIER_HTML_FORBIDELE', '', '_MD_AM_PURIFIER_HTML_FORBIDELEDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_ForbiddenAttributes', '_MD_AM_PURIFIER_HTML_FORBIDATTR', '', '_MD_AM_PURIFIER_HTML_FORBIDATTRDSC', 'textsarea', 'array', " . $p++ . ")"
@@ -614,7 +614,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'purifier_Filter_ExtractStyleBlocks_Scope', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE', '', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Filter_YouTube', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE', '1', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Core_EscapeNonASCIICharacters', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARS', '1', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARSDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Core_HiddenElements', '_MD_AM_PURIFIER_CORE_HIDDENELE', '".addslashes(serialize(array('script','style')))."', '_MD_AM_PURIFIER_CORE_HIDDENELEDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Core_HiddenElements', '_MD_AM_PURIFIER_CORE_HIDDENELE', '" . addslashes(serialize(array('script', 'style'))) . "', '_MD_AM_PURIFIER_CORE_HIDDENELEDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Core_RemoveInvalidImg', '_MD_AM_PURIFIER_CORE_REMINVIMG', '1', '_MD_AM_PURIFIER_CORE_REMINVIMGDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_AutoParagraph', '_MD_AM_PURIFIER_AUTO_AUTOPARA', '0', '_MD_AM_PURIFIER_AUTO_AUTOPARADSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_DisplayLinkURI', '_MD_AM_PURIFIER_AUTO_DISPLINKURI', '0', '_MD_AM_PURIFIER_AUTO_DISPLINKURIDSC', 'yesno', 'int', " . $p++ . ")"
@@ -623,9 +623,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_Custom', '_MD_AM_PURIFIER_AUTO_CUSTOM', '', '_MD_AM_PURIFIER_AUTO_CUSTOMDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_RemoveEmpty', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTY', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_RemoveEmptyNbsp', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSP', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_RemoveEmptyNbspExceptions', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPT', '".addslashes(serialize(array('td','th')))."', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPTDSC', 'textsarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedFrameTargets', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGET', '".addslashes(serialize(array('_blank','_parent','_self','_top')))."', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGETDSC', 'textsarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', '".addslashes(serialize(array('external','nofollow','external nofollow','lightbox')))."', '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_RemoveEmptyNbspExceptions', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPT', '" . addslashes(serialize(array('td', 'th'))) . "', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPTDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedFrameTargets', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGET', '" . addslashes(serialize(array('_blank', '_parent', '_self', '_top'))) . "', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGETDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', '" . addslashes(serialize(array('external', 'nofollow', 'external nofollow', 'lightbox'))) . "', '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_DefaultInvalidImage', '_MD_AM_PURIFIER_ATTR_DEFINVIMG', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGDSC', 'textbox', 'text', " . $p++ . ")"
@@ -644,7 +644,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', " . $p++ . ")");
 	// <<<<< End of Purifier Category >>>>>
 
-	$dbm->insert('system_autotasks', " VALUES (0, 'Inactivating users', 'autotask.php', 0, 1440, 0, 1, ".time().", 'addon/system', 00)");
+	$dbm->insert('system_autotasks', " VALUES (0, 'Inactivating users', 'autotask.php', 0, 1440, 0, 1, " . time() . ", 'addon/system', 00)");
 
 	return $gruops;
 }

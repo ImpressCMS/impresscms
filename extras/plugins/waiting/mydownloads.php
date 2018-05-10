@@ -1,37 +1,37 @@
 <?php
 function b_waiting_mydownloads()
 {
-	$ret = array() ;
+	$ret = array();
 
 	// mydownloads links
 	$block = array();
-	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("mydownloads_downloads")." WHERE status=0");
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("mydownloads_downloads") . " WHERE status=0");
 	if ($result) {
-		$block['adminlink'] = ICMS_URL."/modules/mydownloads/admin/index.php?op=listNewDownloads";
+		$block['adminlink'] = ICMS_URL . "/modules/mydownloads/admin/index.php?op=listNewDownloads";
 		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
-		$block['lang_linkname'] = _PI_WAITING_WAITINGS ;
+		$block['lang_linkname'] = _PI_WAITING_WAITINGS;
 	}
-	$ret[] = $block ;
+	$ret[] = $block;
 
 	// mydownloads broken
 	$block = array();
-	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("mydownloads_broken"));
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("mydownloads_broken"));
 	if ($result) {
-		$block['adminlink'] = ICMS_URL."/modules/mydownloads/admin/index.php?op=listBrokenDownloads";
+		$block['adminlink'] = ICMS_URL . "/modules/mydownloads/admin/index.php?op=listBrokenDownloads";
 		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
-		$block['lang_linkname'] = _PI_WAITING_BROKENS ;
+		$block['lang_linkname'] = _PI_WAITING_BROKENS;
 	}
-	$ret[] = $block ;
+	$ret[] = $block;
 
 	// mydownloads modreq
 	$block = array();
-	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("mydownloads_mod"));
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("mydownloads_mod"));
 	if ($result) {
-		$block['adminlink'] = ICMS_URL."/modules/mydownloads/admin/index.php?op=listModReq";
+		$block['adminlink'] = ICMS_URL . "/modules/mydownloads/admin/index.php?op=listModReq";
 		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
-		$block['lang_linkname'] = _PI_WAITING_MODREQS ;
+		$block['lang_linkname'] = _PI_WAITING_MODREQS;
 	}
-	$ret[] = $block ;
+	$ret[] = $block;
 
 	return $ret;
 }

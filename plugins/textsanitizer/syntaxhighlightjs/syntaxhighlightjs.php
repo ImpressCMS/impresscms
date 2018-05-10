@@ -16,7 +16,7 @@
  * @param string $text the search terms
  */
 function textsanitizer_syntaxhighlightjs($text) {
-	return preg_replace_callback("/\[code_js](.*)\[\/code_js\]/sU", function ($matches) {
+	return preg_replace_callback("/\[code_js](.*)\[\/code_js\]/sU", function($matches) {
 		return textsanitizer_geshi_js_highlight($matches[1]);
 	}, $text);
 }
@@ -26,7 +26,7 @@ function textsanitizer_syntaxhighlightjs($text) {
  *
  * @param $source
  */
-function textsanitizer_geshi_js_highlight( $source) {
+function textsanitizer_geshi_js_highlight($source) {
 	$source = icms_core_DataFilter::undoHtmlSpecialChars($source);
 
 	// Create the new GeSHi object, passing relevant stuff
@@ -37,7 +37,7 @@ function textsanitizer_geshi_js_highlight( $source) {
 	// Sets the proper encoding charset other than "ISO-8859-1"
 	$geshi->set_encoding(_CHARSET);
 
-	$geshi->set_link_target ( "_blank" );
+	$geshi->set_link_target("_blank");
 
 	// Parse the code
 	$code = $geshi->parse_code();
@@ -52,7 +52,7 @@ function textsanitizer_geshi_js_highlight( $source) {
  */
 function render_syntaxhighlightjs($ele_name) {
 	global $xoTheme;
-	$javascript='';
+	$javascript = '';
 	$dirname = basename(__DIR__);
 	if (isset($xoTheme)) {
 		$xoTheme->addScript(
@@ -62,7 +62,7 @@ function render_syntaxhighlightjs($ele_name) {
 	$code = "<img
         	onclick='javascript:icmsCodeJS(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERJSCODE, ENT_QUOTES, _CHARSET) . "\");'
         	onmouseover='style.cursor=\"pointer\"'
-        	src='" . ICMS_URL."/plugins/textsanitizer/" . $dirname . "/js.png'
+        	src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/js.png'
         	alt='js'
         	title='Javascript' />&nbsp;";
 	return array($code, $javascript);

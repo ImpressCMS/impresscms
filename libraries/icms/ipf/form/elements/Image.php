@@ -22,7 +22,7 @@ class icms_ipf_form_elements_Image extends icms_form_elements_Tray {
 		$object_imageurl = $object->getImageDir();
 		parent::__construct($var['form_caption'], ' ');
 
-		if (isset($objectArray['image'])){
+		if (isset($objectArray['image'])) {
 			$objectArray['image'] = str_replace('{ICMS_URL}', ICMS_URL, $objectArray['image']);
 		}
 

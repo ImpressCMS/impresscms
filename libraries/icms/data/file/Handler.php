@@ -31,7 +31,9 @@ class icms_data_file_Handler extends icms_ipf_Handler {
 		$imgUrl = $obj->getVar("url");
 		if (strstr($imgUrl, ICMS_URL) !== FALSE) {
 			$imgPath = str_replace(ICMS_URL, ICMS_ROOT_PATH, $imgUrl);
-			if (is_file($imgPath)) unlink($imgPath);
+			if (is_file($imgPath)) {
+				unlink($imgPath);
+			}
 		}
 		return TRUE;
 	}

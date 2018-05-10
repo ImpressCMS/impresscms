@@ -30,14 +30,14 @@ abstract class icms_db_mysql_Utility implements icms_db_IUtility {
 			$query = $matches [0];
 			if (preg_match('/REFERENCES/', $query) or preg_match('/DROP FOREIGN KEY/', $query)) {
 
-				$matches_1 = $matches;  // claudia
+				$matches_1 = $matches; // claudia
 				//$pattern = "/(REFERENCES)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 				// alterado abaixo 03/10/2011, sendo que funcionou para ADD CONSTRAINT e não para DROP FOREIGN KEY
 				$pattern = "/(REFERENCES|DROP FOREIGN KEY|ADD CONSTRAINT)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 				if (preg_match($pattern, $query, $matches)) {
 					$matches [0] = preg_replace($pattern, $replace, $query);
 					$matches_1[0] = $matches[0]; // claudia
-					$matches = $matches_1;  // claudia
+					$matches = $matches_1; // claudia
 				}
 			}
 			return $matches;
@@ -48,7 +48,7 @@ abstract class icms_db_mysql_Utility implements icms_db_IUtility {
 			return $matches;
 		} else {
 
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -70,7 +70,7 @@ abstract class icms_db_mysql_Utility implements icms_db_IUtility {
 	 *
 	 * @param string $sql
 	 * @return bool	TRUE if the string is safe
-	*/
+	 */
 	static public function checkSQL($sql) {}
 
 }

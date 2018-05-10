@@ -24,7 +24,7 @@
  */
 class icms_ipf_Handler extends icms_core_ObjectHandler {
 
-    /**
+	/**
 	 * Loaded items cache
 	 *
 	 * @var array
@@ -305,7 +305,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      *
      * @return array
      */
-    public function getCalculatedInfo(Array $field_func, icms_db_criteria_Element $criteria = null, $debug = false) {
+    public function getCalculatedInfo(array $field_func, icms_db_criteria_Element $criteria = null, $debug = false) {
         if (empty($field_func)) {
             return array();
         }
@@ -353,8 +353,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      *
      * @return array
      */
-	public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false)
-	{
+	public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false) {
 		trigger_error('Use getObjects() instead', E_USER_DEPRECATED);
 
 		return $this->getObjects($criteria, $id_as_key, $as_object, $sql, true);
@@ -369,8 +368,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return array
 	 */
-	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false)
-	{
+	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
 		$limit = $start = 0;
 
 		if ($this->generalSQL) {
@@ -379,34 +377,34 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM ' . $this->table . " AS " . $this->_itemname;
 		}
 
-        if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-            $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->getSort() != '') {
-                $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
-            }
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+			$sql .= ' ' . $criteria->renderWhere();
+			if ($criteria->getSort() != '') {
+				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
-        }
+		}
 
-        if ($debug) {
-            icms_core_Debug::message($sql);
-        }
+		if ($debug) {
+			icms_core_Debug::message($sql);
+		}
 
 		$result = $this->db->query($sql, $limit, $start);
 
-		$ret = (!$result) ? array() : $this->convertResultSet($result, $id_as_key, $as_object);
+		$ret = (!$result)?array():$this->convertResultSet($result, $id_as_key, $as_object);
 
-        return $ret;
-    }
+		return $ret;
+	}
 
-    /**
+	/**
 	 * Gets all fields for SQL
-     *
+	 *
 	 * @param bool $getcurrent Get current fields
 	 * @param bool $forSQL Returns fields result as for SQL
-     *
+	 *
 	 * @return string
-     */
+	 */
 	protected function getFields($getcurrent = true, $forSQL = false)
 	{
 		if (!empty($this->visibleColumns) && $getcurrent)
@@ -430,156 +428,156 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			return '`' . implode('`, `', $ret) . '`';
 		}
 		return $ret;
-    }
+	}
 
-    /**
+	/**
 	 * Convert a database resultset to a returnable array
-     *
+	 *
 	 * @param object $result database resultset
 	 * @param bool $id_as_key - should NOT be used with joint keys
 	 * @param bool $as_object
-     *
-     * @return array
-     */
+	 *
+	 * @return array
+	 */
 	public function convertResultSet($result, $id_as_key = false, $as_object = true)
 	{
 		if ($id_as_key === true) {
 			$id_as_key = $this->keyName;
 		} elseif (($id_as_key == 'parent_id') && isset($this->parentName)) {
 			$id_as_key = $this->parentName;
-        }
+		}
 
 		if ($as_object === null) {
 			return ($id_as_key !== false) ? $this->convertResultSet_RAWWithKey($result, $id_as_key) : $this->convertResultSet_RAW($result);
-        } else {
+		} else {
 			return ($id_as_key !== false) ? $this->convertResultSet_ObjectWithKey($result, $id_as_key, $as_object) : $this->convertResultSet_Object($result, $as_object);
-        }
-    }
+		}
+	}
 
-    protected function convertResultSet_RAWWithKey($result, $key) {
-        $ret = array();
-        if ($this->keyName == $key) {
-            while ($myrow = $this->db->fetchArray($result)) {
-                $ret[$key] = $myrow;
-            }
-        } else {
-            while ($myrow = $this->db->fetchArray($result)) {
-                $ret[$myrow[$key]][$myrow[$this->keyName]] = $myrow;
-            }
-        }
-        return $ret;
-    }
+	protected function convertResultSet_RAWWithKey($result, $key) {
+		$ret = array();
+		if ($this->keyName == $key) {
+			while ($myrow = $this->db->fetchArray($result)) {
+				$ret[$key] = $myrow;
+			}
+		} else {
+			while ($myrow = $this->db->fetchArray($result)) {
+				$ret[$myrow[$key]][$myrow[$this->keyName]] = $myrow;
+			}
+		}
+		return $ret;
+	}
 
 	protected function convertResultSet_RAW($result)
 	{
-        $ret = array();
-        while ($myrow = $this->db->fetchArray($result)) {
+		$ret = array();
+		while ($myrow = $this->db->fetchArray($result)) {
 			$ret[] = $myrow;
-        }
-        return $ret;
-    }
+		}
+		return $ret;
+	}
 
-    protected function convertResultSet_ObjectWithKey($result, $key, $as_object) {
-        $fields_sk = $this->getSkipKeys();
-        $se = count($fields_sk) == 0;
-        $ret = array();
-        if ($this->keyName == $key) {
-            while ($myrow = $this->db->fetchArray($result)) {
-                $kname = $myrow[$this->keyName];
-                if (isset(self::$_loadedItems[$this->className][$kname])) {
-                    $iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
-                    if ($as_object) {
-                        $ret[$iname] = &self::$_loadedItems[$this->className][$kname];
-                    } else {
-                        $ret[$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
-                    }
-                    icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
-                    continue;
-                }
-                $obj = new $this->className($this, $myrow);
-                if (!$obj->isLoadedOnCreation()) {
-                    $obj->assignVars($myrow);
-                    $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
-                }
-                if (isset($fields_sk)) {
-                    $obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
-                }
-                //if (!$obj->handler)
-                //    $obj->handler = $this;
-                if ($this->uploadEnabled) {
-                    $obj->setImageDir($this->getImageUrl(), $this->getImagePath());
-                }
+	protected function convertResultSet_ObjectWithKey($result, $key, $as_object) {
+		$fields_sk = $this->getSkipKeys();
+		$se = count($fields_sk) == 0;
+		$ret = array();
+		if ($this->keyName == $key) {
+			while ($myrow = $this->db->fetchArray($result)) {
+				$kname = $myrow[$this->keyName];
+				if (isset(self::$_loadedItems[$this->className][$kname])) {
+					$iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
+					if ($as_object) {
+						$ret[$iname] = &self::$_loadedItems[$this->className][$kname];
+					} else {
+						$ret[$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
+					}
+					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
+					continue;
+				}
+				$obj = new $this->className($this, $myrow);
+				if (!$obj->isLoadedOnCreation()) {
+					$obj->assignVars($myrow);
+					$obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+				}
+				if (isset($fields_sk)) {
+					$obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+				}
+				//if (!$obj->handler)
+				//    $obj->handler = $this;
+				if ($this->uploadEnabled) {
+					$obj->setImageDir($this->getImageUrl(), $this->getImagePath());
+				}
 
-                if ($se) {
-                    self::$_loadedItems[$this->className][$kname] = $obj;
-                    if ($as_object) {
-                        $ret[$obj->getVar($this->keyName)] = &self::$_loadedItems[$this->className][$kname];
-                    } else {
-                        $ret[$obj->getVar($this->keyName)] = $obj->toArray();
-                    }
-                } else {
-                    $ret[$obj->getVar($this->keyName)] = $as_object ? $obj : $obj->toArray();
-                }
-            }
-        } else {
-            while ($myrow = $this->db->fetchArray($result)) {
-                $kname = $myrow[$this->keyName];
-                if (isset(self::$_loadedItems[$this->className][$kname])) {
-                    $iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
-                    $cname = self::$_loadedItems[$this->className][$kname]->getVar($key, 'e');
-                    if ($as_object) {
-                        $ret[$cname][$iname] = &self::$_loadedItems[$this->className][$kname];
-                    } else {
-                        $ret[$cname][$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
-                    }
-                    icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
-                    continue;
-                }
-                $obj = new $this->className($this, $myrow);
-                if (!$obj->isLoadedOnCreation()) {
-                    $obj->assignVars($myrow);
-                    $obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
-                }
-                if (isset($fields_sk)) {
-                    $obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
-                }
-                //if (!$obj->handler)
-                //    $obj->handler = $this;
-                if ($this->uploadEnabled) {
-                    $obj->setImageDir($this->getImageUrl(), $this->getImagePath());
-                }
+				if ($se) {
+					self::$_loadedItems[$this->className][$kname] = $obj;
+					if ($as_object) {
+						$ret[$obj->getVar($this->keyName)] = &self::$_loadedItems[$this->className][$kname];
+					} else {
+						$ret[$obj->getVar($this->keyName)] = $obj->toArray();
+					}
+				} else {
+					$ret[$obj->getVar($this->keyName)] = $as_object ? $obj : $obj->toArray();
+				}
+			}
+		} else {
+			while ($myrow = $this->db->fetchArray($result)) {
+				$kname = $myrow[$this->keyName];
+				if (isset(self::$_loadedItems[$this->className][$kname])) {
+					$iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
+					$cname = self::$_loadedItems[$this->className][$kname]->getVar($key, 'e');
+					if ($as_object) {
+						$ret[$cname][$iname] = &self::$_loadedItems[$this->className][$kname];
+					} else {
+						$ret[$cname][$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
+					}
+					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
+					continue;
+				}
+				$obj = new $this->className($this, $myrow);
+				if (!$obj->isLoadedOnCreation()) {
+					$obj->assignVars($myrow);
+					$obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+				}
+				if (isset($fields_sk)) {
+					$obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+				}
+				//if (!$obj->handler)
+				//    $obj->handler = $this;
+				if ($this->uploadEnabled) {
+					$obj->setImageDir($this->getImageUrl(), $this->getImagePath());
+				}
 
-                if ($se) {
-                    self::$_loadedItems[$this->className][$myrow[$this->keyName]] = $obj;
-                    if ($as_object) {
-                        $ret[$obj->getVar($key, 'e')][$obj->getVar($this->keyName)] = &self::$_loadedItems[$this->className][$kname];
-                    } else {
-                        $ret[$obj->getVar($key, 'e')][$obj->getVar($this->keyName)] = $obj->toArray();
-                    }
-                } else {
-                    $ret[$obj->getVar($key, 'e')][$obj->getVar($this->keyName)] = $as_object ? $obj : $obj->toArray();
-                }
-            }
-        }
-        return $ret;
-    }
+				if ($se) {
+					self::$_loadedItems[$this->className][$myrow[$this->keyName]] = $obj;
+					if ($as_object) {
+						$ret[$obj->getVar($key, 'e')][$obj->getVar($this->keyName)] = &self::$_loadedItems[$this->className][$kname];
+					} else {
+						$ret[$obj->getVar($key, 'e')][$obj->getVar($this->keyName)] = $obj->toArray();
+					}
+				} else {
+					$ret[$obj->getVar($key, 'e')][$obj->getVar($this->keyName)] = $as_object ? $obj : $obj->toArray();
+				}
+			}
+		}
+		return $ret;
+	}
 
-    /**
-     * Get array with keys for skipping
-     *
-     * @return array
-     */
-    public function getSkipKeys() {
-        if (!empty($this->visibleColumns)) {
-            $fields_sk = $this->getFields(false, false);
-            return array_diff($fields_sk, $this->visibleColumns);
-        } else {
-            return array();
-        }
-    }
+	/**
+	 * Get array with keys for skipping
+	 *
+	 * @return array
+	 */
+	public function getSkipKeys() {
+		if (!empty($this->visibleColumns)) {
+			$fields_sk = $this->getFields(false, false);
+			return array_diff($fields_sk, $this->visibleColumns);
+		} else {
+			return array();
+		}
+	}
 
-    /**
-     *
+	/**
+	 *
 	 */
 	public function getImageUrl()
 	{
@@ -587,19 +585,18 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-     *
-     */
+	 *
+	 */
 	public function getImagePath()
 	{
 		$dir = $this->_uploadPath . $this->_itemname;
 		if (!file_exists($dir)) {
 			icms_core_Filesystem::mkdir($dir);
-        }
+		}
 		return $dir . "/";
 	}
 
-	protected function convertResultSet_Object($result, $as_object)
-	{
+	protected function convertResultSet_Object($result, $as_object) {
 		$fields_sk = $this->getSkipKeys();
 		$se = count($fields_sk) == 0;
 		$ret = array();
@@ -642,7 +639,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 					$ret[] = $obj->toArray();
 				}
 			} else {
-				$ret[] = $as_object ? $obj : $obj->toArray();
+				$ret[] = $as_object?$obj:$obj->toArray();
 			}
 
 
@@ -687,7 +684,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				//$criteria->add(new icms_db_criteria_Item($keyName, ($id[$i]), '=', $this->_itemname));
 				$criteria->add(new icms_db_criteria_Item($keyName, $id[$i], '=', $this->_itemname));
 			}
-        } else {
+		} else {
 			if (!$criteria) {
 				$criteria = new icms_db_criteria_Item($this->keyName, $id);
 			} else {
@@ -698,7 +695,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				 */
 				$criteria->add(new icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname));
 			}
-        }
+		}
 
 		$criteria->setLimit(1);
 
@@ -716,9 +713,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		}
 
 		return $obj_array[0];
-    }
+	}
 
-    /**
+	/**
 	 * create a new {@link icms_ipf_Object}
 	 *
 	 * @param bool $isNew Flag the new objects as "new"?
@@ -750,25 +747,24 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param int $start
 	 * @return array
 	 */
-	public function getListD($criteria = null, $limit = 0, $start = 0)
-	{
+	public function getListD($criteria = null, $limit = 0, $start = 0) {
 		trigger_error('Use getList() instead', E_USER_DEPRECATED);
 
 		return $this->getList($criteria, $limit, $start, true);
 	}
 
 	/**
-     * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
-     *
-     * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
-     * @param int   $limit      Max number of objects to fetch
-     * @param int   $start      Which record to start at
-     *
-     * @return array
-     */
-    public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
+	 * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
+	 *
+	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
+	 * @param int   $limit      Max number of objects to fetch
+	 * @param int   $start      Which record to start at
+	 *
+	 * @return array
+	 */
+	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 		return $this->getCustomList($this->keyName, $this->getIdentifierName(), $criteria, $limit, $start, $debug);
-    }
+	}
 
 	/**
 	 * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
@@ -783,57 +779,57 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @return array
 	 */
 	public function getCustomList($keyName, $keyValue, $criteria = null, $limit = 0, $start = 0, $debug = false) {
-        $ret = array();
-        if ($criteria == null) {
-            $criteria = new icms_db_criteria_Compo();
-        }
+		$ret = array();
+		if ($criteria == null) {
+			$criteria = new icms_db_criteria_Compo();
+		}
 
-        if ($criteria->getSort() == '') {
+		if ($criteria->getSort() == '') {
 			$criteria->setSort($keyValue);
-        }
+		}
 
-		$sql = 'SELECT ' . (is_array($keyName) ? implode(', ', $keyName) : $keyName);
+		$sql = 'SELECT ' . (is_array($keyName)? implode(', ', $keyName):$keyName);
 		if (!empty($keyValue)) {
 			$sql .= ', ' . $keyValue;
-        }
-        $sql .= ' FROM ' . $this->table . " AS " . $this->_itemname;
-        if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-            $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->getSort() != '') {
-                $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
-            }
-            $limit = $criteria->getLimit();
-            $start = $criteria->getStart();
-        }
+		}
+		$sql .= ' FROM ' . $this->table . " AS " . $this->_itemname;
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+			$sql .= ' ' . $criteria->renderWhere();
+			if ($criteria->getSort() != '') {
+				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+			}
+			$limit = $criteria->getLimit();
+			$start = $criteria->getStart();
+		}
 
-        if ($debug) {
-            icms_core_Debug::message($sql);
-        }
+		if ($debug) {
+			icms_core_Debug::message($sql);
+		}
 
-        $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
-        }
+		$result = $this->db->query($sql, $limit, $start);
+		if (!$result) {
+			return $ret;
+		}
 
-        while ($myrow = $this->db->fetchArray($result)) {
-            //identifiers should be textboxes, so sanitize them like that
+		while ($myrow = $this->db->fetchArray($result)) {
+			//identifiers should be textboxes, so sanitize them like that
 			$ret[$myrow[$keyName]] = empty($keyValue) ? 1 : htmlentities($myrow[$keyValue]);
-        }
+		}
 
-        return $ret;
-    }
+		return $ret;
+	}
 
-    /**
-     *
+	/**
+	 *
 	 * @param    bool $withprefix
-     */
+	 */
 	public function getIdentifierName($withprefix = true)
 	{
 		if ($withprefix) {
 			return $this->_itemname . "." . $this->identifierName;
-        } else {
+		} else {
 			return $this->identifierName;
-        }
+		}
 	}
 
 	/**
@@ -845,28 +841,27 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param    bool $checkObject
 	 * @param    bool $debug
 	 */
-	public function insertD(&$obj, $force = false, $checkObject = true, $debug = false)
-	{
+	public function insertD(&$obj, $force = false, $checkObject = true, $debug = false) {
 		trigger_error('Use save() instead', E_USER_DEPRECATED);
 
 		return $this->save($obj, $force);
-    }
+	}
 
-    /**
+	/**
 	 * Saves one or many items
-     *
+	 *
 	 * @param array /object $data    What to save?
 	 * @param bool $force Force saving?
 	 *
 	 * @return bool
-     */
+	 */
 	public function save($obj_instances, $force = false)
 	{
 		if (is_array($obj_instances)) {
 			$data = &$obj_instances;
 		} else {
 			$data = array(&$obj_instances);
-        }
+		}
 		$scount = 0;
 		$for_insert = array();
 		$for_update = array();
@@ -899,7 +894,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 				$for_update[] = &$data[$i];
 			}
-        }
+		}
 
 		if (($count = count($for_insert)) > 0) {
 
@@ -910,7 +905,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				$sql = $this->generateInsertSQL($for_insert[0]);
 				if ($this->debugMode) {
 					icms_core_Debug::message($sql);
-                }
+				}
 				$result = $force ? $this->db->queryF($sql) : $this->db->query($sql);
 				if ($result) {
 					$insert_id = $this->db->getInsertId();
@@ -923,7 +918,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 					if ($this->debugMode) {
 						icms_core_Debug::message($sql);
 					}
-					$result = $force ? $this->db->queryF($sql) : $this->db->query($sql);
+					$result = $force?$this->db->queryF($sql):$this->db->query($sql);
 					if ($result) {
 						foreach ($for_insert as $i => $obj) {
 							$for_insert[$i]->setVar($this->keyName, $id++);
@@ -956,8 +951,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				$for_insert[0]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
 				$for_insert[0]->unsetNew();
 				$scount = (int)$this->executeEvent('afterInsert', $for_insert[0]);
-            }
-        }
+			}
+		}
 
 		if (($count = count($for_update)) > 0) {
 			$sql = ($count == 1) ? $this->generateUpdateSQL($for_update[0]) : $this->generateUpdateSQL($for_update);
@@ -968,7 +963,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 					icms_core_Debug::message($sql);
 				}
 
-				$force ? $this->db->queryF($sql) : $this->db->query($sql);
+				$force?$this->db->queryF($sql):$this->db->query($sql);
 				$scount += $this->db->getAffectedRows();
 
 				foreach ($for_update as $i => $obj) {
@@ -980,23 +975,23 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				}
 
 			}
-        }
+		}
 
 		foreach ($data as $i => $obj) {
 			$this->executeEvent('afterSave', $data[$i]);
-        }
+		}
 
 		return $scount > 0;
-    }
+	}
 
-    /**
+	/**
 	 * Execute the function associated with an event
 	 * This method will check if the function is available
-     *
+	 *
 	 * @param string $event name of the event
 	 * @param object $obj $object on which is performed the event
 	 * @return mixed result of the execution of the function or FALSE if the function was not executed
-     */
+	 */
 	public function executeEvent($event, &$executeEventObj)
 	{
 		if (!in_array($event, $this->_disabledEvents)) {
@@ -1015,138 +1010,138 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 					}
 				}
 				$ret = true;
-            }
+			}
 			return $ret;
-        }
+		}
 		return true;
-    }
+	}
 
-    /**
-     * Generate insert SQL by data
-     *
-     * @param array/object $data
-     *
-     * @return string
-     */
-    protected function generateInsertSQL($data) {
-        if (!is_array($data)) {
-            $data = array($data);
-        }
-        $sql = 'INSERT INTO ' . $this->table . ' (`';
-
-        foreach ($data as $i => $obj) {
-            $fieldsToStoreInDB = $obj->getVarsForSQL(false);
-            if ($i == 0) {
-                $sql .= implode('`,`', array_keys($fieldsToStoreInDB)) . '`) VALUES';
-            } else {
-                $sql .= ', ';
-            }
-            $sql .= '(' . implode(',', array_values($fieldsToStoreInDB)) . ')';
-        }
-        return $sql;
-    }
-
-    /**
-     * Generates update SQL
-     *
-     * @param array/object $data	Objects to process
-     *
-     * @return string|null
-     */
-    protected function generateUpdateSQL($data) {
-        if (is_array($data)) {
-            $sql = 'UPDATE ' . $this->table . ' SET ' . "\r\n";
-            if (is_array($this->keyName)) {
-                $case = '  CASE ' . implode(', ', $this->keyName) . "\r\n";
-                $when = array();
-                $criteria = new icms_db_criteria_Compo();
-                foreach ($data as $i => $obj) {
-                    $fieldsToStoreInDB = $obj->getVarsForSQL(true);
-                    $cr = $obj->getCriteriaForSelectByID();
-                    $criteria->add($cr, 'OR');
-                    $rendered_criteria = $cr->render();
-                    foreach ($fieldsToStoreInDB as $key => $value) {
-                        if (in_array($key, $this->keyName)) {
-                            continue;
-                        }
-                        $when[$key][$i] = '    WHEN ' . $rendered_criteria . ' THEN ' . $value;
-                    }
-                }
-		if (empty($when)) {
-		    return null;
+	/**
+	 * Generate insert SQL by data
+	 *
+	 * @param array/object $data
+	 *
+	 * @return string
+	 */
+	protected function generateInsertSQL($data) {
+		if (!is_array($data)) {
+			$data = array($data);
 		}
-                $first = true;
-                foreach (array_keys($when) as $wdata) {
-                    if (!$first) {
-                        $sql .= ', ';
-                    } else {
-                        $first = false;
-                    }
-                    $sql .= '`' . $wdata . '` = ' . $case . implode("\r", $when[$wdata]) . ' END ' . "\r";
-                }
-                $sql .= ' ' . $criteria->renderWhere();
-            } else {
-                $case = '  CASE `' . $this->keyName . "` \r\n";
-                $when = array();
-                $ids = array();
-                foreach ($data as $i => $obj) {
-                    $fieldsToStoreInDB = $obj->getVarsForSQL(true);
-                    $id = $obj->id();
-                    foreach ($fieldsToStoreInDB as $key => $value) {
-                        if ($key == $this->keyName) {
-                            continue;
-                        }
-                        $when[$key][$i] = '    WHEN ' . $id . ' THEN ' . $value;
-                    }
-                    $ids[] = $id;
-                }
-		if (empty($when)) {
-		    return null;
+		$sql = 'INSERT INTO ' . $this->table . ' (`';
+
+		foreach ($data as $i => $obj) {
+			$fieldsToStoreInDB = $obj->getVarsForSQL(false);
+			if ($i == 0) {
+				$sql .= implode('`,`', array_keys($fieldsToStoreInDB)) . '`) VALUES';
+			} else {
+				$sql .= ', ';
+			}
+			$sql .= '(' . implode(',', array_values($fieldsToStoreInDB)) . ')';
 		}
-                $first = true;
-                foreach (array_keys($when) as $wdata) {
-                    if (!$first) {
-                        $sql .= ', ';
-                    } else {
-                        $first = false;
-                    }
-                    $sql .= '`' . $wdata . '` = ' . $case . implode("\r", $when[$wdata]) . ' END ' . "\r";
-                }
-                $sql .= ' WHERE ' . $this->keyName . ' IN (' . implode(',', $ids) . ')';
-            }
-        } else {
-            $fieldsToStoreInDB = $data->getVarsForSQL(true);
-	    if (empty($fieldsToStoreInDB)) {
+		return $sql;
+	}
+
+	/**
+	 * Generates update SQL
+	 *
+	 * @param array/object $data	Objects to process
+	 *
+	 * @return string|null
+	 */
+	protected function generateUpdateSQL($data) {
+		if (is_array($data)) {
+			$sql = 'UPDATE ' . $this->table . ' SET ' . "\r\n";
+			if (is_array($this->keyName)) {
+				$case = '  CASE ' . implode(', ', $this->keyName) . "\r\n";
+				$when = array();
+				$criteria = new icms_db_criteria_Compo();
+				foreach ($data as $i => $obj) {
+					$fieldsToStoreInDB = $obj->getVarsForSQL(true);
+					$cr = $obj->getCriteriaForSelectByID();
+					$criteria->add($cr, 'OR');
+					$rendered_criteria = $cr->render();
+					foreach ($fieldsToStoreInDB as $key => $value) {
+						if (in_array($key, $this->keyName)) {
+							continue;
+						}
+						$when[$key][$i] = '    WHEN ' . $rendered_criteria . ' THEN ' . $value;
+					}
+				}
+		if (empty($when)) {
+			return null;
+		}
+				$first = true;
+				foreach (array_keys($when) as $wdata) {
+					if (!$first) {
+						$sql .= ', ';
+					} else {
+						$first = false;
+					}
+					$sql .= '`' . $wdata . '` = ' . $case . implode("\r", $when[$wdata]) . ' END ' . "\r";
+				}
+				$sql .= ' ' . $criteria->renderWhere();
+			} else {
+				$case = '  CASE `' . $this->keyName . "` \r\n";
+				$when = array();
+				$ids = array();
+				foreach ($data as $i => $obj) {
+					$fieldsToStoreInDB = $obj->getVarsForSQL(true);
+					$id = $obj->id();
+					foreach ($fieldsToStoreInDB as $key => $value) {
+						if ($key == $this->keyName) {
+							continue;
+						}
+						$when[$key][$i] = '    WHEN ' . $id . ' THEN ' . $value;
+					}
+					$ids[] = $id;
+				}
+		if (empty($when)) {
+			return null;
+		}
+				$first = true;
+				foreach (array_keys($when) as $wdata) {
+					if (!$first) {
+						$sql .= ', ';
+					} else {
+						$first = false;
+					}
+					$sql .= '`' . $wdata . '` = ' . $case . implode("\r", $when[$wdata]) . ' END ' . "\r";
+				}
+				$sql .= ' WHERE ' . $this->keyName . ' IN (' . implode(',', $ids) . ')';
+			}
+		} else {
+			$fieldsToStoreInDB = $data->getVarsForSQL(true);
+		if (empty($fieldsToStoreInDB)) {
 		return null;
-	    }
+		}
 
-            $sql = 'UPDATE ' . $this->table . ' SET';
-            foreach ($fieldsToStoreInDB as $key => $value) {
-                if ((!is_array($this->keyName) && $key == $this->keyName)
-                        || (is_array($this->keyName) && in_array($key, $this->keyName))) {
-                    continue;
-                }
-                if (isset($notfirst)) {
-                    $sql .= ',';
-                }
-                $sql .= ' `' . $key . '` = ' . $value;
-                $notfirst = true;
-            }
-            $sql .= ' ' . $data->getCriteriaForSelectByID()->renderWhere();
-        }
-        return $sql;
-    }
+			$sql = 'UPDATE ' . $this->table . ' SET';
+			foreach ($fieldsToStoreInDB as $key => $value) {
+				if ((!is_array($this->keyName) && $key == $this->keyName)
+						|| (is_array($this->keyName) && in_array($key, $this->keyName))) {
+					continue;
+				}
+				if (isset($notfirst)) {
+					$sql .= ',';
+				}
+				$sql .= ' `' . $key . '` = ' . $value;
+				$notfirst = true;
+			}
+			$sql .= ' ' . $data->getCriteriaForSelectByID()->renderWhere();
+		}
+		return $sql;
+	}
 
-    /**
+	/**
 	 * insert a new object in the database
-     *
+	 *
 	 * @deprecated Use save() instead
-     *
+	 *
 	 * @param object $obj reference to the object
 	 * @param bool $force whether to force the query execution despite security settings
 	 * @param bool $checkObject check if the object is dirty and clean the attributes
 	 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
-     */
+	 */
 	public function insert(&$obj, $force = false, $checkObject = true, $debug = false)
 	{
 		trigger_error('Use save() instead', E_USER_DEPRECATED);
@@ -1158,17 +1153,16 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param arr $arrayObjects
 	 */
-	public function getObjectsAsArray($arrayObjects)
-	{
+	public function getObjectsAsArray($arrayObjects) {
 		$ret = array();
 		foreach ($arrayObjects as $key => $object) {
 			$ret[$key] = $object->toArray();
 		}
 		if (count($ret > 0)) {
 			return $ret;
-        } else {
+		} else {
 			return false;
-        }
+		}
 	}
 
 	/**
@@ -1182,8 +1176,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param bool $debug
 	 * @return array
 	 */
-	public function doFastChange($id, $field, $value = 1, $math_func = '+', $force = false, $debug = false)
-	{
+	public function doFastChange($id, $field, $value = 1, $math_func = '+', $force = false, $debug = false) {
 		return $this->query('UPDATE `' . $this->keyName . '` SET `' . $field . '` = `' . $field . '` ' . $math_func . ' ' . $value, null, $force, $debug);
 	}
 
@@ -1197,19 +1190,18 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return array
 	 */
-	public function query($sql, $criteria, $force = false, $debug = false)
-	{
+	public function query($sql, $criteria, $force = false, $debug = false) {
 		$ret = array();
 
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
-            }
+			}
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
-        }
+		}
 		if ($debug) {
 			icms_core_Debug::message($sql);
 		}
@@ -1237,8 +1229,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param object $criteria {@link icms_db_criteria_Element} to match
 	 * @return int count of objects
 	 */
-	public function getCount($criteria = null)
-	{
+	public function getCount($criteria = null) {
 		$field = "";
 		$groupby = false;
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
@@ -1274,8 +1265,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$ret = array();
 			while (list($id, $count) = $this->db->fetchRow($result)) {
 				$ret[$id] = (int)$count;
-            }
-        }
+			}
+		}
 
 		return $ret;
 	}
@@ -1284,15 +1275,14 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param arr|str $event
 	 */
-	public function disableEvent($event)
-	{
+	public function disableEvent($event) {
 		if (is_array($event)) {
 			foreach ($event as $v) {
 				$this->_disabledEvents[] = $v;
 			}
 		} else {
 			$this->_disabledEvents[] = $event;
-        }
+		}
 	}
 
 	/**
@@ -1300,8 +1290,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param array $objectsAsArray array of icms_ipf_Object
 	 */
-	public function getIdsFromObjectsAsArray($objectsAsArray)
-	{
+	public function getIdsFromObjectsAsArray($objectsAsArray) {
 		$ret = array();
 		foreach ($objectsAsArray as $array) {
 			$ret[] = $array[$this->keyName];
@@ -1350,7 +1339,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      *
      * @return bool
      */
-    public function deleteAll($criteria = NULL, $quick = false) {
+    public function deleteAll($criteria = null, $quick = false) {
         if (!$criteria) {
             return false;
         }
@@ -1365,12 +1354,12 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $rows = 0;
             $objects = $this->getObjects($criteria);
             foreach ($objects as $obj) {
-                if ($this->delete($obj, TRUE)) {
+                if ($this->delete($obj, true)) {
                     $rows++;
                 }
             }
         }
-        return $rows > 0 ? $rows : TRUE;
+        return $rows > 0 ? $rows : true;
     }
 
     /**
@@ -1380,14 +1369,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param bool $force
 	 * @return bool FALSE if failed.
      */
-	public function delete(&$obj, $force = false)
-	{
+	public function delete(&$obj, $force = false) {
 		if (!$this->executeEvent('beforeDelete', $obj)) {
 			return false;
 		}
 
 		$sql = 'DELETE FROM ' . $this->table . ' ' . $obj->getCriteriaForSelectByID()->renderWhere();
-		$result = ($force) ? $this->db->queryF($sql) : $this->db->query($sql);
+		$result = ($force)?$this->db->queryF($sql):$this->db->query($sql);
 		if (!$result) {
 			return false;
 		}
@@ -1425,104 +1413,103 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param    object $obj optional
 	 * @return    bool    TRUE
 	 */
-	private function deleteGrantedPermissions($obj = NULL)
+	private function deleteGrantedPermissions($obj = null)
 	{
 		$gperm_handler = icms::handler("icms_member_groupperm");
 		$module = icms::handler("icms_module")->getByDirname($this->_moduleName);
 		$permissions = $this->getPermissions();
-		if ($permissions === FALSE) {
-			return TRUE;
+		if ($permissions === false) {
+			return true;
 		}
 		foreach ($permissions as $permission) {
-			if ($obj != NULL) {
+			if ($obj != null) {
 				$gperm_handler->deleteByModule($module->getVar("mid"), $permission["perm_name"], $obj->id());
 			} else {
 				$gperm_handler->deleteByModule($module->getVar("mid"), $permission["perm_name"]);
 			}
 		}
-		return TRUE;
+		return true;
 	}
 
 	/**
 	 * Accessor for the permissions array property
 	 */
-	public function getPermissions()
-	{
+	public function getPermissions() {
 		return $this->permissionsArray;
 	}
 
 	/**
 	 *
 	 */
-    public function getModuleInfo() {
-        return icms_getModuleInfo($this->_moduleName);
-    }
+	public function getModuleInfo() {
+		return icms_getModuleInfo($this->_moduleName);
+	}
 
-    /**
-     *
-     */
-    public function getModuleConfig() {
-        return icms_getModuleConfig($this->_moduleName);
-    }
+	/**
+	 *
+	 */
+	public function getModuleConfig() {
+		return icms_getModuleConfig($this->_moduleName);
+	}
 
-    /**
-     *
-     */
-    public function getModuleItemString() {
-        $ret = $this->_moduleName . '_' . $this->_itemname;
-        return $ret;
-    }
+	/**
+	 *
+	 */
+	public function getModuleItemString() {
+		$ret = $this->_moduleName . '_' . $this->_itemname;
+		return $ret;
+	}
 
-    /**
-     *
-     * @param $object
-     */
-    public function updateCounter($object) {
-        if (isset($object->counter)) {
-            $new_counter = $object->getVar('counter') + 1;
-            $sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
-                    . ' WHERE ' . $this->keyName . '=' . $object->id();
-            $this->query($sql, null, true);
-        }
-    }
+	/**
+	 *
+	 * @param $object
+	 */
+	public function updateCounter($object) {
+		if (isset($object->counter)) {
+			$new_counter = $object->getVar('counter') + 1;
+			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
+					. ' WHERE ' . $this->keyName . '=' . $object->id();
+			$this->query($sql, null, true);
+		}
+	}
 
-    /**
-     *
-     * @param unknown_type $allowedMimeTypes
-     * @param unknown_type $maxFileSize
-     * @param unknown_type $maxWidth
-     * @param unknown_type $maxHeight
-     */
-    public function enableUpload($allowedMimeTypes = false, $maxFileSize = false, $maxWidth = false, $maxHeight = false) {
-        $this->uploadEnabled = true;
-        $this->_allowedMimeTypes = $allowedMimeTypes ? $allowedMimeTypes : $this->_allowedMimeTypes;
-        $this->_maxFileSize = $maxFileSize ? $maxFileSize : $this->_maxFileSize;
-        $this->_maxWidth = $maxWidth ? $maxWidth : $this->_maxWidth;
-        $this->_maxHeight = $maxHeight ? $maxHeight : $this->_maxHeight;
-    }
+	/**
+	 *
+	 * @param unknown_type $allowedMimeTypes
+	 * @param unknown_type $maxFileSize
+	 * @param unknown_type $maxWidth
+	 * @param unknown_type $maxHeight
+	 */
+	public function enableUpload($allowedMimeTypes = false, $maxFileSize = false, $maxWidth = false, $maxHeight = false) {
+		$this->uploadEnabled = true;
+		$this->_allowedMimeTypes = $allowedMimeTypes ? $allowedMimeTypes : $this->_allowedMimeTypes;
+		$this->_maxFileSize = $maxFileSize ? $maxFileSize : $this->_maxFileSize;
+		$this->_maxWidth = $maxWidth ? $maxWidth : $this->_maxWidth;
+		$this->_maxHeight = $maxHeight ? $maxHeight : $this->_maxHeight;
+	}
 
-    /*     * ******** Deprecated ************** */
+	/*     * ******** Deprecated ************** */
 
-    /**
-     * Set the uploader config options.
-     * @deprecated please use enableUpload() instead
-     * @param str $_uploadPath
-     * @param array $_allowedMimeTypes
-     * @param int $_maxFileSize
-     * @param int $_maxFileWidth
-     * @param int $_maxFileHeight
-     * @return VOID
-     */
-    public function setUploaderConfig($_uploadPath = false, $_allowedMimeTypes = false, $_maxFileSize = false, $_maxWidth = false, $_maxHeight = false) {
+	/**
+	 * Set the uploader config options.
+	 * @deprecated please use enableUpload() instead
+	 * @param str $_uploadPath
+	 * @param array $_allowedMimeTypes
+	 * @param int $_maxFileSize
+	 * @param int $_maxFileWidth
+	 * @param int $_maxFileHeight
+	 * @return VOID
+	 */
+	public function setUploaderConfig($_uploadPath = false, $_allowedMimeTypes = false, $_maxFileSize = false, $_maxWidth = false, $_maxHeight = false) {
 		trigger_error('Use enableUpload() instead', E_USER_DEPRECATED);
 
 		$this->uploadEnabled = true;
-        $this->_uploadPath = $_uploadPath ? $_uploadPath : $this->_uploadPath;
-        $this->_allowedMimeTypes = $_allowedMimeTypes ? $_allowedMimeTypes : $this->_allowedMimeTypes;
-        $this->_maxFileSize = $_maxFileSize ? $_maxFileSize : $this->_maxFileSize;
-        $this->_maxWidth = $_maxWidth ? $_maxWidth : $this->_maxWidth;
-        $this->_maxHeight = $_maxHeight ? $_maxHeight : $this->_maxHeight;
-    }
+		$this->_uploadPath = $_uploadPath ? $_uploadPath : $this->_uploadPath;
+		$this->_allowedMimeTypes = $_allowedMimeTypes ? $_allowedMimeTypes : $this->_allowedMimeTypes;
+		$this->_maxFileSize = $_maxFileSize ? $_maxFileSize : $this->_maxFileSize;
+		$this->_maxWidth = $_maxWidth ? $_maxWidth : $this->_maxWidth;
+		$this->_maxHeight = $_maxHeight ? $_maxHeight : $this->_maxHeight;
+	}
 
 }
 

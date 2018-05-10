@@ -39,7 +39,7 @@ class icms_ipf_permission_Handler {
 		static $groups;
 
 		if (!isset($groups[$gperm_name]) || ($id != null && !isset($groups[$gperm_name][$id]))) {
-			$icmsModule =& $this->handler->getModuleInfo();
+			$icmsModule = & $this->handler->getModuleInfo();
 			//Get group permissions handler
 			$gperm_handler = icms::handler('icms_member_groupperm');
 
@@ -48,7 +48,7 @@ class icms_ipf_permission_Handler {
 			$groups[$gperm_name][$id] = $allowedgroups;
 		}
 		//Return the permission array
-		return isset($groups[$gperm_name][$id]) ? $groups[$gperm_name][$id] : array();
+		return isset($groups[$gperm_name][$id])?$groups[$gperm_name][$id]:array();
 	}
 
 	/**
@@ -69,7 +69,7 @@ class icms_ipf_permission_Handler {
 			return $groups;
 		}
 
-		$icmsModule =& $this->handler->getModuleInfo();
+		$icmsModule = & $this->handler->getModuleInfo();
 
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('gperm_modid', $icmsModule->getVar('mid')));
@@ -89,9 +89,9 @@ class icms_ipf_permission_Handler {
 
 		//Return the permission array
 		if ($gperm_name) {
-			return isset($groups[$gperm_name]) ? $groups[$gperm_name] : array();
+			return isset($groups[$gperm_name])?$groups[$gperm_name]:array();
 		} else {
-			return isset($groups) ? $groups : array();
+			return isset($groups)?$groups:array();
 		}
 	}
 
@@ -116,7 +116,7 @@ class icms_ipf_permission_Handler {
 				$gperm_handler = icms::handler('icms_member_groupperm');
 
 				//Get user's groups
-				$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+				$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 
 				//Get all allowed item ids in this module and for this user's groups
 				$userpermissions = $gperm_handler->getItemIds($gperm_name, $groups, $icmsModule->getVar('mid'));
@@ -124,7 +124,7 @@ class icms_ipf_permission_Handler {
 			}
 		}
 		//Return the permission array
-		return isset($permissions[$gperm_name]) ? $permissions[$gperm_name] : array();
+		return isset($permissions[$gperm_name])?$permissions[$gperm_name]:array();
 	}
 
 	/**
@@ -148,7 +148,7 @@ class icms_ipf_permission_Handler {
 	 * @return boolean : TRUE if the no errors occured
 	 */
 	public function saveItem_Permissions($groups, $itemid, $perm_name) {
-		$icmsModule =& $this->handler->getModuleInfo();
+		$icmsModule = & $this->handler->getModuleInfo();
 
 		$result = true;
 		$module_id = $icmsModule->getVar('mid');
@@ -201,9 +201,9 @@ class icms_ipf_permission_Handler {
 	 * @return boolean : TRUE if user has access, FALSE if not
 	 */
 	public function accessGranted($gperm_name, $gperm_itemid) {
-		$gperm_groupid = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-		$icmsModule =& $this->handler->getModuleInfo();
-		$gperm_modid = $icmsModule->getVar('mid')   ;
+		$gperm_groupid = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		$icmsModule = & $this->handler->getModuleInfo();
+		$gperm_modid = $icmsModule->getVar('mid');
 
 		//Get group permissions handler
 		$gperm_handler = icms::handler('icms_member_groupperm');

@@ -18,7 +18,9 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )    exit();
+if (!defined( 'XOOPS_INSTALL' ) ) {
+	exit();
+}
 
 $wizard->setPage( 'dbconnection' );
 $pageHasForm = true;
@@ -80,7 +82,7 @@ if (function_exists('mysql_connect') || function_exists('mysql_pconnect')) {
 }
 // Fill with default values
 // check for PDO MySQL and select it, if it is available
-if (class_exists("PDO", FALSE)) {
+if (class_exists("PDO", false)) {
 	$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
 	if (isset($connections['mysql'])) {
 		$connections['mysql']['selected'] = '';
@@ -90,11 +92,11 @@ if (class_exists("PDO", FALSE)) {
 
 if (@empty( $vars['DB_HOST'] )) {
 	$vars = array_merge( $vars, array(
-        'DB_TYPE'        => $db_connection['type'],
-        'DB_HOST'        => 'localhost',
-        'DB_USER'        => '',
-        'DB_PASS'        => '',
-        'DB_PCONNECT'    => 0,
+		'DB_TYPE'        => $db_connection['type'],
+		'DB_HOST'        => 'localhost',
+		'DB_USER'        => '',
+		'DB_PASS'        => '',
+		'DB_PCONNECT'    => 0,
 	) );
 
 }
@@ -117,7 +119,10 @@ function xoFormField( $name, $value, $label, $help = '', $type='text') {
 
 ob_start();
 ?>
-<?php if (!empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty( $error ) ) {
+	echo '<div class="x2-note error">' . $error . "</div>\n";
+}
+?>
 <h3><?php echo LEGEND_CONNECTION; ?></h3>
 <div class="blokSQL">
 <div class="dbconn_line"><label> <?php echo LEGEND_DATABASE; ?><br />
@@ -125,26 +130,28 @@ ob_start();
 <?php
 	foreach ($connections as $option) {
 		$selected = "";
-		if (!empty($option['selected'])) $selected = " selected='selected'";
+		if (!empty($option['selected'])) {
+			$selected = " selected='selected'";
+		}
 		echo "<option value='" . $option['type'] . "'" . $selected . ">" . $option['name'] . "</option>";
  	}
 ?>
 </select> </label>
 <div class='clear'>&nbsp;</div>
 </div>
-<div class="dbconn_line"><?php echo xoFormField( 'DB_HOST',    $vars['DB_HOST'],        DB_HOST_LABEL, DB_HOST_HELP ); ?>
+<div class="dbconn_line"><?php echo xoFormField('DB_HOST', $vars['DB_HOST'], DB_HOST_LABEL, DB_HOST_HELP); ?>
 </div>
-<div class="dbconn_line"><?php echo xoFormField( 'DB_USER',    $vars['DB_USER'],        DB_USER_LABEL, DB_USER_HELP ); ?>
+<div class="dbconn_line"><?php echo xoFormField('DB_USER', $vars['DB_USER'], DB_USER_LABEL, DB_USER_HELP); ?>
 </div>
-<div class="dbconn_line"><?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 'password' ); ?>
+<div class="dbconn_line"><?php echo xoFormField('DB_PASS', $vars['DB_PASS'], DB_PASS_LABEL, DB_PASS_HELP, 'password'); ?>
 </div>
 </div>
 
-<label> <?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?> <input
+<label> <?php echo htmlspecialchars(DB_PCONNECT_LABEL); ?> <input
 	class="checkbox" type="checkbox" name="DB_PCONNECT" value="1"
-	onclick="alert('<?php echo htmlspecialchars( DB_PCONNECT_HELPS ); ?>');"
-	<?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?> />
-<div class="xoform-help"><?php echo htmlspecialchars( DB_PCONNECT_HELP ); ?></div>
+	onclick="alert('<?php echo htmlspecialchars(DB_PCONNECT_HELPS); ?>');"
+	<?php echo $vars['DB_PCONNECT']?"'checked'":""; ?> />
+<div class="xoform-help"><?php echo htmlspecialchars(DB_PCONNECT_HELP); ?></div>
 </label>
 	<?php
 	$content = ob_get_contents();

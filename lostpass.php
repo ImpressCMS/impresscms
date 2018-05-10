@@ -54,12 +54,12 @@ $filter_get = $filter_post = array('email' => array('email', 'options' => array(
 $code = '';
 
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
-    extract($clean_GET);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
 }
 if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
-    extract($clean_POST);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
 }
 if ($email == '') {
 	redirect_header('user.php', 2, _US_SORRYNOTFOUND);
@@ -67,9 +67,9 @@ if ($email == '') {
 
 $member_handler = icms::handler('icms_member');
 $criteria = new icms_db_criteria_Compo();
-$criteria->add(new icms_db_criteria_Item('email',$email));
+$criteria->add(new icms_db_criteria_Item('email', $email));
 $criteria->add(new icms_db_criteria_Item('level', '-1', '!='));
-$getuser =& $member_handler->getUsers($criteria);
+$getuser = & $member_handler->getUsers($criteria);
 
 if (empty($getuser)) {
 	$msg = _US_SORRYNOTFOUND;

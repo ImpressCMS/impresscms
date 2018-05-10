@@ -22,8 +22,7 @@ use \League\Container\Container;
  * @package    ImpressCMS/core
  * @since    1.3
  */
-final class icms extends Container
-{
+final class icms extends Container {
 
 	/**
 	 * Current response
@@ -42,7 +41,7 @@ final class icms extends Container
 	);
 
 	/** @var array */
-	public static $urls = FALSE;
+	public static $urls = false;
 
 	/**
 	 * array of handlers
@@ -55,8 +54,7 @@ final class icms extends Container
 	 *
 	 * @return $this
 	 */
-	public function setup()
-	{
+	public function setup() {
 		self::$paths['www'] = array(ICMS_ROOT_PATH, ICMS_URL);
 		self::$paths['modules'] = array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
 		self::$paths['themes'] = array(ICMS_THEME_PATH, ICMS_THEME_URL);
@@ -88,8 +86,7 @@ final class icms extends Container
 	 *
 	 * @return $this
 	 */
-	public function boot()
-	{
+	public function boot() {
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\PreloadServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\LoggerServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\FilesystemServiceProvider::class);
@@ -116,12 +113,13 @@ final class icms extends Container
 	/**
 	 * Finalizes all processes as the script exits
 	 */
-	static public function shutdown()
-	{
+	static public function shutdown() {
 		// Ensure the session service can write data before the DB connection is closed
-		if (session_id()) session_write_close();
+		if (session_id()) {
+			session_write_close();
+		}
 		// Ensure the logger can decorate output before objects are destroyed
-		while (@ob_end_flush()) ;
+		while (@ob_end_flush());
 	}
 
 	/**
@@ -147,9 +145,9 @@ final class icms extends Container
 	 * @param array $args Factory/Constructor arguments
 	 * @return object
 	 */
-	static public function create($factory, $args = array())
-	{
-		if (is_string($factory) && substr($factory, 0, 1) == '\\') {    // Class name
+	static public function create($factory, $args = array()) {
+		if (is_string($factory) && substr($factory, 0, 1) == '\\') {
+// Class name
 			$class = substr($factory, 1);
 			if (!isset($args)) {
 				$instance = new $class();
@@ -169,7 +167,7 @@ final class icms extends Container
 	 * @param    boolean $virtual
 	 * @return    string
 	 */
-	public function path($url, $virtual = FALSE)
+	public function path($url, $virtual = false)
 	{
 		$path = '';
 		@list($root, $path) = explode('/', $url, 2);
@@ -180,7 +178,7 @@ final class icms extends Container
 			// Returns a physical path
 			return self::$paths[$root][0] . '/' . $path;
 		}
-		return !isset(self::$paths[$root][1]) ? '' : (self::$paths[$root][1] . '/' . $path);
+		return !isset(self::$paths[$root][1])?'':(self::$paths[$root][1] . '/' . $path);
 	}
 
 	/**
@@ -190,7 +188,7 @@ final class icms extends Container
 	 */
 	static public function url($url)
 	{
-		return (FALSE !== strpos($url, '://') ? $url : self::path($url, TRUE));
+		return (FALSE !== strpos($url, '://')?$url:self::path($url, TRUE));
 	}
 
 	/**
@@ -199,8 +197,7 @@ final class icms extends Container
 	 * @param    array $params
 	 * @return    string
 	 */
-	static public function buildUrl($url, $params = array())
-	{
+	static public function buildUrl($url, $params = array()) {
 		if ($url == '.') {
 			$url = $_SERVER['REQUEST_URI'];
 		}
@@ -226,7 +223,7 @@ final class icms extends Container
 	 * @param bool $optional Is the handler optional?
 	 * @return        object        $inst        The instance of the object that was created
 	 */
-	static public function &handler($name, $optional = FALSE)
+	static public function &handler($name, $optional = false)
 	{
 		if (!isset(self::$handlers[$name])) {
 			$class = $name . "Handler";
@@ -249,7 +246,7 @@ final class icms extends Container
 					}
 				}
 			}
-			self::$handlers[$name] = $class ? new $class(self::$xoopsDB) : FALSE;
+			self::$handlers[$name] = $class?new $class(self::$xoopsDB):FALSE;
 		}
 		if (!self::$handlers[$name] && !$optional) {
 			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);
@@ -262,11 +259,10 @@ final class icms extends Container
 	 * Build URLs for global use throughout the application
 	 * @return    array
 	 */
-	protected function buildRelevantUrls()
-	{
+	protected function buildRelevantUrls() {
 		if (isset($_SERVER['HTTP_HOST']) && !self::$urls) {
 			$http = strpos(ICMS_URL, "https://") === FALSE
-				? "http://"
+				?"http://"
 				: "https://";
 
 			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */

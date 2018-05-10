@@ -38,13 +38,13 @@ $icmsTpl = new icms_view_Tpl();
  * (int) image_id
  * (str) query
  */
-$op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : 'list');
-$imgcat_id = (isset($_GET['imgcat_id'])) ? (int) $_GET['imgcat_id'] : ((isset($_POST['imgcat_id'])) ? (int) $_POST['imgcat_id'] : NULL);
-$image_id = (isset($_GET['image_id'])) ? (int) $_GET['image_id'] : ((isset($_POST['image_id'])) ? (int) $_POST['image_id'] : NULL);
-$target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target') : ((isset($_POST['target'])) ? filter_input(INPUT_POST, 'target') : NULL);
-$limit = (isset($_GET['limit'])) ? (int) $_GET['limit'] : ((isset($_POST['limit'])) ? (int) $_POST['limit'] : 15);
-$start = (isset($_GET['start'])) ? (int) $_GET['start'] : ((isset($_POST['start'])) ? (int) $_POST['start'] : 0);
-$type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type') : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type') : 'ibrow');
+$op = (isset($_GET['op']))? filter_input(INPUT_GET, 'op'):((isset($_POST['op']))? filter_input(INPUT_POST, 'op'):'list');
+$imgcat_id = (isset($_GET['imgcat_id']))?(int) $_GET['imgcat_id']:((isset($_POST['imgcat_id']))?(int) $_POST['imgcat_id']:NULL);
+$image_id = (isset($_GET['image_id']))?(int) $_GET['image_id']:((isset($_POST['image_id']))?(int) $_POST['image_id']:NULL);
+$target = (isset($_GET['target']))? filter_input(INPUT_GET, 'target'):((isset($_POST['target']))? filter_input(INPUT_POST, 'target'):NULL);
+$limit = (isset($_GET['limit']))?(int) $_GET['limit']:((isset($_POST['limit']))?(int) $_POST['limit']:15);
+$start = (isset($_GET['start']))?(int) $_GET['start']:((isset($_POST['start']))?(int) $_POST['start']:0);
+$type = (isset($_GET['type']))? filter_input(INPUT_GET, 'type'):((isset($_POST['type']))? filter_input(INPUT_POST, 'type'):'ibrow');
 
 global $icmsConfig;
 // Adding language files
@@ -74,9 +74,9 @@ switch ($op) {
 	case 'delfile':
 		icmsPopupHeader();
 		$image_handler = icms::handler('icms_image');
-		$image =& $image_handler->get($image_id);
+		$image = & $image_handler->get($image_id);
 		$imgcat_handler = icms::handler('icms_image_category');
-		$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
+		$imagecategory = & $imgcat_handler->get($image->getVar('imgcat_id'));
 		$src = '<img src="' . ICMS_MODULES_URL . "/system/admin/images/preview.php?file=" . $image->getVar('image_name') . '" title="' . $image->getVar('image_nicename') . '" /><br />';
 		echo '<div style="margin:5px;" align="center">' . $src . '</div>';
 		icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'browser.php', _MD_DELETE_AVATAR);
@@ -92,7 +92,7 @@ switch ($op) {
 		break;
 
 	case 'save_edit_ok':
-		$msg = isset($_GET['msg']) ? urldecode($_GET['msg']) : NULL;
+		$msg = isset($_GET['msg'])? urldecode($_GET['msg']):NULL;
 		redir($imgcat_id, $msg);
 		break;
 
@@ -115,8 +115,8 @@ function imanager_index($imgcat_id = NULL) {
 		$groups = array(ICMS_GROUP_ANONYMOUS);
 		$admin = FALSE;
 	} else {
-		$groups =& icms::$user->getGroups();
-		$admin = (!icms::$user->isAdmin(1)) ? FALSE : TRUE;
+		$groups = & icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1))? FALSE : TRUE;
 	}
 	if (!is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
 				icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH)));
@@ -135,9 +135,9 @@ function imanager_index($imgcat_id = NULL) {
 		$criteriaRead->add(new icms_db_criteria_Item('gperm_modid', 1));
 	}
 	$criteriaRead->add(new icms_db_criteria_Item('imgcat_display', 1));
-	$id = (!is_null($imgcat_id) ? $imgcat_id : 0);
+	$id = (!is_null($imgcat_id)?$imgcat_id:0);
 	$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $id));
-	$imagecategorys =& $imgcat_handler->getObjects($criteriaRead);
+	$imagecategorys = & $imgcat_handler->getObjects($criteriaRead);
 	$criteriaWrite = new icms_db_criteria_Compo();
 	if (is_array($groups) && !empty($groups)) {
 		$criteriaWrite->add($criteriaTray);
@@ -146,7 +146,7 @@ function imanager_index($imgcat_id = NULL) {
 	}
 	$criteriaWrite->add(new icms_db_criteria_Item('imgcat_display', 1));
 	$criteriaWrite->add(new icms_db_criteria_Item('imgcat_pid', $id));
-	$imagecategorysWrite =& $imgcat_handler->getObjects($criteriaWrite);
+	$imagecategorysWrite = & $imgcat_handler->getObjects($criteriaWrite);
 
 	$icmsTpl->assign('lang_imanager_title', _IMGMANAGER);
 	$icmsTpl->assign('lang_imanager_catid', _MD_IMAGECATID);
@@ -201,9 +201,9 @@ function imanager_index($imgcat_id = NULL) {
 			$criteriaRead->add(new icms_db_criteria_Item('gperm_name', 'imgcat_read'));
 			$criteriaRead->add(new icms_db_criteria_Item('gperm_modid', 1));
 		}
-		$id = (!is_null($imgcat_id) ? $imgcat_id : 0);
+		$id = (!is_null($imgcat_id)?$imgcat_id:0);
 		$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategorys[$i]->getVar('imgcat_id')));
-		$subs[$i]  = count($imgcat_handler->getObjects($criteriaRead));
+		$subs[$i] = count($imgcat_handler->getObjects($criteriaRead));
 	}
 	$hasnwrite = implode(', ', $hasnwrite);
 	$scount = array();
@@ -218,7 +218,7 @@ function imanager_index($imgcat_id = NULL) {
 			$criteriaRead->add(new icms_db_criteria_Item('gperm_name', 'imgcat_read'));
 			$criteriaRead->add(new icms_db_criteria_Item('gperm_modid', 1));
 		}
-		$id = (!is_null($imgcat_id) ? $imgcat_id : 0);
+		$id = (!is_null($imgcat_id)?$imgcat_id:0);
 		$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategorys[$k]->getVar('imgcat_id')));
 		$ssubs = $imgcat_handler->getObjects($criteriaRead);
 		$sc = 0;
@@ -235,19 +235,19 @@ function imanager_index($imgcat_id = NULL) {
 	$icmsTpl->assign('scount', $scount);
 
 	if (!empty($catcount)) {
-		$form = new icms_form_Theme(_ADDIMAGE, 'image_form', 'browser.php', 'post', TRUE);
+		$form = new icms_form_Theme(_ADDIMAGE, 'image_form', 'browser.php', 'post', true);
 		$form->setExtra('enctype="multipart/form-data"');
-		$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'image_nicename', 50, 255), TRUE);
+		$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'image_nicename', 50, 255), true);
 		$select = new icms_form_elements_Select(_IMAGECAT, 'imgcat_id');
 		$select->addOptionArray($imgcat_handler->getCategList($groups, 'imgcat_write'));
-		$form->addElement($select, TRUE);
+		$form->addElement($select, true);
 		$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'image_file', 5000000));
 		$form->addElement(new icms_form_elements_Text(_IMGWEIGHT, 'image_weight', 3, 4, 0));
 		$form->addElement(new icms_form_elements_Radioyn(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
 		$form->addElement(new icms_form_elements_Hidden('op', 'addfile'));
 		$form->addElement(new icms_form_elements_Hidden('target', $target));
 		$form->addElement(new icms_form_elements_Hidden('type', $type));
-		$tray = new icms_form_elements_Tray('' , '');
+		$tray = new icms_form_elements_Tray('', '');
 		$tray->addElement(new icms_form_elements_Button('', 'img_button', _SUBMIT, 'submit'));
 		$btn = new icms_form_elements_Button('', 'reset', _CANCEL, 'button');
 		$btn->setExtra('onclick="document.getElementById(\'addimgform\').style.display = \'none\'; return FALSE;"');
@@ -256,7 +256,7 @@ function imanager_index($imgcat_id = NULL) {
 		$icmsTpl->assign('addimgform', $form->render());
 	}
 	$form = new icms_form_Theme(_MD_ADDIMGCAT, 'imagecat_form', 'browser.php', 'post', TRUE);
-	$list =& $imgcat_handler->getCategList($groups, 'imgcat_write');
+	$list = & $imgcat_handler->getCategList($groups, 'imgcat_write');
 	$sup = new icms_form_elements_Select(_MD_IMGCATPARENT, 'imgcat_pid', $id);
 	$list[0] = '--------------------';
 	ksort($list);
@@ -277,11 +277,11 @@ function imanager_index($imgcat_id = NULL) {
 	$form->addElement($storetype);
 	$fname = new icms_form_elements_Text(_MD_IMGCATFOLDERNAME, 'imgcat_foldername', 50, 255, '');
 	$fname->setDescription('<span style="color:#ff0000;">' . _MD_IMGCATFOLDERNAME_DESC . '<br />' . _MD_STRTYOPENG . '</span>');
-	$form->addElement($fname, TRUE);
+	$form->addElement($fname, true);
 	$form->addElement(new icms_form_elements_Hidden('op', 'addcat'));
 	$form->addElement(new icms_form_elements_Hidden('target', $target));
 	$form->addElement(new icms_form_elements_Hidden('type', $type));
-	$tray1 = new icms_form_elements_Tray('' , '');
+	$tray1 = new icms_form_elements_Tray('', '');
 	$tray1->addElement(new icms_form_elements_Button('', 'imgcat_button', _SUBMIT, 'submit'));
 	$btn = new icms_form_elements_Button('', 'reset', _CANCEL, 'button');
 	$btn->setExtra('onclick="document.getElementById(\'addcatform\').style.display = \'none\'; return FALSE;"');
@@ -305,17 +305,17 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$groups = array(ICMS_GROUP_ANONYMOUS);
 		$admin = FALSE;
 	} else {
-		$groups =& icms::$user->getGroups();
-		$admin = (!icms::$user->isAdmin(1)) ? FALSE : TRUE;
+		$groups = & icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1))? FALSE : TRUE;
 	}
 
-	$query = isset($_POST['query']) ? $_POST['query'] : NULL;
+	$query = isset($_POST['query'])?$_POST['query']:NULL;
 
 	if ($imgcat_id <= 0) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 1, '');
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = & $imgcat_handler->get($imgcat_id);
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	$categ_url  = $imgcat_handler->getCategFolder($imagecategory, 1, 'url');
 	if (!is_object($imagecategory)) {
@@ -363,7 +363,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	}
 	$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategory->getVar('imgcat_id')));
 	$subcats = $imgcat_handler->getObjects($criteriaRead);
-	$subs  = count($subcats);
+	$subs = count($subcats);
 	$icmsTpl->assign('cat_subs', $subs);
 
 	$image_handler = icms::handler('icms_image');
@@ -378,7 +378,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$criteriaRead->add(new icms_db_criteria_Item('gperm_name', 'imgcat_read'));
 		$criteriaRead->add(new icms_db_criteria_Item('gperm_modid', 1));
 	}
-	$id = (!is_null($imgcat_id) ? $imgcat_id : 0);
+	$id = (!is_null($imgcat_id)?$imgcat_id:0);
 	$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategory->getVar('imgcat_id')));
 	$ssubs = $imgcat_handler->getObjects($criteriaRead);
 	$sc = 0;
@@ -420,7 +420,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	$criteria->setOrder('DESC');
 	$criteria->setSort('image_weight');
 	$criteria->setLimit(15);
-	$images =& $image_handler->getObjects($criteria, TRUE, TRUE);
+	$images = & $image_handler->getObjects($criteria, TRUE, TRUE);
 
 	$icmsTpl->assign('imgcount', $imgcount);
 
@@ -450,8 +450,8 @@ function imanager_listimg($imgcat_id, $start = 0) {
 			$arrimg[$i]['code'] = '[img align=center id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';
 			$arrimg[$i]['rcode'] = '[img align=right id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';
 		} else {
-			$url = (substr($categ_url, -1) != '/') ? $categ_url . '/' : $categ_url;
-			$path = (substr($categ_path, -1) != '/') ? $categ_path . '/' : $categ_path;
+			$url = (substr($categ_url, -1) != '/')?$categ_url . '/':$categ_url;
+			$path = (substr($categ_path, -1) != '/')?$categ_path . '/':$categ_path;
 			$src = $url . $images[$i]->getVar('image_name');
 			$arrimg[$i]['size'] = icms_convert_size(filesize($path . $images[$i]->getVar('image_name')));
 			$img_info = WideImage::load($path . $images[$i]->getVar('image_name'));
@@ -464,7 +464,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$arrimg[$i]['src'] = $src . '?' . time();
 		$arrimg[$i]['url_src'] = str_replace(ICMS_URL, '', $src);
 		$src_lightbox = ICMS_MODULES_URL . "/system/admin/images/preview.php?file=" . $images[$i]->getVar('image_name');
-		$preview_url = '<a href="' . $src_lightbox . '" rel="lightbox[categ' . $images[$i]->getVar('imgcat_id') . ']" title="' . $images[$i]->getVar('image_nicename') . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/viewmag.png" alt="' . _PREVIEW . '" title="' . _PREVIEW . '" /></a>';
+		$preview_url = '<a href="' . $src_lightbox . '" rel="lightbox[categ' . $images[$i]->getVar('imgcat_id') . ']" title="' . $images[$i]->getVar('image_nicename') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" alt="' . _PREVIEW . '" title="' . _PREVIEW . '" /></a>';
 		$arrimg[$i]['preview_link'] = $preview_url;
 
 		$extra_perm = array("image/jpeg", "image/jpeg", "image/png", "image/gif");
@@ -479,7 +479,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 			$arrimg[$i]['hasextra_link'] = 0;
 		}
 
-		$list =& $imgcat_handler->getList(array(), NULL, NULL, $imagecategory->getVar('imgcat_storetype'));
+		$list = & $imgcat_handler->getList(array(), NULL, NULL, $imagecategory->getVar('imgcat_storetype'));
 		$div = '';
 		foreach ($list as $value => $name) {
 			$sel = '';
@@ -520,18 +520,20 @@ function imanager_listimg($imgcat_id, $start = 0) {
  * @see
  */
 function imanager_addcat() {
-	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_POST)) {
+		foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	}
 	if (!icms::$security->check()) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->create();
+	$imagecategory = & $imgcat_handler->create();
 	$imagecategory->setVar('imgcat_pid', $imgcat_pid);
 	$imagecategory->setVar('imgcat_name', $imgcat_name);
 	$imagecategory->setVar('imgcat_maxsize', $imgcat_maxsize);
 	$imagecategory->setVar('imgcat_maxwidth', $imgcat_maxwidth);
 	$imagecategory->setVar('imgcat_maxheight', $imgcat_maxheight);
-	$imgcat_display = empty($imgcat_display) ? 0 : 1;
+	$imgcat_display = empty($imgcat_display)?0:1;
 	$imagecategory->setVar('imgcat_display', $imgcat_display);
 	$imagecategory->setVar('imgcat_weight', $imgcat_weight);
 	$imagecategory->setVar('imgcat_storetype', $imgcat_storetype);
@@ -559,7 +561,7 @@ function imanager_addcat() {
 		array_push($readgroup, ICMS_GROUP_ADMIN);
 	}
 	foreach ($readgroup as $rgroup) {
-		$imagecategoryperm =& $imagecategoryperm_handler->create();
+		$imagecategoryperm = & $imagecategoryperm_handler->create();
 		$imagecategoryperm->setVar('gperm_groupid', $rgroup);
 		$imagecategoryperm->setVar('gperm_itemid', $newid);
 		$imagecategoryperm->setVar('gperm_name', 'imgcat_read');
@@ -574,7 +576,7 @@ function imanager_addcat() {
 		array_push($writegroup, ICMS_GROUP_ADMIN);
 	}
 	foreach ($writegroup as $wgroup) {
-		$imagecategoryperm =& $imagecategoryperm_handler->create();
+		$imagecategoryperm = & $imagecategoryperm_handler->create();
 		$imagecategoryperm->setVar('gperm_groupid', $wgroup);
 		$imagecategoryperm->setVar('gperm_itemid', $newid);
 		$imagecategoryperm->setVar('gperm_name', 'imgcat_write');
@@ -589,12 +591,14 @@ function imanager_addcat() {
  * Add file for the image manager
  */
 function imanager_addfile() {
-	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_POST)) {
+		foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	}
 	if (!icms::$security->check()) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 3, implode('<br />', icms::$security->getErrors()));
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = & $imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 1);
 	}
@@ -615,12 +619,12 @@ function imanager_addfile() {
 				$err[] = $uploader->getErrors();
 			} else {
 				$image_handler = icms::handler('icms_image');
-				$image =& $image_handler->create();
+				$image = & $image_handler->create();
 				$image->setVar('image_name', $uploader->getSavedFileName());
 				$image->setVar('image_nicename', $image_nicename);
 				$image->setVar('image_mimetype', $uploader->getMediaType());
 				$image->setVar('image_created', time());
-				$image_display = empty($image_display) ? 0 : 1;
+				$image_display = empty($image_display)?0:1;
 				$image->setVar('image_display', $image_display);
 				$image->setVar('image_weight', $image_weight);
 				$image->setVar('imgcat_id', $imgcat_id);
@@ -628,7 +632,7 @@ function imanager_addfile() {
 					$fp = @fopen($uploader->getSavedDestination(), 'rb');
 					$fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
 					@fclose($fp);
-					$image->setVar('image_body', $fbinary, TRUE);
+					$image->setVar('image_body', $fbinary, true);
 					@unlink($uploader->getSavedDestination());
 				}
 				if (!$image_handler->insert($image)) {
@@ -637,7 +641,7 @@ function imanager_addfile() {
 			}
 		} else {
 			$err[] = sprintf(_FAILFETCHIMG, $i);
-			$err = array_merge($err, $uploader->getErrors(FALSE));
+			$err = array_merge($err, $uploader->getErrors(false));
 		}
 	}
 	if (count($err) > 0) {
@@ -658,7 +662,9 @@ function imanager_addfile() {
  * Update an image for the image manager
  */
 function imanager_updateimage() {
-	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_POST)) {
+		foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	}
 	if (!icms::$security->check()) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 3, implode('<br />', icms::$security->getErrors()));
 	}
@@ -667,20 +673,20 @@ function imanager_updateimage() {
 		$image_handler = icms::handler('icms_image');
 		$error = array();
 		for ($i = 0; $i < $count; $i++) {
-			$image =& $image_handler->get($image_id[$i]);
+			$image = & $image_handler->get($image_id[$i]);
 			if (!is_object($image)) {
 				$error[] = sprintf(_FAILGETIMG, $image_id[$i]);
 				continue;
 			}
-			$image_display[$i] = empty($image_display[$i]) ? 0 : 1;
+			$image_display[$i] = empty($image_display[$i])?0:1;
 			$image->setVar('image_display', $image_display[$i]);
 			$image->setVar('image_weight', $image_weight[$i]);
 			$image->setVar('image_nicename', $image_nicename[$i]);
 			if ($image->getVar('imgcat_id') != $imgcat_id[$i]) {
-				$changedCat = TRUE;
+				$changedCat = true;
 				$oldcat = (int) $image->getVar('imgcat_id');
 			} else {
-				$changedCat = FALSE;
+				$changedCat = false;
 			}
 			$image->setVar('imgcat_id', $imgcat_id[$i]);
 			if (!$image_handler->insert($image)) {
@@ -688,10 +694,10 @@ function imanager_updateimage() {
 			}
 			if ($changedCat) {
 				$imgcat_handler = icms::handler('icms_image_category');
-				$imagecategory  =& $imgcat_handler->get($imgcat_id[$i]);
+				$imagecategory  = & $imgcat_handler->get($imgcat_id[$i]);
 				$dest_categ_path = $imgcat_handler->getCategFolder($imagecategory);
 				if ($imagecategory->getVar('imgcat_storetype') != 'db') {
-					$oldimgcategory =& $imgcat_handler->get($oldcat);
+					$oldimgcategory = & $imgcat_handler->get($oldcat);
 					$src_categ_path = $imgcat_handler->getCategFolder($oldimgcategory);
 					$src = $src_categ_path . '/' . $image->getVar('image_name');
 					$dest = $dest_categ_path . '/' . $image->getVar('image_name');
@@ -719,9 +725,11 @@ function imanager_updateimage() {
 /**
  * Delete an image file after confirmation
  */
-function imanager_delfileok($image_id, $redir = NULL) {
+function imanager_delfileok($image_id, $redir = null) {
 	global $target, $type;
-	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_POST)) {
+		foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	}
 	if (!icms::$security->check()) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 3, implode('<br />', icms::$security->getErrors()));
 	}
@@ -730,12 +738,12 @@ function imanager_delfileok($image_id, $redir = NULL) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 1);
 	}
 	$image_handler = icms::handler('icms_image');
-	$image =& $image_handler->get($image_id);
+	$image = & $image_handler->get($image_id);
 	if (!is_object($image)) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 1);
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory  =& $imgcat_handler->get($image->getVar('imgcat_id'));
+	$imagecategory  = & $imgcat_handler->get($image->getVar('imgcat_id'));
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
 		icmsPopupHeader();
@@ -766,20 +774,20 @@ function imanager_clone() {
 	$image_id = (int) $_POST['image_id'];
 
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = & $imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 1);
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 
 	$image_handler = icms::handler('icms_image');
-	$image =& $image_handler->get($image_id);
+	$image = & $image_handler->get($image_id);
 	if (($ext = strrpos($image->getVar('image_name'), '.')) !== FALSE) {
 		$ext = strtolower(substr($image->getVar('image_name'), $ext + 1));
 	}
 
 	$imgname = 'img' . icms_random_str(12) . '.' . $ext;
-	$newimg =& $image_handler->create();
+	$newimg = & $image_handler->create();
 	$newimg->setVar('image_name', $imgname);
 	$newimg->setVar('image_nicename', $_POST['image_nicename']);
 	$newimg->setVar('image_mimetype', $image->getVar('image_mimetype'));
@@ -793,7 +801,7 @@ function imanager_clone() {
 		$fp = @fopen(ICMS_IMANAGER_FOLDER_PATH . '/' . $image->getVar('image_name'), 'rb');
 		$fbinary = @fread($fp, filesize(ICMS_IMANAGER_FOLDER_PATH . '/' . $image->getVar('image_name')));
 		@fclose($fp);
-		$newimg->setVar('image_body', $fbinary, TRUE);
+		$newimg->setVar('image_body', $fbinary, true);
 		@unlink(ICMS_IMANAGER_FOLDER_PATH . '/' . $image->getVar('image_name'));
 	} else {
 		if (!@copy($categ_path . '/' . $image->getVar('image_name'), $categ_path . '/' . $imgname)) {
@@ -820,20 +828,20 @@ function imanager_clone() {
  */
 function icmsPopupHeader() {
 	global $icmsConfig;
-	if (! headers_sent ()) {
-		header ('Content-Type:text/html; charset=' . _CHARSET);
-		header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-		header ("Last-Modified: " . gmdate ("D, d M Y H:i:s") . " GMT");
-		header ('Cache-Control: no-store, no-cache, must-revalidate');
-		header ("Cache-Control: post-check=0, pre-check=0", FALSE);
-		header ("Pragma: no-cache");
+	if (!headers_sent()) {
+		header('Content-Type:text/html; charset=' . _CHARSET);
+		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header('Cache-Control: no-store, no-cache, must-revalidate');
+		header("Cache-Control: post-check=0, pre-check=0", FALSE);
+		header("Pragma: no-cache");
 	}
 	echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">
 	<head>
 	<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />
 	<meta http-equiv="content-language" content="' . _LANGCODE . '" />
-	<title>' . htmlspecialchars ($icmsConfig ['sitename'], ENT_QUOTES) . ' - ' . _IMGMANAGER . '</title>
+	<title>' . htmlspecialchars($icmsConfig ['sitename'], ENT_QUOTES) . ' - ' . _IMGMANAGER . '</title>
 	<script type="text/javascript" src="' . ICMS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . ICMS_URL . '/favicon.ico" />
 	<link rel="icon" type="image/png" href="' . ICMS_URL . '/favicon.ico" />
 	';
@@ -871,12 +879,12 @@ function icmsPopupFooter() {
 function showAddImgForm($imgcat_id) {
 	global $target, $type;
 	$imgcat_handler = icms::handler('icms_image_category');
-	$form = new icms_form_Theme(_ADDIMAGE, 'image_form', $_SERVER['SCRIPT_NAME'], 'post', TRUE);
+	$form = new icms_form_Theme(_ADDIMAGE, 'image_form', $_SERVER['SCRIPT_NAME'], 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');
-	$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'image_nicename', 50, 255), TRUE);
+	$form->addElement(new icms_form_elements_Text(_IMAGENAME, 'image_nicename', 50, 255), true);
 	$select = new icms_form_elements_Select(_IMAGECAT, 'imgcat_id', (int) $imgcat_id);
 	$select->addOptionArray($imgcat_handler->getCategList());
-	$form->addElement($select, TRUE);
+	$form->addElement($select, true);
 	$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'image_file', 5000000));
 	$form->addElement(new icms_form_elements_Text(_IMGWEIGHT, 'image_weight', 3, 4, 0));
 	$form->addElement(new icms_form_elements_Radioyn(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
@@ -884,7 +892,7 @@ function showAddImgForm($imgcat_id) {
 	$form->addElement(new icms_form_elements_Hidden('op', 'addfile'));
 	$form->addElement(new icms_form_elements_Hidden('target', $target));
 	$form->addElement(new icms_form_elements_Hidden('type', $type));
-	$tray = new icms_form_elements_Tray('' , '');
+	$tray = new icms_form_elements_Tray('', '');
 	$tray->addElement(new icms_form_elements_Button('', 'img_button', _SUBMIT, 'submit'));
 	$btn = new icms_form_elements_Button('', 'reset', _CANCEL, 'button');
 	$btn->setExtra('onclick="document.getElementById(\'addimgform\').style.display = \'none\'; return FALSE;"');
@@ -898,7 +906,7 @@ function showAddImgForm($imgcat_id) {
  *
  * @return	string  $ret  the generated HTML for the admin navigation
  */
-function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='font-weight:bold'") {
+function adminNav($id = NULL, $separador = "/", $list = FALSE, $style = "style='font-weight:bold'") {
 	global $target, $type;
 
 	$admin_url = $_SERVER['SCRIPT_NAME'] . '?target=' . $target . '&type=' . $type;
@@ -908,7 +916,7 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
 		if ($id > 0) {
 			$id = (int) $id;
 			$imgcat_handler = icms::handler('icms_image_category');
-			$imagecategory =& $imgcat_handler->get($id);
+			$imagecategory = & $imgcat_handler->get($id);
 			if ($imagecategory->getVar('imgcat_id') > 0) {
 				if ($list) {
 					$ret = $imagecategory->getVar('imgcat_name');
@@ -918,11 +926,11 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
 				if ($imagecategory->getVar('imgcat_pid') == 0) {
 					return "<a href='" . $admin_url . "'>" . _MD_IMGMAIN . "</a> $separador " . $ret;
 				}elseif ($imagecategory->getVar('imgcat_pid') > 0) {
-					$ret = adminNav($imagecategory->getVar('imgcat_pid'), $separador) . " $separador ". $ret;
+					$ret = adminNav($imagecategory->getVar('imgcat_pid'), $separador) . " $separador " . $ret;
 				}
 			}
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 	return $ret;
@@ -934,7 +942,7 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
  * @param	string    $imgcat_id
  * @param	string    $msg
  */
-function redir($imgcat_id, $msg = NULL) {
+function redir($imgcat_id, $msg = null) {
 	global $target, $type;
 
 	redirect_header($_SERVER['SCRIPT_NAME'] . '?op=listimg&imgcat_id=' . (int) $imgcat_id . '&target=' . $target . '&type=' . $type, 2, $msg);

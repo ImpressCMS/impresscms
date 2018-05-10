@@ -107,8 +107,8 @@ $location_text = new icms_form_elements_Text(_AM_LOCATION, "user_from", 30, 100,
 $occupation_text = new icms_form_elements_Text(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
 $interest_text = new icms_form_elements_Text(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
 $sig_tray = new icms_form_elements_Tray(_AM_SIGNATURE, "<br />");
-if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new icms_form_elements_Textarea("", "user_sig", $sig_value);}
-else {$sig_tarea = new icms_form_elements_Dhtmltextarea("", "user_sig", $sig_value);}
+if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new icms_form_elements_Textarea("", "user_sig", $sig_value); }
+else {$sig_tarea = new icms_form_elements_Dhtmltextarea("", "user_sig", $sig_value); }
 $sig_tray->addElement($sig_tarea);
 $sig_cbox = new icms_form_elements_Checkbox("", "attachsig", $sig_cbox_value);
 $sig_cbox->addOption(1, _US_SHOWSIG);
@@ -139,7 +139,7 @@ $pwd_text = new icms_form_elements_Password(_AM_PASSWORD, "password", 10, 255, '
 $pwd_text2 = new icms_form_elements_Password(_AM_RETYPEPD, "pass2", 10, 255);
 $mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', (int) ($mailok_value));
 
-$language = new icms_form_elements_select_Lang(_US_SELECT_LANG,'language', $language_value);
+$language = new icms_form_elements_select_Lang(_US_SELECT_LANG, 'language', $language_value);
 
 // Groups administration addition XOOPS 2.0.9: Mith
 $gperm_handler = icms::handler('icms_member_groupperm');
@@ -149,18 +149,17 @@ if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, icms::$user->
 	if (in_array(XOOPS_GROUP_ADMIN, icms::$user->getGroups())) {
 		$group_select = array(new icms_form_elements_select_Group(_US_GROUPS, 'groups', false, $groups, 5, true));
 	} else {
-		$group_manager_value = array_intersect_key(icms::handler('icms_member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', icms::$user->getGroups()))) ;
-		$group_array = new icms_form_elements_Select(_US_GROUPS, 'groups',$groups, 5, true);
+		$group_manager_value = array_intersect_key(icms::handler('icms_member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', icms::$user->getGroups())));
+		$group_array = new icms_form_elements_Select(_US_GROUPS, 'groups', $groups, 5, true);
 		$group_array->addOptionArray($group_manager_value);
-		$group_select = array ($group_array);
+		$group_select = array($group_array);
 		//$group_hidden = array_diff(icms::handler('icms_member')->getGroupList(),$group_manager_value);
-		$group_hidden = array_diff($groups,array_flip($group_manager_value));
+		$group_hidden = array_diff($groups, array_flip($group_manager_value));
 		foreach ($group_hidden as $key => $group) {
 			$group_hidden_select[] = new icms_form_elements_Hidden('groups_hidden[' . $key . ']', $group);
 		}
 	}
-}
-else {
+} else {
 	//add each user groups
 	foreach ($groups as $key => $group) {
 		$group_select[] = new icms_form_elements_Hidden('groups[' . $key . ']', $group);

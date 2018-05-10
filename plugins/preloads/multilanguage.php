@@ -32,7 +32,7 @@ class icms_MultilanguageEventHandler {
 	static public function initMultilang() {
 		global $icmsConfigMultilang, $icmsConfig;
 		if ($icmsConfigMultilang['ml_enable']) {
-			require_once ICMS_INCLUDE_PATH . '/im_multilanguage.php' ;
+			require_once ICMS_INCLUDE_PATH . '/im_multilanguage.php';
 			$easiestml_langs = explode(',', $icmsConfigMultilang['ml_tags']);
 
 			$easiestml_langpaths = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/");
@@ -68,7 +68,7 @@ class icms_MultilanguageEventHandler {
 			} elseif (isset($_COOKIE['lang'])) {
 				if (in_array($_COOKIE['lang'], $easiestml_langs)) {
 					$icmsConfig['language'] = $langs[$_COOKIE['lang']];
-					if (isset( $_SESSION['UserLanguage'] )) {
+					if (isset($_SESSION['UserLanguage'])) {
 						$_SESSION['UserLanguage'] = $langs[$_GET['lang']];
 					}
 				}

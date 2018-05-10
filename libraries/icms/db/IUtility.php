@@ -28,7 +28,7 @@ interface icms_db_IUtility {
 	 * @param   array    the split sql commands
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
-	*/
+	 */
 	static public function splitSqlFile(&$ret, $sql);
 
 	/**
@@ -37,7 +37,7 @@ interface icms_db_IUtility {
 	 * @param   string  $query  valid SQL query string
 	 * @param   string  $prefix prefix to add to all table names
 	 * @return  mixed   FALSE on failure
-	*/
+	 */
 	static public function prefixQuery($query, $prefix);
 
 	/**
@@ -45,7 +45,7 @@ interface icms_db_IUtility {
 	 *
 	 * @param string $sql
 	 * @return bool	TRUE if the string is safe
-	*/
+	 */
 	static public function checkSQL($sql);
 
 }

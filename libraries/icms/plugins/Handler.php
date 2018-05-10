@@ -22,7 +22,7 @@ class icms_plugins_Handler {
 	public function getPlugin($path, $dirname) {
 		$pluginName = ICMS_PLUGINS_PATH . '/' . $path . '/' . $dirname . '.php';
 		if (file_exists($pluginName)) {
-			include_once $pluginName ;
+			include_once $pluginName;
 			$function = 'icms_plugin_' . $dirname;
 			if (function_exists($function)) {
 				$array = $function();
@@ -30,7 +30,7 @@ class icms_plugins_Handler {
 				return $ret;
 			}
 		}
-		return FALSE;
+		return false;
 	}
 
 	/**
@@ -51,7 +51,7 @@ class icms_plugins_Handler {
 
 		$aFiles = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_PLUGINS_PATH . '/' . $path . '/', '', array('php')));
 		$ret = array();
-		foreach($aFiles as $pluginName) {
+		foreach ($aFiles as $pluginName) {
 			$module_xoops_version_file = ICMS_MODULES_PATH . "/$pluginName/xoops_version.php";
 			$module_icms_version_file = ICMS_MODULES_PATH . "/$pluginName/icms_version.php";
 			if ((file_exists($module_xoops_version_file) || file_exists($module_icms_version_file)) && isset($modulesObj[$pluginName])) {

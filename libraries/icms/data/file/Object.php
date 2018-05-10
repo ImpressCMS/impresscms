@@ -26,8 +26,8 @@ class icms_data_file_Object extends icms_ipf_Object {
     * constructor
     */
     public function __construct(&$handler, $data = array()) {
-        $this->initVar("fileid", self::DTYPE_INTEGER, 0, TRUE);
-        $this->initVar("mid", self::DTYPE_INTEGER, 0, TRUE);
+        $this->initVar("fileid", self::DTYPE_INTEGER, 0, true);
+        $this->initVar("mid", self::DTYPE_INTEGER, 0, true);
         $this->initVar("caption", self::DTYPE_STRING, '', false, 255);
         $this->initVar("description", self::DTYPE_STRING, '', false, 255);
         $this->initVar("url", self::DTYPE_STRING, '', false, 255);
@@ -58,7 +58,7 @@ class icms_data_file_Object extends icms_ipf_Object {
 
     public function render() {
         $url = str_replace("{ICMS_URL}", ICMS_URL, $this->getVar("url"));
-        $caption = $this->getVar("caption") != "" ? $this->getVar("caption") : $url;
+        $caption = $this->getVar("caption") != ""?$this->getVar("caption"):$url;
         return "<a href='" . $url . "' title='" . $this->getVar("description") . "' target='_blank'>" . $caption . "</a>";
     }
 

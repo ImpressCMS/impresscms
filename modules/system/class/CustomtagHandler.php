@@ -20,7 +20,7 @@ defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
  * @package     ImpressCMS\Modules\System\Class\CustomTag
  */
 class mod_system_CustomtagHandler extends icms_ipf_Handler {
-	private $_objects = FALSE;
+	private $_objects = false;
 
 	/**
 	 * Constructor
@@ -60,7 +60,7 @@ class mod_system_CustomtagHandler extends icms_ipf_Handler {
 
 			if ($granted_ids && count($granted_ids) > 0) {
 				$criteria->add(new icms_db_criteria_Item('customtagid', '(' . implode(', ', $granted_ids) . ')', 'IN'));
-				$customtagsObj = $this->getObjects($criteria, TRUE);
+				$customtagsObj = $this->getObjects($criteria, true);
 				foreach ($customtagsObj as $customtagObj) {
 					$ret[$customtagObj->getVar('name')] = $customtagObj;
 				}

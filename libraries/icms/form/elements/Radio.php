@@ -137,8 +137,8 @@ class icms_form_elements_Radio extends icms_form_Element {
 		}
 		$value = array();
 		foreach ($this->_options as $val => $name) {
-			$value[$encode ? htmlspecialchars($val, ENT_QUOTES, _CHARSET) : $val]
-				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES, _CHARSET) : $name;
+			$value[$encode? htmlspecialchars($val, ENT_QUOTES, _CHARSET):$val]
+				= ($encode > 1)? htmlspecialchars($name, ENT_QUOTES, _CHARSET):$name;
 		}
 		return $value;
 	}
@@ -150,7 +150,7 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 * @return	string  The delimiter
 	 */
 	public function getDelimeter($encode = false) {
-		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
+		return $encode? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)):$this->_delimeter;
 	}
 
 	/**

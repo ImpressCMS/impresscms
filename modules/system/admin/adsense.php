@@ -27,7 +27,7 @@ include "admin_header.php";
  * @param $adsenseid	Unique identifier of the AdSense unit
  * @param $clone		Is this cloning an existing AdSense unit?
  */
-function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
+function editadsense($showmenu = false, $adsenseid = 0, $clone = false) {
 	global $icms_admin_handler, $icmsAdminTpl;
 
 	icms_cp_header();
@@ -51,42 +51,42 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 }
 
 switch ($op) {
-	case "mod":
-		$adsenseid = isset($adsenseid) ? (int) $adsenseid : 0;
-		editadsense(TRUE, $adsenseid);
-		break;
+		case "mod":
+			$adsenseid = isset($adsenseid) ? (int) $adsenseid : 0;
+			editadsense(TRUE, $adsenseid);
+			break;
 
-	case "clone":
-		$adsenseid = isset($adsenseid) ? (int) $adsenseid : 0;
-		editadsense(TRUE, $adsenseid, TRUE);
-		break;
+		case "clone":
+			$adsenseid = isset($adsenseid) ? (int) $adsenseid : 0;
+			editadsense(TRUE, $adsenseid, TRUE);
+			break;
 
-	case "addadsense":
-		$controller = new icms_ipf_Controller($icms_admin_handler);
-		$controller->storeFromDefaultForm(_CO_ICMS_ADSENSES_CREATED, _CO_ICMS_ADSENSES_MODIFIED);
-		break;
+		case "addadsense":
+			$controller = new icms_ipf_Controller($icms_admin_handler);
+			$controller->storeFromDefaultForm(_CO_ICMS_ADSENSES_CREATED, _CO_ICMS_ADSENSES_MODIFIED);
+			break;
 
-	case "del":
-		$controller = new icms_ipf_Controller($icms_admin_handler);
-		$controller->handleObjectDeletion();
-		break;
+		case "del":
+			$controller = new icms_ipf_Controller($icms_admin_handler);
+			$controller->handleObjectDeletion();
+			break;
 
-	default:
-		icms_cp_header();
-		$objectTable = new icms_ipf_view_Table($icms_admin_handler);
-		$objectTable->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT));
-		$objectTable->addColumn(new icms_ipf_view_Column(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));
+		default:
+			icms_cp_header();
+			$objectTable = new icms_ipf_view_Table($icms_admin_handler);
+			$objectTable->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT));
+			$objectTable->addColumn(new icms_ipf_view_Column(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));
 
-		$objectTable->addIntroButton('addadsense', 'admin.php?fct=adsense&amp;op=mod', _CO_ICMS_ADSENSES_CREATE);
-		$objectTable->addQuickSearch(array('title', 'summary', 'description'));
-		$objectTable->addCustomAction('getCloneLink');
+			$objectTable->addIntroButton('addadsense', 'admin.php?fct=adsense&amp;op=mod', _CO_ICMS_ADSENSES_CREATE);
+			$objectTable->addQuickSearch(array('title', 'summary', 'description'));
+			$objectTable->addCustomAction('getCloneLink');
 
-		$icmsAdminTpl->assign('icms_adsense_table', $objectTable->fetch());
-		$icmsAdminTpl->assign('icms_adsense_explain', TRUE);
-		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_DSC);
+			$icmsAdminTpl->assign('icms_adsense_table', $objectTable->fetch());
+			$icmsAdminTpl->assign('icms_adsense_explain', TRUE);
+			$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_DSC);
 
-		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
-		break;
+			$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
+			break;
 }
 
 icms_cp_footer();

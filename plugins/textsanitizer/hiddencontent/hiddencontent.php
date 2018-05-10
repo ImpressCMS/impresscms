@@ -32,7 +32,7 @@ function textsanitizer_hiddencontent($text) {
  */
 function render_hiddencontent($ele_name) {
 	global $xoTheme;
-	$javascript='';
+	$javascript = '';
 	$dirname = basename(__DIR__);
 	if (isset($xoTheme)) {
 		$xoTheme->addScript(

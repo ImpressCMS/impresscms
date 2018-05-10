@@ -15,13 +15,13 @@
  * @return mixed Did the query succeed or not? Returns nothing if succeeded, false if not succeeded
  */
 function remove_usersxdays() {
-	$db =& icms_db_Factory::instance();
+	$db = & icms_db_Factory::instance();
 	global $icmsConfigUser;
 	$days = $icmsConfigUser['delusers'];
-	$delete_regdate= time() - ($days * 24 * 60 * 60);  // X days/month * 24 hrs/day
+	$delete_regdate = time() - ($days * 24 * 60 * 60); // X days/month * 24 hrs/day
 	$sql = sprintf("DELETE FROM %s WHERE (level = '0' AND user_regdate < '%s')", $db->prefix('users'), $delete_regdate);
 	if (!$result = $db->queryF($sql)) {
-		return FALSE;
+		return false;
 	}
 }
 

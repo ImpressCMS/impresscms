@@ -50,23 +50,23 @@ if (('system' != $icmsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == 
 }
 
 icms_loadLanguageFile('core', 'comment');
-$com_itemid = isset($_GET['com_itemid']) ? (int) $_GET['com_itemid'] : 0;
+$com_itemid = isset($_GET['com_itemid'])?(int) $_GET['com_itemid']:0;
 
 if ($com_itemid > 0) {
 	include ICMS_ROOT_PATH . '/header.php';
 	if (isset($com_replytitle)) {
 		if (isset($com_replytext)) {
 			//themecenterposts($com_replytitle, $com_replytext);
-			echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$com_replytitle.'</td></tr><tr><td><br />'.$com_replytext.'<br /></td></tr></table>';
+			echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $com_replytitle . '</td></tr><tr><td><br />' . $com_replytext . '<br /></td></tr></table>';
 		}
 		$com_title = icms_core_DataFilter::htmlSpecialChars($com_replytitle);
-		if (!preg_match("/^(Re|"._CM_RE."):/i", $com_title)) {
-			$com_title = _CM_RE.": ".icms_core_DataFilter::icms_substr($com_title, 0, 56);
+		if (!preg_match("/^(Re|" . _CM_RE . "):/i", $com_title)) {
+			$com_title = _CM_RE . ": " . icms_core_DataFilter::icms_substr($com_title, 0, 56);
 		}
 	} else {
 		$com_title = '';
 	}
-	$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES, _CHARSET) : '';
+	$com_mode = isset($_GET['com_mode'])? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES, _CHARSET):'';
 	if ($com_mode == '') {
 		if (is_object(icms::$user)) {
 			$com_mode = icms::$user->getVar('umode');
@@ -87,7 +87,7 @@ if ($com_itemid > 0) {
 	$com_id = 0;
 	$noname = 0;
 	$dosmiley = 1;
-	$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+	$groups   = (is_object(icms::$user))? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 	$gperm_handler = icms::handler('icms_member_groupperm');
 	if ($icmsConfig ['editor_default'] != 'dhtmltextarea'
 		&& $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {

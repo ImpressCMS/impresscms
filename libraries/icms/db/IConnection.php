@@ -109,6 +109,6 @@ interface icms_db_IConnection {
 	 * @param string $name
 	 * @return string
 	 */
-	public function lastInsertId($name = NULL);
+	public function lastInsertId($name = null);
 
 }

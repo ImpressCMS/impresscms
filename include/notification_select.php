@@ -41,7 +41,7 @@
 
 include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
 $xoops_notification = [
-    'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline')) ? 1 : 0
+	'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline')) ? 1 : 0
 ];
 
 if ($xoops_notification['show']) {
@@ -64,9 +64,9 @@ if ($xoops_notification['show']) {
 				if (!empty($event['invisible'])) {
 					continue;
 				}
-				$subscribed = in_array($event['name'], $subscribed_events) ? 1 : 0;
-				$section['events'][$event['name']] = array ('name'=>$event['name'], 'title'=>$event['title'], 'caption'=>$event['caption'], 'description'=>$event['description'], 'subscribed'=>$subscribed);
-				$event_count ++;
+				$subscribed = in_array($event['name'], $subscribed_events)?1:0;
+				$section['events'][$event['name']] = array('name'=>$event['name'], 'title'=>$event['title'], 'caption'=>$event['caption'], 'description'=>$event['description'], 'subscribed'=>$subscribed);
+				$event_count++;
 			}
 			$xoops_notification['categories'][$category['name']] = $section;
 		}

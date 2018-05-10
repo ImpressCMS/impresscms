@@ -89,7 +89,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		}
 		$value = array();
 		foreach ($this->_value as $val) {
-			$value[] = $val ? htmlspecialchars($val, ENT_QUOTES, _CHARSET) : $val;
+			$value[] = $val? htmlspecialchars($val, ENT_QUOTES, _CHARSET):$val;
 		}
 		return $value;
 	}
@@ -197,7 +197,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		}
 		if (count($ele_options) > 1) {
 			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
-				. $ele_name	. "_checkemall' class='checkemall' /><label for='"
+				. $ele_name . "_checkemall' class='checkemall' /><label for='"
 				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
 		}
 		$ret .= "</div>";
