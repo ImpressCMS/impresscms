@@ -84,7 +84,7 @@ if (in_array($op, $valid_op)) {
 			$criteria = new icms_db_criteria_Item('not_uid', $uid);
 			$criteria->setSort('not_modid,not_category,not_itemid');
 			$notification_handler = icms::handler('icms_data_notification');
-			$notifications =& $notification_handler->getObjects($criteria);
+			$notifications = & $notification_handler->getObjects($criteria);
 
 			// Generate the info for the template
 

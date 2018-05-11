@@ -287,12 +287,12 @@ class icms_core_DataFilter {
 	 */
 	static public function checkVar($data, $type, $options1 = '', $options2 = '') {
 		if (!$data || !$type) {
-			return FALSE;
+			return false;
 		}
 
 		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'special', 'html', 'text');
 		if (!in_array($type, $valid_types)) {
-			return FALSE;
+			return false;
 		} else {
 			switch ($type) {
 				case 'url':
@@ -520,7 +520,7 @@ class icms_core_DataFilter {
 		$html = icms_core_HTMLFilter::filterHTML($html);
 
 		$purified = strpos($html, '<!-- filtered with htmlpurifier -->');
-		if ($purified === FALSE && $br == 1) {
+		if ($purified === false && $br == 1) {
 			$html = self::nl2Br($html);
 		}
 
@@ -546,7 +546,7 @@ class icms_core_DataFilter {
 		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
 
 		$ifiltered = strpos($html, '<!-- input filtered -->');
-		if ($ifiltered === FALSE) {
+		if ($ifiltered === false) {
 			$html = self::codePreConv($html, 1);
 			$html = self::smiley($html);
 			$html = self::codeDecode($html);
@@ -557,7 +557,7 @@ class icms_core_DataFilter {
 			$html .= '<!-- warning! output filtered only -->';
 
 			$purified = strpos($html, '<!-- filtered with htmlpurifier -->');
-			if ($purified === FALSE || $br = 1) {
+			if ($purified === false || $br = 1) {
 				$html = self::nl2Br($html);
 			}
 		}
@@ -1001,16 +1001,16 @@ class icms_core_DataFilter {
 		if ($icmsConfigMultilang['ml_enable']) {
 			$tags = explode(',', $icmsConfigMultilang['ml_tags']);
 			$strs = array();
-			$hasML = FALSE;
+			$hasML = false;
 			foreach ($tags as $tag) {
 				if (preg_match("/\[" . $tag . "](.*)\[\/" . $tag . "\]/sU", $str, $matches)) {
 					if (count($matches) > 0) {
-						$hasML = TRUE;
+						$hasML = true;
 						$strs[] = $matches[1];
 					}
 				}
 			}
-		} else {$hasML = FALSE; }
+		} else {$hasML = false; }
 
 		if (!$hasML) {$strs = array($str); }
 
@@ -1025,12 +1025,12 @@ class icms_core_DataFilter {
 
 			$DEP_CHAR = 127;
 			$pos_st = 0;
-			$action = FALSE;
+			$action = false;
 			for ($pos_i = 0; $pos_i < strlen($strs[$i]); $pos_i++) {
 				if (ord(substr($strs[$i], $pos_i, 1)) > 127) {$pos_i++; }
 				if ($pos_i <= $start) {$pos_st = $pos_i; }
 				if ($pos_i >= $pos_st + $length) {
-					$action = TRUE;
+					$action = true;
 					break;
 				}
 			}
@@ -1096,16 +1096,16 @@ class icms_core_DataFilter {
 					if ($options2 == 1 && is_array($icmsConfigUser['bad_emails'])) {
 						foreach ($icmsConfigUser['bad_emails'] as $be) {
 							if ((!empty($be) && preg_match('/' . $be . '/i', $data))) {
-								return FALSE;
+								return false;
 							}
 						}
 						$icmsStopSpammers = new icms_core_StopSpammer();
 						if ($icmsStopSpammers->badEmail($data)) {
-							return FALSE;
+							return false;
 						}
 					}
 				} else {
-					return FALSE;
+					return false;
 				}
 				if ($options1 == 1) {
 					$data = str_replace('@', ' at ', $data);
@@ -1216,11 +1216,11 @@ class icms_core_DataFilter {
 
 					case 'edit':
 						$filtered = strpos($data, '<!-- input filtered -->');
-						if ($filtered !== FALSE) {
+						if ($filtered !== false) {
 							$data = str_replace('<!-- input filtered -->', '', $data);
 							$data = str_replace('<!-- filtered with htmlpurifier -->', '', $data);
 						}
-						return htmlspecialchars($data, ENT_QUOTES, _CHARSET, FALSE);
+						return htmlspecialchars($data, ENT_QUOTES, _CHARSET, false);
 					break;
 
 					case 'print':

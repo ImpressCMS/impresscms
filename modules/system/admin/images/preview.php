@@ -24,7 +24,7 @@ include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
  */
 $file = filter_input(INPUT_GET, 'file', FILTER_SANITIZE_STRING);
 $resize = isset($_GET['resize'])?(int) $_GET['resize']:1;
-$filter = isset($_GET['filter'])? filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING):NULL;
+$filter = isset($_GET['filter'])? filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING):null;
 $args = array();
 if (isset($_GET['arg1'])) {
 	$args[] = filter_input(INPUT_GET, 'arg1', FILTER_SANITIZE_STRING);
@@ -39,7 +39,7 @@ if (isset($_GET['arg3'])) {
 $image_handler = icms::handler('icms_image');
 $imgcat_handler = icms::handler('icms_image_category');
 
-$image = & $image_handler->getObjects(new icms_db_criteria_Item('image_name', $file), FALSE, TRUE);
+$image = & $image_handler->getObjects(new icms_db_criteria_Item('image_name', $file), false, true);
 $imagecategory = & $imgcat_handler->get($image[0]->getVar('imgcat_id'));
 
 $categ_path = $imgcat_handler->getCategFolder($imagecategory);

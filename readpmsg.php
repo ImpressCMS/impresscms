@@ -105,10 +105,10 @@ if (!$pm_handler->setRead($pm_arr[0])) {
 $poster = new icms_member_user_Object((int) $pm_arr[0]->getVar("from_userid"));
 
 if (!$poster->isActive()) {
-	$poster = FALSE;
+	$poster = false;
 }
 
-if (is_object($poster) == TRUE) {
+if (is_object($poster) == true) {
 // no need to do this for deleted users
 	$icmsTpl->assign(
 			array(

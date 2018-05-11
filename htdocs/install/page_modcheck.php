@@ -19,16 +19,16 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) ) {
+if (!defined('XOOPS_INSTALL')) {
 	exit();
 }
 
-$wizard->setPage( 'modcheck' );
+$wizard->setPage('modcheck');
 $pageHasForm = false;
 
 $diagsOK = false;
 
-function xoDiag( $status = -1, $str = '') {
+function xoDiag($status = -1, $str = '') {
 	if ($status == -1) {
 		$GLOBALS['error'] = true;
 	}
@@ -145,49 +145,49 @@ if (version_compare(phpversion(), '5.6', '>=')) {
 <p><?php echo RECOMMENDED_EXTENSIONS_MSG; ?></p>
 <div class="clear">&nbsp;</div>
 
-<h4><?php printf( PHP_EXTENSION, CHAR_ENCODING ); ?>:&nbsp; <?php
+<h4><?php printf(PHP_EXTENSION, CHAR_ENCODING); ?>:&nbsp; <?php
 $ext = array();
-if (extension_loaded( 'iconv' ) ) {
+if (extension_loaded('iconv')) {
 	$ext[] = 'Iconv';
 }
-if (extension_loaded( 'mb_string' ) ) {
+if (extension_loaded('mb_string')) {
 	$ext[] = 'MBString';
 }
 if (empty($ext)) {
-	echo xoDiag( 0, NONE );
+	echo xoDiag(0, NONE);
 } else {
-	echo xoDiag( 1, implode( ',', $ext ) );
+	echo xoDiag(1, implode(',', $ext));
 }
 ?> <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf( PHP_EXTENSION, XML_PARSING ); ?>:&nbsp; <?php
+<h4><?php printf(PHP_EXTENSION, XML_PARSING); ?>:&nbsp; <?php
 $ext = array();
-if (extension_loaded( 'xml' ) ) {
+if (extension_loaded('xml')) {
 	$ext[] = 'XML';
 }
 //if (extension_loaded( 'dom' ) )		$ext[] = 'DOM';
 if (empty($ext)) {
-	echo xoDiag( 0, NONE );
+	echo xoDiag(0, NONE);
 } else {
-	echo xoDiag( 1, implode( ',', $ext ) );
+	echo xoDiag(1, implode(',', $ext));
 }
 ?> <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf( PHP_EXTENSION, OPEN_ID ); ?>:&nbsp; <?php
+<h4><?php printf(PHP_EXTENSION, OPEN_ID); ?>:&nbsp; <?php
 $ext = array();
-if (extension_loaded( 'curl' ) ) {
+if (extension_loaded('curl')) {
 	$ext[] = 'Curl  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
 }
-if (extension_loaded( 'bcmath' ) ) {
+if (extension_loaded('bcmath')) {
 	$ext[] = ' Math Support  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
 }
-if (extension_loaded( 'openssl' ) ) {
+if (extension_loaded('openssl')) {
 	$ext[] = ' OpenSSL  <img src="img/yes.png" alt="Success" class="rootimg" />';
 }
 if (empty($ext)) {
-	echo xoDiag( 0, NONE );
+	echo xoDiag(0, NONE);
 } else {
-	echo xoDiag( 1, implode( ' ', $ext ) );
+	echo xoDiag(1, implode(' ', $ext));
 }
 ?></h4>
 <div class="clear">&nbsp;</div>

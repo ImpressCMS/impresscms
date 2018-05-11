@@ -30,14 +30,14 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
 	function XoopsFormTinymce($configs, $checkCompatible = false) {
 		$current_path = __FILE__;
 		if (DIRECTORY_SEPARATOR != "/") {
-					$current_path = str_replace ( strpos ( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path );
+					$current_path = str_replace(strpos($current_path, "\\\\", 2)?"\\\\":DIRECTORY_SEPARATOR, "/", $current_path);
 		}
 		$this->rootpath = substr(strstr(dirname($current_path), ICMS_ROOT_PATH), strlen(ICMS_ROOT_PATH));
 
-		if (is_array ( $configs )) {
-			$vars = array_keys ( get_object_vars ( $this ) );
-			foreach ( $configs as $key => $val) {
-				if (in_array ( "_" . $key, $vars )) {
+		if (is_array($configs)) {
+			$vars = array_keys(get_object_vars($this));
+			foreach ($configs as $key => $val) {
+				if (in_array("_" . $key, $vars)) {
 					$this->{"_" . $key} = $val;
 				} else {
 					$this->config [$key] = $val;

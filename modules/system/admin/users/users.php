@@ -198,13 +198,13 @@ function modifyUser($user) {
 		$notify_method_value = $user->getVar('notify_method');
 		$notify_mode_value = $user->getVar('notify_mode');
 		$bio_value = $user->getVar('bio', 'E');
-		$rank_value = $user->rank(FALSE);
+		$rank_value = $user->rank(false);
 		$mailok_value = $user->getVar('user_mailok', 'E');
 		$pass_expired_value = $user->getVar('pass_expired')?1:0;
 		$op_value = 'updateUser';
 		$form_title = _AM_UPDATEUSER . ': ' . $user->getVar('uname');
 		$language_value = $user->getVar('language');
-		$form_isedit = TRUE;
+		$form_isedit = true;
 		$groups = array_values($user->getGroups());
 		include ICMS_MODULES_PATH . '/system/admin/users/userform.php';
 		echo "<br /><strong>" . _AM_USERPOST . "</strong><br /><br />\n"

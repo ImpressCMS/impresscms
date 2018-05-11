@@ -71,7 +71,7 @@ class icms_ipf_Tree {
 		 *
 		 * @var array
 		 */
-	public $_tree = array ();
+	public $_tree = array();
 
 		/**
 		 * Array of {@link icms_core_Object}s

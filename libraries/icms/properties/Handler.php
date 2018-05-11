@@ -358,21 +358,26 @@ abstract class icms_properties_Handler implements Serializable {
 				}
 				return (object) $value;
 			case self::DTYPE_BOOLEAN:
-				if (is_bool($value))
-					return $value;
-				if (!is_string($value))
-					return (bool) intval($value);
+				if (is_bool($value)) {
+									return $value;
+				}
+				if (!is_string($value)) {
+									return (bool) intval($value);
+				}
 				$value = strtolower($value);
 				return ($value == 'yes') || ($value == 'true');
 			case self::DTYPE_LIST:
-				if ((array) ($value) === $value)
-					return $value;
-				if (empty($value))
-					return array();
-				if (is_string($value))
-					return explode($this->_vars[$key][self::VARCFG_SEPARATOR], strval($value));
-				else
-					return array($value);
+				if ((array) ($value) === $value) {
+									return $value;
+				}
+				if (empty($value)) {
+									return array();
+				}
+				if (is_string($value)) {
+									return explode($this->_vars[$key][self::VARCFG_SEPARATOR], strval($value));
+				} else {
+									return array($value);
+				}
 			case self::DTYPE_FLOAT:
 				return (float) $value;
 			case self::DTYPE_INTEGER:
@@ -452,18 +457,23 @@ abstract class icms_properties_Handler implements Serializable {
 				}
 				return null;
 			case self::DTYPE_DATETIME:
-				if (is_int($value))
-					return $value;
-				if ($value === null)
-					return 0;
-				if (is_numeric($value))
-					return intval($value);
-				if (!is_string($value))
-					return 0;
-				if (preg_match('/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/ui', $value, $ret))
-					$time = gmmktime($ret[4], $ret[5], $ret[6], $ret[2], $ret[3], $ret[1]);
-				else
-					$time = (int) strtotime($value);
+				if (is_int($value)) {
+									return $value;
+				}
+				if ($value === null) {
+									return 0;
+				}
+				if (is_numeric($value)) {
+									return intval($value);
+				}
+				if (!is_string($value)) {
+									return 0;
+				}
+				if (preg_match('/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/ui', $value, $ret)) {
+									$time = gmmktime($ret[4], $ret[5], $ret[6], $ret[2], $ret[3], $ret[1]);
+				} else {
+									$time = (int) strtotime($value);
+				}
 				return ($time < 0)?0:$time;
 			case self::DTYPE_STRING:
 			default:
@@ -641,8 +651,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 *
 	 * @return mixed
 	 */
-	public function getVarInfo($key = null, $info = null, $default = null)
-	{
+	public function getVarInfo($key = null, $info = null, $default = null) {
 		if ($key === null) {
 			return $this->_vars;
 		} elseif ($info === null) {
@@ -694,14 +703,14 @@ abstract class icms_properties_Handler implements Serializable {
 	 * @param mixed $value      New value
 	 * @param array $options Options to apply when settings values
 	 */
-	public function setVar($name, $value, $options = null)
-	{
+	public function setVar($name, $value, $options = null) {
 		if ($options !== null) {
 			if (is_bool($options)) {
 				$this->setVarInfo($name, self::VARCFG_NOT_GPC, $options);
 			} elseif (is_array($options)) {
-				foreach ($options as $k2 => $v2)
-					$this->setVarInfo($name, $k2, $v2);
+				foreach ($options as $k2 => $v2) {
+									$this->setVarInfo($name, $k2, $v2);
+				}
 			}
 		}
 		$this->__set($name, $value);
@@ -755,8 +764,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 *
 	 * @deprecated use setVarInfo with self::VARCFG_TYPE option instead
 	 */
-	public function setType($key, $type)
-	{
+	public function setType($key, $type) {
 		trigger_error('use setVarInfo with self::VARCFG_TYPE option instead', E_USER_DEPRECATED);
 
 		$this->setVarInfo($key, self::VARCFG_TYPE, $type);
@@ -848,145 +856,145 @@ abstract class icms_properties_Handler implements Serializable {
 	}
 
 	/**
-    * Returns a specific variable for the object in a proper format
-     *
-    * @access public
-    * @param string $key key of the object's variable to be returned
-    * @param string $format format to use for the output
-    * @return mixed formatted value of the variable
-    */
-    public function getVar($name, $format = 's') {
-        switch (strtolower($format)) {
-            case 's':
-            case 'show':
-            case 'p':
-            case 'preview':
-                $ret = $this->getVarForDisplay($name);
-                break;
-            case 'e':
-            case 'edit':
-                $ret = $this->getVarForEdit($name);
-                break;
-            case 'f':
-            case 'formpreview':
-                $ret = $this->getVarForForm($name);
-                break;
-            case 'n':
-            case 'none':
-            default:
-                $ret = $this->__get($name);
-        }
-        return $ret;
-    }
+	 * Returns a specific variable for the object in a proper format
+	 *
+	 * @access public
+	 * @param string $key key of the object's variable to be returned
+	 * @param string $format format to use for the output
+	 * @return mixed formatted value of the variable
+	 */
+	public function getVar($name, $format = 's') {
+		switch (strtolower($format)) {
+			case 's':
+			case 'show':
+			case 'p':
+			case 'preview':
+				$ret = $this->getVarForDisplay($name);
+				break;
+			case 'e':
+			case 'edit':
+				$ret = $this->getVarForEdit($name);
+				break;
+			case 'f':
+			case 'formpreview':
+				$ret = $this->getVarForForm($name);
+				break;
+			case 'n':
+			case 'none':
+			default:
+				$ret = $this->__get($name);
+		}
+		return $ret;
+	}
 
-    /**
-    * Gets var value for displaying
-     *
-    * @param string $name
-     *
-    * @return mixed
-    */
-    public function getVarForDisplay($name) {
-        switch ($this->_vars[$name][self::VARCFG_TYPE]) {
-            case self::DTYPE_STRING:
-                if (!isset($this->_vars[$name][self::VARCFG_AF_DISABLED]) || !$this->_vars[$name][self::VARCFG_AF_DISABLED]) {
-                    $ts = icms_core_Textsanitizer::getInstance();
-                    $html = !empty($this->_vars['dohtml'])?1:0;
-                    $xcode = (!isset($this->_vars['doxcode']) || $this->_vars['doxcode'][self::VARCFG_VALUE] == 1)?1:0;
-                    $smiley = (!isset($this->_vars['dosmiley']) || $this->_vars['dosmiley'][self::VARCFG_VALUE] == 1)?1:0;
-                    $image = (!isset($this->_vars['doimage']) || $this->_vars['doimage'][self::VARCFG_VALUE] == 1)?1:0;
-                    $br = (!isset($this->_vars['dobr']) || $this->_vars['dobr'][self::VARCFG_VALUE] == 1)?1:0;
-                    if ($html) {
-                        return $ts->displayTarea($this->_vars[$name][self::VARCFG_VALUE], $html, $smiley, $xcode, $image, $br);
-                    } else {
-                        return $this->_vars[$name][self::VARCFG_VALUE]; //icms_core_DataFilter::checkVar($this->_vars[$name][self::VARCFG_VALUE], 'text', 'output');
-                    }
-                } else {
-                    $ret = str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET)); //icms_core_DataFilter::htmlSpecialchars($this->_vars[$name][self::VARCFG_VALUE]);
-                    if (method_exists($this, 'formatForML')) {
-                        return $this->formatForML($ret);
-                    } else {
-                        return $ret;
-                    }
-                    return $ret;
-                }
-            case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
-                return $this->_vars[$name][self::VARCFG_VALUE];
-            case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
-                return sprintf(isset($this->_vars[$name][self::VARCFG_FORMAT])?$this->_vars[$name][self::VARCFG_FORMAT]:'%d', $this->_vars[$name][self::VARCFG_VALUE]);
-            case self::DTYPE_BOOLEAN:
-                return $this->_vars[$name][self::VARCFG_VALUE]? _YES : _NO;
-            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
-            case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
-                return date(isset($this->_vars[$name][self::VARCFG_FORMAT])?$this->_vars[$name][self::VARCFG_FORMAT]:'r', $this->_vars[$name][self::VARCFG_VALUE]);
-            case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
-                return $this->_vars[$name][self::VARCFG_VALUE];
-            case self::DTYPE_LIST; // XOBJ_DTYPE_SIMPLE_ARRAY
-                return $this->_vars[$name][self::VARCFG_VALUE]; //nl2br(implode("\n", $this->_vars[$name][self::VARCFG_VALUE]));
-            default:
-                return (string) $this->_vars[$name][self::VARCFG_VALUE];
-        }
-    }
-
-    /**
-    * Gets var value for editing
-     *
-    * @param string $name
-     *
-    * @return mixed
-    */
-    public function getVarForEdit($name) {
-        switch ($this->_vars[$name][self::VARCFG_TYPE]) {
-            case self::DTYPE_STRING:
-            case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
-            case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
-            case self::DTYPE_BOOLEAN:
-            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
-            case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
-            case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
-            case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
-                return $this->getVar($name, 'n');
-                break;
-            case self::DTYPE_OBJECT:
-            default:
-                return null;
-        }
-    }
-
-    /**
-    * Gets var value for form
-     *
-    * @param string $name
-     *
-    * @return mixed
-    */
-    public function getVarForForm($name) {
-        switch ($this->_vars[$name][self::VARCFG_TYPE]) {
-            case self::DTYPE_STRING:
-            case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
-            case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
-            case self::DTYPE_BOOLEAN:
-            case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
-            case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
-            case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
-            case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
-            case self::DTYPE_OTHER: // XOBJ_DTYPE_OTHER
-            case self::DTYPE_OBJECT:
-            default:
-                return null;
-        }
-    }
-
-    /**
-	 * Magic function to get property value by accessing it by name
-     *
+	/**
+	 * Gets var value for displaying
+	 *
 	 * @param string $name
-     *
+	 *
 	 * @return mixed
-    */
+	 */
+	public function getVarForDisplay($name) {
+		switch ($this->_vars[$name][self::VARCFG_TYPE]) {
+			case self::DTYPE_STRING:
+				if (!isset($this->_vars[$name][self::VARCFG_AF_DISABLED]) || !$this->_vars[$name][self::VARCFG_AF_DISABLED]) {
+					$ts = icms_core_Textsanitizer::getInstance();
+					$html = !empty($this->_vars['dohtml'])?1:0;
+					$xcode = (!isset($this->_vars['doxcode']) || $this->_vars['doxcode'][self::VARCFG_VALUE] == 1)?1:0;
+					$smiley = (!isset($this->_vars['dosmiley']) || $this->_vars['dosmiley'][self::VARCFG_VALUE] == 1)?1:0;
+					$image = (!isset($this->_vars['doimage']) || $this->_vars['doimage'][self::VARCFG_VALUE] == 1)?1:0;
+					$br = (!isset($this->_vars['dobr']) || $this->_vars['dobr'][self::VARCFG_VALUE] == 1)?1:0;
+					if ($html) {
+						return $ts->displayTarea($this->_vars[$name][self::VARCFG_VALUE], $html, $smiley, $xcode, $image, $br);
+					} else {
+						return $this->_vars[$name][self::VARCFG_VALUE]; //icms_core_DataFilter::checkVar($this->_vars[$name][self::VARCFG_VALUE], 'text', 'output');
+					}
+				} else {
+					$ret = str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET)); //icms_core_DataFilter::htmlSpecialchars($this->_vars[$name][self::VARCFG_VALUE]);
+					if (method_exists($this, 'formatForML')) {
+						return $this->formatForML($ret);
+					} else {
+						return $ret;
+					}
+					return $ret;
+				}
+			case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
+				return $this->_vars[$name][self::VARCFG_VALUE];
+			case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
+				return sprintf(isset($this->_vars[$name][self::VARCFG_FORMAT])?$this->_vars[$name][self::VARCFG_FORMAT]:'%d', $this->_vars[$name][self::VARCFG_VALUE]);
+			case self::DTYPE_BOOLEAN:
+				return $this->_vars[$name][self::VARCFG_VALUE]? _YES : _NO;
+			case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
+				return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
+			case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+				return date(isset($this->_vars[$name][self::VARCFG_FORMAT])?$this->_vars[$name][self::VARCFG_FORMAT]:'r', $this->_vars[$name][self::VARCFG_VALUE]);
+			case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
+				return $this->_vars[$name][self::VARCFG_VALUE];
+			case self::DTYPE_LIST; // XOBJ_DTYPE_SIMPLE_ARRAY
+				return $this->_vars[$name][self::VARCFG_VALUE]; //nl2br(implode("\n", $this->_vars[$name][self::VARCFG_VALUE]));
+			default:
+				return (string) $this->_vars[$name][self::VARCFG_VALUE];
+		}
+	}
+
+	/**
+	 * Gets var value for editing
+	 *
+	 * @param string $name
+	 *
+	 * @return mixed
+	 */
+	public function getVarForEdit($name) {
+		switch ($this->_vars[$name][self::VARCFG_TYPE]) {
+			case self::DTYPE_STRING:
+			case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
+			case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
+			case self::DTYPE_BOOLEAN:
+			case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
+			case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+			case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
+				return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
+			case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
+				return $this->getVar($name, 'n');
+				break;
+			case self::DTYPE_OBJECT:
+			default:
+				return null;
+		}
+	}
+
+	/**
+	 * Gets var value for form
+	 *
+	 * @param string $name
+	 *
+	 * @return mixed
+	 */
+	public function getVarForForm($name) {
+		switch ($this->_vars[$name][self::VARCFG_TYPE]) {
+			case self::DTYPE_STRING:
+			case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
+			case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
+			case self::DTYPE_BOOLEAN:
+			case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
+			case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
+			case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
+			case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
+				return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
+			case self::DTYPE_OTHER: // XOBJ_DTYPE_OTHER
+			case self::DTYPE_OBJECT:
+			default:
+				return null;
+		}
+	}
+
+	/**
+	 * Magic function to get property value by accessing it by name
+	 *
+	 * @param string $name
+	 *
+	 * @return mixed
+	 */
 	public function __get($name) {
 		switch ($name) {
 			case '_vars':
@@ -1017,22 +1025,26 @@ abstract class icms_properties_Handler implements Serializable {
 	 * @param string $name Var name
 	 * @param mixed $value New value
 	 */
-	public function __set($name, $value)
-	{
-		if (!isset($this->_vars[$name]))
-			return trigger_error('Variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
-		if ($this->_vars[$name][self::VARCFG_LOCKED])
-			return trigger_error('Variable ' . get_class($this) . '::$' . $name . ' locked', E_USER_WARNING);
-		if (isset($this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS]) && !in_array($value, $this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS]))
-			return trigger_error('Option not in array for variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
+	public function __set($name, $value) {
+		if (!isset($this->_vars[$name])) {
+					return trigger_error('Variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
+		}
+		if ($this->_vars[$name][self::VARCFG_LOCKED]) {
+					return trigger_error('Variable ' . get_class($this) . '::$' . $name . ' locked', E_USER_WARNING);
+		}
+		if (isset($this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS]) && !in_array($value, $this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS])) {
+					return trigger_error('Option not in array for variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
+		}
 		$clean = $this->cleanVar($name, $this->_vars[$name][self::VARCFG_TYPE], $value);
 
-		if ($clean === $this->_vars[$name][self::VARCFG_VALUE])
-			return;
+		if ($clean === $this->_vars[$name][self::VARCFG_VALUE]) {
+					return;
+		}
 		$this->_vars[$name][self::VARCFG_VALUE] = $clean;
 		$this->setVarInfo($name, self::VARCFG_CHANGED, true);
-		if (isset($this->_vars[$name][self::VARCFG_NOTLOADED]) && $this->_vars[$name][self::VARCFG_NOTLOADED])
-			$this->_vars[$name][self::VARCFG_NOTLOADED] = false;
+		if (isset($this->_vars[$name][self::VARCFG_NOTLOADED]) && $this->_vars[$name][self::VARCFG_NOTLOADED]) {
+					$this->_vars[$name][self::VARCFG_NOTLOADED] = false;
+		}
 	}
 
 	/**
@@ -1040,8 +1052,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 *
 	 * @param mixed $serialized
 	 */
-	public function unserialize($serialized)
-	{
+	public function unserialize($serialized) {
 		$data = unserialize($serialized);
 		if (method_exists($this, '__construct')) {
 			$this->__construct();

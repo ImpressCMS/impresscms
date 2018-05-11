@@ -15,10 +15,13 @@ function dirList($directory) {
 
 	$results = array();
 	$handler = @opendir($directory);
-	if ($handler === FALSE) return $results;
+	if ($handler === FALSE) {
+		return $results;
+	}
 	while (false !== ($file = readdir($handler))) {
-		if ($file != '.' && $file != '..' && preg_match("/\.(jpg|png|bmp|gif|svg)$/i", $file))
-			$results[] = $file;
+		if ($file != '.' && $file != '..' && preg_match("/\.(jpg|png|bmp|gif|svg)$/i", $file)) {
+					$results[] = $file;
+		}
 	}
 	closedir($handler);
 	return $results;
@@ -32,7 +35,9 @@ function getThumb($folder, $file) {
 
 	//echo '<pre>' . $folder . ' -> ' . $file . '</pre>';
 	$thumb = $folder . $file;
-	if ($folder == '') $thumb = '/' . $thumb;
+	if ($folder == '') {
+		$thumb = '/' . $thumb;
+	}
 	$thumbfilepath = $cfconfig['fileroot'] . $cfconfig['imagecache'] . $thumb;
 	$origfile = $cfconfig['fileroot'] . $cfconfig['imagefolder'] . $folder . $file;
 	if (file_exists($thumbfilepath)) {
@@ -56,7 +61,10 @@ function getThumb($folder, $file) {
 	// Load image and resize to thumbnail size
 	$image = new simpleimage();
 	$image->load($origfile);
-	if ($image->isImage() === FALSE) return FALSE; // This is not an image!
+	if ($image->isImage() === FALSE) {
+		return FALSE;
+	}
+	// This is not an image!
 	if ($image->getWidth() <= $cfconfig['thumbwidth'] && $image->getHeight() <= $cfconfig['thumbheight']) {
 		// Doesn't need resizing, so return link to original file
 		return $cfconfig['imagefolder'] . $folder . $file;
@@ -78,7 +86,9 @@ function showParentFolder($folders) {
 		for ($i = 1; $i < (count($folders) - 1); $i++) {
 		$parentfolder .= '/' . $folders[$i];
 	}
-	if ($parentfolder == '') $parentfolder = '/';
+	if ($parentfolder == '') {
+		$parentfolder = '/';
+	}
 	echo '<a href="' . $browseURL . 'folder=' . urlencode($parentfolder) . '"><p class="imagefolder">Parent folder</p></a>';
 	}
 }
@@ -86,13 +96,19 @@ function showFolder($folder) {
 	// Displays the pictures within the given folder
 	global $cfconfig, $browseURL;
 
-	if ($folder == '/') $folder = '';
+	if ($folder == '/') {
+		$folder = '';
+	}
 	if ($folder != '') {
 		$folders = explode('/', $folder);
 		echo '<h3>Current folder: ';
 		$path = '';
-		if ($folders[0] == '') unset($folders[0]);
-		if ($folders[count($folders)] == '') unset($folders[count($folders)]);
+		if ($folders[0] == '') {
+			unset($folders[0]);
+		}
+		if ($folders[count($folders)] == '') {
+			unset($folders[count($folders)]);
+		}
 		foreach ($folders as $subpath) {
 			if ($subpath != '') {
 				$path .= '/' . $subpath;
@@ -127,7 +143,7 @@ function showFolder($folder) {
 			} else {
 				$thumb = getThumb($folder, $file);
 				// echo '<pre>' . $thumb . '</pre>';
-				if ($thumb !== FALSE) {
+				if ($thumb !== false) {
 					// Create image view
 					$imagediv = '<div class="thumbviewimage"';
 /*				if ($_GET['CKEditorFuncNum'] < 1) {
@@ -150,7 +166,9 @@ function showFolder($folder) {
 				$controldiv .= '<a href="' . $browseURL . '&amp;action=edit&amp;name=' . $file . '&amp;folder=' . $folder . '" onmouseover="Tip(\'Edit image\', DELAY, 0)" onmouseout="UnTip()">';
 				$controldiv .= '<img src="images/edit.png" alt="Edit" /></a>';
 				$controldiv .= '<a href="' . $browseURL . '&amp;action=delimage&amp;name=' . $file . '&amp;folder=' . $folder . '" onmouseover="Tip(\'Delete image\', DELAY, 0)" onmouseout="UnTip()"';
-				if ($cfconfig['confirmdelete']) $controldiv .= ' onclick="return confirm(\'Are you sure you want to delete ' . $file . ' ?\')"';
+				if ($cfconfig['confirmdelete']) {
+					$controldiv .= ' onclick="return confirm(\'Are you sure you want to delete ' . $file . ' ?\')"';
+				}
 				$controldiv .= ' >';
 				$controldiv .= '<img src="images/delete.png" alt="Delete" /></a>';
 				$controldiv .= '</div>';
@@ -168,7 +186,9 @@ function showFolder($folder) {
 				echo '<div class="deletefolder">';
 				echo '<a href="' . $browseURL . '&amp;action=delfolder&amp;folder=';
 				echo urlencode($folder . '/' . $subfolder) . '" onmouseover="Tip(\'Delete ' . $subfolder . '\', DELAY, 0)" onmouseout="UnTip()"';
-				if ($cfconfig['confirmdelete']) echo ' onclick="return confirm(\'Are you sure you want to delete?\')"';
+				if ($cfconfig['confirmdelete']) {
+					echo ' onclick="return confirm(\'Are you sure you want to delete?\')"';
+				}
 				echo ' >';
 				echo '<img src="/cms/images/icons/delete.png" />';
 				echo '</a></div>';
@@ -188,7 +208,9 @@ function showFolder($folder) {
 
 function showEditImageForm($folder, $filename) {
 	global $cfconfig, $browseURL, $rooturl;
-	if ($folder == DS) $folder = '';
+	if ($folder == DS) {
+		$folder = '';
+	}
 	if (!file_exists($cfconfig['fileroot'] . $folder . $filename)) {
 		echo '<p>Image not found.</p>';
 		return;
@@ -199,8 +221,12 @@ function showEditImageForm($folder, $filename) {
 		$folders = explode('/', $folder);
 		echo '<h3';
 		$path = '';
-		if ($folders[0] == '') unset($folders[0]);
-		if ($folders[count($folders)] == '') unset($folders[count($folders)]);
+		if ($folders[0] == '') {
+			unset($folders[0]);
+		}
+		if ($folders[count($folders)] == '') {
+			unset($folders[count($folders)]);
+		}
 		foreach ($folders as $subpath) {
 			if ($subpath != '') {
 				$path .= '/' . $subpath;
@@ -315,35 +341,45 @@ function ListFolder($path, $editlink = '') {
 	$dir_handle = @opendir($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $path) or die("Unable to open " . $cfconfig['fileroot'] . $cfconfig['imagefolder'] . $path);
 	//Leave only the last folder name
 	$active = FALSE;
-	if (($path . '/') == $folder) $active = TRUE;
-	if ($folder == '' && $path == '') $active = TRUE;
+	if (($path . '/') == $folder) {
+		$active = TRUE;
+	}
+	if ($folder == '' && $path == '') {
+		$active = TRUE;
+	}
 	$p = explode('/', $path);
 	$dirname = end($p);
-	if ($dirname == '') $dirname = '/';
+	if ($dirname == '') {
+		$dirname = '/';
+	}
 
 	//display the target folder.
 	$html .= '<li';
 	//if ( $active ) $html .= ' class="active"';
 	$html .= '>';
-	if ($editlink != '')
-		$html .= '<a ';
-	if ($active) $html .= 'class="active" ';
+	if ($editlink != '') {
+			$html .= '<a ';
+	}
+	if ($active) {
+		$html .= 'class="active" ';
+	}
 	if ($path == '') {
 		$html .= 'href="' . $editlink . '" >';
 	} else {
 		$html .= 'href="' . $editlink . '&amp;folder=' . urlencode($path) . '" >';
 	}
 	$html .= $dirname;
-	if ($editlink != '') $html .= '</a>';
+	if ($editlink != '') {
+		$html .= '</a>';
+	}
 	$html .= "\n";
 	$html .= "<ul>\n";
-	while (false !== ($file = readdir($dir_handle)))
-	{
-		if ($file != "." && $file != "..")
-		{
-			if (is_dir($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $path . '/' . $file))
-			{
-				if ($file != "cfthumbs") $html .= ListFolder($path . '/' . $file, $editlink);
+	while (false !== ($file = readdir($dir_handle))) {
+		if ($file != "." && $file != "..") {
+			if (is_dir($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $path . '/' . $file)) {
+				if ($file != "cfthumbs") {
+					$html .= ListFolder($path . '/' . $file, $editlink);
+				}
 			}
 		}
 	}
@@ -356,7 +392,9 @@ function ListFolder($path, $editlink = '') {
 
 function ShowFolderTree($editlink = '') {
 	global $browseURL;
-	if ($editlink == '') $editlink = $browseURL;
+	if ($editlink == '') {
+		$editlink = $browseURL;
+	}
 	$html = '<div id="foldertree">';
 	$html .= "\n<ul>";
 	$html .= ListFolder('', $editlink);

@@ -53,7 +53,7 @@ function editmimetype($showmenu = false, $mimetypeid = 0) {
 
 switch ($op) {
 		case "mod":
-			editmimetype(TRUE, $mimetypeid);
+			editmimetype(true, $mimetypeid);
 			break;
 
 		case "addmimetype":
@@ -78,7 +78,7 @@ switch ($op) {
 			$objectTable->addQuickSearch(array('name', 'extension', 'types'));
 
 			$icmsAdminTpl->assign('icms_mimetype_table', $objectTable->fetch());
-			$icmsAdminTpl->assign('icms_mimetype_explain', TRUE);
+			$icmsAdminTpl->assign('icms_mimetype_explain', true);
 			$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPES_DSC);
 			$icmsAdminTpl->display('db:admin/mimetype/system_adm_mimetype.html');
 			break;

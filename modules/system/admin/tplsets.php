@@ -262,7 +262,7 @@ switch ($op) {
 			redirect_header('admin.php?fct=tplsets', 1);
 		}
 		$tpltpl_handler = & icms::handler('icms_view_template_file');
-		$tplfile = & $tpltpl_handler->get($id, TRUE);
+		$tplfile = & $tpltpl_handler->get($id, true);
 		if (is_object($tplfile)) {
 			$tplset = $tplfile->getVar('tpl_tplset');
 			$tform = array(
@@ -299,7 +299,7 @@ switch ($op) {
 			redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$tpltpl_handler = & icms::handler('icms_view_template_file');
-		$tplfile = & $tpltpl_handler->get($id, TRUE);
+		$tplfile = & $tpltpl_handler->get($id, true);
 		$err = array();
 		if (!is_object($tplfile)) {
 			$err[] = sprintf(_MD_TPLSET_TEMPLATE_NOTEXIST, $id);
@@ -362,7 +362,7 @@ switch ($op) {
 				} else {
 					// need to compile default template
 					if ($tplfile->getVar('tpl_tplset') == $icmsConfig['template_set']) {
-						$defaulttpl = & $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), NULL, $tplfile->getVar('tpl_file'));
+						$defaulttpl = & $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), null, $tplfile->getVar('tpl_file'));
 						if (count($defaulttpl) > 0) {
 							icms_view_Tpl::template_touch($defaulttpl[0]->getVar('tpl_id'));
 						}
@@ -472,7 +472,7 @@ switch ($op) {
 				$msgs[] = '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_CREATE_FAILED, '<strong>' . $newtheme . '</strong>') . '</span><br />';
 			} else {
 				$tplsetid = $tplsetobj->getVar('tplset_id');
-				$templates = & $tpltpl_handler->getObjects(new icms_db_criteria_Item('tpl_tplset', $tplset), TRUE);
+				$templates = & $tpltpl_handler->getObjects(new icms_db_criteria_Item('tpl_tplset', $tplset), true);
 				$tcount = count($templates);
 				if ($tcount > 0) {
 					$msgs[] = _MD_TPLSET_COPYING;
@@ -507,7 +507,7 @@ switch ($op) {
 	case 'viewdefault':
 		$tpltpl_handler = & icms::handler('icms_view_template_file');
 		$tplfile = & $tpltpl_handler->get($id);
-		$default = & $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), NULL, $tplfile->getVar('tpl_file'));
+		$default = & $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), null, $tplfile->getVar('tpl_file'));
 		echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 		echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE
 			. '"><head><meta http-equiv="content-type" content="text/html; charset=' . _CHARSET
@@ -551,7 +551,7 @@ switch ($op) {
 
 	case 'downloadtpl':
 		$tpltpl_handler = & icms::handler('icms_view_template_file');
-		$tpl = & $tpltpl_handler->get((int) ($id), TRUE);
+		$tpl = & $tpltpl_handler->get((int) ($id), true);
 		if (is_object($tpl)) {
 			$output = $tpl->getVar('tpl_source');
 			strlen($output);
@@ -583,7 +583,7 @@ switch ($op) {
 				$tplsetobj = & $tplset_handler->getByName($tplset);
 				$xml = "<" . "?xml version=\"1.0\"?" . ">\r\n<tplset>\r\n  <name>" . $tplset . "</name>\r\n  <dateCreated>" . $tplsetobj->getVar('tplset_created') . "</dateCreated>\r\n  <credits>\r\n" . $tplsetobj->getVar('tplset_credits') . "\r\n  </credits>\r\n  <generator>" . ICMS_VERSION_NAME . "</generator>\r\n  <templates>";
 				$tpltpl_handler = & icms::handler('icms_view_template_file');
-				$files = & $tpltpl_handler->getObjects(new icms_db_criteria_Item('tpl_tplset', $tplset), TRUE);
+				$files = & $tpltpl_handler->getObjects(new icms_db_criteria_Item('tpl_tplset', $tplset), true);
 				$fcount = count($files);
 				if ($fcount > 0) {
 					for ($i = 0; $i < $fcount; $i++) {
@@ -623,7 +623,7 @@ switch ($op) {
 			redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$tpltpl_handler = & icms::handler('icms_view_template_file');
-		$tplfile = & $tpltpl_handler->find('default', $type, NULL, $moddir, $file, TRUE);
+		$tplfile = & $tpltpl_handler->find('default', $type, null, $moddir, $file, true);
 		if (count($tplfile) > 0) {
 			$newtpl = & $tplfile[0]->xoopsClone();
 			$newtpl->setVar('tpl_id', 0);
@@ -664,7 +664,7 @@ switch ($op) {
 		$tpltpl_handler = & icms::handler('icms_view_template_file');
 		icms_cp_header();
 		echo '<code>';
-		$tplfiles = & $tpltpl_handler->find('default', 'module', NULL, $moddir, NULL, TRUE);
+		$tplfiles = & $tpltpl_handler->find('default', 'module', null, $moddir, null, true);
 		$fcount = count($tplfiles);
 		if ($fcount > 0) {
 			echo sprintf(_MD_TPLSET_INSTALLING . $tplset) . '...<br />';
@@ -688,7 +688,7 @@ switch ($op) {
 			unset($newtpl);
 		}
 		unset($files);
-		$tplfiles = & $tpltpl_handler->find('default', 'block', NULL, $moddir, NULL, TRUE);
+		$tplfiles = & $tpltpl_handler->find('default', 'block', null, $moddir, null, true);
 		$fcount = count($tplfiles);
 		if ($fcount > 0) {
 			echo '&nbsp;&nbsp;' . _MD_TPLSET_INSTALLING_BLOCKS . '...<br />';
@@ -780,15 +780,15 @@ switch ($op) {
 							foreach ($tar->files as $id => $info) {
 								$infoarr = explode('/', str_replace("\\", '/', $info['name']));
 								if (isset($infoarr[3]) && trim($infoarr[3]) == 'blocks') {
-									$default = & $tpltpl_handler->find('default', 'block', NULL, trim($infoarr[2]), trim($infoarr[4]));
+									$default = & $tpltpl_handler->find('default', 'block', null, trim($infoarr[2]), trim($infoarr[4]));
 								} elseif ((!isset($infoarr[4]) || trim($infoarr[4]) == '') && $infoarr[1] == 'templates') {
-									$default = & $tpltpl_handler->find('default', 'module', NULL, trim($infoarr[2]), trim($infoarr[3]));
+									$default = & $tpltpl_handler->find('default', 'module', null, trim($infoarr[2]), trim($infoarr[3]));
 								} elseif ($infoarr[1] == "templates" && $infoarr[2] == "system" && $infoarr[3] == "admin") {
 									$file = $infoarr[3];
 									for ($i = 4; $i < count($infoarr); $i++) {
 										$file .= "/" . $infoarr[$i];
 									}
-									$default = & $tpltpl_handler->find('default', 'module', NULL, trim($infoarr[2]), $file);
+									$default = & $tpltpl_handler->find('default', 'module', null, trim($infoarr[2]), $file);
 									unset($file);
 								} elseif (isset($infoarr[3]) && trim($infoarr[3]) == 'images') {
 									$infoarr[2] = trim($infoarr[2]);
@@ -854,7 +854,7 @@ switch ($op) {
 
 		$html = icms_core_DataFilter::stripSlashesGPC($html);
 		$tpltpl_handler = & icms::handler('icms_view_template_file');
-		$tplfile = & $tpltpl_handler->get($id, TRUE);
+		$tplfile = & $tpltpl_handler->get($id, true);
 		$xoopsTpl = new icms_view_Tpl();
 
 		if (is_object($tplfile)) {
@@ -869,7 +869,7 @@ switch ($op) {
 				. '.css" /><link rel="stylesheet" type="text/css" media="screen" href="'
 				. xoops_getcss($icmsConfig['theme_set']) . '" />';
 
-			$css = & $tpltpl_handler->find($icmsConfig['template_set'], 'css', 0, NULL, NULL, TRUE);
+			$css = & $tpltpl_handler->find($icmsConfig['template_set'], 'css', 0, null, null, true);
 			$csscount = count($css);
 
 			for ($i = 0; $i < $csscount; $i++) {
@@ -941,7 +941,7 @@ switch ($op) {
 				} else {
 					$tpltpl_handler = & icms::handler('icms_view_template_file');
 					if (!isset($old_template[$upload_file])) {
-						$tplfile = & $tpltpl_handler->find('default', NULL, NULL, $moddir, $upload_file);
+						$tplfile = & $tpltpl_handler->find('default', null, null, $moddir, $upload_file);
 						if (count($tplfile) > 0) {
 							$tpl = & $tplfile[0]->xoopsClone();
 							$tpl->setVar('tpl_id', 0);
@@ -1005,13 +1005,13 @@ switch ($op) {
 		$tpltpl_handler = & icms::handler('icms_view_template_file');
 		$tplfile = '';
 		if (!empty($id)) {
-			$tplfile = & $tpltpl_handler->get($id, TRUE);
+			$tplfile = & $tpltpl_handler->get($id, true);
 		} else {
-			$tplfiles = & $tpltpl_handler->find('default', NULL, NULL, NULL, trim($file), TRUE);
+			$tplfiles = & $tpltpl_handler->find('default', null, null, null, trim($file), true);
 			$tplfile = (count($tplfiles) > 0)?$tplfiles[0]:'';
 		}
 
-		$error = TRUE;
+		$error = true;
 		if (is_object($tplfile)) {
 			switch ($tplfile->getVar('tpl_type')) {
 				case 'module':
@@ -1062,7 +1062,7 @@ switch ($op) {
 		$installed_mods = $tpltpl_handler->getModuleTplCount('default');
 		$tcount = count($tplsets);
 		if ($tcount == 1) {
-			icms_core_Message::warning(_MD_TPLSET_CREATE_OWN, "", TRUE);
+			icms_core_Message::warning(_MD_TPLSET_CREATE_OWN, "", true);
 		}
 		echo '<table width="100%" cellspacing="1" class="outer"><tr align="center"><th width="25%">'
 			. _MD_THMSETNAME . '</th><th>' . _MD_CREATED . '</th><th>' . _MD_TEMPLATES

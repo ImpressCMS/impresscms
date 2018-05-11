@@ -98,16 +98,16 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	S - Auto Format (smilies and HTML enabled)
 		 *  T - Auto Format (smilies and HTML disabled)
 		 */
-		$this->initVar('c_type', self::DTYPE_STRING, 'S', TRUE, 1);
-		$this->initVar('isactive', self::DTYPE_INTEGER, 0, FALSE, 1);
-		$this->initVar('dirname', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('func_file', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('show_func', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('edit_func', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('template', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('bcachetime', self::DTYPE_INTEGER, 0, FALSE, 10);
-		$this->initVar('last_modified', self::DTYPE_INTEGER, 0, FALSE, 10);
-		$this->initVar('options', self::DTYPE_STRING, '', FALSE, 255);
+		$this->initVar('c_type', self::DTYPE_STRING, 'S', true, 1);
+		$this->initVar('isactive', self::DTYPE_INTEGER, 0, false, 1);
+		$this->initVar('dirname', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('func_file', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('show_func', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('edit_func', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('template', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('bcachetime', self::DTYPE_INTEGER, 0, false, 10);
+		$this->initVar('last_modified', self::DTYPE_INTEGER, 0, false, 10);
+		$this->initVar('options', self::DTYPE_STRING, '', false, 255);
 
 	  //  $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
 				parent::__construct($handler, $data);

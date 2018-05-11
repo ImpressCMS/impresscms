@@ -433,34 +433,34 @@ function xoops_module_install($dirname) {
 
 			$ret = '<p><code>';
 			foreach ($msgs as $m) {
-				$ret .= $m.'<br />';
+				$ret .= $m . '<br />';
 			}
 			unset($msgs);
 			unset($errs);
-			$ret .= '</code><br />'.sprintf(_MD_AM_OKINS, "<b>".$module->getVar('name')."</b>").'</p>';
+			$ret .= '</code><br />' . sprintf(_MD_AM_OKINS, "<b>" . $module->getVar('name') . "</b>") . '</p>';
 			unset($module);
 			return $ret;
 		} else {
 			$ret = '<p>';
 			foreach ($errs as $er) {
-				$ret .= '&nbsp;&nbsp;'.$er.'<br />';
+				$ret .= '&nbsp;&nbsp;' . $er . '<br />';
 			}
 			unset($msgs);
 			unset($errs);
-			$ret .= '<br />'.sprintf(_MD_AM_FAILINS, '<b>'.$dirname.'</b>').'&nbsp;'._MD_AM_ERRORSC.'</p>';
+			$ret .= '<br />' . sprintf(_MD_AM_FAILINS, '<b>' . $dirname . '</b>') . '&nbsp;' . _MD_AM_ERRORSC . '</p>';
 			return $ret;
 		}
 	} else {
-		return "<p>".sprintf(_MD_AM_FAILINS, "<b>".$dirname."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />&nbsp;&nbsp;".sprintf(_MD_AM_ALEXISTS, $dirname)."</p>";
+		return "<p>" . sprintf(_MD_AM_FAILINS, "<b>" . $dirname . "</b>") . "&nbsp;" . _MD_AM_ERRORSC . "<br />&nbsp;&nbsp;" . sprintf(_MD_AM_ALEXISTS, $dirname) . "</p>";
 	}
 }
 
-function &xoops_module_gettemplate($dirname, $template, $block=false) {
+function &xoops_module_gettemplate($dirname, $template, $block = false) {
 	$ret = '';
 	if ($block) {
-		$path = ICMS_ROOT_PATH.'/modules/'.$dirname.'/templates/blocks/'.$template;
+		$path = ICMS_ROOT_PATH . '/modules/' . $dirname . '/templates/blocks/' . $template;
 	} else {
-		$path = ICMS_ROOT_PATH.'/modules/'.$dirname.'/templates/'.$template;
+		$path = ICMS_ROOT_PATH . '/modules/' . $dirname . '/templates/' . $template;
 	}
 	if (!file_exists($path)) {
 		return $ret;

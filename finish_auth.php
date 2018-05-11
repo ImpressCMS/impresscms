@@ -34,14 +34,14 @@ switch ($xoopsAuth->step) {
 		case OPENID_STEP_NO_USER_FOUND :
 			$xoopsOption['template_main'] = 'system_openid.html';
 			/** Including header.php to start page rendering */
-			include_once ICMS_ROOT_PATH . "/header.php" ;
+			include_once ICMS_ROOT_PATH . "/header.php";
 
 			$sreg = $_SESSION['openid_sreg'];
 
 			$xoopsTpl->assign('displayId', $xoopsAuth->displayid);
 			$xoopsTpl->assign('cid', $xoopsAuth->openid);
-			$xoopsTpl->assign('uname', isset ($sreg['nickname']) ? $sreg['nickname'] : '');
-			$xoopsTpl->assign('email', isset ($sreg['email']) ? $sreg['email'] : '');
+			$xoopsTpl->assign('uname', isset ($sreg['nickname'])?$sreg['nickname']:'');
+			$xoopsTpl->assign('email', isset ($sreg['email'])?$sreg['email']:'');
 			/** Including footer.php to complete page rendering */
 			include_once ICMS_ROOT_PATH . '/footer.php';
 			break;
@@ -49,18 +49,18 @@ switch ($xoopsAuth->step) {
 		case OPENID_STEP_REGISTER :
 
 			/**
-		 * setting the step to the previous one for if there is an error, user will be redirected
-		 * a step behind
-		 */
+			 * setting the step to the previous one for if there is an error, user will be redirected
+			 * a step behind
+			 */
 			$_SESSION['openid_step'] = OPENID_STEP_NO_USER_FOUND;
 
 			$sreg = $_SESSION['openid_sreg'];
 			/** Including header.php to start page rendering */
-			include_once ICMS_ROOT_PATH . '/header.php' ;
+			include_once ICMS_ROOT_PATH . '/header.php';
 
 			/**
-		 * @todo this is only temporary and it needs to be included in the template as a javascript check
-		 */
+			 * @todo this is only temporary and it needs to be included in the template as a javascript check
+			 */
 			if (empty ($_POST['email']) || empty ($_POST['uname'])) {
 				redirect_header(ICMS_URL . '/finish_auth.php', 3, 'email and username are mandatory');
 			}
@@ -69,8 +69,8 @@ switch ($xoopsAuth->step) {
 
 			$uname = addslashes($_POST['uname']);
 			/**
-		 * @todo use the related UserConfigOption
-		 */
+			 * @todo use the related UserConfigOption
+			 */
 			if (strlen($uname) < 3) { // Username too short.
 				redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_TOO_SHORT);
 			}
@@ -78,7 +78,7 @@ switch ($xoopsAuth->step) {
 			// checking if this uname is available
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
 			$user_handler = icms::handler('icms_member_user');
-			$users = & $user_handler->getObjects($criteria, FALSE);
+			$users = & $user_handler->getObjects($criteria, false);
 
 			if (is_array($users) && count($users) > 0) {
 				redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
@@ -89,8 +89,8 @@ switch ($xoopsAuth->step) {
 			$country = addslashes(icms_core_DataFilter::stripSlashesGPC(utf8_decode($sreg['country'])));
 
 			/**
-		 * @todo use proper core class, manage activation_type and send notifications
-		 */
+			 * @todo use proper core class, manage activation_type and send notifications
+			 */
 
 			$newUser = $member_handler->createUser();
 			$newUser->setVar('uname', $uname);
@@ -119,8 +119,8 @@ switch ($xoopsAuth->step) {
 			// Login with this user.
 
 			/**
-		 * @todo use proper login process (include/checklogin.php)
-		 */
+			 * @todo use proper login process (include/checklogin.php)
+			 */
 			if ($newUser->getVar('level') == 0) {
 				redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED);
 			}
@@ -150,7 +150,7 @@ switch ($xoopsAuth->step) {
 		case OPENID_STEP_LINK :
 			// Linking an existing user with this openid
 			/** Including header.php to start page rendering */
-			include_once ICMS_ROOT_PATH . '/header.php' ;
+			include_once ICMS_ROOT_PATH . '/header.php';
 
 			$uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($_POST['uname']));
 			$pass4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($_POST['pass']));

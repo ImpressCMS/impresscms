@@ -168,7 +168,9 @@ if (empty($_POST["user_submit"])) {
 	$modes_switch = array();
 
 	foreach ($modes as $_mode => $title) {
-		if ($mode == $_mode) continue;
+		if ($mode == $_mode) {
+			continue;
+		}
 		$modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(@$_REQUEST["target"], ENT_QUOTES) . "&amp;multiple=" . htmlspecialchars(@$_REQUEST["multiple"], ENT_QUOTES) . "&amp;token=" . htmlspecialchars($token, ENT_QUOTES, _CHARSET) . "&amp;mode={$_mode}'>{$title}</a>";
 	}
 

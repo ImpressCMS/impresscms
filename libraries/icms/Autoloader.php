@@ -94,14 +94,14 @@ class icms_Autoloader {
 	 * @param bool $required Whether to throw an exception or not if the namespace file is not found
 	 * @return bool
 	 */
-	static public function import($namespace, $required = TRUE) {
+	static public function import($namespace, $required = true) {
 		if (!isset(self::$imported[$namespace])) {
-			$nspath = self::classPath($namespace, TRUE, DIRECTORY_SEPARATOR . "namespace.php");
+			$nspath = self::classPath($namespace, true, DIRECTORY_SEPARATOR . "namespace.php");
 			if ($nspath) {
 				include_once $nspath . DIRECTORY_SEPARATOR . "namespace.php";
-				return self::$imported[$namespace] = TRUE;
+				return self::$imported[$namespace] = true;
 			}
-			self::$imported[$namespace] = FALSE;
+			self::$imported[$namespace] = false;
 		}
 		if (!self::$imported[$namespace] && $required) {
 			throw new RuntimeException("No namespace file for namespace '$namespace'.");

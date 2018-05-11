@@ -122,13 +122,13 @@ class mod_system_Autotasks extends icms_ipf_Object {
 	 * @param string $part
 	 * @return	string
 	 */
-	public function getType($part = NULL) {
+	public function getType($part = null) {
 		$type = $this->getVar('sat_type');
 		if ($type[0] == ':') {
 			$type = substr($type, 1);
 		}
 		$type = explode('/', $type);
-		if ($part === NULL) {
+		if ($part === null) {
 			return $type;
 		}
 		return $type[$part];
@@ -165,35 +165,35 @@ class mod_system_Autotasks extends icms_ipf_Object {
 	 */
 	public function exec() {
 		if (!$this->getVar('sat_enabled')) {
-			return FALSE;
+			return false;
 		}
 		if (((int) $this->getVar('sat_lastruntime') + (int) $this->getVar('sat_interval') * 60) > time()) {
-			return FALSE;
+			return false;
 		}
 		$code = $this->getVar('sat_code');
-		ignore_user_abort(TRUE);
+		ignore_user_abort(true);
 		if (substr($this->getVar('sat_type'), 0, 6) == 'addon/') {
 			$dirname = substr($this->getVar('sat_type'), 6);
 			if ($dirname == '') {
-				return FALSE;
+				return false;
 			}
 
 			// only execute autotasks for active modules
 			$module = icms::handler("icms_module")->getByDirname($dirname);
 			if ($module->getVar("isactive") != 1) {
-				return FALSE;
+				return false;
 			}
 
 			$dirname = ICMS_MODULES_PATH . '/' . $dirname;
 			$dirname = $dirname . '/' . $code;
 			$code = " require '" . $dirname . "';";
-			$is_bug = !(@highlight_string(file_get_contents($dirname), TRUE));
+			$is_bug = !(@highlight_string(file_get_contents($dirname), true));
 		} else {
-			$is_bug = !(@highlight_string('<?' . 'php ' . $code . ' return TRUE; ?' . '>', TRUE));
+			$is_bug = !(@highlight_string('<?' . 'php ' . $code . ' return TRUE; ?' . '>', true));
 		}
 		if ($is_bug) {
 			trigger_error(sprintf(_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR, $code));
-			return FALSE;
+			return false;
 		}
 		eval($code);
 		$count = $this->getVar('sat_repeat');
@@ -212,15 +212,15 @@ class mod_system_Autotasks extends icms_ipf_Object {
 			$this->setVar('sat_repeat', $count);
 		}
 		$this->setVar('sat_lastruntime', time());
-		$this->handler->insert($this, TRUE);
-		return TRUE;
+		$this->handler->insert($this, true);
+		return true;
 	}
 
 	/**
 	 * Custom form generation for autotasks
 	 * @see icms_ipf_Object::getForm()
 	 */
-	public function getForm($form_caption, $form_name, $form_action = FALSE, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = FALSE, $captcha = FALSE) {
+	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
 		if ($this->getType(0) == 'addon') {
 			$this->doHideFieldFromForm('sat_code');
 			$this->doHideFieldFromForm('sat_onfinish');
@@ -236,14 +236,14 @@ class mod_system_Autotasks extends icms_ipf_Object {
 	 * @return	mixed
 	 */
 	public function getDeleteButtonForDisplay() {
-		static $controller = NULL;
+		static $controller = null;
 		if ($this->getType(0) == 'addon') {
 			return;
 		}
-		if ($controller === NULL) {
+		if ($controller === null) {
 			$controller = new icms_ipf_Controller($this->handler);
 		}
-		return $controller->getDeleteItemLink($this, FALSE, TRUE, FALSE);
+		return $controller->getDeleteItemLink($this, false, true, false);
 	}
 
 	/**

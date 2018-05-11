@@ -183,7 +183,7 @@ class icms_file_ZipFileHandler {
 			. pack('v', count($this -> ctrl_dir))   // total # of entries overall
 			. pack('V', strlen($ctrldir))           // size of central dir
 			. pack('V', strlen($data))              // offset to start of central dir
-			. "\x00\x00";                           // .zip file comment length
+			. "\x00\x00"; // .zip file comment length
 	} // end of the 'file()' method
 
 } // end of the 'zipfile' class

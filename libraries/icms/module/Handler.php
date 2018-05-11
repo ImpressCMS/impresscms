@@ -101,9 +101,9 @@ class icms_module_Handler
 	 * @param bool $inAdmin
 	 * @return bool
 	 */
-	static protected function checkModuleAccess($module, $inAdmin = FALSE) {
+	static protected function checkModuleAccess($module, $inAdmin = false) {
 		if ($inAdmin && !icms::$user) {
-			return FALSE;
+			return false;
 		}
 		/* @var $perm_handler icms_member_groupperm_Handler */
 		$perm_handler = icms::handler('icms_member_groupperm');
@@ -148,8 +148,8 @@ class icms_module_Handler
 	 * @return    bool                TRUE
 	 */
 	private function loadConfig($module) {
-		if ($module->config !== NULL) {
-			return TRUE;
+		if ($module->config !== null) {
+			return true;
 		}
 		icms_loadLanguageFile($module->getVar("dirname"), "main");
 		if ($module->getVar("hasconfig") == 1
@@ -170,7 +170,7 @@ class icms_module_Handler
 	 * @param    bool $loadConfig set to TRUE in case you want to load the module config in addition
 	 * @return    object  {@link icms_module_Object} FALSE on fail
 	 */
-	public function getByDirname($dirname, $loadConfig = FALSE) {
+	public function getByDirname($dirname, $loadConfig = false) {
 		//if (!($module = $this->getFromCache('dirname', $dirname))) {
 		$criteria = new icms_db_criteria_Item('dirname', trim($dirname));
 		$criteria->setLimit(1);
@@ -335,7 +335,7 @@ class icms_module_Handler
 	 * @param    string $template Name of the template file
 	 * @param    boolean $block Are you trying to retrieve the template for a block?
 	 */
-	public function getTemplate($dirname, $template, $block = FALSE) {
+	public function getTemplate($dirname, $template, $block = false) {
 
 	}
 

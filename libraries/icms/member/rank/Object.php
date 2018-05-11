@@ -40,7 +40,7 @@ class icms_member_rank_Object extends icms_ipf_Object {
 		$this->initVar("rank_special", self::DTYPE_INTEGER, 0, true, 1, null, null, _CO_ICMS_USERRANK_RANK_SPECIAL, _CO_ICMS_USERRANK_RANK_SPECIAL_DSC);
 		$this->initVar("rank_image", self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
 
-                parent::__construct($handler);
+				parent::__construct($handler);
 
 		$this->setControl("rank_special", "yesno");
 		$this->setControl("rank_image", "image");

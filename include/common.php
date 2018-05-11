@@ -62,8 +62,8 @@ if ($icmsConfig['gzip_compression'] == 1
 	&& !ini_get('zlib.output_compression')
 	) {
 		ini_set('zlib.output_compression', true);
-		if (ini_get( 'zlib.output_compression_level') < 0 ) {
-			ini_set( 'zlib.output_compression_level', 6 );
+		if (ini_get('zlib.output_compression_level') < 0) {
+			ini_set('zlib.output_compression_level', 6);
 		}
 		if (!zlib_get_coding_type()) {
 			ini_set('zlib.output_compression', false);

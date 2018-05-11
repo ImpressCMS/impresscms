@@ -27,7 +27,7 @@ class icms_ipf_form_elements_Page extends icms_form_elements_Tray {
 	 * @param mixed $value module-page combination
 	 * @return string html
 	 */
-	private function getPageSelOptions($value = NULL) {
+	private function getPageSelOptions($value = null) {
 		$icms_page_handler = icms::handler('icms_data_page');
 		if (!is_array($value)) {
 			$value = array($value);

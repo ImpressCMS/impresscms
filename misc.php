@@ -65,8 +65,7 @@ if ($action == 'showpopups') {
 	xoops_header(false);
 	// show javascript close button?
 	$closebutton = 1;
-	switch ($type)
-	{
+	switch ($type) {
 		case 'smilies':
 			if ($target == '' || !preg_match('/^[0-9a-z_]*$/i', $target)) {} else {
 				echo "<script type=\"text/javascript\"><!--//
@@ -84,11 +83,9 @@ if ($action == 'showpopups') {
 				<tr class="head"><td>'._MSC_CODE . '</td><td>' . _MSC_EMOTION . '</td><td>' . _IMAGE . '</td></tr>';
 				$smiles = icms_core_DataFilter::getSmileys(1);
 				$count = count($smiles);
-				if ($count > 0)
-				{
+				if ($count > 0) {
 					$rcolor = 'even';
-					for ($i = 0; $i < $count; $i++)
-					{
+					for ($i = 0; $i < $count; $i++) {
 						echo "<tr class='$rcolor'><td>" . $smiles[$i]['code'] . "</td>
 							<td>".$smiles[$i]['emotion'] . "</td>
 							<td><img onmouseover='style.cursor=\"pointer\"' onclick='doSmilie(\" "
@@ -96,8 +93,7 @@ if ($action == 'showpopups') {
 							. ICMS_UPLOAD_URL . "/" . $smiles[$i]['smile_url'] . "' alt='' /></td></tr>";
 						$rcolor = ($rcolor == 'even')?'odd':'even';
 					}
-				}
-				else {echo 'Could not retrieve data from the database.'; }
+				} else {echo 'Could not retrieve data from the database.'; }
 				echo '</table>' . _MSC_CLICKASMILIE;
 			}
 			break;
@@ -128,16 +124,14 @@ if ($action == 'showpopups') {
 				$avatarslist = & $avatar_handler->getList('S');
 				$cntavs = 0;
 				$counter = isset($start)?(int) ($start):0;
-				foreach ($avatarslist as $file => $name)
-				{
+				foreach ($avatarslist as $file => $name) {
 					echo '<td><img src="uploads/' . $file . '" alt="' . $name . '" style="padding:10px; vertical-align:top;" />
 						<br />'.$name . '<br />
 						<input name="myimage" type="button" value="'._SELECT . '" onclick="myimage_onclick(' . $counter . ')" />
 						</td>';
 					$counter++;
 					$cntavs++;
-					if ($cntavs > 8)
-					{
+					if ($cntavs > 8) {
 						echo '</tr><tr>';
 						$cntavs = 0;
 					}
@@ -209,8 +203,7 @@ if ($action == 'showpopups') {
 					$xoopsMailer->setFromName($yname);
 					$xoopsMailer->setSubject(sprintf(_MSC_INTSITE, $icmsConfig['sitename']));
 					//OpenTable();
-					if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors(); }
-					else {echo '<div><h4>' . _MSC_REFERENCESENT . '</h4></div>'; }
+					if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors(); } else {echo '<div><h4>' . _MSC_REFERENCESENT . '</h4></div>'; }
 					//CloseTable();
 				}
 				break;

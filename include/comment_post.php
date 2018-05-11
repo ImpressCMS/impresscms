@@ -136,27 +136,27 @@ switch ($op) {
 				}
 			}
 			$p_comment = icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input');
-			$noname = isset($noname) ? (int) $noname : 0;
+			$noname = isset($noname)?(int) $noname:0;
 			$com_text = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_text']));
 			if ($icmsModule->getVar('dirname') != 'system') {
 				include ICMS_ROOT_PATH . '/header.php';
 				//themecenterposts($com_title, $p_comment);
-				echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$com_title.'</td></tr><tr><td><br />'.$p_comment.'<br /></td></tr></table>';
+				echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $com_title . '</td></tr><tr><td><br />' . $p_comment . '<br /></td></tr></table>';
 				include ICMS_INCLUDE_PATH . '/comment_form.php';
 				include ICMS_ROOT_PATH . '/footer.php';
 			} else {
 				icms_cp_header();
 				//themecenterposts($com_title, $p_comment);
-				echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$com_title.'</td></tr><tr><td><br />'.$p_comment.'<br /></td></tr></table>';
+				echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $com_title . '</td></tr><tr><td><br />' . $p_comment . '<br /></td></tr></table>';
 				include ICMS_INCLUDE_PATH . '/comment_form.php';
 				icms_cp_footer();
 			}
 			break;
 
 		case "post":
-			if ($icmsConfig['use_captchaf'] == TRUE) {
+			if ($icmsConfig['use_captchaf'] == true) {
 				$icmsCaptcha = icms_form_elements_captcha_Object::instance();
-				if (!$icmsCaptcha->verify(TRUE)) {
+				if (!$icmsCaptcha->verify(true)) {
 					redirect_header($redirect_page . '=' . $com_itemid . '&com_id=' . $com_id . '&com_mode=' . $com_mode . '&com_order=' . $com_order,
 					2, $icmsCaptcha->getMessage());
 				}
@@ -170,7 +170,7 @@ switch ($op) {
 			// RMV-NOTIFY - this can be set to 'comment' or 'comment_submit'
 			$notify_event = FALSE;
 			if (!empty($com_id)) {
-				$comment =& $comment_handler->get($com_id);
+				$comment = & $comment_handler->get($com_id);
 				$accesserror = FALSE;
 
 				if (is_object(icms::$user)) {
@@ -182,32 +182,32 @@ switch ($op) {
 							$comment->setVar('com_status', $com_status);
 							// if changing status from pending state, increment user post
 							if (XOOPS_COMMENT_PENDING == $old_com_status) {
-								$add_userpost = TRUE;
+								$add_userpost = true;
 								if (XOOPS_COMMENT_ACTIVE == $com_status) {
-									$call_updatefunc = TRUE;
-									$call_approvefunc = TRUE;
+									$call_updatefunc = true;
+									$call_approvefunc = true;
 									// RMV-NOTIFY
 									$notify_event = 'comment';
 								}
 							} elseif (XOOPS_COMMENT_HIDDEN == $old_com_status && XOOPS_COMMENT_ACTIVE == $com_status) {
-								$call_updatefunc = TRUE;
+								$call_updatefunc = true;
 								// Comments can not be directly posted hidden,
 								// no need to send notification here
 							} elseif (XOOPS_COMMENT_ACTIVE == $old_com_status && XOOPS_COMMENT_HIDDEN == $com_status) {
-								$call_updatefunc = TRUE;
+								$call_updatefunc = true;
 							}
 						}
 					} else {
 						$dohtml = 0;
 						if ($comment->getVar('com_uid') != icms::$user->getVar('uid')) {
-							$accesserror = TRUE;
+							$accesserror = true;
 						}
 					}
 				} else {
 					$dohtml = 0;
-					$accesserror = TRUE;
+					$accesserror = true;
 				}
-				if (FALSE != $accesserror) {
+				if (false != $accesserror) {
 					redirect_header($redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order,
 					2, _NOPERM);
 				}
@@ -223,29 +223,29 @@ switch ($op) {
 					if (icms::$user->isAdmin($com_modid)
 					|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 						$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
-						$add_userpost = TRUE;
-						$call_approvefunc = TRUE;
-						$call_updatefunc = TRUE;
+						$add_userpost = true;
+						$call_approvefunc = true;
+						$call_updatefunc = true;
 						// RMV-NOTIFY
 						$notify_event = 'comment';
 					} else {
 						$dohtml = 0;
 						switch ($icmsModuleConfig['com_rule']) {
-						case XOOPS_COMMENT_APPROVEALL:
-						case XOOPS_COMMENT_APPROVEUSER:
-							$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
-							$add_userpost = true;
-							$call_approvefunc = true;
-							$call_updatefunc = true;
-							// RMV-NOTIFY
-							$notify_event = 'comment';
-							break;
+							case XOOPS_COMMENT_APPROVEALL:
+							case XOOPS_COMMENT_APPROVEUSER:
+								$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
+								$add_userpost = true;
+								$call_approvefunc = true;
+								$call_updatefunc = true;
+								// RMV-NOTIFY
+								$notify_event = 'comment';
+								break;
 
-						case XOOPS_COMMENT_APPROVEADMIN:
-						default:
-							$comment->setVar('com_status', XOOPS_COMMENT_PENDING);
-							$notify_event = 'comment_submit';
-							break;
+							case XOOPS_COMMENT_APPROVEADMIN:
+							default:
+								$comment->setVar('com_status', XOOPS_COMMENT_PENDING);
+								$notify_event = 'comment_submit';
+								break;
 						}
 				}
 				if (!empty($icmsModuleConfig['com_anonpost']) && !empty($noname)) {
@@ -436,6 +436,6 @@ switch ($op) {
 		break;
 
 		default:
-			redirect_header(ICMS_URL.'/',3, implode('<br />', icms::$security->getErrors()));
+			redirect_header(ICMS_URL . '/', 3, implode('<br />', icms::$security->getErrors()));
 			break;
 }

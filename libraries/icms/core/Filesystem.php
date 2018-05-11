@@ -43,7 +43,7 @@ class icms_core_Filesystem {
 	static public function mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = array()) {
 
 		if (is_dir($target)) {
-			return TRUE;
+			return true;
 		}
 		if (!isset($metachars)) {
 			$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':');
@@ -162,7 +162,7 @@ class icms_core_Filesystem {
 	 * @return	bool TRUE if the file is deleted or doesn't exist; FALSE otherwise
 	 */
 	static public function deleteFile($dirname) {
-		$success = FALSE;
+		$success = false;
 
 		if (is_file($dirname)) {
 			if (!is_writable($dirname)) {
@@ -170,7 +170,7 @@ class icms_core_Filesystem {
 			}
 			$success = unlink($dirname);
 		} else {
-			$success = TRUE;
+			$success = true;
 		}
 		return $success;
 	}
@@ -207,10 +207,10 @@ class icms_core_Filesystem {
 	 * @param	bool 	$deleteRootToo Delete specified top-level directory as well
 	 * @return	bool	TRUE if directory is removed or doesn't exist; FALSE otherwise
 	 */
-	static public function deleteRecursive($dir, $deleteRootToo = TRUE) {
-		$success = FALSE;
+	static public function deleteRecursive($dir, $deleteRootToo = true) {
+		$success = false;
 		if (!is_dir($dir)) {
-			return TRUE;
+			return true;
 		}
 		$iterator = new RecursiveIteratorIterator(
 			new RecursiveDirectoryIterator($dir),
@@ -397,7 +397,7 @@ class icms_core_Filesystem {
 	 * @param	bool	$hideDot	Hide files starting with a dot?
 	 * @return	array	$fileList	A list of files in a directory
 	 */
-	static public function getFileList($dirname, $prefix = '', array $extension = array(), $hideDot = FALSE) {
+	static public function getFileList($dirname, $prefix = '', array $extension = array(), $hideDot = false) {
 		if (!is_dir($dirname)) {
 			return array();
 		}
@@ -440,7 +440,7 @@ class icms_core_Filesystem {
 	 * @param	boolean	$overwrite	If TRUE, overwrite any existing file. If FALSE, append to any existing file
 	 * @return	boolean				TRUE, if the operation was successful, FALSE if it fails
 	 */
-	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_ROOT_PATH, $overwrite = TRUE) {
+	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_ROOT_PATH, $overwrite = true) {
 		if ($extension == '') {
 			$extension = 'php';
 		}
@@ -450,13 +450,13 @@ class icms_core_Filesystem {
 		$file = $location . '/' . $filename . '.' . $extension;
 		$mode = $overwrite?"wb":"ab";
 		if ($fp = fopen($file, $mode)) {
-			if (fwrite($fp, $contents) == FALSE) {
+			if (fwrite($fp, $contents) == false) {
 				echo 'failed write file';
-				return FALSE;
+				return false;
 			}
 			fclose($fp);
 		}
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -509,10 +509,10 @@ class icms_core_Filesystem {
 						$overwrite
 				);
 				fclose($handle);
-				if ($success === FALSE) {
-					return FALSE;
+				if ($success === false) {
+					return false;
 				}
-				$overwrite = FALSE;
+				$overwrite = false;
 			}
 		}
 		$filepath = $combinedFile;
@@ -537,11 +537,11 @@ class icms_core_Filesystem {
 					$filename . "-min",
 					$type,
 					$location,
-					TRUE
+					true
 			);
 			fclose($handle);
-			if ($success === FALSE) {
-				return FALSE;
+			if ($success === false) {
+				return false;
 			}
 			$filepath = $minFile;
 		}
@@ -562,13 +562,13 @@ class icms_core_Filesystem {
 	 */
 	static public function rename($oldname, $newname, $overwrite) {
 		if ($oldname == $newname) {
-			return TRUE;
+			return true;
 		}
 		if (file_exists($newname) && !$overwrite) {
-			return FALSE;
+			return false;
 		}
 		if (empty($newname)) {
-			return FALSE;
+			return false;
 		}
 
 		$success = rename($oldname, $newname);

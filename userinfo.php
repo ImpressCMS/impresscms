@@ -79,8 +79,8 @@ if (is_object(icms::$user)) {
 			'lang_inbox' => _US_INBOX,
 			'lang_logout' => _US_LOGOUT,
 			'lang_administration' => _CPHOME,
-			'user_candelete' => $icmsConfigUser['self_delete'] ? TRUE : FALSE,
-			'lang_deleteaccount' => $icmsConfigUser['self_delete'] ? _US_DELACCOUNT : ''));
+			'user_candelete' => $icmsConfigUser['self_delete']? TRUE : FALSE,
+			'lang_deleteaccount' => $icmsConfigUser['self_delete']? _US_DELACCOUNT : ''));
 		$thisUser = icms::$user;
 	} else {
 		$thisUser = icms::handler('icms_member')->getUser($uid);
@@ -112,7 +112,7 @@ if (is_object(icms::$user) && $isAdmin) {
 $userrank = $thisUser->rank();
 $date = $thisUser->getVar('last_login');
 icms_makeSmarty(array(
-	'user_avatarurl' => $icmsConfigUser['avatar_allow_gravatar'] == TRUE
+	'user_avatarurl' => $icmsConfigUser['avatar_allow_gravatar'] == true
 		?$thisUser->gravatar('G', $icmsConfigUser['avatar_width'])
 		: ICMS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar'),
 	'user_websiteurl' => ($thisUser->getVar('url', 'E') == '')?''
@@ -123,7 +123,7 @@ icms_makeSmarty(array(
 	'lang_avatar' => _US_AVATAR,
 	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
 	'user_alwopenid' => $icmsConfigAuth['auth_openid'],
-	'lang_openid', $icmsConfigAuth['auth_openid'] == TRUE? _US_OPENID_FORM_CAPTION : '',
+	'lang_openid', $icmsConfigAuth['auth_openid'] == true? _US_OPENID_FORM_CAPTION : '',
 	'lang_email' => _US_EMAIL,
 	'lang_privmsg' => _US_PM,
 	'lang_icq' => _US_ICQ,
@@ -162,14 +162,14 @@ icms_makeSmarty(array(
 	'user_ranktitle' => $userrank['title'],
 	'user_lastlogin' => !empty($date)? formatTimestamp($thisUser->getVar('last_login'), 'm'):'',
 	'icms_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
-	'user_email' => ($thisUser->getVar('user_viewemail') == TRUE
+	'user_email' => ($thisUser->getVar('user_viewemail') == true
 			|| (is_object(icms::$user)
 			&& (icms::$user->isAdmin()
 			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid')))))
 		?$thisUser->getVar('email', 'E')
 		: '&nbsp;',
-	'user_openid' => ($icmsConfigAuth['auth_openid'] == TRUE
-			&& ($thisUser->getVar('user_viewoid') == TRUE
+	'user_openid' => ($icmsConfigAuth['auth_openid'] == true
+			&& ($thisUser->getVar('user_viewoid') == true
 			|| (is_object(icms::$user)
 			&& (icms::$user->isAdmin()
 			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid'))))))

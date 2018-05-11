@@ -196,48 +196,48 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$temp = $pwd->encryptPass($adminpass);
 	$regdate = time();
 	// RMV-NOTIFY (updated for extra columns in user table)
-	$dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'iTheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '', 0, 0, 1, '".addslashes($adminlogin_name)."')");
+	$dbm->insert('users', " VALUES (1,'','" . addslashes($adminname) . "','" . addslashes($adminmail) . "','" . XOOPS_URL . "/','blank.gif','" . $regdate . "','','','',0,'','','','','" . $temp . "',0,0,7,5,'iTheme','0.0'," . time() . ",'thread',0,1,0,'','','','0','" . addslashes($language) . "', '', '', 0, 0, 1, '" . addslashes($adminlogin_name) . "')");
 
 	// data for table 'block_module_link'
-	$sql = 'SELECT bid, side, template FROM '.$dbm->prefix('newblocks');
+	$sql = 'SELECT bid, side, template FROM ' . $dbm->prefix('newblocks');
 	$result = $dbm->query($sql);
 
 	while ($myrow = $dbm->fetchArray($result)) {
 		# Adding dynamic block area/position system - TheRpLima - 2007-10-21
 		if ($myrow['side'] == 1 or $myrow['side'] == 2 or $myrow['side'] == 7) {
-			$dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 0)");
-		} elseif (in_array($myrow['template'],array('system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))) {
-			$dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 1, 2)");
+			$dbm->insert("block_module_link", " VALUES (" . $myrow['bid'] . ", 0, 0)");
+		} elseif (in_array($myrow['template'], array('system_admin_block_warnings.html', 'system_admin_block_cp.html', 'system_admin_block_modules.html', 'system_block_newusers.html', 'system_block_online.html', 'system_block_waiting.html', 'system_block_topusers.html'))) {
+			$dbm->insert("block_module_link", " VALUES (" . $myrow['bid'] . ", 1, 2)");
 		} else {
-			$dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 1)");
+			$dbm->insert("block_module_link", " VALUES (" . $myrow['bid'] . ", 0, 1)");
 		}
 	}
 
 	// Data for table 'config'
 
-	$i=0; // sets auto increment for config values (incremented using $i++ after each value.)
-	$ci=1; // sets auto increment for configoption values (incremented using $ci++ after each value.)
+	$i = 0; // sets auto increment for config values (incremented using $i++ after each value.)
+	$ci = 1; // sets auto increment for configoption values (incremented using $ci++ after each value.)
 
 	// Data for Config Category 1 (System Preferences)
 	$c = 1; // sets config category id
 	$p = 0; // sets auto increment for config position (the order in which the option is displayed in the form)
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'sitename', '_MD_AM_SITENAME', '"._LOCAOL_STNAME."', '_MD_AM_SITENAMEDSC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'slogan', '_MD_AM_SLOGAN', '"._LOCAL_SLOCGAN." ', '_MD_AM_SLOGANDSC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'adminmail', '_MD_AM_ADMINML', '".addslashes($adminmail)."', '_MD_AM_ADMINMLDSC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'language', '_MD_AM_LANGUAGE', '".addslashes($language)."', '_MD_AM_LANGUAGEDSC', 'language', 'other', " . $p++ . ")"
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'sitename', '_MD_AM_SITENAME', '" . _LOCAOL_STNAME . "', '_MD_AM_SITENAMEDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'slogan', '_MD_AM_SLOGAN', '" . _LOCAL_SLOCGAN . " ', '_MD_AM_SLOGANDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'adminmail', '_MD_AM_ADMINML', '" . addslashes($adminmail) . "', '_MD_AM_ADMINMLDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'language', '_MD_AM_LANGUAGE', '" . addslashes($language) . "', '_MD_AM_LANGUAGEDSC', 'language', 'other', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'startpage', '_MD_AM_STARTPAGE', 'a:3:{i:1;s:2:\"--\";i:2;s:2:\"--\";i:3;s:2:\"--\";}', '_MD_AM_STARTPAGEDSC', 'startpage', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'server_TZ', '_MD_AM_SERVERTZ', '0', '_MD_AM_SERVERTZDSC', 'timezone', 'float', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'default_TZ', '_MD_AM_DEFAULTTZ', '0', '_MD_AM_DEFAULTTZDSC', 'timezone', 'float', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'use_ext_date', '_MD_AM_EXT_DATE', '"._EXT_DATE_FUNC."', '_MD_AM_EXT_DATEDSC', 'yesno', 'int', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'use_ext_date', '_MD_AM_EXT_DATE', '" . _EXT_DATE_FUNC . "', '_MD_AM_EXT_DATEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'theme_set', '_MD_AM_DTHEME', 'iTheme', '_MD_AM_DTHEMEDSC', 'theme', 'other', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '0', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('iTheme'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'theme_set_allowed', '_MD_AM_THEMEOK', '" . serialize(array('iTheme')) . "', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'template_set', '_MD_AM_DTPLSET', 'default', '_MD_AM_DTPLSETDSC', 'tplset', 'other', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'dhtmltextarea', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '" . addslashes(serialize(array('dhtmltextarea', 'CKeditor', 'tinymce'))) . "', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'anonymous', '_MD_AM_ANONNAME', '".addslashes(_INSTALL_ANON)."', '_MD_AM_ANONNAMEDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'anonymous', '_MD_AM_ANONNAME', '" . addslashes(_INSTALL_ANON) . "', '_MD_AM_ANONNAMEDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'gzip_compression', '_MD_AM_USEGZIP', '0', '_MD_AM_USEGZIPDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'usercookie', '_MD_AM_USERCOOKIE', 'icms_user', '_MD_AM_USERCOOKIEDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'use_mysession', '_MD_AM_USEMYSESS', '0', '_MD_AM_USEMYSESSDSC', 'yesno', 'int', " . $p++ . ")"
@@ -561,20 +561,20 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$host_domain = imcms_get_base_domain(XOOPS_URL);
 	$host_base = imcms_get_url_domain(XOOPS_URL);
 
-	$c=14; // sets config category id
-	$p=0; // reset position increment to 0 for new category id
+	$c = 14; // sets config category id
+	$p = 0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'enable_purifier', '_MD_AM_PURIFIER_ENABLE', '1', '_MD_AM_PURIFIER_ENABLEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_DefinitionID', '_MD_AM_PURIFIER_URI_DEFID', 'system', '_MD_AM_PURIFIER_URI_DEFIDDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_DefinitionRev', '_MD_AM_PURIFIER_URI_DEFREV', '1', '_MD_AM_PURIFIER_URI_DEFREVDSC', 'textbox', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_URI_Host', '_MD_AM_PURIFIER_URI_HOST', '".addslashes($host_domain)."', '_MD_AM_PURIFIER_URI_HOSTDSC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_URI_Base', '_MD_AM_PURIFIER_URI_BASE', '".addslashes($host_base)."', '_MD_AM_PURIFIER_URI_BASEDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_URI_Host', '_MD_AM_PURIFIER_URI_HOST', '" . addslashes($host_domain) . "', '_MD_AM_PURIFIER_URI_HOSTDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_URI_Base', '_MD_AM_PURIFIER_URI_BASE', '" . addslashes($host_base) . "', '_MD_AM_PURIFIER_URI_BASEDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_Disable', '_MD_AM_PURIFIER_URI_DISABLE', '0', '_MD_AM_PURIFIER_URI_DISABLEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_DisableExternal', '_MD_AM_PURIFIER_URI_DISABLEEXT', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_DisableExternalResources', '_MD_AM_PURIFIER_URI_DISABLEEXTRES', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTRESDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_DisableResources', '_MD_AM_PURIFIER_URI_DISABLERES', '0', '_MD_AM_PURIFIER_URI_DISABLERESDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_MakeAbsolute', '_MD_AM_PURIFIER_URI_MAKEABS', '0', '_MD_AM_PURIFIER_URI_MAKEABSDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_HostBlacklist', '_MD_AM_PURIFIER_URI_BLACKLIST', '', '_MD_AM_PURIFIER_URI_BLACKLISTDSC', 'textsarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_URI_AllowedSchemes', '_MD_AM_PURIFIER_URI_ALLOWSCHEME', '".addslashes(serialize(array('http','https','mailto','ftp','nntp','news')))."', '_MD_AM_PURIFIER_URI_ALLOWSCHEMEDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_URI_AllowedSchemes', '_MD_AM_PURIFIER_URI_ALLOWSCHEME', '" . addslashes(serialize(array('http', 'https', 'mailto', 'ftp', 'nntp', 'news'))) . "', '_MD_AM_PURIFIER_URI_ALLOWSCHEMEDSC', 'textsarea', 'array', " . $p++ . ")"
 	//$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_URI_SafeIframeRegexp', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP', '', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC', 'textsarea', 'array', " . $p++ . ")");
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_DefinitionID', '_MD_AM_PURIFIER_HTML_DEFID', 'system', '_MD_AM_PURIFIER_HTML_DEFIDDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_DefinitionRev', '_MD_AM_PURIFIER_HTML_DEFREV', '1', '_MD_AM_PURIFIER_HTML_DEFREVDSC', 'textbox', 'int', " . $p++ . ")"
@@ -594,13 +594,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			. ", (" . $ci++ . ", '_MD_AM_PURIFIER_HEAVY', 'heavy', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_AllowedElements', '_MD_AM_PURIFIER_HTML_ALLOWELE',
-     '".addslashes(serialize(array('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl',
+     '" . addslashes(serialize(array('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl',
 								   'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's',
-								   'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var')))."',
+								   'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var'))) . "',
      '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textsarea', 'array', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_AllowedAttributes', '_MD_AM_PURIFIER_HTML_ALLOWATTR',
-     '".addslashes(serialize(array('a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title',
-								   'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style', 'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id', 'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan', 'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan', 'th.style', 'th.valign', 'ul.style')))."',
+     '" . addslashes(serialize(array('a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title',
+								   'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style', 'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id', 'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan', 'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan', 'th.style', 'th.valign', 'ul.style'))) . "',
      '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_ForbiddenElements', '_MD_AM_PURIFIER_HTML_FORBIDELE', '', '_MD_AM_PURIFIER_HTML_FORBIDELEDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_ForbiddenAttributes', '_MD_AM_PURIFIER_HTML_FORBIDATTR', '', '_MD_AM_PURIFIER_HTML_FORBIDATTRDSC', 'textsarea', 'array', " . $p++ . ")"

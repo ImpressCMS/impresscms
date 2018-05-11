@@ -99,7 +99,9 @@ class icms_core_StopSpammer {
 	 */
 	public function badIP($ip) {
 		// return TRUE if it's not a valid IP
-		if (!filter_var($ip, FILTER_VALIDATE_IP)) return TRUE;
+		if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+			return TRUE;
+		}
 		// return FALSE if it is a valid IPv6 address - only until IPv6 can be checked without error
 		if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
 			return FALSE;

@@ -107,7 +107,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	 * @var 	boolean
 	 * @access	private
 	 */
-	public $SMTPAuth = FALSE;
+	public $SMTPAuth = false;
 
 	/**
 	 * Username for authentication with your SMTP host.

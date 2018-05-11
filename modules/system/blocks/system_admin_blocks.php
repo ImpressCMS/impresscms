@@ -23,31 +23,31 @@ function b_system_admin_warnings_show() {
 
 	// Check if PDO is being used - if not, issue a warning, because it is being removed from PHP
 	// @todo	Add a language constant in  language/{language}/core.php for the warning message
-	if (icms::$db === NULL) {
+	if (icms::$db === null) {
 		defined('_CORE_MYSQL_DEPRECATED') || define('_CORE_MYSQL_DEPRECATED', 'The mysql extension is being deprecated as of PHP 5.5.0 (<a href="http://php.net/mysql_connect">PHP MySQL Extenstion</a>). Switch to PDO, instead');
-		array_push($block['msg'], icms_core_Message::error(_CORE_MYSQL_DEPRECATED, '', FALSE));
+		array_push($block['msg'], icms_core_Message::error(_CORE_MYSQL_DEPRECATED, '', false));
 	}
 	// ###### Output warn messages for security  ######
 	if (is_dir(ICMS_ROOT_PATH . '/install/')) {
-		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINSTALL2, ICMS_ROOT_PATH . '/install/'), '', FALSE));
+		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINSTALL2, ICMS_ROOT_PATH . '/install/'), '', false));
 	}
 	/** @todo make this dynamic, so the value is updated automatically */
-	if (getDbValue(icms::$xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE) {
+	if (getDbValue(icms::$xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== false) {
 		array_push($block['msg'], icms_core_Message::error('<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=modules&amp;op=update&amp;module=system">' . _WARNINGUPDATESYSTEM . '</a>'));
 	}
 	if (is_writable(ICMS_ROOT_PATH . '/.env')) {
-		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINWRITEABLE, ICMS_ROOT_PATH . '/.env'), '', FALSE));
+		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINWRITEABLE, ICMS_ROOT_PATH . '/.env'), '', false));
 	}
 
 	// ###### Output warn messages for correct functionality  ######
 	if (!is_writable(ICMS_CACHE_PATH)) {
-			array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_CACHE_PATH)), '', FALSE);
+			array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_CACHE_PATH)), '', false);
 	}
 	if (!is_writable(ICMS_UPLOAD_PATH)) {
-			array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_UPLOAD_PATH)), '', FALSE);
+			array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_UPLOAD_PATH)), '', false);
 	}
 	if (!is_writable(ICMS_COMPILE_PATH)) {
-			array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_COMPILE_PATH)), '', FALSE);
+			array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_COMPILE_PATH)), '', false);
 	}
 
 	if (count($block['msg']) > 0) {
@@ -74,11 +74,11 @@ function b_system_admin_cp_show() {
 	} else {
 		$groups = array();
 	}
-	$all_ok = FALSE;
+	$all_ok = false;
 	if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 		$sysperm_handler = icms::handler('icms_member_groupperm');
 		$ok_syscats = & $sysperm_handler->getItemIds('system_admin', $groups);
-	} else {$all_ok = TRUE; }
+	} else {$all_ok = true; }
 
 	require_once ICMS_MODULES_PATH . '/system/constants.php';
 
@@ -93,11 +93,11 @@ function b_system_admin_cp_show() {
 		if (file_exists($admin_dir . '/' . $file . '/icms_version.php')) {
 			$mod_version_file = 'icms_version.php';
 		}
-		icms_loadLanguageFile('system', $file, TRUE);
+		icms_loadLanguageFile('system', $file, true);
 		include $admin_dir . '/' . $file . '/' . $mod_version_file;
 		if ($modversion['hasAdmin']) {
 			$category = isset($modversion['category'])?(int) ($modversion['category']):0;
-			if (FALSE != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+			if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
 				$sysmod = array('title' => $modversion['name'], 'link' => ICMS_MODULES_URL . '/system/admin.php?fct=' . $file, 'image' => ICMS_MODULES_URL . '/system/admin/' . $file . '/images/' . $file . '_big.png');
 				array_push($block['sysmod'], $sysmod);
 			}
@@ -199,12 +199,12 @@ function b_system_admin_cp_new_show() {
 	} else {
 		$groups = array();
 	}
-	$all_ok = FALSE;
+	$all_ok = false;
 	if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 		$sysperm_handler = icms::handler('icms_member_groupperm');
 		$ok_syscats = & $sysperm_handler->getItemIds('system_admin', $groups);
 	} else {
-		$all_ok = TRUE;
+		$all_ok = true;
 	}
 
 	require_once ICMS_MODULES_PATH . '/system/constants.php';
@@ -220,11 +220,11 @@ function b_system_admin_cp_new_show() {
 		if (file_exists($admin_dir . '/' . $file . '/icms_version.php')) {
 			$mod_version_file = 'icms_version.php';
 		}
-		icms_loadLanguageFile('system', $file, TRUE);
+		icms_loadLanguageFile('system', $file, true);
 		include $admin_dir . '/' . $file . '/' . $mod_version_file;
 		if ($modversion['hasAdmin']) {
 			$category = isset($modversion['category'])?(int) ($modversion['category']):0;
-			if (FALSE != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+			if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
 				$block[$modversion['group']][] = array(
 					'title' => $modversion['name'],
 					'link' => ICMS_MODULES_URL . '/system/admin.php?fct=' . $file,

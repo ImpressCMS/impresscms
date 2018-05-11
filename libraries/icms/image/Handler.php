@@ -129,12 +129,12 @@ class icms_image_Handler extends \icms_ipf_Handler {
 	 *
 	 * @return  array                       Array of {@link icms_image_Object} objects
 	 */
-	public function getList($imgcat_id, $image_display = NULL) {
+	public function getList($imgcat_id, $image_display = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id)));
 		if (isset($image_display)) {
 			$criteria->add(new icms_db_criteria_Item('image_display', (int) ($image_display)));
 		}
-		$images = & $this->getObjects($criteria, FALSE, TRUE);
+		$images = & $this->getObjects($criteria, false, true);
 		$ret = array();
 		foreach (array_keys($images) as $i) {
 			$ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');

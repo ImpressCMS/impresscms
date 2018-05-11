@@ -52,12 +52,12 @@ function editadsense($showmenu = false, $adsenseid = 0, $clone = false) {
 
 switch ($op) {
 		case "mod":
-			$adsenseid = isset($adsenseid) ? (int) $adsenseid : 0;
+			$adsenseid = isset($adsenseid)?(int) $adsenseid:0;
 			editadsense(TRUE, $adsenseid);
 			break;
 
 		case "clone":
-			$adsenseid = isset($adsenseid) ? (int) $adsenseid : 0;
+			$adsenseid = isset($adsenseid)?(int) $adsenseid:0;
 			editadsense(TRUE, $adsenseid, TRUE);
 			break;
 
@@ -82,7 +82,7 @@ switch ($op) {
 			$objectTable->addCustomAction('getCloneLink');
 
 			$icmsAdminTpl->assign('icms_adsense_table', $objectTable->fetch());
-			$icmsAdminTpl->assign('icms_adsense_explain', TRUE);
+			$icmsAdminTpl->assign('icms_adsense_explain', true);
 			$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_DSC);
 
 			$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');

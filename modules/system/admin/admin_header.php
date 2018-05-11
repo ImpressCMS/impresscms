@@ -40,15 +40,15 @@ $fct = $op = "";
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
 if ($fct !== "") {
 	$icms_admin_handler = icms_getModuleHandler($fct, $module_dir);
-	icms_loadLanguageFile($module_dir, $fct, TRUE);
+	icms_loadLanguageFile($module_dir, $fct, true);
 }

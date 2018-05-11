@@ -29,26 +29,34 @@ $filter_post = array();
 
 /* filter the user input - v1.3+ */
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
 // get the subfolder path
 if (isset($folder)) {
-	if (!file_exists($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $folder)) $folder = '';
-} else $folder = '';
-if ($folder != '') {
-	if ($folder[strlen($folder) - 1] != '/') $folder .= '/';
+	if (!file_exists($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $folder)) {
+		$folder = '';
+	}
+	} else {
+	$folder = '';
 }
+if ($folder != '') {
+	if ($folder[strlen($folder) - 1] != '/') {
+		$folder .= '/';
+	}
+	}
 if (isset($action) && $action == 'edit') {
 	$editimage = $cfconfig['fileroot'] . $cfconfig['imagefolder'];
 	if ($folder[0] == '/') {
 		$editimage .= substr($folder, 1);
-	} else $editimage .= $folder;
+	} else {
+		$editimage .= $folder;
+	}
 	$editimage .= $name;
 /*	$head = '	<style type="text/css">@import "imageeditor/ImageEditor.css";</style>
 	<script type="text/javascript" src="imageeditor/PageInfo.js"></script>
@@ -95,8 +103,12 @@ if ($_POST) {
 			if ($image->save($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $filename)) {
 				chmod($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $filename, 0664);
 				$message = "<div id=\"message_box\"><p class=\"success\">Image uploaded</p></div>";
-			} else $message = "<div id=\"message_box\"><p class=\"error\">Failed to upload image</p></div>";
-		} else $message = "<div id=\"message_box\"><p class=\"error\">Image not found</p></div>";
+			} else {
+				$message = "<div id=\"message_box\"><p class=\"error\">Failed to upload image</p></div>";
+			}
+		} else {
+			$message = "<div id=\"message_box\"><p class=\"error\">Image not found</p></div>";
+		}
 	}
 }
 echo '<div id="browsertitle"><h1>Image Browser</h1></div>';
@@ -107,14 +119,21 @@ if (isset($action)) {
 	switch ($action) {
 		case 'delimage': // Delete the image
 			$imagename = $name;
-			if ($imagename != '') $imagename = $folder . $imagename;
+			if ($imagename != '') {
+				$imagename = $folder . $imagename;
+			}
 			if (file_exists($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $imagename)) {
 				if (unlink($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $imagename)) {
-					if (file_exists($cfconfig['fileroot'] . $cfconfig['imagecache'] . $imagename))
-						unlink($cfconfig['fileroot'] . $cfconfig['imagecache'] . $imagename);
+					if (file_exists($cfconfig['fileroot'] . $cfconfig['imagecache'] . $imagename)) {
+											unlink($cfconfig['fileroot'] . $cfconfig['imagecache'] . $imagename);
+					}
 					$message = "<div id=\"message_box\"><p class=\"success\">Image deleted</p></div>";
-				} else $message = "<div id=\"message_box\"><p class=\"error\">Failed to delete image</p></div>";
-			} else $message = "<div id=\"message_box\"><p class=\"error\">Image not found</p></div>";
+				} else {
+					$message = "<div id=\"message_box\"><p class=\"error\">Failed to delete image</p></div>";
+				}
+			} else {
+				$message = "<div id=\"message_box\"><p class=\"error\">Image not found</p></div>";
+			}
 			break;
 		case 'edit': // Edit an image
 			$name = $name;
@@ -125,7 +144,9 @@ if (isset($action)) {
 			break;
 	}
 }
-if ($message != '') echo $message;
+if ($message != '') {
+	echo $message;
+}
 if ($showfolder) {
 	showFolder($folder);
 }

@@ -234,7 +234,7 @@ function b_system_user_show($options) {
  */
 function b_system_user_edit($options) {
 	$chk = "";
-	$form =  _MB_SYSTEM_DISPLAYA;
+	$form = _MB_SYSTEM_DISPLAYA;
 	if ($options[0] == 1) {
 		$chk = " checked='checked'";
 	}

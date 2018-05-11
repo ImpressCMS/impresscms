@@ -18,16 +18,14 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2005 XOOPS.org
  */
-class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
-{
+class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea {
 	/**
 	 * Constructor
 	 *
 	 * @param	array   $configs  Editor Options
 	 * @param	binary 	$checkCompatible  true - return false on failure
 	 */
-	function FormDhtmlTextArea($configs, $checkCompatible = false)
-	{
+	function FormDhtmlTextArea($configs, $checkCompatible = false) {
 		if (!empty($configs)) {
 			foreach ($configs as $key => $val) {
 				${$key} = $val;

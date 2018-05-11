@@ -128,7 +128,9 @@ class icms_core_Logger {
 	 * @param   int     $errno  error number (if any)
 	 */
 	public function addQuery($sql, $error = null, $errno = null) {
-		if ($this->activated) $this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
+		if ($this->activated) {
+			$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
+		}
 		if (defined('ICMS_LOGGING_HOOK') and ICMS_LOGGING_HOOK != '') {
 			include ICMS_LOGGING_HOOK;
 		}
@@ -253,11 +255,11 @@ class icms_core_Logger {
 		if (!$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 			return $output;
 		}
-		$this->renderingEnabled = $this->activated = FALSE;
+		$this->renderingEnabled = $this->activated = false;
 		$log = $this->dump($this->usePopup?'popup':'');
 		$pattern = '<!--{xo-logger-output}-->';
 		$pos = strpos($output, $pattern);
-		if ($pos !== FALSE) {
+		if ($pos !== false) {
 			return substr($output, 0, $pos) . $log . substr($output, $pos + strlen($pattern));
 		} else {
 			return $output . $log;

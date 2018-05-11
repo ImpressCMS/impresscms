@@ -167,8 +167,7 @@ final class icms extends Container {
 	 * @param    boolean $virtual
 	 * @return    string
 	 */
-	public function path($url, $virtual = false)
-	{
+	public function path($url, $virtual = false) {
 		$path = '';
 		@list($root, $path) = explode('/', $url, 2);
 		if (!isset(self::$paths[$root])) {
@@ -186,8 +185,7 @@ final class icms extends Container {
 	 * @param    string $url
 	 * @return    string
 	 */
-	static public function url($url)
-	{
+	static public function url($url) {
 		return (FALSE !== strpos($url, '://')?$url:self::path($url, TRUE));
 	}
 
@@ -233,18 +231,18 @@ final class icms extends Container {
 					// Try old style handler loading (should be removed later, in favor of the
 					// lookup table present in xoops_gethandler)
 					$lower = strtolower(trim($name));
-					if (file_exists($hnd_file = ICMS_ROOT_PATH.'/class/' . $lower . '.php')) {
+					if (file_exists($hnd_file = ICMS_ROOT_PATH . '/class/' . $lower . '.php')) {
 						require_once $hnd_file;
 					}
-					if (!class_exists($class = 'Xoops' . ucfirst($lower) . 'Handler', FALSE)) {
-						if (!class_exists($class = 'Icms' . ucfirst($lower) . 'Handler', FALSE)) {
+					if (!class_exists($class = 'Xoops' . ucfirst($lower) . 'Handler', false)) {
+						if (!class_exists($class = 'Icms' . ucfirst($lower) . 'Handler', false)) {
 							// Not found at all
-							$class = FALSE;
+							$class = false;
 						}
 					}
 				}
 			}
-			self::$handlers[$name] = $class?new $class(self::$xoopsDB):FALSE;
+			self::$handlers[$name] = $class?new $class(self::$xoopsDB):false;
 		}
 		if (!self::$handlers[$name] && !$optional) {
 			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);
@@ -259,7 +257,7 @@ final class icms extends Container {
 	 */
 	protected function buildRelevantUrls() {
 		if (isset($_SERVER['HTTP_HOST']) && !self::$urls) {
-			$http = strpos(ICMS_URL, "https://") === FALSE
+			$http = strpos(ICMS_URL, "https://") === false
 				?"http://"
 				: "https://";
 

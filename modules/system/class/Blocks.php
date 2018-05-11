@@ -185,7 +185,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getDeleteItemLink($onlyUrl = FALSE, $withimage = TRUE, $userSide = FALSE) {
+	public function getDeleteItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
 		$ret = ICMS_MODULES_URL . "/system/admin.php?fct=blocks&op=del&"
 			. $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
 		if ($onlyUrl) {
@@ -214,13 +214,13 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
-	public function getForm($form_caption, $form_name, $form_action = FALSE, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = FALSE, $captcha = FALSE) {
+	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
 		if (!$this->isNew() && $this->getVar('block_type') != 'C') {
 			$this->hideFieldFromForm('content');
 			$this->hideFieldFromForm('c_type');
 		}
 
-		$form = new icms_ipf_form_Base($this, $form_name, $form_caption, $form_action, NULL, $submit_button_caption, $cancel_js_action, $captcha);
+		$form = new icms_ipf_form_Base($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 		return $form;
 	}
 

@@ -149,7 +149,7 @@ abstract class icms_form_Base {
 	 * @return	string
 	 */
 	public function getMethod() {
-		return ( strtolower($this->_method) == "get" ) ? "get" : "post";
+		return (strtolower($this->_method) == "get")?"get":"post";
 	}
 
 	/**
@@ -248,7 +248,7 @@ abstract class icms_form_Base {
 	 * @param	string $value	the "value" attribute of a form element
 	 */
 	public function setElementValue($name, $value) {
-		$ele =& $this->getElementByName($name);
+		$ele = & $this->getElementByName($name);
 		if (is_object($ele) && method_exists($ele, 'setValue')) {
 			$ele->setValue($value);
 		}
@@ -262,7 +262,7 @@ abstract class icms_form_Base {
 	public function setElementValues($values) {
 		if (is_array($values) && !empty($values)) {
 			// will not use getElementByName() for performance..
-			$elements =& $this->getElements(true);
+			$elements = & $this->getElements(true);
 			$count = count($elements);
 			for ($i = 0; $i < $count; $i++) {
 				$name = $elements[$i]->getName(false);

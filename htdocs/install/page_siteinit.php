@@ -17,7 +17,9 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined('XOOPS_INSTALL'))	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
 $wizard->setPage('siteinit');
 $pageHasForm = true;
@@ -54,7 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ob_start();
 ?>
-<?php if (!empty($error)) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty($error)) {
+	echo '<div class="x2-note error">' . $error . "</div>\n";
+}
+?>
 
 <script
 	type="text/javascript"

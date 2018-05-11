@@ -15,47 +15,47 @@
  */
 
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) ) {
+if (!defined('XOOPS_INSTALL')) {
 	exit();
 }
 
-$wizard->setPage( 'tablesfill' );
+$wizard->setPage('tablesfill');
 $pageHasForm = false;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['settings'];
+$vars = & $_SESSION['settings'];
 
 include_once "../../mainfile.php";
 include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
 if (!$dbm->isConnectable()) {
-	$wizard->redirectToPage( 'dbsettings' );
+	$wizard->redirectToPage('dbsettings');
 	exit();
 }
 
 icms::$db = &$dbm->db;
 icms::$xoopsDB = &$dbm->db;
 
-$res = $dbm->query( "SELECT COUNT(*) FROM " . $dbm->db->prefix( "users" ) );
+$res = $dbm->query("SELECT COUNT(*) FROM " . $dbm->db->prefix("users"));
 if (!$res) {
-	$wizard->redirectToPage( 'dbsettings' );
+	$wizard->redirectToPage('dbsettings');
 	exit();
 }
-list ( $count ) = $dbm->db->fetchRow( $res );
-$process = $count ? '' : 'insert';
+list ($count) = $dbm->db->fetchRow($res);
+$process = $count?'':'insert';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (!$process) {
-		$wizard->redirectToPage( '+0' );
+		$wizard->redirectToPage('+0');
 		exit();
 	}
 	include_once './makedata.php';
 	$cm = 'dummy';
 
-	$wizard->loadLangFile( 'install2' );
+	$wizard->loadLangFile('install2');
 
-	extract( $_SESSION['siteconfig'], EXTR_SKIP );
+	extract($_SESSION['siteconfig'], EXTR_SKIP);
 	$language = $wizard->language;
 
 	$type = getenv('DB_TYPE');

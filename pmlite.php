@@ -95,20 +95,20 @@ if (!icms::$user) {
 	icms_core_Message::warning(
 		_PM_PLZREG . " <a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a> " . _OR . " <a href='" . ICMS_URL . "/user.php'>" . _LOGIN . "</a>",
 		_PM_SORRY,
-		TRUE
+		true
 	);
 } else {
 	if (!empty($op) && $op == _SUBMIT) {
 		/* This section is for sending messages */
 		if (!icms::$security->check()) {
-			$security_error = TRUE;
+			$security_error = true;
 		}
 		$res = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("users")
 			. " WHERE uid='" . $to_userid . "'");
 		list($count) = icms::$xoopsDB->fetchRow($res);
 		if ($count != 1) {
 			redirect_header(icms_getPreviousPage(), 5, _PM_USERNOEXIST . ' ' . _PM_PLZTRYAGAIN);
-			if (isset($security_error) && $security_error == TRUE) {
+			if (isset($security_error) && $security_error == true) {
 				redirect_header(icms_getPreviousPage(), 5, implode('<br />', icms::$security->getErrors()));
 			}
 		} else {

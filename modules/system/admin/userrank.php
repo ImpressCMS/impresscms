@@ -79,19 +79,23 @@ function edituserrank($showmenu = false, $rank_id = 0, $clone = false) {
 
 $icms_userrank_handler = icms_getModuleHandler("userrank", "system");
 
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) {
+	foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+}
+if (!empty($_GET)) {
+	foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
+}
 $op = (isset($_POST['op']))? trim(filter_input(INPUT_POST, 'op')):((isset($_GET['op']))? trim(filter_input(INPUT_GET, 'op')):'');
 
 switch ($op) {
 	case "mod" :
 		$rank_id = isset($_GET["rank_id"])?(int) $_GET["rank_id"]:0;
-		edituserrank(TRUE, $rank_id);
+		edituserrank(true, $rank_id);
 		break;
 
 	case "clone" :
 		$rank_id = isset($_GET["rank_id"])?(int) $_GET["rank_id"]:0;
-		edituserrank(TRUE, $rank_id, TRUE);
+		edituserrank(true, $rank_id, true);
 		break;
 
 	case "adduserrank" :

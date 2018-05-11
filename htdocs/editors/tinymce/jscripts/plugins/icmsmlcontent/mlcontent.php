@@ -38,23 +38,23 @@ if (is_object(icms::$user) && $easiestml_exist) {
 
 		// if "THE EASIEST MULTILANGUAGE HACK" by GIJOE is applied... (The hack can be found at http://www.peak.ne.jp/xoops/)
 		if ($easiestml_exist) {
-			$easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
-			$langnames = explode( ',' , EASIESTML_LANGNAMES ) ;
+			$easiestml_langs = explode(',', EASIESTML_LANGS);
+			$langnames = explode(',', EASIESTML_LANGNAMES);
     
-			$lang_options = '' ;
+			$lang_options = '';
     
-			foreach ($easiestml_langs as $l => $lang )
-				$lang_options .= '<option value="'.$lang.'">'.$langnames[$l].'</option>' ;
+			foreach ($easiestml_langs as $l => $lang)
+				$lang_options .= '<option value="' . $lang . '">' . $langnames[$l] . '</option>';
 
 			$javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";
-			echo "<select name=\"mlanguages\" ".$javascript." style=\"width:200px\">";
+			echo "<select name=\"mlanguages\" " . $javascript . " style=\"width:200px\">";
 			echo "<option value=\" selected\">{#icmsmlcontent_dlg.sellang}</option>";
-			echo "".$lang_options."";
+			echo "" . $lang_options . "";
 			echo "</select>";
 		// if "Xlanguage" module is installed...
 		} else {
 			$javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";
-			echo "<input type=\"text\" size=\"2\" name=\"mlanguages\" ".$javascript." //>";
+			echo "<input type=\"text\" size=\"2\" name=\"mlanguages\" " . $javascript . " //>";
 		}
 	}
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

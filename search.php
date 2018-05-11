@@ -40,12 +40,12 @@ $xoopsOption['pagetype'] = "search";
 
 include 'mainfile.php';
 
-if ($icmsConfigSearch['enable_search'] == FALSE) {
+if ($icmsConfigSearch['enable_search'] == false) {
 	header('Location: ' . ICMS_URL . '/');
 	exit();
 }
 
-$search_limiter = (($icmsConfigSearch['enable_deep_search'] == FALSE)?$icmsConfigSearch['num_shallow_search']:FALSE);
+$search_limiter = (($icmsConfigSearch['enable_deep_search'] == false)?$icmsConfigSearch['num_shallow_search']:false);
 $xoopsOption['template_main'] = 'system_search.html';
 include ICMS_ROOT_PATH . '/header.php';
 
@@ -198,7 +198,7 @@ switch ($action) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hassearch', 1));
 		$criteria->add(new icms_db_criteria_Item('isactive', 1));
 		$criteria->add(new icms_db_criteria_Item('mid', "(" . implode(',', $available_modules) . ")", 'IN'));
-		$modules = & $module_handler->getObjects($criteria, TRUE);
+		$modules = & $module_handler->getObjects($criteria, true);
 		$mids = isset($_REQUEST['mids'])?$_REQUEST['mids']:array();
 		if (empty($mids) || !is_array($mids)) {
 			unset($mids);

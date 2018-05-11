@@ -101,7 +101,7 @@ switch ($op) {
 			$criteria->setOrder($order);
 			$criteria->setLimit($limit);
 			$criteria->setStart($start);
-			$comments =& $comment_handler->getObjects($criteria, true);
+			$comments = & $comment_handler->getObjects($criteria, true);
 		}
 		icms_cp_header();
 		$module_array[0] = _MD_AM_ALLMODS;

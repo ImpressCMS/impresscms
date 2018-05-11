@@ -200,7 +200,9 @@ abstract class icms_form_Element {
 	 * @return 	string  "class" attribute value
 	 */
 	public function getClass() {
-		if (empty($this->_class)) return '';
+		if (empty($this->_class)) {
+			return '';
+		}
 		$class = array();
 		foreach ($this->_class as $class) {
 			$class[] = htmlspecialchars($class, ENT_QUOTES, _CHARSET);

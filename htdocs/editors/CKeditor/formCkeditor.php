@@ -103,7 +103,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 
 		$toolbar = "Basic";
 
-		if (is_object(icms::$user) ) {
+		if (is_object(icms::$user)) {
 			 $toolbar = "Normal";
 			 if (icms::$user->isAdmin(icms::$module->getVar('mid'))) { $toolbar = "Full"; }
 		}

@@ -49,12 +49,12 @@ $criteria = icms_buildCriteria(array("i.image_display" => 1, "i.image_id" => $im
 $images = icms::handler("icms_image")->getObjects($criteria, false, true);
 
 if (count($images) == 1 && $images[0]->getVar("image_body") !== null) {
-	header("Content-type: ".$images[0]->getVar("image_mimetype"));
+	header("Content-type: " . $images[0]->getVar("image_mimetype"));
 	header("Cache-control: max-age=31536000");
 	header("Expires: " . gmdate("D, d M Y H:i:s", time() + 31536000) . "GMT");
 	header("Content-disposition: filename=" . $images[0]->getVar("image_name"));
 	header("Content-Length: " . strlen($images[0]->getVar("image_body")));
-	header("Last-Modified: " . gmdate("D, d M Y H:i:s", $images[0]->getVar("image_created"))  . "GMT");
+	header("Last-Modified: " . gmdate("D, d M Y H:i:s", $images[0]->getVar("image_created")) . "GMT");
 	echo $images[0]->getVar("image_body");
 } else {
 	header("Content-type: image/gif");

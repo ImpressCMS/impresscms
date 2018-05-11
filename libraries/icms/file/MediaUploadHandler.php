@@ -256,18 +256,20 @@ class icms_file_MediaUploadHandler {
 					$line = trim($line);
 					$i = strpos($line, ':');
 					if (!$i) {
-						if (substr($line, 0, 5) == 'HTTP/')
-						   $hdrs['http'] = explode(' ', substr($line, 5));
-						elseif (trim($line) != '')
-							$hdrs['unknown-header'][] = $line;
+						if (substr($line, 0, 5) == 'HTTP/') {
+												   $hdrs['http'] = explode(' ', substr($line, 5));
+						} elseif (trim($line) != '') {
+													$hdrs['unknown-header'][] = $line;
+						}
 					} else {
 						$name = strtolower(trim(substr($line, 0, $i)));
 						$value = trim(substr($line, $i + 1));
 						switch ($name) {
 							case 'content-disposition':
 								preg_match_all('/([^;]+);\ *filename=(".+"|.+)/Ui', $value, $matches, PREG_SET_ORDER);
-								if (mb_substr($matches[0][2], 0, 1) == '"')
-									$matches[0][2] = mb_substr($matches[0][2], 1, -1);
+								if (mb_substr($matches[0][2], 0, 1) == '"') {
+																	$matches[0][2] = mb_substr($matches[0][2], 1, -1);
+								}
 								$hdrs[$name] = array(
 									 'type'     => $matches[0][1],
 									 'filename' => $matches[0][2],
@@ -282,10 +284,12 @@ class icms_file_MediaUploadHandler {
 				}
 				$headers = $hdrs;
 				unset($hdrs);
-				if (!isset($headers['http'][1]) || ($headers['http'][1] != 200))
-					return false;
-				if (!isset($headers['content-type']))
-					$headers['content-type'] = 'application/octet-stream';
+				if (!isset($headers['http'][1]) || ($headers['http'][1] != 200)) {
+									return false;
+				}
+				if (!isset($headers['content-type'])) {
+									$headers['content-type'] = 'application/octet-stream';
+				}
 			}
 			if (empty($headers['content-disposition']['filename']) === false) {
 				$this->mediaName = $headers['content-disposition']['filename'];
@@ -300,11 +304,11 @@ class icms_file_MediaUploadHandler {
 				}
 			}
 			$this->mediaType = $headers['content-type'];
-			$this->mediaSize = (int)$headers['content-length'];
+			$this->mediaSize = (int) $headers['content-length'];
 			$this->mediaTmpName = tempnam(sys_get_temp_dir(), 'icms_media');
 			$this->mediaError = 0;
 			$this->mediaRealType = isset($this->extensionToMime[$ext])?$this->extensionToMime[$ext]:$this->mediaType;
-			$fp = fopen( $this->mediaTmpName, 'w+');
+			$fp = fopen($this->mediaTmpName, 'w+');
 			fwrite($fp, $content);
 			fclose($fp);
 			$this->errors = array();

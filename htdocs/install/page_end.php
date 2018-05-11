@@ -20,7 +20,9 @@
 define('INSTALLER_INCLUDE_MAIN', true);
 require_once 'common.inc.php';
 
-if (!defined('XOOPS_INSTALL'))	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
 $success = isset($_REQUEST['success'])?trim($_REQUEST['success']):false;
 if ($success) {

@@ -19,7 +19,9 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined('XOOPS_INSTALL'))	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
 $wizard->setPage('langselect');
 

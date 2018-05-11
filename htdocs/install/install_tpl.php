@@ -88,14 +88,14 @@ echo '<body>';
 	<div id="leftside">
 			<h3><?php echo INSTALL_H3_STEPS; ?></h3>
 			<ul>
-			<?php foreach ( $wizard->pages as $k => $page) {
+			<?php foreach ($wizard->pages as $k => $page) {
 				$class = '';
-				if ($k == $wizard->currentPage ) {
+				if ($k == $wizard->currentPage) {
 					$class = ' class="current"';
-				} elseif ($k > $wizard->currentPage ) {
+				} elseif ($k > $wizard->currentPage) {
 					$class = ' class="disabled"';
 				}
-				if (empty( $class )) {
+				if (empty($class)) {
 					$li = '<a href="' . $wizard->pageURI($page) . '">' . $wizard->pagesNames[$k] . '</a>';
 				} else {
 					$li = $wizard->pagesNames[$k];

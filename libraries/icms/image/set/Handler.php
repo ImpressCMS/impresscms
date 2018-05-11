@@ -82,7 +82,7 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
 	 *
 	 * @return array {@link icms_image_set_Object}s matching the conditions
 	 */
-	public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
+	public function &getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT i.* FROM ' . $this->table . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';

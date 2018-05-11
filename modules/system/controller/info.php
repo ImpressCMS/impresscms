@@ -38,7 +38,7 @@ class info
 	public function getServerTime() {
 		$response = new \icms_response_Events();
 
-		while(true) {
+		while (true) {
 			$response->sendMessage(date(DATE_ISO8601));
 			sleep(1);
 		}

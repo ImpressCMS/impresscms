@@ -279,7 +279,9 @@ class icms_config_Handler {
 				return $ret;
 			}
 		} else {
-			if (!empty($this->_cachedConfigs[$module][$category])) return $this->_cachedConfigs[$module][$category];
+			if (!empty($this->_cachedConfigs[$module][$category])) {
+				return $this->_cachedConfigs[$module][$category];
+			}
 
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
 			if (!empty($category)) {

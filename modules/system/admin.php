@@ -111,15 +111,15 @@ if ($admintest != 0) {
 			if ($category > 0) {
 				$groups = & icms::$user->getGroups();
 				if (in_array(ICMS_GROUP_ADMIN, $groups)
-					|| FALSE !== $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid'))
+					|| false !== $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid'))
 				) {
 					if (file_exists(ICMS_MODULES_PATH . "/system/admin/" . $fct . ".php")) {
 						include_once ICMS_MODULES_PATH . "/system/admin/" . $fct . ".php";
 					}
-				} else {$error = TRUE; }
-			} else {$error = TRUE; }
-		} else {$error = TRUE; }
-	} else {$error = TRUE; }
+				} else {$error = true; }
+			} else {$error = true; }
+		} else {$error = true; }
+	} else {$error = true; }
 }
 if ($error) {
 	header("Location:" . ICMS_URL . "/admin.php");

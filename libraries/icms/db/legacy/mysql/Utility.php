@@ -79,20 +79,20 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 					// substring to the returned array
 					if (!$i) {
 						$ret[] = $sql;
-						return TRUE;
+						return true;
 					} elseif ($string_start == '`' || $sql[$i - 1] != '\\') {
 					// Backquotes or no backslashes before
 					// quotes: it's indeed the end of the
 					// string -> exit the loop
 						$string_start      = '';
-						$in_string         = FALSE;
+						$in_string         = false;
 						break;
 					} else {
 					// one or more Backslashes before the presumed
 					// end of string...
 						// first checks for escaped backslashes
 						$j                     = 2;
-						$escaped_backslash     = FALSE;
+						$escaped_backslash     = false;
 						while ($i - $j > 0 && $sql[$i - $j] == '\\') {
 							$escaped_backslash = !$escaped_backslash;
 							$j++;
@@ -187,20 +187,20 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 					// substring to the returned array
 					if (!$i) {
 						$ret[] = $sql;
-						return TRUE;
+						return true;
 					} elseif ($string_start == '`' || $sql[$i - 1] != '\\') {
 					// Backquotes or no backslashes before
 					// quotes: it's indeed the end of the
 					// string -> exit the loop
 						$string_start      = '';
-						$in_string         = FALSE;
+						$in_string         = false;
 						break;
 					} else {
 					// one or more Backslashes before the presumed
 					// end of string...
 						// first checks for escaped backslashes
 						$j                     = 2;
-						$escaped_backslash     = FALSE;
+						$escaped_backslash     = false;
 						while ($i - $j > 0 && $sql[$i - $j] == '\\') {
 							$escaped_backslash = !$escaped_backslash;
 							$j++;
@@ -302,11 +302,11 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 			foreach ($protectorDB->doubtful_needles as $needle) {
 				if (stristr($sql4check, $needle)) {
 					$protectorDB->checkSql($sql);
-					return FALSE;
+					return false;
 				}
 			}
 }
 
-		return TRUE;
+		return true;
 	}
 }

@@ -104,7 +104,7 @@ switch ($op) {
 
 			$icmsAdminTpl->assign('icms_rating_table', $objectTable->fetch());
 
-			$icmsAdminTpl->assign('icms_rating_explain', TRUE);
+			$icmsAdminTpl->assign('icms_rating_explain', true);
 			$icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_DSC);
 
 			$icmsAdminTpl->display('db:admin/rating/system_adm_rating.html');
