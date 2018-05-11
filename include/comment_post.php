@@ -164,14 +164,14 @@ switch ($op) {
 
 			$doimage = 1;
 			$comment_handler = icms::handler('icms_data_comment');
-			$add_userpost = FALSE;
-			$call_approvefunc = FALSE;
-			$call_updatefunc = FALSE;
+			$add_userpost = false;
+			$call_approvefunc = false;
+			$call_updatefunc = false;
 			// RMV-NOTIFY - this can be set to 'comment' or 'comment_submit'
-			$notify_event = FALSE;
+			$notify_event = false;
 			if (!empty($com_id)) {
 				$comment = & $comment_handler->get($com_id);
-				$accesserror = FALSE;
+				$accesserror = false;
 
 				if (is_object(icms::$user)) {
 					$sysperm_handler = icms::handler('icms_member_groupperm');

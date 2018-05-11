@@ -70,16 +70,16 @@ if (is_object(icms::$user)) {
 	if ($uid == icms::$user->getVar('uid')) {
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH . '/header.php';
-		$icmsTpl->assign('user_ownpage', TRUE);
+		$icmsTpl->assign('user_ownpage', true);
 		icms_makeSmarty(array(
-			'user_ownpage' => TRUE,
+			'user_ownpage' => true,
 			'lang_editprofile' => _US_EDITPROFILE,
 			'lang_avatar' => _US_AVATAR,
 			'lang_notifications' => _US_NOTIFICATIONS,
 			'lang_inbox' => _US_INBOX,
 			'lang_logout' => _US_LOGOUT,
 			'lang_administration' => _CPHOME,
-			'user_candelete' => $icmsConfigUser['self_delete']? TRUE : FALSE,
+			'user_candelete' => $icmsConfigUser['self_delete']? true : false,
 			'lang_deleteaccount' => $icmsConfigUser['self_delete']? _US_DELACCOUNT : ''));
 		$thisUser = icms::$user;
 	} else {

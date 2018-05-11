@@ -77,7 +77,7 @@ class icms_member_user_Handler
 	 * @return bool FALSE if failed.
 	 * @TODO we need some kind of error message instead of just a FALSE return to inform whether user was deleted aswell as PM messages.
 	 */
-	public function delete(&$user, $force = FALSE) {
+	public function delete(&$user, $force = false) {
 				if (!($user instanceof icms_member_user_Object)) {
 									return;
 				}
@@ -103,11 +103,13 @@ class icms_member_user_Handler
 	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
 	 */
 	public function deleteAll($criteria = null, $quick = false) {
-			if ($quick)
-				throw new Exception('quick variable not supported!');
+			if ($quick) {
+							throw new Exception('quick variable not supported!');
+			}
 			$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
-			if ($criteria instanceof icms_db_criteria_Element)
-				$sql .= ' ' . $criteria->renderWhere();
+			if ($criteria instanceof icms_db_criteria_Element) {
+							$sql .= ' ' . $criteria->renderWhere();
+			}
 			return (bool) $this->db->query($sql);
 	}
 
@@ -185,7 +187,7 @@ class icms_member_user_Handler
 		}
 
 		// check uname
-		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') != $uname && $uname !== FALSE) || !is_object($thisUser)) {
+		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') != $uname && $uname !== false) || !is_object($thisUser)) {
 			$count = $this->getCount(icms_buildCriteria(array('uname' => addslashes($uname))));
 			if ($count > 0) {
 				$stop .= _US_NICKNAMETAKEN . '<br />';
@@ -193,7 +195,7 @@ class icms_member_user_Handler
 		}
 
 		// check password
-		if ($pass !== FALSE) {
+		if ($pass !== false) {
 			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') {
 				$stop .= _US_ENTERPWD . '<br />';
 			}
@@ -202,7 +204,7 @@ class icms_member_user_Handler
 			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
 				$stop .= sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']) . '<br />';
 			}
-			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, TRUE) || strripos($pass, $login_name) === TRUE)) {
+			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)) {
 				$stop .= _US_BADPWD . '<br />';
 			}
 		}

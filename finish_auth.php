@@ -71,7 +71,8 @@ switch ($xoopsAuth->step) {
 			/**
 			 * @todo use the related UserConfigOption
 			 */
-			if (strlen($uname) < 3) { // Username too short.
+			if (strlen($uname) < 3) {
+// Username too short.
 				redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_TOO_SHORT);
 			}
 

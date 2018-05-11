@@ -183,12 +183,12 @@ switch ($op) {
 			$module_handler = icms::handler('icms_module');
 			$mod = & $module_handler->create();
 			$mod->loadInfoAsVar($module);
-			if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
+			if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
 				$msgs = '<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
 			}
 			$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREINS;
 			if (empty($from_112)) {
-				$from_112 = FALSE;
+				$from_112 = false;
 			}
 			icms_cp_header();
 			icms_core_Message::confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modules', 'from_112' => $from_112), 'admin.php', $msgs, _MD_AM_INSTALL);
@@ -222,7 +222,7 @@ switch ($op) {
 			$mod = & $module_handler->getByDirname($module);
 			$mod->registerClassPath();
 
-			if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
+			if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
 				$msgs = '<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
 			}
 			$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREUNINS;
@@ -253,17 +253,17 @@ switch ($op) {
 		case 'update':
 			$module_handler = icms::handler('icms_module');
 			$mod = & $module_handler->getByDirname($module);
-			if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
+			if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
 				$msgs = '<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
 			}
 			$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREUPD;
 			icms_cp_header();
 
 			if (icms_getModuleInfo('system')->getDBVersion() < 14 && (!is_writable(ICMS_PLUGINS_PATH) || !is_dir(ICMS_ROOT_PATH . '/plugins/preloads') || !is_writable(ICMS_ROOT_PATH . '/plugins/preloads'))) {
-				icms_core_Message::error(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH, ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, TRUE);
+				icms_core_Message::error(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH, ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, true);
 			}
 			if (icms_getModuleInfo('system')->getDBVersion() < 37 && !is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
-				icms_core_Message::error(sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH)), _MD_AM_IMAGESFOLDER_UPDATE_TITLE, TRUE);
+				icms_core_Message::error(sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH)), _MD_AM_IMAGESFOLDER_UPDATE_TITLE, true);
 			}
 
 			icms_core_Message::confirm(array('module' => $module, 'op' => 'update_ok', 'fct' => 'modules'), 'admin.php', $msgs, _MD_AM_UPDATE);

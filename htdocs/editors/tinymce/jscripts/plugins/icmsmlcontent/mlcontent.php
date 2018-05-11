@@ -43,8 +43,9 @@ if (is_object(icms::$user) && $easiestml_exist) {
     
 			$lang_options = '';
     
-			foreach ($easiestml_langs as $l => $lang)
-				$lang_options .= '<option value="' . $lang . '">' . $langnames[$l] . '</option>';
+			foreach ($easiestml_langs as $l => $lang) {
+							$lang_options .= '<option value="' . $lang . '">' . $langnames[$l] . '</option>';
+			}
 
 			$javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";
 			echo "<select name=\"mlanguages\" " . $javascript . " style=\"width:200px\">";

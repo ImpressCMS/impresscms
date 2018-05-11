@@ -673,33 +673,25 @@ function icms_loadLanguageFile($module, $file, $admin = false) {
  * @param mixed	Float value or 0 if no match was found in the string
  * @todo Move to a static class method - String/Data
  */
-function icms_getfloat($str, $set = false)
-{
-	if (preg_match("/([0-9\.,-]+)/", $str, $match))
-	{
+function icms_getfloat($str, $set = false) {
+	if (preg_match("/([0-9\.,-]+)/", $str, $match)) {
 		// Found number in $str, so set $str that number
 		$str = $match[0];
-		if (strstr($str, ','))
-		{
+		if (strstr($str, ',')) {
 			// A comma exists, that makes it easy, cos we assume it separates the decimal part.
 			$str = str_replace('.', '', $str); // Erase thousand seps
 			$str = str_replace(',', '.', $str); // Convert , to . for (float) command
 			return (float) ($str);
-		}
-		else
-		{
+		} else {
 			// No comma exists, so we have to decide, how a single dot shall be treated
 			if (preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == true && $set['single_dot_as_decimal'] == true) {
 				return (float) ($str);
-			}
-			else
-			{
+			} else {
 				$str = str_replace('.', '', $str); // Erase thousand seps
 				return (float) ($str);
 			}
 		}
-	}
-	else {return 0;
+	} else {return 0;
 	}
 }
 
@@ -711,24 +703,20 @@ function icms_getfloat($str, $set = false)
  * @return string	$ret The returned value
  * @todo Move to a static class method - Currency
  */
-function icms_currency($var, $currencyObj = false)
-{
+function icms_currency($var, $currencyObj = false) {
 	$ret = icms_getfloat($var, array('single_dot_as_decimal'=> true));
 	$ret = round($ret, 2);
 	// make sure we have at least .00 in the $var
 	$decimal_section_original = strstr($ret, '.');
 	$decimal_section = $decimal_section_original;
-	if ($decimal_section)
-	{
+	if ($decimal_section) {
 		if (strlen($decimal_section) == 1) {
 			$decimal_section = '.00';
-		}
-		elseif (strlen($decimal_section) == 2) {
+		} elseif (strlen($decimal_section) == 2) {
 			$decimal_section = $decimal_section . '0';
 		}
 		$ret = str_replace($decimal_section_original, $decimal_section, $ret);
-	}
-	else {$ret = $ret . '.00';
+	} else {$ret = $ret . '.00';
 	}
 	if ($currencyObj) {
 		$ret = $ret . ' ' . $currencyObj->getCode();

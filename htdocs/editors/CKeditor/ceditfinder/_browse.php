@@ -15,7 +15,7 @@ function dirList($directory) {
 
 	$results = array();
 	$handler = @opendir($directory);
-	if ($handler === FALSE) {
+	if ($handler === false) {
 		return $results;
 	}
 	while (false !== ($file = readdir($handler))) {
@@ -61,8 +61,8 @@ function getThumb($folder, $file) {
 	// Load image and resize to thumbnail size
 	$image = new simpleimage();
 	$image->load($origfile);
-	if ($image->isImage() === FALSE) {
-		return FALSE;
+	if ($image->isImage() === false) {
+		return false;
 	}
 	// This is not an image!
 	if ($image->getWidth() <= $cfconfig['thumbwidth'] && $image->getHeight() <= $cfconfig['thumbheight']) {
@@ -340,12 +340,12 @@ function ListFolder($path, $editlink = '') {
 	$html = '';
 	$dir_handle = @opendir($cfconfig['fileroot'] . $cfconfig['imagefolder'] . $path) or die("Unable to open " . $cfconfig['fileroot'] . $cfconfig['imagefolder'] . $path);
 	//Leave only the last folder name
-	$active = FALSE;
+	$active = false;
 	if (($path . '/') == $folder) {
-		$active = TRUE;
+		$active = true;
 	}
 	if ($folder == '' && $path == '') {
-		$active = TRUE;
+		$active = true;
 	}
 	$p = explode('/', $path);
 	$dirname = end($p);
