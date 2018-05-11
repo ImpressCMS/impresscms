@@ -186,7 +186,7 @@ final class icms extends Container {
 	 * @return    string
 	 */
 	static public function url($url) {
-		return (FALSE !== strpos($url, '://')?$url:self::path($url, TRUE));
+		return (false !== strpos($url, '://')?$url:self::path($url, true));
 	}
 
 	/**

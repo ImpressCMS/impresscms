@@ -50,12 +50,12 @@ switch ($op) {
 		case "mod":
 
 			$autotasksid = isset($sat_id)?(int) ($sat_id):0;
-			editautotasks(TRUE, $autotasksid);
+			editautotasks(true, $autotasksid);
 			break;
 
 		case "clone":
 			$autotasksid = isset($sat_id)?(int) ($sat_id):0;
-			editautotasks(TRUE, $autotasksid, TRUE);
+			editautotasks(true, $autotasksid, true);
 			break;
 
 		case "addautotasks":

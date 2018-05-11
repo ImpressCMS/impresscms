@@ -74,7 +74,7 @@ switch ($op) {
 				$xoopsOption['template_main'] = 'system_userform.html';
 				include 'header.php';
 				icms_makeSmarty(array(
-					'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']]) ? $_COOKIE[$icmsConfig['usercookie']] : false,
+					'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']])?$_COOKIE[$icmsConfig['usercookie']]:false,
 					'lang_login' => _LOGIN,
 					'lang_username' => _USERNAME,
 					'redirect_page' => $redirect,

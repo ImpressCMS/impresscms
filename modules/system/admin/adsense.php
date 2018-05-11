@@ -53,12 +53,12 @@ function editadsense($showmenu = false, $adsenseid = 0, $clone = false) {
 switch ($op) {
 		case "mod":
 			$adsenseid = isset($adsenseid)?(int) $adsenseid:0;
-			editadsense(TRUE, $adsenseid);
+			editadsense(true, $adsenseid);
 			break;
 
 		case "clone":
 			$adsenseid = isset($adsenseid)?(int) $adsenseid:0;
-			editadsense(TRUE, $adsenseid, TRUE);
+			editadsense(true, $adsenseid, true);
 			break;
 
 		case "addadsense":

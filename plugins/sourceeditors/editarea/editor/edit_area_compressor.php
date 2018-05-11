@@ -364,22 +364,21 @@
 			/*$pattern= array("/(\\\\)?\"/", '/\\\n/'	, '/\\\r/'	, "/(\r?\n)/");
 			$replace= array('$1$1\\"', '\\\\\\n', '\\\\\\r'	, '\\\n"$1+"');*/
 			$pattern = array("/(\\\\)?\"/", '/\\\n/', '/\\\r/', "/(\r?\n)/");
-			if ($this->param['compress'])
-				$replace = array('$1$1\\"', '\\\\\\n', '\\\\\\r', '\n');
-			else
-				$replace = array('$1$1\\"', '\\\\\\n', '\\\\\\r', "\\n\"\n+\"");
+			if ($this->param['compress']) {
+							$replace = array('$1$1\\"', '\\\\\\n', '\\\\\\r', '\n');
+			} else {
+							$replace = array('$1$1\\"', '\\\\\\n', '\\\\\\r', "\\n\"\n+\"");
+			}
 			$str = preg_replace($pattern, $replace, $str);
 		}
 
-		function replace_scripts($var, $param1, $param2)
-		{
+		function replace_scripts($var, $param1, $param2) {
 			$this->$var = stripslashes($param2);
 			return $param1 . "[];";
 		}
 
 		/* for php version that have not thoses functions */
-		function file_get_contents($file)
-		{
+		function file_get_contents($file) {
 			$fd = fopen($file, 'rb');
 			$content = fread($fd, filesize($file));
 			fclose($fd);

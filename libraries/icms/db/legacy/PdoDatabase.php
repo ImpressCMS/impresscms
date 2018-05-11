@@ -110,7 +110,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 			$this->rowCount = $result->rowCount();
 			} else {
 // added by claudia, ImpressCMS.org
-				$this->rowCount = FALSE; // added by claudia, ImpressCMS.org
+				$this->rowCount = false; // added by claudia, ImpressCMS.org
 			} // added by claudia, ImpressCMS.org
 		} catch (Exception $e) {
 

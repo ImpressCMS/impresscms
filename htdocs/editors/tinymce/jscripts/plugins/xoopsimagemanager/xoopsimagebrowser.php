@@ -487,7 +487,9 @@ function imanager_listimg($imgcat_id, $start = 0) {
 
 function imanager_addcat() {
 	if (!empty($_POST)) {
-		foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+		foreach ($_POST as $k => $v) {
+			${$k} = StopXSS($v);
+		}
 	}
 	if (!icms::$security->check()) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 3, implode('<br />', icms::$security->getErrors()));
@@ -555,7 +557,9 @@ function imanager_addcat() {
 
 function imanager_addfile() {
 	if (!empty($_POST)) {
-		foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+		foreach ($_POST as $k => $v) {
+			${$k} = StopXSS($v);
+		}
 	}
 	if (!icms::$security->check()) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 3, implode('<br />', icms::$security->getErrors()));
@@ -623,7 +627,9 @@ function imanager_addfile() {
 
 function imanager_updateimage() {
 	if (!empty($_POST)) {
-		foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+		foreach ($_POST as $k => $v) {
+			${$k} = StopXSS($v);
+		}
 	}
 	if (!icms::$security->check()) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 3, implode('<br />', icms::$security->getErrors()));
@@ -687,7 +693,9 @@ function imanager_updateimage() {
 function imanager_delfileok($image_id, $redir = null) {
 	global $target, $type;
 	if (!empty($_POST)) {
-		foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+		foreach ($_POST as $k => $v) {
+			${$k} = StopXSS($v);
+		}
 	}
 	if (!icms::$security->check()) {
 		redirect_header($_SERVER['SCRIPT_NAME'] . '?op=list&target=' . $target . '&type=' . $type, 3, implode('<br />', icms::$security->getErrors()));

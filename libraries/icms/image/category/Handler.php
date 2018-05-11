@@ -166,16 +166,16 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 		if (isset($storetype)) {
 			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
 		}
-		if ($imgcat_id === null ) {
+		if ($imgcat_id === null) {
 					$imgcat_id = 0;
 				}
 		$criteria->add(new icms_db_criteria_Item('imgcat_pid', $imgcat_id));
 		$categories = $this->getObjects($criteria, true);
 		$ret = array();
-		foreach ( array_keys($categories) as $i) {
+		foreach (array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('imgcat_name');
 			$subcategories = $this->getCategList($groups, $perm, $display, $storetype, $categories[$i]->getVar('imgcat_id'));
-			foreach ( array_keys($subcategories) as $j) {
+			foreach (array_keys($subcategories) as $j) {
 				$ret[$j] = '-' . $subcategories[$j];
 			}
 		}

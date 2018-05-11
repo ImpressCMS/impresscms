@@ -112,7 +112,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 		$IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];
 		if ($IframeRegExp !== '') {
 			$pos = strpos($IframeRegExp, '|');
-			if ($pos === FALSE) {
+			if ($pos === false) {
 				$IframeRegExp = '%^' . $IframeRegExp . '%';
 			} else {
 				$IframeRegExp = '%^(' . $IframeRegExp . ')%';

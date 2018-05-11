@@ -1350,7 +1350,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				}
 			}
 		}
-		return $rows > 0 ? $rows : true;
+		return $rows > 0?$rows:true;
 	}
 
 	/**
