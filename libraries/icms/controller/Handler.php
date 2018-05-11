@@ -82,7 +82,7 @@ class icms_controller_Handler {
 			}
 		} else {
 			$replace_with = array_values($params);
-			$replace_what = array_map(function ($item) {
+			$replace_what = array_map(function($item) {
 				return '{' . $item . '}';
 			}, array_keys($params));
 			$args = str_replace($replace_what, $replace_with, $format);
@@ -120,7 +120,7 @@ class icms_controller_Handler {
 		$reflector = new ReflectionClass($controller);
 
 		$vars = [];
-		$regex = '/' . str_replace('/', '\/', preg_replace_callback('/{([@a-zA-Z0-9]+)}/', function ($matches) use (&$vars) {
+		$regex = '/' . str_replace('/', '\/', preg_replace_callback('/{([@a-zA-Z0-9]+)}/', function($matches) use (&$vars) {
 			$vars[] = $matches[1];
 			return '(.+)';
 		}, $reflector->getConstant('PARAMS_FORMAT'))) . '/';
@@ -128,7 +128,7 @@ class icms_controller_Handler {
 		if (preg_match_all($regex, $string, $matches, PREG_SET_ORDER) > 0) {
 			$name = null;
 			$ret = [];
-			foreach($matches as $match) {
+			foreach ($matches as $match) {
 				foreach ($vars as $o => $var) {
 					if ($var === '@param') {
 						$name = $match[$o + 1];

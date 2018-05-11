@@ -276,15 +276,15 @@ class icms_view_PageBuilder {
 			$template->caching = 2;
 			$template->cache_lifetime = $bcachetime;
 		}
-		$tplName = ($tplName = $xobject->getVar('template')) ? "db:$tplName" : "db:system_block_dummy.html";
+		$tplName = ($tplName = $xobject->getVar('template'))?"db:$tplName":"db:system_block_dummy.html";
 		$cacheid = $this->generateCacheId(
 			'blk_' . $xobject->dirname . '_'
 			. $bid
 		);
 
-		if (! $bcachetime || ! $template->is_cached($tplName, $cacheid)) {
+		if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {
 			icms::$logger->addBlock($xobject->getVar('name'));
-			if (! ($bresult = $xobject->buildBlock())) {
+			if (!($bresult = $xobject->buildBlock())) {
 				return false;
 			}
 			$template->assign('block', $bresult);

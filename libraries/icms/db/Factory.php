@@ -130,13 +130,13 @@ abstract class icms_db_Factory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function instance() {
-		if (self::$xoopsInstance !== FALSE) {
+		if (self::$xoopsInstance !== false) {
 			return self::$xoopsInstance;
 		}
 		$type = getenv('DB_TYPE');
-		$allowWebChanges = defined('XOOPS_DB_PROXY')? FALSE : TRUE;
+		$allowWebChanges = defined('XOOPS_DB_PROXY')? false : true;
 		if (substr($type, 0, 4) == 'pdo.') {
-			if (FALSE === self::$pdoInstance) {
+			if (false === self::$pdoInstance) {
 				self::pdoInstance();
 			}
 			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);

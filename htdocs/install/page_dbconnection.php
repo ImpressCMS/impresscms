@@ -18,58 +18,58 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) ) {
+if (!defined('XOOPS_INSTALL')) {
 	exit();
 }
 
-$wizard->setPage( 'dbconnection' );
+$wizard->setPage('dbconnection');
 $pageHasForm = true;
 $pageHasHelp = true;
 
-$vars =& $_SESSION['settings'];
+$vars = & $_SESSION['settings'];
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
-if (!isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0' )) {
-	$keys = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT' );
-	foreach ( $keys as $k) {
-		$vars[ $k ] = defined( "XOOPS_$k" ) ? constant( "XOOPS_$k" ) : '';
+if (!isset($vars['DB_HOST']) || false !== @strpos($_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0')) {
+	$keys = array('DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT');
+	foreach ($keys as $k) {
+		$vars[$k] = defined("XOOPS_$k")? constant("XOOPS_$k"):'';
 	}
 	$vars['DB_PASS'] = '';
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$params = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS' );
-	foreach ( $params as $name) {
+	$params = array('DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS');
+	foreach ($params as $name) {
 		$vars[$name] = $_POST[$name];
 	}
-	$vars['DB_PCONNECT'] = @$_POST['DB_PCONNECT'] ? 1 : 0;
+	$vars['DB_PCONNECT'] = @$_POST['DB_PCONNECT']?1:0;
 }
 
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty( $vars['DB_HOST'] ) && !empty( $vars['DB_USER'] )) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
 	switch ($vars['DB_TYPE']) {
 		case 'mysql':
-			$func_connect = empty( $vars['DB_PCONNECT'] ) ? "mysql_connect" : "mysql_pconnect";
-			if (! ( $link = @$func_connect( $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true ) )) {
+			$func_connect = empty($vars['DB_PCONNECT'])?"mysql_connect":"mysql_pconnect";
+			if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
 				$error = ERR_NO_DBCONNECTION;
 			}
 		break;
 		case 'pdo.mysql':
 			try {
-				$dbh = new PDO( 'mysql:host='.$vars['DB_HOST'],
+				$dbh = new PDO('mysql:host=' . $vars['DB_HOST'],
 					$vars['DB_USER'],
 					$vars['DB_PASS'],
 					array(
 						PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-						PDO::ATTR_PERSISTENT => !empty( $vars['DB_PCONNECT'] )
+						PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
 					));
-			} catch(PDOException $ex) {
+			} catch (PDOException $ex) {
 				$error = ERR_NO_DBCONNECTION;
 			}
 		break;
 	}
-	if (empty( $error )) {
-		$wizard->redirectToPage( '+1' );
+	if (empty($error)) {
+		$wizard->redirectToPage('+1');
 		exit();
 	}
 }
@@ -90,22 +90,22 @@ if (class_exists("PDO", false)) {
 	$connections['pdo'] = $db_connection;
 }
 
-if (@empty( $vars['DB_HOST'] )) {
-	$vars = array_merge( $vars, array(
+if (@empty($vars['DB_HOST'])) {
+	$vars = array_merge($vars, array(
 		'DB_TYPE'        => $db_connection['type'],
 		'DB_HOST'        => 'localhost',
 		'DB_USER'        => '',
 		'DB_PASS'        => '',
 		'DB_PCONNECT'    => 0,
-	) );
+	));
 
 }
 
 
-function xoFormField( $name, $value, $label, $help = '', $type='text') {
-	$label = htmlspecialchars( $label );
-	$name = htmlspecialchars( $name, ENT_QUOTES );
-	$value = htmlspecialchars( $value, ENT_QUOTES );
+function xoFormField($name, $value, $label, $help = '', $type = 'text') {
+	$label = htmlspecialchars($label);
+	$name = htmlspecialchars($name, ENT_QUOTES);
+	$value = htmlspecialchars($value, ENT_QUOTES);
 
 	$field = "<label for='$name'>$label</label>\n";
 	if ($help) {
@@ -119,7 +119,7 @@ function xoFormField( $name, $value, $label, $help = '', $type='text') {
 
 ob_start();
 ?>
-<?php if (!empty( $error ) ) {
+<?php if (!empty($error)) {
 	echo '<div class="x2-note error">' . $error . "</div>\n";
 }
 ?>

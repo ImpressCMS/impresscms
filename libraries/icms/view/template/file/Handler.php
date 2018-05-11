@@ -76,8 +76,9 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * @return bool TRUE on success, FALSE if fail
 	 */
 	public function forceUpdate(&$tplfile) {
-			if ($tplfile->isNew())
-				return false;
+			if ($tplfile->isNew()) {
+							return false;
+			}
 			return $tplfile->store(true);
 	}
 

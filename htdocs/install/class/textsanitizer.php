@@ -164,38 +164,32 @@ class TextSanitizer {
 		return $text;
 	}
 
-	function makeTboxData4Save($text)
-	{
+	function makeTboxData4Save($text) {
 		//$text = $this->undoHtmlSpecialChars($text);
 		return $this->addSlashes($text);
 	}
 
-	function makeTboxData4Show($text, $smiley = 0)
-	{
+	function makeTboxData4Show($text, $smiley = 0) {
 		$text = $this->htmlSpecialChars($text);
 		return $text;
 	}
 
-	function makeTboxData4Edit($text)
-	{
+	function makeTboxData4Edit($text) {
 		return $this->htmlSpecialChars($text);
 	}
 
-	function makeTboxData4Preview($text, $smiley = 0)
-	{
+	function makeTboxData4Preview($text, $smiley = 0) {
 		$text = $this->stripSlashesGPC($text);
 		$text = $this->htmlSpecialChars($text);
 		return $text;
 	}
 
-	function makeTboxData4PreviewInForm($text)
-	{
+	function makeTboxData4PreviewInForm($text) {
 		$text = $this->stripSlashesGPC($text);
 		return $this->htmlSpecialChars($text);
 	}
 
-	function makeTareaData4Save($text)
-	{
+	function makeTareaData4Save($text) {
 		return $this->addSlashes($text);
 	}
 

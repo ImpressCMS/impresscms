@@ -34,13 +34,13 @@ function textsanitizer_wiki($text) {
  * @param $text
  */
 function wikiLink($text) {
-	if (empty($text) ) {
+	if (empty($text)) {
 		return $text;
 	}
 	$ret = "<a
 		href='" . sprintf(WIKI_LINK, $text) . "'
 		target='_blank'
-		title=''>".$text."</a>";
+		title=''>".$text . "</a>";
 	return $ret;
 }
 

@@ -140,7 +140,7 @@ class icms_module_Object
 		}
 
 		// check if module is active (only if applicable)
-		if ($isactive !== NULL && $this->getVar("isactive") != (int) $isactive) {
+		if ($isactive !== null && $this->getVar("isactive") != (int) $isactive) {
 			return;
 		}
 
@@ -362,7 +362,7 @@ class icms_module_Object
 		$inf = & $this->getInfo();
 		$url = ICMS_MODULES_URL . DIRECTORY_SEPARATOR . $this->dirname . DIRECTORY_SEPARATOR;
 		$rtn = [
-			'link' => $url . (isset($inf['adminindex']) ? $inf['adminindex'] : ''),
+			'link' => $url . (isset($inf['adminindex'])?$inf['adminindex']:''),
 			'title' => $this->getVar('name'),
 			'dir' => $this->dirname,
 			'absolute' => 1,
@@ -387,7 +387,7 @@ class icms_module_Object
 				'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $this->mid
 			];
 		}
-		$rtn['hassubs'] = (count($rtn['subs']) > 0) ? 1 : 0;
+		$rtn['hassubs'] = (count($rtn['subs']) > 0)?1:0;
 		if ($rtn['hassubs'] == 0) {
 			unset($rtn['subs']);
 		}

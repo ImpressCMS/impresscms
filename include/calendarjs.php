@@ -20,21 +20,21 @@ function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
 		// Year
 		'Y' => 'yy', 'y' => 'y',
 	);
-	return strtr((string)$dateFormat, $chars);
+	return strtr((string) $dateFormat, $chars);
 }
 $dateFormatTojQueryUIDatePickerFormat = dateFormatTojQueryUIDatePickerFormat(_SHORTDATESTRING);
 define('_DATEFORMATCHANGED', $dateFormatTojQueryUIDatePickerFormat);
 
-if (_LANGCODE  !== 'en' && file_exists (ICMS_ROOT_PATH.'/language/'.$icmsConfig['language']."/datepicker-" ._LANGCODE. ".js")) {
-	$icmsTheme->addScript(ICMS_URL . "/language/" .$icmsConfig['language']. "/datepicker-" ._LANGCODE. ".js",  array("type" => "text/javascript"));
+if (_LANGCODE !== 'en' && file_exists(ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . "/datepicker-" . _LANGCODE . ".js")) {
+	$icmsTheme->addScript(ICMS_URL . "/language/" . $icmsConfig['language'] . "/datepicker-" . _LANGCODE . ".js", array("type" => "text/javascript"));
 }
 
 
-$time = isset($jstime) ? $jstime : "null";
+$time = isset($jstime)?$jstime:"null";
 $src = ' $(function() {
-$.datepicker.setDefaults($.datepicker.regional["' ._LANGCODE. '"]);
+$.datepicker.setDefaults($.datepicker.regional["' ._LANGCODE . '"]);
 $(".datepick").datepicker({
-dateFormat: "' ._DATEFORMATCHANGED. '",
+dateFormat: "' ._DATEFORMATCHANGED . '",
 showOn: "button",
 buttonImage: "' . ICMS_URL . '/images/calendar.png",
 buttonImageOnly: true,

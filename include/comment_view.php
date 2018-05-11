@@ -74,11 +74,11 @@ $com_mode = '';
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
@@ -151,7 +151,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			if (!empty($com_id) && !empty($com_rootid) && ($com_id != $com_rootid)) {
 				// Show specific thread tree
 				$comments = & $comment_handler->getThread($com_rootid, $com_id);
-				if (FALSE != $comments) {
+				if (false != $comments) {
 					$renderer->setComments($comments);
 					$renderer->renderThreadView($com_id, $admin_view);
 				}

@@ -147,11 +147,11 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	 *
 	 * @return array  list of categories
 	 */
-		public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id=null) {
+		public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id = null) {
 		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
 			$criteriaTray = new icms_db_criteria_Compo();
-			foreach ( $groups as $gid) {
+			foreach ($groups as $gid) {
 				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
@@ -167,8 +167,8 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
 		}
 		if ($imgcat_id === null ) {
-                    $imgcat_id = 0;
-                }
+					$imgcat_id = 0;
+				}
 		$criteria->add(new icms_db_criteria_Item('imgcat_pid', $imgcat_id));
 		$categories = $this->getObjects($criteria, true);
 		$ret = array();

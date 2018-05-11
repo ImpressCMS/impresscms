@@ -18,11 +18,11 @@
  *
  */
 require_once 'common.inc.php';
-if (! defined ( 'XOOPS_INSTALL' )) {
+if (!defined('XOOPS_INSTALL')) {
 	exit ();
 }
 
-$wizard->setPage ( 'dbsettings' );
+$wizard->setPage('dbsettings');
 $pageHasForm = true;
 $pageHasHelp = true;
 
@@ -83,28 +83,28 @@ function quote_sql($sql) {
 	if ($link instanceof PDO) {
 		return $link->quote($sql);
 	} else {
-		return '\'' .mysql_real_escape_string($sql) . '\'';
+		return '\'' . mysql_real_escape_string($sql) . '\'';
 	}
 }
 
 function getDbCharsets($link) {
-	static $charsets = array ( );
+	static $charsets = array( );
 	if ($charsets) {
 		return $charsets;
 	}
 
 	$charsets ["utf8"] = "UTF-8 Unicode";
 	$ut8_available = false;
-	if ($result = exec_query ( "SHOW CHARSET", $link )) {
-		while ($row = fetch_assoc ( $result )) {
+	if ($result = exec_query("SHOW CHARSET", $link)) {
+		while ($row = fetch_assoc($result)) {
 			$charsets [$row ["Charset"]] = $row ["Description"];
 			if ($row ["Charset"] == "utf8") {
 				$ut8_available = true;
 			}
 		}
 	}
-	if (! $ut8_available) {
-		unset ( $charsets ["utf8"] );
+	if (!$ut8_available) {
+		unset ($charsets ["utf8"]);
 	}
 
 	return $charsets;
@@ -328,19 +328,19 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 	}
 	$field .= "<select name='$name' id='$name' onchange=\"setFormFieldCollation('DB_COLLATION_div', this.value)\">";
 	$field .= "<option value=''>None</option>";
-	foreach ( $charsets as $key => $desc) {
-		$field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key} - {$desc}</option>";
+	foreach ($charsets as $key => $desc) {
+		$field .= "<option value='{$key}'" . (($value == $key)?" selected='selected'":"") . ">{$key} - {$desc}</option>";
 	}
 	$field .= "</select></div>";
 
 	return $field;
 }
 
-ob_start ();
+ob_start();
 ?>
 
 <?php
-if (! empty ( $error )) {
+if (!empty ($error)) {
 	echo '<div class="x2-note error">' . $error . "</div>\n";
 }
 ?>

@@ -155,7 +155,7 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 	 */
 	public function beforeSave(&$obj) {
 		if (empty($_POST['options'])) {
-			return TRUE;
+			return true;
 		}
 
 		$options = "";

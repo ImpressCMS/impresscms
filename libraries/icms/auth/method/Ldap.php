@@ -137,7 +137,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 			// The uid is not always in the dn
 			$userDN = $this->getUserDN($uname);
 			if (!$userDN) {
-				return FALSE;
+				return false;
 			}
 			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userDN, stripslashes($pwd));
@@ -145,7 +145,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 				icms::$session->securityLevel = 3;
 				icms::$session->check_ip_blocks = 2;
 				icms::$session->salt_key = getenv('DB_SALT');
-				icms::$session->enableRegenerateId = TRUE;
+				icms::$session->enableRegenerateId = true;
 				icms::$session->sessionOpen();
 				// We load the User database
 				return $this->getMember($userDN, $uname, $pwd);

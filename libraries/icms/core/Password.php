@@ -49,8 +49,9 @@ final class icms_core_Password {
 		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$microtime = function_exists('microtime')? microtime():time();
 		mt_srand((double) $microtime * 1000000);
-		for ($i = 0; $i <= $slength; $i++)
-		$salt .= substr($base, mt_rand(0, $slength) % strlen($base), 1);
+		for ($i = 0; $i <= $slength; $i++) {
+				$salt .= substr($base, mt_rand(0, $slength) % strlen($base), 1);
+		}
 
 		return $salt;
 	}
@@ -235,11 +236,11 @@ final class icms_core_Password {
 		$table = new icms_db_legacy_updater_Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
-		if($table->fieldExists('loginname')) {
+		if ($table->fieldExists('loginname')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE loginname = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
 			list($enc_type) = icms::$xoopsDB->fetchRow($sql);
-		} elseif($table->fieldExists('login_name')) {
+		} elseif ($table->fieldExists('login_name')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE login_name = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
 			list($enc_type) = icms::$xoopsDB->fetchRow($sql);
@@ -267,11 +268,11 @@ final class icms_core_Password {
 		$table = new icms_db_legacy_updater_Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
-		if($table->fieldExists('loginname')) {
+		if ($table->fieldExists('loginname')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE loginname = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
 			list($pass) = icms::$xoopsDB->fetchRow($sql);
-		} elseif($table->fieldExists('login_name')) {
+		} elseif ($table->fieldExists('login_name')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE login_name = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
 			list($pass) = icms::$xoopsDB->fetchRow($sql);
@@ -401,7 +402,7 @@ final class icms_core_Password {
 		$userSalt = self::_getUserSalt($uname); // to be deprecated in future versions
 		$userHash = self::_getUserHash($uname);
 
-		if(preg_match_all("/(\\$)(\\d+)(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
+		if (preg_match_all("/(\\$)(\\d+)(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
 			$encType = (int) $matches[2][0];
 			$iterations = (int) $matches[4][0];
 			$userSalt = $matches[6][0];
@@ -409,7 +410,8 @@ final class icms_core_Password {
 			if (self::_encryptPassword($pass, $userSalt, $encType, $iterations) == $userHash) {
 				return $userHash;
 			}
-		} else { // to be removed in future versions
+		} else {
+// to be removed in future versions
 			$encType = self::_getUserEncType($uname);
 
 			if (self::_encryptPass($pass, $userSalt, $encType) == $userHash) {

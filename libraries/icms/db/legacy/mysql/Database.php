@@ -316,7 +316,9 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @return string
 	 */
 	public function getServerVersion($connection = null) {
-		if (null === $connection) $connection = $this->conn;
+		if (null === $connection) {
+			$connection = $this->conn;
+		}
 		return mysql_get_server_info($connection);
 	}
 }

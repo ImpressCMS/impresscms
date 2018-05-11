@@ -123,10 +123,11 @@ class icms_config_item_Object extends icms_ipf_Object {
 
 			case 'array':
 				$value = $this->conf_value;
-				if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) != ':'))
-					return array();
+				if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) != ':')) {
+									return array();
+				}
 				$value = @unserialize($value);
-				return $value ? $value : array();
+				return $value?$value:array();
 
 			case 'float':
 				$value = $this->conf_value;

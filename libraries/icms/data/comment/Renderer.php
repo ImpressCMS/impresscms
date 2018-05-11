@@ -56,7 +56,7 @@ class icms_data_comment_Renderer {
 	 * @param   boolean $use_icons
 	 * @param   boolean $do_iconcheck
 	 */
-	private function __construct(&$tpl, $use_icons = TRUE, $do_iconcheck = FALSE) {
+	private function __construct(&$tpl, $use_icons = true, $do_iconcheck = false) {
 		$this->_tpl = & $tpl;
 		$this->_useIcons = $use_icons;
 		$this->_doIconCheck = $do_iconcheck;
@@ -133,24 +133,24 @@ class icms_data_comment_Renderer {
 	 * @param boolean $admin_view
 	 * @param boolean $show_nav
 	 */
-	public function renderThreadView($comment_id = 0, $admin_view = FALSE, $show_nav = TRUE) {
+	public function renderThreadView($comment_id = 0, $admin_view = false, $show_nav = true) {
 		// construct comment tree
 		$xot = new icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree = & $xot->getTree();
 
-		if (FALSE != $this->_useIcons) {
+		if (false != $this->_useIcons) {
 			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
 		} else {
 			$title = $tree[$comment_id]['obj']->getVar('com_title');
 		}
-		if (FALSE != $show_nav && $tree[$comment_id]['obj']->getVar('com_pid') != 0) {
+		if (false != $show_nav && $tree[$comment_id]['obj']->getVar('com_pid') != 0) {
 			$this->_tpl->assign('lang_top', _CM_TOP);
 			$this->_tpl->assign('lang_parent', _CM_PARENT);
-			$this->_tpl->assign('show_threadnav', TRUE);
+			$this->_tpl->assign('show_threadnav', true);
 		} else {
-			$this->_tpl->assign('show_threadnav', FALSE);
+			$this->_tpl->assign('show_threadnav', false);
 		}
-		if (FALSE != $admin_view) {
+		if (false != $admin_view) {
 			// admins can see all
 			$text = $tree[$comment_id]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
 				. _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->getVar('com_status')]
@@ -171,7 +171,7 @@ class icms_data_comment_Renderer {
 		}
 		$replies = array();
 		$this->_renderThreadReplies($tree, $comment_id, $replies, '&nbsp;&nbsp;', $admin_view);
-		$show_replies = (count($replies) > 0)? TRUE : FALSE;
+		$show_replies = (count($replies) > 0)? true : false;
 		$this->_tpl->append('comments',
 			array('pid' => $tree[$comment_id]['obj']->getVar('com_pid'),
 				'id' => $tree[$comment_id]['obj']->getVar('com_id'),
@@ -202,12 +202,12 @@ class icms_data_comment_Renderer {
 	private function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '') {
 		if ($depth > 0) {
 			$simple_title = $thread[$key]['obj']->getVar('com_title');
-			if (FALSE != $this->_useIcons) {
+			if (false != $this->_useIcons) {
 				$title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')) . '&nbsp;' . $thread[$key]['obj']->getVar('com_title');
 			} else {
 				$title = $thread[$key]['obj']->getVar('com_title');
 			}
-			$title = (FALSE != $admin_view)?$title . ' ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')]:$title;
+			$title = (false != $admin_view)?$title . ' ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')]:$title;
 			$replies[] = array(
 				'id' => $key,
 				'prefix' => $current_prefix,
@@ -245,15 +245,15 @@ class icms_data_comment_Renderer {
 	 * @param integer $comment_id   Always "0" when called by client.
 	 * @param boolean $admin_view
 	 */
-	public function renderNestView($comment_id = 0, $admin_view = FALSE) {
+	public function renderNestView($comment_id = 0, $admin_view = false) {
 		$xot = new icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree = & $xot->getTree();
-		if (FALSE != $this->_useIcons) {
+		if (false != $this->_useIcons) {
 			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
 		} else {
 			$title = $tree[$comment_id]['obj']->getVar('com_title');
 		}
-		if (FALSE != $admin_view) {
+		if (false != $admin_view) {
 			$text = $tree[$comment_id]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
 				. _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->getVar('com_status')]
 				. '<br />IP: <span style="font-weight: bold;">' . $tree[$comment_id]['obj']->getVar('com_ip') . '</span></div>';
@@ -301,12 +301,12 @@ class icms_data_comment_Renderer {
 	 */
 	private function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0) {
 		if ($depth > 0) {
-			if (FALSE != $this->_useIcons) {
+			if (false != $this->_useIcons) {
 				$title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')) . '&nbsp;' . $thread[$key]['obj']->getVar('com_title');
 			} else {
 				$title = $thread[$key]['obj']->getVar('com_title');
 			}
-			$text = (FALSE != $admin_view)?$thread[$key]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] . '<br />IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_ip') . '</span></div>':$thread[$key]['obj']->getVar('com_text');
+			$text = (false != $admin_view)?$thread[$key]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] . '<br />IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_ip') . '</span></div>':$thread[$key]['obj']->getVar('com_text');
 			$replies[] = array(
 				'id' => $key,
 				'prefix' => $prefix,

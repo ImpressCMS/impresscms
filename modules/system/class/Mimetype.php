@@ -32,11 +32,11 @@ class mod_system_Mimetype extends icms_ipf_Object {
 	 * @param object $handler
 	 */
 	function __construct(&$handler) {
-				$this->initVar('mimetypeid', self::DTYPE_INTEGER, 0, TRUE);
-				$this->initVar('extension', self::DTYPE_STRING, '', TRUE, 60, null, null, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC);
-				$this->initVar('types', self::DTYPE_STRING, '', TRUE, null, null, null, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC);
-				$this->initVar('name', self::DTYPE_STRING, '', TRUE, 255, null, null, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC);
-				$this->initVar('dirname', self::DTYPE_LIST, null, TRUE, null, null, null, _CO_ICMS_MIMETYPE_DIRNAME);
+				$this->initVar('mimetypeid', self::DTYPE_INTEGER, 0, true);
+				$this->initVar('extension', self::DTYPE_STRING, '', true, 60, null, null, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC);
+				$this->initVar('types', self::DTYPE_STRING, '', true, null, null, null, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC);
+				$this->initVar('name', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC);
+				$this->initVar('dirname', self::DTYPE_LIST, null, true, null, null, null, _CO_ICMS_MIMETYPE_DIRNAME);
 
 		parent::__construct($handler);
 

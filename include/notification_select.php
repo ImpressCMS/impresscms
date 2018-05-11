@@ -39,15 +39,15 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
+include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 $xoops_notification = [
-	'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline')) ? 1 : 0
+	'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline'))?1:0
 ];
 
 if ($xoops_notification['show']) {
 	icms_loadLanguageFile('core', 'notification');
 	$notification_handler = icms::handler('icms_data_notification');
-	$categories =& $notification_handler->subscribableCategoryInfo();
+	$categories = & $notification_handler->subscribableCategoryInfo();
 	$event_count = 0;
 	if (!empty($categories)) {
 		foreach ($categories as $category) {

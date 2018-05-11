@@ -53,7 +53,7 @@ $config = array(
 	'height' => '400px',
 	'syntax' => 'html');
 if ($tform['tpl_tplset'] == 'default') {
-	$config["is_editable"] = FALSE;
+	$config["is_editable"] = false;
 }
 $tpl_src = icms_plugins_EditorHandler::getInstance('source')->get($icmsConfig['sourceeditor_default'], $config);
 $tpl_src->setCaption(_MD_FILEHTML);

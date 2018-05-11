@@ -65,12 +65,12 @@ class icms_core_Debug {
 			$pre .= $trace[0]['function'] . ': ';
 		}
 
-		foreach ( $trace as $step) {
+		foreach ($trace as $step) {
 			$level .= '-';
 			if (isset($step['file'])) {
 					$message .= $level . $msg
-						. (isset( $step['class'] ) ? $step['class'] : '')
-						. (isset( $step['type'] ) ? $step['type'] : '' )
+						. (isset($step['class'])?$step['class']:'')
+						. (isset($step['type'])?$step['type']:'')
 						. sprintf(_CORE_DEPRECATED_MSG, $step['function'],
 							str_replace(ICMS_ROOT_PATH, "ROOTPATH", $step['file']),
 							$step['line']

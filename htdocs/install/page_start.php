@@ -17,7 +17,9 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined('XOOPS_INSTALL'))	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
 icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'modules', 0777);
 icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . '.env', 0777);

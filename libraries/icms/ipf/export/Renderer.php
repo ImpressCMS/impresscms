@@ -70,13 +70,13 @@ class icms_ipf_export_Renderer {
 	 * @param str $trim
 	 * @param bool $removeEmptyLines
 	 */
-	public function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = TRUE) {
+	public function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = true) {
 		if (!is_array($dataArray) || empty ($dataArray)) {
 				return '';
 		}
 		switch ($trim) {
 			case 'none' :
-				$trimFunction = FALSE;
+				$trimFunction = false;
 				break;
 
 			case 'left' :
@@ -108,8 +108,9 @@ class icms_ipf_export_Renderer {
 	 * @param str $trimFunction
 	 */
 	public function valToCsvHelper($val, $separator, $trimFunction) {
-		if ($trimFunction)
-		$val = $trimFunction($val);
+		if ($trimFunction) {
+				$val = $trimFunction($val);
+		}
 		//If there is a separator (;) or a quote (") or a linebreak in the string, we need to quote it.
 		$needQuote = false;
 		do {

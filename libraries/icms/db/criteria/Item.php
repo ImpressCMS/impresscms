@@ -104,17 +104,17 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * @return  string
 	 */
 	public function render() {
-		$clause = (!empty($this->prefix) ? "{$this->prefix}." : "") . $this->column;
+		$clause = (!empty($this->prefix)?"{$this->prefix}.":"") . $this->column;
 		if (!empty($this->function)) {
 			$clause = sprintf($this->function, $clause);
 		}
-		if (in_array( strtoupper($this->operator), array('IS NULL', 'IS NOT NULL'))) {
+		if (in_array(strtoupper($this->operator), array('IS NULL', 'IS NOT NULL'))) {
 			$clause .= ' ' . $this->operator;
 		} else {
 						if (is_bool($this->value)) {
-							$value = (int)$this->value;
+							$value = (int) $this->value;
 						} else if (is_object($this->value)) {
-							$value = (string)$this->value;
+							$value = (string) $this->value;
 						} else if (is_array($this->value)) {
 							if (!empty($this->value)) {
 								$value = '(\'' . implode('\', \'', $this->value) . '\')';
@@ -128,7 +128,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 				return '';
 							}
 							if (!in_array(strtoupper($this->operator), array('IN', 'NOT IN'))) {
-									if (( substr($value, 0, 1) != '`' ) && ( substr($value, -1) != '`' )) {
+									if ((substr($value, 0, 1) != '`') && (substr($value, -1) != '`')) {
 											$value = "'$value'";
 									} elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
 											$value = '``';
@@ -182,7 +182,7 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 */
 	public function renderWhere() {
 		$cond = $this->render();
-		return empty($cond) ? '' : "where $cond";
+		return empty($cond)?'':"where $cond";
 	}
 }
 

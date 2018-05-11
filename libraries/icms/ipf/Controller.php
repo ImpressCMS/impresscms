@@ -31,11 +31,14 @@ class icms_ipf_Controller {
 		foreach ($icmsObj->getVarNames() as $key) {
 			// do not post data if control is a label
 			$control = $icmsObj->getControl($key);
-			if (is_array($control) && isset($control['name']) && $control['name'] == "label") continue;
+			if (is_array($control) && isset($control['name']) && $control['name'] == "label") {
+				continue;
+			}
 
 			$data_type = $icmsObj->getVarInfo($key, icms_properties_Handler::VARCFG_DEP_DATA_TYPE);
-			if (!$data_type)
-				$data_type = $icmsObj->getVarInfo($key, icms_properties_Handler::VARCFG_TYPE);
+			if (!$data_type) {
+							$data_type = $icmsObj->getVarInfo($key, icms_properties_Handler::VARCFG_TYPE);
+			}
 
 			switch ($data_type) {
 				case icms_properties_Handler::DTYPE_DEP_IMAGE:
@@ -46,7 +49,9 @@ class icms_ipf_Controller {
 						}
 						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, $_POST['url_' . $key]);
-						if (is_file($oldFile)) unlink($oldFile);
+						if (is_file($oldFile)) {
+							unlink($oldFile);
+						}
 						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
 						if (!$eventResult) {
 							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
@@ -59,7 +64,9 @@ class icms_ipf_Controller {
 						}
 						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, '');
-						if (is_file($oldFile)) unlink($oldFile);
+						if (is_file($oldFile)) {
+							unlink($oldFile);
+						}
 						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
 						if (!$eventResult) {
 							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
@@ -167,10 +174,10 @@ class icms_ipf_Controller {
 							$related_field = str_replace('upload_', '', $name);
 							$uploadedArray[] = $related_field;
 							// if it's a richfile
-                            $var_type = $icmsObj->getVarInfo($related_field, icms_properties_Handler::VARCFG_DEP_DATA_TYPE);
-                            if (!$var_type) {
-                                                            $var_type = $icmsObj->getVarInfo($related_field, icms_properties_Handler::VARCFG_TYPE);
-                            }
+							$var_type = $icmsObj->getVarInfo($related_field, icms_properties_Handler::VARCFG_DEP_DATA_TYPE);
+							if (!$var_type) {
+															$var_type = $icmsObj->getVarInfo($related_field, icms_properties_Handler::VARCFG_TYPE);
+							}
 							if ($var_type == icms_properties_Handler::DTYPE_DEP_FILE) {
 								$object_fileurl = $icmsObj->getUploadDir();
 								$fileObj = $icmsObj->getFileObj($related_field);
@@ -188,7 +195,9 @@ class icms_ipf_Controller {
 								}
 
 								$old_file = $icmsObj->getUploadDir(true) . $icmsObj->getVar($related_field);
-								if (is_file($old_file)) unlink($old_file);
+								if (is_file($old_file)) {
+									unlink($old_file);
+								}
 								$icmsObj->setVar($related_field, $uploaderObj->getSavedFileName());
 
 								$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);

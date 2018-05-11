@@ -204,14 +204,14 @@ class icms_core_Session {
 	 */
 	public function update_cookie($sess_id = null, $expire = null) {
 		global $icmsConfig;
-		$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
+		$secure = substr(ICMS_URL, 0, 5) == 'https'?1:0; // we need to secure cookie when using SSL
 		$session_name = ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '')
-				? $icmsConfig['session_name'] : session_name();
-		$session_expire = $expire !== null ? (int) $expire
+				?$icmsConfig['session_name']:session_name();
+		$session_expire = $expire !== null?(int) $expire
 				: (($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '')
-					? $icmsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime'));
-		$session_id = empty($sess_id) ? session_id() : $sess_id;
-		setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', $secure, 0);
+					?$icmsConfig['session_expire'] * 60:ini_get('session.cookie_lifetime'));
+		$session_id = empty($sess_id)? session_id():$sess_id;
+		setcookie($session_name, $session_id, $session_expire? time() + $session_expire:0, '/', '', $secure, 0);
 	}
 
 	/**

@@ -39,19 +39,19 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 */
 	protected $rowCount = 0;
 
-	public function __construct($connection, $allowWebChanges = FALSE) {
+	public function __construct($connection, $allowWebChanges = false) {
 		parent::__construct($connection, $allowWebChanges);
 		$this->pdo = $connection;
 		$this->conn = & $this->pdo; // only for legacy support
 	}
 
-	public function connect($selectdb = TRUE) {
-		return TRUE;
+	public function connect($selectdb = true) {
+		return true;
 	}
 
 	public function close() {
-		$this->pdo = NULL;
-		return TRUE;
+		$this->pdo = null;
+		return true;
 	}
 
 	public function quoteString($string) {
@@ -105,9 +105,11 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 		try {
 			$result = $this->pdo->query($sql);
-			if ($result) {   // added by claudia, ImpressCMS.org
+			if ($result) {
+// added by claudia, ImpressCMS.org
 			$this->rowCount = $result->rowCount();
-			} else { // added by claudia, ImpressCMS.org
+			} else {
+// added by claudia, ImpressCMS.org
 				$this->rowCount = FALSE; // added by claudia, ImpressCMS.org
 			} // added by claudia, ImpressCMS.org
 		} catch (Exception $e) {
@@ -280,8 +282,8 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 * @param obj $connection	A MySQL database connection link
 	 * @return mixed
 	 */
-	public function getServerVersion($connection = NULL) {
-		if (NULL === $connection) {
+	public function getServerVersion($connection = null) {
+		if (null === $connection) {
 			$connection = $this->pdo;
 		}
 		return $connection->getAttribute(PDO::ATTR_SERVER_VERSION);

@@ -48,7 +48,9 @@ if (!preg_match('?' . preg_quote(ICMS_ROOT_PATH, '?') . '(/common/)?', $_SERVER[
 
 	// get cookie path
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH')? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
-	if ($xoops_cookie_path == ICMS_URL) $xoops_cookie_path = '/';
+	if ($xoops_cookie_path == ICMS_URL) {
+		$xoops_cookie_path = '/';
+	}
 
 	// deciding the current language (the priority is important)
 	$easiestml_langs = explode(',', EASIESTML_LANGS);

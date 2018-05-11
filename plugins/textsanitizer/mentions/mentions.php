@@ -35,13 +35,13 @@ function mentions($text, $prefix) {
 		return $text;
 	}
 	icms_loadLanguageFile("core", "user");
-	$userHandler =& icms::handler('icms_member');
+	$userHandler = & icms::handler('icms_member');
 	$criteria = new icms_db_criteria_Item('uname', $text);
 	$userId = $userHandler->getUsers($criteria);
 	if (!$userId) {
 		return $prefix . "@" . $text;
 	}
-	$ret = $prefix . "<a href='" . sprintf(MENTIONS_LINK, $userId[0]->getVar('uid')) . "' title='" . sprintf(_US_ALLABOUT, $text) ."'>@" . $text . "</a>";
+	$ret = $prefix . "<a href='" . sprintf(MENTIONS_LINK, $userId[0]->getVar('uid')) . "' title='" . sprintf(_US_ALLABOUT, $text) . "'>@" . $text . "</a>";
 	return $ret;
 }
 

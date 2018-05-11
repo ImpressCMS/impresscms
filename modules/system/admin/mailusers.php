@@ -155,7 +155,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			}
 			$member_handler = icms::handler('icms_member');
 			$groups = empty($_POST['mail_to_group'])?array():array_map('intval', $_POST['mail_to_group']);
-			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, TRUE);
+			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
 			$count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
 			foreach ($getusers as $getuser) {
 				if (!in_array($getuser->getVar("uid"), $added_id)) {

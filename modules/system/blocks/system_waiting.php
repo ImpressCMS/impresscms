@@ -34,28 +34,28 @@ function b_system_waiting_show($options) {
 	$block = array();
 
 	// get module's list installed
-	$mod_lists = $module_handler->getList(new icms_db_criteria_Item(1,1),true);
+	$mod_lists = $module_handler->getList(new icms_db_criteria_Item(1, 1), true);
 	foreach ($mod_lists as $dirname => $name) {
 
-		$plugin_info = system_get_plugin_info($dirname , $icmsConfig['language']) ;
+		$plugin_info = system_get_plugin_info($dirname, $icmsConfig['language']);
 		if (empty($plugin_info) || empty($plugin_info['plugin_path'])) {
-			continue ;
+			continue;
 		}
 
-		if (! empty($plugin_info['langfile_path'])) {
-			include_once $plugin_info['langfile_path'] ;
+		if (!empty($plugin_info['langfile_path'])) {
+			include_once $plugin_info['langfile_path'];
 		}
-		include_once $plugin_info['plugin_path'] ;
+		include_once $plugin_info['plugin_path'];
 
 		// call the plugin
 		if (function_exists(@$plugin_info['func'])) {
 			// get the list of waitings
-			$_tmp = call_user_func($plugin_info['func'] , $dirname) ;
+			$_tmp = call_user_func($plugin_info['func'], $dirname);
 			if (isset($_tmp["lang_linkname"])) {
 				if (@$_tmp["pendingnum"] > 0 || $options[0] > 0) {
 					$block["modules"][$dirname]["pending"][] = $_tmp;
 				}
-				unset($_tmp) ;
+				unset($_tmp);
 			} else {
 				// Judging the plugin returns multiple items
 				// if lang_linkname does not exist
@@ -69,24 +69,24 @@ function b_system_waiting_show($options) {
 
 		// for older compatibilities
 		// Hacked by GIJOE
-		$i = 0 ;
+		$i = 0;
 		while (1) {
-			$function_name = "b_waiting_{$dirname}_$i" ;
+			$function_name = "b_waiting_{$dirname}_$i";
 			if (function_exists($function_name)) {
-				$_tmp = call_user_func($function_name) ;
-				++ $i ;
+				$_tmp = call_user_func($function_name);
+				++$i;
 				if ($_tmp["pendingnum"] > 0 || $options[0] > 0) {
 					$block["modules"][$dirname]["pending"][] = $_tmp;
 				}
 				unset($_tmp);
 			} else {
-				break ;
+				break;
 			}
 		}
 		// End of Hack
 
 		// if (count($block["modules"][$dirname]) > 0) {
-		if (! empty($block["modules"][$dirname])) {
+		if (!empty($block["modules"][$dirname])) {
 			$block["modules"][$dirname]["name"] = $name;
 		}
 	}

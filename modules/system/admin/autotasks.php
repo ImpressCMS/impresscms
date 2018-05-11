@@ -49,12 +49,12 @@ function editautotasks($showmenu = false, $autotasksid = 0, $clone = false) {
 switch ($op) {
 		case "mod":
 
-			$autotasksid = isset($sat_id) ? (int) ($sat_id) : 0;
+			$autotasksid = isset($sat_id)?(int) ($sat_id):0;
 			editautotasks(TRUE, $autotasksid);
 			break;
 
 		case "clone":
-			$autotasksid = isset($sat_id) ? (int) ($sat_id) : 0;
+			$autotasksid = isset($sat_id)?(int) ($sat_id):0;
 			editautotasks(TRUE, $autotasksid, TRUE);
 			break;
 
@@ -71,8 +71,8 @@ switch ($op) {
 		default:
 			icms_cp_header();
 
-			$objectTable = new icms_ipf_view_Table($icms_admin_handler, FALSE, array('edit'));
-			$objectTable->addColumn(new icms_ipf_view_Column('sat_name', 'left', FALSE, 'getNameForDisplay'));
+			$objectTable = new icms_ipf_view_Table($icms_admin_handler, false, array('edit'));
+			$objectTable->addColumn(new icms_ipf_view_Column('sat_name', 'left', false, 'getNameForDisplay'));
 			$objectTable->addColumn(new icms_ipf_view_Column('sat_repeat', 'center', 80, 'getRepeatForDisplay'));
 			$objectTable->addColumn(new icms_ipf_view_Column('sat_interval', 'center', 80, 'getIntervalForDisplay'));
 			$objectTable->addColumn(new icms_ipf_view_Column('sat_enabled', 'center', 80, 'getEnableForDisplay'));

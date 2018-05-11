@@ -105,9 +105,9 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 				$imgcat = & $imgcat_handler->get($k);
 				$storetype = $imgcat->getVar('imgcat_storetype');
 				if ($storetype == 'db') {
-					$images = & $image_handler->getObjects($criteria, FALSE, TRUE);
+					$images = & $image_handler->getObjects($criteria, false, true);
 				} else {
-					$images = & $image_handler->getObjects($criteria, FALSE, FALSE);
+					$images = & $image_handler->getObjects($criteria, false, false);
 				}
 				foreach ($images as $i) {
 					if ($storetype == "db") {

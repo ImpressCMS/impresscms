@@ -47,8 +47,7 @@
  * displayes xoopsCode buttons and target textarea to which xoopscodes are inserted
  * $textarea_id is a unique id of the target textarea
  */
-function xoopsCodeTarea($textarea_id, $cols = 60, $rows = 15, $suffix = null)
-{
+function xoopsCodeTarea($textarea_id, $cols = 60, $rows = 15, $suffix = null) {
 	trigger_error('This is not used anywhere in the core', E_USER_DEPRECATED);
 
 	$hiddentext = isset($suffix)?'xoopsHiddenText' . trim($suffix):'xoopsHiddenText';

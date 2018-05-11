@@ -31,7 +31,9 @@ class IcmsAutoTasksAt extends icms_sys_autotasks_System {
 	 * @return bool				returns true if start was succesfull
 	 */
 	function start(int $interval) {
-		if ($this->isEnabled()) $this->stop();
+		if ($this->isEnabled()) {
+			$this->stop();
+		}
 		$rez = shell_exec('at ' . date('H:i', time() + $interval * 60 + 10) . ' ' . $this->getCommandLine());
 		return (substr($rez, 0, 5) == 'Added');
 	}
@@ -42,7 +44,9 @@ class IcmsAutoTasksAt extends icms_sys_autotasks_System {
 	 */
 	function stop() {
 		$id = $this->getProcessId();
-		if ($id < 0) return false;
+		if ($id < 0) {
+			return false;
+		}
 		$rez = shell_exec('at ' . $id . ' /DELETE');
 		return true;
 	}
@@ -94,8 +98,12 @@ class IcmsAutoTasksAt extends icms_sys_autotasks_System {
 		for ($i = 2; $i < $count[0]; $i++) {
 			$id		= (int) trim(substr($rez[$i], $pos[1], $pos[2] - $pos[1]));
 			$cmd	= str_replace(array('\\/', '/\\'), array('\\', '\\'), substr($rez[$i], $pos[$count[1] - 1]));
-			if ($cmd == '"' . $cmd_to_find . '"') return $id;
-			if ($cmd == $cmd_to_find) return $id;
+			if ($cmd == '"' . $cmd_to_find . '"') {
+				return $id;
+			}
+			if ($cmd == $cmd_to_find) {
+				return $id;
+			}
 		}
 		return -2;
 	}

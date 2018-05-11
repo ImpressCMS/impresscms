@@ -22,15 +22,15 @@ function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
 		// Year
 		'Y' => 'yy', 'y' => 'y',
 	);
-	return strtr((string)$dateFormat, $chars);
+	return strtr((string) $dateFormat, $chars);
 }
 $dateFormatTojQueryUIDatePickerFormat = dateFormatTojQueryUIDatePickerFormat(_SHORTDATESTRING);
 define('_DATEFORMATCHANGED', $dateFormatTojQueryUIDatePickerFormat);
 
-$time = isset($jstime) ? $jstime : "null";
+$time = isset($jstime)?$jstime:"null";
 $src = ' $(function() {
 $(".datepick").datepicker({
-dateFormat: "' ._DATEFORMATCHANGED. '",
+dateFormat: "' ._DATEFORMATCHANGED . '",
 showOn: "button",
 buttonImage: "' . ICMS_URL . '/images/calendar.png",
 buttonImageOnly: true,

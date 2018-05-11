@@ -126,12 +126,16 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 	}
 
 	function getCronTabValue($number) {
-		if ($number == 0) return '*';
+		if ($number == 0) {
+			return '*';
+		}
 		return '*/' . $number;
 	}
 
 	function getNormalValue($crontab_number) {
-		if ($crontab_number == '*') return 0;
+		if ($crontab_number == '*') {
+			return 0;
+		}
 		return (int) (substr($crontab_number, 2));
 	}
 
@@ -221,7 +225,9 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 	 */
 	function readCronTab() {
 		exec($this->getCronCommandLine() . " -l 2>&1", $crons, $return);
-		if ($return != 0) return false;
+		if ($return != 0) {
+			return false;
+		}
 
 		foreach ($crons as $line) {
 			$line = trim($line); // discarding all prepending spaces and tabs

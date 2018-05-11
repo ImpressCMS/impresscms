@@ -63,7 +63,7 @@ $fct = $op = "";
 
 /* filter the user input */
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 

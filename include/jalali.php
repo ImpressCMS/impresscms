@@ -61,11 +61,13 @@ function gregorian_to_jalali($g_y, $g_m, $g_d) {
 
 	$g_day_no = 365 * $gy + div($gy + 3, 4) - div($gy + 99, 100) + div($gy + 399, 400);
 
-	for ($i = 0; $i < $gm; ++$i)
-	$g_day_no += $g_days_in_month[$i];
-	if ($gm > 1 && (($gy % 4 == 0 && $gy % 100 != 0) || ($gy % 400 == 0)))
-	/* leap and after Feb */
+	for ($i = 0; $i < $gm; ++$i) {
+		$g_day_no += $g_days_in_month[$i];
+	}
+	if ($gm > 1 && (($gy % 4 == 0 && $gy % 100 != 0) || ($gy % 400 == 0))) {
+		/* leap and after Feb */
 	$g_day_no++;
+	}
 	$g_day_no += $gd;
 
 	$j_day_no = $g_day_no - 79;
@@ -82,8 +84,9 @@ function gregorian_to_jalali($g_y, $g_m, $g_d) {
 		$j_day_no = ($j_day_no - 1) % 365;
 	}
 
-	for ($i = 0; $i < 11 && $j_day_no >= $j_days_in_month[$i]; ++$i)
-	$j_day_no -= $j_days_in_month[$i];
+	for ($i = 0; $i < 11 && $j_day_no >= $j_days_in_month[$i]; ++$i) {
+		$j_day_no -= $j_days_in_month[$i];
+	}
 	$jm = $i + 1;
 	$jd = $j_day_no + 1;
 
@@ -107,8 +110,9 @@ function jalali_to_gregorian($j_y, $j_m, $j_d) {
 	$jd = $j_d - 1;
 
 	$j_day_no = 365 * $jy + div($jy, 33) * 8 + div($jy % 33 + 3, 4);
-	for ($i = 0; $i < $jm; ++$i)
-	$j_day_no += $j_days_in_month[$i];
+	for ($i = 0; $i < $jm; ++$i) {
+		$j_day_no += $j_days_in_month[$i];
+	}
 
 	$j_day_no += $jd;
 
@@ -118,16 +122,19 @@ function jalali_to_gregorian($j_y, $j_m, $j_d) {
 	$g_day_no = $g_day_no % 146097;
 
 	$leap = true;
-	if ($g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */
+	if ($g_day_no >= 36525) {
+		/* 36525 = 365*100 + 100/4 */
 	{
 	 $g_day_no--;
+	}
 	 $gy += 100 * div($g_day_no, 36524); /* 36524 = 365*100 + 100/4 - 100/100 */
 	 $g_day_no = $g_day_no % 36524;
 
-	 if ($g_day_no >= 365)
-		$g_day_no++;
-	 else
-		$leap = false;
+	 if ($g_day_no >= 365) {
+	 		$g_day_no++;
+	 } else {
+	 		$leap = false;
+	 }
 	}
 
 	$gy += 4 * div($g_day_no, 1461); /* 1461 = 365*4 + 4/4 */
@@ -141,8 +148,9 @@ function jalali_to_gregorian($j_y, $j_m, $j_d) {
 	 $g_day_no = $g_day_no % 365;
 	}
 
-	for ($i = 0; $g_day_no >= $g_days_in_month[$i] + ($i == 1 && $leap); $i++)
-	$g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap);
+	for ($i = 0; $g_day_no >= $g_days_in_month[$i] + ($i == 1 && $leap); $i++) {
+		$g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap);
+	}
 	$gm = $i + 1;
 	$gd = $g_day_no + 1;
 
@@ -177,19 +185,20 @@ function lastday($month, $day, $year) {
 	$lastdayen = date('d', mktime(0, 0, 0, $month + 1, 0, $year));
 	list($jyear, $jmonth, $jday) = gregorian_to_jalali($year, $month, $day);
 	$lastdatep = $jday;
-	while ($jday != '1')
-	{
-		if ($day < $lastdayen)
-		{
+	while ($jday != '1') {
+		if ($day < $lastdayen) {
 			$day++;
 			list($jyear, $jmonth, $jday) = gregorian_to_jalali($year, $month, $day);
-			if ($jday == '1') break;
-			if ($jday = '1') $lastdatep++;
+			if ($jday == '1') {
+				break;
+			}
+			if ($jday = '1') {
+				$lastdatep++;
+			}
 		} else {
 			$day = 0;
 			$month++;
-			if ($month == 13)
-			{
+			if ($month == 13) {
 				$month = '1';
 				$year++;
 			}
@@ -253,38 +262,53 @@ function jdate($type, $maket = 'now') {
 	$month = date('m', $need);
 	$day = date('d', $need);
 	$i = 0;
-	while ($i < strlen($type))
-	{
+	while ($i < strlen($type)) {
 		$subtype = substr($type, $i, 1);
-		switch ($subtype)
-		{
+		switch ($subtype) {
 
 			case 'A':
 				$result1 = date('a', $need);
-				if ($result1 == 'pm') $result .= _CAL_PM_LONG;
-				else $result .= _CAL_AM_LONG;
+				if ($result1 == 'pm') {
+					$result .= _CAL_PM_LONG;
+				} else {
+					$result .= _CAL_AM_LONG;
+				}
 				break;
 
 			case 'a':
 				$result1 = date('a', $need);
-				if ($result1 == 'pm') $result .= _CAL_PM;
-				else $result .= _CAL_AM;
+				if ($result1 == 'pm') {
+					$result .= _CAL_PM;
+				} else {
+					$result .= _CAL_AM;
+				}
 				break;
 			case 'd':
 				list($jyear, $jmonth, $jday) = gregorian_to_jalali($year, $month, $day);
-				if ($jday < 10)$result1 = '0' . $jday;
-				else 	$result1 = $jday;
+				if ($jday < 10) {
+					$result1 = '0' . $jday;
+				} else {
+					$result1 = $jday;
+				}
 				$result .= $result1;
 				break;
 			case 'D':
 				$result1 = date('D', $need);
-				if ($result1 == 'Sat') $result1 = _CAL_SAT;
-				else if ($result1 == 'Sun') $result1 = _CAL_SUN;
-				else if ($result1 == 'Mon') $result1 = _CAL_MON;
-				else if ($result1 == 'Tue') $result1 = _CAL_TUE;
-				else if ($result1 == 'Wed') $result1 = _CAL_WED;
-				else if ($result1 == 'Thu') $result1 = _CAL_THU;
-				else if ($result1 == 'Fri') $result1 = _CAL_FRI;
+				if ($result1 == 'Sat') {
+					$result1 = _CAL_SAT;
+				} else if ($result1 == 'Sun') {
+					$result1 = _CAL_SUN;
+				} else if ($result1 == 'Mon') {
+					$result1 = _CAL_MON;
+				} else if ($result1 == 'Tue') {
+					$result1 = _CAL_TUE;
+				} else if ($result1 == 'Wed') {
+					$result1 = _CAL_WED;
+				} else if ($result1 == 'Thu') {
+					$result1 = _CAL_THU;
+				} else if ($result1 == 'Fri') {
+					$result1 = _CAL_FRI;
+				}
 				$result .= $result1;
 				break;
 			case'F':
@@ -312,19 +336,30 @@ function jdate($type, $maket = 'now') {
 				break;
 			case 'l':
 				$result1 = date('l', $need);
-				if ($result1 == 'Saturday') $result1 = _CAL_SATURDAY;
-				else if ($result1 == 'Sunday') $result1 = _CAL_SUNDAY;
-				else if ($result1 == 'Monday') $result1 = _CAL_MONDAY;
-				else if ($result1 == 'Tuesday') $result1 = _CAL_TUESDAY;
-				else if ($result1 == 'Wednesday') $result1 = _CAL_WEDNESDAY;
-				else if ($result1 == 'Thursday') $result1 = _CAL_THURSDAY;
-				else if ($result1 == 'Friday') $result1 = _CAL_FRIDAY;
+				if ($result1 == 'Saturday') {
+					$result1 = _CAL_SATURDAY;
+				} else if ($result1 == 'Sunday') {
+					$result1 = _CAL_SUNDAY;
+				} else if ($result1 == 'Monday') {
+					$result1 = _CAL_MONDAY;
+				} else if ($result1 == 'Tuesday') {
+					$result1 = _CAL_TUESDAY;
+				} else if ($result1 == 'Wednesday') {
+					$result1 = _CAL_WEDNESDAY;
+				} else if ($result1 == 'Thursday') {
+					$result1 = _CAL_THURSDAY;
+				} else if ($result1 == 'Friday') {
+					$result1 = _CAL_FRIDAY;
+				}
 				$result .= $result1;
 				break;
 			case 'm':
 				list($jyear, $jmonth, $jday) = gregorian_to_jalali($year, $month, $day);
-				if ($jmonth < 10) $result1 = '0' . $jmonth;
-				else	$result1 = $jmonth;
+				if ($jmonth < 10) {
+					$result1 = '0' . $jmonth;
+				} else {
+					$result1 = $jmonth;
+				}
 				$result .= $result1;
 				break;
 			case 'M':

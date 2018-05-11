@@ -65,7 +65,7 @@ class icms_ipf_export_Handler {
 		 *
 		 * @var bool|array
 		 */
-	public $outputMethods=false;
+	public $outputMethods = false;
 
 		/**
 		 * Fields data should not be included in generated result

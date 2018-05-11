@@ -87,7 +87,7 @@ class icms_auth_method_Ads extends icms_auth_method_Ldap {
 			// The uid is not always in the dn
 			$userUPN = $this->getUPN($uname);
 			if (!$userUPN) {
-				return FALSE;
+				return false;
 			}
 			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userUPN, $this->cp1252_to_utf8(stripslashes($pwd)));

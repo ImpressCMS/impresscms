@@ -28,16 +28,16 @@ class IcmsSourceEditorCodeMirror extends icms_form_elements_Textarea {
 	 */
 	function __construct($configs, $checkCompatible = false) {
 		$current_path = __FILE__;
-		if (DIRECTORY_SEPARATOR != "/" ) {
-			$current_path = str_replace(strpos($current_path, "\\\\", 2) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
+		if (DIRECTORY_SEPARATOR != "/") {
+			$current_path = str_replace(strpos($current_path, "\\\\", 2)?"\\\\":DIRECTORY_SEPARATOR, "/", $current_path);
 		}
 		$this->rootpath = substr(dirname($current_path), strlen(ICMS_ROOT_PATH));
 
-		if(is_array($configs)) {
+		if (is_array($configs)) {
 			$vars = array_keys(get_object_vars($this));
 			foreach ($configs as $key => $val) {
-				if (in_array("_".$key, $vars)) {
-					$this->{"_".$key} = $val;
+				if (in_array("_" . $key, $vars)) {
+					$this->{"_" . $key} = $val;
 				} elseif (in_array($key, array('name', 'value'))) {
 					$method = "set" . ucfirst($key);
 					$this->$method($val);

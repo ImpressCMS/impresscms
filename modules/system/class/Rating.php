@@ -47,7 +47,7 @@ class mod_system_Rating extends icms_ipf_Object {
 		$this->setControl('uid', 'user');
 		$this->setControl('rate', array('method' => 'getRateList'));
 
-                parent::__construct($handler);
+				parent::__construct($handler);
 	}
 
 	/**

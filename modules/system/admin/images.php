@@ -165,8 +165,8 @@ function imanager_index($imgcat_id = null) {
 		$groups = array(ICMS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& icms::$user->getGroups();
-		$admin = (!icms::$user->isAdmin(1)) ? false : true;
+		$groups = & icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1))? false : true;
 	}
 
 	if (!is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
@@ -186,9 +186,9 @@ function imanager_index($imgcat_id = null) {
 		$criteriaRead->add(new icms_db_criteria_Item('gperm_name', 'imgcat_read'));
 		$criteriaRead->add(new icms_db_criteria_Item('gperm_modid', 1));
 	}
-	$id = (null !== $imgcat_id ? $imgcat_id : 0);
+	$id = (null !== $imgcat_id?$imgcat_id:0);
 	$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $id));
-	$imagecategorys =& $imgcat_handler->getObjects($criteriaRead);
+	$imagecategorys = & $imgcat_handler->getObjects($criteriaRead);
 	$criteriaWrite = new icms_db_criteria_Compo();
 	if (is_array($groups) && !empty($groups)) {
 		$criteriaWrite->add($criteriaTray);
@@ -251,9 +251,9 @@ function imanager_index($imgcat_id = null) {
 			$criteriaRead->add(new icms_db_criteria_Item('gperm_name', 'imgcat_read'));
 			$criteriaRead->add(new icms_db_criteria_Item('gperm_modid', 1));
 		}
-		$id = (null !== $imgcat_id ? $imgcat_id : 0);
+		$id = (null !== $imgcat_id?$imgcat_id:0);
 		$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategorys[$i]->getVar('imgcat_id')));
-		$subs[$i]  = count($imgcat_handler->getObjects($criteriaRead));
+		$subs[$i] = count($imgcat_handler->getObjects($criteriaRead));
 	}
 	$hasnwrite = implode(', ', $hasnwrite);
 	$scount = array();
@@ -268,7 +268,7 @@ function imanager_index($imgcat_id = null) {
 			$criteriaRead->add(new icms_db_criteria_Item('gperm_name', 'imgcat_read'));
 			$criteriaRead->add(new icms_db_criteria_Item('gperm_modid', 1));
 		}
-		$id = (null !== $imgcat_id ? $imgcat_id : 0);
+		$id = (null !== $imgcat_id?$imgcat_id:0);
 		$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategorys[$k]->getVar('imgcat_id')));
 		$ssubs = $imgcat_handler->getObjects($criteriaRead);
 		$sc = 0;
@@ -359,17 +359,17 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$groups = array(ICMS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& icms::$user->getGroups();
-		$admin = (!icms::$user->isAdmin(1)) ? false : true;
+		$groups = & icms::$user->getGroups();
+		$admin = (!icms::$user->isAdmin(1))? false : true;
 	}
 
-	$query = !empty($query) ? $query : null;
+	$query = !empty($query)?$query:null;
 
 	if ($imgcat_id <= 0) {
 		redirect_header('admin.php?fct=images', 1, '');
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = & $imgcat_handler->get($imgcat_id);
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	$categ_url  = $imgcat_handler->getCategFolder($imagecategory, 1, 'url');
 	if (!is_object($imagecategory)) {
@@ -433,7 +433,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$criteriaRead->add(new icms_db_criteria_Item('gperm_name', 'imgcat_read'));
 		$criteriaRead->add(new icms_db_criteria_Item('gperm_modid', 1));
 	}
-	$id = (null !== $imgcat_id ? $imgcat_id : 0);
+	$id = (null !== $imgcat_id?$imgcat_id:0);
 	$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategory->getVar('imgcat_id')));
 	$ssubs = $imgcat_handler->getObjects($criteriaRead);
 	$sc = 0;
@@ -473,7 +473,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	$criteria->setOrder('DESC');
 	$criteria->setSort('image_weight');
 	$criteria->setLimit($limit);
-	$images =& $image_handler->getObjects($criteria, true, true);
+	$images = & $image_handler->getObjects($criteria, true, true);
 
 	$icmsAdminTpl->assign('imgcount', $imgcount);
 
@@ -762,19 +762,19 @@ function imanager_delcatok($imgcat_id) {
 		redirect_header('admin.php?fct=images', 1, '1');
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = & $imgcat_handler->get($imgcat_id);
 
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1, '2');
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
-	$categ_path = (substr($categ_path, -1) != '/') ? $categ_path . '/' : $categ_path;
+	$categ_path = (substr($categ_path, -1) != '/')?$categ_path . '/':$categ_path;
 	if ($imagecategory->getVar('imgcat_type') != 'C') {
 		redirect_header('admin.php?fct=images', 1, _MD_SCATDELNG);
 	}
 
 	$image_handler = icms::handler('icms_image');
-	$images =& $image_handler->getObjects(new icms_db_criteria_Item('imgcat_id', $imgcat_id), true, false);
+	$images = & $image_handler->getObjects(new icms_db_criteria_Item('imgcat_id', $imgcat_id), true, false);
 
 	$errors = array();
 
@@ -1059,20 +1059,20 @@ function imanager_clone() {
 	global $imgcat_id, $image_nicename, $image_display, $image_weight, $image_id;
 
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = & $imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1);
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 
 	$image_handler = icms::handler('icms_image');
-	$image =& $image_handler->get($image_id);
-	if (($ext = strrpos($image->getVar('image_name'), '.' )) !== false) {
-		$ext = strtolower(substr($image->getVar('image_name'), $ext + 1 ));
+	$image = & $image_handler->get($image_id);
+	if (($ext = strrpos($image->getVar('image_name'), '.')) !== false) {
+		$ext = strtolower(substr($image->getVar('image_name'), $ext + 1));
 	}
 
 	$imgname = 'img' . icms_random_str(12) . '.' . $ext;
-	$newimg =& $image_handler->create();
+	$newimg = & $image_handler->create();
 	$newimg->setVar('image_name', $imgname);
 	$newimg->setVar('image_nicename', $image_nicename);
 	$newimg->setVar('image_mimetype', $image->getVar('image_mimetype'));
@@ -1117,7 +1117,7 @@ function imanager_clone() {
  * @param str $style
  * @return str
  */
-function adminNav($id = null, $separador = "/", $list = false, $style="style='font-weight:bold'") {
+function adminNav($id = null, $separador = "/", $list = false, $style = "style='font-weight:bold'") {
 	$admin_url = ICMS_MODULES_URL . "/system/admin.php?fct=images";
 	if ($id === false) {
 		return false;

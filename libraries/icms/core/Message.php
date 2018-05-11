@@ -33,7 +33,7 @@ class icms_core_Message {
 	 * @param 		string $title
 	 * @param 		boolean $render
 	 */
-	static public function warning($msg, $title = '', $render = FALSE) {
+	static public function warning($msg, $title = '', $render = false) {
 		$ret = '<div class="warningMsg alert alert-warning" role="alert">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';

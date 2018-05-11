@@ -1,6 +1,5 @@
 <?php
-function b_waiting_mydownloads()
-{
+function b_waiting_mydownloads() {
 	$ret = array();
 
 	// mydownloads links

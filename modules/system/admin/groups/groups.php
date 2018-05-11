@@ -141,7 +141,7 @@ function modifyGroup($g_id) {
 		$icmsAdminTpl->assign("groupid", $thisgroup->getVar("groupid"));
 		// do the old way only when counts are small
 		$mlist = array();
-		$members = & $member_handler->getUsersByGroup($g_id, FALSE);
+		$members = & $member_handler->getUsersByGroup($g_id, false);
 		if (count($members) > 0) {
 			$member_criteria = new icms_db_criteria_Item('uid', "(" . implode(',', $members) . ")", "IN");
 			$member_criteria->setSort('uname');
@@ -162,7 +162,7 @@ function modifyGroup($g_id) {
 					$icmsAdminTpl->assign("multiple", $multiple);
 				}
 		} else {
-			$members = & $member_handler->getUsersByGroup($g_id, FALSE, 200, $memstart);
+			$members = & $member_handler->getUsersByGroup($g_id, false, 200, $memstart);
 			$mlist = array();
 			if (count($members) > 0) {
 				$member_criteria = new icms_db_criteria_Item('uid', "(" . implode(',', $members) . ")", "IN");

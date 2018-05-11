@@ -1,6 +1,5 @@
 <?php
-function b_waiting_mylinks()
-{
+function b_waiting_mylinks() {
 	$ret = array();
 
 	// mylinks links

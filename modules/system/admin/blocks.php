@@ -131,7 +131,7 @@ $valid_op = array(
  * are case sensitive and the 3rd argument determines whether type matching is
  * required
  */
-if (in_array($clean_op, $valid_op, TRUE)) {
+if (in_array($clean_op, $valid_op, true)) {
 	switch ($clean_op) {
 		case 'visible' :
 			$icms_admin_handler->changeVisible($bid);

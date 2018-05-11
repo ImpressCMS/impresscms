@@ -61,10 +61,10 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->setSort('sat_lastruntime');
 		$criteria->setOrder('ASC');
-		$criteria->add(new icms_db_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', NULL, "%s"));
-		$criteria->add(new icms_db_criteria_Item('sat_repeat', 0, '>=', NULL, "'%s'"));
+		$criteria->add(new icms_db_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', null, "%s"));
+		$criteria->add(new icms_db_criteria_Item('sat_repeat', 0, '>=', null, "'%s'"));
 		$criteria->add(new icms_db_criteria_Item('sat_enabled', 1));
-		$rez = $this->getObjects($criteria, FALSE);
+		$rez = $this->getObjects($criteria, false);
 		return $rez;
 	}
 

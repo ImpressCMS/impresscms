@@ -50,11 +50,11 @@ $filter_post = array();
 $filter_get = array();
 
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 
@@ -473,11 +473,11 @@ if ($op == "form") {
 			$icmsAdminTpl->assign("users", $users);
 		}
 
-		$group = !empty($group) ? (int) $group : 0;
+		$group = !empty($group)?(int) $group:0;
 		$icmsAdminTpl->assign("groupvalue", $group);
 		if ($group > 0) {
 			$member_handler = icms::handler('icms_member');
-			$add2group =& $member_handler->getGroup($group);
+			$add2group = & $member_handler->getGroup($group);
 			$icmsAdminTpl->assign("groupvalue_name", sprintf(_AM_ADD2GROUP, $add2group->getVar('name')));
 		}
 
@@ -512,16 +512,16 @@ if ($op == "form") {
 			}
 
 			$counter = 1;
-			$currentpage = ($start+$limit) / $limit;
+			$currentpage = ($start + $limit) / $limit;
 			while ($counter <= $totalpages) {
 				if ($counter == $currentpage) {
 					$hiddenform .= "<strong>" . $counter . "</strong> ";
-				} elseif (($counter > $currentpage-4 && $counter < $currentpage+4) || $counter == 1 || $counter == $totalpages) {
-					if ($counter == $totalpages && $currentpage < $totalpages-4) {
+				} elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1 || $counter == $totalpages) {
+					if ($counter == $totalpages && $currentpage < $totalpages - 4) {
 						$hiddenform .= "... ";
 					}
 
-					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter-1)*$limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 					if ($counter == 1 && $currentpage > 5) {
 						$hiddenform .= "... ";
 					}
@@ -531,7 +531,7 @@ if ($op == "form") {
 				$counter++;
 			}
 
-			$next = $start+$limit;
+			$next = $start + $limit;
 			if ($total > $next) {
 				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _AM_NEXT . "</a>\n";
 			}

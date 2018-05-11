@@ -93,7 +93,7 @@ switch ($op) {
 		$avtcount = $avt_handler->getCount($criteria);
 		$criteria->setStart($start);
 		$criteria->setLimit(10);
-		$avatars = & $avt_handler->getObjects($criteria, TRUE);
+		$avatars = & $avt_handler->getObjects($criteria, true);
 		if ($type == 'S') {
 			foreach (array_keys($avatars) as $i) {
 				$id = $avatars[$i]->getVar('avatar_id');

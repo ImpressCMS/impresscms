@@ -28,7 +28,9 @@ class IcmsSourceEditorEditArea extends icms_form_elements_Textarea {
 	 */
 	public function __construct($configs, $checkCompatible = false) {
 		$current_path = __FILE__;
-		if (DIRECTORY_SEPARATOR != "/") $current_path = str_replace(strpos($current_path, "\\\\", 2)?"\\\\":DIRECTORY_SEPARATOR, "/", $current_path);
+		if (DIRECTORY_SEPARATOR != "/") {
+			$current_path = str_replace(strpos($current_path, "\\\\", 2)?"\\\\":DIRECTORY_SEPARATOR, "/", $current_path);
+		}
 		$this->rootpath = substr(dirname($current_path), strlen(ICMS_ROOT_PATH));
 
 		if (is_array($configs)) {

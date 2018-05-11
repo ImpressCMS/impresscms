@@ -25,14 +25,14 @@ class mod_system_Tags extends icms_ipf_seo_Object {
 	 * @param @mod_sys_TagsHandler $handler
 	 */
 	public function __construct(&$handler) {
-                $this->initVar('id', self::DTYPE_INTEGER, null, true);
-                $this->initVar('tag', self::DTYPE_STRING, '', true, 255, null, null, _CO_SYSTEM_TAGS_TAG, _CO_SYSTEM_TAGS_TAG_DSC);
-                $this->initVar('status', self::DTYPE_INTEGER, null, true, null, null, null, _CO_SYSTEM_TAGS_STATUS, _CO_SYSTEM_TAGS_STATUS_DSC);
-                $this->initVar('count', self::DTYPE_INTEGER, null, false, null, null, null, _CO_SYSTEM_TAGS_COUNT, _CO_SYSTEM_TAGS_COUNT_DSC);
+				$this->initVar('id', self::DTYPE_INTEGER, null, true);
+				$this->initVar('tag', self::DTYPE_STRING, '', true, 255, null, null, _CO_SYSTEM_TAGS_TAG, _CO_SYSTEM_TAGS_TAG_DSC);
+				$this->initVar('status', self::DTYPE_INTEGER, null, true, null, null, null, _CO_SYSTEM_TAGS_STATUS, _CO_SYSTEM_TAGS_STATUS_DSC);
+				$this->initVar('count', self::DTYPE_INTEGER, null, false, null, null, null, _CO_SYSTEM_TAGS_COUNT, _CO_SYSTEM_TAGS_COUNT_DSC);
 
 		$this->setControl("status", "yesno");
 
-                parent::__construct($handler);
+				parent::__construct($handler);
 
 		$this->initiateSEO();
 	}
@@ -47,7 +47,7 @@ class mod_system_Tags extends icms_ipf_seo_Object {
     */
 	function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array())) {
-			return call_user_func(array($this,$key));
+			return call_user_func(array($this, $key));
 		}
 		return parent::getVar($key, $format);
 	}

@@ -77,13 +77,13 @@ switch ($op) {
 			if (!icms::$security->check()) {
 				redirect_header("admin.php?fct=groups", 3, implode('<br />', icms::$security->getErrors()));
 			}
-			$system_catids = empty($system_catids) ? array() : $system_catids;
-			$admin_mids = empty($admin_mids) ? array() : $admin_mids;
-			$read_mids = empty($read_mids) ? array() : $read_mids;
-			$useeditor_mids = empty($useeditor_mids) ? array() : $useeditor_mids;
-			$enabledebug_mids = empty($enabledebug_mids) ? array() : $enabledebug_mids;
-			$read_bids = empty($read_bids) ? array() : $read_bids;
-			$group =& $member_handler->getGroup($g_id);
+			$system_catids = empty($system_catids)?array():$system_catids;
+			$admin_mids = empty($admin_mids)?array():$admin_mids;
+			$read_mids = empty($read_mids)?array():$read_mids;
+			$useeditor_mids = empty($useeditor_mids)?array():$useeditor_mids;
+			$enabledebug_mids = empty($enabledebug_mids)?array():$enabledebug_mids;
+			$read_bids = empty($read_bids)?array():$read_bids;
+			$group = & $member_handler->getGroup($g_id);
 			$group->setVar('name', $name);
 			$group->setVar('description', $desc);
 
@@ -116,7 +116,7 @@ switch ($op) {
 				if (count($system_catids) > 0) {
 					array_push($admin_mids, 1);
 					foreach ($system_catids as $s_cid) {
-						$sysperm =& $gperm_handler->create();
+						$sysperm = & $gperm_handler->create();
 						$sysperm->setVar('gperm_groupid', $groupid);
 						$sysperm->setVar('gperm_itemid', $s_cid);
 						$sysperm->setVar('gperm_name', 'system_admin');
@@ -126,7 +126,7 @@ switch ($op) {
 				}
 
 				foreach ($admin_mids as $a_mid) {
-					$modperm =& $gperm_handler->create();
+					$modperm = & $gperm_handler->create();
 					$modperm->setVar('gperm_groupid', $groupid);
 					$modperm->setVar('gperm_itemid', $a_mid);
 					$modperm->setVar('gperm_name', 'module_admin');
@@ -136,7 +136,7 @@ switch ($op) {
 
 				array_push($read_mids, 1);
 				foreach ($read_mids as $r_mid) {
-					$modperm =& $gperm_handler->create();
+					$modperm = & $gperm_handler->create();
 					$modperm->setVar('gperm_groupid', $groupid);
 					$modperm->setVar('gperm_itemid', $r_mid);
 					$modperm->setVar('gperm_name', 'module_read');
@@ -146,7 +146,7 @@ switch ($op) {
 
 				if ($g_id != ICMS_GROUP_ANONYMOUS) {
 					foreach ($useeditor_mids as $ed_mid) {
-						$modperm =& $gperm_handler->create();
+						$modperm = & $gperm_handler->create();
 						$modperm->setVar('gperm_groupid', $groupid);
 						$modperm->setVar('gperm_itemid', $ed_mid);
 						$modperm->setVar('gperm_name', 'use_wysiwygeditor');
@@ -156,7 +156,7 @@ switch ($op) {
 				}
 
 				foreach ($enabledebug_mids as $ed_mid) {
-					$modperm =& $gperm_handler->create();
+					$modperm = & $gperm_handler->create();
 					$modperm->setVar('gperm_groupid', $groupid);
 					$modperm->setVar('gperm_itemid', $ed_mid);
 					$modperm->setVar('gperm_name', 'enable_debug');
@@ -164,9 +164,9 @@ switch ($op) {
 					$gperm_handler->insert($modperm);
 				}
 
-				$groupmanager_gids = empty($groupmanager_gids) ? array() : $groupmanager_gids;
+				$groupmanager_gids = empty($groupmanager_gids)?array():$groupmanager_gids;
 				foreach ($groupmanager_gids as $gm_gid) {
-					$modperm =& $gperm_handler->create();
+					$modperm = & $gperm_handler->create();
 					$modperm->setVar('gperm_groupid', $groupid);
 					$modperm->setVar('gperm_itemid', $gm_gid);
 					$modperm->setVar('gperm_name', 'group_manager');
@@ -174,7 +174,7 @@ switch ($op) {
 					$gperm_handler->insert($modperm);
 				}
 				foreach ($read_bids as $r_bid) {
-					$blockperm =& $gperm_handler->create();
+					$blockperm = & $gperm_handler->create();
 					$blockperm->setVar('gperm_groupid', $groupid);
 					$blockperm->setVar('gperm_itemid', $r_bid);
 					$blockperm->setVar('gperm_name', 'block_read');
@@ -194,14 +194,14 @@ switch ($op) {
 				exit();
 			}
 
-			$system_catids = empty($system_catids) ? array() : $system_catids;
-			$admin_mids = empty($admin_mids) ? array() : $admin_mids;
-			$read_mids = empty($read_mids) ? array() : $read_mids;
-			$useeditor_mids = empty($useeditor_mids) ? array() : $useeditor_mids;
-			$enabledebug_mids = empty($enabledebug_mids) ? array() : $enabledebug_mids;
-			$groupmanager_gids = empty($groupmanager_gids) ? array() : $groupmanager_gids;
-			$read_bids = empty($read_bids) ? array() : $read_bids;
-			$group =& $member_handler->createGroup();
+			$system_catids = empty($system_catids)?array():$system_catids;
+			$admin_mids = empty($admin_mids)?array():$admin_mids;
+			$read_mids = empty($read_mids)?array():$read_mids;
+			$useeditor_mids = empty($useeditor_mids)?array():$useeditor_mids;
+			$enabledebug_mids = empty($enabledebug_mids)?array():$enabledebug_mids;
+			$groupmanager_gids = empty($groupmanager_gids)?array():$groupmanager_gids;
+			$read_bids = empty($read_bids)?array():$read_bids;
+			$group = & $member_handler->createGroup();
 			$group->setVar("name", $name);
 			$group->setVar("description", $desc);
 			if (count($system_catids) > 0) {
@@ -214,7 +214,7 @@ switch ($op) {
 				if (count($system_catids) > 0) {
 					array_push($admin_mids, 1);
 					foreach ($system_catids as $s_cid) {
-						$sysperm =& $gperm_handler->create();
+						$sysperm = & $gperm_handler->create();
 						$sysperm->setVar('gperm_groupid', $groupid);
 						$sysperm->setVar('gperm_itemid', $s_cid);
 						$sysperm->setVar('gperm_name', 'system_admin');
@@ -223,7 +223,7 @@ switch ($op) {
 					}
 				}
 				foreach ($admin_mids as $a_mid) {
-					$modperm =& $gperm_handler->create();
+					$modperm = & $gperm_handler->create();
 					$modperm->setVar('gperm_groupid', $groupid);
 					$modperm->setVar('gperm_itemid', $a_mid);
 					$modperm->setVar('gperm_name', 'module_admin');
@@ -232,7 +232,7 @@ switch ($op) {
 				}
 				array_push($read_mids, 1);
 				foreach ($read_mids as $r_mid) {
-					$modperm =& $gperm_handler->create();
+					$modperm = & $gperm_handler->create();
 					$modperm->setVar('gperm_groupid', $groupid);
 					$modperm->setVar('gperm_itemid', $r_mid);
 					$modperm->setVar('gperm_name', 'module_read');
@@ -248,7 +248,7 @@ switch ($op) {
 					$gperm_handler->insert($modperm);
 				}
 				foreach ($enabledebug_mids as $ed_mid) {
-					$modperm =& $gperm_handler->create();
+					$modperm = & $gperm_handler->create();
 					$modperm->setVar('gperm_groupid', $groupid);
 					$modperm->setVar('gperm_itemid', $ed_mid);
 					$modperm->setVar('gperm_name', 'enable_debug');
@@ -256,7 +256,7 @@ switch ($op) {
 					$gperm_handler->insert($modperm);
 				}
 				foreach ($groupmanager_gids as $gm_gid) {
-					$modperm =& $gperm_handler->create();
+					$modperm = & $gperm_handler->create();
 					$modperm->setVar('gperm_groupid', $groupid);
 					$modperm->setVar('gperm_itemid', $gm_gid);
 					$modperm->setVar('gperm_name', 'group_manager');
@@ -264,7 +264,7 @@ switch ($op) {
 					$gperm_handler->insert($modperm);
 				}
 				foreach ($read_bids as $r_bid) {
-					$blockperm =& $gperm_handler->create();
+					$blockperm = & $gperm_handler->create();
 					$blockperm->setVar('gperm_groupid', $groupid);
 					$blockperm->setVar('gperm_itemid', $r_bid);
 					$blockperm->setVar('gperm_name', 'block_read');
@@ -286,7 +286,7 @@ switch ($op) {
 				redirect_header("admin.php?fct=groups", 3, implode('<br />', icms::$security->getErrors()));
 			}
 			if ((int) ($g_id) > 0 && !in_array($g_id, array(ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS))) {
-				$group =& $member_handler->getGroup($g_id);
+				$group = & $member_handler->getGroup($g_id);
 				$member_handler->deleteGroup($group);
 				$gperm_handler = icms::handler('icms_member_groupperm');
 				$gperm_handler->deleteByGroup($g_id);
@@ -310,7 +310,7 @@ switch ($op) {
 				redirect_header("admin.php?fct=groups", 3, implode('<br />', icms::$security->getErrors()));
 			}
 			if ((int) $groupid > 0) {
-				$memstart = isset($memstart) ? (int) $memstart : 0;
+				$memstart = isset($memstart)?(int) $memstart:0;
 				if ($groupid == ICMS_GROUP_ADMIN) {
 					if ($member_handler->getUserCountByGroup($groupid) > count($uids)) {
 						$member_handler->removeUsersFromGroup($groupid, $uids);

@@ -53,8 +53,9 @@ class icms_member_user_Handler
 	extends icms_ipf_Handler {
 
 		public function __construct(&$db, $module = 'icms') {
-			if (!$module)
-				$module = 'icms_member';
+			if (!$module) {
+							$module = 'icms_member';
+			}
 			$objName = ($module == 'icms')?'member_user':'user';
 			parent::__construct($db, $objName, 'uid', 'uname', 'email', $module, 'users');
 		}
@@ -77,8 +78,9 @@ class icms_member_user_Handler
 	 * @TODO we need some kind of error message instead of just a FALSE return to inform whether user was deleted aswell as PM messages.
 	 */
 	public function delete(&$user, $force = FALSE) {
-				if (!($user instanceof icms_member_user_Object))
-					return;
+				if (!($user instanceof icms_member_user_Object)) {
+									return;
+				}
 		$sql = sprintf(
 			"UPDATE %s SET level = '-1', pass = '%s' WHERE uid = '%u'",
 			$this->table,
@@ -90,7 +92,7 @@ class icms_member_user_Handler
 		} else {
 			$result = $this->db->query($sql);
 		}
-				return (bool)$result;
+				return (bool) $result;
 	}
 
 	/**
@@ -100,13 +102,13 @@ class icms_member_user_Handler
 	 * @return bool FALSE if deletion failed
 	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
 	 */
-	public function deleteAll($criteria = NULL, $quick = false) {
+	public function deleteAll($criteria = null, $quick = false) {
 			if ($quick)
-				throw new Exception ('quick variable not supported!');
+				throw new Exception('quick variable not supported!');
 			$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
 			if ($criteria instanceof icms_db_criteria_Element)
 				$sql .= ' ' . $criteria->renderWhere();
-			return (bool)$this->db->query($sql);
+			return (bool) $this->db->query($sql);
 	}
 
 	/**
@@ -129,7 +131,7 @@ class icms_member_user_Handler
 
 		// initializations
 		$member_handler = icms::handler('icms_member');
-		$thisUser = ($uid > 0)?$thisUser = $member_handler->getUser($uid):FALSE;
+		$thisUser = ($uid > 0)?$thisUser = $member_handler->getUser($uid):false;
 		$icmsStopSpammers = new icms_core_StopSpammer();
 		$stop = '';
 		switch ($icmsConfigUser['uname_test_level']) {
@@ -146,47 +148,69 @@ class icms_member_user_Handler
 
 		// check email
 		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') != $email && $email !== false) || !is_object($thisUser)) {
-			if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) $stop .= _US_INVALIDMAIL . '<br />';
+			if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) {
+				$stop .= _US_INVALIDMAIL . '<br />';
+			}
 			$count = $this->getCount(icms_buildCriteria(array('email' => addslashes($email))));
-			if ($count > 0) $stop .= _US_EMAILTAKEN . '<br />';
+			if ($count > 0) {
+				$stop .= _US_EMAILTAKEN . '<br />';
+			}
 		}
 
 		// check login_name
 		$login_name = icms_core_DataFilter::icms_trim($login_name);
 		if ((is_object($thisUser) && $thisUser->getVar('login_name', 'e') != $login_name && $login_name !== false) || !is_object($thisUser)) {
-			if (empty($login_name) || preg_match($restriction, $login_name)) $stop .= _US_INVALIDNICKNAME . '<br />';
-			if (strlen($login_name) > $icmsConfigUser['maxuname']) $stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']) . '<br />';
-			if (strlen($login_name) < $icmsConfigUser['minuname']) $stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']) . '<br />';
+			if (empty($login_name) || preg_match($restriction, $login_name)) {
+				$stop .= _US_INVALIDNICKNAME . '<br />';
+			}
+			if (strlen($login_name) > $icmsConfigUser['maxuname']) {
+				$stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']) . '<br />';
+			}
+			if (strlen($login_name) < $icmsConfigUser['minuname']) {
+				$stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']) . '<br />';
+			}
 			foreach ($icmsConfigUser['bad_unames'] as $bu) {
 				if (!empty($bu) && preg_match('/' . $bu . '/i', $login_name)) {
 					$stop .= _US_NAMERESERVED . '<br />';
 					break;
 				}
 			}
-			if (strrpos($login_name, ' ') > 0) $stop .= _US_NICKNAMENOSPACES . '<br />';
+			if (strrpos($login_name, ' ') > 0) {
+				$stop .= _US_NICKNAMENOSPACES . '<br />';
+			}
 			$count = $this->getCount(icms_buildCriteria(array('login_name' => addslashes($login_name))));
-			if ($count > 0) $stop .= _US_LOGINNAMETAKEN . '<br />';
+			if ($count > 0) {
+				$stop .= _US_LOGINNAMETAKEN . '<br />';
+			}
 		}
 
 		// check uname
 		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') != $uname && $uname !== FALSE) || !is_object($thisUser)) {
 			$count = $this->getCount(icms_buildCriteria(array('uname' => addslashes($uname))));
-			if ($count > 0) $stop .= _US_NICKNAMETAKEN . '<br />';
+			if ($count > 0) {
+				$stop .= _US_NICKNAMETAKEN . '<br />';
+			}
 		}
 
 		// check password
 		if ($pass !== FALSE) {
-			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD . '<br />';
+			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') {
+				$stop .= _US_ENTERPWD . '<br />';
+			}
 			if ((isset($pass)) && ($pass != $vpass)) {
 				$stop .= _US_PASSNOTSAME . '<br />';
 			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
 				$stop .= sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']) . '<br />';
 			}
-			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, TRUE) || strripos($pass, $login_name) === TRUE)) $stop .= _US_BADPWD . '<br />';
+			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, TRUE) || strripos($pass, $login_name) === TRUE)) {
+				$stop .= _US_BADPWD . '<br />';
+			}
 		}
 
 		// check other things
-		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) $stop .= _US_INVALIDIP . '<br />';
+		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) {
+			$stop .= _US_INVALIDIP . '<br />';
+		}
 
 		return $stop;
 	}
@@ -225,11 +249,17 @@ class icms_member_user_Handler
 
 				$username = $user->getVar('uname');
 				$fullname2 = $user->getVar('name');
-				if (($name) && !empty($fullname2)) $fullname = $user->getVar('name');
-				if (!empty($fullname)) $linkeduser = $fullname . "[";
+				if (($name) && !empty($fullname2)) {
+					$fullname = $user->getVar('name');
+				}
+				if (!empty($fullname)) {
+					$linkeduser = $fullname . "[";
+				}
 				$linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $uid . '"' . $author . '>';
 				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username) . "</a>";
-				if (!empty($fullname)) $linkeduser .= "]";
+				if (!empty($fullname)) {
+					$linkeduser .= "]";
+				}
 
 				if ($withContact) {
 					$linkeduser .= '<a href="mailto:' . $user->getVar('email') . '">';
@@ -279,7 +309,7 @@ class icms_member_user_Handler
 		$userid = (int) $userid;
 		if ($userid > 0) {
 						$sql = $this->db->query(
-								'SELECT '.($usereal?'name':'uname').' FROM ' . $this->table
+								'SELECT ' . ($usereal?'name':'uname') . ' FROM ' . $this->table
 				. " WHERE userid = '"
 								. $userid
 				. "'"
@@ -292,20 +322,20 @@ class icms_member_user_Handler
 		return $GLOBALS['icmsConfig']['anonymous'];
 	}
 
-	public function getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) {
+	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 				if ($limit > 0) {
-					if ($criteria === NULL) {
+					if ($criteria === null) {
 						$criteria = new icms_db_criteria_Compo();
 					}
 					$criteria->setLimit($limit);
 				}
 				if ($start > 0) {
-					if ($criteria === NULL) {
+					if ($criteria === null) {
 						$criteria = new icms_db_criteria_Compo();
 					}
 					$criteria->setLimit($start);
 				}
-		$users = $this->getObjects($criteria, TRUE);
+		$users = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($users) as $i) {
 			$ret[$i] = $users[$i]->getVar('uname');

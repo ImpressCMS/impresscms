@@ -29,9 +29,9 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 	 * @param array $actions		An array of actions for this object
 	 * @param boolean $userSide		TRUE - display on the user side; FALSE - do not display
 	 */
-	public function __construct(&$objectHandler, $criteria = FALSE, $actions = array('edit', 'delete'), $userSide = FALSE) {
+	public function __construct(&$objectHandler, $criteria = false, $actions = array('edit', 'delete'), $userSide = false) {
 		parent::__construct($objectHandler, $criteria, $actions, $userSide);
-		$this->_isTree = TRUE;
+		$this->_isTree = true;
 	}
 
 	/**

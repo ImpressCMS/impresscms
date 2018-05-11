@@ -181,11 +181,11 @@ class icms_view_theme_Object {
 		));
 		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
-				'icms_isuser' => TRUE,
+				'icms_isuser' => true,
 				'icms_userid' => icms::$user->getVar('uid'),
 				'icms_uname' => icms::$user->getVar('uname'),
 				'icms_isadmin' => icms::$user->isAdmin(),
-				'xoops_isuser' => TRUE,
+				'xoops_isuser' => true,
 				'xoops_userid' => icms::$user->getVar('uid'),
 				'xoops_uname' => icms::$user->getVar('uname'),
 				'xoops_isadmin' => icms::$user->isAdmin(),
@@ -350,10 +350,10 @@ class icms_view_theme_Object {
 		}
 
 		if ($canvasTpl) {
-			$this->canvasTemplate	= $canvasTpl;
+			$this->canvasTemplate = $canvasTpl;
 		}
 		if ($contentTpl) {
-			$this->contentTemplate	= $contentTpl;
+			$this->contentTemplate = $contentTpl;
 		}
 
 		if (!empty($vars)) {
@@ -373,11 +373,11 @@ class icms_view_theme_Object {
 			?$this->template->get_template_vars('icms_module_header')
 			: $xoopsOption['icms_module_header'];
 
-		$this->template->assign('icms_module_header', $header . "\n" . $this->renderOldMetas(NULL, TRUE));
+		$this->template->assign('icms_module_header', $header . "\n" . $this->renderOldMetas(null, true));
 
 		/* create template vars for the new meta zones */
 		foreach ($this->metas as $zone => $value) {
-			$this->template->assign($zone, "<!-- " . ucfirst($zone) . " section-->\n" . $this->renderMetas(NULL, TRUE, $zone));
+			$this->template->assign($zone, "<!-- " . ucfirst($zone) . " section-->\n" . $this->renderMetas(null, true, $zone));
 		}
 
 		$pagetitle = empty($xoopsOption['icms_pagetitle'])
@@ -389,7 +389,7 @@ class icms_view_theme_Object {
 		// Do not cache the main (theme.html) template output
 		$this->template->caching = 0;
 
-				if (FALSE === strpos($this->canvasTemplate, ':')) {
+				if (false === strpos($this->canvasTemplate, ':')) {
 					$this->template->display($this->path . '/' . $this->canvasTemplate);
 				} else {
 					$this->template->display($this->canvasTemplate);

@@ -55,7 +55,9 @@ class mod_system_Positions extends icms_view_block_position_Object {
 	 * @return string
 	 */
 	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		if ($this->getVar('block_default') == 1) return "";
+		if ($this->getVar('block_default') == 1) {
+			return "";
+		}
 		return parent::getEditItemLink($onlyUrl, $withimage, $userSide);
 	}
 
@@ -70,7 +72,9 @@ class mod_system_Positions extends icms_view_block_position_Object {
 	 * @return string
 	 */
 	public function getDeleteItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		if ($this->getVar('block_default') == 1) return "";
+		if ($this->getVar('block_default') == 1) {
+			return "";
+		}
 		return parent::getDeleteItemLink($onlyUrl, $withimage, $userSide);
 	}
 }

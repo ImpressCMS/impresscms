@@ -107,8 +107,7 @@ $location_text = new icms_form_elements_Text(_AM_LOCATION, "user_from", 30, 100,
 $occupation_text = new icms_form_elements_Text(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
 $interest_text = new icms_form_elements_Text(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
 $sig_tray = new icms_form_elements_Tray(_AM_SIGNATURE, "<br />");
-if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new icms_form_elements_Textarea("", "user_sig", $sig_value); }
-else {$sig_tarea = new icms_form_elements_Dhtmltextarea("", "user_sig", $sig_value); }
+if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new icms_form_elements_Textarea("", "user_sig", $sig_value); } else {$sig_tarea = new icms_form_elements_Dhtmltextarea("", "user_sig", $sig_value); }
 $sig_tray->addElement($sig_tarea);
 $sig_cbox = new icms_form_elements_Checkbox("", "attachsig", $sig_cbox_value);
 $sig_cbox->addOption(1, _US_SHOWSIG);
