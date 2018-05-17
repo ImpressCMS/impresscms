@@ -80,6 +80,7 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_properties_Handler::DTYPE_DEP_FORM_
  * */
 class icms_core_Object extends icms_properties_Handler {
 
+
 	use \Imponeer\ObjectErrors\ErrorsTrait {
 		getHtmlErrors as protected _getHtmlErrors;
 	}
@@ -109,132 +110,107 @@ class icms_core_Object extends icms_properties_Handler {
 		$this->errors->mode = \Imponeer\ObjectErrors\ErrorsCollection::MODE_2_AS_PREFIX;
     }
 
-    /*    * #@+
+
+	/*    * #@+
     * used for new/clone objects
      *
     * @access public
     */
 
-    public function setNew() {
-        $this->_isNew = true;
-    }
+	public function unsetNew() {
+		$this->_isNew = false;
+	}
 
-    public function unsetNew() {
-        $this->_isNew = false;
-    }
+	public function isNew() {
+		return $this->_isNew;
+	}
 
-    public function isNew() {
-        return $this->_isNew;
-    }
+	/**
+	 * initialize variables for the object
+	 *
+	 * @access public
+	 * @param string $key
+	 * @param int $data_type  set to one of self::DTYPE_XXX constants
+	 * @param mixed
+	 * @param bool $required  require html form input?
+	 * @param int $maxlength  for self::DTYPE_STRING, self::DTYPE_INTERGER types only
+	 * @param string $option  does this data have any select options?
+	 */
+	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
+		parent::initVar($key, $data_type, $value, $required, array(
+			parent::VARCFG_MAX_LENGTH => $maxlength,
+			'options' => $options
+				)
+		);
+	}
 
-    /*    * #@- */
+	/*    * #@- */
 
-    /**
-    * initialize variables for the object
-     *
-    * @access public
-    * @param string $key
-    * @param int $data_type  set to one of self::DTYPE_XXX constants
-    * @param mixed
-    * @param bool $required  require html form input?
-    * @param int $maxlength  for self::DTYPE_STRING, self::DTYPE_INTERGER types only
-    * @param string $option  does this data have any select options?
-    */
-    public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
-        parent::initVar($key, $data_type, $value, $required, array(
-            parent::VARCFG_MAX_LENGTH => $maxlength,
-            'options' => $options
-                )
-        );
-    }
+	/**
+	 * Assign values to multiple variables in a batch
+	 *
+	 * Meant for a CGI context:
+	 * - prefixed CGI args are considered safe
+	 * - avoids polluting of namespace with CGI args
+	 *
+	 * @access public
+	 * @param array $var_arr associative array of values to assign
+	 * @param string $pref prefix (only keys starting with the prefix will be set)
+	 */
+	public function setFormVars($var_arr = null, $pref = 'xo_', $not_gpc = false) {
+		$len = strlen($pref);
+		foreach ($var_arr as $key => $value) {
+			if ($pref == substr($key, 0, $len)) {
+				$this->setVar(substr($key, $len), $value, $not_gpc);
+			}
+		}
+	}
 
-    /**
-    * Assign values to multiple variables in a batch
-     *
-    * Meant for a CGI context:
-    * - prefixed CGI args are considered safe
-    * - avoids polluting of namespace with CGI args
-     *
-    * @access public
-    * @param array $var_arr associative array of values to assign
-    * @param string $pref prefix (only keys starting with the prefix will be set)
-    */
-    public function setFormVars($var_arr = null, $pref = 'xo_', $not_gpc = false) {
-        $len = strlen($pref);
-        foreach ($var_arr as $key => $value) {
-            if ($pref == substr($key, 0, $len)) {
-                $this->setVar(substr($key, $len), $value, $not_gpc);
-            }
-        }
-    }
+	/**
+	 * dynamically register additional filter for the object
+	 *
+	 * @param string $filtername name of the filter
+	 * @access public
+	 */
+	public function registerFilter($filtername) {
+		$this->_filters[] = $filtername;
+	}
 
-    /**
-    * dynamically register additional filter for the object
-     *
-    * @param string $filtername name of the filter
-    * @access public
-    */
-    public function registerFilter($filtername) {
-        $this->_filters[] = $filtername;
-    }
+	/**
+	 * Clone current instance
+	 *
+	 * @return object
+	 *
+	 * @deprecated Use php function clone
+	 */
+	public function xoopsClone() {
+		trigger_error('Use php function clone!', E_USER_DEPRECATED);
 
-    /**
-    * load all additional filters that have been registered to the object
-     *
-    * @access private
-    */
-    private function _loadFilters() {
+		return clone $this;
+	}
 
-    }
+	/**
+	 * Sets object modified
+	 *
+	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead
+	 */
+	public function setDirty() {
+		trigger_error('Use setVarInfo with self::VARCFG_CHANGED instead', E_USER_DEPRECATED);
 
-    /**
-    * Clone current instance
-     *
-    * @return object
-     *
-    * @deprecated since version 2.1
-    */
-    public function xoopsClone() {
-        icms_core_Debug::setDeprecated('php function clone', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        return clone $this;
-    }
+		$this->setVarInfo(null, parent::VARCFG_CHANGED, true);
+	}
 
-    /**
-    * Sets object modified
-     *
-    * @deprecated since version 2.1
-    */
-    public function setDirty() {
-        icms_core_Debug::setDeprecated('setVarInfo with self::VARCFG_CHANGED', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        $this->setVarInfo(null, parent::VARCFG_CHANGED, true);
-    }
+	/**
+	 * Sets object unmodified
+	 *
+	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead
+	 */
+	public function unsetDirty() {
+		trigger_error('Use setVarInfo with self::VARCFG_CHANGED instead', E_USER_DEPRECATED);
 
-    /**
-    * Sets object unmodified
-     *
-    * @deprecated since version 2.1
-    */
-    public function unsetDirty() {
-        icms_core_Debug::setDeprecated('setVarInfo with self::VARCFG_CHANGED', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        $this->setVarInfo(null, parent::VARCFG_CHANGED, false);
-    }
+		$this->setVarInfo(null, parent::VARCFG_CHANGED, false);
+	}
 
-    /**
-    * Is object modified?
-     *
-    * @deprecated since version 2.1
-    */
-    public function isDirty() {
-        icms_core_Debug::setDeprecated('count($this->getChangedVars()) > 0', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
-        return count($this->getChangedVars()) > 0;
-    }
-
-    /**
-    * Create cloned copy of current object
-    */
-    public function __clone() {
-        $this->setNew();
-    }
 
     /**
     * return the errors for this object as html
@@ -258,5 +234,6 @@ class icms_core_Object extends icms_properties_Handler {
     public function hasError() {
         return count($this->_errors) > 0;
     }
+
 
 }

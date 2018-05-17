@@ -61,7 +61,8 @@ if (
 	$ext = pathinfo($full_path, PATHINFO_EXTENSION)
 	) != 'php'
 ) {
-	if ($requested_path[0] == '.') { // protect hidden files
+	if ($requested_path[0] == '.') {
+// protect hidden files
 		$_REQUEST['e'] = 403;
 		http_response_code(403);
 		include 'error.php';
@@ -136,15 +137,15 @@ if (isset($ext)) {
 } else {
 	$member_handler = \icms::handler('icms_member');
 	$group = $member_handler->getUserBestGroup(
-		(!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
+		(!empty(\icms::$user) && is_object(\icms::$user))? \icms::$user->uid:0
 	);
 
 	// added failover to default startpage for the registered users group -- JULIAN EGELSTAFF Apr 3 2017
-	$groups = (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-	if(($icmsConfig['startpage'][$group] == "" OR $icmsConfig['startpage'][$group] == "--")
-		AND in_array(ICMS_GROUP_USERS, $groups)
-		AND $icmsConfig['startpage'][ICMS_GROUP_USERS] != ""
-		AND $icmsConfig['startpage'][ICMS_GROUP_USERS] != "--") {
+	$groups = (!empty(\icms::$user) && is_object(\icms::$user))? \icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+	if (($icmsConfig['startpage'][$group] == "" or $icmsConfig['startpage'][$group] == "--")
+		and in_array(ICMS_GROUP_USERS, $groups)
+		and $icmsConfig['startpage'][ICMS_GROUP_USERS] != ""
+		and $icmsConfig['startpage'][ICMS_GROUP_USERS] != "--") {
 		$icmsConfig['startpage'] = $icmsConfig['startpage'][ICMS_GROUP_USERS];
 	} else {
 		$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];

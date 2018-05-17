@@ -80,11 +80,13 @@ class icms_auth_Object {
 		if ($icmsConfigPersona['debug_mode'] < 3) {
 			$ret .= _US_INCORRECTLOGIN;
 		} else {
+
 			$errors = $this->_getHtmlErrors();
 			$ret .= $errors ? $errors : _NONE;
 			$ret .= '<br />';
 			if ($errors) {
 				$ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $this->auth_method);
+
 			}
 		}
 		return $ret;

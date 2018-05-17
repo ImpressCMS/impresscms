@@ -21,7 +21,7 @@ class icms_view_Printerfriendly {
 	public $_dsc;
 	public $_content;
 	public $_tpl;
-	public $_pageTitle = FALSE;
+	public $_pageTitle = false;
 	public $_width = 680;
 
 	/**
@@ -29,7 +29,7 @@ class icms_view_Printerfriendly {
 	 *
 	 * @param field_type bare_field_name
 	 */
-	public function __construct($content, $title = FALSE, $dsc = FALSE) {
+	public function __construct($content, $title = false, $dsc = false) {
 		$this->_title = $title;
 		$this->_dsc = $dsc;
 		$this->_content = $content;
@@ -51,7 +51,7 @@ class icms_view_Printerfriendly {
 
 		$this->_tpl = new icms_view_Tpl();
 
-		$this->_tpl->assign('icms_print_pageTitle', $this->_pageTitle ? $this->_pageTitle : $this->_title);
+		$this->_tpl->assign('icms_print_pageTitle', $this->_pageTitle?$this->_pageTitle:$this->_title);
 		$this->_tpl->assign('icms_print_title', $this->_title);
 		$this->_tpl->assign('icms_print_dsc', $this->_dsc);
 		$this->_tpl->assign('icms_print_content', $this->_content);
@@ -74,7 +74,7 @@ class icms_view_Printerfriendly {
 	 * @param	string	$pagetitle
 	 * @param	int		$width		The width of the page, in pixels
 	 */
-	static public function generate($content, $title = FALSE, $description = FALSE, $pagetitle = FALSE, $width = 680) {
+	static public function generate($content, $title = false, $description = false, $pagetitle = false, $width = 680) {
 		$PrintDataBuilder = new self($content, $title, $description);
 		$PrintDataBuilder->setPageTitle($pagetitle);
 		$PrintDataBuilder->setWidth($width);

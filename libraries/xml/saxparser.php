@@ -24,6 +24,7 @@
 
 class SaxParser
 {
+
 	use \Imponeer\ObjectErrors\ErrorsTrait;
 
 	var $level;
@@ -343,6 +344,7 @@ class SaxParser
 	function handleCharacterDataDefault($parser, $data)
 	{
 	}
+
 }
 
 ?>

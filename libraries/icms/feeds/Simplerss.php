@@ -32,18 +32,18 @@ class icms_feeds_Simplerss extends SimplePie {
 	 * @param str $feed_url This is the URL you want to parse.
 	 * @param int $cache_duration This is the number of seconds that you want to store the cache file for.
 	 */
-	public function __construct($feed_url = NULL, $cache_duration = NULL) {
+	public function __construct($feed_url = null, $cache_duration = null) {
 		/* SimplePie 1.3+ does not accept arguments in the constructor */
 		parent::__construct();
 
 		$this->set_cache_location(ICMS_CACHE_PATH);
 
-		if ($cache_duration !== NULL) {
+		if ($cache_duration !== null) {
 			$this->set_cache_duration($cache_duration);
 		}
 
 		// Only init the script if we're passed a feed URL
-		if ($feed_url !== NULL) {
+		if ($feed_url !== null) {
 			$this->set_feed_url($feed_url);
 			$this->init();
 		}

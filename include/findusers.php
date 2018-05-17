@@ -29,8 +29,8 @@ if ($denied) {
 
 $token = @$_REQUEST["token"];
 $name_form = 'memberslist';
-$name_userid = 'uid' . ( @$_REQUEST['multiple'] ? "[]" : "" );
-$name_username = 'uname' . ( @$_REQUEST['multiple'] ? "[]" : "" );
+$name_userid = 'uid' . (@$_REQUEST['multiple']?"[]":"");
+$name_username = 'uname' . (@$_REQUEST['multiple']?"[]":"");
 
 icms_loadLanguageFile('core', 'user');
 
@@ -57,9 +57,9 @@ $items_range = array(
 				"posts"			=> _MA_USER_RANGE_POSTS,
 );
 
-define("FINDUSERS_MODE_SIMPLE",		0);
-define("FINDUSERS_MODE_ADVANCED",	1);
-define("FINDUSERS_MODE_QUERY", 		2);
+define("FINDUSERS_MODE_SIMPLE", 0);
+define("FINDUSERS_MODE_ADVANCED", 1);
+define("FINDUSERS_MODE_QUERY", 2);
 
 $modes = array(
 FINDUSERS_MODE_SIMPLE	=> _MA_USER_MODE_SIMPLE,
@@ -71,7 +71,7 @@ if (empty($_POST["user_submit"])) {
 
 	$form = new icms_form_Theme(_MA_USER_FINDUS, "uesr_findform", "findusers.php", 'post', true);
 
-	$mode = (int) ( @$_REQUEST["mode"] );
+	$mode = (int) (@$_REQUEST["mode"]);
 	if (FINDUSERS_MODE_QUERY == $mode) {
 		$form->addElement(new icms_form_elements_Textarea(_MA_USER_QUERY, "query", @$_POST["query"]));
 	} else {
@@ -101,13 +101,13 @@ if (empty($_POST["user_submit"])) {
 				unset($more, $less, $range_tray);
 			}
 
-			$mailok_radio = new icms_form_elements_Radio(_MA_USER_SHOWMAILOK, "user_mailok", empty($_POST["user_mailok"]) ? "both" : $_POST["user_mailok"]);
+			$mailok_radio = new icms_form_elements_Radio(_MA_USER_SHOWMAILOK, "user_mailok", empty($_POST["user_mailok"])?"both":$_POST["user_mailok"]);
 			$mailok_radio->addOptionArray(array("mailok"=>_MA_USER_MAILOK, "mailng"=>_MA_USER_MAILNG, "both"=>_MA_USER_BOTH));
-			$avatar_radio = new icms_form_elements_Radio(_MA_USER_HASAVATAR, "user_avatar", empty($_POST["user_avatar"]) ? "both" : $_POST["user_avatar"]);
+			$avatar_radio = new icms_form_elements_Radio(_MA_USER_HASAVATAR, "user_avatar", empty($_POST["user_avatar"])?"both":$_POST["user_avatar"]);
 			$avatar_radio->addOptionArray(array("y"=>_YES, "n"=>_NO, "both"=>_MA_USER_BOTH));
 
 			$level_radio = new icms_form_elements_Radio(_MA_USER_LEVEL, "level", @$_POST["level"]);
-			$levels = array( 0 => _ALL, 1 => _MA_USER_LEVEL_ACTIVE, 2 => _MA_USER_LEVEL_INACTIVE , 3 => _MA_USER_LEVEL_DISABLED);
+			$levels = array(0 => _ALL, 1 => _MA_USER_LEVEL_ACTIVE, 2 => _MA_USER_LEVEL_INACTIVE, 3 => _MA_USER_LEVEL_DISABLED);
 			$level_radio->addOptionArray($levels);
 
 			$member_handler = icms::handler('icms_member');
@@ -118,7 +118,7 @@ if (empty($_POST["user_submit"])) {
 
 			$ranks = $rank_handler->getList();
 			$ranks[0] = _ALL;
-			$rank_select = new icms_form_elements_Select(_MA_USER_RANK, 'rank', (int) ( @$_POST['rank'] ));
+			$rank_select = new icms_form_elements_Select(_MA_USER_RANK, 'rank', (int) (@$_POST['rank']));
 			$rank_select->addOptionArray($ranks);
 
 
@@ -148,56 +148,58 @@ if (empty($_POST["user_submit"])) {
 		$sort_select = new icms_form_elements_Select(_MA_USER_SORT, "user_sort", @$_POST["user_sort"]);
 		$sort_select->addOptionArray(array("uname"=>_MA_USER_UNAME, "last_login"=>_MA_USER_LASTLOGIN, "user_regdate"=>_MA_USER_REGDATE, "posts"=>_MA_USER_POSTS));
 		$order_select = new icms_form_elements_Select(_MA_USER_ORDER, "user_order", @$_POST["user_order"]);
-		$order_select->addOptionArray(array("ASC"=>_MA_USER_ASC,"DESC"=>_MA_USER_DESC));
+		$order_select->addOptionArray(array("ASC"=>_MA_USER_ASC, "DESC"=>_MA_USER_DESC));
 
 		$form->addElement($sort_select);
 		$form->addElement($order_select);
 	}
 
-	$form->addElement( new icms_form_elements_Text(_MA_USER_LIMIT, "limit", 6, 6, empty($_REQUEST["limit"]) ? 50 : (int) ($_REQUEST["limit"])) );
-	$form->addElement( new icms_form_elements_Hidden("mode", $mode) );
-	$form->addElement( new icms_form_elements_Hidden("target", @$_REQUEST["target"]) );
-	$form->addElement( new icms_form_elements_Hidden("multiple", @$_REQUEST["multiple"]) );
-	$form->addElement( new icms_form_elements_Hidden("token", $token) );
-	$form->addElement( new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit") );
+	$form->addElement(new icms_form_elements_Text(_MA_USER_LIMIT, "limit", 6, 6, empty($_REQUEST["limit"])?50:(int) ($_REQUEST["limit"])));
+	$form->addElement(new icms_form_elements_Hidden("mode", $mode));
+	$form->addElement(new icms_form_elements_Hidden("target", @$_REQUEST["target"]));
+	$form->addElement(new icms_form_elements_Hidden("multiple", @$_REQUEST["multiple"]));
+	$form->addElement(new icms_form_elements_Hidden("token", $token));
+	$form->addElement(new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit"));
 
 	$acttotal = $user_handler->getUserCountByGroupLink(array(), new icms_db_criteria_Item('level', 0, '>'));
 	$inacttotal = $user_handler->getUserCountByGroupLink(array(), new icms_db_criteria_Item('level', 0, '<='));
 	echo "</html><body>";
-	echo "<h2 style='text-align:"._GLOBAL_LEFT.";'>"._MA_USER_FINDUS." - ".$modes[$mode]."</h2>";
+	echo "<h2 style='text-align:" . _GLOBAL_LEFT . ";'>" . _MA_USER_FINDUS . " - " . $modes[$mode] . "</h2>";
 	$modes_switch = array();
 
 	foreach ($modes as $_mode => $title) {
-		if ($mode == $_mode) continue;
-		$modes_switch[] = "<a href='findusers.php?target=".htmlspecialchars(@$_REQUEST["target"], ENT_QUOTES)."&amp;multiple=".htmlspecialchars(@$_REQUEST["multiple"], ENT_QUOTES)."&amp;token=".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."&amp;mode={$_mode}'>{$title}</a>";
+		if ($mode == $_mode) {
+			continue;
+		}
+		$modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(@$_REQUEST["target"], ENT_QUOTES) . "&amp;multiple=" . htmlspecialchars(@$_REQUEST["multiple"], ENT_QUOTES) . "&amp;token=" . htmlspecialchars($token, ENT_QUOTES, _CHARSET) . "&amp;mode={$_mode}'>{$title}</a>";
 	}
 
-	echo "<h4>".implode(" | ", $modes_switch)."</h4>";
-	echo "(".sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>")." ".sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>").")";
+	echo "<h4>" . implode(" | ", $modes_switch) . "</h4>";
+	echo "(" . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . " " . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ")";
 	$form->display();
 
 } else {
-	$limit = empty($_POST['limit']) ? 50 : (int) ( $_POST['limit'] );
-	$start = (int) ( @$_POST['start'] );
+	$limit = empty($_POST['limit'])?50:(int) ($_POST['limit']);
+	$start = (int) (@$_POST['start']);
 
 	if (!isset($_POST["query"])) {
 		$criteria = new icms_db_criteria_Compo();
 		foreach (array_keys($items_match) as $var) {
 			if (!empty($_POST[$var])) {
-				$match = (!empty($_POST["{$var}_match"])) ? (int) ($_POST["{$var}_match"]) : XOOPS_MATCH_START;
+				$match = (!empty($_POST["{$var}_match"]))?(int) ($_POST["{$var}_match"]):XOOPS_MATCH_START;
 				$value = str_replace("_", "\\\_", icms_core_DataFilter::addSlashes(trim($_POST[$var])));
 				switch ($match) {
 					case XOOPS_MATCH_START:
-						$criteria->add(new icms_db_criteria_Item($var, $value.'%', 'LIKE'));
+						$criteria->add(new icms_db_criteria_Item($var, $value . '%', 'LIKE'));
 						break;
 					case XOOPS_MATCH_END:
-						$criteria->add(new icms_db_criteria_Item($var, '%'.$value, 'LIKE'));
+						$criteria->add(new icms_db_criteria_Item($var, '%' . $value, 'LIKE'));
 						break;
 					case XOOPS_MATCH_EQUAL:
 						$criteria->add(new icms_db_criteria_Item($var, $value));
 						break;
 					case XOOPS_MATCH_CONTAIN:
-						$criteria->add(new icms_db_criteria_Item($var, '%'.$value.'%', 'LIKE'));
+						$criteria->add(new icms_db_criteria_Item($var, '%' . $value . '%', 'LIKE'));
 						break;
 				}
 			}
@@ -205,18 +207,18 @@ if (empty($_POST["user_submit"])) {
 
 		if (!empty($_POST['url'])) {
 			$url = formatURL(trim($_POST['url']));
-			$criteria->add(new icms_db_criteria_Item('url', $url.'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('url', $url . '%', 'LIKE'));
 		}
 
 		if (!empty($_POST['user_from'])) {
-			$criteria->add(new icms_db_criteria_Item('user_from', '%'.icms_core_DataFilter::addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_from', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_from'])) . '%', 'LIKE'));
 		}
 
 		if (!empty($_POST['user_intrest'])) {
-			$criteria->add(new icms_db_criteria_Item('user_intrest', '%'.icms_core_DataFilter::addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_intrest', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_intrest'])) . '%', 'LIKE'));
 		}
 		if (!empty($_POST['user_occ'])) {
-			$criteria->add(new icms_db_criteria_Item('user_occ', '%'.icms_core_DataFilter::addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_occ', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_occ'])) . '%', 'LIKE'));
 		}
 
 		foreach (array("last_login", "user_regdate") as $var) {
@@ -257,12 +259,12 @@ if (empty($_POST["user_submit"])) {
 
 		if (!empty($_POST['level'])) {
 			$level_value = array(1 => 1, 2 => 0, 3 => -1);
-			$level = isset($level_value[ (int) ($_POST["level"])]) ? $level_value[ (int) ($_POST["level"])] : 1;
+			$level = isset($level_value[(int) ($_POST["level"])])?$level_value[(int) ($_POST["level"])]:1;
 			$criteria->add(new icms_db_criteria_Item("level", $level));
 		}
 
 		if (!empty($_POST['rank'])) {
-			$rank_obj = $rank_handler->get( $_POST['rank'] );
+			$rank_obj = $rank_handler->get($_POST['rank']);
 			if ($rank_obj->getVar("rank_special")) {
 				$criteria->add(new icms_db_criteria_Item("rank", (int) ($_POST['rank'])));
 			} else {
@@ -279,7 +281,7 @@ if (empty($_POST["user_submit"])) {
 		$total = $user_handler->getUserCountByGroupLink(@$_POST["groups"], $criteria);
 
 		$validsort = array("uname", "email", "last_login", "user_regdate", "posts");
-		$sort = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
+		$sort = (!in_array($_POST['user_sort'], $validsort))?"uname":$_POST['user_sort'];
 		$order = "ASC";
 		if (isset($_POST['user_order']) && $_POST['user_order'] == "DESC") {
 			$order = "DESC";
@@ -289,51 +291,51 @@ if (empty($_POST["user_submit"])) {
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
 		$criteria->setStart($start);
-		$foundusers = $user_handler->getUsersByGroupLink(@$_POST["groups"], $criteria, TRUE);
+		$foundusers = $user_handler->getUsersByGroupLink(@$_POST["groups"], $criteria, true);
 
 	} else {
 		$query = trim($_POST["query"]);
 		// Query with alias
-		if (preg_match("/select[\s]+.*[\s]+from[\s]+(".icms::$xoopsDB->prefix("users")."[\s]+as[\s]+([^\s]+).*)/i", $query, $matches)) {
+		if (preg_match("/select[\s]+.*[\s]+from[\s]+(" . icms::$xoopsDB->prefix("users") . "[\s]+as[\s]+([^\s]+).*)/i", $query, $matches)) {
 			$alias = $matches[2];
 			$subquery = $matches[1];
 
 			// Query without alias
-		} elseif (preg_match("/select[\s]+.*[\s]+from[\s]+(".icms::$xoopsDB->prefix("users")."\b.*)/i", $query, $matches)) {
+		} elseif (preg_match("/select[\s]+.*[\s]+from[\s]+(" . icms::$xoopsDB->prefix("users") . "\b.*)/i", $query, $matches)) {
 			$alias = "";
 			$subquery = $matches[1];
 
 			// Invalid query
 		} else {
-			$query = "SELECT * FROM ".icms::$xoopsDB->prefix("users");
+			$query = "SELECT * FROM " . icms::$xoopsDB->prefix("users");
 			$subquery = icms::$xoopsDB->prefix("users");
 		}
 
-		$sql_count = "SELECT COUNT(DISTINCT ".(empty($alias) ? "" : $alias . "." )."uid) FROM ". $subquery;
+		$sql_count = "SELECT COUNT(DISTINCT " . (empty($alias)?"":$alias . ".") . "uid) FROM " . $subquery;
 		$result = icms::$xoopsDB->query($sql_count);
 		list($total) = icms::$xoopsDB->FetchRow($result);
 
 		$result = icms::$xoopsDB->query($query, $limit, $start);
 		$foundusers = array();
 		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
-			$object =& $user_handler->createUser(false);
+			$object = & $user_handler->createUser(false);
 			$object->assignVars($myrow);
 			$foundusers[$myrow["uid"]] = $object;
 			unset($object);
 		}
 	}
 
-	echo $js_adduser='
+	echo $js_adduser = '
 		<script type="text/javascript">
-			var multiple='. (int) ($_REQUEST['multiple']).';
+			var multiple='. (int) ($_REQUEST['multiple']) . ';
 			function addusers()
 			{
 				var sel_str = "";
 				var num = 0;
-				var mForm = document.forms["'.$name_form.'"];
+				var mForm = document.forms["'.$name_form . '"];
 				for (var i=0;i!=mForm.elements.length;i++) {
 					var id=mForm.elements[i];
-					if (( (multiple > 0 && id.type == "checkbox") || (multiple == 0 && id.type == "radio") ) && (id.checked == true) && ( id.name == "'.$name_userid.'" )) {
+					if (( (multiple > 0 && id.type == "checkbox") || (multiple == 0 && id.type == "radio") ) && (id.checked == true) && ( id.name == "'.$name_userid . '" )) {
 						var name = mForm.elements[++i];
 						var len = id.value.length + name.value.length;
 						sel_str += len + ":" + id.value + ":" + name.value;
@@ -342,13 +344,13 @@ if (empty($_POST["user_submit"])) {
 				}
 
 				if (num == 0) {
-					alert("'._MA_USER_NOUSERSELECTED.'");
+					alert("'._MA_USER_NOUSERSELECTED . '");
 					return false;
 				}
 
 				sel_str = num + ":" + sel_str;
 				window.opener.addusers(sel_str);
-				alert("'._MA_USER_USERADDED.'");
+				alert("'._MA_USER_USERADDED . '");
 				if (multiple == 0) {
 					window.close();
 					window.opener.focus();
@@ -359,16 +361,16 @@ if (empty($_POST["user_submit"])) {
 	';
 
 	echo "</html><body>";
-	echo "<a href='findusers.php?target=".htmlspecialchars(@$_POST["target"], ENT_QUOTES)."&amp;multiple=". (int) (@$_POST["multiple"])."&amp;token=".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."'>". _MA_USER_FINDUS ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _MA_USER_RESULTS."<br /><br />";
+	echo "<a href='findusers.php?target=" . htmlspecialchars(@$_POST["target"], ENT_QUOTES) . "&amp;multiple=" . (int) (@$_POST["multiple"]) . "&amp;token=" . htmlspecialchars($token, ENT_QUOTES, _CHARSET) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _MA_USER_RESULTS . "<br /><br />";
 	if (empty($start) && empty($foundusers)) {
-		echo "<h4>"._MA_USER_NOFOUND,"</h4>";
+		echo "<h4>" . _MA_USER_NOFOUND, "</h4>";
 		$hiddenform = "<form name='findnext' action='findusers.php' method='post'>";
-		foreach ( $_POST as $k => $v) {
+		foreach ($_POST as $k => $v) {
 			if ($k == 'XOOPS_TOKEN_REQUEST') {
 				// regenerate token value
-				$hiddenform .= icms::$security->getTokenHTML()."\n";
+				$hiddenform .= icms::$security->getTokenHTML() . "\n";
 			} else {
-				$hiddenform .= "<input type='hidden' name='".htmlSpecialChars($k, ENT_QUOTES)."' value='".htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v), ENT_QUOTES)."' />\n";
+				$hiddenform .= "<input type='hidden' name='" . htmlSpecialChars($k, ENT_QUOTES) . "' value='" . htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v), ENT_QUOTES) . "' />\n";
 			}
 		}
 
@@ -380,15 +382,15 @@ if (empty($_POST["user_submit"])) {
 			$hiddenform .= "<input type='hidden' name='start' value='{$start}' />\n";
 		}
 
-		$hiddenform .= "<input type='hidden' name='token' value='".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."' />\n";
+		$hiddenform .= "<input type='hidden' name='token' value='" . htmlspecialchars($token, ENT_QUOTES, _CHARSET) . "' />\n";
 		$hiddenform .= "</form>";
 
-		echo "<div>".$hiddenform;
-		echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>"._MA_USER_SEARCHAGAIN."</a>\n";
+		echo "<div>" . $hiddenform;
+		echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
 		echo "</div>";
 	} elseif ($start < $total) {
 		if (!empty($total)) {
-			echo sprintf(_MA_USER_USERSFOUND, $total)."<br />";
+			echo sprintf(_MA_USER_USERSFOUND, $total) . "<br />";
 		}
 
 		if (!empty($foundusers)) {
@@ -400,11 +402,11 @@ if (empty($_POST["user_submit"])) {
 				echo "<input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"{$name_form}\", \"memberslist_checkall\");' />";
 			}
 			echo "</th>
-			<th align='center'>"._MA_USER_UNAME."</th>
-			<th align='center'>"._MA_USER_REALNAME."</th>
-			<th align='center'>"._MA_USER_REGDATE."</th>
-			<th align='center'>"._MA_USER_LASTLOGIN."</th>
-			<th align='center'>"._MA_USER_POSTS."</th>
+			<th align='center'>"._MA_USER_UNAME . "</th>
+			<th align='center'>"._MA_USER_REALNAME . "</th>
+			<th align='center'>"._MA_USER_REGDATE . "</th>
+			<th align='center'>"._MA_USER_LASTLOGIN . "</th>
+			<th align='center'>"._MA_USER_POSTS . "</th>
 			</tr>";
 			$ucount = 0;
 			foreach (array_keys($foundusers) as $j) {
@@ -414,72 +416,72 @@ if (empty($_POST["user_submit"])) {
 					$class = 'odd';
 				}
 				$ucount++;
-				$fuser_name = $foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
+				$fuser_name = $foundusers[$j]->getVar("name")?$foundusers[$j]->getVar("name"):"&nbsp;";
 				echo "<tr class='$class'>
 				<td align='center'>";
 				if (!empty($_POST["multiple"])) {
-					echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='".$foundusers[$j]->getVar("uid")."' />";
-					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='".$foundusers[$j]->getVar("uname")."' />";
+					echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar("uid") . "' />";
+					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar("uname") . "' />";
 				} else {
-					echo "<input type='radio' name='{$name_userid}' id='{$name_userid}' value='".$foundusers[$j]->getVar("uid")."' />";
-					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='".$foundusers[$j]->getVar("uname")."' />";
+					echo "<input type='radio' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar("uid") . "' />";
+					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar("uname") . "' />";
 				}
 				echo "</td>
-				<td><a href='".ICMS_URL."/userinfo.php?uid=".$foundusers[$j]->getVar("uid")."' target='_blank'>".$foundusers[$j]->getVar("uname")."</a></td>
-				<td>".$fuser_name."</td>
-				<td align='center'>".($foundusers[$j]->getVar("user_regdate") ? date(_SHORTDATESTRING, $foundusers[$j]->getVar("user_regdate")) : "")."</td>
-				<td align='center'>".($foundusers[$j]->getVar("last_login") ? date(_MEDIUMDATESTRING, $foundusers[$j]->getVar("last_login")) : "")."</td>
-				<td align='center'>".$foundusers[$j]->getVar("posts")."</td>";
+				<td><a href='".ICMS_URL . "/userinfo.php?uid=" . $foundusers[$j]->getVar("uid") . "' target='_blank'>" . $foundusers[$j]->getVar("uname") . "</a></td>
+				<td>".$fuser_name . "</td>
+				<td align='center'>".($foundusers[$j]->getVar("user_regdate")? date(_SHORTDATESTRING, $foundusers[$j]->getVar("user_regdate")):"") . "</td>
+				<td align='center'>".($foundusers[$j]->getVar("last_login")? date(_MEDIUMDATESTRING, $foundusers[$j]->getVar("last_login")):"") . "</td>
+				<td align='center'>".$foundusers[$j]->getVar("posts") . "</td>";
 				echo "</tr>\n";
 			}
 			echo "<tr class='foot'><td colspan='6'>";
 
 			// placeholder for external applications
 			if (empty($_POST["target"])) {
-				echo "<select name='fct'><option value='users'>"._DELETE."</option><option value='mailusers'>"._MA_USER_SENDMAIL."</option>";
+				echo "<select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _MA_USER_SENDMAIL . "</option>";
 				echo "</select>&nbsp;";
-				echo icms::$security->getTokenHTML()."<input type='submit' value='"._SUBMIT."' />";
+				echo icms::$security->getTokenHTML() . "<input type='submit' value='" . _SUBMIT . "' />";
 
 				// Add selected users
 			} else {
-				echo "<input type='button' value='"._MA_USER_ADD_SELECTED."' onclick='addusers();' />";
+				echo "<input type='button' value='" . _MA_USER_ADD_SELECTED . "' onclick='addusers();' />";
 			}
-			echo "<input type='hidden' name='token' value='".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."' />\n";
+			echo "<input type='hidden' name='token' value='" . htmlspecialchars($token, ENT_QUOTES, _CHARSET) . "' />\n";
 			echo "</td></tr></table></form>\n";
 		}
 
 		$hiddenform = "<form name='findnext' action='findusers.php' method='post'>";
-		foreach ( $_POST as $k => $v) {
+		foreach ($_POST as $k => $v) {
 			if ($k == 'XOOPS_TOKEN_REQUEST') {
 				// regenerate token value
-				$hiddenform .= icms::$security->getTokenHTML()."\n";
+				$hiddenform .= icms::$security->getTokenHTML() . "\n";
 			} else {
-				$hiddenform .= "<input type='hidden' name='".htmlSpecialChars($k, ENT_QUOTES)."' value='".htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v), ENT_QUOTES)."' />\n";
+				$hiddenform .= "<input type='hidden' name='" . htmlSpecialChars($k, ENT_QUOTES) . "' value='" . htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v), ENT_QUOTES) . "' />\n";
 			}
 		}
 
 		if (!isset($_POST['limit'])) {
-			$hiddenform .= "<input type='hidden' name='limit' value='".$limit."' />\n";
+			$hiddenform .= "<input type='hidden' name='limit' value='" . $limit . "' />\n";
 		}
 		if (!isset($_POST['start'])) {
-			$hiddenform .= "<input type='hidden' name='start' value='".$start."' />\n";
+			$hiddenform .= "<input type='hidden' name='start' value='" . $start . "' />\n";
 		}
-		$hiddenform .= "<input type='hidden' name='token' value='".htmlspecialchars($token, ENT_QUOTES, _CHARSET)."' />\n";
-		if (!isset($total) || ( $totalpages = ceil($total / $limit) ) > 1) {
+		$hiddenform .= "<input type='hidden' name='token' value='" . htmlspecialchars($token, ENT_QUOTES, _CHARSET) . "' />\n";
+		if (!isset($total) || ($totalpages = ceil($total / $limit)) > 1) {
 			$prev = $start - $limit;
 			if ($start - $limit >= 0) {
-				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=".$prev.";document.findnext.submit();'>"._MA_USER_PREVIOUS."</a>&nbsp;\n";
+				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _MA_USER_PREVIOUS . "</a>&nbsp;\n";
 			}
 			$counter = 1;
-			$currentpage = ($start+$limit) / $limit;
+			$currentpage = ($start + $limit) / $limit;
 
 			if (!isset($total)) {
 
 				while ($counter <= $currentpage) {
 					if ($counter == $currentpage) {
-						$hiddenform .= "<strong>".$counter."</strong> ";
-					} elseif (($counter > $currentpage-4 && $counter < $currentpage+4) || $counter == 1) {
-						$hiddenform .= "<a href='#".$counter."' onclick='javascript:document.findnext.start.value=".($counter-1)*$limit.";document.findnext.submit();'>".$counter."</a> ";
+						$hiddenform .= "<strong>" . $counter . "</strong> ";
+					} elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1) {
+						$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 						if ($counter == 1 && $currentpage > 5) {
 							$hiddenform .= "... ";
 						}
@@ -491,12 +493,12 @@ if (empty($_POST["user_submit"])) {
 
 				while ($counter <= $totalpages) {
 					if ($counter == $currentpage) {
-						$hiddenform .= "<strong>".$counter."</strong> ";
-					} elseif (($counter > $currentpage-4 && $counter < $currentpage+4) || $counter == 1 || $counter == $totalpages) {
-						if ($counter == $totalpages && $currentpage < $totalpages-4) {
+						$hiddenform .= "<strong>" . $counter . "</strong> ";
+					} elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1 || $counter == $totalpages) {
+						if ($counter == $totalpages && $currentpage < $totalpages - 4) {
 							$hiddenform .= "... ";
 						}
-						$hiddenform .= "<a href='#".$counter."' onclick='javascript:document.findnext.start.value=".($counter-1)*$limit.";document.findnext.submit();'>".$counter."</a> ";
+						$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 						if ($counter == 1 && $currentpage > 5) {
 							$hiddenform .= "... ";
 						}
@@ -506,17 +508,17 @@ if (empty($_POST["user_submit"])) {
 			}
 
 			$next = $start + $limit;
-			if (( isset($total) && $total > $next) || ( !isset($total) && count($foundusers) >= $limit )) {
-				$hiddenform .= "&nbsp;<a href='#".$total."' onclick='javascript:document.findnext.start.value=".$next.";document.findnext.submit();'>"._MA_USER_NEXT."</a>\n";
+			if ((isset($total) && $total > $next) || (!isset($total) && count($foundusers) >= $limit)) {
+				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _MA_USER_NEXT . "</a>\n";
 			}
 		}
 		$hiddenform .= "</form>";
 
-		echo "<div>".$hiddenform;
+		echo "<div>" . $hiddenform;
 		if (isset($total)) {
-			echo "<br />".sprintf(_MA_USER_USERSFOUND, $total) . "&nbsp;";
+			echo "<br />" . sprintf(_MA_USER_USERSFOUND, $total) . "&nbsp;";
 		}
-		echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>"._MA_USER_SEARCHAGAIN."</a>\n";
+		echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
 		echo "</div>";
 	}
 }

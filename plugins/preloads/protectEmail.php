@@ -83,13 +83,13 @@ class IcmsPreloadProtectEmail extends icms_preload_Item {
 				// @todo - this should be decoupled, too. This entire plugin could be more of a factory method, not knowing what types of changes to make
 				$protection_type = (int) $icmsConfigPersona['email_protect'];
 
-				if ($protection_type == 1  /* uses gd protection method */ ) {
+				if ($protection_type == 1  /* uses gd protection method */) {
 					$patterns[] = '/' . $email . '/';
 					$replacements[] = "<img style='vertical-align:middle;' class='email_protect' src='" . ICMS_URL . "/include/protection.php?p=" . base64_encode(urlencode($email)) . "'>";
 				} elseif ($protection_type == 2  /* using script method */) {
 					$encoded_email = json_encode(array_map("urlencode", explode(PHP_EOL, chunk_split($email, 3, PHP_EOL))));
 					$patterns[] = '/' . $email . '/';
-					$replacements[] = '<script type="text/javascript">document.write(decodeURIComponent('.$encoded_email.'.join("")));</script>';
+					$replacements[] = '<script type="text/javascript">document.write(decodeURIComponent(' . $encoded_email . '.join("")));</script>';
 				}
 			}
 			$_smarty_results = preg_replace($patterns, $replacements, $_smarty_results);

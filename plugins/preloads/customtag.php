@@ -19,7 +19,7 @@ class IcmsPreloadCustomtag extends icms_preload_Item {
 	 * Function to be triggered at the end of the core boot process
 	 */
 	function eventFinishCoreBoot() {
-		icms_loadLanguageFile("system", "customtag", TRUE);
+		icms_loadLanguageFile("system", "customtag", true);
 	}
 
 	/**

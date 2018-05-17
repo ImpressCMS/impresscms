@@ -60,7 +60,7 @@ class icms_auth_method_Openid extends icms_auth_Object {
 	 * Authentication Service constructor
 	 */
 	public function __construct() {
-		$this->_dao = NULL;
+		$this->_dao = null;
 		$this->auth_method = 'openid';
 	}
 
@@ -83,13 +83,17 @@ class icms_auth_method_Openid extends icms_auth_Object {
 	 * @param bool $debug Turn debug on or not
 	 * @return bool successful?
 	 */
-	public function authenticate($debug = FALSE) {
+	public function authenticate($debug = false) {
 		// check to see if we already have an OpenID response in SESSION
 		if (isset($_SESSION['openid_response'])) {
-			if ($debug) icms_core_Debug::message(_CORE_OID_INSESSIONS);
+			if ($debug) {
+				icms_core_Debug::message(_CORE_OID_INSESSIONS);
+			}
 			$this->response = unserialize($_SESSION['openid_response']);
 		} else {
-			if ($debug) icms_core_Debug::message(_CORE_OID_FETCHING);
+			if ($debug) {
+				icms_core_Debug::message(_CORE_OID_FETCHING);
+			}
 			// Complete the authentication process using the server's response.
 			$consumer = getConsumer();
 			$return_to = getReturnTo();
@@ -99,12 +103,16 @@ class icms_auth_method_Openid extends icms_auth_Object {
 		}
 
 		if ($this->response->status == Auth_OpenID_CANCEL) {
-			if ($debug) icms_core_Debug::message(_CORE_OID_STATCANCEL);
+			if ($debug) {
+				icms_core_Debug::message(_CORE_OID_STATCANCEL);
+			}
 
 			// This means the authentication was cancelled.
 			$this->setErrors('100', _CORE_OID_VERIFCANCEL);
 		} elseif ($this->response->status == Auth_OpenID_FAILURE) {
-			if ($debug) icms_core_Debug::message(_CORE_OID_SERVERFAILED);
+			if ($debug) {
+				icms_core_Debug::message(_CORE_OID_SERVERFAILED);
+			}
 
 			$this->setErrors('101', _CORE_OID_FAILED . $this->response->message);
 			if ($debug) {
@@ -112,7 +120,7 @@ class icms_auth_method_Openid extends icms_auth_Object {
 				icms_core_Debug::vardump($_REQUEST);
 			}
 
-			return FALSE;
+			return false;
 		} elseif ($this->response->status == Auth_OpenID_SUCCESS) {
 			// This means the authentication succeeded.
 			$this->displayid = $this->response->getDisplayIdentifier();
@@ -142,24 +150,34 @@ class icms_auth_method_Openid extends icms_auth_Object {
 			 * trying to link to an existing account
 			 */
 			if (isset($_POST['openid_register'])) {
-				if ($debug) icms_core_Debug::message(_CORE_OID_STEPIS . 'OPENID_STEP_REGISTER');
+				if ($debug) {
+					icms_core_Debug::message(_CORE_OID_STEPIS . 'OPENID_STEP_REGISTER');
+				}
 				$this->step = OPENID_STEP_REGISTER;
 			} elseif (isset($_POST['openid_link'])) {
-				if ($debug) icms_core_Debug::message(_CORE_OID_STEPIS . 'OPENID_STEP_LINK');
+				if ($debug) {
+					icms_core_Debug::message(_CORE_OID_STEPIS . 'OPENID_STEP_LINK');
+				}
 				$this->step = OPENID_STEP_LINK;
 			} elseif (isset($_SESSION['openid_step'])) {
-				if ($debug) icms_core_Debug::message(_CORE_OID_STEPIS . $_SESSION['openid_step']);
+				if ($debug) {
+					icms_core_Debug::message(_CORE_OID_STEPIS . $_SESSION['openid_step']);
+				}
 				$this->step = $_SESSION['openid_step'];
 			} else {
-				if ($debug) icms_core_Debug::message(_CORE_OID_CHECKINGID);
+				if ($debug) {
+					icms_core_Debug::message(_CORE_OID_CHECKINGID);
+				}
 				// Do we already have a user with this openid
 				$member_handler = icms::handler('icms_member');
 				$criteria = new icms_db_criteria_Compo();
 				$criteria->add(new icms_db_criteria_Item('openid', $this->openid));
-				$users =& $member_handler->getUsers($criteria);
+				$users = & $member_handler->getUsers($criteria);
 				if ($users && count($users) > 0) {
 					$this->step = OPENID_STEP_USER_FOUND;
-					if ($debug) icms_core_Debug::message(_CORE_OID_FOUNDSTEPIS . 'OPENID_STEP_USER_FOUND');
+					if ($debug) {
+						icms_core_Debug::message(_CORE_OID_FOUNDSTEPIS . 'OPENID_STEP_USER_FOUND');
+					}
 					return $users[0];
 				} else {
 					/*
@@ -167,9 +185,11 @@ class icms_auth_method_Openid extends icms_auth_Object {
 					 * to create a new user account on the site or else login with his already registered
 					 * account
 					 */
-					if ($debug) icms_core_Debug::message(_CORE_OID_NOTFOUNDSTEPIS . 'OPENID_STEP_NO_USER_FOUND');
+					if ($debug) {
+						icms_core_Debug::message(_CORE_OID_NOTFOUNDSTEPIS . 'OPENID_STEP_NO_USER_FOUND');
+					}
 					$this->step = OPENID_STEP_NO_USER_FOUND;
-					return FALSE;
+					return false;
 				}
 			}
 		}

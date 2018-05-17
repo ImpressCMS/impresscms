@@ -21,7 +21,7 @@ class icms_ipf_form_elements_Radio extends icms_form_elements_Radio {
 		$var = $object->getVarInfo($key);
 
 		$control = $object->getControl($key);
-		if(isset($control['delimeter'])) {
+		if (isset($control['delimeter'])) {
 			$this->_delimeter = $control['delimeter'];
 		}
 
@@ -48,10 +48,10 @@ class icms_ipf_form_elements_Radio extends icms_form_elements_Radio {
 						// Creating the specified core object handler
 						$control_handler = icms::handler($control['itemHandler']);
 					} else {
-						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
+						$control_handler = & icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}
 				} else {
-					$control_handler =& $object->handler;
+					$control_handler = & $object->handler;
 				}
 
 				// Checking if the specified method exists

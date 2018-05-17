@@ -51,30 +51,30 @@ include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
  */
 class icms_data_notification_Handler extends icms_ipf_Handler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'data_notification', 'not_id', 'not_event', 'not_itemid', 'icms', 'xoopsnotifications', 'not_id');
-        }
+		public function __construct(&$db) {
+			parent::__construct($db, 'data_notification', 'not_id', 'not_event', 'not_itemid', 'icms', 'xoopsnotifications', 'not_id');
+		}
 
 	// TODO: rename this...
 	// Also, should we have get by module, get by category, etc...??
 	/**
-	* Change a value in multiple notifications
-	*
-	* @param   int     $module_id  module ID to get notification for
-	* @param   string  $category   category to get notification for
-	* @param   int     $item_id    item ID to get notification for
-	* @param   string  $event      module ID to get notification for
-	* @param   int     $user_id    user ID to get notification for
-	*
-	* @return  mixed   array of objects or false
-	*/
+	 * Change a value in multiple notifications
+	 *
+	 * @param   int     $module_id  module ID to get notification for
+	 * @param   string  $category   category to get notification for
+	 * @param   int     $item_id    item ID to get notification for
+	 * @param   string  $event      module ID to get notification for
+	 * @param   int     $user_id    user ID to get notification for
+	 *
+	 * @return  mixed   array of objects or false
+	 */
 	public function &getNotification($module_id, $category, $item_id, $event, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('not_modid', (int)$module_id));
+		$criteria->add(new icms_db_criteria_Item('not_modid', (int) $module_id));
 		$criteria->add(new icms_db_criteria_Item('not_category', icms::$xoopsDB->escape($category)));
-		$criteria->add(new icms_db_criteria_Item('not_itemid', (int)$item_id));
+		$criteria->add(new icms_db_criteria_Item('not_itemid', (int) $item_id));
 		$criteria->add(new icms_db_criteria_Item('not_event', icms::$xoopsDB->escape($event)));
-		$criteria->add(new icms_db_criteria_Item('not_uid', (int)$user_id));
+		$criteria->add(new icms_db_criteria_Item('not_uid', (int) $user_id));
 		$objects = $this->getObjects($criteria);
 		if (count($objects) == 1) {
 			return $objects[0];
@@ -96,11 +96,11 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 */
 	public function isSubscribed($category, $item_id, $event, $module_id, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('not_modid', (int)$module_id));
+		$criteria->add(new icms_db_criteria_Item('not_modid', (int) $module_id));
 		$criteria->add(new icms_db_criteria_Item('not_category', icms::$xoopsDB->escape($category)));
-		$criteria->add(new icms_db_criteria_Item('not_itemid', (int)$item_id));
+		$criteria->add(new icms_db_criteria_Item('not_itemid', (int) $item_id));
 		$criteria->add(new icms_db_criteria_Item('not_event', icms::$xoopsDB->escape($event)));
-		$criteria->add(new icms_db_criteria_Item('not_uid', (int)$user_id));
+		$criteria->add(new icms_db_criteria_Item('not_uid', (int) $user_id));
 		return $this->getCount($criteria);
 	}
 
@@ -118,10 +118,10 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int    $module_id   ID of the module (default to current module)
 	 * @param  int    $user_id     ID of the user (default to current user)
 	 */
-	public function subscribe($category, $item_id, $events, $mode=null, $module_id=null, $user_id=null) {
+	public function subscribe($category, $item_id, $events, $mode = null, $module_id = null, $user_id = null) {
 		if (!isset($user_id)) {
 			if (empty(icms::$user)) {
-				return false;  // anonymous cannot subscribe
+				return false; // anonymous cannot subscribe
 			} else {
 				$user_id = icms::$user->getVar('uid');
 			}
@@ -137,14 +137,16 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 			$mode = $user->getVar('notify_mode');
 		}
 
-		if (!is_array($events)) $events = array($events);
+		if (!is_array($events)) {
+			$events = array($events);
+		}
 		foreach ($events as $event) {
-			if ($notification =& $this->getNotification($module_id, $category, $item_id, $event, $user_id)) {
+			if ($notification = & $this->getNotification($module_id, $category, $item_id, $event, $user_id)) {
 				if ($notification->getVar('not_mode') != $mode) {
 					$this->updateByField($notification, 'not_mode', $mode);
 				}
 			} else {
-				$notification =& $this->create();
+				$notification = & $this->create();
 				$notification->setVar('not_modid', $module_id);
 				$notification->setVar('not_category', $category);
 				$notification->setVar('not_itemid', $item_id);
@@ -174,13 +176,13 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 
 	// TODO: rename this??
 	/**
-	* Get a list of notification events for the current item/mod/user
-	* @param  string   $category  category for the subscribed events
-	* @param  int      $item_id  ID of the subscribed items
-	* @param  int      $module_id  ID of the module of the subscribed items
-	* @param  int      $user_id  ID of the user of the subscribed items
-	* @return array    Array of {@link icms_data_notification_Object} objects
-	*/
+	 * Get a list of notification events for the current item/mod/user
+	 * @param  string   $category  category for the subscribed events
+	 * @param  int      $item_id  ID of the subscribed items
+	 * @param  int      $module_id  ID of the module of the subscribed items
+	 * @param  int      $user_id  ID of the user of the subscribed items
+	 * @return array    Array of {@link icms_data_notification_Object} objects
+	 */
 	public function getSubscribedEvents($category, $item_id, $module_id, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('not_modid', (int) $module_id));
@@ -188,7 +190,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 		if ($item_id) {
 			$criteria->add(new icms_db_criteria_Item('not_itemid', (int) $item_id));
 		}
-		$criteria->add(new icms_db_criteria_Item('not_uid', (int)$user_id));
+		$criteria->add(new icms_db_criteria_Item('not_uid', (int) $user_id));
 		$results = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($results) as $i) {
@@ -238,7 +240,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	// mail templates can include logic in the future, then we can
 	// tailor the mail so it makes sense for any of the possible
 	// (or combination of) events.
-	public function triggerEvents($category, $item_id, $events, $extra_tags=array(), $user_list=array(), $module_id=null, $omit_user_id=null) {
+	public function triggerEvents($category, $item_id, $events, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null) {
 		if (!is_array($events)) {
 			$events = array($events);
 		}
@@ -259,24 +261,24 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int      $module_id    ID of the module
 	 * @param  int      $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
 	 */
-	public function triggerEvent($category, $item_id, $event, $extra_tags=array(), $user_list=array(), $module_id=null, $omit_user_id=null) {
+	public function triggerEvent($category, $item_id, $event, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
-			$module =& $icmsModule;
-			$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
+			$module = & $icmsModule;
+			$module_id = !empty($icmsModule)?$icmsModule->getVar('mid'):0;
 		} else {
 			$module_handler = icms::handler('icms_module');
-			$module =& $module_handler->get($module_id);
+			$module = & $module_handler->get($module_id);
 		}
 
 		// Check if event is enabled
-		$mod_config =& icms::$config->getConfigsByCat(0,$module->getVar('mid'));
+		$mod_config = & icms::$config->getConfigsByCat(0, $module->getVar('mid'));
 		if (empty($mod_config['notification_enabled'])) {
 			return false;
 		}
-		$category_info =& $this->categoryInfo($category, $module_id);
-		$event_info =& $this->eventInfo($category, $event, $module_id);
-		if (!in_array($this->generateConfig($category_info,$event_info, 'option_name'), $mod_config['notification_events']) && empty($event_info['invisible'])) {
+		$category_info = & $this->categoryInfo($category, $module_id);
+		$event_info = & $this->eventInfo($category, $event, $module_id);
+		if (!in_array($this->generateConfig($category_info, $event_info, 'option_name'), $mod_config['notification_events']) && empty($event_info['invisible'])) {
 			return false;
 		}
 
@@ -304,7 +306,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 			}
 			$criteria->add($user_criteria);
 		}
-		$notifications =& $this->getObjects($criteria);
+		$notifications = & $this->getObjects($criteria);
 		if (empty($notifications)) {
 			return;
 		}
@@ -340,9 +342,9 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 			}
 		}
 
-		$tags['X_ITEM_NAME'] = !empty($item_info['name']) ? $item_info['name'] : '[' . _NOT_ITEMNAMENOTAVAILABLE . ']';
-		$tags['X_ITEM_URL']  = !empty($item_info['url']) ? $item_info['url'] : '[' . _NOT_ITEMURLNOTAVAILABLE . ']';
-		$tags['X_ITEM_TYPE'] = !empty($category_info['item_name']) ? $category_info['title'] : '[' . _NOT_ITEMTYPENOTAVAILABLE . ']';
+		$tags['X_ITEM_NAME'] = !empty($item_info['name'])?$item_info['name']:'[' . _NOT_ITEMNAMENOTAVAILABLE . ']';
+		$tags['X_ITEM_URL']  = !empty($item_info['url'])?$item_info['url']:'[' . _NOT_ITEMURLNOTAVAILABLE . ']';
+		$tags['X_ITEM_TYPE'] = !empty($category_info['item_name'])?$category_info['title']:'[' . _NOT_ITEMTYPENOTAVAILABLE . ']';
 		$tags['X_MODULE'] = $module->getVar('name');
 		$tags['X_MODULE_URL'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/';
 		$tags['X_NOTIFY_CATEGORY'] = $category;
@@ -372,7 +374,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @return  bool
 	 */
 	public function unsubscribeByUser($user_id) {
-		$criteria = new icms_db_criteria_Item('not_uid', (int)$user_id);
+		$criteria = new icms_db_criteria_Item('not_uid', (int) $user_id);
 		return $this->deleteAll($criteria);
 	}
 
@@ -388,10 +390,10 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 *
 	 * @return bool
 	 */
-	public function unsubscribe($category, $item_id, $events, $module_id=null, $user_id=null) {
+	public function unsubscribe($category, $item_id, $events, $module_id = null, $user_id = null) {
 		if (!isset($user_id)) {
 			if (empty(icms::$user)) {
-				return false;  // anonymous cannot subscribe
+				return false; // anonymous cannot subscribe
 			} else {
 				$user_id = icms::$user->getVar('uid');
 			}
@@ -428,7 +430,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @return  bool
 	 */
 	public function unsubscribeByModule($module_id) {
-		$criteria = new icms_db_criteria_Item('not_modid', (int)$module_id);
+		$criteria = new icms_db_criteria_Item('not_modid', (int) $module_id);
 		return $this->deleteAll($criteria);
 	}
 
@@ -491,7 +493,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int	 $module_id  ID of the module  (default current module)
 	 * @return bool
 	 */
-	static public function isEnabled($style, $module_id=null) {
+	static public function isEnabled($style, $module_id = null) {
 		if (isset($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
 			$status = $GLOBALS['xoopsModuleConfig']['notification_enabled'];
 		} else {
@@ -499,7 +501,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 				return false;
 			}
 			$module_handler = icms::handler('icms_module');
-			$module =& $module_handler->get($module_id);
+			$module = & $module_handler->get($module_id);
 			if (!empty($module) && $module->getVar('hasnotification') == 1) {
 				$config = icms::$config->getConfigsByCat(0, $module_id);
 				$status = $config['notification_enabled'];
@@ -526,16 +528,16 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int	 $module_id  ID of the module (default current module)
 	 * @return mixed
 	 */
-	static public function &categoryInfo($category_name='', $module_id=null) {
+	static public function &categoryInfo($category_name = '', $module_id = null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
-			$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
-			$module =& $icmsModule;
+			$module_id = !empty($icmsModule)?$icmsModule->getVar('mid'):0;
+			$module = & $icmsModule;
 		} else {
 			$module_handler = icms::handler('icms_module');
-			$module =& $module_handler->get($module_id);
+			$module = & $module_handler->get($module_id);
 		}
-		$not_config =& $module->getInfo('notification');
+		$not_config = & $module->getInfo('notification');
 		if (empty($category_name)) {
 			return $not_config['category'];
 		}
@@ -561,14 +563,14 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int  $module_id  ID of the module (default current module)
 	 * @return mixed			Associative array of category info
 	 */
-	static public function &commentCategoryInfo($module_id=null) {
+	static public function &commentCategoryInfo($module_id = null) {
 		$ret = false;
-		$all_categories =& self::categoryInfo('', $module_id);
+		$all_categories = & self::categoryInfo('', $module_id);
 		if (empty($all_categories)) {
 			return $ret;
 		}
 		foreach ($all_categories as $category) {
-			$all_events =& self::categoryEvents($category['name'], false, $module_id);
+			$all_events = & self::categoryEvents($category['name'], false, $module_id);
 			if (empty($all_events)) {
 				continue;
 			}
@@ -592,19 +594,19 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int	 $module_id	  ID of the module (default current module)
 	 * @return mixed
 	 */
-	static public function &categoryEvents($category_name, $enabled_only, $module_id=null) {
+	static public function &categoryEvents($category_name, $enabled_only, $module_id = null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
-			$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
-			$module =& $icmsModule;
+			$module_id = !empty($icmsModule)?$icmsModule->getVar('mid'):0;
+			$module = & $icmsModule;
 		} else {
 			$module_handler = icms::handler('icms_module');
-			$module =& $module_handler->get($module_id);
+			$module = & $module_handler->get($module_id);
 		}
-		$not_config =& $module->getInfo('notification');
-		$mod_config = icms::$config->getConfigsByCat(0,$module_id);
+		$not_config = & $module->getInfo('notification');
+		$mod_config = icms::$config->getConfigsByCat(0, $module_id);
 
-		$category =& self::categoryInfo($category_name, $module_id);
+		$category = & self::categoryInfo($category_name, $module_id);
 
 		global $icmsConfig;
 		$event_array = array();
@@ -647,7 +649,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 				} else {
 					$insert_comment = false;
 					$insert_submit = false;
-					switch($com_config['com_rule']) {
+					switch ($com_config['com_rule']) {
 						case XOOPS_COMMENT_APPROVENONE:
 							// comments disabled, no comment events
 							break;
@@ -714,7 +716,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @return bool
 	 */
 	static public function eventEnabled(&$category, &$event, &$module) {
-		$mod_config = icms::$config->getConfigsByCat(0,$module->getVar('mid'));
+		$mod_config = icms::$config->getConfigsByCat(0, $module->getVar('mid'));
 
 		if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
 			$option_name = self::generateConfig($category, $event, 'option_name');
@@ -734,8 +736,8 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int	 $module_id	  ID of the module (default current module)
 	 * @return mixed
 	 */
-	static public function &eventInfo($category_name, $event_name, $module_id=null) {
-		$all_events =& self::categoryEvents($category_name, false, $module_id);
+	static public function &eventInfo($category_name, $event_name, $module_id = null) {
+		$all_events = & self::categoryEvents($category_name, false, $module_id);
 		foreach ($all_events as $event) {
 			if ($event['name'] == $event_name) {
 				return $event;
@@ -752,12 +754,12 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int  $module_id  ID of the module
 	 * @return mixed
 	 */
-	static public function &subscribableCategoryInfo($module_id=null) {
-		$all_categories =& self::categoryInfo('', $module_id);
+	static public function &subscribableCategoryInfo($module_id = null) {
+		$all_categories = & self::categoryInfo('', $module_id);
 
 		// FIXME: better or more standardized way to do this?
 		$script_url = explode('/', $_SERVER['PHP_SELF']);
-		$script_name = $script_url[count($script_url)-1];
+		$script_name = $script_url[count($script_url) - 1];
 
 		$sub_categories = array();
 
@@ -787,8 +789,8 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 				$sub_categories[] = $category;
 			} else {
 				$item_name = $category['item_name'];
-				$id = ($item_name != '' && isset($_GET[$item_name])) ? (int) ($_GET[$item_name]) : 0;
-				if ($id > 0)  {
+				$id = ($item_name != '' && isset($_GET[$item_name]))?(int) ($_GET[$item_name]):0;
+				if ($id > 0) {
 					$category['item_id'] = $id;
 					$sub_categories[] = $category;
 				}

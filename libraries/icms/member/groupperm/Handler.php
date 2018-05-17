@@ -48,9 +48,9 @@
  */
 class icms_member_groupperm_Handler extends icms_ipf_Handler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'member_groupperm', 'gperm_id', 'gperm_itemid', 'gperm_name', 'icms', 'group_permission', array('gperm_id', array('gperm_name', 'gperm_itemid', 'gperm_modid')));
-        }
+		public function __construct(&$db) {
+			parent::__construct($db, 'member_groupperm', 'gperm_id', 'gperm_itemid', 'gperm_name', 'icms', 'group_permission', array('gperm_id', array('gperm_name', 'gperm_itemid', 'gperm_modid')));
+		}
 
 	/**
 	 * Delete all module specific permissions assigned for a group
@@ -100,7 +100,7 @@ class icms_member_groupperm_Handler extends icms_ipf_Handler {
 	 *
 	 * @return	bool    TRUE if permission is enabled
 	 */
-	public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue=true) {
+	public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue = true) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_modid', $gperm_modid));
 		$criteria->add(new icms_db_criteria_Item('gperm_name', $gperm_name));
 		$gperm_itemid = (int) $gperm_itemid;
@@ -139,7 +139,7 @@ class icms_member_groupperm_Handler extends icms_ipf_Handler {
 	 * @return	bool    TRUE if success
 	 */
 	public function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1) {
-		$perm =& $this->create();
+		$perm = & $this->create();
 		$perm->setVar('gperm_name', $gperm_name);
 		$perm->setVar('gperm_groupid', $gperm_groupid);
 		$perm->setVar('gperm_itemid', $gperm_itemid);
@@ -170,7 +170,7 @@ class icms_member_groupperm_Handler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('gperm_groupid', (int) $gperm_groupid));
 		}
 		$perms = $this->getObjects($criteria, true);
-		foreach ( array_keys($perms) as $i) {
+		foreach (array_keys($perms) as $i) {
 			$ret[] = $perms[$i]->getVar('gperm_itemid');
 		}
 		return array_unique($ret);
@@ -186,11 +186,11 @@ class icms_member_groupperm_Handler extends icms_ipf_Handler {
 	 * @return  array   array of group IDs
 	 */
 	public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1) {
-                $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', $gperm_name));
-                $criteria->add(new icms_db_criteria_Item('gperm_itemid', (int) $gperm_itemid));
-                $criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
-                $perms = $this->getObjects($criteria, true);
-                $ret = array();
+				$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', $gperm_name));
+				$criteria->add(new icms_db_criteria_Item('gperm_itemid', (int) $gperm_itemid));
+				$criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
+				$perms = $this->getObjects($criteria, true);
+				$ret = array();
 		foreach (array_keys($perms) as $i) {
 			$ret[] = $perms[$i]->getVar('gperm_groupid');
 		}

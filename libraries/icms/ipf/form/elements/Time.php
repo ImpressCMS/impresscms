@@ -20,7 +20,7 @@ class icms_ipf_form_elements_Time extends icms_form_elements_Select {
 		for ($i = 0; $i < 24; $i++) {
 			for ($j = 0; $j < 60; $j = $j + 10) {
 				$key_t = ($i * 3600) + ($j * 60);
-				$timearray[$key_t] = ($j != 0) ? $i.':'.$j : $i.':0'.$j;
+				$timearray[$key_t] = ($j != 0)?$i . ':' . $j:$i . ':0' . $j;
 			}
 		}
 		ksort($timearray);

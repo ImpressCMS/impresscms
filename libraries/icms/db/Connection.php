@@ -34,7 +34,7 @@ class icms_db_Connection extends PDO implements icms_db_IConnection {
 
 		// trigger events for the debug console - see plugins/preloads/debug_mode.php
 		if ($result) {
-			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => NULL, 'error' => NULL));
+			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => null, 'error' => null));
 		} else {
 			$errorinfo = $this->errorInfo();
 			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));

@@ -15,7 +15,7 @@
 class icms_form_elements_captcha_ImageHandler {
 	//var $mode = "gd"; // GD or bmp
 	private $code;
-	public $invalid = FALSE;
+	public $invalid = false;
 
 	private $font;
 	private $spacing;
@@ -27,7 +27,7 @@ class icms_form_elements_captcha_ImageHandler {
 	 */
 	public function __construct() {
 		if (empty($_SESSION['icms_form_elements_captcha_Object_name'])) {
-			$this->invalid = TRUE;
+			$this->invalid = true;
 		}
 
 		if (!extension_loaded('gd')) {
@@ -93,7 +93,7 @@ class icms_form_elements_captcha_ImageHandler {
 		if (!empty($maxAttempts)) {
 			$_SESSION['icms_form_elements_captcha_Object_attempt_' . $_SESSION['icms_form_elements_captcha_Object_name']]++;
 			if ($_SESSION['icms_form_elements_captcha_Object_attempt_' . $_SESSION['icms_form_elements_captcha_Object_name']] > $maxAttempts) {
-				$this->invalid = TRUE;
+				$this->invalid = true;
 			}
 		}
 	}
@@ -222,11 +222,11 @@ class icms_form_elements_captcha_ImageHandler {
 		for ($Angle = -30; $Angle <= 30; $Angle++) {
 			for ($i = 65; $i <= 90; $i++) {
 				$CharDetails = imageftbbox($FontSize, $Angle, $this->font, chr($i), array());
-				$_MaxCharWidth  = abs($CharDetails[0] + $CharDetails[2]);
+				$_MaxCharWidth = abs($CharDetails[0] + $CharDetails[2]);
 				if ($_MaxCharWidth > $MaxCharWidth) {
 					$MaxCharWidth = $_MaxCharWidth;
 				}
-				$_MaxCharHeight  = abs($CharDetails[1] + $CharDetails[5]);
+				$_MaxCharHeight = abs($CharDetails[1] + $CharDetails[5]);
 				if ($_MaxCharHeight > $MaxCharHeight) {
 					$MaxCharHeight = $_MaxCharHeight;
 				}
@@ -236,7 +236,7 @@ class icms_form_elements_captcha_ImageHandler {
 
 		$this->height = $MaxCharHeight + 2;
 		$this->spacing = (int) (($icmsConfigCaptcha['captcha_num_chars'] * $MaxCharWidth) / $icmsConfigCaptcha['captcha_num_chars']);
-		$this->width = ($icmsConfigCaptcha['captcha_num_chars'] * $MaxCharWidth) + ($this->spacing/2);
+		$this->width = ($icmsConfigCaptcha['captcha_num_chars'] * $MaxCharWidth) + ($this->spacing / 2);
 	}
 
 	/**
@@ -245,7 +245,7 @@ class icms_form_elements_captcha_ImageHandler {
 	 * @return array Random Background
 	 */
 	public function loadBackground() {
-		$RandBackground = NULL;
+		$RandBackground = null;
 		if ($backgrounds = $this->_getList("backgrounds", "(gif|jpg|png)")) {
 			$RandBackground = "backgrounds/" . $backgrounds[array_rand($backgrounds)];
 		}
@@ -285,7 +285,7 @@ class icms_form_elements_captcha_ImageHandler {
 	 */
 	public function drawCode() {
 		global $icmsConfigCaptcha;
-		for ($i = 0; $i < $icmsConfigCaptcha['captcha_num_chars'] ; $i++) {
+		for ($i = 0; $i < $icmsConfigCaptcha['captcha_num_chars']; $i++) {
 			// select random greyscale colour
 			$text_color = imagecolorallocate($this->oImage, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
 
@@ -302,7 +302,7 @@ class icms_form_elements_captcha_ImageHandler {
 			$CharHeight = abs($CharDetails[1] + $CharDetails[5]);
 
 			// calculate character starting coordinates
-			$posX = ($this->spacing/2) + ($i * $this->spacing);
+			$posX = ($this->spacing / 2) + ($i * $this->spacing);
 			$posY = 2 + ($this->height / 2) + ($CharHeight / 4);
 
 			imagefttext($this->oImage, $FontSize, $Angle, $posX, $posY, $text_color, $this->font, $this->code[$i], array());
@@ -315,7 +315,7 @@ class icms_form_elements_captcha_ImageHandler {
 	public function drawBorder() {
 		$rgb = rand(50, 150);
 		$border_color = imagecolorallocate($this->oImage, $rgb, $rgb, $rgb);
-		imagerectangle($this->oImage, 0, 0, $this->width-1, $this->height-1, $border_color);
+		imagerectangle($this->oImage, 0, 0, $this->width - 1, $this->height - 1, $border_color);
 	}
 
 	/**
@@ -324,8 +324,8 @@ class icms_form_elements_captcha_ImageHandler {
 	public function drawCircles() {
 		global $icmsConfigCaptcha;
 		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			imagefilledellipse($this->oImage, mt_rand(0,$this->width-10), mt_rand(0,$this->height-3), mt_rand(10,20), mt_rand(20,30),$randomcolor);
+			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+			imagefilledellipse($this->oImage, mt_rand(0, $this->width - 10), mt_rand(0, $this->height - 3), mt_rand(10, 20), mt_rand(20, 30), $randomcolor);
 		}
 	}
 
@@ -335,7 +335,7 @@ class icms_form_elements_captcha_ImageHandler {
 	public function drawLines() {
 		global $icmsConfigCaptcha;
 		for ($i = 0; $i < $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
+			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
 			imageline($this->oImage, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
 		}
 	}
@@ -346,8 +346,8 @@ class icms_form_elements_captcha_ImageHandler {
 	public function drawRectangles() {
 		global $icmsConfigCaptcha;
 		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			imagefilledrectangle($this->oImage, mt_rand(0,$this->width), mt_rand(0,$this->height), mt_rand(0, $this->width), mt_rand(0,$this->height),  $randomcolor);
+			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+			imagefilledrectangle($this->oImage, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
 		}
 	}
 
@@ -355,13 +355,13 @@ class icms_form_elements_captcha_ImageHandler {
 	 * Draw Captcha Bars background
 	 */
 	public function drawBars() {
-		for ($i= 0 ; $i <= $this->height;) {
-			$randomcolor = imagecolorallocate($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
+		for ($i = 0; $i <= $this->height;) {
+			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
 			imageline($this->oImage, 0, $i, $this->width, $i, $randomcolor);
 			$i = $i + 2.5;
 		}
-		for ($i = 0;$i <= $this->width;) {
-			$randomcolor = imagecolorallocate($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
+		for ($i = 0; $i <= $this->width;) {
+			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
 			imageline($this->oImage, $i, 0, $i, $this->height, $randomcolor);
 			$i = $i + 2.5;
 		}
@@ -373,8 +373,8 @@ class icms_form_elements_captcha_ImageHandler {
 	public function drawEllipses() {
 		global $icmsConfigCaptcha;
 		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			imageellipse($this->oImage, mt_rand(0,$this->width), mt_rand(0,$this->height), mt_rand(0,$this->width), mt_rand(0,$this->height), $randomcolor);
+			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+			imageellipse($this->oImage, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
 		}
 	}
 
@@ -384,11 +384,11 @@ class icms_form_elements_captcha_ImageHandler {
 	public function drawPolygons() {
 		global $icmsConfigCaptcha;
 		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
+			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
 			$coords = array();
-			for ($j=1; $j <= $icmsConfigCaptcha['captcha_polygon_point']; $j++) {
-				$coords[] = mt_rand(0,$this->width);
-				$coords[] = mt_rand(0,$this->height);
+			for ($j = 1; $j <= $icmsConfigCaptcha['captcha_polygon_point']; $j++) {
+				$coords[] = mt_rand(0, $this->width);
+				$coords[] = mt_rand(0, $this->height);
 			}
 			imagefilledpolygon($this->oImage, $coords, $icmsConfigCaptcha['captcha_polygon_point'], $randomcolor);
 		}

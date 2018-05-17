@@ -30,7 +30,6 @@
 /**
  * Manage of modules
  *
-
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
  */
@@ -60,12 +59,12 @@
  * @property int    $ipf               Is this module IPF based?
  */
 class icms_module_Object
-    extends icms_ipf_Object {
+	extends icms_ipf_Object {
 	/**
 	 * Module configuration
 	 * @var array
 	 */
-	public $config = NULL;
+	public $config = null;
 	/**
 	 * @var string
 	 */
@@ -111,7 +110,7 @@ class icms_module_Object
 		$this->initVar('modname', self::DTYPE_STRING, null, true, 25);
 		$this->initVar('ipf', self::DTYPE_INTEGER, 0, false);
 
-        parent::__construct($handler, $data);
+		parent::__construct($handler, $data);
 	}
 
 	/**
@@ -131,20 +130,24 @@ class icms_module_Object
 	 *								if FALSE, the class path is only registered if the module is inactive
 	 * @return void
 	 */
-	public function registerClassPath($isactive = NULL) {
+	public function registerClassPath($isactive = null) {
 		//if ($this->getVar("dirname") == "system") return;
 		$class_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname") . "/class";
 
 		// check if class path exists
-		if (!is_dir($class_path)) return;
+		if (!is_dir($class_path)) {
+			return;
+		}
 
 		// check if module is active (only if applicable)
-		if ($isactive !== NULL && $this->getVar("isactive") != (int) $isactive) return;
+		if ($isactive !== null && $this->getVar("isactive") != (int) $isactive) {
+			return;
+		}
 
 		// register class path
 		if ($this->getVar("ipf")) {
-			$modname = ($this->getVar("modname") != "") ?
-				$this->getVar("modname") : $this->getVar("dirname");
+			$modname = ($this->getVar("modname") != "")?
+				$this->getVar("modname"):$this->getVar("dirname");
 			icms_Autoloader::register($class_path, "mod_" . $modname);
 		} else {
 			icms_Autoloader::register($class_path);
@@ -158,17 +161,17 @@ class icms_module_Object
 	 * @param   boolean $verbose
 	 */
 	public function loadInfoAsVar($dirname, $verbose = true) {
-		if (!isset($this->modinfo)) {$this->loadInfo($dirname, $verbose);}
+		if (!isset($this->modinfo)) {$this->loadInfo($dirname, $verbose); }
 		$this->setVar('name', $this->modinfo['name'], true);
 		$this->setVar('version', (int) (100 * ($this->modinfo['version'] + 0.001)), true);
 		$this->setVar('dirname', $this->modinfo['dirname'], true);
-		$hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
-		$hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;
-		$hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1) ? 1 : 0;
-		$hasconfig = ((isset($this->modinfo['config']) && is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
-		$hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1) ? 1 : 0;
+		$hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1)?1:0;
+		$hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1)?1:0;
+		$hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1)?1:0;
+		$hasconfig = ((isset($this->modinfo['config']) && is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments']))?1:0;
+		$hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1)?1:0;
 		// RMV-NOTIFY
-		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
+		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1)?1:0;
 		$this->setVar('hasmain', $hasmain);
 		$this->setVar('hasadmin', $hasadmin);
 		$this->setVar('hassearch', $hassearch);
@@ -176,8 +179,8 @@ class icms_module_Object
 		$this->setVar('hascomments', $hascomments);
 		// RMV-NOTIFY
 		$this->setVar('hasnotification', $hasnotification);
-		$this->setVar('modname', isset($this->modinfo['modname']) ? $this->modinfo['modname'] : "", true);
-		$ipf = (isset($this->modinfo['object_items']) && is_array($this->modinfo['object_items'])) ? 1 : 0;
+		$this->setVar('modname', isset($this->modinfo['modname'])?$this->modinfo['modname']:"", true);
+		$ipf = (isset($this->modinfo['object_items']) && is_array($this->modinfo['object_items']))?1:0;
 		$this->setVar('ipf', $ipf);
 	}
 
@@ -189,9 +192,9 @@ class icms_module_Object
 	 * If {@link $name} is set, returns a single module information item as string.
 	 */
 	public function &getInfo($name = null) {
-		if (!isset($this->modinfo)) {$this->loadInfo($this->getVar('dirname'));}
+		if (!isset($this->modinfo)) {$this->loadInfo($this->getVar('dirname')); }
 		if (isset($name)) {
-			if (isset($this->modinfo[$name])) {return $this->modinfo[$name];}
+			if (isset($this->modinfo[$name])) {return $this->modinfo[$name]; }
 			$return = false;
 			return $return;
 		}
@@ -246,7 +249,7 @@ class icms_module_Object
 		) {
 			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
-			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu;}
+			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu; }
 		}
 	}
 
@@ -256,7 +259,7 @@ class icms_module_Object
 	 * @return	string $this->adminmenu
 	 */
 	public function &getAdminMenu() {
-		if (!isset($this->adminmenu)) {$this->loadAdminMenu();}
+		if (!isset($this->adminmenu)) {$this->loadAdminMenu(); }
 		return $this->adminmenu;
 	}
 
@@ -266,7 +269,7 @@ class icms_module_Object
 	 * @return	string $this->adminmenu
 	 */
 	public function &getAdminHeaderMenu() {
-		if (!isset($this->adminheadermenu)) {$this->loadAdminMenu();}
+		if (!isset($this->adminheadermenu)) {$this->loadAdminMenu(); }
 		return $this->adminheadermenu;
 	}
 
@@ -285,10 +288,10 @@ class icms_module_Object
 		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php')) {
 			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php';
 		} else {
-			if (false != $verbose) {echo "Module File for $dirname Not Found!";}
+			if (false != $verbose) {echo "Module File for $dirname Not Found!"; }
 			return false;
 		}
-		$this->modinfo =& $modversion;
+		$this->modinfo = & $modversion;
 		return true;
 	}
 
@@ -303,7 +306,7 @@ class icms_module_Object
 	 * @return  mixed   Search result or False if fail.
 	 */
 	public function search($term = '', $andor = 'AND', $limit = 0, $offset = 0, $userid = 0) {
-		if ($this->getVar('hassearch') != 1) {return false;}
+		if ($this->getVar('hassearch') != 1) {return false; }
 		$search = & $this->getInfo('search');
 		if ($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
 			return false;
@@ -350,48 +353,48 @@ class icms_module_Object
 		$tpl->display('db:admin/system_adm_modulemenu.html');
 	}
 
-    /**
-    * Get admin menu items for current module
-     *
-    * @return array
-    */
-    public function getAdminMenuItems() {
-        $inf = & $this->getInfo();
-        $url = ICMS_MODULES_URL . DIRECTORY_SEPARATOR . $this->dirname . DIRECTORY_SEPARATOR;
-        $rtn = [
-            'link' => $url . (isset($inf['adminindex']) ? $inf['adminindex'] : ''),
-            'title' => $this->getVar('name'),
-            'dir' => $this->dirname,
-            'absolute' => 1,
-            'subs' => []
-        ];
-        if (isset($inf['iconsmall']) && $inf['iconsmall'] != '') {
-            $rtn['small'] = $url . $inf['iconsmall'];
-        }
-        if (isset($inf['iconbig']) && $inf['iconbig'] != '') {
-            $rtn['iconbig'] = $url . $inf['iconbig'];
-        }
-        $this->loadAdminMenu();
-        if (is_array($this->adminmenu) && count($this->adminmenu) > 0) {
-            foreach ($this->adminmenu as $item) {
-                $item['link'] = $url . $item['link'];
-                $rtn['subs'][] = $item;
-            }
-        }
-        if ($this->hasconfig || $this->hascomments) {
-            $rtn['subs'][] = [
-                'title' => _PREFERENCES,
-                'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $this->mid
-            ];
-        }
-        $rtn['hassubs'] = (count($rtn['subs']) > 0) ? 1 : 0;
-        if ($rtn['hassubs'] == 0) {
-            unset($rtn['subs']);
-        }
-        return $rtn;
-    }
+	/**
+	 * Get admin menu items for current module
+	 *
+	 * @return array
+	 */
+	public function getAdminMenuItems() {
+		$inf = & $this->getInfo();
+		$url = ICMS_MODULES_URL . DIRECTORY_SEPARATOR . $this->dirname . DIRECTORY_SEPARATOR;
+		$rtn = [
+			'link' => $url . (isset($inf['adminindex'])?$inf['adminindex']:''),
+			'title' => $this->getVar('name'),
+			'dir' => $this->dirname,
+			'absolute' => 1,
+			'subs' => []
+		];
+		if (isset($inf['iconsmall']) && $inf['iconsmall'] != '') {
+			$rtn['small'] = $url . $inf['iconsmall'];
+		}
+		if (isset($inf['iconbig']) && $inf['iconbig'] != '') {
+			$rtn['iconbig'] = $url . $inf['iconbig'];
+		}
+		$this->loadAdminMenu();
+		if (is_array($this->adminmenu) && count($this->adminmenu) > 0) {
+			foreach ($this->adminmenu as $item) {
+				$item['link'] = $url . $item['link'];
+				$rtn['subs'][] = $item;
+			}
+		}
+		if ($this->hasconfig || $this->hascomments) {
+			$rtn['subs'][] = [
+				'title' => _PREFERENCES,
+				'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $this->mid
+			];
+		}
+		$rtn['hassubs'] = (count($rtn['subs']) > 0)?1:0;
+		if ($rtn['hassubs'] == 0) {
+			unset($rtn['subs']);
+		}
+		return $rtn;
+	}
 
-    /**
+	/**
 	 * Modules Message Function
 	 *
 	 * @since ImpressCMS 1.2
@@ -405,9 +408,9 @@ class icms_module_Object
 	 */
 	public function setMessage($msg, $title = '', $render = false) {
 		$ret = '<div class="moduleMsg">';
-		if ($title != '') {$ret .= '<h4>' . $title . '</h4>';}
+		if ($title != '') {$ret .= '<h4>' . $title . '</h4>'; }
 		if (is_array($msg)) {
-			foreach ($msg as $m) {$ret .= $m . '<br />';}
+			foreach ($msg as $m) {$ret .= $m . '<br />'; }
 		} else {
 			$ret .= $msg;
 		}

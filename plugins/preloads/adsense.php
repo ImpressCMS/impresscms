@@ -20,7 +20,7 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 	 * Function to be triggered at the end of the core boot process
 	 */
 	function eventFinishCoreBoot() {
-		icms_loadLanguageFile('system', 'adsense', TRUE);
+		icms_loadLanguageFile('system', 'adsense', true);
 	}
 
 	/**

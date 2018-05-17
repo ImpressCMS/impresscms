@@ -62,12 +62,12 @@ class icms_image_Object extends \icms_ipf_Object {
 	 */
 	public $image_info = array();
 
-        /**
-        * Stores image body
-         *
-        * @var string
-        */
-        public $image_body;
+		/**
+		 * Stores image body
+		 *
+		 * @var string
+		 */
+		public $image_body;
 
 	/**
 	 * Constructor
@@ -82,12 +82,12 @@ class icms_image_Object extends \icms_ipf_Object {
 		$this->initVar('image_weight', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('imgcat_id', self::DTYPE_INTEGER, 0, false);
 
-                if (isset($data['image_body'])) {
-                    $this->image_body = $data['image_body'];
-                    unset($data['image_body']);
-                }
+				if (isset($data['image_body'])) {
+					$this->image_body = $data['image_body'];
+					unset($data['image_body']);
+				}
 
-                parent::__construct($handler, $data);
+				parent::__construct($handler, $data);
 	}
 
 	/**
@@ -100,7 +100,7 @@ class icms_image_Object extends \icms_ipf_Object {
 	 * @return array            The array of image information
 	 */
 	public function getInfo($path, $type = 'url', $ret = false) {
-		$path = (substr($path,-1) != '/') ? $path . '/' : $path;
+		$path = (substr($path, -1) != '/')?$path . '/':$path;
 		if ($type == 'url') {
 			$img = $path . $this->getVar('image_name');
 		} else {
@@ -118,48 +118,48 @@ class icms_image_Object extends \icms_ipf_Object {
 		}
 	}
 
-        /**
-        * Overide setVar for loading also image_body on the fly
-         *
-        * @param array $var_arr    Data
-        * @param bool  $not_gpc    Not GPC?
-        */
-        public function setVars($var_arr, $not_gpc = false) {
-            if (isset($var_arr['image_body'])) {
-                $this->image_body = $var_arr['image_body'];
-                unset($var_arr['image_body']);
-            }
-            parent::setVars($var_arr, $not_gpc);
-        }
+		/**
+		 * Overide setVar for loading also image_body on the fly
+		 *
+		 * @param array $var_arr    Data
+		 * @param bool  $not_gpc    Not GPC?
+		 */
+		public function setVars($var_arr, $not_gpc = false) {
+			if (isset($var_arr['image_body'])) {
+				$this->image_body = $var_arr['image_body'];
+				unset($var_arr['image_body']);
+			}
+			parent::setVars($var_arr, $not_gpc);
+		}
 
-        /**
-        * Returns a specific variable for the object in a proper format
-         *
-        * @param string $name      Name of var
-        * @param string $format    Format
-         *
-        * @return mixed
-        */
-        public function getVar($name, $format = 's') {
-            if ($name == 'image_body') {
-                return $this->image_body;
-            } else {
-                return parent::getVar($name, $format);
-            }
-        }
+		/**
+		 * Returns a specific variable for the object in a proper format
+		 *
+		 * @param string $name      Name of var
+		 * @param string $format    Format
+		 *
+		 * @return mixed
+		 */
+		public function getVar($name, $format = 's') {
+			if ($name == 'image_body') {
+				return $this->image_body;
+			} else {
+				return parent::getVar($name, $format);
+			}
+		}
 
-    /**
-    * Sets var value
-     *
-    * @param string $name      Var name
-    * @param mixed $value      New value
-    * @param array $options    Options to apply when settings values
-    */
-        public function setVar($name, $value, $options = null) {
-            if ($name == 'image_body') {
-                $this->image_body = $value;
-            } else {
-                parent::setVar($name, $value, $options);
-            }
-        }
+	/**
+	 * Sets var value
+	 *
+	 * @param string $name      Var name
+	 * @param mixed $value      New value
+	 * @param array $options    Options to apply when settings values
+	 */
+		public function setVar($name, $value, $options = null) {
+			if ($name == 'image_body') {
+				$this->image_body = $value;
+			} else {
+				parent::setVar($name, $value, $options);
+			}
+		}
 }
