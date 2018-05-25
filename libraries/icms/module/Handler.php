@@ -101,7 +101,7 @@ class icms_module_Handler
 	 * @param bool $inAdmin
 	 * @return bool
 	 */
-	static protected function checkModuleAccess($module, $inAdmin = false) {
+	static public function checkModuleAccess($module, $inAdmin = false) {
 		if ($inAdmin && !icms::$user) {
 			return false;
 		}
