@@ -2,12 +2,14 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class StopSpammerTest extends \PHPUnit_Framework_TestCase {
+class StopSpammerTest extends TestCase {
 
     /**
      * Test if icms_core_DataFilter is available

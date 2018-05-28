@@ -4,13 +4,14 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 
 use ImpressCMS\Core\Providers\ConfigServiceProvider;
 use League\Container\Container;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class ConfigTest extends \PHPUnit_Framework_TestCase {
+class ConfigTest extends TestCase {
 
     /**
      * Tests availability

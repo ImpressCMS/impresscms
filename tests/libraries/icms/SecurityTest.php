@@ -3,13 +3,14 @@
 namespace ImpressCMS\Tests\Libraries\ICMS;
 use ImpressCMS\Core\Providers\SecurityServiceProvider;
 use League\Container\Container;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class SecurityTest extends \PHPUnit_Framework_TestCase {
+class SecurityTest extends TestCase {
 
     /**
      * Test if icms_core_DataFilter is available
