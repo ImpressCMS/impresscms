@@ -311,7 +311,7 @@ class icms_file_MediaUploadHandler {
 			$fp = fopen($this->mediaTmpName, 'w+');
 			fwrite($fp, $content);
 			fclose($fp);
-			$this->errors = array();
+			$errors = array();
 			if ($this->mediaSize < 0) {
 				self::setErrors(_ER_UP_INVALIDFILESIZE);
 				return false;
@@ -364,7 +364,7 @@ class icms_file_MediaUploadHandler {
 				$this->mediaRealType = $this->extensionToMime[$ext];
 			}
 		}
-		$this->errors = array();
+		$errors = array();
 		if ((int) ($this->mediaSize) < 0) {
 			self::setErrors(_ER_UP_INVALIDFILESIZE);
 			return false;
@@ -526,7 +526,7 @@ class icms_file_MediaUploadHandler {
 		if (!self::checkMaxHeight()) {
 			return false;
 		}
-		if (count($this->errors) > 0) {
+		if (count($errors) > 0) {
 			return false;
 		}
 		return self::_copyFile($chmod);
@@ -691,7 +691,7 @@ class icms_file_MediaUploadHandler {
 	 * @param   string  $error
 	 */
 	public function setErrors($error) {
-		$this->errors[] = trim($error);
+		$errors[] = trim($error);
 	}
 
 	/**
@@ -701,12 +701,12 @@ class icms_file_MediaUploadHandler {
 	 */
 	public function getErrors($ashtml = true) {
 		if (!$ashtml) {
-			return $this->errors;
+			return $errors;
 		} else {
 			$ret = '';
-			if (count($this->errors) > 0) {
+			if (count($errors) > 0) {
 				$ret = '<h4>' . _ER_UP_ERRORSRETURNED . '</h4>';
-				foreach ($this->errors as $error) {
+				foreach ($errors as $error) {
 					$ret .= $error . '<br />';
 				}
 			}
