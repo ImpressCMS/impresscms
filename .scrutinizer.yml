@@ -70,10 +70,10 @@ coding_style:
       around_operators:
         concatenation: true
       ternary_operator:
-        before_condition: false
-        after_condition: false
-        before_alternative: false
-        after_alternative: false
+        before_condition: true
+        after_condition: true
+        before_alternative: true
+        after_alternative: true
     braces:
       classes_functions:
         class: end-of-line
