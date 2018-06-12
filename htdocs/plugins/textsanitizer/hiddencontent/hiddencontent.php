@@ -8,16 +8,15 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id: hiddencontent.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		$Id$
  */
 /**
  *
  * Replaces text delimited with [hide][/hide] with appropriate values
  *
- * @param object $ts textsanitizer instance
  * @param string $text text to be marked as hidden
  */
-function textsanitizer_hiddencontent(&$ts, $text) {
+function textsanitizer_hiddencontent($text) {
 	$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
 	if (!empty($_SESSION['xoopsUserId']) && $_SESSION['xoopsUserId']) {
 		$replacements[] = _HIDDENC . '<div class="icmsHidden">\\1</div>';
@@ -42,7 +41,7 @@ function render_hiddencontent($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeHidden(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES) . "\");'
+		onclick='javascript:icmsCodeHidden(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES, _CHARSET) . "\");'
 		onmouseover='style.cursor=\"pointer\"' src='" . ICMS_URL . "/images/hide.gif'
 		alt='hide'
 		title='" . $dirname . "' />&nbsp;";
