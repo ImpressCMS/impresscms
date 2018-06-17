@@ -1,6 +1,28 @@
 ImpressCMS ChangeLog
 ====================
-ImpressCMS 1.3.11
+ImpressCMS 1.3.11 beta 2
+-------------------------------
+Date: 18 june 2017
+DB Version: 44
+Build Version: 88
+
+##Improvements
+109 - Add extra metadata types property and itemprop
+
+##Fixes
+102 - pagination in the backend generates wrong URLs
+116 - Update the links to our website
+119 - Update system requirements in installer
+117 - update links to translations in installer
+
+##Update
+296 - Update HTMLPurifier to 4.10
+297 - Update GeSHI to 1.0.8.13
+299 - Update jQuery to 3.3.1
+125 - Upgrade PHPMailer to 5.2.26
+
+
+ImpressCMS 1.3.11 beta 1
 -------------------------------
 Date: 21 july 2017
 DB Version: 44
