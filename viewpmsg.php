@@ -54,12 +54,12 @@ $delete_messages = '';
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_POST);
 }
 
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
@@ -85,7 +85,7 @@ if (!empty($delete_messages) && isset($msg_id)) {
 	}
 	$size = count($msg_id);
 	for ($i = 0; $i < $size; $i++) {
-		$pm =& $pm_handler->get($msg_id[$i]);
+		$pm = & $pm_handler->get($msg_id[$i]);
 		if ($pm->getVar('to_userid') == icms::$user->getVar('uid')) {
 			$pm_handler->delete($pm);
 		}
@@ -99,7 +99,7 @@ require ICMS_ROOT_PATH . '/header.php';
 
 $criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
 $criteria->setOrder('DESC');
-$pm_arr =& $pm_handler->getObjects($criteria);
+$pm_arr = & $pm_handler->getObjects($criteria);
 
 /* get and properly treat the values of each of the objects' properties */
 foreach ($pm_arr as $id => $message) {

@@ -9,39 +9,39 @@
  */
 class icms_ipf_export_Renderer {
 
-    /**
-    * Contains the data to be exported
-     *
-    * @var array
-    */
+	/**
+	 * Contains the data to be exported
+	 *
+	 * @var array
+	 */
 	public $data = array();
 
-        /**
-        * Format of the ouputed export. Currently only supports CSV
-         *
-        * @var string
-        */
+		/**
+		 * Format of the ouputed export. Currently only supports CSV
+		 *
+		 * @var string
+		 */
 	public $format = 'csv';
 
-        /**
-        * Name of the file in which the exported data will be saved
-         *
-        * @var string
-        */
+		/**
+		 * Name of the file in which the exported data will be saved
+		 *
+		 * @var string
+		 */
 	public $filename = '';
 
-        /**
-        * Path where the file will be saved
-         *
-        * @var string
-        */
+		/**
+		 * Path where the file will be saved
+		 *
+		 * @var string
+		 */
 	public $filepath = '';
 
-        /**
-        * Options of the format to be exported in
-         *
-        * @var array
-        */
+		/**
+		 * Options of the format to be exported in
+		 *
+		 * @var array
+		 */
 	public $options = array();
 
 	/**
@@ -53,7 +53,7 @@ class icms_ipf_export_Renderer {
 	 * @param string    $filepath   Path where the file will be saved
 	 * @param array     $options    Options of the format to be exported in
 	 */
-	public function __construct($data, $filename=false, $filepath=false, $format='csv', $options=array('separator'=>';')) {
+	public function __construct($data, $filename = false, $filepath = false, $format = 'csv', $options = array('separator'=>';')) {
 		$this->data = $data;
 		$this->format = $format;
 		$this->filename = $filename;
@@ -70,12 +70,13 @@ class icms_ipf_export_Renderer {
 	 * @param str $trim
 	 * @param bool $removeEmptyLines
 	 */
-	public function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = TRUE) {
-		if (!is_array($dataArray) || empty ($dataArray))
-		return '';
+	public function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = true) {
+		if (!is_array($dataArray) || empty ($dataArray)) {
+				return '';
+		}
 		switch ($trim) {
 			case 'none' :
-				$trimFunction = FALSE;
+				$trimFunction = false;
 				break;
 
 			case 'left' :
@@ -107,26 +108,27 @@ class icms_ipf_export_Renderer {
 	 * @param str $trimFunction
 	 */
 	public function valToCsvHelper($val, $separator, $trimFunction) {
-		if ($trimFunction)
-		$val = $trimFunction ($val);
+		if ($trimFunction) {
+				$val = $trimFunction($val);
+		}
 		//If there is a separator (;) or a quote (") or a linebreak in the string, we need to quote it.
-		$needQuote = FALSE;
+		$needQuote = false;
 		do {
-			if (strpos($val, '"') !== FALSE) {
+			if (strpos($val, '"') !== false) {
 				$val = str_replace('"', '""', $val);
-				$needQuote = TRUE;
+				$needQuote = true;
 				break;
 			}
-			if (strpos($val, $separator) !== FALSE) {
-				$needQuote = TRUE;
+			if (strpos($val, $separator) !== false) {
+				$needQuote = true;
 				break;
 			}
-			if ((strpos($val, "\n") !== FALSE) || (strpos($val, "\r") !== FALSE)) {
+			if ((strpos($val, "\n") !== false) || (strpos($val, "\r") !== false)) {
 				// \r is for mac
-				$needQuote = TRUE;
+				$needQuote = true;
 				break;
 			}
-		} while (FALSE);
+		} while (false);
 		if ($needQuote) {
 			$val = '"' . $val . '"';
 		}
@@ -141,7 +143,7 @@ class icms_ipf_export_Renderer {
 
 		switch ($this->format) {
 			case 'csv':
-				$separator = isset($this->options['separator']) ? $this->options['separator'] : ';';
+				$separator = isset($this->options['separator'])?$this->options['separator']:';';
 				$firstRow = implode($separator, $this->data['columnsHeaders']);
 				$exportFileData .= $firstRow . "\r\n";
 
@@ -190,12 +192,12 @@ class icms_ipf_export_Renderer {
 
 		if (!$handle = fopen($fullFileName, 'a+')) {
 			trigger_error('Unable to open ' . $fullFileName, E_USER_WARNING);
-		} elseif (fwrite($handle, $content) === FALSE) {
+		} elseif (fwrite($handle, $content) === false) {
 			trigger_error('Unable to write in ' . $fullFileName, E_USER_WARNING);
 		} else {
 			$mimeType = 'text/csv';
 			$file = strrev($this->filename);
-			$temp_name = strtolower(strrev(substr($file,0,strpos($file,"--"))));
+			$temp_name = strtolower(strrev(substr($file, 0, strpos($file, "--"))));
 			if ($temp_name == '') {
 				$file_name = $this->filename;
 			} else {
@@ -209,7 +211,7 @@ class icms_ipf_export_Renderer {
 
 			header("Pragma: public");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-			header("Cache-Control: private",false);
+			header("Cache-Control: private", false);
 			header("Content-Transfer-Encoding: binary");
 			if (isset($mimeType)) {
 				header("Content-Type: " . $mimeType);

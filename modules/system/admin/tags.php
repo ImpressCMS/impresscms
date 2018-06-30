@@ -24,9 +24,9 @@ include 'admin_header.php';
 $clean_op = $op;
 
 /* conventions used elsewhere: add{object}, mod, del */
-$valid_op = array ("addtags", "mod", "edit", "changedField", "del", "");
+$valid_op = array("addtags", "mod", "edit", "changedField", "del", "");
 
-if (in_array($clean_op, $valid_op, TRUE)) {
+if (in_array($clean_op, $valid_op, true)) {
 	switch ($clean_op) {
 		case "addtags":
 			$controller = new icms_ipf_Controller($icms_admin_handler);
@@ -40,7 +40,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 			$tagObj = $icms_admin_handler->get($id);
 
-			if (!$tagObj->isNew()){
+			if (!$tagObj->isNew()) {
 				$sform = $tagObj->getForm(_CO_SYSTEM_TAG_EDIT, 'addtags');
 				$sform->assign($icmsAdminTpl);
 
@@ -70,7 +70,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addQuickSearch(array("tag"));
 
 			$icmsAdminTpl->assign("icms_tags_table", $objectTable->fetch());
-			$icmsAdminTpl->assign("icms_tags_explain", TRUE);
+			$icmsAdminTpl->assign("icms_tags_explain", true);
 			$icmsAdminTpl->assign("icms_tags_title", _CO_SYSTEM_TAGS_DSC);
 
 			$icmsAdminTpl->display(ICMS_MODULES_PATH . "/system/templates/admin/tags/system_adm_tags.html");

@@ -45,7 +45,7 @@ if (empty(icms::$user)) {
 }
 
 $uid = (int) icms::$user->getVar('uid');
-$valid_op = array('cancel', 'list', 'delete', 'delete_ok', '', NULL);
+$valid_op = array('cancel', 'list', 'delete', 'delete_ok', '', null);
 $op = 'list';
 
 if (isset($_POST['op'])) {
@@ -84,7 +84,7 @@ if (in_array($op, $valid_op)) {
 			$criteria = new icms_db_criteria_Item('not_uid', $uid);
 			$criteria->setSort('not_modid,not_category,not_itemid');
 			$notification_handler = icms::handler('icms_data_notification');
-			$notifications =& $notification_handler->getObjects($criteria);
+			$notifications = & $notification_handler->getObjects($criteria);
 
 			// Generate the info for the template
 
@@ -100,7 +100,7 @@ if (in_array($op, $valid_op)) {
 					$prev_modid = $modid;
 					$prev_category = -1;
 					$prev_item = -1;
-					$module =& $module_handler->get($modid);
+					$module = & $module_handler->get($modid);
 					$modules[$modid] = array('id'=>$modid, 'name'=>$module->getVar('name'), 'categories'=>array());
 					// TODO: note, we could auto-generate the url from the id
 					// and category info... (except when category has multiple
@@ -128,7 +128,7 @@ if (in_array($op, $valid_op)) {
 				if ($category != $prev_category) {
 					$prev_category = $category;
 					$prev_item = -1;
-					$category_info =& $notification_handler->categoryInfo($category, $modid);
+					$category_info = & $notification_handler->categoryInfo($category, $modid);
 					$modules[$modid]['categories'][$category] = array('name'=>$category, 'title'=>$category_info['title'], 'items'=>array());
 				}
 				$item = $n->getVar('not_itemid');
@@ -145,7 +145,7 @@ if (in_array($op, $valid_op)) {
 																						'notifications' => array()
 																					);
 				}
-				$event_info =& $notification_handler->eventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
+				$event_info = & $notification_handler->eventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
 				$modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array(
 					'id'=>$n->getVar('not_id'),
 					'module_id'=>$n->getVar('not_modid'),
@@ -219,7 +219,7 @@ if (in_array($op, $valid_op)) {
 			$notification_handler = icms::handler('icms_data_notification');
 			foreach ($_POST['del_not'] as $n_array) {
 				foreach ($n_array as $n) {
-					$notification =& $notification_handler->get((int) $n);
+					$notification = & $notification_handler->get((int) $n);
 					if ($notification->getVar('not_uid') == $uid) {
 						$notification_handler->delete($notification);
 					}

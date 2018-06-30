@@ -47,17 +47,17 @@
  */
 class icms_data_avatar_Handler extends icms_ipf_Handler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'data_avatar', 'avatar_id', 'avatar_name', 'avatar_file', 'icms', 'avatar', 'avatar_id');
-        }
+		public function __construct(&$db) {
+			parent::__construct($db, 'data_avatar', 'avatar_id', 'avatar_name', 'avatar_file', 'icms', 'avatar', 'avatar_id');
+		}
 
 	/**
 	 * Deletes an avatar
 	 * @see icms_core_ObjectHandler#delete($object)
 	 *
-     * @param icms_data_avatar_Object   $avatar Avatar to delete
-     * @param bool                      $force  Force deletion?
-     *
+	 * @param icms_data_avatar_Object   $avatar Avatar to delete
+	 * @param bool                      $force  Force deletion?
+	 *
 	 * @return boolean
 	 */
 	public function delete(&$avatar, $force = false) {
@@ -98,9 +98,9 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 			$avatar = new icms_data_avatar_Object($this, $myrow);
 			$avatar->setUserCount($myrow['count']);
 			if (!$id_as_key) {
-				$ret[] =& $avatar;
+				$ret[] = & $avatar;
 			} else {
-				$ret[$myrow['avatar_id']] =& $avatar;
+				$ret[$myrow['avatar_id']] = & $avatar;
 			}
 			unset($avatar);
 		}
@@ -128,7 +128,7 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 			"INSERT INTO %s (avatar_id, user_id) VALUES ('%u', '%u')",
 			$this->db->prefix('avatar_user_link'), $avatar_id, $user_id
 		);
-		if (!$result =& $this->db->query($sql)) {
+		if (!$result = & $this->db->query($sql)) {
 			return false;
 		}
 		return true;
@@ -148,12 +148,12 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 		}
 
 		$sql = "SELECT user_id FROM " . $this->db->prefix('avatar_user_link')
-			. " WHERE avatar_id='". (int) $avatar->getVar('avatar_id') . "'";
+			. " WHERE avatar_id='" . (int) $avatar->getVar('avatar_id') . "'";
 		if (!$result = $this->db->query($sql)) {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$ret[] =& $myrow['user_id'];
+			$ret[] = & $myrow['user_id'];
 		}
 		return $ret;
 	}
@@ -167,13 +167,13 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 	public function getList($avatar_type = null, $avatar_display = null) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($avatar_type)) {
-			$avatar_type = ($avatar_type == 'C') ? 'C' : 'S';
+			$avatar_type = ($avatar_type == 'C')?'C':'S';
 			$criteria->add(new icms_db_criteria_Item('avatar_type', $avatar_type));
 		}
 		if (isset($avatar_display)) {
 			$criteria->add(new icms_db_criteria_Item('avatar_display', (int) $avatar_display));
 		}
-		$avatars =& $this->getObjects($criteria, true);
+		$avatars = & $this->getObjects($criteria, true);
 		$ret = array('blank.gif' => _NONE);
 		foreach (array_keys($avatars) as $i) {
 			$ret[$avatars[$i]->getVar('avatar_file')] = $avatars[$i]->getVar('avatar_name');
@@ -187,7 +187,7 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 	 * @param   string	$avatar_dir name of the directory to scan for files,
 	 * @return  array	 $avatars	list of avatars in the directory
 	 */
-	static public function getListFromDir($avatar_dir="") {
+	static public function getListFromDir($avatar_dir = "") {
 		$avatars = array();
 		if ($avatar_dir != "") {
 			$avatars = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $avatar_dir . "/", $avatar_dir . "/", array('gif', 'jpg', 'png'));
@@ -208,7 +208,7 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 		$dirlist = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/images/avatar/");
 		if (count($dirlist) > 0) {
 			foreach ($dirlist as $dir) {
-				$avatars[$dir] =& icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $dir . "/", $dir . "/", array('gif', 'jpg', 'png'));
+				$avatars[$dir] = & icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $dir . "/", $dir . "/", array('gif', 'jpg', 'png'));
 			}
 		} else {
 			return false;

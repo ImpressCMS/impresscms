@@ -119,10 +119,10 @@ class icms_file_TarFileHandler {
 	 */
 	private function __computeUnsignedChecksum($bytestring) {
 		$unsigned_chksum = '';
-		for ($i=0; $i<512; $i++) {
+		for ($i = 0; $i < 512; $i++) {
 			$unsigned_chksum += ord($bytestring[$i]);
 		}
-		for ($i=0; $i<8; $i++) {
+		for ($i = 0; $i < 8; $i++) {
 			$unsigned_chksum -= ord($bytestring[148 + $i]);
 		}
 		$unsigned_chksum += ord(" ") * 8;
@@ -156,8 +156,9 @@ class icms_file_TarFileHandler {
 		$this->numFiles = 0;
 		while ($main_offset < $tar_length) {
 			// If we read a block of 512 nulls, we are at the end of the archive
-			if (substr($this->tar_file, $main_offset, 512) == str_repeat(chr(0), 512))
-			break;
+			if (substr($this->tar_file, $main_offset, 512) == str_repeat(chr(0), 512)) {
+						break;
+			}
 
 			// Parse file name
 			$file_name = self::__parseNullPaddedString(substr($this->tar_file, $main_offset, 100));
@@ -192,7 +193,7 @@ class icms_file_TarFileHandler {
 			}
 
 			// Parse File Contents
-			$file_contents		= substr($this->tar_file, $main_offset + 512, $file_size);
+			$file_contents = substr($this->tar_file, $main_offset + 512, $file_size);
 
 			/*	### Unused Header Information ###
 				$activeFile["typeflag"]		= substr($this->tar_file,$main_offset + 156,1);
@@ -255,7 +256,7 @@ class icms_file_TarFileHandler {
 	 * @return  bool    always TRUE
 	 *
 	 */
-	private function __readTar($filename='') {
+	private function __readTar($filename = '') {
 		// Set the filename to load
 		if (!$filename) {
 			$filename = $this->filename;
@@ -319,7 +320,7 @@ class icms_file_TarFileHandler {
 
 				// Compute header checksum
 				$checksum = str_pad(decoct(self::__computeUnsignedChecksum($header)), 6, "0", STR_PAD_LEFT);
-				for ($i=0; $i<6; $i++) {
+				for ($i = 0; $i < 6; $i++) {
 					$header[(148 + $i)] = substr($checksum, $i, 1);
 				}
 				$header[154] = chr(0);
@@ -349,8 +350,8 @@ class icms_file_TarFileHandler {
 				$header .= str_repeat(chr(0), 100);
 				$header .= str_pad("ustar", 6, chr(32));
 				$header .= chr(32) . chr(0);
-				$header .= str_pad($information["user_name"], 32, chr(0));	// How do I get a file's user name from PHP?
-				$header .= str_pad($information["group_name"], 32, chr(0));	// How do I get a file's group name from PHP?
+				$header .= str_pad($information["user_name"], 32, chr(0)); // How do I get a file's user name from PHP?
+				$header .= str_pad($information["group_name"], 32, chr(0)); // How do I get a file's group name from PHP?
 				$header .= str_repeat(chr(0), 8);
 				$header .= str_repeat(chr(0), 8);
 				$header .= str_repeat(chr(0), 155);
@@ -358,7 +359,7 @@ class icms_file_TarFileHandler {
 
 				// Compute header checksum
 				$checksum = str_pad(decoct(self::__computeUnsignedChecksum($header)), 6, "0", STR_PAD_LEFT);
-				for ($i=0; $i<6; $i++) {
+				for ($i = 0; $i < 6; $i++) {
 					$header[(148 + $i)] = substr($checksum, $i, 1);
 				}
 				$header[154] = chr(0);
@@ -415,7 +416,9 @@ class icms_file_TarFileHandler {
 	 */
 	public function appendTar($filename) {
 		// If the tar file doesn't exist...
-		if (!file_exists($filename)) return false;
+		if (!file_exists($filename)) {
+			return false;
+		}
 
 		self::__readTar($filename);
 
@@ -431,7 +434,9 @@ class icms_file_TarFileHandler {
 	public function getFile($filename) {
 		if ($this->numFiles > 0) {
 			foreach ($this->files as $key => $information) {
-				if ($information["name"] == $filename) return $information;
+				if ($information["name"] == $filename) {
+					return $information;
+				}
 			}
 		}
 
@@ -447,7 +452,9 @@ class icms_file_TarFileHandler {
 	public function getDirectory($dirname) {
 		if ($this->numDirectories > 0) {
 			foreach ($this->directories as $key => $information) {
-				if ($information["name"] == $dirname) return $information;
+				if ($information["name"] == $dirname) {
+					return $information;
+				}
 			}
 		}
 
@@ -463,8 +470,9 @@ class icms_file_TarFileHandler {
 	public function containsFile($filename) {
 		if ($this->numFiles > 0) {
 			foreach ($this->files as $key => $information) {
-				if ($information["name"] == $filename)
-				return true;
+				if ($information["name"] == $filename) {
+								return true;
+				}
 			}
 		}
 		return false;
@@ -553,7 +561,7 @@ class icms_file_TarFileHandler {
 		$activeFile["group_id"] = $file_information["gid"];
 		$activeFile["size"] = $file_information["size"];
 		$activeFile["time"] = $file_information["mtime"];
-		$activeFile["checksum"] = isset($checksum) ? $checksum : '';
+		$activeFile["checksum"] = isset($checksum)?$checksum:'';
 		$activeFile["user_name"] = "";
 		$activeFile["group_name"] = "";
 		$activeFile["file"] = trim($file_contents);

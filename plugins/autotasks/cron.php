@@ -43,11 +43,11 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 		if ($canRun === null) {
 			$crons = null; $return = null;
 			// checking if cron servise is active
-			exec( 'ps -ef | grep cron | grep -v grep', $crons, $return);
-			$canRun = is_array($crons) && (count($crons) > 0) && ( (int) ($return) === 0);
+			exec('ps -ef | grep cron | grep -v grep', $crons, $return);
+			$canRun = is_array($crons) && (count($crons) > 0) && ((int) ($return) === 0);
 			if ($canRun) {
 				// checking if we have access to use cron
-				exec( 'crontab -l', $crons, $return);
+				exec('crontab -l', $crons, $return);
 				$crons = @implode("\r\n", $crons);
 				$canRun = (strpos($crons, 'not allowed to use this program (crontab)') === false);
 			}
@@ -60,10 +60,10 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 	 * @return string
 	 */
 	function getCronCommandLine() {
-		if (trim($user = $this->getCronTabUser())=='') {
+		if (trim($user = $this->getCronTabUser()) == '') {
 			return 'crontab';
 		} else {
-			return 'crontab -u '.$user;
+			return 'crontab -u ' . $user;
 		}
 	}
 
@@ -95,7 +95,7 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 
 	function &getIntervalArray($interval) {
 		$hours = $days = $months = 0;
-		if ($interval>60) {
+		if ($interval > 60) {
 			$minutes   = $interval % 60;
 			$interval -= $minutes * 60;
 			if ($interval > 24) {
@@ -118,21 +118,25 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 		} else {
 			$minutes = $interval;
 		}
-		$hours	 = $this->getCronTabValue($hours);
-		$days	 = $this->getCronTabValue($days);
-		$months	 = $this->getCronTabValue($months);
-		$rez = array( "minute" => $this->getCronTabValue($minutes), "hour" => $this->getCronTabValue($hours), "dayofmonth" => $this->getCronTabValue($days), "month" => $this->getCronTabValue($months), 'dayofweek' => '*');
+		$hours = $this->getCronTabValue($hours);
+		$days = $this->getCronTabValue($days);
+		$months = $this->getCronTabValue($months);
+		$rez = array("minute" => $this->getCronTabValue($minutes), "hour" => $this->getCronTabValue($hours), "dayofmonth" => $this->getCronTabValue($days), "month" => $this->getCronTabValue($months), 'dayofweek' => '*');
 		return $rez;
 	}
 
 	function getCronTabValue($number) {
-		if ($number == 0) return '*';
-		return '*/'.$number;
+		if ($number == 0) {
+			return '*';
+		}
+		return '*/' . $number;
 	}
 
 	function getNormalValue($crontab_number) {
-		if ($crontab_number == '*') return 0;
-		return (int) (substr($crontab_number,2));
+		if ($crontab_number == '*') {
+			return 0;
+		}
+		return (int) (substr($crontab_number, 2));
 	}
 
 	/**
@@ -141,7 +145,9 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 	 */
 	function stop() {
 		$id = $this->getProcessId();
-		if ($id < 0) return false;
+		if ($id < 0) {
+			return false;
+		}
 		unset($this->_lines[$id]);
 		$this->writeCronTab();
 		return true;
@@ -153,7 +159,7 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 	 * @return bool
 	 */
 	function isEnabled() {
-		return ($this->getProcessId()>-1);
+		return ($this->getProcessId() > -1);
 	}
 
 	/**
@@ -168,7 +174,7 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 				$config_atasks['autotasks_helper_path'] .= '/';
 			}
 		}
-		$autotasks_helper_path = $config_atasks['autotasks_helper_path'].str_replace(array('%path%','%url%'),array(ICMS_ROOT_PATH, ICMS_URL),trim($config_atasks['autotasks_helper']))  . '/include/autotasks.php > /dev/null';
+		$autotasks_helper_path = $config_atasks['autotasks_helper_path'] . str_replace(array('%path%', '%url%'), array(ICMS_ROOT_PATH, ICMS_URL), trim($config_atasks['autotasks_helper'])) . '/include/autotasks.php > /dev/null';
 		return $autotasks_helper_path;
 	}
 
@@ -183,16 +189,18 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 		$cmd = $this->getCommandLine();
 		$this->_line_id = -1;
 		foreach ($this->_lines as $id => $line) {
-			if ($line[1] != 4) continue;
+			if ($line[1] != 4) {
+				continue;
+			}
 			if (isset($line[0]['command'])) {
 				$line = $line[0];
 			}
-			if (strpos($line['command'], ICMS_ROOT_PATH . '/include/autotasks.php')!==false) {
-				$this->_line_id = (int)$id;
+			if (strpos($line['command'], ICMS_ROOT_PATH . '/include/autotasks.php') !== false) {
+				$this->_line_id = (int) $id;
 				break;
 			}
-			if (strpos($line['command'], ICMS_URL . '/include/autotasks.php')!==false) {
-				$this->_line_id = (int)$id;
+			if (strpos($line['command'], ICMS_URL . '/include/autotasks.php') !== false) {
+				$this->_line_id = (int) $id;
 				break;
 			}
 		}
@@ -202,11 +210,13 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 	function getCronTabUser() {
 		static $user = null;
 		if ($user === null) {
-			$atasks_handler =& icms_getModuleHandler('autotasks', 'system');
+			$atasks_handler = & icms_getModuleHandler('autotasks', 'system');
 			$config = $atasks_handler->getConfig();
 			$user = $config['autotasks_user'];
 		}
-		if (trim("$user") == '') $user = '';
+		if (trim("$user") == '') {
+			$user = '';
+		}
 		return $user;
 	}
 
@@ -214,34 +224,36 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 	 *	Reads cron tab file and parses to $this->_lines array
 	 */
 	function readCronTab() {
-		exec( $this->getCronCommandLine()." -l 2>&1", $crons, $return);
-		if ($return != 0) return false;
+		exec($this->getCronCommandLine() . " -l 2>&1", $crons, $return);
+		if ($return != 0) {
+			return false;
+		}
 
-		foreach ( $crons as $line) {
-			$line = trim( $line ); // discarding all prepending spaces and tabs
+		foreach ($crons as $line) {
+			$line = trim($line); // discarding all prepending spaces and tabs
 			// empty lines..
 			if (!$line) {
-				$this->_lines[] = array('',0);
+				$this->_lines[] = array('', 0);
 				continue;
 			}
 			// checking if this is a comment
 			if ($line[0] == "#") {
-				$this->_lines[] = array($line,1);
+				$this->_lines[] = array($line, 1);
 				continue;
 			}
 			// Checking if this is an assignment
-			if (preg_match( "/(.*)=(.*)/", $line, $assign )) {
-				$this->_lines[] = array(array( "name" => $assign[1], "value" => $assign[2] ),2);
+			if (preg_match("/(.*)=(.*)/", $line, $assign)) {
+				$this->_lines[] = array(array("name" => $assign[1], "value" => $assign[2]), 2);
 				continue;
 			}
 			// Checking if this is a special -entry. check man 5 crontab for more info
 			if ($line[0] == '@') {
-				$this->_lines[] = array( preg_split( "/[ \t]/", $line, 2 ), 3);
+				$this->_lines[] = array(preg_split("/[ \t]/", $line, 2), 3);
 				continue;
 			}
 			// It's a regular crontab-entry
-			$ct = preg_split( "/[ \t]/", $line, 6 );
-			$this->_lines[] = array(array( "minute" => $ct[0], "hour" => $ct[1], "dayofmonth" => $ct[2], "month" => $ct[3], "dayofweek" => $ct[4], "command" => $ct[5] ), 4);
+			$ct = preg_split("/[ \t]/", $line, 6);
+			$this->_lines[] = array(array("minute" => $ct[0], "hour" => $ct[1], "dayofmonth" => $ct[2], "month" => $ct[3], "dayofweek" => $ct[4], "command" => $ct[5]), 4);
 		}
 
 		return true;
@@ -252,9 +264,9 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 	 */
 	function writeCronTab() {
 		$filename = tempnam(ICMS_CACHE_PATH, 'cron');
-		$file = fopen( $filename, "w" );
+		$file = fopen($filename, "w");
 		foreach ($this->_lines as $current_line) {
-			switch ( $current_line[1]) {
+			switch ($current_line[1]) {
 				case 1: // comment
 					$line = $current_line[0];
 					break;
@@ -262,10 +274,10 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 					$line = $current_line[0]['name'] . " = " . $current_line[0]['value'];
 					break;
 				case 4: //comand
-					$line = implode( ' ', $current_line[0] );
+					$line = implode(' ', $current_line[0]);
 					break;
 				case 3: //special
-					$line = implode( ' ', $current_line[0] );
+					$line = implode(' ', $current_line[0]);
 					break;
 				case 0: //empty line
 					$line = "\n"; // an empty line in the crontab-file
@@ -273,15 +285,15 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 				default:
 					die('ERROR: Unknown type of line.');
 			}
-			fwrite( $file, $line . "\n" );
+			fwrite($file, $line . "\n");
 		}
-		fclose( $file );
+		fclose($file);
 
-		exec( $this->getCronCommandLine()." $filename 2>&1", $returnar, $return );
+		exec($this->getCronCommandLine() . " $filename 2>&1", $returnar, $return);
 		if ($return != 0) {
 			die("Error running crontab ($return). $filename not deleted\n");
 		} else {
-			unlink( $filename );
+			unlink($filename);
 		}
 	}
 

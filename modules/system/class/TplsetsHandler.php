@@ -9,7 +9,6 @@
 
 /**
  * Handler for managing images
-
  * @category	ICMS
  * @package		Administration
  * @subpackage	Templates

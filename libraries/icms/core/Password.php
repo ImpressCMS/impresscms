@@ -44,13 +44,14 @@ final class icms_core_Password {
 	 * @param    string  $slength    The length of the key to produce
 	 * @return   string  returns the generated random key.
 	 */
-	static public function createSalt($slength=64) {
+	static public function createSalt($slength = 64) {
 		$salt = '';
 		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$microtime = function_exists('microtime') ? microtime() : time();
-		mt_srand((double)$microtime * 1000000);
-		for ($i=0; $i<=$slength; $i++)
-		$salt.= substr($base, mt_rand(0, $slength) % strlen($base), 1);
+		$microtime = function_exists('microtime')? microtime():time();
+		mt_srand((double) $microtime * 1000000);
+		for ($i = 0; $i <= $slength; $i++) {
+				$salt .= substr($base, mt_rand(0, $slength) % strlen($base), 1);
+		}
 
 		return $salt;
 	}
@@ -66,7 +67,7 @@ final class icms_core_Password {
 	public function createCryptoKey($slength = 64) {
 		if (function_exists('openssl_random_pseudo_bytes')) {
 			$key = openssl_random_pseudo_bytes($slength, $strong);
-			if ($strong === TRUE) {
+			if ($strong === true) {
 				return $key;
 			} else {
 				return self::createCryptoKey($slength);
@@ -137,7 +138,7 @@ final class icms_core_Password {
 
 		$salt = self::createSalt();
 		$iterations = 5000;
-		$enc_type = (isset($icmsConfigUser['enc_type']) ? (int) $icmsConfigUser['enc_type'] : 23);
+		$enc_type = (isset($icmsConfigUser['enc_type'])?(int) $icmsConfigUser['enc_type']:23);
 
 		return self::_encryptPassword($pass, $salt, $enc_type, $iterations);
 	}
@@ -169,7 +170,7 @@ final class icms_core_Password {
 	 */
 	private function _passExpired($uname) {
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
-        $table = new icms_db_legacy_updater_Table('users');
+		$table = new icms_db_legacy_updater_Table('users');
 
 		if ($table->fieldExists('loginname')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE loginname = %s",
@@ -198,7 +199,7 @@ final class icms_core_Password {
 	 * @since    1.1
 	 * @param    string  $uname      Username to find User Salt key for.
 	 * @return   string  returns the Salt key of the user.
-     *
+	 *
 	 * To be removed in future versions
 	 */
 	private function _getUserSalt($uname) {
@@ -222,42 +223,42 @@ final class icms_core_Password {
 		return $salt;
 	}
 
-    /**
-     * This Private Function returns the User Encryption Type belonging to username.
-     * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-     * @since    1.2.3
-     * @param    string  $uname      Username to find Enc_type for.
-     * @return   string  returns the Encryption type of the user.
-     *
+	/**
+	 * This Private Function returns the User Encryption Type belonging to username.
+	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+	 * @since    1.2.3
+	 * @param    string  $uname      Username to find Enc_type for.
+	 * @return   string  returns the Encryption type of the user.
+	 *
 	 * To be removed in future versions
 	 */
 	private function _getUserEncType($uname) {
 		$table = new icms_db_legacy_updater_Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
-        if($table->fieldExists('loginname')) {
+		if ($table->fieldExists('loginname')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE loginname = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($enc_type) = icms::$xoopsDB->fetchRow($sql);
-        } elseif($table->fieldExists('login_name')) {
+			list($enc_type) = icms::$xoopsDB->fetchRow($sql);
+		} elseif ($table->fieldExists('login_name')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE login_name = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($enc_type) = icms::$xoopsDB->fetchRow($sql);
-        } else {
-            $sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE uname = %s",
+			list($enc_type) = icms::$xoopsDB->fetchRow($sql);
+		} else {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE uname = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($enc_type) = icms::$xoopsDB->fetchRow($sql);
-        }
+			list($enc_type) = icms::$xoopsDB->fetchRow($sql);
+		}
 
 		return (int) $enc_type;
-    }
+	}
 
-    /**
-     * This Private Function returns the User Password Hash belonging to username.
-     * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-     * @since    1.3.3
-     * @param    string  $uname      Username to find hash for.
-     * @return   string  returns the Password hash of the user.
+	/**
+	 * This Private Function returns the User Password Hash belonging to username.
+	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+	 * @since    1.3.3
+	 * @param    string  $uname      Username to find hash for.
+	 * @return   string  returns the Password hash of the user.
 	 */
 	private function _getUserHash($uname) {
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
@@ -267,24 +268,24 @@ final class icms_core_Password {
 		$table = new icms_db_legacy_updater_Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
-        if($table->fieldExists('loginname')) {
+		if ($table->fieldExists('loginname')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE loginname = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($pass) = icms::$xoopsDB->fetchRow($sql);
-        } elseif($table->fieldExists('login_name')) {
+			list($pass) = icms::$xoopsDB->fetchRow($sql);
+		} elseif ($table->fieldExists('login_name')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE login_name = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($pass) = icms::$xoopsDB->fetchRow($sql);
-        } else {
-            $sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE uname = %s",
+			list($pass) = icms::$xoopsDB->fetchRow($sql);
+		} else {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE uname = %s",
 				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($pass) = icms::$xoopsDB->fetchRow($sql);
-        }
+			list($pass) = icms::$xoopsDB->fetchRow($sql);
+		}
 
 		return $pass;
-    }
+	}
 
-    /**
+	/**
 	 * This Private Function is used to Encrypt User Passwords
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.1
@@ -292,7 +293,7 @@ final class icms_core_Password {
 	 * @param    string  $salt       unique user salt key used in encryption process
 	 * @param    int     $enc_type   encryption type to use (this is required & only used when passwords are expired)
 	 * @return   Hash of users password.
-     *
+	 *
 	 * To be removed in future versions, use _encryptPassword() instead
 	 */
 	private function _encryptPass($pass, $salt, $enc_type) {
@@ -301,29 +302,29 @@ final class icms_core_Password {
 		} else {
 			$pass = $salt . md5($pass) . $this->mainSalt;
 
-            $type = array();
-            $type['encType'] = array(
-                                        1 => 'sha256',
-                                        2 => 'sha384',
-                                        3 => 'sha512',
-                                        4 => 'ripemd128',
-                                        5 => 'ripemd160',
-                                        6 => 'whirlpool',
-                                        7 => 'haval128,4',
-                                        8 => 'haval160,4',
-                                        9 => 'haval192,4',
-                                        10 => 'haval224,4',
-                                        11 => 'haval256,4',
-                                        12 => 'haval128,5',
-                                        13 => 'haval160,5',
-                                        14 => 'haval192,5',
-                                        15 => 'haval224,5',
-                                        16 => 'haval256,5',
-                                    );
+			$type = array();
+			$type['encType'] = array(
+										1 => 'sha256',
+										2 => 'sha384',
+										3 => 'sha512',
+										4 => 'ripemd128',
+										5 => 'ripemd160',
+										6 => 'whirlpool',
+										7 => 'haval128,4',
+										8 => 'haval160,4',
+										9 => 'haval192,4',
+										10 => 'haval224,4',
+										11 => 'haval256,4',
+										12 => 'haval128,5',
+										13 => 'haval160,5',
+										14 => 'haval192,5',
+										15 => 'haval224,5',
+										16 => 'haval256,5',
+									);
 
-            return hash($type['encType'][$enc_type], $pass);
-        }
-    }
+			return hash($type['encType'][$enc_type], $pass);
+		}
+	}
 
 	/**
 	 * This Private Function is used to Encrypt User Passwords
@@ -343,9 +344,9 @@ final class icms_core_Password {
 				self::_rehash($salt, $iterations) .
 				self::_rehash($pass, $iterations) .
 				self::_rehash($this->mainSalt, $iterations),
-                                        $iterations, $enc_type);
+										$iterations, $enc_type);
 
-            return $hash;
+			return $hash;
 		}
 	}
 
@@ -359,35 +360,35 @@ final class icms_core_Password {
 	 * @return   Hash of users password.
 	 */
 	private function _rehash($hash, $iterations, $enc_type = 21) {
-        $type['encType'] = array(
-                                    21 => 'sha256',
-                                    22 => 'sha384',
-                                    23 => 'sha512',
-                                    24 => 'ripemd128',
-                                    25 => 'ripemd160',
-                                    26 => 'whirlpool',
-                                    27 => 'haval128,4',
-                                    28 => 'haval160,4',
-                                    29 => 'haval192,4',
-                                    30 => 'haval224,4',
-                                    31 => 'haval256,4',
-                                    32 => 'haval128,5',
-                                    33 => 'haval160,5',
-                                    34 => 'haval192,5',
-                                    35 => 'haval224,5',
-                                    36 => 'haval256,5',
-                                    37 => 'ripemd256',
-                                    38 => 'ripemd320',
-                                    39 => 'snefru256',
-                                    40 => 'gost'
-                                );
+		$type['encType'] = array(
+									21 => 'sha256',
+									22 => 'sha384',
+									23 => 'sha512',
+									24 => 'ripemd128',
+									25 => 'ripemd160',
+									26 => 'whirlpool',
+									27 => 'haval128,4',
+									28 => 'haval160,4',
+									29 => 'haval192,4',
+									30 => 'haval224,4',
+									31 => 'haval256,4',
+									32 => 'haval128,5',
+									33 => 'haval160,5',
+									34 => 'haval192,5',
+									35 => 'haval224,5',
+									36 => 'haval256,5',
+									37 => 'ripemd256',
+									38 => 'ripemd320',
+									39 => 'snefru256',
+									40 => 'gost'
+								);
 
-        for ($i = 0; $i < $iterations; ++$i) {
-            $hashed = hash($type['encType'][$enc_type], $hash . $hash);
-        }
+		for ($i = 0; $i < $iterations; ++$i) {
+			$hashed = hash($type['encType'][$enc_type], $hash . $hash);
+		}
 
-        return $hashed;
-    }
+		return $hashed;
+	}
 
 	/**
 	 * This Private Function verifies if the password is correct
@@ -401,22 +402,23 @@ final class icms_core_Password {
 		$userSalt = self::_getUserSalt($uname); // to be deprecated in future versions
 		$userHash = self::_getUserHash($uname);
 
-        if(preg_match_all("/(\\$)(\\d+)(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
-            $encType = (int) $matches[2][0];
-            $iterations = (int) $matches[4][0];
-            $userSalt = $matches[6][0];
+		if (preg_match_all("/(\\$)(\\d+)(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
+			$encType = (int) $matches[2][0];
+			$iterations = (int) $matches[4][0];
+			$userSalt = $matches[6][0];
 
 			if (self::_encryptPassword($pass, $userSalt, $encType, $iterations) == $userHash) {
-                return $userHash;
-            }
-		} else { // to be removed in future versions
+				return $userHash;
+			}
+		} else {
+// to be removed in future versions
 			$encType = self::_getUserEncType($uname);
 
 			if (self::_encryptPass($pass, $userSalt, $encType) == $userHash) {
-                return $userHash;
-            }
-        }
+				return $userHash;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 }

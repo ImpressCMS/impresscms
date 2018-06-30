@@ -46,7 +46,7 @@ abstract class icms_db_Factory {
 	 * @copyright	The ImpressCMS Project <http://www.impresscms.org>
 	 * @var 		icms_db_IConnection
 	 */
-	static protected $pdoInstance = FALSE;
+	static protected $pdoInstance = false;
 
 	/**
 	 * Legacy database adapter - it can represent a legacy database connection or a PDO connection.
@@ -54,7 +54,7 @@ abstract class icms_db_Factory {
 	 *
 	 * @var icms_db_legacy_Database
 	 */
-	static protected $xoopsInstance = FALSE;
+	static protected $xoopsInstance = false;
 
 	/**
 	 * Instanciate the PDO compatible DB adapter (if appropriate).
@@ -64,26 +64,26 @@ abstract class icms_db_Factory {
 	 * @throws RuntimeException
 	 */
 	static public function pdoInstance() {
-		if (self::$pdoInstance !== FALSE) {
+		if (self::$pdoInstance !== false) {
 			return self::$pdoInstance;
 		}
 
 		$type = getenv('DB_TYPE');
 
 		if (substr($type, 0, 4) != 'pdo.') {
-			return self::$pdoInstance = NULL;
+			return self::$pdoInstance = null;
 		}
-		if (!class_exists('PDO', FALSE)) {
+		if (!class_exists('PDO', false)) {
 			throw new RuntimeException("PDO extension not available.");
 		}
 
 		// --> added by Claudia, ImpressCMS.org
-		$string_conn = "host=". getenv('DB_HOST') . ";dbname=". getenv('DB_NAME');
-		if (getenv ('DB_PORT')) {
-			$string_conn .= ';port='. getenv('DB_PORT');
+		$string_conn = "host=" . getenv('DB_HOST') . ";dbname=" . getenv('DB_NAME');
+		if (getenv('DB_PORT')) {
+			$string_conn .= ';port=' . getenv('DB_PORT');
 		}
 		$string_conn .= ';charset=' . getenv('DB_CHARSET');
-		define ('ICMS_DB_DSN', $string_conn);
+		define('ICMS_DB_DSN', $string_conn);
 		// <--
 
 		/* this is an array of attributes to pass to the connection before it is established */
@@ -130,19 +130,21 @@ abstract class icms_db_Factory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function instance() {
-		if (self::$xoopsInstance !== FALSE) {
+		if (self::$xoopsInstance !== false) {
 			return self::$xoopsInstance;
 		}
 		$type = getenv('DB_TYPE');
-		$allowWebChanges = defined('XOOPS_DB_PROXY') ? FALSE : TRUE;
+		$allowWebChanges = defined('XOOPS_DB_PROXY')? false : true;
 		if (substr($type, 0, 4) == 'pdo.') {
-			if (FALSE === self::$pdoInstance) self::pdoInstance();
+			if (false === self::$pdoInstance) {
+				self::pdoInstance();
+			}
 			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
 		} else {
 			$class = getenv('DB_ALTERNATIVE');
 			if (!($class && class_exists($class))) {
 				$class = 'icms_db_legacy_' . $type;
-				$class .= $allowWebChanges ? '_Safe' : '_Proxy';
+				$class .= $allowWebChanges?'_Safe':'_Proxy';
 			}
 			self::$xoopsInstance = new $class();
 			/* during a new installation, the icms object does not exist */

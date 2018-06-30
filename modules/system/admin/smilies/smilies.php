@@ -48,7 +48,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
  */
 function SmilesAdmin() {
 	global $icmsAdminTpl;
-	$db =& icms_db_Factory::instance();
+	$db = & icms_db_Factory::instance();
 	$url_smiles = ICMS_UPLOAD_URL;
 	icms_cp_header();
 
@@ -90,10 +90,10 @@ function SmilesAdmin() {
  * @param int $id
  */
 function SmilesEdit($id) {
-	$db =& icms_db_Factory::instance();
+	$db = & icms_db_Factory::instance();
 	icms_cp_header();
-	echo '<a href="admin.php?fct=smilies">' . _AM_SMILESCONTROL .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_EDITSMILE . '<br /><br />';
-	if ($getsmiles = $db->query("SELECT * FROM " . $db->prefix("smiles") . " WHERE id = '". (int) $id . "'")) {
+	echo '<a href="admin.php?fct=smilies">' . _AM_SMILESCONTROL . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_EDITSMILE . '<br /><br />';
+	if ($getsmiles = $db->query("SELECT * FROM " . $db->prefix("smiles") . " WHERE id = '" . (int) $id . "'")) {
 		$numsmiles = $db->getRowsNum($getsmiles);
 		if ($numsmiles == 0) {
 			//EMPTY

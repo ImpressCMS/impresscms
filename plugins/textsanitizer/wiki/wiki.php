@@ -14,7 +14,7 @@
  *
  * @var unknown_type
  */
-define('WIKI_LINK',	'http://'._LANGCODE.'.wikipedia.org/wiki/%s');
+define('WIKI_LINK', 'http://' . _LANGCODE . '.wikipedia.org/wiki/%s');
 
 /**
  *
@@ -23,7 +23,7 @@ define('WIKI_LINK',	'http://'._LANGCODE.'.wikipedia.org/wiki/%s');
  * @param unknown_type $text
  */
 function textsanitizer_wiki($text) {
-	return preg_replace_callback("/\[\[([^\]]*)\]\]/sU", function ($matches) {
+	return preg_replace_callback("/\[\[([^\]]*)\]\]/sU", function($matches) {
 		return wikiLink($matches[1]);
 	}, $text);
 }
@@ -34,11 +34,13 @@ function textsanitizer_wiki($text) {
  * @param $text
  */
 function wikiLink($text) {
-	if (empty($text) ) return $text;
+	if (empty($text)) {
+		return $text;
+	}
 	$ret = "<a
 		href='" . sprintf(WIKI_LINK, $text) . "'
 		target='_blank'
-		title=''>".$text."</a>";
+		title=''>".$text . "</a>";
 	return $ret;
 }
 
@@ -56,7 +58,7 @@ function render_wiki($ele_name) {
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img
-		onclick='javascript:icmsCodeWIKI(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES, _CHARSET)."\");'
+		onclick='javascript:icmsCodeWIKI(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES, _CHARSET) . "\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/wiki.png'
 		alt='wiki'
@@ -64,7 +66,7 @@ function render_wiki($ele_name) {
 	/**
 	 * Using this method You can add a file to load your java script informations
 	 */
-	$javascript = 'plugins/textsanitizer/' . $dirname . '/wiki.js';;
+	$javascript = 'plugins/textsanitizer/' . $dirname . '/wiki.js'; ;
 	return array($code, $javascript);
 }
 

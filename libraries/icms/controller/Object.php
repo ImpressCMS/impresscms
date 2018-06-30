@@ -9,10 +9,10 @@
  */
 abstract class icms_controller_Object {
 
-    /**
-    * This constant defines how controller will parse params
-    * It's possible to redefine on extended class
-    */
-    const PARAMS_FORMAT = '/{@param}/{@value}';
+	/**
+	 * This constant defines how controller will parse params
+	 * It's possible to redefine on extended class
+	 */
+	const PARAMS_FORMAT = '/{@param}/{@value}';
 
 }

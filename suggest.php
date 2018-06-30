@@ -13,7 +13,7 @@ if (isset($_POST['queryString'])) {
 
 	// Is the string length greater than 2?
 	if (strlen($queryString) > 2) {
-		$sql = "SELECT * FROM ".icms::$xoopsDB->prefix("autosearch_list")." s INNER JOIN "
+		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix("autosearch_list") . " s INNER JOIN "
 			. icms::$xoopsDB->prefix("autosearch_cat") . " c ON s.cat_id = c.cid WHERE name LIKE '%"
 			. $queryString . "%' ORDER BY cat_id LIMIT 8";
 		$query = icms::$xoopsDB->query($sql);
@@ -30,19 +30,19 @@ if (isset($_POST['queryString'])) {
 				$catid = 0;
 				while ($result = icms::$xoopsDB->fetchArray($query)) {
 					echo '<li><a href="' . ICMS_URL . $result['url'] . '">';
-					echo '<img src="'.ICMS_URL.$result['img'].'" alt="" />';
+					echo '<img src="' . ICMS_URL . $result['img'] . '" alt="" />';
 
 					$name = $result['name'];
 					if (strlen($name) > 35) {
 						$name = substr($name, 0, 35) . "...";
 					}
-					echo '<span class="searchheading">'.$name.'</span>';
+					echo '<span class="searchheading">' . $name . '</span>';
 
 					$description = $result['desc'];
 					if (strlen($description) > 80) {
 						$description = substr($description, 0, 80) . "...";
 					}
-					echo '<span class="searchdesc">'.$description.'</span></a></li>';
+					echo '<span class="searchdesc">' . $description . '</span></a></li>';
 				}
 			}
 			echo '<li><span class="seperator"><a href="http://www.impresscms.org" rel="external">ImpressCMS Project</a></span><br /></li>';

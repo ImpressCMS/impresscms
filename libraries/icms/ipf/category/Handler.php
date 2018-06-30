@@ -43,7 +43,7 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	 * @param string $order
 	 * @return array
 	 */
-	public function getAllCategoriesArray($parentid=0, $perm_name=false, $sort = 'parentid', $order='ASC') {
+	public function getAllCategoriesArray($parentid = 0, $perm_name = false, $sort = 'parentid', $order = 'ASC') {
 
 		if (!$this->allCategoriesObj) {
 			$criteria = new icms_db_criteria_Compo();
@@ -57,15 +57,15 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 				}
 			}
 
-			$this->allCategoriesObj =& $this->getObjects($criteria, 'parentid');
+			$this->allCategoriesObj = & $this->getObjects($criteria, 'parentid');
 		}
 
 		$ret = array();
 		if (isset($this->allCategoriesObj[$parentid])) {
-			foreach ( $this->allCategoriesObj[$parentid] as $categoryid=>$categoryObj) {
-				$ret[$categoryid]['self'] =& $categoryObj->toArray();
+			foreach ($this->allCategoriesObj[$parentid] as $categoryid=>$categoryObj) {
+				$ret[$categoryid]['self'] = & $categoryObj->toArray();
 				if (isset($this->allCategoriesObj[$categoryid])) {
-					$ret[$categoryid]['sub'] =& $this->getAllCategoriesArray($categoryid);
+					$ret[$categoryid]['sub'] = & $this->getAllCategoriesArray($categoryid);
 					$ret[$categoryid]['subcatscount'] = count($ret[$categoryid]['sub']);
 				}
 			}
@@ -79,7 +79,7 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	 * @param	bool	$asString
 	 * @return	array|string	array of ids, or if $asString is TRUE a comma-separated string of ids
 	 */
-	public function getParentIds($parentid, $asString=true) {
+	public function getParentIds($parentid, $asString = true) {
 
 		if (!$this->allCategoriesId) {
 
@@ -94,7 +94,7 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 			}
 
 			while ($myrow = $this->db->fetchArray($result)) {
-				$this->allCategoriesId[$myrow['categoryid']] =  $myrow['parentid'];
+				$this->allCategoriesId[$myrow['categoryid']] = $myrow['parentid'];
 			}
 		}
 

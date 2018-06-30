@@ -21,9 +21,9 @@
  */
 class icms_ipf_seo_Object extends icms_ipf_Object {
 
-    public function __construct(&$handler) {
+	public function __construct(&$handler) {
 		parent::__construct($handler);
-    }
+	}
 
 	public function initiateSEO() {
 		$this->initCommonVar('meta_keywords');
@@ -37,9 +37,9 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 	 *
 	 * @todo to be removed in 1.4
 	 */
-    function IcmsPersistableSeoObject() {
+	function IcmsPersistableSeoObject() {
 		$this->initiateSEO();
-    }
+	}
 
 	/**
 	 * Return the value of the short_url field of this object

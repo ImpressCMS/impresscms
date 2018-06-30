@@ -14,7 +14,7 @@ class icms_AutologinEventHandler {
 	}
 	static public function onSessionClose() {
 		// autologin hack GIJ (clear autologin cookies)
-		$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH
+		$icms_cookie_path = defined('ICMS_COOKIE_PATH')? ICMS_COOKIE_PATH
 				: preg_replace('?http://[^/]+(/.*)$?', '$1', ICMS_URL);
 		if ($icms_cookie_path == ICMS_URL) {
 			$icms_cookie_path = '/';
@@ -36,27 +36,26 @@ class icms_AutologinEventHandler {
 		$uname = icms_core_DataFilter::stripSlashesGPC($autologinName);
 		$pass = icms_core_DataFilter::stripSlashesGPC($autologinPass);
 		if (empty($uname) || is_numeric($pass)) {
-			$user = false ;
+			$user = false;
 		} else {
 			$uname4sql = addslashes($uname);
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname4sql));
 			$user_handler = icms::handler('icms_member_user');
 			$users = $user_handler->getObjects($criteria, false);
 			if (empty($users) || count($users) != 1) {
-				$user = false ;
+				$user = false;
 			} else {
-				$user = $users[0] ;
-				$old_limit = time() - (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
+				$user = $users[0];
+				$old_limit = time() - (defined('ICMS_AUTOLOGIN_LIFETIME')? ICMS_AUTOLOGIN_LIFETIME : 604800);
 				list($old_Ynj, $old_encpass) = explode(':', $pass);
 				if (strtotime($old_Ynj) < $old_limit || md5($user->getVar('pass') .
-						ICMS_DB_PASS . ICMS_DB_PREFIX . $old_Ynj) != $old_encpass)
-				{
+						ICMS_DB_PASS . ICMS_DB_PREFIX . $old_Ynj) != $old_encpass) {
 					$user = false;
 				}
 			}
 			unset($users);
 		}
-		$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH
+		$icms_cookie_path = defined('ICMS_COOKIE_PATH')? ICMS_COOKIE_PATH
 			: preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
 		if ($icms_cookie_path == ICMS_URL) {
 			$icms_cookie_path = '/';
@@ -80,10 +79,10 @@ class icms_AutologinEventHandler {
 
 			// update autologin cookies
 			// we need to secure cookie when using SSL
-			$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0;
+			$secure = substr(ICMS_URL, 0, 5) == 'https'?1:0;
 			// 1 week default
 			$expire = time()
-					+ (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800);
+					+ (defined('ICMS_AUTOLOGIN_LIFETIME')? ICMS_AUTOLOGIN_LIFETIME : 604800);
 			setcookie('autologin_uname', $uname, $expire, $icms_cookie_path, '', $secure, 1);
 			$Ynj = date('Y-n-j');
 			setcookie(

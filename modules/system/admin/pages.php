@@ -28,7 +28,7 @@ include 'admin_header.php';
  *
  * @param int $post_id Postid to be edited
  */
-function editpage($page_id = 0, $clone = FALSE) {
+function editpage($page_id = 0, $clone = false) {
 	global $icms_admin_handler, $icmsAdminTpl;
 
 	$pageObj = $icms_admin_handler->get($page_id);
@@ -40,7 +40,7 @@ function editpage($page_id = 0, $clone = FALSE) {
 	} else {
 		$pageObj->setVar('page_type', 'C');
 		$sform = $pageObj->getForm(_AM_SYSTEM_PAGES_CREATE, 'addpage');
-		$sform->assign ($icmsAdminTpl);
+		$sform->assign($icmsAdminTpl);
 
 	}
 	$icmsAdminTpl->assign('page_id', $page_id);
@@ -53,7 +53,7 @@ $clean_op = $op;
 /* Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
-$valid_op = array ('mod', 'changedField', 'addpage', 'del', 'status', '');
+$valid_op = array('mod', 'changedField', 'addpage', 'del', 'status', '');
 
 /* Again, use a naming convention that indicates the source of the content of the variable */
 $clean_page_id = $page_id;
@@ -64,11 +64,13 @@ $clean_page_id = $page_id;
  * are case sensitive and the 3rd argument determines whether type matching is
  * required
  */
-if (in_array($clean_op, $valid_op, TRUE)) {
+if (in_array($clean_op, $valid_op, true)) {
 	switch ($clean_op) {
 		case 'status' :
 			$icms_admin_handler->changeStatus($clean_page_id);
-			if (isset($rtn)) redirect_header(ICMS_URL . base64_decode($rtn));
+			if (isset($rtn)) {
+				redirect_header(ICMS_URL . base64_decode($rtn));
+			}
 
 			$rtn = '/modules/system/admin.php?fct=pages';
 			redirect_header(ICMS_URL . $rtn);
@@ -76,7 +78,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case "clone" :
 			icms_cp_header();
-			editpage($clean_page_id, TRUE);
+			editpage($clean_page_id, true);
 			break;
 
 		case "mod" :
@@ -99,14 +101,14 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			$objectTable = new icms_ipf_view_Table($icms_admin_handler);
 
-			$objectTable->addColumn(new icms_ipf_view_Column('page_status', 'center', FALSE, 'getCustomPageStatus'));
-			$objectTable->addColumn(new icms_ipf_view_Column('page_title', _GLOBAL_LEFT, FALSE, 'getAdminViewItemLink'));
+			$objectTable->addColumn(new icms_ipf_view_Column('page_status', 'center', false, 'getCustomPageStatus'));
+			$objectTable->addColumn(new icms_ipf_view_Column('page_title', _GLOBAL_LEFT, false, 'getAdminViewItemLink'));
 			$objectTable->addColumn(new icms_ipf_view_Column('page_url'));
-			$objectTable->addColumn(new icms_ipf_view_Column('page_moduleid', 'center', FALSE, 'getCustomPageModuleid'));
+			$objectTable->addColumn(new icms_ipf_view_Column('page_moduleid', 'center', false, 'getCustomPageModuleid'));
 
 			$objectTable->addIntroButton('addpost', 'admin.php?fct=pages&amp;op=mod', _AM_SYSTEM_PAGES_CREATE);
 			$objectTable->addCustomAction('getViewItemLink');
-			$objectTable->addQuickSearch(array ('page_title', 'page_url'));
+			$objectTable->addQuickSearch(array('page_title', 'page_url'));
 			$objectTable->addFilter('page_moduleid', 'getModulesArray');
 
 			$icmsAdminTpl->assign('icms_page_table', $objectTable->fetch());

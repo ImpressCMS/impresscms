@@ -69,7 +69,7 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	 * @param   object  $ele
 	 * @param   string  $condition
 	 */
-	public function __construct($ele=null, $condition='AND') {
+	public function __construct($ele = null, $condition = 'AND') {
 		if (isset($ele) && is_object($ele)) {
 			$this->add($ele, $condition);
 		}
@@ -83,8 +83,8 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	 *
 	 * @return  object  reference to this collection
 	 */
-	public function &add($criteriaElement, $condition='AND') {
-		$this->criteriaElements[] =& $criteriaElement;
+	public function &add($criteriaElement, $condition = 'AND') {
+		$this->criteriaElements[] = & $criteriaElement;
 		$this->conditions[] = $condition;
 		return $this;
 	}
@@ -100,8 +100,10 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 		if ($count > 0) {
 			$ret = '(' . $this->criteriaElements[0]->render();
 			for ($i = 1; $i < $count; $i++) {
-                $query = $this->criteriaElements[$i]->render();
-                if (!$query) continue;
+				$query = $this->criteriaElements[$i]->render();
+				if (!$query) {
+					continue;
+				}
 				$ret .= ' ' . $this->conditions[$i] . ' ' . $query;
 			}
 			$ret .= ')';
@@ -116,7 +118,7 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	 */
 	public function renderWhere() {
 		$ret = $this->render();
-		$ret = ($ret != '') ? 'WHERE ' . $ret : $ret;
+		$ret = ($ret != '')?'WHERE ' . $ret:$ret;
 		return $ret;
 	}
 

@@ -27,7 +27,7 @@ class icms_ipf_form_elements_Richfile extends icms_form_elements_Tray {
 		if ($fileObj->isNew()) {
 			$this->addElement(new icms_ipf_form_elements_Fileupload($fileObj, $key));
 			$this->addElement(new icms_form_elements_Label("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
-			$this->addElement(new icms_form_elements_Label("","<br />" . _CO_ICMS_URL_FILE));
+			$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_URL_FILE));
 			$this->addElement(new icms_ipf_form_elements_Text($fileObj, "url_" . $key));
 		}
 

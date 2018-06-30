@@ -24,7 +24,7 @@ class icms_preload_LibrariesHandler {
 	/**
 	 * @public array $_librariesArray array containing a list of all available third party libraries
 	 */
-	public $_librariesArray=array();
+	public $_librariesArray = array();
 
 	/**
 	 * Constructor
@@ -69,8 +69,8 @@ class icms_preload_LibrariesHandler {
 	 * @param $array mixed container to pass any arguments to be used by the library
 	 * @return	TRUE if successful, FALSE if not
 	 */
-	public function triggerEvent($event, $array=false) {
-		foreach($this->_librariesArray as $library) {
+	public function triggerEvent($event, $array = false) {
+		foreach ($this->_librariesArray as $library) {
 			$functionName = $this->getFunctionName($event, $library);
 			if (function_exists($functionName)) {
 				$ret = $functionName($array);

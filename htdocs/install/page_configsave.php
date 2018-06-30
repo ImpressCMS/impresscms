@@ -27,13 +27,15 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
-$wizard->setPage( 'configsave' );
+$wizard->setPage('configsave');
 $pageHasForm = true;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['settings'];
+$vars = & $_SESSION['settings'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -54,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	@chmod($env_file, 0400);
 
-	if (empty( $error )) {
-		$wizard->redirectToPage( '+1' );
+	if (empty($error)) {
+		$wizard->redirectToPage('+1');
 		exit();
 	}
 	$content = '<p class="errorMsg">' . $error . '</p>';
@@ -67,7 +69,7 @@ ob_start();
 ?>
 <p class="x2-note"><?php echo READY_SAVE_MAINFILE; ?></p>
 <dl style="height: 200px; overflow: auto; border: 1px solid #D0D0D0">
-<?php foreach ( $vars as $k => $v) {
+<?php foreach ($vars as $k => $v) {
 	echo "<dt>ICMS_$k</dt><dd>$v</dd>";
 } ?>
 </dl>

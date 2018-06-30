@@ -43,30 +43,32 @@
  * @since		XOOPS
  */
 icms_loadLanguageFile('core', 'user');
-$uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
-$pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
+$uname = !isset($_POST['uname'])?'':trim($_POST['uname']);
+$pass = !isset($_POST['pass'])?'':trim($_POST['pass']);
 
 /* make sure redirect stays within domain and isn't open to exploit */
 if (!isset($redirect)) {
 
 	$redirect = isset($_GET['xoops_redirect'])
-		? $_GET['xoops_redirect']
+		?$_GET['xoops_redirect']
 		: isset($_POST['xoops_redirect'])
-			? $_POST['xoops_redirect']
+			?$_POST['xoops_redirect']
 			: ICMS_URL;
 
 		$redirect = htmlspecialchars(trim($redirect));
-		if ($redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) $redirect = ICMS_URL;
-}
+		if ($redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) {
+			$redirect = ICMS_URL;
+		}
+		}
 
 /* if redirect goes to the register page, divert to main page - users don't go to register */
-if ($redirect && strpos($redirect, 'register') !== FALSE) {
+if ($redirect && strpos($redirect, 'register') !== false) {
 	$redirect = ICMS_URL;
 }
 
 /* prevent breaking out of the domain */
 $pos = strpos($redirect, '://');
-if ($pos !== FALSE) {
+if ($pos !== false) {
 	$icmsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
 	if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
 		$redirect = ICMS_URL;
@@ -85,20 +87,20 @@ if ($pos !== FALSE) {
 $member_handler = icms::handler('icms_member');
 
 icms_loadLanguageFile('core', 'auth');
-$icmsAuth =& icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlashes($uname));
+$icmsAuth = & icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlashes($uname));
 
 $uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($uname));
 $pass4sql = icms_core_DataFilter::stripSlashesGPC($pass);
 
 /* Check to see if being access by a user - if not, attempt to authenticate */
 if (empty($user) || !is_object($user)) {
-	$user =& $icmsAuth->authenticate($uname4sql, $pass4sql);
+	$user = & $icmsAuth->authenticate($uname4sql, $pass4sql);
 }
 
 /* User exists: check to see if the user has been activated.
  * If not, redirect with 'no permission' message
  */
-if (FALSE != $user) {
+if (false != $user) {
 	if (0 == $user->getVar('level')) {
 		redirect_header(ICMS_URL . '/', 5, _US_NOACTTPADM);
 		exit();
@@ -111,10 +113,10 @@ if (FALSE != $user) {
 		if (is_object($user)) {
 			$online_handler = icms::handler('icms_core_Online');
 			$online_handler->gc(300);
-			$onlines =& $online_handler->getAll();
+			$onlines = & $online_handler->getAll();
 			foreach ($onlines as $online) {
 				if ($online['online_uid'] == $user->getVar('uid')) {
-					$user = FALSE;
+					$user = false;
 					redirect_header(ICMS_URL . '/', 3, _US_MULTLOGIN);
 				}
 			}
@@ -132,10 +134,10 @@ if (FALSE != $user) {
 
 	/* Check if site is closed and verify user's group can access if it is */
 	if ($icmsConfig['closesite'] == 1) {
-		$allowed = FALSE;
-		foreach ( $user->getGroups() as $group) {
+		$allowed = false;
+		foreach ($user->getGroups() as $group) {
 			if (in_array($group, $icmsConfig['closesite_okgrp']) || ICMS_GROUP_ADMIN == $group) {
-				$allowed = TRUE;
+				$allowed = true;
 				break;
 			}
 		}
@@ -149,12 +151,12 @@ if (FALSE != $user) {
 	$user->setVar('last_login', time());
 	if (!$member_handler->insertUser($user)) {}
 	// Regenerate a new session id and destroy old session
-	session_regenerate_id(TRUE);
+	session_regenerate_id(true);
 	$_SESSION = array();
 	$_SESSION['xoopsUserId'] = $user->getVar('uid');
 	$_SESSION['xoopsUserGroups'] = $user->getGroups();
 	if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
-		setcookie($icmsConfig['session_name'], session_id(), time()+(60 * $icmsConfig['session_expire']), '/',  '', 0);
+		setcookie($icmsConfig['session_name'], session_id(), time() + (60 * $icmsConfig['session_expire']), '/', '', 0);
 	}
 	$_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
 	if (!$member_handler->updateUserByField($user, 'last_login', time())) {}
@@ -164,14 +166,16 @@ if (FALSE != $user) {
 	}
 
 	// autologin hack V3.1 GIJ (set cookie)
-	$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
-	$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH :
-	preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL );
-	if ($icms_cookie_path == ICMS_URL) $icms_cookie_path = '/';
+	$secure = substr(ICMS_URL, 0, 5) == 'https'?1:0; // we need to secure cookie when using SSL
+	$icms_cookie_path = defined('ICMS_COOKIE_PATH')? ICMS_COOKIE_PATH :
+	preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
+	if ($icms_cookie_path == ICMS_URL) {
+		$icms_cookie_path = '/';
+	}
 	if (!empty($_POST['rememberme'])) {
-		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800) ; // 1 week default
+		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME')? ICMS_AUTOLOGIN_LIFETIME : 604800); // 1 week default
 		setcookie('autologin_uname', $user->getVar('login_name'), $expire, $icms_cookie_path, '', $secure, 0);
-		$Ynj = date('Y-n-j') ;
+		$Ynj = date('Y-n-j');
 		setcookie('autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
 		$expire, $icms_cookie_path, '', $secure, 0);
 	}
@@ -184,10 +188,10 @@ if (FALSE != $user) {
 	/* check if user's password has expired and send to reset password page if it has */
 	$is_expired = $user->getVar('pass_expired');
 	if ($is_expired == 1) {
-		redirect_header(ICMS_URL . '/user.php?op=resetpass', 5, _US_PASSEXPIRED, FALSE);
+		redirect_header(ICMS_URL . '/user.php?op=resetpass', 5, _US_PASSEXPIRED, false);
 	} else {
-    	redirect_header($redirect, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), FALSE);
-    }
+		redirect_header($redirect, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
+	}
 
 } elseif (!isset($_POST['xoops_redirect']) && !isset($_GET['xoops_redirect'])) {
 	/* if not a user and redirect has not been set, go back to the user page */
@@ -196,7 +200,7 @@ if (FALSE != $user) {
 	/* if not a user and redirect has been set, go back to that page */
 	redirect_header(
 		ICMS_URL . '/user.php?xoops_redirect='
-		. urlencode($redirect), 5, $icmsAuth->getHtmlErrors(), FALSE
+		. urlencode($redirect), 5, $icmsAuth->getHtmlErrors(), false
 	);
 }
 exit();
