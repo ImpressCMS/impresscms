@@ -82,7 +82,7 @@ Also, help could be found on [our official forums](https://www.impresscms.org/mo
 
 ### How to contribute?
 
-If you want to contribute to the code just go a head! 
+Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls)
 
 All development for 2.0 version happens on the *retro* branch, so it is always the most up-to-date. 
 
