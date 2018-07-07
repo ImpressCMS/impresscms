@@ -2,8 +2,8 @@ version: "2"
 
 prepare:
   fetch:
-  - url: "https://gist.githubusercontent.com/Ovsyanka/e2ab2ff76e7c0d7e75a1e4213a03ff95/raw/afd91af92a68500d24636791f56a48daea034dfa/ruleset.xml"
-    path: ".cs-ruleset.xml"
+    - url: "https://gist.githubusercontent.com/Ovsyanka/e2ab2ff76e7c0d7e75a1e4213a03ff95/raw/afd91af92a68500d24636791f56a48daea034dfa/ruleset.xml"
+      path: ".cs-ruleset.xml"
 
 checks:
   argument-count:
@@ -55,13 +55,13 @@ plugins:
 
   # Offers linting, complexity analysis, and style checking for your modern
   # EcmaScript/JavaScript code.
-  eslint:
-    enabled: true
-    channel: "eslint-4"
-    config:
-      extensions:
-        - .js
-      ignore_warnings: true
+  #eslint:
+  #  enabled: true
+  #  channel: "eslint-4"
+  #  config:
+  #    extensions:
+  #      - .js
+  #    ignore_warnings: true
 
   # performs a case-sensitive search for the following strings in your project:
   # TODO, FIXME, HACK, XXX, and BUG, which are all things you should fix now,
@@ -110,12 +110,3 @@ plugins:
     config:
       file_extensions:
         - php
-
-  # offers the ability to scan code for issues before checking it in, with minimal
-  # configuration.
-  sonar-php:
-    enabled: true
-    config:
-      minimum_severity: critical
-      tests_patterns:
-        - tests/libraries/**
