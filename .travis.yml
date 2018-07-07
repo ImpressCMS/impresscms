@@ -39,7 +39,7 @@ jobs:
         - '7.2'
       install:
         - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
-        - travis_retry composer install --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction
+        - travis_retry composer install --no-progress --no-interaction
       script:
         - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --no-coverage
     - stage: coverage
