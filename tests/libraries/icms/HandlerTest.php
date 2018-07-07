@@ -7,7 +7,7 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 * @backupStaticAttributes disabled
 */
 
-class HandlerTest extends \PHPUnit_Framework_TestCase {
+class HandlerTest extends TestCase {
 
     /**
      * Tests availability

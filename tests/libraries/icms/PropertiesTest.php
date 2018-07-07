@@ -2,12 +2,14 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class PropertiesTest extends \PHPUnit_Framework_TestCase {
+class PropertiesTest extends TestCase {
 
     /**
      * Does icms_properties_Handler exists and it's usable?

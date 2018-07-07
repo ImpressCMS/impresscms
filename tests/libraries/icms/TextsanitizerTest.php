@@ -2,12 +2,14 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class TextsanitizerTest extends \PHPUnit_Framework_TestCase {
+class TextsanitizerTest extends TestCase {
 
     /**
      * Test if is available

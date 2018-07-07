@@ -5,13 +5,14 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 use ImpressCMS\Core\Providers\DatabaseServiceProvider;
 use ImpressCMS\Core\Providers\SessionServiceProvider;
 use League\Container\Container;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class SessionTest extends \PHPUnit_Framework_TestCase {
+class SessionTest extends TestCase {
 
     /**
      * Test if icms_core_DataFilter is available
