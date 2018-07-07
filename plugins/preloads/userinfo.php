@@ -32,7 +32,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 						if ($key == 'last_login') {
 							$value1 = formatTimestamp(
 								isset($_SESSION['xoopsUserLastLogin'])
-										? $_SESSION['xoopsUserLastLogin']
+										?$_SESSION['xoopsUserLastLogin']
 										: time(),
 								_DATESTRING
 							);

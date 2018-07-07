@@ -7,7 +7,7 @@
  */
 
 /* This may be loaded by other modules - and not just through the cpanel */
-icms_loadLanguageFile('system', 'tags', TRUE);
+icms_loadLanguageFile('system', 'tags', true);
 
 /**
  * Handler for all system tags

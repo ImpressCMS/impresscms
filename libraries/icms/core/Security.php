@@ -86,7 +86,7 @@ class icms_core_Security {
 		}
 		$token_data = array('id' => $token_id, 'expire' => time() + (int) ($timeout));
 		array_push($_SESSION[$name . '_SESSION'], $token_data);
-		return md5($token_id.$_SERVER['HTTP_USER_AGENT'].getenv('DB_PREFIX'));
+		return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . getenv('DB_PREFIX'));
 	}
 
 	/**
@@ -99,15 +99,15 @@ class icms_core_Security {
 	 * @return bool
 	 */
 	public function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN) {
-		$token = ($token !== false) ? $token : ( isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '' );
+		$token = ($token !== false)?$token:(isset($_REQUEST[$name . '_REQUEST'])?$_REQUEST[$name . '_REQUEST']:'');
 		if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
 			icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
 			return false;
 		}
 		$validFound = false;
-		$token_data =& $_SESSION[$name . '_SESSION'];
+		$token_data = & $_SESSION[$name . '_SESSION'];
 		foreach (array_keys($token_data) as $i) {
-			if ($token === md5($token_data[$i]['id'].$_SERVER['HTTP_USER_AGENT'].getenv('DB_PREFIX'))) {
+			if ($token === md5($token_data[$i]['id'] . $_SERVER['HTTP_USER_AGENT'] . getenv('DB_PREFIX'))) {
 				if ($this->filterToken($token_data[$i])) {
 					if ($clearIfValid) {
 						// token should be valid once, so clear it once validated
@@ -176,7 +176,7 @@ class icms_core_Security {
 		if ($ref == '') {
 			return false;
 		}
-		if (strpos($ref, ICMS_URL) !== 0 ) {
+		if (strpos($ref, ICMS_URL) !== 0) {
 			return false;
 		}
 		return true;
@@ -214,7 +214,7 @@ class icms_core_Security {
 		global $icmsConfig;
 		if ($icmsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
 			foreach ($icmsConfig['bad_ips'] as $bi) {
-				if (!empty($bi) && preg_match("/".$bi."/", $_SERVER['REMOTE_ADDR'])) {
+				if (!empty($bi) && preg_match("/" . $bi . "/", $_SERVER['REMOTE_ADDR'])) {
 					exit();
 				}
 			}
@@ -257,7 +257,7 @@ class icms_core_Security {
 			$ret = '';
 			if (count($this->errors) > 0) {
 				foreach ($this->errors as $error) {
-					$ret .= $error.'<br />';
+					$ret .= $error . '<br />';
 				}
 			}
 			return $ret;

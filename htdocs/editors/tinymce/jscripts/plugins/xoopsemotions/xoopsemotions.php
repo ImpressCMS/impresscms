@@ -1,8 +1,12 @@
 <?php
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (file_exists('../../../../../mainfile.php')) {
+	include_once '../../../../../mainfile.php';
+}
+if (!defined('ICMS_ROOT_PATH')) {
+	die("ImpressCMS root path not defined");
+}
 
-include_once ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/misc.php';
+include_once ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/misc.php';
 
 xoops_header(false);
 ?>
@@ -18,25 +22,23 @@ xoops_header(false);
 <?php
 {
 echo '<table width="100%" class="outer">';
-echo '<tr><th colspan="3">'._MSC_SMILIES.'</th></tr>';
-echo '<tr class="head"><td>'._MSC_CODE.'</td><td>'._MSC_EMOTION.'</td><td>'._IMAGE.'</td></tr>';
-if ($getsmiles = icms::$xoopsDB->query("SELECT * FROM ".icms::$xoopsDB->prefix("smiles")))
-	{
+echo '<tr><th colspan="3">' . _MSC_SMILIES . '</th></tr>';
+echo '<tr class="head"><td>' . _MSC_CODE . '</td><td>' . _MSC_EMOTION . '</td><td>' . _IMAGE . '</td></tr>';
+if ($getsmiles = icms::$xoopsDB->query("SELECT * FROM " . icms::$xoopsDB->prefix("smiles"))) {
 	$rcolor = 'even';
-	while ($smile = icms::$xoopsDB->fetchArray($getsmiles) )
-		{
+	while ($smile = icms::$xoopsDB->fetchArray($getsmiles)) {
 		$html = "<tr class='$rcolor'>";
-		$html.= "<td>".$smile['code']."</td>";
-		$html.= "<td>".$smile['emotion']."</td>";
-		$html.= "<td><img onmouseover='style.cursor=\"pointer\"' onclick='javascript:XoopsemotionsDialog.insert(\"".ICMS_UPLOAD_URL."/".$smile['smile_url']."\",\"".$smile['emotion']."\");' src='".ICMS_UPLOAD_URL."/".$smile['smile_url']."' alt='".$smile['emotion']."' /></td>";
-		$html.= "</tr>";
+		$html .= "<td>" . $smile['code'] . "</td>";
+		$html .= "<td>" . $smile['emotion'] . "</td>";
+		$html .= "<td><img onmouseover='style.cursor=\"pointer\"' onclick='javascript:XoopsemotionsDialog.insert(\"" . ICMS_UPLOAD_URL . "/" . $smile['smile_url'] . "\",\"" . $smile['emotion'] . "\");' src='" . ICMS_UPLOAD_URL . "/" . $smile['smile_url'] . "' alt='" . $smile['emotion'] . "' /></td>";
+		$html .= "</tr>";
 		echo ($html);
-		$rcolor = ($rcolor == 'even') ? 'odd' : 'even';
+		$rcolor = ($rcolor == 'even')?'odd':'even';
 		}
 	} else {
 	echo "Could not retrieve data from the database.";
 	}
-echo '</table><br />'._MSC_CLICKASMILIE.'<br />';
+echo '</table><br />' . _MSC_CLICKASMILIE . '<br />';
 }
 ?>
 <div align="right">

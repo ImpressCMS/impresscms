@@ -80,7 +80,7 @@ class icms_form_elements_Button extends icms_form_Element {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET) : $this->_value;
+		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
 	}
 
 	/**
@@ -98,7 +98,7 @@ class icms_form_elements_Button extends icms_form_Element {
 	 * @return	string
 	 */
 	public function getType() {
-		return in_array(strtolower($this->_type), array("button", "submit", "reset")) ? $this->_type : "button";
+		return in_array(strtolower($this->_type), array("button", "submit", "reset"))?$this->_type:"button";
 	}
 
 	/**
@@ -107,6 +107,6 @@ class icms_form_elements_Button extends icms_form_Element {
 	 * @return	string
 	 */
 	public function render() {
-		return "<input type='".$this->getType()."' class='btn btn-primary formButton' name='".$this->getName()."'  id='".$this->getName()."' value='".$this->getValue()."'".$this->getExtra()." />";
+		return "<input type='" . $this->getType() . "' class='btn btn-primary formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "'" . $this->getExtra() . " />";
 	}
 }

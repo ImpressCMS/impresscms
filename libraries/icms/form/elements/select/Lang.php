@@ -53,6 +53,6 @@ class icms_form_elements_select_Lang extends icms_form_elements_Select {
 	 */
 	public function __construct($caption, $name, $value = null, $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(icms_core_Filesystem::getDirList(ICMS_ROOT_PATH."/language/"));
+		$this->addOptionArray(icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/"));
 	}
 }

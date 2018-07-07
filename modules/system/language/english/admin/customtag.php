@@ -2,7 +2,7 @@
 define('_MD_AM_CUSTOMTAGS', 'Custom Tags');
 define('_MD_AM_CUSTOMTAGS_DSC', 'Custom Tags are tags that you can define and use anywhere on your website.');
 
-define('_CO_ICMS_CUSTOMTAGS','Custom Tags');
+define('_CO_ICMS_CUSTOMTAGS', 'Custom Tags');
 define('_CO_ICMS_CUSTOMTAGS_DSC', 'Here is a list of the custom tags available in the system.');
 define('_CO_ICMS_CUSTOMTAG', 'Custom tag');
 define('_CO_ICMS_CUSTOMTAG_CREATE', 'Create a custom tag');

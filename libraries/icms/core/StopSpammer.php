@@ -45,7 +45,7 @@ class icms_core_StopSpammer {
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
 			}
 			curl_setopt($ch, CURLOPT_URL, "$url");
-			curl_setopt($ch, CURLOPT_HEADER,0);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			$output .= curl_exec($ch);
 			curl_close($ch);
@@ -98,12 +98,14 @@ class icms_core_StopSpammer {
 	 * @return true if spammer was found with this IP
 	 */
 	public function badIP($ip) {
-	    // return TRUE if it's not a valid IP
-	    if (!filter_var($ip, FILTER_VALIDATE_IP)) return TRUE;
-	    // return FALSE if it is a valid IPv6 address - only until IPv6 can be checked without error
-	    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-	        return FALSE;
-	    }
-	    return $this->checkForField('ip', $ip);
+		// return TRUE if it's not a valid IP
+		if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+			return true;
+		}
+		// return FALSE if it is a valid IPv6 address - only until IPv6 can be checked without error
+		if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+			return false;
+		}
+		return $this->checkForField('ip', $ip);
 	}
 }

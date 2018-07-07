@@ -123,7 +123,7 @@ class icms_messaging_Handler {
 		$this->template = "";
 		$this->templatedir = "";
 		// Change below to \r\n if you have problem sending mail
-		$this->LE ="\n";
+		$this->LE = "\n";
 	}
 
 	public function setTemplateDir($value) {
@@ -147,7 +147,7 @@ class icms_messaging_Handler {
 
 	public function setFromUser(&$user) {
 		if (get_class($user) == "icms_member_user_Object") {
-			$this->fromUser =& $user;
+			$this->fromUser = & $user;
 		}
 	}
 
@@ -179,7 +179,7 @@ class icms_messaging_Handler {
 			}
 			return false;
 		} elseif ($this->template != "") {
-			$path = ($this->templatedir != "") ? $this->templatedir . "" . $this->template : (ICMS_ROOT_PATH . "/language/" . $icmsConfig['language'] . "/mail_template/" . $this->template);
+			$path = ($this->templatedir != "")?$this->templatedir . "" . $this->template:(ICMS_ROOT_PATH . "/language/" . $icmsConfig['language'] . "/mail_template/" . $this->template);
 			if (!($fd = @fopen($path, 'r'))) {
 				if ($debug) {
 					$this->errors[] = _MAIL_FAILOPTPL;
@@ -190,7 +190,7 @@ class icms_messaging_Handler {
 		}
 
 		// for sending mail only
-		if ($this->isMail  || !empty($this->toEmails)) {
+		if ($this->isMail || !empty($this->toEmails)) {
 			if (!empty($this->priority)) {
 				$this->headers[] = "X-Priority: " . $this->priority;
 			}
@@ -206,9 +206,9 @@ class icms_messaging_Handler {
 
 		// add some standard tags (user-dependent tags are included later)
 		global $icmsConfig;
-		$this->assign ('X_ADMINMAIL', $icmsConfig['adminmail']);
-		$this->assign ('X_SITENAME', $icmsConfig['sitename']);
-		$this->assign ('X_SITEURL', ICMS_URL);
+		$this->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
+		$this->assign('X_SITENAME', $icmsConfig['sitename']);
+		$this->assign('X_SITEURL', ICMS_URL);
 		// TODO: also X_ADMINNAME??
 		// TODO: X_SIGNATURE, X_DISCLAIMER ?? - these are probably best
 		//  done as includes if mail templates ever get this sophisticated
@@ -247,7 +247,7 @@ class icms_messaging_Handler {
 			$text = str_replace("{X_UID}", $user->getVar("uid"), $text);
 			$text = str_replace("{X_UEMAIL}", $user->getVar("email"), $text);
 			$text = str_replace("{X_UNAME}", $user->getVar("uname"), $text);
-			$text = str_replace("{X_UACTLINK}", ICMS_URL . "/user.php?op=actv&id=".$user->getVar("uid") . "&actkey=".$user->getVar('actkey'), $text);
+			$text = str_replace("{X_UACTLINK}", ICMS_URL . "/user.php?op=actv&id=" . $user->getVar("uid") . "&actkey=" . $user->getVar('actkey'), $text);
 			// send mail
 			if ($this->isMail) {
 				if (!$this->sendMail($user->getVar("email"), $subject, $text, $headers)) {
@@ -282,9 +282,9 @@ class icms_messaging_Handler {
 
 	public function sendPM($uid, $subject, $body) {
 		$pm_handler = icms::handler('icms_data_privmessage');
-		$pm =& $pm_handler->create();
+		$pm = & $pm_handler->create();
 		$pm->setVar("subject", $subject);
-		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : icms::$user->getVar('uid'));
+		$pm->setVar('from_userid', !empty($this->fromUser)?$this->fromUser->getVar('uid'):icms::$user->getVar('uid'));
 		$pm->setVar("msg_text", $body);
 		$pm->setVar("to_userid", $uid);
 		if (!$pm_handler->insert($pm)) {
@@ -323,9 +323,9 @@ class icms_messaging_Handler {
 		}
 		if (!$this->multimailer->Send()) {
 			$this->errors[] = $this->multimailer->ErrorInfo;
-			return FALSE;
+			return false;
 		}
-		return TRUE;
+		return true;
 	}
 
 	public function getErrors($ashtml = true) {

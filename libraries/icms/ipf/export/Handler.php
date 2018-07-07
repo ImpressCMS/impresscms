@@ -11,67 +11,67 @@
  */
 class icms_ipf_export_Handler {
 
-    /**
-    * Handler that can provide data
-     *
-    * @var \icms_ipf_Handler
-    */
+	/**
+	 * Handler that can provide data
+	 *
+	 * @var \icms_ipf_Handler
+	 */
 	public $handler;
 
-        /**
-        * criteria how to filter exported data
-         *
-        * @var \icms_db_criteria_Element
-        */
+		/**
+		 * criteria how to filter exported data
+		 *
+		 * @var \icms_db_criteria_Element
+		 */
 	public $criteria;
 
-        /**
-        * Fields to be exported. If FALSE then all fields will be exported
-         *
-        * @var array|bool
-        */
+		/**
+		 * Fields to be exported. If FALSE then all fields will be exported
+		 *
+		 * @var array|bool
+		 */
 	public $fields = false;
 
-        /**
-        * Format of the ouputed export. Currently only supports CSV
-         *
-        * @var string
-        */
+		/**
+		 * Format of the ouputed export. Currently only supports CSV
+		 *
+		 * @var string
+		 */
 	public $format = 'csv';
 
-        /**
-        * Name of the file to be created
-         *
-        * @var string
-        */
+		/**
+		 * Name of the file to be created
+		 *
+		 * @var string
+		 */
 	public $filename = '';
 
-        /**
-        * Path where the file will be saved
-         *
-        * @var string
-        */
+		/**
+		 * Path where the file will be saved
+		 *
+		 * @var string
+		 */
 	public $filepath = '';
 
-        /**
-        * Options of the format to be exported in
-         *
-        * @var array
-        */
+		/**
+		 * Options of the format to be exported in
+		 *
+		 * @var array
+		 */
 	public $options = array();
 
-        /**
-        * Output methods used for formating exported data
-         *
-        * @var bool|array
-        */
-	public $outputMethods=false;
+		/**
+		 * Output methods used for formating exported data
+		 *
+		 * @var bool|array
+		 */
+	public $outputMethods = false;
 
-        /**
-        * Fields data should not be included in generated result
-         *
-        * @var array
-        */
+		/**
+		 * Fields data should not be included in generated result
+		 *
+		 * @var array
+		 */
 	public $notDisplayFields = array();
 
 	/**
@@ -85,7 +85,7 @@ class icms_ipf_export_Handler {
 	 * @param string                    $format         Format of the ouputed export. Currently only supports CSV
 	 * @param array                     $options        Options of the format to be exported in
 	 */
-	public function __construct(&$objectHandler, $criteria=null, $fields=false, $filename=false, $filepath=false, $format='csv', $options=false) {
+	public function __construct(&$objectHandler, $criteria = null, $fields = false, $filename = false, $filepath = false, $format = 'csv', $options = false) {
 		$this->handler = $objectHandler;
 		$this->criteria = $criteria;
 		$this->fields = $fields;
@@ -105,9 +105,9 @@ class icms_ipf_export_Handler {
 		$rows = array();
 		$columnsHeaders = array();
 		$firstObject = true;
-		foreach ( $objects as $object) {
+		foreach ($objects as $object) {
 			$row = array();
-			foreach ( $object->getVars() as $key=>$var) {
+			foreach ($object->getVars() as $key=>$var) {
 				if ((!$this->fields || in_array($key, $this->fields)) && !in_array($key, $this->notDisplayFields)) {
 					if ($this->outputMethods && (isset($this->outputMethods[$key])) && (method_exists($object, $this->outputMethods[$key]))) {
 						$method = $this->outputMethods[$key];

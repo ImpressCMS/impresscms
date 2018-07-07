@@ -29,10 +29,12 @@ class icms_data_file_Handler extends icms_ipf_Handler {
 	 */
 	protected function afterDelete(&$obj) {
 		$imgUrl = $obj->getVar("url");
-		if (strstr($imgUrl, ICMS_URL) !== FALSE) {
+		if (strstr($imgUrl, ICMS_URL) !== false) {
 			$imgPath = str_replace(ICMS_URL, ICMS_ROOT_PATH, $imgUrl);
-			if (is_file($imgPath)) unlink($imgPath);
+			if (is_file($imgPath)) {
+				unlink($imgPath);
+			}
 		}
-		return TRUE;
+		return true;
 	}
 }

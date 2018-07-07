@@ -24,7 +24,7 @@ class icms_Event {
 	 * @return icms_Event
 	 */
 	static public function current($index = 0) {
-		return isset(self::$events[$index]) ? self::$events[$index] : false;
+		return isset(self::$events[$index])? self::$events[$index]:false;
 	}
 
 	/**
@@ -91,7 +91,9 @@ class icms_Event {
 			if (isset(self::$handlers[$namespace][$handlers])) {
 				foreach (self::$handlers[$namespace][$handlers] as $callback) {
 					call_user_func($callback, $parameters, $event);
-					if ($cancancel && $event->canceled) break 2;
+					if ($cancancel && $event->canceled) {
+						break 2;
+					}
 				}
 			}
 		}
@@ -141,7 +143,7 @@ class icms_Event {
 
 	public function __construct($namespace, $name, $source, $params = array(), $canCancel = false) {
 		$this->namespace = $namespace;
-		$this->name	= $name;
+		$this->name = $name;
 		$this->source = $source;
 		$this->parameters = $params;
 		$this->canCancel = $canCancel;

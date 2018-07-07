@@ -20,26 +20,28 @@
 define('INSTALLER_INCLUDE_MAIN', true);
 require_once 'common.inc.php';
 
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
 $success = isset($_REQUEST['success'])?trim($_REQUEST['success']):false;
 if ($success) {
 	if (is_dir(__DIR__)) {
 		icms_core_Filesystem::deleteRecursive(__DIR__, true);
-		header('Location: '.ICMS_URL.'/');
+		header('Location: ' . ICMS_URL . '/');
 	}
 	$_SESSION = array();
 }
 
-$wizard->setPage( 'end' );
+$wizard->setPage('end');
 $pageHasForm = false;
 $content = "";
 include "./language/$wizard->language/finish.php";
 
 // destroy all the installation session
 unset($_SESSION);
-if(isset($_COOKIE[session_name()])) {
-	setcookie(session_name(), '', time()-60);
+if (isset($_COOKIE[session_name()])) {
+	setcookie(session_name(), '', time() - 60);
 }
 session_unset();
 session_destroy();

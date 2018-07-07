@@ -11,7 +11,7 @@
  */
 
 /* This may be loaded by other modules - and not just through the cpanel */
-icms_loadLanguageFile('system', 'positions', TRUE);
+icms_loadLanguageFile('system', 'positions', true);
 /**
  * icms_view_block_position_Handler
  *

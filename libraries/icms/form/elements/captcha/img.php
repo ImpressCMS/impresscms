@@ -15,7 +15,7 @@
  */
 
 error_reporting(0);
-icms::$logger->activated = FALSE;
+icms::$logger->activated = false;
 
 $image_handler = icms::handler('icms_form_elements_captcha_Image');
 $image_handler->loadImage();

@@ -99,17 +99,17 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 * @param	object  &$element    {@link icms_form_Element} to add
 	 */
 	public function addElement(&$formElement, $required = false) {
-		$this->_elements[] =& $formElement;
+		$this->_elements[] = & $formElement;
 		if (!$formElement->isContainer()) {
 			if ($required) {
 				$formElement->setRequired();
-				$this->_required[] =& $formElement;
+				$this->_required[] = & $formElement;
 			}
 		} else {
-			$required_elements =& $formElement->getRequired();
+			$required_elements = & $formElement->getRequired();
 			$count = count($required_elements);
-			for ($i = 0 ; $i < $count; $i++) {
-				$this->_required[] =& $required_elements[$i];
+			for ($i = 0; $i < $count; $i++) {
+				$this->_required[] = & $required_elements[$i];
 			}
 		}
 	}
@@ -137,12 +137,12 @@ class icms_form_elements_Tray extends icms_form_Element {
 			$count = count($this->_elements);
 			for ($i = 0; $i < $count; $i++) {
 				if (!$this->_elements[$i]->isContainer()) {
-					$ret[] =& $this->_elements[$i];
+					$ret[] = & $this->_elements[$i];
 				} else {
-					$elements =& $this->_elements[$i]->getElements(true);
+					$elements = & $this->_elements[$i]->getElements(true);
 					$count2 = count($elements);
 					for ($j = 0; $j < $count2; $j++) {
-						$ret[] =& $elements[$j];
+						$ret[] = & $elements[$j];
 					}
 					unset($elements);
 				}
@@ -158,7 +158,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 * @return	string  The delimiter
 	 */
 	public function getDelimeter($encode = false) {
-		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
+		return $encode? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)):$this->_delimeter;
 	}
 
 	/**

@@ -40,7 +40,7 @@
 
 $cform = new icms_form_Theme(_CM_POSTCOMMENT, "commentform", "postcomment.php", "post", true);
 if (!preg_match("/^re:/i", $subject)) {
-	$subject = "Re: " . icms_core_DataFilter::icms_substr($subject,0,56);
+	$subject = "Re: " . icms_core_DataFilter::icms_substr($subject, 0, 56);
 }
 $cform->addElement(new icms_form_elements_Text(_CM_TITLE, 'subject', 50, 255, $subject), true);
 $icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'icon', $icon);
@@ -50,7 +50,7 @@ foreach ($subject_icons as $iconfile) {
 }
 $cform->addElement($icons_radio);
 $cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'message', $message, 10, 50), true);
-$option_tray = new icms_form_elements_Tray(_OPTIONS,'<br />');
+$option_tray = new icms_form_elements_Tray(_OPTIONS, '<br />');
 if (icms::$user) {
 	if ($icmsConfig['anonpost'] == true) {
 		$noname_checkbox = new icms_form_elements_Checkbox('', 'noname', $noname);
@@ -72,7 +72,7 @@ $cform->addElement(new icms_form_elements_Hidden('pid', (int) $pid));
 $cform->addElement(new icms_form_elements_Hidden('comment_id', (int) $comment_id));
 $cform->addElement(new icms_form_elements_Hidden('item_id', (int) $item_id));
 $cform->addElement(new icms_form_elements_Hidden('order', (int) $order));
-$button_tray = new icms_form_elements_Tray('' ,'&nbsp;');
+$button_tray = new icms_form_elements_Tray('', '&nbsp;');
 $button_tray->addElement(new icms_form_elements_Button('', 'preview', _PREVIEW, 'submit'));
 $button_tray->addElement(new icms_form_elements_Button('', 'post', _CM_POSTCOMMENT, 'submit'));
 $cform->addElement($button_tray);

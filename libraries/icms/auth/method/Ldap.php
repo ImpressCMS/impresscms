@@ -47,17 +47,17 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	public $cp1252_map = array(
 		"\xc2\x80" => "\xe2\x82\xac", /* EURO SIGN */
 		"\xc2\x82" => "\xe2\x80\x9a", /* SINGLE LOW-9 QUOTATION MARK */
-		"\xc2\x83" => "\xc6\x92",     /* LATIN SMALL LETTER F WITH HOOK */
+		"\xc2\x83" => "\xc6\x92", /* LATIN SMALL LETTER F WITH HOOK */
 		"\xc2\x84" => "\xe2\x80\x9e", /* DOUBLE LOW-9 QUOTATION MARK */
 		"\xc2\x85" => "\xe2\x80\xa6", /* HORIZONTAL ELLIPSIS */
 		"\xc2\x86" => "\xe2\x80\xa0", /* DAGGER */
 		"\xc2\x87" => "\xe2\x80\xa1", /* DOUBLE DAGGER */
-		"\xc2\x88" => "\xcb\x86",     /* MODIFIER LETTER CIRCUMFLEX ACCENT */
+		"\xc2\x88" => "\xcb\x86", /* MODIFIER LETTER CIRCUMFLEX ACCENT */
 		"\xc2\x89" => "\xe2\x80\xb0", /* PER MILLE SIGN */
-		"\xc2\x8a" => "\xc5\xa0",     /* LATIN CAPITAL LETTER S WITH CARON */
+		"\xc2\x8a" => "\xc5\xa0", /* LATIN CAPITAL LETTER S WITH CARON */
 		"\xc2\x8b" => "\xe2\x80\xb9", /* SINGLE LEFT-POINTING ANGLE QUOTATION */
-		"\xc2\x8c" => "\xc5\x92",     /* LATIN CAPITAL LIGATURE OE */
-		"\xc2\x8e" => "\xc5\xbd",     /* LATIN CAPITAL LETTER Z WITH CARON */
+		"\xc2\x8c" => "\xc5\x92", /* LATIN CAPITAL LIGATURE OE */
+		"\xc2\x8e" => "\xc5\xbd", /* LATIN CAPITAL LETTER Z WITH CARON */
 		"\xc2\x91" => "\xe2\x80\x98", /* LEFT SINGLE QUOTATION MARK */
 		"\xc2\x92" => "\xe2\x80\x99", /* RIGHT SINGLE QUOTATION MARK */
 		"\xc2\x93" => "\xe2\x80\x9c", /* LEFT DOUBLE QUOTATION MARK */
@@ -65,12 +65,12 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 		"\xc2\x95" => "\xe2\x80\xa2", /* BULLET */
 		"\xc2\x96" => "\xe2\x80\x93", /* EN DASH */
 		"\xc2\x97" => "\xe2\x80\x94", /* EM DASH */
-		"\xc2\x98" => "\xcb\x9c",     /* SMALL TILDE */
+		"\xc2\x98" => "\xcb\x9c", /* SMALL TILDE */
 		"\xc2\x99" => "\xe2\x84\xa2", /* TRADE MARK SIGN */
-		"\xc2\x9a" => "\xc5\xa1",     /* LATIN SMALL LETTER S WITH CARON */
+		"\xc2\x9a" => "\xc5\xa1", /* LATIN SMALL LETTER S WITH CARON */
 		"\xc2\x9b" => "\xe2\x80\xba", /* SINGLE RIGHT-POINTING ANGLE QUOTATION*/
-		"\xc2\x9c" => "\xc5\x93",     /* LATIN SMALL LIGATURE OE */
-		"\xc2\x9e" => "\xc5\xbe",     /* LATIN SMALL LETTER Z WITH CARON */
+		"\xc2\x9c" => "\xc5\x93", /* LATIN SMALL LIGATURE OE */
+		"\xc2\x9e" => "\xc5\xbe", /* LATIN SMALL LETTER Z WITH CARON */
 		"\xc2\x9f" => "\xc5\xb8"      /* LATIN CAPITAL LETTER Y WITH DIAERESIS*/
 	);
 
@@ -92,11 +92,11 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	 * Authentication Service constructor
 	 */
 	public function __construct() {
-		$this->_dao = NULL;
+		$this->_dao = null;
 		//The config handler object allows us to look at the configuration options that are stored in the database
 		global $icmsConfigAuth;
 		$confcount = count($icmsConfigAuth);
-		foreach ($icmsConfigAuth as $key => $val) {$this->$key = $val;}
+		foreach ($icmsConfigAuth as $key => $val) {$this->$key = $val; }
 	}
 
 	public function cp1252_to_utf8($str) {
@@ -112,9 +112,9 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	 * @param string $pwd Password
 	 * @return bool
 	 */
-	public function authenticate($uname, $pwd = NULL) {
+	public function authenticate($uname, $pwd = null) {
 		global $icmsConfigAuth;
-		$authenticated = FALSE;
+		$authenticated = false;
 		if (in_array($uname, $icmsConfigAuth['ldap_users_bypass'])) {
 			/* use local authentication if user is bypassed for LDAP */
 			$auth = new icms_auth_method_Local();
@@ -136,14 +136,16 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 			// If the uid is not in the DN we proceed to a search
 			// The uid is not always in the dn
 			$userDN = $this->getUserDN($uname);
-			if (!$userDN) return FALSE;
+			if (!$userDN) {
+				return false;
+			}
 			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userDN, stripslashes($pwd));
 			if ($authenticated) {
 				icms::$session->securityLevel = 3;
 				icms::$session->check_ip_blocks = 2;
 				icms::$session->salt_key = getenv('DB_SALT');
-				icms::$session->enableRegenerateId = TRUE;
+				icms::$session->enableRegenerateId = true;
 				icms::$session->sessionOpen();
 				// We load the User database
 				return $this->getMember($userDN, $uname, $pwd);
@@ -164,12 +166,12 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	 * @return userDN or false
 	 */
 	public function getUserDN($uname) {
-		$userDN = FALSE;
+		$userDN = false;
 		if (!$this->ldap_loginname_asdn) {
 			// Bind with the manager
 			if (!ldap_bind($this->_ds, $this->ldap_manager_dn, stripslashes($this->ldap_manager_pass))) {
 				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $this->ldap_manager_dn . ')');
-				return FALSE;
+				return false;
 			}
 			$filter = $this->getFilter($uname);
 			$sr = ldap_search($this->_ds, $this->ldap_base_dn, $filter);
@@ -207,7 +209,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	 * @param string $pwd Password
 	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
 	 */
-	public function getMember($userdn, $uname, $pwd = NULL) {
+	public function getMember($userdn, $uname, $pwd = null) {
 		$provisHandler = icms_auth_method_ldap_Provisioning::getInstance($this);
 		$sr = ldap_read($this->_ds, $userdn, '(objectclass=*)');
 		$entries = ldap_get_entries($this->_ds, $sr);

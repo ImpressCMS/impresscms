@@ -54,7 +54,7 @@ $groups = icms::$user->getGroups();
 
 foreach ($dirlist as $file) {
 	if (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $file . '/icms_version.php')) {
-		icms_loadLanguageFile('system', $file, TRUE);
+		icms_loadLanguageFile('system', $file, true);
 		include ICMS_MODULES_PATH . '/system/admin/' . $file . '/icms_version.php';
 	}
 	if (!empty($modversion['category'])
@@ -121,16 +121,17 @@ $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1))
 $groups = $member_handler->getGroups();
 
 foreach ($groups as $group) {
-	if ($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), icms::$user->getGroups()))
-	$group_manager_checkbox->addOption($group->getVar('groupid'), $group->getVar('name'));
-}
+	if ($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), icms::$user->getGroups())) {
+		$group_manager_checkbox->addOption($group->getVar('groupid'), $group->getVar('name'));
+	}
+	}
 $icms_block_handler = icms::handler('icms_view_block');
 $posarr = $icms_block_handler->getBlockPositions(true);
 $block_checkbox = array();
 $i = 0;
 $groups = icms::$user->getGroups();
 foreach ($posarr as $k=>$v) {
-	$tit = (defined($posarr[$k]['title'])) ? constant($posarr[$k]['title']) : $posarr[$k]['title'];
+	$tit = (defined($posarr[$k]['title']))? constant($posarr[$k]['title']):$posarr[$k]['title'];
 	$block_checkbox[$i] = new icms_form_elements_Checkbox('<strong>' . $tit . '</strong><br />', "read_bids[]", $r_block_value);
 	$new_blocks_array = array();
 	$blocks_array = $icms_block_handler->getAllBlocks("list", $k);
@@ -157,7 +158,7 @@ $op_hidden = new icms_form_elements_Hidden("op", $op_value);
 $fct_hidden = new icms_form_elements_Hidden("fct", "groups");
 $submit_button = new icms_form_elements_Button("", "groupsubmit", $submit_value, "submit");
 $form = new icms_form_Theme($form_title, "groupform", "admin.php", "post", true);
-$form->addElement($name_text, TRUE);
+$form->addElement($name_text, true);
 $form->addElement($desc_text);
 $form->addElement($s_cat_checkbox);
 

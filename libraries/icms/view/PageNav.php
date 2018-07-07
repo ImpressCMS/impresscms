@@ -93,7 +93,7 @@ class icms_view_PageNav {
 
 		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php'))?$icmsConfigPersona['pagstyle']:'default';
 		$ret = '';
-		if (isset($xoTheme)){
+		if (isset($xoTheme)) {
 			$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/' . $icmsConfigPersona['pagstyle'] . '.css', array("media" => "all"));
 		} else {
 			echo'<link rel="stylesheet" type="text/css" href="' . ICMS_LIBRARIES_URL . '/paginationstyles/css/' . $icmsConfigPersona['pagstyle'] . '.css" />';
@@ -114,7 +114,7 @@ class icms_view_PageNav {
 			while ($counter <= $total_pages) {
 				if ($counter == $current_page) {
 					$ret .= '<span class="current"><strong>' . (($style == 'default')?'(':'') . icms_conv_nr2local($counter) . (($style == 'default')?')':'') . '</strong></span> ';
-				} elseif (($counter > $current_page-$offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
+				} elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
 					if ($counter == $total_pages && $current_page < $total_pages - $offset) {
 						$ret .= '... ';
 					}
@@ -194,7 +194,7 @@ class icms_view_PageNav {
 			while ($counter <= $total_pages) {
 				if ($counter == $current_page) {
 					$ret .= '<td class="pagact"><strong>' . $counter . '</strong></td>';
-				} elseif (($counter > $current_page-$offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
+				} elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
 					if ($counter == $total_pages && $current_page < $total_pages - $offset) {
 						$ret .= '<td class="paginact">...</td>';
 					}
