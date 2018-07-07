@@ -52,7 +52,7 @@ if (('system' != $icmsModule->getVar('dirname')
 }
 
 icms_loadLanguageFile('core', 'comment');
-$com_id = isset($_GET['com_id']) ? (int) $_GET['com_id'] : 0;
+$com_id = isset($_GET['com_id'])?(int) $_GET['com_id']:0;
 $com_mode = isset($_GET['com_mode'])
 	? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES, _CHARSET)
 	: '';
@@ -73,7 +73,7 @@ if (!isset($_GET['com_order'])) {
 	$com_order = (int) $_GET['com_order'];
 }
 $comment_handler = icms::handler('icms_data_comment');
-$comment =& $comment_handler->get($com_id);
+$comment = & $comment_handler->get($com_id);
 $dohtml = $comment->getVar('dohtml');
 $dosmiley = $comment->getVar('dosmiley');
 $dobr = $comment->getVar('dobr');

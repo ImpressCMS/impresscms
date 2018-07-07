@@ -39,19 +39,19 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 */
 	protected $rowCount = 0;
 
-	public function __construct($connection, $allowWebChanges = FALSE) {
+	public function __construct($connection, $allowWebChanges = false) {
 		parent::__construct($connection, $allowWebChanges);
 		$this->pdo = $connection;
-		$this->conn =& $this->pdo; // only for legacy support
+		$this->conn = & $this->pdo; // only for legacy support
 	}
 
-	public function connect($selectdb = TRUE) {
-		return TRUE;
+	public function connect($selectdb = true) {
+		return true;
 	}
 
 	public function close() {
-		$this->pdo = NULL;
-		return TRUE;
+		$this->pdo = null;
+		return true;
 	}
 
 	public function quoteString($string) {
@@ -83,32 +83,34 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	public function query($sql, $limit = 0, $start = 0) {
 		if (!$this->allowWebChanges && strtolower(substr(trim($sql), 0, 6)) != 'select') {
 			trigger_error(_CORE_DB_NOTALLOWEDINGET, E_USER_WARNING);
-			return FALSE;
+			return false;
 		}
 		return $this->queryF($sql, $limit, $start);
 	}
 
 	public function queryF($sql, $limit = 0, $start = 0) {
-		$result = FALSE;
+		$result = false;
 		/* Use Protector's db layer protection against possible SQLi
 		 * This needs to be done for legacy queries, since PDO only offers
 		 * SQLi protection when you use bindParam and bindValue, and then
 		 * use prepare() and execute() on the statement
 		 */
-		if (FALSE === icms_db_legacy_mysql_Utility::checkSQL($sql)) {
+		if (false === icms_db_legacy_mysql_Utility::checkSQL($sql)) {
 			return $result;
 		}
 
 		if (!empty($limit)) {
-			$start = !empty($start) ? (int) $start . ',' : '';
+			$start = !empty($start)?(int) $start . ',':'';
 			$sql .= ' LIMIT ' . $start . (int) $limit;
 		}
 		try {
 			$result = $this->pdo->query($sql);
-			if ($result) {   // added by claudia, ImpressCMS.org
+			if ($result) {
+// added by claudia, ImpressCMS.org
 			$this->rowCount = $result->rowCount();
-			} else { // added by claudia, ImpressCMS.org
-				$this->rowCount = FALSE;  // added by claudia, ImpressCMS.org
+			} else {
+// added by claudia, ImpressCMS.org
+				$this->rowCount = false; // added by claudia, ImpressCMS.org
 			} // added by claudia, ImpressCMS.org
 		} catch (Exception $e) {
 
@@ -129,7 +131,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		$column = $result->getColumnMeta($offset);
 		return $column['name'];
 		} else {
-			return FALSE;
+			return false;
 	}
 	}
 
@@ -138,7 +140,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		$column = $result->getColumnMeta($offset);
 		return $column['mysql:decl_type'];
 		} else {
-			return FALSE;
+			return false;
 	}
 	}
 
@@ -146,7 +148,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		if ($result) {
 		return $result->columnCount();
 		} else {
-			return FALSE;
+			return false;
 	}
 	}
 
@@ -154,7 +156,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		if ($result) {
 			return $result->fetch(PDO::FETCH_NUM);
 		} else {
-			return FALSE;
+			return false;
 	}
 	}
 
@@ -162,7 +164,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		if ($result) {
 			return $result->fetch(PDO::FETCH_ASSOC);
 		} else {
-			return FALSE;
+			return false;
 	}
 	}
 
@@ -170,7 +172,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		if ($result) {
 			return $result->fetch(PDO::FETCH_BOTH);
 		} else {
-			return FALSE;
+			return false;
 	}
 	}
 
@@ -178,16 +180,16 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		if ($result) {
 		return $result->rowCount();
 		} else {
-			return FALSE;
+			return false;
 	}
 	}
 
 	public function freeRecordSet($result) {
 		if ($result) {
 		$result->closeCursor();
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -235,7 +237,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 * 			An optional array of parameters to pass to the constructor for class_name objects.
 	 * @return object Inserida por Claudia // added by Claudia (ImpressCMS)
 	 */
-	function fetchObject($result, $class='stdClass', $params=array()) {
+	function fetchObject($result, $class = 'stdClass', $params = array()) {
 		/*
 		 if ($result) {
 		return $result->fetchObject($class, $params);
@@ -253,7 +255,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 * @return bool FALSE if failed reading SQL file or TRUE if the file has been read and queries executed
 	 */
 	public function queryFromFile($file) {
-		if (FALSE !== ($fp = fopen($file, 'r'))) {
+		if (false !== ($fp = fopen($file, 'r'))) {
 
 			$sql_queries = trim(fread($fp, filesize($file)));
 			icms_db_legacy_mysql_Utility::splitSqlFile($pieces, $sql_queries);
@@ -261,13 +263,13 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 				// [0] contains the prefixed query
 				// [4] contains unprefixed table name
 				$prefixed_query = icms_db_mysql_Utility::prefixQuery(trim($query), $this->prefix());
-				if ($prefixed_query != FALSE) {
+				if ($prefixed_query != false) {
 					$this->query($prefixed_query[0]);
 				}
 			}
-			return TRUE;
+			return true;
 		}
-		return FALSE;
+		return false;
 	}
 
 	function getConnection() {
@@ -280,8 +282,10 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 * @param obj $connection	A MySQL database connection link
 	 * @return mixed
 	 */
-	public function getServerVersion($connection = NULL) {
-		if (NULL === $connection) $connection = $this->pdo;
+	public function getServerVersion($connection = null) {
+		if (null === $connection) {
+			$connection = $this->pdo;
+		}
 		return $connection->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}
 }

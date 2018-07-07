@@ -71,13 +71,13 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 * @param	int	 $cols	   Number of columns
 	 * @param	string  $hiddentext Hidden Text
 	 */
-	public function __construct($caption, $name, $value, $rows=5, $cols=50, $hiddentext="xoopsHiddenText", $options = array()) {
+	public function __construct($caption, $name, $value, $rows = 5, $cols = 50, $hiddentext = "xoopsHiddenText", $options = array()) {
 		parent::__construct($caption, $name, $value, $rows, $cols);
 		$this->_hiddenText = $hiddentext;
 		global $icmsConfig, $icmsModule;
 
-		$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
-		$moduleid = (is_object($icmsModule) && $name != 'com_text') ? $icmsModule->getVar('mid') : 1;
+		$groups   = (is_object(icms::$user))? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
+		$moduleid = (is_object($icmsModule) && $name != 'com_text')?$icmsModule->getVar('mid'):1;
 
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $icmsConfig['editor_default']) {
 			$editor_default = $options['editor'];
@@ -86,7 +86,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		}
 
 		$gperm_handler = icms::handler('icms_member_groupperm');
-		if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, FALSE)) {
+		if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
 			include ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php";
 			$this->htmlEditor = array($editorversion['class'], ICMS_EDITOR_PATH . "/" . $editorversion['dirname'] . "/" . $editorversion['file']);
 		}
@@ -100,7 +100,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 			if (class_exists($class)) {
 				$this->htmlEditor = new $class($options);
 			} else {
-				$this->htmlEditor = FALSE;
+				$this->htmlEditor = false;
 			}
 		}
 	}
@@ -112,10 +112,10 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 */
 	public function render() {
 		global $icmsConfigPlugins, $icmsConfigMultilang;
-		$editor = FALSE;
+		$editor = false;
 		if ($this->htmlEditor && is_object($this->htmlEditor)) {
 			if (!isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
-				$editor = TRUE;
+				$editor = true;
 			}
 		}
 		if ($editor) {
@@ -134,7 +134,9 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 			$func = "render_{$key}";
 			if (function_exists($func)) {
 				@list($encode, $js) = $func($ele_name);
-				if (empty($encode)) continue;
+				if (empty($encode)) {
+					continue;
+				}
 				$ret .= $encode;
 			}
 		}
@@ -159,7 +161,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		$ret .= "<select id='" . $ele_name . "Size' onchange='setVisible(\"" . $this->_hiddenText . "\");setElementSize(\"" . $this->_hiddenText . "\",this.options[this.selectedIndex].value);'>\n";
 		$ret .= "<option value='SIZE'>" . _SIZE . "</option>\n";
 		foreach ($sizearray as $size) {
-			$ret .=  "<option value='$size'>$size</option>\n";
+			$ret .= "<option value='$size'>$size</option>\n";
 		}
 		$ret .= "</select>\n";
 		$fontarray = array("Arial", "Courier", "Georgia", "Helvetica", "Impact", "Tahoma", "Verdana");
@@ -208,7 +210,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 			. "Addtext' size='20' />&nbsp;<input type='button' onclick='xoopsCodeText(\"" . $ele_name . "\", \""
 			. $this->_hiddenText . "\", \"" . htmlspecialchars(_ENTERTEXTBOX, ENT_QUOTES, _CHARSET)
 			. "\")' class='formButton' value='" . _ADD . "' /><br /><br />"
-			. "<textarea id='" . $ele_name  . ""
+			. "<textarea id='" . $ele_name . ""
 					. "' name='" . $name
 					. "' onselect=\"xoopsSavePosition('" . $ele_name . "');\""
 					. "' onclick=\"xoopsSavePosition('" . $ele_name . "');\""

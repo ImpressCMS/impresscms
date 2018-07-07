@@ -46,9 +46,9 @@
  */
 class icms_member_group_membership_Handler extends icms_ipf_Handler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'member_group_membership', 'linkid', 'groupid', 'uid', 'icms', 'groups_users_link', 'linkid');
-        }
+		public function __construct(&$db) {
+			parent::__construct($db, 'member_group_membership', 'linkid', 'groupid', 'uid', 'icms', 'groups_users_link', 'linkid');
+		}
 
 	/**
 	 * retrieve groups for a user
@@ -82,7 +82,7 @@ class icms_member_group_membership_Handler extends icms_ipf_Handler {
 	 * @param int $start offset of first entry to return
 	 * @return array array of users belonging to the group
 	 */
-	public function getUsersByGroup($groupid, $limit=0, $start=0) {
+	public function getUsersByGroup($groupid, $limit = 0, $start = 0) {
 		$ret = array();
 		$sql = "SELECT uid FROM " . icms::$xoopsDB->prefix('groups_users_link')
 			. " WHERE groupid='" . (int) $groupid . "'";

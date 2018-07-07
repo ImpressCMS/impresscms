@@ -10,7 +10,7 @@
  */
 
 /* This may be loaded by other modules - and not just through the cpanel */
-icms_loadLanguageFile('system', 'mimetype', TRUE);
+icms_loadLanguageFile('system', 'mimetype', true);
 
 /**
  * Handler for the mimetype object class
@@ -19,7 +19,7 @@ icms_loadLanguageFile('system', 'mimetype', TRUE);
  */
 class mod_system_MimetypeHandler extends icms_ipf_Handler {
 
-	public $objects = FALSE;
+	public $objects = false;
 
 	/**
 	 * Creates an instance of the mimetype handler
@@ -45,20 +45,20 @@ class mod_system_MimetypeHandler extends icms_ipf_Handler {
 	 * @return	array
 	 */
 	public function AllowedMimeTypes() {
-		$GrantedItems =  $this->UserCanUpload();
+		$GrantedItems = $this->UserCanUpload();
 		$array = array();
 		$grantedItemValues = array_values($GrantedItems);
 		if (!empty($grantedItemValues)) {
 			$sql = "SELECT types " . "FROM " . $this->table . " WHERE (mimetypeid='";
-			if (count($grantedItemValues)>1) {
+			if (count($grantedItemValues) > 1) {
 				foreach ($grantedItemValues as $grantedItemValue) {
-					$sql .= ($grantedItemValue != $grantedItemValues[0]) ? $grantedItemValue . "' OR mimetypeid='" : "";
+					$sql .= ($grantedItemValue != $grantedItemValues[0])?$grantedItemValue . "' OR mimetypeid='":"";
 				}
 			}
 			$sql .= $grantedItemValues[0] . "')";
-			$Qvalues = $this->query($sql, FALSE);
+			$Qvalues = $this->query($sql, false);
 			foreach ($Qvalues as $Qvalue) {
-				$values[]= explode(' ', $Qvalue['types']);
+				$values[] = explode(' ', $Qvalue['types']);
 			}
 			foreach ($values as $item=>$value) {
 				$array = array_merge($array, $value);
@@ -75,7 +75,7 @@ class mod_system_MimetypeHandler extends icms_ipf_Handler {
 	 * @return	boolean
 	 */
 	public function AllowedModules($mimetype, $module) {
-		$mimetypeid_allowed = $dirname_allowed = FALSE;
+		$mimetypeid_allowed = $dirname_allowed = false;
 		$GrantedItems = $this->UserCanUpload();
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('types', '%' . $mimetype . '%', 'LIKE'));
 
@@ -83,36 +83,36 @@ class mod_system_MimetypeHandler extends icms_ipf_Handler {
 		$rows = $this->query($sql, $criteria);
 		if (count($rows) > 1) {
 			for ($i = 0; $i < count($rows); $i++) {
-				$mimetypeids[]= $rows[$i]['mimetypeid'];
-				$dirname[]= explode('|', $rows[$i]['dirname']);
-				$types[]= $rows[$i]['types'];
+				$mimetypeids[] = $rows[$i]['mimetypeid'];
+				$dirname[] = explode('|', $rows[$i]['dirname']);
+				$types[] = $rows[$i]['types'];
 			}
 
 			foreach ($mimetypeids as $mimetypeid) {
 				if (in_array($mimetypeid, $GrantedItems)) {
-					$mimetypeid_allowed = TRUE;
+					$mimetypeid_allowed = true;
 				}
 			}
 			foreach ($dirname as $dir) {
 				if (!empty($module) && in_array($module, $dir)) {
-					$dirname_allowed = TRUE;
+					$dirname_allowed = true;
 				}
 			}
 		} elseif (count($rows) == 1) {
-			$mimetypeid= $rows[0]['mimetypeid'];
-			$dirname= explode('|', $rows[0]['dirname']);
-			$types= $rows[0]['types'];
+			$mimetypeid = $rows[0]['mimetypeid'];
+			$dirname = explode('|', $rows[0]['dirname']);
+			$types = $rows[0]['types'];
 			if (in_array($mimetypeid, $GrantedItems)) {
-				$mimetypeid_allowed = TRUE;
+				$mimetypeid_allowed = true;
 			}
 			if (!empty($module) && in_array($module, $dirname)) {
-				$dirname_allowed = TRUE;
+				$dirname_allowed = true;
 			}
 		}
 		if ($mimetypeid_allowed && $dirname_allowed) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 }

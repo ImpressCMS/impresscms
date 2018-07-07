@@ -20,7 +20,7 @@ class icms_ipf_form_elements_File extends icms_form_elements_File {
 	public function __construct($object, $key) {
 		$this->_object = $object;
 		$this->_key = $key;
-		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, isset($object->getVarInfo($key)['form_maxfilesize']) ? $object->getVarInfo($key)['form_maxfilesize'] : 0);
+		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, isset($object->getVarInfo($key)['form_maxfilesize'])?$object->getVarInfo($key)['form_maxfilesize']:0);
 		$this->setExtra(" size=30");
 	}
 
@@ -32,9 +32,9 @@ class icms_ipf_form_elements_File extends icms_form_elements_File {
 	public function render() {
 		$ret = '';
 		if ($this->_object->getVar($this->_key) != '') {
-			$ret .=	"<div>" . _CO_ICMS_CURRENT_FILE
+			$ret .= "<div>" . _CO_ICMS_CURRENT_FILE
 				. "<a href='" . $this->_object->getUploadDir() . $this->_object->getVar($this->_key)
-				. "' target='_blank' >". $this->_object->getVar($this->_key) . "</a></div>" ;
+				. "' target='_blank' >" . $this->_object->getVar($this->_key) . "</a></div>";
 		}
 
 		$ret .= "<div><input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />

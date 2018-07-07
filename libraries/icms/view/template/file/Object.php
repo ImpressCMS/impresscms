@@ -72,53 +72,53 @@ class icms_view_template_file_Object extends icms_ipf_Object {
 		$this->initVar('tpl_type', self::DTYPE_STRING, null, false, 20);
 		//$this->initVar('tpl_source', self::DTYPE_DEP_SOURCE, null, false);
 
-                parent::__construct($handler, $data);
+				parent::__construct($handler, $data);
 	}
 
 	/**
 	 * Gets Template Source
 	 */
-	public function getSource()	{
+	public function getSource() {
 		$sql = "SELECT tpl_source FROM " . $this->handler->db->prefix('tplsource')
 				. " WHERE tpl_id='" . $this->getVar('tpl_id') . "'";
 		if (!$result = $this->handler->db->query($sql)) {
-                    return false;
+					return false;
 		}
-                $myrow = $this->handler->db->fetchArray($result);
-                return $myrow['tpl_source'];
+				$myrow = $this->handler->db->fetchArray($result);
+				return $myrow['tpl_source'];
 	}
 
-        public function getVar($name, $format = 's') {
-            if ($name == 'tpl_source') {
-                if ($this->tpl_source === false) {
-                    $this->tpl_source = $this->getSource();
-                }
-                return $this->tpl_source;
-            } else {
-                return parent::getVar($name, $format);
-            }
-        }
+		public function getVar($name, $format = 's') {
+			if ($name == 'tpl_source') {
+				if ($this->tpl_source === false) {
+					$this->tpl_source = $this->getSource();
+				}
+				return $this->tpl_source;
+			} else {
+				return parent::getVar($name, $format);
+			}
+		}
 
-        public function assignVar($name, &$value) {
-            if ($name == 'tpl_source') {
-                $this->tpl_source = $value;
-            } else {
-                parent::assignVar($name, $value);
-            }
-        }
+		public function assignVar($name, &$value) {
+			if ($name == 'tpl_source') {
+				$this->tpl_source = $value;
+			} else {
+				parent::assignVar($name, $value);
+			}
+		}
 
-        public function setVar($name, $value, $options = null) {
-            if ($name == 'tpl_source') {
-                $this->tpl_source = $value;
-            } else {
-                parent::setVar($name, $value, $options);
-            }
-        }
+		public function setVar($name, $value, $options = null) {
+			if ($name == 'tpl_source') {
+				$this->tpl_source = $value;
+			} else {
+				parent::setVar($name, $value, $options);
+			}
+		}
 
 	/**
 	 * Gets Last Modified timestamp
 	 */
-	public function getLastModified()	{
+	public function getLastModified() {
 		return $this->getVar('tpl_lastmodified');
 	}
 }

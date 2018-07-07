@@ -1,20 +1,17 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 2.0.0 Alpha 7 ===
+Release date: 26 April 2018
+DB Version: 44
+Build Version: 75
+
+For a detailed list of changes in this version, please check https://github.com/ImpressCMS/impresscms/milestone/6?closed=1
+
 === ImpressCMS 2.0.0 Alpha 6 ===
 Release date: 
 DB Version: 44
-Build Version: 
+Build Version: 74
 
-Changes:
-
-Improvements:
-* #884, #653 - further PHP 5.4 Strict compliance (from 1.3.9)
-* #751, #929 - switch to Google Analytics universal (from 1.3.9)
-* #868 - removed duplicate value URI.AllowedSchemes in HTMLPurifier configuration (from 1.3.9)
-
-Fixes:
-
-Security Fixes:
-* #927 - SSRF vulnerability in image editor resolved (from 1.3.10)
+For a detailed list of changes in this version, please check https://github.com/ImpressCMS/impresscms/milestone/5?closed=1
 
 === ImpressCMS 2.0.0 Alpha 5 ===
 Release date: 7 April 2015

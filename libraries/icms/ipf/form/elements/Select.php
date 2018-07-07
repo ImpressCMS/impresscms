@@ -18,13 +18,13 @@ class icms_ipf_form_elements_Select extends icms_form_elements_Select {
 	 */
 	public function __construct($object, $key) {
 		$var = $object->getVarInfo($key);
-		$size = isset($var['size']) ? $var['size'] : ($this->_multiple ? 5 : 1);
+		$size = isset($var['size'])?$var['size']:($this->_multiple?5:1);
 
 		// Adding the options inside this SelectBox
 		// If the custom method is not from a module, than it's from the core
 		$control = $object->getControl($key);
 
-		$value = isset($control['value']) ? $control['value'] : $object->getVar($key, 'e');
+		$value = isset($control['value'])?$control['value']:$object->getVar($key, 'e');
 
 		parent::__construct($var['form_caption'], $key, $value, $size, $this->_multiple);
 
@@ -45,19 +45,19 @@ class icms_ipf_form_elements_Select extends icms_form_elements_Select {
 					if (!isset($control['module'])) {
 						// Creating the specified core object handler
 						$control_handler = icms::handler($control['itemHandler']);
-                    } elseif ($control['module'] == 'icms') {
-                    	$control_handler = icms::handler($control['module'] . '_' . $control['itemHandler']);
+					} elseif ($control['module'] == 'icms') {
+						$control_handler = icms::handler($control['module'] . '_' . $control['itemHandler']);
 					} else {
-						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
+						$control_handler = & icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}
 				} else {
-					$control_handler =& $object->handler;
+					$control_handler = & $object->handler;
 				}
 
 				// Checking if the specified method exists
 				if (method_exists($control_handler, $control['method'])) {
 					$option_array = call_user_func_array(array($control_handler, $control['method']),
-						isset($control['params']) ? $control['params'] : array());
+						isset($control['params'])?$control['params']:array());
 					if (is_array($option_array) && count($option_array) > 0) {
 						// Adding the options array to the select element
 						$this->addOptionArray($option_array);

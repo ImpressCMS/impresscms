@@ -130,13 +130,10 @@ class icms_core_Textsanitizer {
 	 * @return  string
 	 */
 	public function displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
-		// Before this can be deprecated, the events for displayTarea need to be added, first
-		//icms_core_Debug::setDeprecated('icms_core_DataFilter::checkVar - type = text or html, $options1 = input or output', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-
 		/* trigger all the events tied to the beforeDisplayTarea event */
 		icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
-		if ($html = 0){
+		if ($html = 0) {
 			$text = icms_core_DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
 		} else {
 			$text = icms_core_DataFilter::filterHTMLdisplay($text, $xcode, $br);

@@ -9,13 +9,13 @@
  * @author	MekDrop <mekdrop@gmail.com>
  */
 abstract class icms_sys_autotasks_System
-implements icms_sys_autotasks_ISystem  {
+implements icms_sys_autotasks_ISystem {
 
 	/**
 	 *
 	 */
 	public function getName() {
-		return strtolower(substr(get_class($this),strlen('IcmsAutoTasks')));
+		return strtolower(substr(get_class($this), strlen('IcmsAutoTasks')));
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 // $Id: version.php 12064 2012-10-10 14:37:53Z skenow $
-define('_MD_AM_VRSN','Version Checker');
+define('_MD_AM_VRSN', 'Version Checker');
 define('_MD_AM_VRSN_DSC', 'Use this tool to check your system for updates.');
 
 //%%%%%%	Admin Module Name  Version 	%%%%%

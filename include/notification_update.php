@@ -60,7 +60,7 @@ if (!is_object($icmsModule)) {
 	exit();
 }
 
-include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
+include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 icms_loadLanguageFile('core', 'notification');
 
 if (!isset($_POST['not_submit'])) {
@@ -80,7 +80,7 @@ if (!icms::$security->check()) {
 $update_list = $_POST['not_list'];
 
 $module_id = $icmsModule->getVar('mid');
-$user_id = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
+$user_id = is_object(icms::$user)? icms::$user->getVar('uid'):0;
 
 // For each event, update the notification depending on the status.
 // If status=1, subscribe to the event; otherwise, unsubscribe.
@@ -92,8 +92,8 @@ $notification_handler = icms::handler('icms_data_notification');
 
 foreach ($update_list as $update_item) {
 
-	list($category, $item_id, $event) = explode( ',', $update_item['params'] );
-	$status = !empty($update_item['status']) ? 1 : 0;
+	list($category, $item_id, $event) = explode(',', $update_item['params']);
+	$status = !empty($update_item['status'])?1:0;
 
 	if (!$status) {
 		$notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
@@ -113,8 +113,8 @@ foreach ($update_list as $update_item) {
 
 $redirect_args = array();
 foreach ($update_list as $update_item) {
-	list($category,$item_id,$event) = explode( ',',$update_item['params'] );
-	$category_info =& icms_data_notification_Handler::categoryInfo($category);
+	list($category, $item_id, $event) = explode(',', $update_item['params']);
+	$category_info = & icms_data_notification_Handler::categoryInfo($category);
 	if (!empty($category_info['item_name'])) {
 		$redirect_args[$category_info['item_name']] = $item_id;
 	}
@@ -133,6 +133,6 @@ foreach (array_keys($redirect_args) as $arg) {
 	}
 }
 
-redirect_header ($_POST['not_redirect'].$argstring, 3, _NOT_UPDATEOK);
+redirect_header($_POST['not_redirect'] . $argstring, 3, _NOT_UPDATEOK);
 exit();
 

@@ -46,7 +46,7 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 	/**
 	 * Creates a new utility object
 	 */
-	public function __construct(){
+	public function __construct() {
 	}
 
 	/**
@@ -65,7 +65,7 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 		$sql_len           = strlen($sql);
 		$char              = '';
 		$string_start      = '';
-		$in_string         = FALSE;
+		$in_string         = false;
 
 		for ($i = 0; $i < $sql_len; ++$i) {
 			$char = $sql[$i];
@@ -79,21 +79,21 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 					// substring to the returned array
 					if (!$i) {
 						$ret[] = $sql;
-						return TRUE;
-					} elseif ($string_start == '`' || $sql[$i-1] != '\\') {
+						return true;
+					} elseif ($string_start == '`' || $sql[$i - 1] != '\\') {
 					// Backquotes or no backslashes before
 					// quotes: it's indeed the end of the
 					// string -> exit the loop
 						$string_start      = '';
-						$in_string         = FALSE;
+						$in_string         = false;
 						break;
 					} else {
 					// one or more Backslashes before the presumed
 					// end of string...
 						// first checks for escaped backslashes
 						$j                     = 2;
-						$escaped_backslash     = FALSE;
-						while ($i-$j > 0 && $sql[$i-$j] == '\\') {
+						$escaped_backslash     = false;
+						while ($i - $j > 0 && $sql[$i - $j] == '\\') {
 							$escaped_backslash = !$escaped_backslash;
 							$j++;
 						}
@@ -101,7 +101,7 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 						// end of the string -> exit the loop
 						if ($escaped_backslash) {
 							$string_start  = '';
-							$in_string     = FALSE;
+							$in_string     = false;
 							break;
 						} else {
 							$i++;
@@ -115,33 +115,33 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 				$sql      = ltrim(substr($sql, min($i + 1, $sql_len)));
 				$sql_len  = strlen($sql);
 				if ($sql_len) {
-					$i      = -1;
+					$i = -1;
 				} else {
 					// The submited statement(s) end(s) here
-					return TRUE;
+					return true;
 				}
 			} elseif (($char == '"') || ($char == '\'') || ($char == '`')) {
 			// ... then check for start of a string,...
-				$in_string    = TRUE;
+				$in_string    = true;
 				$string_start = $char;
-			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i-2] . $sql[$i-1] == '--')) {
+			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i - 2] . $sql[$i - 1] == '--')) {
 			// for start of a comment (and remove this comment if found)...
 				// starting position of the comment depends on the comment type
-				$start_of_comment = (($sql[$i] == '#') ? $i : $i-2);
+				$start_of_comment = (($sql[$i] == '#')?$i:$i - 2);
 				// if no "\n" exits in the remaining string, checks for "\r"
 				// (Mac eol style)
-				$end_of_comment   = (strpos(' ' . $sql, "\012", $i+2))
-					? strpos(' ' . $sql, "\012", $i+2)
-					: strpos(' ' . $sql, "\015", $i+2);
+				$end_of_comment   = (strpos(' ' . $sql, "\012", $i + 2))
+					? strpos(' ' . $sql, "\012", $i + 2)
+					: strpos(' ' . $sql, "\015", $i + 2);
 				if (!$end_of_comment) {
 					// no eol found after '#', add the parsed part to the returned
 					// array and exit
 					// RMV fix for comments at end of file
-					$last = trim(substr($sql, 0, $i-1));
+					$last = trim(substr($sql, 0, $i - 1));
 					if (!empty($last)) {
 						$ret[] = $last;
 					}
-					return TRUE;
+					return true;
 				} else {
 					$sql     = substr($sql, 0, $start_of_comment) . ltrim(substr($sql, $end_of_comment));
 					$sql_len = strlen($sql);
@@ -154,7 +154,7 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 		if (!empty($sql) && trim($sql) != '') {
 			$ret[] = $sql;
 		}
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -173,7 +173,7 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 		$sql_len           = strlen($sql);
 		$char              = '';
 		$string_start      = '';
-		$in_string         = FALSE;
+		$in_string         = false;
 
 		for ($i = 0; $i < $sql_len; ++$i) {
 			$char = $sql[$i];
@@ -182,26 +182,26 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 			// strings except for backquotes that can't be escaped
 			if ($in_string) {
 				for (;;) {
-					$i         = strpos($sql, $string_start, $i);
+					$i = strpos($sql, $string_start, $i);
 					// No end of string found -> add the current
 					// substring to the returned array
 					if (!$i) {
 						$ret[] = $sql;
-						return TRUE;
-					} elseif ($string_start == '`' || $sql[$i-1] != '\\') {
+						return true;
+					} elseif ($string_start == '`' || $sql[$i - 1] != '\\') {
 					// Backquotes or no backslashes before
 					// quotes: it's indeed the end of the
 					// string -> exit the loop
 						$string_start      = '';
-						$in_string         = FALSE;
+						$in_string         = false;
 						break;
 					} else {
 					// one or more Backslashes before the presumed
 					// end of string...
 						// first checks for escaped backslashes
 						$j                     = 2;
-						$escaped_backslash     = FALSE;
-						while ($i-$j > 0 && $sql[$i-$j] == '\\') {
+						$escaped_backslash     = false;
+						while ($i - $j > 0 && $sql[$i - $j] == '\\') {
 							$escaped_backslash = !$escaped_backslash;
 							$j++;
 						}
@@ -209,7 +209,7 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 						// end of the string -> exit the loop
 						if ($escaped_backslash) {
 							$string_start  = '';
-							$in_string     = FALSE;
+							$in_string     = false;
 							break;
 						} else {
 						// ... else loop
@@ -224,33 +224,33 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 				$sql      = ltrim(substr($sql, min($i + 1, $sql_len)));
 				$sql_len  = strlen($sql);
 				if ($sql_len) {
-					$i      = -1;
+					$i = -1;
 				} else {
 					// The submited statement(s) end(s) here
-					return TRUE;
+					return true;
 				}
 			} elseif (($char == '"') || ($char == '\'') || ($char == '`')) {
 			// ... then check for start of a string,...
-				$in_string    = TRUE;
+				$in_string    = true;
 				$string_start = $char;
-			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i-2] . $sql[$i-1] == '--')) {
+			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i - 2] . $sql[$i - 1] == '--')) {
 			// for start of a comment (and remove this comment if found)...
 				// starting position of the comment depends on the comment type
-				$start_of_comment = (($sql[$i] == '#') ? $i : $i-2);
+				$start_of_comment = (($sql[$i] == '#')?$i:$i - 2);
 				// if no "\n" exits in the remaining string, checks for "\r"
 				// (Mac eol style)
-				$end_of_comment   = (strpos(' ' . $sql, "\012", $i+2))
-					? strpos(' ' . $sql, "\012", $i+2)
-					: strpos(' ' . $sql, "\015", $i+2);
+				$end_of_comment   = (strpos(' ' . $sql, "\012", $i + 2))
+					? strpos(' ' . $sql, "\012", $i + 2)
+					: strpos(' ' . $sql, "\015", $i + 2);
 				if (!$end_of_comment) {
 					// no eol found after '#', add the parsed part to the returned
 					// array and exit
 					// RMV fix for comments at end of file
-					$last = trim(substr($sql, 0, $i-1));
+					$last = trim(substr($sql, 0, $i - 1));
 					if (!empty($last)) {
 						$ret[] = $last;
 					}
-					return TRUE;
+					return true;
 				} else {
 					$sql     = substr($sql, 0, $start_of_comment) . ltrim(substr($sql, $end_of_comment));
 					$sql_len = strlen($sql);
@@ -263,7 +263,7 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 		if (!empty($sql) && trim($sql) != '') {
 			$ret[] = $sql;
 		}
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -281,7 +281,7 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 			$matches[0] = preg_replace($pattern, $replace, $query);
 			return $matches;
 		}
-		return FALSE;
+		return false;
 	}
 
 	/**
@@ -298,15 +298,15 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 		if ($class && class_exists($class)) {
 			$protectorDB = new $class();
 
-			$sql4check = substr($sql , 7);
+			$sql4check = substr($sql, 7);
 			foreach ($protectorDB->doubtful_needles as $needle) {
-				if(stristr($sql4check , $needle)) {
-					$protectorDB->checkSql($sql) ;
-					return FALSE;
+				if (stristr($sql4check, $needle)) {
+					$protectorDB->checkSql($sql);
+					return false;
 				}
 			}
 }
 
-		return TRUE;
+		return true;
 	}
 }

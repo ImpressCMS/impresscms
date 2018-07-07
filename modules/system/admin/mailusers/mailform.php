@@ -40,7 +40,7 @@
  * @subpackage	Users
  */
 
-$form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', TRUE);
+$form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', true);
 /*
  * GET variables
  *
@@ -67,7 +67,7 @@ if (!empty($_POST['memberslist_id'])) {
 
 if (!empty($display_criteria)) {
 	$selected_groups = array();
-	$group_select = new icms_form_elements_select_Group(_AM_GROUPIS . "<br />", "mail_to_group", FALSE, $selected_groups, 5, TRUE);
+	$group_select = new icms_form_elements_select_Group(_AM_GROUPIS . "<br />", "mail_to_group", false, $selected_groups, 5, true);
 	$lastlog_min = new icms_form_elements_Text(_AM_LASTLOGMIN . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_lastlog_min", 20, 10);
 	$lastlog_max = new icms_form_elements_Text(_AM_LASTLOGMAX . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_lastlog_max", 20, 10);
 	$regd_min = new icms_form_elements_Text(_AM_REGDMIN . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_regd_min", 20, 10);
@@ -93,7 +93,7 @@ if (!empty($display_criteria)) {
 }
 
 $fname_text = new icms_form_elements_Text(_AM_MAILFNAME, "mail_fromname", 30, 255, htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET));
-$fromemail = !empty($icmsConfig['adminmail']) ? $icmsConfig['adminmail'] : icms::$user->getVar("email", "E");
+$fromemail = !empty($icmsConfig['adminmail'])?$icmsConfig['adminmail']:icms::$user->getVar("email", "E");
 $femail_text = new icms_form_elements_Text(_AM_MAILFMAIL, "mail_fromemail", 30, 255, $fromemail);
 //$subject_caption = _AM_MAILSUBJECT . "<br /><br /><span style='font-size:x-small;font-weight:bold;'>" . _AM_MAILTAGS . "</span><br /><span style='font-size:x-small;font-weight:normal;'>" . _AM_MAILTAGS1 . "<br />" . _AM_MAILTAGS2 . "<br />" . _AM_MAILTAGS3 . "</span>";
 $subject_caption = _AM_MAILSUBJECT . "<br /><br /><span style='font-size:x-small;font-weight:bold;'>" . _AM_MAILTAGS . "</span><br /><span style='font-size:x-small;font-weight:normal;'>" . _AM_MAILTAGS2 . "</span>";

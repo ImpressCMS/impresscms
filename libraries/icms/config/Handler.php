@@ -47,75 +47,75 @@
 class icms_config_Handler {
 	static protected $instance;
 
-        /**
-        * Main (default) category
-        */
-        const CATEGORY_MAIN = 1;
+		/**
+		 * Main (default) category
+		 */
+		const CATEGORY_MAIN = 1;
 
-        /**
-        * User category
-        */
-        const CATEGORY_USER = 2;
+		/**
+		 * User category
+		 */
+		const CATEGORY_USER = 2;
 
-        /**
-        * Meta & footer category
-        */
-        const CATEGORY_METAFOOTER = 3;
+		/**
+		 * Meta & footer category
+		 */
+		const CATEGORY_METAFOOTER = 3;
 
-        /**
-        * Censorship category
-        */
-        const CATEGORY_CENSOR = 4;
+		/**
+		 * Censorship category
+		 */
+		const CATEGORY_CENSOR = 4;
 
-        /**
-        * Search catageory
-        */
-        const CATEGORY_SEARCH = 5;
+		/**
+		 * Search catageory
+		 */
+		const CATEGORY_SEARCH = 5;
 
-        /**
-        * Mailer category
-        */
-        const CATEGORY_MAILER = 6;
+		/**
+		 * Mailer category
+		 */
+		const CATEGORY_MAILER = 6;
 
-        /**
-        * Authentification category
-        */
-        const CATEGORY_AUTH = 7;
+		/**
+		 * Authentification category
+		 */
+		const CATEGORY_AUTH = 7;
 
-        /**
-        * Multilanguage configuration
-        */
-        const CATEGORY_MULILANGUAGE = 8;
+		/**
+		 * Multilanguage configuration
+		 */
+		const CATEGORY_MULILANGUAGE = 8;
 
-        /**
-        * Content category
-        */
-        const CATEGORY_CONTENT = 9;
+		/**
+		 * Content category
+		 */
+		const CATEGORY_CONTENT = 9;
 
-        /**
-        * Persona category
-        */
-        const CATEGORY_PERSONA = 10;
+		/**
+		 * Persona category
+		 */
+		const CATEGORY_PERSONA = 10;
 
-        /**
-        * Captcha category
-        */
-        const CATEGORY_CAPTCHA = 11;
+		/**
+		 * Captcha category
+		 */
+		const CATEGORY_CAPTCHA = 11;
 
-        /**
-        * Plugins category
-        */
-        const CATEGORY_PLUGINS = 12;
+		/**
+		 * Plugins category
+		 */
+		const CATEGORY_PLUGINS = 12;
 
-        /**
-        * Autotasks category
-        */
-        const CATEGORY_AUTOTASKS = 13;
+		/**
+		 * Autotasks category
+		 */
+		const CATEGORY_AUTOTASKS = 13;
 
-        /**
-        * Purifier category
-        */
-        const CATEGORY_PURIFIER = 14;
+		/**
+		 * Purifier category
+		 */
+		const CATEGORY_PURIFIER = 14;
 
 	/**
 	 * holds reference to config item handler(DAO) class
@@ -159,7 +159,7 @@ class icms_config_Handler {
 	 * @return	object  reference to the new {@link icms_config_Item_Object}
 	 */
 	public function &createConfig() {
-		$instance =& $this->_cHandler->create();
+		$instance = & $this->_cHandler->create();
 		return $instance;
 	}
 
@@ -171,7 +171,7 @@ class icms_config_Handler {
 	 * @return	object  reference to the {@link icms_config_Item_Object}
 	 */
 	public function &getConfig($id, $withoptions = false) {
-		$config =& $this->_cHandler->get($id);
+		$config = & $this->_cHandler->get($id);
 		if ($withoptions == true) {
 			$config->setConfOptions($this->getConfigOptions(new icms_db_criteria_Item('conf_id', $id)));
 		}
@@ -188,13 +188,13 @@ class icms_config_Handler {
 		if (!$this->_cHandler->insert($config)) {
 			return false;
 		}
-		$options =& $config->getConfOptions();
+		$options = & $config->getConfOptions();
 		$count = count($options);
 		$conf_id = $config->getVar('conf_id');
-		for ( $i = 0; $i < $count; $i++) {
+		for ($i = 0; $i < $count; $i++) {
 			$options[$i]->setVar('conf_id', $conf_id);
 			if (!$this->_oHandler->insert($options[$i])) {
-				foreach ( $options[$i]->getErrors() as $msg) {
+				foreach ($options[$i]->getErrors() as $msg) {
 					$config->setErrors($msg);
 				}
 			}
@@ -216,14 +216,14 @@ class icms_config_Handler {
 		if (!$this->_cHandler->delete($config)) {
 			return false;
 		}
-		$options =& $config->getConfOptions();
+		$options = & $config->getConfOptions();
 		$count = count($options);
 		if ($count == 0) {
 			$options = $this->getConfigOptions(new icms_db_criteria_Item('conf_id', $config->getVar('conf_id')));
 			$count = count($options);
 		}
 		if (is_array($options) && $count > 0) {
-			for ( $i = 0; $i < $count; $i++) {
+			for ($i = 0; $i < $count; $i++) {
 				$this->_oHandler->delete($options[$i]);
 			}
 		}
@@ -270,16 +270,18 @@ class icms_config_Handler {
 			$criteria->add(new icms_db_criteria_Item('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
-				foreach ( array_keys($configs) as $i) {
+				foreach (array_keys($configs) as $i) {
 					$ret[$configs[$i]->getVar('conf_catid')][$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
 				}
-				foreach ( $ret as $key => $value) {
+				foreach ($ret as $key => $value) {
 					$this->_cachedConfigs[$module][$key] = $value;
 				}
 				return $ret;
 			}
 		} else {
-			if (!empty($this->_cachedConfigs[$module][$category]) ) return $this->_cachedConfigs[$module][$category];
+			if (!empty($this->_cachedConfigs[$module][$category])) {
+				return $this->_cachedConfigs[$module][$category];
+			}
 
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
 			if (!empty($category)) {
@@ -288,7 +290,7 @@ class icms_config_Handler {
 			$ret = array();
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
-				foreach ( array_keys($configs) as $i) {
+				foreach (array_keys($configs) as $i) {
 					$ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
 				}
 			}
@@ -303,7 +305,7 @@ class icms_config_Handler {
 	 * @return	object  {@link icms_config_option_Object}
 	 */
 	public function &createConfigOption() {
-		$inst =& $this->_oHandler->create();
+		$inst = & $this->_oHandler->create();
 		return $inst;
 	}
 
@@ -315,7 +317,7 @@ class icms_config_Handler {
 	 * @return	object  {@link icms_config_option_Object}
 	 */
 	public function &getConfigOption($id) {
-		$inst =& $this->_oHandler->get($id);
+		$inst = & $this->_oHandler->get($id);
 		return $inst;
 	}
 
@@ -358,13 +360,13 @@ class icms_config_Handler {
 			if (empty($conf_catid)) {
 				$criteria->add(new icms_db_criteria_Item('conf_catid', $conf_catid));
 			}
-			$configs =& $this->_cHandler->getObjects($criteria);
+			$configs = & $this->_cHandler->getObjects($criteria);
 			$confcount = count($configs);
 			$ret = array();
-			for ( $i = 0; $i < $confcount; $i++) {
+			for ($i = 0; $i < $confcount; $i++) {
 				$ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
 			}
-			$this->_cachedConfigs[$conf_modid][$conf_catid] =& $ret;
+			$this->_cachedConfigs[$conf_modid][$conf_catid] = & $ret;
 			return $ret;
 		}
 	}

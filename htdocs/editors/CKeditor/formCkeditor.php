@@ -23,7 +23,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 	public function __construct($configs, $checkCompatible = false) {
 		$current_path = __DIR__;
 		if (DIRECTORY_SEPARATOR != "/") {
-			$current_path = str_replace(strpos($current_path, "\\\\", 2) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
+			$current_path = str_replace(strpos($current_path, "\\\\", 2)?"\\\\":DIRECTORY_SEPARATOR, "/", $current_path);
 		}
 		$docroot = pathinfo($_SERVER['DOCUMENT_ROOT']);
 		$homepath = $docroot['dirname'] . DIRECTORY_SEPARATOR . $docroot['basename'];
@@ -31,7 +31,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 
 		if (is_array($configs)) {
 			$vars = array_keys(get_object_vars($this));
-			foreach($configs as $key => $val) {
+			foreach ($configs as $key => $val) {
 				if (in_array("_" . $key, $vars)) {
 					$this->{"_" . $key} = $val;
 				} else {
@@ -40,7 +40,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 			}
 		}
 
-		if ($checkCompatible && ! $this->isCompatible ()) {
+		if ($checkCompatible && !$this->isCompatible()) {
 			return false;
 		}
 
@@ -55,8 +55,8 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 	 */
 	protected function initCKEditor() {
 		$this->config = array(
-				"elements" => $this->getName (),
-				"language" => $this->getLanguage (),
+				"elements" => $this->getName(),
+				"language" => $this->getLanguage(),
 				"rootpath" => $this->rootpath,
 				"area_width" => $this->_width,
 				"area_height" => $this->_height,
@@ -103,15 +103,15 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 
 		$toolbar = "Basic";
 
-		if (is_object(icms::$user) ) {
-	         $toolbar = "Normal";
-	         if (icms::$user->isAdmin(icms::$module->getVar('mid'))) { $toolbar = "Full"; }
-	    }
+		if (is_object(icms::$user)) {
+			 $toolbar = "Normal";
+			 if (icms::$user->isAdmin(icms::$module->getVar('mid'))) { $toolbar = "Full"; }
+		}
 
 		$ret = $xoTheme->addScript("/editors/CKeditor/ckeditor/ckeditor.js", array('type' => 'text/javascript'), '');
 		$ret .= $xoTheme->addScript("/editors/CKeditor/ckeditor/adapters/jquery.js", array('type' => 'text/javascript'), '');
 		$ret .= $xoTheme->addScript('', array('type' => 'text/javascript'),
-			'var config = {filebrowserImageBrowseUrl: "' . ICMS_URL . '/editors/CKeditor/ceditfinder/browse.php?site=administrator", toolbar: "' .  $toolbar . '"}; $(function() { $("#'.@$this->_name.'_tarea").ckeditor(config); $("#'.@$this->_name.'_tarea").parents("form").submit(function() { var data = $("#'.@$this->_name.'_tarea").html(); $("#'.@$this->_name.'_tarea").html(data); }); });');
+			'var config = {filebrowserImageBrowseUrl: "' . ICMS_URL . '/editors/CKeditor/ceditfinder/browse.php?site=administrator", toolbar: "' . $toolbar . '"}; $(function() { $("#' . @$this->_name . '_tarea").ckeditor(config); $("#' . @$this->_name . '_tarea").parents("form").submit(function() { var data = $("#' . @$this->_name . '_tarea").html(); $("#' . @$this->_name . '_tarea").html(data); }); });');
 		$ret .= parent::render();
 
 		$ret .= '<br clear="' . _GLOBAL_RIGHT . '" />';

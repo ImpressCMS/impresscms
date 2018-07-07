@@ -62,7 +62,7 @@ class icms_form_elements_select_Timezone extends icms_form_elements_Select {
 	 */
 	static public function getTimeZoneList() {
 		icms_loadLanguageFile('core', 'timezone');
-		$time_zone_list = array (
+		$time_zone_list = array(
 			"-12" => _TZ_GMTM12,
 			"-11" => _TZ_GMTM11,
 			"-10" => _TZ_GMTM10,

@@ -83,7 +83,7 @@ abstract class icms_db_criteria_Element {
 	/**
 	 * Constructor
 	 */
-	public function __construct(){}
+	public function __construct() {}
 
 	/**
 	 * Render the criteria element
@@ -108,10 +108,10 @@ abstract class icms_db_criteria_Element {
 	 * @param	string  $order
 	 */
 	public function setOrder($order) {
-                $order = strtoupper($order);
-                if ($order == 'DESC' || $order == 'ASC') {
-                        $this->order = $order;
-                }
+				$order = strtoupper($order);
+				if ($order == 'DESC' || $order == 'ASC') {
+						$this->order = $order;
+				}
 	}
 
 	/**
@@ -124,7 +124,7 @@ abstract class icms_db_criteria_Element {
 	/**
 	 * @param	int $limit
 	 */
-	public function setLimit($limit=0) {
+	public function setLimit($limit = 0) {
 		$this->limit = (int) ($limit);
 	}
 
@@ -138,7 +138,7 @@ abstract class icms_db_criteria_Element {
 	/**
 	 * @param	int $start
 	 */
-	public function setStart($start=0) {
+	public function setStart($start = 0) {
 		$this->start = (int) ($start);
 	}
 

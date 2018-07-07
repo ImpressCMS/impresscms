@@ -57,7 +57,7 @@ include "admin_header.php";
  * @param int	$rank_id	Unique ID for the rank entry
  * @param bool	$clone		Are you cloning an existing rank?
  */
-function edituserrank($showmenu = FALSE, $rank_id = 0, $clone = FALSE) {
+function edituserrank($showmenu = false, $rank_id = 0, $clone = false) {
 	global $icms_userrank_handler, $icmsAdminTpl;
 
 	icms_cp_header();
@@ -79,19 +79,27 @@ function edituserrank($showmenu = FALSE, $rank_id = 0, $clone = FALSE) {
 
 $icms_userrank_handler = icms_getModuleHandler("userrank", "system");
 
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op')) : ((isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op')) : '');
+if (!empty($_POST)) {
+	foreach ($_POST as $k => $v) {
+		${$k} = StopXSS($v);
+	}
+	}
+if (!empty($_GET)) {
+	foreach ($_GET as $k => $v) {
+		${$k} = StopXSS($v);
+	}
+	}
+$op = (isset($_POST['op']))? trim(filter_input(INPUT_POST, 'op')):((isset($_GET['op']))? trim(filter_input(INPUT_GET, 'op')):'');
 
 switch ($op) {
 	case "mod" :
-		$rank_id = isset($_GET["rank_id"]) ? (int) $_GET["rank_id"] : 0;
-		edituserrank(TRUE, $rank_id);
+		$rank_id = isset($_GET["rank_id"])?(int) $_GET["rank_id"]:0;
+		edituserrank(true, $rank_id);
 		break;
 
 	case "clone" :
-		$rank_id = isset($_GET["rank_id"]) ? (int) $_GET["rank_id"] : 0;
-		edituserrank(TRUE, $rank_id, TRUE);
+		$rank_id = isset($_GET["rank_id"])?(int) $_GET["rank_id"]:0;
+		edituserrank(true, $rank_id, true);
 		break;
 
 	case "adduserrank" :
@@ -107,15 +115,15 @@ switch ($op) {
 	default:
 		icms_cp_header();
 		$objectTable = new icms_ipf_view_Table($icms_userrank_handler);
-		$objectTable->addColumn(new icms_ipf_view_Column("rank_title", _GLOBAL_LEFT, FALSE, "getRankTitle"));
+		$objectTable->addColumn(new icms_ipf_view_Column("rank_title", _GLOBAL_LEFT, false, "getRankTitle"));
 		$objectTable->addColumn(new icms_ipf_view_Column("rank_min"));
 		$objectTable->addColumn(new icms_ipf_view_Column("rank_max"));
-		$objectTable->addColumn(new icms_ipf_view_Column("rank_image", "center", 200, "getRankPicture", FALSE, FALSE, FALSE));
+		$objectTable->addColumn(new icms_ipf_view_Column("rank_image", "center", 200, "getRankPicture", false, false, false));
 		$objectTable->addIntroButton("adduserrank", "admin.php?fct=userrank&amp;op=mod", _CO_ICMS_USERRANKS_CREATE);
 		$objectTable->addQuickSearch(array("rank_title"));
 		$objectTable->addCustomAction("getCloneLink");
 		$icmsAdminTpl->assign("icms_userrank_table", $objectTable->fetch());
-		$icmsAdminTpl->assign("icms_userrank_explain", TRUE);
+		$icmsAdminTpl->assign("icms_userrank_explain", true);
 		$icmsAdminTpl->assign("icms_userrank_title", _CO_ICMS_USERRANKS_DSC);
 		$icmsAdminTpl->display("db:admin/userrank/system_adm_userrank.html");
 		break;

@@ -33,7 +33,7 @@ class icms_ipf_form_elements_Section extends icms_form_Element {
 
 		$this->setName($key);
 		$this->_value = $object->getVarInfo($key)['value'];
-		$this->_close = isset($control['close']) ? $control['close'] : FALSE;
+		$this->_close = isset($control['close'])?$control['close']:false;
 	}
 
 	/**
@@ -60,7 +60,9 @@ class icms_ipf_form_elements_Section extends icms_form_Element {
 	 * @return	string
 	 */
 	public function render() {
-		if ($this->_close) return;
+		if ($this->_close) {
+			return;
+		}
 		return $this->getValue();
 	}
 }

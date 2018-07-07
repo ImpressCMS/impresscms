@@ -16,14 +16,14 @@ class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
-	public function __construct($object, $key){
+	public function __construct($object, $key) {
 		$var = $object->getVarInfo($key);
 		$control = $object->controls[$key];
 
 		icms_loadLanguageFile('core', 'user');
 		parent::__construct($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
 
-		$password_box1 = new icms_form_elements_Password('', $key . '1', 10, 32, '', FALSE, "password_adv");
+		$password_box1 = new icms_form_elements_Password('', $key . '1', 10, 32, '', false, "password_adv");
 		$this->addElement($password_box1);
 
 		$this->_key = $key;

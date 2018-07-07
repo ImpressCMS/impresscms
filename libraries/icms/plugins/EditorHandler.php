@@ -37,11 +37,11 @@
  */
 class icms_plugins_EditorHandler {
 
-    /**
-    * Path where is editor
-     *
-    * @var string
-    */
+	/**
+	 * Path where is editor
+	 *
+	 * @var string
+	 */
 	private $root_path = '';
 
 	/**
@@ -49,7 +49,7 @@ class icms_plugins_EditorHandler {
 	 *
 	 * @var bool
 	 */
-	public $nohtml = FALSE;
+	public $nohtml = false;
 
 	/**
 	 * What editors to allow?
@@ -97,7 +97,7 @@ class icms_plugins_EditorHandler {
 	 * @param	string	$OnFailure  a pre-validated editor that will be used if the required editor is failed to create
 	 * @param	bool	$noHtml		dohtml disabled
 	 */
-	public function &get($name = "", $options = NULL, $noHtml = FALSE, $OnFailure = "") {
+	public function &get($name = "", $options = null, $noHtml = false, $OnFailure = "") {
 		if ($editor = $this->_loadEditor($name, $options)) {
 			return $editor;
 		}
@@ -115,33 +115,37 @@ class icms_plugins_EditorHandler {
 	 * @param   bool    $noHtml   is this an editor with no html options?
 	 * @return  array   $_list    list of available editors that are allowed (through admin config)
 	 */
-	public function &getList($noHtml = FALSE) {
-                $file = ICMS_CACHE_PATH . $this->_type . DIRECTORY_SEPARATOR . 'editor_list.php';
-                $list = file_exists($file)?include($file):[];
+	public function &getList($noHtml = false) {
+		$cache = icms::getInstance()->get('cache');
+		$cached_item = $cache->getItem('editors_list');
 
-		if (empty($list)) {
-
+		if (!$cached_item->isHit()) {
 			$list = array();
 			$order = array();
 			$_list = icms_core_Filesystem::getDirList($this->root_path . '/');
 
 			foreach ($_list as $item) {
-                                $file = $this->root_path . '/' . $item . '/editor_registry.php';
+				$file = $this->root_path . '/' . $item . '/editor_registry.php';
 				if (file_exists($file)) {
-                                    include($file);
-					if (empty($config['order'])) continue;
+					include($file);
+					if (empty($config['order'])) {
+						continue;
+					}
 					$order[] = $config['order'];
 					$list[$item] = [
-                                            'title' => $config['title'],
-                                            'nohtml' => isset($config['nohtml'])?$config['nohtml']:0
-                                        ];
+						'title' => $config['title'],
+						'nohtml' => isset($config['nohtml'])?$config['nohtml']:0
+					];
 				}
 			}
 
 			array_multisort($order, $list);
-			$contents = "<?php return " . var_export($list, TRUE) . ';';
-			icms_core_Filesystem::writeFile($contents, $this->_type . 'editor_list', 'php', ICMS_CACHE_PATH);
+
+			$cached_item->set($list);
+			$cache->save($cached_item);
 		}
+
+		$list = $cached_item->get();
 
 		$editors = array_keys($list);
 		if (!empty($this->allowed_editors)) {
@@ -150,7 +154,9 @@ class icms_plugins_EditorHandler {
 
 		$_list = array();
 		foreach ($editors as $name) {
-			if (!empty($noHtml) && empty($list[$name]['nohtml'])) continue;
+			if (!empty($noHtml) && empty($list[$name]['nohtml'])) {
+				continue;
+			}
 			$_list[$name] = $list[$name]['title'];
 		}
 		return $_list;
@@ -189,8 +195,8 @@ class icms_plugins_EditorHandler {
 	 * @return  object                The loaded Editor object
 	 *
 	 */
-	public function &_loadEditor($name, $options = NULL) {
-		$editor = NULL;
+	public function &_loadEditor($name, $options = null) {
+		$editor = null;
 
 		if (empty($name)) {
 			return $editor;
@@ -201,7 +207,7 @@ class icms_plugins_EditorHandler {
 			return $editor;
 		}
 		if (empty($config['order'])) {
-			return NULL;
+			return null;
 		}
 		require_once $config['file'];
 		$editor = new $config['class']($options);

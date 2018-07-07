@@ -20,10 +20,12 @@ class icms_ipf_form_elements_Blockoptions extends icms_form_elements_Tray {
 		parent::__construct($var['form_caption'], ' ', 'options_tray');
 		$func = $object->getVar('edit_func');
 
-		require_once ICMS_ROOT_PATH . "/modules/" . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . "/blocks/" . $object->getVar('func_file') ;
+		require_once ICMS_ROOT_PATH . "/modules/" . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . "/blocks/" . $object->getVar('func_file');
 		icms_loadLanguageFile($object->handler->getModuleDirname($object->getVar('mid', 'e')), 'blocks');
 
-		if (!function_exists($func)) return;
+		if (!function_exists($func)) {
+			return;
+		}
 		$visible_label = new icms_form_elements_Label('', $func(explode('|', $object->getVar('options'))));
 		$this->addElement($visible_label);
 	}
