@@ -1,17 +1,12 @@
 language: php
 
-php:
-  - 7.0
-  - 7.1
-  - 7.2
+os:
+  - linux
 
 cache:
   directories:
-    - $HOME/.composer/cache/files
+    - $HOME/.composer/cache
 
-services:
-  - mysql
-  
 env:
  global:
   - URL=http://192.168.2.99
@@ -25,10 +20,36 @@ env:
   - DB_COLLATION=utf8_general_ci
   - DB_PREFIX=icms
   - DB_SALT=icms
-  
-install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
-  - composer install
 
-script:
- - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php
+stages:
+  - validate
+  - test
+  - coverage
+
+jobs:
+  include:
+    - stage: validate
+      script: composer validate
+    - stage: test
+      services:
+        - mysql
+      php:
+        - '7.0'
+        - '7.1'
+        - '7.2'
+      install:
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
+        - travis_retry composer install --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction
+      script:
+        - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --no-coverage
+    - stage: coverage
+      env:
+        - CC_TEST_REPORTER_ID=ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
+      script:
+        - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --coverage-clover=build/logs/clover.xml
+      after_script:
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
