@@ -46,7 +46,7 @@ define('ICMS_IN_ADMIN', 1);
 /** necessary files, since this is a direct POST target */
 require_once dirname(__DIR__) . '/include/common.php';
 
-icms_loadLanguageFile('system', 'groups', TRUE);
+icms_loadLanguageFile('system', 'groups', true);
 
 /* set filter types, if not strings */
 // there should be no GET variables - this page is for POST, only!
@@ -63,8 +63,8 @@ $fct = $op = "";
 
 /* filter the user input */
 if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
-    extract($clean_POST);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
 }
 
 // we don't want system module permissions to be changed here
@@ -74,7 +74,7 @@ if ($modid <= 1 || !is_object(icms::$user) || !icms::$user->isAdmin($modid) || !
 }
 
 $module_handler = icms::handler('icms_module');
-$module =& $module_handler->get($modid);
+$module = & $module_handler->get($modid);
 
 if (!is_object($module) || !$module->getVar('isactive')) {
 	redirect_header(ICMS_URL . '/admin.php', 1, _MODULENOEXIST);
@@ -84,11 +84,11 @@ if (!is_object($module) || !$module->getVar('isactive')) {
 $msg = array();
 
 $member_handler = icms::handler('icms_member');
-$group_list =& $member_handler->getGroupList();
+$group_list = & $member_handler->getGroupList();
 if (is_array($perms) && !empty($perms)) {
 	$gperm_handler = icms::handler('icms_member_groupperm');
 	foreach ($perms as $perm_name => $perm_data) {
-		if (FALSE != $gperm_handler->deleteByModule($modid, $perm_name)) {
+		if (false != $gperm_handler->deleteByModule($modid, $perm_name)) {
 			$msg[] = sprintf(_MD_AM_PERMRESETOK, $perm_name, $module->getVar('name'));
 			foreach ($perm_data['groups'] as $group_id => $item_ids) {
 				foreach ($item_ids as $item_id => $selected) {
@@ -106,7 +106,7 @@ if (is_array($perms) && !empty($perms)) {
 							}
 						}
 
-						$gperm =& $gperm_handler->create();
+						$gperm = & $gperm_handler->create();
 						$gperm->setVar('gperm_groupid', $group_id);
 						$gperm->setVar('gperm_name', $perm_name);
 						$gperm->setVar('gperm_modid', $modid);
@@ -130,11 +130,11 @@ if (is_array($perms) && !empty($perms)) {
 
 $backlink = xoops_getenv("HTTP_REFERER");
 if ($module->getVar('hasadmin')) {
-	$adminindex = ($redirect_url != "") ? $redirect_url : $module->getInfo('adminindex');
+	$adminindex = ($redirect_url != "")?$redirect_url:$module->getInfo('adminindex');
 	if ($adminindex) {
 		$backlink = ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $adminindex;
 	}
 }
-$backlink = $backlink ? $backlink : ICMS_URL . '/admin.php';
+$backlink = $backlink?$backlink:ICMS_URL . '/admin.php';
 
 redirect_header($backlink, 2, implode("<br />", $msg));

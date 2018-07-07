@@ -2,7 +2,7 @@
 define('_MD_AM_MIMETYPES', 'Mime Types');
 define('_MD_AM_MIMETYPES_DSC', 'Manage the allowed extensions for files uploaded to your website.');
 
-define('_CO_ICMS_MIMETYPES','Mime types');
+define('_CO_ICMS_MIMETYPES', 'Mime types');
 define('_CO_ICMS_MIMETYPES_DSC', 'Here is a list of the mime types available in the system.');
 define('_CO_ICMS_MIMETYPE', 'Mime type');
 define('_CO_ICMS_MIMETYPE_CREATE', 'Create a mime type');

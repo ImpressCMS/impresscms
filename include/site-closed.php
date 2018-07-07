@@ -9,13 +9,13 @@
  * @package 	core
  */
 
-$allowed = FALSE;
+$allowed = false;
 if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_site']) {
-	$allowed = TRUE;
+	$allowed = true;
 } elseif (is_object(icms::$user)) {
 	foreach (icms::$user->getGroups() as $group) {
 		if (in_array($group, $icmsConfig['closesite_okgrp']) || ICMS_GROUP_ADMIN == $group) {
-			$allowed = TRUE;
+			$allowed = true;
 			break;
 		}
 	}
@@ -28,9 +28,9 @@ if (!$allowed) {
 	$themeFactory = new icms_view_theme_Factory();
 	$themeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 	$themeFactory->defaultTheme = $icmsConfig['theme_set'];
-	$icmsTheme =& $themeFactory->createInstance(array("plugins" => array()));
+	$icmsTheme = & $themeFactory->createInstance(array("plugins" => array()));
 	$icmsTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
-	$icmsTpl =& $icmsTheme->template;
+	$icmsTpl = & $icmsTheme->template;
 
 	$icmsTpl->assign(array(
 		'icms_theme' => $icmsConfig['theme_set'],
@@ -39,9 +39,9 @@ if (!$allowed) {
 		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, _CHARSET),
 		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET),
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
-		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
+		'icms_dirname' => @$icmsModule?$icmsModule->getVar('dirname'):'system',
 		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
-			? $icmsModule->getVar('name')
+			?$icmsModule->getVar('name')
 			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
 		'lang_login' => _LOGIN,
 		'lang_username' => _USERNAME,
@@ -56,11 +56,11 @@ if (!$allowed) {
 			$icmsTpl->assign("xoops_$name", $value);
 		}
 	}
-	$icmsTpl->debugging = FALSE;
+	$icmsTpl->debugging = false;
 	$icmsTpl->debugging_ctrl = 'NONE';
 	$icmsTpl->caching = 0;
 
-	icms_loadLanguageFile("system", "customtag", TRUE);
+	icms_loadLanguageFile("system", "customtag", true);
 	icms_Autoloader::register(ICMS_MODULES_PATH . "/system/class", "mod_system");
 	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 	$customtags_array = array();
@@ -76,4 +76,4 @@ if (!$allowed) {
 }
 unset($allowed, $group);
 
-return TRUE;
+return true;

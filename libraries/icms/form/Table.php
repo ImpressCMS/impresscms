@@ -50,8 +50,8 @@ class icms_form_Table extends icms_form_Base {
 	 * @param	string  $extra  HTML to be displayed in the empty row.
 	 * @param	string	$class	CSS class name for <td> tag
 	 */
-	public function insertBreak($extra = '', $class= '') {
-		$class = ($class != '') ? " class='$class'" : '';
+	public function insertBreak($extra = '', $class = '') {
+		$class = ($class != '')?" class='$class'":'';
 		//Fix for $extra tag not showing
 		if ($extra) {
 			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";

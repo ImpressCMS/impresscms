@@ -27,7 +27,7 @@
  * @property string $style              Styles
  */
 class mod_system_Adsense extends icms_ipf_Object {
-	public $content = FALSE;
+	public $content = false;
 
 	/**
 	 * Constructor
@@ -35,18 +35,18 @@ class mod_system_Adsense extends icms_ipf_Object {
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
-                $this->initVar('adsenseid', self::DTYPE_INTEGER, 0, true);
-                $this->initVar('description', self::DTYPE_STRING, '', true, null, null, null, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
-                $this->initVar('client_id', self::DTYPE_STRING, '', true, 100, null, null, _CO_ICMS_ADSENSE_CLIENT_ID, _CO_ICMS_ADSENSE_CLIENT_ID_DSC);
-                $this->initVar('slot', self::DTYPE_STRING, '', true, 12, null, null, _CO_ICMS_ADSENSE_SLOT, _CO_ICMS_ADSENSE_SLOT_DSC);
-                $this->initVar('tag', self::DTYPE_STRING, '', false, 50, null, null, _CO_ICMS_ADSENSE_TAG, _CO_ICMS_ADSENSE_TAG_DSC);
-                $this->initVar('format', self::DTYPE_STRING, '', true, 100, null, null, _CO_ICMS_ADSENSE_FORMAT, _CO_ICMS_ADSENSE_FORMAT_DSC);
-                $this->initVar('color_border', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_BORDER, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
-                $this->initVar('color_background', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_BACKGROUND, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
-                $this->initVar('color_link', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_LINK, _CO_ICMS_ADSENSE_COLOR_LINK_DSC);
-                $this->initVar('color_url', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_URL, _CO_ICMS_ADSENSE_COLOR_URL_DSC);
-                $this->initVar('color_text', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_TEXT, _CO_ICMS_ADSENSE_COLOR_TEXT_DSC);
-                $this->initVar('style', self::DTYPE_STRING, '', false, null, null, null, _CO_ICMS_ADSENSE_STYLE, _CO_ICMS_ADSENSE_STYLE_DSC);
+				$this->initVar('adsenseid', self::DTYPE_INTEGER, 0, true);
+				$this->initVar('description', self::DTYPE_STRING, '', true, null, null, null, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
+				$this->initVar('client_id', self::DTYPE_STRING, '', true, 100, null, null, _CO_ICMS_ADSENSE_CLIENT_ID, _CO_ICMS_ADSENSE_CLIENT_ID_DSC);
+				$this->initVar('slot', self::DTYPE_STRING, '', true, 12, null, null, _CO_ICMS_ADSENSE_SLOT, _CO_ICMS_ADSENSE_SLOT_DSC);
+				$this->initVar('tag', self::DTYPE_STRING, '', false, 50, null, null, _CO_ICMS_ADSENSE_TAG, _CO_ICMS_ADSENSE_TAG_DSC);
+				$this->initVar('format', self::DTYPE_STRING, '', true, 100, null, null, _CO_ICMS_ADSENSE_FORMAT, _CO_ICMS_ADSENSE_FORMAT_DSC);
+				$this->initVar('color_border', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_BORDER, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
+				$this->initVar('color_background', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_BACKGROUND, _CO_ICMS_ADSENSE_COLOR_BORDER_DSC);
+				$this->initVar('color_link', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_LINK, _CO_ICMS_ADSENSE_COLOR_LINK_DSC);
+				$this->initVar('color_url', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_URL, _CO_ICMS_ADSENSE_COLOR_URL_DSC);
+				$this->initVar('color_text', self::DTYPE_STRING, '', true, 6, null, null, _CO_ICMS_ADSENSE_COLOR_TEXT, _CO_ICMS_ADSENSE_COLOR_TEXT_DSC);
+				$this->initVar('style', self::DTYPE_STRING, '', false, null, null, null, _CO_ICMS_ADSENSE_STYLE, _CO_ICMS_ADSENSE_STYLE_DSC);
 
 		parent::__construct($handler);
 
@@ -76,7 +76,9 @@ class mod_system_Adsense extends icms_ipf_Object {
 	 */
 	public function color_border() {
 		$value = $this->getVar("color_border", "n");
-		if ($value == "") return;
+		if ($value == "") {
+			return;
+		}
 		return "#" . $value;
 	}
 
@@ -86,7 +88,9 @@ class mod_system_Adsense extends icms_ipf_Object {
 	 */
 	public function color_background() {
 		$value = $this->getVar("color_background", "n");
-		if ($value == "") return;
+		if ($value == "") {
+			return;
+		}
 		return "#" . $value;
 	}
 
@@ -96,7 +100,9 @@ class mod_system_Adsense extends icms_ipf_Object {
 	 */
 	public function color_link() {
 		$value = $this->getVar("color_link", "n");
-		if ($value == "") return;
+		if ($value == "") {
+			return;
+		}
 		return "#" . $value;
 	}
 
@@ -106,7 +112,9 @@ class mod_system_Adsense extends icms_ipf_Object {
 	 */
 	public function color_url() {
 		$value = $this->getVar("color_url", "n");
-		if ($value == "") return;
+		if ($value == "") {
+			return;
+		}
 		return "#" . $value;
 	}
 
@@ -116,7 +124,9 @@ class mod_system_Adsense extends icms_ipf_Object {
 	 */
 	public function color_text() {
 		$value = $this->getVar("color_text", "n");
-		if ($value == "") return;
+		if ($value == "") {
+			return;
+		}
 		return "#" . $value;
 	}
 
@@ -189,11 +199,11 @@ class mod_system_Adsense extends icms_ipf_Object {
 		$title = rawurlencode(strtolower($this->getVar('description', 'e')));
 		$title = icms_core_DataFilter::icms_substr($title, 0, 10, '');
 
-		$pattern = array ("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./" );
-		$rep_pat = array ("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-" );
+		$pattern = array("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./");
+		$rep_pat = array("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-");
 		$title = preg_replace($pattern, $rep_pat, $title);
 
-		$rep_pat = array ("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o" );
+		$rep_pat = array("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o");
 		$title = preg_replace($pattern, $rep_pat, $title);
 
 		$tableau = explode("-", $title);

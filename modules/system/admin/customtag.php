@@ -27,7 +27,7 @@ include 'admin_header.php';
  * @param $customtagid	unique identifier for the custom tag
  * @param $clone		are you cloning an existing custom tag?
  */
-function editcustomtag($customtagid = 0, $clone = FALSE) {
+function editcustomtag($customtagid = 0, $clone = false) {
 	global $icms_admin_handler, $icmsAdminTpl, $op, $changedField;
 
 	icms_cp_header();
@@ -73,9 +73,9 @@ function editcustomtag($customtagid = 0, $clone = FALSE) {
 
 $clean_op = $op;
 
-$valid_op = array ("mod", "changedField", "clone", "addcustomtag", "del", "");
+$valid_op = array("mod", "changedField", "clone", "addcustomtag", "del", "");
 
-if (in_array($clean_op, $valid_op, TRUE)) {
+if (in_array($clean_op, $valid_op, true)) {
 	switch ($clean_op) {
 		case "mod":
 		case "changedField":
@@ -83,7 +83,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "clone":
-			editcustomtag($customtagid, TRUE);
+			editcustomtag($customtagid, true);
 			break;
 
 		case "addcustomtag":
@@ -110,7 +110,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addCustomAction("getCloneLink");
 
 			$icmsAdminTpl->assign("icms_customtag_table", $objectTable->fetch());
-			$icmsAdminTpl->assign("icms_custom_tag_explain", TRUE);
+			$icmsAdminTpl->assign("icms_custom_tag_explain", true);
 			$icmsAdminTpl->assign("icms_custom_tag_title", _CO_ICMS_CUSTOMTAGS_DSC);
 
 			$icmsAdminTpl->display(ICMS_MODULES_PATH . "/system/templates/admin/customtag/system_adm_customtag.html");

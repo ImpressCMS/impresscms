@@ -16,7 +16,7 @@
  * @param string $text the search terms
  */
 function textsanitizer_syntaxhighlighthtml($text) {
-	return preg_replace_callback("/\[code_html](.*)\[\/code_html\]/sU", function ($matches) {
+	return preg_replace_callback("/\[code_html](.*)\[\/code_html\]/sU", function($matches) {
 		return textsanitizer_geshi_html_highlight($matches[1]);
 	}, $text);
 }
@@ -37,11 +37,11 @@ function textsanitizer_geshi_html_highlight($source) {
 	// Sets the proper encoding charset other than "ISO-8859-1"
 	$geshi->set_encoding(_CHARSET);
 
-	$geshi->set_link_target ( "_blank" );
+	$geshi->set_link_target("_blank");
 
 	// Parse the code
 	$code = $geshi->parse_code();
-	$code = "<div class=\"icmsCodeHtml\"><pre><code>".$code."</code></pre></div>";
+	$code = "<div class=\"icmsCodeHtml\"><pre><code>" . $code . "</code></pre></div>";
 	return $code;
 }
 
@@ -52,11 +52,11 @@ function textsanitizer_geshi_html_highlight($source) {
  */
 function render_syntaxhighlighthtml($ele_name) {
 	global $xoTheme;
-	$javascript='';
+	$javascript = '';
 	$dirname = basename(__DIR__);
 	if (isset($xoTheme)) {
 		$xoTheme->addScript(
-			ICMS_URL.'/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
+			ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
 			array('type' => 'text/javascript'));
 	}
 	$code = "<img

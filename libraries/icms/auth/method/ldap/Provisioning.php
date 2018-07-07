@@ -75,7 +75,9 @@ class icms_auth_method_ldap_Provisioning {
 			// User Database not exists
 			if ($this->ldap_provisionning) {
 				$icmsUser = $this->add($datas, $uname, $pwd);
-			} else $this->_auth_instance->setErrors(0, sprintf(_AUTH_LDAP_XOOPS_USER_NOTFOUND, $uname));
+			} else {
+				$this->_auth_instance->setErrors(0, sprintf(_AUTH_LDAP_XOOPS_USER_NOTFOUND, $uname));
+			}
 		} else {
 			// User Database exists
 			if ($this->ldap_provisionning && $this->ldap_provisionning_upd) {
@@ -104,14 +106,15 @@ class icms_auth_method_ldap_Provisioning {
 		$newuser->setVar('rank', 0);
 		$newuser->setVar('level', 1);
 		$newuser->setVar('timezone_offset', $this->default_TZ);
-		$newuser->setVar('theme', 	$this->theme_set);
-		$newuser->setVar('umode', 	$this->com_mode);
-		$newuser->setVar('uorder', 	$this->com_order);
+		$newuser->setVar('theme', $this->theme_set);
+		$newuser->setVar('umode', $this->com_mode);
+		$newuser->setVar('uorder', $this->com_order);
 		$tab_mapping = explode('|', $this->ldap_field_mapping);
 		foreach ($tab_mapping as $mapping) {
 			$fields = explode('=', trim($mapping));
-			if ($fields[0] && $fields[1])
-			$newuser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
+			if ($fields[0] && $fields[1]) {
+						$newuser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
+			}
 		}
 		if ($member_handler->insertUser($newuser)) {
 			foreach ($this->ldap_provisionning_group as $groupid) {

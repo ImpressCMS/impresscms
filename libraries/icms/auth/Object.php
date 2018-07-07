@@ -96,7 +96,7 @@ class icms_auth_Object {
 				$ret .= _NONE . '<br />';
 			} else {
 				foreach ($this->_errors as $errno => $errstr) {
-					$ret .=  $errstr . '<br/>';
+					$ret .= $errstr . '<br/>';
 				}
 			$ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $this->auth_method);
 			}

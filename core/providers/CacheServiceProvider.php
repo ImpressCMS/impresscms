@@ -25,7 +25,7 @@ class CacheServiceProvider extends AbstractServiceProvider
 	public function register()
 	{
 		$this->getContainer()->add('cache', function () {
-			Factory::getPool(
+			return Factory::getPool(
 				'files',
 				[
 					'directory' => ICMS_CACHE_PATH,

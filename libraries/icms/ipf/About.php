@@ -22,150 +22,150 @@
  */
 class icms_ipf_About {
 
-    /**
-    * Title
-     *
-    * @var string
-    */
+	/**
+	 * Title
+	 *
+	 * @var string
+	 */
 	public $_lang_aboutTitle = '';
 
-        /**
-        * Author info
-         *
-        * @var string
-        */
+		/**
+		 * Author info
+		 *
+		 * @var string
+		 */
 	public $_lang_author_info = '';
 
-        /**
-        * Lead developer
-         *
-        * @var string
-        */
+		/**
+		 * Lead developer
+		 *
+		 * @var string
+		 */
 	public $_lang_developer_lead = '';
 
-        /**
-        * Contributor(s)
-         *
-        * @var string
-        */
+		/**
+		 * Contributor(s)
+		 *
+		 * @var string
+		 */
 	public $_lang_developer_contributor = '';
 
-        /**
-        * Developer's website
-         *
-        * @var string
-        */
+		/**
+		 * Developer's website
+		 *
+		 * @var string
+		 */
 	public $_lang_developer_website = '';
 
-        /**
-        * Developer's email
-         *
-        * @var string
-        */
+		/**
+		 * Developer's email
+		 *
+		 * @var string
+		 */
 	public $_lang_developer_email = '';
 
-        /**
-         *
-        * @var string
-        */
+		/**
+		 *
+		 * @var string
+		 */
 	public $_lang_developer_credits = '';
 
-        /**
-        * Module info
-         *
-        * @var string
-        */
+		/**
+		 * Module info
+		 *
+		 * @var string
+		 */
 	public $_lang_module_info = '';
 
-        /**
-        * Module status (alfa, beta...)
-         *
-        * @var string
-        */
+		/**
+		 * Module status (alfa, beta...)
+		 *
+		 * @var string
+		 */
 	public $_lang_module_status = '';
 
-        /**
-        * Release date
-         *
-        * @var string
-        */
+		/**
+		 * Release date
+		 *
+		 * @var string
+		 */
 	public $_lang_module_release_date = '';
 
-        /**
-        * Demn
-         *
-        * @var string
-        */
+		/**
+		 * Demn
+		 *
+		 * @var string
+		 */
 	public $_lang_module_demo = '';
 
-        /**
-        * Support address
-         *
-        * @var string
-        */
+		/**
+		 * Support address
+		 *
+		 * @var string
+		 */
 	public $_lang_module_support = '';
 
-        /**
-        * Bug text
-         *
-        * @var string
-        */
+		/**
+		 * Bug text
+		 *
+		 * @var string
+		 */
 	public $_lang_module_bug = '';
 
-        /**
-        * Bug address
-         *
-        * @var string
-        */
+		/**
+		 * Bug address
+		 *
+		 * @var string
+		 */
 	public $_lang_module_submit_bug = '';
 
-        /**
-        * Feature(s)
-         *
-        * @var string
-        */
+		/**
+		 * Feature(s)
+		 *
+		 * @var string
+		 */
 	public $_lang_module_feature = '';
 
-        /**
-        * Submit feature link
-         *
-        * @var string
-        */
+		/**
+		 * Submit feature link
+		 *
+		 * @var string
+		 */
 	public $_lang_module_submit_feature = '';
 
-        /**
-        * Disclaimer
-         *
-        * @var string
-        */
+		/**
+		 * Disclaimer
+		 *
+		 * @var string
+		 */
 	public $_lang_module_disclaimer = '';
 
-        /**
-        * Author word
-         *
-        * @var string
-        */
+		/**
+		 * Author word
+		 *
+		 * @var string
+		 */
 	public $_lang_author_word = '';
 
-        /**
-        * Version history
-         *
-        * @var string
-        */
+		/**
+		 * Version history
+		 *
+		 * @var string
+		 */
 	public $_lang_version_history = '';
 
-        /**
-        * Credits
-         *
-        * @var string
-        */
+		/**
+		 * Credits
+		 *
+		 * @var string
+		 */
 	public $_lang_by = '';
 
-        /**
-        * Template
-         *
-        * @var \icms_view_Tpl|null
-        */
+		/**
+		 * Template
+		 *
+		 * @var \icms_view_Tpl|null
+		 */
 	public $_tpl;
 
 	/**
@@ -190,7 +190,7 @@ class icms_ipf_About {
 		$this->_lang_developer_credits = _MODABOUT_DEVELOPER_CREDITS;
 		$this->_lang_module_info = _MODABOUT_MODULE_INFO;
 		$this->_lang_module_status = _MODABOUT_MODULE_STATUS;
-		$this->_lang_module_release_date =_MODABOUT_MODULE_RELEASE_DATE ;
+		$this->_lang_module_release_date = _MODABOUT_MODULE_RELEASE_DATE;
 		$this->_lang_module_demo = _MODABOUT_MODULE_DEMO;
 		$this->_lang_module_support = _CO_ICMS_MODULE_SUPPORT;
 		$this->_lang_module_bug = _MODABOUT_MODULE_BUG;
@@ -222,7 +222,7 @@ class icms_ipf_About {
 		icms_cp_header();
 
 		$module_handler = icms::handler('icms_module');
-		$versioninfo =& $module_handler->get($icmsModule->getVar('mid'));
+		$versioninfo = & $module_handler->get($icmsModule->getVar('mid'));
 
 		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));
 
@@ -290,9 +290,9 @@ class icms_ipf_About {
 		$this->_tpl->assign('module_submit_feature', $versioninfo->getInfo('submit_feature'));
 
 		// Manual
-		$manual =$versioninfo->getInfo('manual');
+		$manual = $versioninfo->getInfo('manual');
 		if ($manual) {
-			$this->_tpl->assign('module_manual', isset($manual['wiki']) ? array_map(array($this, 'sanitize'), $manual['wiki']) : false);
+			$this->_tpl->assign('module_manual', isset($manual['wiki'])? array_map(array($this, 'sanitize'), $manual['wiki']):false);
 		}
 
 		// Warning
@@ -322,15 +322,15 @@ class icms_ipf_About {
 		}
 
 		// For license thanks to 3Dev
-		if (file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt' )) {
+		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt')) {
 			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt';
-		} elseif (file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt' )) {
+		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt')) {
 			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt';
-		} elseif (file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' )) {
+		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt')) {
 			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
-		} elseif (file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt' )) {
+		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt')) {
 			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt';
-		} elseif (file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' )) {
+		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt')) {
 			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
 		}
 		if (is_file($filename)) {

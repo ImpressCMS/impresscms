@@ -1,14 +1,16 @@
-[![License](https://img.shields.io/github/license/ImpressCMS/impresscms.svg?maxAge=2592000)](License.txt) [![GitHub release](https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=2592000)](https://github.com/ImpressCMS/impresscms/releases) [![Build Status](https://travis-ci.org/ImpressCMS/impresscms.svg?branch=retro)](https://travis-ci.org/ImpressCMS/impresscms) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ImpressCMS/impresscms/badges/quality-score.png?b=retro)](https://scrutinizer-ci.com/g/ImpressCMS/impresscms/?branch=retro) 
-
+[![license](https://img.shields.io/badge/dynamic/json.svg?style=flat-square&label=license&url=https%3A%2F%2Fraw.githubusercontent.com%2FImpressCMS%2Fimpresscms%2Fretro%2Fcomposer.json&query=license)](https://github.com/ImpressCMS/impresscms/blob/retro/LICENSE) [![GitHub release](https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=2592000&style=flat-square)](https://github.com/ImpressCMS/impresscms/releases) [![Issue Stats](https://img.shields.io/issuestats/i/github/ImpressCMS/impresscms.svg?maxAge=2592000&style=flat-square)](https://github.com/ImpressCMS/impresscms/issues) [![HitCount](http://hits.dwyl.io/ImpressCMS/ImpressCMS/impresscms.svg)](http://hits.dwyl.com/ImpressCMS/impresscms) [![Build Status](https://img.shields.io/travis/ImpressCMS/impresscms.svg?branch=retro&style=flat-square)](https://travis-ci.org/ImpressCMS/impresscms) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ImpressCMS/impresscms/badges/quality-score.png?b=retro)](https://scrutinizer-ci.com/g/ImpressCMS/impresscms/?branch=retro) 
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/ImpressCMS/impresscms.svg?style=flat-square)](https://codeclimate.com/github/ImpressCMS/impresscms/maintainability)
+ 
 # ImpressCMS
 
 ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool. ImpressCMS is a powerful system that gets outstanding results and it is free!
 
 ### What can you do with it?
 
-ImpressCMS can be used for many types of web sites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company. The system is extremely useful for managing online communities because it has the ability to create user groups and assign permissions for managing content to each different group.
+ImpressCMS can be used for many types of web sites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company. 
+The system is extremely useful for managing online communities because it has the ability to create user groups and assign permissions for managing content to each different group.
 
-For each type of website ImpressCMS offers different functionality with a collection of hundreds of free modules that are available on [http://addons.impresscms.org](http://addons.impresscms.org). A few examples of what you can do with them:
+For each type of website ImpressCMS offers different functionality with a collection of free modules that are available on [https://www.impresscms.org/modules/downloads/](https://www.impresscms.org/modules/downloads/). A few examples of what you can do with them:
 
 *   Publish news of your organization
 *   Let visitors contact you through a state of the art customizable contact form
@@ -74,13 +76,13 @@ For each type of website ImpressCMS offers different functionality with a collec
 
 ### Do you need any help?
 
-You can find our official documentation at [wiki.impresscms.org](http://wiki.impresscms.org/modules/wiki/). 
+You can find our official documentation at [our wiki](https://www.impresscms.org/modules/simplywiki/). 
 
-Also, help could be found on [our official forums](http://community.impresscms.org/modules/newbb/).
+Also, help could be found on [our official forums](https://www.impresscms.org/modules/iforum/).
 
 ### How to contribute?
 
-If you want to contribute to the code just go a head! 
+Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls)
 
 All development for 2.0 version happens on the *retro* branch, so it is always the most up-to-date. 
 

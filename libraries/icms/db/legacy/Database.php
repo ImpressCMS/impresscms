@@ -63,7 +63,7 @@ abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	 * If statements that modify the database are selected
 	 * @var boolean
 	 */
-	public $allowWebChanges = FALSE;
+	public $allowWebChanges = false;
 
 	/**
 	 * Create a legacy database object
@@ -72,7 +72,7 @@ abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	 * @param string $allowWebChanges	set tp TRUE to allow inserts, updates or deletes
 	 * @return	void
 	 */
-	public function __construct($connection = NULL, $allowWebChanges = FALSE) {
+	public function __construct($connection = null, $allowWebChanges = false) {
 		$this->allowWebChanges = $allowWebChanges;
 	}
 
@@ -100,9 +100,9 @@ abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	 * @see icms_db_legacy_IDatabase::prefix()
 	 * @return	string
 	 */
-	public function prefix($tablename='') {
-		if ( $tablename != '' ) {
-			return $this->prefix .'_'. $tablename;
+	public function prefix($tablename = '') {
+		if ($tablename != '') {
+			return $this->prefix . '_' . $tablename;
 		} else {
 			return $this->prefix;
 		}

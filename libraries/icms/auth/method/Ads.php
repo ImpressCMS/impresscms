@@ -61,9 +61,9 @@ class icms_auth_method_Ads extends icms_auth_method_Ldap {
 	 *
 	 * @return bool
 	 */
-	public function authenticate($uname, $pwd = NULL) {
+	public function authenticate($uname, $pwd = null) {
 		global $icmsConfigAuth;
-		$authenticated = FALSE;
+		$authenticated = false;
 		if (in_array($uname, $icmsConfigAuth['ldap_users_bypass'])) {
 			/* use core authentication if user is bypassed for LDAP */
 			$auth = new icms_auth_method_Local();
@@ -79,12 +79,16 @@ class icms_auth_method_Ads extends icms_auth_method_Ldap {
 			ldap_set_option($this->_ds, LDAP_OPT_REFERRALS, 0);
 			if ($this->ldap_use_TLS) {
 				// We use TLS secure connection
-				if (!ldap_start_tls($this->_ds)) $this->setErrors(0, _AUTH_LDAP_START_TLS_FAILED);
+				if (!ldap_start_tls($this->_ds)) {
+					$this->setErrors(0, _AUTH_LDAP_START_TLS_FAILED);
+				}
 			}
 			// If the uid is not in the DN we proceed to a search
 			// The uid is not always in the dn
 			$userUPN = $this->getUPN($uname);
-			if (!$userUPN) return FALSE;
+			if (!$userUPN) {
+				return false;
+			}
 			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userUPN, $this->cp1252_to_utf8(stripslashes($pwd)));
 			if ($authenticated) {
@@ -93,7 +97,7 @@ class icms_auth_method_Ads extends icms_auth_method_Ldap {
 				if ($dn) {
 					return $this->getMember($dn, $uname, $pwd);
 				} else {
-					return FALSE;
+					return false;
 				}
 			} else {
 				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userUPN . ')');

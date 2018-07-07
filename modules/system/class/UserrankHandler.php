@@ -9,7 +9,7 @@
  */
 
 icms_loadLanguageFile("system", "common");
-icms_loadLanguageFile("system", "userrank", TRUE);
+icms_loadLanguageFile("system", "userrank", true);
 
 /**
  * Handler for the user ranks object
@@ -20,7 +20,7 @@ icms_loadLanguageFile("system", "userrank", TRUE);
 class mod_system_UserrankHandler extends icms_ipf_Handler {
 
 	/** */
-	public $objects = FALSE;
+	public $objects = false;
 
 	/**
 	 * Create a new instance of the handler
@@ -76,7 +76,7 @@ class mod_system_UserrankHandler extends icms_ipf_Handler {
 	 */
 	public function MoveAllRanksImagesToProperPath() {
 		$sql = "SELECT rank_image FROM " . $this->table;
-		$Query = $this->query($sql, FALSE);
+		$Query = $this->query($sql, false);
 		foreach ($Query as $qitem) {
 			$value = $qitem["rank_image"];
 			if (file_exists(ICMS_UPLOAD_PATH . "/" . $value)) {
@@ -84,6 +84,6 @@ class mod_system_UserrankHandler extends icms_ipf_Handler {
 			}
 		}
 
-		return TRUE;
+		return true;
 	}
 }

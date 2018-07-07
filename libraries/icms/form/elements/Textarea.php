@@ -102,7 +102,7 @@ class icms_form_elements_Textarea extends icms_form_Element {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value) : $this->_value;
+		return $encode? htmlspecialchars($this->_value):$this->_value;
 	}
 
 	/**
@@ -110,7 +110,7 @@ class icms_form_elements_Textarea extends icms_form_Element {
 	 *
 	 * @param	$value	string
 	 */
-	public function setValue($value){
+	public function setValue($value) {
 		$this->_value = $value;
 	}
 
@@ -119,7 +119,7 @@ class icms_form_elements_Textarea extends icms_form_Element {
 	 *
 	 * @return string HTML
 	 */
-	public function render(){
+	public function render() {
 		return "<textarea class='form-control' name='" . $this->getName()
 			. "' id='" . $this->getName() . '_tarea'
 			. "' rows='" . $this->getRows()
