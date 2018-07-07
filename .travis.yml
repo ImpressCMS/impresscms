@@ -26,22 +26,25 @@ stages:
   - test
   - coverage
 
+services:
+  - mysql
+
+php:
+  - '7.0'
+  - '7.1'
+  - '7.2'
+
+install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
+  - travis_retry composer install --no-progress --no-interaction
+
+script:
+  - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --no-coverage
+
 jobs:
   include:
     - stage: validate
       script: composer validate
-    - stage: test
-      services:
-        - mysql
-      php:
-        - '7.0'
-        - '7.1'
-        - '7.2'
-      install:
-        - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
-        - travis_retry composer install --no-progress --no-interaction
-      script:
-        - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --no-coverage
     - stage: coverage
       env:
         - CC_TEST_REPORTER_ID=ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
@@ -49,6 +52,9 @@ jobs:
         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         - chmod +x ./cc-test-reporter
         - ./cc-test-reporter before-build
+      install:
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
+        - travis_retry composer install --no-progress --no-interaction
       script:
         - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --coverage-clover=build/logs/clover.xml
       after_script:
