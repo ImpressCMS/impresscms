@@ -16,7 +16,7 @@
 class mod_system_AdsenseHandler extends icms_ipf_Handler {
 	public $adFormats = array();
 	private $_adFormatsList = array();
-	private $_objects = FALSE;
+	private $_objects = false;
 
 	/**
 	 * Constructor
@@ -131,7 +131,7 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 	 */
 	protected function beforeSave(&$obj) {
 		if ($obj->getVar('tag') == '') {
-			$obj->setVar('tag', $title  = $obj->generateTag());
+			$obj->setVar('tag', $title = $obj->generateTag());
 		}
 		$obj->setVar("color_border", str_replace("#", "", $obj->getVar("color_border")));
 		$obj->setVar("color_background", str_replace("#", "", $obj->getVar("color_background")));
@@ -139,7 +139,7 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 		$obj->setVar("color_url", str_replace("#", "", $obj->getVar("color_url")));
 		$obj->setVar("color_text", str_replace("#", "", $obj->getVar("color_text")));
 
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -148,7 +148,7 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 	 */
 	public function getAdsensesByTag() {
 		if (!$this->_objects) {
-			$adsensesObj = $this->getObjects(NULL, TRUE);
+			$adsensesObj = $this->getObjects(null, true);
 			$ret = array();
 			foreach ($adsensesObj as $adsenseObj) {
 				$ret[$adsenseObj->getVar('tag')] = $adsenseObj;

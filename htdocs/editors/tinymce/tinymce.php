@@ -76,31 +76,31 @@ class TinyMCE {
 	function init() {
 		global $icmsConfigMultilang, $icmsConfigPersona;
 		$configured = array();
-		if (is_readable(ICMS_ROOT_PATH . $this->rootpath. '/langs/'.$this->config["language"].'.js')) {
+		if (is_readable(ICMS_ROOT_PATH . $this->rootpath . '/langs/' . $this->config["language"] . '.js')) {
 			$this->setting["language"] = $this->config["language"];
 		}
 
-		if (empty($this->config["theme"]) || !is_dir(ICMS_ROOT_PATH . $this->rootpath."/themes/".$this->config["theme"])) {
+		if (empty($this->config["theme"]) || !is_dir(ICMS_ROOT_PATH . $this->rootpath . "/themes/" . $this->config["theme"])) {
 			$this->setting["theme"] = "advanced";
 		} else {
 			$this->setting["theme"] = $this->config["theme"];
 		}
-		$this->setting["mode"] = @$this->config["mode"] ? $this->config["mode"] : "exact";
+		$this->setting["mode"] = @$this->config["mode"]?$this->config["mode"]:"exact";
 		$configured[] = "language";
 		$configured[] = "theme";
 		$configured[] = "mode";
-		$this->setting["plugins"] = "icmsmlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking" ;
-		$this->setting["plugins"] .= !empty($this->config["plugins"]) ? ",".$this->config["plugins"] : "";
+		$this->setting["plugins"] = "icmsmlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking";
+		$this->setting["plugins"] .= !empty($this->config["plugins"])?"," . $this->config["plugins"]:"";
 		$configured[] = "plugins";
 
-		$this->setting["content_css"] = @$this->config["content_css"] ? $this->config["content_css"] : "editor_xoops.css";
-		if (!is_readable(ICMS_ROOT_PATH . $this->rootpath. '/themes/'.$this->setting["theme"].'/css/' .$this->setting["content_css"])) {
-			unset( $this->setting["content_css"] );
+		$this->setting["content_css"] = @$this->config["content_css"]?$this->config["content_css"]:"editor_xoops.css";
+		if (!is_readable(ICMS_ROOT_PATH . $this->rootpath . '/themes/' . $this->setting["theme"] . '/css/' . $this->setting["content_css"])) {
+			unset($this->setting["content_css"]);
 		}
 		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == true && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
 		if ($this->setting["theme"] == "advanced") {
-			$this->setting["theme_advanced_buttons1"] = "bold,italic,underline,strikethrough,sub,sup,separator,justify"._GLOBAL_LEFT.",justifycenter,justify"._GLOBAL_RIGHT.",justifyfull,formatselect,fontselect,fontsizeselect";
-			$this->setting["theme_advanced_buttons2"] = "xoopsquote,xoopscode,".(($easiestml_exist)?"icmsmlcontent,":"")."separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
+			$this->setting["theme_advanced_buttons1"] = "bold,italic,underline,strikethrough,sub,sup,separator,justify" . _GLOBAL_LEFT . ",justifycenter,justify" . _GLOBAL_RIGHT . ",justifyfull,formatselect,fontselect,fontsizeselect";
+			$this->setting["theme_advanced_buttons2"] = "xoopsquote,xoopscode," . (($easiestml_exist)?"icmsmlcontent,":"") . "separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
 			$this->setting["theme_advanced_buttons3"] = "tablecontrols,separator,cleanup,visualaid,visualchars,separator,insertdate,inserttime,separator,preview,fullscreen,help,code";
 		}
 
@@ -123,53 +123,53 @@ class TinyMCE {
 			foreach ($this->config["buttons"] as $button) {
 				$i++;
 				if (isset($button["before"])) {
-					$this->setting["theme_".$this->setting["theme"]."_buttons{$i}_add_before"] = $button["before"];
+					$this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}_add_before"] = $button["before"];
 				}
 				if (isset($button["add"])) {
-					$this->setting["theme_".$this->setting["theme"]."_buttons{$i}_add"] = $button["add"];
+					$this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}_add"] = $button["add"];
 				}
 				if (isset($button[""])) {
-					$this->setting["theme_".$this->setting["theme"]."_buttons{$i}"] = $button[""];
+					$this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"] = $button[""];
 				}
 			}
 			$configured[] = "buttons";
 
 			if (isset($this->config["toolbar_location"])) {
-				$this->setting["theme_".$this->setting["theme"]."_toolbar_location"] = $this->config["toolbar_location"];
+				$this->setting["theme_" . $this->setting["theme"] . "_toolbar_location"] = $this->config["toolbar_location"];
 				$configured[] = "toolbar_location";
 			} else {
-				$this->setting["theme_".$this->setting["theme"]."_toolbar_location"] = "top";
+				$this->setting["theme_" . $this->setting["theme"] . "_toolbar_location"] = "top";
 			}
 
 			if (isset($this->config["toolbar_align"])) {
-				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = $this->config["toolbar_align"];
+				$this->setting["theme_" . $this->setting["theme"] . "_toolbar_align"] = $this->config["toolbar_align"];
 				$configured[] = "toolbar_align";
 			} else {
-				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = _GLOBAL_LEFT;
+				$this->setting["theme_" . $this->setting["theme"] . "_toolbar_align"] = _GLOBAL_LEFT;
 			}
 
 			if (isset($this->config["statusbar_location"])) {
-				$this->setting["theme_".$this->setting["theme"]."_statusbar_location"] = $this->config["statusbar_location"];
+				$this->setting["theme_" . $this->setting["theme"] . "_statusbar_location"] = $this->config["statusbar_location"];
 				$configured[] = "statusbar_location";
 			}
 
 			if (isset($this->config["path_location"])) {
-				$this->setting["theme_".$this->setting["theme"]."_path_location"] = $this->config["path_location"];
+				$this->setting["theme_" . $this->setting["theme"] . "_path_location"] = $this->config["path_location"];
 				$configured[] = "path_location";
 			}
 
 			if (isset($this->config["resize_horizontal"])) {
-				$this->setting["theme_".$this->setting["theme"]."_resize_horizontal"] = $this->config["resize_horizontal"];
+				$this->setting["theme_" . $this->setting["theme"] . "_resize_horizontal"] = $this->config["resize_horizontal"];
 				$configured[] = "resize_horizontal";
 			}
 
 			if (isset($this->config["resizing"])) {
-				$this->setting["theme_".$this->setting["theme"]."_resizing"] = $this->config["resizing"];
+				$this->setting["theme_" . $this->setting["theme"] . "_resizing"] = $this->config["resizing"];
 				$configured[] = "resizing";
 			}
 
 			if (!empty($this->config["fonts"])) {
-				$this->setting["theme_".$this->setting["theme"]."_fonts"] = $this->config["fonts"];
+				$this->setting["theme_" . $this->setting["theme"] . "_fonts"] = $this->config["fonts"];
 				$configured[] = "fonts";
 			}
 		}
@@ -181,7 +181,7 @@ class TinyMCE {
 			$this->setting[$key] = $val;
 		}
 
-		if (!is_dir(ICMS_ROOT_PATH . $this->rootpath."/themes/".$this->setting["theme"]. '/docs/'.$this->config["language"].'/')) {
+		if (!is_dir(ICMS_ROOT_PATH . $this->rootpath . "/themes/" . $this->setting["theme"] . '/docs/' . $this->config["language"] . '/')) {
 			$this->setting["docs_language"] = "en";
 		}
 
@@ -196,7 +196,9 @@ class TinyMCE {
 	 */
 	function render() {
 		static $rendered;
-		if ($rendered) return null;
+		if ($rendered) {
+			return null;
+		}
 
 		$rendered = true;
 
@@ -217,9 +219,9 @@ class TinyMCE {
 		foreach ($this->setting as $key => $val) {
 			$ret .= $key . ' : ';
 			if ($val === true || $val === false) {
-				$ret .= $val.','."\r\n";
+				$ret .= $val . ',' . "\r\n";
 			} else {
-				$ret .= '"'. $val . '",'."\r\n";
+				$ret .= '"' . $val . '",' . "\r\n";
 			}
 		}
 		$ret .= '
@@ -229,7 +231,7 @@ relative_urls : false,
 remove_script_host : false,
 force_br_newlines : false,
 tinymceload : "1"});
-'.$callback.'
+'.$callback . '
 function showMCE(id) {
   if (tinyMCE.getInstanceById(id) == null) {
       tinyMCE.execCommand(\'mceAddControl\', false, id);
@@ -239,6 +241,6 @@ function showMCE(id) {
 }
             </script>
       ';
-		return $ret ;
+		return $ret;
 	}
 }

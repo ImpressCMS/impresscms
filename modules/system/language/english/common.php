@@ -163,7 +163,7 @@ define('_CO_ICMS_CLONE', "Clone this object");
 define('_CO_ICMS_CATEGORY_VIEW', "Category view");
 
 define('_CO_ICMS_CURRENT_FILE', "Current file: ");
-define('_CO_ICMS_URL_FILE_DSC', "Alternatively, you can use an URL. If you select a file via 'Browse' button, URL will be ignored. You can use the tag {ICMS_URL} to print ".ICMS_URL);
+define('_CO_ICMS_URL_FILE_DSC', "Alternatively, you can use an URL. If you select a file via 'Browse' button, URL will be ignored. You can use the tag {ICMS_URL} to print " . ICMS_URL);
 define('_CO_ICMS_URL_FILE', "URL: ");
 define('_CO_ICMS_UPLOAD', "Select a file to upload: ");
 
@@ -183,10 +183,10 @@ define('_CO_ICMS_UPDATE_DBVERSION', "Database migrate to version '<em>%s</em>' <
 define('_CO_ICMS_ON', "On");
 define('_CO_ICMS_OFF', "Off");
 define('_CO_ICMS_WARNING_ALPHA', "This module comes as is, without any guarantees whatsoever. This module is ALPHA, meaning it is still under active development. This release is meant for <b>development and testing purposes only</b>, and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
-define('_CO_ICMS_UPDATE_NEEDED','Your system module needs updating');
+define('_CO_ICMS_UPDATE_NEEDED', 'Your system module needs updating');
 
 // moved in 1.3.3
-define("_MD_AM_HELP_TIP","View help text");
+define("_MD_AM_HELP_TIP", "View help text");
 
 // added in 2.0 to replace _MD_AM_MODULE
 define("_CO_ICMS_MODULE", "Module");

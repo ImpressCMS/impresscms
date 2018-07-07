@@ -30,7 +30,7 @@ class icms_Autoloader {
 	 * Whether setup has already been called or not
 	 * @var bool
 	 */
-	static protected $initialized = FALSE;
+	static protected $initialized = false;
 
 	/**
 	 * Initialize the autoloader, and register its autoload method
@@ -41,7 +41,7 @@ class icms_Autoloader {
 			//self::register(dirname(__DIR__));
 			//spl_autoload_register(array('icms_Autoloader', 'autoload'));
 			//spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));
-			self::$initialized = TRUE;
+			self::$initialized = true;
 		}
 	}
 
@@ -54,7 +54,7 @@ class icms_Autoloader {
 	 * @return array
 	 */
 	static public function split($class) {
-		if (FALSE === ($pos = strrpos($class, "\\"))) {
+		if (false === ($pos = strrpos($class, "\\"))) {
 			$pos = strrpos($class, "_");
 		}
 		if ($pos) {
@@ -78,7 +78,7 @@ class icms_Autoloader {
 	 */
 	static public function register($path, $namespace = "") {
 		if ($namespace) {
-			self::$localRepositories[ $namespace ] = array(strlen($namespace), $path);
+			self::$localRepositories[$namespace] = array(strlen($namespace), $path);
 		} else {
 			self::$globalRepositories[] = $path;
 		}
@@ -94,14 +94,14 @@ class icms_Autoloader {
 	 * @param bool $required Whether to throw an exception or not if the namespace file is not found
 	 * @return bool
 	 */
-	static public function import($namespace, $required = TRUE) {
-		if (!isset(self::$imported[ $namespace ])) {
-			$nspath = self::classPath($namespace, TRUE, DIRECTORY_SEPARATOR . "namespace.php");
+	static public function import($namespace, $required = true) {
+		if (!isset(self::$imported[$namespace])) {
+			$nspath = self::classPath($namespace, true, DIRECTORY_SEPARATOR . "namespace.php");
 			if ($nspath) {
 				include_once $nspath . DIRECTORY_SEPARATOR . "namespace.php";
-				return self::$imported[$namespace] = TRUE;
+				return self::$imported[$namespace] = true;
 			}
-			self::$imported[$namespace] = FALSE;
+			self::$imported[$namespace] = false;
 		}
 		if (!self::$imported[$namespace] && $required) {
 			throw new RuntimeException("No namespace file for namespace '$namespace'.");
@@ -119,9 +119,9 @@ class icms_Autoloader {
 		if ($path = self::classPath($class)) {
 			list($ns, $local) = self::split($class);
 			include_once "$path.php";
-			return TRUE;
+			return true;
 		}
-		return FALSE;
+		return false;
 	}
 
 	/**
@@ -130,13 +130,13 @@ class icms_Autoloader {
 	 * @param string $class Name of the class to find
 	 * @param bool $useIncludePath If to search include paths too
 	 */
-	static public function classPath($class, $useIncludePath = FALSE, $ext = ".php") {
+	static public function classPath($class, $useIncludePath = false, $ext = ".php") {
 		$classPath = str_replace(array("\\", "_"), DIRECTORY_SEPARATOR, $class);
 		// First, try local repositories
 		if (strpos($class, "\\") || strpos($class, "_")) {
 			foreach (self::$localRepositories as $name => $info) {
 				list($len, $path) = $info;
-				if (!strncmp($name . "\\", $class, $len+1) || !strncmp($name . "_", $class, $len+1)) {
+				if (!strncmp($name . "\\", $class, $len + 1) || !strncmp($name . "_", $class, $len + 1)) {
 					$localPath = substr($classPath, $len + 1);
 					if (file_exists($path . DIRECTORY_SEPARATOR . $localPath . $ext)) {
 						return $path . DIRECTORY_SEPARATOR . $localPath;
@@ -156,11 +156,11 @@ class icms_Autoloader {
 		if ($useIncludePath) {
 			foreach (explode(PATH_SEPARATOR, get_include_path()) as $path) {
 				if (file_exists($path . DIRECTORY_SEPARATOR . $classPath . $ext)) {
-					return (DIRECTORY_SEPARATOR != "/" ? str_replace("/", DIRECTORY_SEPARATOR, $path) : $path) . DIRECTORY_SEPARATOR . $classPath;
+					return (DIRECTORY_SEPARATOR != "/"? str_replace("/", DIRECTORY_SEPARATOR, $path):$path) . DIRECTORY_SEPARATOR . $classPath;
 				}
 			}
 		}
-		return FALSE;
+		return false;
 	}
 
 	/**
@@ -171,9 +171,9 @@ class icms_Autoloader {
 	static public function registerLegacy($class) {
 		$class = strtolower($class);
 		$legacyClassPath = array(
-		    "database" 						=> "/class/database/database.php",
-		    "icmsdatabase" 					=> "/class/database/database.php",
-		    "xoopsdatabase" 				=> "/class/database/database.php",
+			"database" 						=> "/class/database/database.php",
+			"icmsdatabase" 					=> "/class/database/database.php",
+			"xoopsdatabase" 				=> "/class/database/database.php",
 			"mytextsanitizer" 				=> "/class/module.textsanitizer.php",
 			"xoopsmodule" 					=> "/kernel/module.php",
 			"xoopsmodulehandler"			=> "/kernel/module.php",

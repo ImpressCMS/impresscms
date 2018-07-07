@@ -25,26 +25,26 @@ $filter_post = array(
 	'email' => array('email', 'options' => array(0, 1)),
 );
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
-    extract($clean_GET);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
 }
 if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
-    extract($clean_POST);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
 }
 
 global $icmsConfigUser;
 if ($password == '' || $password2 == '') {
-	redirect_header('user.php?op=resetpass', 3, sprintf(_US_SORRYMUSTENTERPASS, icms::$user->getVar('uname')), FALSE);
+	redirect_header('user.php?op=resetpass', 3, sprintf(_US_SORRYMUSTENTERPASS, icms::$user->getVar('uname')), false);
 }
 if ((isset($password)) && ($password !== $password2)) {
-	redirect_header('user.php?op=resetpass', 3, sprintf(_US_PASSNOTSAME, ''), FALSE);
+	redirect_header('user.php?op=resetpass', 3, sprintf(_US_PASSNOTSAME, ''), false);
 } elseif (($password !== '') && (strlen($password) < $icmsConfigUser['minpass'])) {
-	redirect_header('user.php?op=resetpass', 2, sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']), FALSE);
+	redirect_header('user.php?op=resetpass', 2, sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']), false);
 }
 
 if (!icms::$user) {
-	redirect_header('user.php', 2, sprintf(_US_SORRYNOTFOUND, 3, ''), FALSE);
+	redirect_header('user.php', 2, sprintf(_US_SORRYNOTFOUND, 3, ''), false);
 	} else {
 		$icmspass = new icms_core_Password();
 
@@ -81,5 +81,5 @@ if (!icms::$user) {
 			exit();
 		}
 		unset($pass);
-	redirect_header('user.php', 3, sprintf(_US_PWDRESET, icms::$user->getVar('uname')), FALSE);
+	redirect_header('user.php', 3, sprintf(_US_PWDRESET, icms::$user->getVar('uname')), false);
 }

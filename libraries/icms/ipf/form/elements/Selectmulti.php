@@ -8,7 +8,7 @@
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_form_elements_Selectmulti extends icms_ipf_form_elements_Select  {
+class icms_ipf_form_elements_Selectmulti extends icms_ipf_form_elements_Select {
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)

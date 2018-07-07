@@ -29,9 +29,9 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 	 * @param array $actions		An array of actions for this object
 	 * @param boolean $userSide		TRUE - display on the user side; FALSE - do not display
 	 */
-	public function __construct(&$objectHandler, $criteria=FALSE, $actions=array('edit', 'delete'), $userSide=FALSE) {
+	public function __construct(&$objectHandler, $criteria = false, $actions = array('edit', 'delete'), $userSide = false) {
 		parent::__construct($objectHandler, $criteria, $actions, $userSide);
-		$this->_isTree = TRUE;
+		$this->_isTree = true;
 	}
 
 	/**
@@ -40,8 +40,8 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 	 * @var int $category_pid id of the parent which children we want to retreive
 	 * @return array of icms_ipf_Object
 	 */
-	public function getChildrenOf($category_pid=0) {
-		return isset($this->_objects[$category_pid]) ? $this->_objects[$category_pid] : false;
+	public function getChildrenOf($category_pid = 0) {
+		return isset($this->_objects[$category_pid])?$this->_objects[$category_pid]:false;
 	}
 
 	/**
@@ -50,11 +50,11 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 	 * @param object	$object	@link icms_ipf_Object
 	 * @param integer	$level	sub-level of the item
 	 */
-	public function createTableRow($object, $level=0) {
+	public function createTableRow($object, $level = 0) {
 
 		$aObject = array();
 
-		$i=0;
+		$i = 0;
 
 		$aColumns = array();
 		$doWeHaveActions = false;
@@ -63,7 +63,7 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 
 			$aColumn = array();
 
-			if ($i==0) {
+			if ($i == 0) {
 				$class = "head";
 			} elseif ($i % 2 == 0) {
 				$class = "even";
@@ -108,7 +108,7 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 
 		$aObject['columns'] = $aColumns;
 
-		$class = $class == 'even' ? 'odd' : 'even';
+		$class = $class == 'even'?'odd':'even';
 		$aObject['class'] = $class;
 
 		$actions = array();
@@ -136,7 +136,7 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 
 		$childrenObjects = $this->getChildrenOf($object->id());
 
-		$this->_hasActions = $this->_hasActions  ? true : count($actions) > 0;
+		$this->_hasActions = $this->_hasActions? true : count($actions) > 0;
 
 		if ($childrenObjects) {
 			$level++;

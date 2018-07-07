@@ -45,19 +45,19 @@ class icms_form_elements_select_Editor extends icms_form_elements_Tray {
 	 * @param	string	$value	Pre-selected text value
 	 * @param	bool	$noHtml  dohtml disabled
 	 */
-	public function __construct(&$form, $name = "editor", $value = NULL, $noHtml = FALSE) {
+	public function __construct(&$form, $name = "editor", $value = null, $noHtml = false) {
 		global $icmsConfig;
 
-		if (empty($value)){
+		if (empty($value)) {
 			$value = $icmsConfig['editor_default'];
 		}
 
 		parent::__construct(_SELECT);
 		$edtlist = icms_plugins_EditorHandler::getListByType();
 		$option_select = new icms_form_elements_Select("", $name, $value);
-		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);
+		$querys = preg_replace('/editor=(.*?)&/', '', $_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
-				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&'.$querys.'\';
+				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&'.$querys . '\';
 			}"';
 		$option_select->setExtra($extra);
 		$option_select->addOptionArray($edtlist);

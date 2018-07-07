@@ -18,9 +18,11 @@
  */
 require_once 'common.inc.php';
 
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
-$wizard->setPage( 'pathsettings' );
+$wizard->setPage('pathsettings');
 $pageHasForm = true;
 $pageHasHelp = true;
 
@@ -54,19 +56,19 @@ ob_start();
 <div class="clear">&nbsp;</div>
 <input type="text" name="ROOT_PATH" id="rootpath"
 	value="<?=htmlentities(ICMS_ROOT_PATH); ?>" readonly />
-<?php if ( !empty( $ctrl->permErrors )) { ?>
+<?php if (!empty($ctrl->permErrors)) { ?>
 <div id="rootperms"><?php echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
 <ul class="diags">
-<?php foreach ( $ctrl->permErrors as $path => $result) {
+<?php foreach ($ctrl->permErrors as $path => $result) {
 	if ($result) {
-		echo '<li class="success">' . sprintf( IS_WRITABLE, $path ) . '</li>';
+		echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
 	} else {
-		echo '<li class="failure">' . sprintf( IS_NOT_WRITABLE, $path ) . '</li>';
+		echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
 	}
 } ?>
 	<button type="button" id="permrefresh" /><?php echo BUTTON_REFRESH; ?></button>
 </ul>
-<?php } else { echo '<div id="rootperms">'.CHECKING_PERMISSIONS .'<br /><ul class="diags"><li class="success">'.ALL_PERM_OK.'</li></ul></div>';} ?>
+<?php } else { echo '<div id="rootperms">' . CHECKING_PERMISSIONS . '<br /><ul class="diags"><li class="success">' . ALL_PERM_OK . '</li></ul></div>'; } ?>
 
 </fieldset>
 <br />

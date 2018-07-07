@@ -48,9 +48,9 @@ function editblockposition($id = 0) {
 $clean_op = $op;
 $clean_id = $id;
 
-$valid_op = array ('mod', 'changedField', 'addblockposition', 'del', '');
+$valid_op = array('mod', 'changedField', 'addblockposition', 'del', '');
 
-if (in_array($clean_op, $valid_op, TRUE)) {
+if (in_array($clean_op, $valid_op, true)) {
 
 	switch ($clean_op) {
 		case "mod":
@@ -71,10 +71,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		default:
 			icms_cp_header();
-			$objectTable = new icms_ipf_view_Table($icms_admin_handler, FALSE);
+			$objectTable = new icms_ipf_view_Table($icms_admin_handler, false);
 
 			$objectTable->addColumn(new icms_ipf_view_Column('pname'), 'center');
-			$objectTable->addColumn(new icms_ipf_view_Column('title', FALSE, FALSE, 'getCustomTitle', FALSE, FALSE, FALSE));
+			$objectTable->addColumn(new icms_ipf_view_Column('title', false, false, 'getCustomTitle', false, false, false));
 			$objectTable->addColumn(new icms_ipf_view_Column('description'));
 
 			$objectTable->addIntroButton('addblockposition', 'admin.php?fct=positions&amp;op=mod', _AM_SYSTEM_POSITIONS_CREATE);

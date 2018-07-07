@@ -10,7 +10,7 @@
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-include_once ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php" ;
+include_once ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php";
 
 icms_loadLanguageFile('system', 'rating', true);
 
@@ -73,4 +73,3 @@ if (isset($_POST['icms_rating_submit'])) {
 	exit;
 }
 
-?>

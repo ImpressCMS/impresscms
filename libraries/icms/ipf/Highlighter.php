@@ -12,38 +12,38 @@
 class icms_ipf_Highlighter {
 
 	/**
-        * PREG keywords
-         *
+	 * PREG keywords
+	 *
 	 * @var string
 	 */
 	private $preg_keywords = '';
 
 	/**
-        * Keywords
-         *
+	 * Keywords
+	 *
 	 * @var string
 	 */
 	private $keywords = '';
 
 	/**
-        * Single words?
-         *
+	 * Single words?
+	 *
 	 * @var bool
 	 */
 	private $singlewords = false;
 
 	/**
-        * Replace callback
-         *
+	 * Replace callback
+	 *
 	 * @var null|callable
 	 */
 	private $replace_callback = null;
 
-        /**
-        * Content
-         *
-        * @var string
-        */
+		/**
+		 * Content
+		 *
+		 * @var string
+		 */
 	public $content = '';
 
 	/**
@@ -107,7 +107,7 @@ class icms_ipf_Highlighter {
 	private function highlight($buffer) {
 		$buffer = '>' . $buffer . '<';
 		$this->preg_keywords = preg_replace('/[^\w ]/si', '', $this->keywords);
-		$buffer = preg_replace_callback ("/(\>(((?" . ">[^><]+)|(?R))*)\<)/is", array(&$this, 'replace'), $buffer);
+		$buffer = preg_replace_callback("/(\>(((?" . ">[^><]+)|(?R))*)\<)/is", array(&$this, 'replace'), $buffer);
 		$buffer = substr($buffer, 1, -1);
 		return $buffer;
 	}

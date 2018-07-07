@@ -21,54 +21,54 @@
  */
 class icms_ipf_view_Column {
 
-    /**
-     * Keyname
-     *
-     * @var string
-     */
+	/**
+	 * Keyname
+	 *
+	 * @var string
+	 */
 	public $_keyname = '';
 
-        /**
-         * Align of text in column
-         *
-         * @var string
-         */
+		/**
+		 * Align of text in column
+		 *
+		 * @var string
+		 */
 	public $_align = _GLOBAL_LEFT;
 
-        /**
-         * Width
-         *
-         * @var bool|string|int
-         */
+		/**
+		 * Width
+		 *
+		 * @var bool|string|int
+		 */
 	public $_width = false;
 
-        /**
-         * Custom method that formats value
-         *
-         * @var callable|null
-         */
+		/**
+		 * Custom method that formats value
+		 *
+		 * @var callable|null
+		 */
 	public $_customMethodForValue;
 
-        /**
-         * Extra params
-         *
-         * @var string
-         */
+		/**
+		 * Extra params
+		 *
+		 * @var string
+		 */
 	public $_extraParams = '';
 
-        /**
-         * Column can be sortable?
-         *
-         * @var bool
-         */
+		/**
+		 * Column can be sortable?
+		 *
+		 * @var bool
+		 */
 	public $_sortable = true;
 
-        /**
-         * Custom caption for column
-         * Uf empty it tried to autodetect from property
-         *
-         * @var string
-         */
+		/**
+		 * Custom caption for column
+		 * Uf empty it tried to autodetect from property
+		 *
+		 * @var string
+		 */
 	public $_customCaption = '';
 
 	/**

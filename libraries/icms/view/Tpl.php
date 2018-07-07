@@ -64,7 +64,7 @@ class icms_view_Tpl extends Smarty {
 
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
 		$this->_compile_id = $this->compile_id;
-		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
+		$this->compile_check = ($icmsConfig['theme_fromfile'] == 1);
 		$this->plugins_dir = array(
 			SMARTY_DIR . 'icms_plugins',
 			SMARTY_DIR . 'plugins',
@@ -81,8 +81,8 @@ class icms_view_Tpl extends Smarty {
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
-			$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->getVar('mid') : 1;
+			$groups = (is_object(icms::$user))? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+			$moduleid = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('mid'):1;
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			if ($icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
@@ -132,7 +132,7 @@ class icms_view_Tpl extends Smarty {
 			$this->_tpl_vars = $oldVars;
 			return $out;
 		}
-		return smarty_function_eval(array('var' => $tplSource), $this );
+		return smarty_function_eval(array('var' => $tplSource), $this);
 	}
 
 	/**
@@ -151,25 +151,18 @@ class icms_view_Tpl extends Smarty {
 	}
 
 	/**
-	 * function to update compiled template file in cached templates folder
-	 * Prior to PHP5.3.0, when refering to the class with a variable, like $icmsAdminTpl, you
-	 * still need to use the arrow operator instead of ::
-	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
-	 *
-	 * The proper way to use this would be
-	 * icms_view_Tpl::template_touch($tplid);
-	 * or
-	 * $icmsAdminTpl->template_touch($tplid);
+	 * Touch template by id
 	 *
 	 * @param   string  $tpl_id
+	 *
 	 * @return  boolean
 	 */
 	static public function template_touch($tpl_id) {
-		$tplfile_handler =& icms::handler('icms_view_template_file');
-		$tplfile =& $tplfile_handler->get($tpl_id);
+		$tplfile_handler = & icms::handler('icms_view_template_file');
+		$tplfile = & $tplfile_handler->get($tpl_id);
 
 		if (is_object($tplfile)) {
-			$file = $tplfile->getVar('tpl_file', 'n');
+			$file = $tplfile->tpl_file;
 			$tpl = new icms_view_Tpl();
 			return $tpl->touch("db:$file");
 		}
@@ -179,17 +172,7 @@ class icms_view_Tpl extends Smarty {
 	/**
 	 * Clear the module cache
 	 *
-	 * Prior to PHP5.3.0, when refering to the class with a variable, like $icmsAdminTpl, you
-	 * still need to use the arrow operator instead of ::
-	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
-	 *
-	 * The proper way to use this would be
-	 * icms_view_Tpl::template_clear_module_cache($tplid);
-	 * or
-	 * $icmsAdminTpl->template_clear_module_cache($tplid);
-	 *
 	 * @param   int $mid    Module ID
-	 * @return
 	 */
 	static public function template_clear_module_cache($mid) {
 		$icms_block_handler = icms::handler('icms_view_block');
@@ -200,7 +183,7 @@ class icms_view_Tpl extends Smarty {
 			$xoopsTpl->caching = 2;
 			for ($i = 0; $i < $count; $i++) {
 				if ($block_arr[$i]->getVar('template') != '') {
-					$xoopsTpl->clear_cache('db:'.$block_arr[$i]->getVar('template'), 'blk_'.$block_arr[$i]->getVar('bid'));
+					$xoopsTpl->clear_cache('db:' . $block_arr[$i]->getVar('template'), 'blk_' . $block_arr[$i]->getVar('bid'));
 				}
 			}
 		}

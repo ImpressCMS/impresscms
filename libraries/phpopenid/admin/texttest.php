@@ -194,4 +194,3 @@ if ($totals['error'] || $totals['failure']) {
     exit(1);
 }
 
-?>

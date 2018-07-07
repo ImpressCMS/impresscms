@@ -38,7 +38,24 @@ define('XOOPS_MATCH_END', 1);
 define('XOOPS_MATCH_EQUAL', 2);
 define('XOOPS_MATCH_CONTAIN', 3);
 
-define('ICMS_KERNEL_PATH', ICMS_ROOT_PATH . '/kernel/');
+if (!defined('ICMS_PUBLIC_PATH')) {
+	$path = getenv('public_path');
+	if (empty($path)) {
+		foreach (['public_html', 'htdocs', 'wwwroot'] as $dirname) {
+			if (file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $dirname)) {
+				$path = $dirname;
+				break;
+			}
+		}
+		if (empty($path)) {
+			throw new Exception('You need to define relative "public_path" in .env file before using this tool');
+		}
+		unset($dirname);
+	}
+	define('ICMS_PUBLIC_PATH', ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $path);
+	unset($dirname);
+}
+
 define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
 define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH . '/include');
 define('ICMS_UPLOAD_PATH', ICMS_PUBLIC_PATH . '/uploads');

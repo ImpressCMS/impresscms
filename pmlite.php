@@ -64,12 +64,12 @@ $reply = $send = $send2 = $refresh = $to_userid = $msg_id = 0;
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_POST);
 }
 
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
@@ -95,25 +95,25 @@ if (!icms::$user) {
 	icms_core_Message::warning(
 		_PM_PLZREG . " <a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a> " . _OR . " <a href='" . ICMS_URL . "/user.php'>" . _LOGIN . "</a>",
 		_PM_SORRY,
-		TRUE
+		true
 	);
 } else {
 	if (!empty($op) && $op == _SUBMIT) {
 		/* This section is for sending messages */
 		if (!icms::$security->check()) {
-			$security_error = TRUE;
+			$security_error = true;
 		}
 		$res = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("users")
-			. " WHERE uid='". $to_userid . "'");
+			. " WHERE uid='" . $to_userid . "'");
 		list($count) = icms::$xoopsDB->fetchRow($res);
 		if ($count != 1) {
 			redirect_header(icms_getPreviousPage(), 5, _PM_USERNOEXIST . ' ' . _PM_PLZTRYAGAIN);
-			if (isset($security_error) && $security_error == TRUE) {
+			if (isset($security_error) && $security_error == true) {
 				redirect_header(icms_getPreviousPage(), 5, implode('<br />', icms::$security->getErrors()));
 			}
 		} else {
 			$pm_handler = icms::handler('icms_data_privmessage');
-			$pm =& $pm_handler->create();
+			$pm = & $pm_handler->create();
 			$pm->setVar("subject", $subject);
 			$pm->setVar("msg_text", $message);
 			$pm->setVar("to_userid", $to_userid);
@@ -123,7 +123,7 @@ if (!icms::$user) {
 			} else {
 				// Send a Private Message email notification
 				$userHandler = icms::handler('icms_member_user');
-				$toUser =& $userHandler->get($to_userid);
+				$toUser = & $userHandler->get($to_userid);
 				// Only send email notif if notification method is mail
 				if ($toUser->getVar('notify_method') == 2) {
 					$mailer = new icms_messaging_Handler();
@@ -155,14 +155,14 @@ if (!icms::$user) {
 	} elseif ($reply != 0 || $send != 0 || $send2 != 0) {
 		/* This section is for composing messages */
 		$theme = new icms_view_theme_Factory();
-		$icmsTheme =& $theme->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
+		$icmsTheme = & $theme->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
 
-		$form = new icms_form_Theme('', 'coolsus', ICMS_URL . '/pmlite.php', 'post', TRUE);
+		$form = new icms_form_Theme('', 'coolsus', ICMS_URL . '/pmlite.php', 'post', true);
 
 		if ($reply != 0) {
 			/* we are replying to a message */
 			$pm_handler = icms::handler('icms_data_privmessage');
-			$pm =& $pm_handler->get($msg_id);
+			$pm = & $pm_handler->get($msg_id);
 
 			if ($pm->getVar("to_userid") == (int) (icms::$user->getVar('uid'))) {
 				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
@@ -185,11 +185,11 @@ if (!icms::$user) {
 			$userID = $to_userid;
 		} else {
 			/* we are composing a new message from our inbox */
-			$userID = NULL;
+			$userID = null;
 		}
 
-		$form->addElement(new icms_form_elements_select_User(_PM_TO, 'to_userid', FALSE, $userID));
-		$form->addElement(new icms_form_elements_Text(_SUBJECT, 'subject', 30, 100, $subject), TRUE);
+		$form->addElement(new icms_form_elements_select_User(_PM_TO, 'to_userid', false, $userID));
+		$form->addElement(new icms_form_elements_Text(_SUBJECT, 'subject', 30, 100, $subject), true);
 		$form->addElement(new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', $message));
 
 		$tray = new icms_form_elements_Tray();

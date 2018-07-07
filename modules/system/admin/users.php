@@ -42,12 +42,12 @@
 
 /* set get and post filters before including admin_header, if not strings */
 $filter_post = array(
-    'user_sig' => 'html',
-    'bio'=> 'html',
+	'user_sig' => 'html',
+	'bio'=> 'html',
 );
 
 $filter_get = array(
-    'uid' => 'int',
+	'uid' => 'int',
 );
 
 /* set default values for variables. $op and $fct are handled in the header */
@@ -68,22 +68,22 @@ switch ($op) {
 		if (!icms::$security->check()) {
 			redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));
 		}
-		$user_avatar = $theme = NULL;
+		$user_avatar = $theme = null;
 		if (!isset($attachsig)) {
-			$attachsig = NULL;
+			$attachsig = null;
 		}
 		if (!isset($user_viewemail)) {
-			$user_viewemail = NULL;
+			$user_viewemail = null;
 		}
 		if (!isset($user_viewoid)) {
-			$user_viewoid = NULL;
+			$user_viewoid = null;
 		}
 		if (!isset($openid)) {
-			$openid = NULL;
+			$openid = null;
 		}
-		$groups = isset($_POST['groups']) ? $groups : array(ICMS_GROUP_ANONYMOUS);
+		$groups = isset($_POST['groups'])?$groups:array(ICMS_GROUP_ANONYMOUS);
 		if (@is_array($groups_hidden)) {
-			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
+			$groups = array_unique(array_merge($groups, $groups_hidden));
 		}
 		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm,
 					$user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig,
@@ -94,7 +94,7 @@ switch ($op) {
 
 	case 'delUser':
 		icms_cp_header();
-		$userdata =& $user_handler->get($uid);
+		$userdata = & $user_handler->get($uid);
 		icms_core_Message::confirm(array('fct' => 'users',
 											'op' => 'delUserConf',
 											'del_uid' => $userdata->getVar('uid')
@@ -123,7 +123,7 @@ switch ($op) {
 				. "<input type='button' value='" . _NO
 				. "' onclick='javascript:location.href=\"admin.php?op=adminMain\"' />"
 				. $hidden . "</form></div>";
-		} else {echo _AM_NOUSERS;}
+		} else {echo _AM_NOUSERS; }
 		icms_cp_footer();
 		break;
 
@@ -135,11 +135,11 @@ switch ($op) {
 		$output = '';
 		$member_handler = icms::handler('icms_member');
 		for ($i = 0; $i < $count; $i++) {
-			$deluser =& $user_handler->get($memberslist_id[$i]);
+			$deluser = & $user_handler->get($memberslist_id[$i]);
 			$delgroups = $deluser->getGroups();
 			if (in_array(ICMS_GROUP_ADMIN, $delgroups)) {
 				$output .= sprintf(
-						_AM_ADMIN_CAN_NOT_BE_DELETEED . ' (' ._AM_NICKNAME . ': %s)',
+						_AM_ADMIN_CAN_NOT_BE_DELETEED . ' (' . _AM_NICKNAME . ': %s)',
 						$deluser->getVar('uname')
 					) . '<br />';
 			} else {
@@ -161,7 +161,7 @@ switch ($op) {
 			redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		$member_handler = icms::handler('icms_member');
-		$user =& $user_handler->get($del_uid);
+		$user = & $user_handler->get($del_uid);
 		$groups = $user->getGroups();
 		if (in_array(ICMS_GROUP_ADMIN, $groups)) {
 			icms_cp_header();
@@ -195,7 +195,7 @@ switch ($op) {
 			} elseif ($user_handler->getCount(new icms_db_criteria_Item('email', $email)) > 0) {
 				$adduser_errormsg = _AM_A_USER_WITH_THIS_EMAIL_ADDRESS . ' "' . $email . '" ' . _AM_ALREADY_EXISTS;
 			} else {
-				$newuser =& $user_handler->create();
+				$newuser = & $user_handler->create();
 				if (isset($user_viewemail)) {
 					$newuser->setVar('user_viewemail', $user_viewemail);
 				}
@@ -225,10 +225,10 @@ switch ($op) {
 						icms_cp_footer();
 						exit();
 					}
-					if ($password == $username || $password == icms_core_DataFilter::utf8_strrev($username, TRUE)
-						|| strripos($password, $username) === TRUE || $password == $login_name
-						|| $password == icms_core_Datafilter::utf8_strrev($login_name, TRUE)
-						|| strripos($password, $login_name) === TRUE
+					if ($password == $username || $password == icms_core_DataFilter::utf8_strrev($username, true)
+						|| strripos($password, $username) === true || $password == $login_name
+						|| $password == icms_core_Datafilter::utf8_strrev($login_name, true)
+						|| strripos($password, $login_name) === true
 					) {
 						icms_cp_header();
 						echo '<strong>' . _AM_BADPWD . '</strong>';
@@ -254,7 +254,7 @@ switch ($op) {
 				$newuser->setVar('language', $language);
 
 				if ($icmsConfigAuth['auth_openid'] == 1) {
-					$newuser->setVar('openid', $openid);}
+					$newuser->setVar('openid', $openid); }
 					if (!$user_handler->insert($newuser)) {
 						$adduser_errormsg = _AM_CNRNU;
 					} else {
@@ -276,7 +276,7 @@ switch ($op) {
 							 /* Hack by marcan <INBOX>
 							 * Sending a confirmation email to the newly registered user
 							 */
-							redirect_header('admin.php?fct=users', 1,_ICMS_DBUPDATED);
+							redirect_header('admin.php?fct=users', 1, _ICMS_DBUPDATED);
 						}
 					}
 			}
@@ -295,12 +295,12 @@ switch ($op) {
 
 	case 'reactivate':
 		$result = icms::$xoopsDB->query(
-				"UPDATE " . icms::$xoopsDB->prefix('users') . " SET level='1' WHERE uid='". (int) $uid . "'"
+				"UPDATE " . icms::$xoopsDB->prefix('users') . " SET level='1' WHERE uid='" . (int) $uid . "'"
 		);
 		if (!$result) {
 			exit();
 		}
-		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . (int) $uid, 1 , _ICMS_DBUPDATED);
+		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid=' . (int) $uid, 1, _ICMS_DBUPDATED);
 		break;
 
 	case 'mod_users':

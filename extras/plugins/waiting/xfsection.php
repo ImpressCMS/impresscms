@@ -8,9 +8,9 @@ function b_waiting_xfsection() {
 
 	// xf-section articles - waiting
 	$block = array();
-	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("xfs_article")." WHERE published=0");
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("xfs_article") . " WHERE published=0");
 	if ($result) {
-		$block['adminlink'] = ICMS_URL."/modules/xfsection/admin/allarticles.php?action=submitted";
+		$block['adminlink'] = ICMS_URL . "/modules/xfsection/admin/allarticles.php?action=submitted";
 		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS;
 	}
@@ -18,14 +18,13 @@ function b_waiting_xfsection() {
 
 	// xf-section articles - attach broken
 	$block = array();
-	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("xfs_broken")."");
+	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("xfs_broken") . "");
 	if ($result) {
-		$block['adminlink'] = ICMS_URL."/modules/xfsection/admin/brokendown.php?op=listBrokenDownloads";
+		$block['adminlink'] = ICMS_URL . "/modules/xfsection/admin/brokendown.php?op=listBrokenDownloads";
 		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
-		$block['lang_linkname'] = _PI_WAITING_FILES."&nbsp;"._PI_WAITING_BROKENS;
+		$block['lang_linkname'] = _PI_WAITING_FILES . "&nbsp;" . _PI_WAITING_BROKENS;
 	}
 	$ret[] = $block;
 
 	return $ret;
 }
-?>

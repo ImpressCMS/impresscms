@@ -50,9 +50,9 @@
  */
 class icms_data_comment_Handler extends icms_ipf_Handler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'data_comment', 'com_id', 'com_title', 'com_text', 'icms', 'xoopscomments', 'com_id');
-        }
+		public function __construct(&$db) {
+			parent::__construct($db, 'data_comment', 'com_id', 'com_title', 'com_text', 'icms', 'xoopscomments', 'com_id');
+		}
 
 	/**
 	 * Get a list of comments
@@ -62,8 +62,8 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @return  array   Array of raw database records
 	 */
 	public function getList($criteria = null, $limit, $start, $debug) {
-            $comments = parent::getList($criteria, $limit, $start, $debug);
-            return array_keys($comments);
+			$comments = parent::getList($criteria, $limit, $start, $debug);
+			return array_keys($comments);
 	}
 
 	/**

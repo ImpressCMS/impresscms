@@ -148,11 +148,11 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 	 * @return array $names
 	 * @author xHelp Team
 	 */
-	public function genUserNames($email, $count=20) {
+	public function genUserNames($email, $count = 20) {
 		$name = substr($email, 0, strpos($email, "@")); //Take the email adress without domain as username
 
 		$names = array();
-		$userid   = explode('@',$email);
+		$userid   = explode('@', $email);
 
 		$basename = '';
 		$hasbasename = false;
@@ -180,10 +180,10 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		while ($i < $count) {
 			$num = $this->genRandNumber();
 			if ($onbasename < 0 && $hasbasename) {
-				$names[] = icms_core_DataFilter::icms_substr($basename, 0, 58, '').$num;
+				$names[] = icms_core_DataFilter::icms_substr($basename, 0, 58, '') . $num;
 
 			} else {
-				$names[] = icms_core_DataFilter::icms_substr($emailname, 0, 58, ''). $num;
+				$names[] = icms_core_DataFilter::icms_substr($emailname, 0, 58, '') . $num;
 			}
 			$i = count($names);
 			$onbasename = ~ $onbasename;
@@ -206,7 +206,7 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		$tmp = array();
 
 		for ($i = 0; $i < $digits; $i++) {
-			$tmp[$i] = (rand()%9);
+			$tmp[$i] = (rand() % 9);
 		}
 		return implode('', $tmp);
 	}
@@ -219,10 +219,10 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 	 * @access public
 	 */
 	public function initRand() {
-		static $randCalled = FALSE;
+		static $randCalled = false;
 		if (!$randCalled) {
 			srand((double) microtime() * 1000000);
-			$randCalled = TRUE;
+			$randCalled = true;
 		}
 	}
 }

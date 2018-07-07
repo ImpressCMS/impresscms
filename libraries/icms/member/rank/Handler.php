@@ -8,7 +8,7 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 icms_loadLanguageFile("system", "common");
-icms_loadLanguageFile("system", "userrank", TRUE);
+icms_loadLanguageFile("system", "userrank", true);
 
 /**
  * Handler for the user ranks object
@@ -18,7 +18,7 @@ icms_loadLanguageFile("system", "userrank", TRUE);
 class icms_member_rank_Handler extends icms_ipf_Handler {
 
 	/** */
-	public $objects = FALSE;
+	public $objects = false;
 
 	/**
 	 * Create a new instance of the handler
@@ -73,7 +73,7 @@ class icms_member_rank_Handler extends icms_ipf_Handler {
 	 */
 	public function MoveAllRanksImagesToProperPath() {
 		$sql = "SELECT rank_image FROM " . $this->table;
-		$Query = $this->query($sql, FALSE);
+		$Query = $this->query($sql, false);
 		foreach ($Query as $qpart) {
 			$file_orig = ICMS_UPLOAD_PATH . "/" . $qpart["rank_image"];
 			if (file_exists($file_orig)) {
@@ -81,6 +81,6 @@ class icms_member_rank_Handler extends icms_ipf_Handler {
 			}
 		}
 
-		return TRUE;
+		return true;
 	}
 }

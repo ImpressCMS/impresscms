@@ -35,6 +35,8 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 /**
  * Mailer Class.
  *
@@ -49,14 +51,14 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $From 		= "";
+	public $From = "";
 
 	/**
 	 * "from" name
 	 * @var 	string
 	 * @access	private
 	 */
-	public $FromName 	= "";
+	public $FromName = "";
 
 	/**
 	 * Method to be used when sending the mail.
@@ -72,7 +74,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $Mailer		= "mail";
+	public $Mailer = "mail";
 
 	/**
 	 * set if $Mailer is "sendmail"
@@ -91,7 +93,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $Host		= "";
+	public $Host = "";
 
 	/**
 	 * Sets connection prefix.
@@ -105,7 +107,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	 * @var 	boolean
 	 * @access	private
 	 */
-	public $SMTPAuth	= FALSE;
+	public $SMTPAuth = false;
 
 	/**
 	 * Username for authentication with your SMTP host.
@@ -114,7 +116,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $Username	= "";
+	public $Username = "";
 
 	/**
 	 * Password for SMTPAuth.
@@ -123,14 +125,14 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $Password	= "";
+	public $Password = "";
 
 	/**
 	 * Sets default SMTP Port to use?
 	 * @var 	boolean
 	 * @access	private
 	 */
-	public $Port	= 25;
+	public $Port = 25;
 
 	/**
 	 * Constuctor
@@ -153,7 +155,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 			$this->SMTPAuth = true;
 			$this->SMTPSecure = $icmsConfigMailer['smtpsecure'];
 			// TODO: change value type of icmsConfigMailer "smtphost" from array to text
-			$this->Host = implode(';',$icmsConfigMailer['smtphost']);
+			$this->Host = implode(';', $icmsConfigMailer['smtphost']);
 			$this->Username = $icmsConfigMailer['smtpuser'];
 			$this->Password = $icmsConfigMailer['smtppass'];
 			$this->Port = $icmsConfigMailer['smtpauthport'];
@@ -179,7 +181,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 		if (empty($addr[1])) {
 			$formatted = $addr[0];
 		} else {
-			$formatted = sprintf('%s <%s>', '=?'. $this->CharSet . '?B?' . base64_encode($addr[1]) . '?=', $addr[0]);
+			$formatted = sprintf('%s <%s>', '=?' . $this->CharSet . '?B?' . base64_encode($addr[1]) . '?=', $addr[0]);
 		}
 		return $formatted;
 	}

@@ -27,7 +27,7 @@ include 'admin_header.php';
  * @param bool	$showmenu	Doesn't appear to have any current functionality
  * @param int	$mimetypeid	Unique ID for mimetype entry
  */
-function editmimetype($showmenu = FALSE, $mimetypeid = 0) {
+function editmimetype($showmenu = false, $mimetypeid = 0) {
 	global $icms_admin_handler, $icmsAdminTpl;
 
 	icms_cp_header();
@@ -52,36 +52,36 @@ function editmimetype($showmenu = FALSE, $mimetypeid = 0) {
 }
 
 switch ($op) {
-	case "mod":
-		editmimetype(TRUE, $mimetypeid);
-		break;
+		case "mod":
+			editmimetype(true, $mimetypeid);
+			break;
 
-	case "addmimetype":
-		$controller = new icms_ipf_Controller($icms_admin_handler);
-		$controller->storeFromDefaultForm(_CO_ICMS_MIMETYPE_CREATED, _CO_ICMS_MIMETYPE_MODIFIED);
-		break;
+		case "addmimetype":
+			$controller = new icms_ipf_Controller($icms_admin_handler);
+			$controller->storeFromDefaultForm(_CO_ICMS_MIMETYPE_CREATED, _CO_ICMS_MIMETYPE_MODIFIED);
+			break;
 
-	case "del":
-		$controller = new icms_ipf_Controller($icms_admin_handler);
-		$controller->handleObjectDeletion();
-		break;
+		case "del":
+			$controller = new icms_ipf_Controller($icms_admin_handler);
+			$controller->handleObjectDeletion();
+			break;
 
-	default:
-		icms_cp_header();
+		default:
+			icms_cp_header();
 
-		$objectTable = new icms_ipf_view_Table($icms_admin_handler);
-		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, 150));
-		$objectTable->addColumn(new icms_ipf_view_Column('extension', _GLOBAL_LEFT, 150));
-		$objectTable->addColumn(new icms_ipf_view_Column('types', _GLOBAL_LEFT));
+			$objectTable = new icms_ipf_view_Table($icms_admin_handler);
+			$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, 150));
+			$objectTable->addColumn(new icms_ipf_view_Column('extension', _GLOBAL_LEFT, 150));
+			$objectTable->addColumn(new icms_ipf_view_Column('types', _GLOBAL_LEFT));
 
-		$objectTable->addIntroButton('addmimetype', 'admin.php?fct=mimetype&amp;op=mod', _CO_ICMS_MIMETYPE_CREATE);
-		$objectTable->addQuickSearch(array('name', 'extension', 'types'));
+			$objectTable->addIntroButton('addmimetype', 'admin.php?fct=mimetype&amp;op=mod', _CO_ICMS_MIMETYPE_CREATE);
+			$objectTable->addQuickSearch(array('name', 'extension', 'types'));
 
-		$icmsAdminTpl->assign('icms_mimetype_table', $objectTable->fetch());
-		$icmsAdminTpl->assign('icms_mimetype_explain', TRUE);
-		$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPES_DSC);
-		$icmsAdminTpl->display('db:admin/mimetype/system_adm_mimetype.html');
-		break;
+			$icmsAdminTpl->assign('icms_mimetype_table', $objectTable->fetch());
+			$icmsAdminTpl->assign('icms_mimetype_explain', true);
+			$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPES_DSC);
+			$icmsAdminTpl->display('db:admin/mimetype/system_adm_mimetype.html');
+			break;
 }
 
 icms_cp_footer();

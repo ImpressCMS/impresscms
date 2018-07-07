@@ -42,11 +42,12 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . "constants.php";
 require_once __DIR__ . DIRECTORY_SEPARATOR . "functions.php";
 require_once __DIR__ . DIRECTORY_SEPARATOR . "version.php";
 
-if (!isset($xoopsOption)) $xoopsOption = array();
+if (!isset($xoopsOption)) {
+	$xoopsOption = array();
+}
 
 // -- Initialize kernel and launch bootstrap
-icms::setup();
-icms::boot();
+icms::getInstance()->setup()->boot();
 
 // -- Easiest ML by Gijoe (no longer needed here)
 
@@ -60,12 +61,12 @@ if ($icmsConfig['gzip_compression'] == 1
 	&& extension_loaded('zlib')
 	&& !ini_get('zlib.output_compression')
 	) {
-		ini_set('zlib.output_compression', TRUE);
-		if (ini_get( 'zlib.output_compression_level') < 0 ) {
-			ini_set( 'zlib.output_compression_level', 6 );
+		ini_set('zlib.output_compression', true);
+		if (ini_get('zlib.output_compression_level') < 0) {
+			ini_set('zlib.output_compression_level', 6);
 		}
 		if (!zlib_get_coding_type()) {
-			ini_set('zlib.output_compression', FALSE);
+			ini_set('zlib.output_compression', false);
 			ob_start('ob_gzhandler');
 		}
 }
@@ -86,15 +87,15 @@ icms_loadLanguageFile('core', 'core');
 icms_loadLanguageFile('system', 'common');
 
 if (defined('_ADM_USE_RTL') && _ADM_USE_RTL == 1) {
-    define('_GLOBAL_LEFT', 'right');
-    define('_GLOBAL_RIGHT', 'left');
+	define('_GLOBAL_LEFT', 'right');
+	define('_GLOBAL_RIGHT', 'left');
 } else {
-    define('_GLOBAL_LEFT', 'left');
-    define('_GLOBAL_RIGHT', 'right');
+	define('_GLOBAL_LEFT', 'left');
+	define('_GLOBAL_RIGHT', 'right');
 }
 
 // -- Include page-specific lang file
-if (isset($xoopsOption['pagetype']) && FALSE === strpos($xoopsOption['pagetype'], '.')) {
+if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
 	icms_loadLanguageFile('core', $xoopsOption['pagetype']);
 }
 
@@ -115,7 +116,27 @@ if ($icmsConfig['closesite'] == 1) {
 	include ICMS_INCLUDE_PATH . '/site-closed.php';
 }
 
-icms::launchModule();
+global $xoopsOption, $icmsConfig;
+if (!isset ($xoopsOption ['nodebug']) || !$xoopsOption ['nodebug']) {
+	if ($icmsConfig ['debug_mode'] == 1 || $icmsConfig ['debug_mode'] == 2) {
+		error_reporting(E_ALL);
+		icms::getInstance()->get('logger')->enableRendering();
+		icms::getInstance()->get('logger')->usePopup = ($icmsConfig ['debug_mode'] == 2);
+		if (icms::getInstance()->has('db')) {
+			icms_Event::attach('icms_db_IConnection', 'prepare', function($params) {
+				icms::getInstance()->get('logger')->addQuery('prepare: ' . $params ['sql']);
+			});
+			icms_Event::attach('icms_db_IConnection', 'execute', function($params) {
+				icms::getInstance()->get('logger')->addQuery('execute: ' . $params ['sql']);
+			});
+		}
+	} else {
+		error_reporting(0);
+		icms::getInstance()->get('logger')->activated = false;
+	}
+}
+
+icms::$module = icms::getInstance()->get('module');
 
 if ($icmsConfigPersona['multi_login']) {
 	if (is_object(icms::$user)) {

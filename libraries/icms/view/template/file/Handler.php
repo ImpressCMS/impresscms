@@ -43,8 +43,7 @@
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class icms_view_template_file_Handler extends icms_ipf_Handler
-{
+class icms_view_template_file_Handler extends icms_ipf_Handler {
 	private $_prefetch_cache = array();
 
 	public function __construct(&$db) {
@@ -77,9 +76,10 @@ class icms_view_template_file_Handler extends icms_ipf_Handler
 	 * @return bool TRUE on success, FALSE if fail
 	 */
 	public function forceUpdate(&$tplfile) {
-            if ($tplfile->isNew())
-                return false;
-            return $tplfile->store(true);
+			if ($tplfile->isNew()) {
+							return false;
+			}
+			return $tplfile->store(true);
 	}
 
 	/**
@@ -170,10 +170,12 @@ class icms_view_template_file_Handler extends icms_ipf_Handler
 	public function prefetchBlocks(&$block_arr) {
 		global $icmsConfig;
 
-		if (count($block_arr) == 0) return false;
+		if (count($block_arr) == 0) {
+			return false;
+		}
 		$tplNames = array();
 		foreach ($block_arr as $block) {
-			$tplNames[] = $block->template ? $block->template : "system_block_dummy.html";
+			$tplNames[] = $block->template?$block->template:"system_block_dummy.html";
 		}
 
 		$criteria = new icms_db_criteria_Compo(
@@ -231,7 +233,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler
 	 * @return	array				array of templates (just one item)
 	 */
 	public function getPrefetchedBlock($tplset, $tpl_name) {
-		foreach($this->_prefetch_cache as $block) {
+		foreach ($this->_prefetch_cache as $block) {
 			if ($block->getVar("tpl_tplset") == $tplset && $block->getVar("tpl_file") == $tpl_name) {
 				return array($block);
 			}
@@ -242,7 +244,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler
 		 * template set is different from default
 		 */
 		if ($tplset != 'default') {
-			foreach($this->_prefetch_cache as $block) {
+			foreach ($this->_prefetch_cache as $block) {
 				if ($block->getVar("tpl_tplset") == "default" && $block->getVar("tpl_file") == $tpl_name) {
 					return array($block);
 				}
@@ -257,6 +259,6 @@ class icms_view_template_file_Handler extends icms_ipf_Handler
 		 */
 		$blocks = $this->find($tplset, null, null, null, $tpl_name, true);
 		$this->_prefetch_cache = array_merge($this->_prefetch_cache, $blocks);
-                return $blocks;
+				return $blocks;
 	}
 }

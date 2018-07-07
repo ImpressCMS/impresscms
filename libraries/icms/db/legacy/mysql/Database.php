@@ -53,13 +53,15 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	/**
 	 * connect to the database
 	 *
+	 * @deprecated The mysql extension is being deprecated as of PHP 5.5.0 (<a href="http://php.net/mysql_connect">PHP MySQL Extenstion</a>). Switch to PDO, instead
+	 *
 	 * @param bool $selectdb select the database now?
 	 * @return bool successful?
 	 */
 	public function connect($selectdb = true) {
-		defined('_CORE_MYSQL_DEPRECATED') || define('_CORE_MYSQL_DEPRECATED', 'The mysql extension is being deprecated as of PHP 5.5.0 (<a href="http://php.net/mysql_connect">PHP MySQL Extenstion</a>). Switch to PDO, instead');
-		icms_core_Debug::setDeprecated("PDO", _CORE_MYSQL_DEPRECATED);
 		static $db_charset_set;
+
+		trigger_error('PHP is removing support for the mysql driver functions. Switch to PDO', E_USER_DEPRECATED);
 
 		$this->allowWebChanges = ($_SERVER['REQUEST_METHOD'] != 'GET');
 
@@ -91,6 +93,50 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 		$db_charset_set = 1;
 
 		return true;
+	}
+
+	/**
+	 * Returns the text of the error message from previous MySQL operation
+	 *
+	 * @return string Returns the error text from the last MySQL function, or '' (the empty string) if no error occurred.
+	 */
+	public function error() {
+		return @ mysql_error();
+	}
+
+	/**
+	 * Returns the numerical value of the error message from previous MySQL operation
+	 *
+	 * @return int Returns the error number from the last MySQL function, or 0 (zero) if no error occurred.
+	 */
+	public function errno() {
+		return @ mysql_errno();
+	}
+
+	/**
+	 * perform a query on the database
+	 *
+	 * @param string $sql a valid MySQL query
+	 * @param int $limit number of records to return
+	 * @param int $start offset of first record to return
+	 * @return resource query result or FALSE if successful
+	 * or TRUE if successful and no result
+	 */
+	public function queryF($sql, $limit = 0, $start = 0) {
+		if (!empty ($limit)) {
+			if (empty ($start)) {
+				$start = 0;
+			}
+			$sql = $sql . ' LIMIT ' . (int) $start . ', ' . (int) $limit;
+		}
+		$result = mysql_query($sql, $this->conn);
+		if ($result) {
+			$this->logger->addQuery($sql);
+			return $result;
+		} else {
+			$this->logger->addQuery($sql, $this->error(), $this->errno());
+			return false;
+		}
 	}
 
 	/**
@@ -181,24 +227,6 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	}
 
 	/**
-	 * Returns the text of the error message from previous MySQL operation
-	 *
-	 * @return string Returns the error text from the last MySQL function, or '' (the empty string) if no error occurred.
-	 */
-	public function error() {
-		return @ mysql_error();
-	}
-
-	/**
-	 * Returns the numerical value of the error message from previous MySQL operation
-	 *
-	 * @return int Returns the error number from the last MySQL function, or 0 (zero) if no error occurred.
-	 */
-	public function errno() {
-		return @ mysql_errno();
-	}
-
-	/**
 	 * Returns escaped string text with single quotes around it to be safely stored in database
 	 *
 	 * @param string $str unescaped string text
@@ -219,33 +247,9 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	public function quote($string) {
 		return "'" . mysql_real_escape_string($string, $this->conn) . "'";
 	}
+
 	public function escape($string) {
 		return mysql_real_escape_string($string, $this->conn);
-	}
-	/**
-	 * perform a query on the database
-	 *
-	 * @param string $sql a valid MySQL query
-	 * @param int $limit number of records to return
-	 * @param int $start offset of first record to return
-	 * @return resource query result or FALSE if successful
-	 * or TRUE if successful and no result
-	 */
-	public function queryF($sql, $limit = 0, $start = 0) {
-		if (!empty ($limit)) {
-			if (empty ($start)) {
-				$start = 0;
-			}
-			$sql = $sql . ' LIMIT ' . (int) $start . ', ' . (int) $limit;
-		}
-		$result = mysql_query($sql, $this->conn);
-		if ($result) {
-			$this->logger->addQuery($sql);
-			return $result;
-		} else {
-			$this->logger->addQuery($sql, $this->error(), $this->errno());
-			return false;
-		}
 	}
 
 	/**
@@ -311,8 +315,10 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param obj $connecton	A MySQL database connection link
 	 * @return string
 	 */
-	public function getServerVersion($connection = NULL) {
-		if (NULL === $connection) $connection = $this->conn;
+	public function getServerVersion($connection = null) {
+		if (null === $connection) {
+			$connection = $this->conn;
+		}
 		return mysql_get_server_info($connection);
 	}
 }

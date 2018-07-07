@@ -18,8 +18,8 @@ if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register']
 	exit();
 }
 
-$op = !isset($_POST['op']) ? 'invite' : $_POST['op'];
-$email = isset($_POST['email']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])) : '';
+$op = !isset($_POST['op'])?'invite':$_POST['op'];
+$email = isset($_POST['email'])? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])):'';
 
 switch ($op) {
 	case 'finish':
@@ -29,7 +29,7 @@ switch ($op) {
 			$stop .= implode('<br />', icms::$security->getErrors()) . "<br />";
 		}
 		$icmsCaptcha = icms_form_elements_captcha_Object::instance();
-		if (! $icmsCaptcha->verify()) {
+		if (!$icmsCaptcha->verify()) {
 			$stop .= $icmsCaptcha->getMessage() . '<br />';
 
 		}
@@ -42,7 +42,7 @@ switch ($op) {
 							(invite_code, from_id, invite_to, invite_date, extra_info) VALUES
 							(%s, %d, %s, %d, %s)',
 							icms::$xoopsDB->quoteString(addslashes($invite_code)),
-							is_object(icms::$user) ? icms::$user->getVar('uid') : 0,
+							is_object(icms::$user)? icms::$user->getVar('uid'):0,
 							icms::$xoopsDB->quoteString(addslashes($email)),
 							time(),
 							icms::$xoopsDB->quoteString(addslashes(serialize(array())))
@@ -71,7 +71,7 @@ switch ($op) {
 				$stop .= _US_INVITEDBERR;
 			}
 		}
-		if (! empty($stop)) {
+		if (!empty($stop)) {
 			echo "<span style='color:#ff0000; font-weight:bold;'>$stop</span>";
 			include 'include/inviteform.php';
 			$invite_form->display();

@@ -191,7 +191,7 @@ class icms_file_MediaUploadHandler {
 	 * @param   int     $maxHeight
 	 */
 	public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
-		$this->extensionToMime = icms_Utils::mimetypes() ;
+		$this->extensionToMime = icms_Utils::mimetypes();
 		if (!is_array($this->extensionToMime)) {
 			$this->extensionToMime = array();
 			return false;
@@ -211,82 +211,86 @@ class icms_file_MediaUploadHandler {
 		icms_loadLanguageFile('core', 'uploader');
 	}
 
-        /**
-        * Do same as fetchMedia but from URL
-         *
-        * @param string $url
-        */
-        public function fetchFromURL($url) {
-            if (empty($this->extensionToMime)) {
-                self::setErrors(_ER_UP_MIMETYPELOAD);
-                return false;
-            }
-            //header('Content-Type: text/plain');
-            if (substr($url, 0, 5) == 'data:') {
+		/**
+		 * Do same as fetchMedia but from URL
+		 *
+		 * @param string $url
+		 */
+		public function fetchFromURL($url) {
+			if (empty($this->extensionToMime)) {
+				self::setErrors(_ER_UP_MIMETYPELOAD);
+				return false;
+			}
+			//header('Content-Type: text/plain');
+			if (substr($url, 0, 5) == 'data:') {
 				$fp   = fopen($url, 'r');
 				$meta = stream_get_meta_data($fp);
 				$content = stream_get_contents($fp);
 				$headers = array(
-                    'content-type' => isset($meta['mediatype'])?$meta['mediatype']:'text/plain',
+					'content-type' => isset($meta['mediatype'])?$meta['mediatype']:'text/plain',
 					'base64' => isset($meta['base64'])?$meta['base64']:true,
 					'content-length' => strlen($content),
 					'charset' => isset($meta['charset'])?$meta['charset']:'US-ASCII',
-                );
+				);
 				fclose($fp);
-            } else {
-                if (!function_exists('curl_init')) {
-                    self::setErrors('cURL not found!');
-                    return false;
-                }
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_HEADER, true);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_VERBOSE, true);
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-                $data = curl_exec($ch);
+			} else {
+				if (!function_exists('curl_init')) {
+					self::setErrors('cURL not found!');
+					return false;
+				}
+				$ch = curl_init($url);
+				curl_setopt($ch, CURLOPT_HEADER, true);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_VERBOSE, true);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+				$data = curl_exec($ch);
 
-                $hsize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-                $headers = mb_substr($data, 0, $hsize);
-                $content = mb_substr($data, $hsize);
+				$hsize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+				$headers = mb_substr($data, 0, $hsize);
+				$content = mb_substr($data, $hsize);
 
-                curl_close($ch);
+				curl_close($ch);
 
-                $hdrs = array();
-                foreach (explode("\r\n", $headers) as $line) {
-                    $line = trim($line);
-                    $i = strpos($line, ':');
-                    if (!$i) {
-                        if (substr($line, 0, 5) == 'HTTP/')
-                           $hdrs['http'] = explode(' ', substr($line, 5));
-                        elseif (trim($line) != '')
-                            $hdrs['unknown-header'][] = $line;
-                    } else {
-                        $name = strtolower(trim(substr($line, 0, $i)));
-                        $value = trim(substr($line, $i + 1));
-                        switch ($name) {
-                            case 'content-disposition':
-                                preg_match_all('/([^;]+);\ *filename=(".+"|.+)/Ui', $value, $matches, PREG_SET_ORDER);
-                                if (mb_substr($matches[0][2], 0, 1) == '"')
-                                    $matches[0][2] = mb_substr($matches[0][2], 1, -1);
-                                $hdrs[$name] = array(
-                                     'type'     => $matches[0][1],
-                                     'filename' => $matches[0][2],
-                                );
-                            break;
-                            default:
-                                $hdrs[$name] = $value;
-                            break;
-                        }
-                        unset($name, $value);
-                    }
-                }
-                $headers = $hdrs;
-                unset($hdrs);
-                if (!isset($headers['http'][1]) || ($headers['http'][1] != 200))
-                    return false;
-                if (!isset($headers['content-type']))
-                    $headers['content-type'] = 'application/octet-stream';
-            }
+				$hdrs = array();
+				foreach (explode("\r\n", $headers) as $line) {
+					$line = trim($line);
+					$i = strpos($line, ':');
+					if (!$i) {
+						if (substr($line, 0, 5) == 'HTTP/') {
+												   $hdrs['http'] = explode(' ', substr($line, 5));
+						} elseif (trim($line) != '') {
+													$hdrs['unknown-header'][] = $line;
+						}
+					} else {
+						$name = strtolower(trim(substr($line, 0, $i)));
+						$value = trim(substr($line, $i + 1));
+						switch ($name) {
+							case 'content-disposition':
+								preg_match_all('/([^;]+);\ *filename=(".+"|.+)/Ui', $value, $matches, PREG_SET_ORDER);
+								if (mb_substr($matches[0][2], 0, 1) == '"') {
+																	$matches[0][2] = mb_substr($matches[0][2], 1, -1);
+								}
+								$hdrs[$name] = array(
+									 'type'     => $matches[0][1],
+									 'filename' => $matches[0][2],
+								);
+							break;
+							default:
+								$hdrs[$name] = $value;
+							break;
+						}
+						unset($name, $value);
+					}
+				}
+				$headers = $hdrs;
+				unset($hdrs);
+				if (!isset($headers['http'][1]) || ($headers['http'][1] != 200)) {
+									return false;
+				}
+				if (!isset($headers['content-type'])) {
+									$headers['content-type'] = 'application/octet-stream';
+				}
+			}
 			if (empty($headers['content-disposition']['filename']) === false) {
 				$this->mediaName = $headers['content-disposition']['filename'];
 				$ext = pathinfo($this->mediaName, PATHINFO_EXTENSION);
@@ -299,29 +303,29 @@ class icms_file_MediaUploadHandler {
 					$ext = pathinfo($this->mediaName, PATHINFO_EXTENSION);
 				}
 			}
-            $this->mediaType = $headers['content-type'];
-            $this->mediaSize = (int)$headers['content-length'];
-            $this->mediaTmpName = tempnam(sys_get_temp_dir(), 'icms_media');
-            $this->mediaError = 0;
+			$this->mediaType = $headers['content-type'];
+			$this->mediaSize = (int) $headers['content-length'];
+			$this->mediaTmpName = tempnam(sys_get_temp_dir(), 'icms_media');
+			$this->mediaError = 0;
 			$this->mediaRealType = isset($this->extensionToMime[$ext])?$this->extensionToMime[$ext]:$this->mediaType;
-            $fp = fopen( $this->mediaTmpName, 'w+');
-            fwrite($fp, $content);
-            fclose($fp);
-            $this->errors = array();
-            if ($this->mediaSize < 0) {
+			$fp = fopen($this->mediaTmpName, 'w+');
+			fwrite($fp, $content);
+			fclose($fp);
+			$this->errors = array();
+			if ($this->mediaSize < 0) {
 				self::setErrors(_ER_UP_INVALIDFILESIZE);
-                return false;
-            }
-            if ($this->mediaName == '') {
-                self::setErrors(_ER_UP_FILENAMEEMPTY);
-                return false;
-            }
-            if ($this->mediaError > 0) {
-                self::setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));
-                return false;
-            }
-            return true;
-        }
+				return false;
+			}
+			if ($this->mediaName == '') {
+				self::setErrors(_ER_UP_FILENAMEEMPTY);
+				return false;
+			}
+			if ($this->mediaError > 0) {
+				self::setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));
+				return false;
+			}
+			return true;
+		}
 
 	/**
 	 * Fetch the uploaded file
@@ -340,28 +344,28 @@ class icms_file_MediaUploadHandler {
 			return false;
 		} elseif (is_array($_FILES[$media_name]['name']) && isset($index)) {
 			$index = (int) ($index);
-			$this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($_FILES[$media_name]['name'][$index]) : $_FILES[$media_name]['name'][$index];
+			$this->mediaName = (get_magic_quotes_gpc())? stripslashes($_FILES[$media_name]['name'][$index]):$_FILES[$media_name]['name'][$index];
 			$this->mediaType = $_FILES[$media_name]['type'][$index];
 			$this->mediaSize = $_FILES[$media_name]['size'][$index];
 			$this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
-			$this->mediaError = !empty($_FILES[$media_name]['error'][$index]) ? $_FILES[$media_name]['error'][$index] : 0;
+			$this->mediaError = !empty($_FILES[$media_name]['error'][$index])?$_FILES[$media_name]['error'][$index]:0;
 		} else {
 			$media_name = & $_FILES[$media_name];
-			$this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($media_name['name']) : $media_name['name'];
+			$this->mediaName = (get_magic_quotes_gpc())? stripslashes($media_name['name']):$media_name['name'];
 			$this->mediaName = $media_name['name'];
 			$this->mediaType = $media_name['type'];
 			$this->mediaSize = $media_name['size'];
 			$this->mediaTmpName = $media_name['tmp_name'];
-			$this->mediaError = !empty($media_name['error']) ? $media_name['error'] : 0;
+			$this->mediaError = !empty($media_name['error'])?$media_name['error']:0;
 		}
 		if (($ext = strrpos($this->mediaName, '.')) !== false) {
-			$ext = strtolower(substr($this->mediaName, $ext +1));
+			$ext = strtolower(substr($this->mediaName, $ext + 1));
 			if (isset($this->extensionToMime[$ext])) {
 				$this->mediaRealType = $this->extensionToMime[$ext];
 			}
 		}
 		$this->errors = array();
-		if ( (int) ($this->mediaSize) < 0) {
+		if ((int) ($this->mediaSize) < 0) {
 			self::setErrors(_ER_UP_INVALIDFILESIZE);
 			return false;
 		}
@@ -546,17 +550,17 @@ class icms_file_MediaUploadHandler {
 			$this->savedFileName = strtolower($this->mediaName);
 		}
 		$this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
-        if (is_uploaded_file($this->mediaTmpName)) {
-            if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
-                self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
-                return false;
-            }
-        } else {
-            if (!rename($this->mediaTmpName, $this->savedDestination)) {
-                self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
-                return false;
-            }
-        }
+		if (is_uploaded_file($this->mediaTmpName)) {
+			if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
+				self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
+				return false;
+			}
+		} else {
+			if (!rename($this->mediaTmpName, $this->savedDestination)) {
+				self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
+				return false;
+			}
+		}
 		// Check IE XSS before returning success
 		$ext = strtolower(substr(strrchr($this->savedDestination, '.'), 1));
 		if (in_array($ext, $this->imageExtensions)) {
@@ -632,7 +636,7 @@ class icms_file_MediaUploadHandler {
 	public function checkMimeType() {
 		global $icmsModule;
 		$mimetypeHandler = icms_getModulehandler('mimetype', 'system');
-		$modulename = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->getVar('dirname') : 'system';
+		$modulename = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('dirname'):'system';
 		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
 			self::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
 			return false;
@@ -640,8 +644,7 @@ class icms_file_MediaUploadHandler {
 		$AllowedMimeTypes = $mimetypeHandler->AllowedModules($this->mediaRealType, $modulename);
 		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes))
 				|| (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes))
-				|| (empty($this->allowedMimeTypes) && !$AllowedMimeTypes))
-			{
+				|| (empty($this->allowedMimeTypes) && !$AllowedMimeTypes)) {
 			self::setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
 			return false;
 		}
