@@ -6,13 +6,13 @@ prepare:
       path: ".cs-ruleset.xml"
 
 exclude_patterns:
-- /libraries/phpopenid
-- /libraries/smarty
-- /libraries/wideimage
-- /plugins/sourceeditors
-- /plugins/textsanitizer
-- /htdocs/editors
-- /htdocs/libraries
+- libraries/phpopenid
+- libraries/smarty
+- libraries/wideimage
+- plugins/sourceeditors
+- plugins/textsanitizer
+- htdocs/editors
+- htdocs/libraries
 
 checks:
   argument-count:
