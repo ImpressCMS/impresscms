@@ -50,19 +50,19 @@ switch ($op) {
 			icms::$xoopsDB->query($sql);
 			// if query executed successful
 			if (icms::$xoopsDB->getAffectedRows() == 1) {
-				$xoopsMailer = new icms_messaging_Handler();
-				$xoopsMailer->useMail();
-				$xoopsMailer->setTemplate('invite.tpl');
-				$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-				$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-				$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
-				$xoopsMailer->assign('USEREMAIL', $email);
-				$xoopsMailer->assign('REGISTERLINK', ICMS_URL . '/register.php?code=' . $invite_code);
-				$xoopsMailer->setToEmails($email);
-				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-				$xoopsMailer->setFromName($icmsConfig['sitename']);
-				$xoopsMailer->setSubject(sprintf(_US_INVITEREGLINK, ICMS_URL));
-				if (!$xoopsMailer->send()) {
+				$mailer = new icms_messaging_Handler();
+				$mailer->useMail();
+				$mailer->setTemplate('invite.tpl');
+				$mailer->assign('SITENAME', $icmsConfig['sitename']);
+				$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+				$mailer->assign('SITEURL', ICMS_URL . "/");
+				$mailer->assign('USEREMAIL', $email);
+				$mailer->assign('REGISTERLINK', ICMS_URL . '/register.php?code=' . $invite_code);
+				$mailer->setToEmails($email);
+				$mailer->setFromEmail($icmsConfig['adminmail']);
+				$mailer->setFromName($icmsConfig['sitename']);
+				$mailer->setSubject(sprintf(_US_INVITEREGLINK, ICMS_URL));
+				if (!$mailer->send()) {
 					$stop .= _US_INVITEMAILERR;
 				} else {
 					echo _US_INVITESENT;

@@ -126,27 +126,27 @@ if (!icms::$user) {
 				$toUser = & $userHandler->get($to_userid);
 				// Only send email notif if notification method is mail
 				if ($toUser->getVar('notify_method') == 2) {
-					$xoopsMailer = new icms_messaging_Handler();
-					$xoopsMailer->useMail();
-					$xoopsMailer->setToEmails($toUser->getVar('email'));
+					$mailer = new icms_messaging_Handler();
+					$mailer->useMail();
+					$mailer->setToEmails($toUser->getVar('email'));
 					if (icms::$user->getVar('user_viewemail')) {
-						$xoopsMailer->setFromEmail(icms::$user->getVar('email'));
-						$xoopsMailer->setFromName(icms::$user->getVar('uname'));
+						$mailer->setFromEmail(icms::$user->getVar('email'));
+						$mailer->setFromName(icms::$user->getVar('uname'));
 					} else {
-						$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-						$xoopsMailer->setFromName($icmsConfig['sitename']);
+						$mailer->setFromEmail($icmsConfig['adminmail']);
+						$mailer->setFromName($icmsConfig['sitename']);
 					}
-					$xoopsMailer->setTemplate('new_pm.tpl');
-					$xoopsMailer->assign('X_SITENAME', $icmsConfig['sitename']);
-					$xoopsMailer->assign('X_SITEURL', ICMS_URL . "/");
-					$xoopsMailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
-					$xoopsMailer->assign('X_UNAME', $toUser->getVar('uname'));
-					$xoopsMailer->assign('X_FROMUNAME', icms::$user->getVar('uname'));
-					$xoopsMailer->assign('X_SUBJECT', icms_core_DataFilter::stripSlashesGPC($subject));
-					$xoopsMailer->assign('X_MESSAGE', icms_core_DataFilter::stripSlashesGPC($message));
-					$xoopsMailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
-					$xoopsMailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $icmsConfig['sitename']));
-					$xoopsMailer->send();
+					$mailer->setTemplate('new_pm.tpl');
+					$mailer->assign('X_SITENAME', $icmsConfig['sitename']);
+					$mailer->assign('X_SITEURL', ICMS_URL . "/");
+					$mailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
+					$mailer->assign('X_UNAME', $toUser->getVar('uname'));
+					$mailer->assign('X_FROMUNAME', icms::$user->getVar('uname'));
+					$mailer->assign('X_SUBJECT', icms_core_DataFilter::stripSlashesGPC($subject));
+					$mailer->assign('X_MESSAGE', icms_core_DataFilter::stripSlashesGPC($message));
+					$mailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
+					$mailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $icmsConfig['sitename']));
+					$mailer->send();
 				}
 				redirect_header(icms_getPreviousPage(), 5, _PM_MESSAGEPOSTED);
 			}

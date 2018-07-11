@@ -53,19 +53,19 @@ if (!icms::$user) {
 		}
 
 		$pass = $icmspass->encryptPass($password);
-		$xoopsMailer = new icms_messaging_Handler();
-		$xoopsMailer->useMail();
-		$xoopsMailer->setTemplate('resetpass2.tpl');
-		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-		$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-		$xoopsMailer->assign('SITEURL', ICMS_URL . '/');
-		$xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
-	$xoopsMailer->setToUsers(icms::$user->getVar('uid'));
-		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_PWDRESET, ICMS_URL));
-		if (!$xoopsMailer->send()) {
-			echo $xoopsMailer->getErrors();
+		$mailer = new icms_messaging_Handler();
+		$mailer->useMail();
+		$mailer->setTemplate('resetpass2.tpl');
+		$mailer->assign('SITENAME', $icmsConfig['sitename']);
+		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+		$mailer->assign('SITEURL', ICMS_URL.'/');
+		$mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
+	$mailer->setToUsers(icms::$user->getVar('uid'));
+		$mailer->setFromEmail($icmsConfig['adminmail']);
+		$mailer->setFromName($icmsConfig['sitename']);
+		$mailer->setSubject(sprintf(_US_PWDRESET, ICMS_URL));
+		if (!$mailer->send()) {
+			echo $mailer->getErrors();
 		}
 
 		$sql = sprintf("UPDATE %s SET pass = '%s', pass_expired = '%u' WHERE uid = '%u'",
