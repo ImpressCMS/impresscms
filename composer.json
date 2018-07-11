@@ -31,6 +31,7 @@
     "geshi/geshi": "^1.0",
     "ext-curl": "*",
     "ext-gd": "*",
+     "old-xoops-libraries/php-downloader": "1.*",
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-pcre": "*",
