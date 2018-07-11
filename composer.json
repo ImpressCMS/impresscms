@@ -29,6 +29,7 @@
 	  "erusev/parsedown": "^1.7.0",
 	  "cerdic/css-tidy": "^1.5",
     "geshi/geshi": "^1.0",
+	  "mibe/feedwriter": "^1.1",
     "ext-curl": "*",
     "ext-gd": "*",
      "old-xoops-libraries/php-downloader": "1.*",
