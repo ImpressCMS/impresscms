@@ -154,7 +154,7 @@
 		$criteria->add ( new icms_db_criteria_Item ( 'conf_catid', ICMS_CONF_PERSONA ) );
 		$configitemsObj = $configitem_handler->getObjects ( $criteria );
 		if (isset ( $configitemsObj [0] ) && $configitemsObj [0]->getVar ( 'conf_value', 'n' ) == 'http://www.impresscms.org/modules/smartsection/backend.php') {
-			$configitemsObj [0]->setVar ( 'conf_value', 'http://community.impresscms.org/modules/smartsection/backend.php' );
+			$configitemsObj [0]->setVar ( 'conf_value', 'https://www.impresscms.org/modules/new/rss.php' );
 			$configitem_handler->insert ( $configitemsObj [0] );
 			echo "&nbsp;&nbsp;Updating rss_local config with correct info (if value was not previously changed by user)<br />";
 		}
