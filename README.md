@@ -1,5 +1,6 @@
-[![license](https://img.shields.io/badge/dynamic/json.svg?label=license&url=https%3A%2F%2Fraw.githubusercontent.com%2FImpressCMS%2Fimpresscms%2Fretro%2Fcomposer.json&query=license)](https://github.com/ImpressCMS/impresscms/blob/retro/LICENSE) [![GitHub release](https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=2592000)](https://github.com/ImpressCMS/impresscms/releases) [![Build Status](https://travis-ci.org/ImpressCMS/impresscms.svg?branch=retro)](https://travis-ci.org/ImpressCMS/impresscms) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ImpressCMS/impresscms/badges/quality-score.png?b=retro)](https://scrutinizer-ci.com/g/ImpressCMS/impresscms/?branch=retro) 
-
+[![license](https://img.shields.io/badge/dynamic/json.svg?style=flat-square&label=license&url=https%3A%2F%2Fraw.githubusercontent.com%2FImpressCMS%2Fimpresscms%2Fretro%2Fcomposer.json&query=license)](https://github.com/ImpressCMS/impresscms/blob/retro/LICENSE) [![GitHub release](https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=2592000&style=flat-square)](https://github.com/ImpressCMS/impresscms/releases) [![Issue Stats](https://img.shields.io/issuestats/i/github/ImpressCMS/impresscms.svg?maxAge=2592000&style=flat-square)](https://github.com/ImpressCMS/impresscms/issues) [![HitCount](http://hits.dwyl.io/ImpressCMS/ImpressCMS/impresscms.svg)](http://hits.dwyl.com/ImpressCMS/impresscms) [![Build Status](https://img.shields.io/travis/ImpressCMS/impresscms.svg?branch=retro&style=flat-square)](https://travis-ci.org/ImpressCMS/impresscms) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ImpressCMS/impresscms/badges/quality-score.png?b=retro)](https://scrutinizer-ci.com/g/ImpressCMS/impresscms/?branch=retro) 
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/ImpressCMS/impresscms.svg?style=flat-square)](https://codeclimate.com/github/ImpressCMS/impresscms/maintainability)
+ 
 # ImpressCMS
 
 ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool. ImpressCMS is a powerful system that gets outstanding results and it is free!
@@ -81,7 +82,7 @@ Also, help could be found on [our official forums](https://www.impresscms.org/mo
 
 ### How to contribute?
 
-If you want to contribute to the code just go a head! 
+Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls)
 
 All development for 2.0 version happens on the *retro* branch, so it is always the most up-to-date. 
 

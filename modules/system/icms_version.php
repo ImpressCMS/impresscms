@@ -327,11 +327,6 @@ $modversion['templates'][] = array(
 	);
 
 $modversion['templates'][] = array(
-	'file' => 'system_rss.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
 	'file' => 'system_comment.html',
 	'description' => ''
 	);

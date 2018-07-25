@@ -17,9 +17,7 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
                 'icms_file_DownloadHandler' => null,
                 'icms_file_MediaUploadHandler' => null,
                 'icms_file_TarDownloader' => 'icms_file_DownloadHandler',
-                'icms_file_TarFileHandler' => null,
-                'icms_file_ZipDownloader' => 'icms_file_DownloadHandler',
-                'icms_file_ZipFileHandler' => null
+                'icms_file_ZipDownloader' => 'icms_file_DownloadHandler'
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {
@@ -80,46 +78,10 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
                 'sanitizeMultipleExtensions',
                 'setErrors',
                 'getErrors'
-            ],
-            'icms_file_TarFileHandler' => [
-                'openTAR',
-                'appendTar',
-                'getFile',
-                'getDirectory',
-                'containsFile',
-                'containsDirectory',
-                'addDirectory',
-                'addFile',
-                'removeFile',
-                'removeDirectory',
-                'saveTar',
-                'toTar',
-                'toTarOutput'
-            ],
-            'icms_file_ZipFileHandler' => [
-                'addFile',
-                'file'
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
                 $this->assertTrue(method_exists($class, $method), 'Static method ' . $method . ' doesn\'t exists for class ' . $class);
-            }
-        }
-    }
-
-    /**
-     * Tests variables availability and types
-     */
-    public function testVariables() {
-        foreach ([
-            'icms_file_TarFileHandler' => [
-                'numFiles' => 'null', // int
-                'files' => 'null' // array
-            ]
-        ] as $class => $variables) {
-            $instance = $this->getClassInstance($class);
-            foreach ($variables as $variable => $type) {
-                $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
     }
