@@ -104,10 +104,12 @@ class icms_plugins_EditorHandler {
 	 * @return  array   $_list    list of available editors that are allowed (through admin config)
 	 */
 	public function &getList($noHtml = FALSE) {
-		$list = @include_once ICMS_CACHE_PATH . $this->_type . 'editor_list.php';
+		static $list = null;
+		$cache_file = ICMS_CACHE_PATH . '/' . $this->_type . 'editor_list.php';
 		
-		if (empty($list)) {
-
+		if ($list === null && file_exists($cache_file)) {
+			$list = include($cache_file);
+		} else {
 			$list = array();
 			$order = array();
 			$_list = icms_core_Filesystem::getDirList($this->root_path . '/');
