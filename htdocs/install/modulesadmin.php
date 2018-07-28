@@ -34,7 +34,7 @@ function xoops_module_install($dirname) {
 		$msgs = array();
 		$msgs[] = '<h4 style="text-align:' . _GLOBAL_LEFT . ';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing ' . $module->getInfo('name') . '</h4>';
 		if ($module->getInfo('image') != false && trim($module->getInfo('image')) != '') {
-			$msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
+			$msgs[] = '<img src="' . ICMS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
 		}
 		$msgs[] = '<b>Version:</b> ' . icms_conv_nr2local($module->getInfo('version'));
 		if ($module->getInfo('author') != false && trim($module->getInfo('author')) != '') {
