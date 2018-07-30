@@ -25,7 +25,7 @@
     "simplepie/simplepie": "^1.5",
     "league/flysystem": "^1.0",
     "phpmailer/phpmailer": "^6.0",
-    "league/container": "^2.4",
+    "league/container": "^3.0",
 	  "erusev/parsedown": "^1.7.0",
 	  "cerdic/css-tidy": "^1.5",
     "geshi/geshi": "^1.0",
