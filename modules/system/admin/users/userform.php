@@ -70,7 +70,7 @@ $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //  $a_dirlist = icms_core_Filesystem::getDirList(XOOPS_ROOT_PATH."/images/avatar/");
 //  $a_dir_labels = array();
 //  $a_count = 0;
-//  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;start=".$a_count."','avatars',600,400);\">XOOPS</a>";
+//  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;start=".$a_count."','avatars',600,400);\">XOOPS</a>";
 //  $a_count = $a_count + count($avatar_array);
 //  $a_dir_labels[] = new icms_form_elements_Label("", $a_dir_link);
 //  foreach ($a_dirlist as $a_dir) {
@@ -79,7 +79,7 @@ $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //	  }
 //	  $avatars_array = icms_core_Filesystem::getImgList(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
 //	  $avatar_select->addOptionArray($avatars_array);
-//	  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
+//	  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
 //	  $a_dir_labels[] = new icms_form_elements_Label("", $a_dir_link);
 //	  $a_count = $a_count + count($avatars_array);
 //  }
@@ -89,8 +89,8 @@ $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //		  $avatar_select->addOption($myavatar, _US_MYAVATAR);
 //	  }
 //  }
-//  $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"images/avatar\", \"\", \"".XOOPS_URL."\")'");
-//  $avatar_label = new icms_form_elements_Label("", "<img src='".XOOPS_URL."/images/avatar/".$avatar_value."' name='avatar' id='avatar' alt='' />");
+//  $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"images/avatar\", \"\", \"".ICMS_URL."\")'");
+//  $avatar_label = new icms_form_elements_Label("", "<img src='".ICMS_URL."/images/avatar/".$avatar_value."' name='avatar' id='avatar' alt='' />");
 //  $avatar_tray = new icms_form_elements_Tray(_AM_AVATAR, "&nbsp;");
 //  $avatar_tray->addElement($avatar_select);
 //  $avatar_tray->addElement($avatar_label);
