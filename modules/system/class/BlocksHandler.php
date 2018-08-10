@@ -11,7 +11,7 @@
  */
 
 /* This may be loaded by other modules - and not just through the cpanel */
-icms_loadLanguageFile('system', 'blocks', TRUE);
+icms_loadLanguageFile('system', 'blocks', true);
 
 /**
  * System Block Configuration Object Handler Class
@@ -44,7 +44,7 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 	//  }
 
 	public function getBlockPositionArray() {
-		$block_positions = $this->getBlockPositions(TRUE);
+		$block_positions = $this->getBlockPositions(true);
 		$rtn = array();
 		foreach ($block_positions as $k=>$v) {
 			$rtn[$k] = (defined($block_positions[$k]['title']))
@@ -63,10 +63,10 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 		return $rtn;
 	}
 
-	public function getModulesArray($full = FALSE) {
+	public function getModulesArray($full = false) {
 		if (!count($this->modules_name)) {
 			$icms_module_handler = icms::handler('icms_module');
-			$installed_modules =& $icms_module_handler->getObjects();
+			$installed_modules = & $icms_module_handler->getObjects();
 			$this->modules_name[0]['name'] = _NONE;
 			$this->modules_name[0]['dirname'] = '';
 			foreach ($installed_modules as $module) {
@@ -85,14 +85,16 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 	}
 
 	public function getModuleName($mid) {
-		if ($mid == 0) return '';
+		if ($mid == 0) {
+			return '';
+		}
 		$modules = $this->getModulesArray();
 		$rtn = $modules[$mid];
 		return $rtn;
 	}
 
 	public function getModuleDirname($mid) {
-		$modules = $this->getModulesArray(TRUE);
+		$modules = $this->getModulesArray(true);
 		$rtn = $modules[$mid]['dirname'];
 		return $rtn;
 	}
@@ -107,11 +109,13 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '<'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1)
-			? $sideBlocks[0]->getVar('weight') - 1
+			?$sideBlocks[0]->getVar('weight') - 1
 			: $blockObj->getVar('weight') - 1;
-		if ($weight < 0) $weight = 0;
+		if ($weight < 0) {
+			$weight = 0;
+		}
 		$blockObj->setVar('weight', $weight);
-		$this->insert($blockObj, TRUE);
+		$this->insert($blockObj, true);
 	}
 
 	public function downWeight($bid) {
@@ -124,20 +128,20 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '>'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1)
-			? $sideBlocks[0]->getVar('weight') + 1
+			?$sideBlocks[0]->getVar('weight') + 1
 			: $blockObj->getVar('weight') + 1;
 		$blockObj->setVar('weight', $weight);
-		$this->insert($blockObj, TRUE);
+		$this->insert($blockObj, true);
 	}
 
 	public function changeVisible($bid) {
 		$blockObj = $this->get($bid);
-		if ($blockObj->getVar('visible' , 'n')) {
+		if ($blockObj->visible) {
 			$blockObj->setVar('visible', 0);
 		} else {
 			$blockObj->setVar('visible', 1);
 		}
-		$this->insert($blockObj, TRUE);
+		$this->insert($blockObj, true);
 	}
 
 	/**
@@ -150,15 +154,19 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 	 * @return TRUE
 	 */
 	public function beforeSave(&$obj) {
-		if (empty($_POST['options'])) return TRUE;
+		if (empty($_POST['options'])) {
+			return true;
+		}
 
 		$options = "";
 		ksort($_POST['options']);
 		foreach ($_POST['options'] as $opt) {
-			if ($options != "")	$options .= '|';
+			if ($options != "") {
+				$options .= '|';
+			}
 			$options .= $opt;
 		}
 		$obj->setVar('options', $options);
-		return TRUE;
+		return true;
 	}
 }

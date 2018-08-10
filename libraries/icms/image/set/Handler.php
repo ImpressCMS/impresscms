@@ -52,128 +52,128 @@
  */
 class icms_image_set_Handler extends \icms_ipf_Handler {
 
-        /**
-        * Constructor
-         *
-        * @param \icms_db_IConnection $db              Database connection
-        */
-        public function __construct(&$db) {
-                parent::__construct($db, 'image_set', 'imgset_id', 'imgset_name', '', 'icms', 'imgset');
-        }
+		/**
+		 * Constructor
+		 *
+		 * @param \icms_db_IConnection $db              Database connection
+		 */
+		public function __construct(&$db) {
+				parent::__construct($db, 'image_set', 'imgset_id', 'imgset_name', '', 'icms', 'imgset');
+		}
 
-        /**
-        * This event executes after deletion
-         *
-        * @param \icms_image_set_Object $obj           Instance of icms_image_set_Object
-         *
-        * @return boolean
-        */
-        protected function afterDelete($obj) {
-                $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), $obj->imgset_id);
-                $this->db->query($sql);
-                return true;
-        }
+		/**
+		 * This event executes after deletion
+		 *
+		 * @param \icms_image_set_Object $obj           Instance of icms_image_set_Object
+		 *
+		 * @return boolean
+		 */
+		protected function afterDelete($obj) {
+				$sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), $obj->imgset_id);
+				$this->db->query($sql);
+				return true;
+		}
 
-    /**
-    * Retrieve array of {@link icms_image_set_Object}s meeting certain conditions
-     *
-    * @param object $criteria {@link CriteriaElement} with conditions for the imagesets
-    * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
-     *
-    * @return array {@link icms_image_set_Object}s matching the conditions
-     */
-    public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
-        $ret = array();
-        $limit = $start = 0;
-        $sql = 'SELECT DISTINCT i.* FROM ' . $this->table . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' ' . $criteria->renderWhere();
-            $limit = $criteria->getLimit();
-            $start = $criteria->getStart();
-        }
-        $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
-        }
-        while ($myrow = $this->db->fetchArray($result)) {
-            $imgset = new icms_image_set_Object($this, $myrow);
-            if (!$id_as_key) {
-                $ret[] = & $imgset;
-            } else {
-                $ret[$myrow['imgset_id']] = & $imgset;
-            }
-            unset($imgset);
-        }
-        return $ret;
-    }
+	/**
+	 * Retrieve array of {@link icms_image_set_Object}s meeting certain conditions
+	 *
+	 * @param object $criteria {@link CriteriaElement} with conditions for the imagesets
+	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
+	 *
+	 * @return array {@link icms_image_set_Object}s matching the conditions
+	 */
+	public function &getObjects($criteria = null, $id_as_key = false) {
+		$ret = array();
+		$limit = $start = 0;
+		$sql = 'SELECT DISTINCT i.* FROM ' . $this->table . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
+		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+			$sql .= ' ' . $criteria->renderWhere();
+			$limit = $criteria->getLimit();
+			$start = $criteria->getStart();
+		}
+		$result = $this->db->query($sql, $limit, $start);
+		if (!$result) {
+			return $ret;
+		}
+		while ($myrow = $this->db->fetchArray($result)) {
+			$imgset = new icms_image_set_Object($this, $myrow);
+			if (!$id_as_key) {
+				$ret[] = & $imgset;
+			} else {
+				$ret[$myrow['imgset_id']] = & $imgset;
+			}
+			unset($imgset);
+		}
+		return $ret;
+	}
 
-    /**
-    * Links a {@link icms_image_set_Object} to a themeset (tplset)
-    * @param int $imgset_id image set id to link
-    * @param int $tplset_name theme set to link
-     *
-    * @return bool TRUE if succesful FALSE if unsuccesful
-     */
-    public function linkThemeset($imgset_id, $tplset_name) {
-        $imgset_id = (int) $imgset_id;
-        $tplset_name = trim($tplset_name);
-        if ($imgset_id <= 0 || $tplset_name == '') {
-            return false;
-        }
-        if (!$this->unlinkThemeset($imgset_id, $tplset_name)) {
-            return false;
-        }
-        $sql = sprintf("INSERT INTO %s (imgset_id, tplset_name) VALUES ('%u', %s)", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
-        $result = $this->db->query($sql);
-        if (!$result) {
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * Links a {@link icms_image_set_Object} to a themeset (tplset)
+	 * @param int $imgset_id image set id to link
+	 * @param int $tplset_name theme set to link
+	 *
+	 * @return bool TRUE if succesful FALSE if unsuccesful
+	 */
+	public function linkThemeset($imgset_id, $tplset_name) {
+		$imgset_id = (int) $imgset_id;
+		$tplset_name = trim($tplset_name);
+		if ($imgset_id <= 0 || $tplset_name == '') {
+			return false;
+		}
+		if (!$this->unlinkThemeset($imgset_id, $tplset_name)) {
+			return false;
+		}
+		$sql = sprintf("INSERT INTO %s (imgset_id, tplset_name) VALUES ('%u', %s)", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+		$result = $this->db->query($sql);
+		if (!$result) {
+			return false;
+		}
+		return true;
+	}
 
-    /**
-    * Unlinks a {@link icms_image_set_Object} from a themeset (tplset)
-     *
-    * @param int $imgset_id image set id to unlink
-    * @param int $tplset_name theme set to unlink
-     *
-    * @return bool TRUE if succesful FALSE if unsuccesful
-    * */
-    public function unlinkThemeset($imgset_id, $tplset_name) {
-        $imgset_id = (int) $imgset_id;
-        $tplset_name = trim($tplset_name);
-        if ($imgset_id <= 0 || $tplset_name == '') {
-            return false;
-        }
-        $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u' AND tplset_name = %s", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
-        $result = $this->db->query($sql);
-        if (!$result) {
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * Unlinks a {@link icms_image_set_Object} from a themeset (tplset)
+	 *
+	 * @param int $imgset_id image set id to unlink
+	 * @param int $tplset_name theme set to unlink
+	 *
+	 * @return bool TRUE if succesful FALSE if unsuccesful
+	 * */
+	public function unlinkThemeset($imgset_id, $tplset_name) {
+		$imgset_id = (int) $imgset_id;
+		$tplset_name = trim($tplset_name);
+		if ($imgset_id <= 0 || $tplset_name == '') {
+			return false;
+		}
+		$sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u' AND tplset_name = %s", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+		$result = $this->db->query($sql);
+		if (!$result) {
+			return false;
+		}
+		return true;
+	}
 
-    /**
-    * Get a list of {@link icms_image_set_Object}s matching certain conditions
-     *
-    * @param int $refid conditions to match
-    * @param int $tplset conditions to match
-    * @return array array of {@link icms_image_set_Object}s matching the conditions
-    * */
-    public function getList($refid = null, $tplset = null) {
-        $criteria = new CriteriaCompo();
-        if (isset($refid)) {
-            $criteria->add(new Criteria('imgset_refid', (int) $refid));
-        }
-        if (isset($tplset)) {
-            $criteria->add(new Criteria('tplset_name', $tplset));
-        }
-        $imgsets = & $this->getObjects($criteria, true);
-        $ret = array();
-        foreach (array_keys($imgsets) as $i) {
-            $ret[$i] = $imgsets[$i]->getVar('imgset_name');
-        }
-        return $ret;
-    }
+	/**
+	 * Get a list of {@link icms_image_set_Object}s matching certain conditions
+	 *
+	 * @param int $refid conditions to match
+	 * @param int $tplset conditions to match
+	 * @return array array of {@link icms_image_set_Object}s matching the conditions
+	 * */
+	public function getList($refid = null, $tplset = null) {
+		$criteria = new CriteriaCompo();
+		if (isset($refid)) {
+			$criteria->add(new Criteria('imgset_refid', (int) $refid));
+		}
+		if (isset($tplset)) {
+			$criteria->add(new Criteria('tplset_name', $tplset));
+		}
+		$imgsets = & $this->getObjects($criteria, true);
+		$ret = array();
+		foreach (array_keys($imgsets) as $i) {
+			$ret[$i] = $imgsets[$i]->getVar('imgset_name');
+		}
+		return $ret;
+	}
 
 }

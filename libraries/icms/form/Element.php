@@ -99,7 +99,7 @@ abstract class icms_form_Element {
 	 * required field?
 	 * @var	bool
 	 */
-	private $_required = FALSE;
+	private $_required = false;
 
 	/**
 	 * description of the field
@@ -177,7 +177,7 @@ abstract class icms_form_Element {
 			return htmlspecialchars(substr($str, 0, $pos), ENT_QUOTES, _CHARSET)
 				. '<span style="text-decoration:underline">'
 				. htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES, _CHARSET)
-				. '</span>' . htmlspecialchars(substr($str, $pos+1), ENT_QUOTES, _CHARSET);
+				. '</span>' . htmlspecialchars(substr($str, $pos + 1), ENT_QUOTES, _CHARSET);
 		}
 		return htmlspecialchars($str, ENT_QUOTES, _CHARSET);
 	}
@@ -200,7 +200,9 @@ abstract class icms_form_Element {
 	 * @return 	string  "class" attribute value
 	 */
 	public function getClass() {
-		if(empty($this->_class)) return '';
+		if (empty($this->_class)) {
+			return '';
+		}
 		$class = array();
 		foreach ($this->_class as $class) {
 			$class[] = htmlspecialchars($class, ENT_QUOTES, _CHARSET);
@@ -224,7 +226,7 @@ abstract class icms_form_Element {
 	 * @return	string
 	 */
 	public function getCaption($encode = false) {
-		return $encode ? htmlspecialchars($this->_caption, ENT_QUOTES, _CHARSET) : $this->_caption;
+		return $encode? htmlspecialchars($this->_caption, ENT_QUOTES, _CHARSET):$this->_caption;
 	}
 
 	/**
@@ -275,7 +277,7 @@ abstract class icms_form_Element {
 	}
 
 	public function setRequired() {
-		$this->_required = TRUE;
+		$this->_required = true;
 	}
 
 	/**
@@ -311,7 +313,7 @@ abstract class icms_form_Element {
 		foreach ($this->_extra as $val) {
 			$value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
 		}
-		return empty($value) ? "" : " " . implode(' ', $value);
+		return empty($value)?"":" " . implode(' ', $value);
 	}
 
 	/**

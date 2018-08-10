@@ -46,7 +46,7 @@ $filter_get = array(
 $filter_post = array(
 	'id' => 'int',
 	'smile_id' => 'int',
-	'smile_display' => array('int', array(0,1)),
+	'smile_display' => array('int', array(0, 1)),
 );
 
 /* set default values for variables, $op and $fct are handled in the header */
@@ -57,21 +57,21 @@ include 'admin_header.php';
 /** load helper functions for smilies administration */
 include_once ICMS_MODULES_PATH . "/system/admin/smilies/smilies.php";
 
-$db =& icms_db_Factory::instance();
+$db = & icms_db_Factory::instance();
 
-switch($op) {
+switch ($op) {
 	case "SmilesUpdate":
 		if (!icms::$security->check()) {
 			redirect_header('admin.php?fct=smilies', 3, implode('<br />', icms::$security->getErrors()));
 		}
-		$count = (!empty($smile_id) && is_array($smile_id)) ? count($smile_id) : 0;
+		$count = (!empty($smile_id) && is_array($smile_id))? count($smile_id):0;
 
 		for ($i = 0; $i < $count; $i++) {
 			$smileid = (int) $smile_id[$i];
 			if (empty($smileid)) {
 				continue;
 			}
-			$smiledisplay = empty($smile_display[$i]) ? 0 : 1;
+			$smiledisplay = empty($smile_display[$i])?0:1;
 			if (isset($old_display[$i]) && $old_display[$i] != $smiledisplay) {
 				$db->query("UPDATE " . $db->prefix('smiles') . " SET display='" . (int) $smiledisplay . "' WHERE id ='" . $smileid . "'");
 			}
@@ -92,7 +92,7 @@ switch($op) {
 				$smile_url = $uploader->getSavedFileName();
 				$smile_code = icms_core_DataFilter::stripSlashesGPC($smile_code);
 				$smile_desc = icms_core_DataFilter::stripSlashesGPC($smile_desc);
-				$smile_display = (int) $smile_display > 0 ? 1 : 0;
+				$smile_display = (int) $smile_display > 0?1:0;
 				$newid = $db->genId($db->prefix('smilies') . "_id_seq");
 				$sql = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES ('%d', %s, %s, %s, '%d')", $db->prefix('smiles'), (int) $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
 				if (!$db->query($sql)) {
@@ -124,7 +124,7 @@ switch($op) {
 		}
 		$smile_code = icms_core_DataFilter::stripSlashesGPC($smile_code);
 		$smile_desc = icms_core_DataFilter::stripSlashesGPC($smile_desc);
-		$smile_display = (int) $smile_display > 0 ? 1 : 0;
+		$smile_display = (int) $smile_display > 0?1:0;
 		if ($_FILES['smile_url']['name'] != "") {
 			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 			$uploader->setPrefix('smil');

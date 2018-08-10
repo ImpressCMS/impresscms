@@ -12,11 +12,11 @@
  */
 class icms_plugins_Object {
 
-    /**
-    * Plugin information (storied as array)
-     *
-    * @var array
-    */
+	/**
+	 * Plugin information (storied as array)
+	 *
+	 * @var array
+	 */
 	public $_infoArray = array();
 
 	/**
@@ -63,7 +63,7 @@ class icms_plugins_Object {
 	 */
 	public function getItem() {
 		$ret = false;
-		foreach($this->_infoArray['items'] as $k => $v) {
+		foreach ($this->_infoArray['items'] as $k => $v) {
 			$search_str = str_replace('%u', '', $v['url']);
 			if (strpos($_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'], $search_str) > 0) {
 				$ret = $k;

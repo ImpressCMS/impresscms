@@ -1,24 +1,61 @@
 language: php
 
+os:
+  - linux
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+env:
+ global:
+  - URL=http://192.168.2.99
+  - DB_TYPE=pdo.mysql
+  - DB_HOST=localhost
+  - DB_USER=root
+  - DB_PASS=
+  - DB_PCONNECT=0
+  - DB_NAME=icms
+  - DB_CHARSET=utf8
+  - DB_COLLATION=utf8_general_ci
+  - DB_PREFIX=icms
+  - DB_SALT=icms
+
+stages:
+  - validate
+  - test
+  - coverage
+
+services:
+  - mysql
+
 php:
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
+  - '7.0'
+  - '7.1'
+  - '7.2'
+
+install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
+  - travis_retry composer install --no-progress --no-interaction
 
 script:
- - echo URL=http://192.168.2.99 > .env
- - echo DB_TYPE=pdo.mysql >> .env
- - echo DB_HOST=localhost >> .env
- - echo DB_USER=icms >> .env
- - echo DB_PASS=icms >> .env
- - echo DB_PCONNECT=0 >> .env
- - echo DB_NAME=icms >> .env
- - echo DB_CHARSET=utf8 >> .env
- - echo DB_COLLATION=utf8_general_ci >> .env
- - echo DB_PREFIX=icms >> .env
- - echo DB_SALT=icms >> .env
- - composer install
- - composer dumpautoload
- - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php
+  - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --no-coverage
+
+jobs:
+  include:
+    - stage: validate
+      script: composer validate
+    - stage: coverage
+      env:
+        - CC_TEST_REPORTER_ID=ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
+      install:
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
+        - travis_retry composer install --no-progress --no-interaction
+      script:
+        - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --coverage-clover=build/logs/clover.xml
+      after_script:
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

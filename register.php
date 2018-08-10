@@ -52,18 +52,18 @@ if ($icmsConfigUser['allow_register'] == 0 && $icmsConfigUser['activation_type']
 if (is_object(icms::$user)) {
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
 }
-$op = !isset($_POST['op']) ? 'register' : filter_input(INPUT_POST, 'op');
-$login_name = isset($_POST['login_name']) ? icms_core_DataFilter::stripSlashesGPC($_POST['login_name']) : '';
-$uname = isset($_POST['uname']) ? icms_core_DataFilter::stripSlashesGPC($_POST['uname']) : '';
-$email = isset($_POST['email']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])) : '';
-$url = isset($_POST['url']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['url'])) : '';
-$pass = isset($_POST['pass']) ? icms_core_DataFilter::stripSlashesGPC($_POST['pass']) : '';
-$vpass = isset($_POST['vpass']) ? icms_core_DataFilter::stripSlashesGPC($_POST['vpass']) : '';
-$timezone_offset = isset($_POST['timezone_offset']) ? (float)($_POST['timezone_offset']) : $icmsConfig['default_TZ'];
-$user_viewemail = (isset($_POST['user_viewemail']) && (int) $_POST['user_viewemail']) ? 1 : 0;
-$user_mailok = (isset($_POST['user_mailok']) && (int) $_POST['user_mailok']) ? 1 : 0;
-$agree_disc = (isset($_POST['agree_disc']) && (int) $_POST['agree_disc']) ? 1 : 0;
-$actkey = isset($_POST['actkey']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['actkey'])) : '';
+$op = !isset($_POST['op'])?'register':filter_input(INPUT_POST, 'op');
+$login_name = isset($_POST['login_name'])? icms_core_DataFilter::stripSlashesGPC($_POST['login_name']):'';
+$uname = isset($_POST['uname'])? icms_core_DataFilter::stripSlashesGPC($_POST['uname']):'';
+$email = isset($_POST['email'])? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])):'';
+$url = isset($_POST['url'])? trim(icms_core_DataFilter::stripSlashesGPC($_POST['url'])):'';
+$pass = isset($_POST['pass'])? icms_core_DataFilter::stripSlashesGPC($_POST['pass']):'';
+$vpass = isset($_POST['vpass'])? icms_core_DataFilter::stripSlashesGPC($_POST['vpass']):'';
+$timezone_offset = isset($_POST['timezone_offset'])?(float) ($_POST['timezone_offset']):$icmsConfig['default_TZ'];
+$user_viewemail = (isset($_POST['user_viewemail']) && (int) $_POST['user_viewemail'])?1:0;
+$user_mailok = (isset($_POST['user_mailok']) && (int) $_POST['user_mailok'])?1:0;
+$agree_disc = (isset($_POST['agree_disc']) && (int) $_POST['agree_disc'])?1:0;
+$actkey = isset($_POST['actkey'])? trim(icms_core_DataFilter::stripSlashesGPC($_POST['actkey'])):'';
 
 $thisuser = icms::handler('icms_member_user');
 switch ($op) {
@@ -98,7 +98,7 @@ switch ($op) {
 				$url = formatURL($url);
 				echo _US_WEBSITE . ': ' . icms_core_DataFilter::htmlSpecialChars($url) . '<br />';
 			}
-			$f_timezone = ($timezone_offset < 0) ? 'GMT ' . $timezone_offset : 'GMT +' . $timezone_offset;
+			$f_timezone = ($timezone_offset < 0)?'GMT ' . $timezone_offset:'GMT +' . $timezone_offset;
 			echo _US_TIMEZONE . ": $f_timezone<br />";
 			echo "<form action='register.php' method='post'><input type='hidden' name='login_name' value='"
 				. icms_core_DataFilter::htmlSpecialChars($login_name)
@@ -113,7 +113,7 @@ switch ($op) {
 				. "' /><input type='hidden' name='actkey' value='" . icms_core_DataFilter::htmlSpecialChars($actkey)
 				. "' /><input type='hidden' name='agree_disc' value='" . (int) $agree_disc
 				. "' /><br /><br /><input type='hidden' name='op' value='finish' />" . icms::$security->getTokenHTML()
-				. "<input type='submit' value='". _US_FINISH ."' /></form>";
+				. "<input type='submit' value='" . _US_FINISH . "' /></form>";
 		} else {
 			echo "<div id='registerstop' style='color:#ff0000;'>$stop</div>";
 			include 'include/registerform.php';
@@ -131,7 +131,7 @@ switch ($op) {
 		}
 		if ($icmsConfigUser['use_captcha'] == 1) {
 			$icmsCaptcha = icms_form_elements_captcha_Object::instance();
-			if (! $icmsCaptcha->verify()) {
+			if (!$icmsCaptcha->verify()) {
 				$stop .= $icmsCaptcha->getMessage() . '<br />';
 
 			}
@@ -145,31 +145,31 @@ switch ($op) {
 
 		if (empty($stop)) {
 			$member_handler = icms::handler('icms_member');
-			$newuser =& $member_handler->createUser();
-			$newuser->setVar('user_viewemail', $user_viewemail, TRUE);
-			$newuser->setVar('login_name', $login_name, TRUE);
-			$newuser->setVar('uname', $uname, TRUE);
-			$newuser->setVar('email', $email, TRUE);
+			$newuser = & $member_handler->createUser();
+			$newuser->setVar('user_viewemail', $user_viewemail, true);
+			$newuser->setVar('login_name', $login_name, true);
+			$newuser->setVar('uname', $uname, true);
+			$newuser->setVar('email', $email, true);
 			if ($url != '') {
-				$newuser->setVar('url', formatURL($url), TRUE);
+				$newuser->setVar('url', formatURL($url), true);
 			}
-			$newuser->setVar('user_avatar', 'blank.gif', TRUE);
+			$newuser->setVar('user_avatar', 'blank.gif', true);
 			include_once 'include/checkinvite.php';
 			$valid_actkey = check_invite_code($actkey);
-			$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), TRUE);
+			$newuser->setVar('actkey', $valid_actkey?$actkey:substr(md5(uniqid(mt_rand(), 1)), 0, 8), true);
 
 			$icmspass = new icms_core_Password();
 
 			$pass1 = $icmspass->encryptPass($pass);
-			$newuser->setVar('pass', $pass1, TRUE);
-			$newuser->setVar('timezone_offset', $timezone_offset, TRUE);
-			$newuser->setVar('user_regdate', time(), TRUE);
-			$newuser->setVar('uorder', $icmsConfig['com_order'], TRUE);
-			$newuser->setVar('umode', $icmsConfig['com_mode'], TRUE);
-			$newuser->setVar('user_mailok', $user_mailok, TRUE);
+			$newuser->setVar('pass', $pass1, true);
+			$newuser->setVar('timezone_offset', $timezone_offset, true);
+			$newuser->setVar('user_regdate', time(), true);
+			$newuser->setVar('uorder', $icmsConfig['com_order'], true);
+			$newuser->setVar('umode', $icmsConfig['com_mode'], true);
+			$newuser->setVar('user_mailok', $user_mailok, true);
 			$newuser->setVar('notify_method', 2);
 			if ($valid_actkey || $icmsConfigUser['activation_type'] == 1) {
-				$newuser->setVar('level', 1, TRUE);
+				$newuser->setVar('level', 1, true);
 			}
 			if (!$member_handler->insertUser($newuser)) {
 				echo "<div id='registerng'>" . _US_REGISTERNG . "</div>";
@@ -201,33 +201,33 @@ switch ($op) {
 
 			// Activation by user
 			if ($icmsConfigUser['activation_type'] == 0) {
-				$xoopsMailer = new icms_messaging_Handler();
-				$xoopsMailer->useMail();
-				$xoopsMailer->setTemplate('register.tpl');
-				$xoopsMailer->setToUsers(new icms_member_user_Object($newid));
-				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-				$xoopsMailer->setFromName($icmsConfig['sitename']);
-				$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
-				if (!$xoopsMailer->send()) {
+				$mailer = new icms_messaging_Handler();
+				$mailer->useMail();
+				$mailer->setTemplate('register.tpl');
+				$mailer->setToUsers(new icms_member_user_Object($newid));
+				$mailer->setFromEmail($icmsConfig['adminmail']);
+				$mailer->setFromName($icmsConfig['sitename']);
+				$mailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
+				if (!$mailer->send()) {
 					echo "<div id='yourregmailng'>" . _US_YOURREGMAILNG . "</div>";
 				} else {
 					echo "<div id='yourregistered'>" . _US_YOURREGISTERED . "</div>";
 				}
 				// activation by admin
 			} elseif ($icmsConfigUser['activation_type'] == 2) {
-				$xoopsMailer = new icms_messaging_Handler();
-				$xoopsMailer->useMail();
-				$xoopsMailer->setTemplate('adminactivate.tpl');
-				$xoopsMailer->assign('USERNAME', $uname);
-				$xoopsMailer->assign('USERLOGINNAME', $login_name);
-				$xoopsMailer->assign('USEREMAIL', $email);
-				$xoopsMailer->assign('USERACTLINK', ICMS_URL . '/user.php?op=actv&amp;id=' . $newid . '&amp;actkey=' . $newuser->getVar('actkey'));
+				$mailer = new icms_messaging_Handler();
+				$mailer->useMail();
+				$mailer->setTemplate('adminactivate.tpl');
+				$mailer->assign('USERNAME', $uname);
+				$mailer->assign('USERLOGINNAME', $login_name);
+				$mailer->assign('USEREMAIL', $email);
+				$mailer->assign('USERACTLINK', ICMS_URL . '/user.php?op=actv&amp;id=' . $newid . '&amp;actkey=' . $newuser->getVar('actkey'));
 				$member_handler = icms::handler('icms_member');
-				$xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['activation_group']));
-				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-				$xoopsMailer->setFromName($icmsConfig['sitename']);
-				$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
-				if (!$xoopsMailer->send()) {
+				$mailer->setToGroups($member_handler->getGroup($icmsConfigUser['activation_group']));
+				$mailer->setFromEmail($icmsConfig['adminmail']);
+				$mailer->setFromName($icmsConfig['sitename']);
+				$mailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
+				if (!$mailer->send()) {
 					echo "<div id='yourregmailng'>" . _US_YOURREGMAILNG . "</div>";
 				} else {
 					echo "<div id='yourregistered2'>" . _US_YOURREGISTERED2 . "</div>";
@@ -244,7 +244,7 @@ switch ($op) {
 
 	case 'register':
 	default:
-		$invite_code = isset($_GET['code']) ? filter_input(INPUT_GET, 'code') : NULL;
+		$invite_code = isset($_GET['code'])? filter_input(INPUT_GET, 'code'):null;
 		if ($icmsConfigUser['activation_type'] == 3 || !empty($invite_code)) {
 			include 'include/checkinvite.php';
 			load_invite_code($invite_code);

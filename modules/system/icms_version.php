@@ -51,7 +51,7 @@ $modversion = array(
 	'credits'=> "The ImpressCMS Project",
 	'help'=> "",
 	'license'=> "GNU General Public License (GPL)",
-	'official'=> TRUE,
+	'official'=> true,
 	'dirname'=> basename(__DIR__),
 	'modname' => 'system',
 
@@ -61,9 +61,9 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /*  Development information */
-	'status_version'=> "Alpha 6",
+	'status_version'=> "Alpha 7",
 	'status'=> "Alpha",
-	'date'=> "21 March 2018",
+	'date'=> "26 April 2018",
 	'author_word'=> "",
 	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
@@ -93,7 +93,7 @@ $modversion['people']['documenters'][] = "[url=https://www.impresscms.org/userin
 
 // Autotasks
 $modversion['autotasks'][] = array(
-	'enabled' => TRUE,
+	'enabled' => true,
 	'name' => _MI_SYSTEM_REMOVEUSERS,
 	'code' => 'autotask.php',
 	'interval' => 1440
@@ -103,7 +103,7 @@ $modversion['autotasks'][] = array(
 $modversion['manual']['wiki'][] = "<a href='https://www.impresscms.org/modules/simplywiki/index.php?page=System' target='_blank'>" . _MI_SYSTEM_NAME . "</a>";
 
 /* Administrative information */
-$modversion['hasAdmin'] = TRUE;
+$modversion['hasAdmin'] = true;
 $modversion['adminindex'] = "admin.php";
 $modversion['adminmenu'] = "menu.php";
 
@@ -129,16 +129,13 @@ $modversion['object_items'] = array(
 );
 
 /* This will be the list of database tables for the above objects */
-$modversion['tables']  = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
-
-/* Install and update informations */
-$modversion['onUpdate'] = "include/update.php";
+$modversion['tables'] = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
 
 /* Search information */
-$modversion['hasSearch'] = FALSE;
+$modversion['hasSearch'] = false;
 
 /* Menu information */
-$modversion['hasMain'] = FALSE;
+$modversion['hasMain'] = false;
 
 /* Blocks information */
 $modversion['blocks'][1] = array(
@@ -319,18 +316,13 @@ $modversion['templates'][] = array(
 	'description' => ''
 	);
 
-$modversion['templates'][]= array(
+$modversion['templates'][] = array(
 	'file' => 'system_userinfo.html',
 	'description' => ''
 	);
 
 $modversion['templates'][] = array(
 	'file' => 'system_userform.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_rss.html',
 	'description' => ''
 	);
 

@@ -45,39 +45,39 @@
  */
 class icms_ipf_Tree {
 
-        /**
-        * Field name of parent object ID
-         *
-        * @var string
-        */
+		/**
+		 * Field name of parent object ID
+		 *
+		 * @var string
+		 */
 	private $_parentId;
 
-        /**
-        * Field name of object ID
-         *
-        * @var string
-        */
+		/**
+		 * Field name of object ID
+		 *
+		 * @var string
+		 */
 	public $_myId = '';
 
-        /**
-        * Field name of root object ID
-         *
-        * @var string
-        */
+		/**
+		 * Field name of root object ID
+		 *
+		 * @var string
+		 */
 	private $_rootId = null;
 
-        /**
-        * Array of Tree
-         *
-        * @var array
-        */
-	public $_tree = array ();
+		/**
+		 * Array of Tree
+		 *
+		 * @var array
+		 */
+	public $_tree = array();
 
-        /**
-        * Array of {@link icms_core_Object}s
-         *
-        * @var array
-        */
+		/**
+		 * Array of {@link icms_core_Object}s
+		 *
+		 * @var array
+		 */
 	private $_objects = array();
 
 	/**
@@ -142,7 +142,7 @@ class icms_ipf_Tree {
 	 * @return  array   Array of children of the parent
 	 */
 	public function getFirstChild($key) {
-		$ret = array ();
+		$ret = array();
 		if (isset ($this->_tree[$key]['child'])) {
 			foreach ($this->_tree[$key]['child'] as $childkey) {
 				$ret[$childkey] = & $this->_tree[$childkey]['obj'];
@@ -158,7 +158,7 @@ class icms_ipf_Tree {
 	 * @param   array   $ret    (Empty when called from client) Array of children from previous recursions.
 	 * @return  array   Array of child nodes.
 	 */
-	public function getAllChild($key, $ret = array ()) {
+	public function getAllChild($key, $ret = array()) {
 		if (isset ($this->_tree[$key]['child'])) {
 			foreach ($this->_tree[$key]['child'] as $childkey) {
 				$ret[$childkey] = & $this->_tree[$childkey]['obj'];
@@ -180,10 +180,10 @@ class icms_ipf_Tree {
 	 * @param   int $uplevel (empty when called from outside) level of recursion
 	 * @return  array   Array of parent nodes.
 	 */
-	public function getAllParent($key, $ret = array (), $uplevel = 1) {
+	public function getAllParent($key, $ret = array(), $uplevel = 1) {
 		if (isset ($this->_tree[$key]['parent']) && isset ($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
 			$ret[$uplevel] = & $this->_tree[$this->_tree[$key]['parent']]['obj'];
-			$parents = & $this->getAllParent($this->_tree[$key]['parent'], $ret, $uplevel +1);
+			$parents = & $this->getAllParent($this->_tree[$key]['parent'], $ret, $uplevel + 1);
 			foreach (array_keys($parents) as $newkey) {
 				$ret[$newkey] = & $parents[$newkey];
 			}

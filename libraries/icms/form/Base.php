@@ -115,7 +115,7 @@ abstract class icms_form_Base {
 	 * @return	string
 	 */
 	public function getTitle($encode = false) {
-		return $encode ? htmlspecialchars($this->_title, ENT_QUOTES, _CHARSET) : $this->_title;
+		return $encode? htmlspecialchars($this->_title, ENT_QUOTES, _CHARSET):$this->_title;
 	}
 
 	/**
@@ -128,7 +128,9 @@ abstract class icms_form_Base {
 	 * @deprecated The "name" attribute is not strict HTML
 	 */
 	public function getName($encode = true) {
-		return $encode ? htmlspecialchars($this->_name, ENT_QUOTES, _CHARSET) : $this->_name;
+		trigger_error('The "name" attribute is not strict HTML', E_USER_DEPRECATED);
+
+		return $encode? htmlspecialchars($this->_name, ENT_QUOTES, _CHARSET):$this->_name;
 	}
 
 	/**
@@ -138,7 +140,7 @@ abstract class icms_form_Base {
 	 * @return	string
 	 */
 	public function getAction($encode = true) {
-		return $encode ? htmlspecialchars($this->_action, ENT_QUOTES, _CHARSET) : $this->_action;
+		return $encode? htmlspecialchars($this->_action, ENT_QUOTES, _CHARSET):$this->_action;
 	}
 
 	/**
@@ -146,8 +148,8 @@ abstract class icms_form_Base {
 	 *
 	 * @return	string
 	 */
-	public function getMethod(){
-		return ( strtolower($this->_method) == "get" ) ? "get" : "post";
+	public function getMethod() {
+		return (strtolower($this->_method) == "get")?"get":"post";
 	}
 
 	/**
@@ -157,20 +159,20 @@ abstract class icms_form_Base {
 	 * @param	bool    $required       is this a "required" element?
 	 */
 	public function addElement(&$formElement, $required = false) {
-		if ( is_string( $formElement ) ) {
+		if (is_string($formElement)) {
 			$this->_elements[] = $formElement;
-		} elseif ( is_subclass_of($formElement, 'icms_form_Element') ) {
-			$this->_elements[] =& $formElement;
+		} elseif (is_subclass_of($formElement, 'icms_form_Element')) {
+			$this->_elements[] = & $formElement;
 			if (!$formElement->isContainer()) {
 				if ($required) {
 					$formElement->setRequired();
-					$this->_required[] =& $formElement;
+					$this->_required[] = & $formElement;
 				}
 			} else {
-				$required_elements =& $formElement->getRequired();
+				$required_elements = & $formElement->getRequired();
 				$count = count($required_elements);
-				for ($i = 0 ; $i < $count; $i++) {
-					$this->_required[] =& $required_elements[$i];
+				for ($i = 0; $i < $count; $i++) {
+					$this->_required[] = & $required_elements[$i];
 				}
 			}
 		}
@@ -189,14 +191,14 @@ abstract class icms_form_Base {
 			$ret = array();
 			$count = count($this->_elements);
 			for ($i = 0; $i < $count; $i++) {
-				if ( is_object( $this->_elements[$i] ) ) {
+				if (is_object($this->_elements[$i])) {
 					if (!$this->_elements[$i]->isContainer()) {
-						$ret[] =& $this->_elements[$i];
+						$ret[] = & $this->_elements[$i];
 					} else {
-						$elements =& $this->_elements[$i]->getElements(true);
+						$elements = & $this->_elements[$i]->getElements(true);
 						$count2 = count($elements);
 						for ($j = 0; $j < $count2; $j++) {
-							$ret[] =& $elements[$j];
+							$ret[] = & $elements[$j];
 						}
 						unset($elements);
 					}
@@ -213,7 +215,7 @@ abstract class icms_form_Base {
 	 */
 	public function getElementNames() {
 		$ret = array();
-		$elements =& $this->getElements(true);
+		$elements = & $this->getElements(true);
 		$count = count($elements);
 		for ($i = 0; $i < $count; $i++) {
 			$ret[] = $elements[$i]->getName();
@@ -245,8 +247,8 @@ abstract class icms_form_Base {
 	 * @param	string $name	the "name" attribute of a form element
 	 * @param	string $value	the "value" attribute of a form element
 	 */
-	public function setElementValue($name, $value){
-		$ele =& $this->getElementByName($name);
+	public function setElementValue($name, $value) {
+		$ele = & $this->getElementByName($name);
 		if (is_object($ele) && method_exists($ele, 'setValue')) {
 			$ele->setValue($value);
 		}
@@ -257,10 +259,10 @@ abstract class icms_form_Base {
 	 *
 	 * @param	array $values	array of name/value pairs to be assigned to form elements
 	 */
-	public function setElementValues($values){
+	public function setElementValues($values) {
 		if (is_array($values) && !empty($values)) {
 			// will not use getElementByName() for performance..
-			$elements =& $this->getElements(true);
+			$elements = & $this->getElements(true);
 			$count = count($elements);
 			for ($i = 0; $i < $count; $i++) {
 				$name = $elements[$i]->getName(false);
@@ -279,7 +281,7 @@ abstract class icms_form_Base {
 	 * @return	string 	the "value" attribute assigned to a form element, null if not set
 	 */
 	public function getElementValue($name, $encode = false) {
-		$ele =& $this->getElementByName($name);
+		$ele = & $this->getElementByName($name);
 		if (is_object($ele) && method_exists($ele, 'getValue')) {
 			return $ele->getValue($encode);
 		}
@@ -294,13 +296,13 @@ abstract class icms_form_Base {
 	 */
 	public function getElementValues($encode = false) {
 		// will not use getElementByName() for performance..
-		$elements =& $this->getElements(true);
+		$elements = & $this->getElements(true);
 		$count = count($elements);
 		$values = array();
 		for ($i = 0; $i < $count; $i++) {
 			$name = $elements[$i]->getName(false);
 			if ($name && method_exists($elements[$i], 'getValue')) {
-				$values[$name] =& $elements[$i]->getValue($encode);
+				$values[$name] = & $elements[$i]->getValue($encode);
 			}
 		}
 		return $values;
@@ -323,7 +325,7 @@ abstract class icms_form_Base {
 	 * @return	string $extra
 	 */
 	public function &getExtra() {
-		$extra = empty($this->_extra) ? "" : " ". implode(" ", $this->_extra);
+		$extra = empty($this->_extra)?"":" " . implode(" ", $this->_extra);
 		return $extra;
 	}
 
@@ -333,7 +335,7 @@ abstract class icms_form_Base {
 	 * @param	object  &$formElement    reference to a {@link icms_form_Element}
 	 */
 	public function setRequired(&$formElement) {
-		$this->_required[] =& $formElement;
+		$this->_required[] = & $formElement;
 	}
 
 	/**
@@ -393,21 +395,21 @@ abstract class icms_form_Base {
 	 *
 	 * @param		boolean  $withtags	Include the < javascript > tags in the returned string
 	 */
-	public function renderValidationJS( $withtags = true ) {
+	public function renderValidationJS($withtags = true) {
 		$js = "";
-		if ( $withtags ) {
+		if ($withtags) {
 			$js .= "\n<!-- Start Form Validation JavaScript //-->\n<script type='text/javascript'>\n<!--//\n";
 		}
 		$formname = $this->getName();
 		$js .= "function xoopsFormValidate_{$formname}() { myform = window.document.{$formname}; ";
-		$elements = $this->getElements( true );
-		foreach ( $elements as $elt ) {
-			if ( method_exists( $elt, 'renderValidationJS' ) ) {
+		$elements = $this->getElements(true);
+		foreach ($elements as $elt) {
+			if (method_exists($elt, 'renderValidationJS')) {
 				$js .= $elt->renderValidationJS();
 			}
 		}
 		$js .= "return true;\n}\n";
-		if ( $withtags ) {
+		if ($withtags) {
 			$js .= "//--></script>\n<!-- End Form Vaidation JavaScript //-->\n";
 		}
 		return $js;
@@ -422,25 +424,25 @@ abstract class icms_form_Base {
 	public function assign(&$tpl) {
 		$i = -1;
 		$elements = array();
-		foreach ( $this->getElements() as $ele ) {
+		foreach ($this->getElements() as $ele) {
 			++$i;
-			if (is_string( $ele )) {
-				$elements[$i]['body']	= $ele;
+			if (is_string($ele)) {
+				$elements[$i]['body'] = $ele;
 				continue;
 			}
 			$ele_name = $ele->getName();
 			$ele_description = $ele->getDescription();
-			$n = $ele_name ? $ele_name : $i;
+			$n = $ele_name?$ele_name:$i;
 			$elements[$n]['name']       = $ele_name;
 			$elements[$n]['caption']    = $ele->getCaption();
 			$elements[$n]['body']       = $ele->render();
 			$elements[$n]['hidden']     = $ele->isHidden();
 			$elements[$n]['required']   = $ele->isRequired();
 			if ($ele_description != '') {
-				$elements[$n]['description']  = $ele_description;
+				$elements[$n]['description'] = $ele_description;
 			}
 		}
 		$js = $this->renderValidationJS();
-		$tpl->assign($this->getName(), array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(),  'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'();"'.$this->getExtra(), 'javascript' => $js, 'elements' => $elements));
+		$tpl->assign($this->getName(), array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(), 'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_' . $this->getName() . '();"' . $this->getExtra(), 'javascript' => $js, 'elements' => $elements));
 	}
 }

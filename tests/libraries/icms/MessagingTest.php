@@ -14,7 +14,7 @@ class MessagingTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-            'icms_messaging_EmailHandler' => 'PHPMailer',
+            'icms_messaging_EmailHandler' => '\\PHPMailer\\PHPMailer\\PHPMailer',
             'icms_messaging_Handler' => null
         ] as $class => $must_be_instances_of) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');

@@ -81,7 +81,7 @@ class icms_form_elements_Colorpicker extends icms_form_elements_Text {
 	public function renderValidationJS() {
 		$eltname = $this->getName();
 		$eltcaption = $this->getCaption();
-		$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+		$eltmsg = empty($eltcaption)? sprintf(_FORM_ENTER, $eltname):sprintf(_FORM_ENTER, $eltcaption);
 		$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
 		$eltmsg = strip_tags($eltmsg);
 		return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";

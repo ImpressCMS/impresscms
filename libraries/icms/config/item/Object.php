@@ -59,13 +59,13 @@ class icms_config_item_Object extends icms_ipf_Object {
 	 */
 	public $_confOptions = array();
 
-        /**
-       * is it a newly created config object?
-        *
-       * @var bool
-       * @access protected
-       */
-        protected $_isNewConfig = false;
+		/**
+		 * is it a newly created config object?
+		 *
+		 * @var bool
+		 * @access protected
+		 */
+		protected $_isNewConfig = false;
 
 	/**
 	 * Constructor
@@ -76,39 +76,39 @@ class icms_config_item_Object extends icms_ipf_Object {
 		$this->initVar('conf_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('conf_modid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('conf_catid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('conf_name',  self::DTYPE_STRING, false, '',  75);
-		$this->initVar('conf_title', self::DTYPE_STRING, false, '',  255);
+		$this->initVar('conf_name', self::DTYPE_STRING, false, '', 75);
+		$this->initVar('conf_title', self::DTYPE_STRING, false, '', 255);
 		$this->initVar('conf_value', self::DTYPE_STRING);
-		$this->initVar('conf_desc',  self::DTYPE_STRING, false, '',  255);
-		$this->initVar('conf_formtype',  self::DTYPE_STRING, false, '',  15);
-		$this->initVar('conf_valuetype',  self::DTYPE_STRING, false, '',  10);
+		$this->initVar('conf_desc', self::DTYPE_STRING, false, '', 255);
+		$this->initVar('conf_formtype', self::DTYPE_STRING, false, '', 15);
+		$this->initVar('conf_valuetype', self::DTYPE_STRING, false, '', 10);
 		$this->initVar('conf_order', self::DTYPE_INTEGER);
 
-                parent::__construct($handler, $data);
+				parent::__construct($handler, $data);
 	}
 
-        /**
-        * #@+
-        * used for new config objects when installing/updating module(s)
-         *
-        * @access public
-        */
+		/**
+		 * #@+
+		 * used for new config objects when installing/updating module(s)
+		 *
+		 * @access public
+		 */
 
-        public function setNewConfig() {
-            $this->_isNewConfig = true;
-        }
+		public function setNewConfig() {
+			$this->_isNewConfig = true;
+		}
 
-        public function unsetNewConfig() {
-            $this->_isNewConfig = false;
-        }
+		public function unsetNewConfig() {
+			$this->_isNewConfig = false;
+		}
 
-        public function isNewConfig() {
-            return $this->_isNewConfig;
-        }
+		public function isNewConfig() {
+			return $this->_isNewConfig;
+		}
 
-        /*    * #@- */
+		/*    * #@- */
 
-        /*    * #@+
+		/*    * #@+
 
           /**
         * Get a config value in a format ready for output
@@ -116,20 +116,21 @@ class icms_config_item_Object extends icms_ipf_Object {
         * @return	string
         */
 	public function getConfValueForOutput() {
-		switch($this->getVar('conf_valuetype')) {
+		switch ($this->getVar('conf_valuetype')) {
 			case 'int':
-				return (int) ($this->getVar('conf_value', 'N'));
+				return (int) ($this->conf_value);
 				break;
 
 			case 'array':
-                $value = $this->getVar('conf_value', 'N');
-                if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) != ':'))
-                	return array();
-                $value = @unserialize($value);
-				return $value ? $value : array();
+				$value = $this->conf_value;
+				if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) != ':')) {
+									return array();
+				}
+				$value = @unserialize($value);
+				return $value?$value:array();
 
 			case 'float':
-				$value = $this->getVar('conf_value', 'N');
+				$value = $this->conf_value;
 				return (float) $value;
 				break;
 
@@ -140,7 +141,7 @@ class icms_config_item_Object extends icms_ipf_Object {
 			case 'textarea':
 				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'html', 'output');
 			default:
-				return $this->getVar('conf_value', 'N');
+				return $this->conf_value;
 				break;
 		}
 	}
@@ -161,7 +162,7 @@ class icms_config_item_Object extends icms_ipf_Object {
 		} else {
 			$value = StopXSS($value);
 		}
-		switch($this->getVar('conf_valuetype')) {
+		switch ($this->getVar('conf_valuetype')) {
 			case 'array':
 				if (!is_array($value)) {
 					$value = explode('|', trim($value));
@@ -192,7 +193,7 @@ class icms_config_item_Object extends icms_ipf_Object {
 			}
 		} else {
 			if (is_object($option)) {
-				$this->_confOptions[] =& $option;
+				$this->_confOptions[] = & $option;
 			}
 		}
 	}
@@ -209,8 +210,8 @@ class icms_config_item_Object extends icms_ipf_Object {
 	/**
 	 * This function will properly set the data type for each config item, overriding the
 	 * default in the __construct method
-         *
-        * @todo        Remove param $dummy once after removing setType from icms_properties_Handler (this is hack to bypass PHP strict message)
+	 *
+	 * @todo        Remove param $dummy once after removing setType from icms_properties_Handler (this is hack to bypass PHP strict message)
 	 *
 	 * @since	1.3.3
 	 * @param	string	$newType	data type of the config item
@@ -229,6 +230,6 @@ class icms_config_item_Object extends icms_ipf_Object {
 			'float' => self::DTYPE_FLOAT,
 		);
 
-		$this->setVarInfo('conf_value', 'data_type',$types[$newType]);
+		$this->setVarInfo('conf_value', 'data_type', $types[$newType]);
 	}
 }

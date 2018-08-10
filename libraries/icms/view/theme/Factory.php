@@ -101,7 +101,7 @@ class icms_view_theme_Factory {
 			}
 			$GLOBALS['icmsConfig']['theme_set'] = $options['folderName'];
 		}
-		$options['path'] = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'])) ? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'] : ICMS_THEME_PATH . '/' . $options['folderName'];
+		$options['path'] = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName']))? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName']:ICMS_THEME_PATH . '/' . $options['folderName'];
 		$inst = new icms_view_theme_Object();
 		foreach ($options as $k => $v) {
 			$inst->$k = $v;
@@ -124,14 +124,16 @@ class icms_view_theme_Factory {
 	 * @return	array
 	 */
 	static public function getThemesList() {
-		$cleanList = array();
-		$dirtyList = icms_core_Filesystem::getDirList(ICMS_THEME_PATH . '/');
-		foreach ($dirtyList as $item) {
-			if (file_exists(ICMS_THEME_PATH . '/' . $item . '/theme.html')) {
-				$cleanList[$item] = $item;
+		$dirlist = [];
+		$fs = icms::getInstance()->get('filesystem');
+		foreach ($fs->listContents('themes://') as $fileInfo) {
+			$file = $fileInfo['basename'];
+			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme.html') === false) {
+				continue;
 			}
+			$dirlist[$file] = $file;
 		}
-		return $cleanList;
+		return $dirlist;
 	}
 
 	/**
@@ -139,23 +141,25 @@ class icms_view_theme_Factory {
 	 * @return	array
 	 */
 	static public function getAdminThemesList() {
-		$cleanList1 = array();
-		$cleanList2 = array();
-		$dirtyList1 = icms_core_Filesystem::getDirList(ICMS_THEME_PATH . '/');
-		$dirtyList2 = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/system/themes/');
-		foreach ($dirtyList1 as $item1) {
-			if (file_exists(ICMS_THEME_PATH . '/' . $item1 . '/theme_admin.html')) {
-				$cleanList1[$item1] = $item1;
+		$items = [];
+		$fs = icms::getInstance()->get('filesystem');
+		foreach ($fs->listContents('themes://') as $fileInfo) {
+			$file = $fileInfo['basename'];
+			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme_admin.html') === false) {
+				continue;
 			}
+			$items[$file] = $file;
 		}
-		foreach ($dirtyList2 as $item2) {
-			if (file_exists(ICMS_MODULES_PATH . '/system/themes/' . $item2 . '/theme.html') || file_exists(ICMS_MODULES_PATH . '/system/themes/' . $item2 . '/theme_admin.html')
-			) {
-				$cleanList2[$item2] = $item2;
+
+		foreach ($fs->listContents('modules://system/themes') as $fileInfo) {
+			$file = $fileInfo['basename'];
+			if (substr($file, 0, 1) == '.' || $fs->has('modules://system/themes/' . $file . '/theme.html') === false) {
+				continue;
 			}
+			$items[$file] = $file;
 		}
-		$cleanList = array_merge($cleanList1, $cleanList2);
-		return $cleanList;
+
+		return $items;
 	}
 
 }

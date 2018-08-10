@@ -14,11 +14,11 @@
  * Has this file been included?
  * @var boolean
  */
-define('ICMS_INCLUDE_OPENID', TRUE);
+define('ICMS_INCLUDE_OPENID', true);
 
 $_SESSION['frompage'] = isset($_SERVER['HTTP_REFERER'])
-	? $_SERVER['HTTP_REFERER']
-	: (isset($_ENV['HTTP_REFERER']) ? $_ENV['HTTP_REFERER'] : '');
+	?$_SERVER['HTTP_REFERER']
+	: (isset($_ENV['HTTP_REFERER'])?$_ENV['HTTP_REFERER']:'');
 
 // since we are trying to authenticate with OpenID, let's get rid of any data in $_SESSION['openid_response']
 unset($_SESSION['openid_response']);
@@ -56,7 +56,7 @@ function run() {
 		$auth_request->addExtension($sreg_request);
 	}
 
-	$policy_uris = isset($_GET['policies']) ? filter_var($_GET['policies'], FILTER_SANITIZE_URL) : NULL;
+	$policy_uris = isset($_GET['policies'])? filter_var($_GET['policies'], FILTER_SANITIZE_URL):null;
 
 	$pape_request = new Auth_OpenID_PAPE_Request($policy_uris);
 	if ($pape_request) {
@@ -84,7 +84,7 @@ function run() {
 	} else {
 		// Generate form markup and render it.
 		$form_id = 'openid_message';
-		$form_html = $auth_request->formMarkup(getTrustRoot(), getReturnTo(), FALSE, array('id' => $form_id));
+		$form_html = $auth_request->formMarkup(getTrustRoot(), getReturnTo(), false, array('id' => $form_id));
 
 		// Display an error if the form markup couldn't be generated;
 		// otherwise, render the HTML.

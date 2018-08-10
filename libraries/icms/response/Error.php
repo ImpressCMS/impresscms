@@ -6,8 +6,7 @@
  * @author Raimondas Rimkevičius <mekdrop@impresscms.org>
  */
 class icms_response_Error
-	extends icms_response_HTML
-{
+	extends icms_response_HTML {
 
 	/**
 	 * Error number
@@ -31,8 +30,7 @@ class icms_response_Error
 	 * @param   int $http_status HTTP Status code
 	 * @param   array $headers Headers array
 	 */
-	public function __construct($config = array(), $http_status = null, $headers = array())
-	{
+	public function __construct($config = array(), $http_status = null, $headers = array()) {
 		$config['template_main'] = 'system_error.html';
 
 		parent::__construct($config, $http_status, $headers);
@@ -52,14 +50,13 @@ class icms_response_Error
 	 *
 	 * @global array $icmsConfig Site configuration array
 	 */
-	public function render()
-	{
+	public function render() {
 		global $icmsConfig;
 
 		$siteName = $icmsConfig['sitename'];
 		$lang_error_no = sprintf(_ERR_NO, $this->errorNo);
 
-		$msg = $this->msg ? constant('_ERR_MSG_' . $this->msg) : sprintf(constant('_ERR_' . $this->errorNo . '_DESC'), $siteName);
+		$msg = $this->msg? constant('_ERR_MSG_' . $this->msg):sprintf(constant('_ERR_' . $this->errorNo . '_DESC'), $siteName);
 
 		$this->assign('lang_error_no', $lang_error_no);
 		$this->assign('lang_error_desc', $msg);

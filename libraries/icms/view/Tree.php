@@ -59,7 +59,7 @@ class icms_view_Tree {
 	 * @param $pid_name Name of the parent id field in the table
 	 */
 	public function __construct($table_name, $id_name, $pid_name) {
-		$this->db =& icms_db_Factory::instance();
+		$this->db = & icms_db_Factory::instance();
 		$this->table = $table_name;
 		$this->id = $id_name;
 		$this->pid = $pid_name;
@@ -96,7 +96,7 @@ class icms_view_Tree {
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ($count==0) {
+		if ($count == 0) {
 			return $arr;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
@@ -139,7 +139,7 @@ class icms_view_Tree {
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ($count==0) {
+		if ($count == 0) {
 			return $idarray;
 		}
 		while (list($r_id) = $this->db->fetchRow($result)) {
@@ -253,7 +253,7 @@ class icms_view_Tree {
 	 * $return string $path
 	 */
 	public function getNicePathFromId($sel_id, $title, $funcURL, $path = '', $separator = _BRDCRMB_SEP) {
-		$path = !empty($path) ? $separator . $path : $path;
+		$path = !empty($path)?$separator . $path:$path;
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"';
 		$result = $this->db->query($sql);

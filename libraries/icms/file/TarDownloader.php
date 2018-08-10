@@ -50,7 +50,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 * @param string $mimyType  Mimetype
 	 */
 	public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip') {
-		$this->archiver = new icms_file_TarFileHandler();
+		$this->archiver = new Tar();
 		$this->ext = trim($ext);
 		$this->mimeType = trim($mimyType);
 	}
@@ -100,7 +100,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
 	 */
-	public function addFileData(&$data, $filename, $time=0) {
+	public function addFileData(&$data, $filename, $time = 0) {
 		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
 		$fp = fopen($dummyfile, 'w');
 		fwrite($fp, $data);
@@ -127,7 +127,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
 	 */
-	public function addBinaryFileData(&$data, $filename, $time=0) {
+	public function addBinaryFileData(&$data, $filename, $time = 0) {
 		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
 		$fp = fopen($dummyfile, 'wb');
 		fwrite($fp, $data);

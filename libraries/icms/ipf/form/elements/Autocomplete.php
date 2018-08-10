@@ -41,8 +41,8 @@ class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text {
 	public function __construct($object, $key) {
 		$var = $object->getVarInfo($key);
 		$control = $object->controls[$key];
-		$form_maxlength = isset($control['maxlength']) ? $control['maxlength'] : (isset($var['maxlength']) ? $var['maxlength'] : 255);
-		$form_size = isset($control['size']) ? $control['size'] : 50;
+		$form_maxlength = isset($control['maxlength'])?$control['maxlength']:(isset($var['maxlength'])?$var['maxlength']:255);
+		$form_size = isset($control['size'])?$control['size']:50;
 		$this->_file = $control['file'];
 
 		parent::__construct($var['form_caption'], $key, $form_size, $form_maxlength, $object->getVar($key, 'e'));
@@ -57,10 +57,12 @@ class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text {
 	public function render() {
 		global $xoTheme;
 
-		if (!is_file(ICMS_ROOT_PATH . "/" . $this->_file)) return parent::render();
+		if (!is_file(ICMS_ROOT_PATH . "/" . $this->_file)) {
+			return parent::render();
+		}
 
-		$minlength = isset($control['minlength']) ? $control['minlength'] : 3;
-		$delay = isset($control['delay']) ? $control['delay'] : 500;
+		$minlength = isset($control['minlength'])?$control['minlength']:3;
+		$delay = isset($control['delay'])?$control['delay']:500;
 
 		$js  = "jQuery(document).ready(function() {\n";
 		$js .= " jQuery('#" . $this->getName() . "').autocomplete({\n";

@@ -31,30 +31,30 @@ defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
  * @property int    $dosmiley
  */
 class mod_system_Customtag extends icms_ipf_Object {
-	public $content = FALSE;
-	public $evaluated = FALSE;
+	public $content = false;
+	public $evaluated = false;
 
 	/**
 	 * Constructor
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
-                $this->initVar('customtagid', self::DTYPE_INTEGER, 0, TRUE);
-                $this->initVar('name', self::DTYPE_STRING, '', TRUE, 255, null, null, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC);
-                $this->initVar('description', self::DTYPE_STRING, '', FALSE, null, null, null, _CO_ICMS_CUSTOMTAG_DESCRIPTION, _CO_ICMS_CUSTOMTAG_DESCRIPTION_DSC);
-                $this->initVar('customtag_content', self::DTYPE_STRING, '', TRUE, null, null, null, _CO_ICMS_CUSTOMTAG_CONTENT, _CO_ICMS_CUSTOMTAG_CONTENT_DSC);
-                $this->initVar('language', self::DTYPE_STRING, '', TRUE, 100, null, null, _CO_ICMS_CUSTOMTAG_LANGUAGE, _CO_ICMS_CUSTOMTAG_LANGUAGE_DSC);
-                $this->initVar('customtag_type', self::DTYPE_INTEGER, ICMS_CUSTOMTAG_TYPE_XCODES, TRUE, 1, null, null, _CO_ICMS_CUSTOMTAG_TYPE, _CO_ICMS_CUSTOMTAG_TYPE_DSC);
+				$this->initVar('customtagid', self::DTYPE_INTEGER, 0, true);
+				$this->initVar('name', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC);
+				$this->initVar('description', self::DTYPE_STRING, '', false, null, null, null, _CO_ICMS_CUSTOMTAG_DESCRIPTION, _CO_ICMS_CUSTOMTAG_DESCRIPTION_DSC);
+				$this->initVar('customtag_content', self::DTYPE_STRING, '', true, null, null, null, _CO_ICMS_CUSTOMTAG_CONTENT, _CO_ICMS_CUSTOMTAG_CONTENT_DSC);
+				$this->initVar('language', self::DTYPE_STRING, '', true, 100, null, null, _CO_ICMS_CUSTOMTAG_LANGUAGE, _CO_ICMS_CUSTOMTAG_LANGUAGE_DSC);
+				$this->initVar('customtag_type', self::DTYPE_INTEGER, ICMS_CUSTOMTAG_TYPE_XCODES, true, 1, null, null, _CO_ICMS_CUSTOMTAG_TYPE, _CO_ICMS_CUSTOMTAG_TYPE_DSC);
 
-                $this->initNonPersistableVar('dohtml', self::DTYPE_INTEGER, 'class', 'dohtml', '', TRUE);
-		$this->initNonPersistableVar('doimage', self::DTYPE_INTEGER, 'class', 'doimage', '', TRUE);
-		$this->initNonPersistableVar('doxcode', self::DTYPE_INTEGER, 'class', 'doxcode', '', TRUE);
-		$this->initNonPersistableVar('dosmiley', self::DTYPE_INTEGER, 'class', 'dosmiley', '', TRUE);
+				$this->initNonPersistableVar('dohtml', self::DTYPE_INTEGER, 'class', 'dohtml', '', true);
+		$this->initNonPersistableVar('doimage', self::DTYPE_INTEGER, 'class', 'doimage', '', true);
+		$this->initNonPersistableVar('doxcode', self::DTYPE_INTEGER, 'class', 'doxcode', '', true);
+		$this->initNonPersistableVar('dosmiley', self::DTYPE_INTEGER, 'class', 'dosmiley', '', true);
 
 		parent::__construct($handler);
 
 		$this->setControl('customtag_content', array('name' => 'textarea', 'form_editor' => 'textarea', 'form_rows' => 25));
-		$this->setControl('language', array('name' => 'language', 'all' => TRUE));
+		$this->setControl('language', array('name' => 'language', 'all' => true));
 		$this->setControl('customtag_type', array('itemHandler' => 'customtag', 'method' => 'getCustomtag_types', 'module' => 'system', "onSelect" => "submit"));
 	}
 
@@ -77,12 +77,12 @@ class mod_system_Customtag extends icms_ipf_Object {
 		if (!$this->content) {
 			switch ($this->getVar('customtag_type')) {
 				case ICMS_CUSTOMTAG_TYPE_XCODES:
-					$ret = $this->getVar('customtag_content', 'N');
+					$ret = $this->customtag_content;
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 1);
 					break;
 
 				case ICMS_CUSTOMTAG_TYPE_HTML:
-					$ret = $this->getVar('customtag_content', 'N');
+					$ret = $this->customtag_content;
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 0);
 					break;
 
@@ -103,16 +103,16 @@ class mod_system_Customtag extends icms_ipf_Object {
 	 */
 	public function renderWithPhp() {
 		if (!$this->content && !$this->evaluated) {
-			$ret = $this->getVar('customtag_content', 'N');
+			$ret = $this->customtag_content;
 
 			// check for PHP if we are not on admin side
-			if (!defined('XOOPS_CPFUNC_LOADED' ) && $this->getVar('customtag_type') == ICMS_CUSTOMTAG_TYPE_PHP) {
+			if (!defined('XOOPS_CPFUNC_LOADED') && $this->getVar('customtag_type') == ICMS_CUSTOMTAG_TYPE_PHP) {
 				// we have PHP code, let's evaluate
 				ob_start();
 				echo eval($ret);
 				$ret = ob_get_contents();
 				ob_end_clean();
-				$this->evaluated = TRUE;
+				$this->evaluated = true;
 			}
 			$this->content = $ret;
 		}
@@ -124,7 +124,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 	 * Generate a bbcode for the custom tag
 	 */
 	public function getXoopsCode() {
-		$ret = '[customtag]' . $this->getVar('name', 'n') . '[/customtag]';
+		$ret = '[customtag]' . $this->name . '[/customtag]';
 		return $ret;
 	}
 

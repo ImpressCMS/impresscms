@@ -42,7 +42,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 	 * @param	mixed	  $value	Value for the Select attribute
 	 * @param	string	$cat    Name of the Category
 	 */
-	public function __construct($caption, $name, $value = NULL, $cat = NULL) {
+	public function __construct($caption, $name, $value = null, $cat = null) {
 		parent::__construct($caption, $name, $value);
 		$this->addOptGroupArray($this->getImageList($cat));
 	}
@@ -76,12 +76,12 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 	 * @param    mixed     $cat    category number or array of categories
 	 * @return   string    $ret    The imagelist string
 	 */
-	public function getImageList($cat = NULL) {
+	public function getImageList($cat = null) {
 		$ret = array();
 		if (!is_object(icms::$user)) {
 			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			$group =& icms::$user->getGroups();
+			$group = & icms::$user->getGroups();
 		}
 		$imgcat_handler = icms::handler('icms_image_category');
 		$catlist = $imgcat_handler->getList($group, 'imgcat_read', 1);
@@ -92,7 +92,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 				}
 			}
 		} elseif (is_int($cat)) {
-			$catlist = array_key_exists($cat, $catlist) ? array($cat=>$catlist[$cat]) : array();
+			$catlist = array_key_exists($cat, $catlist)?array($cat=>$catlist[$cat]):array();
 		}
 
 		$image_handler = icms::handler('icms_image');
@@ -102,20 +102,20 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 			$criteria->add(new icms_db_criteria_Item('image_display', 1));
 			$total = $image_handler->getCount($criteria);
 			if ($total > 0) {
-				$imgcat =& $imgcat_handler->get($k);
+				$imgcat = & $imgcat_handler->get($k);
 				$storetype = $imgcat->getVar('imgcat_storetype');
 				if ($storetype == 'db') {
-					$images =& $image_handler->getObjects($criteria, FALSE, TRUE);
+					$images = & $image_handler->getObjects($criteria, false, true);
 				} else {
-					$images =& $image_handler->getObjects($criteria, FALSE, FALSE);
+					$images = & $image_handler->getObjects($criteria, false, false);
 				}
 				foreach ($images as $i) {
-					if ($storetype == "db"){
+					if ($storetype == "db") {
 						$ret[$v]["/image.php?id=" . $i->getVar('image_id')] = $i->getVar('image_nicename');
 					} else {
 						$categ_path = $imgcat_handler->getCategFolder($imgcat);
 						$categ_path = str_replace(ICMS_ROOT_PATH, '', $categ_path);
-						$path = (substr($categ_path,-1) != '/') ? $categ_path . '/' : $categ_path;
+						$path = (substr($categ_path, -1) != '/')?$categ_path . '/':$categ_path;
 						$ret[$v][$path . $i->getVar('image_name')] = $i->getVar('image_nicename');
 					}
 				}
@@ -148,11 +148,11 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 	 * Renders the HTML for the select form attribute
 	 * @return   string    $ret    the constructed select form attribute HTML
 	 */
-	public function render(){
+	public function render() {
 		if (!is_object(icms::$user)) {
 			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			$group =& icms::$user->getGroups();
+			$group = & icms::$user->getGroups();
 		}
 		$imgcat_handler = icms::handler('icms_image_category');
 		$catlist = $imgcat_handler->getList($group, 'imgcat_write', 1);
@@ -181,12 +181,12 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 			}
 			$ret .= '</optgroup>\n';
 		}
-		$browse_url = ICMS_URL."/modules/system/admin/images/browser.php";
+		$browse_url = ICMS_URL . "/modules/system/admin/images/browser.php";
 		$ret .= "</select>";
 		$ret .= ($catlist_total > 0)
-			? " <input type='button' value='" . _ADDIMAGE . "' onclick=\"window.open('$browse_url?target=" . $this->getName() . "','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">"
-			: "" ;
-		$ret .= "<br /><img id='" . $this->getName() . "_img' src='" . ((!empty($imagem)) ? ICMS_URL.$imagem : ICMS_URL . "/images/blank.gif") . "'>";
+			?" <input type='button' value='" . _ADDIMAGE . "' onclick=\"window.open('$browse_url?target=" . $this->getName() . "','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">"
+			: "";
+		$ret .= "<br /><img id='" . $this->getName() . "_img' src='" . ((!empty($imagem))? ICMS_URL.$imagem:ICMS_URL . "/images/blank.gif") . "'>";
 		return $ret;
 	}
 }

@@ -49,7 +49,7 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler {
 	 * @param	string    $mimyType    the mimytype (mimetype) of the file
 	 */
 	public function __construct($ext = '.zip', $mimyType = 'application/x-zip') {
-		$this->archiver = new icms_file_ZipFileHandler();
+		$this->archiver = new Zipfile();
 		$this->ext      = trim($ext);
 		$this->mimeType = trim($mimyType);
 	}
@@ -60,12 +60,12 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler {
 	 * @param	string    $filepath      path of the file to add
 	 * @param	string    $newfilename    name of the newly created file
 	 */
-	public function addFile($filepath, $newfilename=null) {
+	public function addFile($filepath, $newfilename = null) {
 		// Read in the file's contents
 		$fp = fopen($filepath, "r");
 		$data = fread($fp, filesize($filepath));
 		fclose($fp);
-		$filename = (isset($newfilename) && trim($newfilename) != '') ? trim($newfilename) : $filepath;
+		$filename = (isset($newfilename) && trim($newfilename) != '')? trim($newfilename):$filepath;
 		$this->archiver->addFile($data, $filename, filemtime($filename));
 	}
 
@@ -75,12 +75,12 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler {
 	 * @param	string    $filepath      path of the file to add
 	 * @param	string    $newfilename    name of the newly created file
 	 */
-	public function addBinaryFile($filepath, $newfilename=null) {
+	public function addBinaryFile($filepath, $newfilename = null) {
 		// Read in the file's contents
 		$fp = fopen($filepath, "rb");
 		$data = fread($fp, filesize($filepath));
 		fclose($fp);
-		$filename = (isset($newfilename) && trim($newfilename) != '') ? trim($newfilename) : $filepath;
+		$filename = (isset($newfilename) && trim($newfilename) != '')? trim($newfilename):$filepath;
 		$this->archiver->addFile($data, $filename, filemtime($filename));
 	}
 
@@ -91,7 +91,7 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler {
 	 * @param	string    $filename     filename to add the data to
 	 * @param	string    $time         timestamp
 	 */
-	public function addFileData(&$data, $filename, $time=0) {
+	public function addFileData(&$data, $filename, $time = 0) {
 		$this->archiver->addFile($data, $filename, $time);
 	}
 
@@ -102,7 +102,7 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler {
 	 * @param	string    $filename     filename to add the data to
 	 * @param	string    $time         timestamp
 	 */
-	public function addBinaryFileData(&$data, $filename, $time=0) {
+	public function addBinaryFileData(&$data, $filename, $time = 0) {
 		self::addFileData($data, $filename, $time);
 	}
 

@@ -17,35 +17,37 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
 include_once "../../mainfile.php";
 
 icms_core_Filesystem::chmod("../.env", 0444);
-icms_core_Filesystem::chmod(ICMS_ROOT_PATH.'/modules', 0777);
-icms_core_Filesystem::chmod(ICMS_ROOT_PATH.'/modules', 0755);
-$wizard->setPage( 'tablescreate' );
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . '/modules', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . '/modules', 0755);
+$wizard->setPage('tablescreate');
 $pageHasForm = true;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['settings'];
+$vars = & $_SESSION['settings'];
 
 include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
 if (!$dbm->isConnectable()) {
-	$wizard->redirectToPage( '-3' );
+	$wizard->redirectToPage('-3');
 	exit();
 }
 $process = '';
-if (!$dbm->tableExists( 'users' )) {
+if (!$dbm->tableExists('users')) {
 	$process = 'create';
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// If there's nothing to do: switch to next page
-	if (empty( $process )) {
-		$wizard->redirectToPage( '+1' );
+	if (empty($process)) {
+		$wizard->redirectToPage('+1');
 		exit();
 	}
 	$tables = array();
@@ -56,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} else {
 		$driver = $type;
 	}
-	$result = $dbm->queryFromFile( './sql/' . $driver . '.structure.sql' );
+	$result = $dbm->queryFromFile('./sql/' . $driver . '.structure.sql');
 	$content = $dbm->report();
 	include 'install_tpl.php';
 	exit();

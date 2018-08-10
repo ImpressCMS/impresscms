@@ -18,7 +18,7 @@ define('ICMS_PUBLIC_PATH', __DIR__);
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 \icms::$response = new \icms_response_Error($xoopsOption);
-\icms::$response->errorNo = isset($_REQUEST['e']) ? (int)$_REQUEST['e'] : 500;
+\icms::$response->errorNo = isset($_REQUEST['e'])?(int) $_REQUEST['e']:500;
 if (isset($_REQUEST['msg'])) {
 	\icms::$response->msg = $_REQUEST['msg'];
 }

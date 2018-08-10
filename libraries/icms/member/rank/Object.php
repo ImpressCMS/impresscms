@@ -8,7 +8,7 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 icms_loadLanguageFile("system", "common");
-icms_loadLanguageFile("system", "userrank", TRUE);
+icms_loadLanguageFile("system", "userrank", true);
 
 /**
  * Ranks to assign members
@@ -25,7 +25,7 @@ icms_loadLanguageFile("system", "userrank", TRUE);
 class icms_member_rank_Object extends icms_ipf_Object {
 
 	/** */
-	public $content = FALSE;
+	public $content = false;
 
 	/**
 	 * Create a new instance of the userrank object
@@ -33,14 +33,14 @@ class icms_member_rank_Object extends icms_ipf_Object {
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
-		$this->initVar("rank_id", self::DTYPE_INTEGER, 0, TRUE, 5);
-		$this->initVar("rank_title", self::DTYPE_STRING, '', TRUE, 50, null, null, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
-		$this->initVar("rank_min", self::DTYPE_INTEGER, 0, TRUE, 8, null, null, _CO_ICMS_USERRANK_RANK_MIN, _CO_ICMS_USERRANK_RANK_MIN_DSC);
-		$this->initVar("rank_max", self::DTYPE_INTEGER, 0, TRUE, 8, null, null, _CO_ICMS_USERRANK_RANK_MAX, _CO_ICMS_USERRANK_RANK_MAX_DSC);
-		$this->initVar("rank_special", self::DTYPE_INTEGER, 0, TRUE, 1, null, null, _CO_ICMS_USERRANK_RANK_SPECIAL, _CO_ICMS_USERRANK_RANK_SPECIAL_DSC);
-		$this->initVar("rank_image", self::DTYPE_STRING, '', TRUE, 255, null, null, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
+		$this->initVar("rank_id", self::DTYPE_INTEGER, 0, true, 5);
+		$this->initVar("rank_title", self::DTYPE_STRING, '', true, 50, null, null, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
+		$this->initVar("rank_min", self::DTYPE_INTEGER, 0, true, 8, null, null, _CO_ICMS_USERRANK_RANK_MIN, _CO_ICMS_USERRANK_RANK_MIN_DSC);
+		$this->initVar("rank_max", self::DTYPE_INTEGER, 0, true, 8, null, null, _CO_ICMS_USERRANK_RANK_MAX, _CO_ICMS_USERRANK_RANK_MAX_DSC);
+		$this->initVar("rank_special", self::DTYPE_INTEGER, 0, true, 1, null, null, _CO_ICMS_USERRANK_RANK_SPECIAL, _CO_ICMS_USERRANK_RANK_SPECIAL_DSC);
+		$this->initVar("rank_image", self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
 
-                parent::__construct($handler);
+				parent::__construct($handler);
 
 		$this->setControl("rank_special", "yesno");
 		$this->setControl("rank_image", "image");

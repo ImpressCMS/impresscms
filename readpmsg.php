@@ -59,12 +59,12 @@ $start = $total_messages = $msg_id = $delete = 0;
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_POST);
 }
 
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
@@ -78,7 +78,7 @@ if ($delete != 0) {
 		exit();
 	}
 
-	$pm =& $pm_handler->get($msg_id);
+	$pm = & $pm_handler->get($msg_id);
 
 	if (!is_object($pm) || $pm->getVar('to_userid') != icms::$user->getVar('uid') || !$pm_handler->delete($pm)) {
 		exit();
@@ -90,7 +90,7 @@ if ($delete != 0) {
 $xoopsOption['template_main'] = 'system_readmsg.html';
 require ICMS_ROOT_PATH . '/header.php';
 
-$form = new icms_form_Simple('', 'delete', 'readpmsg.php', 'post', TRUE);
+$form = new icms_form_Simple('', 'delete', 'readpmsg.php', 'post', true);
 
 $criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
 $criteria->setLimit(1);
@@ -99,15 +99,17 @@ $criteria->setSort('msg_time');
 
 $pm_arr = $pm_handler->getObjects($criteria);
 
-if (!$pm_handler->setRead($pm_arr[0])) { /* echo "failed"; */ }
+if (!$pm_handler->setRead($pm_arr[0])) {
+/* echo "failed"; */ }
 
 $poster = new icms_member_user_Object((int) $pm_arr[0]->getVar("from_userid"));
 
 if (!$poster->isActive()) {
-	$poster = FALSE;
+	$poster = false;
 }
 
-if (is_object($poster) == TRUE) { // no need to do this for deleted users
+if (is_object($poster) == true) {
+// no need to do this for deleted users
 	$icmsTpl->assign(
 			array(
 				'uname' =>  $poster->getVar("uname"),
@@ -125,12 +127,12 @@ if (is_object($poster) == TRUE) { // no need to do this for deleted users
 	$icmsTpl->assign('anonymous', $icmsConfig['anonymous']);
 }
 
-$var = $pm_arr[0]->getVar('msg_text', 'N');
+$var = $pm_arr[0]->msg_text;
 
 // see if the sender had permission to use wysiwyg for the system module - in 2.0, everyone will
 /* @todo remove editor permission check in 2.0 */
 $permHandler = icms::handler('icms_member_groupperm');
-$filterType = $permHandler->checkRight('use_wysiwygeditor', 1, $poster->getGroups()) ? 'html' : 'text';
+$filterType = $permHandler->checkRight('use_wysiwygeditor', 1, $poster->getGroups())?'html':'text';
 
 $form->addElement(new icms_form_elements_Hidden('delete', '1'));
 $form->addElement(new icms_form_elements_Hidden('msg_id', $pm_arr[0]->getVar("msg_id")));

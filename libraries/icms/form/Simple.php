@@ -47,7 +47,7 @@ class icms_form_Simple extends icms_form_Base {
 	 * This method is required - this method in the parent (abstract) class is also abstract
 	 * @param string $extra
 	 */
-	public function insertBreak($extra = NULL) {
+	public function insertBreak($extra = null) {
 	}
 	/**
 	 * create HTML to output the form with minimal formatting

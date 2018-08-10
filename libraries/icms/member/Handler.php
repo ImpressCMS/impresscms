@@ -85,7 +85,7 @@ class icms_member_Handler {
 	 *
 	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the new group
 	 */
-	public function &createGroup(&$isNew = TRUE) {
+	public function &createGroup(&$isNew = true) {
 		$inst = & $this->_gHandler->create();
 		return $inst;
 	}
@@ -95,7 +95,7 @@ class icms_member_Handler {
 	 *
 	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the new user
 	 */
-	public function &createUser(&$isNew = TRUE) {
+	public function &createUser(&$isNew = true) {
 		$inst = & $this->_uHandler->create();
 		return $inst;
 	}
@@ -117,7 +117,7 @@ class icms_member_Handler {
 	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the user
 	 */
 	public function &getUser($id) {
-		if (! isset($this->_members[$id])) {
+		if (!isset($this->_members[$id])) {
 			$this->_members[$id] = & $this->_uHandler->get($id);
 		}
 		return $this->_members[$id];
@@ -215,6 +215,8 @@ class icms_member_Handler {
 	 * @return array associative array of user-IDs and names
 	 */
 	public function getUserList($criteria = null) {
+		trigger_error('This isn\'t really a membership method, but for the user handler', E_USER_DEPRECATED);
+
 		$users = $this->_uHandler->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($users) as $i) {
@@ -231,7 +233,7 @@ class icms_member_Handler {
 	 * @return object icms_member_group_membership_Object {@link icms_member_group_membership_Object}
 	 */
 	public function addUserToGroup($group_id, $user_id) {
-		$mship =& $this->_mHandler->create();
+		$mship = & $this->_mHandler->create();
 		$mship->setVar('groupid', $group_id);
 		$mship->setVar('uid', $user_id);
 		return $this->_mHandler->insert($mship);
@@ -267,14 +269,14 @@ class icms_member_Handler {
 	 */
 	public function &getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
 		$user_ids = $this->_mHandler->getUsersByGroup($group_id, $limit, $start);
-		if (! $asobject) {
+		if (!$asobject) {
 			return $user_ids;
 		} else {
 			$ret = array();
 			foreach ($user_ids as $u_id) {
-				$user =& $this->getUser($u_id);
+				$user = & $this->getUser($u_id);
 				if (is_object($user)) {
-					$ret[] =& $user;
+					$ret[] = & $user;
 				}
 				unset($user);
 			}
@@ -289,13 +291,13 @@ class icms_member_Handler {
 	 * @param bool $asobject return groups as {@link icms_member_group_Object} objects or arrays?
 	 * @return array array of objects or arrays
 	 */
-	public function &getGroupsByUser($user_id, $asobject = FALSE) {
+	public function &getGroupsByUser($user_id, $asobject = false) {
 		$group_ids = $this->_mHandler->getGroupsByUser($user_id);
 		if (!$asobject) {
 			return $group_ids;
 		} else {
 			foreach ($group_ids as $g_id) {
-				$ret[] =& $this->getGroup($g_id);
+				$ret[] = & $this->getGroup($g_id);
 			}
 			return $ret;
 		}
@@ -455,12 +457,12 @@ class icms_member_Handler {
 	public function getUsersByGroupLink($groups, $criteria = null, $asobject = false, $id_as_key = false) {
 		$ret = array();
 
-		$select = $asobject ? "u.*" : "u.uid";
+		$select = $asobject?"u.*":"u.uid";
 		$sql[] = "	SELECT DISTINCT {$select} "
 				. "	FROM " . icms::$xoopsDB->prefix("users") . " AS u"
 				. " LEFT JOIN " . icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
-		if (! empty($groups)) {
+		if (!empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
 		}
 		$limit = $start = 0;
@@ -476,16 +478,16 @@ class icms_member_Handler {
 			}
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if (! $result =icms::$xoopsDB->query($sql_string, $limit, $start)) {
+		if (!$result = icms::$xoopsDB->query($sql_string, $limit, $start)) {
 			return $ret;
 		}
 		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			if ($asobject) {
 				$user = new icms_member_user_Object($this, $myrow);
-				if (! $id_as_key) {
-					$ret[] =& $user;
+				if (!$id_as_key) {
+					$ret[] = & $user;
 				} else {
-					$ret[$myrow['uid']] =& $user;
+					$ret[$myrow['uid']] = & $user;
 				}
 				unset($user);
 			} else {
@@ -509,14 +511,14 @@ class icms_member_Handler {
 				. "	FROM " . icms::$xoopsDB->prefix("users") . " AS u"
 				. " LEFT JOIN " . icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
-		if (! empty($groups)) {
+		if (!empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
 		}
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql[] = $criteria->render();
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if (! $result = icms::$xoopsDB->query($sql_string)) {
+		if (!$result = icms::$xoopsDB->query($sql_string)) {
 			return $ret;
 		}
 		list($ret) = icms::$xoopsDB->fetchRow($result);
@@ -546,7 +548,7 @@ class icms_member_Handler {
 				$sql = 'SELECT COUNT(gperm_id) as total FROM '
 					. icms::$xoopsDB->prefix("group_permission")
 					. ' WHERE gperm_groupid=' . $group;
-				if (! $result = icms::$xoopsDB->query($sql)) {
+				if (!$result = icms::$xoopsDB->query($sql)) {
 					return $ret;
 				}
 				list($t) = icms::$xoopsDB->fetchRow($result);

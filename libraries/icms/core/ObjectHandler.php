@@ -65,13 +65,13 @@ abstract class icms_core_ObjectHandler {
 
 	//
 	/**
-	* called from child classes only
-	*
-	* @param object $db reference to the {@link icms_db_legacy_Database} object
-	* @access protected
-	*/
+	 * called from child classes only
+	 *
+	 * @param object $db reference to the {@link icms_db_legacy_Database} object
+	 * @access protected
+	 */
 	function __construct(&$db) {
-		$this->db =& $db;
+		$this->db = & $db;
 	}
 
 	/**

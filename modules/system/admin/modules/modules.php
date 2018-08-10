@@ -71,10 +71,10 @@ function xoops_module_list() {
 	$icmsAdminTpl->assign('lang_noninstall', _MD_AM_NONINSTALL);
 
 	$module_handler = icms::handler('icms_module');
-	$installed_mods =& $module_handler->getObjects();
+	$installed_mods = & $module_handler->getObjects();
 	$listed_mods = array();
 	foreach ($installed_mods as $module) {
-		$module->registerClassPath(FALSE);
+		$module->registerClassPath(false);
 		$module->getInfo();
 		$mod = array(
 			'mid' => $module->getVar('mid'),
@@ -87,8 +87,8 @@ function xoops_module_list() {
 			'hasmain' => $module->getVar('hasmain'),
 			'isactive' => $module->getVar('isactive'),
 			'version' => icms_conv_nr2local(round($module -> getVar('version') / 100, 2)),
-			'status' => ($module->getInfo('status')) ? $module->getInfo('status') : '&nbsp;',
-			'last_update' => ($module->getVar('last_update') != 0) ? formatTimestamp($module->getVar('last_update'), 'm') : '&nbsp;',
+			'status' => ($module->getInfo('status'))?$module->getInfo('status'):'&nbsp;',
+			'last_update' => ($module->getVar('last_update') != 0)? formatTimestamp($module->getVar('last_update'), 'm'):'&nbsp;',
 			'weight' => $module->getVar('weight'),
 			'support_site_url' => $module->getInfo('support_site_url'),
 		);
@@ -101,8 +101,8 @@ function xoops_module_list() {
 	foreach ($uninstalled as $file) {
 		clearstatcache();
 		$file = trim($file);
-			$module =& $module_handler->create();
-			if (!$module->loadInfo($file, FALSE)) {
+			$module = & $module_handler->create();
+			if (!$module->loadInfo($file, false)) {
 				continue;
 			}
 			$mod = array(
@@ -122,15 +122,13 @@ function xoops_module_list() {
 /**
  * Function and rendering for installation of a module
  *
- * @todo	add installation_notify()
- *
  * @param 	string	$dirname
  * @return	string	Results of the installation process
  */
 function xoops_module_install($dirname) {
 	global $icmsConfig, $icmsAdminTpl;
 	$dirname = trim($dirname);
-	$db =& icms_db_Factory::instance();
+	$db = & icms_db_Factory::instance();
 	$reservedTables = array(
 		'avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments',
 		'config', 'configcategory', 'configoption', 'image', 'imagebody',
@@ -141,27 +139,27 @@ function xoops_module_install($dirname) {
 	);
 	$module_handler = icms::handler('icms_module');
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
-		$module =& $module_handler->create();
+		$module = & $module_handler->create();
 		$module->loadInfoAsVar($dirname);
 		$module->registerClassPath();
 		$module->setVar('weight', 1);
-		$error = FALSE;
+		$error = false;
 		$errs = array();
-		$sqlfile =& $module->getInfo('sqlfile');
+		$sqlfile = & $module->getInfo('sqlfile');
 		$msgs = array();
 		$msgs[] = '<h4 style="text-align:' . _GLOBAL_LEFT . ';margin-bottom: 0px;border-bottom: dashed 1px #000000;">'
 			. _MD_AM_INSTALLING . $module->getInfo('name') . '</h4>';
-		if ($module->getInfo('image') !== FALSE && trim($module->getInfo('image')) != '') {
-			$msgs[] ='<img src="' . ICMS_MODULES_URL . '/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
+		if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
+			$msgs[] = '<img src="' . ICMS_MODULES_URL . '/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
 		}
-		$msgs[] ='<strong>'._VERSION . ':</strong> ' . icms_conv_nr2local($module->getInfo('version'));
-		if ($module->getInfo('author') !== FALSE && trim($module->getInfo('author')) != '') {
-			$msgs[] ='<strong>' . _AUTHOR .':</strong> ' . trim($module->getInfo('author'));
+		$msgs[] = '<strong>' . _VERSION . ':</strong> ' . icms_conv_nr2local($module->getInfo('version'));
+		if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
+			$msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . trim($module->getInfo('author'));
 		}
 		$msgs[] = '';
 		$errs[] = '<h4 style="text-align:' . _GLOBAL_LEFT . ';margin-bottom: 0px;border-bottom: dashed 1px #000000;">'
 			. _MD_AM_INSTALLING . $module->getInfo('name') . '</h4>';
-		if ($sqlfile !== FALSE && is_array($sqlfile)) {
+		if ($sqlfile !== false && is_array($sqlfile)) {
 			// handle instances when DB_TYPE includes 'pdo.'
 			if (substr(getenv('DB_TYPE'), 0, 4) == 'pdo.') {
 				$driver = substr(getenv('DB_TYPE'), 4);
@@ -169,7 +167,7 @@ function xoops_module_install($dirname) {
 			$sql_file_path = ICMS_MODULES_PATH . "/" . $dirname . "/" . $sqlfile[$driver];
 			if (!file_exists($sql_file_path)) {
 				$errs[] = sprintf(_MD_AM_SQL_NOT_FOUND, '<strong>' . $sql_file_path . '</strong>');
-				$error = TRUE;
+				$error = true;
 			} else {
 				$msgs[] = sprintf(_MD_AM_SQL_FOUND, '<strong>' . $sql_file_path . '</strong>');
 				$sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
@@ -182,7 +180,7 @@ function xoops_module_install($dirname) {
 					$prefixed_query = icms_db_legacy_mysql_Utility::prefixQuery($piece, $db->prefix());
 					if (!$prefixed_query) {
 						$errs[] = "<strong>$piece</strong>" . _MD_SQL_NOT_VALID;
-						$error = TRUE;
+						$error = true;
 						break;
 					}
 					// check if the table name is reserved
@@ -190,7 +188,7 @@ function xoops_module_install($dirname) {
 						// not reserved, so try to create one
 						if (!$db->query($prefixed_query[0])) {
 							$errs[] = $db->error();
-							$error = TRUE;
+							$error = true;
 							break;
 						} else {
 
@@ -206,13 +204,13 @@ function xoops_module_install($dirname) {
 					} else {
 						// the table name is reserved, so halt the installation
 						$errs[] = sprintf(_MD_AM_RESERVED_TABLE, '<strong>' . $prefixed_query[4] . '</strong>');
-						$error = TRUE;
+						$error = true;
 						break;
 					}
 				}
 
 				// if there was an error, delete the tables created so far, so the next installation will not fail
-				if ($error === TRUE) {
+				if ($error === true) {
 					foreach ($created_tables as $ct) {
 						$db->query("DROP TABLE " . $db->prefix($ct));
 					}
@@ -221,7 +219,7 @@ function xoops_module_install($dirname) {
 		}
 
 		// if no error, save the module info and blocks info associated with it
-		if ($error === FALSE) {
+		if ($error === false) {
 			if (!$module_handler->insert($module)) {
 				$errs[] = sprintf(_MD_AM_DATA_INSERT_FAIL, '<strong>' . $module->getVar('name') . '</strong>');
 				foreach ($created_tables as $ct) {
@@ -236,19 +234,19 @@ function xoops_module_install($dirname) {
 				$newmid = $module->getVar('mid');
 				unset($created_tables);
 				$msgs[] = sprintf(_MD_AM_MOD_DATA_INSERT_SUCCESS, '<strong>' . icms_conv_nr2local($newmid) . '</strong>');
-				$tplfile_handler =& icms::handler('icms_view_template_file');
+				$tplfile_handler = & icms::handler('icms_view_template_file');
 				$templates = $module->getInfo('templates');
-				if ($templates !== FALSE) {
+				if ($templates !== false) {
 					$msgs[] = _MD_AM_TEMPLATES_ADDING;
 					foreach ($templates as $tpl) {
-						$tplfile =& $tplfile_handler->create();
-						$tpldata =& xoops_module_gettemplate($dirname, $tpl['file']);
-						$tplfile->setVar('tpl_source', $tpldata, TRUE);
+						$tplfile = & $tplfile_handler->create();
+						$tpldata = & xoops_module_gettemplate($dirname, $tpl['file']);
+						$tplfile->setVar('tpl_source', $tpldata, true);
 						$tplfile->setVar('tpl_refid', $newmid);
 
 						$tplfile->setVar('tpl_tplset', 'default');
 						$tplfile->setVar('tpl_file', $tpl['file']);
-						$tplfile->setVar('tpl_desc', $tpl['description'], TRUE);
+						$tplfile->setVar('tpl_desc', $tpl['description'], true);
 						$tplfile->setVar('tpl_module', $dirname);
 						$tplfile->setVar('tpl_lastmodified', time());
 						$tplfile->setVar('tpl_lastimported', 0);
@@ -262,7 +260,7 @@ function xoops_module_install($dirname) {
 								'<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 
 							// generate compiled file
-							if (!$icmsAdminTpl->template_touch($newtplid)) {
+							if (!icms_view_Tpl::template_touch($newtplid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_COMPILE_FAIL . '</span>',
 									'<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newtplid . '</strong>');
 							} else {
@@ -272,9 +270,9 @@ function xoops_module_install($dirname) {
 						unset($tpldata);
 					}
 				}
-				$icmsAdminTpl->template_clear_module_cache($newmid);
+				icms_view_Tpl::template_clear_module_cache($newmid);
 				$blocks = $module->getInfo('blocks');
-				if ($blocks !== FALSE) {
+				if ($blocks !== false) {
 					$msgs[] = _MD_AM_BLOCKS_ADDING;
 					foreach ($blocks as $blockkey => $block) {
 						// break the loop if missing block config
@@ -286,10 +284,10 @@ function xoops_module_install($dirname) {
 							$options = trim($block['options']);
 						}
 						$newbid = $db->genId($db->prefix('newblocks') . '_bid_seq');
-						$edit_func = isset($block['edit_func']) ? trim($block['edit_func']) : '';
+						$edit_func = isset($block['edit_func'])? trim($block['edit_func']):'';
 						$template = '';
 						if ((isset($block['template']) && trim($block['template']) != '')) {
-							$content =& xoops_module_gettemplate($dirname, $block['template'], TRUE);
+							$content = & xoops_module_gettemplate($dirname, $block['template'], true);
 						}
 						if (empty($content)) {
 							$content = '';
@@ -299,7 +297,7 @@ function xoops_module_install($dirname) {
 						$block_name = addslashes(trim($block['name']));
 						$sql = "INSERT INTO " . $db->prefix("newblocks")
 							. " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('"
-							. (int) $newbid . "', '". (int) $newmid . "', '". (int) $blockkey . "', '$options', '" . $block_name . "', '" . $block_name . "', '', '1', '0', '0', 'M', 'H', '1', '" . addslashes($dirname) . "', '" . addslashes(trim($block['file'])) . "', '" . addslashes(trim($block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', '0', '" . time() . "')";
+							. (int) $newbid . "', '" . (int) $newmid . "', '" . (int) $blockkey . "', '$options', '" . $block_name . "', '" . $block_name . "', '', '1', '0', '0', 'M', 'H', '1', '" . addslashes($dirname) . "', '" . addslashes(trim($block['file'])) . "', '" . addslashes(trim($block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', '0', '" . time() . "')";
 						if (!$db->query($sql)) {
 							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_BLOCKS_ADD_FAIL . '</span>',
 								'<strong>' . $block['name'] . '</strong>', '<strong>' . $db->error() . '</strong>');
@@ -314,14 +312,14 @@ function xoops_module_install($dirname) {
 								. (int) $newbid . ', 0, 1)';
 							$db->query($sql);
 							if ($template != '') {
-								$tplfile =& $tplfile_handler->create();
+								$tplfile = & $tplfile_handler->create();
 								$tplfile->setVar('tpl_refid', $newbid);
-								$tplfile->setVar('tpl_source', $content, TRUE);
+								$tplfile->setVar('tpl_source', $content, true);
 								$tplfile->setVar('tpl_tplset', 'default');
 								$tplfile->setVar('tpl_file', $block['template']);
 								$tplfile->setVar('tpl_module', $dirname);
 								$tplfile->setVar('tpl_type', 'block');
-								$tplfile->setVar('tpl_desc', isset($block['description']) ? $block['description'] : '', TRUE);
+								$tplfile->setVar('tpl_desc', isset($block['description'])?$block['description']:'', true);
 								$tplfile->setVar('tpl_lastimported', 0);
 								$tplfile->setVar('tpl_lastmodified', time());
 								if (!$tplfile_handler->insert($tplfile)) {
@@ -332,7 +330,7 @@ function xoops_module_install($dirname) {
 									$msgs[] = sprintf(_MD_AM_TEMPLATE_INSERTED, '<strong>' . $block['template'] . '</strong>',
 										'<strong>' . icms_conv_nr2local($newtplid) . '</strong>');
 									// generate compiled file
-									if (!$icmsAdminTpl->template_touch($newtplid)) {
+									if (!icms_view_Tpl::template_touch($newtplid)) {
 										$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_COMPILE_FAIL . '</span>',
 											'<strong>' . $block['template'] . '</strong>', '<strong>' . icms_conv_nr2local($newtplid) . '</strong>');
 									} else {
@@ -346,9 +344,9 @@ function xoops_module_install($dirname) {
 					unset($blocks);
 				}
 				$configs = $module->getInfo('config');
-				if ($configs !== FALSE) {
+				if ($configs !== false) {
 					if ($module->getVar('hascomments') != 0) {
-						include_once ICMS_INCLUDE_PATH . '/comment_constants.php' ;
+						include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 						$configs[] = array(
 							'name' => 'com_rule',
 							'title' => '_CM_COMRULES',
@@ -374,7 +372,7 @@ function xoops_module_install($dirname) {
 					}
 				} else {
 					if ($module->getVar('hascomments') != 0) {
-						include_once ICMS_INCLUDE_PATH . '/comment_constants.php' ;
+						include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 						$configs[] = array(
 							'name' => 'com_rule',
 							'title' => '_CM_COMRULES',
@@ -425,9 +423,9 @@ function xoops_module_install($dirname) {
 					// FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
 					$options = array();
 					$notification_handler = icms::handler('icms_data_notification');
-					$categories =& $notification_handler->categoryInfo('', $module->getVar('mid'));
+					$categories = & $notification_handler->categoryInfo('', $module->getVar('mid'));
 					foreach ($categories as $category) {
-						$events =& $notification_handler->categoryEvents($category['name'], FALSE, $module->getVar('mid'));
+						$events = & $notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
 						foreach ($events as $event) {
 							if (!empty($event['invisible'])) {
 								continue;
@@ -448,34 +446,34 @@ function xoops_module_install($dirname) {
 					);
 				}
 
-				if ($configs !== FALSE) {
+				if ($configs !== false) {
 					$msgs[] = _MD_AM_CONFIG_ADDING;
 					$config_handler = icms::handler('icms_config');
 					$order = 0;
 					foreach ($configs as $config) {
-						$confobj =& $config_handler->createConfig();
+						$confobj = & $config_handler->createConfig();
 						$confobj->setVar('conf_modid', $newmid);
 						$confobj->setVar('conf_catid', 0);
 						$confobj->setVar('conf_name', $config['name']);
-						$confobj->setVar('conf_title', $config['title'], TRUE);
-						$confobj->setVar('conf_desc', $config['description'], TRUE);
+						$confobj->setVar('conf_title', $config['title'], true);
+						$confobj->setVar('conf_desc', $config['description'], true);
 						$confobj->setVar('conf_formtype', $config['formtype']);
 						$confobj->setVar('conf_valuetype', $config['valuetype']);
-						$confobj->setConfValueForInput($config['default'], TRUE);
+						$confobj->setConfValueForInput($config['default'], true);
 						$confobj->setVar('conf_order', $order);
 						$confop_msgs = '';
 						if (isset($config['options']) && is_array($config['options'])) {
 							foreach ($config['options'] as $key => $value) {
-								$confop =& $config_handler->createConfigOption();
-								$confop->setVar('confop_name', $key, TRUE);
-								$confop->setVar('confop_value', $value, TRUE);
+								$confop = & $config_handler->createConfigOption();
+								$confop->setVar('confop_name', $key, true);
+								$confop->setVar('confop_value', $value, true);
 								$confobj->setConfOptions($confop);
-								$confop_msgs .= sprintf('<br />&nbsp;&nbsp;&nbsp;&nbsp;'. _MD_AM_CONFIGOPTION_ADDED, '<strong>' . $key . '</strong>', '<strong>' . $value . '</strong>');
+								$confop_msgs .= sprintf('<br />&nbsp;&nbsp;&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_ADDED, '<strong>' . $key . '</strong>', '<strong>' . $value . '</strong>');
 								unset($confop);
 							}
 						}
 						$order++;
-						if ($config_handler->insertConfig($confobj) !== FALSE) {
+						if ($config_handler->insertConfig($confobj) !== false) {
 							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIG_ADDED . $confop_msgs, '<strong>' . $config['name'] . '</strong>');
 						} else {
 							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIG_ADD_FAIL . '</span>', '<strong>' . $config['name'] . '</strong>');
@@ -494,24 +492,24 @@ function xoops_module_install($dirname) {
 
 			// retrieve all block ids for this module
 			$icms_block_handler = icms::handler('icms_view_block');
-			$blocks =& $icms_block_handler->getByModule($newmid, FALSE);
+			$blocks = & $icms_block_handler->getByModule($newmid, false);
 			$msgs[] = _MD_AM_PERMS_ADDING;
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			foreach ($groups as $mygroup) {
 				if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
-					$mperm =& $gperm_handler->create();
+					$mperm = & $gperm_handler->create();
 					$mperm->setVar('gperm_groupid', $mygroup);
 					$mperm->setVar('gperm_itemid', $newmid);
 					$mperm->setVar('gperm_name', 'module_admin');
 					$mperm->setVar('gperm_modid', 1);
 					if (!$gperm_handler->insert($mperm)) {
-						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_ADMIN_PERM_ADD_FAIL . '</span>' , '<strong>' . icms_conv_nr2local($mygroup) . '</strong>');
+						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_ADMIN_PERM_ADD_FAIL . '</span>', '<strong>' . icms_conv_nr2local($mygroup) . '</strong>');
 					} else {
 						$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_ADMIN_PERM_ADDED, '<strong>' . icms_conv_nr2local($mygroup) . '</strong>');
 					}
 					unset($mperm);
 				}
-				$mperm =& $gperm_handler->create();
+				$mperm = & $gperm_handler->create();
 				$mperm->setVar('gperm_groupid', $mygroup);
 				$mperm->setVar('gperm_itemid', $newmid);
 				$mperm->setVar('gperm_name', 'module_read');
@@ -523,7 +521,7 @@ function xoops_module_install($dirname) {
 				}
 				unset($mperm);
 				foreach ($blocks as $blc) {
-					$bperm =& $gperm_handler->create();
+					$bperm = & $gperm_handler->create();
 					$bperm->setVar('gperm_groupid', $mygroup);
 					$bperm->setVar('gperm_itemid', $blc);
 					$bperm->setVar('gperm_name', 'block_read');
@@ -549,10 +547,18 @@ function xoops_module_install($dirname) {
 				$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 				foreach ($atasks as $taskID => $taskData) {
 					$task = &$atasks_handler->create();
-					if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
-					if (isset($taskData['repeat'])) $task->setVar('sat_repeat', $taskData['repeat']);
-					if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
-					if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
+					if (isset($taskData['enabled'])) {
+						$task->setVar('sat_enabled', $taskData['enabled']);
+					}
+					if (isset($taskData['repeat'])) {
+						$task->setVar('sat_repeat', $taskData['repeat']);
+					}
+					if (isset($taskData['interval'])) {
+						$task->setVar('sat_interval', $taskData['interval']);
+					}
+					if (isset($taskData['onfinish'])) {
+						$task->setVar('sat_onfinish', $taskData['onfinish']);
+					}
 					$task->setVar('sat_name', $taskData['name']);
 					$task->setVar('sat_code', $taskData['code']);
 					$task->setVar('sat_type', 'addon/' . $module->getInfo('dirname'));
@@ -569,14 +575,14 @@ function xoops_module_install($dirname) {
 
 			// execute module specific install script if any
 			$install_script = $module->getInfo('onInstall');
-			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
-			if (FALSE !== $install_script && trim($install_script) != '') {
+			$ModName = ($module->getInfo('modname') != '')? trim($module->getInfo('modname')):$dirname;
+			if (false !== $install_script && trim($install_script) != '') {
 				include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . trim($install_script);
 
 				$is_IPF = $module->getInfo('object_items');
 				if (!empty($is_IPF)) {
 					$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-					$icmsDatabaseUpdater->moduleUpgrade($module, TRUE);
+					$icmsDatabaseUpdater->moduleUpgrade($module, true);
 					array_merge($msgs, $icmsDatabaseUpdater->_messages);
 				}
 
@@ -629,7 +635,7 @@ function xoops_module_install($dirname) {
  * @param	string	$template	Name of the template file
  * @param	boolean	$block		Are you trying to retrieve the template for a block?
  */
-function &xoops_module_gettemplate($dirname, $template, $block = FALSE) {
+function &xoops_module_gettemplate($dirname, $template, $block = false) {
 	global $icmsConfig;
 	$ret = '';
 	if ($block) {
@@ -655,8 +661,6 @@ function &xoops_module_gettemplate($dirname, $template, $block = FALSE) {
 /**
  * Logic for uninstalling a module
  *
- * @todo	add installation_notify(), send status
- *
  * @param unknown_type $dirname
  * @return	string	Result messages for uninstallation
  */
@@ -667,14 +671,14 @@ function xoops_module_uninstall($dirname) {
 		'avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config',
 		'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset',
 		'imgset_tplset_link', 'imgsetimg', 'groups', 'groups_users_link', 'group_permission',
-		'online', 'priv_msgs', 'ranks', 'session',  'smiles', 'users', 'newblocks',
+		'online', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks',
 		'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications');
 
-	$db =& icms_db_Factory::instance();
+	$db = & icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');
-	$module =& $module_handler->getByDirname($dirname);
+	$module = & $module_handler->getByDirname($dirname);
 	$module->registerClassPath();
-	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
 	if ($module->getVar('dirname') == 'system') {
 		return "<p>" . sprintf(_MD_AM_FAILUNINS, "<strong>" . $module->getVar('name') . "</strong>")
 		. "&nbsp;" . _MD_AM_ERRORSC . "<br /> - " . _MD_AM_SYSNO . "</p>";
@@ -711,7 +715,7 @@ function xoops_module_uninstall($dirname) {
 			foreach ($pages as $page) {
 				if (!$page_handler->delete($page)) {
 					$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_SYMLINK_DELETE_FAIL . '</span>',
-					$page->getVar('page_title'),  '<strong>'. $page->getVar('page_id') . '</strong>');
+					$page->getVar('page_title'), '<strong>' . $page->getVar('page_id') . '</strong>');
 				} else {
 					$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_SYMLINK_DELETED,
 						'<strong>' . $page->getVar('page_title') . '</strong>', '<strong>' . $page->getVar('page_id') . '</strong>');
@@ -724,14 +728,14 @@ function xoops_module_uninstall($dirname) {
 		} else {
 			// delete template files
 			$tplfile_handler = icms::handler('icms_view_template_file');
-			$templates =& $tplfile_handler->find(NULL, 'module', $module->getVar('mid'));
+			$templates = & $tplfile_handler->find(null, 'module', $module->getVar('mid'));
 			$tcount = count($templates);
 			if ($tcount > 0) {
 				$msgs[] = _MD_AM_TEMPLATES_DELETE;
 				for ($i = 0; $i < $tcount; $i++) {
 					if (!$tplfile_handler->delete($templates[$i])) {
 						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_DELETE_FAIL . '</span>',
-						$templates[$i]->getVar('tpl_file') , '<strong>' . icms_conv_nr2local($templates[$i]->getVar('tpl_id')) . '</strong>');
+						$templates[$i]->getVar('tpl_file'), '<strong>' . icms_conv_nr2local($templates[$i]->getVar('tpl_id')) . '</strong>');
 					} else {
 						$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_DELETED,
 							'<strong>' . icms_conv_nr2local($templates[$i]->getVar('tpl_file')) . '</strong>',
@@ -744,7 +748,7 @@ function xoops_module_uninstall($dirname) {
 
 			// delete blocks and block template files
 			$icms_block_handler = icms::handler('icms_view_block');
-			$block_arr =& $icms_block_handler->getByModule($module->getVar('mid'));
+			$block_arr = & $icms_block_handler->getByModule($module->getVar('mid'));
 			if (is_array($block_arr)) {
 				$bcount = count($block_arr);
 				$msgs[] = _MD_AM_BLOCKS_DELETE;
@@ -756,12 +760,12 @@ function xoops_module_uninstall($dirname) {
 							);
 					} else {
 						$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_BLOCK_DELETED,
-							'<strong>' . $block_arr[$i]->getVar('name')	. '</strong>',
+							'<strong>' . $block_arr[$i]->getVar('name') . '</strong>',
 							'<strong>' . icms_conv_nr2local($block_arr[$i]->getVar('bid')) . '</strong>'
 							);
 					}
 					if ($block_arr[$i]->getVar('template') != '') {
-						$templates =& $tplfile_handler->find(NULL, 'block', $block_arr[$i]->getVar('bid'));
+						$templates = & $tplfile_handler->find(null, 'block', $block_arr[$i]->getVar('bid'));
 						$btcount = count($templates);
 						if ($btcount > 0) {
 							for ($j = 0; $j < $btcount; $j++) {
@@ -786,7 +790,7 @@ function xoops_module_uninstall($dirname) {
 			// delete tables used by this module
 			$modtables = $module->getInfo('tables');
 			$is_IPF = $module->getInfo('object_items');
-			if ($modtables !== FALSE && is_array($modtables)) {
+			if ($modtables !== false && is_array($modtables)) {
 				$msgs[] = _MD_AM_MOD_TABLES_DELETE;
 				foreach ($modtables as $table) {
 					if ($is_IPF) {
@@ -798,7 +802,7 @@ function xoops_module_uninstall($dirname) {
 						$sql = 'DROP TABLE ' . $prefix_table;
 						if (!$db->query($sql)) {
 							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_MOD_TABLE_DELETE_FAIL . '</span>',
-								'<strong>'. $prefix_table . '<strong> . '
+								'<strong>' . $prefix_table . '<strong> . '
 								);
 						} else {
 							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_MOD_TABLE_DELETED,
@@ -828,7 +832,7 @@ function xoops_module_uninstall($dirname) {
 			if ($module->getVar('hasnotification') != 0) {
 				$msgs[] = _MD_AM_NOTIFICATIONS_DELETE;
 				if (!xoops_notification_deletebymodule($module->getVar('mid'))) {
-					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_NOTIFICATION_DELETE_FAIL .'</span>';
+					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_NOTIFICATION_DELETE_FAIL . '</span>';
 				} else {
 					$msgs[] = '&nbsp;&nbsp;' . _MD_AM_NOTIFICATION_DELETED;
 				}
@@ -846,14 +850,14 @@ function xoops_module_uninstall($dirname) {
 			// delete module config options if any
 			if ($module->getVar('hasconfig') != 0 || $module->getVar('hascomments') != 0) {
 				$config_handler = icms::handler('icms_config');
-				$configs =& $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
+				$configs = & $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
 				$confcount = count($configs);
 				if ($confcount > 0) {
 					$msgs[] = _MD_AM_CONFIGOPTIONS_DELETE;
 					for ($i = 0; $i < $confcount; $i++) {
 						if (!$config_handler->deleteConfig($configs[$i])) {
-							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIGOPTION_DELETE_FAIL .'</span>',
-								'<strong>' . icms_conv_nr2local($configs[$i]->getvar('conf_id')) . '</strong>');
+							$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIGOPTION_DELETE_FAIL . '</span>',
+								'<strong>' . icms_conv_nr2local($configs[$i]->getVar('conf_id')) . '</strong>');
 						} else {
 							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_DELETED,
 								'<strong>' . icms_conv_nr2local($configs[$i]->getVar('conf_id')) . '</strong>');
@@ -884,8 +888,8 @@ function xoops_module_uninstall($dirname) {
 
 			// execute module specific install script if any
 			$uninstall_script = $module->getInfo('onUninstall');
-			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
-			if (FALSE !== $uninstall_script && trim($uninstall_script) != '') {
+			$ModName = ($module->getInfo('modname') != '')? trim($module->getInfo('modname')):$dirname;
+			if (false !== $uninstall_script && trim($uninstall_script) != '') {
 				include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . trim($uninstall_script);
 				if (function_exists('xoops_module_uninstall_' . $ModName)) {
 					$func = 'xoops_module_uninstall_' . $ModName;
@@ -922,8 +926,8 @@ function xoops_module_uninstall($dirname) {
 function xoops_module_activate($mid) {
 	global $icms_block_handler, $icmsAdminTpl;
 	$module_handler = icms::handler('icms_module');
-	$module =& $module_handler->get($mid);
-	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+	$module = & $module_handler->get($mid);
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
 	$module->setVar('isactive', 1);
 	if (!$module_handler->insert($module)) {
 		$ret = "<p>" . sprintf(_MD_AM_FAILACT, "<strong>" . $module->getVar('name') . "</strong>") . "&nbsp;"
@@ -931,7 +935,7 @@ function xoops_module_activate($mid) {
 		return $ret . "</p>";
 	}
 	$icms_block_handler = icms_getModuleHandler('blocks', 'system');
-	$blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
+	$blocks = & $icms_block_handler->getByModule($module->getVar('mid'));
 	$bcount = count($blocks);
 	for ($i = 0; $i < $bcount; $i++) {
 		$blocks[$i]->setVar('isactive', 1);
@@ -943,8 +947,6 @@ function xoops_module_activate($mid) {
 /**
  * Logic for deactivating a module
  *
- * @todo	Add installation_notify() - send status change?
- *
  * @param	int	$mid
  * @return	string	Result message for deactivating the module
  */
@@ -955,8 +957,8 @@ function xoops_module_deactivate($mid) {
 	}
 
 	$module_handler = icms::handler('icms_module');
-	$module =& $module_handler->get($mid);
-	$icmsAdminTpl->template_clear_module_cache($mid);
+	$module = & $module_handler->get($mid);
+	icms_view_Tpl::template_clear_module_cache($mid);
 	$module->setVar('isactive', 0);
 	if ($module->getVar('dirname') == "system") {
 		return "<p>" . sprintf(_MD_AM_FAILDEACT, "<strong>" . $module->getVar('name') . "</strong>")
@@ -987,10 +989,10 @@ function xoops_module_deactivate($mid) {
 		}
 
 		$icms_block_handler = icms_getModuleHandler('blocks', 'system');
-		$blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
+		$blocks = & $icms_block_handler->getByModule($module->getVar('mid'));
 		$bcount = count($blocks);
 		for ($i = 0; $i < $bcount; $i++) {
-			$blocks[$i]->setVar('isactive', FALSE);
+			$blocks[$i]->setVar('isactive', false);
 			$icms_block_handler->insert($blocks[$i]);
 		}
 		return "<p>" . sprintf(_MD_AM_OKDEACT, "<strong>" . $module->getVar('name') . "</strong>") . "</p>";
@@ -1006,7 +1008,7 @@ function xoops_module_deactivate($mid) {
  */
 function xoops_module_change($mid, $weight, $name) {
 	$module_handler = icms::handler('icms_module');
-	$module =& $module_handler->get($mid);
+	$module = & $module_handler->get($mid);
 	$module->setVar('weight', $weight);
 	$module->setVar('name', $name);
 	if (!$module_handler->insert($module)) {
@@ -1021,8 +1023,6 @@ function xoops_module_change($mid, $weight, $name) {
 /**
  * Logic for updating a module
  *
- * @todo	add installation_notify(), only if the version of the module changes
- *
  * @param 	str $dirname
  * @return	str	Result messages from the module update
  */
@@ -1033,16 +1033,13 @@ function icms_module_update($dirname) {
 
 	$dirname = trim($dirname);
 	$module_handler = icms::handler('icms_module');
-	$module =& $module_handler->getByDirname($dirname);
+	$module = & $module_handler->getByDirname($dirname);
 
 	// Save current version for use in the update function
 	$prev_version = $module->getVar('version');
 	$prev_dbversion = $module->getVar('dbversion');
-	/**
-	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
-	 * @todo PHP5.3.0 supports $icmsAdminTpl::template_clear_module_cache($module->getVar('mid'));
-	 */
-	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
+
+	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
 	// we dont want to change the module name set by admin
 	$temp_name = $module->getVar('name');
 	$module->loadInfoAsVar($dirname);
@@ -1064,13 +1061,13 @@ function icms_module_update($dirname) {
 	} else {
 		$newmid = $module->getVar('mid');
 		$msgs[] = _MD_AM_MOD_DATA_UPDATED;
-		$tplfile_handler =& icms::handler('icms_view_template_file');
-		$deltpl =& $tplfile_handler->find('default', 'module', $module->getVar('mid'));
+		$tplfile_handler = & icms::handler('icms_view_template_file');
+		$deltpl = & $tplfile_handler->find('default', 'module', $module->getVar('mid'));
 		$delng = array();
 		if (is_array($deltpl)) {
 			$xoopsDelTpl = new icms_view_Tpl();
 			// clear cache files
-			$xoopsDelTpl->clear_cache(NULL, 'mod_' . $dirname);
+			$xoopsDelTpl->clear_cache(null, 'mod_' . $dirname);
 			// delete template file entry in db
 			$dcount = count($deltpl);
 			for ($i = 0; $i < $dcount; $i++) {
@@ -1081,13 +1078,13 @@ function icms_module_update($dirname) {
 		}
 
 		$templates = $module->getInfo('templates');
-		if ($templates !== FALSE) {
+		if ($templates !== false) {
 			$msgs[] = _MD_AM_MOD_UP_TEM;
 			foreach ($templates as $tpl) {
 				$tpl['file'] = trim($tpl['file']);
 				if (!in_array($tpl['file'], $delng)) {
-					$tpldata =& xoops_module_gettemplate($dirname, $tpl['file']);
-					$tplfile =& $tplfile_handler->create();
+					$tpldata = & xoops_module_gettemplate($dirname, $tpl['file']);
+					$tplfile = & $tplfile_handler->create();
 					$tplfile->setVar('tpl_refid', $newmid);
 					$tplfile->setVar('tpl_lastimported', 0);
 					$tplfile->setVar('tpl_lastmodified', time());
@@ -1096,11 +1093,11 @@ function icms_module_update($dirname) {
 					} else {
 						$tplfile->setVar('tpl_type', 'module');
 					}
-					$tplfile->setVar('tpl_source', $tpldata, TRUE);
+					$tplfile->setVar('tpl_source', $tpldata, true);
 					$tplfile->setVar('tpl_module', $dirname);
 					$tplfile->setVar('tpl_tplset', 'default');
-					$tplfile->setVar('tpl_file', $tpl['file'], TRUE);
-					$tplfile->setVar('tpl_desc', $tpl['description'], TRUE);
+					$tplfile->setVar('tpl_file', $tpl['file'], true);
+					$tplfile->setVar('tpl_desc', $tpl['description'], true);
 					if (!$tplfile_handler->insert($tplfile)) {
 						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'
 						. _MD_AM_TEMPLATE_INSERT_FAIL . '</span>', '<strong>' . $tpl['file'] . '</strong>');
@@ -1108,7 +1105,7 @@ function icms_module_update($dirname) {
 						$newid = $tplfile->getVar('tpl_id');
 						$msgs[] = sprintf('&nbsp;&nbsp;<span>' . _MD_AM_TEMPLATE_INSERTED . '</span>', '<strong>' . $tpl['file'] . '</strong>', '<strong>' . $newid . '</strong>');
 						if ($icmsConfig['template_set'] == 'default') {
-							if (!$icmsAdminTpl->template_touch($newid)) {
+							if (!icms_view_Tpl::template_touch($newid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'
 								. _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $tpl['file'] . '</strong>');
 							} else {
@@ -1124,18 +1121,18 @@ function icms_module_update($dirname) {
 		}
 		$blocks = $module->getInfo('blocks');
 		$msgs[] = _MD_AM_MOD_REBUILD_BLOCKS;
-		if ($blocks !== FALSE) {
+		if ($blocks !== false) {
 			$count = count($blocks);
 			$showfuncs = array();
 			$funcfiles = array();
 			foreach ($blocks as $i => $block) {
 				if (isset($block['show_func']) && $block['show_func'] != '' && isset($block['file']) && $block['file'] != '') {
-					$editfunc = isset($block['edit_func']) ? $block['edit_func'] : '';
+					$editfunc = isset($block['edit_func'])?$block['edit_func']:'';
 					$showfuncs[] = $block['show_func'];
 					$funcfiles[] = $block['file'];
 					$template = $content = '';
 					if ((isset($block['template']) && trim($block['template']) != '')) {
-						$content =& xoops_module_gettemplate($dirname, $block['template'], TRUE);
+						$content = & xoops_module_gettemplate($dirname, $block['template'], true);
 					}
 					if (!$content) {
 						$content = '';
@@ -1160,7 +1157,7 @@ function icms_module_update($dirname) {
 							. "', edit_func='" . addslashes($editfunc)
 							. "', content='', template='" . $template
 							. "', last_modified=" . time()
-							. " WHERE bid='". (int) $fblock['bid'] . "'";
+							. " WHERE bid='" . (int) $fblock['bid'] . "'";
 						$result = icms::$xoopsDB->query($sql);
 						if (!$result) {
 							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_UPDATE_FAIL, $fblock['name']);
@@ -1169,19 +1166,19 @@ function icms_module_update($dirname) {
 								'<strong>' . $fblock['name'] . '</strong>',
 								'<strong>' . icms_conv_nr2local($fblock['bid']) . '</strong>');
 							if ($template != '') {
-								$tplfile =& $tplfile_handler->find('default', 'block', $fblock['bid']);
+								$tplfile = & $tplfile_handler->find('default', 'block', $fblock['bid']);
 								if (count($tplfile) == 0) {
-									$tplfile_new =& $tplfile_handler->create();
+									$tplfile_new = & $tplfile_handler->create();
 									$tplfile_new->setVar('tpl_module', $dirname);
 									$tplfile_new->setVar('tpl_refid', (int) $fblock['bid']);
 									$tplfile_new->setVar('tpl_tplset', 'default');
-									$tplfile_new->setVar('tpl_file', $block['template'], TRUE);
+									$tplfile_new->setVar('tpl_file', $block['template'], true);
 									$tplfile_new->setVar('tpl_type', 'block');
 								} else {
 									$tplfile_new = $tplfile[0];
 								}
-								$tplfile_new->setVar('tpl_source', $content, TRUE);
-								$tplfile_new->setVar('tpl_desc', $block['description'], TRUE);
+								$tplfile_new->setVar('tpl_source', $content, true);
+								$tplfile_new->setVar('tpl_desc', $block['description'], true);
 								$tplfile_new->setVar('tpl_lastmodified', time());
 								$tplfile_new->setVar('tpl_lastimported', 0);
 								if (!$tplfile_handler->insert($tplfile_new)) {
@@ -1190,7 +1187,7 @@ function icms_module_update($dirname) {
 								} else {
 									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_UPDATED, '<strong>' . $block['template'] . '</strong>');
 									if ($icmsConfig['template_set'] == 'default') {
-										if (!$icmsAdminTpl->template_touch($tplfile_new->getVar('tpl_id'))) {
+										if (!icms_view_Tpl::template_touch($tplfile_new->getVar('tpl_id'))) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'
 												. _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>', '<strong>' . $block['template'] . '</strong>');
 										} else {
@@ -1208,19 +1205,19 @@ function icms_module_update($dirname) {
 						/* @todo properly handle the block_type when updating the system module */
 						$sql = "INSERT INTO " . icms::$xoopsDB->prefix("newblocks")
 							. " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('"
-							. (int) $newbid . "', '". (int) $module->getVar('mid') . "', '". (int) $i . "', '" . addslashes($options) . "', '" . $block_name . "', '" . $block_name . "', '', '1', '0', '0', 'M', 'H', '1', '" . addslashes($dirname) . "', '" . addslashes($block['file']) . "', '" . addslashes($block['show_func']) . "', '" . addslashes($editfunc) . "', '" . $template . "', '0', '" . time() . "')";
+							. (int) $newbid . "', '" . (int) $module->getVar('mid') . "', '" . (int) $i . "', '" . addslashes($options) . "', '" . $block_name . "', '" . $block_name . "', '', '1', '0', '0', 'M', 'H', '1', '" . addslashes($dirname) . "', '" . addslashes($block['file']) . "', '" . addslashes($block['show_func']) . "', '" . addslashes($editfunc) . "', '" . $template . "', '0', '" . time() . "')";
 						$result = icms::$xoopsDB->query($sql);
 						if (!$result) {
-							$msgs[] = sprintf('&nbsp;&nbsp;' .  _MD_AM_CREATE_FAIL, $block['name']);
+							$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CREATE_FAIL, $block['name']);
 							echo $sql;
 						} else {
 							if (empty($newbid)) {
 								$newbid = icms::$xoopsDB->getInsertId();
 							}
-							$groups =& icms::$user->getGroups();
+							$groups = & icms::$user->getGroups();
 							$gperm_handler = icms::handler('icms_member_groupperm');
 							foreach ($groups as $mygroup) {
-								$bperm =& $gperm_handler->create();
+								$bperm = & $gperm_handler->create();
 								$bperm->setVar('gperm_groupid', (int) $mygroup);
 								$bperm->setVar('gperm_itemid', (int) $newbid);
 								$bperm->setVar('gperm_name', 'block_read');
@@ -1237,16 +1234,16 @@ function icms_module_update($dirname) {
 							}
 
 							if ($template != '') {
-								$tplfile =& $tplfile_handler->create();
+								$tplfile = & $tplfile_handler->create();
 								$tplfile->setVar('tpl_module', $dirname);
 								$tplfile->setVar('tpl_refid', (int) $newbid);
-								$tplfile->setVar('tpl_source', $content, TRUE);
+								$tplfile->setVar('tpl_source', $content, true);
 								$tplfile->setVar('tpl_tplset', 'default');
-								$tplfile->setVar('tpl_file', $block['template'], TRUE);
+								$tplfile->setVar('tpl_file', $block['template'], true);
 								$tplfile->setVar('tpl_type', 'block');
 								$tplfile->setVar('tpl_lastimported', 0);
 								$tplfile->setVar('tpl_lastmodified', time());
-								$tplfile->setVar('tpl_desc', $block['description'], TRUE);
+								$tplfile->setVar('tpl_desc', $block['description'], true);
 								if (!$tplfile_handler->insert($tplfile)) {
 									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_INSERT_FAIL . '</span>',
 										'<strong>' . $block['template'] . '</strong>');
@@ -1255,7 +1252,7 @@ function icms_module_update($dirname) {
 									$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_TEMPLATE_INSERTED,
 										'<strong>' . $block['template'] . '</strong>', '<strong>' . $newid . '</strong>');
 									if ($icmsConfig['template_set'] == 'default') {
-										if (!$icmsAdminTpl->template_touch($newid)) {
+										if (!icms_view_Tpl::template_touch($newid)) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_TEMPLATE_RECOMPILE_FAIL . '</span>',
 												'<strong>' . $block['template'] . '</strong>');
 										} else {
@@ -1290,7 +1287,7 @@ function icms_module_update($dirname) {
 							'<strong>' . $block->getVar('name') . '</strong>',
 							'<strong>' . $block->getVar('bid') . '</strong>');
 						if ($block->getVar('template') != '') {
-							$tplfiles =& $tplfile_handler->find(NULL, 'block', $block->getVar('bid'));
+							$tplfiles = & $tplfile_handler->find(null, 'block', $block->getVar('bid'));
 							if (is_array($tplfiles)) {
 								$btcount = count($tplfiles);
 								for ($k = 0; $k < $btcount; $k++) {
@@ -1313,7 +1310,7 @@ function icms_module_update($dirname) {
 
 		// first delete all config entries
 		$config_handler = icms::handler('icms_config');
-		$configs =& $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
+		$configs = & $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
 		$confcount = count($configs);
 		$config_delng = array();
 		if ($confcount > 0) {
@@ -1321,13 +1318,13 @@ function icms_module_update($dirname) {
 			for ($i = 0; $i < $confcount; $i++) {
 				if (!$config_handler->deleteConfig($configs[$i])) {
 					$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">' . _MD_AM_CONFIGOPTION_DELETE_FAIL . '</span>',
-						'<strong>' . $configs[$i]->getvar('conf_id') . '</strong>');
+						'<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
 					// save the name of config failed to delete for later use
-					$config_delng[] = $configs[$i]->getvar('conf_name');
+					$config_delng[] = $configs[$i]->getVar('conf_name');
 				} else {
-					$config_old[$configs[$i]->getvar('conf_name')]['value'] = $configs[$i]->getvar('conf_value', 'N');
-					$config_old[$configs[$i]->getvar('conf_name')]['formtype'] = $configs[$i]->getvar('conf_formtype');
-					$config_old[$configs[$i]->getvar('conf_name')]['valuetype'] = $configs[$i]->getvar('conf_valuetype');
+					$config_old[$configs[$i]->getVar('conf_name')]['value'] = $configs[$i]->conf_value;
+					$config_old[$configs[$i]->getVar('conf_name')]['formtype'] = $configs[$i]->getVar('conf_formtype');
+					$config_old[$configs[$i]->getVar('conf_name')]['valuetype'] = $configs[$i]->getVar('conf_valuetype');
 					$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_DELETED,
 						'<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
 				}
@@ -1336,9 +1333,9 @@ function icms_module_update($dirname) {
 
 		// now reinsert them with the new settings
 		$configs = $module->getInfo('config');
-		if ($configs !== FALSE) {
+		if ($configs !== false) {
 			if ($module->getVar('hascomments') != 0) {
-				include_once ICMS_INCLUDE_PATH . '/comment_constants.php' ;
+				include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 				array_push($configs, array(
 					'name' => 'com_rule',
 					'title' => '_CM_COMRULES',
@@ -1365,7 +1362,7 @@ function icms_module_update($dirname) {
 			}
 		} else {
 			if ($module->getVar('hascomments') != 0) {
-				include_once ICMS_INCLUDE_PATH . '/comment_constants.php' ;
+				include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 				$configs[] = array(
 					'name' => 'com_rule',
 					'title' => '_CM_COMRULES',
@@ -1418,9 +1415,9 @@ function icms_module_update($dirname) {
 			//  initially is ok, but not when 'update' module..
 			$options = array();
 			$notification_handler = icms::handler('icms_data_notification');
-			$categories =& $notification_handler->categoryInfo('', $module->getVar('mid'));
+			$categories = & $notification_handler->categoryInfo('', $module->getVar('mid'));
 			foreach ($categories as $category) {
-				$events =& $notification_handler->categoryEvents($category['name'], FALSE, $module->getVar('mid'));
+				$events = & $notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
 				foreach ($events as $event) {
 					if (!empty($event['invisible'])) {
 						continue;
@@ -1441,19 +1438,19 @@ function icms_module_update($dirname) {
 			);
 		}
 
-		if ($configs !== FALSE) {
+		if ($configs !== false) {
 			$msgs[] = _MD_AM_CONFIG_ADDING;
 			$config_handler = icms::handler('icms_config');
 			$order = 0;
 			foreach ($configs as $config) {
 				// only insert ones that have been deleted previously with success
 				if (!in_array($config['name'], $config_delng)) {
-					$confobj =& $config_handler->createConfig();
+					$confobj = & $config_handler->createConfig();
 					$confobj->setVar('conf_modid', (int) $newmid);
 					$confobj->setVar('conf_catid', 0);
 					$confobj->setVar('conf_name', $config['name']);
-					$confobj->setVar('conf_title', $config['title'], TRUE);
-					$confobj->setVar('conf_desc', $config['description'], TRUE);
+					$confobj->setVar('conf_title', $config['title'], true);
+					$confobj->setVar('conf_desc', $config['description'], true);
 					$confobj->setVar('conf_formtype', $config['formtype']);
 					$confobj->setVar('conf_valuetype', $config['valuetype']);
 					if (isset($config_old[$config['name']]['value'])
@@ -1464,20 +1461,20 @@ function icms_module_update($dirname) {
 						// form type and value type must be the same
 						// need to deal with arrays, because getInfo('config') doesn't convert arrays
 						if (is_array($config_old[$config['name']]['value'])) {
-							$confobj->setVar('conf_value', serialize($config_old[$config['name']]['value']), TRUE);
+							$confobj->setVar('conf_value', serialize($config_old[$config['name']]['value']), true);
 						} else {
-							$confobj->setVar('conf_value', $config_old[$config['name']]['value'], TRUE);
+							$confobj->setVar('conf_value', $config_old[$config['name']]['value'], true);
 						}
 					} else {
-						$confobj->setConfValueForInput($config['default'], TRUE);
+						$confobj->setConfValueForInput($config['default'], true);
 					}
 					$confobj->setVar('conf_order', $order);
 					$confop_msgs = '';
 					if (isset($config['options']) && is_array($config['options'])) {
 						foreach ($config['options'] as $key => $value) {
-							$confop =& $config_handler->createConfigOption();
-							$confop->setVar('confop_name', $key, TRUE);
-							$confop->setVar('confop_value', $value, TRUE);
+							$confop = & $config_handler->createConfigOption();
+							$confop->setVar('confop_name', $key, true);
+							$confop->setVar('confop_value', $value, true);
 							$confobj->setConfOptions($confop);
 							$confop_msgs .= sprintf('<br />&nbsp;&nbsp;&nbsp;&nbsp;' . _MD_AM_CONFIGOPTION_ADDED,
 								'<strong>' . $key . '</strong>',
@@ -1486,7 +1483,7 @@ function icms_module_update($dirname) {
 						}
 					}
 					$order++;
-					if (FALSE !== $config_handler->insertConfig($confobj)) {
+					if (false !== $config_handler->insertConfig($confobj)) {
 						$msgs[] = sprintf('&nbsp;&nbsp;' . _MD_AM_CONFIG_ADDED, '<strong>' . $config['name'] . '</strong>. ')
 						. $confop_msgs;
 					} else {
@@ -1506,7 +1503,7 @@ function icms_module_update($dirname) {
 			$msgs[] = _MD_AM_AUTOTASK_UPDATE;
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item('sat_type', 'addon/' . $module->getInfo('dirname')));
-			$items_atasks = $atasks_handler->getObjects($criteria, FALSE);
+			$items_atasks = $atasks_handler->getObjects($criteria, false);
 			foreach ($items_atasks as $task) {
 				$taskID = (int) $task->getVar('sat_addon_id');
 				$atasks[$taskID]['enabled'] = $task->getVar('sat_enabled');
@@ -1517,12 +1514,22 @@ function icms_module_update($dirname) {
 			$atasks_handler->deleteAll($criteria);
 			if (is_array($atasks)) {
 				foreach ($atasks as $taskID => $taskData) {
-					if (!isset($taskData['code']) || trim($taskData['code']) == '') continue;
+					if (!isset($taskData['code']) || trim($taskData['code']) == '') {
+						continue;
+					}
 					$task = &$atasks_handler->create();
-					if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
-					if (isset($taskData['repeat'])) $task->setVar('sat_repeat', $taskData['repeat']);
-					if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
-					if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
+					if (isset($taskData['enabled'])) {
+						$task->setVar('sat_enabled', $taskData['enabled']);
+					}
+					if (isset($taskData['repeat'])) {
+						$task->setVar('sat_repeat', $taskData['repeat']);
+					}
+					if (isset($taskData['interval'])) {
+						$task->setVar('sat_interval', $taskData['interval']);
+					}
+					if (isset($taskData['onfinish'])) {
+						$task->setVar('sat_onfinish', $taskData['onfinish']);
+					}
 					$task->setVar('sat_name', $taskData['name']);
 					$task->setVar('sat_code', $taskData['code']);
 					$task->setVar('sat_type', 'addon/' . $module->getInfo('dirname'));
@@ -1541,14 +1548,14 @@ function icms_module_update($dirname) {
 
 		// execute module specific update script if any
 		$update_script = $module->getInfo('onUpdate');
-		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
-		if (FALSE !== $update_script && trim($update_script) != '') {
+		$ModName = ($module->getInfo('modname') != '')? trim($module->getInfo('modname')):$dirname;
+		if (false !== $update_script && trim($update_script) != '') {
 			include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . trim($update_script);
 
 			$is_IPF = $module->getInfo('object_items');
 			if (!empty($is_IPF)) {
 				$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-				$icmsDatabaseUpdater->moduleUpgrade($module, TRUE);
+				$icmsDatabaseUpdater->moduleUpgrade($module, true);
 				array_merge($msgs, $icmsDatabaseUpdater->_messages);
 			}
 

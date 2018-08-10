@@ -66,7 +66,7 @@
  */
 class icms_view_block_Object extends icms_ipf_Object {
 
-        public $visiblein = [];
+		public $visiblein = [];
 
 	/**
 	 * Constructor for the block object
@@ -74,15 +74,15 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 */
 	public function __construct(& $handler, $data = array()) {
 
-		$this->initVar('name', self::DTYPE_STRING, '', FALSE, 150);
-		$this->initVar('bid', self::DTYPE_INTEGER, 0, TRUE, 8);
-		$this->initVar('mid', self::DTYPE_INTEGER, 0, TRUE, 5);
-		$this->initVar('func_num', self::DTYPE_INTEGER, 0, FALSE, 3);
-		$this->initVar('title', self::DTYPE_STRING, '', FALSE, 255);
+		$this->initVar('name', self::DTYPE_STRING, '', false, 150);
+		$this->initVar('bid', self::DTYPE_INTEGER, 0, true, 8);
+		$this->initVar('mid', self::DTYPE_INTEGER, 0, true, 5);
+		$this->initVar('func_num', self::DTYPE_INTEGER, 0, false, 3);
+		$this->initVar('title', self::DTYPE_STRING, '', false, 255);
 		$this->initVar('content', self::DTYPE_STRING);
-		$this->initVar('side', self::DTYPE_INTEGER, 0, TRUE, 1);
-		$this->initVar('weight', self::DTYPE_INTEGER, 0, TRUE, 5);
-		$this->initVar('visible', self::DTYPE_INTEGER, 0, TRUE, 1);
+		$this->initVar('side', self::DTYPE_INTEGER, 0, true, 1);
+		$this->initVar('weight', self::DTYPE_INTEGER, 0, true, 5);
+		$this->initVar('visible', self::DTYPE_INTEGER, 0, true, 1);
 		/**
 		 * @var string $block_type Holds the type of block
 		 * 	S - System block
@@ -90,7 +90,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	C - Custom block (legacy type 'E')
 		 * 	K - block cloned from another block (legacy type 'D')
 		 */
-		$this->initVar('block_type', self::DTYPE_STRING, '', TRUE, 1);
+		$this->initVar('block_type', self::DTYPE_STRING, '', true, 1);
 		/**
 		 * @var	string	$c_type	The type of content in the block
 		 * 	H - HTML
@@ -98,55 +98,55 @@ class icms_view_block_Object extends icms_ipf_Object {
 		 * 	S - Auto Format (smilies and HTML enabled)
 		 *  T - Auto Format (smilies and HTML disabled)
 		 */
-		$this->initVar('c_type', self::DTYPE_STRING, 'S', TRUE, 1);
-		$this->initVar('isactive', self::DTYPE_INTEGER, 0, FALSE, 1);
-		$this->initVar('dirname', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('func_file', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('show_func', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('edit_func', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('template', self::DTYPE_STRING, '', FALSE, 50);
-		$this->initVar('bcachetime', self::DTYPE_INTEGER, 0, FALSE, 10);
-		$this->initVar('last_modified', self::DTYPE_INTEGER, 0, FALSE, 10);
-		$this->initVar('options', self::DTYPE_STRING, '', FALSE, 255);
+		$this->initVar('c_type', self::DTYPE_STRING, 'S', true, 1);
+		$this->initVar('isactive', self::DTYPE_INTEGER, 0, false, 1);
+		$this->initVar('dirname', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('func_file', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('show_func', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('edit_func', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('template', self::DTYPE_STRING, '', false, 50);
+		$this->initVar('bcachetime', self::DTYPE_INTEGER, 0, false, 10);
+		$this->initVar('last_modified', self::DTYPE_INTEGER, 0, false, 10);
+		$this->initVar('options', self::DTYPE_STRING, '', false, 255);
 
-      //  $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
-                parent::__construct($handler, $data);
+	  //  $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
+				parent::__construct($handler, $data);
 
 	}
 
-        /**
-        * gets var
-         *
-        * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
-         *
-        * @param string $name
-        * @param string $format
-        * @return mixed
-        */
-        public function getVar($name, $format = 's') {
-            if ($name == 'visiblein') {
-                return $this->visiblein;
-            } else {
-                return parent::getVar($name, $format);
-            }
-        }
+		/**
+		 * gets var
+		 *
+		 * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+		 *
+		 * @param string $name
+		 * @param string $format
+		 * @return mixed
+		 */
+		public function getVar($name, $format = 's') {
+			if ($name == 'visiblein') {
+				return $this->visiblein;
+			} else {
+				return parent::getVar($name, $format);
+			}
+		}
 
-        /**
-        * sets var
-         *
-        * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
-         *
-        * @param string $name
-        * @param string $format
-        * @return mixed
-        */
-        public function setVar($name, $value, $options = null) {
-            if ($name == 'visiblein') {
-                $this->visiblein = $value;
-            } else {
-                parent::setVar($name, $value, $options);
-            }
-        }
+		/**
+		 * sets var
+		 *
+		 * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+		 *
+		 * @param string $name
+		 * @param string $format
+		 * @return mixed
+		 */
+		public function setVar($name, $value, $options = null) {
+			if ($name == 'visiblein') {
+				$this->visiblein = $value;
+			} else {
+				parent::setVar($name, $value, $options);
+			}
+		}
 
 	// The next Methods are for backward Compatibility
 
@@ -154,24 +154,24 @@ class icms_view_block_Object extends icms_ipf_Object {
 		switch ($format) {
 			case 'S':
 				if ($c_type == 'H') {
-                    $content = $this->getVar('content', 'n');
-                    $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-                    $content = str_replace(getenv('DB_SALT'), '', $content);
+					$content = $this->content;
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+					$content = str_replace(getenv('DB_SALT'), '', $content);
 					return $content;
 				} elseif ($c_type == 'P') {
 					ob_start();
 					echo eval(icms_core_DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
 					$content = ob_get_contents();
 					ob_end_clean();
-                    $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-                    $content = str_replace(getenv('DB_SALT'), '', $content);
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+					$content = str_replace(getenv('DB_SALT'), '', $content);
 					return $content;
 				} elseif ($c_type == 'S') {
 					$myts = icms_core_Textsanitizer::getInstance();
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
 					return $myts->displayTarea($content, 1, 1);
 				} else {
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
 					return icms_core_DataFilter::checkVar($content, 'text', 'output');
 				}
 				break;
@@ -181,7 +181,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 				break;
 
 			default:
-				return $this->getVar('content', 'n');
+				return $this->content;
 				break;
 		}
 	}
@@ -195,18 +195,18 @@ class icms_view_block_Object extends icms_ipf_Object {
 		if ($this->getVar('block_type') != 'C') {
 			$edit_func = $this->getVar('edit_func');
 			if (!$edit_func) {
-				return FALSE;
+				return false;
 			}
 			icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
 			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file');
 			$options = explode('|', $this->getVar('options'));
 			$edit_form = $edit_func($options);
 			if (!$edit_form) {
-				return FALSE;
+				return false;
 			}
 			return $edit_form;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -218,9 +218,9 @@ class icms_view_block_Object extends icms_ipf_Object {
 	 */
 	public function isCustom() {
 		if ($this->getVar("block_type") == "C" || $this->getVar("block_type") == "E") {
-			return TRUE;
+			return true;
 		}
-		return FALSE;
+		return false;
 	}
 
 	/**
@@ -238,28 +238,28 @@ class icms_view_block_Object extends icms_ipf_Object {
 			// it is a custom block, so just return the contents
 			$block['content'] = $this->getContent("S", $this->getVar("c_type"));
 			if (empty($block['content'])) {
-				return FALSE;
+				return false;
 			}
 		} else {
 			// get block display function
 			$show_func = $this->getVar('show_func');
 			if (!$show_func) {
-				return FALSE;
+				return false;
 			}
 			// Must get lang files before execution of the function.
 			if (!file_exists(ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file'))) {
-				return FALSE;
+				return false;
 			} else {
 				icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
 				include_once ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file');
 				$options = explode("|", $this->getVar("options"));
 				if (!function_exists($show_func)) {
-					return FALSE;
+					return false;
 				} else {
 					// execute the function
 					$block = $show_func($options);
 					if (!$block) {
-						return FALSE;
+						return false;
 					}
 				}
 			}

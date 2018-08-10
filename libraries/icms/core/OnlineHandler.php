@@ -58,7 +58,7 @@ class icms_core_OnlineHandler {
 	 * @param	object  &$db    {@link XoopsHandlerFactory}
 	 */
 	public function __construct(&$db) {
-		$this->db =& $db;
+		$this->db = & $db;
 	}
 
 	/**

@@ -22,10 +22,9 @@ class IcmsPreloadAutotasks extends icms_preload_Item {
 	function eventFinishCoreBoot() {
 		$handler = &icms_getModuleHandler('autotasks', 'system');
 		if ($handler->needExecution()) {
-			$rez = $handler->execTasks();
+			$handler->execTasks();
 			$handler->startIfNeeded();
 			if ($handler->needExit()) {
-				var_dump($rez);
 				exit(0);
 			}
 		}
@@ -37,7 +36,9 @@ class IcmsPreloadAutotasks extends icms_preload_Item {
 	 * @param array config array
 	 */
 	function eventAfterSaveSystemAdminPreferencesItems($array) {
-		if (!isset($array[\icms_config_Handler::CATEGORY_AUTOTASKS])) return;
+		if (!isset($array[\icms_config_Handler::CATEGORY_AUTOTASKS])) {
+			return;
+		}
 		$handler = icms_getModuleHandler('autotasks', 'system');
 		$handler->virtual_config = array();
 		$array = &$array[\icms_config_Handler::CATEGORY_AUTOTASKS];

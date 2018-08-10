@@ -88,7 +88,7 @@ abstract class icms_file_DownloadHandler {
 	 * @param   string    $filepath
 	 * @param   string    $newfilename
 	 */
-	abstract function addFile($filepath, $newfilename = NULL);
+	abstract function addFile($filepath, $newfilename = null);
 
 	/**
 	 * addBinaryFile()
@@ -96,7 +96,7 @@ abstract class icms_file_DownloadHandler {
 	 * @param   string    $filepath
 	 * @param   string    $newfilename
 	 */
-	abstract function addBinaryFile($filepath, $newfilename = NULL);
+	abstract function addBinaryFile($filepath, $newfilename = null);
 
 	/**
 	 * addFileData()

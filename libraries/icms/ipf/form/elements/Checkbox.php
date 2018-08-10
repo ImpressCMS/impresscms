@@ -20,7 +20,7 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 	public function __construct($object, $key) {
 
 		$control = $object->getControl($key);
-		if(isset($control['delimeter'])) {
+		if (isset($control['delimeter'])) {
 			$this->_delimeter = $control['delimeter'];
 		}
 
@@ -44,16 +44,16 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 						// Creating the specified core object handler
 						$control_handler = icms::handler($control['itemHandler']);
 					} else {
-						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
+						$control_handler = & icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}
 				} else {
-					$control_handler =& $object->handler;
+					$control_handler = & $object->handler;
 				}
 
 				// Checking if the specified method exists
 				if (method_exists($control_handler, $control['method'])) {
 					$option_array = call_user_func_array(array($control_handler, $control['method']),
-						isset($control['params']) ? $control['params'] : array());
+						isset($control['params'])?$control['params']:array());
 					if (is_array($option_array) && count($option_array) > 0) {
 						// Adding the options array to the select element
 						$this->addOptionArray($option_array);
@@ -89,7 +89,7 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 		}
 		if (count($ele_options) > 1) {
 			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
-				. $ele_name	. "_checkemall' class='checkemall' /><label for='"
+				. $ele_name . "_checkemall' class='checkemall' /><label for='"
 				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
 		}
 		$ret .= "</div>";
@@ -104,9 +104,11 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 		$js = "";
 		$js .= "var hasSelections = false;";
 		$eltname = $this->getName();
-		$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+		$eltmsg = empty($eltcaption)? sprintf(_FORM_ENTER, $eltname):sprintf(_FORM_ENTER, $eltcaption);
 		$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
-		if (strpos($eltname, '[') === false) $eltname = $eltname . "[]";
+		if (strpos($eltname, '[') === false) {
+			$eltname = $eltname . "[]";
+		}
 		$js .=
 		"for (var i = 0; i < myform['" . $eltname . "'].length; i++) {
 			if (myform['" . $eltname . "'][i].checked) {

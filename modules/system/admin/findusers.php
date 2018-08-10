@@ -50,12 +50,12 @@ $filter_post = array();
 $filter_get = array();
 
 if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
-    extract($clean_POST);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
 }
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
-    extract($clean_GET);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
 }
 
 $op = (isset($_GET['op']))
@@ -70,7 +70,7 @@ if ($op == "form") {
 	$member_handler = icms::handler('icms_member');
 	$acttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_db_criteria_Item('level', 0, '>')));
 	$inacttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_db_criteria_Item('level', 0)));
-	$group_select = new icms_form_elements_select_Group(_AM_GROUPS, "selgroups", NULL, FALSE, 5, TRUE);
+	$group_select = new icms_form_elements_select_Group(_AM_GROUPS, "selgroups", null, false, 5, true);
 	$uname_text = new icms_form_elements_Text("", "user_uname", 30, 60);
 	$uname_match = new icms_form_elements_select_Matchoption("", "user_uname_match");
 	$uname_tray = new icms_form_elements_Tray(_AM_UNAME, "&nbsp;");
@@ -138,7 +138,7 @@ if ($op == "form") {
 	$op_hidden = new icms_form_elements_Hidden("op", "submit");
 	$submit_button = new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit");
 
-	$form = new icms_form_Theme(_AM_FINDUS, "uesr_findform", "admin.php", 'post', TRUE);
+	$form = new icms_form_Theme(_AM_FINDUS, "uesr_findform", "admin.php", 'post', true);
 	$form->addElement($uname_tray);
 	$form->addElement($name_tray);
 	$form->addElement($login_name_tray);
@@ -180,7 +180,7 @@ if ($op == "form") {
 } elseif ($op == "submit" & icms::$security->check()) {
 	$criteria = new icms_db_criteria_Compo();
 	if (!empty($user_uname)) {
-		$match = (!empty($user_uname_match)) ? (int) $user_uname_match : XOOPS_MATCH_START;
+		$match = (!empty($user_uname_match))?(int) $user_uname_match:XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('uname', icms_core_DataFilter::addSlashes(trim($user_uname)) . '%', 'LIKE'));
@@ -203,7 +203,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($user_name)) {
-		$match = (!empty($user_name_match)) ? (int) $user_name_match : XOOPS_MATCH_START;
+		$match = (!empty($user_name_match))?(int) $user_name_match:XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('name', icms_core_DataFilter::addSlashes(trim($user_name)) . '%', 'LIKE'));
@@ -226,7 +226,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($user_login_name)) {
-		$match = (!empty($user_login_name_match)) ? (int) $user_login_name_match : XOOPS_MATCH_START;
+		$match = (!empty($user_login_name_match))?(int) $user_login_name_match:XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('login_name', icms_core_DataFilter::addSlashes(trim($user_login_name)) . '%', 'LIKE'));
@@ -249,7 +249,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($user_email)) {
-		$match = (!empty($user_email_match)) ? (int) $user_email_match : XOOPS_MATCH_START;
+		$match = (!empty($user_email_match))?(int) $user_email_match:XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('email', icms_core_DataFilter::addSlashes(trim($user_email)) . '%', 'LIKE'));
@@ -276,7 +276,7 @@ if ($op == "form") {
 		$criteria->add(new icms_db_criteria_Item('url', $url . '%', 'LIKE'));
 	}
 	if (!empty($user_icq)) {
-		$match = (!empty($user_icq_match)) ? (int) $user_icq_match : XOOPS_MATCH_START;
+		$match = (!empty($user_icq_match))?(int) $user_icq_match:XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_icq', icms_core_DataFilter::addSlashes(trim($user_icq)) . '%', 'LIKE'));
@@ -299,7 +299,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($user_aim)) {
-		$match = (!empty($user_aim_match)) ? (int) $user_aim_match : XOOPS_MATCH_START;
+		$match = (!empty($user_aim_match))?(int) $user_aim_match:XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_aim', icms_core_DataFilter::addSlashes(trim($user_aim)) . '%', 'LIKE'));
@@ -322,7 +322,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($user_yim)) {
-		$match = (!empty($user_yim_match)) ? (int) $user_yim_match : XOOPS_MATCH_START;
+		$match = (!empty($user_yim_match))?(int) $user_yim_match:XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_yim', icms_core_DataFilter::addSlashes(trim($user_yim)) . '%', 'LIKE'));
@@ -345,7 +345,7 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($user_msnm)) {
-		$match = (!empty($user_msnm_match)) ? (int) $user_msnm_match : XOOPS_MATCH_START;
+		$match = (!empty($user_msnm_match))?(int) $user_msnm_match:XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new icms_db_criteria_Item('user_msnm', icms_core_DataFilter::addSlashes(trim($user_msnm)) . '%', 'LIKE'));
@@ -429,18 +429,18 @@ if ($op == "form") {
 			$criteria->add(new icms_db_criteria_Item('level', 0, '>='));
 		}
 	}
-	$groups = empty($selgroups) ? array() : array_map('intval', $selgroups);
+	$groups = empty($selgroups)?array():array_map('intval', $selgroups);
 	$validsort = array("uname", "login_name", "email", "last_login", "user_regdate", "posts");
-	$sort = (!in_array($user_sort, $validsort)) ? "uname" : $user_sort;
+	$sort = (!in_array($user_sort, $validsort))?"uname":$user_sort;
 	$order = "ASC";
 	if (isset($user_order) && $user_order == "DESC") {
 		$order = "DESC";
 	}
-	$limit = (!empty($limit)) ? (int) $limit : 50;
+	$limit = (!empty($limit))?(int) $limit:50;
 	if ($limit == 0 || $limit > 50) {
 		$limit = 50;
 	}
-	$start = (!empty($start)) ? (int) $start : 0;
+	$start = (!empty($start))?(int) $start:0;
 	$member_handler = icms::handler('icms_member');
 	$total = $member_handler->getUserCountByGroupLink($groups, $criteria);
 	if ($total == 0) {
@@ -451,19 +451,19 @@ if ($op == "form") {
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
 		$criteria->setStart($start);
-		$foundusers = $member_handler->getUsersByGroupLink($groups, $criteria, TRUE);
+		$foundusers = $member_handler->getUsersByGroupLink($groups, $criteria, true);
 		$ucount = 0;
 		foreach (array_keys($foundusers) as $j) {
 			$ucount++;
-			$fuser_avatar = $foundusers[$j]->getVar("user_avatar") ? "<img src='" . ICMS_UPLOAD_URL . "/"
-				. $foundusers[$j]->getVar("user_avatar") . "' alt='' />" : "&nbsp;";
-			$fuser_name = $foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
-			$users[$j]['uid'] = 	$foundusers[$j]->getVar("uid");
-			$users[$j]['email'] = 	$foundusers[$j]->getVar("email");
-			$users[$j]['uname'] = 	$foundusers[$j]->getVar("uname");
+			$fuser_avatar = $foundusers[$j]->getVar("user_avatar")?"<img src='" . ICMS_UPLOAD_URL . "/"
+				. $foundusers[$j]->getVar("user_avatar") . "' alt='' />":"&nbsp;";
+			$fuser_name = $foundusers[$j]->getVar("name")?$foundusers[$j]->getVar("name"):"&nbsp;";
+			$users[$j]['uid'] = $foundusers[$j]->getVar("uid");
+			$users[$j]['email'] = $foundusers[$j]->getVar("email");
+			$users[$j]['uname'] = $foundusers[$j]->getVar("uname");
 			$users[$j]['uname_e'] = $foundusers[$j]->getVar("uname", "E");
-			$users[$j]['name'] = 	$foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
-			$users[$j]['login_name'] = 	$foundusers[$j]->getVar("login_name");
+			$users[$j]['name'] = $foundusers[$j]->getVar("name")?$foundusers[$j]->getVar("name"):"&nbsp;";
+			$users[$j]['login_name'] = $foundusers[$j]->getVar("login_name");
 			$users[$j]['user_avatar'] = $fuser_avatar;
 			$users[$j]['user_regdate'] = formatTimeStamp($foundusers[$j]->getVar("user_regdate"), "s");
 			$users[$j]['url'] = $foundusers[$j]->getVar("url", "E");
@@ -473,11 +473,11 @@ if ($op == "form") {
 			$icmsAdminTpl->assign("users", $users);
 		}
 
-		$group = !empty($group) ? (int) $group : 0;
+		$group = !empty($group)?(int) $group:0;
 		$icmsAdminTpl->assign("groupvalue", $group);
 		if ($group > 0) {
 			$member_handler = icms::handler('icms_member');
-			$add2group =& $member_handler->getGroup($group);
+			$add2group = & $member_handler->getGroup($group);
 			$icmsAdminTpl->assign("groupvalue_name", sprintf(_AM_ADD2GROUP, $add2group->getVar('name')));
 		}
 
@@ -512,16 +512,16 @@ if ($op == "form") {
 			}
 
 			$counter = 1;
-			$currentpage = ($start+$limit) / $limit;
+			$currentpage = ($start + $limit) / $limit;
 			while ($counter <= $totalpages) {
 				if ($counter == $currentpage) {
 					$hiddenform .= "<strong>" . $counter . "</strong> ";
-				} elseif (($counter > $currentpage-4 && $counter < $currentpage+4) || $counter == 1 || $counter == $totalpages) {
-					if ($counter == $totalpages && $currentpage < $totalpages-4) {
+				} elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1 || $counter == $totalpages) {
+					if ($counter == $totalpages && $currentpage < $totalpages - 4) {
 						$hiddenform .= "... ";
 					}
 
-					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter-1)*$limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 					if ($counter == 1 && $currentpage > 5) {
 						$hiddenform .= "... ";
 					}
@@ -531,7 +531,7 @@ if ($op == "form") {
 				$counter++;
 			}
 
-			$next = $start+$limit;
+			$next = $start + $limit;
 			if ($total > $next) {
 				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _AM_NEXT . "</a>\n";
 			}

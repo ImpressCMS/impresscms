@@ -42,20 +42,22 @@ class icms_core_Filesystem {
 	 */
 	static public function mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = array()) {
 
-		if (is_dir($target)) return TRUE;
+		if (is_dir($target)) {
+			return true;
+		}
 		if (!isset($metachars)) {
 			$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':');
 		}
 
-		$base = preg_replace ('/[\\|\/]/', DIRECTORY_SEPARATOR, $base);
-		$target = preg_replace ('/[\\|\/]/', DIRECTORY_SEPARATOR, $target);
+		$base = preg_replace('/[\\|\/]/', DIRECTORY_SEPARATOR, $base);
+		$target = preg_replace('/[\\|\/]/', DIRECTORY_SEPARATOR, $target);
 		if ($base !== '') {
 			$target = str_ireplace($base . DIRECTORY_SEPARATOR, '', $target);
-			$target = $base . DIRECTORY_SEPARATOR . str_replace($metachars , '_', $target);
+			$target = $base . DIRECTORY_SEPARATOR . str_replace($metachars, '_', $target);
 		} else {
-			$target = str_replace($metachars , '_', $target);
+			$target = str_replace($metachars, '_', $target);
 		}
-		if (mkdir($target, $mode, TRUE)) {
+		if (mkdir($target, $mode, true)) {
 			// create an index.html file in this directory
 			if ($fh = @fopen($target . '/index.html', 'w')) {
 				fwrite($fh, '<script>history.go(-1);</script>');
@@ -81,13 +83,13 @@ class icms_core_Filesystem {
 	 * @param	string	$dir	The folder path to cleaned. Must be an array like: array('cache' => ICMS_CACHE_PATH . "/");
 	 * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
 	 */
-	static public function cleanFolders($dir, $remove_admin_cache = FALSE) {
+	static public function cleanFolders($dir, $remove_admin_cache = false) {
 		global $icmsConfig;
 		foreach ($dir as $d) {
 			$dd = opendir($d);
 			while ($file = readdir($dd)) {
 				$files_array = $remove_admin_cache
-					? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
+					?($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
 						&& $file != '.gitignore')
 					: ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
 						&& $file != '.gitignore' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
@@ -127,7 +129,7 @@ class icms_core_Filesystem {
 	 */
 	static public function copyRecursive($source, $dest) {
 		// Simple copy for a file
-		if (is_file($source)) {return copy($source, $dest);}
+		if (is_file($source)) {return copy($source, $dest); }
 
 		// Make destination directory
 		if (!is_dir($dest)) {
@@ -138,7 +140,7 @@ class icms_core_Filesystem {
 		$dir = dir($source);
 		while (false !== $entry = $dir->read()) {
 			// Skip pointers
-			if ($entry == '.' || $entry == '..') {continue;}
+			if ($entry == '.' || $entry == '..') {continue; }
 			// Deep copy directories
 			if (is_dir("$source/$entry") && ($dest !== "$source/$entry")) {
 				self::copyRecursive("$source/$entry", "$dest/$entry");
@@ -160,13 +162,15 @@ class icms_core_Filesystem {
 	 * @return	bool TRUE if the file is deleted or doesn't exist; FALSE otherwise
 	 */
 	static public function deleteFile($dirname) {
-		$success = FALSE;
+		$success = false;
 
 		if (is_file($dirname)) {
-			if (!is_writable($dirname)) chmod($dirname, 0777);
+			if (!is_writable($dirname)) {
+				chmod($dirname, 0777);
+			}
 			$success = unlink($dirname);
 		} else {
-			$success = TRUE;
+			$success = true;
 		}
 		return $success;
 	}
@@ -203,15 +207,19 @@ class icms_core_Filesystem {
 	 * @param	bool 	$deleteRootToo Delete specified top-level directory as well
 	 * @return	bool	TRUE if directory is removed or doesn't exist; FALSE otherwise
 	 */
-	static public function deleteRecursive($dir, $deleteRootToo= TRUE) {
-		$success = FALSE;
-		if (!is_dir($dir)) return TRUE;
+	static public function deleteRecursive($dir, $deleteRootToo = true) {
+		$success = false;
+		if (!is_dir($dir)) {
+			return true;
+		}
 		$iterator = new RecursiveIteratorIterator(
 			new RecursiveDirectoryIterator($dir),
 			RecursiveIteratorIterator::CHILD_FIRST
 		);
 		foreach ($iterator as $path) {
-			if (!$path->isWritable()) chmod($path->__toString(), 0777);
+			if (!$path->isWritable()) {
+				chmod($path->__toString(), 0777);
+			}
 			if ($path->isDir()) {
 				$success = rmdir($path->__toString());
 			} else {
@@ -220,7 +228,9 @@ class icms_core_Filesystem {
 		}
 		unset($iterator);
 
-		if ($deleteRootToo) $success = rmdir($dir);
+		if ($deleteRootToo) {
+			$success = rmdir($dir);
+		}
 
 		return $success;
 	}
@@ -237,16 +247,16 @@ class icms_core_Filesystem {
 		if (empty($path)) {
 			return false;
 		}
-		$path = substr($path, -1) == "/" ? substr($path, 0, -1) : $path;
+		$path = substr($path, -1) == "/"? substr($path, 0, -1):$path;
 		$filename = $path . '/index.html';
 		if (file_exists($filename)) {
 			return true;
 		}
-		if (! $file = fopen($filename, "w")) {
+		if (!$file = fopen($filename, "w")) {
 			echo 'failed open file';
 			return false;
 		}
-		if (fwrite($file, "<script>history.go(-1);</script>") == FALSE) {
+		if (fwrite($file, "<script>history.go(-1);</script>") == false) {
 			echo 'failed write file';
 			return false;
 		}
@@ -274,8 +284,8 @@ class icms_core_Filesystem {
 			/* exclude cache and templates directories */
 			if ($itemPath != $cache_dir) {
 				$fileHash = sha1_file($name);
-				echo _CORE_CHECKSUM_ADDING . ': ' . $name . _CORE_CHECKSUM_CHECKSUM . ' : <em>'. $fileHash .'</em>, ' ._CORE_CHECKSUM_PERMISSIONS .' : '. $itemPerms . '<br />';
-				$file->fwrite($newline . $name . ';' .$fileHash . ';' . $itemPerms);
+				echo _CORE_CHECKSUM_ADDING . ': ' . $name . _CORE_CHECKSUM_CHECKSUM . ' : <em>' . $fileHash . '</em>, ' . _CORE_CHECKSUM_PERMISSIONS . ' : ' . $itemPerms . '<br />';
+				$file->fwrite($newline . $name . ';' . $fileHash . ';' . $itemPerms);
 			}
 			$newline = "\n";
 		}
@@ -314,7 +324,7 @@ class icms_core_Filesystem {
 			}
 			echo _CORE_CHECKSUM_CHECKFILE . $checkfile . '<br />';
 			$validHash = $validPerms = array();
-			while (! $validationFile->eof()) {
+			while (!$validationFile->eof()) {
 				list($filename, $checksum, $filePermissions) = $validationFile->fgetcsv(';');
 				$validHash[$filename] = $checksum;
 				$validPerms[$filename] = $filePermissions;
@@ -323,7 +333,7 @@ class icms_core_Filesystem {
 			$addedFiles = array_diff_key($currentHash, $validHash);
 			$missingFiles = array_diff_key($validHash, $currentHash);
 			$permVariations = array_diff_assoc($validPerms, $currentPerms); // changed permissions or removed files
-			echo '<br /><strong>'. count($hashVariations) .  _CORE_CHECKSUM_ALTERED_REMOVED . '</strong><br />';
+			echo '<br /><strong>' . count($hashVariations) . _CORE_CHECKSUM_ALTERED_REMOVED . '</strong><br />';
 			foreach ($hashVariations as $file=>$check) {
 				echo $file . '<br />';
 			}
@@ -356,10 +366,10 @@ class icms_core_Filesystem {
 	 * @param	boolean	$hideDot	Hide folders starting with a dot?
 	 * @return	array An array of directory names
 	 */
-	static public function getDirList($dirname, array $ignore = array('cvs', '_darcs', '.svn'), $hideDot = TRUE) {
+	static public function getDirList($dirname, array $ignore = array('cvs', '_darcs', '.svn'), $hideDot = true) {
 		$dirList = array();
 		$iterator = new DirectoryIterator($dirname);
-		while($iterator->valid()) {
+		while ($iterator->valid()) {
 			if ($iterator->isDir() && !$iterator->isDot()) {
 				$filename = $iterator->getFilename();
 				if (!$hideDot || substr($filename, 0, 1) != '.') {
@@ -387,8 +397,10 @@ class icms_core_Filesystem {
 	 * @param	bool	$hideDot	Hide files starting with a dot?
 	 * @return	array	$fileList	A list of files in a directory
 	 */
-	static public function getFileList($dirname, $prefix = '', array $extension = array(), $hideDot = FALSE) {
-		if (!is_dir($dirname)) return array();
+	static public function getFileList($dirname, $prefix = '', array $extension = array(), $hideDot = false) {
+		if (!is_dir($dirname)) {
+			return array();
+		}
 		$fileList = array();
 		if (empty($extension)) {
 			$extList = '';
@@ -428,19 +440,23 @@ class icms_core_Filesystem {
 	 * @param	boolean	$overwrite	If TRUE, overwrite any existing file. If FALSE, append to any existing file
 	 * @return	boolean				TRUE, if the operation was successful, FALSE if it fails
 	 */
-	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_ROOT_PATH, $overwrite = TRUE) {
-		if ($extension == '') $extension = 'php';
-		if (DIRECTORY_SEPARATOR !== "/") $location = str_replace(DIRECTORY_SEPARATOR, "/", $location);
+	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_ROOT_PATH, $overwrite = true) {
+		if ($extension == '') {
+			$extension = 'php';
+		}
+		if (DIRECTORY_SEPARATOR !== "/") {
+			$location = str_replace(DIRECTORY_SEPARATOR, "/", $location);
+		}
 		$file = $location . '/' . $filename . '.' . $extension;
-		$mode = $overwrite ? "wb" : "ab";
+		$mode = $overwrite?"wb":"ab";
 		if ($fp = fopen($file, $mode)) {
-			if (fwrite($fp, $contents) == FALSE) {
+			if (fwrite($fp, $contents) == false) {
 				echo 'failed write file';
-				return FALSE;
+				return false;
 			}
 			fclose($fp);
 		}
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -454,8 +470,8 @@ class icms_core_Filesystem {
 	 * @param	string	$location	Path of the output file
 	 * @return	mixed				Full path and name of the file created, if successful. FALSE if the write operation fails
 	 */
-	static public function combineFiles(array $files, $type, $minimize = FALSE, $replace = FALSE, $maxage = 0, $location = ICMS_CACHE_PATH) {
-		$expired = FALSE;
+	static public function combineFiles(array $files, $type, $minimize = false, $replace = false, $maxage = 0, $location = ICMS_CACHE_PATH) {
+		$expired = false;
 
 		/* generate a unique filename based on all the files included and the order they're added
 		 * remove site specific path information and directory separators, full paths are still needed
@@ -493,13 +509,15 @@ class icms_core_Filesystem {
 						$overwrite
 				);
 				fclose($handle);
-				if ($success === FALSE) return FALSE;
-				$overwrite = FALSE;
+				if ($success === false) {
+					return false;
+				}
+				$overwrite = false;
 			}
 		}
 		$filepath = $combinedFile;
 
-		$minFile = $location . "/" . $filename . "-min". "." . $type;
+		$minFile = $location . "/" . $filename . "-min" . "." . $type;
 		$minFileExists = file_exists($minFile);
 		if ($minFileExists && $maxage !== 0) {
 			$expired = (time() - filectime($minFile)) > $maxage;
@@ -510,8 +528,8 @@ class icms_core_Filesystem {
 			$file_contents = fread($handle, filesize($combinedFile));
 			/* @todo this could be more sophisticated for minifying */
 			$min_contents = preg_replace(
-				array( "/\t/", "/(\s)+/",),
-				array( " ", "\\1",),
+				array("/\t/", "/(\s)+/",),
+				array(" ", "\\1",),
 				$file_contents
 			);
 			$success = self::writeFile(
@@ -519,10 +537,12 @@ class icms_core_Filesystem {
 					$filename . "-min",
 					$type,
 					$location,
-					TRUE
+					true
 			);
 			fclose($handle);
-			if ($success === FALSE) return FALSE;
+			if ($success === false) {
+				return false;
+			}
 			$filepath = $minFile;
 		}
 
@@ -541,9 +561,15 @@ class icms_core_Filesystem {
 	 * @param	bool	$overwrite	If TRUE, overwrite an existing file with the same name
 	 */
 	static public function rename($oldname, $newname, $overwrite) {
-		if ($oldname == $newname) return TRUE;
-		if (file_exists($newname) && !$overwrite) return FALSE;
-		if (empty($newname)) return FALSE;
+		if ($oldname == $newname) {
+			return true;
+		}
+		if (file_exists($newname) && !$overwrite) {
+			return false;
+		}
+		if (empty($newname)) {
+			return false;
+		}
 
 		$success = rename($oldname, $newname);
 		return $success;

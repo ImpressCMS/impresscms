@@ -9,11 +9,11 @@
  * @package		cpanel
  */
 
-$icmsTpl->assign("cpanel_adminpage", "<a href='" . ICMS_MODULES_URL . "/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_CPANEL_ADMIN_PAGE . "</a>");
+$icmsTpl->assign("cpanel_adminpage", "<a href='" . ICMS_MODULES_URL . "/" . icms::$module->getVar("dirname") . "/admin/index.php'>" . _MD_CPANEL_ADMIN_PAGE . "</a>");
 $icmsTpl->assign("cpanel_is_admin", icms_userIsAdmin(CPANEL_DIRNAME));
 $icmsTpl->assign('cpanel_url', CPANEL_URL);
 $icmsTpl->assign('cpanel_images_url', CPANEL_IMAGES_URL);
 
-$xoTheme->addStylesheet(CPANEL_URL . 'module' . ((defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? '_rtl' : '') . '.css');
+$xoTheme->addStylesheet(CPANEL_URL . 'module' . ((defined("_ADM_USE_RTL") && _ADM_USE_RTL)?'_rtl':'') . '.css');
 
 include_once ICMS_ROOT_PATH . '/footer.php';

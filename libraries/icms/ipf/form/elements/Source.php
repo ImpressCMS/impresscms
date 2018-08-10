@@ -30,10 +30,10 @@ class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
 		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
 			array('name' => $key,
 				'value' => $object->getVar($key, 'e'),
-				'language' => isset($control['language']) ? $control['language'] : _LANGCODE,
-				'width' => isset($control['width']) ? $control['width'] : '100%',
-				'height' => isset($control['height']) ? $control['height'] : '400px',
-				'syntax' => isset($control['syntax']) ? $control['syntax'] : 'php'));
+				'language' => isset($control['language'])?$control['language']:_LANGCODE,
+				'width' => isset($control['width'])?$control['width']:'100%',
+				'height' => isset($control['height'])?$control['height']:'400px',
+				'syntax' => isset($control['syntax'])?$control['syntax']:'php'));
 	}
 
 	/**

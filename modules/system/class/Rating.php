@@ -10,9 +10,9 @@
 
 /**
  * Rating object
- * 
+ *
  * @package     ImpressCMS\Modules\System\Class\Rating
- * 
+ *
  * @property int    $ratingid   Rating ID
  * @property string $dirname    Module dirname
  * @property string $item       Item type
@@ -20,34 +20,34 @@
  * @property int    $uid        User ID
  * @property int    $date       Date
  * @property int    $rate       Rate
- * 
+ *
  * @property string $name       Name
  */
 class mod_system_Rating extends icms_ipf_Object {
 
 	/** */
-	public $_modulePlugin = FALSE;
+	public $_modulePlugin = false;
 
 	/**
 	 * Constructor for the ratings object
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
-                $this->initVar('ratingid', self::DTYPE_INTEGER, 0, true);
-                $this->initVar('dirname', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_RATING_DIRNAME);
-                $this->initVar('item', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_RATING_ITEM);
-                $this->initVar('itemid', self::DTYPE_INTEGER, 0, true, null, null, null, _CO_ICMS_RATING_ITEMID);
-                $this->initVar('uid', self::DTYPE_INTEGER, 0, true, null, null, null, _CO_ICMS_RATING_UID);
-                $this->initVar('date', self::DTYPE_DATETIME, 0, true, null, null, null, _CO_ICMS_RATING_DATE);
-                $this->initVar('rate', self::DTYPE_INTEGER, 0, true, null, null, null, _CO_ICMS_RATING_RATE);
+				$this->initVar('ratingid', self::DTYPE_INTEGER, 0, true);
+				$this->initVar('dirname', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_RATING_DIRNAME);
+				$this->initVar('item', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_RATING_ITEM);
+				$this->initVar('itemid', self::DTYPE_INTEGER, 0, true, null, null, null, _CO_ICMS_RATING_ITEMID);
+				$this->initVar('uid', self::DTYPE_INTEGER, 0, true, null, null, null, _CO_ICMS_RATING_UID);
+				$this->initVar('date', self::DTYPE_DATETIME, 0, true, null, null, null, _CO_ICMS_RATING_DATE);
+				$this->initVar('rate', self::DTYPE_INTEGER, 0, true, null, null, null, _CO_ICMS_RATING_RATE);
 
 		$this->initNonPersistableVar('name', self::DTYPE_STRING, 'user', _CO_ICMS_RATING_NAME);
 		$this->setControl('dirname', array('method' => 'getModuleList', 'onSelect' => 'submit'));
 		$this->setControl('item', array('object' => &$this, 'method' => 'getItemList'));
 		$this->setControl('uid', 'user');
 		$this->setControl('rate', array('method' => 'getRateList'));
-                
-                parent::__construct($handler);
+
+				parent::__construct($handler);
 	}
 
 	/**
@@ -69,7 +69,7 @@ class mod_system_Rating extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function name() {
-		return icms_member_user_Handler::getUserLink($this->getVar('uid', 'e'), TRUE, array());
+		return icms_member_user_Handler::getUserLink($this->getVar('uid', 'e'), true, array());
 	}
 
 	/**
@@ -78,7 +78,7 @@ class mod_system_Rating extends icms_ipf_Object {
 	 */
 	public function dirname() {
 		$moduleArray = $this->handler->getModuleList();
-		return $moduleArray[$this->getVar('dirname', 'n')];
+		return $moduleArray[$this->dirname];
 	}
 
 	/**
@@ -95,7 +95,7 @@ class mod_system_Rating extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function getItemValue() {
-		$moduleUrl = ICMS_MODULES_URL . '/' . $this->getVar('dirname', 'n') . '/';
+		$moduleUrl = ICMS_MODULES_URL . '/' . $this->dirname . '/';
 		$plugin = $this->getModulePlugin();
 		$pluginItemInfo = $plugin->getItemInfo($this->getVar('item'));
 		if (!$pluginItemInfo) {
@@ -129,7 +129,7 @@ class mod_system_Rating extends icms_ipf_Object {
 	 */
 	public function getModulePlugin() {
 		if (!$this->_modulePlugin) {
-			$this->_modulePlugin = $this->handler->pluginsObject->getPlugin('rating', $this->getVar('dirname', 'n'));
+			$this->_modulePlugin = $this->handler->pluginsObject->getPlugin('rating', $this->dirname);
 		}
 		return $this->_modulePlugin;
 	}

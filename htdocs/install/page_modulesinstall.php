@@ -14,13 +14,15 @@
 define('INSTALLER_INCLUDE_MAIN', true);
 require_once 'common.inc.php';
 
-if (!defined('XOOPS_INSTALL')) exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
 $wizard->setPage('modulesinstall');
 $pageHasForm = true;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['settings'];
+$vars = & $_SESSION['settings'];
 include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "include" . DIRECTORY_SEPARATOR . "common.php";
 include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "include" . DIRECTORY_SEPARATOR . "cp_functions.php";
 include_once __DIR__ . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'dbmanager.php';
@@ -50,12 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		 */
 		$module_handler = icms::handler('icms_module');
 		$system_moduleObj = $module_handler->getByDirname('system');
-		include_once ICMS_ROOT_PATH . '/modules/system/include/update.php';
-		icms_module_update_system($system_moduleObj);
 		$content .= $system_moduleObj->messages;
 
-		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
-		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';
+		$install_mods = isset($_POST['install_mods'])?$_POST['install_mods']:'';
+		$anon_accessible_mods = isset($_POST['anon_accessible_mods'])?$_POST['anon_accessible_mods']:'';
 		if (isset($_POST['install_mods'])) {
 			for ($i = 0; $i <= count($install_mods) - 1; $i++) {
 				$content .= xoops_module_install($install_mods[$i]);
