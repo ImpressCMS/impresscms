@@ -33,4 +33,4 @@ define('_CO_ICMS_RATING_NOT_FOUND', 'The selected rating was not found.');
 define('_CO_ICMS_RATINGS_CREATED', 'The rating was successfully created.');
 define('_CO_ICMS_RATINGS_MODIFIED', 'The rating was successfully modified.');
 define('_CO_ICMS_RATING_EXPLAIN_TITLE', 'What are Ratings ?');
-define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature in ImpressCMS. With using this tool, you can add a new rating method to your modules, and control the results through this section! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Rating_feature">Rating Features</a>.');
+define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature in ImpressCMS. With using this tool, you can add a new rating method to your modules, and control the results through this section! Complete documentation of this feature can be found here: <a rel="external" href="https://www.impresscms.org/modules/simplywiki/index.php?page=Rating_feature">Rating Features</a>.');

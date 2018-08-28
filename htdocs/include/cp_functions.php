@@ -662,35 +662,35 @@ function impresscms_get_adminmenu() {
 	}
 
 	$menu[] = array(
-		'link' => 'http://community.impresscms.org',
+		'link' => 'https://www.impresscms.org/modules/iforum/',
 		'title' => _IMPRESSCMS_COMMUNITY,
 		'absolute' => 1,
 		//'small' = ICMS_URL . '/images/impresscms.png',
 	);
 
 	$menu[] = array(
-		'link' => 'http://addons.impresscms.org',
+		'link' => 'https://www.impresscms.org/modules/downloads/',
 		'title' => _IMPRESSCMS_ADDONS,
 		'absolute' => 1,
 		//'small' => ICMS_URL . '/images/impresscms.png',
 	);
 
 	$menu[] = array(
-		'link' => 'http://wiki.impresscms.org',
+		'link' => 'https://www.impresscms.org/modules/simplywiki/',
 		'title' => _IMPRESSCMS_WIKI,
 		'absolute' => 1,
 		//'small' = ICMS_URL . '/images/impresscms.png',
 	);
 
 	$menu[] = array(
-		'link' => 'http://blog.impresscms.org',
+		'link' => 'https://www.impresscms.org/modules/news/',
 		'title' => _IMPRESSCMS_BLOG,
 		'absolute' => 1,
 		//'small'] = ICMS_URL . '/images/impresscms.png',
 	);
 
 	$menu[] = array(
-		'link' => 'https://impresscmsdev.assembla.com/spaces/impresscms/new_dashboard',
+		'link' => 'https://github.com/ImpressCMS/impresscms',
 		'title' => _IMPRESSCMS_PROJECT,
 		'absolute' => 1,
 		//'small' = ICMS_URL . '/images/impresscms.png',
