@@ -49,14 +49,10 @@
  * @property string $url               Homepage URL
  * @property array  $user_avatar       Avatar
  * @property int    $user_regdate      Registration date
- * @property string $user_icq          ICQ
  * @property string $user_from         From
  * @property string $user_sig          Signature
  * @property bool   $user_viewemail    Can others view email?
  * @property string $actkey            Activation key
- * @property string $user_aim          AIM
- * @property string $user_yim          YIM
- * @property string $user_msnm         MSN
  * @property string $pass              Encoded password
  * @property int    $posts             Post count written by this user
  * @property bool   $attachsig         Attach signature?
@@ -118,14 +114,10 @@ class icms_member_user_Object extends icms_ipf_Object {
 		$this->initVar('user_avatar', self::DTYPE_FILE, null, false, 30, null, null, _US_AVATAR);
 		$this->initVar('user_regdate', self::DTYPE_INTEGER, null, false, null, null, null,
 			'Registration date');
-		$this->initVar('user_icq', self::DTYPE_STRING, null, false, 15, null, null, _US_ICQ);
 		$this->initVar('user_from', self::DTYPE_STRING, null, false, 100, null, null, _US_LOCATION);
 		$this->initVar('user_sig', self::DTYPE_STRING, null, false, null, null, null, _US_SIGNATURE);
 		$this->initVar('user_viewemail', self::DTYPE_BOOLEAN, 0, false, null, null, null, _US_ALLOWVIEWEMAIL);
 		$this->initVar('actkey', self::DTYPE_STRING, null, false, 100, null, null, 'Activation key');
-		$this->initVar('user_aim', self::DTYPE_STRING, null, false, 18, null, null, _US_AIM);
-		$this->initVar('user_yim', self::DTYPE_STRING, null, false, 25, null, null, _US_YIM);
-		$this->initVar('user_msnm', self::DTYPE_STRING, null, false, 100, null, null, _US_MSNM);
 		$this->initVar('pass', self::DTYPE_STRING, null, false, 255, null, null, _US_PASSWORD);
 		$this->initVar('posts', self::DTYPE_INTEGER, null, false, null, null, null, _US_POSTS);
 		$this->initVar('attachsig', self::DTYPE_BOOLEAN, 0, false, null, null, null, _US_SHOWSIG);
@@ -189,9 +181,6 @@ class icms_member_user_Object extends icms_ipf_Object {
 		$this->setControl('name', 'text');
 		$this->setControl('url', 'text');
 		$this->setControl('email', 'text');
-		$this->setControl('user_msnm', 'text');
-		$this->setControl('user_yim', 'text');
-		$this->setControl('user_icq', 'text');
 		$this->setControl('timezone_offset', 'timezone');
 		$this->setControl('user_from', 'country');
 		$this->setControl('last_login', 'date');
