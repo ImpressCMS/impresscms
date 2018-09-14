@@ -128,10 +128,6 @@ function displayUsers() {
 	$openid_cbox_value = 0;
 	$url_value = '';
 	$timezone_value = $icmsConfig['default_TZ'];
-	$icq_value = '';
-	$aim_value = '';
-	$yim_value = '';
-	$msnm_value = '';
 	$location_value = '';
 	$occ_value = '';
 	$interest_value = '';
@@ -184,10 +180,6 @@ function modifyUser($user) {
 		$url_value = $user->getVar('url', 'E');
 		$temp = $user->getVar('theme');
 		$timezone_value = $user->getVar('timezone_offset');
-		$icq_value = $user->getVar('user_icq', 'E');
-		$aim_value = $user->getVar('user_aim', "E");
-		$yim_value = $user->getVar('user_yim', "E");
-		$msnm_value = $user->getVar('user_msnm', 'E');
 		$location_value = $user->getVar('user_from', 'E');
 		$occ_value = $user->getVar('user_occ', 'E');
 		$interest_value = $user->getVar('user_intrest', 'E');
@@ -235,10 +227,6 @@ function modifyUser($user) {
  * @param $name
  * @param $url
  * @param $email
- * @param $user_icq
- * @param $user_aim
- * @param $user_yim
- * @param $user_msnm
  * @param $user_from
  * @param $user_occ
  * @param $user_intrest
@@ -263,8 +251,7 @@ function modifyUser($user) {
  * @param $pass_expired
  * @param $groups
  */
-function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim,
-					$user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar,
+function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar,
 					$user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method,
 					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $user_viewoid,
 					$pass_expired, $groups = array()
@@ -286,7 +273,6 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		$edituser->setVar('user_viewoid', $user_viewoid);
 		$url = isset($url)? formatURL($url):'';
 		$edituser->setVar('url', $url);
-		$edituser->setVar('user_icq', $user_icq);
 		$edituser->setVar('user_from', $user_from);
 		if ($icmsConfigUser['allow_htsig'] == 0) {
 			$signature = strip_tags(icms_core_DataFilter::codeDecode($user_sig, 1));
@@ -297,9 +283,6 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		}
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1)?1:0;
 		$edituser->setVar('user_viewemail', $user_viewemail);
-		$edituser->setVar('user_aim', $user_aim);
-		$edituser->setVar('user_yim', $user_yim);
-		$edituser->setVar('user_msnm', $user_msnm);
 		$attachsig = (isset($attachsig) && $attachsig == 1)?1:0;
 		$edituser->setVar('attachsig', $attachsig);
 		$edituser->setVar('timezone_offset', $timezone_offset);
