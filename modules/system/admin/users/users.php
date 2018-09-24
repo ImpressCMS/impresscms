@@ -223,16 +223,16 @@ function modifyUser($user) {
  *
  * @param $uid
  * @param $uname
- * @param $login_name
+ * @param $loginName
  * @param $name
  * @param $url
  * @param $email
- * @param $user_from
- * @param $user_occ
- * @param $user_intrest
- * @param $user_viewemail
- * @param $user_avatar
- * @param $user_sig
+ * @param $userFrom
+ * @param $userOCC
+ * @param $userInterest
+ * @param $userViewEmail
+ * @param $userAvatar
+ * @param $userSignature
  * @param $attachsig
  * @param $theme
  * @param $pass
@@ -241,21 +241,47 @@ function modifyUser($user) {
  * @param $bio
  * @param $uorder
  * @param $umode
- * @param $notify_method
- * @param $notify_mode
- * @param $timezone_offset
- * @param $user_mailok
+ * @param $notifyMethod
+ * @param $notifyMode
+ * @param $timezoneOffset
+ * @param $userMailOk
  * @param $language
  * @param $openid
- * @param $user_viewoid
- * @param $pass_expired
+ * @param $userViewOID
+ * @param $passExpired
  * @param $groups
  */
-function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar,
-					$user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method,
-					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $user_viewoid,
-					$pass_expired, $groups = array()
-					) {
+function updateUser(
+	$uid,
+	$uname,
+	$loginName,
+	$name,
+	$url,
+	$email,
+	$userFrom,
+	$userOCC,
+	$userInterest,
+	$userViewEmail,
+	$userAvatar,
+	$userSignature,
+	$attachsig,
+	$theme,
+	$pass,
+	$pass2,
+	$rank,
+	$bio,
+	$uorder,
+	$umode,
+	$notifyMethod,
+	$notifyMode,
+	$timezoneOffset,
+	$userMailOk,
+	$language,
+	$openid,
+	$userViewOID,
+	$passExpired,
+	$groups = array()
+) {
 	global $icmsConfig, $icmsModule, $icmsConfigUser, $user_handler;
 	$edituser = & $user_handler->get($uid);
 	if ($edituser->getVar('uname') != $uname && $user_handler->getCount(new icms_db_criteria_Item('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $user_handler->getCount(new icms_db_criteria_Item('login_name', $login_name)) > 0) {
@@ -266,35 +292,35 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_from, 
 	} else {
 		$edituser->setVar('name', $name);
 		$edituser->setVar('uname', $uname);
-		$edituser->setVar('login_name', $login_name);
+		$edituser->setVar('login_name', $loginName);
 		$edituser->setVar('email', $email);
 		$edituser->setVar('openid', $openid);
-		$user_viewoid = (isset($user_viewoid) && $user_viewoid == 1)?1:0;
-		$edituser->setVar('user_viewoid', $user_viewoid);
+		$userViewOID = (isset($userViewOID) && $userViewOID == 1)?1:0;
+		$edituser->setVar('user_viewoid', $userViewOID);
 		$url = isset($url)? formatURL($url):'';
 		$edituser->setVar('url', $url);
-		$edituser->setVar('user_from', $user_from);
+		$edituser->setVar('user_from', $userFrom);
 		if ($icmsConfigUser['allow_htsig'] == 0) {
 			$signature = strip_tags(icms_core_DataFilter::codeDecode($user_sig, 1));
 			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 		} else {
-			$signature = icms_core_DataFilter::checkVar($user_sig, 'html', 'input');
+			$signature = icms_core_DataFilter::checkVar($userSignature, 'html', 'input');
 			$edituser->setVar('user_sig', $signature);
 		}
-		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1)?1:0;
-		$edituser->setVar('user_viewemail', $user_viewemail);
+		$userViewEmail = (isset($userViewEmail) && $userViewEmail == 1)?1:0;
+		$edituser->setVar('user_viewemail', $userViewEmail);
 		$attachsig = (isset($attachsig) && $attachsig == 1)?1:0;
 		$edituser->setVar('attachsig', $attachsig);
-		$edituser->setVar('timezone_offset', $timezone_offset);
+		$edituser->setVar('timezone_offset', $timezoneOffset);
 		$edituser->setVar('uorder', $uorder);
 		$edituser->setVar('umode', $umode);
-		$edituser->setVar('notify_method', $notify_method);
-		$edituser->setVar('notify_mode', $notify_mode);
+		$edituser->setVar('notify_method', $notifyMethod);
+		$edituser->setVar('notify_mode', $notifyMode);
 		$edituser->setVar('bio', $bio);
 		$edituser->setVar('rank', $rank);
-		$edituser->setVar('user_occ', $user_occ);
-		$edituser->setVar('user_intrest', $user_intrest);
-		$edituser->setVar('user_mailok', $user_mailok);
+		$edituser->setVar('user_occ', $userOCC);
+		$edituser->setVar('user_intrest', $userInterest);
+		$edituser->setVar('user_mailok', $userMailOk);
 		$edituser->setVar('language', $language);
 		if ($pass2 != '') {
 			if ($pass != $pass2) {
@@ -305,7 +331,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_from, 
 			}
 
 			$icmspass = new icms_core_Password();
-			$edituser->setVar('pass_expired', $pass_expired);
+			$edituser->setVar('pass_expired', $passExpired);
 			$pass = $icmspass->encryptPass($pass);
 			$edituser->setVar('pass', $pass);
 		}
