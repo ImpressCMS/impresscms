@@ -94,6 +94,7 @@ plugins:
     checks:
       MD013: false
       MD033: false
+
   # a Static analyzer for PHP by the creators of PHP.
   phan:
     enabled: true
