@@ -92,8 +92,12 @@ plugins:
   markdownlint:
     enabled: true
     checks:
-      MD013: false
-      MD033: false
+      # line length
+      MD013:
+        enabled: false
+      # raw html
+      MD033:
+        enabled: false
 
   # a Static analyzer for PHP by the creators of PHP.
   phan:
