@@ -92,9 +92,7 @@ plugins:
   markdownlint:
     enabled: true
     checks:
-      # line length
       MD013: false
-      # raw html
       MD033: false
   # a Static analyzer for PHP by the creators of PHP.
   phan:
