@@ -94,26 +94,6 @@ if ($op == "form") {
 	$url_text = new icms_form_elements_Text(_AM_URLC, "user_url", 30, 100);
 	//$theme_select = new icms_form_elements_select_Theme(_AM_THEME, "user_theme");
 	//$timezone_select = new icms_form_elements_select_Timezone(_AM_TIMEZONE, "user_timezone_offset");
-	$icq_text = new icms_form_elements_Text("", "user_icq", 30, 100);
-	$icq_match = new icms_form_elements_select_Matchoption("", "user_icq_match");
-	$icq_tray = new icms_form_elements_Tray(_AM_ICQ, "&nbsp;");
-	$icq_tray->addElement($icq_match);
-	$icq_tray->addElement($icq_text);
-	$aim_text = new icms_form_elements_Text("", "user_aim", 30, 100);
-	$aim_match = new icms_form_elements_select_Matchoption("", "user_aim_match");
-	$aim_tray = new icms_form_elements_Tray(_AM_AIM, "&nbsp;");
-	$aim_tray->addElement($aim_match);
-	$aim_tray->addElement($aim_text);
-	$yim_text = new icms_form_elements_Text("", "user_yim", 30, 100);
-	$yim_match = new icms_form_elements_select_Matchoption("", "user_yim_match");
-	$yim_tray = new icms_form_elements_Tray(_AM_YIM, "&nbsp;");
-	$yim_tray->addElement($yim_match);
-	$yim_tray->addElement($yim_text);
-	$msnm_text = new icms_form_elements_Text("", "user_msnm", 30, 100);
-	$msnm_match = new icms_form_elements_select_Matchoption("", "user_msnm_match");
-	$msnm_tray = new icms_form_elements_Tray(_AM_MSNM, "&nbsp;");
-	$msnm_tray->addElement($msnm_match);
-	$msnm_tray->addElement($msnm_text);
 	$location_text = new icms_form_elements_Text(_AM_LOCATION, "user_from", 30, 100);
 	$occupation_text = new icms_form_elements_Text(_AM_OCCUPATION, "user_occ", 30, 100);
 	$interest_text = new icms_form_elements_Text(_AM_INTEREST, "user_intrest", 30, 100);
@@ -144,12 +124,6 @@ if ($op == "form") {
 	$form->addElement($login_name_tray);
 	$form->addElement($email_tray);
 	$form->addElement($group_select);
-	//$form->addElement($theme_select);
-	//$form->addElement($timezone_select);
-	$form->addElement($icq_tray);
-	$form->addElement($aim_tray);
-	$form->addElement($yim_tray);
-	$form->addElement($msnm_tray);
 	$form->addElement($url_text);
 	$form->addElement($location_text);
 	$form->addElement($occupation_text);
@@ -274,98 +248,6 @@ if ($op == "form") {
 	if (!empty($user_url)) {
 		$url = formatURL(trim($user_url));
 		$criteria->add(new icms_db_criteria_Item('url', $url . '%', 'LIKE'));
-	}
-	if (!empty($user_icq)) {
-		$match = (!empty($user_icq_match))?(int) $user_icq_match:XOOPS_MATCH_START;
-		switch ($match) {
-			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_icq', icms_core_DataFilter::addSlashes(trim($user_icq)) . '%', 'LIKE'));
-				break;
-
-			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . icms_core_DataFilter::addSlashes(trim($user_icq)), 'LIKE'));
-				break;
-
-			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . icms_core_DataFilter::addSlashes(trim($user_icq))));
-				break;
-
-			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_icq', '%' . icms_core_DataFilter::addSlashes(trim($user_icq)) . '%', 'LIKE'));
-				break;
-
-			default:
-				break;
-		}
-	}
-	if (!empty($user_aim)) {
-		$match = (!empty($user_aim_match))?(int) $user_aim_match:XOOPS_MATCH_START;
-		switch ($match) {
-			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_aim', icms_core_DataFilter::addSlashes(trim($user_aim)) . '%', 'LIKE'));
-				break;
-
-			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . icms_core_DataFilter::addSlashes(trim($user_aim)), 'LIKE'));
-				break;
-
-			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_aim', icms_core_DataFilter::addSlashes(trim($user_aim))));
-				break;
-
-			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_aim', '%' . icms_core_DataFilter::addSlashes(trim($user_aim)) . '%', 'LIKE'));
-				break;
-
-			default:
-				break;
-		}
-	}
-	if (!empty($user_yim)) {
-		$match = (!empty($user_yim_match))?(int) $user_yim_match:XOOPS_MATCH_START;
-		switch ($match) {
-			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_yim', icms_core_DataFilter::addSlashes(trim($user_yim)) . '%', 'LIKE'));
-				break;
-
-			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . icms_core_DataFilter::addSlashes(trim($user_yim)), 'LIKE'));
-				break;
-
-			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_yim', icms_core_DataFilter::addSlashes(trim($user_yim))));
-				break;
-
-			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_yim', '%' . icms_core_DataFilter::addSlashes(trim($user_yim)) . '%', 'LIKE'));
-				break;
-
-			default:
-				break;
-		}
-	}
-	if (!empty($user_msnm)) {
-		$match = (!empty($user_msnm_match))?(int) $user_msnm_match:XOOPS_MATCH_START;
-		switch ($match) {
-			case XOOPS_MATCH_START:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', icms_core_DataFilter::addSlashes(trim($user_msnm)) . '%', 'LIKE'));
-				break;
-
-			case XOOPS_MATCH_END:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . icms_core_DataFilter::addSlashes(trim($user_msnm)), 'LIKE'));
-				break;
-
-			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . icms_core_DataFilter::addSlashes(trim($user_msnm))));
-				break;
-
-			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new icms_db_criteria_Item('user_msnm', '%' . icms_core_DataFilter::addSlashes(trim($user_msnm)) . '%', 'LIKE'));
-				break;
-
-			default:
-				break;
-		}
 	}
 	if (!empty($user_from)) {
 		$criteria->add(new icms_db_criteria_Item('user_from', '%' . icms_core_DataFilter::addSlashes(trim($user_from)) . '%', 'LIKE'));
