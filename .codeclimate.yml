@@ -91,6 +91,8 @@ plugins:
   # a tool designed to check markdown files and flag style issues.
   markdownlint:
     enabled: true
+    config:
+      line_length: false
 
   # a Static analyzer for PHP by the creators of PHP.
   phan:
