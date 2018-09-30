@@ -10,7 +10,7 @@
  * @version		$Id: version.php 12500 2015-06-15 20:03:56Z fiammy $
  */
 
-define('ICMS_VERSION_NAME', 'ImpressCMS 1.3.11 RC');
+define('ICMS_VERSION_NAME', 'ImpressCMS 1.3.11');
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
@@ -23,7 +23,7 @@ define('XOOPS_VERSION', ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define('ICMS_VERSION_STATUS', 3);
+define('ICMS_VERSION_STATUS', 10);
 
 /**
  * Build number
