@@ -1,5 +1,4 @@
 <?php
-// $Id: version.php 12500 2015-06-15 20:03:56Z fiammy $
 /**
  * Version information about ImpressCMS
  *
@@ -11,7 +10,7 @@
  * @version		$Id: version.php 12500 2015-06-15 20:03:56Z fiammy $
  */
 
-define('ICMS_VERSION_NAME', 'ImpressCMS 1.3.11 Beta 2');
+define('ICMS_VERSION_NAME', 'ImpressCMS 1.3.11 Release Candidate');
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
@@ -24,7 +23,7 @@ define('XOOPS_VERSION', ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define('ICMS_VERSION_STATUS', 2);
+define('ICMS_VERSION_STATUS', 3);
 
 /**
  * Build number
@@ -32,7 +31,7 @@ define('ICMS_VERSION_STATUS', 2);
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
 // impresscms_1.3.10 = 82, 2.0.0 alpha 4 = 73
-define('ICMS_VERSION_BUILD', 88);
+define('ICMS_VERSION_BUILD', 89);
 
 /**
  * Latest dbversion of the System Module

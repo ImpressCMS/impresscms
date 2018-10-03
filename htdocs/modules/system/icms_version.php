@@ -1,5 +1,4 @@
 <?php
-// $Id: icms_version.php 12500 2015-06-15 20:03:56Z fiammy $
 //  ------------------------------------------------------------------------ //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -63,14 +62,14 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Beta 2",
-	'status'=> "Beta",
-	'date'=> "12 jun 2018",
+	'status_version'=> "RC",
+	'status'=> "Release Candidate",
+	'date'=> "04 oct 2018",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_BETA,
+	'warning'=>_CO_ICMS_WARNING_RC,
 
 /** Contributors */
-	'developer_website_url' => "http://www.impresscms.org",
+	'developer_website_url' => "https://www.impresscms.org",
 	'developer_website_name' => "ImpressCMS Core & Module developers",
 	'developer_email' => "contact@impresscms.org" );
 
