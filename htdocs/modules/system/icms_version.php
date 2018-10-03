@@ -63,10 +63,10 @@ $modversion = array(
 
 /**  Development information */
 	'status_version'=> "RC",
-	'status'=> "Final",
-	'date'=> "01 oct 2018",
+	'status'=> "Release Candidate",
+	'date'=> "04 oct 2018",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_FINAL,
+	'warning'=>_CO_ICMS_WARNING_RC,
 
 /** Contributors */
 	'developer_website_url' => "https://www.impresscms.org",
