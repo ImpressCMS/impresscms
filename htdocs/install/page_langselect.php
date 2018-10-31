@@ -25,7 +25,7 @@ if (!defined( 'XOOPS_INSTALL' ) )	exit();
 $wizard->setPage( 'langselect' );
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$lang = $_REQUEST['lang'];
+	$lang = htmlentities($_REQUEST['lang']);
 
 	$languages = icms_core_Filesystem::getDirList( "./language/" );
 	if (!in_array($lang, $languages)) {
