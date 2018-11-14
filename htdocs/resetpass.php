@@ -28,6 +28,8 @@ $filter_post = array(
 	'email' => array('email', 'options' => array(0, 1)),
 );
 if (!empty($_GET)) {
+	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+	if (isset($_GET['filter_post'])) unset ($_GET['filter_post']);
     $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
     extract($clean_GET);
 }
