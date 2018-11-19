@@ -12,9 +12,6 @@ $content .=
 <h3>Subscribe to the newsletter</h3>
 <p>Please remember to subscribe to the <a href='http://eepurl.com/dqXVIb' target='_blank'>ImpressCMS Newsletter</a>, for news of new modules, themes, important updates and more!</p>
 
-<h3>Hosting Sponsor</h3>
-<p><a href='http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15'>SiteGround</a> provides hosting for the ImpressCMS websites and offers environments tailored to your needs and ImpressCMS</p> 
-
 <h3>Your New Site</h3>
 <p>You can now access the home page of your site, by clicking on the button below and finishing the wizard.</p>
 ";
