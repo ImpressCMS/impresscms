@@ -62,9 +62,9 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "RC",
-	'status'=> "Release Candidate",
-	'date'=> "04 oct 2018",
+	'status_version'=> "RC2",
+	'status'=> "Release Candidate 2",
+	'date'=> "20 nov 2018",
 	'author_word'=> "",
 	'warning'=>_CO_ICMS_WARNING_RC,
 
