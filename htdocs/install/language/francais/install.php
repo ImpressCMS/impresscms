@@ -1,8 +1,9 @@
+
 <?php
 
 define( "SHOW_HIDE_HELP", "Afficher/masquer l'aide" );
 
-// Vérifier la page de configuration
+// VÃ©rifier la page de configuration
 define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extension" );
 define( "CHAR_ENCODING", "Encodage des caract&egrave;res" );
@@ -26,8 +27,9 @@ define( "FAILED", "&Eacute;chec" );
 // Titres (principaux et les pages)
 define( "XOOPS_INSTALL_WIZARD", " Assistance d'installation %s" );
 define( "INSTALL_STEP", "&Eacute;tape" );
+define( "INSTALL_H3_STEPS", "&Eacute;tapes" );
 define( "INSTALL_OUTOF", " sur " );
-define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org\">The ImpressCMS Project</a>" );
+define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org\">Le projet ImpressCMS</a>" );
 
 define( "LANGUAGE_SELECTION", "S&eacute;lection de la langue" );
 define( "LANGUAGE_SELECTION_TITLE", "Choisissez la langue de l'assistance");	
@@ -71,7 +73,7 @@ define( "XOOPS_URL_HELP", "Adresse principale de votre site" ); // L58
 define( "LEGEND_CONNECTION", "Connection au serveur" );
 define( "LEGEND_DATABASE", "Base de donn&eacute;es" ); // L51
 
-define( "DB_HOST_LABEL", "Nom du serveur (Habituellement localhost ou un nom d'hôte fourni par votre hebergeur)" );	// L27
+define( "DB_HOST_LABEL", "Nom du serveur (Habituellement localhost ou un nom d'hÃ´te fourni par votre hebergeur)" );	// L27
 define( "DB_HOST_HELP",  "Nom du serveur de la base de donn&eacute;es. Si vous n'&ecirc;tes pas s&ucirc;r, <em>localhost</em> fonctionne dans la plupart des cas"); // L67
 define( "DB_USER_LABEL", " Nom d'utilisateur (Soit root ou un identifiant fourni par votre hebergeur)" );	// L28
 define( "DB_USER_HELP",  "Nom pour se connecter au serveur de la base de donn&eacute;es"); // L65
@@ -139,7 +141,7 @@ define( "ERR_REQUIRED", "Veuillez entrer toutes les informations requises." ); /
 define( "ERR_PASSWORD_MATCH", "Les deux mots de passe ne concordent pas" );
 define( "ERR_NEED_WRITE_ACCESS", "Le serveur doit avoir acc&egrave;s en &eacute;criture aux dossiers et fichiers suivants<br />(i.e. <em>chmod 777 nom_dossier</em> sur un syst&egrave;me UNIX/LINUX)" ); // L72
 define( "ERR_NO_DATABASE", "Impossible de cr&eacute;er la base de donn&eacute;es. Veuillez contacter votre h&eacute;bergeur pour plus de d&eacute;tails." ); // L31
-define( "ERR_NO_DBCONNECTION", "Impossible de se connecter à la base de donn&eacute;es." ); // L106
+define( "ERR_NO_DBCONNECTION", "Impossible de se connecter Ã  la base de donn&eacute;es." ); // L106
 define( "ERR_WRITING_CONSTANT", "&Eacute;chec &agrave; l'&eacute;criture de la constante %s." ); // L122
 
 define( "ERR_COPY_MAINFILE", "Impossible de copier le fichier de distribution dans mainfile.php" );
@@ -150,7 +152,7 @@ define( "ERR_WRITE_SDATA", "Impossible d'&eacute;crire dans sdata.php. V&eacute;
 define( "ERR_READ_SDATA", "Impossible d'ouvrir sdata.php en lecture" );
 define( "ERR_INVALID_DBCHARSET", "Le charset '%s' est non support&eacute;." );
 define( "ERR_INVALID_DBCOLLATION", "La collation '%s' est non support&eacute;." );
-define( "ERR_CHARSET_NOT_SET", "les codes ISO ne sont pas réglée pour la base de données." );
+define( "ERR_CHARSET_NOT_SET", "les codes ISO ne sont pas rÃ©glÃ©e pour la base de donnÃ©es." );
 
 
 //
@@ -198,20 +200,20 @@ define("WELCOME_ANONYMOUS","Bienvenue sur votre site internet !");
 define("_MD_AM_MULTLOGINMSG_TXT",'Impossible de vous connectez avec ce nom d\'utilisateur et mot de passe sur le site!! <br />
         <p align="left" style="color:red;">
         Causes possibles:<br />
-         - Vous êtes déjà inscrit sur le site.<br />
-         - Quelqu\'un d\'autre est connecté sur le site en utilisant votre nom d\'utilisateur et mot de passe.<br />
-         - Vous avez quitter le site ou fermez la fenêtre du navigateur sans cliquer sur le bouton de déconnexion.<br />
+         - Vous Ãªtes dÃ©jÃ  inscrit sur le site.<br />
+         - Quelqu\'un d\'autre est connectÃ© sur le site en utilisant votre nom d\'utilisateur et mot de passe.<br />
+         - Vous avez quitter le site ou fermez la fenÃªtre du navigateur sans cliquer sur le bouton de dÃ©connexion.<br />
         </p>
-        Effacez les traces de votre navigateur (historique, cookies, sessions etc... Si le problème persiste contactez le webmasteur du site.');
+        Effacez les traces de votre navigateur (historique, cookies, sessions etc... Si le problÃ¨me persiste contactez le webmasteur du site.');
 define("_MD_AM_RSSLOCALLINK_DESC",'http://community.impresscms.org/modules/smartsection/backend.php'); //Lien vers le RRS de soutien local site
 define("_INSTALL_LOCAL_SITE",'http://www.impresscms.org/'); //Lien vers le site de support local
 define("_LOCAOL_STNAME",'ImpressCMS'); //Lien vers le site de support local
 define("_LOCAL_SLOCGAN",'Make a lasting impression'); 
 define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">ImpressCMS Projet</a>'); //Lien footer (pied de page) pour le soutien local site
 define("_LOCAL_SENSORTXT",'#OOPS#'); 
-define("_ADM_USE_RTL","0"); // tourner à 1 si votre langue est droite à gauche
+define("_ADM_USE_RTL","0"); // tourner Ã  1 si votre langue est droite Ã  gauche
 define("_DEF_LANG_TAGS",'fr,en'); 
 define("_DEF_LANG_NAMES",'french,english'); 
 define("_LOCAL_LANG_NAMES",'Fran&ccedil;ais,English');
-define("_EXT_DATE_FUNC","0"); // changement de 0 à 1, si cette langue a une fonction étendue date
+define("_EXT_DATE_FUNC","0"); // changement de 0 Ã  1, si cette langue a une fonction Ã©tendue date
 ?>
