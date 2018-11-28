@@ -1,4 +1,3 @@
-
 <?php
 
 define( "SHOW_HIDE_HELP", "Afficher/masquer l'aide" );
@@ -89,6 +88,8 @@ define( "DB_PREFIX_LABEL", "Prefixe des tables" );	// L30
 define( "DB_PREFIX_HELP",  "Ce prefixe sera ajout&eacute; &agrave; toutes tables cr&eacute;&eacute;es afin d'&eacute;viter les conflits de noms de tables dans la base de donn&eacute;es. Si vous n'&ecirc;tes pas sur, veuillez utiliser ce qui vous est propos&eacute; (pr&eacute;fix g&eacute;n&eacute;r&eacute;s al&eacute;atoirement)"); // L63
 define( "DB_PCONNECT_LABEL", "Utiliser les connexions persistentes ?" );	// L54
 define( "DB_PCONNECT_HELP",  "Par d&eacute;faut c'est 'NON'. Choisissez 'NON' si vous n'&ecirc;tes pas s&ucirc;r."); // L69
+define( "DB_PCONNECT_HELPS", "Les connexions persistentes sont utiles sur des liens internet lents. En générale, ils ne sont pas nécessaire pour la plupart des installations."); // L69
+
 
 define( "DB_SALT_LABEL", "La Clef cryptee de mot de passe" );	// L98
 define( "DB_SALT_HELP",  "Cette clef crypt&eacute;e sera ajout&eacute;e aux mots de passe dans la fonction icms_encryptPass(), et est utilis&eacute; pour s'assur&eacute; de cr&eacute;er un mot de passe totalement unique. Ne Pas changer cette clef une fois que votre site est cr&eacute;er, sinon cela rendra TOUT les mots de passe invalide. Si vous ne savez pas, garder la clef par d&eacute;faut"); // L97
