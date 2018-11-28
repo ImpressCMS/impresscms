@@ -12,6 +12,9 @@
 
 define( "SHOW_HIDE_HELP", "Show/hide help text" );
 
+define ("ALTERNATE_LANGUAGE_MSG","Download een alternatief taalpakket van de ImpressCMS website");
+define ("ALTERNATE_LANGUAGE_LNK_MSG", "Kies een taal die niet in de lijst staat.");
+define ("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 // Configuration check page
 define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extension" );

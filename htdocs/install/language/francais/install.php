@@ -1,7 +1,9 @@
 <?php
 
 define( "SHOW_HIDE_HELP", "Afficher/masquer l'aide" );
-
+define ("ALTERNATE_LANGUAGE_MSG","T&eacute;l&eacute;chargez une langue suppl&eacute;mentaire du site ImpressCMS");
+define ("ALTERNATE_LANGUAGE_LNK_MSG", "Choisissez une autre langue");
+define ("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 // Vérifier la page de configuration
 define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extension" );
@@ -20,8 +22,6 @@ define( "NONE", "Aucun" );
 define( "SUCCESS", "Succ&egrave;s" );
 define( "WARNING", "Avertissement" );
 define( "FAILED", "&Eacute;chec" );
-
-
 
 // Titres (principaux et les pages)
 define( "XOOPS_INSTALL_WIZARD", " Assistance d'installation %s" );
@@ -217,4 +217,5 @@ define("_DEF_LANG_TAGS",'fr,en');
 define("_DEF_LANG_NAMES",'french,english'); 
 define("_LOCAL_LANG_NAMES",'Fran&ccedil;ais,English');
 define("_EXT_DATE_FUNC","0"); // changement de 0 à 1, si cette langue a une fonction étendue date
+
 ?>
