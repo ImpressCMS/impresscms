@@ -1,0 +1,63 @@
+<?php
+// fichier:  .../modules/system/admin/tplsets/main.php
+//Gestion des templates
+define('_MD_TPLMAIN','Gestionnaire de templates');
+define('_MD_INSTALL','Installer');
+define('_MD_EDITTEMPLATE','Editer le fichier template');
+define('_MD_VIEWTEMPLATE','Voir le fichier template');
+define('_MD_FILENAME','Nom du fichier');
+define('_MD_FILEDESC','Description');
+define('_MD_LASTMOD','Derni&egrave;re modification');
+define('_MD_FILEMOD','Derni&egrave;re modification (fichier)');
+define('_MD_FILECSS','CSS');
+define('_MD_FILEHTML','HTML');
+define('_MD_AM_BTOTADMIN', 'Retour au gestionnaire de templates');
+define('_MD_RUSUREDELTH', 'Etes-vous s&ucirc;r de vouloir supprimer ce jeu de templates et toutes ses donn&eacute;es (fichiers templates associ&eacute;s) ?');
+define('_MD_RUSUREDELTPL', 'Etes-vous s&ucirc;r de vouloir supprimer ces fichiers de template ?');
+define('_MD_PLZINSTALL', "Pressez le bouton ci-dessous pour commencer l'installation");
+define('_MD_PLZGENERATE', 'Pressez le bouton ci-dessous pour g&eacute;n&eacute;rer le(s) fichier(s)');
+define('_MD_CLONETHEME','Cloner un jeu de templates');
+define('_MD_THEMENAME','Jeu de templates de base');
+define('_MD_NEWNAME','Entrez le nouveau nom du jeu de templates');
+define('_MD_IMPORT','Importer');
+define('_MD_RUSUREIMPT', "L'importation des donn&eacute;es template du r&eacute;pertoire template va &eacute;craser vos changements dans la base de donn&eacute;es.<br /> Cliquez sur 'Importer' pour lancer le processus.");
+define('_MD_THMSETNAME','Nom');
+define('_MD_CREATED','Cr&eacute;&eacute;');
+define('_MD_SKIN','Skin');
+define('_MD_TEMPLATES','Templates');
+define('_MD_EDITSKIN','Editer le skin');
+define('_MD_NOFILE','Pas de fichier');
+define('_MD_VIEW','Voir');
+define('_MD_COPYDEFAULT','Copier le fichier par d&eacute;faut');
+define('_MD_DLDEFAULT','T&eacute;l&eacute;charger le fichier par d&eacute;faut');
+define('_MD_VIEWDEFAULT','Voir le template par d&eacute;faut');
+define('_MD_DOWNLOAD','T&eacute;l&eacute;charger');
+define('_MD_UPLOAD','Valider');
+define('_MD_GENERATE','G&eacute;n&eacute;rer');
+define('_MD_CHOOSEFILE', 'Choisir le fichier &agrave; envoyer');
+define('_MD_UPWILLREPLACE', 'Envoyer ce fichier va &eacute;craser les donn&eacute;es de la base de donn&eacute;es !');
+define('_MD_UPLOADTAR', 'Envoyer un jeu de templates');
+define('_MD_CHOOSETAR', 'Choisir le fichier du jeu de templates &agrave; envoyer');
+define('_MD_ONLYTAR', 'Le fichier doit &ecirc;tre au format tar.gz/.tar avec une structure de jeu de templates valide');
+define('_MD_NTHEMENAME', 'Nom du nouveau jeu de templates');
+define('_MD_ENTERTH', 'Entrez un nom de jeu de templates pour ce package. Laissez blanc pour une d&eacute;tection automatique.');
+define('_MD_TITLE','Titre');
+define('_MD_CONTENT','Contenu');
+define('_MD_ACTION','Action');
+define('_MD_DEFAULTTHEME','Votre site utilise ce jeu de templates par d&eacute;faut');
+define('_MD_AM_ERRTHEME', "Le jeu de template suivant n'est pas un fichier de donn&eacute;es skin valide. Pressez 'Effacer' pour supprimer les donn&eacute;es relatifs &agrave; ce jeu de templates.");
+define('_MD_SKINIMGS','Fichiers images de skin');
+define('_MD_EDITSKINIMG','Editer les fichiers images de skin');
+define('_MD_IMGFILE','Nom du fichier');
+define('_MD_IMGNEWFILE','Envoyer un nouveau fichier');
+define('_MD_IMGDELETE','Effacer');
+define('_MD_ADDSKINIMG','Ajouter un fichier image de skin');
+define('_MD_BLOCKHTML', 'Bloc HTML');
+define('_MD_IMAGES', 'Images');
+define('_MD_NOZLIB', 'Le support de Zlib doit &ecirc;tre activ&eacute; sur votre serveur');
+define('_MD_LASTIMP', 'Dernier import&eacute;');
+define('_MD_FILENEWER', "Un fichier plus r&eacute;cent qui n'a pas encore &eacute;t&eacute; import&eacute; existe dans le r&eacute;pertoire <b>themes</b>.");
+define('_MD_FILEIMPORT', "Un fichier plus ancien qui n'a pas encore &eacute;t&eacute; import&eacute; existe dans le r&eacute;pertoire <b>templates</b>.");
+define('_MD_FILEGENER', "Le fichier template n'existe pas pour ce th&egrave;me. Il peut &ecirc;tre g&eacute;n&eacute;r&eacute; (copi&eacute; &agrave; partir du th&egrave;me <b>par d&eacute;faut</b>), T&eacute;l&eacute;charger, ou import&eacute; &agrave; partir du r&eacute;pertoire <b>templates</b>.");
+
+?>

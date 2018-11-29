@@ -56,7 +56,7 @@ class XoopsInstallWizard {
 			return false;
 		}
 		if (@empty( $_SERVER['REQUEST_URI'] )) {
-			$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
+			$_SERVER['REQUEST_URI'] = htmlentities($_SERVER['PHP_SELF']);
 		}
 
 		if (version_compare( phpversion(), '5.5', '<')) {
@@ -206,8 +206,9 @@ class XoopsInstallWizard {
 
 	function baseLocation() {
 		$proto	= ( @$_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
-		$host	= $_SERVER['HTTP_HOST'];
-		$base	= substr( $_SERVER['PHP_SELF'], 0, strrpos( $_SERVER['PHP_SELF'], '/' ) );
+		$host	= htmlentities($_SERVER['HTTP_HOST']);
+		$server_php_self = htmlentities($_SERVER['PHP_SELF']);
+		$base	= substr( $server_php_self, 0, strrpos( $server_php_self, '/' ) );
 		return "$proto://$host$base";
 	}
 

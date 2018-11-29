@@ -12,6 +12,9 @@
 
 define( "SHOW_HIDE_HELP", "Show/hide help text" );
 
+define ("ALTERNATE_LANGUAGE_MSG","Download an alternate language pack from the ImpressCMS website");
+define ("ALTERNATE_LANGUAGE_LNK_MSG", "Select another language not listed here.");
+define ("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 // Configuration check page
 define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extension" );
@@ -212,7 +215,7 @@ define("_MD_AM_RSSLOCALLINK_DESC",'https://www.impresscms.org/modules/news/rss.p
 define("_INSTALL_LOCAL_SITE",'https://www.impresscms.org/'); //Link to local support site
 define("_LOCAOL_STNAME",'ImpressCMS'); //Link to local support site
 define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support site
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
+define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
 define("_LOCAL_SENSORTXT",'#OOPS#'); //Add local translation
 define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
 define("_DEF_LANG_TAGS",'en,de'); //Add local translation
