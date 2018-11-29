@@ -12,6 +12,9 @@
 
 define( "SHOW_HIDE_HELP", "Mostra/nascondi il testo di aiuto" );
 
+define("ALTERNATE_LANGUAGE_MSG","Trovare una lingua alternativa sul sito ImpressCMS.");
+define("ALTERNATE_LANGUAGE_LNK_MSG", "Selezionare una lingua che non si trova nella lista.");
+define("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 // Configuration check page
 define( "SERVER_API", "API Server" );
 define( "PHP_EXTENSION", "Estensioni %s" );
