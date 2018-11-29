@@ -309,7 +309,7 @@ define("_LONGDATESTRING", "F jS Y, h:iA");
 define('_AUTHOR', 'Author');
 define("_CREDITS", "Credits");
 define("_LICENSE", "License");
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
+define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
 define("_BLOCK_ID", "Block ID");
 define('_IMPRESSCMS_PROJECT','Project Development');
 

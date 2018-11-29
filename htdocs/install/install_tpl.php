@@ -26,7 +26,7 @@
 */
 	defined( 'XOOPS_INSTALL' ) or die();
 	if (isset($_COOKIE['xo_install_lang'])) {
-		$icmsConfig['language'] = $icmsConfig['language'] = $_COOKIE['xo_install_lang'];
+		$icmsConfig['language'] = $icmsConfig['language'] = htmlentities($_COOKIE['xo_install_lang']);
 	}
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -85,7 +85,7 @@ echo '<body>';
 <div id="page_top">&nbsp;</div>
 
 <div id="page">
-	<form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
+	<form action='<?php echo htmlentities($_SERVER['PHP_SELF']); ?>' method='post'>
 	<div id="leftside">
 			<h3><?php echo INSTALL_H3_STEPS; ?></h3>
 			<ul>
