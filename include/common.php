@@ -135,7 +135,7 @@ if (!isset ($xoopsOption ['nodebug']) || !$xoopsOption ['nodebug']) {
 		icms::getInstance()->get('logger')->activated = false;
 	}
 }
-
+//TODO: change this, because it is using deprecated notations
 icms::$module = icms::getInstance()->get('module');
 $icmsModule = &icms::$module;
 
