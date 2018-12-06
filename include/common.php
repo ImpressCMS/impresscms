@@ -137,6 +137,7 @@ if (!isset ($xoopsOption ['nodebug']) || !$xoopsOption ['nodebug']) {
 }
 
 icms::$module = icms::getInstance()->get('module');
+$icmsModule = &icms::$module;
 
 if ($icmsConfigPersona['multi_login']) {
 	if (is_object(icms::$user)) {
