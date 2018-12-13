@@ -1,0 +1,243 @@
+[main]
+host = https://www.transifex.com
+lang_map en_GB: english, nl_NL: nl
+
+[impresscms.coreadminphp]
+file_filter = ./htdocs/language/<lang>/admin.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.calendarjs]
+file_filter = ./htdocs/language/<lang>/calendar.js
+source_lang = en_GB
+type = TXT
+
+[impresscms.coreglobalphp]
+file_filter = ./htdocs/language/<lang>/global.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coremailphp]
+file_filter = ./htdocs/language/<lang>/mail.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coremiscphp]
+file_filter = ./htdocs/language/<lang>/misc.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coremoduleaboutphp]
+file_filter = ./htdocs/language/<lang>/moduleabout.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corenotificationphp]
+file_filter = ./htdocs/language/<lang>/notification.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corepmsgphp]
+file_filter = ./htdocs/language/<lang>/pmsg.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coreprivpolicyphp]
+file_filter = ./htdocs/language/<lang>/privpolicy.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coresearchphp]
+file_filter = ./htdocs/language/<lang>/search.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corethemephp]
+file_filter = ./htdocs/language/<lang>/theme.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coretimezonephp]
+file_filter = ./htdocs/language/<lang>/timezone.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coreuploaderphp]
+file_filter = ./htdocs/language/<lang>/uploader.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coreuserphp]
+file_filter = ./htdocs/language/<lang>/user.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.editorsdhtmltextareaphp]
+file_filter = ./htdocs/editors/dhtmltextarea/language/<lang>.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.editorsfckeditorphp]
+file_filter = ./htdocs/editors/CKeditor/language/<lang>.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.editorstinymcephp]
+file_filter = ./htdocs/editors/tinymce/language/<lang>.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.finishphp]
+file_filter = ./htdocs/install/language/<lang>/finish.php
+source_lang = en_GB
+type = TXT
+
+[impresscms.install2php]
+file_filter = ./htdocs/install/language/<lang>/install2.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.installphp]
+file_filter = ./htdocs/install/language/<lang>/install.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.installmysqllangdatasql]
+file_filter = ./htdocs/install/language/<lang>/mysql.lang.data.sql
+source_lang = en_GB
+type = TXT
+
+[impresscms.installwelcome_anonymoustpl]
+file_filter = ./htdocs/install/language/<lang>/welcome_anonymous.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.installwelcome_webmastertpl]
+file_filter = ./htdocs/install/language/<lang>/welcome_webmaster.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templateactivatedtpl]
+file_filter = ./htdocs/language/<lang>/mail_template/activated.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templatecomment_notifytpl]
+file_filter = ./htdocs/language/<lang>/mail_template/comment_notify.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templatecommentsubmit_notifytpl]
+file_filter = ./htdocs/language/<lang>/mail_template/commentsubmit_notify.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_template-default_notifytpl]
+file_filter = ./htdocs/language/<lang>/mail_template/default_notify.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templateresetpass2tpl]
+file_filter = ./htdocs/language/<lang>/mail_template/resetpass2.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templatetellfriendtpl]
+file_filter = ./htdocs/language/<lang>/mail_template/tellfriend.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templatewelcometpl]
+file_filter = ./htdocs/language/<lang>/mail_template/welcome.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_template-adminactivatetpl]
+file_filter = ./htdocs/language/<lang>/mail_template/adminactivate.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templateinvitetpl]
+file_filter = ./htdocs/language/<lang>/mail_template/invite.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templatelostpass1tpl]
+file_filter = ./htdocs/language/<lang>/mail_template/lostpass1.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templatelostpass2tpl]
+file_filter = ./htdocs/language/<lang>/mail_template/lostpass2.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templatenew_pmtpl]
+file_filter = ./htdocs/language/<lang>/mail_template/new_pm.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templatenewuser_notifytpl]
+file_filter = ./htdocs/language/<lang>/mail_template/newuser_notify.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templateregistertpl]
+file_filter = ./htdocs/language/<lang>/mail_template/register.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.mail_templateresetpass1tpl]
+file_filter = ./htdocs/language/<lang>/mail_template/resetpass1.tpl
+source_lang = en_GB
+type = TXT
+
+[impresscms.coreauthphp]
+file_filter = ./htdocs/language/<lang>/auth.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corebannersphp]
+file_filter = ./htdocs/language/<lang>/banners.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corecalendarphp]
+file_filter = ./htdocs/language/<lang>/calendar.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corecaptchaphp]
+file_filter = ./htdocs/language/<lang>/captcha.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corecommentphp]
+file_filter = ./htdocs/language/<lang>/comment.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corecorephp]
+file_filter = ./htdocs/language/<lang>/core.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corecountriesphp]
+file_filter = ./htdocs/language/<lang>/countries.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coredatabaseupdaterphp]
+file_filter = ./htdocs/language/<lang>/databaseupdater.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.coreerrorphp]
+file_filter = ./htdocs/language/<lang>/error.php
+source_lang = en_GB
+type = PHP_DEFINE
+
+[impresscms.corefindusersphp]
+file_filter = ./htdocs/language/<lang>/finduser.php
+source_lang = en_GB
+type = PHP_DEFINE
