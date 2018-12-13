@@ -1,0 +1,103 @@
+<?php
+// 08/2008 Updated and adapted for ImpressCMS by evoc - webmaster of www.impresscms.it
+// Published by ImpressCMS Italian Official Support Site - www.impresscms.it
+// Updated by evoc - webmaster of ImpressCMS
+// Updated by Ianez - Xoops Italia Staff
+// Original translation by Marco Ragogna (blueangel)
+// $Id: tplsets.php 2 2005-11-02 18:23:29Z skalpa $
+//%%%%%% Template Manager %%%%%
+define('_MD_TPLMAIN','Amministrazione Templates');
+define('_MD_INSTALL','Installa');
+define('_MD_EDITTEMPLATE','Modifica template');
+define('_MD_VIEWTEMPLATE','Vedi il file template');
+define('_MD_FILENAME','Nome del template');
+define('_MD_FILEDESC','Descrizione');
+define('_MD_LASTMOD','Ultima modifica');
+define('_MD_FILEMOD','Ultima modifica (template)');
+define('_MD_FILECSS','CSS');
+define('_MD_FILEHTML','HTML');
+define('_MD_AM_BTOTADMIN', 'Torna all\'amministrazione templates');
+define('_MD_RUSUREDELTH', 'Sei sicuro di voler eliminare questo set di template e tutti i suoi dati?');
+define('_MD_RUSUREDELTPL', 'Sei certo di voler eliminare tutti i dati di questo template?');
+define('_MD_PLZINSTALL', 'Premi il pulsante qui sotto per iniziare l\'installazione');
+define('_MD_PLZGENERATE', 'Premi il pulsante qui sotto per generare i template');
+define('_MD_CLONETHEME','Clona un set di template');
+define('_MD_THEMENAME','Set di template base');
+define('_MD_NEWNAME','Inserisci un nuovo nome per il set di template');
+define('_MD_IMPORT','Importa');
+define('_MD_RUSUREIMPT', 'Importando i dati dalla cartella dei template sovrascriverai le modifiche che hai fatto nel database.<br />Clicca "Importa" per procedere.');
+define('_MD_THMSETNAME','Nome');
+define('_MD_CREATED','Creato');
+define('_MD_SKIN','Skin');
+define('_MD_TEMPLATES','Templates');
+define('_MD_EDITSKIN','Modifica skin');
+define('_MD_NOFILE','Nessun template');
+define('_MD_VIEW','Vedi');
+define('_MD_COPYDEFAULT','Copia il template di default');
+define('_MD_DLDEFAULT','Scarica il template di default');
+define('_MD_VIEWDEFAULT','Vedi il template di default');
+define('_MD_DOWNLOAD','Scarica');
+define('_MD_UPLOAD','Carica');
+define('_MD_GENERATE','Genera');
+define('_MD_CHOOSEFILE', 'Scegli un template da caricare');
+define('_MD_UPWILLREPLACE', 'Il caricamento di questo template sovrascriver&agrave; il template presente nel database!');
+define('_MD_UPLOADTAR', 'Carica un set di templates');
+define('_MD_CHOOSETAR', 'Scegli un pacchetto di template da caricare');
+define('_MD_ONLYTAR', 'Deve essere un file tar.gz/.tar con una struttura di template valida per ImpressCMS');
+define('_MD_NTHEMENAME', 'Nuovo nome per il set di templates');
+define('_MD_ENTERTH', 'Inserisci un nome per il set di template di questo pacchetto. Lascia vuoto per il riconoscimento automatico.');
+define('_MD_TITLE','Titolo');
+define('_MD_CONTENT','Contenuto');
+define('_MD_ACTION','Azione');
+define('_MD_DEFAULTTHEME','Il tuo sito utilizza questo template di default');
+define('_MD_AM_ERRTHEME', 'I seguenti set di template non hanno dati validi negli skin file. Premi cancella per rimuovere i dati relativi al set di template.');
+define('_MD_SKINIMGS','File di immagini dello skin');
+define('_MD_EDITSKINIMG','Modifica i file di immagine dello skin');
+define('_MD_IMGFILE','Nome del file');
+define('_MD_IMGNEWFILE','Carica nuovo file');
+define('_MD_IMGDELETE','Elimina');
+define('_MD_ADDSKINIMG','Aggiungi un file di immagine alla skin');
+define('_MD_BLOCKHTML', 'Blocco HTML');
+define('_MD_IMAGES', 'Immagini');
+define('_MD_NOZLIB', 'Il supporto alle Zlib deve essere abilitato sul tuo server');
+define('_MD_LASTIMP', 'Ultima importazione');
+define('_MD_FILENEWER', 'Un template pi&ugrave; recente non ancora importato &egrave; presente nella cartella <b>template</b>.');
+define('_MD_FILEIMPORT', 'Un vecchio template non ancora importato &egrave; presente nella cartella <b>template</b>.');
+define('_MD_FILEGENER', 'Il template non esiste. Pu&ograve; essere generato (copiato dal template di <b>default</b>), caricato o importato dalla cartella <b>template</b>.');
+// Added in 1.3
+define('_MD_TPLSET_DEFAULT_NOEDIT', 'I files del template Default non possono essere modificati.');
+define('_MD_TPLSET_INSERT_FAILED', 'Non è possibile inserire il file template %s nel database.');
+define("_MD_TPLSET_TEMPLATE_NOTEXIST", 'Il template selezionato (ID: %s) non esiste');
+define("_MD_TPLSET_DELETE_FAIL", 'Non è possibile cancellare %s dal database.');
+define("_MD_TPLSET_DEFAULT_NODELETE", 'I files del template Default non possono essere cancellati.');
+define("_MD_TPLSET_DELETING", 'Files del template in cancellazione ...');
+define("_MD_TPLSET_DELETE_OK", "Template %s cancellato");
+define("_MD_TPLSET_UNIQUE_NAME", "Il nome del template set deve essere differente.");
+define("_MD_TPLSET_EXISTS", "Template set %s è già esistente");
+define("_MD_TPLSET_CREATE_FAILED", "Non è possibile creare il template set %s");
+define("_MD_TPLSET_COPY_FAILED", "Impossibile copiare il tempate %s");
+define("_MD_TPLSET_COPY_OK", "Template %s  copiato");
+define("_MD_TPLSET_CREATE_OK", "Template set %s  creato");
+define("_MD_TPLSET_TPLFILES_NOTEXIST", 'Template files per %s non esistono');
+define("_MD_TPLSET_FILE_NOTEXIST", 'I files selezionati non esistono');
+define("_MD_TPLSET_INSERT_OK", 'Template %s aggiunto al database.');
+define("_MD_TPLSET_INSTALLING_BLOCKS", "Files template del blocco in fase di installazione");
+define("_MD_TPLSET_BLOCK_INSERT_FAILED", "Non è possibile inserire il template del blocco %s nel database.");
+define("_MD_TPLSET_BLOCK_INSERT_OK", "Template blocco %s aggiunto al database");
+define("_MD_TPLSET_TEMPLATE_ADDED",	'Files del template di modulo %s generati e installati.');
+define("_MD_TPLSET_NAME_NOT_BLANK", "Il nome del template name non può restare in bianco");
+define("_MD_TPLSET_INVALID_NAME", "Il nome del template contiene caratteri non validi");
+define("_MD_TPLSET_NOT_FOUND", 'Non è possibile trovare %s nel file di default.');
+define("_MD_TPLSET_IMGSET_CREATE_FAILED", "Non è possibile creare un set immagine.");
+define("_MD_TPLSET_IMGSET_CREATED", "Set immagine %s creato.");
+define("_MD_TPLSET_IMGSET_LINK_FAILED", "Errore linkando il set immagine al set template");
+define("_MD_TPLSET_FILE_UNNECESSARY", 'I file di template %s non necessitano di essere installati (i files PHP che usano questo tempate non esistono');
+define("_MD_TPLSET_UPDATED", "File template %s aggiornato");
+define("_MD_TPLSET_COMPILED", "File template %s compilato");
+define("_MD_TPLSET_IMPORT_FAILED", "Non è possibile importare il file ");
+define("_MD_TPLSET_DELETING_DATA", 'Dati del template set in cancellazione ...');
+define("_MD_TPLSET_COPYING", "Files del template in fase di copiatura ...");
+define("_MD_TPLSET_INSTALLING", "Files per il template set %s in corso di installazione");
+define("_MD_TPLSET_CREATE_OWN", "Per modificare i template online sei pregato di creare un clone del template di <strong>default</strong> o uplodare il tuo proprio set.");
+define("_MD_TPLSET_STATUS", "Status");
+define("_MD_TPLSET_ACTIONS", "Azioni");
