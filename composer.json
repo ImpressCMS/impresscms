@@ -38,7 +38,7 @@
     "ext-pcre": "*",
     "ext-session": "*",
     "apix/cache": "^1.3",
-    "vlucas/phpdotenv": "^2.5",
+    "vlucas/phpdotenv": "^3.1",
     "keo/iso-639": "^1.0",
     "tecnickcom/tcpdf": "^6.2",
     "ezyang/htmlpurifier": "^4.10"
