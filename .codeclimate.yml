@@ -13,6 +13,7 @@ exclude_patterns:
 - plugins/textsanitizer
 - htdocs/editors
 - htdocs/libraries
+- tests/
 
 checks:
   argument-count:
@@ -125,4 +126,12 @@ plugins:
     enabled: true
     config:
       file_extensions:
+        - php
+
+  # enable dublications detection
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
         - php
