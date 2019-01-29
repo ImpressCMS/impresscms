@@ -12,8 +12,8 @@ if (!defined("ICMS_MAINFILE_INCLUDED")) {
 	// Including libs with composer
 	include_once ICMS_ROOT_PATH . "/vendor/autoload.php";
 
-	// Loads enviroment data
-	(new \Dotenv\Dotenv(ICMS_ROOT_PATH))->load();
+	// Loads environment data
+	\Dotenv\Dotenv::create(__DIR__)->load();
 
 	// (optional) Physical path to script that logs database queries.
 	// Example: define('ICMS_LOGGING_HOOK', ICMS_ROOT_PATH . '/modules/foobar/logging_hook.php');
