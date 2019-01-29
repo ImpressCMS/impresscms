@@ -30,7 +30,7 @@ class MainfileTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testLoggingHook() {
 		$this->assertTrue(defined('ICMS_LOGGING_HOOK'), 'ICMS_LOGGING_HOOK is not defined');
-		$this->assertSame(getenv('LOGGING_HOOK'),ICMS_LOGGING_HOOK, 'ICMS_LOGGING_HOOK is not same as LOGGING_HOOK env variable');
+		$this->assertSame(getenv('LOGGING_HOOK'), ICMS_LOGGING_HOOK, 'ICMS_LOGGING_HOOK is not same as LOGGING_HOOK env variable');
 	}
 
 	/**
@@ -50,14 +50,13 @@ class MainfileTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testUrlConstant() {
 		$this->assertTrue(defined('ICMS_URL'), 'ICMS_URL is not defined');
-		$this->assertSame(getenv('URL'),ICMS_URL, 'ICMS_URL is not same as URL env variable');
+		$this->assertSame(getenv('URL'), ICMS_URL, 'ICMS_URL is not same as URL env variable');
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	protected function setUp()
-	{
+	protected function setUp() {
 		global $xoopsOption;
 
 		$xoopsOption['nocommon'] = true;

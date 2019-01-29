@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <phpunit bootstrap="bootstrap.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         syntaxCheck="true"
+		 colors="true"
+		 convertErrorsToExceptions="true"
+		 convertNoticesToExceptions="true"
+		 convertWarningsToExceptions="true"
+		 syntaxCheck="true"
 		 backupGlobals="false"
 		 backupStaticAttributes="false"
 		 processIsolation="false"
-         stopOnFailure="false">
+		 stopOnFailure="false">
 	<testsuites>
 		<testsuite name="All">
 			<directory suffix="Test.php">./tests/</directory>
