@@ -299,7 +299,7 @@ define("_MD_AM_SEARCH_PER_PAGE", "Item per page in search results");
 define("_MD_AM_SEARCH_PER_PAGEDSC", "");
 
 define("_MD_AM_EXT_DATE", "Do you want to use an extended/local date function?");
-define("_MD_AM_EXT_DATEDSC", "Note: by activating this option, ImpressCMS will use an extended calendar script <b>ONLY</b> if you have this script running on your site.<br />Please visit <a href='http://wiki.impresscms.org/index.php?title=Extended_date_function'>extended date function</a> for more info.");
+define("_MD_AM_EXT_DATEDSC", "Note: by activating this option, ImpressCMS will use an extended calendar script <b>ONLY</b> if you have this script running on your site.<br />Please visit <a href='https://www.impresscms.org/modules/simplywiki/index.php?page=Extended_date_function'>extended date function</a> for more info.");
 
 define("_MD_AM_EDITOR_DEFAULT", "Default Editor");
 define("_MD_AM_EDITOR_DEFAULT_DESC", "Select the default Editor for all the site.");
@@ -411,7 +411,7 @@ define("_MD_AM_SIGMAXLENGTH", "Maximum amount of characters in users signatures?
 define("_MD_AM_SIGMAXLENGTHDSC", "Here you can choose the length of your users signatures.<br /> any character longer than this amount will be ignored.<br /><i>Be careful, long signatures can often break the design...</i>");
 
 define("_MD_AM_AUTHOPENID", "Enable OpenID authentication");
-define("_MD_AM_AUTHOPENIDDSC", "Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
+define("_MD_AM_AUTHOPENIDDSC", "Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='https://www.impresscms.org/modules/simplywiki/index.php?page=ImpressCMS_OpenID'>our wiki</a>.");
 define("_MD_AM_USE_GOOGLE_ANA", " Enable Google Analytics?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC", "");
 

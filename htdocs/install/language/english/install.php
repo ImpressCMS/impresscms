@@ -11,6 +11,10 @@
 
 define("SHOW_HIDE_HELP", "Show/hide help text");
 
+define ("ALTERNATE_LANGUAGE_MSG","Download an alternate language pack from the ImpressCMS website");
+define ("ALTERNATE_LANGUAGE_LNK_MSG", "Select another language not listed here.");
+define ("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
+
 // Configuration check page
 define("SERVER_API", "Server API");
 define("PHP_EXTENSION", "%s extension");
@@ -36,7 +40,7 @@ define("XOOPS_INSTALL_WIZARD", " %s - Installation Wizard");
 define("INSTALL_STEP", "Step");
 define("INSTALL_H3_STEPS", "Steps");
 define("INSTALL_OUTOF", " out of ");
-define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>");
+define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"https://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>");
 
 define("LANGUAGE_SELECTION", "Language selection");
 define("LANGUAGE_SELECTION_TITLE", "Choose your language"); // L128
@@ -64,7 +68,7 @@ define("WELCOME_TITLE", "Installation of ImpressCMS completed"); // L0
 define("MODULES_INSTALL", "Install modules");
 define("MODULES_INSTALL_TITLE", "Installation of modules ");
 define("NO_PHP5_TITLE", "No PHP 5");
-define("NO_PHP5_CONTENT", "PHP 5.2.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.2.0 (5.2.8 + is recommended) before attempting to install again. For more information, read <a href='http://community.impresscms.org/modules/smartsection/item.php?itemid=122' >ImpressCMS on PHP5 </a>.");
+define("NO_PHP5_CONTENT", "PHP 5.2.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.2.0 (5.2.8 + is recommended) before attempting to install again. For more information, read <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS on PHP5 </a>.");
 define("SAFE_MODE", "Safe Mode On");
 define("SAFE_MODE_TITLE", "Safe Mode On");
 define("SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again.");
@@ -156,7 +160,7 @@ define("ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS d
 define("_INSTALL_SELECT_MODS_INTRO", 'From the list below, please select the modules that you wish to install on this site. <br /><br />
 All the installed modules are accessible by the Administrators group and the Registered Users group by default. <br /><br />
 If you need to set permissions for Anonymous Users please do so in the Administration Panel after you complete this installer. <br /><br />
-For more information regarding Group Administration, please visit the <a href="http://wiki.impresscms.org/index.php?title=Permissions" rel="external">wiki</a>.');
+For more information regarding Group Administration, please visit the <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">wiki</a>.');
 
 define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
 define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
@@ -189,11 +193,11 @@ define("_MD_AM_MULTLOGINMSG_TXT", 'It was not possible to login on the site!! <b
          - You left the site or close the browser window without clicking the logout button.<br />
         </p>
         Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
-define("_MD_AM_RSSLOCALLINK_DESC", 'http://community.impresscms.org/modules/smartsection/backend.php'); //Link to the rrs of local support site
-define("_INSTALL_LOCAL_SITE", 'http://www.impresscms.org/'); //Link to local support site
+define("_MD_AM_RSSLOCALLINK_DESC", 'https://www.impresscms.org/modules/news/rss.php'); //Link to the rrs of local support site
+define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Link to local support site
 define("_LOCAOL_STNAME", 'ImpressCMS'); //Link to local support site
 define("_LOCAL_SLOCGAN", 'Make a lasting impression'); //Link to local support site
-define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
+define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_LOCAL_SENSORTXT", '#OOPS#'); //Add local translation
 define("_ADM_USE_RTL", "0"); // turn this to 1 if your language is right to left
 define("_DEF_LANG_TAGS", 'en,de'); //Add local translation

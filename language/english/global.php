@@ -240,7 +240,7 @@ define("_BLOCK", "Block(s)");
 define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
 
 // This shows local support site in ImpressCMS menu, (if selected language is not English)
-define('_IMPRESSCMS_LOCAL_SUPPORT','http://www.impresscms.org'); //add the local support site's URL
+define('_IMPRESSCMS_LOCAL_SUPPORT','https://www.impresscms.org'); //add the local support site's URL
 define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Local support site');
 define("_ALLEFTCON","Enter the text to be aligned on the Left side.");
 define("_ALCENTERCON","Enter the text to be aligned on the Center side.");
@@ -306,7 +306,7 @@ define("_LONGDATESTRING", "F jS Y, h:iA");
 define('_AUTHOR', 'Author');
 define("_CREDITS", "Credits");
 define("_LICENSE", "License");
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
+define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_BLOCK_ID", "Block ID");
 define('_IMPRESSCMS_PROJECT','Project Development');
 
