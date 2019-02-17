@@ -11,9 +11,9 @@
 
 define("SHOW_HIDE_HELP", "Show/hide help text");
 
-define ("ALTERNATE_LANGUAGE_MSG","Download an alternate language pack from the ImpressCMS website");
-define ("ALTERNATE_LANGUAGE_LNK_MSG", "Select another language not listed here.");
-define ("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
+define("ALTERNATE_LANGUAGE_MSG", "Download an alternate language pack from the ImpressCMS website");
+define("ALTERNATE_LANGUAGE_LNK_MSG", "Select another language not listed here.");
+define("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 
 // Configuration check page
 define("SERVER_API", "Server API");
