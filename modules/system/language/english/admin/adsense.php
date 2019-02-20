@@ -41,7 +41,7 @@ define('_CO_ICMS_ADSENSE_STYLE_DSC', 'The ad will be displayed in a container wi
 define('_CO_ICMS_ADSENSE_TAG', 'ID of the [adsense] tag to display this ad');
 define('_CO_ICMS_ADSENSE_TAG_DSC', 'The module will automatically generate an ID for you. However, if you which to customize it, you can. Remember that this needs to be unique.');
 define('_CO_ICMS_ADSENSE_EXPLAIN_TITLE', 'What are Adsenses ?');
-define('_CO_ICMS_ADSENSE_EXPLAIN', 'AdSenses are tags that you can define and use anywhere on your ImpressCMS site to insert Google AdSense ads. Documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/modules/wiki/index.php?page=Adsense">Adsense</a>.');
+define('_CO_ICMS_ADSENSE_EXPLAIN', 'AdSenses are tags that you can define and use anywhere on your ImpressCMS site to insert Google AdSense ads. Documentation of this feature can be found here: <a rel="external" href="https://www.impresscms.org/modules/simplywiki/index.php?page=Adsense">Adsense</a>.');
 define('_CO_ICMS_ADSENSE_COLOR_BACKGROUND', 'Background color');
 define('_CO_ICMS_ADSENSE_COLOR_BACKGROUND_DSC', 'The background color of your text ads');
 define('_CO_ICMS_ADSENSE_COLOR_BORDER', 'Border color');

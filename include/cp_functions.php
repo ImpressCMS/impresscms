@@ -158,47 +158,49 @@ function impresscms_get_adminmenu() {
 		'link' => '#',
 		'menu' => [
 			[
-				'link' => 'http://www.impresscms.org',
+				'link' => 'https://www.impresscms.org/',
 				'title' => _IMPRESSCMS_HOME,
 				'absolute' => 1,
 			//small' => ICMS_URL . '/images/impresscms.png',
 			],
 			[
-				'link' => 'http://community.impresscms.org',
+				'link' => 'https://www.impresscms.org/modules/iforum/',
 				'title' => _IMPRESSCMS_COMMUNITY,
 				'absolute' => 1,
 			//'small' = ICMS_URL . '/images/impresscms.png',
 			],
 			[
-				'link' => 'http://addons.impresscms.org',
+				'link' => 'https://www.impresscms.org/modules/downloads/',
 				'title' => _IMPRESSCMS_ADDONS,
 				'absolute' => 1,
 			//'small' => ICMS_URL . '/images/impresscms.png',
 			],
 			[
-				'link' => 'http://wiki.impresscms.org',
+				'link' => 'https://www.impresscms.org/modules/simplywiki/',
 				'title' => _IMPRESSCMS_WIKI,
 				'absolute' => 1,
 			//'small' = ICMS_URL . '/images/impresscms.png',
 			],
 			[
-				'link' => 'http://blog.impresscms.org',
+				'link' => 'https://www.impresscms.org/modules/news/',
 				'title' => _IMPRESSCMS_BLOG,
 				'absolute' => 1,
 			//'small'] = ICMS_URL . '/images/impresscms.png',
 			],
 			[
-				'link' => 'https://impresscmsdev.assembla.com/spaces/impresscms/new_dashboard',
+				'link' => 'https://github.com/ImpressCMS/impresscms',
 				'title' => _IMPRESSCMS_PROJECT,
 				'absolute' => 1,
 			//'small' = ICMS_URL . '/images/impresscms.png',
 			],
+/*
 			[
 				'link' => 'http://www.impresscms.org/donations/',
 				'title' => _IMPRESSCMS_DONATE,
 				'absolute' => 1,
 			//'small' = ICMS_URL . '/images/impresscms.png',
 			],
+*/
 			[
 				'link' => ICMS_URL . '/admin.php?rssnews=1',
 				'title' => _IMPRESSCMS_NEWS,
