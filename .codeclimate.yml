@@ -13,6 +13,7 @@ exclude_patterns:
 - plugins/textsanitizer
 - htdocs/editors
 - htdocs/libraries
+- tests/
 
 checks:
   argument-count:
@@ -56,11 +57,11 @@ plugins:
   # helps developers define and maintain consistent coding styles between different
   # editors and IDEs.  The Code Climate EditorConfig plugin will validate your project
   # files with your .editorconfig configuration.
-  editorconfig:
-    enabled: true
-    channel: beta
-    config:
-      editorconfig: .editorconfig
+  # editorconfig:
+  #  enabled: true
+  #  channel: beta
+  #  config:
+  #    editorconfig: .editorconfig
 
   # Offers linting, complexity analysis, and style checking for your modern
   # EcmaScript/JavaScript code.
@@ -125,4 +126,12 @@ plugins:
     enabled: true
     config:
       file_extensions:
+        - php
+
+  # enable dublications detection
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
         - php
