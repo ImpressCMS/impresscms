@@ -51,8 +51,7 @@ $errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
 
 try {
-	$env = new \Dotenv\Dotenv(ICMS_ROOT_PATH);
-	$env->load();
+	\Dotenv\Dotenv::create(ICMS_ROOT_PATH)->load();
 } catch (Exception $ex) {
 	// Reading .env file failed but that is not out business
 }
