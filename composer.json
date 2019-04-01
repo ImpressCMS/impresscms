@@ -27,7 +27,7 @@
     "imponeer/composer-custom-commands": "^0.1.0",
     "php": ">=5.6.0",
     "simplepie/simplepie": "^1.5",
-    "league/flysystem": "1.0.50",
+    "league/flysystem": "1.0.51",
     "phpmailer/phpmailer": "6.0.7",
     "league/container": "^3.2",
 	  "erusev/parsedown": "^1.7.0",
