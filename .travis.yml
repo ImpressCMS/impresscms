@@ -43,13 +43,14 @@ install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
   - travis_retry composer install --no-progress --no-interaction
 
+script:
+  - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php
+
+after_script:
+  - vendor/bin/test-reporter --coverage-report=./storage/log/clover.xml
+
 jobs:
   include:
     - stage: validate
       script:
         - composer validate
-    - stage: phpunit
-      script:
-        - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php
-      after_script:
-        - vendor/bin/test-reporter --coverage-report=./storage/log/clover.xml
