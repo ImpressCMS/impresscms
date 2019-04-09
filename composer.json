@@ -30,13 +30,13 @@
     "league/flysystem": "1.0.51",
     "phpmailer/phpmailer": "6.0.7",
     "league/container": "^3.2",
-	  "erusev/parsedown": "^1.7.0",
-	  "cerdic/css-tidy": "^1.5",
+    "erusev/parsedown": "^1.7.0",
+    "cerdic/css-tidy": "^1.5",
     "geshi/geshi": "^1.0",
-	  "mibe/feedwriter": "^1.1",
+    "mibe/feedwriter": "^1.1",
     "ext-curl": "*",
     "ext-gd": "*",
-     "old-xoops-libraries/php-downloader": "1.*",
+    "old-xoops-libraries/php-downloader": "1.*",
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-pcre": "*",
@@ -56,26 +56,29 @@
     "ext-mysql": "Use it if you would like to use old driver for MySQL (only for PHP 5.x)"
   },
   "autoload": {
-    "psr-0" : {"" : "libraries/"},
-	  "classmap": [
-		  "modules/"
-	  ],
-	  "psr-4": {
-		  "ImpressCMS\\Core\\Providers\\": "core/providers/"
-	  }
+    "psr-0": {
+      "": "libraries/"
+    },
+    "classmap": [
+      "modules/"
+    ],
+    "psr-4": {
+      "ImpressCMS\\Core\\Providers\\": "core/providers/"
+    }
   },
   "require-dev": {
-	  "phpunit/phpunit": "5.7.27"
+    "codeclimate/php-test-reporter": "^0.4.4",
+    "phpunit/phpunit": "5.7.27"
   },
-	"extra": {
-		"custom-commands": {
-			"commands": [
-			],
-			"boot": "mainfile.php"
-		}
+  "extra": {
+    "custom-commands": {
+      "commands": [
+      ],
+      "boot": "mainfile.php"
+    }
   },
   "config": {
-	  "optimize-autoloader": true,
-      "sort-packages": true
+    "optimize-autoloader": true,
+    "sort-packages": true
   }
 }

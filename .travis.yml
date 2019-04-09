@@ -5,21 +5,25 @@ os:
 
 cache:
   directories:
-    - $HOME/.composer/cache
+    - "$HOME/.composer/cache"
 
+addons:
+  code_climate:
+    repo_token:
+      secure: "BWrxwgDYR9P9e2S1N3kKAMbONJVFSZVTETHKs6IwpsDMhGLPEyCwIffg7l3iWI28w2zuIuOLKo5SbAZKqul+FFOur7F9lUPfjd4jbhF6cLHSc423F9SohuAdWmPLeoUOTzdv99FYKHo2T8w5w6ikzRGjaz2Fe9bzC9Bicw6Uh2OamTLS411apA8zTqOC2IIyi8hOC3ZfC833vAkD/USPrTOX7Oh/9Ght21R+Z8/k+xFM3u02J9wjmR37NTJJ6zgbKRXi8bJ2grn/vX6Sy5ebfFr0Cf7Cjk8Tot2gHBpoBxbQe+a15W9VXMLI1iK0DxYEzrNMVigsfbfauXpNq8/k0b+U3dq3gQLQs/KpZfei5+sKKj/jhzx6gSSvTzq2hA9CGTizb7JEJNBCQdA9Q0P5Ylah0thyC/j0sCTRqC2aMxfJk+LfOvO568Snn6cCUoAqguMRjeYm6sfLNCvoOnGyUHfLz4tsSq35rhbcAmW4B7YXghxy20Pm9h1gYN5/hkvyAuq9lDCHq+A7ey4l4s7LDB0sLbLyZDN5UCFMyX694r8lIMhV9TD9iOdaiIyUBINj1HlR6vcjT0xRmeHTnveyTJ0Qqm1AOZRIUOU5MX/omMgh2eE7sxZ6XIidYF/ZrkbZDEOovX238CT9m/KylNZkbNxV/1SvDZ1grHg0xxuHuG0="
 env:
- global:
-  - URL=http://192.168.2.99
-  - DB_TYPE=pdo.mysql
-  - DB_HOST=localhost
-  - DB_USER=root
-  - DB_PASS=
-  - DB_PCONNECT=0
-  - DB_NAME=icms
-  - DB_CHARSET=utf8
-  - DB_COLLATION=utf8_general_ci
-  - DB_PREFIX=icms
-  - DB_SALT=icms
+  global:
+    - URL=http://192.168.2.99
+    - DB_TYPE=pdo.mysql
+    - DB_HOST=localhost
+    - DB_USER=root
+    - DB_PASS=
+    - DB_PCONNECT=0
+    - DB_NAME=icms
+    - DB_CHARSET=utf8
+    - DB_COLLATION=utf8_general_ci
+    - DB_PREFIX=icms
+    - DB_SALT=icms
 
 stages:
   - validate
@@ -33,29 +37,19 @@ php:
   - '7.0'
   - '7.1'
   - '7.2'
+  - '7.3'
 
 install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
   - travis_retry composer install --no-progress --no-interaction
 
-script:
-  - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --no-coverage
-
 jobs:
   include:
     - stage: validate
-      script: composer validate
-    - stage: coverage
-      env:
-        - CC_TEST_REPORTER_ID=ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
-      before_script:
-        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        - chmod +x ./cc-test-reporter
-        - ./cc-test-reporter before-build
-      install:
-        - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
-        - travis_retry composer install --no-progress --no-interaction
       script:
-        - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php --coverage-clover=build/logs/clover.xml
+        - composer validate
+    - stage: phpunit
+      script:
+        - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php
       after_script:
-        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+        - vendor/bin/test-reporter --coverage-report=./storage/log/clover.xml
