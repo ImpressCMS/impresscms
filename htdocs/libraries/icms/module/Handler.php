@@ -438,7 +438,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param bool $inAdmin
 	 * @return bool
 	 */
-	static protected function checkModuleAccess($module, $inAdmin = FALSE) {
+	static public function checkModuleAccess($module, $inAdmin = FALSE) {
 		if ($inAdmin && !icms::$user) return FALSE;
 		/* @var $perm_handler icms_member_groupperm_Handler */
 		$perm_handler = icms::handler('icms_member_groupperm');
