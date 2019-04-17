@@ -84,6 +84,6 @@ Also, help could be found on [our official forums](https://www.impresscms.org/mo
 
 Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls)
 
-All development for 2.0 version happens on the *retro* branch, so it is always the most up-to-date. 
+All development for 2.0 version happens on the *master* branch, so it is always the most up-to-date. 
 
-If you are going to be submitting a pull request, please branch from *retro*, and submit your pull request back to same branch.
+If you are going to be submitting a pull request, please branch from *master*, and submit your pull request back to same branch.
