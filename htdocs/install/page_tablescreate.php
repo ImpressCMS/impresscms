@@ -18,28 +18,30 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) {
+    exit();
+}
 
 include_once "../mainfile.php";
 
 icms_core_Filesystem::chmod("../mainfile.php", 0444);
 if (defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != '') {
-	icms_core_Filesystem::chmod(XOOPS_TRUST_PATH, 0777);
-	icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0777);
-	icms_core_Filesystem::chmod("/modules/protector/root/modules/protector", 0777);
-	icms_core_Filesystem::chmod("/modules/protector/trust_path/modules", 0777);
-	if (!is_dir(XOOPS_ROOT_PATH.'/modules/protector')) {
-		icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/root/modules/protector',XOOPS_ROOT_PATH.'/modules/protector');
-	}
-	if (!is_dir(XOOPS_TRUST_PATH.'/modules')) {
-		icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules',XOOPS_TRUST_PATH.'/modules');
-	}
-	if (!is_dir(XOOPS_TRUST_PATH.'/modules/protector')) {
-		icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules/protector',XOOPS_TRUST_PATH.'/modules/protector');
-	}
-	icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0755);
+    icms_core_Filesystem::chmod(XOOPS_TRUST_PATH, 0777);
+    icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0777);
+    icms_core_Filesystem::chmod("/modules/protector/root/modules/protector", 0777);
+    icms_core_Filesystem::chmod("/modules/protector/trust_path/modules", 0777);
+    if (!is_dir(XOOPS_ROOT_PATH.'/modules/protector')) {
+        icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/root/modules/protector', XOOPS_ROOT_PATH.'/modules/protector');
+    }
+    if (!is_dir(XOOPS_TRUST_PATH.'/modules')) {
+        icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules', XOOPS_TRUST_PATH.'/modules');
+    }
+    if (!is_dir(XOOPS_TRUST_PATH.'/modules/protector')) {
+        icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules/protector', XOOPS_TRUST_PATH.'/modules/protector');
+    }
+    icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0755);
 }
-$wizard->setPage( 'tablescreate' );
+$wizard->setPage('tablescreate');
 $pageHasForm = true;
 $pageHasHelp = false;
 
@@ -49,45 +51,44 @@ include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
 if (!$dbm->isConnectable()) {
-	$wizard->redirectToPage( '-3' );
-	exit();
+    $wizard->redirectToPage('-3');
+    exit();
 }
 $process = '';
-if (!$dbm->tableExists( 'users' )) {
-	$process = 'create';
+if (!$dbm->tableExists('users')) {
+    $process = 'create';
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	// If there's nothing to do: switch to next page
-	if (empty( $process )) {
-		$wizard->redirectToPage( '+1' );
-		exit();
-	}
-	$tables = array();
-	
-	if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
-		$driver = substr(XOOPS_DB_TYPE, 4);
-	} else {
-		$driver = XOOPS_DB_TYPE;
-	}
-	$result = $dbm->queryFromFile( './sql/' . $driver . '.structure.sql' );
-	$content = $dbm->report();
-	include 'install_tpl.php';
-	exit();
+    // If there's nothing to do: switch to next page
+    if (empty($process)) {
+        $wizard->redirectToPage('+1');
+        exit();
+    }
+    $tables = array();
+    
+    if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
+        $driver = substr(XOOPS_DB_TYPE, 4);
+    } else {
+        $driver = XOOPS_DB_TYPE;
+    }
+    $result = $dbm->queryFromFile('./sql/' . $driver . '.structure.sql');
+    $content = $dbm->report();
+    include 'install_tpl.php';
+    exit();
 }
 
 ob_start();
 
 if ($process == 'create') {
-	?>
+    ?>
 <p class="x2-note"><?php echo READY_CREATE_TABLES; ?></p>
 	<?php
 } else {
-	$pageHasForm = false;
-	?>
+        $pageHasForm = false; ?>
 <p class="x2-note"><?php echo XOOPS_TABLES_FOUND; ?></p>
 	<?php
-}
+    }
 
 $content = ob_get_contents();
 ob_end_clean();

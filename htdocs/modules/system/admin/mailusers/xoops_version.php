@@ -39,16 +39,16 @@
  */
 
 $modversion = array(
-	'name' => _MD_AM_MLUS,
-	'version' => "",
-	'description' => _MD_AM_MLUS_DSC,
-	'author' => "Kazumi Ono<br />( http://www.myweb.ne.jp/ )",
-	'credits' => "",
-	'help' => "mailusers.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "mailusers.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=mailusers",
-	'category' => XOOPS_SYSTEM_MAILU,
-	'group' => _MD_AM_GROUPS_USERSANDGROUPS);
+    'name' => _MD_AM_MLUS,
+    'version' => "",
+    'description' => _MD_AM_MLUS_DSC,
+    'author' => "Kazumi Ono<br />( http://www.myweb.ne.jp/ )",
+    'credits' => "",
+    'help' => "mailusers.html",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "mailusers.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=mailusers",
+    'category' => XOOPS_SYSTEM_MAILU,
+    'group' => _MD_AM_GROUPS_USERSANDGROUPS);

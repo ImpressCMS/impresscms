@@ -43,7 +43,7 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 
 /**
@@ -59,21 +59,20 @@ if (!defined('ICMS_ROOT_PATH')) {
  */
 class XoopsFormSelectGroup extends icms_form_elements_select_Group
 {
-	private $_deprecated;
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	bool	$include_anon	Include group "anonymous"?
-	 * @param	mixed	$value	    	Pre-selected value (or array of them).
-	 * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
-	 * @param	bool    $multiple       Allow multiple selections?
-	 */
-	function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
-	{
-		parent::__construct($caption, $name, $include_anon, $value, $size, $multiple);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Group', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    private $_deprecated;
+    /**
+     * Constructor
+     *
+     * @param	string	$caption
+     * @param	string	$name
+     * @param	bool	$include_anon	Include group "anonymous"?
+     * @param	mixed	$value	    	Pre-selected value (or array of them).
+     * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
+     * @param	bool    $multiple       Allow multiple selections?
+     */
+    public function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
+    {
+        parent::__construct($caption, $name, $include_anon, $value, $size, $multiple);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Group', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-?>

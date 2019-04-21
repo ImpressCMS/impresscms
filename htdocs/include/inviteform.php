@@ -11,7 +11,7 @@
  */
 
 if (!defined("ICMS_ROOT_PATH")) {
-	die("ImpressCMS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 
 $invite_form = new icms_form_Theme(_US_USERINVITE, "userinvite", "invite.php", "post", true);

@@ -44,7 +44,9 @@
 
 
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  * @package kernel
@@ -62,16 +64,16 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  **/
 class XoopsTplset extends icms_view_template_set_Object
 {
-	private $_deprecated;
+    private $_deprecated;
 
-	/**
-	 * constructor
-	 */
-	function XoopsTplset()
-	{
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_view_template_set_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    /**
+     * constructor
+     */
+    public function XoopsTplset()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_view_template_set_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -86,10 +88,10 @@ class XoopsTplset extends icms_view_template_set_Object
  */
 class XoopsTplsetHandler extends icms_view_template_set_Handler
 {
-
-	private $_deprecated;
-	public function __construct(&$db) {
-		parent::__construct($db);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_view_template_set_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    private $_deprecated;
+    public function __construct(&$db)
+    {
+        parent::__construct($db);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_view_template_set_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

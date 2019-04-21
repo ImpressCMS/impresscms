@@ -44,7 +44,9 @@
 
 
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  * @package     kernel
@@ -67,16 +69,15 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  */
 class XoopsPrivmessage extends icms_data_privmessage_Object
 {
-
-	private $_deprecated;
-	/**
-	 * constructor
-	 **/
-	function XoopsPrivmessage()
-	{
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_data_privmessage_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    private $_deprecated;
+    /**
+     * constructor
+     **/
+    public function XoopsPrivmessage()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_data_privmessage_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -97,9 +98,10 @@ class XoopsPrivmessage extends icms_data_privmessage_Object
  */
 class XoopsPrivmessageHandler extends icms_data_privmessage_Handler
 {
-	private $_deprecated;
-	public function __construct(&$db) {
-		parent::__construct($db);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_data_privmessage_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    private $_deprecated;
+    public function __construct(&$db)
+    {
+        parent::__construct($db);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_data_privmessage_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

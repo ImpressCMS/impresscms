@@ -43,7 +43,7 @@
  **/
 
 if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 
 /**
@@ -60,15 +60,14 @@ if (!defined('ICMS_ROOT_PATH')) {
 
 class XoopsFormTextDateSelect extends icms_form_elements_Date
 {
-
-	private $_deprecated;
-	/**
-	 * Constructor
-	 */
-	function XoopsFormTextDateSelect($caption, $name, $size = 15, $value= 0)
-	{
-		$value = !is_numeric($value) ? time() : (int) ($value);
-		parent::__construct($caption, $name, $size, $value);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Date', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    private $_deprecated;
+    /**
+     * Constructor
+     */
+    public function XoopsFormTextDateSelect($caption, $name, $size = 15, $value= 0)
+    {
+        $value = !is_numeric($value) ? time() : (int) ($value);
+        parent::__construct($caption, $name, $size, $value);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Date', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

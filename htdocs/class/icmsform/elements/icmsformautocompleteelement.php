@@ -12,11 +12,13 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class IcmsFormAutocompleteElement extends icms_ipf_form_elements_Autocomplete {
-	private $_deprecated;
+class IcmsFormAutocompleteElement extends icms_ipf_form_elements_Autocomplete
+{
+    private $_deprecated;
 
-	public function __construct($object, $key) {
-		parent::__construct($object, $key);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Autocomplete', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct($object, $key)
+    {
+        parent::__construct($object, $key);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Autocomplete', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

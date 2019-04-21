@@ -38,9 +38,9 @@ $editorversion['file'] = "formtinymce.php";
 if ($handle = opendir($path)) {
    while (false !== ($file = readdir($handle))) {
        if (is_dir($path."/".$file) && $file != "." && $file != "..") {
-			$name = strtoupper($file);
-			$name = "_MI_TINYPLG".$name;
-			$plugins_array[$name] = $file;
+            $name = strtoupper($file);
+            $name = "_MI_TINYPLG".$name;
+            $plugins_array[$name] = $file;
        }
    }
    closedir($handle);
@@ -368,4 +368,3 @@ $modversion['config'][36]['valuetype'] = 'array';
 $modversion['config'][36]['default'] = '1 2 3';
 $modversion['config'][36]['category'] = 'tiny_manager';
 */
-?>

@@ -12,16 +12,16 @@
  */
 
 $modversion = array(
-	'name' => _MD_AM_RATINGS,
-	'version' => "1.0",
-	'description' => _MD_AM_RATINGS_DSC,
-	'author' => "Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>",
-	'credits' => "The ImpressCMS Projects",
-	'help' => "",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "rating.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=rating",
-	'category' => XOOPS_SYSTEM_RATINGS,
-	'group' => _MD_AM_GROUPS_CONTENT);
+    'name' => _MD_AM_RATINGS,
+    'version' => "1.0",
+    'description' => _MD_AM_RATINGS_DSC,
+    'author' => "Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>",
+    'credits' => "The ImpressCMS Projects",
+    'help' => "",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "rating.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=rating",
+    'category' => XOOPS_SYSTEM_RATINGS,
+    'group' => _MD_AM_GROUPS_CONTENT);

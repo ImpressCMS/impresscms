@@ -1,12 +1,28 @@
 <?php
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
-if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (file_exists('../../../../../../../mainfile.php')) {
+    include_once '../../../../../../../mainfile.php';
+}
+if (file_exists('../../../../../../mainfile.php')) {
+    include_once '../../../../../../mainfile.php';
+}
+if (file_exists('../../../../../mainfile.php')) {
+    include_once '../../../../../mainfile.php';
+}
+if (file_exists('../../../../mainfile.php')) {
+    include_once '../../../../mainfile.php';
+}
+if (file_exists('../../../mainfile.php')) {
+    include_once '../../../mainfile.php';
+}
+if (file_exists('../../mainfile.php')) {
+    include_once '../../mainfile.php';
+}
+if (file_exists('../mainfile.php')) {
+    include_once '../mainfile.php';
+}
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 
 //only site users can access this file or if multilanguage is enabled
@@ -23,13 +39,14 @@ if (is_object(icms::$user) && $easiestml_exist) {
 
         // if "THE EASIEST MULTILANGUAGE HACK" by GIJOE is applied... (The hack can be found at http://www.peak.ne.jp/xoops/)
         if ($easiestml_exist) {
-            $easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
-            $langnames = explode( ',' , EASIESTML_LANGNAMES ) ;
+            $easiestml_langs = explode(',', EASIESTML_LANGS) ;
+            $langnames = explode(',', EASIESTML_LANGNAMES) ;
     
             $lang_options = '' ;
     
-            foreach ($easiestml_langs as $l => $lang )
+            foreach ($easiestml_langs as $l => $lang) {
                 $lang_options .= '<option value="'.$lang.'">'.$langnames[$l].'</option>' ;
+            }
 
             $javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";
             echo "<select name=\"mlanguages\" ".$javascript." style=\"width:200px\">";
@@ -41,8 +58,7 @@ if (is_object(icms::$user) && $easiestml_exist) {
             $javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";
             echo "<input type=\"text\" size=\"2\" name=\"mlanguages\" ".$javascript." //>";
         }
-    }
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    } ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>{#icmsmlcontent_dlg.title}</title>
@@ -72,6 +88,6 @@ if (is_object(icms::$user) && $easiestml_exist) {
 </body>
 </html><?php
 } else {
-    die(_NOPERM);
-}
+        die(_NOPERM);
+    }
 ?>

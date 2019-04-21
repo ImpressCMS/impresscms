@@ -24,7 +24,7 @@
  */
 
 $config = array(
-	"name" => 'icmscaptcha',
+    "name" => 'icmscaptcha',
 );
 
 return $config;

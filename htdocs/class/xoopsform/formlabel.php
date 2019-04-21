@@ -42,7 +42,9 @@
  * @version	$Id: formlabel.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  * @package     kernel
@@ -60,12 +62,12 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormLabel extends icms_form_elements_Label {
-	private $_deprecated;
-	public function __construct($caption = "", $value = "", $name = "") {
-		parent::__construct($caption, $value, $name);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Label', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormLabel extends icms_form_elements_Label
+{
+    private $_deprecated;
+    public function __construct($caption = "", $value = "", $name = "")
+    {
+        parent::__construct($caption, $value, $name);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Label', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>

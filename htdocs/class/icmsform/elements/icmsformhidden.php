@@ -12,11 +12,13 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class IcmsFormHidden extends icms_form_elements_Hidden {
-	private $_deprecated;
+class IcmsFormHidden extends icms_form_elements_Hidden
+{
+    private $_deprecated;
 
-	public function __construct($name, $value) {
-		parent::__construct($name, $value);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Hidden', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct($name, $value)
+    {
+        parent::__construct($name, $value);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Hidden', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

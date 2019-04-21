@@ -37,7 +37,9 @@
  * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  * A Config-Option
@@ -51,16 +53,17 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     Config
  * @subpackage	Option
  */
-class icms_config_option_Object extends icms_core_Object {
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('confop_id', XOBJ_DTYPE_INT, null);
-		$this->initVar('confop_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		$this->initVar('confop_value', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		$this->initVar('conf_id', XOBJ_DTYPE_INT, 0);
-	}
+class icms_config_option_Object extends icms_core_Object
+{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->initVar('confop_id', XOBJ_DTYPE_INT, null);
+        $this->initVar('confop_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
+        $this->initVar('confop_value', XOBJ_DTYPE_TXTBOX, null, true, 255);
+        $this->initVar('conf_id', XOBJ_DTYPE_INT, 0);
+    }
 }
-

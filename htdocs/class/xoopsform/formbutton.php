@@ -42,7 +42,9 @@
  * @version	$Id: formbutton.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 /**
  *
  *
@@ -61,10 +63,12 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  form
  */
-class XoopsFormButton extends icms_form_elements_Button {
-	private $_deprecated;
-	public function __construct($caption, $name, $value = "", $type = "button") {
-		parent::__construct($caption, $name, $value, $type);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Button', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormButton extends icms_form_elements_Button
+{
+    private $_deprecated;
+    public function __construct($caption, $name, $value = "", $type = "button")
+    {
+        parent::__construct($caption, $name, $value, $type);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Button', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

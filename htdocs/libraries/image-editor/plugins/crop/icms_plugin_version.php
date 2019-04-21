@@ -25,4 +25,3 @@ $plugversion['file'] = 'crop_image.php';
 $plugversion['block_template'] = 'crop_image.html';
 $plugversion['init_js_function'] = 'init_imageCrop()';
 $plugversion['stop_js_function'] = 'crop_removeDivElements()';
-?>

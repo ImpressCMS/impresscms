@@ -12,109 +12,116 @@
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-	exit("Access Denied");
+    exit("Access Denied");
 }
 
-function editrating($showmenu = FALSE, $ratingid = 0) {
-	global $icms_rating_handler, $icmsAdminTpl;
+function editrating($showmenu = false, $ratingid = 0)
+{
+    global $icms_rating_handler, $icmsAdminTpl;
 
-	icms_cp_header();
+    icms_cp_header();
 
-	$ratingObj = $icms_rating_handler->get($ratingid);
+    $ratingObj = $icms_rating_handler->get($ratingid);
 
-	if (!$ratingObj->isNew()) {
+    if (!$ratingObj->isNew()) {
+        $sform = $ratingObj->getForm(_CO_ICMS_RATINGS_EDIT, 'addrating');
 
-		$sform = $ratingObj->getForm(_CO_ICMS_RATINGS_EDIT, 'addrating');
+        $sform->assign($icmsAdminTpl);
+        $icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_EDIT_INFO);
+        $icmsAdminTpl->display('db:admin/rating/system_adm_rating.html');
+    } else {
+        $ratingObj->hideFieldFromForm(array('item', 'itemid', 'uid', 'date', 'rate'));
 
-		$sform->assign($icmsAdminTpl);
-		$icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_EDIT_INFO);
-		$icmsAdminTpl->display('db:admin/rating/system_adm_rating.html');
-	} else {
-		$ratingObj->hideFieldFromForm(array('item', 'itemid', 'uid', 'date', 'rate'));
+        if (isset($_POST['op'])) {
+            $controller = new icms_ipf_Controller($icms_rating_handler);
+            $controller->postDataToObject($ratingObj);
 
-		if (isset($_POST['op'])) {
-			$controller = new icms_ipf_Controller($icms_rating_handler);
-			$controller->postDataToObject($ratingObj);
+            if ($_POST['op'] == 'changedField') {
+                switch ($_POST['changedField']) {
+                    case 'dirname':
+                        $ratingObj->showFieldOnForm(array('item', 'itemid', 'uid', 'date', 'rate'));
+                        break;
+                }
+            }
+        }
 
-			if ($_POST['op'] == 'changedField') {
-				switch($_POST['changedField']) {
-					case 'dirname' :
-						$ratingObj->showFieldOnForm(array('item', 'itemid', 'uid', 'date', 'rate'));
-						break;
-				}
-			}
-		}
+        $sform = $ratingObj->getForm(_CO_ICMS_RATINGS_CREATE, 'addrating');
+        $sform->assign($icmsAdminTpl);
 
-		$sform = $ratingObj->getForm(_CO_ICMS_RATINGS_CREATE, 'addrating');
-		$sform->assign($icmsAdminTpl);
-
-		$icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_CREATE_INFO);
-		$icmsAdminTpl->display('db:admin/rating/system_adm_rating.html');
-	}
+        $icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_CREATE_INFO);
+        $icmsAdminTpl->display('db:admin/rating/system_adm_rating.html');
+    }
 }
 icms_loadLanguageFile('system', 'common');
 
 $icms_rating_handler = icms_getmodulehandler('rating');
 
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op'])) 
-	? trim(filter_input(INPUT_POST, 'op'))
-	: ((isset($_GET['op']))
-		? trim(filter_input(INPUT_GET, 'op'))
-		: '');
+if (!empty($_POST)) {
+    foreach ($_POST as $k => $v) {
+        ${$k} = StopXSS($v);
+    }
+}
+if (!empty($_GET)) {
+    foreach ($_GET as $k => $v) {
+        ${$k} = StopXSS($v);
+    }
+}
+$op = (isset($_POST['op']))
+    ? trim(filter_input(INPUT_POST, 'op'))
+    : ((isset($_GET['op']))
+        ? trim(filter_input(INPUT_GET, 'op'))
+        : '');
 
 switch ($op) {
-	/*	case "mod":
-	 case "changedField";
+    /*	case "mod":
+     case "changedField";
 
-		$ratingid = isset($_GET['ratingid']) ? (int) ($_GET['ratingid']) : 0 ;
+        $ratingid = isset($_GET['ratingid']) ? (int) ($_GET['ratingid']) : 0 ;
 
-		editrating(true, $ratingid);
+        editrating(true, $ratingid);
 
-		break;
+        break;
 
-		case "clone":
+        case "clone":
 
-		$ratingid = isset($_GET['ratingid']) ? (int) ($_GET['ratingid']) : 0 ;
+        $ratingid = isset($_GET['ratingid']) ? (int) ($_GET['ratingid']) : 0 ;
 
-		editrating(true, $ratingid, true);
-		break;
+        editrating(true, $ratingid, true);
+        break;
 
-		case "addrating":
-		$controller = new icms_ipf_Controller($icms_rating_handler);
-		$controller->storeFromDefaultForm(_CO_ICMS_RATINGS_CREATED, _CO_ICMS_RATINGS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=rating');
-		break;
-		*/
-	case "del":
-		$controller = new icms_ipf_Controller($icms_rating_handler);
-		$controller->handleObjectDeletion();
+        case "addrating":
+        $controller = new icms_ipf_Controller($icms_rating_handler);
+        $controller->storeFromDefaultForm(_CO_ICMS_RATINGS_CREATED, _CO_ICMS_RATINGS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=rating');
+        break;
+        */
+    case "del":
+        $controller = new icms_ipf_Controller($icms_rating_handler);
+        $controller->handleObjectDeletion();
 
-		break;
+        break;
 
-	default:
+    default:
 
-		icms_cp_header();
+        icms_cp_header();
 
-		$objectTable = new icms_ipf_view_Table($icms_rating_handler, false, array('delete'));
-		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, false, 'getUnameValue'));
-		$objectTable->addColumn(new icms_ipf_view_Column('dirname', _GLOBAL_LEFT));
-		$objectTable->addColumn(new icms_ipf_view_Column('item', _GLOBAL_LEFT, false, 'getItemValue'));
-		$objectTable->addColumn(new icms_ipf_view_Column('date', 'center', 150));
-		$objectTable->addColumn(new icms_ipf_view_Column('rate', 'center', 60, 'getRateValue'));
-		//$objectTable->addIntroButton('addrating', 'admin.php?fct=rating&op=mod', _CO_ICMS_RATINGS_CREATE);
+        $objectTable = new icms_ipf_view_Table($icms_rating_handler, false, array('delete'));
+        $objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, false, 'getUnameValue'));
+        $objectTable->addColumn(new icms_ipf_view_Column('dirname', _GLOBAL_LEFT));
+        $objectTable->addColumn(new icms_ipf_view_Column('item', _GLOBAL_LEFT, false, 'getItemValue'));
+        $objectTable->addColumn(new icms_ipf_view_Column('date', 'center', 150));
+        $objectTable->addColumn(new icms_ipf_view_Column('rate', 'center', 60, 'getRateValue'));
+        //$objectTable->addIntroButton('addrating', 'admin.php?fct=rating&op=mod', _CO_ICMS_RATINGS_CREATE);
 
-		//$objectTable->addQuickSearch(array('title', 'summary', 'description'));
+        //$objectTable->addQuickSearch(array('title', 'summary', 'description'));
 
-		$icmsAdminTpl->assign('icms_rating_table', $objectTable->fetch());
+        $icmsAdminTpl->assign('icms_rating_table', $objectTable->fetch());
 
-		$icmsAdminTpl->assign('icms_rating_explain', TRUE);
-		$icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_DSC);
+        $icmsAdminTpl->assign('icms_rating_explain', true);
+        $icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_DSC);
 
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/rating/system_adm_rating.html');
+        $icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/rating/system_adm_rating.html');
 
-		break;
+        break;
 }
 
 icms_cp_footer();
-

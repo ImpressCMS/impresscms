@@ -11,16 +11,16 @@
  */
 
 $modversion = array(
-	'name' => _MD_AM_CUSTOMTAGS,
-	'version' => "1.0",
-	'description' => _MD_AM_CUSTOMTAGS_DSC,
-	'author' => "marcan <marcan@impresscms.org",
-	'credits' => "The ImpressCMS Projects",
-	'help' => "",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "banners.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=customtag",
-	'category' => XOOPS_SYSTEM_CUSTOMTAGS,
-	'group' => _MD_AM_GROUPS_CONTENT);
+    'name' => _MD_AM_CUSTOMTAGS,
+    'version' => "1.0",
+    'description' => _MD_AM_CUSTOMTAGS_DSC,
+    'author' => "marcan <marcan@impresscms.org",
+    'credits' => "The ImpressCMS Projects",
+    'help' => "",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "banners.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=customtag",
+    'category' => XOOPS_SYSTEM_CUSTOMTAGS,
+    'group' => _MD_AM_GROUPS_CONTENT);

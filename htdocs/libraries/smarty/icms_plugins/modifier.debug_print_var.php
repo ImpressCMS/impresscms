@@ -7,11 +7,11 @@
 
 /**
  * Smarty debug_print_var modifier plugin
- * 
+ *
  * Modified version of the default smarty plug-in that prevents endless looping when dealing with assigned
  * objects
- * 
- * 
+ *
+ *
  *
  * Type:     modifier
  * Name:     debug_print_var
@@ -32,23 +32,23 @@ function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40)
             $return = smarty_modifier_debug_print_var($curr_val, $depth+1, $length);
             $results .= "<br />".str_repeat('&nbsp;', $depth*2)."<b>".strtr($curr_key, $_replace)."</b> =&gt; $return";
         }
-    } else if (is_object($var)) {
+    } elseif (is_object($var)) {
         $object_vars = get_object_vars($var);
         $results = "<b>".get_class($var)." Object (".count($object_vars).")</b>";
         foreach ($object_vars as $curr_key => $curr_val) {
-        	if ( is_object( $curr_val ) ) {
-        		$return ='[object ' . get_class( $curr_val ) . ']';
-        	} else {
-            	$return = smarty_modifier_debug_print_var($curr_val, $depth+1, $length);
-        	}
+            if (is_object($curr_val)) {
+                $return ='[object ' . get_class($curr_val) . ']';
+            } else {
+                $return = smarty_modifier_debug_print_var($curr_val, $depth+1, $length);
+            }
             $results .= "<br />".str_repeat('&nbsp;', $depth*2)."<b>$curr_key</b> =&gt; $return";
         }
-    } else if (is_resource($var)) {
+    } elseif (is_resource($var)) {
         $results = '<i>'.(string)$var.'</i>';
-    } else if (empty($var) && $var != "0") {
+    } elseif (empty($var) && $var != "0") {
         $results = '<i>empty</i>';
     } else {
-        if (strlen($var) > $length ) {
+        if (strlen($var) > $length) {
             $results = substr($var, 0, $length-3).'...';
         } else {
             $results = $var;
@@ -60,5 +60,3 @@ function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40)
 }
 
 /* vim: set expandtab: */
-
-?>

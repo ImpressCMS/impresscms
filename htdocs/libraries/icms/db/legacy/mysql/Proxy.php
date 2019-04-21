@@ -53,31 +53,33 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_db_legacy_mysql_Proxy extends icms_db_legacy_mysql_Database {
+class icms_db_legacy_mysql_Proxy extends icms_db_legacy_mysql_Database
+{
 
-	/**
-	 * perform a query on the database
-	 *
-	 * this method allows only SELECT queries for safety.
-	 *
-	 * @param string $sql a valid MySQL query
-	 * @param int $limit number of records to return
-	 * @param int $start offset of first record to return
-	 * @return resource query result or FALSE if unsuccessful
-	 */
-	public function query($sql, $limit = 0, $start = 0) {
-		// Hack by marcan to track query count
-		global $smartfactory_query_count_activated, $smartfactory_query_count;
-		if (isset($smartfactory_query_count_activated) && $smartfactory_query_count_activated) {
-			$smartfactory_query_count++;
-		}
-		// End of Hack by marcan to track query count
-		$sql = ltrim($sql);
-		if (!$this->allowWebChanges && strtolower(substr($sql, 0, 6)) != 'select')  {
-			trigger_error(_CORE_DB_NOTALLOWEDINGET, E_USER_WARNING);
-			return FALSE;
-		}
+    /**
+     * perform a query on the database
+     *
+     * this method allows only SELECT queries for safety.
+     *
+     * @param string $sql a valid MySQL query
+     * @param int $limit number of records to return
+     * @param int $start offset of first record to return
+     * @return resource query result or FALSE if unsuccessful
+     */
+    public function query($sql, $limit = 0, $start = 0)
+    {
+        // Hack by marcan to track query count
+        global $smartfactory_query_count_activated, $smartfactory_query_count;
+        if (isset($smartfactory_query_count_activated) && $smartfactory_query_count_activated) {
+            $smartfactory_query_count++;
+        }
+        // End of Hack by marcan to track query count
+        $sql = ltrim($sql);
+        if (!$this->allowWebChanges && strtolower(substr($sql, 0, 6)) != 'select') {
+            trigger_error(_CORE_DB_NOTALLOWEDINGET, E_USER_WARNING);
+            return false;
+        }
 
-		return $this->queryF($sql, $limit, $start);
-	}
+        return $this->queryF($sql, $limit, $start);
+    }
 }

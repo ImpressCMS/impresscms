@@ -11,4 +11,3 @@ define("ICMS_CAPTCHA_REFRESH", "Click the image for a new code.");
 
 // For text mode
 define("ICMS_CAPTCHA_RULE_TEXT", "Input the result from the expression");
-?>

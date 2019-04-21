@@ -42,7 +42,9 @@
  * @version	$Id: formselectlang.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 /**
  * @package     kernel
  * @subpackage  form
@@ -67,12 +69,12 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectLang extends icms_form_elements_select_Lang {
-	private $_deprecated;
-	public function __construct($caption, $name, $value = null, $size = 1) {
-		parent::__construct($caption, $name, $value, $size);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Lang', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormSelectLang extends icms_form_elements_select_Lang
+{
+    private $_deprecated;
+    public function __construct($caption, $name, $value = null, $size = 1)
+    {
+        parent::__construct($caption, $name, $value, $size);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Lang', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>

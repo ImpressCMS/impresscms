@@ -42,7 +42,9 @@
  * @version	$Id: formelement.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 /**
  *
  *
@@ -64,11 +66,12 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  form
  */
-abstract class XoopsFormElement extends icms_form_Element{
-	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_Element', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+abstract class XoopsFormElement extends icms_form_Element
+{
+    private $_deprecated;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_Element', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-?>

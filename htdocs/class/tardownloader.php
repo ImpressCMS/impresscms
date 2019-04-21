@@ -43,7 +43,7 @@
  * @version	$Id: tardownloader.php 12329 2013-09-19 13:53:36Z skenow $
  */
 if (!defined('ICMS_ROOT_PATH')) {
-	exit();
+    exit();
 }
 
 /**
@@ -56,19 +56,19 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @deprecated	Use icms_file_TarDownloader, instead
  * @todo		Remove in 1.4
  */
-class XoopsTarDownloader extends icms_file_TarDownloader {
+class XoopsTarDownloader extends icms_file_TarDownloader
+{
+    private $_deprecated;
 
-	private $_deprecated;
-
-	/**
-	 * Constructor
-	 *
-	 * @param string $ext       file extension
-	 * @param string $mimyType  Mimetype
-	 **/
-	public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip') {
-		parent::__construct($ext, $mimyType);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_file_TarDownloader', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
+    /**
+     * Constructor
+     *
+     * @param string $ext       file extension
+     * @param string $mimyType  Mimetype
+     **/
+    public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip')
+    {
+        parent::__construct($ext, $mimyType);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_file_TarDownloader', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

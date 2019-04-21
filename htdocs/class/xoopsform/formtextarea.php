@@ -43,7 +43,7 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 
 /**
@@ -54,20 +54,21 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @deprecated	Use icms_form_elements_Textarea
  * @todo		Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsFormTextArea extends icms_form_elements_Textarea {
-
-	private $_deprecated;
-	/**
-	 * Constuctor
-	 *
-	 * @param	string  $caption    caption
-	 * @param	string  $name       name
-	 * @param	string  $value      initial content
-	 * @param	int     $rows       number of rows
-	 * @param	int     $cols       number of columns
-	 */
-	function XoopsFormTextArea($caption, $name, $value = "", $rows = 5, $cols = 50) {
-		parent::__construct($caption, $name, $value, $rows, $cols);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Textarea', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormTextArea extends icms_form_elements_Textarea
+{
+    private $_deprecated;
+    /**
+     * Constuctor
+     *
+     * @param	string  $caption    caption
+     * @param	string  $name       name
+     * @param	string  $value      initial content
+     * @param	int     $rows       number of rows
+     * @param	int     $cols       number of columns
+     */
+    public function XoopsFormTextArea($caption, $name, $value = "", $rows = 5, $cols = 50)
+    {
+        parent::__construct($caption, $name, $value, $rows, $cols);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Textarea', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

@@ -14,16 +14,16 @@
  */
 
 $modversion = array(
-	'name' => _MD_AM_BKPOSAD,
-	'version' => "",
-	'description' => _MD_AM_BKPOSAD_DSC,
-	'author' => "",
-	'credits' => "The ImpressCMS Project",
-	'help' => "blocksp.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "blockspadmin.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=blockspadmin",
-	'category' => XOOPS_SYSTEM_BLOCKP,
-	'group' => _MD_AM_GROUPS_LAYOUT);
+    'name' => _MD_AM_BKPOSAD,
+    'version' => "",
+    'description' => _MD_AM_BKPOSAD_DSC,
+    'author' => "",
+    'credits' => "The ImpressCMS Project",
+    'help' => "blocksp.html",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "blockspadmin.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=blockspadmin",
+    'category' => XOOPS_SYSTEM_BLOCKP,
+    'group' => _MD_AM_GROUPS_LAYOUT);

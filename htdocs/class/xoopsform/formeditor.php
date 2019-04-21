@@ -22,7 +22,9 @@
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  * XoopsEditor hanlder
@@ -33,12 +35,12 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  form
  */
-class XoopsFormEditor extends icms_form_elements_Editor {
-	private $_deprecated;
-	public function __construct($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "") {
-		parent::__construct($caption, $name, $editor_configs, $noHtml, $OnFailure);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Editor', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormEditor extends icms_form_elements_Editor
+{
+    private $_deprecated;
+    public function __construct($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
+    {
+        parent::__construct($caption, $name, $editor_configs, $noHtml, $OnFailure);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Editor', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>

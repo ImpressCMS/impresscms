@@ -42,7 +42,9 @@
  * @version	$Id: formtext.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-if(!defined('ICMS_ROOT_PATH')) {die('ImpressCMS root path not defined');}
+if (!defined('ICMS_ROOT_PATH')) {
+    die('ImpressCMS root path not defined');
+}
 /**
  * @package     kernel
  * @subpackage  form
@@ -63,22 +65,20 @@ if(!defined('ICMS_ROOT_PATH')) {die('ImpressCMS root path not defined');}
  */
 class XoopsFormText extends icms_form_elements_Text
 {
+    private $_deprecated;
 
-	private $_deprecated;
-
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$name       "name" attribute
-	 * @param	int		$size	    Size
-	 * @param	int		$maxlength	Maximum length of text
-	 * @param	string  $value      Initial text
-	 */
-	function XoopsFormText($caption, $name, $size, $maxlength, $value = '', $autocomplete = false)
-	{
-		parent::__construct($caption, $name, $size, $maxlength, $value, $autocomplete);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Text', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    /**
+     * Constructor
+     *
+     * @param	string	$caption	Caption
+     * @param	string	$name       "name" attribute
+     * @param	int		$size	    Size
+     * @param	int		$maxlength	Maximum length of text
+     * @param	string  $value      Initial text
+     */
+    public function XoopsFormText($caption, $name, $size, $maxlength, $value = '', $autocomplete = false)
+    {
+        parent::__construct($caption, $name, $size, $maxlength, $value, $autocomplete);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Text', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-

@@ -76,8 +76,9 @@
  */
 abstract class CriteriaElement extends icms_db_criteria_Element
 {
-	public function __construct() {
-	}
+    public function __construct()
+    {
+    }
 }
 
 /**
@@ -93,12 +94,12 @@ abstract class CriteriaElement extends icms_db_criteria_Element
  */
 class CriteriaCompo extends icms_db_criteria_Compo
 {
-	private $_errors;
-	public function __construct($ele=null, $condition='AND') {
-		parent::__construct($ele, $condition);
-		$this->_errors = icms_core_Debug::setDeprecated('icms_db_criteria_Compo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
+    private $_errors;
+    public function __construct($ele=null, $condition='AND')
+    {
+        parent::__construct($ele, $condition);
+        $this->_errors = icms_core_Debug::setDeprecated('icms_db_criteria_Compo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -114,10 +115,10 @@ class CriteriaCompo extends icms_db_criteria_Compo
  */
 class Criteria extends icms_db_criteria_Item
 {
-	private $_errors;
-	public function __construct($column, $value='', $operator='=', $prefix = '', $function = '') {
-		parent::__construct($column, $value, $operator, $prefix, $function);
-		$this->_errors = icms_core_Debug::setDeprecated('icms_db_criteria_Item', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    private $_errors;
+    public function __construct($column, $value='', $operator='=', $prefix = '', $function = '')
+    {
+        parent::__construct($column, $value, $operator, $prefix, $function);
+        $this->_errors = icms_core_Debug::setDeprecated('icms_db_criteria_Item', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-

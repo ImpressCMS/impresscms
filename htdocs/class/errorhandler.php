@@ -39,20 +39,20 @@
  * @version	$Id: errorhandler.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-defined( 'ICMS_ROOT_PATH' ) or die();
+defined('ICMS_ROOT_PATH') or die();
 
 /**
  * Backward compatibility code, do not use this class directly
  * @deprecated	Use icms_core_Logger, instead
  * @todo		Remove in version 1.4
  */
-class XoopsErrorHandler extends icms_core_Logger {
-	private $_deprecated;
+class XoopsErrorHandler extends icms_core_Logger
+{
+    private $_deprecated;
 
-	public function __construct() {
-		parent::instance();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_core_Logger', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct()
+    {
+        parent::instance();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_core_Logger', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>
