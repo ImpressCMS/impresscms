@@ -21,26 +21,27 @@
  * Defines the FCKPlugins object that is responsible for loading the Plugins.
  */
 
-var FCKPlugins = FCK.Plugins = new Object() ;
-FCKPlugins.ItemsCount = 0 ;
-FCKPlugins.Items = new Object() ;
+var FCKPlugins = (FCK.Plugins = new Object());
+FCKPlugins.ItemsCount = 0;
+FCKPlugins.Items = new Object();
 
-FCKPlugins.Load = function()
-{
-	var oItems = FCKPlugins.Items ;
+FCKPlugins.Load = function() {
+	var oItems = FCKPlugins.Items;
 
 	// build the plugins collection.
-	for ( var i = 0 ; i < FCKConfig.Plugins.Items.length ; i++ )
-	{
-		var oItem = FCKConfig.Plugins.Items[i] ;
-		var oPlugin = oItems[ oItem[0] ] = new FCKPlugin( oItem[0], oItem[1], oItem[2] ) ;
-		FCKPlugins.ItemsCount++ ;
+	for (var i = 0; i < FCKConfig.Plugins.Items.length; i++) {
+		var oItem = FCKConfig.Plugins.Items[i];
+		var oPlugin = (oItems[oItem[0]] = new FCKPlugin(
+			oItem[0],
+			oItem[1],
+			oItem[2]
+		));
+		FCKPlugins.ItemsCount++;
 	}
 
 	// Load all items in the plugins collection.
-	for ( var s in oItems )
-		oItems[s].Load() ;
+	for (var s in oItems) oItems[s].Load();
 
 	// This is a self destroyable function (must be called once).
-	FCKPlugins.Load = null ;
-}
+	FCKPlugins.Load = null;
+};

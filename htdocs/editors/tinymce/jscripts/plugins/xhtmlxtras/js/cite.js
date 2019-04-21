@@ -9,19 +9,19 @@
  */
 
 function init() {
-	SXE.initElementDialog('cite');
+	SXE.initElementDialog("cite");
 	if (SXE.currentAction == "update") {
 		SXE.showRemoveButton();
 	}
 }
 
 function insertCite() {
-	SXE.insertElement('cite');
+	SXE.insertElement("cite");
 	tinyMCEPopup.close();
 }
 
 function removeCite() {
-	SXE.removeElement('cite');
+	SXE.removeElement("cite");
 	tinyMCEPopup.close();
 }
 

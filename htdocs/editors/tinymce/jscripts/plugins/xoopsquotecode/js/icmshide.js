@@ -4,27 +4,26 @@
 tinyMCEPopup.requireLangPack();
 
 var IcmshideDialog = {
-	init : function()
-		{
+	init: function() {
 		var formObj = document.forms[0];
 		// Get the selected contents as text and place it in the input
-		formObj.htext.value = tinyMCEPopup.editor.selection.getContent({format : 'text'});
-		},
-	insert : function()
-		{
+		formObj.htext.value = tinyMCEPopup.editor.selection.getContent({
+			format: "text"
+		});
+	},
+	insert: function() {
 		// Insert the contents from the input into the document
 		var formObj = document.forms[0];
-		if (window.opener)
-			{
+		if (window.opener) {
 			var htext = formObj.htext.value;
-			htext.replace(new RegExp("<",'g'), "&lt;");
-			htext.replace(new RegExp(">",'g'), "&gt;");
-			var html = '[hide]';
-			html += htext+'[/hide]<br />';
-			tinyMCEPopup.editor.execCommand('mceInsertContent', true, html);
+			htext.replace(new RegExp("<", "g"), "&lt;");
+			htext.replace(new RegExp(">", "g"), "&gt;");
+			var html = "[hide]";
+			html += htext + "[/hide]<br />";
+			tinyMCEPopup.editor.execCommand("mceInsertContent", true, html);
 			tinyMCEPopup.close();
-			}
 		}
+	}
 };
 
 tinyMCEPopup.onInit.add(IcmshideDialog.init, IcmshideDialog);

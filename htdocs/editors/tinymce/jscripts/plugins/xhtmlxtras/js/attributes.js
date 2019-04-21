@@ -14,37 +14,51 @@ function init() {
 	var dom = inst.dom;
 	var elm = inst.selection.getNode();
 	var f = document.forms[0];
-	var onclick = dom.getAttrib(elm, 'onclick');
+	var onclick = dom.getAttrib(elm, "onclick");
 
-	setFormValue('title', dom.getAttrib(elm, 'title'));
-	setFormValue('id', dom.getAttrib(elm, 'id'));
-	setFormValue('style', dom.getAttrib(elm, "style"));
-	setFormValue('dir', dom.getAttrib(elm, 'dir'));
-	setFormValue('lang', dom.getAttrib(elm, 'lang'));
-	setFormValue('tabindex', dom.getAttrib(elm, 'tabindex', typeof(elm.tabindex) != "undefined" ? elm.tabindex : ""));
-	setFormValue('accesskey', dom.getAttrib(elm, 'accesskey', typeof(elm.accesskey) != "undefined" ? elm.accesskey : ""));
-	setFormValue('onfocus', dom.getAttrib(elm, 'onfocus'));
-	setFormValue('onblur', dom.getAttrib(elm, 'onblur'));
-	setFormValue('onclick', onclick);
-	setFormValue('ondblclick', dom.getAttrib(elm, 'ondblclick'));
-	setFormValue('onmousedown', dom.getAttrib(elm, 'onmousedown'));
-	setFormValue('onmouseup', dom.getAttrib(elm, 'onmouseup'));
-	setFormValue('onmouseover', dom.getAttrib(elm, 'onmouseover'));
-	setFormValue('onmousemove', dom.getAttrib(elm, 'onmousemove'));
-	setFormValue('onmouseout', dom.getAttrib(elm, 'onmouseout'));
-	setFormValue('onkeypress', dom.getAttrib(elm, 'onkeypress'));
-	setFormValue('onkeydown', dom.getAttrib(elm, 'onkeydown'));
-	setFormValue('onkeyup', dom.getAttrib(elm, 'onkeyup'));
-	className = dom.getAttrib(elm, 'class');
+	setFormValue("title", dom.getAttrib(elm, "title"));
+	setFormValue("id", dom.getAttrib(elm, "id"));
+	setFormValue("style", dom.getAttrib(elm, "style"));
+	setFormValue("dir", dom.getAttrib(elm, "dir"));
+	setFormValue("lang", dom.getAttrib(elm, "lang"));
+	setFormValue(
+		"tabindex",
+		dom.getAttrib(
+			elm,
+			"tabindex",
+			typeof elm.tabindex != "undefined" ? elm.tabindex : ""
+		)
+	);
+	setFormValue(
+		"accesskey",
+		dom.getAttrib(
+			elm,
+			"accesskey",
+			typeof elm.accesskey != "undefined" ? elm.accesskey : ""
+		)
+	);
+	setFormValue("onfocus", dom.getAttrib(elm, "onfocus"));
+	setFormValue("onblur", dom.getAttrib(elm, "onblur"));
+	setFormValue("onclick", onclick);
+	setFormValue("ondblclick", dom.getAttrib(elm, "ondblclick"));
+	setFormValue("onmousedown", dom.getAttrib(elm, "onmousedown"));
+	setFormValue("onmouseup", dom.getAttrib(elm, "onmouseup"));
+	setFormValue("onmouseover", dom.getAttrib(elm, "onmouseover"));
+	setFormValue("onmousemove", dom.getAttrib(elm, "onmousemove"));
+	setFormValue("onmouseout", dom.getAttrib(elm, "onmouseout"));
+	setFormValue("onkeypress", dom.getAttrib(elm, "onkeypress"));
+	setFormValue("onkeydown", dom.getAttrib(elm, "onkeydown"));
+	setFormValue("onkeyup", dom.getAttrib(elm, "onkeyup"));
+	className = dom.getAttrib(elm, "class");
 
-	addClassesToList('classlist', 'advlink_styles');
-	selectByValue(f, 'classlist', className, true);
+	addClassesToList("classlist", "advlink_styles");
+	selectByValue(f, "classlist", className, true);
 
 	TinyMCE_EditableSelects.init();
 }
 
 function setFormValue(name, value) {
-	if(value && document.forms[0].elements[name]){
+	if (value && document.forms[0].elements[name]) {
 		document.forms[0].elements[name].value = value;
 	}
 }
@@ -64,11 +78,10 @@ function setAttrib(elm, attrib, value) {
 	var inst = tinyMCEPopup.editor;
 	var dom = inst.dom;
 
-	if (typeof(value) == "undefined" || value == null) {
+	if (typeof value == "undefined" || value == null) {
 		value = "";
 
-		if (valueElm)
-			value = valueElm.value;
+		if (valueElm) value = valueElm.value;
 	}
 
 	dom.setAttrib(elm, attrib.toLowerCase(), value);
@@ -77,30 +90,30 @@ function setAttrib(elm, attrib, value) {
 function setAllAttribs(elm) {
 	var f = document.forms[0];
 
-	setAttrib(elm, 'title');
-	setAttrib(elm, 'id');
-	setAttrib(elm, 'style');
-	setAttrib(elm, 'class', getSelectValue(f, 'classlist'));
-	setAttrib(elm, 'dir');
-	setAttrib(elm, 'lang');
-	setAttrib(elm, 'tabindex');
-	setAttrib(elm, 'accesskey');
-	setAttrib(elm, 'onfocus');
-	setAttrib(elm, 'onblur');
-	setAttrib(elm, 'onclick');
-	setAttrib(elm, 'ondblclick');
-	setAttrib(elm, 'onmousedown');
-	setAttrib(elm, 'onmouseup');
-	setAttrib(elm, 'onmouseover');
-	setAttrib(elm, 'onmousemove');
-	setAttrib(elm, 'onmouseout');
-	setAttrib(elm, 'onkeypress');
-	setAttrib(elm, 'onkeydown');
-	setAttrib(elm, 'onkeyup');
+	setAttrib(elm, "title");
+	setAttrib(elm, "id");
+	setAttrib(elm, "style");
+	setAttrib(elm, "class", getSelectValue(f, "classlist"));
+	setAttrib(elm, "dir");
+	setAttrib(elm, "lang");
+	setAttrib(elm, "tabindex");
+	setAttrib(elm, "accesskey");
+	setAttrib(elm, "onfocus");
+	setAttrib(elm, "onblur");
+	setAttrib(elm, "onclick");
+	setAttrib(elm, "ondblclick");
+	setAttrib(elm, "onmousedown");
+	setAttrib(elm, "onmouseup");
+	setAttrib(elm, "onmouseover");
+	setAttrib(elm, "onmousemove");
+	setAttrib(elm, "onmouseout");
+	setAttrib(elm, "onkeypress");
+	setAttrib(elm, "onkeydown");
+	setAttrib(elm, "onkeyup");
 
 	// Refresh in old MSIE
-//	if (tinyMCE.isMSIE5)
-//		elm.outerHTML = elm.outerHTML;
+	//	if (tinyMCE.isMSIE5)
+	//		elm.outerHTML = elm.outerHTML;
 }
 
 function insertAttribute() {

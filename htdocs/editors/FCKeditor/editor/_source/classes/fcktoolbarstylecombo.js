@@ -21,180 +21,169 @@
  * FCKToolbarPanelButton Class: Handles the Fonts combo selector.
  */
 
-var FCKToolbarStyleCombo = function( tooltip, style )
-{
-	if ( tooltip === false )
-		return ;
+var FCKToolbarStyleCombo = function(tooltip, style) {
+	if (tooltip === false) return;
 
-	this.CommandName = 'Style' ;
-	this.Label		= this.GetLabel() ;
-	this.Tooltip	= tooltip ? tooltip : this.Label ;
-	this.Style		= style ? style : FCK_TOOLBARITEM_ICONTEXT ;
+	this.CommandName = "Style";
+	this.Label = this.GetLabel();
+	this.Tooltip = tooltip ? tooltip : this.Label;
+	this.Style = style ? style : FCK_TOOLBARITEM_ICONTEXT;
 
-	this.DefaultLabel = FCKConfig.DefaultStyleLabel || '' ;
-}
+	this.DefaultLabel = FCKConfig.DefaultStyleLabel || "";
+};
 
 // Inherit from FCKToolbarSpecialCombo.
-FCKToolbarStyleCombo.prototype = new FCKToolbarSpecialCombo ;
+FCKToolbarStyleCombo.prototype = new FCKToolbarSpecialCombo();
 
-FCKToolbarStyleCombo.prototype.GetLabel = function()
-{
-	return FCKLang.Style ;
-}
+FCKToolbarStyleCombo.prototype.GetLabel = function() {
+	return FCKLang.Style;
+};
 
-FCKToolbarStyleCombo.prototype.GetStyles = function()
-{
-	var styles = {} ;
-	var allStyles = FCK.ToolbarSet.CurrentInstance.Styles.GetStyles() ;
+FCKToolbarStyleCombo.prototype.GetStyles = function() {
+	var styles = {};
+	var allStyles = FCK.ToolbarSet.CurrentInstance.Styles.GetStyles();
 
-	for ( var styleName in allStyles )
-	{
-		var style = allStyles[ styleName ] ;
-		if ( !style.IsCore )
-			styles[ styleName ] = style ;
+	for (var styleName in allStyles) {
+		var style = allStyles[styleName];
+		if (!style.IsCore) styles[styleName] = style;
 	}
-	return styles ;
-}
+	return styles;
+};
 
-FCKToolbarStyleCombo.prototype.CreateItems = function( targetSpecialCombo )
-{
-	var targetDoc = targetSpecialCombo._Panel.Document ;
+FCKToolbarStyleCombo.prototype.CreateItems = function(targetSpecialCombo) {
+	var targetDoc = targetSpecialCombo._Panel.Document;
 
 	// Add the Editor Area CSS to the panel so the style classes are previewed correctly.
-	FCKTools.AppendStyleSheet( targetDoc, FCKConfig.ToolbarComboPreviewCSS ) ;
-	FCKTools.AppendStyleString( targetDoc, FCKConfig.EditorAreaStyles ) ;
-	targetDoc.body.className += ' ForceBaseFont' ;
+	FCKTools.AppendStyleSheet(targetDoc, FCKConfig.ToolbarComboPreviewCSS);
+	FCKTools.AppendStyleString(targetDoc, FCKConfig.EditorAreaStyles);
+	targetDoc.body.className += " ForceBaseFont";
 
 	// Add ID and Class to the body.
-	FCKConfig.ApplyBodyAttributes( targetDoc.body ) ;
+	FCKConfig.ApplyBodyAttributes(targetDoc.body);
 
 	// Get the styles list.
-	var styles = this.GetStyles() ;
+	var styles = this.GetStyles();
 
-	for ( var styleName in styles )
-	{
-		var style = styles[ styleName ] ;
+	for (var styleName in styles) {
+		var style = styles[styleName];
 
 		// Object type styles have no preview.
-		var caption = style.GetType() == FCK_STYLE_OBJECT ?
-			styleName :
-			FCKToolbarStyleCombo_BuildPreview( style, style.Label || styleName ) ;
+		var caption =
+			style.GetType() == FCK_STYLE_OBJECT
+				? styleName
+				: FCKToolbarStyleCombo_BuildPreview(
+						style,
+						style.Label || styleName
+				  );
 
-		var item = targetSpecialCombo.AddItem( styleName, caption ) ;
+		var item = targetSpecialCombo.AddItem(styleName, caption);
 
-		item.Style = style ;
+		item.Style = style;
 	}
 
 	// We must prepare the list before showing it.
-	targetSpecialCombo.OnBeforeClick = this.StyleCombo_OnBeforeClick ;
-}
+	targetSpecialCombo.OnBeforeClick = this.StyleCombo_OnBeforeClick;
+};
 
-FCKToolbarStyleCombo.prototype.RefreshActiveItems = function( targetSpecialCombo )
-{
-	var startElement = FCK.ToolbarSet.CurrentInstance.Selection.GetBoundaryParentElement( true ) ;
+FCKToolbarStyleCombo.prototype.RefreshActiveItems = function(
+	targetSpecialCombo
+) {
+	var startElement = FCK.ToolbarSet.CurrentInstance.Selection.GetBoundaryParentElement(
+		true
+	);
 
-	if ( startElement )
-	{
-		var path = new FCKElementPath( startElement ) ;
-		var elements = path.Elements ;
+	if (startElement) {
+		var path = new FCKElementPath(startElement);
+		var elements = path.Elements;
 
-		for ( var e = 0 ; e < elements.length ; e++ )
-		{
-			for ( var i in targetSpecialCombo.Items )
-			{
-				var item = targetSpecialCombo.Items[i] ;
-				var style = item.Style ;
+		for (var e = 0; e < elements.length; e++) {
+			for (var i in targetSpecialCombo.Items) {
+				var item = targetSpecialCombo.Items[i];
+				var style = item.Style;
 
-				if ( style.CheckElementRemovable( elements[ e ], true ) )
-				{
-					targetSpecialCombo.SetLabel( style.Label || style.Name ) ;
-					return ;
+				if (style.CheckElementRemovable(elements[e], true)) {
+					targetSpecialCombo.SetLabel(style.Label || style.Name);
+					return;
 				}
 			}
 		}
 	}
 
-	targetSpecialCombo.SetLabel( this.DefaultLabel ) ;
-}
+	targetSpecialCombo.SetLabel(this.DefaultLabel);
+};
 
-FCKToolbarStyleCombo.prototype.StyleCombo_OnBeforeClick = function( targetSpecialCombo )
-{
+FCKToolbarStyleCombo.prototype.StyleCombo_OnBeforeClick = function(
+	targetSpecialCombo
+) {
 	// Two things are done here:
 	//	- In a control selection, get the element name, so we'll display styles
 	//	  for that element only.
 	//	- Select the styles that are active for the current selection.
 
 	// Clear the current selection.
-	targetSpecialCombo.DeselectAll() ;
+	targetSpecialCombo.DeselectAll();
 
-	var startElement ;
-	var path ;
-	var tagName ;
+	var startElement;
+	var path;
+	var tagName;
 
-	var selection = FCK.ToolbarSet.CurrentInstance.Selection ;
+	var selection = FCK.ToolbarSet.CurrentInstance.Selection;
 
-	if ( selection.GetType() == 'Control' )
-	{
-		startElement = selection.GetSelectedElement() ;
-		tagName = startElement.nodeName.toLowerCase() ;
-	}
-	else
-	{
-		startElement = selection.GetBoundaryParentElement( true ) ;
-		path = new FCKElementPath( startElement ) ;
+	if (selection.GetType() == "Control") {
+		startElement = selection.GetSelectedElement();
+		tagName = startElement.nodeName.toLowerCase();
+	} else {
+		startElement = selection.GetBoundaryParentElement(true);
+		path = new FCKElementPath(startElement);
 	}
 
-	for ( var i in targetSpecialCombo.Items )
-	{
-		var item = targetSpecialCombo.Items[i] ;
-		var style = item.Style ;
+	for (var i in targetSpecialCombo.Items) {
+		var item = targetSpecialCombo.Items[i];
+		var style = item.Style;
 
-		if ( ( tagName && style.Element == tagName ) || ( !tagName && style.GetType() != FCK_STYLE_OBJECT ) )
-		{
-			item.style.display = '' ;
+		if (
+			(tagName && style.Element == tagName) ||
+			(!tagName && style.GetType() != FCK_STYLE_OBJECT)
+		) {
+			item.style.display = "";
 
-			if ( ( path && style.CheckActive( path ) ) || ( !path && style.CheckElementRemovable( startElement, true ) ) )
-				targetSpecialCombo.SelectItem( style.Name ) ;
-		}
-		else
-			item.style.display = 'none' ;
+			if (
+				(path && style.CheckActive(path)) ||
+				(!path && style.CheckElementRemovable(startElement, true))
+			)
+				targetSpecialCombo.SelectItem(style.Name);
+		} else item.style.display = "none";
 	}
-}
+};
 
-function FCKToolbarStyleCombo_BuildPreview( style, caption )
-{
-	var styleType = style.GetType() ;
-	var html = [] ;
+function FCKToolbarStyleCombo_BuildPreview(style, caption) {
+	var styleType = style.GetType();
+	var html = [];
 
-	if ( styleType == FCK_STYLE_BLOCK )
-		html.push( '<div class="BaseFont">' ) ;
+	if (styleType == FCK_STYLE_BLOCK) html.push('<div class="BaseFont">');
 
-	var elementName = style.Element ;
+	var elementName = style.Element;
 
 	// Avoid <bdo> in the preview.
-	if ( elementName == 'bdo' )
-		elementName = 'span' ;
+	if (elementName == "bdo") elementName = "span";
 
-	html = [ '<', elementName ] ;
+	html = ["<", elementName];
 
 	// Assign all defined attributes.
-	var attribs	= style._StyleDesc.Attributes ;
-	if ( attribs )
-	{
-		for ( var att in attribs )
-		{
-			html.push( ' ', att, '="', style.GetFinalAttributeValue( att ), '"' ) ;
+	var attribs = style._StyleDesc.Attributes;
+	if (attribs) {
+		for (var att in attribs) {
+			html.push(" ", att, '="', style.GetFinalAttributeValue(att), '"');
 		}
 	}
 
 	// Assign the style attribute.
-	if ( style._GetStyleText().length > 0 )
-		html.push( ' style="', style.GetFinalStyleValue(), '"' ) ;
+	if (style._GetStyleText().length > 0)
+		html.push(' style="', style.GetFinalStyleValue(), '"');
 
-	html.push( '>', caption, '</', elementName, '>' ) ;
+	html.push(">", caption, "</", elementName, ">");
 
-	if ( styleType == FCK_STYLE_BLOCK )
-		html.push( '</div>' ) ;
+	if (styleType == FCK_STYLE_BLOCK) html.push("</div>");
 
-	return html.join( '' ) ;
+	return html.join("");
 }

@@ -21,8 +21,7 @@
  * This is a sample implementation for a custom Data Processor for basic BBCode.
  */
 
-FCK.DataProcessor =
-{
+FCK.DataProcessor = {
 	/*
 	 * Returns a string representing the HTML format of "data". The returned
 	 * value will be loaded in the editor.
@@ -31,29 +30,33 @@ FCK.DataProcessor =
 	 *     @param {String} data The data to be converted in the
 	 *            DataProcessor specific format.
 	 */
-	ConvertToHtml : function( data )
-	{
+	ConvertToHtml: function(data) {
 		// Convert < and > to their HTML entities.
-        data = data.replace( /</g, '&lt;' ) ;
-        data = data.replace( />/g, '&gt;' ) ;
+		data = data.replace(/</g, "&lt;");
+		data = data.replace(/>/g, "&gt;");
 
-        // Convert line breaks to <br>.
-        data = data.replace( /(?:\r\n|\n|\r)/g, '<br>' ) ;
+		// Convert line breaks to <br>.
+		data = data.replace(/(?:\r\n|\n|\r)/g, "<br>");
 
-        // [url]
-        data = data.replace( /\[url\](.+?)\[\/url]/gi, '<a href="$1">$1</a>' ) ;
-        data = data.replace( /\[url\=([^\]]+)](.+?)\[\/url]/gi, '<a href="$1">$2</a>' ) ;
+		// [url]
+		data = data.replace(/\[url\](.+?)\[\/url]/gi, '<a href="$1">$1</a>');
+		data = data.replace(
+			/\[url\=([^\]]+)](.+?)\[\/url]/gi,
+			'<a href="$1">$2</a>'
+		);
 
-        // [b]
-        data = data.replace( /\[b\](.+?)\[\/b]/gi, '<b>$1</b>' ) ;
+		// [b]
+		data = data.replace(/\[b\](.+?)\[\/b]/gi, "<b>$1</b>");
 
-        // [i]
-        data = data.replace( /\[i\](.+?)\[\/i]/gi, '<i>$1</i>' ) ;
+		// [i]
+		data = data.replace(/\[i\](.+?)\[\/i]/gi, "<i>$1</i>");
 
-        // [u]
-        data = data.replace( /\[u\](.+?)\[\/u]/gi, '<u>$1</u>' ) ;
+		// [u]
+		data = data.replace(/\[u\](.+?)\[\/u]/gi, "<u>$1</u>");
 
-		return '<html><head><title></title></head><body>' + data + '</body></html>' ;
+		return (
+			"<html><head><title></title></head><body>" + data + "</body></html>"
+		);
 	},
 
 	/*
@@ -65,32 +68,39 @@ FCK.DataProcessor =
 	 *     @param {Boolean} format Indicates that the data must be formatted
 	 *            for human reading. Not all Data Processors may provide it.
 	 */
-	ConvertToDataFormat : function( rootNode, excludeRoot, ignoreIfEmptyParagraph, format )
-	{
-		var data = rootNode.innerHTML ;
+	ConvertToDataFormat: function(
+		rootNode,
+		excludeRoot,
+		ignoreIfEmptyParagraph,
+		format
+	) {
+		var data = rootNode.innerHTML;
 
 		// Convert <br> to line breaks.
-		data = data.replace( /<br(?=[ \/>]).*?>/gi, '\r\n') ;
+		data = data.replace(/<br(?=[ \/>]).*?>/gi, "\r\n");
 
 		// [url]
-		data = data.replace( /<a .*?href=(["'])(.+?)\1.*?>(.+?)<\/a>/gi, '[url=$2]$3[/url]') ;
+		data = data.replace(
+			/<a .*?href=(["'])(.+?)\1.*?>(.+?)<\/a>/gi,
+			"[url=$2]$3[/url]"
+		);
 
 		// [b]
-		data = data.replace( /<(?:b|strong)>/gi, '[b]') ;
-		data = data.replace( /<\/(?:b|strong)>/gi, '[/b]') ;
+		data = data.replace(/<(?:b|strong)>/gi, "[b]");
+		data = data.replace(/<\/(?:b|strong)>/gi, "[/b]");
 
 		// [i]
-		data = data.replace( /<(?:i|em)>/gi, '[i]') ;
-		data = data.replace( /<\/(?:i|em)>/gi, '[/i]') ;
+		data = data.replace(/<(?:i|em)>/gi, "[i]");
+		data = data.replace(/<\/(?:i|em)>/gi, "[/i]");
 
 		// [u]
-		data = data.replace( /<u>/gi, '[u]') ;
-		data = data.replace( /<\/u>/gi, '[/u]') ;
+		data = data.replace(/<u>/gi, "[u]");
+		data = data.replace(/<\/u>/gi, "[/u]");
 
 		// Remove remaining tags.
-		data = data.replace( /<[^>]+>/g, '') ;
+		data = data.replace(/<[^>]+>/g, "");
 
-		return data ;
+		return data;
 	},
 
 	/*
@@ -98,26 +108,36 @@ FCK.DataProcessor =
 	 * editor selection position.
 	 *     @param {String} html The HTML to be fixed.
 	 */
-	FixHtml : function( html )
-	{
-		return html ;
+	FixHtml: function(html) {
+		return html;
 	}
-} ;
+};
 
 // This Data Processor doesn't support <p>, so let's use <br>.
-FCKConfig.EnterMode = 'br' ;
+FCKConfig.EnterMode = "br";
 
 // To avoid pasting invalid markup (which is discarded in any case), let's
 // force pasting to plain text.
-FCKConfig.ForcePasteAsPlainText	= true ;
+FCKConfig.ForcePasteAsPlainText = true;
 
 // Rename the "Source" buttom to "BBCode".
-FCKToolbarItems.RegisterItem( 'Source', new FCKToolbarButton( 'Source', 'BBCode', null, FCK_TOOLBARITEM_ICONTEXT, true, true, 1 ) ) ;
+FCKToolbarItems.RegisterItem(
+	"Source",
+	new FCKToolbarButton(
+		"Source",
+		"BBCode",
+		null,
+		FCK_TOOLBARITEM_ICONTEXT,
+		true,
+		true,
+		1
+	)
+);
 
 // Let's enforce the toolbar to the limits of this Data Processor. A custom
 // toolbar set may be defined in the configuration file with more or less entries.
 FCKConfig.ToolbarSets["Default"] = [
-	['Source'],
-	['Bold','Italic','Underline','-','Link'],
-	['About']
-] ;
+	["Source"],
+	["Bold", "Italic", "Underline", "-", "Link"],
+	["About"]
+];

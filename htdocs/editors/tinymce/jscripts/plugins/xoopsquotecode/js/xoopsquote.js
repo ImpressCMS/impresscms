@@ -4,27 +4,26 @@
 tinyMCEPopup.requireLangPack();
 
 var XoopsquoteDialog = {
-	init : function()
-		{
+	init: function() {
 		var formObj = document.forms[0];
 		// Get the selected contents as text and place it in the input
-		formObj.ctext.value = tinyMCEPopup.editor.selection.getContent({format : 'text'});
-		},
-	insert : function()
-		{
+		formObj.ctext.value = tinyMCEPopup.editor.selection.getContent({
+			format: "text"
+		});
+	},
+	insert: function() {
 		// Insert the contents from the input into the document
 		var formObj = document.forms[0];
-		if (window.opener)
-			{
+		if (window.opener) {
 			var qtext = formObj.qtext.value;
-			qtext.replace(new RegExp("<",'g'), "&lt;");
-			qtext.replace(new RegExp(">",'g'), "&gt;");
+			qtext.replace(new RegExp("<", "g"), "&lt;");
+			qtext.replace(new RegExp(">", "g"), "&gt;");
 			var html = '<div class="xoopsQuote">';
-			html += qtext+'</div><br />';
-			tinyMCEPopup.editor.execCommand('mceInsertContent', true, html);
+			html += qtext + "</div><br />";
+			tinyMCEPopup.editor.execCommand("mceInsertContent", true, html);
 			tinyMCEPopup.close();
-			}
 		}
+	}
 };
 
 tinyMCEPopup.onInit.add(XoopsquoteDialog.init, XoopsquoteDialog);

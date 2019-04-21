@@ -23,16 +23,16 @@
  * This is the IE specific implementation.
  */
 
-var FCKToolbarBreak = function()
-{}
+var FCKToolbarBreak = function() {};
 
-FCKToolbarBreak.prototype.Create = function( targetElement )
-{
-	var oBreakDiv = FCKTools.GetElementDocument( targetElement ).createElement( 'div' ) ;
+FCKToolbarBreak.prototype.Create = function(targetElement) {
+	var oBreakDiv = FCKTools.GetElementDocument(targetElement).createElement(
+		"div"
+	);
 
-	oBreakDiv.className = 'TB_Break' ;
+	oBreakDiv.className = "TB_Break";
 
-	oBreakDiv.style.clear = FCKLang.Dir == 'rtl' ? 'left' : 'right' ;
+	oBreakDiv.style.clear = FCKLang.Dir == "rtl" ? "left" : "right";
 
-	targetElement.appendChild( oBreakDiv ) ;
-}
+	targetElement.appendChild(oBreakDiv);
+};

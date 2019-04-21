@@ -21,119 +21,115 @@
  * FCKToolbarPanelButton Class: Handles the Fonts combo selector.
  */
 
-var FCKToolbarFontFormatCombo = function( tooltip, style )
-{
-	if ( tooltip === false )
-		return ;
+var FCKToolbarFontFormatCombo = function(tooltip, style) {
+	if (tooltip === false) return;
 
-	this.CommandName = 'FontFormat' ;
-	this.Label		= this.GetLabel() ;
-	this.Tooltip	= tooltip ? tooltip : this.Label ;
-	this.Style		= style ? style : FCK_TOOLBARITEM_ICONTEXT ;
+	this.CommandName = "FontFormat";
+	this.Label = this.GetLabel();
+	this.Tooltip = tooltip ? tooltip : this.Label;
+	this.Style = style ? style : FCK_TOOLBARITEM_ICONTEXT;
 
-	this.NormalLabel = 'Normal' ;
+	this.NormalLabel = "Normal";
 
-	this.PanelWidth = 190 ;
+	this.PanelWidth = 190;
 
-	this.DefaultLabel = FCKConfig.DefaultFontFormatLabel || '' ;
-}
+	this.DefaultLabel = FCKConfig.DefaultFontFormatLabel || "";
+};
 
 // Inherit from FCKToolbarSpecialCombo.
-FCKToolbarFontFormatCombo.prototype = new FCKToolbarStyleCombo( false ) ;
+FCKToolbarFontFormatCombo.prototype = new FCKToolbarStyleCombo(false);
 
-FCKToolbarFontFormatCombo.prototype.GetLabel = function()
-{
-	return FCKLang.FontFormat ;
-}
+FCKToolbarFontFormatCombo.prototype.GetLabel = function() {
+	return FCKLang.FontFormat;
+};
 
-FCKToolbarFontFormatCombo.prototype.GetStyles = function()
-{
-	var styles = {} ;
+FCKToolbarFontFormatCombo.prototype.GetStyles = function() {
+	var styles = {};
 
 	// Get the format names from the language file.
-	var aNames = FCKLang['FontFormats'].split(';') ;
+	var aNames = FCKLang["FontFormats"].split(";");
 	var oNames = {
-		p		: aNames[0],
-		pre		: aNames[1],
-		address	: aNames[2],
-		h1		: aNames[3],
-		h2		: aNames[4],
-		h3		: aNames[5],
-		h4		: aNames[6],
-		h5		: aNames[7],
-		h6		: aNames[8],
-		div		: aNames[9] || ( aNames[0] + ' (DIV)')
-	} ;
+		p: aNames[0],
+		pre: aNames[1],
+		address: aNames[2],
+		h1: aNames[3],
+		h2: aNames[4],
+		h3: aNames[5],
+		h4: aNames[6],
+		h5: aNames[7],
+		h6: aNames[8],
+		div: aNames[9] || aNames[0] + " (DIV)"
+	};
 
 	// Get the available formats from the configuration file.
-	var elements = FCKConfig.FontFormats.split(';') ;
+	var elements = FCKConfig.FontFormats.split(";");
 
-	for ( var i = 0 ; i < elements.length ; i++ )
-	{
-		var elementName = elements[ i ] ;
-		var style = FCKStyles.GetStyle( '_FCK_' + elementName ) ;
-		if ( style )
-		{
-			style.Label = oNames[ elementName ] ;
-			styles[ '_FCK_' + elementName ] = style ;
-		}
-		else
-			alert( "The FCKConfig.CoreStyles['" + elementName + "'] setting was not found. Please check the fckconfig.js file" ) ;
+	for (var i = 0; i < elements.length; i++) {
+		var elementName = elements[i];
+		var style = FCKStyles.GetStyle("_FCK_" + elementName);
+		if (style) {
+			style.Label = oNames[elementName];
+			styles["_FCK_" + elementName] = style;
+		} else
+			alert(
+				"The FCKConfig.CoreStyles['" +
+					elementName +
+					"'] setting was not found. Please check the fckconfig.js file"
+			);
 	}
 
-	return styles ;
-}
+	return styles;
+};
 
-FCKToolbarFontFormatCombo.prototype.RefreshActiveItems = function( targetSpecialCombo )
-{
-	var startElement = FCK.ToolbarSet.CurrentInstance.Selection.GetBoundaryParentElement( true ) ;
+FCKToolbarFontFormatCombo.prototype.RefreshActiveItems = function(
+	targetSpecialCombo
+) {
+	var startElement = FCK.ToolbarSet.CurrentInstance.Selection.GetBoundaryParentElement(
+		true
+	);
 
-	if ( startElement )
-	{
-		var path = new FCKElementPath( startElement ) ;
-		var blockElement = path.Block ;
+	if (startElement) {
+		var path = new FCKElementPath(startElement);
+		var blockElement = path.Block;
 
-		if ( blockElement )
-		{
-			for ( var i in targetSpecialCombo.Items )
-			{
-				var item = targetSpecialCombo.Items[i] ;
-				var style = item.Style ;
+		if (blockElement) {
+			for (var i in targetSpecialCombo.Items) {
+				var item = targetSpecialCombo.Items[i];
+				var style = item.Style;
 
-				if ( style.CheckElementRemovable( blockElement ) )
-				{
-					targetSpecialCombo.SetLabel( style.Label ) ;
-					return ;
+				if (style.CheckElementRemovable(blockElement)) {
+					targetSpecialCombo.SetLabel(style.Label);
+					return;
 				}
 			}
 		}
 	}
 
-	targetSpecialCombo.SetLabel( this.DefaultLabel ) ;
-}
+	targetSpecialCombo.SetLabel(this.DefaultLabel);
+};
 
-FCKToolbarFontFormatCombo.prototype.StyleCombo_OnBeforeClick = function( targetSpecialCombo )
-{
+FCKToolbarFontFormatCombo.prototype.StyleCombo_OnBeforeClick = function(
+	targetSpecialCombo
+) {
 	// Clear the current selection.
-	targetSpecialCombo.DeselectAll() ;
+	targetSpecialCombo.DeselectAll();
 
-	var startElement = FCK.ToolbarSet.CurrentInstance.Selection.GetBoundaryParentElement( true ) ;
+	var startElement = FCK.ToolbarSet.CurrentInstance.Selection.GetBoundaryParentElement(
+		true
+	);
 
-	if ( startElement )
-	{
-		var path = new FCKElementPath( startElement ) ;
-		var blockElement = path.Block ;
+	if (startElement) {
+		var path = new FCKElementPath(startElement);
+		var blockElement = path.Block;
 
-		for ( var i in targetSpecialCombo.Items )
-		{
-			var item = targetSpecialCombo.Items[i] ;
-			var style = item.Style ;
+		for (var i in targetSpecialCombo.Items) {
+			var item = targetSpecialCombo.Items[i];
+			var style = item.Style;
 
-			if ( style.CheckElementRemovable( blockElement ) )
-			{
-				targetSpecialCombo.SelectItem( item ) ;
-				return ;
+			if (style.CheckElementRemovable(blockElement)) {
+				targetSpecialCombo.SelectItem(item);
+				return;
 			}
 		}
 	}
-}
+};
