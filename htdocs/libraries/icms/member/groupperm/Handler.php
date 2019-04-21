@@ -55,7 +55,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
-	public $_cachedRights;
+	static public $_cachedRights;
 
 	/**
 	 * Create a new {@link icms_member_groupperm_Object}
