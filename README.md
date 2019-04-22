@@ -11,12 +11,12 @@ The system is extremely useful for managing online communities because it has th
 
 For each type of website ImpressCMS offers different functionality with a collection of free modules that are available on [https://www.impresscms.org/modules/downloads/](https://www.impresscms.org/modules/downloads/). A few examples of what you can do with them:
 
-*   Publish news of your organization
-*   Let visitors contact you through a state of the art customizable contact form
-*   Create and manage articles
-*   Add a forum to your site
-*   Sell products through your web site using an online store
-*   ...and many more
+* Publish news of your organization
+* Let visitors contact you through a state of the art customizable contact form
+* Create and manage articles
+* Add a forum to your site
+* Sell products through your web site using an online store
+* ...and many more
 
 ### List of key features
 
