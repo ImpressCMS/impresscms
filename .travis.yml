@@ -34,7 +34,6 @@ services:
   - mysql
 
 php:
-  - '7.0'
   - '7.1'
   - '7.2'
   - '7.3'
@@ -44,7 +43,7 @@ install:
   - travis_retry composer install --no-progress --no-interaction
 
 script:
-  - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php
+  - composer test
 
 after_script:
   - vendor/bin/test-reporter --coverage-report=./storage/log/clover.xml

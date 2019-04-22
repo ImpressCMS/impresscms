@@ -25,7 +25,7 @@
   ],
   "require": {
     "imponeer/composer-custom-commands": "^0.1.0",
-    "php": ">=5.6.0",
+    "php": ">=7.1.0",
     "simplepie/simplepie": "^1.5",
     "league/flysystem": "1.0.51",
     "phpmailer/phpmailer": "6.0.7",
@@ -80,5 +80,8 @@
   "config": {
     "optimize-autoloader": true,
     "sort-packages": true
+  },
+  "scripts": {
+    "test": "phpunit -c tests/configuration.xml"
   }
 }
