@@ -7,10 +7,6 @@ cache:
   directories:
     - "$HOME/.composer/cache"
 
-addons:
-  code_climate:
-    repo_token:
-      secure: "BWrxwgDYR9P9e2S1N3kKAMbONJVFSZVTETHKs6IwpsDMhGLPEyCwIffg7l3iWI28w2zuIuOLKo5SbAZKqul+FFOur7F9lUPfjd4jbhF6cLHSc423F9SohuAdWmPLeoUOTzdv99FYKHo2T8w5w6ikzRGjaz2Fe9bzC9Bicw6Uh2OamTLS411apA8zTqOC2IIyi8hOC3ZfC833vAkD/USPrTOX7Oh/9Ght21R+Z8/k+xFM3u02J9wjmR37NTJJ6zgbKRXi8bJ2grn/vX6Sy5ebfFr0Cf7Cjk8Tot2gHBpoBxbQe+a15W9VXMLI1iK0DxYEzrNMVigsfbfauXpNq8/k0b+U3dq3gQLQs/KpZfei5+sKKj/jhzx6gSSvTzq2hA9CGTizb7JEJNBCQdA9Q0P5Ylah0thyC/j0sCTRqC2aMxfJk+LfOvO568Snn6cCUoAqguMRjeYm6sfLNCvoOnGyUHfLz4tsSq35rhbcAmW4B7YXghxy20Pm9h1gYN5/hkvyAuq9lDCHq+A7ey4l4s7LDB0sLbLyZDN5UCFMyX694r8lIMhV9TD9iOdaiIyUBINj1HlR6vcjT0xRmeHTnveyTJ0Qqm1AOZRIUOU5MX/omMgh2eE7sxZ6XIidYF/ZrkbZDEOovX238CT9m/KylNZkbNxV/1SvDZ1grHg0xxuHuG0="
 env:
   global:
     - URL=http://192.168.2.99
@@ -28,27 +24,27 @@ env:
 stages:
   - validate
   - test
-  - coverage
 
 services:
   - mysql
-
-php:
-  - '7.2'
-  - '7.3'
 
 install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
   - travis_retry composer install --no-progress --no-interaction
 
-script:
-  - composer test
-
-after_script:
-  - vendor/bin/test-reporter --coverage-report=./storage/log/clover.xml
-
 jobs:
   include:
     - stage: validate
+      php: 7.2
       script:
         - composer validate
+    - stage: test
+      php: 7.2
+      script:
+        - composer test
+      after_script:
+        - ./vendor/bin/test-reporter --coverage-report=./storage/log/clover.xml
+    - stage: test
+      php: 7.3
+      script:
+        - composer test
