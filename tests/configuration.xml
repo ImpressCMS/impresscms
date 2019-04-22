@@ -12,6 +12,7 @@
 	<testsuites>
 		<testsuite name="All">
 			<directory suffix="Test.php">libraries/</directory>
+			<directory suffix="Test.php">core/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>
