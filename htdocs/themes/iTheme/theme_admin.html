@@ -36,9 +36,16 @@
 		<{$icms_module_header}>
 
 <!-- Sheet Css -->
+	<link rel="stylesheet" type="text/css" media="all" href="<{$icms_imageurl}><{if $icms_rtl}>rtl/<{/if}>icms.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="<{$icms_url}>/modules/system/style<{if $icms_rtl}>_rtl<{/if}>.css" />
 	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$icms_imageurl}><{if $icms_rtl}>rtl/<{/if}>style_admin.css" />
 
+	<script type="text/javascript">
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		});
+	</script>
+	
 </head>
 
 <body id="<{$icms_dirname}>" class="<{$icms_langcode}>">
@@ -218,10 +225,7 @@
 </div>
 	<!-- Footer -->
 	<div id="xo-footer">
-	<div id="banner" style="margin-left: auto; margin-right: auto;"><{$icms_banner}>
-	<br />
-	<{$icms_footadm}>
-	</div>
+	<div style="margin-left: auto; margin-right: auto;"><{$icms_footadm}></div>
 	</div>
 </body>
 </html>

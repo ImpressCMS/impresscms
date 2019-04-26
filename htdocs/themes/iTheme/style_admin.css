@@ -64,13 +64,6 @@ h6 {font-size: .8em;}
 	float: left;
 }
 
-#xo-headerbanner {
-	position:relative;
-	top:10px;
-	right:20px;
-	float: right;
-}
-
 /* ------ Header top menu navigation rules ------ */
 
 #xo-globalnav {

@@ -10,15 +10,16 @@
  * @package		installer
  * @since        Xoops 2.3.0
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: page_no_php5.php 10326 2010-07-11 18:54:25Z malanciault $
  */
 /**
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
-$wizard->setPage( 'no_php5' );
+$wizard->setPage('no_php5');
 $pageHasForm = false;
 
 ob_start();
@@ -28,4 +29,3 @@ ob_end_clean();
 
 include 'install_tpl.php';
 
-?>

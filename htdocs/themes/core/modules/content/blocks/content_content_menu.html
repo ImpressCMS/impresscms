@@ -1,0 +1,14 @@
+<div class="contentmenu">
+	<ul class="nav nav-pills nav-stacked">
+		<{foreach from=$block.menu key=key item=menu}>
+		<li class="">
+			<a class="menuMain" href="<{$icms_url}>/modules/content/content.php?page=<{$menu.menu}>&content_id=<{$menu.id}>"><{$menu.title}></a>
+			<{if $block.showsubs && $menu.hassubs}><{includeq file='db:content_content_menu_structure.html' menus=$menu.subs}><{/if}>
+		</li>
+		<{/foreach}>
+	</ul>
+</div><script>
+$( ".contentmenu ul.nav li" ).click(function() {
+$( this ).toggleClass( "active" );
+});
+</script>

@@ -1,0 +1,5 @@
+<div class="commentWrapper flat">
+  <{foreach item=comment from=$comments}>
+    <{include file="db:system_comment.html" comment=$comments[i] comment=$comment}>
+  <{/foreach}>
+</div>

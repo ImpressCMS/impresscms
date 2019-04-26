@@ -1,13 +1,3 @@
-#
-# Dumping data for table `bannerclient`
-#
-
-INSERT INTO bannerclient VALUES (0, 'ImpressCMS', 'ImpressCMS Dev Team', 'info@impresscms.org', '', '', '');
-
-#
-# Dumping data for table `bannerfinish`
-#
-
 # Adding dynamic block area/position system - TheRpLima - 2007-10-21
 #
 # Dumping data for table `block_positions`

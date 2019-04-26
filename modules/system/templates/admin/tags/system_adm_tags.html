@@ -1,0 +1,19 @@
+<div class="CPbigTitle" style="background-image: url(<{$icms_url}>/modules/system/admin/tags/images/tags_big.png)">
+	<{$smarty.const._CO_SYSTEM_TAGS}>
+</div>
+<br />
+
+<{if $icms_tags_explain}>
+	<h1><{$smarty.const._CO_SYSTEM_TAGS_EXPLAIN_TITLE}></h1>
+	<p><{$smarty.const._CO_SYSTEM_TAGS_EXPLAIN}></p>
+<{/if}>
+
+<p><{$icms_tags_title}></p>
+
+<{if $icms_tags_table}>
+	<{$icms_tags_table}>
+<{/if}>
+
+<{if $addtags}>
+	<{includeq file='db:system_common_form.html' form=$addtags}>
+<{/if}>

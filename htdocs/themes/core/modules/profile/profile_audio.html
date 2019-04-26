@@ -1,0 +1,39 @@
+<{include file="db:profile_header.html"}>
+<{if $profile_audioform}>
+<{if $hideForm}>
+<div class="profile-form outer">
+  <h2 class="head">
+    <a href="#add-audio" onclick ="jQuery('div.profile-album-form').toggle(400);" name="add-audio"><img src="images/toggle.png" />&nbsp;<{$lang_audioform_title}></a>
+  </h2>
+  <div class="profile-album-form" style="display: none">
+    <{includeq file='db:system_common_form.html' form=$profile_audioform}>
+  </div>
+</div>
+<{else}>
+<{includeq file='db:system_common_form.html' form=$profile_audioform}>
+<{/if}>
+<{/if}>
+<{if $profile_audios}>
+
+<div id="profile-audio-container" class="outer">
+      <{foreach item=audio from=$profile_audios}>
+      <{cycle values='even,odd' assign=class}>
+      <div class="<{$class}> contnt">
+        <p><strong><{$audio.title}></strong> <{if $audio.userCanEditAndDelete}><{$audio.editItemLink}><{$audio.deleteItemLink}><{/if}></p>
+        <p><{$audio.audio_content}></p>
+        <p><{$lang_author}>: <{$audio.author}></p>
+        <p><{$lang_lastupdated}>: <{$audio.creation_time}></p>
+      </div>
+	<p>&nbsp;</p>
+      <{/foreach}>
+    </tbody>
+  </table>
+</div>
+
+<{if $profile_audios_pagenav}>
+<div class="pagination"><{$profile_audios_pagenav}></div>
+<{/if}>
+<{/if}>
+<{if $icmspersistable_delete_confirm}><{$icmspersistable_delete_confirm}><{/if}>
+<{if $lang_nocontent}><div class="resultMsg"><p><{$lang_nocontent}></p></div><{/if}>
+<{if $profile_audios || $lang_nocontent}><{includeq file='db:system_notification_select.html'}><{/if}>

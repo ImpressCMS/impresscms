@@ -22,7 +22,7 @@
 		// To switch to a specific named stylesheet
 		$.stylesheetSwitch = function(styleName)
 		{
-			$('link[@rel*=style][title]').each(
+			$('link[rel*=style][title]').each(
 				function(i) 
 				{
 					this.disabled = true;
@@ -38,7 +38,7 @@
 		// To initialise the stylesheet with it's 
 		$.stylesheetInit = function()
 		{
-			$('link[@rel*=style][title]').each(
+			$('link[rel*=style][title]').each(
 				function(i) 
 				{
 					availableStylesheets.push(this.getAttribute('title'));

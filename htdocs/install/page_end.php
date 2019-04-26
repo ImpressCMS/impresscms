@@ -12,36 +12,38 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_end.php 11963 2012-08-26 02:57:04Z skenow $
+ * @author		Taiwen Jiang <phppp@users.sourceforge.net>
  */
 /**
  *
  */
+define('INSTALLER_INCLUDE_MAIN', true);
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
-$success = isset($_GET['success'])?trim($_GET['success']):false;
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
+
+$success = isset($_REQUEST['success'])?trim($_REQUEST['success']):false;
 if ($success) {
-	if (is_dir(ICMS_ROOT_PATH.'/install')) {
-		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH.'/install', true);
-		header('Location: '.ICMS_URL.'/');
+	if (is_dir(__DIR__)) {
+		icms_core_Filesystem::deleteRecursive(__DIR__, true);
+		header('Location: ' . ICMS_URL . '/');
 	}
 	$_SESSION = array();
 }
 
-$wizard->setPage( 'end' );
+$wizard->setPage('end');
 $pageHasForm = false;
 $content = "";
 include "./language/$wizard->language/finish.php";
 
 // destroy all the installation session
 unset($_SESSION);
-if(isset($_COOKIE[session_name()]))
-{
-	setcookie(session_name(), '', time()-60);
+if (isset($_COOKIE[session_name()])) {
+	setcookie(session_name(), '', time() - 60);
 }
 session_unset();
 session_destroy();
 
 include 'install_tpl.php';
-?>

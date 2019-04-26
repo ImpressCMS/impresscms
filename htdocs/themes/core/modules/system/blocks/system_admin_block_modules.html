@@ -1,0 +1,11 @@
+<div class="CPindexOptions">
+	<div class="cpicon2">
+		<{foreach item=mod from=$block.mods}>
+			<span>
+				<a class="preferences" href="<{$mod.link}>" title="<{$mod.title}>"><img src="<{if $mod.iconbig != ''}><{$mod.iconbig}><{else}><{$xoops_url}>/modules/system/images/modules.png<{/if}>" alt="<{$mod.title}>" />
+					<div class="name"><{$mod.title}></div>
+				</a>
+			</span>
+		<{/foreach}>
+	</div>
+</div>

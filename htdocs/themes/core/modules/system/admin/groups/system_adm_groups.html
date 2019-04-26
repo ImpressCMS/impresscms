@@ -1,0 +1,97 @@
+<{if $displaygroups}>
+	<div class="CPbigTitle" style="background-image: url(<{$icms_url}>/modules/system/admin/groups/images/groups_big.png)"><{$smarty.const._AM_EDITADG}>
+	</div><br>
+	<div class="row">
+		<{foreach item=grouparray from=$grouparray}>
+		<{if $grouprights}>
+			<div class="col-xs-6 col-sm-4 col-md-3">
+				<div class="thumbnail">
+					<div class="caption">
+						<h4><{$grouparray.name}></h4>
+						<p><{$grouparray.description}></p>
+						<div class="center">
+							<a class="btn btn-sm btn-primary" href="admin.php?fct=groups&amp;op=modify&amp;g_id=<{$grouparray.id}>"><{$smarty.const._AM_MODIFY}></a>
+							<{if $grouparray.permissions == true}>
+							<a class="btn btn-sm btn-danger" href="admin.php?fct=groups&amp;op=del&amp;g_id=<{$grouparray.id}>"><{$smarty.const._AM_DELETEADG}></a>
+							<{/if}>
+						</div> 
+					</div>
+				</div>
+			</div>
+		<{/if}>
+		<{/foreach}>
+	</div>
+	<br>
+<{/if}>
+<{if $modifygroups}>
+	<{if $usersless200}>
+		<table class="table">
+			<tr>
+				<th colspan="2"><{$smarty.const._AM_EDITMEMBER}></th>
+			</tr>
+			<tr>
+				<td>
+					<form action="admin.php" method="post" role="form">
+						<fieldset>
+							<div class="control-group">
+								<label><{$smarty.const._AM_NONMEMBERS}></label>
+								<select multiple class="form-control" name="uids[]" multiple="multiple">
+									<{foreach item=usersarray from=$usersarray}>
+										<option value="<{$usersarray.id}>"><{$usersarray.name}></option>
+									<{/foreach}>	
+								</select>
+							</div>
+							<input type="hidden" name="op" value="addUser"><{$security}>
+							<input type="hidden" name="fct" value="groups">
+							<input type="hidden" name="groupid" value="<{$groupid}>"><br>
+							<input class="btn btn-primary" type="submit" name="submit" value="<{$smarty.const._AM_ADDBUTTON}>">
+						</fieldset>
+					</form>
+				</td>
+				<td>
+					<form action="admin.php" method="post" role="form">
+						<fieldset>
+							<div class="control-group">
+								<label><{$smarty.const._AM_MEMBERS}></label>
+								<select multiple class="form-control" name="uids[]" multiple="multiple">
+									<{foreach item=multiple from=$multiple}>
+										<option value="<{$multiple.id}>"><{$multiple.name}></option>
+									<{/foreach}>
+								</select>
+							</div>
+							<input type="hidden" name="op" value="delUser"><{$security}>
+							<input type="hidden" name="fct" value="groups">
+							<input type="hidden" name="groupid" value="<{$groupid}>"><br>
+							<input class="btn btn-primary" type="submit" name="submit" value="<{$smarty.const._AM_DELBUTTON}>">
+						</fieldset>
+					</form>
+			   </td>
+			</tr>
+		</table>
+	<{else}>
+		<a href="<{$smarty.const.ICMS_MODULES_URL}>/system/admin.php?fct=findusers&amp;group=<{$g_id}>"><{$smarty.const._AM_FINDU4GROUP}></a><br>
+		<form action="admin.php" method="post" role="form">
+			<table class="outer">
+				<tr>
+					<th align="center"><{$smarty.const._AM_MEMBERS}><br>
+						<{$nav}>
+					</th>
+				</tr>
+				<tr>
+					<td class="even" align="center">
+						<input type="hidden" name="op" value="delUser">
+						<input type="hidden" name="fct" value="groups">
+						<input type="hidden" name="groupid" value="<{$groupid}>">
+						<input type="hidden" name="memstart" value="<{$memstart}>"><{$security}>
+						<select multiple class="form-control" name="uids[]" multiple="multiple">
+							<{foreach item=multiple from=$multiple}>
+								<option value="<{$multiple.id}>"><{$multiple.name}></option>
+							<{/foreach}>
+						</select><br>
+						<input class="btn btn-primary" type="submit" name="submit" value="<{$smarty.const._DELETE}>">
+					</td>
+				</tr>
+			</table>
+		</form>	
+	<{/if}>
+<{/if}>

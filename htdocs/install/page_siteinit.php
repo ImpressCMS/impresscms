@@ -12,21 +12,22 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_siteinit.php 11750 2012-06-28 15:31:34Z m0nty $
  */
 /**
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
-$wizard->setPage( 'siteinit' );
+$wizard->setPage('siteinit');
 $pageHasForm = true;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['siteconfig'];
+$vars = & $_SESSION['siteconfig'];
 
-$error =& $_SESSION['error'];
+$error = & $_SESSION['error'];
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -37,35 +38,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$vars['adminpass2'] = $_POST['adminpass2'];
 	$error = '';
 
-	if (!preg_match( "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'] )) {
+	if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'])) {
 		$error = ERR_INVALID_EMAIL;
-	} elseif (@empty( $vars['adminlogin_name'] ) || @empty( $vars['adminname'] )  || @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail'])) {
+	} elseif (@empty($vars['adminlogin_name']) || @empty($vars['adminname']) || @empty($vars['adminlogin_name']) || @empty($vars['adminpass']) || @empty($vars['adminmail'])) {
 		$error = ERR_REQUIRED;
 	} elseif ($vars['adminpass'] != $vars['adminpass2']) {
 		$error = ERR_PASSWORD_MATCH;
 	}
 	if ($error) {
-		$wizard->redirectToPage( '+0' );
+		$wizard->redirectToPage('+0');
 		return 200;
 	} else {
-		$wizard->redirectToPage( '+1' );
+		$wizard->redirectToPage('+1');
 		return 302;
 	}
 }
 
 ob_start();
 ?>
-<?php if (!empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty($error)) {
+	echo '<div class="x2-note error">' . $error . "</div>\n";
+}
+?>
 
 <script
 	type="text/javascript"
 	src="../libraries/jquery/password_strength_plugin.js"></script>
 <script type="text/javascript">
                 $(document).ready( function() {
-                    $.fn.shortPass = "<?php echo _CORE_PASSLEVEL1;?>";
-                    $.fn.badPass = "<?php echo _CORE_PASSLEVEL2;?>";
-                    $.fn.goodPass = "<?php echo _CORE_PASSLEVEL3;?>";
-                    $.fn.strongPass = "<?php echo _CORE_PASSLEVEL4;?>";
+                    $.fn.shortPass = "<?php echo _CORE_PASSLEVEL1; ?>";
+                    $.fn.badPass = "<?php echo _CORE_PASSLEVEL2; ?>";
+                    $.fn.goodPass = "<?php echo _CORE_PASSLEVEL3; ?>";
+                    $.fn.strongPass = "<?php echo _CORE_PASSLEVEL4; ?>";
                     $.fn.samePassword = "Username and Password identical.";
                     $.fn.resultStyle = "";
 				$(".password_adv").passStrength({
@@ -86,18 +90,18 @@ ob_start();
 <div class="dbconn_line"><label for="adminname"><?php echo ADMIN_DISPLAY_LABEL; ?></label>
 <div class="clear">&nbsp;</div>
 <input type="text" name="adminname" id="adminname" maxlength="25"
-	value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
+	value="<?php echo htmlspecialchars($vars['adminname'], ENT_QUOTES); ?>" />
 </div>
 <div class="dbconn_line"><label for="adminlogin_name"><?php echo ADMIN_LOGIN_LABEL; ?></label>
 <div class="clear">&nbsp;</div>
 <input class="adminlogin_name" type="text" name="adminlogin_name"
 	id="adminlogin_name" maxlength="25"
-	value="<?php echo htmlspecialchars( $vars['adminlogin_name'], ENT_QUOTES ); ?>" />
+	value="<?php echo htmlspecialchars($vars['adminlogin_name'], ENT_QUOTES); ?>" />
 </div>
 <div class="dbconn_line"><label for="adminmail"><?php echo ADMIN_EMAIL_LABEL; ?></label>
 <div class="clear">&nbsp;</div>
 <input type="text" name="adminmail" id="adminmail" maxlength="255"
-	value="<?php echo htmlspecialchars( $vars['adminmail'], ENT_QUOTES ); ?>" />
+	value="<?php echo htmlspecialchars($vars['adminmail'], ENT_QUOTES); ?>" />
 </div>
 <div class="dbconn_line"><label for="adminpass"><?php echo ADMIN_PASS_LABEL; ?></label>
 <div class="clear">&nbsp;</div>
@@ -114,4 +118,3 @@ $content = ob_get_contents();
 ob_end_clean();
 $error = '';
 include 'install_tpl.php';
-?>

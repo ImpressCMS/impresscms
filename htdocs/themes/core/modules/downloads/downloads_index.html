@@ -1,0 +1,142 @@
+<{includeq file='db:downloads_header.html'}>
+
+<div>
+	<{if $byTags}>
+		<h2><{$smarty.const._MD_DOWNLOADS_DOWNLOAD_FILELIST}></h2>
+		<div class="downloads_filelist">
+		
+			<!-- pagination control -->
+			<{if $download_pagenav }><{$download_pagenav}><{/if}>
+		
+			<!-- File rule -->
+			<{foreach item=download from=$downloads_files}>
+				<{includeq file='db:downloads_download.html'}>
+			<{/foreach}>
+			
+			<!-- pagination control -->
+			<{if $download_pagenav }><{$download_pagenav}><{/if}>
+	
+		</div>
+	<{/if}>
+	
+	<{if $byRecentDownloads}>
+		<h2><{$smarty.const._MD_DOWNLOADS_DOWNLOAD_FILELIST}></h2>
+		<div class="downloads_filelist">
+		
+			<!-- pagination control -->
+			<{if $download_pagenav }><{$download_pagenav}><{/if}>
+		
+			<!-- File rule -->
+			<{foreach item=download from=$downloads}>
+				<{includeq file='db:downloads_download.html'}>
+			<{/foreach}>
+			
+			<!-- pagination control -->
+			<{if $download_pagenav }><{$download_pagenav}><{/if}>
+	
+		</div>
+	<{/if}>
+	
+	<{if $category_columns}>
+			
+		<!-- display index header -->
+		<{$downloads_index.header}>
+		<!-- display index heading -->
+		<{$downloads_index.heading}>
+		
+		<div class="downloads_cats"><!-- START category index view -->
+			<{if $user_submit}>
+				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+					<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_cat.png" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" alt="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" />
+				</a>
+			<{/if}>
+			<!-- pagination control -->
+			<{if $category_pagenav}><{$category_pagenav}><{/if}>
+			<!-- category row -->
+			<{foreach item=category_column from=$category_columns}>
+				<div>
+					<{foreach item=categories from=$category_column}>
+						<{includeq file='db:downloads_category.html'}>
+					<{/foreach}>
+				</div>
+			<{/foreach}>
+			<!-- pagination control -->
+			<{if $category_pagenav}><{$category_pagenav}><{/if}>
+			
+		</div>
+
+		<{if $downloads_upl_disclaimer}>
+			<div id="dialog-confirm-upl-disclaimer">
+				<p><{$up_disclaimer}></p>
+			</div>
+		<{/if}>
+		
+	<{/if}>
+	
+	<{if $downloads_single_cat}>
+	
+		<div class="downloads_scat_title"><h2><{$downloads_single_cat.title}></h2></div>&nbsp;
+			<{if $downloads_single_cat.userCanEditAndDelete}>
+				<{$downloads_single_cat.editItemLink}>
+			<{/if}>
+			<{if $downloads_single_cat.user_upload}>
+				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_100" href="<{$downloads_url}>download.php?op=mod&category_id=<{$downloads_single_cat.id}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
+					<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
+				</a>
+				<{if $downloads_upl_disclaimer}>
+					<div id="dialog-confirm-upl-disclaimer">
+						<p><{$up_disclaimer}></p>
+					</div>
+				<{/if}>
+			<{/if}>
+			<{if $user_submit}>
+				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$downloads_url}>category.php?op=mod&category_pid=<{$downloads_single_cat.id}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+					<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_cat.png" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" alt="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" />
+				</a>
+				
+			<{/if}>
+
+		<div class="downloads_cat_desc"> <{$downloads_single_cat.dsc}> </div>
+		
+		<!-- subcategories -->
+		<{if $sub_category_columns}>
+			<h3><{$smarty.const._MD_DOWNLOADS_CATEGORY_SUBCATLIST}></h3>
+			<!-- pagination control -->
+			<{if $category_pagenav }><{$category_pagenav}><{/if}>
+			
+			<{foreach item=category_column from=$sub_category_columns}>
+				<div class="category_row">
+					<{foreach item=categories from=$category_column}>
+						<{includeq file='db:downloads_category.html'}>
+					<{/foreach}>
+					<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;"></div>
+				</div>
+			<{/foreach}>
+			
+			<!-- pagination control -->
+			<{if $category_pagenav }><{$category_pagenav}><{/if}>
+		<{/if}>
+		
+		<{if $downloads_files }>
+			<h2><{$smarty.const._MD_DOWNLOADS_DOWNLOAD_FILELIST}></h2>
+			
+			<div class="downloads_filelist">
+			
+				<!-- pagination control -->
+				<{if $download_pagenav }><{$download_pagenav}><{/if}>
+			
+				<!-- File rule -->
+				<{foreach item=download from=$downloads_files}>
+					<{includeq file='db:downloads_download.html'}>
+				<{/foreach}>
+				
+				<!-- pagination control -->
+				<{if $download_pagenav }><{$download_pagenav}><{/if}>
+		
+			</div>
+		<{/if}>
+
+	<{/if}>
+</div>
+
+<{includeq file='db:downloads_footer.html'}>

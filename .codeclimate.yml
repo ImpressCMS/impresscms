@@ -1,0 +1,137 @@
+version: "2"
+
+prepare:
+  fetch:
+    - url: "https://gist.githubusercontent.com/Ovsyanka/e2ab2ff76e7c0d7e75a1e4213a03ff95/raw/afd91af92a68500d24636791f56a48daea034dfa/ruleset.xml"
+      path: ".cs-ruleset.xml"
+
+exclude_patterns:
+- libraries/phpopenid
+- libraries/smarty
+- libraries/wideimage
+- plugins/sourceeditors
+- plugins/textsanitizer
+- htdocs/editors
+- htdocs/libraries
+- tests/
+
+checks:
+  argument-count:
+    config:
+      threshold: 4
+  complex-logic:
+    config:
+      threshold: 4
+  file-lines:
+    config:
+      threshold: 250
+  method-complexity:
+    config:
+      threshold: 5
+  method-count:
+    config:
+      threshold: 20
+  method-lines:
+    config:
+      threshold: 25
+  nested-control-flow:
+    config:
+      threshold: 4
+  return-statements:
+    config:
+      threshold: 4
+  #similar-code:
+  #  config:
+  #    threshold: # language-specific defaults. an override will affect all languages.
+  #identical-code:
+  #  config:
+  #    threshold: # language-specific defaults. an override will affect all languages.
+
+plugins:
+
+  # engine offers style checking for all CSS stylesheets. It also includes basic
+  # syntax checking and can check your code against a configured standard.
+  csslint:
+    enabled: true
+
+  # helps developers define and maintain consistent coding styles between different
+  # editors and IDEs.  The Code Climate EditorConfig plugin will validate your project
+  # files with your .editorconfig configuration.
+  # editorconfig:
+  #  enabled: true
+  #  channel: beta
+  #  config:
+  #    editorconfig: .editorconfig
+
+  # Offers linting, complexity analysis, and style checking for your modern
+  # EcmaScript/JavaScript code.
+  #eslint:
+  #  enabled: true
+  #  channel: "eslint-4"
+  #  config:
+  #    extensions:
+  #      - .js
+  #    ignore_warnings: true
+
+  # performs a case-sensitive search for the following strings in your project:
+  # TODO, FIXME, HACK, XXX, and BUG, which are all things you should fix now,
+  # not later
+  fixme:
+    enabled: true
+    config:
+      strings:
+        - FIXME
+        - BUG
+        - TODO
+
+  # scans the libraries used by your project and flags potential compliance and
+  # compatibility issues, optionally based on policies that you configure.
+  git-legal:
+    enabled: true
+
+  # a tool designed to check markdown files and flag style issues.
+  markdownlint:
+    enabled: true
+    checks:
+      # line length
+      MD013:
+        enabled: false
+      # raw html
+      MD033:
+        enabled: false
+
+  # a Static analyzer for PHP by the creators of PHP.
+  phan:
+    enabled: true
+    config:
+      file_extensions: php
+      minimum-severity: 0
+      ignore-undeclared: false
+      quick: false
+      backward-compatibility-checks: false
+      dead-code-detection: false
+
+  # helps you detect violations of a defined coding standard.
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: .cs-ruleset.xml
+      file_extensions: php
+      ignore_warnings: true
+
+  # looks for several potential problems within PHP source code, like possible bugs,
+  # suboptimal code, overcomplicated expressions, and unused parameters, methods, or
+  # properties.
+  phpmd:
+    enabled: true
+    config:
+      file_extensions:
+        - php
+
+  # enable dublications detection
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
+        - php

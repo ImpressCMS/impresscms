@@ -1,0 +1,55 @@
+<div class="login-block panel panel-default">
+	<div class="panel-body">
+	 <{if $block.auth_openid}>
+		<ul class="nav nav-tabs" role="tablist">
+		  <li class="active"><a href="#block_login_form" role="tab" data-toggle="tab">Normal</a></li>
+		   <li><a href="#block-openid-form" role="tab" data-toggle="tab">OpenID</a></li> 
+		</ul>
+	 <{/if}>
+  
+	  <div class="login-content tab-content">
+		<div id="block_login_form" class="block_login_form<{if $block.auth_openid}> tab-pane fade in active<{/if}>">
+		  <form role="form" action="<{if $block.dossl}><{$icms_secure_url}><{else}><{$icms_url}><{/if}>/user.php" method="post">
+			<div class="form-group" style="margin-top:12px">
+				 <div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<input type="text" class="form-control required" name="uname" placeholder="<{$block.lang_username}>">
+				</div>
+				<div class="input-group" style="margin-top:5px">
+				  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+					<input type="password" class="form-control required" name="pass" placeholder="<{$block.lang_password}>">
+				</div>
+			
+			<a style="margin-bottom:5px; display: block" href="<{$icms_url}>/user.php#lost"><{$block.lang_lostpass}></a>
+			  <{if $block.rememberme}>
+			  <div class="checkbox">
+				<label class="checkbox" for="rememberme">
+				<input type="checkbox"name="rememberme" id="rememberme" value="On"><{$block.lang_rememberme}>
+				</label>
+			  </div>
+			  <{/if}>
+				<input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>">
+				<input type="hidden" name="op" value="login">
+			  <button type="submit" class="btn btn-success btn-sm"><{$block.lang_login}></button></div>
+		  <{if $block.registration }>
+			<button class="btn btn-primary btn-sm" href="<{$icms_url}>/register.php" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></button>
+		  <{/if}>
+		  </form>
+		</div>  
+		<{if $block.auth_openid}>  
+		  <div id="block-openid-form" class="tab-pane">
+			<form role="form" method="get" action="<{if $block.dossl}><{$icms_secure_url}><{else}><{$icms_url}><{/if}>/try_auth.php">
+			  <div class="form-group"><p style="padding: 5px 0px;"><{$smarty.const._MB_SYSTEM_OPENID_URL}></p>
+				  <div class="input-group">
+					 <input type="hidden" name="action" value="verify">
+					<input style="margin-bottom:3px" type="text" class="openid_url" name="openid_identifier">
+					
+				  </div> 
+				  <button type="submit" class="btn btn-success btn-sm"><{$block.lang_login}></button>
+			  </div>
+			</form>
+		  </div>
+		<{/if}>
+	  </div>
+	</div>
+</div>   

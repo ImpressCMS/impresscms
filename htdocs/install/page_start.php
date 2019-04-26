@@ -12,24 +12,26 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_start.php 10607 2010-09-07 16:19:19Z skenow $
  */
 /**
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) {
+	exit();
+}
 
-icms_core_Filesystem::chmod("../modules", 0777);
-icms_core_Filesystem::chmod("../mainfile.php", 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'modules', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . '.env', 0777);
 icms_core_Filesystem::chmod("../uploads", 0777);
-icms_core_Filesystem::chmod("../templates_c", 0777);
-icms_core_Filesystem::chmod("../cache", 0777);
-$wizard->setPage( 'start' );
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'htmlpurifier', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'log', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'cache', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'templates_c', 0777);
+$wizard->setPage('start');
 $pageHasForm = false;
 
 $content = "";
 include "./language/$wizard->language/welcome.php";
 
 include 'install_tpl.php';
-?>

@@ -1,0 +1,15 @@
+<div style="text-align: center;">
+	<form action="index.php" method="post">
+		<div>
+		<{if $block.imagenes}>
+			<img src="<{$block.imagenesruta}>" vspace="2" id="icms_theme_img" />
+			<br />
+			<select id="theme_select" name="theme_select" onchange="showImgSelected('icms_theme_img', 'theme_select', 'themes', '/screenshot.png',<{$icms_url}>)"><{$block.opciones}></select>
+			<input type="submit" value="<{$smarty.const._GO}>" />
+		<{else}>
+			<select id="theme_select" name="theme_select" onchange="submit();" size="3"><{$block.opciones}></select>
+		<{/if}>
+			<p><{$block.numero}></p>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,36 @@
+<div class="CPbigTitle" style="background-image: url(<{$icms_url}>/modules/system/admin/smilies/images/smilies_big.png)"><{$smarty.const._AM_SMILESCONTROL}>
+</div><br />
+<form action="admin.php" method="post">
+	<table class="table table-hover">
+		<tr>
+			<th><{$smarty.const._AM_CODE}></th>
+			<th><{$smarty.const._AM_SMILIE}></th>
+			<th><{$smarty.const._AM_SMILEEMOTION}></th>
+			<th><{$smarty.const._AM_DISPLAYF}></th>
+			<th><{$smarty.const._AM_ACTION}></th>
+		</tr>	
+		<{foreach item=smile from=$smilesarray}>			
+		<tr class="<{cycle values="odd,even"}>">
+			<td><{$smile.code}></td>
+			<td><img src="<{$icms_upload_url}>/<{$smile.smile_url}>" alt="" /></td>
+			<td><{$smile.smile_emotion}></td>
+			<td>
+				<input type="hidden" name="smile_id[<{$smile.id}>]" value="<{$smile.id}>" />
+				<input type="hidden" name="old_display[<{$smile.id}>]" value="<{$smile.display}>" />
+				<input type="checkbox" value="1" name="smile_display[<{$smile.id}>]"<{if $smile.display}> checked="checked"<{/if}> />
+			</td>
+			<td>
+				<a href="admin.php?fct=smilies&amp;op=SmilesEdit&amp;id=<{$smile.id}>"><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/edit.png" alt="<{$smarty.const._EDIT}>" title="<{$smarty.const._EDIT}>" /></a>&nbsp;
+				<a href="admin.php?fct=smilies&amp;op=SmilesDel&amp;id=<{$smile.id}>"><img src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/editdelete.png" alt="<{$smarty.const._DELETE}>" title="<{$smarty.const._DELETE}>" /></a>
+			</td>
+		</tr>
+		<{/foreach}>
+	</table>
+	<input type="hidden" name="op" value="SmilesUpdate" /><input type="hidden" name="fct" value="smilies"> 
+	<{$security}>
+	<input class="btn btn-primary" type="submit" value="<{$smarty.const._SUBMIT}>">
+</form><br />
+			
+
+  
+		

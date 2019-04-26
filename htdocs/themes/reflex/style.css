@@ -33,6 +33,7 @@ input[type=button]:focus {background: #eeefff; border: 1px solid #000; color: #0
 #outer_header {clear: both; height: 64px; position: relative; width: 100%; background: transparent url(img/headbg.jpg) top left repeat-x;}
 #header {clear: both; height: 64px; position: relative; width: 1002px; margin: 0 auto; background: transparent; font-size: 12px;}
 #logo {width: 257px; height: 64px; float: left;}
+#logo img {max-height: 64px}
 #quicksearch {width: 254px; float: right; margin-top: 10px; margin-right: 15px; text-align: right; font-size: 12px;}
 #quicksearch input {margin-bottom: 3px;}
 #suggestions {position: absolute; right: 17px; z-index: 9000; width:203px; display:none; margin-top: -4px;}

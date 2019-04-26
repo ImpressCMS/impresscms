@@ -1,15 +1,15 @@
 <?php
-// $Id: install2.php 9920 2010-03-27 17:46:23Z skenow $
-define("_INSTALL_WEBMASTER","Webmasters");
-define("_INSTALL_WEBMASTERD","Webmasters of this site");
-define("_INSTALL_REGUSERS","Registered Users");
-define("_INSTALL_REGUSERSD","Registered Users Group");
-define("_INSTALL_ANONUSERS","Anonymous Users");
-define("_INSTALL_ANONUSERSD","Anonymous Users Group");
 
-define("_INSTALL_L165","The site is currently closed for maintenance. Please come back later.");
+define("_INSTALL_WEBMASTER", "Webmasters");
+define("_INSTALL_WEBMASTERD", "Webmasters of this site");
+define("_INSTALL_REGUSERS", "Registered Users");
+define("_INSTALL_REGUSERSD", "Registered Users Group");
+define("_INSTALL_ANONUSERS", "Anonymous Users");
+define("_INSTALL_ANONUSERSD", "Anonymous Users Group");
 
-define("_INSTALL_ANON","Anonymous");
+define("_INSTALL_L165", "The site is currently closed for maintenance. Please come back later.");
+
+define("_INSTALL_ANON", "Anonymous");
 
 define("_INSTALL_DISCLMR", "While the administrators and moderators of this site will attempt to remove or edit any generally objectionable material as quickly as possible, it is impossible to review every message. Therefore you acknowledge that all posts made to this site express the views and opinions of the author and not the administrators, moderators or webmaster (except for posts by these people) and hence will not be held liable.
 
@@ -81,4 +81,4 @@ If you did not registered to our site, please contact us at the following addres
 Yours truly,
 {X_SITENAME}
 {X_SITEURL}");
-?>
+

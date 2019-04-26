@@ -10,7 +10,6 @@
 * @since	XOOPS
 * @author	http://www.xoops.org The XOOPS Project
 * @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id: xoops_version.php 8568 2009-04-11 12:52:08Z icmsunderdog $
 */
 
 // ImpressCMS - Nekro!
@@ -368,4 +367,3 @@ $modversion['config'][36]['valuetype'] = 'array';
 $modversion['config'][36]['default'] = '1 2 3';
 $modversion['config'][36]['category'] = 'tiny_manager';
 */
-?>

@@ -12,59 +12,53 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_tablescreate.php 10607 2010-09-07 16:19:19Z skenow $
  */
 /**
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
-
-icms_core_Filesystem::chmod("../mainfile.php", 0444);
-if (defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != '') {
-	icms_core_Filesystem::chmod(XOOPS_TRUST_PATH, 0777);
-	icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0777);
-	icms_core_Filesystem::chmod("/modules/protector/root/modules/protector", 0777);
-	icms_core_Filesystem::chmod("/modules/protector/trust_path/modules", 0777);
-	if (!is_dir(XOOPS_ROOT_PATH.'/modules/protector')) {
-		icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/root/modules/protector',XOOPS_ROOT_PATH.'/modules/protector');
-	}
-	if (!is_dir(XOOPS_TRUST_PATH.'/modules')) {
-		icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules',XOOPS_TRUST_PATH.'/modules');
-	}
-	if (!is_dir(XOOPS_TRUST_PATH.'/modules/protector')) {
-		icms_core_Filesystem::copyRecursive(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules/protector',XOOPS_TRUST_PATH.'/modules/protector');
-	}
-	icms_core_Filesystem::chmod(XOOPS_ROOT_PATH.'/modules', 0755);
+if (!defined('XOOPS_INSTALL')) {
+	exit();
 }
-$wizard->setPage( 'tablescreate' );
+
+include_once "../../mainfile.php";
+
+icms_core_Filesystem::chmod("../.env", 0444);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . '/modules', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . '/modules', 0755);
+$wizard->setPage('tablescreate');
 $pageHasForm = true;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['settings'];
+$vars = & $_SESSION['settings'];
 
-
-include_once "../mainfile.php";
 include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
 if (!$dbm->isConnectable()) {
-	$wizard->redirectToPage( '-3' );
+	$wizard->redirectToPage('-3');
 	exit();
 }
 $process = '';
-if (!$dbm->tableExists( 'users' )) {
+if (!$dbm->tableExists('users')) {
 	$process = 'create';
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// If there's nothing to do: switch to next page
-	if (empty( $process )) {
-		$wizard->redirectToPage( '+1' );
+	if (empty($process)) {
+		$wizard->redirectToPage('+1');
 		exit();
 	}
 	$tables = array();
-	$result = $dbm->queryFromFile( './sql/' . XOOPS_DB_TYPE . '.structure.sql' );
+
+	$type = getenv('DB_TYPE');
+	if (substr($type, 0, 4) == 'pdo.') {
+		$driver = substr($type, 4);
+	} else {
+		$driver = $type;
+	}
+	$result = $dbm->queryFromFile('./sql/' . $driver . '.structure.sql');
 	$content = $dbm->report();
 	include 'install_tpl.php';
 	exit();
@@ -86,4 +80,3 @@ if ($process == 'create') {
 $content = ob_get_contents();
 ob_end_clean();
 include 'install_tpl.php';
-?>

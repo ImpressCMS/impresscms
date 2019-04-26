@@ -1,0 +1,21 @@
+
+
+<{if $icms_langcode =="es"}>
+<{if $sub.title == "Anuncios"}><i class="fa fa-star"></i>
+<{elseif $sub.title == "Configuración"}><i class="fa fa-cog"></i>
+<{elseif $sub.title == "Diseño"}><i class="fa fa-magic"></i>
+<{elseif $sub.title == "Contenido"}><i class="fa fa-desktop"></i>
+<{elseif $sub.title == "Herramientas"}><i class="fa fa-flask"></i>
+<{elseif $sub.title == "Usuarios y grupos"}><i class="fa fa-users"></i>
+<{elseif $sub.title == "Medios"}><i class="fa fa-picture-o"></i>
+<{/if}>
+<{elseif $icms_langcode =="en"}>
+<{if $sub.title == $smarty.const._MD_AM_GROUPS_ADVERTISING}><i class="fa fa-star"></i>
+<{elseif $sub.title == $smarty.const._MD_AM_GROUPS_SITECONFIGURATION}><i class="fa fa-cog"></i>
+<{elseif $sub.title == $smarty.const._MD_AM_GROUPS_LAYOUT}><i class="fa fa-magic"></i>
+<{elseif $sub.title == $smarty.const._MD_AM_GROUPS_CONTENT}><i class="fa fa-desktop"></i>
+<{elseif $sub.title == $smarty.const._MD_AM_GROUPS_SYSTEMTOOLS}><i class="fa fa-flask"></i>
+<{elseif $sub.title == $smarty.const._MD_AM_GROUPS_USERSANDGROUPS}><i class="fa fa-users"></i>
+<{elseif $sub.title == $smarty.const._MD_AM_GROUPS_MEDIA}><i class="fa fa-picture-o"></i>
+<{/if}>
+<{/if}>

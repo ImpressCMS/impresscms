@@ -1,0 +1,17 @@
+<div class="socialModuleLinks">
+	<div class="btn-group">
+		<a class="btn-primary btn-sm btn-group btn dropdown-toggle" data-toggle="dropdown" href="#">
+	    <{$block.label}><{$smarty.const._MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK}>
+	    <span class="caret"></span>
+	  </a>
+	  <ul class="dropdown-menu add-arrow">
+			<{foreach item=provider from=$block.provider name=social}>  		
+				<li>
+	  			<a href="#" onclick="window.open(<{$provider.link}>);return false;" rel="nofollow" data-original-title="<{$provider.title}>" class="text-left">
+	  				<img src="<{$block.imagepath}><{$provider.image}>" alt="<{$provider.title}>"/> <{$provider.title}>
+	  			</a>
+		  	</li>
+			<{/foreach}>
+		</ul>
+	</div>
+</div>

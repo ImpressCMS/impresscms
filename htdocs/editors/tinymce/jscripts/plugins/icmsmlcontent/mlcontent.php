@@ -1,49 +1,67 @@
 <?php
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
-if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
+if (file_exists('../../../../../../../mainfile.php')) {
+	include_once '../../../../../../../mainfile.php';
+}
+if (file_exists('../../../../../../mainfile.php')) {
+	include_once '../../../../../../mainfile.php';
+}
+if (file_exists('../../../../../mainfile.php')) {
+	include_once '../../../../../mainfile.php';
+}
+if (file_exists('../../../../mainfile.php')) {
+	include_once '../../../../mainfile.php';
+}
+if (file_exists('../../../mainfile.php')) {
+	include_once '../../../mainfile.php';
+}
+if (file_exists('../../mainfile.php')) {
+	include_once '../../mainfile.php';
+}
+if (file_exists('../mainfile.php')) {
+	include_once '../mainfile.php';
+}
+if (!defined('ICMS_ROOT_PATH')) {
+	die("ImpressCMS root path not defined");
+}
 
 //only site users can access this file or if multilanguage is enabled
-        //$easiestml_exist = false;
-        $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+		//$easiestml_exist = false;
+		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+		
 if (is_object(icms::$user) && $easiestml_exist) {
-    function langDropdown()
-    {
-        // check THE EASIEST MULTILANGUAGE HACK
-        $easiestml_exist = false;
-        $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+	function langDropdown() {
+		global $icmsConfigMultilang;
+		// check THE EASIEST MULTILANGUAGE HACK
+		$easiestml_exist = false;
+		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
 
 
-        // if "THE EASIEST MULTILANGUAGE HACK" by GIJOE is applied... (The hack can be found at http://www.peak.ne.jp/xoops/)
-        if ($easiestml_exist) {
-            $easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
-            $langnames = explode( ',' , EASIESTML_LANGNAMES ) ;
+		// if "THE EASIEST MULTILANGUAGE HACK" by GIJOE is applied... (The hack can be found at http://www.peak.ne.jp/xoops/)
+		if ($easiestml_exist) {
+			$easiestml_langs = explode(',', EASIESTML_LANGS);
+			$langnames = explode(',', EASIESTML_LANGNAMES);
     
-            $lang_options = '' ;
+			$lang_options = '';
     
-            foreach ($easiestml_langs as $l => $lang )
-                $lang_options .= '<option value="'.$lang.'">'.$langnames[$l].'</option>' ;
+			foreach ($easiestml_langs as $l => $lang) {
+							$lang_options .= '<option value="' . $lang . '">' . $langnames[$l] . '</option>';
+			}
 
-            $javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";
-            echo "<select name=\"mlanguages\" ".$javascript." style=\"width:200px\">";
-            echo "<option value=\" selected\">{#icmsmlcontent_dlg.sellang}</option>";
-            echo "".$lang_options."";
-            echo "</select>";
-        // if "Xlanguage" module is installed...
-        } else {
-            $javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";
-            echo "<input type=\"text\" size=\"2\" name=\"mlanguages\" ".$javascript." //>";
-        }
-    }
+			$javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";
+			echo "<select name=\"mlanguages\" " . $javascript . " style=\"width:200px\">";
+			echo "<option value=\" selected\">{#icmsmlcontent_dlg.sellang}</option>";
+			echo "" . $lang_options . "";
+			echo "</select>";
+		// if "Xlanguage" module is installed...
+		} else {
+			$javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";
+			echo "<input type=\"text\" size=\"2\" name=\"mlanguages\" " . $javascript . " //>";
+		}
+	}
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta charset="utf-8">
 <title>{#icmsmlcontent_dlg.title}</title>
 <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
 <script type="text/javascript" src="js/icmsmlcontent.js"></script>
@@ -71,6 +89,5 @@ if (is_object(icms::$user) && $easiestml_exist) {
 </body>
 </html><?php
 } else {
-    die(_NOPERM);
+	die(_NOPERM);
 }
-?>

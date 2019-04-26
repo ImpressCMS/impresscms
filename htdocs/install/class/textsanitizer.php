@@ -1,22 +1,44 @@
 <?php
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
 /**
  * Textsanitizer Class
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	installer
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: textsanitizer.php 11614 2012-03-03 00:55:21Z skenow $
  */
 // This is subset and modified version of module.textsanitizer.php
-@set_magic_quotes_runtime(0);
 
-class TextSanitizer
-{
+class TextSanitizer {
 
 	/*
 	 * Constructor of this class
@@ -24,8 +46,7 @@ class TextSanitizer
 	 * <br> should not be allowed since nl2br will be used
 	 * when storing data
 	 */
-	function TextSanitizer()
-	{
+	function __construct() {
 
 	}
 
@@ -47,11 +68,11 @@ class TextSanitizer
 
 	function &nl2Br($text)
 	{
-		return preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text);
+		return preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $text);
 	}
 
 	/** @todo	get_magic_quotes_gpc is removed in PHP 5.4 */
-	function &addSlashes($text, $force=false)
+	function &addSlashes($text, $force = false)
 	{
 		if ($force) {
 			return addslashes($text);
@@ -77,43 +98,40 @@ class TextSanitizer
 	/*
 	 *  for displaying data in html textbox forms
 	 */
-	function htmlSpecialChars($text)
-	{
+	function htmlSpecialChars($text) {
 		return preg_replace("/&amp;/i", '&', htmlspecialchars($text, ENT_QUOTES));
 	}
 
-	function undoHtmlSpecialChars(&$text)
-	{
+	function undoHtmlSpecialChars(&$text) {
 		return preg_replace(array("/&gt;/i", "/&lt;/i", "/&quot;/i", "/&#039;/i"), array(">", "<", "\"", "'"), $text);
 	}
 
 	/*
 	 *  Filters textarea form data in DB for display
 	 */
-	function &displayText($text, $html=false)
+	function &displayText($text, $html = false)
 	{
-		if (! $html) {
+		if (!$html) {
 			// html not allowed
-			$text =& $this->htmlSpecialChars($text);
+			$text = & $this->htmlSpecialChars($text);
 		}
-		$text =& $this->makeClickable($text);
-		$text =& $this->nl2Br($text);
+		$text = & $this->makeClickable($text);
+		$text = & $this->nl2Br($text);
 		return $text;
 	}
 
 	/*
 	 *  Filters textarea form data submitted for preview
 	 */
-	function &previewText($text, $html=false)
+	function &previewText($text, $html = false)
 	{
-		$text =& $this->stripSlashesGPC($text);
+		$text = & $this->stripSlashesGPC($text);
 		return $this->displayText($text, $html);
 	}
 
 	##################### Deprecated Methods ######################
 
-	function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
-	{
+	function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
 		if ($allowhtml == 0) {
 			$text = $this->htmlSpecialChars($text);
 		} else {
@@ -129,8 +147,7 @@ class TextSanitizer
 		return $text;
 	}
 
-	function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
-	{
+	function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
 		$text = $this->stripSlashesGPC($text);
 		if ($allowhtml == 0) {
 			$text = $this->htmlSpecialChars($text);
@@ -147,65 +164,56 @@ class TextSanitizer
 		return $text;
 	}
 
-	function makeTboxData4Save($text)
-	{
+	function makeTboxData4Save($text) {
 		//$text = $this->undoHtmlSpecialChars($text);
 		return $this->addSlashes($text);
 	}
 
-	function makeTboxData4Show($text, $smiley=0)
-	{
+	function makeTboxData4Show($text, $smiley = 0) {
 		$text = $this->htmlSpecialChars($text);
 		return $text;
 	}
 
-	function makeTboxData4Edit($text)
-	{
+	function makeTboxData4Edit($text) {
 		return $this->htmlSpecialChars($text);
 	}
 
-	function makeTboxData4Preview($text, $smiley=0)
-	{
+	function makeTboxData4Preview($text, $smiley = 0) {
 		$text = $this->stripSlashesGPC($text);
 		$text = $this->htmlSpecialChars($text);
 		return $text;
 	}
 
-	function makeTboxData4PreviewInForm($text)
-	{
+	function makeTboxData4PreviewInForm($text) {
 		$text = $this->stripSlashesGPC($text);
 		return $this->htmlSpecialChars($text);
 	}
 
-	function makeTareaData4Save($text)
-	{
+	function makeTareaData4Save($text) {
 		return $this->addSlashes($text);
 	}
 
-	function &makeTareaData4Show(&$text, $html=1, $smiley=1, $xcode=1)
+	function &makeTareaData4Show(&$text, $html = 1, $smiley = 1, $xcode = 1)
 	{
 		return $this->displayTarea($text, $html, $smiley, $xcode);
 	}
 
-	function makeTareaData4Edit($text)
-	{
+	function makeTareaData4Edit($text) {
 		return htmlSpecialChars($text, ENT_QUOTES);
 	}
 
-	function &makeTareaData4Preview(&$text, $html=1, $smiley=1, $xcode=1)
+	function &makeTareaData4Preview(&$text, $html = 1, $smiley = 1, $xcode = 1)
 	{
 		return $this->previewTarea($text, $html, $smiley, $xcode);
 	}
 
-	function makeTareaData4PreviewInForm($text)
-	{
+	function makeTareaData4PreviewInForm($text) {
 		//if magic_quotes_gpc is on, do stipslashes
 		$text = $this->stripSlashesGPC($text);
 		return htmlSpecialChars($text, ENT_QUOTES);
 	}
 
-	function makeTareaData4InsideQuotes($text)
-	{
+	function makeTareaData4InsideQuotes($text) {
 		return $this->htmlSpecialChars($text);
 	}
 
@@ -218,7 +226,7 @@ class TextSanitizer
 	function &oopsStripSlashesRT($text)
 	{
 		if (get_magic_quotes_runtime()) {
-			$text =& stripslashes($text);
+			$text = & stripslashes($text);
 		}
 		return $text;
 	}
@@ -238,4 +246,3 @@ class TextSanitizer
 		return $this->nl2br($text);
 	}
 }
-?>
