@@ -9,3 +9,6 @@
 /nbproject/
 vendor/
 /.env
+.vagrant
+user-customizations.sh
+.env
