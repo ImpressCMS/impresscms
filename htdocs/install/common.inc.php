@@ -40,9 +40,6 @@ define('ICMS_PUBLIC_PATH', dirname(__DIR__));
 
 require_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'version.php';
-// including a few functions - relying more on the core, now
-include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'functions.php';
 // installer common functions
 require_once 'include/functions.php';
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'xoopsinstallwizard.php';

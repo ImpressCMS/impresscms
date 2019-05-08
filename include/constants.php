@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Prevent including content if mainfile.php wasn't included before
+ */
+if (!defined('ICMS_ROOT_PATH') || !defined('ICMS_URL')) {
+    return;
+}
+
 /**#@+
  * Creating ICMS specific constants
  */

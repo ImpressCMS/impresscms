@@ -41,6 +41,12 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @author 		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
+
+// @todo remove this hack
+if (!((defined('ICMS_IN_ADMIN') && ICMS_IN_ADMIN) || (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "/admin/") !== false))) {
+    return;
+}
+
 /** Creates constant indicating this file has been loaded */
 define('XOOPS_CPFUNC_LOADED', 1);
 /** Load the template class */

@@ -37,11 +37,6 @@
 /** make sure mainfile is included, for security and functionality */
 defined("ICMS_MAINFILE_INCLUDED") or die();
 
-// -- Include common functions and constants file
-require_once __DIR__ . DIRECTORY_SEPARATOR . "constants.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "functions.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "version.php";
-
 if (!isset($xoopsOption)) {
 	$xoopsOption = array();
 }
