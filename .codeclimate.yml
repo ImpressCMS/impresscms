@@ -39,7 +39,9 @@ checks:
       threshold: 4
   return-statements:
     config:
-      threshold: 4
+      threshold: 4  
+  Controversial/CamelCaseParameterName:
+    enabled: false
   #similar-code:
   #  config:
   #    threshold: # language-specific defaults. an override will affect all languages.
