@@ -43,7 +43,7 @@
  */
 
 // @todo remove this hack
-if (!((defined('ICMS_IN_ADMIN') && ICMS_IN_ADMIN) || (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "/admin/") !== false))) {
+if (!(isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "/admin/") !== false)) {
     return;
 }
 

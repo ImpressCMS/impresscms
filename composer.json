@@ -66,9 +66,9 @@
       "ImpressCMS\\Core\\Providers\\": "core/providers/"
     },
     "files": [
+      "include/version.php",
       "include/constants.php",
       "include/functions.php",
-      "include/version.php",
       "include/cp_functions.php"
     ]
   },
