@@ -758,7 +758,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @return array
 	 */
 	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
-		return $this->getCustomList($this->keyName, $this->getIdentifierName(), $criteria, $limit, $start, $debug);
+		return $this->getCustomList($this->keyName, $this->getIdentifierName(false), $criteria, $limit, $start, $debug);
 	}
 
 	/**

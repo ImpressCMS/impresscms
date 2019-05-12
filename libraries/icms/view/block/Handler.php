@@ -62,7 +62,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @return array
 	 */
 	public function getBlockPositions($full = false) {
-		if (!count($this->block_positions)) {
+		if (empty($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
 			$icms_blockposition_handler = icms::handler('icms_view_block_position');
 			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
@@ -188,6 +188,20 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		return $ret;
 	}
 
+	public function &get($id, $as_object = true, $debug = false, $criteria = false)
+	{
+		$obj = parent::get($id, $as_object, $debug, $criteria);
+		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link')
+			. " WHERE block_id='" . (int)$obj->getVar('bid') . "'";
+		$result = $this->db->query($sql);
+		$modules = $bcustomp = array();
+		while ($row = $this->db->fetchArray($result)) {
+			$modules[] = (int)$row['module_id'] . '-' . (int)$row['page_id'];
+		}
+		$obj->setVar('visiblein', $modules);
+		return $obj;
+	}
+
 	/**
 	 * getAllByGroupModule gets all blocks visible on a page, based on group permissions
 	 *
@@ -274,6 +288,35 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		}
 		return $ret;
 
+	}
+
+	/**
+	 * Get block data for multiple block ids
+	 *
+	 * @param array $blockids
+	 *
+	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks. (used in theme_blocks)
+	 */
+	private function &getMultiple($blockids)
+	{
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+		$criteria->setSort('weight');
+		$ret = $this->getObjects($criteria, true, true);
+		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link')
+			. " WHERE block_id IN (" . implode(',', array_keys($ret)) . ") ORDER BY block_id";
+		$result = $this->db->query($sql);
+		$modules = array();
+		$last_block_id = 0;
+		while ($row = $this->db->fetchArray($result)) {
+			$modules[] = (int)($row['module_id']) . '-' . (int)($row['page_id']);
+			$ret[$row['block_id']]->setVar('visiblein', $modules);
+			if ($row['block_id'] != $last_block_id) {
+				$modules = array();
+			}
+			$last_block_id = $row['block_id'];
+		}
+		return $ret;
 	}
 
 	/**
@@ -435,47 +478,6 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		}
 		return $status;
 
-	}
-
-	public function &get($id, $as_object = true, $debug = false, $criteria = false) {
-		$obj = parent::get($id, $as_object, $debug, $criteria);
-		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link')
-			. " WHERE block_id='" . (int) $obj->getVar('bid') . "'";
-		$result = $this->db->query($sql);
-		$modules = $bcustomp = array();
-		while ($row = $this->db->fetchArray($result)) {
-			$modules[] = (int) $row['module_id'] . '-' . (int) $row['page_id'];
-		}
-		$obj->setVar('visiblein', $modules);
-		return $obj;
-	}
-
-	/**
-	 * Get block data for multiple block ids
-	 *
-	 * @param array $blockids
-	 *
-	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks. (used in theme_blocks)
-	 */
-	private function &getMultiple($blockids) {
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
-		$criteria->setSort('weight');
-		$ret = $this->getObjects($criteria, true, true);
-		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link')
-			. " WHERE block_id IN (" . implode(',', array_keys($ret)) . ") ORDER BY block_id";
-		$result = $this->db->query($sql);
-		$modules = array();
-		$last_block_id = 0;
-		while ($row = $this->db->fetchArray($result)) {
-			$modules[] = (int) ($row['module_id']) . '-' . (int) ($row['page_id']);
-			$ret[$row['block_id']]->setVar('visiblein', $modules);
-			if ($row['block_id'] != $last_block_id) {
-				$modules = array();
-			}
-			$last_block_id = $row['block_id'];
-		}
-		return $ret;
 	}
 
 	public function getCountSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
