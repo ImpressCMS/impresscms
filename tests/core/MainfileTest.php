@@ -30,7 +30,7 @@ class MainfileTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testLoggingHook() {
 		parent::assertTrue(defined('ICMS_LOGGING_HOOK'), 'ICMS_LOGGING_HOOK is not defined');
-		parent::assertSame(getenv('LOGGING_HOOK'), ICMS_LOGGING_HOOK, 'ICMS_LOGGING_HOOK is not same as LOGGING_HOOK env variable');
+		parent::assertSame(env('LOGGING_HOOK'), ICMS_LOGGING_HOOK, 'ICMS_LOGGING_HOOK is not same as LOGGING_HOOK env variable');
 	}
 
 	/**
@@ -50,7 +50,7 @@ class MainfileTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testUrlConstant() {
 		parent::assertTrue(defined('ICMS_URL'), 'ICMS_URL is not defined');
-		parent::assertSame(getenv('URL'), ICMS_URL, 'ICMS_URL is not same as URL env variable');
+		parent::assertSame(env('URL'), ICMS_URL, 'ICMS_URL is not same as URL env variable');
 	}
 
 	/**

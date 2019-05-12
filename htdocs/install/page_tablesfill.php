@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	extract($_SESSION['siteconfig'], EXTR_SKIP);
 	$language = $wizard->language;
 
-	$type = getenv('DB_TYPE');
+	$type = env('DB_TYPE');
 	if (substr($type, 0, 4) == 'pdo.') {
 		$driver = substr($type, 4);
 	} else {

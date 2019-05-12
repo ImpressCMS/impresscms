@@ -67,29 +67,6 @@ class icms_core_Security {
 	}
 
 	/**
-	 * Create a token in the user's session
-	 *
-	 * @param int $timeout time in seconds the token should be valid
-	 * @param string $name session name
-	 *
-	 * @return string token value
-	 */
-	public function createToken($timeout = 0, $name = _CORE_TOKEN) {
-		$this->garbageCollection($name);
-		if ($timeout == 0) {
-			$timeout = $GLOBALS['icmsConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
-		}
-		$token_id = md5(uniqid(rand(), true));
-		// save token data on the server
-		if (!isset($_SESSION[$name . '_SESSION'])) {
-			$_SESSION[$name . '_SESSION'] = array();
-		}
-		$token_data = array('id' => $token_id, 'expire' => time() + (int) ($timeout));
-		array_push($_SESSION[$name . '_SESSION'], $token_data);
-		return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . getenv('DB_PREFIX'));
-	}
-
-	/**
 	 * Check if a token is valid. If no token is specified, $_REQUEST[$name . '_REQUEST'] is checked
 	 *
 	 * @param string $token token to validate
@@ -107,7 +84,7 @@ class icms_core_Security {
 		$validFound = false;
 		$token_data = & $_SESSION[$name . '_SESSION'];
 		foreach (array_keys($token_data) as $i) {
-			if ($token === md5($token_data[$i]['id'] . $_SERVER['HTTP_USER_AGENT'] . getenv('DB_PREFIX'))) {
+			if ($token === md5($token_data[$i]['id'] . $_SERVER['HTTP_USER_AGENT'] . env('DB_PREFIX'))) {
 				if ($this->filterToken($token_data[$i])) {
 					if ($clearIfValid) {
 						// token should be valid once, so clear it once validated
@@ -127,15 +104,6 @@ class icms_core_Security {
 		}
 		$this->garbageCollection($name);
 		return $validFound;
-	}
-
-	/**
-	 * Clear all token values from user's session
-	 *
-	 * @param string $name session name
-	 */
-	public function clearTokens($name = _CORE_TOKEN) {
-		$_SESSION[$name . '_SESSION'] = array();
 	}
 
 	/**
@@ -161,6 +129,41 @@ class icms_core_Security {
 			$_SESSION[$name . '_SESSION'] = array_filter($_SESSION[$name . '_SESSION'], array($this, 'filterToken'));
 		}
 	}
+
+	/**
+	 * Create a token in the user's session
+	 *
+	 * @param int $timeout time in seconds the token should be valid
+	 * @param string $name session name
+	 *
+	 * @return string token value
+	 */
+	public function createToken($timeout = 0, $name = _CORE_TOKEN)
+	{
+		$this->garbageCollection($name);
+		if ($timeout == 0) {
+			$timeout = $GLOBALS['icmsConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
+		}
+		$token_id = md5(uniqid(rand(), true));
+		// save token data on the server
+		if (!isset($_SESSION[$name . '_SESSION'])) {
+			$_SESSION[$name . '_SESSION'] = array();
+		}
+		$token_data = array('id' => $token_id, 'expire' => time() + (int)($timeout));
+		array_push($_SESSION[$name . '_SESSION'], $token_data);
+		return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . env('DB_PREFIX'));
+	}
+
+	/**
+	 * Clear all token values from user's session
+	 *
+	 * @param string $name session name
+	 */
+	public function clearTokens($name = _CORE_TOKEN)
+	{
+		$_SESSION[$name . '_SESSION'] = array();
+	}
+
 	/**
 	 * Check the user agent's HTTP REFERER against ICMS_URL
 	 *
@@ -235,15 +238,6 @@ class icms_core_Security {
 	}
 
 	/**
-	 * Add an error
-	 *
-	 * @param   string  $error
-	 */
-	public function setErrors($error) {
-		$this->errors[] = trim($error);
-	}
-
-	/**
 	 * Get generated errors
 	 *
 	 * @param    bool    $ashtml Format using HTML?
@@ -262,6 +256,16 @@ class icms_core_Security {
 			}
 			return $ret;
 		}
+	}
+
+	/**
+	 * Add an error
+	 *
+	 * @param   string $error
+	 */
+	public function setErrors($error)
+	{
+		$this->errors[] = trim($error);
 	}
 }
 

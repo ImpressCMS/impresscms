@@ -115,23 +115,6 @@ class icms_view_block_Object extends icms_ipf_Object {
 	}
 
 		/**
-		 * gets var
-		 *
-		 * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
-		 *
-		 * @param string $name
-		 * @param string $format
-		 * @return mixed
-		 */
-		public function getVar($name, $format = 's') {
-			if ($name == 'visiblein') {
-				return $this->visiblein;
-			} else {
-				return parent::getVar($name, $format);
-			}
-		}
-
-		/**
 		 * sets var
 		 *
 		 * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
@@ -147,44 +130,6 @@ class icms_view_block_Object extends icms_ipf_Object {
 				parent::setVar($name, $value, $options);
 			}
 		}
-
-	// The next Methods are for backward Compatibility
-
-	public function getContent($format = 'S', $c_type = 'T') {
-		switch ($format) {
-			case 'S':
-				if ($c_type == 'H') {
-					$content = $this->content;
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-					$content = str_replace(getenv('DB_SALT'), '', $content);
-					return $content;
-				} elseif ($c_type == 'P') {
-					ob_start();
-					echo eval(icms_core_DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
-					$content = ob_get_contents();
-					ob_end_clean();
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-					$content = str_replace(getenv('DB_SALT'), '', $content);
-					return $content;
-				} elseif ($c_type == 'S') {
-					$myts = icms_core_Textsanitizer::getInstance();
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
-					return $myts->displayTarea($content, 1, 1);
-				} else {
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
-					return icms_core_DataFilter::checkVar($content, 'text', 'output');
-				}
-				break;
-
-			case 'E':
-				return $this->getVar('content', 'e');
-				break;
-
-			default:
-				return $this->content;
-				break;
-		}
-	}
 
 	/**
 	 * (HTML-) form for setting the options of the block
@@ -210,18 +155,25 @@ class icms_view_block_Object extends icms_ipf_Object {
 		}
 	}
 
+	// The next Methods are for backward Compatibility
+
 	/**
-	 * For backward compatibility
+	 * gets var
 	 *
-	 * @todo improve with IPF
-	 * @return unknown
+	 * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
+	 *
+	 * @param string $name
+	 * @param string $format
+	 * @return mixed
 	 */
-	public function isCustom() {
-		if ($this->getVar("block_type") == "C" || $this->getVar("block_type") == "E") {
-			return true;
+	public function getVar($name, $format = 's')
+	{
+		if ($name == 'visiblein') {
+			return $this->visiblein;
+		} else {
+			return parent::getVar($name, $format);
 		}
-		return false;
-	}
+		}
 
 	/**
 	 * Builds the block
@@ -265,6 +217,57 @@ class icms_view_block_Object extends icms_ipf_Object {
 			}
 		}
 		return $block;
+	}
+
+	/**
+	 * For backward compatibility
+	 *
+	 * @todo improve with IPF
+	 * @return unknown
+	 */
+	public function isCustom()
+	{
+		if ($this->getVar("block_type") == "C" || $this->getVar("block_type") == "E") {
+			return true;
+		}
+		return false;
+	}
+
+	public function getContent($format = 'S', $c_type = 'T')
+	{
+		switch ($format) {
+			case 'S':
+				if ($c_type == 'H') {
+					$content = $this->content;
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+					$content = str_replace(env('DB_SALT'), '', $content);
+					return $content;
+				} elseif ($c_type == 'P') {
+					ob_start();
+					echo eval(icms_core_DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
+					$content = ob_get_contents();
+					ob_end_clean();
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+					$content = str_replace(env('DB_SALT'), '', $content);
+					return $content;
+				} elseif ($c_type == 'S') {
+					$myts = icms_core_Textsanitizer::getInstance();
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
+					return $myts->displayTarea($content, 1, 1);
+				} else {
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
+					return icms_core_DataFilter::checkVar($content, 'text', 'output');
+				}
+				break;
+
+			case 'E':
+				return $this->getVar('content', 'e');
+				break;
+
+			default:
+				return $this->content;
+				break;
+		}
 	}
 
 	/**

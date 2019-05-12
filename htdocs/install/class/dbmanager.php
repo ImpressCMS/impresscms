@@ -47,11 +47,23 @@ class db_manager {
 	var $s_tables = array();
 	var $f_tables = array();
 	var $db;
+	var $successStrings = array(
+		'create' => TABLE_CREATED,
+		'insert' => ROWS_INSERTED,
+		'alter' => TABLE_ALTERED,
+		'drop' => TABLE_DROPPED,
+	);
+	var $failureStrings = array(
+		'create' => TABLE_NOT_CREATED,
+		'insert' => ROWS_FAILED,
+		'alter' => TABLE_NOT_ALTERED,
+		'drop' => TABLE_NOT_DROPPED,
+	);
 
 	function __construct() {
 		$this->db = icms_db_legacy_Factory::getDatabase();
 		$this->db->setPrefix(
-			getenv('DB_PREFIX')
+			env('DB_PREFIX')
 		);
 		$this->db->setLogger(icms_core_Logger::instance());
 	}
@@ -125,20 +137,6 @@ class db_manager {
 		}
 		return true;
 	}
-
-	var $successStrings = array(
-		'create'	=> TABLE_CREATED,
-		'insert'	=> ROWS_INSERTED,
-		'alter'		=> TABLE_ALTERED,
-		'drop'		=> TABLE_DROPPED,
-	);
-	var $failureStrings = array(
-		'create'	=> TABLE_NOT_CREATED,
-		'insert'	=> ROWS_FAILED,
-		'alter'		=> TABLE_NOT_ALTERED,
-		'drop'		=> TABLE_NOT_DROPPED,
-	);
-
 
 	function report() {
 		$commands = array('create', 'insert', 'alter', 'drop');
