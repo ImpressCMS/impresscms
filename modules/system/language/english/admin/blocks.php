@@ -1,5 +1,4 @@
 <?php
-// $Id:$
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
 //if (!defined('_AM_DBUPDATED')) {if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}}
 

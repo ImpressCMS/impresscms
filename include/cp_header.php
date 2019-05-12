@@ -1,5 +1,4 @@
 <?php
-// $Id: cp_header.php 12313 2013-09-15 21:14:35Z skenow $
 /**
  * module files can include this file for admin authorization
  * the file that will include this file must be located under icms_url/modules/module_directory_name/admin_directory_name/

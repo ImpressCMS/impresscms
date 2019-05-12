@@ -1,5 +1,4 @@
 <?php
-// $Id: userrank.php 12064 2012-10-10 14:37:53Z skenow $
 define('_MD_AM_RANK', 'User Ranks');
 define('_MD_AM_RANK_DSC', 'User ranks are picture, used to make difference between users in different levels of your website!');
 

@@ -20,7 +20,7 @@
  *
  * For questions, help, comments, discussion, etc., please join the
  * Smarty mailing list. Send a blank e-mail to
- * smarty-discussion-subscribe@googlegroups.com 
+ * smarty-discussion-subscribe@googlegroups.com
  *
  * @link http://www.smarty.net/
  * @copyright 2001-2005 New Digital Group, Inc.
@@ -29,8 +29,6 @@
  * @package Smarty
  * @version 2.6.28
  */
-
-/* $Id: Smarty.class.php 4660 2012-09-24 20:05:15Z uwe.tews@googlemail.com $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -826,6 +824,18 @@ class Smarty
     }
 
     /**
+	 * trigger Smarty error
+	 *
+	 * @param string $error_msg
+	 * @param integer $error_type
+	 */
+	function trigger_error($error_msg, $error_type = E_USER_WARNING)
+	{
+		$msg = htmlentities($error_msg);
+		trigger_error("Smarty error: $msg", $error_type);
+	}
+
+	/**
      * Unregisters a resource
      *
      * @param string $type name of resource
@@ -848,6 +858,23 @@ class Smarty
     }
 
     /**
+	 * Extracts the filter name from the given callback
+	 *
+	 * @param callback $function
+	 * @return string
+	 */
+	function _get_filter_name($function)
+	{
+		if (is_array($function)) {
+			$_class_name = (is_object($function[0]) ?
+				get_class($function[0]) : $function[0]);
+			return $_class_name . '_' . $function[1];
+		} else {
+			return $function;
+		}
+	}
+
+	/**
      * Unregisters a prefilter function
      *
      * @param callback $function
@@ -902,26 +929,14 @@ class Smarty
     }
 
     /**
-     * load a filter of specified type and name
+	 * clear the entire contents of cache (all templates)
      *
-     * @param string $type filter type
-     * @param string $name filter name
+	 * @param string $exp_time expire time
+	 * @return boolean results of {@link smarty_core_rm_auto()}
      */
-    function load_filter($type, $name)
+	function clear_all_cache($exp_time = null)
     {
-        switch ($type) {
-            case 'output':
-                $_params = array('plugins' => array(array($type . 'filter', $name, null, null, false)));
-                require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-                smarty_core_load_plugins($_params, $this);
-                break;
-
-            case 'pre':
-            case 'post':
-                if (!isset($this->_plugins[$type . 'filter'][$name]))
-                    $this->_plugins[$type . 'filter'][$name] = false;
-                break;
-        }
+		return $this->clear_cache(null, null, null, $exp_time);
     }
 
     /**
@@ -958,18 +973,22 @@ class Smarty
 
     }
 
-
     /**
-     * clear the entire contents of cache (all templates)
+	 * returns an auto_id for auto-file-functions
      *
-     * @param string $exp_time expire time
-     * @return boolean results of {@link smarty_core_rm_auto()}
+	 * @param string $cache_id
+	 * @param string $compile_id
+	 * @return string|null
      */
-    function clear_all_cache($exp_time = null)
-    {
-        return $this->clear_cache(null, null, null, $exp_time);
+	function _get_auto_id($cache_id = null, $compile_id = null)
+	{
+		if (isset($cache_id))
+			return (isset($compile_id)) ? $cache_id . '|' . $compile_id : $cache_id;
+		elseif (isset($compile_id))
+			return $compile_id;
+		else
+			return null;
     }
-
 
     /**
      * test to see if valid cache exists for this template
@@ -995,7 +1014,6 @@ class Smarty
         require_once(SMARTY_CORE_DIR . 'core.read_cache_file.php');
         return smarty_core_read_cache_file($_params, $this);
     }
-
 
     /**
      * clear all the assigned template variables.
@@ -1043,6 +1061,180 @@ class Smarty
     }
 
     /**
+	 * fetch the template info. Gets timestamp, and source
+	 * if get_source is true
+	 *
+	 * sets $source_content to the source of the template, and
+	 * $resource_timestamp to its time stamp
+	 * @param string $resource_name
+	 * @param string $source_content
+	 * @param integer $resource_timestamp
+	 * @param boolean $get_source
+	 * @param boolean $quiet
+	 * @return boolean
+	 */
+
+	function _fetch_resource_info(&$params)
+	{
+		if (!isset($params['get_source'])) {
+			$params['get_source'] = true;
+		}
+		if (!isset($params['quiet'])) {
+			$params['quiet'] = false;
+		}
+
+		$_return = false;
+		$_params = array('resource_name' => $params['resource_name']);
+		if (isset($params['resource_base_path']))
+			$_params['resource_base_path'] = $params['resource_base_path'];
+		else
+			$_params['resource_base_path'] = $this->template_dir;
+
+		if ($this->_parse_resource_name($_params)) {
+			$_resource_type = $_params['resource_type'];
+			$_resource_name = $_params['resource_name'];
+			switch ($_resource_type) {
+				case 'file':
+					if ($params['get_source']) {
+						$params['source_content'] = $this->_read_file($_resource_name);
+					}
+					$params['resource_timestamp'] = filemtime($_resource_name);
+					$_return = is_file($_resource_name) && is_readable($_resource_name);
+					break;
+
+				default:
+					// call resource functions to fetch the template source and timestamp
+					if ($params['get_source']) {
+						$_source_return = isset($this->_plugins['resource'][$_resource_type]) &&
+							call_user_func_array($this->_plugins['resource'][$_resource_type][0][0],
+								array($_resource_name, &$params['source_content'], &$this));
+					} else {
+						$_source_return = true;
+					}
+
+					$_timestamp_return = isset($this->_plugins['resource'][$_resource_type]) &&
+						call_user_func_array($this->_plugins['resource'][$_resource_type][0][1],
+							array($_resource_name, &$params['resource_timestamp'], &$this));
+
+					$_return = $_source_return && $_timestamp_return;
+					break;
+			}
+		}
+
+		if (!$_return) {
+			// see if we can get a template with the default template handler
+			if (!empty($this->default_template_handler_func)) {
+				if (!is_callable($this->default_template_handler_func)) {
+					$this->trigger_error("default template handler function \"$this->default_template_handler_func\" doesn't exist.");
+				} else {
+					$_return = call_user_func_array(
+						$this->default_template_handler_func,
+						array($_params['resource_type'], $_params['resource_name'], &$params['source_content'], &$params['resource_timestamp'], &$this));
+				}
+			}
+		}
+
+		if (!$_return) {
+			if (!$params['quiet']) {
+				$this->trigger_error('unable to read resource: "' . $params['resource_name'] . '"');
+			}
+		} else if ($_return && $this->security) {
+			require_once(SMARTY_CORE_DIR . 'core.is_secure.php');
+			if (!smarty_core_is_secure($_params, $this)) {
+				if (!$params['quiet'])
+					$this->trigger_error('(secure mode) accessing "' . $params['resource_name'] . '" is not allowed');
+				$params['source_content'] = null;
+				$params['resource_timestamp'] = null;
+				return false;
+			}
+		}
+		return $_return;
+	}
+
+	/**
+	 * parse out the type and name from the resource
+	 *
+	 * @param string $resource_base_path
+	 * @param string $resource_name
+	 * @param string $resource_type
+	 * @param string $resource_name
+	 * @return boolean
+	 */
+
+	function _parse_resource_name(&$params)
+	{
+
+		// split tpl_path by the first colon
+		$_resource_name_parts = explode(':', $params['resource_name'], 2);
+
+		if (count($_resource_name_parts) == 1) {
+			// no resource type given
+			$params['resource_type'] = $this->default_resource_type;
+			$params['resource_name'] = $_resource_name_parts[0];
+		} else {
+			if (strlen($_resource_name_parts[0]) == 1) {
+				// 1 char is not resource type, but part of filepath
+				$params['resource_type'] = $this->default_resource_type;
+				$params['resource_name'] = $params['resource_name'];
+			} else {
+				$params['resource_type'] = $_resource_name_parts[0];
+				$params['resource_name'] = $_resource_name_parts[1];
+			}
+		}
+
+		if ($params['resource_type'] == 'file') {
+			if (!preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $params['resource_name'])) {
+				// relative pathname to $params['resource_base_path']
+				// use the first directory where the file is found
+				foreach ((array)$params['resource_base_path'] as $_curr_path) {
+					$_fullpath = $_curr_path . DIRECTORY_SEPARATOR . $params['resource_name'];
+					if (file_exists($_fullpath) && is_file($_fullpath)) {
+						$params['resource_name'] = $_fullpath;
+						return true;
+					}
+					// didn't find the file, try include_path
+					$_params = array('file_path' => $_fullpath);
+					require_once(SMARTY_CORE_DIR . 'core.get_include_path.php');
+					if (smarty_core_get_include_path($_params, $this)) {
+						$params['resource_name'] = $_params['new_file_path'];
+						return true;
+					}
+				}
+				return false;
+			} else {
+				/* absolute path */
+				return file_exists($params['resource_name']);
+			}
+		} elseif (empty($this->_plugins['resource'][$params['resource_type']])) {
+			$_params = array('type' => $params['resource_type']);
+			require_once(SMARTY_CORE_DIR . 'core.load_resource_plugin.php');
+			smarty_core_load_resource_plugin($_params, $this);
+		}
+
+		return true;
+	}
+
+	/**
+	 * read in a file
+	 *
+	 * @param string $filename
+	 * @return string
+	 */
+	function _read_file($filename)
+	{
+		if (file_exists($filename) && is_readable($filename) && ($fd = @fopen($filename, 'rb'))) {
+			$contents = '';
+			while (!feof($fd)) {
+				$contents .= fread($fd, 8192);
+			}
+			fclose($fd);
+			return $contents;
+		} else {
+			return false;
+		}
+	}
+
+	/**
      * Returns an array containing template variables
      *
      * @param string $name
@@ -1058,7 +1250,7 @@ class Smarty
         } else {
             // var non-existant, return valid reference
             $_tmp = null;
-            return $_tmp;   
+			return $_tmp;
         }
     }
 
@@ -1083,19 +1275,6 @@ class Smarty
     }
 
     /**
-     * trigger Smarty error
-     *
-     * @param string $error_msg
-     * @param integer $error_type
-     */
-    function trigger_error($error_msg, $error_type = E_USER_WARNING)
-    {
-        $msg = htmlentities($error_msg);
-        trigger_error("Smarty error: $msg", $error_type);
-    }
-
-
-    /**
      * executes & displays the template results
      *
      * @param string $resource_name
@@ -1118,7 +1297,7 @@ class Smarty
     function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
     {
         static $_cache_info = array();
-        
+
         $_smarty_old_error_level = $this->debugging ? error_reporting() : error_reporting(isset($this->error_reporting)
                ? $this->error_reporting : error_reporting() & ~E_NOTICE);
 
@@ -1311,62 +1490,74 @@ class Smarty
     }
 
     /**
-     * load configuration values
+	 * load a filter of specified type and name
      *
-     * @param string $file
-     * @param string $section
-     * @param string $scope
+	 * @param string $type filter type
+	 * @param string $name filter name
      */
-    function config_load($file, $section = null, $scope = 'global')
+	function load_filter($type, $name)
     {
-        require_once($this->_get_plugin_filepath('function', 'config_load'));
-        smarty_function_config_load(array('file' => $file, 'section' => $section, 'scope' => $scope), $this);
+		switch ($type) {
+			case 'output':
+				$_params = array('plugins' => array(array($type . 'filter', $name, null, null, false)));
+				require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
+				smarty_core_load_plugins($_params, $this);
+				break;
+
+			case 'pre':
+			case 'post':
+				if (!isset($this->_plugins[$type . 'filter'][$name]))
+					$this->_plugins[$type . 'filter'][$name] = false;
+				break;
+		}
     }
 
     /**
-     * return a reference to a registered object
+	 * Get the compile path for this resource
      *
-     * @param string $name
-     * @return object
+	 * @param string $resource_name
+	 * @return string results of {@link _get_auto_filename()}
      */
-    function &get_registered_object($name) {
-        if (!isset($this->_reg_objects[$name]))
-        $this->_trigger_fatal_error("'$name' is not a registered object");
-
-        if (!is_object($this->_reg_objects[$name][0]))
-        $this->_trigger_fatal_error("registered '$name' is not an object");
-
-        return $this->_reg_objects[$name][0];
+	function _get_compile_path($resource_name)
+    {
+		return $this->_get_auto_filename($this->compile_dir, $resource_name,
+			$this->_compile_id) . '.php';
     }
 
     /**
-     * clear configuration values
+	 * get a concrete filename for automagically created content
      *
-     * @param string $var
+	 * @param string $auto_base
+	 * @param string $auto_source
+	 * @param string $auto_id
+	 * @return string
+	 * @staticvar string|null
+	 * @staticvar string|null
      */
-    function clear_config($var = null)
+	function _get_auto_filename($auto_base, $auto_source = null, $auto_id = null)
     {
-        if(!isset($var)) {
-            // clear all values
-            $this->_config = array(array('vars'  => array(),
-                                         'files' => array()));
-        } else {
-            unset($this->_config[0]['vars'][$var]);
-        }
-    }
+		$_compile_dir_sep = $this->use_sub_dirs ? DIRECTORY_SEPARATOR : '^';
+		$_return = $auto_base . DIRECTORY_SEPARATOR;
 
-    /**
-     * get filepath of requested plugin
-     *
-     * @param string $type
-     * @param string $name
-     * @return string|false
-     */
-    function _get_plugin_filepath($type, $name)
-    {
-        $_params = array('type' => $type, 'name' => $name);
-        require_once(SMARTY_CORE_DIR . 'core.assemble_plugin_filepath.php');
-        return smarty_core_assemble_plugin_filepath($_params, $this);
+		if (isset($auto_id)) {
+			// make auto_id safe for directory names
+			$auto_id = str_replace('%7C', $_compile_dir_sep, (urlencode($auto_id)));
+			// split into separate directories
+			$_return .= $auto_id . $_compile_dir_sep;
+		}
+
+		if (isset($auto_source)) {
+			// make source name safe for filename
+			$_filename = urlencode(basename($auto_source));
+			$_crc32 = sprintf('%08X', crc32($auto_source));
+			// prepend %% to avoid name conflicts with
+			// with $params['auto_id'] names
+			$_crc32 = substr($_crc32, 0, 2) . $_compile_dir_sep .
+				substr($_crc32, 0, 3) . $_compile_dir_sep . $_crc32;
+			$_return .= '%%' . $_crc32 . '%%' . $_filename;
+		}
+
+		return $_return;
     }
 
    /**
@@ -1504,168 +1695,89 @@ class Smarty
     }
 
     /**
-     * Get the compile path for this resource
+	 * load configuration values
      *
-     * @param string $resource_name
-     * @return string results of {@link _get_auto_filename()}
+	 * @param string $file
+	 * @param string $section
+	 * @param string $scope
      */
-    function _get_compile_path($resource_name)
+	function config_load($file, $section = null, $scope = 'global')
     {
-        return $this->_get_auto_filename($this->compile_dir, $resource_name,
-                                         $this->_compile_id) . '.php';
+		require_once($this->_get_plugin_filepath('function', 'config_load'));
+		smarty_function_config_load(array('file' => $file, 'section' => $section, 'scope' => $scope), $this);
     }
 
     /**
-     * fetch the template info. Gets timestamp, and source
-     * if get_source is true
+	 * get filepath of requested plugin
      *
-     * sets $source_content to the source of the template, and
-     * $resource_timestamp to its time stamp
-     * @param string $resource_name
-     * @param string $source_content
-     * @param integer $resource_timestamp
-     * @param boolean $get_source
-     * @param boolean $quiet
-     * @return boolean
+	 * @param string $type
+	 * @param string $name
+	 * @return string|false
      */
-
-    function _fetch_resource_info(&$params)
+	function _get_plugin_filepath($type, $name)
     {
-        if(!isset($params['get_source'])) { $params['get_source'] = true; }
-        if(!isset($params['quiet'])) { $params['quiet'] = false; }
+		$_params = array('type' => $type, 'name' => $name);
+		require_once(SMARTY_CORE_DIR . 'core.assemble_plugin_filepath.php');
+		return smarty_core_assemble_plugin_filepath($_params, $this);
+	}
 
-        $_return = false;
-        $_params = array('resource_name' => $params['resource_name']) ;
-        if (isset($params['resource_base_path']))
-            $_params['resource_base_path'] = $params['resource_base_path'];
-        else
-            $_params['resource_base_path'] = $this->template_dir;
+	/**
+	 * return a reference to a registered object
+	 *
+	 * @param string $name
+	 * @return object
+	 */
+	function &get_registered_object($name)
+	{
+		if (!isset($this->_reg_objects[$name]))
+			$this->_trigger_fatal_error("'$name' is not a registered object");
 
-        if ($this->_parse_resource_name($_params)) {
-            $_resource_type = $_params['resource_type'];
-            $_resource_name = $_params['resource_name'];
-            switch ($_resource_type) {
-                case 'file':
-                    if ($params['get_source']) {
-                        $params['source_content'] = $this->_read_file($_resource_name);
-                    }
-                    $params['resource_timestamp'] = filemtime($_resource_name);
-                    $_return = is_file($_resource_name) && is_readable($_resource_name);
-                    break;
+		if (!is_object($this->_reg_objects[$name][0]))
+			$this->_trigger_fatal_error("registered '$name' is not an object");
 
-                default:
-                    // call resource functions to fetch the template source and timestamp
-                    if ($params['get_source']) {
-                        $_source_return = isset($this->_plugins['resource'][$_resource_type]) &&
-                            call_user_func_array($this->_plugins['resource'][$_resource_type][0][0],
-                                                 array($_resource_name, &$params['source_content'], &$this));
-                    } else {
-                        $_source_return = true;
-                    }
+		return $this->_reg_objects[$name][0];
+	}
 
-                    $_timestamp_return = isset($this->_plugins['resource'][$_resource_type]) &&
-                        call_user_func_array($this->_plugins['resource'][$_resource_type][0][1],
-                                             array($_resource_name, &$params['resource_timestamp'], &$this));
-
-                    $_return = $_source_return && $_timestamp_return;
-                    break;
-            }
+	/**
+	 * trigger Smarty plugin error
+	 *
+	 * @param string $error_msg
+	 * @param string $tpl_file
+	 * @param integer $tpl_line
+	 * @param string $file
+	 * @param integer $line
+	 * @param integer $error_type
+	 */
+	function _trigger_fatal_error($error_msg, $tpl_file = null, $tpl_line = null,
+								  $file = null, $line = null, $error_type = E_USER_ERROR)
+	{
+		if (isset($file) && isset($line)) {
+			$info = ' (' . basename($file) . ", line $line)";
+		} else {
+			$info = '';
         }
-
-        if (!$_return) {
-            // see if we can get a template with the default template handler
-            if (!empty($this->default_template_handler_func)) {
-                if (!is_callable($this->default_template_handler_func)) {
-                    $this->trigger_error("default template handler function \"$this->default_template_handler_func\" doesn't exist.");
-                } else {
-                    $_return = call_user_func_array(
-                        $this->default_template_handler_func,
-                        array($_params['resource_type'], $_params['resource_name'], &$params['source_content'], &$params['resource_timestamp'], &$this));
-                }
-            }
+		if (isset($tpl_line) && isset($tpl_file)) {
+			$this->trigger_error('[in ' . $tpl_file . ' line ' . $tpl_line . "]: $error_msg$info", $error_type);
+		} else {
+			$this->trigger_error($error_msg . $info, $error_type);
         }
-
-        if (!$_return) {
-            if (!$params['quiet']) {
-                $this->trigger_error('unable to read resource: "' . $params['resource_name'] . '"');
-            }
-        } else if ($_return && $this->security) {
-            require_once(SMARTY_CORE_DIR . 'core.is_secure.php');
-            if (!smarty_core_is_secure($_params, $this)) {
-                if (!$params['quiet'])
-                    $this->trigger_error('(secure mode) accessing "' . $params['resource_name'] . '" is not allowed');
-                $params['source_content'] = null;
-                $params['resource_timestamp'] = null;
-                return false;
-            }
-        }
-        return $_return;
     }
 
-
     /**
-     * parse out the type and name from the resource
+	 * clear configuration values
      *
-     * @param string $resource_base_path
-     * @param string $resource_name
-     * @param string $resource_type
-     * @param string $resource_name
-     * @return boolean
+	 * @param string $var
      */
-
-    function _parse_resource_name(&$params)
+	function clear_config($var = null)
     {
-
-        // split tpl_path by the first colon
-        $_resource_name_parts = explode(':', $params['resource_name'], 2);
-
-        if (count($_resource_name_parts) == 1) {
-            // no resource type given
-            $params['resource_type'] = $this->default_resource_type;
-            $params['resource_name'] = $_resource_name_parts[0];
+		if (!isset($var)) {
+			// clear all values
+			$this->_config = array(array('vars' => array(),
+				'files' => array()));
         } else {
-            if(strlen($_resource_name_parts[0]) == 1) {
-                // 1 char is not resource type, but part of filepath
-                $params['resource_type'] = $this->default_resource_type;
-                $params['resource_name'] = $params['resource_name'];
-            } else {
-                $params['resource_type'] = $_resource_name_parts[0];
-                $params['resource_name'] = $_resource_name_parts[1];
-            }
+			unset($this->_config[0]['vars'][$var]);
         }
-
-        if ($params['resource_type'] == 'file') {
-            if (!preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $params['resource_name'])) {
-                // relative pathname to $params['resource_base_path']
-                // use the first directory where the file is found
-                foreach ((array)$params['resource_base_path'] as $_curr_path) {
-                    $_fullpath = $_curr_path . DIRECTORY_SEPARATOR . $params['resource_name'];
-                    if (file_exists($_fullpath) && is_file($_fullpath)) {
-                        $params['resource_name'] = $_fullpath;
-                        return true;
-                    }
-                    // didn't find the file, try include_path
-                    $_params = array('file_path' => $_fullpath);
-                    require_once(SMARTY_CORE_DIR . 'core.get_include_path.php');
-                    if(smarty_core_get_include_path($_params, $this)) {
-                        $params['resource_name'] = $_params['new_file_path'];
-                        return true;
-                    }
-                }
-                return false;
-            } else {
-                /* absolute path */
-                return file_exists($params['resource_name']);
-            }
-        } elseif (empty($this->_plugins['resource'][$params['resource_type']])) {
-            $_params = array('type' => $params['resource_type']);
-            require_once(SMARTY_CORE_DIR . 'core.load_resource_plugin.php');
-            smarty_core_load_resource_plugin($_params, $this);
-        }
-
-        return true;
     }
-
 
     /**
      * Handle modifiers
@@ -1704,63 +1816,6 @@ class Smarty
             return $string;
     }
 
-
-    /**
-     * read in a file
-     *
-     * @param string $filename
-     * @return string
-     */
-    function _read_file($filename)
-    {
-        if ( file_exists($filename) && is_readable($filename) && ($fd = @fopen($filename, 'rb')) ) {
-            $contents = '';
-            while (!feof($fd)) {
-                $contents .= fread($fd, 8192);
-            }
-            fclose($fd);
-            return $contents;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * get a concrete filename for automagically created content
-     *
-     * @param string $auto_base
-     * @param string $auto_source
-     * @param string $auto_id
-     * @return string
-     * @staticvar string|null
-     * @staticvar string|null
-     */
-    function _get_auto_filename($auto_base, $auto_source = null, $auto_id = null)
-    {
-        $_compile_dir_sep =  $this->use_sub_dirs ? DIRECTORY_SEPARATOR : '^';
-        $_return = $auto_base . DIRECTORY_SEPARATOR;
-
-        if(isset($auto_id)) {
-            // make auto_id safe for directory names
-            $auto_id = str_replace('%7C',$_compile_dir_sep,(urlencode($auto_id)));
-            // split into separate directories
-            $_return .= $auto_id . $_compile_dir_sep;
-        }
-
-        if(isset($auto_source)) {
-            // make source name safe for filename
-            $_filename = urlencode(basename($auto_source));
-            $_crc32 = sprintf('%08X', crc32($auto_source));
-            // prepend %% to avoid name conflicts with
-            // with $params['auto_id'] names
-            $_crc32 = substr($_crc32, 0, 2) . $_compile_dir_sep .
-                      substr($_crc32, 0, 3) . $_compile_dir_sep . $_crc32;
-            $_return .= '%%' . $_crc32 . '%%' . $_filename;
-        }
-
-        return $_return;
-    }
-
     /**
      * unlink a file, possibly using expiration time
      *
@@ -1778,48 +1833,15 @@ class Smarty
         }
     }
 
-    /**
-     * returns an auto_id for auto-file-functions
-     *
-     * @param string $cache_id
-     * @param string $compile_id
-     * @return string|null
-     */
-    function _get_auto_id($cache_id=null, $compile_id=null) {
-    if (isset($cache_id))
-        return (isset($compile_id)) ? $cache_id . '|' . $compile_id  : $cache_id;
-    elseif(isset($compile_id))
-        return $compile_id;
-    else
-        return null;
-    }
 
     /**
-     * trigger Smarty plugin error
+	 * called for included templates
      *
-     * @param string $error_msg
-     * @param string $tpl_file
-     * @param integer $tpl_line
-     * @param string $file
-     * @param integer $line
-     * @param integer $error_type
+	 * @param string $_smarty_include_tpl_file
+	 * @param string $_smarty_include_vars
      */
-    function _trigger_fatal_error($error_msg, $tpl_file = null, $tpl_line = null,
-            $file = null, $line = null, $error_type = E_USER_ERROR)
-    {
-        if(isset($file) && isset($line)) {
-            $info = ' ('.basename($file).", line $line)";
-        } else {
-            $info = '';
-        }
-        if (isset($tpl_line) && isset($tpl_file)) {
-            $this->trigger_error('[in ' . $tpl_file . ' line ' . $tpl_line . "]: $error_msg$info", $error_type);
-        } else {
-            $this->trigger_error($error_msg . $info, $error_type);
-        }
-    }
 
-
+	// $_smarty_include_tpl_file, $_smarty_include_vars
     /**
      * callback function for preg_replace, to call a non-cacheable block
      * @return string
@@ -1834,14 +1856,6 @@ class Smarty
     }
 
 
-    /**
-     * called for included templates
-     *
-     * @param string $_smarty_include_tpl_file
-     * @param string $_smarty_include_vars
-     */
-
-    // $_smarty_include_tpl_file, $_smarty_include_vars
 
     function _smarty_include($params)
     {
@@ -1887,7 +1901,6 @@ class Smarty
         }
     }
 
-
     /**
      * get or set an array of cached attributes for function that is
      * not cacheable
@@ -1911,7 +1924,6 @@ class Smarty
 
     }
 
-
     /**
      * wrapper for include() retaining $this
      * @return mixed
@@ -1925,7 +1937,6 @@ class Smarty
         }
     }
 
-
     /**
      * wrapper for eval() retaining $this
      * @return mixed
@@ -1934,26 +1945,8 @@ class Smarty
     {
         return eval($code);
     }
-    
-    /**
-     * Extracts the filter name from the given callback
-     * 
-     * @param callback $function
-     * @return string
-     */
-	function _get_filter_name($function)
-	{
-		if (is_array($function)) {
-			$_class_name = (is_object($function[0]) ?
-				get_class($function[0]) : $function[0]);
-			return $_class_name . '_' . $function[1];
-		}
-		else {
-			return $function;
-		}
-	}
-  
-    /**#@-*/
+
+	/**#@-*/
 
 }
 

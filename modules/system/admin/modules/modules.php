@@ -1,5 +1,4 @@
 <?php
-// $Id: modulesadmin.php 12403 2014-01-26 21:35:08Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
