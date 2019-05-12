@@ -2202,8 +2202,6 @@ if (!function_exists('icms_PasswordMeter')) {
 	 * @param    string $password_fieldclass element id for the password field
 	 * @param    string $username_fieldid element id for the username field
 	 *
-	 * @param    string $password_fieldclass element id for the password field
-	 * @param    string $username_fieldid element id for the username field
 	 * @todo Move to a static class method - Password
 	 */
 	function icms_PasswordMeter($password_fieldclass = "password_adv", $username_fieldid = "uname")
