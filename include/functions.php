@@ -257,17 +257,16 @@ if (!function_exists('redirect_header')) {
 			$_SESSION['redirect_message'] = $message;
 			header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
 			exit();
-		} else {
-
-			$xoopsTpl->display('db:system_redirect.html');
-			if (defined('XOOPS_CPFUNC_LOADED')) {
-				icms_cp_footer();
-			} else {
-				require ICMS_ROOT_PATH . '/footer.php';
-			}
-
-			exit();
 		}
+
+		$xoopsTpl->display('db:system_redirect.html');
+		if (defined('XOOPS_CPFUNC_LOADED')) {
+			icms_cp_footer();
+		} else {
+			require ICMS_ROOT_PATH . '/footer.php';
+		}
+
+		exit();
 		// GIJ end
 	}
 }
