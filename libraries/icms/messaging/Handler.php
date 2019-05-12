@@ -81,7 +81,7 @@ class icms_messaging_Handler {
 	/**
 	 * sender UID
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $fromUser;
 
@@ -130,7 +130,7 @@ class icms_messaging_Handler {
 	/**
 	 * Messages upon success
 	 *
-	 * @var string
+	 * @var array
 	 */
 	private $success;
 	private $isMail;
