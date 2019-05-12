@@ -270,7 +270,7 @@ switch ($op) {
 						}
 
 						$moduleslist = array_filter(
-							icms_module_Handler::getActive(true),
+							icms_module_Handler::getActive(),
 							function ($item) {
 								return $item != 'system';
 							}
