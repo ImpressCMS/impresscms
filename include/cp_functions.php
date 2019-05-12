@@ -45,7 +45,10 @@
 // @todo remove this hack
 if (
 !(
-	defined('ICMS_IN_ADMIN') ||
+	(
+		defined('ICMS_IN_ADMIN') ||
+		defined('XOOPS_INSTALL')
+	) ||
 	(
 		isset($_SERVER['REQUEST_URI']) &&
 		(
