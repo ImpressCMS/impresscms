@@ -43,42 +43,95 @@ icms_loadLanguageFile('core', 'mail');
  * @package	ICMS\Messaging
  */
 class icms_messaging_Handler {
+
+	/**
+	 * Charset
+	 *
+	 * @var string
+	 */
 	protected $charSet = 'utf-8';
 
-	// sender email address
+	/**
+	 * Encoding
+	 *
+	 * @var string
+	 */
 	protected $encoding = '8bit';
 
-	// sender name
 	/**
 	 * reference to a {@link icms_messaging_EmailHandler}
 	 * @var		icms_messaging_EmailHandler
 	 */
 	private $multimailer;
 
-	// sender UID
+	/**
+	 * From email address
+	 *
+	 * @var string
+	 */
 	private $fromEmail;
 
-	// array of user class objects
+	/**
+	 * Sender name
+	 *
+	 * @var string
+	 */
 	private $fromName;
 
-	// array of email addresses
+	/**
+	 * sender UID
+	 *
+	 * @var string
+	 */
 	private $fromUser;
 
-	// custom headers
+	/**
+	 * array of user class objects
+	 *
+	 * @var array
+	 */
 	private $toUsers;
 
-	// subjet of mail
+	/**
+	 * Array of email addresses
+	 *
+	 * @var string[]
+	 */
 	private $toEmails;
 
-	// body of mail
+	/**
+	 * custom headers
+	 *
+	 * @var string[]
+	 */
 	private $headers;
 
-	// error messages
+	/**
+	 * Subjet of mail
+	 *
+	 * @var string
+	 */
 	private $subject;
 
-	// messages upon success
+	/**
+	 * body of mail
+	 *
+	 * @var string
+	 */
 	private $body;
+
+	/**
+	 * Error messages
+	 *
+	 * @var string[]
+	 */
 	private $errors;
+
+	/**
+	 * Messages upon success
+	 *
+	 * @var string
+	 */
 	private $success;
 	private $isMail;
 	private $isPM;
