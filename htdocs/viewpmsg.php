@@ -72,7 +72,7 @@ if (!is_object(icms::$user)) {
 	include ICMS_ROOT_PATH . '/header.php';
 	$criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
 	$criteria->setOrder('DESC');
-	$pm_arr =& $pm_handler->getObjects($criteria);
+	$pm_arr = $pm_handler->getObjects($criteria);
 	echo "<h4>" . _PM_PRIVATEMESSAGE
 	. "</h4><p><a href='userinfo.php?uid=". (int) (icms::$user->getVar('uid')) . "'>"
 	. _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _PM_INBOX . "</p>";

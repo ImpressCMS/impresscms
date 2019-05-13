@@ -772,7 +772,7 @@ class icms_core_DataFilter {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
 			$text = preg_replace_callback($patterns, function ($match) {
-				return base64_encode($match[1]);
+				return '[code]' . base64_encode($match[1]) . '[/code]';
 			}, $text);
 		}
 		return $text;
@@ -790,8 +790,9 @@ class icms_core_DataFilter {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
 			$text = preg_replace_callback($patterns, function ($matches) use ($image) {
-				$code = icms_core_DataFilter::codeSanitizer($matches[1],($image != 0)?1:0);
-				return '<div class=\"icmsCode\">' . $code . '</div>';
+				$code = icms_core_DataFilter::codeSanitizer($matches[1],($image != 0) ? 1 : 0);
+				return '<div class="icmsCode">' . $code . '</div>';
+
 			}, $text);
 		}
 		return $text;
