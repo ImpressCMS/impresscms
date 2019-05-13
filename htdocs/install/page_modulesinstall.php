@@ -12,9 +12,7 @@
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
  * @version		$Id: page_modulesinstall.php 12389 2014-01-17 16:58:21Z skenow $
  */
-/**
- *
- */
+
 require_once 'common.inc.php';
 
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
@@ -26,7 +24,7 @@ $pageHasHelp = false;
 $vars =& $_SESSION['settings'];
 
 include_once "../mainfile.php";
-include_once ICMS_ROOT_PATH."/include/common.php";
+include_once "../include/common.php";
 include_once "../include/cp_functions.php";
 include_once './class/dbmanager.php';
 include "modulesadmin.php";
@@ -69,15 +67,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 		//Install protector module by default if found.
 		//TODO: Insert Protector installation - leads to blank page as it is now.
-		if (file_exists(ICMS_ROOT_PATH.'/modules/protector/xoops_version.php')) {
-			$content .= xoops_module_install('protector');
-			/*        	include_once "./class/mainfilemanager.php";
-			 $mm = new mainfile_manager("../mainfile.php");
-			 $mm->setRewrite('PROTECTOR1', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/precheck.inc.php\')' ;
-			 $mm->setRewrite('PROTECTOR2', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/postcheck.inc.php\')' ;
+		if (version_compare( phpversion(), '7.0', '<')) {
+			if (file_exists(ICMS_ROOT_PATH . '/modules/protector/xoops_version.php')) {
+				$content .= xoops_module_install('protector');
+				/*        	include_once "./class/mainfilemanager.php";
+                 $mm = new mainfile_manager("../mainfile.php");
+                 $mm->setRewrite('PROTECTOR1', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/precheck.inc.php\')' ;
+                 $mm->setRewrite('PROTECTOR2', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/postcheck.inc.php\')' ;
 
-			 $result = $mm->doRewrite();
-			 $mm->report();*/
+                 $result = $mm->doRewrite();
+                 $mm->report();*/
+			}
 		}
 
 		$tables = array();

@@ -44,7 +44,6 @@ if(get_magic_quotes_runtime())
 	// Deactivate
 	set_magic_quotes_runtime(false);
 }
-?>
 
 // -- Include common functions and constants file
 require_once ICMS_ROOT_PATH . "/include/constants.php";
