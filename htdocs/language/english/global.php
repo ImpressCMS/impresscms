@@ -321,3 +321,5 @@ define("_FILTERS_MSG2","Input Filter (HTMLPurifier): ");
 define("_FILTERS_MSG3","Output Filter: ");
 define("_FILTERS_MSG4","Output Filter (HTMLPurifier): ");
 
+// added in 1.4.0
+define("_OUTDATED_PHP", "Your current PHP version (%s) is no longer maintained. Please upgrade for security reasons!");

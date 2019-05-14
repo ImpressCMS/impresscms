@@ -298,3 +298,6 @@ define('_VISIBLE', 'Visible');
 define('_UP', 'Haut');
 define('_DOWN', 'Bas');
 define('_CONFIGURE', 'Paramétriser');?>
+
+// rajouté en 1.4.0
+define("_OUTDATED_PHP", "Votre version actuelle de PHP (%s) n'est plus maintenu. Veuillez vous mettre à jour pour des raisons de sécurité!");

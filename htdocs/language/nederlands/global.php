@@ -300,4 +300,6 @@ define('_VISIBLE', 'Zichtbaar');
 define('_UP', 'Boven');
 define('_DOWN', 'Onders');
 define('_CONFIGURE', 'Instellen');
-?>
+
+// added in 1.4.0
+define("_OUTDATED_PHP", "Uw huidige PHP versie (%s) wordt niet langer onderhouden. Gelieve up te graden voor veiligheidsredenen!");

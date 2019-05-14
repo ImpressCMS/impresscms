@@ -71,6 +71,8 @@ function b_system_admin_warnings_show() {
 		array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_UPLOAD_PATH)), '', FALSE);
 	if (!is_writable(ICMS_COMPILE_PATH))
 		array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_COMPILE_PATH)), '', FALSE);
+	if (version_compare( phpversion(), '7.2', '<'))
+		array_push($block['msg'], icms_core_Message::warning(sprintf(_OUTDATED_PHP, phpversion())), '', FALSE);
 
 	if (count($block['msg']) > 0) {
 		return $block;

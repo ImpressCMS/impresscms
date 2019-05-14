@@ -311,3 +311,5 @@ define("_CREDITS", "创建");
 define("_LICENSE", "许可证");
 define("_LOCAL_FOOTER",'基于ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">ImpressCMS项目</a>');
 
+// added in 1.4.0
+define("_OUTDATED_PHP", "Your current PHP version (%s) is no longer maintained. Please upgrade for security reasons!");
