@@ -792,6 +792,7 @@ class icms_core_DataFilter {
 			$text = preg_replace_callback($patterns, function ($matches) use ($image) {
 				$code = icms_core_DataFilter::codeSanitizer($matches[1],($image != 0) ? 1 : 0);
 				return '<div class="icmsCode">' . $code . '</div>';
+
 			}, $text);
 		}
 		return $text;

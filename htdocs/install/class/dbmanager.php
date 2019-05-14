@@ -50,7 +50,7 @@ class db_manager {
 	var $f_tables = array();
 	var $db;
 
-	function db_manager() {
+	function __construct() {
 		$this->db = icms_db_legacy_Factory::getDatabase();
 		$this->db->setPrefix(XOOPS_DB_PREFIX);
 		$this->db->setLogger(icms_core_Logger::instance());
