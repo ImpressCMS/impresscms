@@ -16,9 +16,11 @@
  *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) {
+    exit();
+}
 
-$wizard->setPage( 'no_php5' );
+$wizard->setPage('no_php5');
 $pageHasForm = false;
 
 ob_start();
@@ -27,5 +29,3 @@ $content = ob_get_contents();
 ob_end_clean();
 
 include 'install_tpl.php';
-
-?>

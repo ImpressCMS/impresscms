@@ -53,7 +53,7 @@ $login_name_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'
 $reg_form->addElement(new icms_form_elements_Text(_US_LOGIN_NAME, "login_name", $login_name_size, $login_name_size, icms_core_DataFilter::htmlSpecialChars($login_name)), true);
 $reg_form->addElement($email_tray);
 if ($icmsConfigUser['pass_level']>20) {
-	icms_PasswordMeter();
+    icms_PasswordMeter();
 }
 $reg_form->addElement(new icms_form_elements_Password(_US_PASSWORD, "pass", 10, 255, icms_core_DataFilter::htmlSpecialChars($pass), false, ($icmsConfigUser['pass_level']?'password_adv':'')), true);
 $reg_form->addElement(new icms_form_elements_Password(_US_VERIFYPASS, "vpass", 10, 255, icms_core_DataFilter::htmlSpecialChars($vpass)), true);
@@ -64,27 +64,26 @@ $reg_form->addElement(new icms_form_elements_select_Timezone(_US_TIMEZONE, "time
 $reg_form->addElement(new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', $user_mailok));
 
 if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] != '') {
-	$disc_tray = new icms_form_elements_Tray(_US_DISCLAIMER, '<br />');
-	$disclaimer_html = '<div id="disclaimer">'.nl2br($icmsConfigUser['reg_disclaimer']).'</div>';
-	$disc_text = new icms_form_elements_Label('', $disclaimer_html, 'disclaimer');
-	$disc_tray->addElement($disc_text);
-	$agree_chk = new icms_form_elements_Checkbox('', 'agree_disc', $agree_disc);
-	$agree_chk->addOption(1, _US_IAGREE);
-	$eltname = $agree_chk->getName();
-	$eltmsg = str_replace('"', '\"', stripslashes( sprintf( _FORM_ENTER, _US_IAGREE ) ) );
-	$agree_chk->customValidationCode[] = "if (myform.{$eltname}.checked == false) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
-	$disc_tray->addElement($agree_chk, true);
-	$reg_form->addElement($disc_tray);
+    $disc_tray = new icms_form_elements_Tray(_US_DISCLAIMER, '<br />');
+    $disclaimer_html = '<div id="disclaimer">'.nl2br($icmsConfigUser['reg_disclaimer']).'</div>';
+    $disc_text = new icms_form_elements_Label('', $disclaimer_html, 'disclaimer');
+    $disc_tray->addElement($disc_text);
+    $agree_chk = new icms_form_elements_Checkbox('', 'agree_disc', $agree_disc);
+    $agree_chk->addOption(1, _US_IAGREE);
+    $eltname = $agree_chk->getName();
+    $eltmsg = str_replace('"', '\"', stripslashes(sprintf(_FORM_ENTER, _US_IAGREE)));
+    $agree_chk->customValidationCode[] = "if (myform.{$eltname}.checked == false) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+    $disc_tray->addElement($agree_chk, true);
+    $reg_form->addElement($disc_tray);
 }
 
 $reg_form->addElement(new icms_form_elements_Hidden("actkey", icms_core_DataFilter::htmlSpecialChars($actkey)));
 
 if ($icmsConfigUser['use_captcha'] == true) {
-	$reg_form->addElement(new icms_form_elements_Captcha(_SECURITYIMAGE_GETCODE, "scode"), true);
-	$reg_form->addElement(new icms_form_elements_Hidden("op", "finish"));
+    $reg_form->addElement(new icms_form_elements_Captcha(_SECURITYIMAGE_GETCODE, "scode"), true);
+    $reg_form->addElement(new icms_form_elements_Hidden("op", "finish"));
 } else {
-	$reg_form->addElement(new icms_form_elements_Hidden("op", "newuser"));
+    $reg_form->addElement(new icms_form_elements_Hidden("op", "newuser"));
 }
 
 $reg_form->addElement(new icms_form_elements_Button("", "submit", _US_SUBMIT, "submit"));
-

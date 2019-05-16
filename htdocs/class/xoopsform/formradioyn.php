@@ -42,7 +42,9 @@
  * @version	$Id: formradioyn.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 /**
  * @package     kernel
  * @subpackage  form
@@ -64,11 +66,10 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  */
 class XoopsFormRadioYN extends icms_form_elements_Radioyn
 {
-	private $_deprecated;
-	public function __construct($caption, $name, $value = null, $yes = _YES, $no = _NO) {
-		parent::__construct($caption, $name, $value, $yes, $no);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Radioyn', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    private $_deprecated;
+    public function __construct($caption, $name, $value = null, $yes = _YES, $no = _NO)
+    {
+        parent::__construct($caption, $name, $value, $yes, $no);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Radioyn', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>

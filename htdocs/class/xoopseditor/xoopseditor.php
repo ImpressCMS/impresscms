@@ -21,4 +21,3 @@ Added Ticket #44 to trac http://trac.impresscms.org/addons/ticket/44
 */
 
 include_once str_replace("/class/xoopseditor/", "/class/", str_replace("\\", "/", __FILE__));
-?>

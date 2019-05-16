@@ -47,33 +47,35 @@
  * @author		Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_auth_Xoops extends icms_auth_Object {
-	/**
-	 * Authentication Service constructor
-	 * constructor
-	 * @param object $dao reference to dao object
-	 */
-	public function __construct(&$dao) {
-		$this->_dao = $dao;
-		$this->auth_method = 'xoops';
-	}
+class icms_auth_Xoops extends icms_auth_Object
+{
+    /**
+     * Authentication Service constructor
+     * constructor
+     * @param object $dao reference to dao object
+     */
+    public function __construct(&$dao)
+    {
+        $this->_dao = $dao;
+        $this->auth_method = 'xoops';
+    }
 
-	/**
-	 *  Authenticate user
-	 * @param string $uname
-	 * @param string $pwd
-	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
-	 */
-	public function authenticate($uname, $pwd = null) {
-		$member_handler = icms::handler('icms_member');
-		$user = $member_handler->loginUser($uname, $pwd);
-		icms::$session->enableRegenerateId = true;
-		icms::$session->sessionOpen();
-		if ($user == false) {
-			icms::$session->destroy(session_id());
-			$this->setErrors(1, _US_INCORRECTLOGIN);
-		}
-		return ($user);
-	}
+    /**
+     *  Authenticate user
+     * @param string $uname
+     * @param string $pwd
+     * @return object {@link icms_member_user_Object} icms_member_user_Object object
+     */
+    public function authenticate($uname, $pwd = null)
+    {
+        $member_handler = icms::handler('icms_member');
+        $user = $member_handler->loginUser($uname, $pwd);
+        icms::$session->enableRegenerateId = true;
+        icms::$session->sessionOpen();
+        if ($user == false) {
+            icms::$session->destroy(session_id());
+            $this->setErrors(1, _US_INCORRECTLOGIN);
+        }
+        return ($user);
+    }
 }
-

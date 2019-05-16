@@ -55,57 +55,58 @@
  *
  * @abstract
  */
-abstract class icms_core_ObjectHandler {
+abstract class icms_core_ObjectHandler
+{
 
-	/**
-	 * holds referenced to {@link icms_db_legacy_Database} class object
-	 *
-	 * @var object
-	 * @see icms_db_legacy_Database
-	 * @access protected
-	 */
-	protected $db;
+    /**
+     * holds referenced to {@link icms_db_legacy_Database} class object
+     *
+     * @var object
+     * @see icms_db_legacy_Database
+     * @access protected
+     */
+    protected $db;
 
-	//
-	/**
-	* called from child classes only
-	*
-	* @param object $db reference to the {@link icms_db_legacy_Database} object
-	* @access protected
-	*/
-	function __construct(&$db) {
-		$this->db =& $db;
-	}
+    //
+    /**
+    * called from child classes only
+    *
+    * @param object $db reference to the {@link icms_db_legacy_Database} object
+    * @access protected
+    */
+    public function __construct(&$db)
+    {
+        $this->db =& $db;
+    }
 
-	/**
-	 * creates a new object
-	 *
-	 * @abstract
-	 */
-	abstract function &create();
+    /**
+     * creates a new object
+     *
+     * @abstract
+     */
+    abstract public function &create();
 
-	/**
-	 * gets a value object
-	 *
-	 * @param int $int_id
-	 * @abstract
-	 */
-	abstract function &get($int_id);
+    /**
+     * gets a value object
+     *
+     * @param int $int_id
+     * @abstract
+     */
+    abstract public function &get($int_id);
 
-	/**
-	 * insert/update object
-	 *
-	 * @param object $object
-	 * @abstract
-	 */
-	abstract function insert(&$object);
+    /**
+     * insert/update object
+     *
+     * @param object $object
+     * @abstract
+     */
+    abstract public function insert(&$object);
 
-	/**
-	 * delete object from database
-	 *
-	 * @param object $object
-	 * @abstract
-	 */
-	abstract function delete(&$object);
-
+    /**
+     * delete object from database
+     *
+     * @param object $object
+     * @abstract
+     */
+    abstract public function delete(&$object);
 }

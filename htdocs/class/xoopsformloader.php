@@ -17,7 +17,9 @@
  * @todo		Implement a way to change use autoload.
  */
 
-if (!defined('ICMS_ROOT_PATH')) exit();
+if (!defined('ICMS_ROOT_PATH')) {
+    exit();
+}
 
 //include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
 //include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";

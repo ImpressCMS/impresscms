@@ -48,7 +48,9 @@
 
 
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  * A group permission
@@ -64,17 +66,17 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  */
 class XoopsGroupPerm extends icms_member_groupperm_Object
 {
-	private $_deprecated;
+    private $_deprecated;
 
-	/**
-	 * Constructor
-	 *
-	 */
-	function XoopsGroupPerm()
-	{
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_member_groupperm_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    /**
+     * Constructor
+     *
+     */
+    public function XoopsGroupPerm()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_member_groupperm_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -92,11 +94,10 @@ class XoopsGroupPerm extends icms_member_groupperm_Object
  */
 class XoopsGroupPermHandler extends icms_member_groupperm_Handler
 {
-	private $_deprecated;
-	public function __construct(&$db) {
-		parent::__construct($db);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_member_groupperm_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
-
+    private $_deprecated;
+    public function __construct(&$db)
+    {
+        parent::__construct($db);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_member_groupperm_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

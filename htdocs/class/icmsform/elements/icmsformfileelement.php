@@ -13,11 +13,13 @@
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class IcmsFormFileElement extends icms_ipf_form_elements_File {
-	private $_deprecated;
+class IcmsFormFileElement extends icms_ipf_form_elements_File
+{
+    private $_deprecated;
 
-	public function __construct($object, $key) {
-		parent::__construct($object, $key);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_File', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct($object, $key)
+    {
+        parent::__construct($object, $key);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_File', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

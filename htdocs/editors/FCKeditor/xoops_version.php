@@ -20,5 +20,3 @@ $editorversion['dirname'] = "FCKeditor";
 
 $editorversion['class'] = "XoopsFormFckeditor";
 $editorversion['file'] = "formfckeditor.php";
-
-?>

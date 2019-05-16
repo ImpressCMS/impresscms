@@ -1,6 +1,10 @@
 <?php
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (file_exists('../../../../../mainfile.php')) {
+    include_once '../../../../../mainfile.php';
+}
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,7 +17,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 	<script type="text/javascript" src="js/xoopsimagemanager.js"></script>
 <?php
 $html = "<script type='text/javascript' src='".ICMS_URL."/include/xoops.js'></script>";
-echo ($html);
+echo($html);
 ?>
 	<link href="css/xoopsimagemanager.css" rel="stylesheet" type="text/css" />
 	<base target="_self" />
@@ -44,10 +48,10 @@ echo ($html);
 <?php
 /*
 $html = "<img
-	alt=\"image\"
-	src=\"".XOOPS_URL."/images/image.gif\"
-	onclick=\"javascript:xoopspopup=openWithSelfMain('".XOOPS_URL."/imagemanager.php?target=src','imgmanager',400,430,1);\"
-	style=\"vertical-align:middle;cursor:pointer;\" />\n";
+    alt=\"image\"
+    src=\"".XOOPS_URL."/images/image.gif\"
+    onclick=\"javascript:xoopspopup=openWithSelfMain('".XOOPS_URL."/imagemanager.php?target=src','imgmanager',400,430,1);\"
+    style=\"vertical-align:middle;cursor:pointer;\" />\n";
 */
 $html = "<img
 	alt=\"{#xoopsimagemanager.desc}\"
@@ -57,7 +61,7 @@ $html = "<img
 	onclick=\"javascript:xoopspopup=openWithSelfMain('xoopsimagebrowser.php?target=src&type=tiny','imgmanager',985,650,1);\"
 	style=\"vertical-align:middle;cursor:pointer;\" />\n";
 //	onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/imagemanager.php?target=".$this->getName()."\",\"imgmanager\",400,430);'
-echo ($html);
+echo($html);
 ?>
 										</td>
 										<td id="srcbrowsercontainer">&nbsp;</td>
@@ -183,7 +187,7 @@ echo ($html);
 										<input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" />
 <?php
 $html = "<img alt=\"{#xoopsimagemanager.desc}\" title=\"{#xoopsimagemanager.desc}\" src=\"".ICMS_URL."/images/image.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoversrc','imgmanager',985,650);\" style=\"vertical-align:middle;cursor:pointer;\" />\n";
-echo ($html);
+echo($html);
 ?>
 										</td>
 									  <td id="onmouseoversrccontainer">&nbsp;</td>
@@ -202,7 +206,7 @@ echo ($html);
 										<input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value="" />
 <?php
 $html = "<img alt=\"{#xoopsimagemanager.desc}\" title=\"{#xoopsimagemanager.desc}\" src=\"".ICMS_URL."/images/image.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoutsrc','imgmanager',985,650);\" style=\"vertical-align:middle;cursor:pointer;\" />\n";
-echo ($html);
+echo($html);
 ?>
 										</td>
 									  <td id="onmouseoutsrccontainer">&nbsp;</td>

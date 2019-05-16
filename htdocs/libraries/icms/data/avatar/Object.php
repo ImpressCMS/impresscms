@@ -52,41 +52,44 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @subpackage	Avatar
  *
  */
-class icms_data_avatar_Object extends icms_core_Object {
-	/** @var integer */
-	private $_userCount;
+class icms_data_avatar_Object extends icms_core_Object
+{
+    /** @var integer */
+    private $_userCount;
 
-	/**
-	 * Constructor for avatar class, initializing all the properties of the class object
-	 *
-	 */
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('avatar_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('avatar_file', XOBJ_DTYPE_OTHER, null, false, 30);
-		$this->initVar('avatar_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('avatar_mimetype', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('avatar_created', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('avatar_display', XOBJ_DTYPE_INT, 1, false);
-		$this->initVar('avatar_weight', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('avatar_type', XOBJ_DTYPE_OTHER, 0, false);
-	}
+    /**
+     * Constructor for avatar class, initializing all the properties of the class object
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->initVar('avatar_id', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('avatar_file', XOBJ_DTYPE_OTHER, null, false, 30);
+        $this->initVar('avatar_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
+        $this->initVar('avatar_mimetype', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('avatar_created', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('avatar_display', XOBJ_DTYPE_INT, 1, false);
+        $this->initVar('avatar_weight', XOBJ_DTYPE_INT, 0, false);
+        $this->initVar('avatar_type', XOBJ_DTYPE_OTHER, 0, false);
+    }
 
-	/**
-	 * Sets the value for the number of users
-	 * @param integer $value
-	 *
-	 */
-	public function setUserCount($value) {
-		$this->_userCount = (int) $value;
-	}
+    /**
+     * Sets the value for the number of users
+     * @param integer $value
+     *
+     */
+    public function setUserCount($value)
+    {
+        $this->_userCount = (int) $value;
+    }
 
-	/**
-	 * Gets the value for the number of users
-	 * @return integer
-	 */
-	public function getUserCount() {
-		return $this->_userCount;
-	}
+    /**
+     * Gets the value for the number of users
+     * @return integer
+     */
+    public function getUserCount()
+    {
+        return $this->_userCount;
+    }
 }
-

@@ -40,7 +40,9 @@
  * @version		$Id: Editor.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  * XoopsEditor hanlder
@@ -51,32 +53,33 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @todo		To be removed as this is not used anywhere in the core
  */
-class icms_form_elements_Editor extends icms_form_elements_Textarea {
-	var $editor;
+class icms_form_elements_Editor extends icms_form_elements_Textarea
+{
+    public $editor;
 
-	/**
-	 * Constructor
-	 *
-	 * @param	string  $caption    Caption
-	 * @param	string  $name       "name" attribute
-	 * @param	string  $value      Initial text
-	 * @param	array 	$configs     configures
-	 * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
-	 * @param	string  $OnFailure editor to be used if current one failed
-	 */
-	function __construct($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
-	{
-		parent::__construct($caption, $editor_configs["name"]);
-		$editor_handler = icms_plugins_EditorHandler::getInstance();
-		$this->editor =& $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
-	}
+    /**
+     * Constructor
+     *
+     * @param	string  $caption    Caption
+     * @param	string  $name       "name" attribute
+     * @param	string  $value      Initial text
+     * @param	array 	$configs     configures
+     * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
+     * @param	string  $OnFailure editor to be used if current one failed
+     */
+    public function __construct($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
+    {
+        parent::__construct($caption, $editor_configs["name"]);
+        $editor_handler = icms_plugins_EditorHandler::getInstance();
+        $this->editor =& $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
+    }
 
-	/**
-	 * Renders the editor
-	 * @return	string  the constructed html string for the editor
-	 */
-	function render()
-	{
-		return $this->editor->render();
-	}
+    /**
+     * Renders the editor
+     * @return	string  the constructed html string for the editor
+     */
+    public function render()
+    {
+        return $this->editor->render();
+    }
 }

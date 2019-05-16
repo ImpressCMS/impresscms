@@ -43,7 +43,7 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 
 
@@ -58,13 +58,13 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @deprecated	Use icms_form_element_Select instead
  * @todo		Remove in version 1.4
  */
-class XoopsFormSelect extends icms_form_elements_Select {
+class XoopsFormSelect extends icms_form_elements_Select
+{
+    private $_deprecated;
 
-	private $_deprecated;
-
-	function XoopsFormSelect($caption, $name, $value = null, $size = 1, $multiple = false){
-		parent::__construct($caption, $name, $value, $size, $multiple);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Select', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function XoopsFormSelect($caption, $name, $value = null, $size = 1, $multiple = false)
+    {
+        parent::__construct($caption, $name, $value, $size, $multiple);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Select', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-

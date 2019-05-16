@@ -13,7 +13,7 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 
 /**
@@ -30,11 +30,13 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @author		  marcan <marcan@impresscms.org>
  * @version		$Id: icmslibrarieshandler.php 12278 2013-08-31 22:12:36Z fiammy $
  */
-class IcmsLibrariesHandler extends icms_preload_LibrariesHandler {
-	private $_deprecated;
-	
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_preload_LibrariesHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class IcmsLibrariesHandler extends icms_preload_LibrariesHandler
+{
+    private $_deprecated;
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_preload_LibrariesHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

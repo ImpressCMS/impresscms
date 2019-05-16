@@ -15,16 +15,16 @@
 
 defined('ICMS_ROOT_PATH') or exit();
 
-class IcmsFeed extends icms_feeds_Rss {
+class IcmsFeed extends icms_feeds_Rss
+{
+    private $_deprecated;
 
-	private $_deprecated;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_feeds_Rss', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_feeds_Rss', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

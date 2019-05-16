@@ -21,9 +21,11 @@
  * @todo		Remove this in version 1.4
  * @since 		1.1
  */
-class IcmsKernel extends icms_core_Kernel {
-	public function __construct() {
-		parent::__construct();
-		$this->setErrors = icms_core_Debug::setDeprecated('icms_core_Kernel', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class IcmsKernel extends icms_core_Kernel
+{
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setErrors = icms_core_Debug::setDeprecated('icms_core_Kernel', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

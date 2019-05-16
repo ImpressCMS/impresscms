@@ -21,12 +21,14 @@
  * @deprecated	Use icms_view_theme_Factory, instead
  * @todo		Remove in version 1.4
  */
-class xos_opal_ThemeFactory extends icms_view_theme_Factory {
-	private $_deprecated;
-	public function &createInstance($options = array(), $initArgs = array()) {
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_view_theme_Factory', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return parent::createInstance($options, $initArgs);
-	}
+class xos_opal_ThemeFactory extends icms_view_theme_Factory
+{
+    private $_deprecated;
+    public function &createInstance($options = array(), $initArgs = array())
+    {
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_view_theme_Factory', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+        return parent::createInstance($options, $initArgs);
+    }
 }
 
 /**
@@ -35,11 +37,12 @@ class xos_opal_ThemeFactory extends icms_view_theme_Factory {
  * @todo		Remove in version 1.4
  *
  */
-class xos_opal_Theme extends icms_view_theme_Object {
-	private $_deprecated;
-	public function xoInit($options = array()) {
-		parent::xoInit($options);
-		$this->_deprecated('icms_view_theme_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
+class xos_opal_Theme extends icms_view_theme_Object
+{
+    private $_deprecated;
+    public function xoInit($options = array())
+    {
+        parent::xoInit($options);
+        $this->_deprecated('icms_view_theme_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

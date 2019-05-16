@@ -38,16 +38,16 @@
  * @version		SVN: $Id: xoops_version.php 12313 2013-09-15 21:14:35Z skenow $
  */
 $modversion = array(
-	'name' => _MD_AM_BANS,
-	'version' => "",
-	'description' => _MD_AM_BANS_DSC,
-	'author' => "Francisco Burzi <br />( http://phpnuke.org/ )",
-	'credits' => "The MPN SE Project",
-	'help' => "banners.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "banners.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=banners",
-	'category' => XOOPS_SYSTEM_BANNER,
-	'group' => _MD_AM_GROUPS_ADVERTISING);
+    'name' => _MD_AM_BANS,
+    'version' => "",
+    'description' => _MD_AM_BANS_DSC,
+    'author' => "Francisco Burzi <br />( http://phpnuke.org/ )",
+    'credits' => "The MPN SE Project",
+    'help' => "banners.html",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "banners.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=banners",
+    'category' => XOOPS_SYSTEM_BANNER,
+    'group' => _MD_AM_GROUPS_ADVERTISING);

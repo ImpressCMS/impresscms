@@ -261,4 +261,3 @@ define('_COUNTRY_ZA', 'South Africa');
 define('_COUNTRY_ZM', 'Zambia');
 // define('_COUNTRY_ZR', 'Zaire');	transitionally reserved
 define('_COUNTRY_ZW', 'Zimbabwe');
-?>

@@ -42,7 +42,9 @@
  * @version	$Id: formfile.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  *
@@ -62,11 +64,12 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package		kernel
  * @subpackage	form
  */
-class XoopsFormFile extends icms_form_elements_File {
-	private $_deprecated;
-	public function __construct($caption, $name, $maxfilesize = '4096000') {
-		parent::__construct($caption, $name, $maxfilesize);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_config_item_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormFile extends icms_form_elements_File
+{
+    private $_deprecated;
+    public function __construct($caption, $name, $maxfilesize = '4096000')
+    {
+        parent::__construct($caption, $name, $maxfilesize);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_config_item_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-?>

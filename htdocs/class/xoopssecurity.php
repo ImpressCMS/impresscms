@@ -53,19 +53,19 @@
  * @author        Jan Pedersen     <mithrandir@xoops.org>
  * @copyright    (c) 2000-2005 The Xoops Project - www.xoops.org
  */
-class IcmsSecurity extends	icms_core_Security {
+class IcmsSecurity extends icms_core_Security
+{
+    private $_deprecated;
 
-	private $_deprecated;
-
-	/**
-	 * Constructor
-	 *
-	 **/
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_core_Security', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
+    /**
+     * Constructor
+     *
+     **/
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_core_Security', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -80,13 +80,14 @@ class IcmsSecurity extends	icms_core_Security {
  * @deprecated	Use icms_core_Security instead
  * @todo		Remove this in version 1.4
  */
-class XoopsSecurity extends icms_core_Security {
+class XoopsSecurity extends icms_core_Security
+{
+    private $_deprecated;
 
-	private $_deprecated;
-
-	/* For Backwards Compatibility */
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_core_Security', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    /* For Backwards Compatibility */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_core_Security', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

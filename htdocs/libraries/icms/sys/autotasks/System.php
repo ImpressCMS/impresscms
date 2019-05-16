@@ -16,33 +16,34 @@
  * @category	ICMS
  * @package		Autotasks
  */
-abstract class icms_sys_autotasks_System
-implements icms_sys_autotasks_ISystem  {
+abstract class icms_sys_autotasks_System implements icms_sys_autotasks_ISystem
+{
 
-	/**
-	 *
-	 */
-	public function getName() {
-		return strtolower(substr(get_class($this),strlen('IcmsAutoTasks')));
-	}
+    /**
+     *
+     */
+    public function getName()
+    {
+        return strtolower(substr(get_class($this), strlen('IcmsAutoTasks')));
+    }
 
-	/**
-	 *
-	 */
-	public function needExecution() {
-		static $execMode = null;
-		if ($execMode === null) {
-			$execMode = defined('ICMS_AUTOTASKS_EXECMODE') && ICMS_AUTOTASKS_EXECMODE;
-		}
-		return $execMode;
-	}
+    /**
+     *
+     */
+    public function needExecution()
+    {
+        static $execMode = null;
+        if ($execMode === null) {
+            $execMode = defined('ICMS_AUTOTASKS_EXECMODE') && ICMS_AUTOTASKS_EXECMODE;
+        }
+        return $execMode;
+    }
 
-	/**
-	 *
-	 */
-	public function needExit() {
-		return true;
-	}
-
+    /**
+     *
+     */
+    public function needExit()
+    {
+        return true;
+    }
 }
-

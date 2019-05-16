@@ -48,32 +48,34 @@
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Editor extends icms_form_elements_Tray {
-	/**
-	 * Constructor
-	 *
-	 * @param	object	$form	the form calling the editor selection
-	 * @param	string	$name	editor name
-	 * @param	string	$value	Pre-selected text value
-	 * @param	bool	$noHtml  dohtml disabled
-	 */
-	public function __construct(&$form, $name = "editor", $value = NULL, $noHtml = FALSE) {
-		global $icmsConfig;
+class icms_form_elements_select_Editor extends icms_form_elements_Tray
+{
+    /**
+     * Constructor
+     *
+     * @param	object	$form	the form calling the editor selection
+     * @param	string	$name	editor name
+     * @param	string	$value	Pre-selected text value
+     * @param	bool	$noHtml  dohtml disabled
+     */
+    public function __construct(&$form, $name = "editor", $value = null, $noHtml = false)
+    {
+        global $icmsConfig;
 
-		if (empty($value)){
-			$value = $icmsConfig['editor_default'];
-		}
+        if (empty($value)) {
+            $value = $icmsConfig['editor_default'];
+        }
 
-		parent::__construct(_SELECT);
-		$edtlist = icms_plugins_EditorHandler::getListByType();
-		$option_select = new icms_form_elements_Select("", $name, $value);
-		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);
-		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
+        parent::__construct(_SELECT);
+        $edtlist = icms_plugins_EditorHandler::getListByType();
+        $option_select = new icms_form_elements_Select("", $name, $value);
+        $querys = preg_replace('/editor=(.*?)&/', '', $_SERVER['QUERY_STRING']);
+        $extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
 				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&'.$querys.'\';
 			}"';
-		$option_select->setExtra($extra);
-		$option_select->addOptionArray($edtlist);
+        $option_select->setExtra($extra);
+        $option_select->addOptionArray($edtlist);
 
-		$this->addElement($option_select);
-	}
+        $this->addElement($option_select);
+    }
 }

@@ -49,18 +49,20 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Lang extends icms_form_elements_Select {
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * 							Legal is any name of a ICMS_ROOT_PATH."/language/" subdirectory.
-	 * @param	int		$size	Number of rows. "1" makes a drop-down-list.
-	 */
-	public function __construct($caption, $name, $value = null, $size = 1) {
-		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(icms_core_Filesystem::getDirList(ICMS_ROOT_PATH."/language/"));
-	}
+class icms_form_elements_select_Lang extends icms_form_elements_Select
+{
+    /**
+     * Constructor
+     *
+     * @param	string	$caption
+     * @param	string	$name
+     * @param	mixed	$value	Pre-selected value (or array of them).
+     * 							Legal is any name of a ICMS_ROOT_PATH."/language/" subdirectory.
+     * @param	int		$size	Number of rows. "1" makes a drop-down-list.
+     */
+    public function __construct($caption, $name, $value = null, $size = 1)
+    {
+        parent::__construct($caption, $name, $value, $size);
+        $this->addOptionArray(icms_core_Filesystem::getDirList(ICMS_ROOT_PATH."/language/"));
+    }
 }

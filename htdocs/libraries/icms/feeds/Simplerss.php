@@ -19,40 +19,42 @@
 include_once ICMS_LIBRARIES_PATH . '/simplepie/autoloader.php';
 include_once ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php';
 
-class icms_feeds_Simplerss extends SimplePie {
+class icms_feeds_Simplerss extends SimplePie
+{
 
-	/**
-	 * The icms_feeds_Simplerss class contains feed level data and options
-	 *
-	 * There are two ways that you can create a new icms_feeds_Simplerss object. The first
-	 * is by passing a feed URL as a parameter to the icms_feeds_Simplerss constructor
-	 * (as well as optionally setting the cache expiry - The cache location is automatically set
-	 * as ICMS_CACHE_PATH). This will initialise the whole feed with all of the default settings, and you
-	 * can begin accessing methods and properties immediately.
-	 *
-	 * The second way is to create the icms_feeds_Simplerss object with no parameters
-	 * at all. This will enable you to set configuration options. After setting
-	 * them, you must initialise the feed using $feed->init(). At that point the
-	 * object's methods and properties will be available to you.
-	 *
-	 * @access public
-	 * @param str $feed_url This is the URL you want to parse.
-	 * @param int $cache_duration This is the number of seconds that you want to store the cache file for.
-	 */
-	public function __construct($feed_url = NULL, $cache_duration = NULL) {
-		/* SimplePie 1.3+ does not accept arguments in the constructor */
-		parent::__construct();
+    /**
+     * The icms_feeds_Simplerss class contains feed level data and options
+     *
+     * There are two ways that you can create a new icms_feeds_Simplerss object. The first
+     * is by passing a feed URL as a parameter to the icms_feeds_Simplerss constructor
+     * (as well as optionally setting the cache expiry - The cache location is automatically set
+     * as ICMS_CACHE_PATH). This will initialise the whole feed with all of the default settings, and you
+     * can begin accessing methods and properties immediately.
+     *
+     * The second way is to create the icms_feeds_Simplerss object with no parameters
+     * at all. This will enable you to set configuration options. After setting
+     * them, you must initialise the feed using $feed->init(). At that point the
+     * object's methods and properties will be available to you.
+     *
+     * @access public
+     * @param str $feed_url This is the URL you want to parse.
+     * @param int $cache_duration This is the number of seconds that you want to store the cache file for.
+     */
+    public function __construct($feed_url = null, $cache_duration = null)
+    {
+        /* SimplePie 1.3+ does not accept arguments in the constructor */
+        parent::__construct();
 
-		$this->set_cache_location(ICMS_CACHE_PATH);
+        $this->set_cache_location(ICMS_CACHE_PATH);
 
-		if ($cache_duration !== NULL) {
-			$this->set_cache_duration($cache_duration);
-		}
+        if ($cache_duration !== null) {
+            $this->set_cache_duration($cache_duration);
+        }
 
-		// Only init the script if we're passed a feed URL
-		if ($feed_url !== NULL) {
-			$this->set_feed_url($feed_url);
-			$this->init();
-		}
-	}
+        // Only init the script if we're passed a feed URL
+        if ($feed_url !== null) {
+            $this->set_feed_url($feed_url);
+            $this->init();
+        }
+    }
 }

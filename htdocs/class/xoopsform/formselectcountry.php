@@ -43,7 +43,7 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 
 /**
@@ -63,23 +63,21 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectCountry extends icms_form_elements_select_Country {
-
-	private $_deprecated;
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$name       "name" attribute
-	 * @param	mixed	$value	    Pre-selected value (or array of them).
-	 *                              Legal are all 2-letter country codes (in capitals).
-	 * @param	int		$size	    Number or rows. "1" makes a drop-down-list
-	 */
-	function XoopsFormSelectCountry($caption, $name, $value = null, $size = 1)
-	{
-		parent::__construct($caption, $name, $value, $size);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Country', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormSelectCountry extends icms_form_elements_select_Country
+{
+    private $_deprecated;
+    /**
+     * Constructor
+     *
+     * @param	string	$caption	Caption
+     * @param	string	$name       "name" attribute
+     * @param	mixed	$value	    Pre-selected value (or array of them).
+     *                              Legal are all 2-letter country codes (in capitals).
+     * @param	int		$size	    Number or rows. "1" makes a drop-down-list
+     */
+    public function XoopsFormSelectCountry($caption, $name, $value = null, $size = 1)
+    {
+        parent::__construct($caption, $name, $value, $size);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Country', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>

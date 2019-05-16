@@ -14,8 +14,9 @@
  * @version		SVN: $Id: Item.php 10326 2010-07-11 18:54:25Z malanciault $
  */
 
-class icms_preload_Item {
-
-	public function __construct() {
-	}
+class icms_preload_Item
+{
+    public function __construct()
+    {
+    }
 }

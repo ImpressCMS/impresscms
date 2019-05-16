@@ -12,12 +12,12 @@
 * @version		$Id: paginationstyles.php 1742 2008-04-20 14:46:20Z real_therplima $
 */
 
-$style_list = icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH . "/paginationstyles/css/", "", array("css"), TRUE);
+$style_list = icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH . "/paginationstyles/css/", "", array("css"), true);
 
 foreach ($style_list as $filename) {
-	$filename = str_ireplace(".css", "", $filename);
-	$styles[] = array(
-		'name' => ucfirst($filename),
-		'fcss' => $filename,
-	);
+    $filename = str_ireplace(".css", "", $filename);
+    $styles[] = array(
+        'name' => ucfirst($filename),
+        'fcss' => $filename,
+    );
 }
