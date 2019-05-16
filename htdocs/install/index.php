@@ -28,5 +28,3 @@
 
 require_once 'page_langselect.php';
 exit();
-
-?>
