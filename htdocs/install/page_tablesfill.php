@@ -71,4 +71,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 include 'install_tpl.php';
-?>
