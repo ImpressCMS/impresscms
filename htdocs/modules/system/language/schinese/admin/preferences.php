@@ -37,7 +37,6 @@ define("_MD_AM_SESSNAME","对话名称");
 define("_MD_AM_SESSNAMEDSC","对话的名称(只有在启动了自定义对话后才有效)");
 define("_MD_AM_SESSEXPIRE","对话过期");
 define("_MD_AM_SESSEXPIREDSC","对话的最大期限，以分钟计算。(只有在启动了自定义对话后才有效，只有PHP4.2.0或更新版时才会工作)");
-define("_MD_AM_BANNERS","激活广告条?");
 define("_MD_AM_MYIP","你的IP地址");
 define("_MD_AM_MYIPDSC","这个IP将不会被广告条的点击计算在内");
 define("_MD_AM_ALWDHTML","所有留言中都可用HTML标签");
