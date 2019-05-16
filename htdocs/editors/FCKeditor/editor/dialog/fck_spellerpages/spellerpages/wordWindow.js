@@ -41,8 +41,8 @@ function wordWindow() {
 }
 
 function resetForm() {
-	if( this._forms ) {
-		for( var i = 0; i < this._forms.length; i++ ) {
+	if (this._forms) {
+		for (var i = 0; i < this._forms.length; i++) {
 			this._forms[i].reset();
 		}
 	}
@@ -51,21 +51,21 @@ function resetForm() {
 
 function totalMisspellings() {
 	var total_words = 0;
-	for( var i = 0; i < this.textInputs.length; i++ ) {
-		total_words += this.totalWords( i );
+	for (var i = 0; i < this.textInputs.length; i++) {
+		total_words += this.totalWords(i);
 	}
 	return total_words;
 }
 
-function totalWords( textIndex ) {
+function totalWords(textIndex) {
 	return this.originalSpellings[textIndex].length;
 }
 
-function totalPreviousWords( textIndex, wordIndex ) {
+function totalPreviousWords(textIndex, wordIndex) {
 	var total_words = 0;
-	for( var i = 0; i <= textIndex; i++ ) {
-		for( var j = 0; j < this.totalWords( i ); j++ ) {
-			if( i == textIndex && j == wordIndex ) {
+	for (var i = 0; i <= textIndex; i++) {
+		for (var j = 0; j < this.totalWords(i); j++) {
+			if (i == textIndex && j == wordIndex) {
 				break;
 			} else {
 				total_words++;
@@ -79,42 +79,42 @@ function totalPreviousWords( textIndex, wordIndex ) {
 //	return this._form.elements;
 //}
 
-function getTextVal( textIndex, wordIndex ) {
-	var word = this._getWordObject( textIndex, wordIndex );
-	if( word ) {
+function getTextVal(textIndex, wordIndex) {
+	var word = this._getWordObject(textIndex, wordIndex);
+	if (word) {
 		return word.value;
 	}
 }
 
-function setFocus( textIndex, wordIndex ) {
-	var word = this._getWordObject( textIndex, wordIndex );
-	if( word ) {
-		if( word.type == "text" ) {
+function setFocus(textIndex, wordIndex) {
+	var word = this._getWordObject(textIndex, wordIndex);
+	if (word) {
+		if (word.type == "text") {
 			word.focus();
 			word.style.backgroundColor = this.checkWordBgColor;
 		}
 	}
 }
 
-function removeFocus( textIndex, wordIndex ) {
-	var word = this._getWordObject( textIndex, wordIndex );
-	if( word ) {
-		if( word.type == "text" ) {
+function removeFocus(textIndex, wordIndex) {
+	var word = this._getWordObject(textIndex, wordIndex);
+	if (word) {
+		if (word.type == "text") {
 			word.blur();
 			word.style.backgroundColor = this.normWordBgColor;
 		}
 	}
 }
 
-function setText( textIndex, wordIndex, newText ) {
-	var word = this._getWordObject( textIndex, wordIndex );
+function setText(textIndex, wordIndex, newText) {
+	var word = this._getWordObject(textIndex, wordIndex);
 	var beginStr;
 	var endStr;
-	if( word ) {
+	if (word) {
 		var pos = this.indexes[textIndex][wordIndex];
 		var oldText = word.value;
 		// update the text given the index of the string
-		beginStr = this.textInputs[textIndex].substring( 0, pos );
+		beginStr = this.textInputs[textIndex].substring(0, pos);
 		endStr = this.textInputs[textIndex].substring(
 			pos + oldText.length,
 			this.textInputs[textIndex].length
@@ -124,14 +124,13 @@ function setText( textIndex, wordIndex, newText ) {
 		// adjust the indexes on the stack given the differences in
 		// length between the new word and old word.
 		var lengthDiff = newText.length - oldText.length;
-		this._adjustIndexes( textIndex, wordIndex, lengthDiff );
+		this._adjustIndexes(textIndex, wordIndex, lengthDiff);
 
 		word.size = newText.length;
 		word.value = newText;
-		this.removeFocus( textIndex, wordIndex );
+		this.removeFocus(textIndex, wordIndex);
 	}
 }
-
 
 function writeBody() {
 	var d = window.document;
@@ -140,60 +139,59 @@ function writeBody() {
 	d.open();
 
 	// iterate through each text input.
-	for( var txtid = 0; txtid < this.textInputs.length; txtid++ ) {
+	for (var txtid = 0; txtid < this.textInputs.length; txtid++) {
 		var end_idx = 0;
 		var begin_idx = 0;
-		d.writeln( '<form name="textInput'+txtid+'">' );
+		d.writeln('<form name="textInput' + txtid + '">');
 		var wordtxt = this.textInputs[txtid];
 		this.indexes[txtid] = [];
 
-		if( wordtxt ) {
+		if (wordtxt) {
 			var orig = this.originalSpellings[txtid];
-			if( !orig ) break;
+			if (!orig) break;
 
 			//!!! plain text, or HTML mode?
-			d.writeln( '<div class="plainText">' );
+			d.writeln('<div class="plainText">');
 			// iterate through each occurrence of a misspelled word.
-			for( var i = 0; i < orig.length; i++ ) {
+			for (var i = 0; i < orig.length; i++) {
 				// find the position of the current misspelled word,
 				// starting at the last misspelled word.
 				// and keep looking if it's a substring of another word
 				do {
-					begin_idx = wordtxt.indexOf( orig[i], end_idx );
+					begin_idx = wordtxt.indexOf(orig[i], end_idx);
 					end_idx = begin_idx + orig[i].length;
 					// word not found? messed up!
-					if( begin_idx == -1 ) break;
+					if (begin_idx == -1) break;
 					// look at the characters immediately before and after
 					// the word. If they are word characters we'll keep looking.
-					var before_char = wordtxt.charAt( begin_idx - 1 );
-					var after_char = wordtxt.charAt( end_idx );
+					var before_char = wordtxt.charAt(begin_idx - 1);
+					var after_char = wordtxt.charAt(end_idx);
 				} while (
-					this._isWordChar( before_char )
-					|| this._isWordChar( after_char )
+					this._isWordChar(before_char) ||
+					this._isWordChar(after_char)
 				);
 
 				// keep track of its position in the original text.
 				this.indexes[txtid][i] = begin_idx;
 
 				// write out the characters before the current misspelled word
-				for( var j = this._lastPos( txtid, i ); j < begin_idx; j++ ) {
+				for (var j = this._lastPos(txtid, i); j < begin_idx; j++) {
 					// !!! html mode? make it html compatible
-					d.write( this.printForHtml( wordtxt.charAt( j )));
+					d.write(this.printForHtml(wordtxt.charAt(j)));
 				}
 
 				// write out the misspelled word.
-				d.write( this._wordInputStr( orig[i] ));
+				d.write(this._wordInputStr(orig[i]));
 
 				// if it's the last word, write out the rest of the text
-				if( i == orig.length-1 ){
-					d.write( printForHtml( wordtxt.substr( end_idx )));
+				if (i == orig.length - 1) {
+					d.write(printForHtml(wordtxt.substr(end_idx)));
 				}
 			}
 
-			d.writeln( '</div>' );
-
+			d.writeln("</div>");
 		}
-		d.writeln( '</form>' );
+		d.writeln("</form>");
 	}
 	//for ( var j = 0; j < d.forms.length; j++ ) {
 	//	alert( d.forms[j].name );
@@ -208,16 +206,18 @@ function writeBody() {
 }
 
 // return the character index in the full text after the last word we evaluated
-function _lastPos( txtid, idx ) {
-	if( idx > 0 )
-		return this.indexes[txtid][idx-1] + this.originalSpellings[txtid][idx-1].length;
-	else
-		return 0;
+function _lastPos(txtid, idx) {
+	if (idx > 0)
+		return (
+			this.indexes[txtid][idx - 1] +
+			this.originalSpellings[txtid][idx - 1].length
+		);
+	else return 0;
 }
 
-function printForHtml( n ) {
-	return n ;		// by FredCK
-/*
+function printForHtml(n) {
+	return n; // by FredCK
+	/*
 	var htmlstr = n;
 	if( htmlstr.length == 1 ) {
 		// do simple case statement if it's just one character
@@ -242,31 +242,40 @@ function printForHtml( n ) {
 */
 }
 
-function _isWordChar( letter ) {
-	if( letter.search( this.wordChar ) == -1 ) {
+function _isWordChar(letter) {
+	if (letter.search(this.wordChar) == -1) {
 		return false;
 	} else {
 		return true;
 	}
 }
 
-function _getWordObject( textIndex, wordIndex ) {
-	if( this._forms[textIndex] ) {
-		if( this._forms[textIndex].elements[wordIndex] ) {
+function _getWordObject(textIndex, wordIndex) {
+	if (this._forms[textIndex]) {
+		if (this._forms[textIndex].elements[wordIndex]) {
 			return this._forms[textIndex].elements[wordIndex];
 		}
 	}
 	return null;
 }
 
-function _wordInputStr( word ) {
-	var str = '<input readonly ';
-	str += 'class="blend" type="text" value="' + word + '" size="' + word.length + '">';
+function _wordInputStr(word) {
+	var str = "<input readonly ";
+	str +=
+		'class="blend" type="text" value="' +
+		word +
+		'" size="' +
+		word.length +
+		'">';
 	return str;
 }
 
-function _adjustIndexes( textIndex, wordIndex, lengthDiff ) {
-	for( var i = wordIndex + 1; i < this.originalSpellings[textIndex].length; i++ ) {
+function _adjustIndexes(textIndex, wordIndex, lengthDiff) {
+	for (
+		var i = wordIndex + 1;
+		i < this.originalSpellings[textIndex].length;
+		i++
+	) {
 		this.indexes[textIndex][i] = this.indexes[textIndex][i] + lengthDiff;
 	}
 }

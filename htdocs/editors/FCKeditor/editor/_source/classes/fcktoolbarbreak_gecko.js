@@ -23,14 +23,13 @@
  * This is the Gecko specific implementation.
  */
 
-var FCKToolbarBreak = function()
-{}
+var FCKToolbarBreak = function() {};
 
-FCKToolbarBreak.prototype.Create = function( targetElement )
-{
-	var oBreakDiv = targetElement.ownerDocument.createElement( 'div' ) ;
+FCKToolbarBreak.prototype.Create = function(targetElement) {
+	var oBreakDiv = targetElement.ownerDocument.createElement("div");
 
-	oBreakDiv.style.clear = oBreakDiv.style.cssFloat = FCKLang.Dir == 'rtl' ? 'right' : 'left' ;
+	oBreakDiv.style.clear = oBreakDiv.style.cssFloat =
+		FCKLang.Dir == "rtl" ? "right" : "left";
 
-	targetElement.appendChild( oBreakDiv ) ;
-}
+	targetElement.appendChild(oBreakDiv);
+};

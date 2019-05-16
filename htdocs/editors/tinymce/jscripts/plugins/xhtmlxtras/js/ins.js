@@ -9,30 +9,36 @@
  */
 
 function init() {
-	SXE.initElementDialog('ins');
+	SXE.initElementDialog("ins");
 	if (SXE.currentAction == "update") {
-		setFormValue('datetime', tinyMCEPopup.editor.dom.getAttrib(SXE.updateElement, 'datetime'));
-		setFormValue('cite', tinyMCEPopup.editor.dom.getAttrib(SXE.updateElement, 'cite'));
+		setFormValue(
+			"datetime",
+			tinyMCEPopup.editor.dom.getAttrib(SXE.updateElement, "datetime")
+		);
+		setFormValue(
+			"cite",
+			tinyMCEPopup.editor.dom.getAttrib(SXE.updateElement, "cite")
+		);
 		SXE.showRemoveButton();
 	}
 }
 
 function setElementAttribs(elm) {
 	setAllCommonAttribs(elm);
-	setAttrib(elm, 'datetime');
-	setAttrib(elm, 'cite');
-	elm.removeAttribute('data-mce-new');
+	setAttrib(elm, "datetime");
+	setAttrib(elm, "cite");
+	elm.removeAttribute("data-mce-new");
 }
 
 function insertIns() {
-	var elm = tinyMCEPopup.editor.dom.getParent(SXE.focusElement, 'INS');
+	var elm = tinyMCEPopup.editor.dom.getParent(SXE.focusElement, "INS");
 
 	if (elm == null) {
 		var s = SXE.inst.selection.getContent();
-		if(s.length > 0) {
-			insertInlineElement('ins');
-			var elementArray = SXE.inst.dom.select('ins[data-mce-new]');
-			for (var i=0; i<elementArray.length; i++) {
+		if (s.length > 0) {
+			insertInlineElement("ins");
+			var elementArray = SXE.inst.dom.select("ins[data-mce-new]");
+			for (var i = 0; i < elementArray.length; i++) {
 				var elm = elementArray[i];
 				setElementAttribs(elm);
 			}
@@ -41,12 +47,12 @@ function insertIns() {
 		setElementAttribs(elm);
 	}
 	tinyMCEPopup.editor.nodeChanged();
-	tinyMCEPopup.execCommand('mceEndUndoLevel');
+	tinyMCEPopup.execCommand("mceEndUndoLevel");
 	tinyMCEPopup.close();
 }
 
 function removeIns() {
-	SXE.removeElement('ins');
+	SXE.removeElement("ins");
 	tinyMCEPopup.close();
 }
 

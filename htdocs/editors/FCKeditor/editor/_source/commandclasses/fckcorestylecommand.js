@@ -23,39 +23,35 @@
  * Italic.
  */
 
- var FCKCoreStyleCommand = function( coreStyleName )
- {
- 	this.Name = 'CoreStyle' ;
- 	this.StyleName = '_FCK_' + coreStyleName ;
- 	this.IsActive = false ;
+var FCKCoreStyleCommand = function(coreStyleName) {
+	this.Name = "CoreStyle";
+	this.StyleName = "_FCK_" + coreStyleName;
+	this.IsActive = false;
 
- 	FCKStyles.AttachStyleStateChange( this.StyleName, this._OnStyleStateChange, this ) ;
- }
+	FCKStyles.AttachStyleStateChange(
+		this.StyleName,
+		this._OnStyleStateChange,
+		this
+	);
+};
 
- FCKCoreStyleCommand.prototype =
- {
-	Execute : function()
-	{
-		FCKUndo.SaveUndoStep() ;
+FCKCoreStyleCommand.prototype = {
+	Execute: function() {
+		FCKUndo.SaveUndoStep();
 
-		if ( this.IsActive )
-			FCKStyles.RemoveStyle( this.StyleName ) ;
-		else
-			FCKStyles.ApplyStyle( this.StyleName ) ;
+		if (this.IsActive) FCKStyles.RemoveStyle(this.StyleName);
+		else FCKStyles.ApplyStyle(this.StyleName);
 
-		FCK.Focus() ;
-		FCK.Events.FireEvent( 'OnSelectionChange' ) ;
+		FCK.Focus();
+		FCK.Events.FireEvent("OnSelectionChange");
 	},
 
-	GetState : function()
-	{
-		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG )
-			return FCK_TRISTATE_DISABLED ;
-		return this.IsActive ? FCK_TRISTATE_ON : FCK_TRISTATE_OFF ;
+	GetState: function() {
+		if (FCK.EditMode != FCK_EDITMODE_WYSIWYG) return FCK_TRISTATE_DISABLED;
+		return this.IsActive ? FCK_TRISTATE_ON : FCK_TRISTATE_OFF;
 	},
 
-	_OnStyleStateChange : function( styleName, isActive )
-	{
-		this.IsActive = isActive ;
+	_OnStyleStateChange: function(styleName, isActive) {
+		this.IsActive = isActive;
 	}
- };
+};

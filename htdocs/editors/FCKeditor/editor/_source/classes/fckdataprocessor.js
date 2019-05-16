@@ -27,11 +27,9 @@
  *
  */
 
-var FCKDataProcessor = function()
-{}
+var FCKDataProcessor = function() {};
 
-FCKDataProcessor.prototype =
-{
+FCKDataProcessor.prototype = {
 	/*
 	 * Returns a string representing the HTML format of "data". The returned
 	 * value will be loaded in the editor.
@@ -42,49 +40,62 @@ FCKDataProcessor.prototype =
 	 *     @param {String} data The data to be converted in the
 	 *            DataProcessor specific format.
 	 */
-	ConvertToHtml : function( data )
-	{
+	ConvertToHtml: function(data) {
 		// The default data processor must handle two different cases depending
 		// on the FullPage setting. Custom Data Processors will not be
 		// compatible with FullPage, much probably.
-		if ( FCKConfig.FullPage )
-		{
+		if (FCKConfig.FullPage) {
 			// Save the DOCTYPE.
-			FCK.DocTypeDeclaration = data.match( FCKRegexLib.DocTypeTag ) ;
+			FCK.DocTypeDeclaration = data.match(FCKRegexLib.DocTypeTag);
 
 			// Check if the <body> tag is available.
-			if ( !FCKRegexLib.HasBodyTag.test( data ) )
-				data = '<body>' + data + '</body>' ;
+			if (!FCKRegexLib.HasBodyTag.test(data))
+				data = "<body>" + data + "</body>";
 
 			// Check if the <html> tag is available.
-			if ( !FCKRegexLib.HtmlOpener.test( data ) )
-				data = '<html dir="' + FCKConfig.ContentLangDirection + '">' + data + '</html>' ;
+			if (!FCKRegexLib.HtmlOpener.test(data))
+				data =
+					'<html dir="' +
+					FCKConfig.ContentLangDirection +
+					'">' +
+					data +
+					"</html>";
 
 			// Check if the <head> tag is available.
-			if ( !FCKRegexLib.HeadOpener.test( data ) )
-				data = data.replace( FCKRegexLib.HtmlOpener, '$&<head><title></title></head>' ) ;
+			if (!FCKRegexLib.HeadOpener.test(data))
+				data = data.replace(
+					FCKRegexLib.HtmlOpener,
+					"$&<head><title></title></head>"
+				);
 
-			return data ;
-		}
-		else
-		{
+			return data;
+		} else {
 			var html =
 				FCKConfig.DocType +
-				'<html dir="' + FCKConfig.ContentLangDirection + '"' ;
+				'<html dir="' +
+				FCKConfig.ContentLangDirection +
+				'"';
 
 			// On IE, if you are using a DOCTYPE different of HTML 4 (like
 			// XHTML), you must force the vertical scroll to show, otherwise
 			// the horizontal one may appear when the page needs vertical scrolling.
 			// TODO : Check it with IE7 and make it IE6- if it is the case.
-			if ( FCKBrowserInfo.IsIE && FCKConfig.DocType.length > 0 && !FCKRegexLib.Html4DocType.test( FCKConfig.DocType ) )
-				html += ' style="overflow-y: scroll"' ;
+			if (
+				FCKBrowserInfo.IsIE &&
+				FCKConfig.DocType.length > 0 &&
+				!FCKRegexLib.Html4DocType.test(FCKConfig.DocType)
+			)
+				html += ' style="overflow-y: scroll"';
 
-			html += '><head><title></title></head>' +
-				'<body' + FCKConfig.GetBodyAttributes() + '>' +
+			html +=
+				"><head><title></title></head>" +
+				"<body" +
+				FCKConfig.GetBodyAttributes() +
+				">" +
 				data +
-				'</body></html>' ;
+				"</body></html>";
 
-			return html ;
+			return html;
 		}
 	},
 
@@ -97,14 +108,18 @@ FCKDataProcessor.prototype =
 	 *     @param {Boolean} format Indicates that the data must be formatted
 	 *            for human reading. Not all Data Processors may provide it.
 	 */
-	ConvertToDataFormat : function( rootNode, excludeRoot, ignoreIfEmptyParagraph, format )
-	{
-		var data = FCKXHtml.GetXHTML( rootNode, !excludeRoot, format ) ;
+	ConvertToDataFormat: function(
+		rootNode,
+		excludeRoot,
+		ignoreIfEmptyParagraph,
+		format
+	) {
+		var data = FCKXHtml.GetXHTML(rootNode, !excludeRoot, format);
 
-		if ( ignoreIfEmptyParagraph && FCKRegexLib.EmptyOutParagraph.test( data ) )
-			return '' ;
+		if (ignoreIfEmptyParagraph && FCKRegexLib.EmptyOutParagraph.test(data))
+			return "";
 
-		return data ;
+		return data;
 	},
 
 	/*
@@ -112,8 +127,7 @@ FCKDataProcessor.prototype =
 	 * editor selection position.
 	 *     @param {String} html The HTML to be fixed.
 	 */
-	FixHtml : function( html )
-	{
-		return html ;
+	FixHtml: function(html) {
+		return html;
 	}
-} ;
+};

@@ -23,4 +23,4 @@
  */
 
 // Add the BBCode plugin.
-FCKConfig.Plugins.Add( 'bbcode' ) ;
+FCKConfig.Plugins.Add("bbcode");

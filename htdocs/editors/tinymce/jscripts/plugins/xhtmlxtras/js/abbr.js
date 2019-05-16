@@ -9,19 +9,19 @@
  */
 
 function init() {
-	SXE.initElementDialog('abbr');
+	SXE.initElementDialog("abbr");
 	if (SXE.currentAction == "update") {
 		SXE.showRemoveButton();
 	}
 }
 
 function insertAbbr() {
-	SXE.insertElement('abbr');
+	SXE.insertElement("abbr");
 	tinyMCEPopup.close();
 }
 
 function removeAbbr() {
-	SXE.removeElement('abbr');
+	SXE.removeElement("abbr");
 	tinyMCEPopup.close();
 }
 

@@ -21,174 +21,153 @@
  * Scripts for the fck_select.html page.
  */
 
-function Select( combo )
-{
-	var iIndex = combo.selectedIndex ;
+function Select(combo) {
+	var iIndex = combo.selectedIndex;
 
-	oListText.selectedIndex		= iIndex ;
-	oListValue.selectedIndex	= iIndex ;
+	oListText.selectedIndex = iIndex;
+	oListValue.selectedIndex = iIndex;
 
-	var oTxtText	= document.getElementById( "txtText" ) ;
-	var oTxtValue	= document.getElementById( "txtValue" ) ;
+	var oTxtText = document.getElementById("txtText");
+	var oTxtValue = document.getElementById("txtValue");
 
-	oTxtText.value	= oListText.value ;
-	oTxtValue.value	= oListValue.value ;
+	oTxtText.value = oListText.value;
+	oTxtValue.value = oListValue.value;
 }
 
-function Add()
-{
-	var oTxtText	= document.getElementById( "txtText" ) ;
-	var oTxtValue	= document.getElementById( "txtValue" ) ;
+function Add() {
+	var oTxtText = document.getElementById("txtText");
+	var oTxtValue = document.getElementById("txtValue");
 
-	AddComboOption( oListText, oTxtText.value, oTxtText.value ) ;
-	AddComboOption( oListValue, oTxtValue.value, oTxtValue.value ) ;
+	AddComboOption(oListText, oTxtText.value, oTxtText.value);
+	AddComboOption(oListValue, oTxtValue.value, oTxtValue.value);
 
-	oListText.selectedIndex = oListText.options.length - 1 ;
-	oListValue.selectedIndex = oListValue.options.length - 1 ;
+	oListText.selectedIndex = oListText.options.length - 1;
+	oListValue.selectedIndex = oListValue.options.length - 1;
 
-	oTxtText.value	= '' ;
-	oTxtValue.value	= '' ;
+	oTxtText.value = "";
+	oTxtValue.value = "";
 
-	oTxtText.focus() ;
+	oTxtText.focus();
 }
 
-function Modify()
-{
-	var iIndex = oListText.selectedIndex ;
+function Modify() {
+	var iIndex = oListText.selectedIndex;
 
-	if ( iIndex < 0 ) return ;
+	if (iIndex < 0) return;
 
-	var oTxtText	= document.getElementById( "txtText" ) ;
-	var oTxtValue	= document.getElementById( "txtValue" ) ;
+	var oTxtText = document.getElementById("txtText");
+	var oTxtValue = document.getElementById("txtValue");
 
-	oListText.options[ iIndex ].innerHTML	= HTMLEncode( oTxtText.value ) ;
-	oListText.options[ iIndex ].value		= oTxtText.value ;
+	oListText.options[iIndex].innerHTML = HTMLEncode(oTxtText.value);
+	oListText.options[iIndex].value = oTxtText.value;
 
-	oListValue.options[ iIndex ].innerHTML	= HTMLEncode( oTxtValue.value ) ;
-	oListValue.options[ iIndex ].value		= oTxtValue.value ;
+	oListValue.options[iIndex].innerHTML = HTMLEncode(oTxtValue.value);
+	oListValue.options[iIndex].value = oTxtValue.value;
 
-	oTxtText.value	= '' ;
-	oTxtValue.value	= '' ;
+	oTxtText.value = "";
+	oTxtValue.value = "";
 
-	oTxtText.focus() ;
+	oTxtText.focus();
 }
 
-function Move( steps )
-{
-	ChangeOptionPosition( oListText, steps ) ;
-	ChangeOptionPosition( oListValue, steps ) ;
+function Move(steps) {
+	ChangeOptionPosition(oListText, steps);
+	ChangeOptionPosition(oListValue, steps);
 }
 
-function Delete()
-{
-	RemoveSelectedOptions( oListText ) ;
-	RemoveSelectedOptions( oListValue ) ;
+function Delete() {
+	RemoveSelectedOptions(oListText);
+	RemoveSelectedOptions(oListValue);
 }
 
-function SetSelectedValue()
-{
-	var iIndex = oListValue.selectedIndex ;
-	if ( iIndex < 0 ) return ;
+function SetSelectedValue() {
+	var iIndex = oListValue.selectedIndex;
+	if (iIndex < 0) return;
 
-	var oTxtValue = document.getElementById( "txtSelValue" ) ;
+	var oTxtValue = document.getElementById("txtSelValue");
 
-	oTxtValue.value = oListValue.options[ iIndex ].value ;
+	oTxtValue.value = oListValue.options[iIndex].value;
 }
 
 // Moves the selected option by a number of steps (also negative)
-function ChangeOptionPosition( combo, steps )
-{
-	var iActualIndex = combo.selectedIndex ;
+function ChangeOptionPosition(combo, steps) {
+	var iActualIndex = combo.selectedIndex;
 
-	if ( iActualIndex < 0 )
-		return ;
+	if (iActualIndex < 0) return;
 
-	var iFinalIndex = iActualIndex + steps ;
+	var iFinalIndex = iActualIndex + steps;
 
-	if ( iFinalIndex < 0 )
-		iFinalIndex = 0 ;
+	if (iFinalIndex < 0) iFinalIndex = 0;
 
-	if ( iFinalIndex > ( combo.options.length - 1 ) )
-		iFinalIndex = combo.options.length - 1 ;
+	if (iFinalIndex > combo.options.length - 1)
+		iFinalIndex = combo.options.length - 1;
 
-	if ( iActualIndex == iFinalIndex )
-		return ;
+	if (iActualIndex == iFinalIndex) return;
 
-	var oOption = combo.options[ iActualIndex ] ;
-	var sText	= HTMLDecode( oOption.innerHTML ) ;
-	var sValue	= oOption.value ;
+	var oOption = combo.options[iActualIndex];
+	var sText = HTMLDecode(oOption.innerHTML);
+	var sValue = oOption.value;
 
-	combo.remove( iActualIndex ) ;
+	combo.remove(iActualIndex);
 
-	oOption = AddComboOption( combo, sText, sValue, null, iFinalIndex ) ;
+	oOption = AddComboOption(combo, sText, sValue, null, iFinalIndex);
 
-	oOption.selected = true ;
+	oOption.selected = true;
 }
 
 // Remove all selected options from a SELECT object
-function RemoveSelectedOptions(combo)
-{
+function RemoveSelectedOptions(combo) {
 	// Save the selected index
-	var iSelectedIndex = combo.selectedIndex ;
+	var iSelectedIndex = combo.selectedIndex;
 
-	var oOptions = combo.options ;
+	var oOptions = combo.options;
 
 	// Remove all selected options
-	for ( var i = oOptions.length - 1 ; i >= 0 ; i-- )
-	{
-		if (oOptions[i].selected) combo.remove(i) ;
+	for (var i = oOptions.length - 1; i >= 0; i--) {
+		if (oOptions[i].selected) combo.remove(i);
 	}
 
 	// Reset the selection based on the original selected index
-	if ( combo.options.length > 0 )
-	{
-		if ( iSelectedIndex >= combo.options.length ) iSelectedIndex = combo.options.length - 1 ;
-		combo.selectedIndex = iSelectedIndex ;
+	if (combo.options.length > 0) {
+		if (iSelectedIndex >= combo.options.length)
+			iSelectedIndex = combo.options.length - 1;
+		combo.selectedIndex = iSelectedIndex;
 	}
 }
 
 // Add a new option to a SELECT object (combo or list)
-function AddComboOption( combo, optionText, optionValue, documentObject, index )
-{
-	var oOption ;
+function AddComboOption(combo, optionText, optionValue, documentObject, index) {
+	var oOption;
 
-	if ( documentObject )
-		oOption = documentObject.createElement("OPTION") ;
-	else
-		oOption = document.createElement("OPTION") ;
+	if (documentObject) oOption = documentObject.createElement("OPTION");
+	else oOption = document.createElement("OPTION");
 
-	if ( index != null )
-		combo.options.add( oOption, index ) ;
-	else
-		combo.options.add( oOption ) ;
+	if (index != null) combo.options.add(oOption, index);
+	else combo.options.add(oOption);
 
-	oOption.innerHTML = optionText.length > 0 ? HTMLEncode( optionText ) : '&nbsp;' ;
-	oOption.value     = optionValue ;
+	oOption.innerHTML =
+		optionText.length > 0 ? HTMLEncode(optionText) : "&nbsp;";
+	oOption.value = optionValue;
 
-	return oOption ;
+	return oOption;
 }
 
-function HTMLEncode( text )
-{
-	if ( !text )
-		return '' ;
+function HTMLEncode(text) {
+	if (!text) return "";
 
-	text = text.replace( /&/g, '&amp;' ) ;
-	text = text.replace( /</g, '&lt;' ) ;
-	text = text.replace( />/g, '&gt;' ) ;
+	text = text.replace(/&/g, "&amp;");
+	text = text.replace(/</g, "&lt;");
+	text = text.replace(/>/g, "&gt;");
 
-	return text ;
+	return text;
 }
 
+function HTMLDecode(text) {
+	if (!text) return "";
 
-function HTMLDecode( text )
-{
-	if ( !text )
-		return '' ;
+	text = text.replace(/&gt;/g, ">");
+	text = text.replace(/&lt;/g, "<");
+	text = text.replace(/&amp;/g, "&");
 
-	text = text.replace( /&gt;/g, '>' ) ;
-	text = text.replace( /&lt;/g, '<' ) ;
-	text = text.replace( /&amp;/g, '&' ) ;
-
-	return text ;
+	return text;
 }
