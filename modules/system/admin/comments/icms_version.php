@@ -39,16 +39,16 @@
  */
 
 $modversion = array(
-	'name' => _MD_AM_COMMENTS,
-	'version' => "",
-	'description' => _MD_AM_COMMENTS_DSC,
-	'author' => "",
-	'credits' => "The ImpressCMS Project",
-	'help' => "comments.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "comments.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=comments",
-	'category' => XOOPS_SYSTEM_COMMENT,
-	'group' => _MD_AM_GROUPS_CONTENT);
+    'name' => _MD_AM_COMMENTS,
+    'version' => "",
+    'description' => _MD_AM_COMMENTS_DSC,
+    'author' => "",
+    'credits' => "The ImpressCMS Project",
+    'help' => "comments.html",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "comments.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=comments",
+    'category' => XOOPS_SYSTEM_COMMENT,
+    'group' => _MD_AM_GROUPS_CONTENT);

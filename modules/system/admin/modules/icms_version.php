@@ -39,16 +39,16 @@
  */
 
 $modversion = array(
-	'name' => _MD_AM_MDAD,
-	'version' => "",
-	'description' => _MD_AM_MDAD_DSC,
-	'author' => "Kazumi Ono<br />( http://www.mywebaddons.com/ )",
-	'credits' => "",
-	'help' => "modules.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "modules.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=modules",
-	'category' => XOOPS_SYSTEM_MODULE,
-	'group' => _MD_AM_GROUPS_SITECONFIGURATION);
+    'name' => _MD_AM_MDAD,
+    'version' => "",
+    'description' => _MD_AM_MDAD_DSC,
+    'author' => "Kazumi Ono<br />( http://www.mywebaddons.com/ )",
+    'credits' => "",
+    'help' => "modules.html",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "modules.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=modules",
+    'category' => XOOPS_SYSTEM_MODULE,
+    'group' => _MD_AM_GROUPS_SITECONFIGURATION);

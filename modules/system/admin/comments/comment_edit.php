@@ -35,4 +35,3 @@
 
 include './admin_header.php';
 include ICMS_ROOT_PATH . '/include/comment_edit.php';
-

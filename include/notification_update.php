@@ -56,19 +56,19 @@
 // @TODO: allow 'GET' also so we can process 'unsubscribe' requests??
 
 if (!is_object($icmsModule)) {
-	exit();
+    exit();
 }
 
 include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 icms_loadLanguageFile('core', 'notification');
 
 if (!isset($_POST['not_submit'])) {
-	exit();
+    exit();
 }
 
 if (!icms::$security->check()) {
-	redirect_header($_POST['not_redirect'], 3, implode('<br />', icms::$security->getErrors()));
-	exit();
+    redirect_header($_POST['not_redirect'], 3, implode('<br />', icms::$security->getErrors()));
+    exit();
 }
 
 // NOTE: in addition to the templates provided in the block and view
@@ -90,16 +90,14 @@ $user_id = is_object(icms::$user)? icms::$user->getVar('uid'):0;
 $notification_handler = icms::handler('icms_data_notification');
 
 foreach ($update_list as $update_item) {
+    list($category, $item_id, $event) = explode(',', $update_item['params']);
+    $status = !empty($update_item['status'])?1:0;
 
-	list($category, $item_id, $event) = explode(',', $update_item['params']);
-	$status = !empty($update_item['status'])?1:0;
-
-	if (!$status) {
-		$notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
-	} else {
-		$notification_handler->subscribe($category, $item_id, $event);
-	}
-
+    if (!$status) {
+        $notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
+    } else {
+        $notification_handler->subscribe($category, $item_id, $event);
+    }
 }
 
 // @TODO: something like grey box summary of actions (like multiple comment
@@ -112,11 +110,11 @@ foreach ($update_list as $update_item) {
 
 $redirect_args = array();
 foreach ($update_list as $update_item) {
-	list($category, $item_id, $event) = explode(',', $update_item['params']);
-	$category_info = & icms_data_notification_Handler::categoryInfo($category);
-	if (!empty($category_info['item_name'])) {
-		$redirect_args[$category_info['item_name']] = $item_id;
-	}
+    list($category, $item_id, $event) = explode(',', $update_item['params']);
+    $category_info = & icms_data_notification_Handler::categoryInfo($category);
+    if (!empty($category_info['item_name'])) {
+        $redirect_args[$category_info['item_name']] = $item_id;
+    }
 }
 
 // @TODO: write a central function to put together args with '?' and '&'
@@ -124,14 +122,13 @@ foreach ($update_list as $update_item) {
 $argstring = '';
 $first_arg = 1;
 foreach (array_keys($redirect_args) as $arg) {
-	if ($first_arg) {
-		$argstring .= "?" . $arg . "=" . $redirect_args[$arg];
-		$first_arg = 0;
-	} else {
-		$argstring .= "&" . $arg . "=" . $redirect_args[$arg];
-	}
+    if ($first_arg) {
+        $argstring .= "?" . $arg . "=" . $redirect_args[$arg];
+        $first_arg = 0;
+    } else {
+        $argstring .= "&" . $arg . "=" . $redirect_args[$arg];
+    }
 }
 
 redirect_header($_POST['not_redirect'] . $argstring, 3, _NOT_UPDATEOK);
 exit();
-

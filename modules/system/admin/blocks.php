@@ -44,10 +44,10 @@
 
 /* set get and post filters before including admin_header, if not strings */
 $filter_get = array(
-	'bid' => 'int',
-	'startbid' => 'int',
-	'limitsel' => 'int',
-	);
+    'bid' => 'int',
+    'startbid' => 'int',
+    'limitsel' => 'int',
+    );
 
 /* set default values for variables. $op and $fct are handled in the header */
 $bid = 0;
@@ -64,64 +64,65 @@ $clean_op = $op;
  * @param int $bid ID of block to be edited
  * @param bool $clone Set to 'TRUE' if the block is being cloned
  */
-function editblock($bid = 0, $clone = false) {
-	global $icms_admin_handler, $icmsAdminTpl, $op, $changedField;
+function editblock($bid = 0, $clone = false)
+{
+    global $icms_admin_handler, $icmsAdminTpl, $op, $changedField;
 
-	$blockObj = $icms_admin_handler->get($bid);
+    $blockObj = $icms_admin_handler->get($bid);
 
-	if (isset($op) && $op == 'changedField' && in_array($changedField, array('c_type'))) {
-		$controller = new icms_ipf_Controller($icms_admin_handler);
-		$controller->postDataToObject($blockObj);
-	}
+    if (isset($op) && $op == 'changedField' && in_array($changedField, array('c_type'))) {
+        $controller = new icms_ipf_Controller($icms_admin_handler);
+        $controller->postDataToObject($blockObj);
+    }
 
-	if ($blockObj->getVar("c_type") == "H") {
-		$blockObj->setControl("content", array("name" => "source", "syntax" => "html"));
-	} elseif ($blockObj->getVar("c_type") == "P") {
-		$blockObj->setControl("content", array("name" => "source", "syntax" => "php"));
-	} else {
-		$blockObj->setControl("content", "dhtmltextarea");
-	}
+    if ($blockObj->getVar("c_type") == "H") {
+        $blockObj->setControl("content", array("name" => "source", "syntax" => "html"));
+    } elseif ($blockObj->getVar("c_type") == "P") {
+        $blockObj->setControl("content", array("name" => "source", "syntax" => "php"));
+    } else {
+        $blockObj->setControl("content", "dhtmltextarea");
+    }
 
-	if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') {
-		$blockObj->showFieldOnForm('options');
-	}
-	if (!$clone && !$blockObj->isNew()) {
-		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKS_EDIT, 'addblock');
-		$sform->assign($icmsAdminTpl);
-	} else {
-		if ($clone) {
-			if ($blockObj->getVar('block_type') != 'C') {
-				$blockObj->setVar('block_type', 'K');
-				$blockObj->hideFieldFromForm('content');
-				$blockObj->hideFieldFromForm('c_type');
-			}
-			$blockObj->setVar('bid', '0');
-			$blockObj->setNew();
-		} else {
-			$blockObj->setVar('block_type', 'C');
-		}
-		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKS_CREATE, 'addblock');
-		$sform->assign($icmsAdminTpl);
-	}
+    if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') {
+        $blockObj->showFieldOnForm('options');
+    }
+    if (!$clone && !$blockObj->isNew()) {
+        $sform = $blockObj->getForm(_AM_SYSTEM_BLOCKS_EDIT, 'addblock');
+        $sform->assign($icmsAdminTpl);
+    } else {
+        if ($clone) {
+            if ($blockObj->getVar('block_type') != 'C') {
+                $blockObj->setVar('block_type', 'K');
+                $blockObj->hideFieldFromForm('content');
+                $blockObj->hideFieldFromForm('c_type');
+            }
+            $blockObj->setVar('bid', '0');
+            $blockObj->setNew();
+        } else {
+            $blockObj->setVar('block_type', 'C');
+        }
+        $sform = $blockObj->getForm(_AM_SYSTEM_BLOCKS_CREATE, 'addblock');
+        $sform->assign($icmsAdminTpl);
+    }
 
-	$icmsAdminTpl->assign('bid', $bid);
-	$icmsAdminTpl->display('db:admin/blocks/system_adm_blocks.html');
+    $icmsAdminTpl->assign('bid', $bid);
+    $icmsAdminTpl->display('db:admin/blocks/system_adm_blocks.html');
 }
 
 /* Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
 $valid_op = array(
-	'mod',
-	'changedField',
-	'addblock',
-	'del',
-	'clone',
-	'up',
-	'down',
-	'visible',
-	'change_blocks',
-	''
+    'mod',
+    'changedField',
+    'addblock',
+    'del',
+    'clone',
+    'up',
+    'down',
+    'visible',
+    'change_blocks',
+    ''
 );
 
 /*
@@ -131,133 +132,133 @@ $valid_op = array(
  * required
  */
 if (in_array($clean_op, $valid_op, true)) {
-	switch ($clean_op) {
-		case 'visible' :
-			$icms_admin_handler->changeVisible($bid);
-			if (isset($rtn)) {
-				redirect_header(ICMS_URL . base64_decode($rtn));
-			}
+    switch ($clean_op) {
+        case 'visible':
+            $icms_admin_handler->changeVisible($bid);
+            if (isset($rtn)) {
+                redirect_header(ICMS_URL . base64_decode($rtn));
+            }
 
-			$return = '/modules/system/admin.php?fct=blocks';
-			if (isset($sortsel)) {
-				$return .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
-			}
+            $return = '/modules/system/admin.php?fct=blocks';
+            if (isset($sortsel)) {
+                $return .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
+            }
 
-			redirect_header(ICMS_URL . $return);
-			break;
+            redirect_header(ICMS_URL . $return);
+            break;
 
-		case "up" :
-			$icms_admin_handler->upWeight($bid);
-			if (isset($rtn)) {
-				redirect_header(ICMS_URL . base64_decode($rtn));
-			}
+        case "up":
+            $icms_admin_handler->upWeight($bid);
+            if (isset($rtn)) {
+                redirect_header(ICMS_URL . base64_decode($rtn));
+            }
 
-			$return = '/modules/system/admin.php?fct=blocks';
-			if (isset($sortsel)) {
-				$return .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
-			}
+            $return = '/modules/system/admin.php?fct=blocks';
+            if (isset($sortsel)) {
+                $return .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
+            }
 
-			redirect_header(ICMS_URL . $return);
-			break;
+            redirect_header(ICMS_URL . $return);
+            break;
 
-		case "down" :
-			$icms_admin_handler->downWeight($bid);
-			if (isset($rtn)) {
-				redirect_header(ICMS_URL . base64_decode($rtn));
-			}
+        case "down":
+            $icms_admin_handler->downWeight($bid);
+            if (isset($rtn)) {
+                redirect_header(ICMS_URL . base64_decode($rtn));
+            }
 
-			$return = '/modules/system/admin.php?fct=blocks';
-			if (isset($sortsel)) {
-				$return .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
-			}
+            $return = '/modules/system/admin.php?fct=blocks';
+            if (isset($sortsel)) {
+                $return .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
+            }
 
-			redirect_header(ICMS_URL . $return);
-			break;
+            redirect_header(ICMS_URL . $return);
+            break;
 
-		case "clone" :
-			icms_cp_header();
-			editblock($clean_bid, true);
-			break;
+        case "clone":
+            icms_cp_header();
+            editblock($clean_bid, true);
+            break;
 
-		case "mod" :
-		case "changedField" :
-			icms_cp_header();
-			editblock($clean_bid);
-			break;
+        case "mod":
+        case "changedField":
+            icms_cp_header();
+            editblock($clean_bid);
+            break;
 
-		case "addblock" :
-			$controller = new icms_ipf_Controller($icms_admin_handler);
-			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKS_CREATED, _AM_SYSTEM_BLOCKS_MODIFIED);
-			break;
+        case "addblock":
+            $controller = new icms_ipf_Controller($icms_admin_handler);
+            $controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKS_CREATED, _AM_SYSTEM_BLOCKS_MODIFIED);
+            break;
 
-		case "del" :
-			$controller = new icms_ipf_Controller($icms_admin_handler);
-			$controller->handleObjectDeletion();
+        case "del":
+            $controller = new icms_ipf_Controller($icms_admin_handler);
+            $controller->handleObjectDeletion();
 
-			break;
+            break;
 
-		case "change_blocks" :
-			foreach ($_POST['SystemBlocksadmin_objects'] as $k => $v) {
-				$changed = false;
-				$obj = $icms_admin_handler->get($v);
+        case "change_blocks":
+            foreach ($_POST['SystemBlocksadmin_objects'] as $k => $v) {
+                $changed = false;
+                $obj = $icms_admin_handler->get($v);
 
-				if ($obj->getVar('side', 'e') != $_POST['block_side'][$k]) {
-					$obj->setVar('side', (int) $_POST['block_side'][$k]);
-					$changed = true;
-				}
-				if ($obj->getVar('weight', 'e') != $_POST['block_weight'][$k]) {
-					$obj->setVar('weight', (int) $_POST['block_weight'][$k]);
-					$changed = true;
-				}
-				if ($changed) {
-					$icms_admin_handler->insert($obj);
-				}
-			}
+                if ($obj->getVar('side', 'e') != $_POST['block_side'][$k]) {
+                    $obj->setVar('side', (int) $_POST['block_side'][$k]);
+                    $changed = true;
+                }
+                if ($obj->getVar('weight', 'e') != $_POST['block_weight'][$k]) {
+                    $obj->setVar('weight', (int) $_POST['block_weight'][$k]);
+                    $changed = true;
+                }
+                if ($changed) {
+                    $icms_admin_handler->insert($obj);
+                }
+            }
 
-			if (isset($rtn)) {
-				redirect_header(ICMS_URL . base64_decode($rtn), 2, _AM_SYSTEM_BLOCKS_MODIFIED);
-			}
+            if (isset($rtn)) {
+                redirect_header(ICMS_URL . base64_decode($rtn), 2, _AM_SYSTEM_BLOCKS_MODIFIED);
+            }
 
-			$return = '/modules/system/admin.php?fct=blocks';
-			if (isset($sortsel)) {
-				$return .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
-			}
-			redirect_header(ICMS_URL . $return, 2, _AM_SYSTEM_BLOCKS_MODIFIED);
-			break;
+            $return = '/modules/system/admin.php?fct=blocks';
+            if (isset($sortsel)) {
+                $return .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
+            }
+            redirect_header(ICMS_URL . $return, 2, _AM_SYSTEM_BLOCKS_MODIFIED);
+            break;
 
-		default :
-			icms_cp_header();
-			$objectTable = new icms_ipf_view_Table($icms_admin_handler);
-			$objectTable->addColumn(new icms_ipf_view_Column('visible', 'center'));
-			$objectTable->addColumn(new icms_ipf_view_Column('name'));
-			$objectTable->addColumn(new icms_ipf_view_Column('title', _GLOBAL_LEFT, false, 'getAdminViewItemLink'));
-			$objectTable->addColumn(new icms_ipf_view_Column('mid'));
-			$objectTable->addColumn(new icms_ipf_view_Column('side', 'center', false, 'getSideControl'));
-			$objectTable->addColumn(new icms_ipf_view_Column('weight', 'center', false, 'getWeightControl'));
+        default:
+            icms_cp_header();
+            $objectTable = new icms_ipf_view_Table($icms_admin_handler);
+            $objectTable->addColumn(new icms_ipf_view_Column('visible', 'center'));
+            $objectTable->addColumn(new icms_ipf_view_Column('name'));
+            $objectTable->addColumn(new icms_ipf_view_Column('title', _GLOBAL_LEFT, false, 'getAdminViewItemLink'));
+            $objectTable->addColumn(new icms_ipf_view_Column('mid'));
+            $objectTable->addColumn(new icms_ipf_view_Column('side', 'center', false, 'getSideControl'));
+            $objectTable->addColumn(new icms_ipf_view_Column('weight', 'center', false, 'getWeightControl'));
 
-			$objectTable->addIntroButton('addpost', 'admin.php?fct=blocks&amp;op=mod', _AM_SYSTEM_BLOCKS_CREATE);
-			$objectTable->addQuickSearch(array(
-				'title',
-				'name'
-				));
+            $objectTable->addIntroButton('addpost', 'admin.php?fct=blocks&amp;op=mod', _AM_SYSTEM_BLOCKS_CREATE);
+            $objectTable->addQuickSearch(array(
+                'title',
+                'name'
+                ));
 
-			$objectTable->addFilter('mid', 'getModulesArray');
-			$objectTable->addFilter('visible', 'getVisibleStatusArray');
-			$objectTable->addFilter('side', 'getBlockPositionArray');
+            $objectTable->addFilter('mid', 'getModulesArray');
+            $objectTable->addFilter('visible', 'getVisibleStatusArray');
+            $objectTable->addFilter('side', 'getBlockPositionArray');
 
-			$objectTable->addCustomAction('getBlankLink');
-			$objectTable->addCustomAction('getUpActionLink');
-			$objectTable->addCustomAction('getDownActionLink');
-			$objectTable->addCustomAction('getCloneActionLink');
+            $objectTable->addCustomAction('getBlankLink');
+            $objectTable->addCustomAction('getUpActionLink');
+            $objectTable->addCustomAction('getDownActionLink');
+            $objectTable->addCustomAction('getCloneActionLink');
 
-			$objectTable->addActionButton('change_blocks', false, _SUBMIT);
+            $objectTable->addActionButton('change_blocks', false, _SUBMIT);
 
-			$icmsAdminTpl->assign('icms_block_table', $objectTable->fetch());
+            $icmsAdminTpl->assign('icms_block_table', $objectTable->fetch());
 
-			$icmsAdminTpl->display('db:admin/blocks/system_adm_blocks.html');
-			break;
-	}
-	icms_cp_footer();
+            $icmsAdminTpl->display('db:admin/blocks/system_adm_blocks.html');
+            break;
+    }
+    icms_cp_footer();
 }
 /*
  * If you want to have a specific action taken because the user input was invalid,

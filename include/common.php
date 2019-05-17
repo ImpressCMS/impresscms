@@ -37,7 +37,7 @@
 defined("ICMS_MAINFILE_INCLUDED") or die();
 
 if (!isset($xoopsOption)) {
-	$xoopsOption = array();
+    $xoopsOption = array();
 }
 
 // -- Initialize kernel and launch bootstrap
@@ -48,26 +48,26 @@ icms::getInstance()->setup()->boot();
 // Disable gzip compression if PHP is run under CLI mode
 // To be refactored
 if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli') {
-	$icmsConfig['gzip_compression'] = 0;
+    $icmsConfig['gzip_compression'] = 0;
 }
 
 if ($icmsConfig['gzip_compression'] == 1
-	&& extension_loaded('zlib')
-	&& !ini_get('zlib.output_compression')
-	) {
-		ini_set('zlib.output_compression', true);
-		if (ini_get('zlib.output_compression_level') < 0) {
-			ini_set('zlib.output_compression_level', 6);
-		}
-		if (!zlib_get_coding_type()) {
-			ini_set('zlib.output_compression', false);
-			ob_start('ob_gzhandler');
-		}
+    && extension_loaded('zlib')
+    && !ini_get('zlib.output_compression')
+    ) {
+    ini_set('zlib.output_compression', true);
+    if (ini_get('zlib.output_compression_level') < 0) {
+        ini_set('zlib.output_compression_level', 6);
+    }
+    if (!zlib_get_coding_type()) {
+        ini_set('zlib.output_compression', false);
+        ob_start('ob_gzhandler');
+    }
 }
 
 // Include openid common functions if needed
 if (defined('ICMS_INCLUDE_OPENID')) {
-	require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
+    require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
 }
 /* This address the strict compliance for PHP 5.3/5.4, but the rest of our timezone handling
  * can be improved beyond this. ~skenow
@@ -81,64 +81,69 @@ icms_loadLanguageFile('core', 'core');
 icms_loadLanguageFile('system', 'common');
 
 if (defined('_ADM_USE_RTL') && _ADM_USE_RTL == 1) {
-	define('_GLOBAL_LEFT', 'right');
-	define('_GLOBAL_RIGHT', 'left');
+    define('_GLOBAL_LEFT', 'right');
+    define('_GLOBAL_RIGHT', 'left');
 } else {
-	define('_GLOBAL_LEFT', 'left');
-	define('_GLOBAL_RIGHT', 'right');
+    define('_GLOBAL_LEFT', 'left');
+    define('_GLOBAL_RIGHT', 'right');
 }
 
 // -- Include page-specific lang file
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
-	icms_loadLanguageFile('core', $xoopsOption['pagetype']);
+    icms_loadLanguageFile('core', $xoopsOption['pagetype']);
 }
 
 defined("XOOPS_USE_MULTIBYTES") or define("XOOPS_USE_MULTIBYTES", 0);
 
 if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
-	$_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
+    $icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
+    $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
 } elseif (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_POST['theme_select'];
-	$_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
+    $icmsConfig['theme_set'] = $_POST['theme_select'];
+    $_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
 } elseif (!empty($_SESSION['xoopsUserTheme'])
-		&& in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
+        && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
+    $icmsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
 }
 
 if ($icmsConfig['closesite'] == 1) {
-	include ICMS_INCLUDE_PATH . '/site-closed.php';
+    include ICMS_INCLUDE_PATH . '/site-closed.php';
 }
 
 global $xoopsOption, $icmsConfig;
-if (!isset ($xoopsOption ['nodebug']) || !$xoopsOption ['nodebug']) {
-	if ($icmsConfig ['debug_mode'] == 1 || $icmsConfig ['debug_mode'] == 2) {
-		error_reporting(E_ALL);
-		icms::getInstance()->get('logger')->enableRendering();
-		icms::getInstance()->get('logger')->usePopup = ($icmsConfig ['debug_mode'] == 2);
-		if (icms::getInstance()->has('db')) {
-			icms_Event::attach('icms_db_IConnection', 'prepare', function($params) {
-				icms::getInstance()->get('logger')->addQuery('prepare: ' . $params ['sql']);
-			});
-			icms_Event::attach('icms_db_IConnection', 'execute', function($params) {
-				icms::getInstance()->get('logger')->addQuery('execute: ' . $params ['sql']);
-			});
-		}
-	} else {
-		error_reporting(0);
-		icms::getInstance()->get('logger')->activated = false;
-	}
+if (!isset($xoopsOption ['nodebug']) || !$xoopsOption ['nodebug']) {
+    if ($icmsConfig ['debug_mode'] == 1 || $icmsConfig ['debug_mode'] == 2) {
+        error_reporting(E_ALL);
+        icms::getInstance()->get('logger')->enableRendering();
+        icms::getInstance()->get('logger')->usePopup = ($icmsConfig ['debug_mode'] == 2);
+        if (icms::getInstance()->has('db')) {
+            icms_Event::attach('icms_db_IConnection', 'prepare', function ($params) {
+                icms::getInstance()->get('logger')->addQuery('prepare: ' . $params ['sql']);
+            });
+            icms_Event::attach('icms_db_IConnection', 'execute', function ($params) {
+                icms::getInstance()->get('logger')->addQuery('execute: ' . $params ['sql']);
+            });
+        }
+    } else {
+        error_reporting(0);
+        icms::getInstance()->get('logger')->activated = false;
+    }
 }
 //TODO: change this, because it is using deprecated notations
 icms::$module = icms::getInstance()->get('module');
 $icmsModule = &icms::$module;
 
 if ($icmsConfigPersona['multi_login']) {
-	if (is_object(icms::$user)) {
-		$online_handler = icms::handler('icms_core_Online');
-		$online_handler->write(icms::$user->getVar('uid'), icms::$user->getVar('uname'),
-							   time(), 0, $_SERVER['REMOTE_ADDR']);
-	}
+    if (is_object(icms::$user)) {
+        $online_handler = icms::handler('icms_core_Online');
+        $online_handler->write(
+            icms::$user->getVar('uid'),
+            icms::$user->getVar('uname'),
+            time(),
+            0,
+            $_SERVER['REMOTE_ADDR']
+        );
+    }
 }
 
 // -- finalize boot process

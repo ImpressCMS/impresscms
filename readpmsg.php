@@ -39,32 +39,32 @@ $xoopsOption['pagetype'] = "pmsg";
 
 /* check access permissions */
 if (!is_object(icms::$user)) {
-	redirect_header("user.php", 0);
+    redirect_header("user.php", 0);
 }
 
 /* set filter types, if not strings */
 $filter_get = array(
-		'start' => 'int',
-		'total_messages' => 'int',
-	);
+        'start' => 'int',
+        'total_messages' => 'int',
+    );
 
 $filter_post = array(
-		'msg_id' => 'int',
-		'delete' => 'int',
-	);
+        'msg_id' => 'int',
+        'delete' => 'int',
+    );
 
 /* set default values for variables */
 $start = $total_messages = $msg_id = $delete = 0;
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
-	extract($clean_POST);
+    $clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+    extract($clean_POST);
 }
 
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
-	extract($clean_POST);
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+    extract($clean_POST);
 }
 
 /* begin page logic */
@@ -72,18 +72,18 @@ $pm_handler = icms::handler('icms_data_privmessage');
 
 /* Is a message being deleted? */
 if ($delete != 0) {
-	if (!icms::$security->check()) {
-		echo implode('<br />', icms::$security->getErrors());
-		exit();
-	}
+    if (!icms::$security->check()) {
+        echo implode('<br />', icms::$security->getErrors());
+        exit();
+    }
 
-	$pm = & $pm_handler->get($msg_id);
+    $pm = & $pm_handler->get($msg_id);
 
-	if (!is_object($pm) || $pm->getVar('to_userid') != icms::$user->getVar('uid') || !$pm_handler->delete($pm)) {
-		exit();
-	}
+    if (!is_object($pm) || $pm->getVar('to_userid') != icms::$user->getVar('uid') || !$pm_handler->delete($pm)) {
+        exit();
+    }
 
-	redirect_header("viewpmsg.php", 1, _PM_DELETED);
+    redirect_header("viewpmsg.php", 1, _PM_DELETED);
 }
 
 $xoopsOption['template_main'] = 'system_readmsg.html';
@@ -99,31 +99,31 @@ $criteria->setSort('msg_time');
 $pm_arr = $pm_handler->getObjects($criteria);
 
 if (!$pm_handler->setRead($pm_arr[0])) {
-/* echo "failed"; */ }
+    /* echo "failed"; */
+}
 
 $poster = new icms_member_user_Object((int) $pm_arr[0]->getVar("from_userid"));
 
 if (!$poster->isActive()) {
-	$poster = false;
+    $poster = false;
 }
 
 if (is_object($poster) == true) {
-// no need to do this for deleted users
-	$icmsTpl->assign(
-			array(
-				'uname' =>  $poster->getVar("uname"),
-				'poster_id' =>  $poster->getVar("uid"),
-				'gravatar' =>  $poster->gravatar('G', $GLOBALS['icmsConfigUser']['avatar_width']),
-				'online' =>  $poster->isOnline()
-			)
-	);
+    // no need to do this for deleted users
+    $icmsTpl->assign(
+        array(
+                'uname' =>  $poster->getVar("uname"),
+                'poster_id' =>  $poster->getVar("uid"),
+                'gravatar' =>  $poster->gravatar('G', $GLOBALS['icmsConfigUser']['avatar_width']),
+                'online' =>  $poster->isOnline()
+            )
+    );
 
-	if ($poster->getVar("user_from") != "") {
-		$icmsTpl->assign('from', $poster->getVar("user_from"));
-	}
-
+    if ($poster->getVar("user_from") != "") {
+        $icmsTpl->assign('from', $poster->getVar("user_from"));
+    }
 } else {
-	$icmsTpl->assign('anonymous', $icmsConfig['anonymous']);
+    $icmsTpl->assign('anonymous', $icmsConfig['anonymous']);
 }
 
 $var = $pm_arr[0]->msg_text;
@@ -143,20 +143,20 @@ $previous = $start - 1;
 $next = $start + 1;
 
 $icmsTpl->assign(
-		array(
-			'total_messages' => $total_messages,
-			'messages' => $pm_arr,
-			'uid' => icms::$user->getVar("uid"),
-			'subject' => $pm_arr[0]->getVar("subject"),
-			'poster' => $poster,
-			'image' => $pm_arr[0]->getVar("msg_image", "E"),
-			'sent_time' => formatTimestamp($pm_arr[0]->getVar("msg_time")),
-			'message_body' => icms_core_DataFilter::checkVar($var, $filterType, 'output'),
-			'msg_id' => $pm_arr[0]->getVar("msg_id"),
-			'form' => $form->render(),
-			'previous' => $previous,
-			'next' => $next
-		)
+    array(
+            'total_messages' => $total_messages,
+            'messages' => $pm_arr,
+            'uid' => icms::$user->getVar("uid"),
+            'subject' => $pm_arr[0]->getVar("subject"),
+            'poster' => $poster,
+            'image' => $pm_arr[0]->getVar("msg_image", "E"),
+            'sent_time' => formatTimestamp($pm_arr[0]->getVar("msg_time")),
+            'message_body' => icms_core_DataFilter::checkVar($var, $filterType, 'output'),
+            'msg_id' => $pm_arr[0]->getVar("msg_id"),
+            'form' => $form->render(),
+            'previous' => $previous,
+            'next' => $next
+        )
 );
 
 require "footer.php";

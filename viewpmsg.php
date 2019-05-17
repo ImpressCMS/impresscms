@@ -43,8 +43,8 @@ $filter_get = array(
 );
 
 $filter_post = array(
-		'msg_id' => 'int',
-		'delete_messages' => 'str',
+        'msg_id' => 'int',
+        'delete_messages' => 'str',
 );
 
 /* set default values for variables */
@@ -53,44 +53,44 @@ $delete_messages = '';
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
-	extract($clean_POST);
+    $clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+    extract($clean_POST);
 }
 
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
-	extract($clean_POST);
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+    extract($clean_POST);
 }
 
 /* we do not have this module in our repository, nor is it on addons - unsupported? skenow 14 July 2014
 $module_handler = icms::handler('icms_module');
 $messenger_module = $module_handler->getByDirname('messenger');
 if ($messenger_module && $messenger_module->getVar('isactive')) {
-	header('location: ./modules/messenger/msgbox.php');
-	exit();
+    header('location: ./modules/messenger/msgbox.php');
+    exit();
 }
 */
 
 if (!is_object(icms::$user)) {
-	$errormessage = _PM_SORRY . '<br />' . _PM_PLZREG . '';
-	redirect_header('user.php', 2, $errormessage);
+    $errormessage = _PM_SORRY . '<br />' . _PM_PLZREG . '';
+    redirect_header('user.php', 2, $errormessage);
 }
 
 $pm_handler = icms::handler('icms_data_privmessage');
 if (!empty($delete_messages) && isset($msg_id)) {
-	if (!icms::$security->check()) {
-		echo implode('<br />', icms::$security->getErrors());
-		exit();
-	}
-	$size = count($msg_id);
-	for ($i = 0; $i < $size; $i++) {
-		$pm = & $pm_handler->get($msg_id[$i]);
-		if ($pm->getVar('to_userid') == icms::$user->getVar('uid')) {
-			$pm_handler->delete($pm);
-		}
-		unset($pm);
-	}
-	redirect_header('viewpmsg.php', 1, _PM_DELETED);
+    if (!icms::$security->check()) {
+        echo implode('<br />', icms::$security->getErrors());
+        exit();
+    }
+    $size = count($msg_id);
+    for ($i = 0; $i < $size; $i++) {
+        $pm = & $pm_handler->get($msg_id[$i]);
+        if ($pm->getVar('to_userid') == icms::$user->getVar('uid')) {
+            $pm_handler->delete($pm);
+        }
+        unset($pm);
+    }
+    redirect_header('viewpmsg.php', 1, _PM_DELETED);
 }
 
 $xoopsOption['template_main'] = 'system_viewmsgs.html';
@@ -102,17 +102,17 @@ $pm_arr = & $pm_handler->getObjects($criteria);
 
 /* get and properly treat the values of each of the objects' properties */
 foreach ($pm_arr as $id => $message) {
-	$message_list[$id] = $message->getValues();
-	$message_list[$id]['sender'] = icms_member_user_Object::getUnameFromId($message_list[$id]['from_userid']);
-	$message_list[$id]['sent_time'] = formatTimestamp($message_list[$id]['msg_time']);
+    $message_list[$id] = $message->getValues();
+    $message_list[$id]['sender'] = icms_member_user_Object::getUnameFromId($message_list[$id]['from_userid']);
+    $message_list[$id]['sent_time'] = formatTimestamp($message_list[$id]['msg_time']);
 }
 
 $icmsTpl->assign(
-	array(
-		'uid' => icms::$user->getVar('uid'),
-		'messages' => $message_list,
-		'token' => icms::$security->getTokenHTML(),
-	)
+    array(
+        'uid' => icms::$user->getVar('uid'),
+        'messages' => $message_list,
+        'token' => icms::$security->getTokenHTML(),
+    )
 );
 
 require 'footer.php';

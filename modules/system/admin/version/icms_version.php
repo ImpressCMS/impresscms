@@ -39,16 +39,16 @@
  */
 
 $modversion = array(
-	'name' => _MD_AM_VRSN,
-	'version' => "1.0",
-	'description' => _MD_AM_VRSN_DSC,
-	'author' => "marcan (marcan@impresscms.org)",
-	'credits' => "The ImpressCMS Project",
-	'help' => "",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "version.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=version",
-	'category' => XOOPS_SYSTEM_VERSION,
-	'group' => _MD_AM_GROUPS_SYSTEMTOOLS);
+    'name' => _MD_AM_VRSN,
+    'version' => "1.0",
+    'description' => _MD_AM_VRSN_DSC,
+    'author' => "marcan (marcan@impresscms.org)",
+    'credits' => "The ImpressCMS Project",
+    'help' => "",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "version.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=version",
+    'category' => XOOPS_SYSTEM_VERSION,
+    'group' => _MD_AM_GROUPS_SYSTEMTOOLS);

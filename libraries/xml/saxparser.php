@@ -21,356 +21,349 @@
 
 class SaxParser
 {
-	var $level;
-	var $parser;
+    public $level;
+    public $parser;
 
-	var $isCaseFolding;
-	var $targetEncoding;
+    public $isCaseFolding;
+    public $targetEncoding;
 
-	/* Custom Handler Variables */
-	var $tagHandlers = array();
+    /* Custom Handler Variables */
+    public $tagHandlers = array();
 
-	/* Tag stack */
-	var $tags = array();
+    /* Tag stack */
+    public $tags = array();
 
-	/* Xml Source Input */
-	var $xmlInput;
+    /* Xml Source Input */
+    public $xmlInput;
 
-	var $errors = array();
+    public $errors = array();
 
-	/****************************************************************************
-	 Creates a SaxParser object using a FileInput to represent the stream
-	 of XML data to parse.  Use the static methods createFileInput or
-	 createStringInput to construct xml input source objects to supply
-	 to the constructor, or the implementor can construct them individually.
-	 ****************************************************************************/
-	function SaxParser(&$input)
-	{
-		$this->level = 0;
-		$this->parser = xml_parser_create('UTF-8');
-		xml_set_object($this->parser, $this);
-		$this->input =& $input;
-		$this->setCaseFolding(false);
-		$this->useUtfEncoding();
-		xml_set_element_handler($this->parser, 'handleBeginElement','handleEndElement');
-		xml_set_character_data_handler($this->parser, 'handleCharacterData');
-		xml_set_processing_instruction_handler($this->parser, 'handleProcessingInstruction');
-		xml_set_default_handler($this->parser, 'handleDefault');
-		xml_set_unparsed_entity_decl_handler($this->parser, 'handleUnparsedEntityDecl');
-		xml_set_notation_decl_handler($this->parser, 'handleNotationDecl');
-		xml_set_external_entity_ref_handler($this->parser, 'handleExternalEntityRef');
-	}
+    /****************************************************************************
+     Creates a SaxParser object using a FileInput to represent the stream
+     of XML data to parse.  Use the static methods createFileInput or
+     createStringInput to construct xml input source objects to supply
+     to the constructor, or the implementor can construct them individually.
+     ****************************************************************************/
+    public function SaxParser(&$input)
+    {
+        $this->level = 0;
+        $this->parser = xml_parser_create('UTF-8');
+        xml_set_object($this->parser, $this);
+        $this->input =& $input;
+        $this->setCaseFolding(false);
+        $this->useUtfEncoding();
+        xml_set_element_handler($this->parser, 'handleBeginElement', 'handleEndElement');
+        xml_set_character_data_handler($this->parser, 'handleCharacterData');
+        xml_set_processing_instruction_handler($this->parser, 'handleProcessingInstruction');
+        xml_set_default_handler($this->parser, 'handleDefault');
+        xml_set_unparsed_entity_decl_handler($this->parser, 'handleUnparsedEntityDecl');
+        xml_set_notation_decl_handler($this->parser, 'handleNotationDecl');
+        xml_set_external_entity_ref_handler($this->parser, 'handleExternalEntityRef');
+    }
 
-	/*---------------------------------------------------------------------------
-	 Property Methods
-	 ---------------------------------------------------------------------------*/
+    /*---------------------------------------------------------------------------
+     Property Methods
+     ---------------------------------------------------------------------------*/
 
-	/****************************************************************************
-	 * @param $isCaseFolding
-	 * @returns void
-	 ****************************************************************************/
-	function setCaseFolding($isCaseFolding)
-	{
-		assert(is_bool($isCaseFolding));
+    /****************************************************************************
+     * @param $isCaseFolding
+     * @returns void
+     ****************************************************************************/
+    public function setCaseFolding($isCaseFolding)
+    {
+        assert(is_bool($isCaseFolding));
 
-		$this->isCaseFolding = $isCaseFolding;
-		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, $this->isCaseFolding);
-	}
+        $this->isCaseFolding = $isCaseFolding;
+        xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, $this->isCaseFolding);
+    }
 
-	/****************************************************************************
-	 * @returns void
-	 ****************************************************************************/
-	function useUtfEncoding()
-	{
-		$this->targetEncoding = 'UTF-8';
-		xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
-	}
+    /****************************************************************************
+     * @returns void
+     ****************************************************************************/
+    public function useUtfEncoding()
+    {
+        $this->targetEncoding = 'UTF-8';
+        xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
+    }
 
-	function getCurrentLevel()
-	{
-		return $this->level;
-	}
+    public function getCurrentLevel()
+    {
+        return $this->level;
+    }
 
-	/****************************************************************************
-	 * @returns void
-	 ****************************************************************************/
-	function useIsoEncoding()
-	{
-		$this->targetEncoding = 'ISO-8859-1';
-		xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
-	}
+    /****************************************************************************
+     * @returns void
+     ****************************************************************************/
+    public function useIsoEncoding()
+    {
+        $this->targetEncoding = 'ISO-8859-1';
+        xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
+    }
 
-	/****************************************************************************
-	 * @returns void
-	 ****************************************************************************/
-	function useAsciiEncoding()
-	{
-		$this->targetEncoding = 'US-ASCII';
-		xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
-	}
+    /****************************************************************************
+     * @returns void
+     ****************************************************************************/
+    public function useAsciiEncoding()
+    {
+        $this->targetEncoding = 'US-ASCII';
+        xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
+    }
 
-	function getParentTag()
-	{
-		if (isset($this->tags[count($this->tags) - 2])) {
-			return $this->tags[count($this->tags) - 2];
-		}
-		return false;
-	}
+    public function getParentTag()
+    {
+        if (isset($this->tags[count($this->tags) - 2])) {
+            return $this->tags[count($this->tags) - 2];
+        }
+        return false;
+    }
 
-	/****************************************************************************
-	 * @returns void
-	 ****************************************************************************/
-	function parse()
-	{
-		if (!is_resource($this->input)) {
-			if (!xml_parse($this->parser, $this->input)) {
-				$this->setErrors($this->getXmlError());
-				return false;
-			}
-			//if (!$fp = fopen($this->input, 'r')) {
-			//    $this->setErrors('Could not open file: '.$this->input);
-			//    return false;
-			//}
-		} else {
-			while ($data = fread($this->input, 4096)) {
-				if (!xml_parse($this->parser, str_replace("'", "&apos;", $data), feof($this->input))) {
-					$this->setErrors($this->getXmlError());
-					fclose($this->input);
-					return false;
-				}
-			}
-			fclose($this->input);
-		}
-		return true;
-	}
+    /****************************************************************************
+     * @returns void
+     ****************************************************************************/
+    public function parse()
+    {
+        if (!is_resource($this->input)) {
+            if (!xml_parse($this->parser, $this->input)) {
+                $this->setErrors($this->getXmlError());
+                return false;
+            }
+            //if (!$fp = fopen($this->input, 'r')) {
+            //    $this->setErrors('Could not open file: '.$this->input);
+            //    return false;
+            //}
+        } else {
+            while ($data = fread($this->input, 4096)) {
+                if (!xml_parse($this->parser, str_replace("'", "&apos;", $data), feof($this->input))) {
+                    $this->setErrors($this->getXmlError());
+                    fclose($this->input);
+                    return false;
+                }
+            }
+            fclose($this->input);
+        }
+        return true;
+    }
 
-	/*---------------------------------------------------------------------------
-	 Parser methods
-	 ---------------------------------------------------------------------------*/
+    /*---------------------------------------------------------------------------
+     Parser methods
+     ---------------------------------------------------------------------------*/
 
-	/****************************************************************************
-	 * @private
-	 * @returns string
-	 ****************************************************************************/
-	function getXmlError()
-	{
-		return sprintf("XmlParse error: %s at line %d", xml_error_string(xml_get_error_code($this->parser)), xml_get_current_line_number($this->parser));
-	}
+    /****************************************************************************
+     * @private
+     * @returns string
+     ****************************************************************************/
+    public function getXmlError()
+    {
+        return sprintf("XmlParse error: %s at line %d", xml_error_string(xml_get_error_code($this->parser)), xml_get_current_line_number($this->parser));
+    }
 
-	/****************************************************************************
-	 * @returns void
-	 ****************************************************************************/
-	function free()
-	{
-		xml_parser_free($this->parser);
+    /****************************************************************************
+     * @returns void
+     ****************************************************************************/
+    public function free()
+    {
+        xml_parser_free($this->parser);
 
-		if (!method_exists($this, '__destruct')) {
-			unset($this);
-		}
-		else {
-			$this->__destruct();
-		}
-	}
+        if (!method_exists($this, '__destruct')) {
+            unset($this);
+        } else {
+            $this->__destruct();
+        }
+    }
 
-	/****************************************************************************
-	 Adds a callback function to be called when a tag is encountered.
-	 Functions that are added must be of the form:
-	 <b>functionName( $attributes )</b>
-	 * @param $tagName string.  The name of the tag currently being parsed.
-	 * @param $functionName string.  The name of the function in XmlDocument's
-	 subclass.
-	 * @returns void
-	 ****************************************************************************/
-	function addTagHandler(&$tagHandler)
-	{
-		$name = $tagHandler->getName();
-		if (is_array($name)) {
-			foreach ($name as $n) {
-				$this->tagHandlers[$n] =& $tagHandler;
-			}
-		} else {
-			$this->tagHandlers[$name] =& $tagHandler;
-		}
-	}
+    /****************************************************************************
+     Adds a callback function to be called when a tag is encountered.
+     Functions that are added must be of the form:
+     <b>functionName( $attributes )</b>
+     * @param $tagName string.  The name of the tag currently being parsed.
+     * @param $functionName string.  The name of the function in XmlDocument's
+     subclass.
+     * @returns void
+     ****************************************************************************/
+    public function addTagHandler(&$tagHandler)
+    {
+        $name = $tagHandler->getName();
+        if (is_array($name)) {
+            foreach ($name as $n) {
+                $this->tagHandlers[$n] =& $tagHandler;
+            }
+        } else {
+            $this->tagHandlers[$name] =& $tagHandler;
+        }
+    }
 
-	/*---------------------------------------------------------------------------
-	 Custom Handler Methods
-	 ---------------------------------------------------------------------------*/
+    /*---------------------------------------------------------------------------
+     Custom Handler Methods
+     ---------------------------------------------------------------------------*/
 
-	/****************************************************************************
-	 Callback function that executes whenever a the start of a tag
-	 occurs when being parsed.
-	 * @param $parser int.  The handle to the parser.
-	 * @param $tagName string.  The name of the tag currently being parsed.
-	 * @param $attributesArray attay.  The list of attributes associated with
-	 the tag.
-	 * @private
-	 * @returns void
-	 ****************************************************************************/
-	function handleBeginElement($parser, $tagName, $attributesArray)
-	{
-		array_push($this->tags, $tagName);
-		$this->level++;
-		if (isset($this->tagHandlers[$tagName]) && is_subclass_of($this->tagHandlers[$tagName], 'xmltaghandler')) {
-			$this->tagHandlers[$tagName]->handleBeginElement($this, $attributesArray);
-		} else {
-			$this->handleBeginElementDefault($parser, $tagName, $attributesArray);
-		}
-	}
+    /****************************************************************************
+     Callback function that executes whenever a the start of a tag
+     occurs when being parsed.
+     * @param $parser int.  The handle to the parser.
+     * @param $tagName string.  The name of the tag currently being parsed.
+     * @param $attributesArray attay.  The list of attributes associated with
+     the tag.
+     * @private
+     * @returns void
+     ****************************************************************************/
+    public function handleBeginElement($parser, $tagName, $attributesArray)
+    {
+        array_push($this->tags, $tagName);
+        $this->level++;
+        if (isset($this->tagHandlers[$tagName]) && is_subclass_of($this->tagHandlers[$tagName], 'xmltaghandler')) {
+            $this->tagHandlers[$tagName]->handleBeginElement($this, $attributesArray);
+        } else {
+            $this->handleBeginElementDefault($parser, $tagName, $attributesArray);
+        }
+    }
 
-	/*---------------------------------------------------------------------------
-	 Private Handler Methods
-	 ---------------------------------------------------------------------------*/
+    /*---------------------------------------------------------------------------
+     Private Handler Methods
+     ---------------------------------------------------------------------------*/
 
-	/**
-	 * The default tag handler method for a tag with no handler
-	 *
-	 * @abstract
-	 */
-	function handleBeginElementDefault($parser, $tagName, $attributesArray)
-	{
-	}
+    /**
+     * The default tag handler method for a tag with no handler
+     *
+     * @abstract
+     */
+    public function handleBeginElementDefault($parser, $tagName, $attributesArray)
+    {
+    }
 
-	/****************************************************************************
-	 Callback function that executes whenever the end of a tag
-	 occurs when being parsed.
-	 * @param $parser int.  The handle to the parser.
-	 * @param $tagName string.  The name of the tag currently being parsed.
-	 * @private
-	 * @returns void
-	 ****************************************************************************/
-	function handleEndElement($parser, $tagName)
-	{
-		array_pop($this->tags);
-		if (isset($this->tagHandlers[$tagName]) && is_subclass_of($this->tagHandlers[$tagName], 'xmltaghandler')) {
-			$this->tagHandlers[$tagName]->handleEndElement($this);
-		} else {
-			$this->handleEndElementDefault($parser, $tagName);
-		}
-		$this->level--;
-	}
+    /****************************************************************************
+     Callback function that executes whenever the end of a tag
+     occurs when being parsed.
+     * @param $parser int.  The handle to the parser.
+     * @param $tagName string.  The name of the tag currently being parsed.
+     * @private
+     * @returns void
+     ****************************************************************************/
+    public function handleEndElement($parser, $tagName)
+    {
+        array_pop($this->tags);
+        if (isset($this->tagHandlers[$tagName]) && is_subclass_of($this->tagHandlers[$tagName], 'xmltaghandler')) {
+            $this->tagHandlers[$tagName]->handleEndElement($this);
+        } else {
+            $this->handleEndElementDefault($parser, $tagName);
+        }
+        $this->level--;
+    }
 
-	/**
-	 * The default tag handler method for a tag with no handler
-	 *
-	 * @abstract
-	 */
-	function handleEndElementDefault($parser, $tagName)
-	{
-	}
+    /**
+     * The default tag handler method for a tag with no handler
+     *
+     * @abstract
+     */
+    public function handleEndElementDefault($parser, $tagName)
+    {
+    }
 
-	/****************************************************************************
-	 Callback function that executes whenever character data is encountered
-	 while being parsed.
-	 * @param $parser int.  The handle to the parser.
-	 * @param $data string.  Character data inside the tag
-	 * @returns void
-	 ****************************************************************************/
-	function handleCharacterData($parser, $data)
-	{
-		$tagHandler =& $this->tagHandlers[$this->getCurrentTag()];
-		if (isset($tagHandler) && is_subclass_of($tagHandler, 'xmltaghandler')) {
-			$tagHandler->handleCharacterData($this, $data);
-		} else {
-			$this->handleCharacterDataDefault($parser, $data);
-		}
-	}
+    /****************************************************************************
+     Callback function that executes whenever character data is encountered
+     while being parsed.
+     * @param $parser int.  The handle to the parser.
+     * @param $data string.  Character data inside the tag
+     * @returns void
+     ****************************************************************************/
+    public function handleCharacterData($parser, $data)
+    {
+        $tagHandler =& $this->tagHandlers[$this->getCurrentTag()];
+        if (isset($tagHandler) && is_subclass_of($tagHandler, 'xmltaghandler')) {
+            $tagHandler->handleCharacterData($this, $data);
+        } else {
+            $this->handleCharacterDataDefault($parser, $data);
+        }
+    }
 
-	/****************************************************************************
-	Returns the name of the xml tag being parsed
-	 * @returns string
-	 ****************************************************************************/
-	function getCurrentTag()
-	{
-		return $this->tags[count($this->tags) - 1];
-	}
+    /****************************************************************************
+    Returns the name of the xml tag being parsed
+     * @returns string
+     ****************************************************************************/
+    public function getCurrentTag()
+    {
+        return $this->tags[count($this->tags) - 1];
+    }
 
-	/**
-	 * The default tag handler method for a tag with no handler
-	 *
-	 * @abstract
-	 */
-	function handleCharacterDataDefault($parser, $data)
-	{
-	}
+    /**
+     * The default tag handler method for a tag with no handler
+     *
+     * @abstract
+     */
+    public function handleCharacterDataDefault($parser, $data)
+    {
+    }
 
-	/****************************************************************************
-	 * @param $parser int.  The handle to the parser.
-	 * @returns void
-	 ****************************************************************************/
-	function handleProcessingInstruction($parser, &$target, &$data)
-	{
-		//        if($target == 'php') {
-		//            eval($data);
-		//        }
-	}
+    /****************************************************************************
+     * @param $parser int.  The handle to the parser.
+     * @returns void
+     ****************************************************************************/
+    public function handleProcessingInstruction($parser, &$target, &$data)
+    {
+        //        if($target == 'php') {
+        //            eval($data);
+        //        }
+    }
 
-	/****************************************************************************
-	 * @param $parser int.  The handle to the parser.
-	 * @returns void
-	 ****************************************************************************/
-	function handleDefault($parser, $data)
-	{
+    /****************************************************************************
+     * @param $parser int.  The handle to the parser.
+     * @returns void
+     ****************************************************************************/
+    public function handleDefault($parser, $data)
+    {
+    }
 
-	}
+    /****************************************************************************
+     * @param $parser int.  The handle to the parser.
+     * @returns void
+     ****************************************************************************/
+    public function handleUnparsedEntityDecl($parser, $entityName, $base, $systemId, $publicId, $notationName)
+    {
+    }
 
-	/****************************************************************************
-	 * @param $parser int.  The handle to the parser.
-	 * @returns void
-	 ****************************************************************************/
-	function handleUnparsedEntityDecl($parser, $entityName, $base, $systemId, $publicId, $notationName)
-	{
+    /****************************************************************************
+     * @param $parser int.  The handle to the parser.
+     * @returns void
+     ****************************************************************************/
+    public function handleNotationDecl($parser, $notationName, $base, $systemId, $publicId)
+    {
+    }
 
-	}
+    /****************************************************************************
+     * @param $parser int.  The handle to the parser.
+     * @returns void
+     ****************************************************************************/
+    public function handleExternalEntityRef($parser, $openEntityNames, $base, $systemId, $publicId)
+    {
+    }
 
-	/****************************************************************************
-	 * @param $parser int.  The handle to the parser.
-	 * @returns void
-	 ****************************************************************************/
-	function handleNotationDecl($parser, $notationName, $base, $systemId, $publicId)
-	{
+    /**
+     * Gets all the error messages
+     *
+     * @param	$ashtml	bool	return as html?
+     * @return	mixed
+     */
+    public function &getErrors($ashtml = true)
+    {
+        if (!$ashtml) {
+            return $this->errors;
+        } else {
+            $ret = '';
+            if (count($this->errors) > 0) {
+                foreach ($this->errors as $error) {
+                    $ret .= $error.'<br />';
+                }
+            }
+            return $ret;
+        }
+    }
 
-	}
-
-	/****************************************************************************
-	 * @param $parser int.  The handle to the parser.
-	 * @returns void
-	 ****************************************************************************/
-	function handleExternalEntityRef($parser, $openEntityNames, $base, $systemId, $publicId)
-	{
-
-	}
-
-	/**
-	 * Gets all the error messages
-	 *
-	 * @param	$ashtml	bool	return as html?
-	 * @return	mixed
-	 */
-	function &getErrors($ashtml = true)
-	{
-		if (!$ashtml) {
-			return $this->errors;
-		} else {
-			$ret = '';
-			if (count($this->errors) > 0) {
-				foreach ($this->errors as $error) {
-					$ret .= $error.'<br />';
-				}
-			}
-			return $ret;
-		}
-	}
-
-	/**
-	 * Sets error messages
-	 *
-	 * @param    $error    string    an error message
-	 */
-	function setErrors($error)
-	{
-		$this->errors[] = trim($error);
-	}
+    /**
+     * Sets error messages
+     *
+     * @param    $error    string    an error message
+     */
+    public function setErrors($error)
+    {
+        $this->errors[] = trim($error);
+    }
 }
-
-?>

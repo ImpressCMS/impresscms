@@ -53,15 +53,15 @@ $filter_get = $filter_post = array('email' => array('email', 'options' => array(
 $code = '';
 
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
-	extract($clean_GET);
+    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+    extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
-	extract($clean_POST);
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+    extract($clean_POST);
 }
 if ($email == '') {
-	redirect_header('user.php', 2, _US_SORRYNOTFOUND);
+    redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 }
 
 $member_handler = icms::handler('icms_member');
@@ -71,66 +71,71 @@ $criteria->add(new icms_db_criteria_Item('level', '-1', '!='));
 $getuser = & $member_handler->getUsers($criteria);
 
 if (empty($getuser)) {
-	$msg = _US_SORRYNOTFOUND;
-	redirect_header('user.php', 2, $msg);
+    $msg = _US_SORRYNOTFOUND;
+    redirect_header('user.php', 2, $msg);
 } else {
-	$icmspass = new icms_core_Password();
+    $icmspass = new icms_core_Password();
 
-	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
-	if ($code != '' && $areyou == $code) {
-		$newpass = $icmspass->createSalt(8);
-		$pass = $icmspass->encryptPass($newpass);
-		$mailer = new icms_messaging_Handler();
-		$mailer->useMail();
-		$mailer->setTemplate('lostpass2.tpl');
-		$mailer->assign('SITENAME', $icmsConfig['sitename']);
-		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-		$mailer->assign('SITEURL', ICMS_URL . '/');
-		$mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
-		$mailer->assign('NEWPWD', $newpass);
-		$mailer->setToUsers($getuser[0]);
-		$mailer->setFromEmail($icmsConfig['adminmail']);
-		$mailer->setFromName($icmsConfig['sitename']);
-		$mailer->setSubject(sprintf(_US_NEWPWDREQ, ICMS_URL));
-		if (!$mailer->send()) {
-			echo $mailer->getErrors();
-		}
+    $areyou = substr($getuser[0]->getVar('pass'), 0, 5);
+    if ($code != '' && $areyou == $code) {
+        $newpass = $icmspass->createSalt(8);
+        $pass = $icmspass->encryptPass($newpass);
+        $mailer = new icms_messaging_Handler();
+        $mailer->useMail();
+        $mailer->setTemplate('lostpass2.tpl');
+        $mailer->assign('SITENAME', $icmsConfig['sitename']);
+        $mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+        $mailer->assign('SITEURL', ICMS_URL . '/');
+        $mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
+        $mailer->assign('NEWPWD', $newpass);
+        $mailer->setToUsers($getuser[0]);
+        $mailer->setFromEmail($icmsConfig['adminmail']);
+        $mailer->setFromName($icmsConfig['sitename']);
+        $mailer->setSubject(sprintf(_US_NEWPWDREQ, ICMS_URL));
+        if (!$mailer->send()) {
+            echo $mailer->getErrors();
+        }
 
-		// Next step: add the new password to the database
-		$sql = sprintf("UPDATE %s SET pass = '%s', pass_expired = '%u' WHERE uid = '%u'",
-						icms::$xoopsDB->prefix('users'), $pass, 1, (int) $getuser[0]->getVar('uid'));
-		if (!icms::$xoopsDB->queryF($sql)) {
-			/** Include header.php to start page rendering */
-			include 'header.php';
-			echo _US_MAILPWDNG;
-			/** Include footer.php to complete page rendering */
-			include 'footer.php';
-			exit();
-		}
-		redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
-		// If no Code, send it
-	} else {
-		$mailer = new icms_messaging_Handler();
-		$mailer->useMail();
-		$mailer->setTemplate('lostpass1.tpl');
-		$mailer->assign('SITENAME', $icmsConfig['sitename']);
-		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-		$mailer->assign('SITEURL', ICMS_URL . '/');
-		$mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
-		$mailer->assign('NEWPWD_LINK', ICMS_URL . '/lostpass.php?email=' . $email . '&code=' . $areyou);
-		$mailer->setToUsers($getuser[0]);
-		$mailer->setFromEmail($icmsConfig['adminmail']);
-		$mailer->setFromName($icmsConfig['sitename']);
-		$mailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename']));
-		/** Include header.php to start page rendering */
-		include 'header.php';
-		if (!$mailer->send()) {
-			echo $mailer->getErrors();
-		}
-		echo '<h4>';
-		printf(_US_CONFMAIL, $getuser[0]->getVar('uname'));
-		echo '</h4>';
-		/** Include footer.php to complete page rendering */
-		include 'footer.php';
-	}
+        // Next step: add the new password to the database
+        $sql = sprintf(
+            "UPDATE %s SET pass = '%s', pass_expired = '%u' WHERE uid = '%u'",
+            icms::$xoopsDB->prefix('users'),
+            $pass,
+            1,
+            (int) $getuser[0]->getVar('uid')
+        );
+        if (!icms::$xoopsDB->queryF($sql)) {
+            /** Include header.php to start page rendering */
+            include 'header.php';
+            echo _US_MAILPWDNG;
+            /** Include footer.php to complete page rendering */
+            include 'footer.php';
+            exit();
+        }
+        redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
+    // If no Code, send it
+    } else {
+        $mailer = new icms_messaging_Handler();
+        $mailer->useMail();
+        $mailer->setTemplate('lostpass1.tpl');
+        $mailer->assign('SITENAME', $icmsConfig['sitename']);
+        $mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+        $mailer->assign('SITEURL', ICMS_URL . '/');
+        $mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
+        $mailer->assign('NEWPWD_LINK', ICMS_URL . '/lostpass.php?email=' . $email . '&code=' . $areyou);
+        $mailer->setToUsers($getuser[0]);
+        $mailer->setFromEmail($icmsConfig['adminmail']);
+        $mailer->setFromName($icmsConfig['sitename']);
+        $mailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename']));
+        /** Include header.php to start page rendering */
+        include 'header.php';
+        if (!$mailer->send()) {
+            echo $mailer->getErrors();
+        }
+        echo '<h4>';
+        printf(_US_CONFMAIL, $getuser[0]->getVar('uname'));
+        echo '</h4>';
+        /** Include footer.php to complete page rendering */
+        include 'footer.php';
+    }
 }
