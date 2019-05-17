@@ -19,7 +19,7 @@
  *
  * For questions, help, comments, discussion, etc., please join the
  * Smarty mailing list. Send a blank e-mail to
- * smarty-discussion-subscribe@googlegroups.com 
+ * smarty-discussion-subscribe@googlegroups.com
  *
  * @link http://www.smarty.net/
  * @version 2.6.26
@@ -28,8 +28,6 @@
  * @access public
  * @package Smarty
  */
-
-/* $Id: Config_File.class.php 3149 2009-05-23 20:59:25Z monte.ohrt $ */
 
 /**
  * Config file reading class
@@ -100,8 +98,31 @@ class Config_File {
         }
     }
 
+	/**
+	 * @uses trigger_error() creates a PHP warning/error
+	 * @param string $error_msg
+	 * @param integer $error_type one of
+	 */
+	function _trigger_error_msg($error_msg, $error_type = E_USER_WARNING)
+	{
+		trigger_error("Config_File error: $error_msg", $error_type);
+	}
 
     /**
+	 * Retrieves config info based on the key.
+	 *
+	 * @param $file_name string config key (filename/section/var)
+	 * @return string|array same as get()
+	 * @uses get() retrieves information from config file and returns it
+	 */
+	function &get_key($config_key)
+	{
+		list($file_name, $section_name, $var_name) = explode('/', $config_key, 3);
+		$result = &$this->get($file_name, $section_name, $var_name);
+		return $result;
+	}
+
+	/**
      * Retrieves config info based on the file, section, and variable name.
      *
      * @param string $file_name config file to get info for
@@ -141,88 +162,6 @@ class Config_File {
         }
     }
 
-
-    /**
-     * Retrieves config info based on the key.
-     *
-     * @param $file_name string config key (filename/section/var)
-     * @return string|array same as get()
-     * @uses get() retrieves information from config file and returns it
-     */
-    function &get_key($config_key)
-    {
-        list($file_name, $section_name, $var_name) = explode('/', $config_key, 3);
-        $result = &$this->get($file_name, $section_name, $var_name);
-        return $result;
-    }
-
-    /**
-     * Get all loaded config file names.
-     *
-     * @return array an array of loaded config file names
-     */
-    function get_file_names()
-    {
-        return array_keys($this->_config_data);
-    }
-
-
-    /**
-     * Get all section names from a loaded file.
-     *
-     * @param string $file_name config file to get section names from
-     * @return array an array of section names from the specified file
-     */
-    function get_section_names($file_name)
-    {
-        $file_name = $this->_config_path . $file_name;
-        if (!isset($this->_config_data[$file_name])) {
-            $this->_trigger_error_msg("Unknown config file '$file_name'");
-            return;
-        }
-
-        return array_keys($this->_config_data[$file_name]["sections"]);
-    }
-
-
-    /**
-     * Get all global or section variable names.
-     *
-     * @param string $file_name config file to get info for
-     * @param string $section_name (optional) section to get info for
-     * @return array an array of variables names from the specified file/section
-     */
-    function get_var_names($file_name, $section = NULL)
-    {
-        if (empty($file_name)) {
-            $this->_trigger_error_msg('Empty config file name');
-            return;
-        } else if (!isset($this->_config_data[$file_name])) {
-            $this->_trigger_error_msg("Unknown config file '$file_name'");
-            return;
-        }
-
-        if (empty($section))
-            return array_keys($this->_config_data[$file_name]["vars"]);
-        else
-            return array_keys($this->_config_data[$file_name]["sections"][$section]["vars"]);
-    }
-
-
-    /**
-     * Clear loaded config data for a certain file or all files.
-     *
-     * @param string $file_name file to clear config data for
-     */
-    function clear($file_name = NULL)
-    {
-        if ($file_name === NULL)
-            $this->_config_data = array();
-        else if (isset($this->_config_data[$file_name]))
-            $this->_config_data[$file_name] = array();
-    }
-
-
     /**
      * Load a configuration file manually.
      *
@@ -247,18 +186,6 @@ class Config_File {
         $contents = ($size = filesize($config_file)) ? fread($fp, $size) : '';
         fclose($fp);
 
-        $this->_config_data[$config_file] = $this->parse_contents($contents);
-        return true;
-    }
-
-    /**
-     * Store the contents of a file manually.
-     *
-     * @param string $config_file file name of the related contents
-     * @param string $contents the file-contents to parse
-     */
-    function set_file_contents($config_file, $contents)
-    {
         $this->_config_data[$config_file] = $this->parse_contents($contents);
         return true;
     }
@@ -301,7 +228,7 @@ class Config_File {
                         $vars = array();
                         continue;
                     }
-                } else {                    
+				} else {
                     $section_name = $match[1];
                 }
                 if (!isset($config_data['sections'][$section_name]))
@@ -341,7 +268,6 @@ class Config_File {
         return $config_data;
     }
 
-    /**#@+ @access private */
     /**
      * @param array &$container
      * @param string $var_name
@@ -379,13 +305,80 @@ class Config_File {
     }
 
     /**
-     * @uses trigger_error() creates a PHP warning/error
-     * @param string $error_msg
-     * @param integer $error_type one of
+	 * Get all loaded config file names.
+	 *
+	 * @return array an array of loaded config file names
      */
-    function _trigger_error_msg($error_msg, $error_type = E_USER_WARNING)
+	function get_file_names()
     {
-        trigger_error("Config_File error: $error_msg", $error_type);
+		return array_keys($this->_config_data);
+	}
+
+	/**
+	 * Get all section names from a loaded file.
+	 *
+	 * @param string $file_name config file to get section names from
+	 * @return array an array of section names from the specified file
+	 */
+	function get_section_names($file_name)
+	{
+		$file_name = $this->_config_path . $file_name;
+		if (!isset($this->_config_data[$file_name])) {
+			$this->_trigger_error_msg("Unknown config file '$file_name'");
+			return;
+		}
+
+		return array_keys($this->_config_data[$file_name]["sections"]);
+	}
+
+	/**
+	 * Get all global or section variable names.
+	 *
+	 * @param string $file_name config file to get info for
+	 * @param string $section_name (optional) section to get info for
+	 * @return array an array of variables names from the specified file/section
+	 */
+	function get_var_names($file_name, $section = NULL)
+	{
+		if (empty($file_name)) {
+			$this->_trigger_error_msg('Empty config file name');
+			return;
+		} else if (!isset($this->_config_data[$file_name])) {
+			$this->_trigger_error_msg("Unknown config file '$file_name'");
+			return;
+		}
+
+		if (empty($section))
+			return array_keys($this->_config_data[$file_name]["vars"]);
+		else
+			return array_keys($this->_config_data[$file_name]["sections"][$section]["vars"]);
+	}
+
+	/**#@+ @access private */
+
+	/**
+	 * Clear loaded config data for a certain file or all files.
+	 *
+	 * @param string $file_name file to clear config data for
+	 */
+	function clear($file_name = NULL)
+	{
+		if ($file_name === NULL)
+			$this->_config_data = array();
+		else if (isset($this->_config_data[$file_name]))
+			$this->_config_data[$file_name] = array();
+	}
+
+	/**
+	 * Store the contents of a file manually.
+	 *
+	 * @param string $config_file file name of the related contents
+	 * @param string $contents the file-contents to parse
+	 */
+	function set_file_contents($config_file, $contents)
+	{
+		$this->_config_data[$config_file] = $this->parse_contents($contents);
+		return true;
     }
     /**#@-*/
 }

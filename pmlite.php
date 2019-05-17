@@ -1,5 +1,4 @@
 <?php
-// $Id: pmlite.php 12363 2013-11-01 05:06:13Z sato-san $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

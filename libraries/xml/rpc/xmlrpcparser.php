@@ -40,7 +40,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: xmlrpcparser.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 require_once ICMS_LIBRARIES_PATH . '/xml/saxparser.php';
@@ -178,6 +177,20 @@ class XoopsXmlRpcParser extends SaxParser
 	 * @return
 	 * @see
 	 */
+	function getTempName()
+	{
+		return $this->_tempName[$this->getWorkingLevel()];
+	}
+
+	/**
+	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
+	 *
+	 * @access
+	 * @author
+	 * @param
+	 * @return
+	 * @see
+	 */
 	function setTempName($name)
 	{
 		$this->_tempName[$this->getWorkingLevel()] = $name;
@@ -192,9 +205,37 @@ class XoopsXmlRpcParser extends SaxParser
 	 * @return
 	 * @see
 	 */
-	function getTempName()
+	function getWorkingLevel()
 	{
-		return $this->_tempName[$this->getWorkingLevel()];
+		return $this->_workingLevel[count($this->_workingLevel) - 1];
+	}
+
+	/**
+	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
+	 *
+	 * @access
+	 * @author
+	 * @param
+	 * @return
+	 * @see
+	 */
+	function setWorkingLevel()
+	{
+		array_push($this->_workingLevel, $this->getCurrentLevel());
+	}
+
+	/**
+	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
+	 *
+	 * @access
+	 * @author
+	 * @param
+	 * @return
+	 * @see
+	 */
+	function getTempValue()
+	{
+		return $this->_tempValue;
 	}
 
 	/**
@@ -235,37 +276,9 @@ class XoopsXmlRpcParser extends SaxParser
 	 * @return
 	 * @see
 	 */
-	function getTempValue()
-	{
-		return $this->_tempValue;
-	}
-
-	/**
-	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
-	 *
-	 * @access
-	 * @author
-	 * @param
-	 * @return
-	 * @see
-	 */
 	function resetTempValue()
 	{
 		unset($this->_tempValue);
-	}
-
-	/**
-	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
-	 *
-	 * @access
-	 * @author
-	 * @param
-	 * @return
-	 * @see
-	 */
-	function setTempMember($name, $value)
-	{
-		$this->_tempMember[$this->getWorkingLevel()][$name] = $value;
 	}
 
 	/**
@@ -291,6 +304,20 @@ class XoopsXmlRpcParser extends SaxParser
 	 * @return
 	 * @see
 	 */
+	function setTempMember($name, $value)
+	{
+		$this->_tempMember[$this->getWorkingLevel()][$name] = $value;
+	}
+
+	/**
+	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
+	 *
+	 * @access
+	 * @author
+	 * @param
+	 * @return
+	 * @see
+	 */
 	function resetTempMember()
 	{
 		$this->_tempMember[$this->getCurrentLevel()] = array();
@@ -305,37 +332,23 @@ class XoopsXmlRpcParser extends SaxParser
 	 * @return
 	 * @see
 	 */
-	function setWorkingLevel()
-	{
-		array_push($this->_workingLevel, $this->getCurrentLevel());
-	}
-
-	/**
-	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
-	 *
-	 * @access
-	 * @author
-	 * @param
-	 * @return
-	 * @see
-	 */
-	function getWorkingLevel()
-	{
-		return $this->_workingLevel[count($this->_workingLevel) - 1];
-	}
-
-	/**
-	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
-	 *
-	 * @access
-	 * @author
-	 * @param
-	 * @return
-	 * @see
-	 */
 	function releaseWorkingLevel()
 	{
 		array_pop($this->_workingLevel);
+	}
+
+	/**
+	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
+	 *
+	 * @access
+	 * @author
+	 * @param
+	 * @return
+	 * @see
+	 */
+	function getTempStruct()
+	{
+		return $this->_tempStruct[$this->getWorkingLevel()];
 	}
 
 	/**
@@ -362,37 +375,9 @@ class XoopsXmlRpcParser extends SaxParser
 	 * @return
 	 * @see
 	 */
-	function getTempStruct()
-	{
-		return $this->_tempStruct[$this->getWorkingLevel()];
-	}
-
-	/**
-	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
-	 *
-	 * @access
-	 * @author
-	 * @param
-	 * @return
-	 * @see
-	 */
 	function resetTempStruct()
 	{
 		$this->_tempStruct[$this->getCurrentLevel()] = array();
-	}
-
-	/**
-	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
-	 *
-	 * @access
-	 * @author
-	 * @param
-	 * @return
-	 * @see
-	 */
-	function setTempArray($value)
-	{
-		$this->_tempArray[$this->getWorkingLevel()][] = $value;
 	}
 
 	/**
@@ -418,9 +403,9 @@ class XoopsXmlRpcParser extends SaxParser
 	 * @return
 	 * @see
 	 */
-	function resetTempArray()
+	function setTempArray($value)
 	{
-		$this->_tempArray[$this->getCurrentLevel()] = array();
+		$this->_tempArray[$this->getWorkingLevel()][] = $value;
 	}
 
 	/**
@@ -432,9 +417,9 @@ class XoopsXmlRpcParser extends SaxParser
 	 * @return
 	 * @see
 	 */
-	function setMethodName($methodName)
+	function resetTempArray()
 	{
-		$this->_methodName = $methodName;
+		$this->_tempArray[$this->getCurrentLevel()] = array();
 	}
 
 	/**
@@ -460,9 +445,9 @@ class XoopsXmlRpcParser extends SaxParser
 	 * @return
 	 * @see
 	 */
-	function setParam($value)
+	function setMethodName($methodName)
 	{
-		$this->_param[] = $value;
+		$this->_methodName = $methodName;
 	}
 
 	/**
@@ -477,6 +462,20 @@ class XoopsXmlRpcParser extends SaxParser
 	function &getParam()
 	{
 		return $this->_param;
+	}
+
+	/**
+	 * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
+	 *
+	 * @access
+	 * @author
+	 * @param
+	 * @return
+	 * @see
+	 */
+	function setParam($value)
+	{
+		$this->_param[] = $value;
 	}
 }
 

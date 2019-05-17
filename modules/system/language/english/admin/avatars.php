@@ -1,5 +1,4 @@
 <?php
-// $Id: avatars.php 12064 2012-10-10 14:37:53Z skenow $
 //%%%%%% Avatar Manager %%%%%
 define('_MD_AVATARMAN', 'Avatar Manager');
 

@@ -1,5 +1,4 @@
 <?php
-// $Id: smilies.php 12064 2012-10-10 14:37:53Z skenow $
 define('_MD_AM_SMLS', 'Smilies');
 define('_MD_AM_SMLS_DSC', 'Manage the available smilies and define the code associatted with each.');
 
