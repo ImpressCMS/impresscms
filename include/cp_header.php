@@ -11,8 +11,5 @@
 // Make sure the kernel launches the module in admin mode and checks the correct permissions
 define('ICMS_IN_ADMIN', 1);
 
-/** Load the admin functions */
-include_once ICMS_ROOT_PATH . '/include/cp_functions.php';
-
 // include the default language file for the admin interface
 icms_loadLanguageFile(icms::$module->getVar('dirname'), 'admin');

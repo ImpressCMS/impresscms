@@ -269,7 +269,13 @@ switch ($op) {
 							}
 						}
 
-						$moduleslist = icms_module_Handler::getActive(true);
+						$moduleslist = array_filter(
+							icms_module_Handler::getActive(),
+							function ($item) {
+								return $item != 'system';
+							}
+						);
+						$moduleslist = array_combine($moduleslist, $moduleslist);
 						$moduleslist['--'] = _MD_AM_NONE;
 
 						//Adding support to select custom links to be the start page

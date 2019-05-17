@@ -30,6 +30,8 @@ folders:
 sites:
   - map: impresscms.test
     to: /home/vagrant/impresscms/htdocs
+    type: apache
+    php: "7.2"
 
 # Databases that will be available on this machine
 databases:

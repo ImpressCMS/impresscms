@@ -105,7 +105,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 
 	$modversion = array();
-	include_once ICMS_ROOT_PATH . '/include/functions.php';
 	include_once ICMS_ROOT_PATH . '/modules/system/icms_version.php';
 	$time = time();
 
