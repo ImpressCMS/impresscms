@@ -43,296 +43,285 @@
 
 class XoopsXmlRpcDocument
 {
+    public $_tags = array();
 
-	var $_tags = array();
+    public function XoopsXmlRpcDocument()
+    {
+    }
 
-	function XoopsXmlRpcDocument()
-	{
+    public function add(&$tagobj)
+    {
+        $this->_tags[] =& $tagobj;
+    }
 
-	}
-
-	function add(&$tagobj)
-	{
-		$this->_tags[] =& $tagobj;
-	}
-
-	function render()
-	{
-	}
-
+    public function render()
+    {
+    }
 }
 
 class XoopsXmlRpcResponse extends XoopsXmlRpcDocument
 {
-	function render()
-	{
-		$count = count($this->_tags);
-		$payload = '';
-		for ($i = 0; $i < $count; $i++) {
-			if (!$this->_tags[$i]->isFault()) {
-				$payload .= $this->_tags[$i]->render();
-			} else {
-				return '<?xml version="1.0"?><methodResponse>'.$this->_tags[$i]->render().'</methodResponse>';
-			}
-		}
-		return '<?xml version="1.0"?><methodResponse><params><param>'.$payload.'</param></params></methodResponse>';
-	}
+    public function render()
+    {
+        $count = count($this->_tags);
+        $payload = '';
+        for ($i = 0; $i < $count; $i++) {
+            if (!$this->_tags[$i]->isFault()) {
+                $payload .= $this->_tags[$i]->render();
+            } else {
+                return '<?xml version="1.0"?><methodResponse>'.$this->_tags[$i]->render().'</methodResponse>';
+            }
+        }
+        return '<?xml version="1.0"?><methodResponse><params><param>'.$payload.'</param></params></methodResponse>';
+    }
 }
 
 class XoopsXmlRpcRequest extends XoopsXmlRpcDocument
 {
+    public $methodName;
 
-	var $methodName;
+    public function XoopsXmlRpcRequest($methodName)
+    {
+        $this->methodName = trim($methodName);
+    }
 
-	function XoopsXmlRpcRequest($methodName)
-	{
-		$this->methodName = trim($methodName);
-	}
-
-	function render()
-	{
-		$count = count($this->_tags);
-		$payload = '';
-		for ($i = 0; $i < $count; $i++) {
-			$payload .= '<param>'.$this->_tags[$i]->render().'</param>';
-		}
-		return '<?xml version="1.0"?><methodCall><methodName>'.$this->methodName.'</methodName><params>'.$payload.'</params></methodCall>';
-	}
+    public function render()
+    {
+        $count = count($this->_tags);
+        $payload = '';
+        for ($i = 0; $i < $count; $i++) {
+            $payload .= '<param>'.$this->_tags[$i]->render().'</param>';
+        }
+        return '<?xml version="1.0"?><methodCall><methodName>'.$this->methodName.'</methodName><params>'.$payload.'</params></methodCall>';
+    }
 }
 
 class XoopsXmlRpcTag
 {
+    public $_fault = false;
 
-	var $_fault = false;
+    public function XoopsXmlRpcTag()
+    {
+    }
 
-	function XoopsXmlRpcTag()
-	{
+    public function &encode(&$text)
+    {
+        $text = preg_replace(array("/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"), array("#||\\1||#", "&amp;", "&\\1;"), str_replace(array("<", ">"), array("&lt;", "&gt;"), $text));
+        return $text;
+    }
 
-	}
+    public function setFault($fault = true)
+    {
+        $this->_fault = ((int) ($fault) > 0) ? true : false;
+    }
 
-	function &encode(&$text)
-	{
-		$text = preg_replace(array("/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"), array("#||\\1||#", "&amp;", "&\\1;"), str_replace(array("<", ">"), array("&lt;", "&gt;"), $text));
-		return $text;
-	}
+    public function isFault()
+    {
+        return $this->_fault;
+    }
 
-	function setFault($fault = true){
-		$this->_fault = ( (int) ($fault) > 0) ? true : false;
-	}
-
-	function isFault()
-	{
-		return $this->_fault;
-	}
-
-	function render()
-	{
-	}
+    public function render()
+    {
+    }
 }
 
 class XoopsXmlRpcFault extends XoopsXmlRpcTag
 {
+    public $_code;
+    public $_extra;
 
-	var $_code;
-	var $_extra;
+    public function XoopsXmlRpcFault($code, $extra = null)
+    {
+        $this->setFault(true);
+        $this->_code = (int) ($code);
+        $this->_extra = isset($extra) ? trim($extra) : '';
+    }
 
-	function XoopsXmlRpcFault($code, $extra = null)
-	{
-		$this->setFault(true);
-		$this->_code = (int) ($code);
-		$this->_extra = isset($extra) ? trim($extra) : '';
-	}
-
-	function render()
-	{
-		switch ($this->_code) {
-			case 101:
-				$string = 'Invalid server URI';
-				break;
-			case 102:
-				$string = 'Parser parse error';
-				break;
-			case 103:
-				$string = 'Module not found';
-				break;
-			case 104:
-				$string = 'User authentication failed';
-				break;
-			case 105:
-				$string = 'Module API not found';
-				break;
-			case 106:
-				$string = 'Method response error';
-				break;
-			case 107:
-				$string = 'Method not supported';
-				break;
-			case 108:
-				$string = 'Invalid parameter';
-				break;
-			case 109:
-				$string = 'Missing parameters';
-				break;
-			case 110:
-				$string = 'Selected blog application does not exist';
-				break;
-			case 111:
-				$string = 'Method permission denied';
-				break;
-			default:
-				$string = 'Method response error';
-				break;
-		}
-		$string .= "\n".$this->_extra;
-		return '<fault><value><struct><member><name>faultCode</name><value>'.$this->_code.'</value></member><member><name>faultString</name><value>'.$this->encode($string).'</value></member></struct></value></fault>';
-	}
+    public function render()
+    {
+        switch ($this->_code) {
+            case 101:
+                $string = 'Invalid server URI';
+                break;
+            case 102:
+                $string = 'Parser parse error';
+                break;
+            case 103:
+                $string = 'Module not found';
+                break;
+            case 104:
+                $string = 'User authentication failed';
+                break;
+            case 105:
+                $string = 'Module API not found';
+                break;
+            case 106:
+                $string = 'Method response error';
+                break;
+            case 107:
+                $string = 'Method not supported';
+                break;
+            case 108:
+                $string = 'Invalid parameter';
+                break;
+            case 109:
+                $string = 'Missing parameters';
+                break;
+            case 110:
+                $string = 'Selected blog application does not exist';
+                break;
+            case 111:
+                $string = 'Method permission denied';
+                break;
+            default:
+                $string = 'Method response error';
+                break;
+        }
+        $string .= "\n".$this->_extra;
+        return '<fault><value><struct><member><name>faultCode</name><value>'.$this->_code.'</value></member><member><name>faultString</name><value>'.$this->encode($string).'</value></member></struct></value></fault>';
+    }
 }
 
 class XoopsXmlRpcInt extends XoopsXmlRpcTag
 {
+    public $_value;
 
-	var $_value;
+    public function XoopsXmlRpcInt($value)
+    {
+        $this->_value = (int) ($value);
+    }
 
-	function XoopsXmlRpcInt($value)
-	{
-		$this->_value = (int) ($value);
-	}
-
-	function render()
-	{
-		return '<value><int>'.$this->_value.'</int></value>';
-	}
+    public function render()
+    {
+        return '<value><int>'.$this->_value.'</int></value>';
+    }
 }
 
 class XoopsXmlRpcDouble extends XoopsXmlRpcTag
 {
+    public $_value;
 
-	var $_value;
+    public function XoopsXmlRpcDouble($value)
+    {
+        $this->_value = (float)$value;
+    }
 
-	function XoopsXmlRpcDouble($value)
-	{
-		$this->_value = (float)$value;
-	}
-
-	function render()
-	{
-		return '<value><double>'.$this->_value.'</double></value>';
-	}
+    public function render()
+    {
+        return '<value><double>'.$this->_value.'</double></value>';
+    }
 }
 
 class XoopsXmlRpcBoolean extends XoopsXmlRpcTag
 {
+    public $_value;
 
-	var $_value;
+    public function XoopsXmlRpcBoolean($value)
+    {
+        $this->_value = (!empty($value) && $value != false) ? 1 : 0;
+    }
 
-	function XoopsXmlRpcBoolean($value)
-	{
-		$this->_value = (!empty($value) && $value != false) ? 1 : 0;
-	}
-
-	function render()
-	{
-		return '<value><boolean>'.$this->_value.'</boolean></value>';
-	}
+    public function render()
+    {
+        return '<value><boolean>'.$this->_value.'</boolean></value>';
+    }
 }
 
 class XoopsXmlRpcString extends XoopsXmlRpcTag
 {
+    public $_value;
 
-	var $_value;
+    public function XoopsXmlRpcString($value)
+    {
+        $this->_value = strval($value);
+    }
 
-	function XoopsXmlRpcString($value)
-	{
-		$this->_value = strval($value);
-	}
-
-	function render()
-	{
-		return '<value><string>'.$this->encode($this->_value).'</string></value>';
-	}
+    public function render()
+    {
+        return '<value><string>'.$this->encode($this->_value).'</string></value>';
+    }
 }
 
 class XoopsXmlRpcDatetime extends XoopsXmlRpcTag
 {
+    public $_value;
 
-	var $_value;
+    public function XoopsXmlRpcDatetime($value)
+    {
+        if (!is_numeric($value)) {
+            $this->_value = strtotime($value);
+        } else {
+            $this->_value = (int) ($value);
+        }
+    }
 
-	function XoopsXmlRpcDatetime($value)
-	{
-		if (!is_numeric($value)) {
-			$this->_value = strtotime($value);
-		} else {
-			$this->_value = (int) ($value);
-		}
-	}
-
-	function render()
-	{
-		return '<value><dateTime.iso8601>'.gmstrftime("%Y%m%dT%H:%M:%S", $this->_value).'</dateTime.iso8601></value>';
-	}
+    public function render()
+    {
+        return '<value><dateTime.iso8601>'.gmstrftime("%Y%m%dT%H:%M:%S", $this->_value).'</dateTime.iso8601></value>';
+    }
 }
 
 class XoopsXmlRpcBase64 extends XoopsXmlRpcTag
 {
+    public $_value;
 
-	var $_value;
+    public function XoopsXmlRpcBase64($value)
+    {
+        $this->_value = base64_encode($value);
+    }
 
-	function XoopsXmlRpcBase64($value)
-	{
-		$this->_value = base64_encode($value);
-	}
-
-	function render()
-	{
-		return '<value><base64>'.$this->_value.'</base64></value>';
-	}
+    public function render()
+    {
+        return '<value><base64>'.$this->_value.'</base64></value>';
+    }
 }
 
 class XoopsXmlRpcArray extends XoopsXmlRpcTag
 {
+    public $_tags = array();
 
-	var $_tags = array();
+    public function XoopsXmlRpcArray()
+    {
+    }
 
-	function XoopsXmlRpcArray()
-	{
-	}
+    public function add(&$tagobj)
+    {
+        $this->_tags[] =& $tagobj;
+    }
 
-	function add(&$tagobj)
-	{
-		$this->_tags[] =& $tagobj;
-	}
-
-	function render()
-	{
-		$count = count($this->_tags);
-		$ret = '<value><array><data>';
-		for ($i = 0; $i < $count; $i++) {
-			$ret .= $this->_tags[$i]->render();
-		}
-		$ret .= '</data></array></value>';
-		return $ret;
-	}
+    public function render()
+    {
+        $count = count($this->_tags);
+        $ret = '<value><array><data>';
+        for ($i = 0; $i < $count; $i++) {
+            $ret .= $this->_tags[$i]->render();
+        }
+        $ret .= '</data></array></value>';
+        return $ret;
+    }
 }
 
-class XoopsXmlRpcStruct extends XoopsXmlRpcTag{
+class XoopsXmlRpcStruct extends XoopsXmlRpcTag
+{
+    public $_tags = array();
 
-	var $_tags = array();
+    public function XoopsXmlRpcStruct()
+    {
+    }
 
-	function XoopsXmlRpcStruct(){
-	}
+    public function add($name, &$tagobj)
+    {
+        $this->_tags[] = array('name' => $name, 'value' => $tagobj);
+    }
 
-	function add($name, &$tagobj){
-		$this->_tags[] = array('name' => $name, 'value' => $tagobj);
-	}
-
-	function render(){
-		$count = count($this->_tags);
-		$ret = '<value><struct>';
-		for ($i = 0; $i < $count; $i++) {
-			$ret .= '<member><name>'.$this->encode($this->_tags[$i]['name']).'</name>'.$this->_tags[$i]['value']->render().'</member>';
-		}
-		$ret .= '</struct></value>';
-		return $ret;
-	}
+    public function render()
+    {
+        $count = count($this->_tags);
+        $ret = '<value><struct>';
+        for ($i = 0; $i < $count; $i++) {
+            $ret .= '<member><name>'.$this->encode($this->_tags[$i]['name']).'</name>'.$this->_tags[$i]['value']->render().'</member>';
+        }
+        $ret .= '</struct></value>';
+        return $ret;
+    }
 }
-?>

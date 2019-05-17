@@ -43,7 +43,7 @@
  * @version		SVN: $Id: Database.php 12403 2014-01-26 21:35:08Z skenow $
  */
 
-defined( 'ICMS_ROOT_PATH' ) or die();
+defined('ICMS_ROOT_PATH') or die();
 /**
  * Abstract base class for Database access classes
  *
@@ -54,67 +54,72 @@ defined( 'ICMS_ROOT_PATH' ) or die();
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @author		Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
 */
-abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
-	
-	/**
-	 * Prefix for tables in the database
-	 * @var string
-	 */
-	public $prefix = '';
+abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase
+{
+    
+    /**
+     * Prefix for tables in the database
+     * @var string
+     */
+    public $prefix = '';
 
-	/**
-	 * reference to a {@link icms_core_Logger} object
-	 * @see icms_core_Logger
-	 * @var object icms_core_Logger
-	 */
-	public $logger;
+    /**
+     * reference to a {@link icms_core_Logger} object
+     * @see icms_core_Logger
+     * @var object icms_core_Logger
+     */
+    public $logger;
 
-	/**
-	 * If statements that modify the database are selected
-	 * @var boolean
-	 */
-	public $allowWebChanges = FALSE;
+    /**
+     * If statements that modify the database are selected
+     * @var boolean
+     */
+    public $allowWebChanges = false;
 
-	/**
-	 * Create a legacy database object
-	 *
-	 * @param string $connection		Database connection resource
-	 * @param string $allowWebChanges	set tp TRUE to allow inserts, updates or deletes
-	 * @return	void
-	 */
-	public function __construct($connection = NULL, $allowWebChanges = FALSE) {
-		$this->allowWebChanges = $allowWebChanges;
-	}
-	
-	/**
-	 * Setter for the logging class
-	 * @see icms_db_legacy_IDatabase::setLogger()
-	 * @return	void
-	 */
-	public function setLogger($logger) {
-		$this->logger = $logger;
-	}
-	
-	/**
-	 * Setter for the table prefix
-	 *
-	 * @see icms_db_legacy_IDatabase::setPrefix()
-	 * @return	void
-	 */
-	public function setPrefix($value) {
-		$this->prefix = $value;
-	}
-	
-	/**
-	 * Prefix the database table name
-	 * @see icms_db_legacy_IDatabase::prefix()
-	 * @return	string
-	 */
-	public function prefix($tablename='') {
-		if ( $tablename != '' ) {
-			return $this->prefix .'_'. $tablename;
-		} else {
-			return $this->prefix;
-		}
-	}
+    /**
+     * Create a legacy database object
+     *
+     * @param string $connection		Database connection resource
+     * @param string $allowWebChanges	set tp TRUE to allow inserts, updates or deletes
+     * @return	void
+     */
+    public function __construct($connection = null, $allowWebChanges = false)
+    {
+        $this->allowWebChanges = $allowWebChanges;
+    }
+    
+    /**
+     * Setter for the logging class
+     * @see icms_db_legacy_IDatabase::setLogger()
+     * @return	void
+     */
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
+    }
+    
+    /**
+     * Setter for the table prefix
+     *
+     * @see icms_db_legacy_IDatabase::setPrefix()
+     * @return	void
+     */
+    public function setPrefix($value)
+    {
+        $this->prefix = $value;
+    }
+    
+    /**
+     * Prefix the database table name
+     * @see icms_db_legacy_IDatabase::prefix()
+     * @return	string
+     */
+    public function prefix($tablename='')
+    {
+        if ($tablename != '') {
+            return $this->prefix .'_'. $tablename;
+        } else {
+            return $this->prefix;
+        }
+    }
 }

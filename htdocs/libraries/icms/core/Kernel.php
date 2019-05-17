@@ -54,41 +54,43 @@
  * @deprecated	This should not even end up in the 1.3 final package - it was introduced during the refactoring
  * @todo		Remove this before 1.3 final
  */
-class icms_core_Kernel extends icms_core_Object {
+class icms_core_Kernel extends icms_core_Object
+{
+    public $paths;
+    public $urls;
 
-	public $paths;
-	public $urls;
-
-	public function __construct() {
-		$this->paths =& icms::$paths;
-		$this->urls =& icms::$urls;
-	}
-	/**
-	 * Convert a ImpressCMS path to a physical one
-	 * @param	string	$url URL string to convert to a physical path
-	 * @param 	boolean	$virtual
-	 * @return 	string
-	 */
-	public function path($url, $virtual = false) {
-		return icms::path($url, $virtual);
-	}
-	/**
-	 * Convert a ImpressCMS path to an URL
-	 * @param 	string	$url
-	 * @return 	string
-	 */
-	public function url($url) {
-		return icms::url($url);
-	}
-	/**
-	 * Build an URL with the specified request params
-	 * @param 	string 	$url
-	 * @param 	array	$params
-	 * @return 	string
-	 */
-	public function buildUrl($url, $params = array()) {
-		return icms::buildUrl($url,$params);
-	}
-
+    public function __construct()
+    {
+        $this->paths =& icms::$paths;
+        $this->urls =& icms::$urls;
+    }
+    /**
+     * Convert a ImpressCMS path to a physical one
+     * @param	string	$url URL string to convert to a physical path
+     * @param 	boolean	$virtual
+     * @return 	string
+     */
+    public function path($url, $virtual = false)
+    {
+        return icms::path($url, $virtual);
+    }
+    /**
+     * Convert a ImpressCMS path to an URL
+     * @param 	string	$url
+     * @return 	string
+     */
+    public function url($url)
+    {
+        return icms::url($url);
+    }
+    /**
+     * Build an URL with the specified request params
+     * @param 	string 	$url
+     * @param 	array	$params
+     * @return 	string
+     */
+    public function buildUrl($url, $params = array())
+    {
+        return icms::buildUrl($url, $params);
+    }
 }
-

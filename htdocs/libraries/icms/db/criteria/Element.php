@@ -62,119 +62,131 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-abstract class icms_db_criteria_Element {
-	/**
-	 * Sort order
-	 * @var	string
-	 */
-	public $order = 'ASC';
+abstract class icms_db_criteria_Element
+{
+    /**
+     * Sort order
+     * @var	string
+     */
+    public $order = 'ASC';
 
-	/**
-	 * @var	string
-	 */
-	public $sort = '';
+    /**
+     * @var	string
+     */
+    public $sort = '';
 
-	/**
-	 * Number of records to retrieve
-	 * @var	int
-	 */
-	public $limit = 0;
+    /**
+     * Number of records to retrieve
+     * @var	int
+     */
+    public $limit = 0;
 
-	/**
-	 * Offset of first record
-	 * @var	int
-	 */
-	public $start = 0;
+    /**
+     * Offset of first record
+     * @var	int
+     */
+    public $start = 0;
 
-	/**
-	 * @var	string
-	 */
-	public $groupby = '';
+    /**
+     * @var	string
+     */
+    public $groupby = '';
 
-	/**
-	 * Constructor
-	 **/
-	public function __construct(){}
+    /**
+     * Constructor
+     **/
+    public function __construct()
+    {
+    }
 
-	/**
-	 * Render the criteria element
-	 */
-	abstract public function render();
+    /**
+     * Render the criteria element
+     */
+    abstract public function render();
 
-	/**#@+
-	 * Accessor
-	 */
-	/**
-	 * @param	string  $sort
-	 */
-	public function setSort($sort) {
-		$this->sort = $sort;
-	}
+    /**#@+
+     * Accessor
+     */
+    /**
+     * @param	string  $sort
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+    }
 
-	/**
-	 * @return	string
-	 */
-	public function getSort() {
-		return $this->sort;
-	}
+    /**
+     * @return	string
+     */
+    public function getSort()
+    {
+        return $this->sort;
+    }
 
-	/**
-	 * @param	string  $order
-	 */
-	public function setOrder($order) {
-		if ('DESC' == strtoupper($order)) {
-			$this->order = 'DESC';
-		}
-	}
+    /**
+     * @param	string  $order
+     */
+    public function setOrder($order)
+    {
+        if ('DESC' == strtoupper($order)) {
+            $this->order = 'DESC';
+        }
+    }
 
-	/**
-	 * @return	string
-	 */
-	public function getOrder() {
-		return $this->order;
-	}
+    /**
+     * @return	string
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
 
-	/**
-	 * @param	int $limit
-	 */
-	public function setLimit($limit=0) {
-		$this->limit = (int) ($limit);
-	}
+    /**
+     * @param	int $limit
+     */
+    public function setLimit($limit=0)
+    {
+        $this->limit = (int) ($limit);
+    }
 
-	/**
-	 * @return	int
-	 */
-	public function getLimit() {
-		return $this->limit;
-	}
+    /**
+     * @return	int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
 
-	/**
-	 * @param	int $start
-	 */
-	public function setStart($start=0) {
-		$this->start = (int) ($start);
-	}
+    /**
+     * @param	int $start
+     */
+    public function setStart($start=0)
+    {
+        $this->start = (int) ($start);
+    }
 
-	/**
-	 * @return	int
-	 */
-	public function getStart() {
-		return $this->start;
-	}
+    /**
+     * @return	int
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
 
-	/**
-	 * @param	string  $group
-	 */
-	public function setGroupby($group) {
-		$this->groupby = $group;
-	}
+    /**
+     * @param	string  $group
+     */
+    public function setGroupby($group)
+    {
+        $this->groupby = $group;
+    }
 
-	/**
-	 * @return	string
-	 */
-	public function getGroupby() {
-		return ' GROUP BY ' . $this->groupby;
-	}
-	/**#@-*/
+    /**
+     * @return	string
+     */
+    public function getGroupby()
+    {
+        return ' GROUP BY ' . $this->groupby;
+    }
+    /**#@-*/
 }
-

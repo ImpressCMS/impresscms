@@ -27,53 +27,58 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  */
-class icms_ipf_seo_Object extends icms_ipf_Object {
-
-    public function __construct(&$handler) {
-		parent::__construct($handler);
+class icms_ipf_seo_Object extends icms_ipf_Object
+{
+    public function __construct(&$handler)
+    {
+        parent::__construct($handler);
     }
 
-	public function initiateSEO() {
-		$this->initCommonVar('meta_keywords');
-		$this->initCommonVar('meta_description');
-		$this->initCommonVar('short_url');
-		$this->seoEnabled = true;
-	}
-
-	/**
-	 * Backward compat
-	 *
-	 * @todo to be removed in 1.4
-	 */
-    function IcmsPersistableSeoObject() {
-		$this->initiateSEO();
+    public function initiateSEO()
+    {
+        $this->initCommonVar('meta_keywords');
+        $this->initCommonVar('meta_description');
+        $this->initCommonVar('short_url');
+        $this->seoEnabled = true;
     }
 
-	/**
-	 * Return the value of the short_url field of this object
-	 *
-	 * @return string
-	 */
-	public function short_url() {
-		return $this->getVar('short_url');
-	}
+    /**
+     * Backward compat
+     *
+     * @todo to be removed in 1.4
+     */
+    public function IcmsPersistableSeoObject()
+    {
+        $this->initiateSEO();
+    }
 
-	/**
-	 * Return the value of the meta_keywords field of this object
-	 *
-	 * @return string
-	 */
-	public function meta_keywords() {
-		return $this->getVar('meta_keywords');
-	}
+    /**
+     * Return the value of the short_url field of this object
+     *
+     * @return string
+     */
+    public function short_url()
+    {
+        return $this->getVar('short_url');
+    }
 
-	/**
-	 * Return the value of the meta_description field of this object
-	 *
-	 * @return string
-	 */
-	public function meta_description() {
-		return $this->getVar('meta_description');
-	}
+    /**
+     * Return the value of the meta_keywords field of this object
+     *
+     * @return string
+     */
+    public function meta_keywords()
+    {
+        return $this->getVar('meta_keywords');
+    }
+
+    /**
+     * Return the value of the meta_description field of this object
+     *
+     * @return string
+     */
+    public function meta_description()
+    {
+        return $this->getVar('meta_description');
+    }
 }
-

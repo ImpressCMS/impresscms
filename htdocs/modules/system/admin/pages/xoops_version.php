@@ -12,16 +12,16 @@
 */
 
 $modversion = array(
-	'name' => _MD_AM_PAGES,
-	'version' => "1",
-	'description' => _MD_AM_PAGES_DSC,
-	'author' => "Rodrigo Pereira Lima aka TheRplima",
-	'credits' => "The ImpressCMS Project",
-	'help' => "pages.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "pages.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=pages",
-	'category' => XOOPS_SYSTEM_PAGES,
-	'group' => _MD_AM_GROUPS_CONTENT);
+    'name' => _MD_AM_PAGES,
+    'version' => "1",
+    'description' => _MD_AM_PAGES_DSC,
+    'author' => "Rodrigo Pereira Lima aka TheRplima",
+    'credits' => "The ImpressCMS Project",
+    'help' => "pages.html",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "pages.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=pages",
+    'category' => XOOPS_SYSTEM_PAGES,
+    'group' => _MD_AM_GROUPS_CONTENT);

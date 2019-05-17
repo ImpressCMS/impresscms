@@ -47,57 +47,63 @@
  * @author		http://www.xoops.org The XOOPS Project
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_db_legacy_Factory extends icms_db_Factory {
-	/**
-	 * Constructor
-	 *
-	 * Makes nothing.
-	 */
-	protected function __construct() { /* Empty! */ }
+class icms_db_legacy_Factory extends icms_db_Factory
+{
+    /**
+     * Constructor
+     *
+     * Makes nothing.
+     */
+    protected function __construct()
+    { /* Empty! */
+    }
 
-	/**
-	 * Get a reference to the only instance of database class and connects to DB
-	 *
-	 * if the class has not been instantiated yet, this will also take
-	 * care of that
-	 *
-	 * @static
-	 * @staticvar   object  The only instance of database class
-	 * @return      object  Reference to the only instance of database class
-	 */
-	static public function &instance() {
-		static $instance;
-		if (!isset($instance)) {
-			$instance = parent::instance();
-		}
-		return $instance;
-	}
+    /**
+     * Get a reference to the only instance of database class and connects to DB
+     *
+     * if the class has not been instantiated yet, this will also take
+     * care of that
+     *
+     * @static
+     * @staticvar   object  The only instance of database class
+     * @return      object  Reference to the only instance of database class
+     */
+    public static function &instance()
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = parent::instance();
+        }
+        return $instance;
+    }
 
-	/**
-	 * Gets a reference to the only instance of database class. Currently
-	 * only being used within the installer.
-	 *
-	 * @static
-	 * @staticvar   object  The only instance of database class
-	 * @return      object  Reference to the only instance of database class
-	 */
-	static public function &getDatabase() {
-		static $database;
-		if (!isset($database)) {
-			$database = parent::instance();
-		}
-		return $database;
-	}
+    /**
+     * Gets a reference to the only instance of database class. Currently
+     * only being used within the installer.
+     *
+     * @static
+     * @staticvar   object  The only instance of database class
+     * @return      object  Reference to the only instance of database class
+     */
+    public static function &getDatabase()
+    {
+        static $database;
+        if (!isset($database)) {
+            $database = parent::instance();
+        }
+        return $database;
+    }
 
-	/**
-	 * Gets the databaseupdater object .
-	 *
-	 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
-	 *
-	 * @return	object  @link icms_db_legacy_updater_Handler
-	 * @static
-	 */
-	static public function getDatabaseUpdater() {
-		return new icms_db_legacy_updater_Handler();
-	}
+    /**
+     * Gets the databaseupdater object .
+     *
+     * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+     *
+     * @return	object  @link icms_db_legacy_updater_Handler
+     * @static
+     */
+    public static function getDatabaseUpdater()
+    {
+        return new icms_db_legacy_updater_Handler();
+    }
 }

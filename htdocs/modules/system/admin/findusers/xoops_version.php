@@ -38,16 +38,16 @@
  * @version		SVN: $Id: xoops_version.php 12313 2013-09-15 21:14:35Z skenow $
  */
 $modversion = array(
-	'name' => _MD_AM_FINDUSER,
-	'version' => "",
-	'description' => _MD_AM_FINDUSER_DSC,
-	'author' => "Kazumi Ono<br />( http://www.myweb.ne.jp/ )",
-	'credits' => "The XOOPS Project",
-	'help' => "findusers.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "users.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=findusers",
-	'category' => XOOPS_SYSTEM_FINDU,
-	'group' => _MD_AM_GROUPS_USERSANDGROUPS);
+    'name' => _MD_AM_FINDUSER,
+    'version' => "",
+    'description' => _MD_AM_FINDUSER_DSC,
+    'author' => "Kazumi Ono<br />( http://www.myweb.ne.jp/ )",
+    'credits' => "The XOOPS Project",
+    'help' => "findusers.html",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "users.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=findusers",
+    'category' => XOOPS_SYSTEM_FINDU,
+    'group' => _MD_AM_GROUPS_USERSANDGROUPS);

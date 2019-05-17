@@ -48,15 +48,17 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		Member
  * @subpackage	Group
  */
-class icms_member_group_Object extends icms_core_Object {
-	/**
-	 * constructor
-	 */
-	public function __construct() {
-		parent::__construct();
-		$this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('description', XOBJ_DTYPE_TXTAREA, null, false);
-		$this->initVar('group_type', XOBJ_DTYPE_OTHER, null, false);
-	}
+class icms_member_group_Object extends icms_core_Object
+{
+    /**
+     * constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 100);
+        $this->initVar('description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('group_type', XOBJ_DTYPE_OTHER, null, false);
+    }
 }

@@ -38,16 +38,16 @@
  * @version		SVN: $Id: xoops_version.php 12313 2013-09-15 21:14:35Z skenow $
  */
 $modversion = array(
-	'name' => _MD_AM_SMLS,
-	'version' => "",
-	'description' => _MD_AM_SMLS_DSC,
-	'author' => "",
-	'credits' => "The MPN SE Project",
-	'help' => "smilies.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "smiles.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=smilies",
-	'category' => XOOPS_SYSTEM_SMILE,
-	'group' => _MD_AM_GROUPS_CONTENT);
+    'name' => _MD_AM_SMLS,
+    'version' => "",
+    'description' => _MD_AM_SMLS_DSC,
+    'author' => "",
+    'credits' => "The MPN SE Project",
+    'help' => "smilies.html",
+    'license' => "GPL see LICENSE",
+    'official' => 1,
+    'image' => "smiles.gif",
+    'hasAdmin' => 1,
+    'adminpath' => "admin.php?fct=smilies",
+    'category' => XOOPS_SYSTEM_SMILE,
+    'group' => _MD_AM_GROUPS_CONTENT);

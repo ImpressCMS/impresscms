@@ -38,7 +38,9 @@
 * @version		$Id: Hiddentoken.php 12313 2013-09-15 21:14:35Z skenow $
 */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 /**
  * A hidden token field
  *
@@ -46,7 +48,8 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Hiddentoken extends icms_form_elements_Hidden {
+class icms_form_elements_Hiddentoken extends icms_form_elements_Hidden
+{
 
   /**
    * Constructor
@@ -54,8 +57,8 @@ class icms_form_elements_Hiddentoken extends icms_form_elements_Hidden {
    * @param   string  $name       "name" attribute
    * @param   int     $timeout    timeout variable for the createToken function
    */
-  public function __construct($name = _CORE_TOKEN, $timeout = 0) {
-      parent::__construct($name . '_REQUEST', icms::$security->createToken($timeout, $name));
-  }
+    public function __construct($name = _CORE_TOKEN, $timeout = 0)
+    {
+        parent::__construct($name . '_REQUEST', icms::$security->createToken($timeout, $name));
+    }
 }
-

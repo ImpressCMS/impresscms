@@ -42,7 +42,7 @@
  *
  */
 // ImpressCMS is not installed yet.
-if(! defined('XOOPS_INSTALL')){
+if (! defined('XOOPS_INSTALL')) {
     header('Location: install/index.php');
-	exit();
+    exit();
 }

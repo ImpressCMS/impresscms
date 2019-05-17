@@ -50,49 +50,52 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_Table extends icms_form_Base {
-	/**
-	 * Insert an empty row in the table to serve as a separator.
-	 *
-	 * @param	string  $extra  HTML to be displayed in the empty row.
-	 * @param	string	$class	CSS class name for <td> tag
-	 */
-	public function insertBreak($extra = '', $class= '') {
-		$class = ($class != '') ? " class='$class'" : '';
-		//Fix for $extra tag not showing
-		if ($extra) {
-			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
-			$this->addElement($extra);
-		} else {
-			$extra = "<tr><td colspan='2' $class>&nbsp;</td></tr>";
-			$this->addElement($extra);
-		}
-	}
+class icms_form_Table extends icms_form_Base
+{
+    /**
+     * Insert an empty row in the table to serve as a separator.
+     *
+     * @param	string  $extra  HTML to be displayed in the empty row.
+     * @param	string	$class	CSS class name for <td> tag
+     */
+    public function insertBreak($extra = '', $class= '')
+    {
+        $class = ($class != '') ? " class='$class'" : '';
+        //Fix for $extra tag not showing
+        if ($extra) {
+            $extra = "<tr><td colspan='2' $class>$extra</td></tr>";
+            $this->addElement($extra);
+        } else {
+            $extra = "<tr><td colspan='2' $class>&nbsp;</td></tr>";
+            $this->addElement($extra);
+        }
+    }
 
-	/**
-	 * create HTML to output the form as a table
-	 *
-	 * @return	string  $ret  the constructed HTML
-	 */
-	public function render() {
-		$ret = $this->getTitle() . "\n<form name='" . $this->getName()
-			. "' id='" . $this->getName()
-			. "' action='" . $this->getAction()
-			. "' method='" . $this->getMethod() . "'" . $this->getExtra()
-			. ">\n<table border='0' width='100%'>\n";
-		$hidden = '';
-		foreach ($this->getElements() as $ele) {
-			if (!$ele->isHidden()) {
-				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td>" . $ele->getCaption();
-				if ($ele_desc = $ele->getDescription()) {
-					$ret .= '<br /><br /><span style="font-weight: normal;">' . $ele_desc . '</span>';
-				}
-				$ret .= "</td><td>" . $ele->render() . "</td></tr>";
-			} else {
-				$hidden .= $ele->render() . "\n";
-			}
-		}
-		$ret .= "</table>\n$hidden</form>\n";
-		return $ret;
-	}
+    /**
+     * create HTML to output the form as a table
+     *
+     * @return	string  $ret  the constructed HTML
+     */
+    public function render()
+    {
+        $ret = $this->getTitle() . "\n<form name='" . $this->getName()
+            . "' id='" . $this->getName()
+            . "' action='" . $this->getAction()
+            . "' method='" . $this->getMethod() . "'" . $this->getExtra()
+            . ">\n<table border='0' width='100%'>\n";
+        $hidden = '';
+        foreach ($this->getElements() as $ele) {
+            if (!$ele->isHidden()) {
+                $ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td>" . $ele->getCaption();
+                if ($ele_desc = $ele->getDescription()) {
+                    $ret .= '<br /><br /><span style="font-weight: normal;">' . $ele_desc . '</span>';
+                }
+                $ret .= "</td><td>" . $ele->render() . "</td></tr>";
+            } else {
+                $hidden .= $ele->render() . "\n";
+            }
+        }
+        $ret .= "</table>\n$hidden</form>\n";
+        return $ret;
+    }
 }
