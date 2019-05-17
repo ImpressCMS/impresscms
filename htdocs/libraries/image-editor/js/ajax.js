@@ -1,5 +1,5 @@
 /* Simple AJAX Code-Kit (SACK) v1.6.1 */
-/* ©2005 Gregory Wild-Smith */
+/* ï¿½2005 Gregory Wild-Smith */
 /* www.twilightuniverse.com */
 /* Software licenced under a modified X11 licence,
    see documentation or authors website for more details */
@@ -9,25 +9,25 @@ function sack(file) {
 
 	this.resetData = function() {
 		this.method = "POST";
-  		this.queryStringSeparator = "?";
+		this.queryStringSeparator = "?";
 		this.argumentSeparator = "&";
 		this.URLString = "";
 		this.encodeURIString = true;
-  		this.execute = false;
-  		this.element = null;
+		this.execute = false;
+		this.element = null;
 		this.elementObj = null;
 		this.requestFile = file;
 		this.vars = new Object();
 		this.responseStatus = new Array(2);
-  	};
+	};
 
 	this.resetFunctions = function() {
-  		this.onLoading = function() { };
-  		this.onLoaded = function() { };
-  		this.onInteractive = function() { };
-  		this.onCompletion = function() { };
-  		this.onError = function() { };
-		this.onFail = function() { };
+		this.onLoading = function() {};
+		this.onLoaded = function() {};
+		this.onInteractive = function() {};
+		this.onCompletion = function() {};
+		this.onError = function() {};
+		this.onFail = function() {};
 	};
 
 	this.reset = function() {
@@ -46,7 +46,7 @@ function sack(file) {
 			}
 		}
 
-		if (! this.xmlhttp) {
+		if (!this.xmlhttp) {
 			if (typeof XMLHttpRequest != "undefined") {
 				this.xmlhttp = new XMLHttpRequest();
 			} else {
@@ -55,7 +55,7 @@ function sack(file) {
 		}
 	};
 
-	this.setVar = function(name, value){
+	this.setVar = function(name, value) {
 		this.vars[name] = Array(value, false);
 	};
 
@@ -63,23 +63,26 @@ function sack(file) {
 		if (true == returnvars) {
 			return Array(encodeURIComponent(name), encodeURIComponent(value));
 		} else {
-			this.vars[encodeURIComponent(name)] = Array(encodeURIComponent(value), true);
+			this.vars[encodeURIComponent(name)] = Array(
+				encodeURIComponent(value),
+				true
+			);
 		}
-	}
+	};
 
 	this.processURLString = function(string, encode) {
 		encoded = encodeURIComponent(this.argumentSeparator);
 		regexp = new RegExp(this.argumentSeparator + "|" + encoded);
 		varArray = string.split(regexp);
-		for (i = 0; i < varArray.length; i++){
+		for (i = 0; i < varArray.length; i++) {
 			urlVars = varArray[i].split("=");
-			if (true == encode){
+			if (true == encode) {
 				this.encVar(urlVars[0], urlVars[1]);
 			} else {
 				this.setVar(urlVars[0], urlVars[1]);
 			}
 		}
-	}
+	};
 
 	this.createURLString = function(urlstring) {
 		if (this.encodeURIString && this.URLString.length) {
@@ -108,16 +111,18 @@ function sack(file) {
 
 			urlstringtemp[urlstringtemp.length] = key + "=" + this.vars[key][0];
 		}
-		if (urlstring){
-			this.URLString += this.argumentSeparator + urlstringtemp.join(this.argumentSeparator);
+		if (urlstring) {
+			this.URLString +=
+				this.argumentSeparator +
+				urlstringtemp.join(this.argumentSeparator);
 		} else {
 			this.URLString += urlstringtemp.join(this.argumentSeparator);
 		}
-	}
+	};
 
 	this.runResponse = function() {
 		eval(this.response);
-	}
+	};
 
 	this.runAJAX = function(urlstring) {
 		if (this.failed) {
@@ -130,13 +135,19 @@ function sack(file) {
 			if (this.xmlhttp) {
 				var self = this;
 				if (this.method == "GET") {
-					totalurlstring = this.requestFile + this.queryStringSeparator + this.URLString;
+					totalurlstring =
+						this.requestFile +
+						this.queryStringSeparator +
+						this.URLString;
 					this.xmlhttp.open(this.method, totalurlstring, true);
 				} else {
 					this.xmlhttp.open(this.method, this.requestFile, true);
 					try {
-						this.xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-					} catch (e) { }
+						this.xmlhttp.setRequestHeader(
+							"Content-Type",
+							"application/x-www-form-urlencoded"
+						);
+					} catch (e) {}
 				}
 
 				this.xmlhttp.onreadystatechange = function() {
@@ -162,10 +173,12 @@ function sack(file) {
 							if (self.elementObj) {
 								elemNodeName = self.elementObj.nodeName;
 								elemNodeName.toLowerCase();
-								if (elemNodeName == "input"
-								|| elemNodeName == "select"
-								|| elemNodeName == "option"
-								|| elemNodeName == "textarea") {
+								if (
+									elemNodeName == "input" ||
+									elemNodeName == "select" ||
+									elemNodeName == "option" ||
+									elemNodeName == "textarea"
+								) {
 									self.elementObj.value = self.response;
 								} else {
 									self.elementObj.innerHTML = self.response;
