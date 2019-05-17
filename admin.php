@@ -45,7 +45,6 @@
 define('ICMS_IN_ADMIN', 1);
 
 $xoopsOption['pagetype'] = 'admin';
-include ICMS_ROOT_PATH . '/include/cp_functions.php';
 
 $op = isset($_GET['rssnews'])?(int) ($_GET['rssnews']):0;
 if (!empty($_GET['op'])) {$op = (int) ($_GET['op']); }

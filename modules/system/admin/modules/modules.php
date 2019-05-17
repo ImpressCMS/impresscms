@@ -71,7 +71,7 @@ function xoops_module_list() {
 	$icmsAdminTpl->assign('lang_noninstall', _MD_AM_NONINSTALL);
 
 	$module_handler = icms::handler('icms_module');
-	$installed_mods = & $module_handler->getObjects();
+	$installed_mods = $module_handler->getObjects();
 	$listed_mods = array();
 	foreach ($installed_mods as $module) {
 		$module->registerClassPath(false);
@@ -1033,7 +1033,7 @@ function icms_module_update($dirname) {
 
 	$dirname = trim($dirname);
 	$module_handler = icms::handler('icms_module');
-	$module = & $module_handler->getByDirname($dirname);
+	$module = $module_handler->getByDirname($dirname);
 
 	// Save current version for use in the update function
 	$prev_version = $module->getVar('version');
@@ -1062,7 +1062,7 @@ function icms_module_update($dirname) {
 		$newmid = $module->getVar('mid');
 		$msgs[] = _MD_AM_MOD_DATA_UPDATED;
 		$tplfile_handler = & icms::handler('icms_view_template_file');
-		$deltpl = & $tplfile_handler->find('default', 'module', $module->getVar('mid'));
+		$deltpl = $tplfile_handler->find('default', 'module', $module->getVar('mid'));
 		$delng = array();
 		if (is_array($deltpl)) {
 			$xoopsDelTpl = new icms_view_Tpl();
@@ -1166,7 +1166,7 @@ function icms_module_update($dirname) {
 								'<strong>' . $fblock['name'] . '</strong>',
 								'<strong>' . icms_conv_nr2local($fblock['bid']) . '</strong>');
 							if ($template != '') {
-								$tplfile = & $tplfile_handler->find('default', 'block', $fblock['bid']);
+								$tplfile = $tplfile_handler->find('default', 'block', $fblock['bid']);
 								if (count($tplfile) == 0) {
 									$tplfile_new = & $tplfile_handler->create();
 									$tplfile_new->setVar('tpl_module', $dirname);
@@ -1310,7 +1310,7 @@ function icms_module_update($dirname) {
 
 		// first delete all config entries
 		$config_handler = icms::handler('icms_config');
-		$configs = & $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
+		$configs = $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
 		$confcount = count($configs);
 		$config_delng = array();
 		if ($confcount > 0) {
