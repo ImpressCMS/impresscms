@@ -247,8 +247,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			. ", (" . $ci++ . ", '_MD_AM_DEBUGMODE2', 2, $i)"
 			. ", (" . $ci++ . ", '_MD_AM_DEBUGMODE3', 3, $i)");
 	// ----------
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'banners', '_MD_AM_BANNERS', '1', '_MD_AM_BANNERSDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'closesite', '_MD_AM_CLOSESITE', '0', '_MD_AM_CLOSESITEDSC', 'yesno', 'int', " . $p++ . ")"
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'closesite', '_MD_AM_CLOSESITE', '0', '_MD_AM_CLOSESITEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'closesite_okgrp', '_MD_AM_CLOSESITEOK', '".addslashes(serialize(array('1')))."', '_MD_AM_CLOSESITEOKDSC', 'group_multi', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'closesite_text', '_MD_AM_CLOSESITETXT', '"._INSTALL_L165."', '_MD_AM_CLOSESITETXTDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'my_ip', '_MD_AM_MYIP', '127.0.0.1', '_MD_AM_MYIPDSC', 'textbox', 'text', " . $p++ . ")"
