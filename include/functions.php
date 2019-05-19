@@ -93,13 +93,14 @@ if (!function_exists('xoops_header')) {
                     }
                     icms_updateBody.interval = setInterval(icms_updateBody, 500);
                     " . PHP_EOL;
-            $head .= '</script>';
-        }
-        if (!empty($head)) {
-			\icms::$response->assign('icms_module_header', \icms::$response->getTemplateVars('icms_module_header') . $head);
-        }
-        return $buffer;
-    });
+				$head .= '</script>';
+			}
+			if (!empty($head)) {
+				\icms::$response->assign('icms_module_header', \icms::$response->get_template_vars('icms_module_header') . $head);
+			}
+			return $buffer;
+		});
+	}
 }
 
 if (!function_exists('xoops_footer')) {
