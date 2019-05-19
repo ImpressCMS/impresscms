@@ -1,0 +1,38 @@
+# What IP should be used for virtual server?
+ip: "192.168.10.108"
+
+# How many memory should be used for virtual server?
+memory: 2048
+
+# How much CPU cores should be used for virtual server?
+cpus: 1
+
+# What provider should be used for virtual server?
+# Possible values: virtualbox, hyperv, vmware_desktop, parallels
+provider: virtualbox
+
+# Virtual domain that would be used when server is working
+name: impresscms.test
+
+# Path to your public SSH key
+authorize: ~/.ssh/id_rsa.pub
+
+# Paths to keys that needs to be added to virtual machine environment
+keys:
+  - ~/.ssh/id_rsa
+
+# Folders that should be mapped between host and guest
+folders:
+  - map: ./
+    to: /home/vagrant/impresscms
+
+# Site paths that will be available
+sites:
+  - map: impresscms.test
+    to: /home/vagrant/impresscms/htdocs
+    type: apache
+    php: "7.2"
+
+# Databases that will be available on this machine
+databases:
+  - impresscms

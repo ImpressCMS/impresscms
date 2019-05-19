@@ -1,5 +1,4 @@
 <?php
-// $Id: comments.php 12064 2012-10-10 14:37:53Z skenow $
 //%%%%%% Comment Manager %%%%%
 define('_MD_AM_COMMMAN', 'Comment Manager');
 

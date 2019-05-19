@@ -38,7 +38,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: xmlrpctag.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 class XoopsXmlRpcDocument
@@ -116,13 +115,14 @@ class XoopsXmlRpcTag
 		return $text;
 	}
 
-	function setFault($fault = true){
-		$this->_fault = ( (int) ($fault) > 0) ? true : false;
-	}
-
 	function isFault()
 	{
 		return $this->_fault;
+	}
+
+	function setFault($fault = true)
+	{
+		$this->_fault = ((int)($fault) > 0) ? true : false;
 	}
 
 	function render()

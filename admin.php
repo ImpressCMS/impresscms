@@ -1,5 +1,4 @@
 <?php
-// $Id: admin.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -45,7 +44,6 @@
 define('ICMS_IN_ADMIN', 1);
 
 $xoopsOption['pagetype'] = 'admin';
-include ICMS_ROOT_PATH . '/include/cp_functions.php';
 
 $op = isset($_GET['rssnews'])?(int) ($_GET['rssnews']):0;
 if (!empty($_GET['op'])) {$op = (int) ($_GET['op']); }

@@ -1,6 +1,4 @@
 <?php
-// $Id: saxparser.php 19118 2010-03-27 17:46:23Z skenow $
-
 /**
  * XML Parser Sax Parser
  *
@@ -19,7 +17,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: saxparser.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 class SaxParser
@@ -69,11 +66,6 @@ class SaxParser
 	 Property Methods
 	 ---------------------------------------------------------------------------*/
 
-	function getCurrentLevel()
-	{
-		return $this->level;
-	}
-
 	/****************************************************************************
 	 * @param $isCaseFolding
 	 * @returns void
@@ -84,6 +76,20 @@ class SaxParser
 
 		$this->isCaseFolding = $isCaseFolding;
 		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, $this->isCaseFolding);
+	}
+
+	/****************************************************************************
+	 * @returns void
+	 ****************************************************************************/
+	function useUtfEncoding()
+	{
+		$this->targetEncoding = 'UTF-8';
+		xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
+	}
+
+	function getCurrentLevel()
+	{
+		return $this->level;
 	}
 
 	/****************************************************************************
@@ -104,24 +110,6 @@ class SaxParser
 		xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
 	}
 
-	/****************************************************************************
-	 * @returns void
-	 ****************************************************************************/
-	function useUtfEncoding()
-	{
-		$this->targetEncoding = 'UTF-8';
-		xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
-	}
-
-	/****************************************************************************
-	 Returns the name of the xml tag being parsed
-	 * @returns string
-	 ****************************************************************************/
-	function getCurrentTag()
-	{
-		return $this->tags[count($this->tags) - 1];
-	}
-
 	function getParentTag()
 	{
 		if (isset($this->tags[count($this->tags) - 2])) {
@@ -129,10 +117,6 @@ class SaxParser
 		}
 		return false;
 	}
-
-	/*---------------------------------------------------------------------------
-	 Parser methods
-	 ---------------------------------------------------------------------------*/
 
 	/****************************************************************************
 	 * @returns void
@@ -161,6 +145,19 @@ class SaxParser
 		return true;
 	}
 
+	/*---------------------------------------------------------------------------
+	 Parser methods
+	 ---------------------------------------------------------------------------*/
+
+	/****************************************************************************
+	 * @private
+	 * @returns string
+	 ****************************************************************************/
+	function getXmlError()
+	{
+		return sprintf("XmlParse error: %s at line %d", xml_error_string(xml_get_error_code($this->parser)), xml_get_current_line_number($this->parser));
+	}
+
 	/****************************************************************************
 	 * @returns void
 	 ****************************************************************************/
@@ -175,19 +172,6 @@ class SaxParser
 			$this->__destruct();
 		}
 	}
-
-	/****************************************************************************
-	 * @private
-	 * @returns string
-	 ****************************************************************************/
-	function getXmlError()
-	{
-		return sprintf("XmlParse error: %s at line %d", xml_error_string(xml_get_error_code($this->parser)), xml_get_current_line_number($this->parser));
-	}
-
-	/*---------------------------------------------------------------------------
-	 Custom Handler Methods
-	 ---------------------------------------------------------------------------*/
 
 	/****************************************************************************
 	 Adds a callback function to be called when a tag is encountered.
@@ -211,7 +195,7 @@ class SaxParser
 	}
 
 	/*---------------------------------------------------------------------------
-	 Private Handler Methods
+	 Custom Handler Methods
 	 ---------------------------------------------------------------------------*/
 
 	/****************************************************************************
@@ -235,6 +219,19 @@ class SaxParser
 		}
 	}
 
+	/*---------------------------------------------------------------------------
+	 Private Handler Methods
+	 ---------------------------------------------------------------------------*/
+
+	/**
+	 * The default tag handler method for a tag with no handler
+	 *
+	 * @abstract
+	 */
+	function handleBeginElementDefault($parser, $tagName, $attributesArray)
+	{
+	}
+
 	/****************************************************************************
 	 Callback function that executes whenever the end of a tag
 	 occurs when being parsed.
@@ -254,6 +251,15 @@ class SaxParser
 		$this->level--;
 	}
 
+	/**
+	 * The default tag handler method for a tag with no handler
+	 *
+	 * @abstract
+	 */
+	function handleEndElementDefault($parser, $tagName)
+	{
+	}
+
 	/****************************************************************************
 	 Callback function that executes whenever character data is encountered
 	 while being parsed.
@@ -269,6 +275,24 @@ class SaxParser
 		} else {
 			$this->handleCharacterDataDefault($parser, $data);
 		}
+	}
+
+	/****************************************************************************
+	Returns the name of the xml tag being parsed
+	 * @returns string
+	 ****************************************************************************/
+	function getCurrentTag()
+	{
+		return $this->tags[count($this->tags) - 1];
+	}
+
+	/**
+	 * The default tag handler method for a tag with no handler
+	 *
+	 * @abstract
+	 */
+	function handleCharacterDataDefault($parser, $data)
+	{
 	}
 
 	/****************************************************************************

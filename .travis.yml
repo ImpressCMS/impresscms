@@ -1,34 +1,49 @@
 language: php
 
-php:
-  - 7.0
-  - 7.1
-  - 7.2
+os:
+  - linux
 
 cache:
   directories:
-    - $HOME/.composer/cache/files
+    - "$HOME/.composer/cache"
+
+env:
+  global:
+    - DB_TYPE=pdo.mysql
+    - DB_HOST=localhost
+    - DB_USER=root
+    - DB_PASS=
+    - DB_PCONNECT=0
+    - DB_NAME=icms
+    - DB_CHARSET=utf8
+    - DB_COLLATION=utf8_general_ci
+    - DB_PREFIX=icms
+    - DB_SALT=icms
+
+stages:
+  - validate
+  - test
 
 services:
   - mysql
-  
-env:
- global:
-  - URL=http://192.168.2.99
-  - DB_TYPE=pdo.mysql
-  - DB_HOST=localhost
-  - DB_USER=root
-  - DB_PASS=
-  - DB_PCONNECT=0
-  - DB_NAME=icms
-  - DB_CHARSET=utf8
-  - DB_COLLATION=utf8_general_ci
-  - DB_PREFIX=icms
-  - DB_SALT=icms
-  
+
 install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS icms;'
-  - composer install
+  - travis_retry composer install --no-progress --no-interaction
 
-script:
- - ./vendor/bin/phpunit ./tests/libraries/* --bootstrap tests/bootstrap.php
+jobs:
+  include:
+    - stage: validate
+      php: 7.2
+      script:
+        - composer validate
+    - stage: test
+      php: 7.2
+      script:
+        - composer test
+      after_script:
+        - ./vendor/bin/test-reporter --coverage-report=./storage/log/clover.xml
+    - stage: test
+      php: 7.3
+      script:
+        - composer test

@@ -2,7 +2,7 @@
 /**
  * Hashtag TextSanitizer plugin
  *
- * @link		http://wiki.impresscms.org/modules/wiki/index.php?page=HashtagPlugin
+ * @link		https://www.impresscms.org/modules/simplywiki/index.php?page=HashtagPlugin
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		plugins

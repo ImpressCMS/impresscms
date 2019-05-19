@@ -85,7 +85,7 @@ switch ($op) {
 		if (@is_array($groups_hidden)) {
 			$groups = array_unique(array_merge($groups, $groups_hidden));
 		}
-		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm,
+		updateUser($uid, $username, $login_name, $name, $url, $email,
 					$user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig,
 					$theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode,
 					$timezone_offset, $user_mailok, $language, $openid, $user_viewoid, $pass_expired, $groups
@@ -212,12 +212,8 @@ switch ($op) {
 				$newuser->setVar('url', formatURL($url));
 				$newuser->setVar('user_avatar', 'blank.gif');
 				$newuser->setVar('user_regdate', date('U'));
-				$newuser->setVar('user_icq', $user_icq);
 				$newuser->setVar('user_from', $user_from);
 				$newuser->setVar('user_sig', $user_sig);
-				$newuser->setVar('user_aim', $user_aim);
-				$newuser->setVar('user_yim', $user_yim);
-				$newuser->setVar('user_msnm', $user_msnm);
 				if ($pass2 != '') {
 					if ($password != $pass2) {
 						icms_cp_header();

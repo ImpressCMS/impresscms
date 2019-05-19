@@ -29,20 +29,12 @@ define('XOOPS_INSTALL', 1);
 date_default_timezone_set(@date_default_timezone_get());
 
 /* we need this so we can use icms_core_Logger during the install to trap errors */
-if (!defined('INSTALLER_INCLUDE_MAIN')) {
-	if (!defined('ICMS_ROOT_PATH')) {
-		define('ICMS_ROOT_PATH', dirname(dirname(__DIR__)));
-	}
-} else {
+if (defined('INSTALLER_INCLUDE_MAIN')) {
 	require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "mainfile.php";
 }
-define('ICMS_PUBLIC_PATH', dirname(__DIR__));
 
-require_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'version.php';
-// including a few functions - relying more on the core, now
-include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'functions.php';
 // installer common functions
 require_once 'include/functions.php';
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'xoopsinstallwizard.php';
@@ -51,8 +43,7 @@ $errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
 
 try {
-	$env = new \Dotenv\Dotenv(ICMS_ROOT_PATH);
-	$env->load();
+	\Dotenv\Dotenv::create(ICMS_ROOT_PATH)->load();
 } catch (Exception $ex) {
 	// Reading .env file failed but that is not out business
 }

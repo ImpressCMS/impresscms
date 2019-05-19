@@ -1,5 +1,4 @@
 <?php
-// $Id: admin.php 12064 2012-10-10 14:37:53Z skenow $
 //%%%%%%	File Name  admin.php 	%%%%%
 //define('_MD_AM_CONFIG','System Configuration');
 define('_INVALID_ADMIN_FUNCTION', 'Invalid Admin Function');

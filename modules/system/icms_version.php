@@ -1,6 +1,4 @@
-7<?php
-// $Id: icms_version.php 12455 2014-06-24 09:30:49Z sato-san $
-//  ------------------------------------------------------------------------ //
+<?php
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -323,11 +321,6 @@ $modversion['templates'][] = array(
 
 $modversion['templates'][] = array(
 	'file' => 'system_userform.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_rss.html',
 	'description' => ''
 	);
 
