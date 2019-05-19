@@ -1,5 +1,4 @@
 <?php
-// $Id: images.php 12064 2012-10-10 14:37:53Z skenow $
 //%%%%%% Image Manager %%%%%
 define('_MD_AM_IMAGES', 'Image Manager');
 define('_MD_AM_IMAGES_DSC', 'Create groups of images and manage the permissions for each group. Crop and resize uploaded photos.');

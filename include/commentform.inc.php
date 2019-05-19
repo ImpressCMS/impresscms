@@ -1,5 +1,4 @@
 <?php
-// $Id: commentform.inc.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

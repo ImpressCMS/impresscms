@@ -1,5 +1,4 @@
 <?php
-// $Id: themesetparser.php 19118 2010-03-27 17:46:23Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -40,7 +39,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: themesetparser.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 include_once ICMS_LIBRARIES_PATH . '/xml/saxparser.php';
@@ -71,11 +69,6 @@ class XoopsThemeSetParser extends SaxParser
 		$this->addTagHandler(new ThemeSetTagHandler());
 	}
 
-	function setThemeSetData($name, &$value)
-	{
-		$this->themeSetData[$name] =& $value;
-	}
-
 	function &getThemeSetData($name=null)
 	{
 		if (isset($name)) {
@@ -87,9 +80,9 @@ class XoopsThemeSetParser extends SaxParser
 		return $this->themeSetData;
 	}
 
-	function setImagesData(&$imagearr)
+	function setThemeSetData($name, &$value)
 	{
-		$this->imagesData[] =& $imagearr;
+		$this->themeSetData[$name] =& $value;
 	}
 
 	function &getImagesData()
@@ -97,14 +90,24 @@ class XoopsThemeSetParser extends SaxParser
 		return $this->imagesData;
 	}
 
-	function setTemplatesData(&$tplarr)
+	function setImagesData(&$imagearr)
 	{
-		$this->templatesData[] =& $tplarr;
+		$this->imagesData[] =& $imagearr;
 	}
 
 	function &getTemplatesData()
 	{
 		return $this->templatesData;
+	}
+
+	function setTemplatesData(&$tplarr)
+	{
+		$this->templatesData[] =& $tplarr;
+	}
+
+	function getTempArr()
+	{
+		return $this->tempArr;
 	}
 
 	function setTempArr($name, &$value, $delim='')
@@ -114,11 +117,6 @@ class XoopsThemeSetParser extends SaxParser
 		} else {
 			$this->tempArr[$name] .= $delim.$value;
 		}
-	}
-
-	function getTempArr()
-	{
-		return $this->tempArr;
 	}
 
 	function resetTempArr()

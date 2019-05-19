@@ -65,7 +65,13 @@
     ],
     "psr-4": {
       "ImpressCMS\\Core\\Providers\\": "core/providers/"
-    }
+    },
+    "files": [
+      "include/version.php",
+      "include/constants.php",
+      "include/functions.php",
+      "include/cp_functions.php"
+    ]
   },
   "require-dev": {
     "codeclimate/php-test-reporter": "^0.4.4",

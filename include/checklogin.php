@@ -1,5 +1,4 @@
 <?php
-// $Id: checklogin.php 12474 2014-11-08 14:18:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

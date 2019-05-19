@@ -1,5 +1,4 @@
 <?php
-// $Id: preferences.php 12064 2012-10-10 14:37:53Z skenow $
 define('_MD_AM_PREF', 'Preferences');
 define('_MD_AM_PREF_DSC', "ImpressCMS Site Preferences");
 

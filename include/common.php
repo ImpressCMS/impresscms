@@ -1,5 +1,4 @@
 <?php
-// $Id: common.php 12400 2014-01-25 18:46:03Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -36,11 +35,6 @@
 
 /** make sure mainfile is included, for security and functionality */
 defined("ICMS_MAINFILE_INCLUDED") or die();
-
-// -- Include common functions and constants file
-require_once __DIR__ . DIRECTORY_SEPARATOR . "constants.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "functions.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "version.php";
 
 if (!isset($xoopsOption)) {
 	$xoopsOption = array();

@@ -1,5 +1,4 @@
 <?php
-// $Id: tplsets.php 12064 2012-10-10 14:37:53Z skenow $
 define('_MD_AM_TPLSETS', 'Templates');
 define('_MD_AM_TPLSETS_DSC', 'Templates are sets of html/css files that render the screen layout of modules.');
 

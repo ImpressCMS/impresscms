@@ -4,11 +4,11 @@
 /.idea
 **/.svn/
 **/.git/
-/htdocs/modules/*
-!/htdocs/modules/system/
 /nbproject/
 vendor/
 /.env
 .vagrant
 user-customizations.sh
 .env
+/modules/*
+!/modules/system/

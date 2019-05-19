@@ -1,4 +1,11 @@
 <?php
+
+// Loads environment data
+\Dotenv\Dotenv::create(dirname(__DIR__))->safeLoad();
+
+define('ICMS_ROOT_PATH', dirname(__DIR__));
+define('ICMS_URL', getenv('URL'));
+
 /**#@+
  * Creating ICMS specific constants
  */

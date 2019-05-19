@@ -1,5 +1,4 @@
 <?php
-// $Id: groups.php 12064 2012-10-10 14:37:53Z skenow $
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 //if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 define('_MD_AM_ADGS', 'Groups');
