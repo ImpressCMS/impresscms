@@ -46,21 +46,21 @@ define('XOOPS_MATCH_EQUAL', 2);
 define('XOOPS_MATCH_CONTAIN', 3);
 
 if (!defined('ICMS_PUBLIC_PATH')) {
-	$path = env('public_path');
-	if (empty($path)) {
-		foreach (['public_html', 'htdocs', 'wwwroot'] as $dirname) {
-			if (file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $dirname)) {
-				$path = $dirname;
-				break;
-			}
-		}
-		if (empty($path)) {
-			throw new Exception('You need to define relative "public_path" in .env file before using this tool');
-		}
-		unset($dirname);
-	}
-	define('ICMS_PUBLIC_PATH', ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $path);
-	unset($dirname);
+    $path = env('public_path');
+    if (empty($path)) {
+        foreach (['public_html', 'htdocs', 'wwwroot'] as $dirname) {
+            if (file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $dirname)) {
+                $path = $dirname;
+                break;
+            }
+        }
+        if (empty($path)) {
+            throw new Exception('You need to define relative "public_path" in .env file before using this tool');
+        }
+        unset($dirname);
+    }
+    define('ICMS_PUBLIC_PATH', ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $path);
+    unset($dirname);
 }
 
 define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
@@ -89,7 +89,7 @@ define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
 define('SMARTY_DIR', ICMS_LIBRARIES_PATH . '/smarty/');
 
 if (!defined('XOOPS_XMLRPC')) {
-	define('XOOPS_DB_CHKREF', 1);
+    define('XOOPS_DB_CHKREF', 1);
 } else {
-	define('XOOPS_DB_CHKREF', 0);
+    define('XOOPS_DB_CHKREF', 0);
 }

@@ -18,7 +18,7 @@
  */
 require_once 'common.inc.php';
 if (!defined('XOOPS_INSTALL')) {
-	exit();
+    exit();
 }
 
 include_once "../../mainfile.php";
@@ -36,46 +36,45 @@ include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
 if (!$dbm->isConnectable()) {
-	$wizard->redirectToPage('-3');
-	exit();
+    $wizard->redirectToPage('-3');
+    exit();
 }
 $process = '';
 if (!$dbm->tableExists('users')) {
-	$process = 'create';
+    $process = 'create';
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	// If there's nothing to do: switch to next page
-	if (empty($process)) {
-		$wizard->redirectToPage('+1');
-		exit();
-	}
-	$tables = array();
+    // If there's nothing to do: switch to next page
+    if (empty($process)) {
+        $wizard->redirectToPage('+1');
+        exit();
+    }
+    $tables = array();
 
-	$type = env('DB_TYPE');
-	if (substr($type, 0, 4) == 'pdo.') {
-		$driver = substr($type, 4);
-	} else {
-		$driver = $type;
-	}
-	$result = $dbm->queryFromFile('./sql/' . $driver . '.structure.sql');
-	$content = $dbm->report();
-	include 'install_tpl.php';
-	exit();
+    $type = env('DB_TYPE');
+    if (substr($type, 0, 4) == 'pdo.') {
+        $driver = substr($type, 4);
+    } else {
+        $driver = $type;
+    }
+    $result = $dbm->queryFromFile('./sql/' . $driver . '.structure.sql');
+    $content = $dbm->report();
+    include 'install_tpl.php';
+    exit();
 }
 
 ob_start();
 
 if ($process == 'create') {
-	?>
+    ?>
 <p class="x2-note"><?php echo READY_CREATE_TABLES; ?></p>
 	<?php
 } else {
-	$pageHasForm = false;
-	?>
+        $pageHasForm = false; ?>
 <p class="x2-note"><?php echo XOOPS_TABLES_FOUND; ?></p>
 	<?php
-}
+    }
 
 $content = ob_get_contents();
 ob_end_clean();
