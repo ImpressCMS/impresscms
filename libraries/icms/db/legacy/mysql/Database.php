@@ -70,7 +70,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 			return false;
 		}
 
-		if (getenv('DB_PCONNECT') == 1) {
+		if (env('DB_PCONNECT') == 1) {
 			$this->conn = @ mysql_pconnect(env('DB_HOST'), env('DB_USER'), env('DB_PASS'));
 		} else {
 			$this->conn = @ mysql_connect(env('DB_HOST'), env('DB_USER'), env('DB_PASS'));
