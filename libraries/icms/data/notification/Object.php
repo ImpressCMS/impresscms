@@ -55,8 +55,8 @@ class icms_data_notification_Object extends icms_ipf_Object {
 	 * Constructor
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar('not_id', self::DTYPE_INTEGER, NULL, false);
-		$this->initVar('not_modid', self::DTYPE_INTEGER, NULL, false);
+		$this->initVar('not_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('not_modid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('not_category', self::DTYPE_STRING, null, false, 30);
 		$this->initVar('not_itemid', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('not_event', self::DTYPE_STRING, null, false, 30);
@@ -88,27 +88,27 @@ class icms_data_notification_Object extends icms_ipf_Object {
 		// Check the user's notification preference.
 
 		$member_handler = icms::handler('icms_member');
-		$user =& $member_handler->getUser($this->getVar('not_uid'));
+		$user = & $member_handler->getUser($this->getVar('not_uid'));
 		if (!is_object($user)) {
 			return true;
 		}
 		$method = $user->getVar('notify_method');
 
-		$xoopsMailer = new icms_messaging_Handler();
+		$mailer = new icms_messaging_Handler();
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-		switch($method) {
+		switch ($method) {
 			case XOOPS_NOTIFICATION_METHOD_PM:
-				$xoopsMailer->usePM();
-				$xoopsMailer->setFromUser($member_handler->getUser($icmsConfigMailer['fromuid']));
+				$mailer->usePM();
+				$mailer->setFromUser($member_handler->getUser($icmsConfigMailer['fromuid']));
 				foreach ($tags as $k=>$v) {
-					$xoopsMailer->assign($k, $v);
+					$mailer->assign($k, $v);
 				}
 				break;
 
 			case XOOPS_NOTIFICATION_METHOD_EMAIL:
-				$xoopsMailer->useMail();
+				$mailer->useMail();
 				foreach ($tags as $k=>$v) {
-					$xoopsMailer->assign($k, preg_replace("/&amp;/i", '&', $v));
+					$mailer->assign($k, preg_replace("/&amp;/i", '&', $v));
 				}
 				break;
 
@@ -118,14 +118,14 @@ class icms_data_notification_Object extends icms_ipf_Object {
 		}
 
 		// Set up the mailer
-		$xoopsMailer->setTemplateDir($template_dir);
-		$xoopsMailer->setTemplate($template);
-		$xoopsMailer->setToUsers($user);
+		$mailer->setTemplateDir($template_dir);
+		$mailer->setTemplate($template);
+		$mailer->setToUsers($user);
 		//global $icmsConfig;
-		//$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-		//$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject($subject);
-		$success = $xoopsMailer->send();
+		//$mailer->setFromEmail($icmsConfig['adminmail']);
+		//$mailer->setFromName($icmsConfig['sitename']);
+		$mailer->setSubject($subject);
+		$success = $mailer->send();
 
 		// If send-once-then-delete, delete notification
 		// If send-once-then-wait, disable notification

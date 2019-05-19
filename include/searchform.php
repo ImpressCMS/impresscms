@@ -1,5 +1,4 @@
 <?php
-// $Id: searchform.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -61,7 +60,9 @@ if (empty($modules)) {
 	$mods_checkbox->addOptionArray($module_handler->getList($criteria));
 } else {
 	unset($module);
-	foreach (array_keys($modules) as $mid) $module_array[$mid] = $modules[$mid]->getVar('name');
+	foreach (array_keys($modules) as $mid) {
+		$module_array[$mid] = $modules[$mid]->getVar('name');
+	}
 	$mods_checkbox->addOptionArray($module_array);
 }
 

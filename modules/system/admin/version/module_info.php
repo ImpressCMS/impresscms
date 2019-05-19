@@ -40,12 +40,12 @@
  */
 if ((int) $_GET['mid']) {
 	$module_handler = icms::handler('icms_module');
-	$versioninfo =& $module_handler->get($_GET['mid']);
+	$versioninfo = & $module_handler->get($_GET['mid']);
 } else {
 	$mid = str_replace('..', '', trim($_GET['mid']));
 	if (file_exists(ICMS_MODULES_PATH . '/' . $mid . '/icms_version.php') || file_exists(ICMS_MODULES_PATH . '/' . $mid . '/xoops_version.php')) {
 		$module_handler = icms::handler('icms_module');
-		$versioninfo =& $module_handler->create();
+		$versioninfo = & $module_handler->create();
 		$versioninfo->loadInfo($mid);
 	}
 }

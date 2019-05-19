@@ -63,7 +63,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 	 */
 	static public function getCountryList() {
 		icms_loadLanguageFile('core', 'countries');
-		$country_list = array (
+		$country_list = array(
 			""   => "-",
 			"AD" => _COUNTRY_AD,
 			"AE" => _COUNTRY_AE,
@@ -301,7 +301,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"TZ" => _COUNTRY_TZ,
 			"UA" => _COUNTRY_UA,
 			"UG" => _COUNTRY_UG,
-			"UK" => _COUNTRY_UK,	//  Not listed in ISO 3166
+			"UK" => _COUNTRY_UK, //  Not listed in ISO 3166
 			"UM" => _COUNTRY_UM,
 			"US" => _COUNTRY_US,
 			"UY" => _COUNTRY_UY,

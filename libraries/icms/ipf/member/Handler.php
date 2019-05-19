@@ -111,26 +111,26 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 
 		if ($notifyUser) {
 		// send some notifications
-		$xoopsMailer =  new icms_messaging_Handler();
-		$xoopsMailer->useMail();
-		$xoopsMailer->setTemplateDir(ICMS_ROOT_PATH . 'language/' . $icmsConfig['language'] . '/mail_template');
-		$xoopsMailer->setTemplate('smartobject_notify_user_added_by_admin.tpl');
-		$xoopsMailer->assign('XOOPS_USER_PASSWORD', $password);
-		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-		$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-		$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
-		$xoopsMailer->assign('NAME', $userObj->getVar('name'));
-		$xoopsMailer->assign('UNAME', $userObj->getVar('uname'));
-		$xoopsMailer->setToUsers($userObj);
-		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_CO_ICMS_NEW_USER_NOTIFICATION_SUBJECT, $icmsConfig['sitename']));
+		$mailer =  new icms_messaging_Handler();
+		$mailer->useMail();
+		$mailer->setTemplateDir(ICMS_ROOT_PATH . 'language/' . $icmsConfig['language'] . '/mail_template');
+		$mailer->setTemplate('smartobject_notify_user_added_by_admin.tpl');
+		$mailer->assign('XOOPS_USER_PASSWORD', $password);
+		$mailer->assign('SITENAME', $icmsConfig['sitename']);
+		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+		$mailer->assign('SITEURL', ICMS_URL . "/");
+		$mailer->assign('NAME', $userObj->getVar('name'));
+		$mailer->assign('UNAME', $userObj->getVar('uname'));
+		$mailer->setToUsers($userObj);
+		$mailer->setFromEmail($icmsConfig['adminmail']);
+		$mailer->setFromName($icmsConfig['sitename']);
+		$mailer->setSubject(sprintf(_CO_ICMS_NEW_USER_NOTIFICATION_SUBJECT, $icmsConfig['sitename']));
 
-		if (!$xoopsMailer->send(true)) {
+		if (!$mailer->send(true)) {
 		/**
 		* @todo trap error if email was not sent
 		*	/
-		$xoopsMailer->getErrors(true);
+		$mailer->getErrors(true);
 		}
 		}
 
@@ -148,11 +148,11 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 	 * @return array $names
 	 * @author xHelp Team
 	 */
-	public function genUserNames($email, $count=20) {
+	public function genUserNames($email, $count = 20) {
 		$name = substr($email, 0, strpos($email, "@")); //Take the email adress without domain as username
 
 		$names = array();
-		$userid   = explode('@',$email);
+		$userid   = explode('@', $email);
 
 		$basename = '';
 		$hasbasename = false;
@@ -180,10 +180,10 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		while ($i < $count) {
 			$num = $this->genRandNumber();
 			if ($onbasename < 0 && $hasbasename) {
-				$names[] = icms_core_DataFilter::icms_substr($basename, 0, 58, '').$num;
+				$names[] = icms_core_DataFilter::icms_substr($basename, 0, 58, '') . $num;
 
 			} else {
-				$names[] = icms_core_DataFilter::icms_substr($emailname, 0, 58, ''). $num;
+				$names[] = icms_core_DataFilter::icms_substr($emailname, 0, 58, '') . $num;
 			}
 			$i = count($names);
 			$onbasename = ~ $onbasename;
@@ -206,7 +206,7 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		$tmp = array();
 
 		for ($i = 0; $i < $digits; $i++) {
-			$tmp[$i] = (rand()%9);
+			$tmp[$i] = (rand() % 9);
 		}
 		return implode('', $tmp);
 	}
@@ -219,10 +219,10 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 	 * @access public
 	 */
 	public function initRand() {
-		static $randCalled = FALSE;
+		static $randCalled = false;
 		if (!$randCalled) {
 			srand((double) microtime() * 1000000);
-			$randCalled = TRUE;
+			$randCalled = true;
 		}
 	}
 }

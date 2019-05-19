@@ -2,12 +2,12 @@
 /**
  * Hashtag TextSanitizer plugin
  *
- * @link		http://wiki.impresscms.org/modules/wiki/index.php?page=HashtagPlugin
+ * @link		https://www.impresscms.org/modules/simplywiki/index.php?page=HashtagPlugin
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		plugins
  */
-define('HASHTAG_LINK',	ICMS_URL . '/search.php?query=%s&amp;action=results'); // The link to search results
+define('HASHTAG_LINK', ICMS_URL . '/search.php?query=%s&amp;action=results'); // The link to search results
 
 /**
  * Finds the hashtag in the text
@@ -16,7 +16,7 @@ define('HASHTAG_LINK',	ICMS_URL . '/search.php?query=%s&amp;action=results'); //
  * @return	str	String with the pattern replaced by a link
  */
 function textsanitizer_hashtags($text) {
-	return preg_replace_callback("#([\s\R])\#(?|([\w\-]+)|\[([\w\s\-]+)\])#", function ($matches) {
+	return preg_replace_callback("#([\s\R])\#(?|([\w\-]+)|\[([\w\s\-]+)\])#", function($matches) {
 		return hashtag($matches[2], $matches[1]);
 	}, $text);
 }
@@ -29,18 +29,20 @@ function textsanitizer_hashtags($text) {
  * @return	str	link to search results for hashtag
  */
 function hashtag($text, $prefix) {
-	if (empty($text)) return $text;
+	if (empty($text)) {
+		return $text;
+	}
 	icms_loadLanguageFile('core', 'search');
 	$ret = $prefix . "<a href='" . sprintf(HASHTAG_LINK, urlencode($text)) . "' title='" . _SR_SEARCHRESULTS . ": " . $text . "'>#" . $text . "</a>";
 	return $ret;
 }
 
  /**
- * Generates the code to add a button to the DHTML editor
+  * Generates the code to add a button to the DHTML editor
   *
- * @param unknown_type $ele_name
- * @return	arr
- */
+  * @param unknown_type $ele_name
+  * @return	arr
+  */
 function render_hashtags($ele_name) {
 	global $xoTheme;
 	$dirname = basename(__DIR__);
@@ -54,7 +56,7 @@ function render_hashtags($ele_name) {
 		src='" . ICMS_PLUGINS_URL . "/textsanitizer/" . $dirname . "/" . $dirname . ".png'
 		alt='" . $dirname . "'
 		title='" . ucfirst($dirname) . "' />&nbsp;";
-	$javascript = 'plugins/textsanitizer/'. $dirname . '/' . $dirname . '.js';
+	$javascript = 'plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js';
 
 	return array($code, $javascript);
 }

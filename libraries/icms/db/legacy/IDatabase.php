@@ -28,7 +28,7 @@ interface icms_db_legacy_IDatabase {
 	 * @param string $tablename tablename
 	 * @return string prefixed tablename, just prefix if tablename is empty
 	 */
-	public function prefix($tablename='');
+	public function prefix($tablename = '');
 	/**
 	 * connect to the database
 	 *

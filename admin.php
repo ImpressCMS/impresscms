@@ -1,5 +1,4 @@
 <?php
-// $Id: admin.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -45,29 +44,28 @@
 define('ICMS_IN_ADMIN', 1);
 
 $xoopsOption['pagetype'] = 'admin';
-include ICMS_ROOT_PATH . '/include/cp_functions.php';
 
-$op = isset($_GET['rssnews']) ? (int) ($_GET['rssnews']) : 0;
-if (!empty($_GET['op'])) {$op = (int) ($_GET['op']);}
-if (!empty($_POST['op'])) {$op = (int) ($_POST['op']);}
+$op = isset($_GET['rssnews'])?(int) ($_GET['rssnews']):0;
+if (!empty($_GET['op'])) {$op = (int) ($_GET['op']); }
+if (!empty($_POST['op'])) {$op = (int) ($_POST['op']); }
 
 if (!icms::getInstance()->get('cache')->getItem('adminmenu-' . $icmsConfig['language'])->isHit()) {
 	xoops_module_write_admin_menu(impresscms_get_adminmenu());
 }
 
 switch ($op) {
-	case 1:
-		icms_cp_header();
-		showRSS();
-		break;
-		/*	case 2:
+		case 1:
+			icms_cp_header();
+			showRSS();
+			break;
+			/*	case 2:
 		 xoops_module_write_admin_menu(impresscms_get_adminmenu());
 		 redirect_header('javascript:history.go(-1)', 1, _AD_LOGINADMIN);
 		 break;*/
 
-	default:
-		icms_cp_header();
-		break;
+		default:
+			icms_cp_header();
+			break;
 }
 
 function showRSS() {

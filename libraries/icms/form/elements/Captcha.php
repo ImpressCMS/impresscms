@@ -48,14 +48,14 @@ class icms_form_elements_Captcha extends icms_form_Element {
 			$numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null,
 			$backgroundnum = null
 	) {
-		$this->_captchaHandler =& icms_form_elements_captcha_Object::instance();
+		$this->_captchaHandler = & icms_form_elements_captcha_Object::instance();
 		$this->_captchaHandler->init(
 			$name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum
 		);
 		if (!$this->_captchaHandler->active) {
 			$this->setHidden();
 		} else {
-			$caption = !empty($caption) ? $caption : $this->_captchaHandler->getCaption();
+			$caption = !empty($caption)?$caption:$this->_captchaHandler->getCaption();
 			$this->setCaption($caption);
 		}
 	}

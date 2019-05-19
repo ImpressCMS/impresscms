@@ -1,5 +1,4 @@
 <?php
-// $Id: old_theme_functions.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -46,22 +45,19 @@
 // function_exists check is needed for inclusion from the admin side
 
 if (!function_exists('opentable')) {
-	function OpenTable($width='100%')
-	{
-		echo '<table width="'.$width.'" cellspacing="0" class="outer"><tr><td class="even">';
+	function OpenTable($width = '100%') {
+		echo '<table width="' . $width . '" cellspacing="0" class="outer"><tr><td class="even">';
 	}
 }
 
 if (!function_exists('closetable')) {
-	function CloseTable()
-	{
+	function CloseTable() {
 		echo '</td></tr></table>';
 	}
 }
 
 if (!function_exists('themecenterposts')) {
-	function themecenterposts($title, $content)
-	{
-		echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$title.'</td></tr><tr><td><br />'.$content.'<br /></td></tr></table>';
+	function themecenterposts($title, $content) {
+		echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $title . '</td></tr><tr><td><br />' . $content . '<br /></td></tr></table>';
 	}
 }

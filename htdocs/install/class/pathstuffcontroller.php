@@ -8,11 +8,11 @@ class PathStuffController {
 	var $permErrors = array();
 
 	public function __construct() {
-		if (isset( $_SESSION['settings']['URL'] )) {
+		if (isset($_SESSION['settings']['URL'])) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
 		} else {
 			$path = $GLOBALS['wizard']->baseLocation();
-			$this->xoopsUrl = substr( $path, 0, strrpos( $path, '/' ) );
+			$this->xoopsUrl = substr($path, 0, strrpos($path, '/'));
 		}
 	}
 
@@ -22,9 +22,9 @@ class PathStuffController {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$_SESSION['settings']['URL'] = $this->xoopsUrl;
 			if ($valid) {
-				$GLOBALS['wizard']->redirectToPage( '+1' );
+				$GLOBALS['wizard']->redirectToPage('+1');
 			} else {
-				$GLOBALS['wizard']->redirectToPage( '+0' );
+				$GLOBALS['wizard']->redirectToPage('+0');
 			}
 		}
 	}
@@ -32,9 +32,9 @@ class PathStuffController {
 	function readRequest() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$request = $_POST;
-			if (isset( $request['URL'] )) {
-				if (substr( $request['URL'], -1 ) == '/') {
-					$request['URL'] = substr( $request['URL'], 0, -1 );
+			if (isset($request['URL'])) {
+				if (substr($request['URL'], -1) == '/') {
+					$request['URL'] = substr($request['URL'], 0, -1);
 				}
 				$this->xoopsUrl = $request['URL'];
 			}
@@ -43,7 +43,7 @@ class PathStuffController {
 
 	function validate() {
 		$this->validUrl = !empty($this->xoopsUrl);
-		return $this->checkPermissions() && ( $this->validUrl && empty( $this->permErrors ) );
+		return $this->checkPermissions() && ($this->validUrl && empty($this->permErrors));
 	}
 
 	function checkPermissions() {
@@ -52,20 +52,20 @@ class PathStuffController {
 			'.env',
 			$short_path . DIRECTORY_SEPARATOR . 'uploads',
 			'modules',
-			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier',
-			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'CSS',
-			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'HTML',
-			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'Test',
-			'storage' .  DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'URI',
-			'storage' .  DIRECTORY_SEPARATOR . 'templates_c',
-			'storage' .  DIRECTORY_SEPARATOR . 'log',
-			'storage' .  DIRECTORY_SEPARATOR . 'cache'
+			'storage' . DIRECTORY_SEPARATOR . 'htmlpurifier',
+			'storage' . DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'CSS',
+			'storage' . DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'HTML',
+			'storage' . DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'Test',
+			'storage' . DIRECTORY_SEPARATOR . 'htmlpurifier' . DIRECTORY_SEPARATOR . 'URI',
+			'storage' . DIRECTORY_SEPARATOR . 'templates_c',
+			'storage' . DIRECTORY_SEPARATOR . 'log',
+			'storage' . DIRECTORY_SEPARATOR . 'cache'
 		);
 		$errors = array();
-		foreach ( $paths as $path) {
-			$errors[$path] = $this->makeWritable( ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $path );
+		foreach ($paths as $path) {
+			$errors[$path] = $this->makeWritable(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $path);
 		}
-		if (in_array( false, $errors )) {
+		if (in_array(false, $errors)) {
 			$this->permErrors = $errors;
 			return false;
 		}
@@ -79,28 +79,28 @@ class PathStuffController {
 	 * @param bool $recurse
 	 * @return false on failure, method (u-ser,g-roup,w-orld) on success
 	 */
-	function makeWritable( $path, $group = false, $recurse = false) {
-		if (!file_exists( $path )) {
+	function makeWritable($path, $group = false, $recurse = false) {
+		if (!file_exists($path)) {
 			return false;
 		}
-		$perm = @is_dir( $path ) ? 6 : 7;
+		$perm = @is_dir($path)?6:7;
 		if (@!is_writable($path)) {
 			// First try using owner bit
-			@chmod( $path, octdec( '0' . $perm . '00' ) );
+			@chmod($path, octdec('0' . $perm . '00'));
 			clearstatcache();
-			if (!@is_writable( $path ) && $group !== false) {
+			if (!@is_writable($path) && $group !== false) {
 				// If group has been specified, try using the group bit
-				@chgrp( $path, $group );
-				@chmod( $path, octdec( '0' . $perm . $perm . '0' ) );
+				@chgrp($path, $group);
+				@chmod($path, octdec('0' . $perm . $perm . '0'));
 			}
 			clearstatcache();
-			if (!@is_writable( $path )) {
-				@chmod( $path, octdec( '0' . $perm . $perm . $perm ) );
+			if (!@is_writable($path)) {
+				@chmod($path, octdec('0' . $perm . $perm . $perm));
 			}
 		}
 		clearstatcache();
-		if (@is_writable( $path )) {
-			$info = stat( $path );
+		if (@is_writable($path)) {
+			$info = stat($path);
 			//echo $path . ' : ' . sprintf( '%o', $info['mode'] ) . '....';
 			if ($info['mode'] & 0002) {
 				return 'w';
@@ -116,12 +116,12 @@ class PathStuffController {
 	 * @return int
 	 */
 	function findServerGID() {
-		$name = tempnam( '/non-existent/', 'XOOPS' );
+		$name = tempnam('/non-existent/', 'XOOPS');
 		$group = 0;
 		if ($name) {
-			if (touch( $name )) {
-				$group = filegroup( $name );
-				unlink( $name );
+			if (touch($name)) {
+				$group = filegroup($name);
+				unlink($name);
 				return $group;
 				//$info = posix_getgrgid( $group );
 			}

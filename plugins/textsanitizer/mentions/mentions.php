@@ -2,12 +2,12 @@
 /**
  * Mentions TextSanitizer plugin
  *
- * @link		http://wiki.impresscms.org/modules/wiki/index.php?page=MentionsPlugin
+ * @link		https://www.impresscms.org/modules/simplywiki/index.php?page=MentionsPlugin
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		plugins
  */
-define('MENTIONS_LINK',	ICMS_URL . '/userinfo.php?uid=%u'); // The link to user profile
+define('MENTIONS_LINK', ICMS_URL . '/userinfo.php?uid=%u'); // The link to user profile
 
 /**
  * Finds the mention in the text
@@ -18,7 +18,7 @@ define('MENTIONS_LINK',	ICMS_URL . '/userinfo.php?uid=%u'); // The link to user 
  * @return	str	String with the pattern replaced by a link
  */
 function textsanitizer_mentions($text) {
-	return preg_replace_callback("#([\s\R])@(?|([\w\-]+)|\[([\w\s\-]+)\])#", function ($matches) {
+	return preg_replace_callback("#([\s\R])@(?|([\w\-]+)|\[([\w\s\-]+)\])#", function($matches) {
 		return mentions($matches[2], $matches[1]);
 	}, $text);
 }
@@ -31,22 +31,26 @@ function textsanitizer_mentions($text) {
  * @return	str	link to search results for mention
  */
 function mentions($text, $prefix) {
-	if (empty($text)) return $text;
+	if (empty($text)) {
+		return $text;
+	}
 	icms_loadLanguageFile("core", "user");
-	$userHandler =& icms::handler('icms_member');
+	$userHandler = & icms::handler('icms_member');
 	$criteria = new icms_db_criteria_Item('uname', $text);
 	$userId = $userHandler->getUsers($criteria);
-	if (!$userId) return $prefix . "@" . $text;
-	$ret = $prefix . "<a href='" . sprintf(MENTIONS_LINK, $userId[0]->getVar('uid')) . "' title='" . sprintf(_US_ALLABOUT, $text) ."'>@" . $text . "</a>";
+	if (!$userId) {
+		return $prefix . "@" . $text;
+	}
+	$ret = $prefix . "<a href='" . sprintf(MENTIONS_LINK, $userId[0]->getVar('uid')) . "' title='" . sprintf(_US_ALLABOUT, $text) . "'>@" . $text . "</a>";
 	return $ret;
 }
 
  /**
- * Generates the code to add a button to the DHTML editor
+  * Generates the code to add a button to the DHTML editor
   *
- * @param unknown_type $ele_name
- * @return	arr
- */
+  * @param unknown_type $ele_name
+  * @return	arr
+  */
 function render_mentions($ele_name) {
 	global $xoTheme;
 	$dirname = basename(__DIR__);
@@ -60,7 +64,7 @@ function render_mentions($ele_name) {
 		src='" . ICMS_PLUGINS_URL . "/textsanitizer/" . $dirname . "/" . $dirname . ".png'
 		alt='" . $dirname . "'
 		title='" . ucfirst($dirname) . "' />&nbsp;";
-	$javascript = 'plugins/textsanitizer/'. $dirname . '/' . $dirname . '.js';
+	$javascript = 'plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js';
 
 	return array($code, $javascript);
 }

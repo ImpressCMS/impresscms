@@ -100,8 +100,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 *
 	 * @return string Returns the error text from the last MySQL function, or '' (the empty string) if no error occurred.
 	 */
-	public function error()
-	{
+	public function error() {
 		return @ mysql_error();
 	}
 
@@ -110,8 +109,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 *
 	 * @return int Returns the error number from the last MySQL function, or 0 (zero) if no error occurred.
 	 */
-	public function errno()
-	{
+	public function errno() {
 		return @ mysql_errno();
 	}
 
@@ -124,13 +122,12 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @return resource query result or FALSE if successful
 	 * or TRUE if successful and no result
 	 */
-	public function queryF($sql, $limit = 0, $start = 0)
-	{
+	public function queryF($sql, $limit = 0, $start = 0) {
 		if (!empty ($limit)) {
 			if (empty ($start)) {
 				$start = 0;
 			}
-			$sql = $sql . ' LIMIT ' . (int)$start . ', ' . (int)$limit;
+			$sql = $sql . ' LIMIT ' . (int) $start . ', ' . (int) $limit;
 		}
 		$result = mysql_query($sql, $this->conn);
 		if ($result) {
@@ -318,8 +315,10 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param obj $connecton	A MySQL database connection link
 	 * @return string
 	 */
-	public function getServerVersion($connection = NULL) {
-		if (NULL === $connection) $connection = $this->conn;
+	public function getServerVersion($connection = null) {
+		if (null === $connection) {
+			$connection = $this->conn;
+		}
 		return mysql_get_server_info($connection);
 	}
 }

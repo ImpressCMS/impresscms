@@ -23,7 +23,7 @@
 * @author		Skalpa Keo <skalpa@xoops.org>
 * @author		Taiwen Jiang <phppp@users.sourceforge.net>
  */
-	defined( 'XOOPS_INSTALL' ) or die();
+	defined('XOOPS_INSTALL') or die();
 	if (isset($_COOKIE['xo_install_lang'])) {
 		$icmsConfig['language'] = $icmsConfig['language'] = $_COOKIE['xo_install_lang'];
 	}
@@ -31,7 +31,7 @@
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION); ?>(<?php echo ($wizard->currentPage+1) . '/' . count($wizard->pages); ?>)</title>
+<title><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION); ?>(<?php echo ($wizard->currentPage + 1) . '/' . count($wizard->pages); ?>)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>" />
 <?php
 if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
@@ -78,7 +78,7 @@ echo '<body>';
 <div id="wrapper">
 <div id="header">
 <div id="logo"><img src="img/logo.png" alt="ImpressCMS" /></div>
-<div id="info"><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION)."<br />".INSTALL_STEP; ?>&nbsp;<?php echo ($wizard->currentPage+1) . INSTALL_OUTOF . count($wizard->pages); ?></div>
+<div id="info"><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION) . "<br />" . INSTALL_STEP; ?>&nbsp;<?php echo ($wizard->currentPage + 1) . INSTALL_OUTOF . count($wizard->pages); ?></div>
 </div>
 
 <div id="page_top">&nbsp;</div>
@@ -88,11 +88,14 @@ echo '<body>';
 	<div id="leftside">
 			<h3><?php echo INSTALL_H3_STEPS; ?></h3>
 			<ul>
-			<?php foreach ( $wizard->pages as $k => $page) {
+			<?php foreach ($wizard->pages as $k => $page) {
 				$class = '';
-				if ($k == $wizard->currentPage )	$class = ' class="current"';
-				elseif ($k > $wizard->currentPage )	$class = ' class="disabled"';
-				if (empty( $class )) {
+				if ($k == $wizard->currentPage) {
+					$class = ' class="current"';
+				} elseif ($k > $wizard->currentPage) {
+					$class = ' class="disabled"';
+				}
+				if (empty($class)) {
 					$li = '<a href="' . $wizard->pageURI($page) . '">' . $wizard->pagesNames[$k] . '</a>';
 				} else {
 					$li = $wizard->pagesNames[$k];
@@ -115,11 +118,11 @@ echo '<body>';
 						<button type="button" onclick="javascript:void(0);" id="toggler" >
 						<img src="img/toggler.png" alt="<?php echo SHOW_HIDE_HELP; ?>"/>
 						</button>
-				<h2><?php echo $wizard->pagesTitles[ $wizard->currentPage ]; ?></h2>
+				<h2><?php echo $wizard->pagesTitles[$wizard->currentPage]; ?></h2>
 				<?php echo $content; ?>
 			</div>
 			<div id="buttons">
-				<?php if ($wizard->currentPage != 0  && ( $wizard->currentPage != 11 )) { ?>
+				<?php if ($wizard->currentPage != 0 && ($wizard->currentPage != 11)) { ?>
 				<button type="button" title="<?php echo BUTTON_PREVIOUS; ?>" onclick="location.href='<?php echo $wizard->pageURI('-1'); ?>'" class="prev">
 					<img src="img/left-arr.png" alt="<?php echo BUTTON_PREVIOUS; ?>"  title="<?php echo BUTTON_PREVIOUS; ?>" width="16" />
 				</button>

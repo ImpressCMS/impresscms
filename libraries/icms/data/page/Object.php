@@ -22,24 +22,24 @@
  */
 class icms_data_page_Object extends icms_ipf_Object {
 
-	public function __construct( & $handler, $data = array()) {
-            $this->initVar('page_id', self::DTYPE_INTEGER );
-            $this->initVar('page_moduleid', self::DTYPE_INTEGER, 0, true, 8);
-            $this->initVar('page_title', self::DTYPE_STRING, '', true, 255);
-            $this->initVar('page_url', self::DTYPE_STRING, '', true, 255);
-            $this->initVar('page_status', self::DTYPE_INTEGER, 0, true, 1);
+	public function __construct(& $handler, $data = array()) {
+			$this->initVar('page_id', self::DTYPE_INTEGER);
+			$this->initVar('page_moduleid', self::DTYPE_INTEGER, 0, true, 8);
+			$this->initVar('page_title', self::DTYPE_STRING, '', true, 255);
+			$this->initVar('page_url', self::DTYPE_STRING, '', true, 255);
+			$this->initVar('page_status', self::DTYPE_INTEGER, 0, true, 1);
 
-            parent::__construct( $handler , $data);
+			parent::__construct($handler, $data);
 	}
 
-        /**
-         * Gets page URL
-         *
-         * @return string
-         */
-        public function getURL() {
-            return (substr($this->getVar('page_url'), 0, 7) == 'http://')
-				? $this->getVar('page_url') : ICMS_URL . '/' . $this->getVar('page_url');
-        }
+		/**
+		 * Gets page URL
+		 *
+		 * @return string
+		 */
+		public function getURL() {
+			return (substr($this->getVar('page_url'), 0, 7) == 'http://')
+				?$this->getVar('page_url'):ICMS_URL . '/' . $this->getVar('page_url');
+		}
 }
 

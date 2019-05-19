@@ -1,5 +1,4 @@
 <?php
-// $Id: notification_select.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -39,15 +38,15 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
+include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 $xoops_notification = [
-    'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline')) ? 1 : 0
+	'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline'))?1:0
 ];
 
 if ($xoops_notification['show']) {
 	icms_loadLanguageFile('core', 'notification');
 	$notification_handler = icms::handler('icms_data_notification');
-	$categories =& $notification_handler->subscribableCategoryInfo();
+	$categories = & $notification_handler->subscribableCategoryInfo();
 	$event_count = 0;
 	if (!empty($categories)) {
 		foreach ($categories as $category) {
@@ -64,9 +63,9 @@ if ($xoops_notification['show']) {
 				if (!empty($event['invisible'])) {
 					continue;
 				}
-				$subscribed = in_array($event['name'], $subscribed_events) ? 1 : 0;
-				$section['events'][$event['name']] = array ('name'=>$event['name'], 'title'=>$event['title'], 'caption'=>$event['caption'], 'description'=>$event['description'], 'subscribed'=>$subscribed);
-				$event_count ++;
+				$subscribed = in_array($event['name'], $subscribed_events)?1:0;
+				$section['events'][$event['name']] = array('name'=>$event['name'], 'title'=>$event['title'], 'caption'=>$event['caption'], 'description'=>$event['description'], 'subscribed'=>$subscribed);
+				$event_count++;
 			}
 			$xoops_notification['categories'][$category['name']] = $section;
 		}

@@ -90,7 +90,7 @@ class icms_preload_Handler {
 				if (strpos($method, 'event') === 0) {
 					$preload_event = strtolower(str_replace('event', '', $method));
 
-					$callback = array( $preloadItem, $method );
+					$callback = array($preloadItem, $method);
 					icms_Event::attach('icms', $preload_event, $callback);
 					/*
 					$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);

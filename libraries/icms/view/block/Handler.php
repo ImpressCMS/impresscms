@@ -62,7 +62,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @return array
 	 */
 	public function getBlockPositions($full = false) {
-		if (!count($this->block_positions)) {
+		if (empty($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
 			$icms_blockposition_handler = icms::handler('icms_view_block_position');
 			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
@@ -79,7 +79,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		}
 		if (!$full) {
 			foreach ($this->block_positions as $k => $block_position) {
-				$rtn[ $k ] = $block_position['pname'];
+				$rtn[$k] = $block_position['pname'];
 			}
 		} else {
 			$rtn = $this->block_positions;
@@ -120,7 +120,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 */
 	public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side, weight, bid", $isactive = 1) {
 		$ret = array();
-		$where_query = " WHERE isactive='". (int) $isactive . "'";
+		$where_query = " WHERE isactive='" . (int) $isactive . "'";
 
 		if (isset($side)) {
 			// get both sides in sidebox? (some themes need this)
@@ -132,17 +132,17 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 				$criteria->add(new icms_db_criteria_Item('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach ($blockpositions as $bp) {
-					$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
+					$q_side .= "side='" . (int) $bp->getVar('id') . "' OR ";
 				}
-				$q_side = "('" . substr($q_side, 0, strlen($q_side)-4) . "')";
+				$q_side = "('" . substr($q_side, 0, strlen($q_side) - 4) . "')";
 			} else {
-				$q_side = "side='". (int) $side . "'";
+				$q_side = "side='" . (int) $side . "'";
 			}
-			$where_query .= " AND ". $q_side;
+			$where_query .= " AND " . $q_side;
 		}
 
 		if (isset($visible)) {
-			$where_query .= " AND visible='". (int) $visible . "'";
+			$where_query .= " AND visible='" . (int) $visible . "'";
 		}
 		$where_query .= " ORDER BY $orderby";
 		switch ($rettype) {
@@ -188,6 +188,20 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		return $ret;
 	}
 
+	public function &get($id, $as_object = true, $debug = false, $criteria = false)
+	{
+		$obj = parent::get($id, $as_object, $debug, $criteria);
+		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link')
+			. " WHERE block_id='" . (int)$obj->getVar('bid') . "'";
+		$result = $this->db->query($sql);
+		$modules = $bcustomp = array();
+		while ($row = $this->db->fetchArray($result)) {
+			$modules[] = (int)$row['module_id'] . '-' . (int)$row['page_id'];
+		}
+		$obj->setVar('visiblein', $modules);
+		return $obj;
+	}
+
 	/**
 	 * getAllByGroupModule gets all blocks visible on a page, based on group permissions
 	 *
@@ -204,7 +218,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	public function getAllByGroupModule($groupid, $module_id = '0-0', $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		// TODO: use $this->getObjects($criteria);
 
-		$isactive = (int)$isactive;
+		$isactive = (int) $isactive;
 		$ret = array();
 		$sql = "SELECT DISTINCT gperm_itemid FROM " . $this->db->prefix('group_permission')
 			. " WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
@@ -225,7 +239,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		if (!empty($blockids)) {
 			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, " . $this->db->prefix('block_module_link')
 				. " m WHERE m.block_id=b.bid";
-			$sql .= " AND b.isactive='" . $isactive."'";
+			$sql .= " AND b.isactive='" . $isactive . "'";
 			if (isset($visible)) {
 				$sql .= " AND b.visible='" . (int) ($visible) . "'";
 			}
@@ -238,7 +252,8 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 				if ($page_id == 0) {
 					//All pages
 					$sql .= " AND m.module_id='0' AND m.page_id=0";
-				} elseif ($page_id == 1) { //Top Page
+				} elseif ($page_id == 1) {
+//Top Page
 					$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='0' AND m.page_id=1))";
 				}
 			} else {
@@ -276,6 +291,35 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	}
 
 	/**
+	 * Get block data for multiple block ids
+	 *
+	 * @param array $blockids
+	 *
+	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks. (used in theme_blocks)
+	 */
+	private function &getMultiple($blockids)
+	{
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+		$criteria->setSort('weight');
+		$ret = $this->getObjects($criteria, true, true);
+		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link')
+			. " WHERE block_id IN (" . implode(',', array_keys($ret)) . ") ORDER BY block_id";
+		$result = $this->db->query($sql);
+		$modules = array();
+		$last_block_id = 0;
+		while ($row = $this->db->fetchArray($result)) {
+			$modules[] = (int)($row['module_id']) . '-' . (int)($row['page_id']);
+			$ret[$row['block_id']]->setVar('visiblein', $modules);
+			if ($row['block_id'] != $last_block_id) {
+				$modules = array();
+			}
+			$last_block_id = $row['block_id'];
+		}
+		return $ret;
+	}
+
+	/**
 	 * getNonGroupedBlocks
 	 *
 	 * @param unknown_type $module_id
@@ -308,9 +352,9 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		if (!empty($non_grouped)) {
 			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, "
 				. $this->db->prefix('block_module_link') . " m WHERE m.block_id=b.bid";
-			$sql .= " AND b.isactive='". (int) $isactive . "'";
+			$sql .= " AND b.isactive='" . (int) $isactive . "'";
 			if (isset($visible)) {
-				$sql .= " AND b.visible='" .  (int) $visible . "'";
+				$sql .= " AND b.visible='" . (int) $visible . "'";
 			}
 			$module_id = (int) $module_id;
 			if (!empty($module_id)) {
@@ -436,45 +480,6 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 
 	}
 
-	public function &get($id, $as_object = true, $debug = false, $criteria = false) {
-		$obj = parent::get($id, $as_object, $debug, $criteria);
-		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link')
-			. " WHERE block_id='" . (int) $obj->getVar('bid') . "'";
-		$result = $this->db->query($sql);
-		$modules = $bcustomp = array();
-		while ($row = $this->db->fetchArray($result)) {
-			$modules[] = (int) $row['module_id'] . '-' . (int) $row['page_id'];
-		}
-		$obj->setVar('visiblein', $modules);
-		return $obj;
-	}
-
-	/**
-	 * Get block data for multiple block ids
-	 *
-	 * @param array $blockids
-	 *
-	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks. (used in theme_blocks)
-	 */
-	private function &getMultiple($blockids) {
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
-		$criteria->setSort('weight');
-		$ret = $this->getObjects($criteria, true, true);
-		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link')
-			. " WHERE block_id IN (" . implode(',', array_keys($ret)) . ") ORDER BY block_id";
-		$result = $this->db->query($sql);
-		$modules = array();
-		$last_block_id = 0;
-		while ($row = $this->db->fetchArray($result)) {
-			$modules[] = (int)($row['module_id']) . '-' . (int)($row['page_id']);
-			$ret[$row['block_id']]->setVar('visiblein', $modules);
-			if ($row['block_id'] != $last_block_id) $modules = array();
-			$last_block_id = $row['block_id'];
-		}
-		return $ret;
-	}
-
 	public function getCountSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
 		$funcNum = (int) $funcNum;
 		$moduleId = (int) $moduleId;
@@ -516,7 +521,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @deprecated	Use getObjects() instead
 	 * @todo		Remove in version 1.4
 	 */
-	public function getAllBlocksByGroup($groupid, $asobject = TRUE, $side = NULL, $visible = NULL, $orderby = "b.weight,b.bid", $isactive = 1) {
+	public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = "b.weight,b.bid", $isactive = 1) {
 		trigger_error('Use getObjects() instead', E_USER_DEPRECATED);
 
 		$ret = array();
@@ -533,7 +538,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		if (is_array($groupid)) {
 			$sql .= " AND (l.gperm_groupid='" . (int) $groupid[0] . "'";
 			$size = count($groupid);
-			if ($size  > 1) {
+			if ($size > 1) {
 				for ($i = 1; $i < $size; $i++) {
 					$sql .= " OR l.gperm_groupid='" . (int) $groupid[$i] . "'";
 				}
@@ -547,8 +552,8 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		if (isset($side)) {
 			// get both sides in sidebox? (some themes need this)
 			$tp = ($side == -2)
-				? 'L'
-				: ($side == -6) ? 'C' : '';
+				?'L'
+				: ($side == -6)?'C':'';
 			if ($tp != '') {
 				$side = "";
 				$s1 = "SELECT id FROM " . $this->db->prefix('block_positions') . " WHERE block_type='" . $tp . "' ORDER BY id ASC";

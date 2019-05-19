@@ -127,7 +127,7 @@ class icms_form_Groupperm extends icms_form_Base {
 	public function render() {
 		// load all child ids for javascript codes
 		foreach (array_keys($this->_itemTree) as $item_id) {
-			$this->_itemTree[$item_id]['allchild'] = array ();
+			$this->_itemTree[$item_id]['allchild'] = array();
 			$this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
 		}
 

@@ -45,9 +45,9 @@
  */
 class icms_view_template_set_Handler extends icms_ipf_Handler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'view_template_set', 'tplset_id', 'tplset_name', 'tplset_name', 'icms', 'tplset', 'tplset_id');
-        }
+		public function __construct(&$db) {
+			parent::__construct($db, 'view_template_set', 'tplset_id', 'tplset_name', 'tplset_name', 'icms', 'tplset', 'tplset_id');
+		}
 
 	/**
 	 * Gets templateset from database by Name
@@ -57,10 +57,10 @@ class icms_view_template_set_Handler extends icms_ipf_Handler {
 	 * @return object icms_view_template_set_Object {@link icms_view_template_set_Object} reference to the new template
 	 */
 	public function &getByName($tplset_name) {
-                $criteria = new icms_db_criteria_Item('tplset_name', trim($tplset_name));
-                $criteria->setLimit(1);
-                $objs = $this->getObjects($criteria);
-                return isset($objs[0])?$objs[0]:null;
+				$criteria = new icms_db_criteria_Item('tplset_name', trim($tplset_name));
+				$criteria->setLimit(1);
+				$objs = $this->getObjects($criteria);
+				return isset($objs[0])?$objs[0]:null;
 	}
 
 	/**
@@ -73,10 +73,10 @@ class icms_view_template_set_Handler extends icms_ipf_Handler {
 	 *
 	 * @return object icms_view_template_set_Object {@link icms_view_template_set_Object} reference to the new template
 	 */
-	public function delete(&$tplset, $force = false)
-	{
-		if (!parent::delete($tplset, $force))
-			return false;
+	public function delete(&$tplset, $force = false) {
+		if (!parent::delete($tplset, $force)) {
+					return false;
+		}
 		$sql = sprintf(
 			"DELETE FROM %s WHERE tplset_name = %s",
 			$this->db->prefix('imgset_tplset_link'),

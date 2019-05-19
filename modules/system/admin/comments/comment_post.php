@@ -1,5 +1,4 @@
 <?php
-// $Id: comment_post.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -35,4 +34,4 @@
  */
 
 include './admin_header.php';
-include ICMS_ROOT_PATH.'/include/comment_post.php';
+include ICMS_ROOT_PATH . '/include/comment_post.php';

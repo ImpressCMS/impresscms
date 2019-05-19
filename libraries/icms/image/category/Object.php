@@ -57,11 +57,11 @@
  */
 class icms_image_category_Object extends \icms_ipf_Object {
 
-        /**
-        * Image count
-         *
-        * @var int
-        */
+		/**
+		 * Image count
+		 *
+		 * @var int
+		 */
 	private $_imageCount;
 
 	/**
@@ -81,7 +81,7 @@ class icms_image_category_Object extends \icms_ipf_Object {
 		$this->initVar('imgcat_type', self::DTYPE_STRING, null, false, 1);
 		$this->initVar('imgcat_storetype', self::DTYPE_STRING, null, false, 5);
 
-                parent::__construct($handler, $data);
+				parent::__construct($handler, $data);
 	}
 
 	/**

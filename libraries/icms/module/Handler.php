@@ -45,18 +45,17 @@
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
 class icms_module_Handler
-	extends icms_ipf_Handler
-{
+	extends icms_ipf_Handler {
 
 	/**
 	 * Constructor
 	 *
 	 * @param object $db
 	 */
-	public function __construct(&$db, $module = 'icms')
-	{
-		if (!$module)
-			$module = 'icms_member';
+	public function __construct(&$db, $module = 'icms') {
+		if (!$module) {
+					$module = 'icms_member';
+		}
 		parent::__construct($db, 'module', 'mid', 'dirname', 'name', $module, 'modules', true);
 	}
 
@@ -69,8 +68,7 @@ class icms_module_Handler
 	 * @since    1.3
 	 * @return    array    List of folder names in the modules directory
 	 */
-	static public function getAvailable()
-	{
+	static public function getAvailable() {
 		$dirtyList = $cleanList = array();
 		$dirtyList = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/');
 		foreach ($dirtyList as $item) {
@@ -91,11 +89,10 @@ class icms_module_Handler
 	 * @since    1.3
 	 * @return    array    List of active modules
 	 */
-	static public function getActive()
-	{
+	static public function getActive() {
 		$module_handler = new self(icms::$xoopsDB);
 		$criteria = new icms_db_criteria_Item('isactive', 1);
-		return $module_handler->getList($criteria, TRUE);
+		return $module_handler->getList($criteria, true);
 	}
 
 	/**
@@ -104,9 +101,10 @@ class icms_module_Handler
 	 * @param bool $inAdmin
 	 * @return bool
 	 */
-	static protected function checkModuleAccess($module, $inAdmin = FALSE)
-	{
-		if ($inAdmin && !icms::$user) return FALSE;
+	static public function checkModuleAccess($module, $inAdmin = false) {
+		if ($inAdmin && !icms::$user) {
+			return false;
+		}
 		/* @var $perm_handler icms_member_groupperm_Handler */
 		$perm_handler = icms::handler('icms_member_groupperm');
 		if ($inAdmin) {
@@ -117,11 +115,11 @@ class icms_module_Handler
 				return $perm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
 			}
 		} elseif ($module) {
-			$groups = (icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+			$groups = (icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 			return $perm_handler->checkRight('module_read', $module->getVar('mid'), $groups);
 		}
 		// We are in /something.php: let the page handle permissions
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -134,11 +132,12 @@ class icms_module_Handler
 	 *
 	 * @return    object  {@link icms_module_Object} FALSE on fail
 	 */
-	public function &get($id, $loadConfig = FALSE, $debug = false, $criteria = false)
+	public function &get($id, $loadConfig = false, $debug = false, $criteria = false)
 	{
 		$module = parent::get($id, true, $debug, $criteria);
-		if ($loadConfig)
-			$this->loadConfig($module);
+		if ($loadConfig) {
+					$this->loadConfig($module);
+		}
 		return $module;
 	}
 
@@ -148,9 +147,10 @@ class icms_module_Handler
 	 * @param    icms_module_Object $module
 	 * @return    bool                TRUE
 	 */
-	private function loadConfig($module)
-	{
-		if ($module->config !== NULL) return TRUE;
+	private function loadConfig($module) {
+		if ($module->config !== null) {
+			return true;
+		}
 		icms_loadLanguageFile($module->getVar("dirname"), "main");
 		if ($module->getVar("hasconfig") == 1
 			|| $module->getVar("hascomments") == 1
@@ -158,7 +158,7 @@ class icms_module_Handler
 		) {
 			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
 		}
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -170,8 +170,7 @@ class icms_module_Handler
 	 * @param    bool $loadConfig set to TRUE in case you want to load the module config in addition
 	 * @return    object  {@link icms_module_Object} FALSE on fail
 	 */
-	public function getByDirname($dirname, $loadConfig = FALSE)
-	{
+	public function getByDirname($dirname, $loadConfig = false) {
 		//if (!($module = $this->getFromCache('dirname', $dirname))) {
 		$criteria = new icms_db_criteria_Item('dirname', trim($dirname));
 		$criteria->setLimit(1);
@@ -188,8 +187,7 @@ class icms_module_Handler
 		return $module;
 	}
 
-	public function beforeSave(icms_module_Object &$module)
-	{
+	public function beforeSave(icms_module_Object &$module) {
 		$module->setVar('last_update', time());
 		return true;
 	}
@@ -202,26 +200,26 @@ class icms_module_Handler
 	 *
 	 * @return  bool
 	 */
-	public function delete(&$module, $force = false)
-	{
-		if (!parent::delete($module, $force))
-			return false;
+	public function delete(&$module, $force = false) {
+		if (!parent::delete($module, $force)) {
+					return false;
+		}
 		// delete admin permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
+			$this->db->prefix('group_permission'), (int) $module->getVar('mid')
 		);
 		$this->db->query($sql);
 		// delete read permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
+			$this->db->prefix('group_permission'), (int) $module->getVar('mid')
 		);
 		$this->db->query($sql);
 
 		$sql = sprintf(
 			"SELECT block_id FROM %s WHERE module_id = '%u'",
-			$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+			$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
 		);
 		if ($result = $this->db->query($sql)) {
 			$block_id_arr = array();
@@ -235,26 +233,26 @@ class icms_module_Handler
 			foreach ($block_id_arr as $i) {
 				$sql = sprintf(
 					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
-					$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+					$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
 				);
 				if ($result2 = $this->db->query($sql)) {
 					if (0 < $this->db->getRowsNum($result2)) {
 						// this block has other entries, so delete the entry for this module
 						$sql = sprintf(
 							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+							$this->db->prefix('block_module_link'), (int) $module->getVar('mid'), (int) $i
 						);
 						$this->db->query($sql);
 					} else {
 						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
 						$sql = sprintf(
 							"UPDATE %s SET visible = '0' WHERE bid = '%u'",
-							$this->db->prefix('newblocks'), (int)$i
+							$this->db->prefix('newblocks'), (int) $i
 						);
 						$this->db->query($sql);
 						$sql = sprintf(
 							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+							$this->db->prefix('block_module_link'), (int) $module->getVar('mid')
 						);
 						$this->db->query($sql);
 					}
@@ -276,8 +274,7 @@ class icms_module_Handler
 	 * @param    string $dirname
 	 * @return    string    Results of the installation process
 	 */
-	public function install($dirname)
-	{
+	public function install($dirname) {
 
 	}
 
@@ -287,8 +284,7 @@ class icms_module_Handler
 	 * @param unknown_type $dirname
 	 * @return    string    Result messages for uninstallation
 	 */
-	public function uninstall($dirname)
-	{
+	public function uninstall($dirname) {
 
 	}
 
@@ -298,8 +294,7 @@ class icms_module_Handler
 	 * @param    str $dirname
 	 * @return    str    Result messages from the module update
 	 */
-	public function update($dirname)
-	{
+	public function update($dirname) {
 
 	}
 
@@ -309,8 +304,7 @@ class icms_module_Handler
 	 * @param    int $mid
 	 * @return    string    Result message for activating the module
 	 */
-	public function activate($mid)
-	{
+	public function activate($mid) {
 
 	}
 
@@ -320,8 +314,7 @@ class icms_module_Handler
 	 * @param    int $mid
 	 * @return    string    Result message for deactivating the module
 	 */
-	public function deactivate($mid)
-	{
+	public function deactivate($mid) {
 
 	}
 
@@ -332,8 +325,7 @@ class icms_module_Handler
 	 * @param int $weight Integer value of the weight to be applied to the module
 	 * @param str $name Name to be applied to the module
 	 */
-	public function change($mid, $weight, $name)
-	{
+	public function change($mid, $weight, $name) {
 
 	}
 
@@ -343,8 +335,7 @@ class icms_module_Handler
 	 * @param    string $template Name of the template file
 	 * @param    boolean $block Are you trying to retrieve the template for a block?
 	 */
-	public function getTemplate($dirname, $template, $block = FALSE)
-	{
+	public function getTemplate($dirname, $template, $block = false) {
 
 	}
 
@@ -353,8 +344,7 @@ class icms_module_Handler
 	 *
 	 * @return array
 	 */
-	public function getAdminMenuItems()
-	{
+	public function getAdminMenuItems() {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('hasadmin', 1));
 		$criteria->add(new icms_db_criteria_Item('isactive', 1));

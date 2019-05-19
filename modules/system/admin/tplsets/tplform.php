@@ -1,5 +1,4 @@
 <?php
-// $Id: tplform.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -38,9 +37,9 @@
  */
 
 if ($tform['tpl_tplset'] != 'default') {
-	$form = new icms_form_Theme(_MD_EDITTEMPLATE, 'template_form', 'admin.php', 'post', TRUE);
+	$form = new icms_form_Theme(_MD_EDITTEMPLATE, 'template_form', 'admin.php', 'post', true);
 } else {
-	$form = new icms_form_Theme(_MD_VIEWTEMPLATE, 'template_form', 'admin.php', 'post', TRUE);
+	$form = new icms_form_Theme(_MD_VIEWTEMPLATE, 'template_form', 'admin.php', 'post', true);
 }
 $form->addElement(new icms_form_elements_Label(_MD_FILENAME, $tform['tpl_file']));
 $form->addElement(new icms_form_elements_Label(_MD_FILEDESC, $tform['tpl_desc']));
@@ -52,7 +51,9 @@ $config = array(
 	'width' => '100%',
 	'height' => '400px',
 	'syntax' => 'html');
-if ($tform['tpl_tplset'] == 'default') $config["is_editable"] = FALSE;
+if ($tform['tpl_tplset'] == 'default') {
+	$config["is_editable"] = false;
+}
 $tpl_src = icms_plugins_EditorHandler::getInstance('source')->get($icmsConfig['sourceeditor_default'], $config);
 $tpl_src->setCaption(_MD_FILEHTML);
 $form->addElement($tpl_src);

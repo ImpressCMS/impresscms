@@ -38,7 +38,6 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: xmlrss2parser.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 require_once ICMS_LIBRARIES_PATH . '/xml/saxparser.php' ;
@@ -80,15 +79,6 @@ class XoopsXmlRss2Parser extends SaxParser
 		$this->addTagHandler(new RssTextInputHandler());
 	}
 
-	function setChannelData($name, &$value)
-	{
-		if (!isset($this->_channelData[$name])) {
-			$this->_channelData[$name] =& $value;
-		} else {
-			$this->_channelData[$name] .= $value;
-		}
-	}
-
 	function &getChannelData($name = null)
 	{
 		if (isset($name)) {
@@ -100,9 +90,13 @@ class XoopsXmlRss2Parser extends SaxParser
 		return $this->_channelData;
 	}
 
-	function setImageData($name, &$value)
+	function setChannelData($name, &$value)
 	{
-		$this->_imageData[$name] =& $value;
+		if (!isset($this->_channelData[$name])) {
+			$this->_channelData[$name] =& $value;
+		} else {
+			$this->_channelData[$name] .= $value;
+		}
 	}
 
 	function &getImageData($name = null)
@@ -117,14 +111,24 @@ class XoopsXmlRss2Parser extends SaxParser
 		return $this->_imageData;
 	}
 
-	function setItems(&$itemarr)
+	function setImageData($name, &$value)
 	{
-		$this->_items[] =& $itemarr;
+		$this->_imageData[$name] =& $value;
 	}
 
 	function &getItems()
 	{
 		return $this->_items;
+	}
+
+	function setItems(&$itemarr)
+	{
+		$this->_items[] =& $itemarr;
+	}
+
+	function getTempArr()
+	{
+		return $this->_tempArr;
 	}
 
 	function setTempArr($name, &$value, $delim = '')
@@ -134,11 +138,6 @@ class XoopsXmlRss2Parser extends SaxParser
 		} else {
 			$this->_tempArr[$name] .= $delim.$value;
 		}
-	}
-
-	function getTempArr()
-	{
-		return $this->_tempArr;
 	}
 
 	function resetTempArr()

@@ -69,7 +69,7 @@ class icms_form_elements_Hidden extends icms_form_Element {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET) : $this->_value;
+		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
 	}
 
 	/**
@@ -89,7 +89,7 @@ class icms_form_elements_Hidden extends icms_form_Element {
 	public function render() {
 		if (is_array($this->getValue())) {
 			$ret = '';
-			foreach ($this->getValue() as $value){
+			foreach ($this->getValue() as $value) {
 				$ret .= "<input type='hidden' name='" . $this->getName() . "[]' id='" . $this->getName() . "' value='" . $value . "' />\n";
 			}
 		} else {

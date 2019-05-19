@@ -46,54 +46,54 @@
  */
 class icms_image_Handler extends \icms_ipf_Handler {
 
-    /**
-    * Handler for image bodies
-     *
-    * @var \icms_image_body_Handler
-    */
-    protected $imagebody_handler;
+	/**
+	 * Handler for image bodies
+	 *
+	 * @var \icms_image_body_Handler
+	 */
+	protected $imagebody_handler;
 
 
-    /**
-        * Constructor
-         *
-        * @param \icms_db_IConnection $db              Database connection
-        */
-        public function __construct(&$db) {
-            $this->imagebody_handler = \icms::handler('icms_image_body');
+	/**
+	 * Constructor
+	 *
+	 * @param \icms_db_IConnection $db              Database connection
+	 */
+		public function __construct(&$db) {
+			$this->imagebody_handler = \icms::handler('icms_image_body');
 
-            parent::__construct($db, 'image', 'image_id', 'image_name', 'image_nicename', 'icms', 'image');
-        }
+			parent::__construct($db, 'image', 'image_id', 'image_name', 'image_nicename', 'icms', 'image');
+		}
 
-        /**
-        * This event is executed when saving
-         *
-        * @param   \icms_image_body_Object $obj        Saving object
-         *
-        * @return  boolean
-        */
-        protected function afterSave(&$obj) {
-            if ($obj->image_body) {
-                $body = $this->imagebody_handler->get($obj->image_id);
-                $body->image_id = $obj->image_id;
-                $body->image_body = $obj->image_body;
-                return $body->store();
-            }
-            return true;
-        }
+		/**
+		 * This event is executed when saving
+		 *
+		 * @param   \icms_image_body_Object $obj        Saving object
+		 *
+		 * @return  boolean
+		 */
+		protected function afterSave(&$obj) {
+			if ($obj->image_body) {
+				$body = $this->imagebody_handler->get($obj->image_id);
+				$body->image_id = $obj->image_id;
+				$body->image_body = $obj->image_body;
+				return $body->store();
+			}
+			return true;
+		}
 
-        /**
-        * This event executes after deletion
-         *
-        * @param \icms_image_body_Object $obj      Deleted object
-         *
-        * @return boolean
-        */
-        protected function afterDelete(&$obj) {
-            $sql = sprintf('DELETE FROM %s WHERE image_id = %d', $this->imagebody_handler->table, $obj->image_id);
-            $this->db->query($sql);
-            return true;
-        }
+		/**
+		 * This event executes after deletion
+		 *
+		 * @param \icms_image_body_Object $obj      Deleted object
+		 *
+		 * @return boolean
+		 */
+		protected function afterDelete(&$obj) {
+			$sql = sprintf('DELETE FROM %s WHERE image_id = %d', $this->imagebody_handler->table, $obj->image_id);
+			$this->db->query($sql);
+			return true;
+		}
 
 	/**
 	 * Load {@link icms_image_Object}s from the database
@@ -101,22 +101,22 @@ class icms_image_Handler extends \icms_ipf_Handler {
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
 	 * @param   boolean $getbinary  Get binary image?
-         *
+	 *
 	 * @return  array   Array of {@link icms_image_Object} objects
 	 */
-	public function getObjects($criteria = NULL, $id_as_key = FALSE, $getbinary = FALSE) {
+	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false) {
 		if ($getbinary) {
-			$this->generalSQL = "SELECT i.*, b.image_body FROM ".$this->table." i LEFT JOIN ".$this->imagebody_handler->table." b ON b.image_id=i.image_id";
+			$this->generalSQL = "SELECT i.*, b.image_body FROM " . $this->table . " i LEFT JOIN " . $this->imagebody_handler->table . " b ON b.image_id=i.image_id";
 		} else {
 			$this->generalSQL = '';
 		}
 		if ($criteria instanceof \icms_db_criteria_Element) {
-                    if (!in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))) {
-                        $criteria->setSort('image_weight');
-                    }
-                    if (($criteria instanceof icms_db_criteria_Item) && (!$criteria->prefix)) {
-                         $criteria->prefix = 'i';
-                    }
+					if (!in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))) {
+						$criteria->setSort('image_weight');
+					}
+					if (($criteria instanceof icms_db_criteria_Item) && (!$criteria->prefix)) {
+						 $criteria->prefix = 'i';
+					}
 		}
 		return parent::getObjects($criteria, $id_as_key, true);
 	}
@@ -126,15 +126,15 @@ class icms_image_Handler extends \icms_ipf_Handler {
 	 *
 	 * @param   int         $imgcat_id      Image category ID
 	 * @param   bool|null   $image_display  List only displaed images?
-         *
+	 *
 	 * @return  array                       Array of {@link icms_image_Object} objects
 	 */
-	public function getList($imgcat_id, $image_display = NULL) {
+	public function getList($imgcat_id, $image_display = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id)));
 		if (isset($image_display)) {
 			$criteria->add(new icms_db_criteria_Item('image_display', (int) ($image_display)));
 		}
-		$images =& $this->getObjects($criteria, FALSE, TRUE);
+		$images = & $this->getObjects($criteria, false, true);
 		$ret = array();
 		foreach (array_keys($images) as $i) {
 			$ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');

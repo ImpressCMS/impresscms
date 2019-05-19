@@ -1,4 +1,11 @@
 <?php
+
+// Loads environment data
+\Dotenv\Dotenv::create(dirname(__DIR__))->safeLoad();
+
+define('ICMS_ROOT_PATH', dirname(__DIR__));
+define('ICMS_URL', getenv('URL'));
+
 /**#@+
  * Creating ICMS specific constants
  */
@@ -56,7 +63,6 @@ if (!defined('ICMS_PUBLIC_PATH')) {
 	unset($dirname);
 }
 
-define('ICMS_KERNEL_PATH', ICMS_ROOT_PATH . '/kernel/');
 define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
 define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH . '/include');
 define('ICMS_UPLOAD_PATH', ICMS_PUBLIC_PATH . '/uploads');

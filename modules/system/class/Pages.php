@@ -55,7 +55,7 @@ class mod_system_Pages extends icms_data_page_Object {
 	 * Retrieve title of the symlink
 	 * @return	string
 	 */
-	public function getAdminViewItemLink($onlyUrl = FALSE) {
+	public function getAdminViewItemLink($onlyUrl = false) {
 		$rtn = $this->getVar('page_title');
 		return $rtn;
 	}
@@ -64,9 +64,9 @@ class mod_system_Pages extends icms_data_page_Object {
 	 * Build a link to the page represented by the symlink, if available
 	 * @return	string
 	 */
-	public function getViewItemLink($onlyUrl = FALSE, $withimage = TRUE, $userSide = FALSE) {
+	public function getViewItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
 		$url = (substr($this->getVar('page_url', 'e'), 0, 7) == 'http://')
-			? $this->getVar('page_url', 'e')
+			?$this->getVar('page_url', 'e')
 			: ICMS_URL . '/' . $this->getVar('page_url', 'e');
 		$url = icms_core_DataFilter::checkVar($url, 'url', 'host');
 

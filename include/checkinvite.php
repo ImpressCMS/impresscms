@@ -32,7 +32,7 @@ function load_invite_code($code) {
 		exit();
 	}
 	// discard if already registered or invite is more than 3 days old
-	if (! empty($register_id) || (int) ($invite_date) < time() - 3 * 86400) {
+	if (!empty($register_id) || (int) ($invite_date) < time() - 3 * 86400) {
 		redirect_header('invite.php', 3, _US_INVITEEXPIRED);
 		exit();
 	}

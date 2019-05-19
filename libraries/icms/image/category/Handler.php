@@ -45,75 +45,75 @@
  */
 class icms_image_category_Handler extends \icms_ipf_Handler {
 
-        /**
-        * Constructor
-         *
-        * @param \icms_db_IConnection $db              Database connection
-        */
-        public function __construct(&$db) {
-                parent::__construct($db, 'image_category', 'imgcat_id', 'imgcat_name', '', 'icms', 'imagecategory');
-        }
+		/**
+		 * Constructor
+		 *
+		 * @param \icms_db_IConnection $db              Database connection
+		 */
+		public function __construct(&$db) {
+				parent::__construct($db, 'image_category', 'imgcat_id', 'imgcat_name', '', 'icms', 'imagecategory');
+		}
 
 	/**
 	 * Retrieve array of {@link icms_image_category_Object}s meeting certain conditions
-         *
+	 *
 	 * @param object $criteria {@link icms_db_criteria_Element} with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
-         *
+	 *
 	 * @return array {@link icms_image_category_Object}s matching the conditions
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
-            $this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
+			$this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id";
 
-            $criteria_main = new \icms_db_criteria_Compo();
-            $criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
-            $criteria_main->setSort('imgcat_weight, imgcat_id');
-            $criteria_main->setOrder('ASC');
+			$criteria_main = new \icms_db_criteria_Compo();
+			$criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
+			$criteria_main->setSort('imgcat_weight, imgcat_id');
+			$criteria_main->setOrder('ASC');
 
-            if ($criteria !== null) {
-                $criteria_main->add($criteria);
-            }
-            return parent::getObjects($criteria_main, $id_as_key, $as_object, $sql, $debug);
+			if ($criteria !== null) {
+				$criteria_main->add($criteria);
+			}
+			return parent::getObjects($criteria_main, $id_as_key, $as_object, $sql, $debug);
 	}
 
 	/**
 	 * get number of {@link icms_image_category_Object}s matching certain conditions
 	 *
 	 * @param string $criteria conditions to match
-         *
+	 *
 	 * @return int number of {@link icms_image_category_Object}s matching the conditions
 	 */
 	public function getCount($criteria = null) {
-            $this->generalSQL = 'SELECT COUNT(*) FROM ' . $this->table . ' i LEFT JOIN '
+			$this->generalSQL = 'SELECT COUNT(*) FROM ' . $this->table . ' i LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id";
 
 
-            $criteria_main = new \icms_db_criteria_Compo();
-            $criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
+			$criteria_main = new \icms_db_criteria_Compo();
+			$criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
 
-            if ($criteria !== null) {
-                $criteria_main->add($criteria);
-            }
+			if ($criteria !== null) {
+				$criteria_main->add($criteria);
+			}
 
-            return parent::getCount($criteria_main);
+			return parent::getCount($criteria_main);
 	}
 
-        /**
-        * Get a list of {@link icms_image_category_Object}s matching certain conditions
-         *
-        * @param array         $groups         Groups list
-        * @param string        $perm           Permission name
-        * @param null|integer  $display        Do we need to list only visible or hidden items?
-        * @param string|null   $storetype      How to store images of this category?
-         *
-        * @return array                        array of {@link icms_image_category_Object}s matching the conditions
-        */
+		/**
+		 * Get a list of {@link icms_image_category_Object}s matching certain conditions
+		 *
+		 * @param array         $groups         Groups list
+		 * @param string        $perm           Permission name
+		 * @param null|integer  $display        Do we need to list only visible or hidden items?
+		 * @param string|null   $storetype      How to store images of this category?
+		 *
+		 * @return array                        array of {@link icms_image_category_Object}s matching the conditions
+		 */
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
 		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
 			$criteriaTray = new icms_db_criteria_Compo();
-			foreach ( $groups as $gid) {
+			foreach ($groups as $gid) {
 				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
@@ -137,21 +137,21 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	}
 
 	/**
-        * Gets list of categories for that image
-         *
-        * @param array         $groups         The usergroups to get the permissions for
-        * @param string        $perm           The permissions to retrieve
-        * @param string        $display        How display?
-        * @param string        $storetype      Storage type
-        * @param int           $imgcat_id      The image cat id
-         *
-        * @return array  list of categories
-        */
-        public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id=null) {
+	 * Gets list of categories for that image
+	 *
+	 * @param array         $groups         The usergroups to get the permissions for
+	 * @param string        $perm           The permissions to retrieve
+	 * @param string        $display        How display?
+	 * @param string        $storetype      Storage type
+	 * @param int           $imgcat_id      The image cat id
+	 *
+	 * @return array  list of categories
+	 */
+		public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id = null) {
 		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
 			$criteriaTray = new icms_db_criteria_Compo();
-			foreach ( $groups as $gid) {
+			foreach ($groups as $gid) {
 				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
@@ -166,16 +166,16 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 		if (isset($storetype)) {
 			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
 		}
-		if ($imgcat_id === NULL ) {
-                    $imgcat_id = 0;
-                }
+		if ($imgcat_id === null) {
+					$imgcat_id = 0;
+				}
 		$criteria->add(new icms_db_criteria_Item('imgcat_pid', $imgcat_id));
 		$categories = $this->getObjects($criteria, true);
 		$ret = array();
-		foreach ( array_keys($categories) as $i) {
+		foreach (array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('imgcat_name');
 			$subcategories = $this->getCategList($groups, $perm, $display, $storetype, $categories[$i]->getVar('imgcat_id'));
-			foreach ( array_keys($subcategories) as $j) {
+			foreach (array_keys($subcategories) as $j) {
 				$ret[$j] = '-' . $subcategories[$j];
 			}
 		}
@@ -192,16 +192,16 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	 *
 	 * @return string - full folder path or url
 	 */
-	public function getCategFolder(\icms_image_category_Object &$imgcat, $full=true, $type='path') {
+	public function getCategFolder(\icms_image_category_Object &$imgcat, $full = true, $type = 'path') {
 		if ($imgcat->imgcat_pid != 0) {
 			$sup = $this->get($imgcat->imgcat_pid);
 			$supcateg = $this->getCategFolder($sup, false, $type);
 		} else {
 			$supcateg = 0;
 		}
-		$folder = ($supcateg) ? $supcateg . '/' : '';
+		$folder = ($supcateg)?$supcateg . '/':'';
 		if ($full) {
-			$folder = ( $type == 'path' )
+			$folder = ($type == 'path')
 					? ICMS_IMANAGER_FOLDER_PATH . '/' . $folder
 					: ICMS_IMANAGER_FOLDER_URL . '/' . $folder;
 		}

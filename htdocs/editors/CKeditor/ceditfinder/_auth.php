@@ -17,9 +17,9 @@ defined('ceditFinder') or die('Restricted access');
 
 icms::$logger->disableLogger();
 
-$groups = is_object(icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+$groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 $gperm = icms::handler('icms_member_groupperm');
 
 $agroups = $gperm->getItemIds('use_wysiwygeditor', $groups);
 
-if (count($agroups) == 0) {die(_NOPERM);}
+if (count($agroups) == 0) {die(_NOPERM); }

@@ -10,7 +10,7 @@
  */
 
 /* This may be loaded by other modules - and not just through the cpanel */
-icms_loadLanguageFile('system', 'mimetype', TRUE);
+icms_loadLanguageFile('system', 'mimetype', true);
 
 /**
  * Mimetype management for file handling
@@ -24,7 +24,7 @@ icms_loadLanguageFile('system', 'mimetype', TRUE);
  * @property string[]   $dirname       Modules allowed to use this mimetype
  */
 class mod_system_Mimetype extends icms_ipf_Object {
-	public $content = FALSE;
+	public $content = false;
 
 	/**
 	 * Constructor
@@ -32,11 +32,11 @@ class mod_system_Mimetype extends icms_ipf_Object {
 	 * @param object $handler
 	 */
 	function __construct(&$handler) {
-                $this->initVar('mimetypeid', self::DTYPE_INTEGER, 0, TRUE);
-                $this->initVar('extension', self::DTYPE_STRING, '', TRUE, 60, null, null, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC);
-                $this->initVar('types', self::DTYPE_STRING, '', TRUE, null, null, null, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC);
-                $this->initVar('name', self::DTYPE_STRING, '', TRUE, 255, null, null, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC);
-                $this->initVar('dirname', self::DTYPE_LIST, null, TRUE, null, null, null, _CO_ICMS_MIMETYPE_DIRNAME);
+				$this->initVar('mimetypeid', self::DTYPE_INTEGER, 0, true);
+				$this->initVar('extension', self::DTYPE_STRING, '', true, 60, null, null, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC);
+				$this->initVar('types', self::DTYPE_STRING, '', true, null, null, null, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC);
+				$this->initVar('name', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC);
+				$this->initVar('dirname', self::DTYPE_LIST, null, true, null, null, null, _CO_ICMS_MIMETYPE_DIRNAME);
 
 		parent::__construct($handler);
 
