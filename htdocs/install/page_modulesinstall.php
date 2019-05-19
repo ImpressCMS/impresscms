@@ -24,7 +24,6 @@ $pageHasHelp = false;
 
 $vars = & $_SESSION['settings'];
 include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "include" . DIRECTORY_SEPARATOR . "common.php";
-include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "include" . DIRECTORY_SEPARATOR . "cp_functions.php";
 include_once __DIR__ . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'dbmanager.php';
 include __DIR__ . DIRECTORY_SEPARATOR . "modulesadmin.php";
 

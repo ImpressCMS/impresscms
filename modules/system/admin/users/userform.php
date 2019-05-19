@@ -1,5 +1,4 @@
 <?php
-// $Id: userform.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -70,7 +69,7 @@ $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //  $a_dirlist = icms_core_Filesystem::getDirList(XOOPS_ROOT_PATH."/images/avatar/");
 //  $a_dir_labels = array();
 //  $a_count = 0;
-//  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;start=".$a_count."','avatars',600,400);\">XOOPS</a>";
+//  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;start=".$a_count."','avatars',600,400);\">XOOPS</a>";
 //  $a_count = $a_count + count($avatar_array);
 //  $a_dir_labels[] = new icms_form_elements_Label("", $a_dir_link);
 //  foreach ($a_dirlist as $a_dir) {
@@ -79,7 +78,7 @@ $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //	  }
 //	  $avatars_array = icms_core_Filesystem::getImgList(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
 //	  $avatar_select->addOptionArray($avatars_array);
-//	  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
+//	  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
 //	  $a_dir_labels[] = new icms_form_elements_Label("", $a_dir_link);
 //	  $a_count = $a_count + count($avatars_array);
 //  }
@@ -89,8 +88,8 @@ $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //		  $avatar_select->addOption($myavatar, _US_MYAVATAR);
 //	  }
 //  }
-//  $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"images/avatar\", \"\", \"".XOOPS_URL."\")'");
-//  $avatar_label = new icms_form_elements_Label("", "<img src='".XOOPS_URL."/images/avatar/".$avatar_value."' name='avatar' id='avatar' alt='' />");
+//  $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"images/avatar\", \"\", \"".ICMS_URL."\")'");
+//  $avatar_label = new icms_form_elements_Label("", "<img src='".ICMS_URL."/images/avatar/".$avatar_value."' name='avatar' id='avatar' alt='' />");
 //  $avatar_tray = new icms_form_elements_Tray(_AM_AVATAR, "&nbsp;");
 //  $avatar_tray->addElement($avatar_select);
 //  $avatar_tray->addElement($avatar_label);
@@ -99,10 +98,6 @@ $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //  }
 //  $theme_select = new icms_form_elements_select_Theme(_AM_THEME, "theme", $theme_value);
 $timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, "timezone_offset", $timezone_value);
-$icq_text = new icms_form_elements_Text(_AM_ICQ, "user_icq", 15, 15, $icq_value);
-$aim_text = new icms_form_elements_Text(_AM_AIM, "user_aim", 18, 18, $aim_value);
-$yim_text = new icms_form_elements_Text(_AM_YIM, "user_yim", 25, 25, $yim_value);
-$msnm_text = new icms_form_elements_Text(_AM_MSNM, "user_msnm", 30, 100, $msnm_value);
 $location_text = new icms_form_elements_Text(_AM_LOCATION, "user_from", 30, 100, $location_value);
 $occupation_text = new icms_form_elements_Text(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
 $interest_text = new icms_form_elements_Text(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
@@ -178,10 +173,6 @@ $form->addElement($email_tray, true);
 $form->addElement($openid_tray, true);
 $form->addElement($url_text);
 $form->addElement($timezone_select);
-$form->addElement($icq_text);
-$form->addElement($aim_text);
-$form->addElement($yim_text);
-$form->addElement($msnm_text);
 $form->addElement($location_text);
 $form->addElement($occupation_text);
 $form->addElement($interest_text);

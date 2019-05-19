@@ -13,6 +13,7 @@ exclude_patterns:
 - plugins/textsanitizer
 - htdocs/editors
 - htdocs/libraries
+- tests/
 
 checks:
   argument-count:
@@ -38,7 +39,9 @@ checks:
       threshold: 4
   return-statements:
     config:
-      threshold: 4
+      threshold: 4  
+  Controversial/CamelCaseParameterName:
+    enabled: false
   #similar-code:
   #  config:
   #    threshold: # language-specific defaults. an override will affect all languages.
@@ -56,11 +59,11 @@ plugins:
   # helps developers define and maintain consistent coding styles between different
   # editors and IDEs.  The Code Climate EditorConfig plugin will validate your project
   # files with your .editorconfig configuration.
-  editorconfig:
-    enabled: true
-    channel: beta
-    config:
-      editorconfig: .editorconfig
+  # editorconfig:
+  #  enabled: true
+  #  channel: beta
+  #  config:
+  #    editorconfig: .editorconfig
 
   # Offers linting, complexity analysis, and style checking for your modern
   # EcmaScript/JavaScript code.
@@ -91,6 +94,13 @@ plugins:
   # a tool designed to check markdown files and flag style issues.
   markdownlint:
     enabled: true
+    checks:
+      # line length
+      MD013:
+        enabled: false
+      # raw html
+      MD033:
+        enabled: false
 
   # a Static analyzer for PHP by the creators of PHP.
   phan:
@@ -118,4 +128,12 @@ plugins:
     enabled: true
     config:
       file_extensions:
+        - php
+
+  # enable dublications detection
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
         - php

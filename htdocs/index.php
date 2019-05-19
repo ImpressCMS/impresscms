@@ -1,4 +1,5 @@
 <?php
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -57,6 +58,7 @@ if (!empty($requested_path)) {
 if (
 	!empty($requested_path) &&
 	file_exists($full_path) &&
+	is_file($full_path) &&
 	(
 	$ext = pathinfo($full_path, PATHINFO_EXTENSION)
 	) != 'php'
@@ -82,7 +84,6 @@ if (
 	readfile($full_path);
 	exit(0);
 }
-
 foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'icmsConfig') as $bad_global) {
 	if (isset($_REQUEST[$bad_global])) {
 		$_REQUEST['e'] = 400;
@@ -102,7 +103,7 @@ define('ICMS_PUBLIC_PATH', __DIR__);
 
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
-if (isset($ext)) {
+if (file_exists($full_path)) {
 
 	// for backward compatibility
 	if (isset($_SERVER['REDIRECT_URL'])) {
@@ -112,6 +113,9 @@ if (isset($ext)) {
 	}
 	$_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_NAME'];
 
+	if (!is_file($full_path)) {
+		$full_path .= DIRECTORY_SEPARATOR . 'index.php';
+	}
 	require $full_path;
 } elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', preg_replace('/[^a-zA-Z0-9\-\._\/]/', '', $requested_path), $params, PREG_SET_ORDER) === 1) {
 	\icms::$logger->disableRendering();
@@ -135,6 +139,7 @@ if (isset($ext)) {
 	\icms::$response->errorNo = 404;
 	\icms::$response->render();
 } else {
+
 	$member_handler = \icms::handler('icms_member');
 	$group = $member_handler->getUserBestGroup(
 		(!empty(\icms::$user) && is_object(\icms::$user))? \icms::$user->uid:0

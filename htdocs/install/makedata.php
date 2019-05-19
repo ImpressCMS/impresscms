@@ -105,7 +105,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 
 	$modversion = array();
-	include_once ICMS_ROOT_PATH . '/include/functions.php';
 	include_once ICMS_ROOT_PATH . '/modules/system/icms_version.php';
 	$time = time();
 
@@ -196,7 +195,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$temp = $pwd->encryptPass($adminpass);
 	$regdate = time();
 	// RMV-NOTIFY (updated for extra columns in user table)
-	$dbm->insert('users', " VALUES (1,'','" . addslashes($adminname) . "','" . addslashes($adminmail) . "','" . XOOPS_URL . "/','blank.gif','" . $regdate . "','','','',0,'','','','','" . $temp . "',0,0,7,5,'iTheme','0.0'," . time() . ",'thread',0,1,0,'','','','0','" . addslashes($language) . "', '', '', 0, 0, 1, '" . addslashes($adminlogin_name) . "')");
+	$dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".ICMS_URL."/','blank.gif','".$regdate."','','',0,'','".$temp."',0,0,7,5,'iTheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '','', 0, 0, 1, '".addslashes($adminlogin_name)."')");
 
 	// data for table 'block_module_link'
 	$sql = 'SELECT bid, side, template FROM ' . $dbm->prefix('newblocks');
@@ -474,7 +473,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c = 10; // sets config category id
 	$p = 0;
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/imagemanager/logos/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '" . XOOPS_URL . "/', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '" . ICMS_URL . "/', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
@@ -558,8 +557,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 	// Data for Config Category 14 (HTMLPurifier Settings)
 
-	$host_domain = imcms_get_base_domain(XOOPS_URL);
-	$host_base = imcms_get_url_domain(XOOPS_URL);
+	$host_domain = imcms_get_base_domain(ICMS_URL);
+	$host_base = imcms_get_url_domain(ICMS_URL);
 
 	$c = 14; // sets config category id
 	$p = 0; // reset position increment to 0 for new category id

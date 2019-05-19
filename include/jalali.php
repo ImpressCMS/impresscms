@@ -1,5 +1,4 @@
 <?php
-// $Id: jalali.php 8786 2009-05-28 21:06:30Z realtherplima $  //
 /**
  * Handles all jalali calendar functions within ImpressCMS
  *

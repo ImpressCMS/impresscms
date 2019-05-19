@@ -1,5 +1,4 @@
 <?php
-	// $Id: main.php 12460 2014-06-25 03:35:37Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

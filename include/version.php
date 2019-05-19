@@ -1,4 +1,4 @@
-7<?php
+<?php
 /**
  * Version information about ImpressCMS
  *
