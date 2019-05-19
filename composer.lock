@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5002174d07a1c914a9ae6c2197efb6c8",
+    "content-hash": "2a5a02be5d428cb8669a2c581846dd7e",
     "packages": [
         {
             "name": "apix/cache",
@@ -310,6 +310,54 @@
             ],
             "description": "Adds possibility to define console commands as composer commands with Symfony console component syntax",
             "time": "2018-03-22T08:11:04+00:00"
+        },
+        {
+            "name": "imponeer/object-errors",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/object-errors.git",
+                "reference": "44387dd52067840087ceec8485bce566d05f4005"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/object-errors/zipball/44387dd52067840087ceec8485bce566d05f4005",
+                "reference": "44387dd52067840087ceec8485bce566d05f4005",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "evert/phpdoc-md": "~0.2.0",
+                "mockery/mockery": "^1.0",
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "^5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\ObjectErrors\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevicius",
+                    "email": "mekdrop@impresscms.org"
+                }
+            ],
+            "description": "Library that adds a possibility to collect errors for objects",
+            "keywords": [
+                "collection",
+                "errors",
+                "object"
+            ],
+            "time": "2018-03-14T18:08:50+00:00"
         },
         {
             "name": "keo/iso-639",
