@@ -49,7 +49,7 @@ class icms_AutologinEventHandler {
 		} else {
 			// V3
 			$uname4sql = addslashes($uname);
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname4sql));
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname4sql));
 			$user_handler = icms::handler('icms_member_user');
 			$users = $user_handler->getObjects($criteria, false);
 			if (empty($users) || count($users) != 1) {
