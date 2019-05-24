@@ -248,7 +248,7 @@ class icms_core_Textsanitizer {
 		/* trigger all the events tied to the beforeDisplayTarea event */
 		icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
-		if ($html = 0){
+		if ($html == 0){
 			$text = icms_core_DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
 		} else {
 			$text = icms_core_DataFilter::filterHTMLdisplay($text, $xcode, $br);
