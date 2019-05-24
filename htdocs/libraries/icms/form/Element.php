@@ -341,6 +341,7 @@ abstract class icms_form_Element {
 						? sprintf(_FORM_ENTER, $eltname)
 						: sprintf(_FORM_ENTER, $eltcaption);
 			$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+			if($eltname)
 			return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
 		}
 		return '';
