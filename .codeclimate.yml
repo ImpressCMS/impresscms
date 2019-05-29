@@ -59,11 +59,11 @@ plugins:
   # helps developers define and maintain consistent coding styles between different
   # editors and IDEs.  The Code Climate EditorConfig plugin will validate your project
   # files with your .editorconfig configuration.
-  # editorconfig:
-  #  enabled: true
-  #  channel: beta
-  #  config:
-  #    editorconfig: .editorconfig
+   editorconfig:
+    enabled: true
+    channel: beta
+    config:
+      editorconfig: .editorconfig
 
   # Offers linting, complexity analysis, and style checking for your modern
   # EcmaScript/JavaScript code.
