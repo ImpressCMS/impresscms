@@ -48,15 +48,6 @@
 class icms_core_Session {
 
 	/**
-	 * Database connection
-	 * @var	object
-	 * @access	private
-	 */
-	private $db;
-
-	private $mainSaltKey;
-
-	/**
 	 * Security checking level
 	 * Possible value:
 	 *	0 - no check;
@@ -68,7 +59,6 @@ class icms_core_Session {
 	 * @access	public
 	 */
 	public $securityLevel = 3;
-
 	/**
 	 * Security checking level for IPv6 Address types
 	 * Possible value:
@@ -86,13 +76,19 @@ class icms_core_Session {
 	 * @access	public
 	 */
 	public $ipv6securityLevel = 7;
-
 	/**
 	 * Enable regenerate_id
 	 * @var	bool
 	 * @access	public
 	 */
 	public $enableRegenerateId = false;
+	/**
+	 * Database connection
+	 * @var    object
+	 * @access    private
+	 */
+	private $db;
+	private $mainSaltKey;
 
 	/**
 	 * Constructor
@@ -102,7 +98,7 @@ class icms_core_Session {
 	 */
 	public function __construct(&$db) {
 		$this->db = & $db;
-		$this->mainSaltKey = getenv('DB_SALT');
+		$this->mainSaltKey = env('DB_SALT');
 	}
 
 	/**
@@ -125,12 +121,87 @@ class icms_core_Session {
 	}
 
 	/**
+	 * Force gc for situations where gc is registered but not executed
+	 */
+	public function gc_force()
+	{
+		if (rand(1, 100) < 11) {
+			$expiration = empty($GLOBALS['icmsConfig']['session_expire'])
+				? @ini_get('session.gc_maxlifetime')
+				: $GLOBALS['icmsConfig']['session_expire'] * 60;
+			$this->gc($expiration);
+		}
+	}
+
+	/**
+	 * Garbage Collector
+	 * @param   int $expire Time in seconds until a session expires
+	 * @return  bool
+	 */
+	public function gc($expire)
+	{
+		return self::gcSession($expire);
+	}
+
+	/**
+	 * Garbage Collector
+	 * @param   int $expire Time in seconds until a session expires
+	 * @return  bool
+	 */
+	private function gcSession($expire)
+	{
+		if (empty($expire)) {
+			return true;
+		}
+		$mintime = time() - (int)$expire;
+		$sql = sprintf("DELETE FROM %s WHERE sess_updated < '%u'", icms::$xoopsDB->prefix('session'), $mintime);
+		return icms::$xoopsDB->queryF($sql);
+	}
+
+	/**
 	 * Read a session from the database
 	 * @param	string  &sess_id    ID of the session
 	 * @return	array   Session data
 	 */
 	public function read($sess_id) {
 		return self::readSession($sess_id);
+	}
+
+	/**
+	 * Read a session from the database
+	 * @param    string &sess_id    ID of the session
+	 * @return    array   Session data
+	 */
+	private function readSession($sess_id)
+	{
+		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
+			icms::$xoopsDB->prefix('session'), icms::$xoopsDB->quoteString($sess_id));
+		if (false != $result = icms::$xoopsDB->query($sql)) {
+			if (list($sess_data, $sess_ip) = icms::$xoopsDB->fetchRow($result)) {
+				if ($this->ipv6securityLevel > 1 && icms_core_DataFilter::checkVar($sess_ip, 'ip', 'ipv6')) {
+					/**
+					 * also cover IPv6 localhost string
+					 */
+					if ($_SERVER['REMOTE_ADDR'] == "::1") {
+						$pos = 3;
+					} else {
+						$pos = strpos($sess_ip, ":", $this->ipv6securityLevel - 1);
+					}
+
+					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
+						$sess_data = '';
+					}
+				} elseif ($this->securityLevel > 1 && icms_core_DataFilter::checkVar($sess_ip, 'ip', 'ipv4')) {
+					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
+
+					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
+						$sess_data = '';
+					}
+				}
+				return $sess_data;
+			}
+		}
+		return '';
 	}
 
 	/**
@@ -144,6 +215,36 @@ class icms_core_Session {
 	}
 
 	/**
+	 * Inserts a session into the database
+	 * @param   string $sess_id
+	 * @param   string $sess_data
+	 * @return  bool
+	 */
+	private function writeSession($sess_id, $sess_data)
+	{
+		$sess_id = icms::$xoopsDB->quoteString($sess_id);
+		$sess_data = icms::$xoopsDB->quoteString($sess_data);
+
+		$sql = sprintf(
+			"UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s",
+			icms::$xoopsDB->prefix('session'), time(), $sess_data, $sess_id
+		);
+		icms::$xoopsDB->queryF($sql);
+		if (!icms::$xoopsDB->getAffectedRows()) {
+			$sql = sprintf(
+				"INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)"
+				. " VALUES (%s, '%u', %s, %s)",
+				icms::$xoopsDB->prefix('session'),
+				$sess_id, time(),
+				icms::$xoopsDB->quoteString($_SERVER['REMOTE_ADDR']),
+				$sess_data
+			);
+			return icms::$xoopsDB->queryF($sql);
+		}
+		return true;
+	}
+
+	/**
 	 * Destroy a session
 	 * @param   string  $sess_id
 	 * @return  bool
@@ -153,25 +254,110 @@ class icms_core_Session {
 	}
 
 	/**
-	 * Garbage Collector
-	 * @param   int $expire Time in seconds until a session expires
+	 * Destroy a session stored in DB
+	 * @param   string $sess_id
 	 * @return  bool
 	 */
-	public function gc($expire) {
-		return self::gcSession($expire);
+	private function destroySession($sess_id)
+	{
+		$sql = sprintf(
+			'DELETE FROM %s WHERE sess_id = %s',
+			icms::$xoopsDB->prefix('session'), icms::$xoopsDB->quoteString($sess_id)
+		);
+		if (!$result = icms::$xoopsDB->queryF($sql)) {
+			return false;
+		}
+		return true;
+	}
+
+	// Call this when init session.
+
+	/**
+	 * Compares the Fingerprint stored in $_SESSION['icms_fprint'] by creating a new Fingerprint.
+	 * If they match, the Session is valid.
+	 * To be refactored
+	 * @return  bool
+	 */
+	public function checkFingerprint()
+	{
+		$userAgent = $_SERVER['HTTP_USER_AGENT'];
+		$userIP = $_SERVER['REMOTE_ADDR'];
+		$sessFprint = self::sessionFingerprint($userIP, $userAgent);
+
+		if ($sessFprint == $_SESSION['icms_fprint']) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private function sessionFingerprint($ip, $userAgent)
+	{
+		$securityLevel = (int)$this->securityLevel;
+		$ipv6securityLevel = (int)$this->ipv6securityLevel;
+
+		$fingerprint = $this->mainSaltKey;
+
+		if (isset($ip) && icms_core_DataFilter::checkVar($ip, 'ip', 'ipv4')) {
+			if ($securityLevel >= 1) {
+				$fingerprint .= $userAgent;
+			}
+			if ($securityLevel >= 2) {
+				$num_blocks = abs($securityLevel);
+				if ($num_blocks > 4) {
+					$num_blocks = 4;
+				}
+				$blocks = explode('.', $ip);
+				for ($i = 0; $i < $num_blocks; $i++) {
+					$fingerprint .= $blocks[$i] . '.';
+				}
+			}
+		} elseif (isset($ip) && icms_core_DataFilter::checkVar($ip, 'ip', 'ipv6')) {
+			if ($securityLevel >= 1) {
+				$fingerprint .= $userAgent;
+			}
+			if ($securityLevel >= 2) {
+				$num_blocks = abs($securityLevel);
+				if ($num_blocks > 4) {
+					$num_blocks = 4;
+				}
+				$blocks = explode(':', $ip);
+				for ($i = 0; $i < $num_blocks; $i++) {
+					$fingerprint .= $blocks[$i] . ':';
+				}
+			}
+		} else {
+			icms_core_Debug::message('ERROR (Session Fingerprint): Invalid IP format,
+				IP must be a valid IPv4 or IPv6 format', false);
+			$fingerprint = '';
+			return $fingerprint;
+		}
+		return hash('sha256', $fingerprint);
+	}
+
+	public function sessionOpen($regenerate = false)
+	{
+		$_SESSION['icms_fprint'] = self::createFingerprint();
+		if ($regenerate) {
+			self::icms_sessionRegenerateId(true);
+		}
 	}
 
 	/**
-	 * Force gc for situations where gc is registered but not executed
+	 * Creates a Fingerprint of the current User Session
+	 * Fingerprint stored in current $_SESSION['icms_fprint']
+	 * To be refactored
+	 * @return  string
 	 */
-	public function gc_force() {
-		if (rand(1, 100) < 11) {
-			$expiration = empty($GLOBALS['icmsConfig']['session_expire'])
-						?@ini_get('session.gc_maxlifetime')
-						: $GLOBALS['icmsConfig']['session_expire'] * 60;
-			$this->gc($expiration);
-		}
+	public function createFingerprint()
+	{
+		$userAgent = $_SERVER['HTTP_USER_AGENT'];
+		$userIP = $_SERVER['REMOTE_ADDR'];
+
+		return self::sessionFingerprint($userIP, $userAgent);
 	}
+
+	// Internal function. Returns sha256 from fingerprint.
 
 	/**
 	 * Update the current session id with a newly generated one
@@ -212,53 +398,6 @@ class icms_core_Session {
 					?$icmsConfig['session_expire'] * 60:ini_get('session.cookie_lifetime'));
 		$session_id = empty($sess_id)? session_id():$sess_id;
 		setcookie($session_name, $session_id, $session_expire? time() + $session_expire:0, '/', '', $secure, 0);
-	}
-
-	/**
-	 * Creates a Fingerprint of the current User Session
-	 * Fingerprint stored in current $_SESSION['icms_fprint']
-	 * To be refactored
-	 * @return  string
-	 */
-	public function createFingerprint() {
-		$userAgent = $_SERVER['HTTP_USER_AGENT'];
-		$userIP = $_SERVER['REMOTE_ADDR'];
-
-		return self::sessionFingerprint($userIP, $userAgent);
-	}
-
-	/**
-	 * Compares the Fingerprint stored in $_SESSION['icms_fprint'] by creating a new Fingerprint.
-	 * If they match, the Session is valid.
-	 * To be refactored
-	 * @return  bool
-	 */
-	public function checkFingerprint() {
-		$userAgent = $_SERVER['HTTP_USER_AGENT'];
-		$userIP = $_SERVER['REMOTE_ADDR'];
-		$sessFprint = self::sessionFingerprint($userIP, $userAgent);
-
-		if ($sessFprint == $_SESSION['icms_fprint']) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	// Call this when init session.
-	public function sessionOpen($regenerate = false) {
-		$_SESSION['icms_fprint'] = self::createFingerprint();
-		if ($regenerate) {
-			self::icms_sessionRegenerateId(true);
-		}
-	}
-
-	public function removeExpiredCustomSession($sess) {
-		global $icmsConfig;
-		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != ''
-				&& !isset($_COOKIE[$icmsConfig['session_name']]) && !empty($_SESSION[$sess])) {
-			unset($_SESSION[$sess]);
-		}
 	}
 
 	/**
@@ -319,142 +458,13 @@ class icms_core_Session {
 		return;
 	}
 
-	// Internal function. Returns sha256 from fingerprint.
-	private function sessionFingerprint($ip, $userAgent) {
-		$securityLevel = (int) $this->securityLevel;
-		$ipv6securityLevel = (int) $this->ipv6securityLevel;
-
-		$fingerprint = $this->mainSaltKey;
-
-		if (isset($ip) && icms_core_DataFilter::checkVar($ip, 'ip', 'ipv4')) {
-			if ($securityLevel >= 1) {
-				$fingerprint .= $userAgent;
-			}
-			if ($securityLevel >= 2) {
-				$num_blocks = abs($securityLevel);
-				if ($num_blocks > 4) {
-					$num_blocks = 4;
-				}
-				$blocks = explode('.', $ip);
-				for ($i = 0; $i < $num_blocks; $i++) {
-					$fingerprint .= $blocks[$i] . '.';
-				}
-			}
-		} elseif (isset($ip) && icms_core_DataFilter::checkVar($ip, 'ip', 'ipv6')) {
-			if ($securityLevel >= 1) {
-				$fingerprint .= $userAgent;
-			}
-			if ($securityLevel >= 2) {
-				$num_blocks = abs($securityLevel);
-				if ($num_blocks > 4) {
-					$num_blocks = 4;
-				}
-				$blocks = explode(':', $ip);
-				for ($i = 0; $i < $num_blocks; $i++) {
-					$fingerprint .= $blocks[$i] . ':';
-				}
-			}
-		} else {
-			icms_core_Debug::message('ERROR (Session Fingerprint): Invalid IP format,
-				IP must be a valid IPv4 or IPv6 format', false);
-			$fingerprint = '';
-			return $fingerprint;
+	public function removeExpiredCustomSession($sess)
+	{
+		global $icmsConfig;
+		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != ''
+			&& !isset($_COOKIE[$icmsConfig['session_name']]) && !empty($_SESSION[$sess])
+		) {
+			unset($_SESSION[$sess]);
 		}
-		return hash('sha256', $fingerprint);
-	}
-
-	/**
-	 * Read a session from the database
-	 * @param	string  &sess_id    ID of the session
-	 * @return	array   Session data
-	 */
-	private function readSession($sess_id) {
-		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
-			icms::$xoopsDB->prefix('session'), icms::$xoopsDB->quoteString($sess_id));
-		if (false != $result = icms::$xoopsDB->query($sql)) {
-			if (list($sess_data, $sess_ip) = icms::$xoopsDB->fetchRow($result)) {
-				if ($this->ipv6securityLevel > 1 && icms_core_DataFilter::checkVar($sess_ip, 'ip', 'ipv6')) {
-					/**
-					 * also cover IPv6 localhost string
-					 */
-					if ($_SERVER['REMOTE_ADDR'] == "::1") {
-						$pos = 3;
-					} else {
-						$pos = strpos($sess_ip, ":", $this->ipv6securityLevel - 1);
-					}
-
-					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
-						$sess_data = '';
-					}
-				} elseif ($this->securityLevel > 1 && icms_core_DataFilter::checkVar($sess_ip, 'ip', 'ipv4')) {
-					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
-
-					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
-						$sess_data = '';
-					}
-				}
-				return $sess_data;
-			}
-		}
-		return '';
-	}
-
-	/**
-	 * Inserts a session into the database
-	 * @param   string  $sess_id
-	 * @param   string  $sess_data
-	 * @return  bool
-	 */
-	private function writeSession($sess_id, $sess_data) {
-		$sess_id = icms::$xoopsDB->quoteString($sess_id);
-		$sess_data = icms::$xoopsDB->quoteString($sess_data);
-
-		$sql = sprintf(
-			"UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s",
-			icms::$xoopsDB->prefix('session'), time(), $sess_data, $sess_id
-			);
-		icms::$xoopsDB->queryF($sql);
-		if (!icms::$xoopsDB->getAffectedRows()) {
-			$sql = sprintf(
-				"INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)"
-				. " VALUES (%s, '%u', %s, %s)",
-				icms::$xoopsDB->prefix('session'),
-				$sess_id, time(),
-				icms::$xoopsDB->quoteString($_SERVER['REMOTE_ADDR']),
-				$sess_data
-			);
-			return icms::$xoopsDB->queryF($sql);
-		}
-		return true;
-	}
-
-	/**
-	 * Destroy a session stored in DB
-	 * @param   string  $sess_id
-	 * @return  bool
-	 */
-	private function destroySession($sess_id) {
-		$sql = sprintf(
-			'DELETE FROM %s WHERE sess_id = %s',
-			icms::$xoopsDB->prefix('session'), icms::$xoopsDB->quoteString($sess_id)
-		);
-		if (!$result = icms::$xoopsDB->queryF($sql)) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Garbage Collector
-	 * @param   int $expire Time in seconds until a session expires
-	 * @return  bool
-	 */
-	private function gcSession($expire) {
-		if (empty($expire)) {
-			return true;
-		}
-		$mintime = time() - (int) $expire;
-		$sql = sprintf("DELETE FROM %s WHERE sess_updated < '%u'", icms::$xoopsDB->prefix('session'), $mintime);
-		return icms::$xoopsDB->queryF($sql);
 	}
 }

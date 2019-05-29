@@ -17,7 +17,7 @@ final class icms_core_Password {
 	 * Constructor for the Password class
 	 */
 	public function __construct() {
-		$this->mainSalt = getenv('DB_SALT');
+		$this->mainSalt = env('DB_SALT');
 	}
 
 	/**
@@ -35,26 +35,6 @@ final class icms_core_Password {
 	}
 
 	// ***** Public Functions *****
-
-	/**
-	 * This Function creates a unique random Salt Key for use with password encryptions
-	 * It can also be used to generate a random AlphaNumeric key sequence of any given length.
-	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-	 * @since    1.1
-	 * @param    string  $slength    The length of the key to produce
-	 * @return   string  returns the generated random key.
-	 */
-	static public function createSalt($slength = 64) {
-		$salt = '';
-		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$microtime = function_exists('microtime')? microtime():time();
-		mt_srand((double) $microtime * 1000000);
-		for ($i = 0; $i <= $slength; $i++) {
-				$salt .= substr($base, mt_rand(0, $slength) % strlen($base), 1);
-		}
-
-		return $salt;
-	}
 
 	/**
 	 * This Function creates a unique Crypto Generated Key for use with password encryptions
@@ -78,88 +58,41 @@ final class icms_core_Password {
 	}
 
 	/**
+	 * This Function creates a unique random Salt Key for use with password encryptions
+	 * It can also be used to generate a random AlphaNumeric key sequence of any given length.
+	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+	 * @since    1.1
+	 * @param    string $slength The length of the key to produce
+	 * @return   string  returns the generated random key.
+	 */
+	static public function createSalt($slength = 64)
+	{
+		$salt = '';
+		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$microtime = function_exists('microtime') ? microtime() : time();
+		mt_srand((double)$microtime * 1000000);
+		for ($i = 0; $i <= $slength; $i++) {
+			$salt .= substr($base, mt_rand(0, $slength) % strlen($base), 1);
+		}
+
+		return $salt;
+	}
+
+	/**
 	 * This Public Function checks whether a users password has been expired
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.1
-	 * @param    string  $uname      The username of the account to be checked
+	 * @param    string $uname The username of the account to be checked
 	 * @return   bool     returns true if password is expired, false if password is not expired.
 	 */
-	public function passExpired($uname = '') {
+	public function passExpired($uname = '')
+	{
 		if (!isset($uname) || (isset($uname) && $uname == '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
 		return self::_passExpired($uname);
 	}
-
-	/**
-	 * This Public Function returns the User Salt key belonging to username.
-	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-	 * @since    1.1
-	 * @param    string  $uname      Username to find User Salt key for.
-	 * @return   string  returns the Salt key of the user.
-	 *
-	 * To be removed in future versions
-	 */
-	public function getUserSalt($uname = '') {
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
-			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
-		}
-
-		return self::_getUserSalt($uname);
-	}
-
-	/**
-	 * This Public Function returns the User Encryption Type belonging to username.
-	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-	 * @since    1.1
-	 * @param    string  $uname      Username to find Encryption Type for.
-	 * @return   string  returns the Encryption Type of the user.
-	 *
-	 * to be removed in future versions
-	 */
-	public function getUserEncType($uname = '') {
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
-			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
-		}
-
-		return self::_getUserEncType($uname);
-	}
-
-	/**
-	 * This Public Function is used to Encrypt User Passwords
-	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-	 * @since    1.1
-	 * @param    string  $pass       plaintext password to be encrypted
-	 * @return   Hash of users password.
-	 */
-	public function encryptPass($pass) {
-		global $icmsConfigUser;
-
-		$salt = self::createSalt();
-		$iterations = 5000;
-		$enc_type = (isset($icmsConfigUser['enc_type'])?(int) $icmsConfigUser['enc_type']:23);
-
-		return self::_encryptPassword($pass, $salt, $enc_type, $iterations);
-	}
-
-	/**
-	 * This Public Function verifies if the users password is correct.
-	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-	 * @since    1.3.3
-	 * @param    string  $uname      Username to verify.
-	 * @param    string  $pass       Password to verify.
-	 * @return   mixed      returns Hash if correct, returns false if incorrect.
-	 */
-	public function verifyPass($pass = '', $uname = '') {
-		if (!isset($pass) || !isset($uname)) {
-			return false;
-		}
-
-		return self::_verifyPassword($pass, $uname);
-	}
-
-	// ***** Private Functions *****
 
 	/**
 	 * This Private Function checks whether a users password has been expired
@@ -194,6 +127,24 @@ final class icms_core_Password {
 	}
 
 	/**
+	 * This Public Function returns the User Salt key belonging to username.
+	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+	 * @since    1.1
+	 * @param    string $uname Username to find User Salt key for.
+	 * @return   string  returns the Salt key of the user.
+	 *
+	 * To be removed in future versions
+	 */
+	public function getUserSalt($uname = '')
+	{
+		if (!isset($uname) || (isset($uname) && $uname == '')) {
+			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
+		}
+
+		return self::_getUserSalt($uname);
+	}
+
+	/**
 	 * This Private Function returns the User Salt key belonging to username.
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.1
@@ -222,6 +173,26 @@ final class icms_core_Password {
 
 		return $salt;
 	}
+
+	/**
+	 * This Public Function returns the User Encryption Type belonging to username.
+	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+	 * @since    1.1
+	 * @param    string $uname Username to find Encryption Type for.
+	 * @return   string  returns the Encryption Type of the user.
+	 *
+	 * to be removed in future versions
+	 */
+	public function getUserEncType($uname = '')
+	{
+		if (!isset($uname) || (isset($uname) && $uname == '')) {
+			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
+		}
+
+		return self::_getUserEncType($uname);
+	}
+
+	// ***** Private Functions *****
 
 	/**
 	 * This Private Function returns the User Encryption Type belonging to username.
@@ -254,76 +225,21 @@ final class icms_core_Password {
 	}
 
 	/**
-	 * This Private Function returns the User Password Hash belonging to username.
-	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
-	 * @since    1.3.3
-	 * @param    string  $uname      Username to find hash for.
-	 * @return   string  returns the Password hash of the user.
-	 */
-	private function _getUserHash($uname) {
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
-			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
-		}
-
-		$table = new icms_db_legacy_updater_Table('users');
-		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
-
-		if ($table->fieldExists('loginname')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE loginname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass) = icms::$xoopsDB->fetchRow($sql);
-		} elseif ($table->fieldExists('login_name')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE login_name = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass) = icms::$xoopsDB->fetchRow($sql);
-		} else {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE uname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass) = icms::$xoopsDB->fetchRow($sql);
-		}
-
-		return $pass;
-	}
-
-	/**
-	 * This Private Function is used to Encrypt User Passwords
+	 * This Public Function is used to Encrypt User Passwords
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.1
 	 * @param    string  $pass       plaintext password to be encrypted
-	 * @param    string  $salt       unique user salt key used in encryption process
-	 * @param    int     $enc_type   encryption type to use (this is required & only used when passwords are expired)
 	 * @return   Hash of users password.
-	 *
-	 * To be removed in future versions, use _encryptPassword() instead
 	 */
-	private function _encryptPass($pass, $salt, $enc_type) {
-		if ($enc_type == 0) {
-			return md5($pass);
-		} else {
-			$pass = $salt . md5($pass) . $this->mainSalt;
+	public function encryptPass($pass)
+	{
+		global $icmsConfigUser;
 
-			$type = array();
-			$type['encType'] = array(
-										1 => 'sha256',
-										2 => 'sha384',
-										3 => 'sha512',
-										4 => 'ripemd128',
-										5 => 'ripemd160',
-										6 => 'whirlpool',
-										7 => 'haval128,4',
-										8 => 'haval160,4',
-										9 => 'haval192,4',
-										10 => 'haval224,4',
-										11 => 'haval256,4',
-										12 => 'haval128,5',
-										13 => 'haval160,5',
-										14 => 'haval192,5',
-										15 => 'haval224,5',
-										16 => 'haval256,5',
-									);
+		$salt = self::createSalt();
+		$iterations = 5000;
+		$enc_type = (isset($icmsConfigUser['enc_type']) ? (int)$icmsConfigUser['enc_type'] : 23);
 
-			return hash($type['encType'][$enc_type], $pass);
-		}
+		return self::_encryptPassword($pass, $salt, $enc_type, $iterations);
 	}
 
 	/**
@@ -391,6 +307,23 @@ final class icms_core_Password {
 	}
 
 	/**
+	 * This Public Function verifies if the users password is correct.
+	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+	 * @since    1.3.3
+	 * @param    string $uname Username to verify.
+	 * @param    string $pass Password to verify.
+	 * @return   mixed      returns Hash if correct, returns false if incorrect.
+	 */
+	public function verifyPass($pass = '', $uname = '')
+	{
+		if (!isset($pass) || !isset($uname)) {
+			return false;
+		}
+
+		return self::_verifyPassword($pass, $uname);
+	}
+
+	/**
 	 * This Private Function verifies if the password is correct
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.3.3
@@ -420,5 +353,80 @@ final class icms_core_Password {
 		}
 
 		return false;
+	}
+
+	/**
+	 * This Private Function returns the User Password Hash belonging to username.
+	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+	 * @since    1.3.3
+	 * @param    string $uname Username to find hash for.
+	 * @return   string  returns the Password hash of the user.
+	 */
+	private function _getUserHash($uname)
+	{
+		if (!isset($uname) || (isset($uname) && $uname == '')) {
+			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
+		}
+
+		$table = new icms_db_legacy_updater_Table('users');
+		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
+
+		if ($table->fieldExists('loginname')) {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE loginname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($pass) = icms::$xoopsDB->fetchRow($sql);
+		} elseif ($table->fieldExists('login_name')) {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE login_name = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($pass) = icms::$xoopsDB->fetchRow($sql);
+		} else {
+			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE uname = %s",
+				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+			list($pass) = icms::$xoopsDB->fetchRow($sql);
+		}
+
+		return $pass;
+	}
+
+	/**
+	 * This Private Function is used to Encrypt User Passwords
+	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+	 * @since    1.1
+	 * @param    string $pass plaintext password to be encrypted
+	 * @param    string $salt unique user salt key used in encryption process
+	 * @param    int $enc_type encryption type to use (this is required & only used when passwords are expired)
+	 * @return   Hash of users password.
+	 *
+	 * To be removed in future versions, use _encryptPassword() instead
+	 */
+	private function _encryptPass($pass, $salt, $enc_type)
+	{
+		if ($enc_type == 0) {
+			return md5($pass);
+		} else {
+			$pass = $salt . md5($pass) . $this->mainSalt;
+
+			$type = array();
+			$type['encType'] = array(
+				1 => 'sha256',
+				2 => 'sha384',
+				3 => 'sha512',
+				4 => 'ripemd128',
+				5 => 'ripemd160',
+				6 => 'whirlpool',
+				7 => 'haval128,4',
+				8 => 'haval160,4',
+				9 => 'haval192,4',
+				10 => 'haval224,4',
+				11 => 'haval256,4',
+				12 => 'haval128,5',
+				13 => 'haval160,5',
+				14 => 'haval192,5',
+				15 => 'haval224,5',
+				16 => 'haval256,5',
+			);
+
+			return hash($type['encType'][$enc_type], $pass);
+		}
 	}
 }

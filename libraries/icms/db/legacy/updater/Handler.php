@@ -102,167 +102,6 @@ class icms_db_legacy_updater_Handler {
 	}
 
 	/**
-	 * Use to update a table
-	 *
-	 * @param object $table {@link icms_db_legacy_updater_Table} that will be updated
-	 * @param bool	$force force the query even in a GET process
-	 *
-	 * @see icms_db_legacy_updater_Table
-	 *
-	 * @return bool true if success, false if an error occured
-	 */
-	function updateTable($table, $force = false) {
-		$ret = true;
-		$table->force = $force;
-
-		// If table has a structure, create the table
-		if ($table->getStructure()) {
-			$ret = $table->createTable() && $ret;
-		}
-		// If table is flag for drop, drop it
-		if ($table->_flagForDrop) {
-			$ret = $table->dropTable() && $ret;
-		}
-		// If table has data, insert it
-		if ($table->getData()) {
-			$ret = $table->addData() && $ret;
-		}
-		// If table has new fields to be added, add them
-		if ($table->getNewFields()) {
-			$ret = $table->addNewFields() && $ret;
-		}
-		// If table has altered field, alter the table
-		if ($table->getAlteredFields()) {
-			$ret = $table->alterTable() && $ret;
-		}
-		// If table has droped field, alter the table
-		if ($table->getDropedFields()) {
-			$ret = $table->dropFields() && $ret;
-		}
-		// If table has updateAll items, update the table
-		if ($table->getUpdateAll()) {
-			$ret = $table->updateAll() && $ret;
-		}
-		return $ret;
-	}
-
-	/**
-	 * Upgrade automaticaly an item of a module
-	 *
-	 * Note that currently, $item needs to represent the name of an object derived
-	 * from SmartObject, for example, $item == 'invoice' wich will represent $dirnameInvoice
-	 * for example SmartbillingInvoice which extends SmartObject class
-	 *
-	 * @param string $dirname dirname of the module
-	 * @param mixed $item name or array of names of the item to upgrade
-	 */
-	function automaticUpgrade($dirname, $item) {
-		if (is_array($item)) {
-			foreach ($item as $v) {
-				$this->upgradeObjectItem($dirname, $v);
-			}
-		} else {
-			$this->upgradeObjectItem($dirname, $item);
-		}
-	}
-
-	/**
-	 * Get the type of the field based on the info of the var
-	 *
-	 * @param array $var array containing information about the var
-	 * @return string type of the field
-	 */
-	function getFieldTypeFromVar($var) {
-		switch ($var[icms_properties_Handler::VARCFG_TYPE]) {
-			case icms_properties_Handler::DTYPE_BOOLEAN:
-				return 'TINYINT(1) UNSIGNED';
-				break;
-			case icms_properties_Handler::DTYPE_ARRAY:
-				return 'TEXT';
-				break;
-			case icms_properties_Handler::DTYPE_OBJECT:
-				return 'MEDIUMTEXT';
-				break;
-			case icms_properties_Handler::DTYPE_LIST:
-				return 'VARCHAR(100)';
-				break;
-			case icms_properties_Handler::DTYPE_DATETIME:
-				return 'DATETIME';
-				break;
-			case icms_properties_Handler::DTYPE_FILE:
-				return 'BLOB';
-				break;
-			case icms_properties_Handler::DTYPE_FLOAT:
-				if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
-					return 'FLOAT(' . icms_properties_Handler::VARCFG_MAX_LENGTH . ')';
-				} else {
-					return 'FLOAT';
-				}
-				break;
-			case icms_properties_Handler::DTYPE_INTEGER:
-				if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
-					if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 4) {
-						return 'TINYINT';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 5) {
-						return 'SMALLINT';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 7) {
-						return 'MEDIUMINT';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 11) {
-						return 'INT';
-					} else {
-						return 'BIGINT';
-					}
-				} else {
-					return 'INT';
-				}
-				break;
-			case icms_properties_Handler::DTYPE_LIST:
-				return 'TEXT';
-				break;
-			case icms_properties_Handler::DTYPE_STRING:
-				if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH])) {
-					if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 500) {
-						return 'VARCHAR(' . $var[icms_properties_Handler::VARCFG_MAX_LENGTH] . ')';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 8000) {
-						return 'TEXT';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 2097000) {
-						return 'MEDIUMTEXT';
-					} else {
-						return 'LONGTEXT';
-					}
-				} else {
-					return 'VARCHAR(255)';
-				}
-				break;
-			default:
-				return 'TEXT';
-		}
-	}
-
-	/**
-	 * Get the default value based on the info of the var
-	 *
-	 * @param array $var array containing information about the var
-	 * @param bool $key TRUE if the var is the primary key
-	 * @return string default value
-	 */
-	function getFieldDefaultFromVar($var, $key = false) {
-		if (in_array($var[icms_properties_Handler::VARCFG_TYPE], array(
-					icms_properties_Handler::DTYPE_DATETIME,
-					icms_properties_Handler::DTYPE_OBJECT,
-					icms_properties_Handler::DTYPE_LIST,
-					icms_properties_Handler::DTYPE_ARRAY,
-					icms_properties_Handler::DTYPE_DEP_TXTBOX
-				))) {
-					return null;
-		} elseif (isset($var[icms_properties_Handler::VARCFG_DEFAULT_VALUE])) {
-					return $var[icms_properties_Handler::VARCFG_DEFAULT_VALUE];
-		} else {
-					return null;
-		}
-	}
-
-	/**
 	 * Remove table or some rows if table is used for other object
 	 *
 	 * @param string $dirname
@@ -292,7 +131,7 @@ class icms_db_legacy_updater_Handler {
 
 		if (isset($parentObjectVars)) {
 			$objectVars = $object->getVars();
-			$table = new icms_db_legacy_updater_Table(str_replace(getenv('DB_PREFIX') . '_', '', $module_handler->table));
+			$table = new icms_db_legacy_updater_Table(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
 			foreach (array_keys($objectVars) as $var) {
 				if (!isset($parentObjectVars[$var])) {
 					$table->addDropedField($var);
@@ -303,11 +142,119 @@ class icms_db_legacy_updater_Handler {
 			if (in_array($module_handler->table, $reservedTables)) {
 							return false;
 			}
-			$table = new icms_db_legacy_updater_Table(str_replace(getenv('DB_PREFIX') . '_', '', $module_handler->table));
+			$table = new icms_db_legacy_updater_Table(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
 			$ret = $table->dropTable();
 		}
 		$this->_messages = array_merge($this->_messages, $table->_messages);
 		return $ret;
+	}
+
+	/**
+	 * Insert a config in System Preferences
+	 *
+	 * @param int $conf_catid
+	 * @param string $conf_name
+	 * @param string $conf_title
+	 * @param mixed $conf_value
+	 * @param string $conf_desc
+	 * @param string $conf_formtype
+	 * @param string $conf_valuetype
+	 * @param int $conf_order
+	 */
+	function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order)
+	{
+		global $dbVersion;
+		$configitem_handler = icms::handler('icms_config_item');
+		$configitemObj = $configitem_handler->create();
+		$configitemObj->setVar('conf_modid', 0);
+		$configitemObj->setVar('conf_catid', $conf_catid);
+		$configitemObj->setVar('conf_name', $conf_name);
+		$configitemObj->setVar('conf_title', $conf_title);
+		$configitemObj->setVar('conf_value', $conf_value);
+		$configitemObj->setVar('conf_desc', $conf_desc);
+		$configitemObj->setVar('conf_formtype', $conf_formtype);
+		$configitemObj->setVar('conf_valuetype', $conf_valuetype);
+		$configitemObj->setVar('conf_order', $conf_order);
+		if (!$configitem_handler->insert($configitemObj)) {
+			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_ERR, $conf_title);
+		} else {
+			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_SCC, $conf_title);
+		}
+		$this->_messages[] = $querry_answer;
+	}
+
+	function moduleUpgrade(&$module, $tables_first = false)
+	{
+		$dirname = $module->getVar('dirname');
+
+		//		ob_start();
+
+		$dbVersion = $module->getDbversion();
+
+		$newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
+		$textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
+		$textlatestversion = sprintf(_DATABASEUPDATER_LATESTVER, $newDbVersion);
+		$this->_messages[] = $textcurrentversion;
+		$this->_messages[] = $textlatestversion;
+		if (!$tables_first) {
+			if ($newDbVersion > $dbVersion) {
+				for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
+					$upgrade_function = $dirname . '_db_upgrade_' . $i;
+					if (function_exists($upgrade_function)) {
+						$upgrade_function();
+					}
+				}
+			}
+		}
+		$this->_messages[] = _DATABASEUPDATER_UPDATE_UPDATING_DATABASE;
+
+		// if there is a function to execute for this DB version, let's do it
+		//$function_
+
+		$this->automaticUpgrade($dirname, $module->modinfo['object_items']);
+		/*
+          if (method_exists($module, "setMessage")) {
+          $module->setMessage($this->_messages);
+          } else {
+          foreach($this->_messages as $feedback){
+          echo $feedback;
+          }
+          }
+         */
+		if ($tables_first) {
+			if ($newDbVersion > $dbVersion) {
+				for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
+					$upgrade_function = $dirname . '_db_upgrade_' . $i;
+					if (function_exists($upgrade_function)) {
+						$upgrade_function();
+					}
+				}
+			}
+		}
+
+		$this->updateModuleDBVersion($newDbVersion, $dirname);
+		return true;
+	}
+
+	/**
+	 * Upgrade automaticaly an item of a module
+	 *
+	 * Note that currently, $item needs to represent the name of an object derived
+	 * from SmartObject, for example, $item == 'invoice' wich will represent $dirnameInvoice
+	 * for example SmartbillingInvoice which extends SmartObject class
+	 *
+	 * @param string $dirname dirname of the module
+	 * @param mixed $item name or array of names of the item to upgrade
+	 */
+	function automaticUpgrade($dirname, $item)
+	{
+		if (is_array($item)) {
+			foreach ($item as $v) {
+				$this->upgradeObjectItem($dirname, $v);
+			}
+		} else {
+			$this->upgradeObjectItem($dirname, $item);
+		}
 	}
 
 	/**
@@ -321,7 +268,7 @@ class icms_db_legacy_updater_Handler {
 			return false;
 		}
 
-		$table = new icms_db_legacy_updater_Table(str_replace(getenv('DB_PREFIX') . '_', '', $module_handler->table));
+		$table = new icms_db_legacy_updater_Table(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
 		$object = $module_handler->create();
 		$class = new ReflectionClass($object);
 		$isExtention = false;
@@ -448,36 +395,101 @@ class icms_db_legacy_updater_Handler {
 	}
 
 	/**
-	 * Insert a config in System Preferences
+	 * Get the type of the field based on the info of the var
 	 *
-	 * @param int $conf_catid
-	 * @param string $conf_name
-	 * @param string $conf_title
-	 * @param mixed $conf_value
-	 * @param string $conf_desc
-	 * @param string $conf_formtype
-	 * @param string $conf_valuetype
-	 * @param int $conf_order
+	 * @param array $var array containing information about the var
+	 * @return string type of the field
 	 */
-	function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order) {
-		global $dbVersion;
-		$configitem_handler = icms::handler('icms_config_item');
-		$configitemObj = $configitem_handler->create();
-		$configitemObj->setVar('conf_modid', 0);
-		$configitemObj->setVar('conf_catid', $conf_catid);
-		$configitemObj->setVar('conf_name', $conf_name);
-		$configitemObj->setVar('conf_title', $conf_title);
-		$configitemObj->setVar('conf_value', $conf_value);
-		$configitemObj->setVar('conf_desc', $conf_desc);
-		$configitemObj->setVar('conf_formtype', $conf_formtype);
-		$configitemObj->setVar('conf_valuetype', $conf_valuetype);
-		$configitemObj->setVar('conf_order', $conf_order);
-		if (!$configitem_handler->insert($configitemObj)) {
-			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_ERR, $conf_title);
-		} else {
-			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_SCC, $conf_title);
+	function getFieldTypeFromVar($var)
+	{
+		switch ($var[icms_properties_Handler::VARCFG_TYPE]) {
+			case icms_properties_Handler::DTYPE_BOOLEAN:
+				return 'TINYINT(1) UNSIGNED';
+				break;
+			case icms_properties_Handler::DTYPE_ARRAY:
+				return 'TEXT';
+				break;
+			case icms_properties_Handler::DTYPE_OBJECT:
+				return 'MEDIUMTEXT';
+				break;
+			case icms_properties_Handler::DTYPE_LIST:
+				return 'VARCHAR(100)';
+				break;
+			case icms_properties_Handler::DTYPE_DATETIME:
+				return 'DATETIME';
+				break;
+			case icms_properties_Handler::DTYPE_FILE:
+				return 'BLOB';
+				break;
+			case icms_properties_Handler::DTYPE_FLOAT:
+				if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
+					return 'FLOAT(' . icms_properties_Handler::VARCFG_MAX_LENGTH . ')';
+				} else {
+					return 'FLOAT';
+				}
+				break;
+			case icms_properties_Handler::DTYPE_INTEGER:
+				if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
+					if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 4) {
+						return 'TINYINT';
+					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 5) {
+						return 'SMALLINT';
+					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 7) {
+						return 'MEDIUMINT';
+					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 11) {
+						return 'INT';
+					} else {
+						return 'BIGINT';
+					}
+				} else {
+					return 'INT';
+				}
+				break;
+			case icms_properties_Handler::DTYPE_LIST:
+				return 'TEXT';
+				break;
+			case icms_properties_Handler::DTYPE_STRING:
+				if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH])) {
+					if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 500) {
+						return 'VARCHAR(' . $var[icms_properties_Handler::VARCFG_MAX_LENGTH] . ')';
+					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 8000) {
+						return 'TEXT';
+					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 2097000) {
+						return 'MEDIUMTEXT';
+					} else {
+						return 'LONGTEXT';
+					}
+				} else {
+					return 'VARCHAR(255)';
+				}
+				break;
+			default:
+				return 'TEXT';
 		}
-		$this->_messages[] = $querry_answer;
+	}
+
+	/**
+	 * Get the default value based on the info of the var
+	 *
+	 * @param array $var array containing information about the var
+	 * @param bool $key TRUE if the var is the primary key
+	 * @return string default value
+	 */
+	function getFieldDefaultFromVar($var, $key = false)
+	{
+		if (in_array($var[icms_properties_Handler::VARCFG_TYPE], array(
+			icms_properties_Handler::DTYPE_DATETIME,
+			icms_properties_Handler::DTYPE_OBJECT,
+			icms_properties_Handler::DTYPE_LIST,
+			icms_properties_Handler::DTYPE_ARRAY,
+			icms_properties_Handler::DTYPE_DEP_TXTBOX
+		))) {
+			return null;
+		} elseif (isset($var[icms_properties_Handler::VARCFG_DEFAULT_VALUE])) {
+			return $var[icms_properties_Handler::VARCFG_DEFAULT_VALUE];
+		} else {
+			return null;
+		}
 	}
 
 	/*
@@ -486,56 +498,50 @@ class icms_db_legacy_updater_Handler {
      * @return bool whether upgrade succeeded or not
      */
 
-	function moduleUpgrade(&$module, $tables_first = false) {
-		$dirname = $module->getVar('dirname');
+	/**
+	 * Use to update a table
+	 *
+	 * @param object $table {@link icms_db_legacy_updater_Table} that will be updated
+	 * @param bool $force force the query even in a GET process
+	 *
+	 * @see icms_db_legacy_updater_Table
+	 *
+	 * @return bool true if success, false if an error occured
+	 */
+	function updateTable($table, $force = false)
+	{
+		$ret = true;
+		$table->force = $force;
 
-		//		ob_start();
-
-		$dbVersion = $module->getDbversion();
-
-		$newDbVersion = constant(strtoupper($dirname . '_db_version'))? constant(strtoupper($dirname . '_db_version')):0;
-		$textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
-		$textlatestversion = sprintf(_DATABASEUPDATER_LATESTVER, $newDbVersion);
-		$this->_messages[] = $textcurrentversion;
-		$this->_messages[] = $textlatestversion;
-		if (!$tables_first) {
-			if ($newDbVersion > $dbVersion) {
-				for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
-					$upgrade_function = $dirname . '_db_upgrade_' . $i;
-					if (function_exists($upgrade_function)) {
-						$upgrade_function();
-					}
-				}
-			}
+		// If table has a structure, create the table
+		if ($table->getStructure()) {
+			$ret = $table->createTable() && $ret;
 		}
-		$this->_messages[] = _DATABASEUPDATER_UPDATE_UPDATING_DATABASE;
-
-		// if there is a function to execute for this DB version, let's do it
-		//$function_
-
-		$this->automaticUpgrade($dirname, $module->modinfo['object_items']);
-		/*
-          if (method_exists($module, "setMessage")) {
-          $module->setMessage($this->_messages);
-          } else {
-          foreach($this->_messages as $feedback){
-          echo $feedback;
-          }
-          }
-         */
-		if ($tables_first) {
-			if ($newDbVersion > $dbVersion) {
-				for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
-					$upgrade_function = $dirname . '_db_upgrade_' . $i;
-					if (function_exists($upgrade_function)) {
-						$upgrade_function();
-					}
-				}
-			}
+		// If table is flag for drop, drop it
+		if ($table->_flagForDrop) {
+			$ret = $table->dropTable() && $ret;
 		}
-
-		$this->updateModuleDBVersion($newDbVersion, $dirname);
-		return true;
+		// If table has data, insert it
+		if ($table->getData()) {
+			$ret = $table->addData() && $ret;
+		}
+		// If table has new fields to be added, add them
+		if ($table->getNewFields()) {
+			$ret = $table->addNewFields() && $ret;
+		}
+		// If table has altered field, alter the table
+		if ($table->getAlteredFields()) {
+			$ret = $table->alterTable() && $ret;
+		}
+		// If table has droped field, alter the table
+		if ($table->getDropedFields()) {
+			$ret = $table->dropFields() && $ret;
+		}
+		// If table has updateAll items, update the table
+		if ($table->getUpdateAll()) {
+			$ret = $table->updateAll() && $ret;
+		}
+		return $ret;
 	}
 
 	/**

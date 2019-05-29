@@ -100,16 +100,6 @@ class icms_db_legacy_updater_Table {
 	}
 
 	/**
-	 * Return the table name, prefixed with site table prefix
-	 *
-	 * @return string table name
-	 *
-	 */
-	function name() {
-		return $this->_db->prefix($this->_name);
-	}
-
-	/**
 	 * Detemines if a table exists in the current db
 	 *
 	 * Checks if the table already exists in the database
@@ -120,7 +110,7 @@ class icms_db_legacy_updater_Table {
 	 */
 	function exists() {
 		$bRetVal = false;
-		$ret = $this->_db->queryF("SHOW TABLES FROM `" . getenv('DB_NAME') . "` LIKE '" . $this->name() . "'");
+		$ret = $this->_db->queryF("SHOW TABLES FROM `" . env('DB_NAME') . "` LIKE '" . $this->name() . "'");
 		list ($m_table) = $this->_db->fetchRow($ret);
 		if ($m_table == strtolower($this->name())) {
 			$bRetVal = true;
@@ -128,10 +118,34 @@ class icms_db_legacy_updater_Table {
 		return $bRetVal;
 	}
 
+	/**
+	 * Return the table name, prefixed with site table prefix
+	 *
+	 * @return string table name
+	 *
+	 */
+	function name()
+	{
+		return $this->_db->prefix($this->_name);
+	}
+
 	/*
 	 * Gets the field array from one table name
 	 * @return array array of fields
 	 */
+
+	function fieldExists($field)
+	{
+		$existingFields = $this->getExistingFieldsArray();
+		return isset($existingFields[$field]);
+	}
+
+	/*
+	 * Checks whether the field exists or not
+	 * @param string $field does the field exist in the database
+	 * @return bool whether the field exists or not
+	 */
+
 	function getExistingFieldsArray() {
 		$sql = "SHOW COLUMNS FROM " . $this->name();
 		$result = $this->_db->queryF($sql);
@@ -148,67 +162,6 @@ class icms_db_legacy_updater_Table {
 			}
 		}
 		return $fields;
-	}
-
-	/*
-	 * Checks whether the field exists or not
-	 * @param string $field does the field exist in the database
-	 * @return bool whether the field exists or not
-	 */
-	function fieldExists($field) {
-		$existingFields = $this->getExistingFieldsArray();
-		return isset($existingFields[$field]);
-	}
-
-	/**
-	 * Set the table structure
-	 *
-	 * Example :
-	 *
-	 *	 	$table->setStructure("`transactionid` int(11) NOT NULL auto_increment,
-	 * 				  `date` int(11) NOT NULL default '0',
-	 * 				  `status` int(1) NOT NULL default '-1',
-	 * 				  `itemid` int(11) NOT NULL default '0',
-	 * 				  `uid` int(11) NOT NULL default '0',
-	 * 				  `price` float NOT NULL default '0',
-	 * 				  `currency` varchar(100) NOT NULL default '',
-	 * 				  PRIMARY KEY  (`transactionid`)");
-	 *
-	 * @param  string $structure table structure
-	 *
-	 */
-	function setStructure($structure) {
-		$this->_structure = $structure;
-	}
-
-	/**
-	 * Returns the table structure
-	 *
-	 * @return string table structure
-	 *
-	 */
-	function getStructure() {
-		return sprintf($this->_structure, $this->name());
-	}
-
-	/**
-	 * Add values of a record to be added
-	 *
-	 * @param string $data values of a record
-	 *
-	 */
-	function setData($data) {
-		$this->_data[] = $data;
-	}
-
-	/**
-	 * Get the data array
-	 *
-	 * @return array containing the records values to be added
-	 *
-	 */
-	function getData() {
-		return $this->_data;
 	}
 
 	/**
@@ -232,6 +185,28 @@ class icms_db_legacy_updater_Table {
 			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name());
 		}
 		return $ret;
+	}
+
+	/**
+	 * Get the data array
+	 *
+	 * @return array containing the records values to be added
+	 *
+	 */
+	function getData()
+	{
+		return $this->_data;
+	}
+
+	/**
+	 * Add values of a record to be added
+	 *
+	 * @param string $data values of a record
+	 *
+	 */
+	function setData($data)
+	{
+		$this->_data[] = $data;
 	}
 
 	/**
@@ -260,16 +235,6 @@ class icms_db_legacy_updater_Table {
 		$field['name'] = $name;
 		$field['properties'] = $properties;
 		$this->_newFields[] = $field;
-	}
-
-	/**
-	 * Get fields that need to be altered
-	 *
-	 * @return array fields that need to be altered
-	 *
-	 */
-	function getAlteredFields() {
-		return $this->_alteredFields;
 	}
 
 	/**
@@ -305,36 +270,6 @@ class icms_db_legacy_updater_Table {
 	}
 
 	/**
-	 * Get new fields to be added
-	 *
-	 * @return array fields to be added
-	 *
-	 */
-	function getNewFields() {
-		return $this->_newFields;
-	}
-
-	/**
-	 * Get items to be updated
-	 *
-	 * @return array items to be updated
-	 *
-	 */
-	function getUpdateAll() {
-		return $this->_updateAll;
-	}
-
-	/**
-	 * Get items to be deleted
-	 *
-	 * @return array items to be deleted
-	 *
-	 */
-	function getDeleteAll() {
-		return $this->_deleteAll;
-	}
-
-	/**
 	 * Add values of a record to be added
 	 *
 	 * @param string $name name of the field
@@ -342,16 +277,6 @@ class icms_db_legacy_updater_Table {
 	 */
 	function addDropedField($name) {
 		$this->_dropedFields[] = $name;
-	}
-
-	/**
-	 * Get fields that need to be droped
-	 *
-	 * @return array fields that need to be droped
-	 *
-	 */
-	function getDropedFields() {
-		return $this->_dropedFields;
 	}
 
 	/**
@@ -384,6 +309,39 @@ class icms_db_legacy_updater_Table {
 			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE, $this->name());
 		}
 		return $ret;
+	}
+
+	/**
+	 * Returns the table structure
+	 *
+	 * @return string table structure
+	 *
+	 */
+	function getStructure()
+	{
+		return sprintf($this->_structure, $this->name());
+	}
+
+	/**
+	 * Set the table structure
+	 *
+	 * Example :
+	 *
+	 *        $table->setStructure("`transactionid` int(11) NOT NULL auto_increment,
+	 *                  `date` int(11) NOT NULL default '0',
+	 *                  `status` int(1) NOT NULL default '-1',
+	 *                  `itemid` int(11) NOT NULL default '0',
+	 *                  `uid` int(11) NOT NULL default '0',
+	 *                  `price` float NOT NULL default '0',
+	 *                  `currency` varchar(100) NOT NULL default '',
+	 *                  PRIMARY KEY  (`transactionid`)");
+	 *
+	 * @param  string $structure table structure
+	 *
+	 */
+	function setStructure($structure)
+	{
+		$this->_structure = $structure;
 	}
 
 	/**
@@ -442,6 +400,17 @@ class icms_db_legacy_updater_Table {
 	}
 
 	/**
+	 * Get fields that need to be altered
+	 *
+	 * @return array fields that need to be altered
+	 *
+	 */
+	function getAlteredFields()
+	{
+		return $this->_alteredFields;
+	}
+
+	/**
 	 * Use to add new fileds in the table
 	 *
 	 * @return bool true if success, false if an error occured
@@ -466,6 +435,17 @@ class icms_db_legacy_updater_Table {
 			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name());
 		}
 		return $ret;
+	}
+
+	/**
+	 * Get new fields to be added
+	 *
+	 * @return array fields to be added
+	 *
+	 */
+	function getNewFields()
+	{
+		return $this->_newFields;
 	}
 
 	/**
@@ -511,6 +491,17 @@ class icms_db_legacy_updater_Table {
 	}
 
 	/**
+	 * Get items to be updated
+	 *
+	 * @return array items to be updated
+	 *
+	 */
+	function getUpdateAll()
+	{
+		return $this->_updateAll;
+	}
+
+	/**
 	 * delete all objects meeting the conditions
 	 *
 	 * @param object $criteria {@link icms_db_criteria_Element} with conditions to meet
@@ -541,6 +532,17 @@ class icms_db_legacy_updater_Table {
 	}
 
 	/**
+	 * Get items to be deleted
+	 *
+	 * @return array items to be deleted
+	 *
+	 */
+	function getDeleteAll()
+	{
+		return $this->_deleteAll;
+	}
+
+	/**
 	 * Use to drop fields
 	 *
 	 * @return bool true if success, false if an error occured
@@ -562,5 +564,16 @@ class icms_db_legacy_updater_Table {
 				$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $str, $this->name());
 			}
 		return $ret;
+	}
+
+	/**
+	 * Get fields that need to be droped
+	 *
+	 * @return array fields that need to be droped
+	 *
+	 */
+	function getDropedFields()
+	{
+		return $this->_dropedFields;
 	}
 }

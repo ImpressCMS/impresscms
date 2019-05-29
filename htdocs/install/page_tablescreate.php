@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	$tables = array();
 
-	$type = getenv('DB_TYPE');
+	$type = env('DB_TYPE');
 	if (substr($type, 0, 4) == 'pdo.') {
 		$driver = substr($type, 4);
 	} else {

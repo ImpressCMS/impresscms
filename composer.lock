@@ -4,8 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5002174d07a1c914a9ae6c2197efb6c8",
+    "content-hash": "97c4f7ef0c217e4afbb0a44e00360175",
     "packages": [
+        {
+            "name": "0.0.0/composer-include-files",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpexpertsinc/composer-include-files.git",
+                "reference": "6776421c358c6a25b16eccb617de9478b7ae2019"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpexpertsinc/composer-include-files/zipball/6776421c358c6a25b16eccb617de9478b7ae2019",
+                "reference": "6776421c358c6a25b16eccb617de9478b7ae2019",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "ComposerIncludeFiles\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "ComposerIncludeFiles\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Theodore R. Smith",
+                    "email": "theodore@phpexperts.pro"
+                },
+                {
+                    "name": "Tim Robertson",
+                    "email": "funkjedi@gmail.com"
+                }
+            ],
+            "description": "Include files at a higher priority than autoload files. Useful for overriding Laravel helpers.",
+            "homepage": "https://github.com/funkjedi/composer-include-files",
+            "keywords": [
+                "autoload",
+                "composer"
+            ],
+            "time": "2019-05-09T08:06:44+00:00"
+        },
         {
             "name": "apix/cache",
             "version": "1.3.3",
@@ -627,6 +675,61 @@
             ],
             "description": "Some classes from php-downloader v1.0 by www.ipunkt.biz package that were used in Xoops but can't be found outside",
             "time": "2018-01-29T12:09:44+00:00"
+        },
+        {
+            "name": "phpexperts/laravel-env-polyfill",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpexpertsinc/Laravel57-env-polyfill.git",
+                "reference": "bfc0ba73d4567b88aae325754e9c389d75d20f99"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpexpertsinc/Laravel57-env-polyfill/zipball/bfc0ba73d4567b88aae325754e9c389d75d20f99",
+                "reference": "bfc0ba73d4567b88aae325754e9c389d75d20f99",
+                "shasum": ""
+            },
+            "require": {
+                "0.0.0/composer-include-files": "^1.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "6.*"
+            },
+            "type": "library",
+            "extra": {
+                "include_files": [
+                    "src/env-shim.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP Experts, Inc.",
+                    "homepage": "https://www.phpexperts.pro/"
+                },
+                {
+                    "name": "Theodore R. Smith",
+                    "homepage": "https://www.linkedin.com/in/hopeseekr"
+                },
+                {
+                    "name": "Taylor Otwell",
+                    "homepage": "https://www.laravel.com/"
+                }
+            ],
+            "description": "Backward compatible support for Laravel's pre-5.8 env() function.",
+            "homepage": "https://github/phpexpertsinc/",
+            "keywords": [
+                "5.7",
+                "env",
+                "laravel",
+                "shim"
+            ],
+            "time": "2019-05-10T02:24:47+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
