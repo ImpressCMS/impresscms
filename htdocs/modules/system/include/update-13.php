@@ -224,13 +224,6 @@ if ($dbVersion < $newDbVersion) {
 	}
 	unset($configs);
 
-	/* New HTML Purifier options -
-     * purifier_HTML_FlashAllowFullScreen, after purifier_HTML_AttrNameUseCDATA
-    * purifier_Output_FlashCompat, after purifier_HTML_FlashAllowFullScreen
-    * purifier_Filter_AllowCustom, after purifier_Filter_YouTube
-    * purifier_Core_NormalizeNewlines, after purifier_Core_RemoveInvalidImg
-    */
-
 	$table = new icms_db_legacy_updater_Table("config");
 
 	// retrieve the value of the position before the config to be inserted.
@@ -352,9 +345,6 @@ if ($dbVersion < $newDbVersion) {
 	$sql = "UPDATE `" . $table->name() . "` SET conf_formtype = 'textbox' WHERE conf_formtype = 'text' AND conf_title LIKE '_MI_PROTECTOR%';";
 	$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-
-
-
 	unset($table);
 
 	$table = new icms_db_legacy_updater_Table("users");
@@ -362,9 +352,8 @@ if ($dbVersion < $newDbVersion) {
 	/* Set all user passwords as Expired (required due to password algorhythm update */
 	$sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0 AND pass NOT LIKE '$%';";
 	$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
-
-
 }
+
 if (!$abortUpdate) $newDbVersion = 44;
 /* 1.3.11 release - change in module version storage type (smallint -> varchar)*/
 
