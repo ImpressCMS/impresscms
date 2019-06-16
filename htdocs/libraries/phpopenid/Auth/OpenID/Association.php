@@ -48,14 +48,14 @@ class Auth_OpenID_Association {
      *
      * @access private
      */
-    var $SIG_LENGTH = 20;
+	public $SIG_LENGTH = 20;
 
     /**
      * The ordering and name of keys as stored by serialize.
      *
      * @access private
      */
-    var $assoc_keys = array(
+	public $assoc_keys = array(
                             'version',
                             'handle',
                             'secret',
@@ -64,43 +64,10 @@ class Auth_OpenID_Association {
                             'assoc_type'
                             );
 
-    var $_macs = array(
+	public $_macs = array(
                        'HMAC-SHA1' => 'Auth_OpenID_HMACSHA1',
                        'HMAC-SHA256' => 'Auth_OpenID_HMACSHA256'
                        );
-
-    /**
-     * This is an alternate constructor (factory method) used by the
-     * OpenID consumer library to create associations.  OpenID store
-     * implementations shouldn't use this constructor.
-     *
-     * @access private
-     *
-     * @param integer $expires_in This is the amount of time this
-     * association is good for, measured in seconds since the
-     * association was issued.
-     *
-     * @param string $handle This is the handle the server gave this
-     * association.
-     *
-     * @param string secret This is the shared secret the server
-     * generated for this association.
-     *
-     * @param assoc_type This is the type of association this
-     * instance represents.  The only valid values of this field at
-     * this time is 'HMAC-SHA1' and 'HMAC-SHA256', but new types may
-     * be defined in the future.
-     *
-     * @return association An {@link Auth_OpenID_Association}
-     * instance.
-     */
-    static function fromExpiresIn($expires_in, $handle, $secret, $assoc_type)
-    {
-        $issued = time();
-        $lifetime = $expires_in;
-        return new Auth_OpenID_Association($handle, $secret,
-                                           $issued, $lifetime, $assoc_type);
-    }
 
     /**
      * This is the standard constructor for creating an association.
@@ -128,7 +95,7 @@ class Auth_OpenID_Association {
      * this time is 'HMAC-SHA1' and 'HMAC-SHA256', but new types may
      * be defined in the future.
      */
-    function Auth_OpenID_Association(
+	function __construct(
         $handle, $secret, $issued, $lifetime, $assoc_type)
     {
         if (!in_array($assoc_type,
@@ -145,64 +112,42 @@ class Auth_OpenID_Association {
     }
 
     /**
-     * This returns the number of seconds this association is still
-     * valid for, or 0 if the association is no longer valid.
+	 * This is an alternate constructor (factory method) used by the
+	 * OpenID consumer library to create associations.  OpenID store
+	 * implementations shouldn't use this constructor.
      *
-     * @return integer $seconds The number of seconds this association
-     * is still valid for, or 0 if the association is no longer valid.
-     */
-    function getExpiresIn($now = null)
-    {
-        if ($now == null) {
-            $now = time();
-        }
-
-        return max(0, $this->issued + $this->lifetime - $now);
-    }
-
-    /**
-     * This checks to see if two {@link Auth_OpenID_Association}
-     * instances represent the same association.
+	 * @access private
      *
-     * @return bool $result true if the two instances represent the
-     * same association, false otherwise.
-     */
-    function equal($other)
-    {
-        return ((gettype($this) == gettype($other))
-                && ($this->handle == $other->handle)
-                && ($this->secret == $other->secret)
-                && ($this->issued == $other->issued)
-                && ($this->lifetime == $other->lifetime)
-                && ($this->assoc_type == $other->assoc_type));
-    }
-
-    /**
-     * Convert an association to KV form.
+	 * @param integer $expires_in This is the amount of time this
+	 * association is good for, measured in seconds since the
+	 * association was issued.
      *
-     * @return string $result String in KV form suitable for
-     * deserialization by deserialize.
+	 * @param string $handle This is the handle the server gave this
+	 * association.
+	 *
+	 * @param string $secret This is the shared secret the server
+	 * generated for this association.
+	 *
+	 * @param string $assoc_type This is the type of association this
+	 * instance represents.  The only valid values of this field at
+	 * this time is 'HMAC-SHA1' and 'HMAC-SHA256', but new types may
+	 * be defined in the future.
+	 *
+	 * @return Auth_OpenID_Association
      */
-    function serialize()
+	static function fromExpiresIn($expires_in, $handle, $secret, $assoc_type)
     {
-        $data = array(
-                     'version' => '2',
-                     'handle' => $this->handle,
-                     'secret' => base64_encode($this->secret),
-                     'issued' => strval(intval($this->issued)),
-                     'lifetime' => strval(intval($this->lifetime)),
-                     'assoc_type' => $this->assoc_type
-                     );
-
-        assert(array_keys($data) == $this->assoc_keys);
-
-        return Auth_OpenID_KVForm::fromArray($data, $strict = true);
+		$issued = time();
+		$lifetime = $expires_in;
+		return new Auth_OpenID_Association($handle, $secret,
+			$issued, $lifetime, $assoc_type);
     }
 
     /**
      * Parse an association as stored by serialize().  This is the
      * inverse of serialize.
      *
+	 * @param string $class_name
      * @param string $assoc_s Association as serialized by serialize()
      * @return Auth_OpenID_Association $result instance of this class
      */
@@ -252,33 +197,72 @@ class Auth_OpenID_Association {
     }
 
     /**
-     * Generate a signature for a sequence of (key, value) pairs
+	 * This returns the number of seconds this association is still
+	 * valid for, or 0 if the association is no longer valid.
      *
-     * @access private
-     * @param array $pairs The pairs to sign, in order.  This is an
-     * array of two-tuples.
-     * @return string $signature The binary signature of this sequence
-     * of pairs
+	 * @param int|null $now
+	 * @return int $seconds The number of seconds this association
+	 * is still valid for, or 0 if the association is no longer valid.
      */
-    function sign($pairs)
+	function getExpiresIn($now = null)
     {
-        $kv = Auth_OpenID_KVForm::fromArray($pairs);
+		if ($now == null) {
+			$now = time();
+		}
 
-        /* Invalid association types should be caught at constructor */
-        $callback = $this->_macs[$this->assoc_type];
+		return max(0, $this->issued + $this->lifetime - $now);
+	}
 
-        return call_user_func_array($callback, array($this->secret, $kv));
+	/**
+	 * This checks to see if two {@link Auth_OpenID_Association}
+	 * instances represent the same association.
+	 *
+	 * @param object $other
+	 * @return bool $result true if the two instances represent the
+	 * same association, false otherwise.
+	 */
+	function equal($other)
+	{
+		return ((gettype($this) == gettype($other))
+			&& ($this->handle == $other->handle)
+			&& ($this->secret == $other->secret)
+			&& ($this->issued == $other->issued)
+			&& ($this->lifetime == $other->lifetime)
+			&& ($this->assoc_type == $other->assoc_type));
     }
 
     /**
+	 * Convert an association to KV form.
+	 *
+	 * @return string $result String in KV form suitable for
+	 * deserialization by deserialize.
+	 */
+	function serialize()
+	{
+		$data = array(
+			'version' => '2',
+			'handle' => $this->handle,
+			'secret' => base64_encode($this->secret),
+			'issued' => strval(intval($this->issued)),
+			'lifetime' => strval(intval($this->lifetime)),
+			'assoc_type' => $this->assoc_type
+		);
+
+		assert(array_keys($data) == $this->assoc_keys);
+
+		return Auth_OpenID_KVForm::fromArray($data);
+	}
+
+	/**
      * Generate a signature for some fields in a dictionary
      *
      * @access private
-     * @param array $fields The fields to sign, in order; this is an
+	 * @param Auth_OpenID_Message $message
+	 * @return string $signature The signature, base64 encoded
+	 * @internal param array $fields The fields to sign, in order; this is an
      * array of strings.
-     * @param array $data Dictionary of values to sign (an array of
+	 * @internal param array $data Dictionary of values to sign (an array of
      * string => string pairs).
-     * @return string $signature The signature, base64 encoded
      */
     function signMessage($message)
     {
@@ -321,11 +305,27 @@ class Auth_OpenID_Association {
     }
 
     /**
+	 * Given an {@link Auth_OpenID_Message}, return the signature for
+	 * the signed list in the message.
+	 *
+	 * @access private
+	 * @param Auth_OpenID_Message $message
+	 * @return string
+	 */
+	function getMessageSignature($message)
+	{
+		$pairs = $this->_makePairs($message);
+		return base64_encode($this->sign($pairs));
+	}
+
+	/**
      * Given a {@link Auth_OpenID_Message}, return the key/value pairs
      * to be signed according to the signed list in the message.  If
      * the message lacks a signed list, return null.
      *
      * @access private
+	 * @param Auth_OpenID_Message $message
+	 * @return array|null
      */
     function _makePairs($message)
     {
@@ -347,15 +347,22 @@ class Auth_OpenID_Association {
     }
 
     /**
-     * Given an {@link Auth_OpenID_Message}, return the signature for
-     * the signed list in the message.
+	 * Generate a signature for a sequence of (key, value) pairs
      *
      * @access private
+	 * @param array $pairs The pairs to sign, in order.  This is an
+	 * array of two-tuples.
+	 * @return string $signature The binary signature of this sequence
+	 * of pairs
      */
-    function getMessageSignature($message)
+	function sign($pairs)
     {
-        $pairs = $this->_makePairs($message);
-        return base64_encode($this->sign($pairs));
+		$kv = Auth_OpenID_KVForm::fromArray($pairs);
+
+		/* Invalid association types should be caught at constructor */
+		$callback = $this->_macs[$this->assoc_type];
+
+		return call_user_func_array($callback, array($this->secret, $kv));
     }
 
     /**
@@ -363,6 +370,8 @@ class Auth_OpenID_Association {
      * signature contained in the data.
      *
      * @access private
+	 * @param Auth_OpenID_Message $message
+	 * @return bool
      */
     function checkMessageSignature($message)
     {
@@ -405,6 +414,10 @@ function Auth_OpenID_getSupportedAssociationTypes()
     return $a;
 }
 
+/**
+ * @param string $assoc_type
+ * @return mixed
+ */
 function Auth_OpenID_getSessionTypes($assoc_type)
 {
     $assoc_to_session = array(
@@ -523,7 +536,7 @@ function Auth_OpenID_getEncryptedNegotiator()
  * @package OpenID
  */
 class Auth_OpenID_SessionNegotiator {
-    function Auth_OpenID_SessionNegotiator($allowed_types)
+	function __construct($allowed_types)
     {
         $this->allowed_types = array();
         $this->setAllowedTypes($allowed_types);
@@ -534,6 +547,8 @@ class Auth_OpenID_SessionNegotiator {
      * combination is valid.
      *
      * @access private
+	 * @param array $allowed_types
+	 * @return bool
      */
     function setAllowedTypes($allowed_types)
     {
@@ -554,6 +569,9 @@ class Auth_OpenID_SessionNegotiator {
      * they are added.
      *
      * @access private
+	 * @param $assoc_type
+	 * @param null $session_type
+	 * @return bool
      */
     function addAllowedType($assoc_type, $session_type = null)
     {

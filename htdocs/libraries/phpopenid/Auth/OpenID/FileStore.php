@@ -38,6 +38,13 @@ require_once 'Auth/OpenID/Nonce.php';
  */
 class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
+	protected $directory = '';
+	protected $active = false;
+	protected $nonce_dir = '';
+	protected $association_dir = '';
+	protected $temp_dir = '';
+	protected $max_nonce_age = 0;
+
     /**
      * Initializes a new {@link Auth_OpenID_FileStore}.  This
      * initializes the nonce and association directories, which are
@@ -46,7 +53,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
      * @param string $directory This is the directory to put the store
      * directories in.
      */
-    function Auth_OpenID_FileStore($directory)
+	function __construct($directory)
     {
         if (!Auth_OpenID::ensureDir($directory)) {
             trigger_error('Not a directory and failed to create: '
@@ -74,12 +81,6 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
         }
     }
 
-    function destroy()
-    {
-        Auth_OpenID_FileStore::_rmtree($this->directory);
-        $this->active = false;
-    }
-
     /**
      * Make sure that the directories in which we store our data
      * exist.
@@ -94,25 +95,67 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
     }
 
     /**
-     * Create a temporary file on the same filesystem as
-     * $this->association_dir.
-     *
-     * The temporary directory should not be cleaned if there are any
-     * processes using the store. If there is no active process using
-     * the store, it is safe to remove all of the files in the
-     * temporary directory.
-     *
-     * @return array ($fd, $filename)
      * @access private
+	 * @param string $dir
+	 * @return bool|string
      */
-    function _mktemp()
+	static function _mkdtemp($dir)
     {
-        $name = Auth_OpenID_FileStore::_mkstemp($dir = $this->temp_dir);
-        $file_obj = @fopen($name, 'wb');
-        if ($file_obj !== false) {
-            return array($file_obj, $name);
+		foreach (range(0, 4) as $i) {
+			$name = $dir . strval(DIRECTORY_SEPARATOR) . strval(getmypid()) .
+				"-" . strval(rand(1, time()));
+			if (!mkdir($name, 0700)) {
+				return false;
+			} else {
+				return $name;
+			}
+		}
+		return false;
+	}
+
+	function destroy()
+	{
+		Auth_OpenID_FileStore::_rmtree($this->directory);
+		$this->active = false;
+	}
+
+	/**
+	 * @access private
+	 * @param string $dir
+	 * @return bool
+	 */
+	function _rmtree($dir)
+	{
+		if ($dir[strlen($dir) - 1] != DIRECTORY_SEPARATOR) {
+			$dir .= DIRECTORY_SEPARATOR;
+		}
+
+		if ($handle = opendir($dir)) {
+			while (false !== ($item = readdir($handle))) {
+				if (!in_array($item, array('.', '..'))) {
+					if (is_dir($dir . $item)) {
+
+						if (!Auth_OpenID_FileStore::_rmtree($dir . $item)) {
+							return false;
+						}
+					} else if (is_file($dir . $item)) {
+						if (!unlink($dir . $item)) {
+							return false;
+						}
+					}
+				}
+			}
+
+			closedir($handle);
+
+			if (!@rmdir($dir)) {
+				return false;
+			}
+
+			return true;
         } else {
-            Auth_OpenID_FileStore::_removeIfPresent($name);
+			// Couldn't open directory.
+			return false;
         }
     }
 
@@ -139,45 +182,41 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
     }
 
     /**
-     * Create a unique filename for a given server url and
-     * handle. This implementation does not assume anything about the
-     * format of the handle. The filename that is returned will
-     * contain the domain name from the server URL for ease of human
-     * inspection of the data directory.
-     *
-     * @return string $filename
+	 * @access private
+	 * @param string $dir
+	 * @return array
      */
-    function getAssociationFilename($server_url, $handle)
+	function _listdir($dir)
     {
-        if (!$this->active) {
-            trigger_error("FileStore no longer active", E_USER_ERROR);
-            return null;
+		$handle = opendir($dir);
+		$files = array();
+		while (false !== ($filename = readdir($handle))) {
+			if (!in_array($filename, array('.', '..'))) {
+				$files[] = $dir . DIRECTORY_SEPARATOR . $filename;
+			}
         }
+		return $files;
+	}
 
-        if (strpos($server_url, '://') === false) {
-            trigger_error(sprintf("Bad server URL: %s", $server_url),
-                          E_USER_WARNING);
-            return null;
-        }
-
-        list($proto, $rest) = explode('://', $server_url, 2);
-        $parts = explode('/', $rest);
-        $domain = Auth_OpenID_FileStore::_filenameEscape($parts[0]);
-        $url_hash = Auth_OpenID_FileStore::_safe64($server_url);
-        if ($handle) {
-            $handle_hash = Auth_OpenID_FileStore::_safe64($handle);
-        } else {
-            $handle_hash = '';
-        }
-
-        $filename = sprintf('%s-%s-%s-%s', $proto, $domain, $url_hash,
-                            $handle_hash);
-
-        return $this->association_dir. DIRECTORY_SEPARATOR . $filename;
+	/**
+	 * Attempt to remove a file, returning whether the file existed at
+	 * the time of the call.
+	 *
+	 * @access private
+	 * @param string $filename
+	 * @return bool $result True if the file was present, false if not.
+	 */
+	function _removeIfPresent($filename)
+	{
+		return @unlink($filename);
     }
 
     /**
      * Store an association in the association directory.
+	 *
+	 * @param string $server_url
+	 * @param Auth_OpenID_Association $association
+	 * @return bool
      */
     function storeAssociation($server_url, $association)
     {
@@ -224,10 +263,163 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
     }
 
     /**
+	 * Create a unique filename for a given server url and
+	 * handle. This implementation does not assume anything about the
+	 * format of the handle. The filename that is returned will
+	 * contain the domain name from the server URL for ease of human
+	 * inspection of the data directory.
+	 *
+	 * @param string $server_url
+	 * @param string $handle
+	 * @return string $filename
+	 */
+	function getAssociationFilename($server_url, $handle)
+	{
+		if (!$this->active) {
+			trigger_error("FileStore no longer active", E_USER_ERROR);
+			return null;
+		}
+
+		if (strpos($server_url, '://') === false) {
+			trigger_error(sprintf("Bad server URL: %s", $server_url),
+				E_USER_WARNING);
+			return null;
+		}
+
+		list($proto, $rest) = explode('://', $server_url, 2);
+		$parts = explode('/', $rest);
+		$domain = Auth_OpenID_FileStore::_filenameEscape($parts[0]);
+		$url_hash = Auth_OpenID_FileStore::_safe64($server_url);
+		if ($handle) {
+			$handle_hash = Auth_OpenID_FileStore::_safe64($handle);
+		} else {
+			$handle_hash = '';
+		}
+
+		$filename = sprintf('%s-%s-%s-%s', $proto, $domain, $url_hash,
+			$handle_hash);
+
+		return $this->association_dir . DIRECTORY_SEPARATOR . $filename;
+	}
+
+	/**
+	 * @access private
+	 * @param string $str
+	 * @return string
+	 */
+	function _filenameEscape($str)
+	{
+		$filename = "";
+		$b = Auth_OpenID::toBytes($str);
+
+		for ($i = 0; $i < count($b); $i++) {
+			$c = $b[$i];
+			if (Auth_OpenID_FileStore::_isFilenameSafe($c)) {
+				$filename .= $c;
+			} else {
+				$filename .= sprintf("_%02X", ord($c));
+			}
+		}
+		return $filename;
+	}
+
+	/**
+	 * @access private
+	 * @param string $char
+	 * @return bool
+	 */
+	function _isFilenameSafe($char)
+	{
+		$_Auth_OpenID_filename_allowed = Auth_OpenID_letters .
+			Auth_OpenID_digits . ".";
+		return (strpos($_Auth_OpenID_filename_allowed, $char) !== false);
+	}
+
+	/**
+	 * @access private
+	 * @param string $str
+	 * @return mixed|string
+	 */
+	function _safe64($str)
+	{
+		$h64 = base64_encode(Auth_OpenID_SHA1($str));
+		$h64 = str_replace('+', '_', $h64);
+		$h64 = str_replace('/', '.', $h64);
+		$h64 = str_replace('=', '', $h64);
+		return $h64;
+	}
+
+	/**
+	 * Create a temporary file on the same filesystem as
+	 * $this->association_dir.
+	 *
+	 * The temporary directory should not be cleaned if there are any
+	 * processes using the store. If there is no active process using
+	 * the store, it is safe to remove all of the files in the
+	 * temporary directory.
+	 *
+	 * @return array ($fd, $filename)
+	 * @access private
+	 */
+	function _mktemp()
+	{
+		$name = Auth_OpenID_FileStore::_mkstemp($dir = $this->temp_dir);
+		$file_obj = @fopen($name, 'wb');
+		if ($file_obj !== false) {
+			return array($file_obj, $name);
+		} else {
+			Auth_OpenID_FileStore::_removeIfPresent($name);
+		}
+		return array();
+	}
+
+	/**
+	 * @access private
+	 * @param string $dir
+	 * @return bool|string
+	 */
+	function _mkstemp($dir)
+	{
+		foreach (range(0, 4) as $i) {
+			$name = tempnam($dir, "php_openid_filestore_");
+
+			if ($name !== false) {
+				return $name;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Remove an association if it exists. Do nothing if it does not.
+	 *
+	 * @param string $server_url
+	 * @param string $handle
+	 * @return bool $success
+	 */
+	function removeAssociation($server_url, $handle)
+	{
+		if (!$this->active) {
+			trigger_error("FileStore no longer active", E_USER_ERROR);
+			return null;
+		}
+
+		$assoc = $this->getAssociation($server_url, $handle);
+		if ($assoc === null) {
+			return false;
+		} else {
+			$filename = $this->getAssociationFilename($server_url, $handle);
+			return Auth_OpenID_FileStore::_removeIfPresent($filename);
+		}
+	}
+
+	/**
      * Retrieve an association. If no handle is specified, return the
      * association with the most recent issue time.
      *
-     * @return mixed $association
+	 * @param string $server_url
+	 * @param string|null $handle
+	 * @return Auth_OpenID_Association|mixed|null
      */
     function getAssociation($server_url, $handle = null)
     {
@@ -282,7 +474,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
             // return the most recently issued one.
             if ($matching_associations) {
-                list($issued, $assoc) = $matching_associations[0];
+				list(, $assoc) = $matching_associations[0];
                 return $assoc;
             } else {
                 return null;
@@ -292,6 +484,8 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
     /**
      * @access private
+	 * @param string $filename
+	 * @return Auth_OpenID_Association|null
      */
     function _getAssociation($filename)
     {
@@ -300,13 +494,22 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
             return null;
         }
 
+		if (file_exists($filename) !== true) {
+			return null;
+		}
+
         $assoc_file = @fopen($filename, 'rb');
 
         if ($assoc_file === false) {
             return null;
         }
 
-        $assoc_s = fread($assoc_file, filesize($filename));
+		$filesize = filesize($filename);
+		if ($filesize === false || $filesize <= 0) {
+			return null;
+		}
+
+		$assoc_s = fread($assoc_file, $filesize);
         fclose($assoc_file);
 
         if (!$assoc_s) {
@@ -331,30 +534,12 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
     }
 
     /**
-     * Remove an association if it exists. Do nothing if it does not.
-     *
-     * @return bool $success
-     */
-    function removeAssociation($server_url, $handle)
-    {
-        if (!$this->active) {
-            trigger_error("FileStore no longer active", E_USER_ERROR);
-            return null;
-        }
-
-        $assoc = $this->getAssociation($server_url, $handle);
-        if ($assoc === null) {
-            return false;
-        } else {
-            $filename = $this->getAssociationFilename($server_url, $handle);
-            return Auth_OpenID_FileStore::_removeIfPresent($filename);
-        }
-    }
-
-    /**
      * Return whether this nonce is present. As a side effect, mark it
      * as no longer present.
      *
+	 * @param string $server_url
+	 * @param int $timestamp
+	 * @param string $salt
      * @return bool $present
      */
     function useNonce($server_url, $timestamp, $salt)
@@ -395,6 +580,33 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
             return true;
         }
     }
+
+	function clean()
+	{
+		if (!$this->active) {
+			trigger_error("FileStore no longer active", E_USER_ERROR);
+			return null;
+		}
+
+		$nonces = Auth_OpenID_FileStore::_listdir($this->nonce_dir);
+		$now = time();
+
+		// Check all nonces for expiry
+		foreach ($nonces as $nonce) {
+			if (!Auth_OpenID_checkTimestamp($nonce, $now)) {
+				$filename = $this->nonce_dir . DIRECTORY_SEPARATOR . $nonce;
+				Auth_OpenID_FileStore::_removeIfPresent($filename);
+			}
+		}
+
+		foreach ($this->_allAssocs() as $pair) {
+			list($assoc_filename, $assoc) = $pair;
+			/** @var Auth_OpenID_Association $assoc */
+			if ($assoc->getExpiresIn() == 0) {
+				Auth_OpenID_FileStore::_removeIfPresent($assoc_filename);
+			}
+		}
+	}
 
     /**
      * Remove expired entries from the database. This is potentially
@@ -437,175 +649,12 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
         return $all_associations;
     }
 
-    function clean()
-    {
-        if (!$this->active) {
-            trigger_error("FileStore no longer active", E_USER_ERROR);
-            return null;
-        }
-
-        $nonces = Auth_OpenID_FileStore::_listdir($this->nonce_dir);
-        $now = time();
-
-        // Check all nonces for expiry
-        foreach ($nonces as $nonce) {
-            if (!Auth_OpenID_checkTimestamp($nonce, $now)) {
-                $filename = $this->nonce_dir . DIRECTORY_SEPARATOR . $nonce;
-                Auth_OpenID_FileStore::_removeIfPresent($filename);
-            }
-        }
-
-        foreach ($this->_allAssocs() as $pair) {
-            list($assoc_filename, $assoc) = $pair;
-            if ($assoc->getExpiresIn() == 0) {
-                Auth_OpenID_FileStore::_removeIfPresent($assoc_filename);
-            }
-        }
-    }
-
-    /**
-     * @access private
-     */
-    function _rmtree($dir)
-    {
-        if ($dir[strlen($dir) - 1] != DIRECTORY_SEPARATOR) {
-            $dir .= DIRECTORY_SEPARATOR;
-        }
-
-        if ($handle = opendir($dir)) {
-            while ($item = readdir($handle)) {
-                if (!in_array($item, array('.', '..'))) {
-                    if (is_dir($dir . $item)) {
-
-                        if (!Auth_OpenID_FileStore::_rmtree($dir . $item)) {
-                            return false;
-                        }
-                    } else if (is_file($dir . $item)) {
-                        if (!unlink($dir . $item)) {
-                            return false;
-                        }
-                    }
-                }
-            }
-
-            closedir($handle);
-
-            if (!@rmdir($dir)) {
-                return false;
-            }
-
-            return true;
-        } else {
-            // Couldn't open directory.
-            return false;
-        }
-    }
-
-    /**
-     * @access private
-     */
-    function _mkstemp($dir)
-    {
-        foreach (range(0, 4) as $i) {
-            $name = tempnam($dir, "php_openid_filestore_");
-
-            if ($name !== false) {
-                return $name;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @access private
-     */
-    static function _mkdtemp($dir)
-    {
-        foreach (range(0, 4) as $i) {
-            $name = $dir . strval(DIRECTORY_SEPARATOR) . strval(getmypid()) .
-                "-" . strval(rand(1, time()));
-            if (!mkdir($name, 0700)) {
-                return false;
-            } else {
-                return $name;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @access private
-     */
-    function _listdir($dir)
-    {
-        $handle = opendir($dir);
-        $files = array();
-        while (false !== ($filename = readdir($handle))) {
-            if (!in_array($filename, array('.', '..'))) {
-                $files[] = $dir . DIRECTORY_SEPARATOR . $filename;
-            }
-        }
-        return $files;
-    }
-
-    /**
-     * @access private
-     */
-    function _isFilenameSafe($char)
-    {
-        $_Auth_OpenID_filename_allowed = Auth_OpenID_letters .
-            Auth_OpenID_digits . ".";
-        return (strpos($_Auth_OpenID_filename_allowed, $char) !== false);
-    }
-
-    /**
-     * @access private
-     */
-    function _safe64($str)
-    {
-        $h64 = base64_encode(Auth_OpenID_SHA1($str));
-        $h64 = str_replace('+', '_', $h64);
-        $h64 = str_replace('/', '.', $h64);
-        $h64 = str_replace('=', '', $h64);
-        return $h64;
-    }
-
-    /**
-     * @access private
-     */
-    function _filenameEscape($str)
-    {
-        $filename = "";
-        $b = Auth_OpenID::toBytes($str);
-
-        for ($i = 0; $i < count($b); $i++) {
-            $c = $b[$i];
-            if (Auth_OpenID_FileStore::_isFilenameSafe($c)) {
-                $filename .= $c;
-            } else {
-                $filename .= sprintf("_%02X", ord($c));
-            }
-        }
-        return $filename;
-    }
-
-    /**
-     * Attempt to remove a file, returning whether the file existed at
-     * the time of the call.
-     *
-     * @access private
-     * @return bool $result True if the file was present, false if not.
-     */
-    function _removeIfPresent($filename)
-    {
-        return @unlink($filename);
-    }
-
     function cleanupAssociations()
     {
         $removed = 0;
         foreach ($this->_allAssocs() as $pair) {
             list($assoc_filename, $assoc) = $pair;
+			/** @var Auth_OpenID_Association $assoc */
             if ($assoc->getExpiresIn() == 0) {
                 $this->_removeIfPresent($assoc_filename);
                 $removed += 1;
