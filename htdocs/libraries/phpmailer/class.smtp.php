@@ -30,7 +30,7 @@ class SMTP
      * The PHPMailer SMTP version number.
      * @var string
      */
-    const VERSION = '5.2.26';
+	const VERSION = '5.2.27';
 
     /**
      * SMTP line break constant.
@@ -81,7 +81,7 @@ class SMTP
      * @deprecated Use the `VERSION` constant instead
      * @see SMTP::VERSION
      */
-    public $Version = '5.2.26';
+	public $Version = '5.2.27';
 
     /**
      * SMTP server port number.
@@ -208,49 +208,6 @@ class SMTP
     protected $last_reply = '';
 
     /**
-     * Output debugging info via a user-selected method.
-     * @see SMTP::$Debugoutput
-     * @see SMTP::$do_debug
-     * @param string $str Debug string to output
-     * @param integer $level The debug level of this message; see DEBUG_* constants
-     * @return void
-     */
-    protected function edebug($str, $level = 0)
-    {
-        if ($level > $this->do_debug) {
-            return;
-        }
-        //Avoid clash with built-in function names
-        if (!in_array($this->Debugoutput, array('error_log', 'html', 'echo')) and is_callable($this->Debugoutput)) {
-            call_user_func($this->Debugoutput, $str, $level);
-            return;
-        }
-        switch ($this->Debugoutput) {
-            case 'error_log':
-                //Don't output, just log
-                error_log($str);
-                break;
-            case 'html':
-                //Cleans up output a bit for a better looking, HTML-safe output
-                echo gmdate('Y-m-d H:i:s') . ' ' . htmlentities(
-                    preg_replace('/[\r\n]+/', '', $str),
-                    ENT_QUOTES,
-                    'UTF-8'
-                ) . "<br>\n";
-                break;
-            case 'echo':
-            default:
-                //Normalize line breaks
-                $str = preg_replace('/(\r\n|\r|\n)/ms', "\n", $str);
-                echo gmdate('Y-m-d H:i:s') . "\t" . str_replace(
-                    "\n",
-                    "\n                   \t                  ",
-                    trim($str)
-                ) . "\n";
-        }
-    }
-
-    /**
      * Connect to an SMTP server.
      * @param string $host SMTP server IP or host name
      * @param integer $port The port number to connect to
@@ -346,6 +303,146 @@ class SMTP
     }
 
     /**
+	 * Check connection state.
+	 * @access public
+	 * @return boolean True if connected.
+	 */
+	public function connected()
+	{
+		if (is_resource($this->smtp_conn)) {
+			$sock_status = stream_get_meta_data($this->smtp_conn);
+			if ($sock_status['eof']) {
+				// The socket is valid but we are not connected
+				$this->edebug(
+					'SMTP NOTICE: EOF caught while checking if connected',
+					self::DEBUG_CLIENT
+				);
+				$this->close();
+				return false;
+			}
+			return true; // everything looks good
+		}
+		return false;
+	}
+
+	/**
+	 * Output debugging info via a user-selected method.
+	 * @see SMTP::$Debugoutput
+	 * @see SMTP::$do_debug
+	 * @param string $str Debug string to output
+	 * @param integer $level The debug level of this message; see DEBUG_* constants
+	 * @return void
+	 */
+	protected function edebug($str, $level = 0)
+	{
+		if ($level > $this->do_debug) {
+			return;
+		}
+		//Avoid clash with built-in function names
+		if (!in_array($this->Debugoutput, array('error_log', 'html', 'echo')) and is_callable($this->Debugoutput)) {
+			call_user_func($this->Debugoutput, $str, $level);
+			return;
+		}
+		switch ($this->Debugoutput) {
+			case 'error_log':
+				//Don't output, just log
+				error_log($str);
+				break;
+			case 'html':
+				//Cleans up output a bit for a better looking, HTML-safe output
+				echo gmdate('Y-m-d H:i:s') . ' ' . htmlentities(
+						preg_replace('/[\r\n]+/', '', $str),
+						ENT_QUOTES,
+						'UTF-8'
+					) . "<br>\n";
+				break;
+			case 'echo':
+			default:
+				//Normalize line breaks
+				$str = preg_replace('/(\r\n|\r|\n)/ms', "\n", $str);
+				echo gmdate('Y-m-d H:i:s') . "\t" . str_replace(
+						"\n",
+						"\n                   \t                  ",
+						trim($str)
+					) . "\n";
+		}
+	}
+
+	/**
+	 * Close the socket and clean up the state of the class.
+	 * Don't use this function without first trying to use QUIT.
+	 * @see quit()
+	 * @access public
+	 * @return void
+	 */
+	public function close()
+	{
+		$this->setError('');
+		$this->server_caps = null;
+		$this->helo_rply = null;
+		if (is_resource($this->smtp_conn)) {
+			// close the connection and cleanup
+			fclose($this->smtp_conn);
+			$this->smtp_conn = null; //Makes for cleaner serialization
+			$this->edebug('Connection: closed', self::DEBUG_CONNECTION);
+		}
+	}
+
+	/**
+	 * Read the SMTP server's response.
+	 * Either before eof or socket timeout occurs on the operation.
+	 * With SMTP we can tell if we have more lines to read if the
+	 * 4th character is '-' symbol. If it is a space then we don't
+	 * need to read anything else.
+	 * @access protected
+	 * @return string
+	 */
+	protected function get_lines()
+	{
+		// If the connection is bad, give up straight away
+		if (!is_resource($this->smtp_conn)) {
+			return '';
+		}
+		$data = '';
+		$endtime = 0;
+		stream_set_timeout($this->smtp_conn, $this->Timeout);
+		if ($this->Timelimit > 0) {
+			$endtime = time() + $this->Timelimit;
+		}
+		while (is_resource($this->smtp_conn) && !feof($this->smtp_conn)) {
+			$str = @fgets($this->smtp_conn, 515);
+			$this->edebug("SMTP -> get_lines(): \$data is \"$data\"", self::DEBUG_LOWLEVEL);
+			$this->edebug("SMTP -> get_lines(): \$str is  \"$str\"", self::DEBUG_LOWLEVEL);
+			$data .= $str;
+			// If response is only 3 chars (not valid, but RFC5321 S4.2 says it must be handled),
+			// or 4th character is a space, we are done reading, break the loop,
+			// string array access is a micro-optimisation over strlen
+			if (!isset($str[3]) or (isset($str[3]) and $str[3] == ' ')) {
+				break;
+			}
+			// Timed-out? Log and break
+			$info = stream_get_meta_data($this->smtp_conn);
+			if ($info['timed_out']) {
+				$this->edebug(
+					'SMTP -> get_lines(): timed-out (' . $this->Timeout . ' sec)',
+					self::DEBUG_LOWLEVEL
+				);
+				break;
+			}
+			// Now check if reads took too long
+			if ($endtime and time() > $endtime) {
+				$this->edebug(
+					'SMTP -> get_lines(): timelimit reached (' .
+					$this->Timelimit . ' sec)',
+					self::DEBUG_LOWLEVEL
+				);
+				break;
+			}
+		}
+		return $data;
+	}
+
+	/**
      * Initiate a TLS (encrypted) session.
      * @access public
      * @return boolean
@@ -378,6 +475,82 @@ class SMTP
     }
 
     /**
+	 * Send a command to an SMTP server and check its return code.
+	 * @param string $command The command name - not sent to the server
+	 * @param string $commandstring The actual command to send
+	 * @param integer|array $expect One or more expected integer success codes
+	 * @access protected
+	 * @return boolean True on success.
+	 */
+	protected function sendCommand($command, $commandstring, $expect)
+	{
+		if (!$this->connected()) {
+			$this->setError("Called $command without being connected");
+			return false;
+		}
+		//Reject line breaks in all commands
+		if (strpos($commandstring, "\n") !== false or strpos($commandstring, "\r") !== false) {
+			$this->setError("Command '$command' contained line breaks");
+			return false;
+		}
+		$this->client_send($commandstring . self::CRLF);
+
+		$this->last_reply = $this->get_lines();
+		// Fetch SMTP code and possible error code explanation
+		$matches = array();
+		if (preg_match("/^([0-9]{3})[ -](?:([0-9]\\.[0-9]\\.[0-9]) )?/", $this->last_reply, $matches)) {
+			$code = $matches[1];
+			$code_ex = (count($matches) > 2 ? $matches[2] : null);
+			// Cut off error code from each response line
+			$detail = preg_replace(
+				"/{$code}[ -]" .
+				($code_ex ? str_replace('.', '\\.', $code_ex) . ' ' : '') . "/m",
+				'',
+				$this->last_reply
+			);
+		} else {
+			// Fall back to simple parsing if regex fails
+			$code = substr($this->last_reply, 0, 3);
+			$code_ex = null;
+			$detail = substr($this->last_reply, 4);
+		}
+
+		$this->edebug('SERVER -> CLIENT: ' . $this->last_reply, self::DEBUG_SERVER);
+
+		if (!in_array($code, (array)$expect)) {
+			$this->setError(
+				"$command command failed",
+				$detail,
+				$code,
+				$code_ex
+			);
+			$this->edebug(
+				'SMTP ERROR: ' . $this->error['error'] . ': ' . $this->last_reply,
+				self::DEBUG_CLIENT
+			);
+			return false;
+		}
+
+		$this->setError('');
+		return true;
+	}
+
+	/**
+	 * Send raw data to the server.
+	 * @param string $data The data to send
+	 * @access public
+	 * @return integer|boolean The number of bytes sent to the server or false on error
+	 */
+	public function client_send($data)
+	{
+		$this->edebug("CLIENT -> SERVER: $data", self::DEBUG_CLIENT);
+		set_error_handler(array($this, 'errorHandler'));
+		$result = fwrite($this->smtp_conn, $data);
+		restore_error_handler();
+		return $result;
+	}
+
+	/**
      * Perform SMTP authentication.
      * Must be run after hello().
      * @see hello()
@@ -586,49 +759,6 @@ class SMTP
     }
 
     /**
-     * Check connection state.
-     * @access public
-     * @return boolean True if connected.
-     */
-    public function connected()
-    {
-        if (is_resource($this->smtp_conn)) {
-            $sock_status = stream_get_meta_data($this->smtp_conn);
-            if ($sock_status['eof']) {
-                // The socket is valid but we are not connected
-                $this->edebug(
-                    'SMTP NOTICE: EOF caught while checking if connected',
-                    self::DEBUG_CLIENT
-                );
-                $this->close();
-                return false;
-            }
-            return true; // everything looks good
-        }
-        return false;
-    }
-
-    /**
-     * Close the socket and clean up the state of the class.
-     * Don't use this function without first trying to use QUIT.
-     * @see quit()
-     * @access public
-     * @return void
-     */
-    public function close()
-    {
-        $this->setError('');
-        $this->server_caps = null;
-        $this->helo_rply = null;
-        if (is_resource($this->smtp_conn)) {
-            // close the connection and cleanup
-            fclose($this->smtp_conn);
-            $this->smtp_conn = null; //Makes for cleaner serialization
-            $this->edebug('Connection: closed', self::DEBUG_CONNECTION);
-        }
-    }
-
-    /**
      * Send an SMTP DATA command.
      * Issues a data command and sends the msg_data to the server,
      * finializing the mail transaction. $msg_data is the message
@@ -721,6 +851,42 @@ class SMTP
     }
 
     /**
+	 * Extract and return the ID of the last SMTP transaction based on
+	 * a list of patterns provided in SMTP::$smtp_transaction_id_patterns.
+	 * Relies on the host providing the ID in response to a DATA command.
+	 * If no reply has been received yet, it will return null.
+	 * If no pattern was matched, it will return false.
+	 * @return bool|null|string
+	 */
+	protected function recordLastTransactionID()
+	{
+		$reply = $this->getLastReply();
+
+		if (empty($reply)) {
+			$this->last_smtp_transaction_id = null;
+		} else {
+			$this->last_smtp_transaction_id = false;
+			foreach ($this->smtp_transaction_id_patterns as $smtp_transaction_id_pattern) {
+				if (preg_match($smtp_transaction_id_pattern, $reply, $matches)) {
+					$this->last_smtp_transaction_id = $matches[1];
+				}
+			}
+		}
+
+		return $this->last_smtp_transaction_id;
+	}
+
+	/**
+	 * Get the last reply from the server.
+	 * @access public
+	 * @return string
+	 */
+	public function getLastReply()
+	{
+		return $this->last_reply;
+	}
+
+	/**
      * Send an SMTP HELO or EHLO command.
      * Used to identify the sending server to the receiving server.
      * This makes sure that client and server are in a known state.
@@ -870,67 +1036,6 @@ class SMTP
     }
 
     /**
-     * Send a command to an SMTP server and check its return code.
-     * @param string $command The command name - not sent to the server
-     * @param string $commandstring The actual command to send
-     * @param integer|array $expect One or more expected integer success codes
-     * @access protected
-     * @return boolean True on success.
-     */
-    protected function sendCommand($command, $commandstring, $expect)
-    {
-        if (!$this->connected()) {
-            $this->setError("Called $command without being connected");
-            return false;
-        }
-        //Reject line breaks in all commands
-        if (strpos($commandstring, "\n") !== false or strpos($commandstring, "\r") !== false) {
-            $this->setError("Command '$command' contained line breaks");
-            return false;
-        }
-        $this->client_send($commandstring . self::CRLF);
-
-        $this->last_reply = $this->get_lines();
-        // Fetch SMTP code and possible error code explanation
-        $matches = array();
-        if (preg_match("/^([0-9]{3})[ -](?:([0-9]\\.[0-9]\\.[0-9]) )?/", $this->last_reply, $matches)) {
-            $code = $matches[1];
-            $code_ex = (count($matches) > 2 ? $matches[2] : null);
-            // Cut off error code from each response line
-            $detail = preg_replace(
-                "/{$code}[ -]" .
-                ($code_ex ? str_replace('.', '\\.', $code_ex) . ' ' : '') . "/m",
-                '',
-                $this->last_reply
-            );
-        } else {
-            // Fall back to simple parsing if regex fails
-            $code = substr($this->last_reply, 0, 3);
-            $code_ex = null;
-            $detail = substr($this->last_reply, 4);
-        }
-
-        $this->edebug('SERVER -> CLIENT: ' . $this->last_reply, self::DEBUG_SERVER);
-
-        if (!in_array($code, (array)$expect)) {
-            $this->setError(
-                "$command command failed",
-                $detail,
-                $code,
-                $code_ex
-            );
-            $this->edebug(
-                'SMTP ERROR: ' . $this->error['error'] . ': ' . $this->last_reply,
-                self::DEBUG_CLIENT
-            );
-            return false;
-        }
-
-        $this->setError('');
-        return true;
-    }
-
-    /**
      * Send an SMTP SAML command.
      * Starts a mail transaction from the email address specified in $from.
      * Returns true if successful or false otherwise. If True
@@ -987,28 +1092,30 @@ class SMTP
     }
 
     /**
-     * Send raw data to the server.
-     * @param string $data The data to send
+	 * Get the latest error.
      * @access public
-     * @return integer|boolean The number of bytes sent to the server or false on error
+	 * @return array
      */
-    public function client_send($data)
+	public function getError()
     {
-        $this->edebug("CLIENT -> SERVER: $data", self::DEBUG_CLIENT);
-        set_error_handler(array($this, 'errorHandler'));
-        $result = fwrite($this->smtp_conn, $data);
-        restore_error_handler();
-        return $result;
+		return $this->error;
     }
 
     /**
-     * Get the latest error.
-     * @access public
-     * @return array
+	 * Set error messages and codes.
+	 * @param string $message The error message
+	 * @param string $detail Further detail on the error
+	 * @param string $smtp_code An associated SMTP error code
+	 * @param string $smtp_code_ex Extended SMTP code
      */
-    public function getError()
+	protected function setError($message, $detail = '', $smtp_code = '', $smtp_code_ex = '')
     {
-        return $this->error;
+		$this->error = array(
+			'error' => $message,
+			'detail' => $detail,
+			'smtp_code' => $smtp_code,
+			'smtp_code_ex' => $smtp_code_ex
+		);
     }
 
     /**
@@ -1063,70 +1170,6 @@ class SMTP
     }
 
     /**
-     * Get the last reply from the server.
-     * @access public
-     * @return string
-     */
-    public function getLastReply()
-    {
-        return $this->last_reply;
-    }
-
-    /**
-     * Read the SMTP server's response.
-     * Either before eof or socket timeout occurs on the operation.
-     * With SMTP we can tell if we have more lines to read if the
-     * 4th character is '-' symbol. If it is a space then we don't
-     * need to read anything else.
-     * @access protected
-     * @return string
-     */
-    protected function get_lines()
-    {
-        // If the connection is bad, give up straight away
-        if (!is_resource($this->smtp_conn)) {
-            return '';
-        }
-        $data = '';
-        $endtime = 0;
-        stream_set_timeout($this->smtp_conn, $this->Timeout);
-        if ($this->Timelimit > 0) {
-            $endtime = time() + $this->Timelimit;
-        }
-        while (is_resource($this->smtp_conn) && !feof($this->smtp_conn)) {
-            $str = @fgets($this->smtp_conn, 515);
-            $this->edebug("SMTP -> get_lines(): \$data is \"$data\"", self::DEBUG_LOWLEVEL);
-            $this->edebug("SMTP -> get_lines(): \$str is  \"$str\"", self::DEBUG_LOWLEVEL);
-            $data .= $str;
-            // If response is only 3 chars (not valid, but RFC5321 S4.2 says it must be handled),
-            // or 4th character is a space, we are done reading, break the loop,
-            // string array access is a micro-optimisation over strlen
-            if (!isset($str[3]) or (isset($str[3]) and $str[3] == ' ')) {
-                break;
-            }
-            // Timed-out? Log and break
-            $info = stream_get_meta_data($this->smtp_conn);
-            if ($info['timed_out']) {
-                $this->edebug(
-                    'SMTP -> get_lines(): timed-out (' . $this->Timeout . ' sec)',
-                    self::DEBUG_LOWLEVEL
-                );
-                break;
-            }
-            // Now check if reads took too long
-            if ($endtime and time() > $endtime) {
-                $this->edebug(
-                    'SMTP -> get_lines(): timelimit reached (' .
-                    $this->Timelimit . ' sec)',
-                    self::DEBUG_LOWLEVEL
-                );
-                break;
-            }
-        }
-        return $data;
-    }
-
-    /**
      * Enable or disable VERP address generation.
      * @param boolean $enabled
      */
@@ -1145,20 +1188,12 @@ class SMTP
     }
 
     /**
-     * Set error messages and codes.
-     * @param string $message The error message
-     * @param string $detail Further detail on the error
-     * @param string $smtp_code An associated SMTP error code
-     * @param string $smtp_code_ex Extended SMTP code
+	 * Get debug output method.
+	 * @return string
      */
-    protected function setError($message, $detail = '', $smtp_code = '', $smtp_code_ex = '')
+	public function getDebugOutput()
     {
-        $this->error = array(
-            'error' => $message,
-            'detail' => $detail,
-            'smtp_code' => $smtp_code,
-            'smtp_code_ex' => $smtp_code_ex
-        );
+		return $this->Debugoutput;
     }
 
     /**
@@ -1168,15 +1203,6 @@ class SMTP
     public function setDebugOutput($method = 'echo')
     {
         $this->Debugoutput = $method;
-    }
-
-    /**
-     * Get debug output method.
-     * @return string
-     */
-    public function getDebugOutput()
-    {
-        return $this->Debugoutput;
     }
 
     /**
@@ -1198,6 +1224,15 @@ class SMTP
     }
 
     /**
+	 * Get SMTP timeout.
+	 * @return integer
+	 */
+	public function getTimeout()
+	{
+		return $this->Timeout;
+	}
+
+	/**
      * Set SMTP timeout.
      * @param integer $timeout
      */
@@ -1207,12 +1242,15 @@ class SMTP
     }
 
     /**
-     * Get SMTP timeout.
-     * @return integer
+	 * Get the queue/transaction ID of the last SMTP transaction
+	 * If no reply has been received yet, it will return null.
+	 * If no pattern was matched, it will return false.
+	 * @return bool|null|string
+	 * @see recordLastTransactionID()
      */
-    public function getTimeout()
+	public function getLastTransactionID()
     {
-        return $this->Timeout;
+		return $this->last_smtp_transaction_id;
     }
 
     /**
@@ -1234,43 +1272,5 @@ class SMTP
             $notice . ' Error #' . $errno . ': ' . $errmsg . " [$errfile line $errline]",
             self::DEBUG_CONNECTION
         );
-    }
-
-    /**
-     * Extract and return the ID of the last SMTP transaction based on
-     * a list of patterns provided in SMTP::$smtp_transaction_id_patterns.
-     * Relies on the host providing the ID in response to a DATA command.
-     * If no reply has been received yet, it will return null.
-     * If no pattern was matched, it will return false.
-     * @return bool|null|string
-     */
-    protected function recordLastTransactionID()
-    {
-        $reply = $this->getLastReply();
-
-        if (empty($reply)) {
-            $this->last_smtp_transaction_id = null;
-        } else {
-            $this->last_smtp_transaction_id = false;
-            foreach ($this->smtp_transaction_id_patterns as $smtp_transaction_id_pattern) {
-                if (preg_match($smtp_transaction_id_pattern, $reply, $matches)) {
-                    $this->last_smtp_transaction_id = $matches[1];
-                }
-            }
-        }
-
-        return $this->last_smtp_transaction_id;
-    }
-
-    /**
-     * Get the queue/transaction ID of the last SMTP transaction
-     * If no reply has been received yet, it will return null.
-     * If no pattern was matched, it will return false.
-     * @return bool|null|string
-     * @see recordLastTransactionID()
-     */
-    public function getLastTransactionID()
-    {
-        return $this->last_smtp_transaction_id;
     }
 }
