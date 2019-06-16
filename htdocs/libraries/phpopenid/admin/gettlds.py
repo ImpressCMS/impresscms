@@ -9,9 +9,8 @@ Usage:
 Then cut-n-paste.
 """
 
-import urllib2
-
 import sys
+import urllib2
 
 langs = {
     'php': (r"'/\.(",

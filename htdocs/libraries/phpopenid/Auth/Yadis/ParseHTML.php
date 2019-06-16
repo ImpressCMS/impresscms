@@ -25,25 +25,24 @@ class Auth_Yadis_ParseHTML {
     /**
      * @access private
      */
-    var $_re_flags = "si";
+	public $_re_flags = "si";
 
     /**
      * @access private
      */
-    var $_removed_re =
-           "<!--.*?-->|<!\[CDATA\[.*?\]\]>|<script\b(?!:)[^>]*>.*?<\/script>";
+	public $_removed_re = '<!--.*?-->|<!\[CDATA\[.*?\]\]>|<script\b(?!:)[^>]*>.*?<\/script>';
 
     /**
      * @access private
      */
-    var $_tag_expr = "<%s%s(?:\s.*?)?%s>";
+	public $_tag_expr = '<%s%s(?:\s.*?)?%s>';
 
     /**
      * @access private
      */
-    var $_attr_find = '\b([-\w]+)=(".*?"|\'.*?\'|.+?)[\/\s>]';
+	public $_attr_find = '\b([-\w]+)=(".*?"|\'.*?\'|.+?)[\/\s>]';
 
-    function Auth_Yadis_ParseHTML()
+	function __construct()
     {
         $this->_attr_find = sprintf("/%s/%s",
                                     $this->_attr_find,
@@ -66,81 +65,32 @@ class Auth_Yadis_ParseHTML {
     }
 
     /**
-     * Replace HTML entities (amp, lt, gt, and quot) as well as
-     * numeric entities (e.g. #x9f;) with their actual values and
-     * return the new string.
+	 * Looks for a META tag with an "http-equiv" attribute whose value
+	 * is one of ("x-xrds-location", "x-yadis-location"), ignoring
+	 * case.  If such a META tag is found, its "content" attribute
+	 * value is returned.
      *
-     * @access private
-     * @param string $str The string in which to look for entities
-     * @return string $new_str The new string entities decoded
+	 * @param string $html_string An HTML document in string format
+	 * @return mixed $content The "content" attribute value of the
+	 * META tag, if found, or null if no such tag was found.
      */
-    function replaceEntities($str)
+	function getHTTPEquiv($html_string)
     {
-        foreach ($this->_entity_replacements as $old => $new) {
-            $str = preg_replace(sprintf("/&%s;/", $old), $new, $str);
+		$meta_tags = $this->getMetaTags($html_string);
+
+		if ($meta_tags) {
+			foreach ($meta_tags as $tag) {
+				if (array_key_exists('http-equiv', $tag) &&
+					(in_array(strtolower($tag['http-equiv']),
+						array('x-xrds-location', 'x-yadis-location'))) &&
+					array_key_exists('content', $tag)
+				) {
+					return $tag['content'];
+				}
+			}
         }
 
-        // Replace numeric entities because html_entity_decode doesn't
-        // do it for us.
-        $str = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $str);
-        $str = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $str);
-
-        return $str;
-    }
-
-    /**
-     * Strip single and double quotes off of a string, if they are
-     * present.
-     *
-     * @access private
-     * @param string $str The original string
-     * @return string $new_str The new string with leading and
-     * trailing quotes removed
-     */
-    function removeQuotes($str)
-    {
-        $matches = array();
-        $double = '/^"(.*)"$/';
-        $single = "/^\'(.*)\'$/";
-
-        if (preg_match($double, $str, $matches)) {
-            return $matches[1];
-        } else if (preg_match($single, $str, $matches)) {
-            return $matches[1];
-        } else {
-            return $str;
-        }
-    }
-
-    /**
-     * Create a regular expression that will match an opening 
-     * or closing tag from a set of names.
-     *
-     * @access private
-     * @param mixed $tag_names Tag names to match
-     * @param mixed $close false/0 = no, true/1 = yes, other = maybe
-     * @param mixed $self_close false/0 = no, true/1 = yes, other = maybe
-     * @return string $regex A regular expression string to be used
-     * in, say, preg_match.
-     */
-    function tagPattern($tag_names, $close, $self_close)
-    {
-        if (is_array($tag_names)) {
-            $tag_names = '(?:'.implode('|',$tag_names).')';
-        }
-        if ($close) {
-            $close = '\/' . (($close == 1)? '' : '?');
-        } else {
-            $close = '';
-        }
-        if ($self_close) {
-            $self_close = '(?:\/\s*)' . (($self_close == 1)? '' : '?');
-        } else {
-            $self_close = '';
-        }
-        $expr = sprintf($this->_tag_expr, $close, $tag_names, $self_close);
-
-        return sprintf("/%s/%s", $expr, $this->_re_flags);
+		return null;
     }
 
     /**
@@ -204,7 +154,7 @@ class Auth_Yadis_ParseHTML {
 
         $link_data = array();
         $link_matches = array();
-        
+
         if (!preg_match_all($this->tagPattern('meta', false, 'maybe'),
                             $html_string, $link_matches)) {
             return array();
@@ -216,7 +166,7 @@ class Auth_Yadis_ParseHTML {
             $link_attrs = array();
             foreach ($attr_matches[0] as $index => $full_match) {
                 $name = $attr_matches[1][$index];
-                $value = $this->replaceEntities(
+				$value = html_entity_decode(
                               $this->removeQuotes($attr_matches[2][$index]));
 
                 $link_attrs[strtolower($name)] = $value;
@@ -228,31 +178,58 @@ class Auth_Yadis_ParseHTML {
     }
 
     /**
-     * Looks for a META tag with an "http-equiv" attribute whose value
-     * is one of ("x-xrds-location", "x-yadis-location"), ignoring
-     * case.  If such a META tag is found, its "content" attribute
-     * value is returned.
+	 * Create a regular expression that will match an opening
+	 * or closing tag from a set of names.
      *
-     * @param string $html_string An HTML document in string format
-     * @return mixed $content The "content" attribute value of the
-     * META tag, if found, or null if no such tag was found.
+	 * @access private
+	 * @param mixed $tag_names Tag names to match
+	 * @param mixed $close false/0 = no, true/1 = yes, other = maybe
+	 * @param mixed $self_close false/0 = no, true/1 = yes, other = maybe
+	 * @return string $regex A regular expression string to be used
+	 * in, say, preg_match.
      */
-    function getHTTPEquiv($html_string)
+	function tagPattern($tag_names, $close, $self_close)
     {
-        $meta_tags = $this->getMetaTags($html_string);
-
-        if ($meta_tags) {
-            foreach ($meta_tags as $tag) {
-                if (array_key_exists('http-equiv', $tag) &&
-                    (in_array(strtolower($tag['http-equiv']),
-                              array('x-xrds-location', 'x-yadis-location'))) &&
-                    array_key_exists('content', $tag)) {
-                    return $tag['content'];
-                }
-            }
+		if (is_array($tag_names)) {
+			$tag_names = '(?:' . implode('|', $tag_names) . ')';
         }
+		if ($close) {
+			$close = '\/' . (($close == 1) ? '' : '?');
+		} else {
+			$close = '';
+		}
+		if ($self_close) {
+			$self_close = '(?:\/\s*)' . (($self_close == 1) ? '' : '?');
+		} else {
+			$self_close = '';
+		}
+		$expr = sprintf($this->_tag_expr, $close, $tag_names, $self_close);
 
-        return null;
+		return sprintf("/%s/%s", $expr, $this->_re_flags);
+	}
+
+	/**
+	 * Strip single and double quotes off of a string, if they are
+	 * present.
+	 *
+	 * @access private
+	 * @param string $str The original string
+	 * @return string $new_str The new string with leading and
+	 * trailing quotes removed
+	 */
+	function removeQuotes($str)
+	{
+		$matches = array();
+		$double = '/^"(.*)"$/';
+		$single = "/^'(.*)'$/";
+
+		if (preg_match($double, $str, $matches)) {
+			return $matches[1];
+		} else if (preg_match($single, $str, $matches)) {
+			return $matches[1];
+		} else {
+			return $str;
+		}
     }
 }
 

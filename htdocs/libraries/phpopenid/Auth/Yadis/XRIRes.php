@@ -8,33 +8,17 @@ require_once 'Auth/Yadis/XRDS.php';
 require_once 'Auth/Yadis/XRI.php';
 
 class Auth_Yadis_ProxyResolver {
-    function Auth_Yadis_ProxyResolver($fetcher, $proxy_url = null)
+
+	/** @var Auth_Yadis_HTTPFetcher */
+	protected $fetcher;
+
+	function __construct($fetcher, $proxy_url = null)
     {
         $this->fetcher = $fetcher;
         $this->proxy_url = $proxy_url;
         if (!$this->proxy_url) {
             $this->proxy_url = Auth_Yadis_getDefaultProxy();
         }
-    }
-
-    function queryURL($xri, $service_type = null)
-    {
-        // trim off the xri:// prefix
-        $qxri = substr(Auth_Yadis_toURINormal($xri), 6);
-        $hxri = $this->proxy_url . $qxri;
-        $args = array(
-                      '_xrd_r' => 'application/xrds+xml'
-                      );
-
-        if ($service_type) {
-            $args['_xrd_t'] = $service_type;
-        } else {
-            // Don't perform service endpoint selection.
-            $args['_xrd_r'] .= ';sep=false';
-        }
-
-        $query = Auth_Yadis_XRIAppendArgs($hxri, $args);
-        return $query;
     }
 
     function query($xri, $service_types, $filters = array())
@@ -66,6 +50,26 @@ class Auth_Yadis_ProxyResolver {
             //    entries and broken priority ordering.
         }
         return array($canonicalID, $services);
+	}
+
+	function queryURL($xri, $service_type = null)
+	{
+		// trim off the xri:// prefix
+		$qxri = substr(Auth_Yadis_toURINormal($xri), 6);
+		$hxri = $this->proxy_url . $qxri;
+		$args = array(
+			'_xrd_r' => 'application/xrds+xml'
+		);
+
+		if ($service_type) {
+			$args['_xrd_t'] = $service_type;
+		} else {
+			// Don't perform service endpoint selection.
+			$args['_xrd_r'] .= ';sep=false';
+		}
+
+		$query = Auth_Yadis_XRIAppendArgs($hxri, $args);
+		return $query;
     }
 }
 

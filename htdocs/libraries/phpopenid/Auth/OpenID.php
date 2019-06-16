@@ -117,6 +117,8 @@ class Auth_OpenID {
      * false if not.
      *
      * @access private
+	 * @param object|string $thing
+	 * @return bool
      */
     static function isFailure($thing)
     {
@@ -141,6 +143,8 @@ class Auth_OpenID {
      * http://lists.openidenabled.com/pipermail/dev/2007-March/000395.html
      *
      * @access private
+	 * @param string|null $query_str
+	 * @return array
      */
     static function getQuery($query_str=null)
     {
@@ -203,6 +207,8 @@ class Auth_OpenID {
      * true if the operation succeeded; false if not.
      *
      * @access private
+	 * @param string $dir_name
+	 * @return bool
      */
     static function ensureDir($dir_name)
     {
@@ -225,6 +231,9 @@ class Auth_OpenID {
      * array containing the prefixed values.
      *
      * @access private
+	 * @param array $values
+	 * @param string $prefix
+	 * @return array
      */
     static function addPrefix($values, $prefix)
     {
@@ -241,6 +250,10 @@ class Auth_OpenID {
      * or return $default if the key is absent.
      *
      * @access private
+	 * @param array $arr
+	 * @param string $key
+	 * @param mixed $fallback
+	 * @return mixed
      */
     static function arrayGet($arr, $key, $fallback = null)
     {
@@ -261,6 +274,9 @@ class Auth_OpenID {
 
     /**
      * Replacement for PHP's broken parse_str.
+	 *
+	 * @param string|null $query
+	 * @return array|null
      */
     static function parse_str($query)
     {
@@ -283,30 +299,6 @@ class Auth_OpenID {
         }
 
         return $new_parts;
-    }
-
-    /**
-     * Implements the PHP 5 'http_build_query' functionality.
-     *
-     * @access private
-     * @param array $data Either an array key/value pairs or an array
-     * of arrays, each of which holding two values: a key and a value,
-     * sequentially.
-     * @return string $result The result of url-encoding the key/value
-     * pairs from $data into a URL query string
-     * (e.g. "username=bob&id=56").
-     */
-    static function httpBuildQuery($data)
-    {
-        $pairs = array();
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $pairs[] = urlencode($value[0])."=".urlencode($value[1]);
-            } else {
-                $pairs[] = urlencode($key)."=".urlencode($value);
-            }
-        }
-        return implode("&", $pairs);
     }
 
     /**
@@ -354,6 +346,30 @@ class Auth_OpenID {
     }
 
     /**
+	 * Implements the PHP 5 'http_build_query' functionality.
+	 *
+	 * @access private
+	 * @param array $data Either an array key/value pairs or an array
+	 * of arrays, each of which holding two values: a key and a value,
+	 * sequentially.
+	 * @return string $result The result of url-encoding the key/value
+	 * pairs from $data into a URL query string
+	 * (e.g. "username=bob&id=56").
+	 */
+	static function httpBuildQuery($data)
+	{
+		$pairs = array();
+		foreach ($data as $key => $value) {
+			if (is_array($value)) {
+				$pairs[] = urlencode($value[0]) . "=" . urlencode($value[1]);
+			} else {
+				$pairs[] = urlencode($key) . "=" . urlencode($value);
+			}
+		}
+		return implode("&", $pairs);
+	}
+
+	/**
      * Implements python's urlunparse, which is not available in PHP.
      * Given the specified components of a URL, this function rebuilds
      * and returns the URL.
@@ -435,14 +451,27 @@ class Auth_OpenID {
         if ($normalized === null) {
             return null;
         }
-        list($defragged, $frag) = Auth_OpenID::urldefrag($normalized);
+		list($defragged) = Auth_OpenID::urldefrag($normalized);
         return $defragged;
     }
+
+	static function urldefrag($url)
+	{
+		$parts = explode("#", $url, 2);
+
+		if (count($parts) == 1) {
+			return array($parts[0], "");
+		} else {
+			return $parts;
+		}
+	}
 
     /**
      * Replacement (wrapper) for PHP's intval() because it's broken.
      *
      * @access private
+	 * @param string|int $value
+	 * @return bool|int
      */
     static function intval($value)
     {
@@ -470,6 +499,9 @@ class Auth_OpenID {
     /**
      * Get the bytes in a string independently of multibyte support
      * conditions.
+	 *
+	 * @param string $str
+	 * @return array
      */
     static function toBytes($str)
     {
@@ -485,17 +517,6 @@ class Auth_OpenID {
         }
 
         return $b;
-    }
-
-    static function urldefrag($url)
-    {
-        $parts = explode("#", $url, 2);
-
-        if (count($parts) == 1) {
-            return array($parts[0], "");
-        } else {
-            return $parts;
-        }
     }
 
     static function filter($callback, &$sequence)

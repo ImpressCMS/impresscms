@@ -47,6 +47,9 @@ class Auth_OpenID_AX {
 /**
  * Check an alias for invalid characters; raise AXError if any are
  * found.  Return None if the alias is valid.
+ *
+ * @param string $alias
+ * @return Auth_OpenID_AX_Error|bool
  */
 function Auth_OpenID_AX_checkAlias($alias)
 {
@@ -69,7 +72,7 @@ function Auth_OpenID_AX_checkAlias($alias)
  * @package OpenID
  */
 class Auth_OpenID_AX_Error {
-    function Auth_OpenID_AX_Error($message=null)
+	function __construct($message = null)
     {
         $this->message = $message;
     }
@@ -86,15 +89,15 @@ class Auth_OpenID_AX_Message extends Auth_OpenID_Extension {
      * ns_alias: The preferred namespace alias for attribute exchange
      * messages
      */
-    var $ns_alias = 'ax';
+	public $ns_alias = 'ax';
 
     /**
      * mode: The type of this attribute exchange message. This must be
      * overridden in subclasses.
      */
-    var $mode = null;
+	public $mode = null;
 
-    var $ns_uri = Auth_OpenID_AX_NS_URI;
+	public $ns_uri = Auth_OpenID_AX_NS_URI;
 
     /**
      * Return Auth_OpenID_AX_Error if the mode in the attribute
@@ -102,6 +105,8 @@ class Auth_OpenID_AX_Message extends Auth_OpenID_Extension {
      * class; true otherwise.
      *
      * @access private
+	 * @param array $ax_args
+	 * @return Auth_OpenID_AX_Error|bool
      */
     function _checkMode($ax_args)
     {
@@ -151,8 +156,8 @@ class Auth_OpenID_AX_AttrInfo {
      * @param string $alias The name that should be given to this
      * attribute in the request.
      */
-    function Auth_OpenID_AX_AttrInfo($type_uri, $count, $required,
-                                     $alias)
+	function __construct($type_uri, $count, $required,
+						 $alias)
     {
         /**
          * required: Whether the attribute will be marked as required
@@ -190,6 +195,12 @@ class Auth_OpenID_AX_AttrInfo {
     /**
      * Construct an attribute information object.  For parameter
      * details, see the constructor.
+	 *
+	 * @param string $type_uri
+	 * @param int $count
+	 * @param bool $required
+	 * @param string|null $alias
+	 * @return Auth_OpenID_AX_AttrInfo|Auth_OpenID_AX_Error|bool
      */
     static function make($type_uri, $count=1, $required=false,
                   $alias=null)
@@ -224,11 +235,11 @@ class Auth_OpenID_AX_AttrInfo {
  * list of namespace aliases, return a list of type URIs that
  * correspond to those aliases.
  *
- * @param $namespace_map The mapping from namespace URI to alias
- * @param $alias_list_s The string containing the comma-separated
+ * @param Auth_OpenID_NamespaceMap $namespace_map The mapping from namespace URI to alias
+ * @param string $alias_list_s The string containing the comma-separated
  * list of aliases. May also be None for convenience.
  *
- * @return $seq The list of namespace URIs that corresponds to the
+ * @return string[]|Auth_OpenID_AX_Error The list of namespace URIs that corresponds to the
  * supplied list of aliases. If the string was zero-length or None, an
  * empty list will be returned.
  *
@@ -267,124 +278,36 @@ function Auth_OpenID_AX_toTypeURIs($namespace_map, $alias_list_s)
  */
 class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 
-    var $mode = 'fetch_request';
-
-    function Auth_OpenID_AX_FetchRequest($update_url=null)
-    {
-        /**
-         * requested_attributes: The attributes that have been
-         * requested thus far, indexed by the type URI.
-         */
-        $this->requested_attributes = array();
-
-        /**
-         * update_url: A URL that will accept responses for this
-         * attribute exchange request, even in the absence of the user
-         * who made this request.
-        */
-        $this->update_url = $update_url;
-    }
+	public $mode = 'fetch_request';
 
     /**
-     * Add an attribute to this attribute exchange request.
+	 * update_url: A URL that will accept responses for this
+	 * attribute exchange request, even in the absence of the user
+	 * who made this request.
      *
-     * @param attribute: The attribute that is being requested
-     * @return true on success, false when the requested attribute is
-     * already present in this fetch request.
+	 * @var string
      */
-    function add($attribute)
-    {
-        if ($this->contains($attribute->type_uri)) {
-            return new Auth_OpenID_AX_Error(
-              sprintf("The attribute %s has already been requested",
-                      $attribute->type_uri));
-        }
-
-        $this->requested_attributes[$attribute->type_uri] = $attribute;
-
-        return true;
-    }
+	public $update_url = '';
 
     /**
-     * Get the serialized form of this attribute fetch request.
+	 * requested_attributes: The attributes that have been
+	 * requested thus far, indexed by the type URI.
      *
-     * @returns Auth_OpenID_AX_FetchRequest The fetch request message parameters
+	 * @var array
      */
-    function getExtensionArgs()
+	private $requested_attributes = array();
+
+	function __construct($update_url = null)
     {
-        $aliases = new Auth_OpenID_NamespaceMap();
-
-        $required = array();
-        $if_available = array();
-
-        $ax_args = $this->_newArgs();
-
-        foreach ($this->requested_attributes as $type_uri => $attribute) {
-            if ($attribute->alias === null) {
-                $alias = $aliases->add($type_uri);
-            } else {
-                $alias = $aliases->addAlias($type_uri, $attribute->alias);
-
-                if ($alias === null) {
-                    return new Auth_OpenID_AX_Error(
-                      sprintf("Could not add alias %s for URI %s",
-                              $attribute->alias, $type_uri
-                      ));
-                }
-            }
-
-            if ($attribute->required) {
-                $required[] = $alias;
-            } else {
-                $if_available[] = $alias;
-            }
-
-            if ($attribute->count != 1) {
-                $ax_args['count.' . $alias] = strval($attribute->count);
-            }
-
-            $ax_args['type.' . $alias] = $type_uri;
-        }
-
-        if ($required) {
-            $ax_args['required'] = implode(',', $required);
-        }
-
-        if ($if_available) {
-            $ax_args['if_available'] = implode(',', $if_available);
-        }
-
-        return $ax_args;
-    }
-
-    /**
-     * Get the type URIs for all attributes that have been marked as
-     * required.
-     *
-     * @return A list of the type URIs for attributes that have been
-     * marked as required.
-     */
-    function getRequiredAttrs()
-    {
-        $required = array();
-        foreach ($this->requested_attributes as $type_uri => $attribute) {
-            if ($attribute->required) {
-                $required[] = $type_uri;
-            }
-        }
-
-        return $required;
+		$this->update_url = $update_url;
     }
 
     /**
      * Extract a FetchRequest from an OpenID message
      *
-     * @param request: The OpenID request containing the attribute
-     * fetch request
+	 * @param Auth_OpenID_Request $request The OpenID request containing the attribute fetch request
      *
-     * @returns mixed An Auth_OpenID_AX_Error or the
-     * Auth_OpenID_AX_FetchRequest extracted from the request message if
-     * successful
+	 * @return Auth_OpenID_AX_FetchRequest|Auth_OpenID_AX_Error
      */
     static function fromOpenIDRequest($request)
     {
@@ -424,11 +347,12 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
     /**
      * Given attribute exchange arguments, populate this FetchRequest.
      *
-     * @return $result Auth_OpenID_AX_Error if the data to be parsed
+	 * @param array $ax_args
+	 * @return Auth_OpenID_AX_Error|bool if the data to be parsed
      * does not follow the attribute exchange specification. At least
      * when 'if_available' or 'required' is not specified for a
      * particular attribute type.  Returns true otherwise.
-    */
+	 */
     function parseExtensionArgs($ax_args)
     {
         $result = $this->_checkMode($ax_args);
@@ -509,13 +433,34 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
     }
 
     /**
-     * Iterate over the AttrInfo objects that are contained in this
-     * fetch_request.
+	 * Add an attribute to this attribute exchange request.
+	 *
+	 * @param attribute : The attribute that is being requested
+	 * @return bool|Auth_OpenID_AX_Error
      */
-    function iterAttrs()
+	function add($attribute)
     {
-        return array_values($this->requested_attributes);
+		if ($this->contains($attribute->type_uri)) {
+			return new Auth_OpenID_AX_Error(
+				sprintf("The attribute %s has already been requested",
+					$attribute->type_uri));
+		}
+
+		$this->requested_attributes[$attribute->type_uri] = $attribute;
+
+		return true;
     }
+
+	/**
+	 * Is the given type URI present in this fetch_request?
+	 *
+	 * @param string $type_uri
+	 * @return bool
+	 */
+	function contains($type_uri)
+	{
+		return in_array($type_uri, $this->iterTypes());
+	}
 
     function iterTypes()
     {
@@ -523,12 +468,85 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
     }
 
     /**
-     * Is the given type URI present in this fetch_request?
+	 * Get the serialized form of this attribute fetch request.
+	 *
+	 * @param Auth_OpenID_Request|null $request
+	 * @return Auth_OpenID_AX_Error|Auth_OpenID_AX_FetchRequest The fetch request message parameters
      */
-    function contains($type_uri)
+	function getExtensionArgs($request = null)
     {
-        return in_array($type_uri, $this->iterTypes());
+		$aliases = new Auth_OpenID_NamespaceMap();
+
+		$required = array();
+		$if_available = array();
+
+		$ax_args = $this->_newArgs();
+
+		foreach ($this->requested_attributes as $type_uri => $attribute) {
+			if ($attribute->alias === null) {
+				$alias = $aliases->add($type_uri);
+			} else {
+				$alias = $aliases->addAlias($type_uri, $attribute->alias);
+
+				if ($alias === null) {
+					return new Auth_OpenID_AX_Error(
+						sprintf("Could not add alias %s for URI %s",
+							$attribute->alias, $type_uri
+						));
+				}
+			}
+
+			if ($attribute->required) {
+				$required[] = $alias;
+			} else {
+				$if_available[] = $alias;
+			}
+
+			if ($attribute->count != 1) {
+				$ax_args['count.' . $alias] = strval($attribute->count);
+			}
+
+			$ax_args['type.' . $alias] = $type_uri;
+		}
+
+		if ($required) {
+			$ax_args['required'] = implode(',', $required);
+		}
+
+		if ($if_available) {
+			$ax_args['if_available'] = implode(',', $if_available);
+		}
+
+		return $ax_args;
     }
+
+	/**
+	 * Get the type URIs for all attributes that have been marked as
+	 * required.
+	 *
+	 * @return array A list of the type URIs for attributes that have been
+	 * marked as required.
+	 */
+	function getRequiredAttrs()
+	{
+		$required = array();
+		foreach ($this->requested_attributes as $type_uri => $attribute) {
+			if ($attribute->required) {
+				$required[] = $type_uri;
+			}
+		}
+
+		return $required;
+	}
+
+	/**
+	 * Iterate over the AttrInfo objects that are contained in this
+	 * fetch_request.
+	 */
+	function iterAttrs()
+	{
+		return array_values($this->requested_attributes);
+	}
 }
 
 /**
@@ -540,10 +558,8 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
  */
 class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 
-    function Auth_OpenID_AX_KeyValueMessage()
-    {
-        $this->data = array();
-    }
+	/** @var array */
+	protected $data = array();
 
     /**
      * Add a single value for the given attribute type to the
@@ -554,7 +570,6 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
      * @param type_uri: The URI for the attribute
      * @param value: The value to add to the response to the relying
      * party for this attribute
-     * @return null
      */
     function addValue($type_uri, $value)
     {
@@ -582,12 +597,13 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
      * Get the extension arguments for the key/value pairs contained
      * in this message.
      *
-     * @param aliases: An alias mapping. Set to None if you don't care
+	 * @param Auth_OpenID_NamespaceMap $aliases An alias mapping. Set to None if you don't care
      * about the aliases for this request.
      *
      * @access private
+	 * @return array
      */
-    function _getExtensionKVArgs($aliases)
+	function _getExtensionKpublicgs($aliases)
     {
         if ($aliases === null) {
             $aliases = new Auth_OpenID_NamespaceMap();
@@ -613,10 +629,10 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
     /**
      * Parse attribute exchange key/value arguments into this object.
      *
-     * @param ax_args: The attribute exchange fetch_response
+	 * @param array $ax_args The attribute exchange fetch_response
      * arguments, with namespacing removed.
      *
-     * @return Auth_OpenID_AX_Error or true
+	 * @return Auth_OpenID_AX_Error|bool
      */
     function parseExtensionArgs($ax_args)
     {
@@ -711,13 +727,11 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
      * this attribute, use the supplied default. If there is more than
      * one value for this attribute, this method will fail.
      *
-     * @param type_uri: The URI for the attribute
-     * @param default: The value to return if the attribute was not
+	 * @param string $type_uri The URI for the attribute
+	 * @param mixed $default The value to return if the attribute was not
      * sent in the fetch_response.
      *
-     * @return $value Auth_OpenID_AX_Error on failure or the value of
-     * the attribute in the fetch_response message, or the default
-     * supplied
+	 * @return Auth_OpenID_AX_Error|mixed
      */
     function getSingle($type_uri, $default=null)
     {
@@ -735,25 +749,19 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
     }
 
     /**
-     * Get the list of values for this attribute in the
-     * fetch_response.
+	 * Get the number of responses for a particular attribute in this
+	 * fetch_response message.
      *
-     * XXX: what to do if the values are not present? default
-     * parameter? this is funny because it's always supposed to return
-     * a list, so the default may break that, though it's provided by
-     * the user's code, so it might be okay. If no default is
-     * supplied, should the return be None or []?
+	 * @param string $type_uri The URI of the attribute
      *
-     * @param type_uri: The URI of the attribute
-     *
-     * @return $values The list of values for this attribute in the
-     * response. May be an empty list.  If the attribute was not sent
-     * in the response, returns Auth_OpenID_AX_Error.
+	 * @returns int|Auth_OpenID_AX_Error The number of values sent for this attribute.  If
+	 * the attribute was not sent in the response, returns
+	 * Auth_OpenID_AX_Error.
      */
-    function get($type_uri)
+	function count($type_uri)
     {
         if (array_key_exists($type_uri, $this->data)) {
-            return $this->data[$type_uri];
+			return count($this->get($type_uri));
         } else {
             return new Auth_OpenID_AX_Error(
               sprintf("Type URI %s not found in response",
@@ -763,19 +771,25 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
     }
 
     /**
-     * Get the number of responses for a particular attribute in this
-     * fetch_response message.
+	 * Get the list of values for this attribute in the
+	 * fetch_response.
      *
-     * @param type_uri: The URI of the attribute
+	 * XXX: what to do if the values are not present? default
+	 * parameter? this is funny because it's always supposed to return
+	 * a list, so the default may break that, though it's provided by
+	 * the user's code, so it might be okay. If no default is
+	 * supplied, should the return be None or []?
      *
-     * @returns int The number of values sent for this attribute.  If
-     * the attribute was not sent in the response, returns
-     * Auth_OpenID_AX_Error.
+	 * @param string $type_uri The URI of the attribute
+	 *
+	 * @return Auth_OpenID_AX_Error|array The list of values for this attribute in the
+	 * response. May be an empty list.  If the attribute was not sent
+	 * in the response, returns Auth_OpenID_AX_Error.
      */
-    function count($type_uri)
+	function get($type_uri)
     {
         if (array_key_exists($type_uri, $this->data)) {
-            return count($this->get($type_uri));
+			return $this->data[$type_uri];
         } else {
             return new Auth_OpenID_AX_Error(
               sprintf("Type URI %s not found in response",
@@ -791,19 +805,74 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
  * @package OpenID
  */
 class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
-    var $mode = 'fetch_response';
+	public $mode = 'fetch_response';
 
-    function Auth_OpenID_AX_FetchResponse($update_url=null)
+	/** @var string */
+	private $update_url = '';
+
+	function __construct($update_url = null)
     {
-        $this->Auth_OpenID_AX_KeyValueMessage();
         $this->update_url = $update_url;
     }
 
     /**
+	 * Construct a FetchResponse object from an OpenID library
+	 * SuccessResponse object.
+	 *
+	 * @param Auth_OpenID_SuccessResponse $success_response A successful id_res response object
+	 *
+	 * @param bool $signed Whether non-signed args should be processsed. If
+	 * True (the default), only signed arguments will be processsed.
+	 *
+	 * @return Auth_OpenID_AX_FetchResponse|null A FetchResponse containing the data from the
+	 * OpenID message
+	 */
+	static function fromSuccessResponse($success_response, $signed = true)
+	{
+		$obj = new Auth_OpenID_AX_FetchResponse();
+		if ($signed) {
+			$ax_args = $success_response->getSignedNS($obj->ns_uri);
+		} else {
+			$ax_args = $success_response->message->getArgs($obj->ns_uri);
+		}
+		if ($ax_args === null || Auth_OpenID::isFailure($ax_args) ||
+			sizeof($ax_args) == 0
+		) {
+			return null;
+		}
+
+		$result = $obj->parseExtensionArgs($ax_args);
+		if (Auth_OpenID_AX::isError($result)) {
+			#XXX log me
+			return null;
+		}
+		return $obj;
+	}
+
+	/**
+	 * @param array $ax_args
+	 * @return Auth_OpenID_AX_Error|bool Auth_OpenID_AX_Error on failure or true on
+	 * success.
+	 */
+	function parseExtensionArgs($ax_args)
+	{
+		$result = parent::parseExtensionArgs($ax_args);
+
+		if (Auth_OpenID_AX::isError($result)) {
+			return $result;
+		}
+
+		$this->update_url = Auth_OpenID::arrayGet($ax_args, 'update_url');
+
+		return true;
+	}
+
+	/**
      * Serialize this object into arguments in the attribute exchange
      * namespace
      *
-     * @return $args The dictionary of unqualified attribute exchange
+	 * @param Auth_OpenID_AX_FetchRequest|null $request
+	 * @return Auth_OpenID_AX_Error|array|null $args The dictionary of unqualified attribute exchange
      * arguments that represent this fetch_response, or
      * Auth_OpenID_AX_Error on error.
      */
@@ -863,7 +932,7 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
             }
         }
 
-        $kv_args = $this->_getExtensionKVArgs($aliases);
+		$kv_args = $this->_getExtensionKpublicgs($aliases);
 
         // Add the KV args into the response with the args that are
         // unique to the fetch_response
@@ -892,56 +961,6 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
 
         return $ax_args;
     }
-
-    /**
-     * @return $result Auth_OpenID_AX_Error on failure or true on
-     * success.
-     */
-    function parseExtensionArgs($ax_args)
-    {
-        $result = parent::parseExtensionArgs($ax_args);
-
-        if (Auth_OpenID_AX::isError($result)) {
-            return $result;
-        }
-
-        $this->update_url = Auth_OpenID::arrayGet($ax_args, 'update_url');
-
-        return true;
-    }
-
-    /**
-     * Construct a FetchResponse object from an OpenID library
-     * SuccessResponse object.
-     *
-     * @param success_response: A successful id_res response object
-     *
-     * @param signed: Whether non-signed args should be processsed. If
-     * True (the default), only signed arguments will be processsed.
-     *
-     * @return $response A FetchResponse containing the data from the
-     * OpenID message
-     */
-    static function fromSuccessResponse($success_response, $signed=true)
-    {
-        $obj = new Auth_OpenID_AX_FetchResponse();
-        if ($signed) {
-            $ax_args = $success_response->getSignedNS($obj->ns_uri);
-        } else {
-            $ax_args = $success_response->message->getArgs($obj->ns_uri);
-        }
-        if ($ax_args === null || Auth_OpenID::isFailure($ax_args) ||
-              sizeof($ax_args) == 0) {
-            return null;
-        }
-
-        $result = $obj->parseExtensionArgs($ax_args);
-        if (Auth_OpenID_AX::isError($result)) {
-            #XXX log me
-            return null;
-        }
-        return $obj;
-    }
 }
 
 /**
@@ -950,16 +969,17 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
  * @package OpenID
  */
 class Auth_OpenID_AX_StoreRequest extends Auth_OpenID_AX_KeyValueMessage {
-    var $mode = 'store_request';
+	public $mode = 'store_request';
 
     /**
-     * @param array $aliases The namespace aliases to use when making
+	 * @param Auth_OpenID_NamespaceMap $aliases The namespace aliases to use when making
      * this store response. Leave as None to use defaults.
+	 * @return array|null
      */
     function getExtensionArgs($aliases=null)
     {
         $ax_args = $this->_newArgs();
-        $kv_args = $this->_getExtensionKVArgs($aliases);
+		$kv_args = $this->_getExtensionKpublicgs($aliases);
         Auth_OpenID::update($ax_args, $kv_args);
         return $ax_args;
     }
@@ -973,24 +993,15 @@ class Auth_OpenID_AX_StoreRequest extends Auth_OpenID_AX_KeyValueMessage {
  * @package OpenID
  */
 class Auth_OpenID_AX_StoreResponse extends Auth_OpenID_AX_Message {
-    var $SUCCESS_MODE = 'store_response_success';
-    var $FAILURE_MODE = 'store_response_failure';
+	public $SUCCESS_MODE = 'store_response_success';
+	public $FAILURE_MODE = 'store_response_failure';
 
     /**
-     * Returns Auth_OpenID_AX_Error on error or an
-     * Auth_OpenID_AX_StoreResponse object on success.
+	 * @var string
      */
-    function make($succeeded=true, $error_message=null)
-    {
-        if (($succeeded) && ($error_message !== null)) {
-            return new Auth_OpenID_AX_Error('An error message may only be '.
-                                    'included in a failing fetch response');
-        }
+	private $error_message = '';
 
-        return new Auth_OpenID_AX_StoreResponse($succeeded, $error_message);
-    }
-
-    function Auth_OpenID_AX_StoreResponse($succeeded=true, $error_message=null)
+	function __construct($succeeded = true, $error_message = null)
     {
         if ($succeeded) {
             $this->mode = $this->SUCCESS_MODE;
@@ -1002,14 +1013,28 @@ class Auth_OpenID_AX_StoreResponse extends Auth_OpenID_AX_Message {
     }
 
     /**
-     * Was this response a success response?
+	 * @param bool $succeeded
+	 * @param string $error_message
+	 * @return Auth_OpenID_AX_Error|Auth_OpenID_AX_StoreResponse
      */
-    function succeeded()
+	function make($succeeded = true, $error_message = null)
     {
-        return $this->mode == $this->SUCCESS_MODE;
+		if (($succeeded) && ($error_message !== null)) {
+			return new Auth_OpenID_AX_Error('An error message may only be ' .
+				'included in a failing fetch response');
+		}
+
+		return new Auth_OpenID_AX_StoreResponse($succeeded, $error_message);
     }
 
-    function getExtensionArgs()
+	/**
+	 * Get the string arguments that should be added to an OpenID
+	 * message for this extension.
+	 *
+	 * @param Auth_OpenID_Request|null $request
+	 * @return null
+	 */
+	function getExtensionArgs($request = null)
     {
         $ax_args = $this->_newArgs();
         if ((!$this->succeeded()) && $this->error_message) {
@@ -1017,6 +1042,14 @@ class Auth_OpenID_AX_StoreResponse extends Auth_OpenID_AX_Message {
         }
 
         return $ax_args;
+	}
+
+	/**
+	 * Was this response a success response?
+	 */
+	function succeeded()
+	{
+		return $this->mode == $this->SUCCESS_MODE;
     }
 }
 

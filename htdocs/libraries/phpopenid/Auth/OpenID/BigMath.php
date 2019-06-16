@@ -30,55 +30,24 @@ require_once 'Auth/OpenID.php';
  * @access private
  * @package OpenID
  */
-class Auth_OpenID_MathLibrary {
-    /**
-     * Given a long integer, returns the number converted to a binary
-     * string.  This function accepts long integer values of arbitrary
-     * magnitude and uses the local large-number math library when
-     * available.
-     *
-     * @param integer $long The long number (can be a normal PHP
-     * integer or a number created by one of the available long number
-     * libraries)
-     * @return string $binary The binary version of $long
-     */
-    function longToBinary($long)
+abstract class Auth_OpenID_MathLibrary
+{
+	function base64ToLong($str)
     {
-        $cmp = $this->cmp($long, 0);
-        if ($cmp < 0) {
-            $msg = __FUNCTION__ . " takes only positive integers.";
-            trigger_error($msg, E_USER_ERROR);
-            return null;
+		$b64 = base64_decode($str);
+
+		if ($b64 === false) {
+			return false;
         }
 
-        if ($cmp == 0) {
-            return "\x00";
-        }
-
-        $bytes = array();
-
-        while ($this->cmp($long, 0) > 0) {
-            array_unshift($bytes, $this->mod($long, 256));
-            $long = $this->div($long, pow(2, 8));
-        }
-
-        if ($bytes && ($bytes[0] > 127)) {
-            array_unshift($bytes, 0);
-        }
-
-        $string = '';
-        foreach ($bytes as $byte) {
-            $string .= pack('C', $byte);
-        }
-
-        return $string;
+		return $this->binaryToLong($b64);
     }
 
     /**
      * Given a binary string, returns the binary string converted to a
      * long number.
      *
-     * @param string $binary The binary version of a long number,
+	 * @param string $str The binary version of a long number,
      * probably as a result of calling longToBinary
      * @return integer $long The long number equivalent of the binary
      * string $str
@@ -109,16 +78,26 @@ class Auth_OpenID_MathLibrary {
         return $n;
     }
 
-    function base64ToLong($str)
-    {
-        $b64 = base64_decode($str);
+	/**
+	 * @param int $number
+	 * @param int $base
+	 * @return int
+	 */
+	abstract protected function init($number, $base = 10);
 
-        if ($b64 === false) {
-            return false;
-        }
+	/**
+	 * @param int $x
+	 * @param int $y
+	 * @return int
+	 */
+	abstract protected function mul($x, $y);
 
-        return $this->binaryToLong($b64);
-    }
+	/**
+	 * @param int $x
+	 * @param int $y
+	 * @return int
+	 */
+	abstract protected function add($x, $y);
 
     function longToBase64($str)
     {
@@ -126,17 +105,77 @@ class Auth_OpenID_MathLibrary {
     }
 
     /**
+	 * Given a long integer, returns the number converted to a binary
+	 * string.  This function accepts long integer values of arbitrary
+	 * magnitude and uses the local large-number math library when
+	 * available.
+	 *
+	 * @param integer $long The long number (can be a normal PHP
+	 * integer or a number created by one of the available long number
+	 * libraries)
+	 * @return string $binary The binary version of $long
+	 */
+	function longToBinary($long)
+	{
+		$cmp = $this->cmp($long, 0);
+		if ($cmp < 0) {
+			$msg = __FUNCTION__ . " takes only positive integers.";
+			trigger_error($msg, E_USER_ERROR);
+			return null;
+		}
+
+		if ($cmp == 0) {
+			return "\x00";
+		}
+
+		$bytes = array();
+
+		while ($this->cmp($long, 0) > 0) {
+			array_unshift($bytes, $this->mod($long, 256));
+			$long = $this->div($long, pow(2, 8));
+		}
+
+		if ($bytes && ($bytes[0] > 127)) {
+			array_unshift($bytes, 0);
+		}
+
+		$string = '';
+		foreach ($bytes as $byte) {
+			$string .= pack('C', $byte);
+		}
+
+		return $string;
+	}
+
+	/**
+	 * @param int $x
+	 * @param int $y
+	 * @return int
+	 */
+	abstract public function cmp($x, $y);
+
+	/**
+	 * @param int $base
+	 * @param int $modulus
+	 * @return int
+	 */
+	abstract protected function mod($base, $modulus);
+
+	/**
+	 * @param int $x
+	 * @param int $y
+	 * @return int
+	 */
+	abstract protected function div($x, $y);
+
+	/**
      * Returns a random number in the specified range.  This function
      * accepts $start, $stop, and $step values of arbitrary magnitude
      * and will utilize the local large-number math library when
      * available.
      *
-     * @param integer $start The start of the range, or the minimum
-     * random number to return
      * @param integer $stop The end of the range, or the maximum
      * random number to return
-     * @param integer $step The step size, such that $result - ($step
-     * * N) = $start for some N
      * @return integer $result The resulting randomly-generated number
      */
     function rand($stop)
@@ -176,6 +215,13 @@ class Auth_OpenID_MathLibrary {
 
         return $this->mod($n, $stop);
     }
+
+	/**
+	 * @param int $base
+	 * @param int $exponent
+	 * @return int
+	 */
+	abstract protected function pow($base, $exponent);
 }
 
 /**
@@ -188,7 +234,7 @@ class Auth_OpenID_MathLibrary {
  * @package OpenID
  */
 class Auth_OpenID_BcMathWrapper extends Auth_OpenID_MathLibrary{
-    var $type = 'bcmath';
+	public $type = 'bcmath';
 
     function add($x, $y)
     {
@@ -205,35 +251,28 @@ class Auth_OpenID_BcMathWrapper extends Auth_OpenID_MathLibrary{
         return bcpow($base, $exponent);
     }
 
-    function cmp($x, $y)
-    {
-        return bccomp($x, $y);
-    }
-
     function init($number, $base = 10)
     {
         return $number;
     }
 
-    function mod($base, $modulus)
+	function powmod($base, $exponent, $modulus)
     {
-        return bcmod($base, $modulus);
-    }
-
-    function mul($x, $y)
-    {
-        return bcmul($x, $y);
-    }
-
-    function div($x, $y)
-    {
-        return bcdiv($x, $y);
+		if (function_exists('bcpowmod')) {
+			return bcpowmod($base, $exponent, $modulus);
+		} else {
+			return $this->_powmod($base, $exponent, $modulus);
+		}
     }
 
     /**
      * Same as bcpowmod when bcpowmod is missing
      *
      * @access private
+	 * @param int $base
+	 * @param int $exponent
+	 * @param int $modulus
+	 * @return int
      */
     function _powmod($base, $exponent, $modulus)
     {
@@ -249,14 +288,25 @@ class Auth_OpenID_BcMathWrapper extends Auth_OpenID_MathLibrary{
         return $result;
     }
 
-    function powmod($base, $exponent, $modulus)
+	function mod($base, $modulus)
     {
-        if (function_exists('bcpowmod')) {
-            return bcpowmod($base, $exponent, $modulus);
-        } else {
-            return $this->_powmod($base, $exponent, $modulus);
-        }
+		return bcmod($base, $modulus);
     }
+
+	function cmp($x, $y)
+	{
+		return bccomp($x, $y);
+	}
+
+	function mul($x, $y)
+	{
+		return bcmul($x, $y);
+	}
+
+	function div($x, $y)
+	{
+		return bcdiv($x, $y);
+	}
 
     function toString($num)
     {
@@ -274,7 +324,7 @@ class Auth_OpenID_BcMathWrapper extends Auth_OpenID_MathLibrary{
  * @package OpenID
  */
 class Auth_OpenID_GmpMathWrapper extends Auth_OpenID_MathLibrary{
-    var $type = 'gmp';
+	public $type = 'gmp';
 
     function add($x, $y)
     {
@@ -360,11 +410,12 @@ function Auth_OpenID_math_extensions()
 
 /**
  * Detect which (if any) math library is available
+ *
+ * @param array $exts
+ * @return bool
  */
 function Auth_OpenID_detectMathLibrary($exts)
 {
-    $loaded = false;
-
     foreach ($exts as $extension) {
         if (extension_loaded($extension['extension'])) {
             return $extension;
@@ -391,8 +442,7 @@ function Auth_OpenID_detectMathLibrary($exts)
  * This function checks for the existence of specific long number
  * implementations in the following order: GMP followed by BCmath.
  *
- * @return Auth_OpenID_MathWrapper $instance An instance of
- * {@link Auth_OpenID_MathWrapper} or one of its subclasses
+ * @return Auth_OpenID_MathLibrary|null
  *
  * @package OpenID
  */
@@ -421,12 +471,10 @@ function Auth_OpenID_getMathLib()
         foreach (Auth_OpenID_math_extensions() as $extinfo) {
             $tried[] = $extinfo['extension'];
         }
-        $triedstr = implode(", ", $tried);
 
         Auth_OpenID_setNoMathSupport();
 
-        $result = null;
-        return $result;
+		return null;
     }
 
     // Instantiate a new wrapper
