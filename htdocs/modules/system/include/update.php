@@ -120,6 +120,12 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/modules/system/admin/banners", true);
 			icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . "/modules/system/admin/banners.php");
 
+			/* Finish up this portion of the db update */
+
+			if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
 		}
 	}
 	catch (Exception $e)
