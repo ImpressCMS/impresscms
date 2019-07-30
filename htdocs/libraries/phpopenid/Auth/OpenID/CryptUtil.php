@@ -25,6 +25,45 @@ if (!defined('Auth_OpenID_RAND_SOURCE')) {
 
 class Auth_OpenID_CryptUtil {
     /**
+	 * Produce a string of length random bytes, chosen from chrs.  If
+	 * $chrs is null, the resulting string may contain any characters.
+	 *
+	 * @param integer $length The length of the resulting
+	 * randomly-generated string
+	 * @param string|null $population A string of characters from which to choose
+	 * to build the new string
+	 * @return string $result A string of randomly-chosen characters
+	 * from $chrs
+	 */
+	static function randomString($length, $population = null)
+	{
+		if ($population === null) {
+			return Auth_OpenID_CryptUtil::getBytes($length);
+		}
+
+		$popsize = strlen($population);
+
+		if ($popsize > 256) {
+			$msg = 'More than 256 characters supplied to ' . __FUNCTION__;
+			trigger_error($msg, E_USER_ERROR);
+		}
+
+		$duplicate = 256 % $popsize;
+
+		$str = "";
+		for ($i = 0; $i < $length; $i++) {
+			do {
+				$n = ord(Auth_OpenID_CryptUtil::getBytes(1));
+			} while ($n < $duplicate);
+
+			$n %= $popsize;
+			$str .= $population[$n];
+		}
+
+		return $str;
+	}
+
+	/**
      * Get the specified number of random bytes.
      *
      * Attempts to use a cryptographically secure (not predictable)
@@ -40,7 +79,6 @@ class Auth_OpenID_CryptUtil {
     static function getBytes($num_bytes)
     {
         static $f = null;
-        $bytes = '';
         if ($f === null) {
             if (Auth_OpenID_RAND_SOURCE === null) {
                 $f = false;
@@ -49,7 +87,7 @@ class Auth_OpenID_CryptUtil {
                 if ($f === false) {
                     $msg = 'Define Auth_OpenID_RAND_SOURCE as null to ' .
                         ' continue with an insecure random number generator.';
-                    //trigger_error($msg, E_USER_ERROR);
+					trigger_error($msg, E_USER_ERROR);
                 }
             }
         }
@@ -64,45 +102,6 @@ class Auth_OpenID_CryptUtil {
             $bytes = fread($f, $num_bytes);
         }
         return $bytes;
-    }
-
-    /**
-     * Produce a string of length random bytes, chosen from chrs.  If
-     * $chrs is null, the resulting string may contain any characters.
-     *
-     * @param integer $length The length of the resulting
-     * randomly-generated string
-     * @param string $chrs A string of characters from which to choose
-     * to build the new string
-     * @return string $result A string of randomly-chosen characters
-     * from $chrs
-     */
-    static function randomString($length, $population = null)
-    {
-        if ($population === null) {
-            return Auth_OpenID_CryptUtil::getBytes($length);
-        }
-
-        $popsize = strlen($population);
-
-        if ($popsize > 256) {
-            $msg = 'More than 256 characters supplied to ' . __FUNCTION__;
-            trigger_error($msg, E_USER_ERROR);
-        }
-
-        $duplicate = 256 % $popsize;
-
-        $str = "";
-        for ($i = 0; $i < $length; $i++) {
-            do {
-                $n = ord(Auth_OpenID_CryptUtil::getBytes(1));
-            } while ($n < $duplicate);
-
-            $n %= $popsize;
-            $str .= $population[$n];
-        }
-
-        return $str;
     }
 
     static function constEq($s1, $s2)

@@ -89,26 +89,26 @@ class Auth_OpenID_Parse {
     /**
      * Specify some flags for use with regex matching.
      */
-    var $_re_flags = "si";
+	public $_re_flags = "si";
 
     /**
      * Stuff to remove before we start looking for tags
      */
-    var $_removed_re =
+	public $_removed_re =
            "<!--.*?-->|<!\[CDATA\[.*?\]\]>|<script\b(?!:)[^>]*>.*?<\/script>";
 
     /**
      * Starts with the tag name at a word boundary, where the tag name
      * is not a namespace
      */
-    var $_tag_expr = "<%s\b(?!:)([^>]*?)(?:\/>|>(.*)(?:<\/?%s\s*>|\Z))";
+	public $_tag_expr = "<%s\b(?!:)([^>]*?)(?:\/>|>(.*)(?:<\/?%s\s*>|\Z))";
 
-    var $_attr_find = '\b(\w+)=("[^"]*"|\'[^\']*\'|[^\'"\s\/<>]+)';
+	public $_attr_find = '\b(\w+)=("[^"]*"|\'[^\']*\'|[^\'"\s\/<>]+)';
 
-    var $_open_tag_expr = "<%s\b";
-    var $_close_tag_expr = "<((\/%s\b)|(%s[^>\/]*\/))>";
+	public $_open_tag_expr = "<%s\b";
+	public $_close_tag_expr = "<((\/%s\b)|(%s[^>\/]*\/))>";
 
-    function Auth_OpenID_Parse()
+	function __construct()
     {
         $this->_link_find = sprintf("/<link\b(?!:)([^>]*)(?!<)>/%s",
                                     $this->_re_flags);
@@ -131,104 +131,6 @@ class Auth_OpenID_Parse {
         $this->_ent_replace =
             sprintf("&(%s);", implode("|",
                                       $this->_entity_replacements));
-    }
-
-    /**
-     * Returns a regular expression that will match a given tag in an
-     * SGML string.
-     */
-    function tagMatcher($tag_name, $close_tags = null)
-    {
-        $expr = $this->_tag_expr;
-
-        if ($close_tags) {
-            $options = implode("|", array_merge(array($tag_name), $close_tags));
-            $closer = sprintf("(?:%s)", $options);
-        } else {
-            $closer = $tag_name;
-        }
-
-        $expr = sprintf($expr, $tag_name, $closer);
-        return sprintf("/%s/%s", $expr, $this->_re_flags);
-    }
-
-    function openTag($tag_name)
-    {
-        $expr = sprintf($this->_open_tag_expr, $tag_name);
-        return sprintf("/%s/%s", $expr, $this->_re_flags);
-    }
-
-    function closeTag($tag_name)
-    {
-        $expr = sprintf($this->_close_tag_expr, $tag_name, $tag_name);
-        return sprintf("/%s/%s", $expr, $this->_re_flags);
-    }
-
-    function htmlBegin($s)
-    {
-        $matches = array();
-        $result = preg_match($this->openTag('html'), $s,
-                             $matches, PREG_OFFSET_CAPTURE);
-        if ($result === false || !$matches) {
-            return false;
-        }
-        // Return the offset of the first match.
-        return $matches[0][1];
-    }
-
-    function htmlEnd($s)
-    {
-        $matches = array();
-        $result = preg_match($this->closeTag('html'), $s,
-                             $matches, PREG_OFFSET_CAPTURE);
-        if ($result === false || !$matches) {
-            return false;
-        }
-        // Return the offset of the first match.
-        return $matches[count($matches) - 1][1];
-    }
-
-    function headFind()
-    {
-        return $this->tagMatcher('head', array('body', 'html'));
-    }
-
-    function replaceEntities($str)
-    {
-        foreach ($this->_entity_replacements as $old => $new) {
-            $str = preg_replace(sprintf("/&%s;/", $old), $new, $str);
-        }
-        return $str;
-    }
-
-    function removeQuotes($str)
-    {
-        $matches = array();
-        $double = '/^"(.*)"$/';
-        $single = "/^\'(.*)\'$/";
-
-        if (preg_match($double, $str, $matches)) {
-            return $matches[1];
-        } else if (preg_match($single, $str, $matches)) {
-            return $matches[1];
-        } else {
-            return $str;
-        }
-    }
-    
-    function match($regexp, $text, &$match)
-    {
-        if (!is_callable('mb_ereg_search_init')) {
-            return preg_match($regexp, $text, $match);
-        }
-
-        $regexp = substr($regexp, 1, strlen($regexp) - 2 - strlen($this->_re_flags));
-        mb_ereg_search_init($text);
-        if (!mb_ereg_search($regexp)) {
-            return false;
-        }
-        $match = mb_ereg_search_getregs();
-        return true;
     }
 
     /**
@@ -302,28 +204,113 @@ class Auth_OpenID_Parse {
         return $link_data;
     }
 
-    function relMatches($rel_attr, $target_rel)
+	function htmlBegin($s)
     {
-        // Does this target_rel appear in the rel_str?
-        // XXX: TESTME
-        $rels = preg_split("/\s+/", trim($rel_attr));
-        foreach ($rels as $rel) {
-            $rel = strtolower($rel);
-            if ($rel == $target_rel) {
-                return 1;
-            }
+		$matches = array();
+		$result = preg_match($this->openTag('html'), $s,
+			$matches, PREG_OFFSET_CAPTURE);
+		if ($result === false || !$matches) {
+			return false;
         }
+		// Return the offset of the first match.
+		return $matches[0][1];
+	}
 
-        return 0;
+	function openTag($tag_name)
+	{
+		$expr = sprintf($this->_open_tag_expr, $tag_name);
+		return sprintf("/%s/%s", $expr, $this->_re_flags);
     }
 
-    function linkHasRel($link_attrs, $target_rel)
+	function htmlEnd($s)
     {
-        // Does this link have target_rel as a relationship?
+		$matches = array();
+		$result = preg_match($this->closeTag('html'), $s,
+			$matches, PREG_OFFSET_CAPTURE);
+		if ($result === false || !$matches) {
+			return false;
+		}
+		// Return the offset of the first match.
+		return $matches[count($matches) - 1][1];
+	}
+
+	function closeTag($tag_name)
+	{
+		$expr = sprintf($this->_close_tag_expr, $tag_name, $tag_name);
+		return sprintf("/%s/%s", $expr, $this->_re_flags);
+	}
+
+	function headFind()
+	{
+		return $this->tagMatcher('head', array('body', 'html'));
+	}
+
+	/**
+	 * Returns a regular expression that will match a given tag in an
+	 * SGML string.
+	 *
+	 * @param string $tag_name
+	 * @param array $close_tags
+	 * @return string
+	 */
+	function tagMatcher($tag_name, $close_tags = null)
+	{
+		$expr = $this->_tag_expr;
+
+		if ($close_tags) {
+			$options = implode("|", array_merge(array($tag_name), $close_tags));
+			$closer = sprintf("(?:%s)", $options);
+		} else {
+			$closer = $tag_name;
+		}
+
+		$expr = sprintf($expr, $tag_name, $closer);
+		return sprintf("/%s/%s", $expr, $this->_re_flags);
+	}
+
+	function match($regexp, $text, &$match)
+	{
+		if (preg_match($regexp, $text, $match)) {
+			return true;
+		}
+		return false;
+	}
+
+	function replaceEntities($str)
+	{
+		foreach ($this->_entity_replacements as $old => $new) {
+			$str = preg_replace(sprintf("/&%s;/", $old), $new, $str);
+		}
+		return $str;
+	}
+
+	function removeQuotes($str)
+	{
+		$matches = array();
+		$double = '/^"(.*)"$/';
+		$single = "/^\'(.*)\'$/";
+
+		if (preg_match($double, $str, $matches)) {
+			return $matches[1];
+		} else if (preg_match($single, $str, $matches)) {
+			return $matches[1];
+		} else {
+			return $str;
+		}
+	}
+
+	function findFirstHref($link_attrs_list, $target_rel)
+	{
+		// Return the value of the href attribute for the first link
+		// tag in the list that has target_rel as a relationship.
         // XXX: TESTME
-        $rel_attr = Auth_OpeniD::arrayGet($link_attrs, 'rel', null);
-        return ($rel_attr && $this->relMatches($rel_attr,
-                                               $target_rel));
+		$matches = $this->findLinksRel($link_attrs_list,
+			$target_rel);
+		if (!$matches) {
+			return null;
+		}
+		$first = $matches[0];
+		return Auth_OpenID::arrayGet($first, 'href', null);
     }
 
     function findLinksRel($link_attrs_list, $target_rel)
@@ -341,18 +328,28 @@ class Auth_OpenID_Parse {
         return $result;
     }
 
-    function findFirstHref($link_attrs_list, $target_rel)
+	function linkHasRel($link_attrs, $target_rel)
     {
-        // Return the value of the href attribute for the first link
-        // tag in the list that has target_rel as a relationship.
+		// Does this link have target_rel as a relationship?
         // XXX: TESTME
-        $matches = $this->findLinksRel($link_attrs_list,
-                                       $target_rel);
-        if (!$matches) {
-            return null;
+		$rel_attr = Auth_OpeniD::arrayGet($link_attrs, 'rel', null);
+		return ($rel_attr && $this->relMatches($rel_attr,
+				$target_rel));
+	}
+
+	function relMatches($rel_attr, $target_rel)
+	{
+		// Does this target_rel appear in the rel_str?
+		// XXX: TESTME
+		$rels = preg_split("/\s+/", trim($rel_attr));
+		foreach ($rels as $rel) {
+			$rel = strtolower($rel);
+			if ($rel == $target_rel) {
+				return 1;
+			}
         }
-        $first = $matches[0];
-        return Auth_OpenID::arrayGet($first, 'href', null);
+
+		return 0;
     }
 }
 

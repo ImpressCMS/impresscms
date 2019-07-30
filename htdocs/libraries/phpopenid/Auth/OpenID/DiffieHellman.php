@@ -42,13 +42,14 @@ function Auth_OpenID_getDefaultGen()
  */
 class Auth_OpenID_DiffieHellman {
 
-    var $mod;
-    var $gen;
-    var $private;
-    var $lib = null;
+	public $mod;
+	public $gen;
+	public $private;
+	/** @var Auth_OpenID_BcMathWrapper */
+	public $lib = null;
 
-    function Auth_OpenID_DiffieHellman($mod = null, $gen = null,
-                                       $private = null, $lib = null)
+	function __construct($mod = null, $gen = null,
+						 $private = null, $lib = null)
     {
         if ($lib === null) {
             $this->lib = Auth_OpenID_getMathLib();
@@ -79,11 +80,6 @@ class Auth_OpenID_DiffieHellman {
                                            $this->mod);
     }
 
-    function getSharedSecret($composite)
-    {
-        return $this->lib->powmod($composite, $this->private, $this->mod);
-    }
-
     function getPublicKey()
     {
         return $this->public;
@@ -107,6 +103,11 @@ class Auth_OpenID_DiffieHellman {
         }
 
         return $xsecret;
+	}
+
+	function getSharedSecret($composite)
+	{
+		return $this->lib->powmod($composite, $this->private, $this->mod);
     }
 }
 

@@ -54,6 +54,8 @@ function Auth_Yadis_getNSMap()
 
 /**
  * @access private
+ * @param array $arr
+ * @return array
  */
 function Auth_Yadis_array_scramble($arr)
 {
@@ -82,13 +84,22 @@ function Auth_Yadis_array_scramble($arr)
  */
 class Auth_Yadis_Service {
 
-    /**
-     * Creates an empty service object.
-     */
-    function Auth_Yadis_Service()
+	public $element = null;
+
+	/** @var Auth_Yadis_XMLParser */
+	public $parser = null;
+
+	function matchTypes($type_uris)
     {
-        $this->element = null;
-        $this->parser = null;
+		$result = array();
+
+		foreach ($this->getTypes() as $typ) {
+			if (in_array($typ, $type_uris)) {
+				$result[] = $typ;
+			}
+		}
+
+		return $result;
     }
 
     /**
@@ -109,17 +120,24 @@ class Auth_Yadis_Service {
         return $t;
     }
 
-    function matchTypes($type_uris)
+	/**
+	 * Used to get XML elements from this object's <Service> element.
+	 *
+	 * This is what you should use to get all custom information out
+	 * of this element. This is used by service filter functions to
+	 * determine whether a service element contains specific tags,
+	 * etc.  NOTE: this only considers elements which are direct
+	 * children of the <Service> element for this object.
+	 *
+	 * @param string $name The name of the element to look for
+	 * @return array $list An array of elements with the specified
+	 * name which are direct children of the <Service> element.  The
+	 * nodes returned by this function can be passed to $this->parser
+	 * methods (see {@link Auth_Yadis_XMLParser}).
+	 */
+	function getElements($name)
     {
-        $result = array();
-
-        foreach ($this->getTypes() as $typ) {
-            if (in_array($typ, $type_uris)) {
-                $result[] = $typ;
-            }
-        }
-
-        return $result;
+		return $this->parser->evalXPath($name, $this->element);
     }
 
     /**
@@ -182,26 +200,6 @@ class Auth_Yadis_Service {
 
         return null;
     }
-
-    /**
-     * Used to get XML elements from this object's <Service> element.
-     *
-     * This is what you should use to get all custom information out
-     * of this element. This is used by service filter functions to
-     * determine whether a service element contains specific tags,
-     * etc.  NOTE: this only considers elements which are direct
-     * children of the <Service> element for this object.
-     *
-     * @param string $name The name of the element to look for
-     * @return array $list An array of elements with the specified
-     * name which are direct children of the <Service> element.  The
-     * nodes returned by this function can be passed to $this->parser
-     * methods (see {@link Auth_Yadis_XMLParser}).
-     */
-    function getElements($name)
-    {
-        return $this->parser->evalXPath($name, $this->element);
-    }
 }
 
 /*
@@ -213,7 +211,7 @@ class Auth_Yadis_Service {
  */
 function Auth_Yadis_getXRDExpiration($xrd_element, $default=null)
 {
-    $expires_element = $xrd_element->$parser->evalXPath('/xrd:Expires');
+	$expires_element = $xrd_element->parser->evalXPath('/xrd:Expires');
     if ($expires_element === null) {
         return $default;
     } else {
@@ -251,11 +249,24 @@ function Auth_Yadis_getXRDExpiration($xrd_element, $default=null)
  */
 class Auth_Yadis_XRDS {
 
+	/** @var Auth_Yadis_XMLParser */
+	public $parser;
+
+	public $xrdNode;
+
+	public $allXrdNodes;
+
+	/** @var Auth_Yadis_Service[][] */
+	public $serviceList;
+
     /**
      * Instantiate a Auth_Yadis_XRDS object.  Requires an XPath
      * instance which has been used to parse a valid XRDS document.
+	 *
+	 * @param Auth_Yadis_XMLParser $xmlParser
+	 * @param array $xrdNodes
      */
-    function Auth_Yadis_XRDS($xmlParser, $xrdNodes)
+	function __construct($xmlParser, $xrdNodes)
     {
         $this->parser = $xmlParser;
         $this->xrdNode = $xrdNodes[count($xrdNodes) - 1];
@@ -265,11 +276,55 @@ class Auth_Yadis_XRDS {
     }
 
     /**
+	 * Creates the service list using nodes from the XRDS XML
+	 * document.
+	 *
+	 * @access private
+	 */
+	function _parse()
+	{
+		$this->serviceList = array();
+
+		$services = $this->parser->evalXPath('xrd:Service', $this->xrdNode);
+
+		foreach ($services as $node) {
+			$s = new Auth_Yadis_Service();
+			$s->element = $node;
+			$s->parser = $this->parser;
+
+			$priority = $s->getPriority();
+
+			if ($priority === null) {
+				$priority = SERVICES_YADIS_MAX_PRIORITY;
+			}
+
+			$this->_addService($priority, $s);
+		}
+	}
+
+	/**
+	 * @access private
+	 * @param int $priority
+	 * @param string $service
+	 */
+	function _addService($priority, $service)
+	{
+		$priority = intval($priority);
+
+		if (!array_key_exists($priority, $this->serviceList)) {
+			$this->serviceList[$priority] = array();
+		}
+
+		$this->serviceList[$priority][] = $service;
+	}
+
+	/**
      * Parse an XML string (XRDS document) and return either a
      * Auth_Yadis_XRDS object or null, depending on whether the
      * XRDS XML is valid.
      *
      * @param string $xml_string An XRDS XML string.
+	 * @param array|null $extra_ns_map
      * @return mixed $xrds An instance of Auth_Yadis_XRDS or null,
      * depending on the validity of $xml_string
      */
@@ -321,49 +376,7 @@ class Auth_Yadis_XRDS {
             return $_null;
         }
 
-        $xrds = new Auth_Yadis_XRDS($parser, $xrd_nodes);
-        return $xrds;
-    }
-
-    /**
-     * @access private
-     */
-    function _addService($priority, $service)
-    {
-        $priority = intval($priority);
-
-        if (!array_key_exists($priority, $this->serviceList)) {
-            $this->serviceList[$priority] = array();
-        }
-
-        $this->serviceList[$priority][] = $service;
-    }
-
-    /**
-     * Creates the service list using nodes from the XRDS XML
-     * document.
-     *
-     * @access private
-     */
-    function _parse()
-    {
-        $this->serviceList = array();
-
-        $services = $this->parser->evalXPath('xrd:Service', $this->xrdNode);
-
-        foreach ($services as $node) {
-            $s = new Auth_Yadis_Service();
-            $s->element = $node;
-            $s->parser = $this->parser;
-
-            $priority = $s->getPriority();
-
-            if ($priority === null) {
-                $priority = SERVICES_YADIS_MAX_PRIORITY;
-            }
-
-            $this->_addService($priority, $s);
-        }
+		return new Auth_Yadis_XRDS($parser, $xrd_nodes);
     }
 
     /**
@@ -429,7 +442,7 @@ class Auth_Yadis_XRDS {
 
                 foreach ($filters as $filter) {
 
-                    if (call_user_func_array($filter, array(&$service))) {
+					if (call_user_func_array($filter, array($service))) {
                         $matches++;
 
                         if ($filter_mode == SERVICES_YADIS_MATCH_ANY) {

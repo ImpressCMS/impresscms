@@ -32,12 +32,12 @@ class Auth_Yadis_PHPSession {
      * @param string $name The name of the key to retrieve.
      * @param string $default The optional value to return if the key
      * is not found in the session.
-     * @return string $result The key's value in the session or
+	 * @return mixed $result The key's value in the session or
      * $default if it isn't found.
      */
     function get($name, $default=null)
     {
-        if (array_key_exists($name, $_SESSION)) {
+		if (isset($_SESSION) && array_key_exists($name, $_SESSION)) {
             return $_SESSION[$name];
         } else {
             return $default;
@@ -73,17 +73,8 @@ class Auth_Yadis_PHPSession {
  *
  * @package OpenID
  */
-class Auth_Yadis_SessionLoader {
-    /**
-     * Override this.
-     *
-     * @access private
-     */
-    function check($data)
-    {
-        return true;
-    }
-
+abstract class Auth_Yadis_SessionLoader
+{
     /**
      * Given a session data value (an array), this creates an object
      * (returned by $this->newObject()) whose attributes and values
@@ -93,6 +84,8 @@ class Auth_Yadis_SessionLoader {
      * evaluates to false.
      *
      * @access private
+	 * @param array $data
+	 * @return null
      */
     function fromSession($data)
     {
@@ -126,12 +119,28 @@ class Auth_Yadis_SessionLoader {
         return $obj;
     }
 
+	public abstract function requiredKeys();
+
     /**
+	 * Override this.
+	 *
+	 * @access private
+	 * @param array $data
+	 * @return bool
+	 */
+	function check($data)
+	{
+		return true;
+	}
+
+	/**
      * Prepares the data array by making any necessary changes.
      * Returns an array whose keys and values will be used to update
      * the original data array before calling $this->newObject($data).
      *
      * @access private
+	 * @param array $data
+	 * @return array
      */
     function prepareForLoad($data)
     {
@@ -145,6 +154,8 @@ class Auth_Yadis_SessionLoader {
      * the object's attributes.
      *
      * @access private
+	 * @param array $data
+	 * @return null
      */
     function newObject($data)
     {
@@ -158,6 +169,8 @@ class Auth_Yadis_SessionLoader {
      * from $obj.
      *
      * @access private
+	 * @param object $obj
+	 * @return array
      */
     function toSession($obj)
     {
@@ -181,6 +194,8 @@ class Auth_Yadis_SessionLoader {
      * Override this.
      *
      * @access private
+	 * @param object $obj
+	 * @return array
      */
     function prepareForSave($obj)
     {
@@ -275,13 +290,32 @@ class Auth_Yadis_ManagerLoader extends Auth_Yadis_SessionLoader {
  */
 class Auth_Yadis_Manager {
 
+	/** @var string */
+	public $starting_url;
+
+	/** @var string */
+	public $yadis_url;
+
+	/** @var array */
+	public $services;
+
+	/** @var string */
+	public $session_key;
+
+	/** @var Auth_OpenID_ServiceEndpoint */
+	public $_current;
+
     /**
      * Intialize a new yadis service manager.
      *
      * @access private
+	 * @param string $starting_url
+	 * @param string $yadis_url
+	 * @param array $services
+	 * @param string $session_key
      */
-    function Auth_Yadis_Manager($starting_url, $yadis_url,
-                                    $services, $session_key)
+	function __construct($starting_url, $yadis_url,
+						 $services, $session_key)
     {
         // The URL that was used to initiate the Yadis protocol
         $this->starting_url = $starting_url;
@@ -340,6 +374,8 @@ class Auth_Yadis_Manager {
 
     /**
      * @access private
+	 * @param string $url
+	 * @return bool
      */
     function forURL($url)
     {
@@ -371,12 +407,12 @@ class Auth_Yadis_Discovery {
     /**
      * @access private
      */
-    var $DEFAULT_SUFFIX = 'auth';
+	public $DEFAULT_SUFFIX = 'auth';
 
     /**
      * @access private
      */
-    var $PREFIX = '_yadis_services_';
+	public $PREFIX = '_yadis_services_';
 
     /**
      * Initialize a discovery object.
@@ -387,8 +423,8 @@ class Auth_Yadis_Discovery {
      * @param string $session_key_suffix The optional session key
      * suffix override.
      */
-    function Auth_Yadis_Discovery($session, $url,
-                                      $session_key_suffix = null)
+	function __construct($session, $url,
+						 $session_key_suffix = null)
     {
         /// Initialize a discovery object
         $this->session = $session;
@@ -404,6 +440,10 @@ class Auth_Yadis_Discovery {
     /**
      * Return the next authentication service for the pair of
      * user_input and session. This function handles fallback.
+	 *
+	 * @param callback $discover_cb
+	 * @param object $fetcher
+	 * @return null|Auth_OpenID_ServiceEndpoint
      */
     function getNextService($discover_cb, $fetcher)
     {
@@ -411,9 +451,11 @@ class Auth_Yadis_Discovery {
         if (!$manager || (!$manager->services)) {
             $this->destroyManager();
 
-            list($yadis_url, $services) = call_user_func($discover_cb,
-                                                         $this->url,
-                                                         $fetcher);
+			list($yadis_url, $services) = call_user_func_array($discover_cb,
+				array(
+					$this->url,
+					$fetcher,
+				));
 
             $manager = $this->createManager($services, $yadis_url);
         }
@@ -431,24 +473,30 @@ class Auth_Yadis_Discovery {
     }
 
     /**
-     * Clean up Yadis-related services in the session and return the
-     * most-recently-attempted service from the manager, if one
-     * exists.
+	 * @access private
      *
-     * @param $force True if the manager should be deleted regardless
+	 * @param bool $force True if the manager should be returned regardless
      * of whether it's a manager for $this->url.
+	 * @return null|Auth_Yadis_Manager
      */
-    function cleanup($force=false)
+	function getManager($force = false)
     {
-        $manager = $this->getManager($force);
-        if ($manager) {
-            $service = $manager->current();
-            $this->destroyManager($force);
-        } else {
-            $service = null;
+		// Extract the YadisServiceManager for this object's URL and
+		// suffix from the session.
+
+		$manager_str = $this->session->get($this->getSessionKey());
+		/** @var Auth_Yadis_Manager $manager */
+		$manager = null;
+
+		if ($manager_str !== null) {
+			$loader = new Auth_Yadis_ManagerLoader();
+			$manager = $loader->fromSession(unserialize($manager_str));
         }
 
-        return $service;
+		if ($manager && ($manager->forURL($this->url) || $force)) {
+			return $manager;
+		}
+		return null;
     }
 
     /**
@@ -463,29 +511,22 @@ class Auth_Yadis_Discovery {
     /**
      * @access private
      *
-     * @param $force True if the manager should be returned regardless
+	 * @param bool $force True if the manager should be deleted regardless
      * of whether it's a manager for $this->url.
      */
-    function getManager($force=false)
+	function destroyManager($force = false)
     {
-        // Extract the YadisServiceManager for this object's URL and
-        // suffix from the session.
-
-        $manager_str = $this->session->get($this->getSessionKey());
-        $manager = null;
-
-        if ($manager_str !== null) {
-            $loader = new Auth_Yadis_ManagerLoader();
-            $manager = $loader->fromSession(unserialize($manager_str));
-        }
-
-        if ($manager && ($manager->forURL($this->url) || $force)) {
-            return $manager;
+		if ($this->getManager($force) !== null) {
+			$key = $this->getSessionKey();
+			$this->session->del($key);
         }
     }
 
     /**
      * @access private
+	 * @param array $services
+	 * @param null|string $yadis_url
+	 * @return Auth_Yadis_Manager|null
      */
     function createManager($services, $yadis_url = null)
     {
@@ -502,20 +543,29 @@ class Auth_Yadis_Discovery {
                                 serialize($loader->toSession($manager)));
             return $manager;
         }
+		return null;
     }
 
     /**
-     * @access private
+	 * Clean up Yadis-related services in the session and return the
+	 * most-recently-attempted service from the manager, if one
+	 * exists.
      *
-     * @param $force True if the manager should be deleted regardless
+	 * @param bool $force True if the manager should be deleted regardless
      * of whether it's a manager for $this->url.
+	 * @return null|Auth_OpenID_ServiceEndpoint
      */
-    function destroyManager($force=false)
+	function cleanup($force = false)
     {
-        if ($this->getManager($force) !== null) {
-            $key = $this->getSessionKey();
-            $this->session->del($key);
+		$manager = $this->getManager($force);
+		if ($manager) {
+			$service = $manager->current();
+			$this->destroyManager($force);
+		} else {
+			$service = null;
         }
+
+		return $service;
     }
 }
 

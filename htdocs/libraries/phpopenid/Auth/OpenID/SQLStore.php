@@ -56,12 +56,27 @@ require_once 'Auth/OpenID/Nonce.php';
  */
 class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
+	/** @var string */
+	protected $associations_table_name = '';
+
+	/** @var string */
+	protected $nonces_table_name = '';
+
+	/** @var Auth_OpenID_DatabaseConnection|db_common */
+	protected $connection;
+
+	/** @var int */
+	protected $max_nonce_age = 0;
+
+	/** @var array */
+	protected $sql = array();
+
     /**
      * This creates a new SQLStore instance.  It requires an
      * established database connection be given to it, and it allows
      * overriding the default table names.
      *
-     * @param connection $connection This must be an established
+	 * @param Auth_OpenID_DatabaseConnection $connection This must be an established
      * connection to a database of the correct type for the SQLStore
      * subclass you're using.  This must either be an PEAR DB
      * connection handle or an instance of a subclass of
@@ -75,9 +90,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      * the name of the table used for storing nonces.  The default
      * value is 'oid_nonces'.
      */
-    function Auth_OpenID_SQLStore($connection,
-                                  $associations_table = null,
-                                  $nonces_table = null)
+	function __construct($connection, $associations_table = null, $nonces_table = null)
     {
         $this->associations_table_name = "oid_associations";
         $this->nonces_table_name = "oid_nonces";
@@ -152,37 +165,6 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
         $this->_fixSQL();
     }
 
-    function tableExists($table_name)
-    {
-        return !$this->isError(
-                      $this->connection->query(
-                          sprintf("SELECT * FROM %s LIMIT 0",
-                                  $table_name)));
-    }
-
-    /**
-     * Returns true if $value constitutes a database error; returns
-     * false otherwise.
-     */
-    function isError($value)
-    {
-        return PEAR::isError($value);
-    }
-
-    /**
-     * Converts a query result to a boolean.  If the result is a
-     * database error according to $this->isError(), this returns
-     * false; otherwise, this returns true.
-     */
-    function resultToBool($obj)
-    {
-        if ($this->isError($obj)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     /**
      * This method should be overridden by subclasses.  This method is
      * called by the constructor to set values in $this->sql, which is
@@ -190,19 +172,6 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      */
     function setSQL()
     {
-    }
-
-    /**
-     * Resets the store by removing all records from the store's
-     * tables.
-     */
-    function reset()
-    {
-        $this->connection->query(sprintf("DELETE FROM %s",
-                                         $this->associations_table_name));
-
-        $this->connection->query(sprintf("DELETE FROM %s",
-                                         $this->nonces_table_name));
     }
 
     /**
@@ -273,14 +242,17 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
         }
     }
 
-    function blobDecode($blob)
+	/**
+	 * Resets the store by removing all records from the store's
+	 * tables.
+	 */
+	function reset()
     {
-        return $blob;
-    }
+		$this->connection->query(sprintf("DELETE FROM %s",
+			$this->associations_table_name));
 
-    function blobEncode($str)
-    {
-        return $str;
+		$this->connection->query(sprintf("DELETE FROM %s",
+			$this->nonces_table_name));
     }
 
     function createTables()
@@ -306,6 +278,37 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
         return true;
     }
 
+	function tableExists($table_name)
+	{
+		return !$this->isError(
+			$this->connection->query(
+				sprintf("SELECT * FROM %s LIMIT 0",
+					$table_name)));
+	}
+
+	/**
+	 * Returns true if $value constitutes a database error; returns
+	 * false otherwise.
+	 */
+	function isError($value)
+	{
+		return @PEAR::isError($value);
+	}
+
+	/**
+	 * Converts a query result to a boolean.  If the result is a
+	 * database error according to $this->isError(), this returns
+	 * false; otherwise, this returns true.
+	 */
+	function resultToBool($obj)
+	{
+		if ($this->isError($obj)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
     function create_assoc_table()
     {
         if (!$this->tableExists($this->associations_table_name)) {
@@ -313,22 +316,6 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
             return $this->resultToBool($r);
         }
         return true;
-    }
-
-    /**
-     * @access private
-     */
-    function _set_assoc($server_url, $handle, $secret, $issued,
-                        $lifetime, $assoc_type)
-    {
-        return $this->connection->query($this->sql['set_assoc'],
-                                        array(
-                                              $server_url,
-                                              $handle,
-                                              $secret,
-                                              $issued,
-                                              $lifetime,
-                                              $assoc_type));
     }
 
     function storeAssociation($server_url, $association)
@@ -350,48 +337,30 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
     /**
      * @access private
+	 * @param string $server_url
+	 * @param int $handle
+	 * @param string $secret
+	 * @param string $issued
+	 * @param int $lifetime
+	 * @param string $assoc_type
+	 * @return mixed
      */
-    function _get_assoc($server_url, $handle)
+	function _set_assoc($server_url, $handle, $secret, $issued,
+						$lifetime, $assoc_type)
     {
-        $result = $this->connection->getRow($this->sql['get_assoc'],
-                                            array($server_url, $handle));
-        if ($this->isError($result)) {
-            return null;
-        } else {
-            return $result;
-        }
+		return $this->connection->query($this->sql['set_assoc'],
+			array(
+				$server_url,
+				$handle,
+				$secret,
+				$issued,
+				$lifetime,
+				$assoc_type));
     }
 
-    /**
-     * @access private
-     */
-    function _get_assocs($server_url)
+	function blobEncode($str)
     {
-        $result = $this->connection->getAll($this->sql['get_assocs'],
-                                            array($server_url));
-
-        if ($this->isError($result)) {
-            return array();
-        } else {
-            return $result;
-        }
-    }
-
-    function removeAssociation($server_url, $handle)
-    {
-        if ($this->_get_assoc($server_url, $handle) == null) {
-            return false;
-        }
-
-        if ($this->resultToBool($this->connection->query(
-                              $this->sql['remove_assoc'],
-                              array($server_url, $handle)))) {
-            $this->connection->commit();
-        } else {
-            $this->connection->rollback();
-        }
-
-        return true;
+		return $str;
     }
 
     function getAssociation($server_url, $handle = null)
@@ -440,7 +409,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
                                 $associations);
 
                 // return the most recently issued one.
-                list($issued, $assoc) = $associations[0];
+				list(, $assoc) = $associations[0];
                 return $assoc;
             } else {
                 return null;
@@ -450,19 +419,59 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
     /**
      * @access private
+	 * @param string $server_url
+	 * @param int $handle
+	 * @return array|bool|null
      */
-    function _add_nonce($server_url, $timestamp, $salt)
+	function _get_assoc($server_url, $handle)
     {
-        $sql = $this->sql['add_nonce'];
-        $result = $this->connection->query($sql, array($server_url,
-                                                       $timestamp,
-                                                       $salt));
+		$result = $this->connection->getRow($this->sql['get_assoc'],
+			array($server_url, $handle));
         if ($this->isError($result)) {
-            $this->connection->rollback();
+			return null;
         } else {
+			return $result;
+		}
+	}
+
+	/**
+	 * @access private
+	 * @param string $server_url
+	 * @return array
+	 */
+	function _get_assocs($server_url)
+	{
+		$result = $this->connection->getAll($this->sql['get_assocs'],
+			array($server_url));
+
+		if ($this->isError($result)) {
+			return array();
+		} else {
+			return $result;
+		}
+	}
+
+	function blobDecode($blob)
+	{
+		return $blob;
+	}
+
+	function removeAssociation($server_url, $handle)
+	{
+		if ($this->_get_assoc($server_url, $handle) == null) {
+			return false;
+		}
+
+		if ($this->resultToBool($this->connection->query(
+			$this->sql['remove_assoc'],
+			array($server_url, $handle)))
+		) {
             $this->connection->commit();
+		} else {
+			$this->connection->rollback();
         }
-        return $this->resultToBool($result);
+
+		return true;
     }
 
     function useNonce($server_url, $timestamp, $salt)
@@ -477,11 +486,34 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
     }
 
     /**
+	 * @access private
+	 * @param string $server_url
+	 * @param int $timestamp
+	 * @param string $salt
+	 * @return bool
+	 */
+	function _add_nonce($server_url, $timestamp, $salt)
+	{
+		$sql = $this->sql['add_nonce'];
+		$result = $this->connection->query($sql, array($server_url,
+			$timestamp,
+			$salt));
+		if ($this->isError($result)) {
+			$this->connection->rollback();
+		} else {
+			$this->connection->commit();
+		}
+		return $this->resultToBool($result);
+	}
+
+	/**
      * "Octifies" a binary string by returning a string with escaped
      * octal bytes.  This is used for preparing binary data for
      * PostgreSQL BYTEA fields.
      *
      * @access private
+	 * @param string $str
+	 * @return string
      */
     function _octify($str)
     {
@@ -504,6 +536,8 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      * resulting ASCII (possibly binary) string.
      *
      * @access private
+	 * @param string $str
+	 * @return string
      */
     function _unoctify($str)
     {
@@ -546,8 +580,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
     function cleanupAssociations()
     {
-        $this->connection->query($this->sql['clean_assoc'],
-                                 array(time()));
+		$this->connection->query($this->sql['clean_assoc'], array(time()));
         $num = $this->connection->affectedRows();
         $this->connection->commit();
         return $num;
