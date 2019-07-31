@@ -512,7 +512,7 @@ class icms_core_Object {
 						}
 						if (isset($v['maxlength']) && strlen($cleanv) > (int) ($v['maxlength'])) {
 							$this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) $v['maxlength']));
-							continue;
+							break;
 						}
 						if (!$v['not_gpc']) {
 							$cleanv = icms_core_DataFilter::stripSlashesGPC(icms_core_DataFilter::censorString($cleanv));
@@ -563,7 +563,7 @@ class icms_core_Object {
 						}
 						if ($cleanv != '' && !icms_core_DataFilter::checkVar($cleanv, 'email')) {
 							$this->setErrors(_CORE_DB_INVALIDEMAIL);
-							continue;
+							break;
 						}
 						if (!$v['not_gpc']) {
 							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
