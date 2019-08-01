@@ -443,9 +443,9 @@
             "authors": [
                 {
                     "name": "Phil Bennett",
+                    "role": "Developer",
                     "email": "philipobenito@gmail.com",
-                    "homepage": "http://www.philipobenito.com",
-                    "role": "Developer"
+                    "homepage": "http://www.philipobenito.com"
                 }
             ],
             "description": "A fast and intuitive dependency injection container.",
@@ -678,16 +678,16 @@
         },
         {
             "name": "phpexperts/laravel-env-polyfill",
-            "version": "v1.0.1",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/Laravel57-env-polyfill.git",
-                "reference": "bfc0ba73d4567b88aae325754e9c389d75d20f99"
+                "reference": "6f8209eb9c2cbb9581b9258b47504d86f912c3b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/Laravel57-env-polyfill/zipball/bfc0ba73d4567b88aae325754e9c389d75d20f99",
-                "reference": "bfc0ba73d4567b88aae325754e9c389d75d20f99",
+                "url": "https://api.github.com/repos/phpexpertsinc/Laravel57-env-polyfill/zipball/6f8209eb9c2cbb9581b9258b47504d86f912c3b3",
+                "reference": "6f8209eb9c2cbb9581b9258b47504d86f912c3b3",
                 "shasum": ""
             },
             "require": {
@@ -729,7 +729,7 @@
                 "laravel",
                 "shim"
             ],
-            "time": "2019-05-10T02:24:47+00:00"
+            "time": "2019-07-07T18:34:15+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -1032,19 +1032,19 @@
             "authors": [
                 {
                     "name": "Ryan Parman",
-                    "homepage": "http://ryanparman.com/",
-                    "role": "Creator, alumnus developer"
+                    "role": "Creator, alumnus developer",
+                    "homepage": "http://ryanparman.com/"
                 },
                 {
                     "name": "Geoffrey Sneddon",
-                    "homepage": "http://gsnedders.com/",
-                    "role": "Alumnus developer"
+                    "role": "Alumnus developer",
+                    "homepage": "http://gsnedders.com/"
                 },
                 {
                     "name": "Ryan McCue",
+                    "role": "Developer",
                     "email": "me@ryanmccue.info",
-                    "homepage": "http://ryanmccue.info/",
-                    "role": "Developer"
+                    "homepage": "http://ryanmccue.info/"
                 }
             ],
             "description": "A simple Atom/RSS parsing library for PHP",
@@ -2118,8 +2118,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -2386,8 +2386,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
