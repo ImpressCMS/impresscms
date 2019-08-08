@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
-$db =& icms_db_Factory::instance() ;
+$db = icms_db_Factory::instance() ;
 
 	// for RTL users
 	@define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
@@ -14,7 +14,7 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 
 	// Ticket check
 	if ( ! $xoopsGTicket->check( true , 'protector_admin' ) ) {
-		redirect_header(XOOPS_URL.'/',3,$xoopsGTicket->getErrors());
+		redirect_header(ICMS_URL.'/',3,$xoopsGTicket->getErrors());
 	}
 
 	$new_prefix = empty( $_POST['new_prefix'] ) ? 'x' . substr( md5( time() ) , -5 ) : $_POST['new_prefix'] ;
@@ -66,7 +66,7 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 
 	// Ticket check
 	if ( ! $xoopsGTicket->check( true , 'protector_admin' ) ) {
-		redirect_header(XOOPS_URL.'/',3,$xoopsGTicket->getErrors());
+		redirect_header(ICMS_URL.'/',3,$xoopsGTicket->getErrors());
 	}
 
 	$prefix = $_POST['prefix'] ;
@@ -82,8 +82,8 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 		if( substr( $table , 0 , strlen( $prefix ) + 1 ) !== $prefix . '_' ) continue ;
 		$drs = $db->queryF( "SHOW CREATE TABLE `$table`" ) ;
 		$export_string .= "\nDROP TABLE IF EXISTS `$table`;\n".mysql_result($drs,0,1).";\n\n" ;
-		$result = mysql_query( "SELECT * FROM `$table`" ) ;
-		$fields_cnt = mysql_num_fields( $result ) ;
+		$result = $db->queryF( "SELECT * FROM `$table`" ) ;
+		$fields_cnt = $db->getFieldsNum($result) ;
 		$field_flags = array();
 		for ($j = 0; $j < $fields_cnt; $j++) {
 			$field_flags[$j] = mysql_field_flags( $result , $j ) ;
@@ -91,7 +91,7 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 		$search = array("\x00", "\x0a", "\x0d", "\x1a");
 		$replace = array('\0', '\n', '\r', '\Z');
 		$current_row = 0;
-		while( $row = mysql_fetch_row($result) ) {
+		while( $row = $db->fetchRow($result) ) {
 			$current_row ++ ;
 			for( $j = 0 ; $j < $fields_cnt ; $j ++ ) {
 				$fields_meta = mysql_fetch_field( $result , $j ) ;
@@ -127,7 +127,7 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 			unset($values);
 
 		} // end while
-		mysql_free_result( $result ) ;
+		$db->freeRecordSet($result) ;
 
 	}
 
@@ -145,7 +145,7 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 
 	// Ticket check
 	if ( ! $xoopsGTicket->check( true , 'protector_admin' ) ) {
-		redirect_header(XOOPS_URL.'/',3,$xoopsGTicket->getErrors());
+		redirect_header(ICMS_URL.'/',3,$xoopsGTicket->getErrors());
 	}
 
 	$prefix = $_POST['prefix'] ;
@@ -175,14 +175,14 @@ if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 
 
 // beggining of Output
-xoops_cp_header();
+icms_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 
 // query
 $srs = $db->queryF( "SHOW TABLE STATUS FROM `".XOOPS_DB_NAME.'`' ) ;
 if( ! $db->getRowsNum( $srs ) ) {
 	die( "You are not allowed to copy tables" ) ;
-	xoops_cp_footer() ;
+	icms_cp_footer() ;
 	exit ;
 }
 
@@ -264,7 +264,7 @@ foreach( $prefixes as $prefix ) {
 
 echo "
 </table>
-<p>".sprintf(_AM_TXT_HOWTOCHANGEDB,XOOPS_ROOT_PATH,XOOPS_DB_PREFIX)."</p>
+<p>".sprintf(_AM_TXT_HOWTOCHANGEDB,ICMS_ROOT_PATH,XOOPS_DB_PREFIX)."</p>
 
 " ;
 
@@ -275,5 +275,5 @@ if( ! empty( $_SESSION['protector_logger'] ) ) {
 	unset( $_SESSION['protector_logger'] ) ;
 }
 
-xoops_cp_footer();
+icms_cp_footer();
 ?>

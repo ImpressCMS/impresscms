@@ -54,7 +54,7 @@ var $last_error_type = 'UNKNOWN' ;
 
 
 // Constructor
-function Protector()
+function __construct()
 {
 	$this->mydirname = 'protector' ;
 
@@ -139,12 +139,12 @@ function updateConfFromDb()
 
 	if( empty( $this->_conn ) ) return false ;
 
-	$result = @mysql_query( "SELECT conf_name,conf_value FROM ".XOOPS_DB_PREFIX."_config WHERE conf_title like '".$constpref."%'" , $this->_conn ) ;
-	if( ! $result || mysql_num_rows( $result ) < 5 ) {
+	$result = icms::$xoopsDB->queryF( "SELECT conf_name,conf_value FROM ".XOOPS_DB_PREFIX."_config WHERE conf_title like '".$constpref."%'") ;
+	if( ! $result || icms::$xoopsDB->getRowsNum( $result ) < 5 ) {
 		return false ;
 	}
 	$db_conf = array() ;
-	while( list( $key , $val ) = mysql_fetch_row( $result ) ) {
+	while( list( $key , $val ) = icms::$xoopsDB->fetchRow( $result ) ) {
 		$db_conf[ $key ] = $val ;
 	}
 	$db_conf_serialized = serialize( $db_conf ) ;
@@ -188,14 +188,14 @@ function purge( $redirect_to_top = false )
 		}
 
 		// clear autologin cookie
-		$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
-		if( $xoops_cookie_path == XOOPS_URL ) $xoops_cookie_path = '/' ;
+		$xoops_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL ) ;
+		if( $xoops_cookie_path == ICMS_URL ) $xoops_cookie_path = '/' ;
 		setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
 		setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
 	}
 
 	if( $redirect_to_top ) {
-		header( 'Location: '.XOOPS_URL.'/' ) ;
+		header( 'Location: '.ICMS_URL.'/' ) ;
 		exit ;
 	} else {
 		$ret = $this->call_filter( 'prepurge_exit' ) ;
@@ -212,25 +212,32 @@ function output_log( $type = 'UNKNOWN' , $uid = 0 , $unique_check = false , $lev
 
 	if( ! ( $this->_conf['log_level'] & $level ) ) return true ;
 
+	// do we even need this on 1.4?
 	if( empty( $this->_conn ) ) {
-		$this->_conn = @mysql_connect( XOOPS_DB_HOST , XOOPS_DB_USER , XOOPS_DB_PASS ) ;
-		if( ! $this->_conn ) die( 'db connection failed.' ) ;
-		if( ! mysql_select_db( XOOPS_DB_NAME , $this->_conn ) ) die( 'db selection failed.' ) ;
+		//$this->_conn = @mysql_connect( XOOPS_DB_HOST , XOOPS_DB_USER , XOOPS_DB_PASS ) ;
+		//$this->_conn = icms::$db; // PDO
+		// $this->_conn = icms::$xoopsDB; // non-PDO or PDO
+		// if( ! $this->_conn ) die( 'db connection failed.' ) ;
+		if (! icms::$xoopsDB) die('No DB connection');
+		// if( ! mysql_select_db( XOOPS_DB_NAME , $this->_conn ) ) die( 'db selection failed.' ) ;
 	}
-
+    // --
+    
+	// this is not reliable
 	$ip = @$_SERVER['REMOTE_ADDR'] ;
 	$agent = @$_SERVER['HTTP_USER_AGENT'] ;
-
+    // --
+    
 	if( $unique_check ) {
-		$result = mysql_query( 'SELECT ip,type FROM '.XOOPS_DB_PREFIX.'_'.$this->mydirname.'_log ORDER BY timestamp DESC LIMIT 1' , $this->_conn ) ;
-		list( $last_ip , $last_type ) = mysql_fetch_row( $result ) ;
+		$result = icms::$xoopsDB->queryF( 'SELECT ip,type FROM '.XOOPS_DB_PREFIX.'_'.$this->mydirname.'_log ORDER BY timestamp DESC LIMIT 1') ;
+		list( $last_ip , $last_type ) = icms::$xoopsDB->fetchRow( $result ) ;
 		if( $last_ip == $ip && $last_type == $type ) {
 			$this->_logged = true ;
 			return true ;
 		}
 	}
 
-	mysql_query( "INSERT INTO ".XOOPS_DB_PREFIX."_".$this->mydirname."_log SET ip='".addslashes($ip)."',agent='".addslashes($agent)."',type='".addslashes($type)."',description='".addslashes($this->message)."',uid='".intval($uid)."',timestamp=NOW()" , $this->_conn ) ;
+	icms::$xoopsDB->queryF( "INSERT INTO ".XOOPS_DB_PREFIX."_".$this->mydirname."_log SET ip='".addslashes($ip)."',agent='".addslashes($agent)."',type='".addslashes($type)."',description='".addslashes($this->message)."',uid='".intval($uid)."',timestamp=NOW()") ;
 	$this->_logged = true ;
 	return true ;
 }
@@ -264,7 +271,7 @@ function get_bwlimit()
 
 function get_filepath4bwlimit()
 {
-	return XOOPS_TRUST_PATH . '/modules/protector/configs/bwlimit' . substr( md5( XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX ) , 0 , 6 ) ;
+	return ICMS_TRUST_PATH . '/modules/protector/configs/bwlimit' . substr( md5( ICMS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX ) , 0 , 6 ) ;
 }
 
 
@@ -321,7 +328,7 @@ function get_bad_ips( $with_jailed_time = false )
 
 function get_filepath4badips()
 {
-	return XOOPS_TRUST_PATH . '/modules/protector/configs/badips' . substr( md5( XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX ) , 0 , 6 ) ;
+	return ICMS_TRUST_PATH . '/modules/protector/configs/badips' . substr( md5( ICMS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX ) , 0 , 6 ) ;
 }
 
 
@@ -341,13 +348,13 @@ function get_group1_ips( $with_info = false )
 
 function get_filepath4group1ips()
 {
-	return XOOPS_TRUST_PATH . '/modules/protector/configs/group1ips' . substr( md5( XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX ) , 0 , 6 ) ;
+	return ICMS_TRUST_PATH . '/modules/protector/configs/group1ips' . substr( md5( ICMS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX ) , 0 , 6 ) ;
 }
 
 
 function get_filepath4confighcache()
 {
-	return XOOPS_TRUST_PATH . '/modules/protector/configs/configcache' . substr( md5( XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX ) , 0 , 6 ) ;
+	return ICMS_TRUST_PATH . '/modules/protector/configs/configcache' . substr( md5( ICMS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX ) , 0 , 6 ) ;
 }
 
 
@@ -400,8 +407,8 @@ function deny_by_htaccess( $ip = null )
 	if( empty( $ip ) ) return false ;
 	if( ! function_exists( 'file_get_contents' ) ) return false ;
 
-	$target_htaccess = XOOPS_ROOT_PATH.'/.htaccess' ;
-	$backup_htaccess = XOOPS_ROOT_PATH.'/uploads/.htaccess.bak' ;
+	$target_htaccess = ICMS_ROOT_PATH.'/.htaccess' ;
+	$backup_htaccess = ICMS_ROOT_PATH.'/uploads/.htaccess.bak' ;
 
 	$ht_body = file_get_contents( $target_htaccess ) ;
 
@@ -710,7 +717,7 @@ function check_uploaded_files()
 				$image_attributes = @getimagesize( $_file['tmp_name'] ) ;
 				if( $image_attributes === false && is_uploaded_file( $_file['tmp_name'] ) ) {
 					// open_basedir restriction
-					$temp_file = XOOPS_ROOT_PATH.'/uploads/protector_upload_temporary'.md5( time() ) ;
+					$temp_file = ICMS_ROOT_PATH.'/uploads/protector_upload_temporary'.md5( time() ) ;
 					move_uploaded_file( $_file['tmp_name'] , $temp_file ) ;
 					$image_attributes = @getimagesize( $temp_file ) ;
 					@unlink( $temp_file ) ;
@@ -953,7 +960,7 @@ function _spam_check_point_recursive( $val )
 		}
 	} else {
 		// http_host
-		$path_array = parse_url( XOOPS_URL ) ;
+		$path_array = parse_url( ICMS_URL ) ;
 		$http_host = empty( $path_array['host'] ) ? 'www.xoops.org' : $path_array['host'] ;
 
 		// count URI up
@@ -987,9 +994,9 @@ function spam_check( $points4deny , $uid )
 
 function check_manipulation()
 {
-	if( $_SERVER['SCRIPT_FILENAME'] == XOOPS_ROOT_PATH.'/index.php' ) {
-		$root_stat = stat( XOOPS_ROOT_PATH ) ;
-		$index_stat = stat( XOOPS_ROOT_PATH.'/index.php' ) ;
+	if( $_SERVER['SCRIPT_FILENAME'] == ICMS_ROOT_PATH.'/index.php' ) {
+		$root_stat = stat( ICMS_ROOT_PATH ) ;
+		$index_stat = stat( ICMS_ROOT_PATH.'/index.php' ) ;
 		$finger_print = $root_stat['mtime'] .':'. $index_stat['mtime'] .':'. $index_stat['ino'] ;
 		if( empty( $this->_conf['manip_value'] ) ) {
 			$this->updateConfIntoDb( 'manip_value' , $finger_print ) ;
@@ -1070,11 +1077,11 @@ function disable_features()
 
 		// preview CSRF zx 2004/12/14
 		// news submit.php
-		if( substr( @$_SERVER['SCRIPT_NAME'] , -23 ) == 'modules/news/submit.php' && isset( $_POST['preview'] ) && strpos( @$_SERVER['HTTP_REFERER'] , XOOPS_URL.'/modules/news/submit.php' ) !== 0 ) {
+		if( substr( @$_SERVER['SCRIPT_NAME'] , -23 ) == 'modules/news/submit.php' && isset( $_POST['preview'] ) && strpos( @$_SERVER['HTTP_REFERER'] , ICMS_URL.'/modules/news/submit.php' ) !== 0 ) {
 			$HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1 ;
 		}
 		// news admin/index.php
-		if( substr( @$_SERVER['SCRIPT_NAME'] , -28 ) == 'modules/news/admin/index.php' && ( $_POST['op'] == 'preview' || $_GET['op'] == 'preview' ) && strpos( @$_SERVER['HTTP_REFERER'] , XOOPS_URL.'/modules/news/admin/index.php' ) !== 0 ) {
+		if( substr( @$_SERVER['SCRIPT_NAME'] , -28 ) == 'modules/news/admin/index.php' && ( $_POST['op'] == 'preview' || $_GET['op'] == 'preview' ) && strpos( @$_SERVER['HTTP_REFERER'] , ICMS_URL.'/modules/news/admin/index.php' ) !== 0 ) {
 			$HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1 ;
 		}
 		// comment comment_post.php
@@ -1082,7 +1089,7 @@ function disable_features()
 			$HTTP_POST_VARS['dohtml'] = $_POST['dohtml'] = 0 ;
 		}
 		// disable preview of system's blocksadmin
-		if( substr( @$_SERVER['SCRIPT_NAME'] , -24 ) == 'modules/system/admin.php' && ( $_GET['fct'] == 'blocksadmin' || $_POST['fct'] == 'blocksadmin') && isset( $_POST['previewblock'] ) /* && strpos( $_SERVER['HTTP_REFERER'] , XOOPS_URL.'/modules/system/admin.php' ) !== 0 */ ) {
+		if( substr( @$_SERVER['SCRIPT_NAME'] , -24 ) == 'modules/system/admin.php' && ( $_GET['fct'] == 'blocksadmin' || $_POST['fct'] == 'blocksadmin') && isset( $_POST['previewblock'] ) /* && strpos( $_SERVER['HTTP_REFERER'] , ICMS_URL.'/modules/system/admin.php' ) !== 0 */ ) {
 			die( "Danger! don't use this preview. Use 'altsys module' instead.(by Protector)" ) ;
 		}
 		// tpl preview

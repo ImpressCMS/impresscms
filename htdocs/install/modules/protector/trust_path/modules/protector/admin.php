@@ -6,7 +6,7 @@ $mytrustdirpath = dirname( __FILE__ ) ;
 // environment
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;
 $module_handler = icms::handler('icms_module') ;
-$xoopsModule =& $module_handler->getByDirname( $mydirname ) ;
+$xoopsModule = $module_handler->getByDirname( $mydirname ) ;
 $config_handler = icms::handler('icms_config') ;
 $xoopsModuleConfig =& $config_handler->getConfigsByCat( 0 , $xoopsModule->getVar( 'mid' ) ) ;
 
