@@ -83,16 +83,18 @@ if (version_compare( phpversion(), '5.2', '>=')) {
 	alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php printf( PHP_EXTENSION, 'MySQL' ); ?>:&nbsp; <?php echo xoDiag( in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? 1 : -1 ); ?>
-<img src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<img
+	src="img/<?php echo (in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? "no" : "yes") ?>.png"
+	alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php printf( PHP_EXTENSION, 'Session' ); ?>:&nbsp; <?php echo xoDiag( extension_loaded( 'session' ) ? 1 : -1 ); ?>
-<img src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<img src="img/<?php echo (extension_loaded( 'session' ) ? "no" : "yes") ?>.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php printf( PHP_EXTENSION, 'PCRE' ); ?>:&nbsp; <?php echo xoDiag( extension_loaded( 'pcre' ) ? 1 : -1 ); ?>
-<img src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<img src="img/<?php echo (extension_loaded( 'pcre' ) ? "no" : "yes") ?>.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4>file_uploads:&nbsp; <?php echo xoDiagBoolSetting( 'file_uploads', true ); ?>
-<img src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<img src="img/<?php echo (xoDiagBoolSetting( 'file_uploads', true ) ? "no" : "yes") ?>.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 </fieldset>
 
