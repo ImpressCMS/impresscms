@@ -21,6 +21,7 @@
  */
 require_once 'common.inc.php';
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
+$requirements_array = array();
 
 $wizard->setPage( 'modcheck' );
 $pageHasForm = false;
@@ -63,39 +64,51 @@ function xoDiagIfWritable( $path) {
 	return xoDiag( $error ? -1 : 1, $error ? 'Not writable' : 'Writable' );
 }
 
+function imCheckRequirements()
+{
+	$requirement['server_api']['description']=PHP_SAPI;
+	$requirement['server_api']['result']=php_sapi_name();
+	$requirement['server_api']['status']=true;
+
+	$requirement['php_version']['description']=_PHP_VERSION;
+	if (version_compare( phpversion(), '5.6', '>=')) {
+		$requirement['php_version']['status']=1;
+	} else {
+		$requirement['php_version']['status']=0;
+	}
+	$requirement['php_version']['result']=phpversion();
+
+	$requirement['mysql']['description']="MySQL Handler";
+	$requirement['mysql']['result']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? "using PDO" : "missing";
+	$requirement['mysql']['status']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? true : false;
+
+	$requirement['session']['description']="Session Extension";
+	$requirement['session']['result']=extension_loaded( 'session' ) ? "available" : "missing";
+	$requirement['session']['status']=extension_loaded( 'session' ) ? true : false;
+
+	$requirement['pcre']['description']="PCRE Extension";
+	$requirement['pcre']['result']=extension_loaded( 'PCRE' ) ? "available" : "missing";
+	$requirement['pcre']['status']=extension_loaded( 'PCRE' ) ? true : false;
+
+	$requirement['file_upload']['description']="File uploads";
+	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? "yes" : "no";
+	$requirement['file_upload']['status']=xoDiagBoolSetting( 'file_uploads', true ) ? true : false;
+
+	return $requirement;
+}
+
 ob_start();
+$requirements_array = imCheckRequirements();
 ?>
 <fieldset>
 <h3><?php echo REQUIREMENTS; ?></h3>
-<h4><?php echo SERVER_API; ?>:&nbsp; <?php echo php_sapi_name(); ?> <img
-	src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<?php foreach($requirements_array as &$requirement)
+	 {
+	 ?>
+<h4><?php echo $requirement['description']; ?>:&nbsp; <?php echo xoDiag($requirement['status'], $requirement['result']); ?> <img
+	src="img/<?php echo $requirement['status'] ? "yes" : "no"; ?>.png" alt="<?php echo $requirement['status'] ? "Succes" : "Failure"; ?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php echo _PHP_VERSION; ?>:&nbsp; <?php
-if (version_compare( phpversion(), '5.2', '>=')) {
-	echo xoDiag( 1, phpversion() );
-} elseif (version_compare( phpversion(), '5.1', '>=')) {
-	echo xoDiag( 0, phpversion() );
-} else {
-	echo xoDiag( -1, phpversion() );
-}
-?> <img
-	src="img/<?php echo (isset($php_version_error) ? "no" : "yes") ?>.png"
-	alt="Success" class="rootimg" /></h4>
-<div class="clear">&nbsp;</div>
-<h4><?php printf( PHP_EXTENSION, 'MySQL' ); ?>:&nbsp; <?php echo xoDiag( in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? 1 : -1 ); ?>
-<img
-	src="img/<?php echo (in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? "no" : "yes") ?>.png"
-	alt="Success" class="rootimg" /></h4>
-<div class="clear">&nbsp;</div>
-<h4><?php printf( PHP_EXTENSION, 'Session' ); ?>:&nbsp; <?php echo xoDiag( extension_loaded( 'session' ) ? 1 : -1 ); ?>
-<img src="img/<?php echo (extension_loaded( 'session' ) ? "no" : "yes") ?>.png" alt="Success" class="rootimg" /></h4>
-<div class="clear">&nbsp;</div>
-<h4><?php printf( PHP_EXTENSION, 'PCRE' ); ?>:&nbsp; <?php echo xoDiag( extension_loaded( 'pcre' ) ? 1 : -1 ); ?>
-<img src="img/<?php echo (extension_loaded( 'pcre' ) ? "no" : "yes") ?>.png" alt="Success" class="rootimg" /></h4>
-<div class="clear">&nbsp;</div>
-<h4>file_uploads:&nbsp; <?php echo xoDiagBoolSetting( 'file_uploads', true ); ?>
-<img src="img/<?php echo (xoDiagBoolSetting( 'file_uploads', true ) ? "no" : "yes") ?>.png" alt="Success" class="rootimg" /></h4>
-<div class="clear">&nbsp;</div>
+		 <?php } ?>
 </fieldset>
 
 <fieldset>
