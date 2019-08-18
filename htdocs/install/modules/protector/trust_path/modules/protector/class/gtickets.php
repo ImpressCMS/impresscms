@@ -16,7 +16,7 @@ class XoopsGTicket {
 		global $xoopsConfig ;
 
 		// language file
-		if( defined( 'XOOPS_ROOT_PATH' ) && ! empty( $xoopsConfig['language'] ) && ! strstr( $xoopsConfig['language'] , '/' ) ) {
+		if( defined( 'ICMS_ROOT_PATH' ) && ! empty( $xoopsConfig['language'] ) && ! strstr( $xoopsConfig['language'] , '/' ) ) {
 			if( file_exists( dirname( dirname( __FILE__ ) ) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml' ) ) {
 				include dirname( dirname( __FILE__ ) ) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml' ;
 			}
@@ -278,7 +278,7 @@ class XoopsGTicket {
 
 	function errorHandler4FindOutput($errNo, $errStr, $errFile, $errLine)
 	{
-		if( preg_match( '?'.preg_quote(XOOPS_ROOT_PATH).'([^:]+)\:(\d+)?' , $errStr , $regs ) ) {
+		if( preg_match( '?'.preg_quote(ICMS_ROOT_PATH).'([^:]+)\:(\d+)?' , $errStr , $regs ) ) {
 			echo "Irregular output! check the file ".htmlspecialchars($regs[1])." line ".htmlspecialchars($regs[2]) ;
 		} else {
 			echo "Irregular output! check language files etc." ;
@@ -302,7 +302,7 @@ function admin_refcheck($chkref = "") {
 	} else {
 		$ref = $_SERVER['HTTP_REFERER'];
 	}
-	$cr = XOOPS_URL;
+	$cr = ICMS_URL;
 	if ( $chkref != "" ) { $cr .= $chkref; }
 	if ( strpos($ref, $cr) !== 0 ) { return false; }
 	return true;

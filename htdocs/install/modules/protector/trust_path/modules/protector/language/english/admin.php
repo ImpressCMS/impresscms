@@ -31,14 +31,6 @@ define( "_AM_MSG_GROUP1IPSCANTOPEN" , "The file for allowing group=1 cannot be o
 define( "_AM_MSG_REMOVED" , "Records are removed" ) ;
 define( "_AM_FMT_CONFIGSNOTWRITABLE" , "Turn the configs directory writable: %s" ) ;
 
-
-// prefix_manager.php
-define( "_AM_H3_PREFIXMAN" , "Prefix Manager" ) ;
-define( "_AM_MSG_DBUPDATED" , "Database Updated Successfully!" ) ;
-define( "_AM_CONFIRM_DELETE" , "All data will be dropped. OK?" ) ;
-define( "_AM_TXT_HOWTOCHANGEDB" , "If you want to change prefix,<br /> edit %s/mainfile.php manually.<br /><br />define('XOOPS_DB_PREFIX', '<b>%s</b>');" ) ;
-
-
 // advisory.php
 define("_AM_ADV_NOTSECURE","Not secure");
 
@@ -46,10 +38,10 @@ define("_AM_ADV_TRUSTPATHPUBLIC","If you can look an image -NG- or the link retu
 define("_AM_ADV_TRUSTPATHPUBLICLINK","Check php files inside TRUST_PATH are private (it must be 404,403 or 500 error");
 define("_AM_ADV_REGISTERGLOBALS","This setting invites a variety of injecting attacks.<br />If you can put .htaccess, edit or create...");
 define("_AM_ADV_ALLOWURLFOPEN","This setting allows attackers to execute arbitrary scripts on remote servers.<br />Only administrator can change this option.<br />If you are an admin, edit php.ini or httpd.conf.<br /><b>Sample of httpd.conf:<br /> &nbsp; php_admin_flag &nbsp; allow_url_fopen &nbsp; off</b><br />Else, claim it to your administrators.");
-define("_AM_ADV_USETRANSSID","Your Session ID will be diplayed in anchor tags etc.<br />For preventing from session hi-jacking, add a line into .htaccess in XOOPS_ROOT_PATH.<br /><b>php_flag session.use_trans_sid off</b>");
+define("_AM_ADV_USETRANSSID","Your Session ID will be diplayed in anchor tags etc.<br />For preventing from session hi-jacking, add a line into .htaccess in ICMS_ROOT_PATH.<br /><b>php_flag session.use_trans_sid off</b>");
 define("_AM_ADV_DBPREFIX","This setting invites 'SQL Injections'.<br />Don't forget turning 'Force sanitizing *' on in this module's preferences.");
 define("_AM_ADV_LINK_TO_PREFIXMAN","Go to prefix manager");
-define("_AM_ADV_MAINUNPATCHED","Please upload the protector.php file located in the <strong>extras</strong> folder of the ImpressCMS package to ".XOOPS_URL."/plugins/preloads/.");
+define("_AM_ADV_MAINUNPATCHED","Please upload the protector.php file located in the <strong>extras</strong> folder of the ImpressCMS package to ".ICMS_URL."/plugins/preloads/.");
 define("_AM_ADV_DBFACTORYPATCHED","Your databasefactory is ready for DBLayer Trapping anti-SQL-Injection");
 define("_AM_ADV_DBFACTORYUNPATCHED","Your databasefactory is not ready for DBLayer Trapping anti-SQL-Injection. Some patches are required.");
 

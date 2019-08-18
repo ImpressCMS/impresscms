@@ -20,7 +20,7 @@ function protector_oninstall_base( $module , $mydirname )
 		if( ! is_array( $ret ) ) $ret = array() ;
 	}
 
-	$db =& icms_db_Factory::instance() ;
+	$db = icms_db_Factory::instance() ;
 	$mid = $module->getVar('mid') ;
 
 	// TABLES (loading mysql.sql)
@@ -55,7 +55,7 @@ function protector_oninstall_base( $module , $mydirname )
 	}
 
 	// TEMPLATES
-	$tplfile_handler =& new icms_view_template_file_Handler(icms::$xoopsDB);
+	$tplfile_handler = new icms_view_template_file_Handler(icms::$xoopsDB);
 	$tpl_path = dirname(__FILE__).'/templates' ;
 	if( $handler = @opendir( $tpl_path . '/' ) ) {
 		while( ( $file = readdir( $handler ) ) !== false ) {

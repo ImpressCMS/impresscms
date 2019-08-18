@@ -4,7 +4,7 @@ $mytrustdirname = basename( dirname( __FILE__ ) ) ;
 $mytrustdirpath = dirname( __FILE__ ) ;
 
 // environment
-require_once XOOPS_ROOT_PATH.'/class/template.php' ;
+require_once ICMS_ROOT_PATH.'/class/template.php' ;
 $module_handler = icms::handler('icms_module') ;
 $xoopsModule = $module_handler->getByDirname( $mydirname ) ;
 $config_handler = icms::handler('icms_config') ;
@@ -15,7 +15,7 @@ $moduleperm_handler = icms::handler('icms_member_groupperm') ;
 if( ! is_object( @icms::$user ) || ! $moduleperm_handler->checkRight( 'module_admin' , $xoopsModule->getVar( 'mid' ) , icms::$user->getGroups() ) ) die( 'only admin can access this area' ) ;
 
 $xoopsOption['pagetype'] = 'admin' ;
-require XOOPS_ROOT_PATH.'/include/cp_functions.php' ;
+require ICMS_ROOT_PATH.'/include/cp_functions.php' ;
 
 // language files (admin.php)
 $language = empty( $xoopsConfig['language'] ) ? 'english' : $xoopsConfig['language'] ;
@@ -50,10 +50,10 @@ if( ! empty( $_GET['lib'] ) ) {
 	$lib = preg_replace( '/[^a-zA-Z0-9_-]/' , '' , $_GET['lib'] ) ;
 	$page = preg_replace( '/[^a-zA-Z0-9_-]/' , '' , @$_GET['page'] ) ;
 
-	if( file_exists( XOOPS_TRUST_PATH.'/libs/'.$lib.'/'.$page.'.php' ) ) {
-		include XOOPS_TRUST_PATH.'/libs/'.$lib.'/'.$page.'.php' ;
-	} else if( file_exists( XOOPS_TRUST_PATH.'/libs/'.$lib.'/index.php' ) ) {
-		include XOOPS_TRUST_PATH.'/libs/'.$lib.'/index.php' ;
+	if( file_exists( ICMS_TRUST_PATH.'/libs/'.$lib.'/'.$page.'.php' ) ) {
+		include ICMS_TRUST_PATH.'/libs/'.$lib.'/'.$page.'.php' ;
+	} else if( file_exists( ICMS_TRUST_PATH.'/libs/'.$lib.'/index.php' ) ) {
+		include ICMS_TRUST_PATH.'/libs/'.$lib.'/index.php' ;
 	} else {
 		die( 'wrong request' ) ;
 	}
