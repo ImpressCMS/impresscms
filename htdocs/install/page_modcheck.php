@@ -13,7 +13,7 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @version		$Id: page_modcheck.php 12329 2013-09-19 13:53:36Z skenow $
+ * @author		David Janssens <david.j@impresscms.org> 
  */
 
 /**
@@ -91,7 +91,7 @@ function imCheckRequirements()
 	$requirement['pcre']['status']=extension_loaded( 'PCRE' ) ? true : false;
 
 	$requirement['file_upload']['description']="File uploads";
-	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? "yes" : "no";
+	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? _YES : _NO;
 	$requirement['file_upload']['status']=xoDiagBoolSetting( 'file_uploads', true ) ? true : false;
 
 	return $requirement;
