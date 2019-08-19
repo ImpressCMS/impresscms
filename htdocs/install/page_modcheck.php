@@ -79,15 +79,15 @@ function imCheckRequirements()
 	$requirement['php_version']['result']=phpversion();
 
 	$requirement['mysql']['description']="MySQL Handler";
-	$requirement['mysql']['result']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? "using PDO" : "missing";
+	$requirement['mysql']['result']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? ? SUCCESS : FAILED;
 	$requirement['mysql']['status']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? true : false;
 
 	$requirement['session']['description']="Session Extension";
-	$requirement['session']['result']=extension_loaded( 'session' ) ? "available" : "missing";
+	$requirement['session']['result']=extension_loaded( 'session' ) ? SUCCESS : FAILED;
 	$requirement['session']['status']=extension_loaded( 'session' ) ? true : false;
 
 	$requirement['pcre']['description']="PCRE Extension";
-	$requirement['pcre']['result']=extension_loaded( 'PCRE' ) ? "available" : "missing";
+	$requirement['pcre']['result']=extension_loaded( 'PCRE' ) ? SUCCESS : FAILED;
 	$requirement['pcre']['status']=extension_loaded( 'PCRE' ) ? true : false;
 
 	$requirement['file_upload']['description']="File uploads";
@@ -106,7 +106,7 @@ $requirements_array = imCheckRequirements();
 	 {
 	 ?>
 <h4><?php echo $requirement['description']; ?>:&nbsp; <?php echo xoDiag($requirement['status'], $requirement['result']); ?> <img
-	src="img/<?php echo $requirement['status'] ? "yes" : "no"; ?>.png" alt="<?php echo $requirement['status'] ? "Succes" : "Failure"; ?>" class="rootimg" /></h4>
+	src="img/<?php echo $requirement['status'] ? "yes" : "no"; ?>.png" alt="<?php echo $requirement['status'] ? SUCCESS : FAILED; ?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 		 <?php } ?>
 </fieldset>
