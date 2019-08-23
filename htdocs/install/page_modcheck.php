@@ -79,7 +79,7 @@ function imCheckRequirements()
 	$requirement['php_version']['result']=phpversion();
 
 	$requirement['mysql']['description']="MySQL Handler";
-	$requirement['mysql']['result']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? ? SUCCESS : FAILED;
+	$requirement['mysql']['result']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? SUCCESS : FAILED;
 	$requirement['mysql']['status']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? true : false;
 
 	$requirement['session']['description']="Session Extension";
