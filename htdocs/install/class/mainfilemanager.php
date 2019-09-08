@@ -49,7 +49,7 @@ class mainfile_manager {
 
 	var $path = '../mainfile.php';
 	var $distfile = './templates/mainfile.dist.php';
-	var $rewrite = array();
+	var $rewrite = [];
 
 	var $report = '';
 	var $error = false;

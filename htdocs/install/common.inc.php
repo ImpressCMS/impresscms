@@ -42,8 +42,8 @@ error_reporting( E_ALL );
 
 class XoopsInstallWizard {
 
-	var $pages = array();
-	var $titles = array();
+	var $pages = [];
+	var $titles = [];
 	var $currentPage = 0;
 	var $lastpage;
 	var $secondlastpage;
@@ -252,5 +252,5 @@ if (!$wizard->xoInit()) {
 session_start();
 
 if (!@is_array( $_SESSION['settings'] )) {
-	$_SESSION['settings'] = array();
+	$_SESSION['settings'] = [];
 }

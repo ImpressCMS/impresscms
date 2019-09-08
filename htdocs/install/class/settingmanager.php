@@ -136,7 +136,7 @@ class setting_manager {
 
 	function checkData() {
 		$ret = '';
-		$error = array();
+		$error = [];
 
 		if (empty($this->dbhost)) {
 			$error[] = sprintf(_INSTALL_L57, _INSTALL_L27);

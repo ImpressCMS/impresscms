@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$content = fread( $file, filesize( $vars['TRUST_PATH'] . '/' . $sdata_file_name ) );
 			fclose($file);
 
-			$sdata_rewrite = array();
+			$sdata_rewrite = [];
 			$sdata_rewrite['DB_HOST'] = $vars['DB_HOST'];
 			$sdata_rewrite['DB_USER'] = $vars['DB_USER'];
 			$sdata_rewrite['DB_PASS'] = $vars['DB_PASS'];
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} else {
 		clearstatcache();
 
-		$rewrite = array( 'GROUP_ADMIN' => 1, 'GROUP_USERS' => 2, 'GROUP_ANONYMOUS' => 3 );
+		$rewrite = ['GROUP_ADMIN' => 1, 'GROUP_USERS' => 2, 'GROUP_ANONYMOUS' => 3];
 		$rewrite = array_merge( $rewrite, $vars );
 		if (! $file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', "r" )) {
 			$error = ERR_READ_MAINFILE;
@@ -148,17 +148,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (ini_get('safe_mode') == 0 || strtolower(ini_get('safe_mode')) == 'off')
 	{
 		// creating the required folders in trust_path
-		if (!icms_core_Filesystem::mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))) {
+		if (!icms_core_Filesystem::mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier', 0777, '', ['[', '?', '"', '<', '>', '|', ' '])) {
 			/**
 			 * @todo trap error
 			 */
 		}
 		if (is_dir($vars['TRUST_PATH'] . '/cache/htmlpurifier'))
 		{
-			if (!icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/HTML', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))
-				&& !icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/CSS', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))
-				&& !icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/URI', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))
-				&& !icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/Test', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' )))
+			if (!icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/HTML', 0777, '', ['[', '?', '"', '<', '>', '|', ' '])
+				&& !icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/CSS', 0777, '', ['[', '?', '"', '<', '>', '|', ' '])
+				&& !icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/URI', 0777, '', ['[', '?', '"', '<', '>', '|', ' '])
+				&& !icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/Test', 0777, '', ['[', '?', '"', '<', '>', '|', ' ']))
 			{
 				/**
 				 * @todo trap error

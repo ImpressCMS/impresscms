@@ -28,7 +28,7 @@ if ($success) {
 		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH.'/install', true);
 		header('Location: '.ICMS_URL.'/');
 	}
-	$_SESSION = array();
+	$_SESSION = [];
 }
 
 $wizard->setPage( 'end' );

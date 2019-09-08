@@ -46,8 +46,8 @@
  **/
 class db_manager {
 
-	var $s_tables = array();
-	var $f_tables = array();
+	var $s_tables = [];
+	var $f_tables = [];
 	var $db;
 
 	function __construct() {
@@ -61,7 +61,7 @@ class db_manager {
 	}
 
 	function queryFromFile($sql_file_path) {
-		$tables = array();
+		$tables = [];
 
 		if (!file_exists($sql_file_path)) {
 			return false;
@@ -127,22 +127,22 @@ class db_manager {
 		return true;
 	}
 
-	var $successStrings = array(
+	var $successStrings = [
     	'create'	=> TABLE_CREATED,
     	'insert'	=> ROWS_INSERTED,
     	'alter'		=> TABLE_ALTERED,
     	'drop'		=> TABLE_DROPPED,
-	);
-	var $failureStrings = array(
+    ];
+	var $failureStrings = [
     	'create'	=> TABLE_NOT_CREATED,
     	'insert'	=> ROWS_FAILED,
     	'alter'		=> TABLE_NOT_ALTERED,
     	'drop'		=> TABLE_NOT_DROPPED,
-	);
+    ];
 
 
 	function report() {
-		$commands = array( 'create', 'insert', 'alter', 'drop' );
+		$commands = ['create', 'insert', 'alter', 'drop'];
 		$content = '<ul class="log">';
 		foreach ( $commands as $cmd) {
 			if (!@empty( $this->s_tables[$cmd] )) {

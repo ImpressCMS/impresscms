@@ -36,7 +36,7 @@ class PathStuffController {
 	var $validTrustPath = false;
 	var $validUrl = false;
 
-	var $permErrors = array();
+	var $permErrors = [];
 
 	function __construct() {
 		if (isset( $_SESSION['settings']['ROOT_PATH'] )) {
@@ -155,7 +155,7 @@ class PathStuffController {
 	}
 
 	function createTrustPath() {
-		if (@icms_core_Filesystem::mkdir($this->xoopsTrustPath, 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))) {
+		if (@icms_core_Filesystem::mkdir($this->xoopsTrustPath, 0777, '', ['[', '?', '"', '<', '>', '|', ' '])) {
 			if (@is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath )) {
 				$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
 				return $this->validTrustPath = true;
@@ -165,8 +165,8 @@ class PathStuffController {
 	}
 
 	function checkPermissions() {
-		$paths = array( 'mainfile.php', 'uploads', 'modules', 'templates_c', 'cache' );
-		$errors = array();
+		$paths = ['mainfile.php', 'uploads', 'modules', 'templates_c', 'cache'];
+		$errors = [];
 		foreach ( $paths as $path) {
 			$errors[$path] = $this->makeWritable( "$this->xoopsRootPath/$path" );
 		}
@@ -178,7 +178,7 @@ class PathStuffController {
 	}
 
 	function checkTrustPathPermissions() {
-		$errors = array();
+		$errors = [];
 		$errors['trustpath'] = $this->makeWritable( "$this->xoopsTrustPath" );
 		if (in_array( false, $errors )) {
 			$this->permErrors = $errors;

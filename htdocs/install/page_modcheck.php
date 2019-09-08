@@ -21,7 +21,7 @@
  */
 require_once 'common.inc.php';
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
-$requirements_array = array();
+$requirements_array = [];
 
 $wizard->setPage( 'modcheck' );
 $pageHasForm = false;
@@ -32,8 +32,8 @@ function xoDiag( $status = -1, $str = '') {
 	if ($status == -1) {
 		$GLOBALS['error'] = true;
 	}
-	$classes = array( -1 => 'error', 0 => 'warning', 1 => 'success' );
-	$strings = array( -1 => FAILED, 0 => WARNING, 1 => SUCCESS );
+	$classes = [-1 => 'error', 0 => 'warning', 1 => 'success'];
+	$strings = [-1 => FAILED, 0 => WARNING, 1 => SUCCESS];
 	if (empty($str)) {
 		$str = $strings[$status];
 	}
@@ -117,7 +117,7 @@ $requirements_array = imCheckRequirements();
 <div class="clear">&nbsp;</div>
 
 <h4><?php printf( PHP_EXTENSION, CHAR_ENCODING ); ?>:&nbsp; <?php
-$ext = array();
+$ext = [];
 if (extension_loaded( 'iconv' ) )		$ext[] = 'Iconv';
 if (extension_loaded( 'mb_string' ) )	$ext[] = 'MBString';
 if (empty($ext)) {
@@ -128,7 +128,7 @@ if (empty($ext)) {
 ?> <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php printf( PHP_EXTENSION, XML_PARSING ); ?>:&nbsp; <?php
-$ext = array();
+$ext = [];
 if (extension_loaded( 'xml' ) )		$ext[] = 'XML';
 //if (extension_loaded( 'dom' ) )		$ext[] = 'DOM';
 if (empty($ext)) {
@@ -139,7 +139,7 @@ if (empty($ext)) {
 ?> <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php printf( PHP_EXTENSION, OPEN_ID ); ?>:&nbsp; <?php
-$ext = array();
+$ext = [];
 if (extension_loaded( 'curl' ) )		$ext[] = 'Curl  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
 if (extension_loaded( 'bcmath' ) )		$ext[] = ' Math Support  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
 if (extension_loaded( 'openssl' ) )	$ext[] = ' OpenSSL  <img src="img/yes.png" alt="Success" class="rootimg" />';
@@ -158,7 +158,7 @@ if (empty($ext)) {
     	<tr><th>Path</th><th>Status</th></tr>
     </thead>
 	<?php
-		$paths = array("uploads/", "cache/", "templates_c/", "mainfile.php");
+		$paths = ["uploads/", "cache/", "templates_c/", "mainfile.php"];
 		foreach ( $paths as $path) {
 	?>
 	<tr>

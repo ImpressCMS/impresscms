@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$wizard->redirectToPage( '+1' );
 		exit();
 	}
-	$tables = array();
+	$tables = [];
 	
 	if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
 		$driver = substr(XOOPS_DB_TYPE, 4);

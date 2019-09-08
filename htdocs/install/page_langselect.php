@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$wizard->redirectToPage( '+1' );
 	exit();
 }
-$_SESSION = array();
+$_SESSION = [];
 $pageHasForm = true;
 $pageHasHelp = true;
 $title = LANGUAGE_SELECTION;

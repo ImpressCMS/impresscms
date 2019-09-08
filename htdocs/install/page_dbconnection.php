@@ -29,7 +29,7 @@ $vars =& $_SESSION['settings'];
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
 if (!isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0' )) {
-	$keys = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT' );
+	$keys = ['DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT'];
 	foreach ( $keys as $k) {
 		$vars[ $k ] = defined( "XOOPS_$k" ) ? constant( "XOOPS_$k" ) : '';
 	}
@@ -37,7 +37,7 @@ if (!isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTRO
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$params = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS' );
+	$params = ['DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS'];
 	foreach ( $params as $name) {
 		$vars[$name] = $_POST[$name];
 	}
@@ -58,10 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($
 				$dbh = new PDO('mysql:host=' . $vars['DB_HOST'],
 					$vars['DB_USER'],
 					$vars['DB_PASS'],
-					array(
+                               [
 						PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 						PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
-					));
+                               ]);
 			} catch (PDOException $ex) {
 				$error = ERR_NO_DBCONNECTION;
 			}
@@ -76,13 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($
 //so far, mysql extension has to exist and be loaded
 $connections = [];
 if (function_exists('mysql_connect') || function_exists('mysql_pconnect')) {
-	$connections['mysql'] = array('type' => 'mysql', 'name' => 'MySQL', 'selected' => 'selected');
+	$connections['mysql'] = ['type' => 'mysql', 'name' => 'MySQL', 'selected' => 'selected'];
 	$db_connection = $connections['mysql'];
 }
 // Fill with default values
 // check for PDO MySQL and select it, if it is available
 if (class_exists("PDO", false)) {
-	$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
+	$db_connection = ['type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected'];
 	if (isset($connections['mysql'])) {
 		$connections['mysql']['selected'] = '';
 	}
@@ -90,13 +90,13 @@ if (class_exists("PDO", false)) {
 }
 
 if (@empty($vars['DB_HOST'])) {
-	$vars = array_merge($vars, array(
+	$vars = array_merge($vars, [
 		'DB_TYPE'        => $db_connection['type'],
 		'DB_HOST'        => 'localhost',
 		'DB_USER'        => '',
 		'DB_PASS'        => '',
 		'DB_PCONNECT'    => 0,
-	));
+    ]);
 
 }
 

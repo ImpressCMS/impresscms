@@ -40,10 +40,10 @@ switch ($vars['DB_TYPE']) {
 			$link = new PDO('mysql:host=' . $vars['DB_HOST'],
 				$vars['DB_USER'],
 				$vars['DB_PASS'],
-				array(
+                            [
 					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
-				));
+                            ]);
 		} catch (PDOException $ex) {
 			$error = ERR_NO_DBCONNECTION;
 		}
@@ -56,7 +56,7 @@ if (isset($error)) {
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
 if (!isset ($vars ['DB_NAME']) || false !== @strpos($_SERVER ['HTTP_CACHE_CONTROL'], 'max-age=0')) {
-	$keys = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT');
+	$keys = ['DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT'];
 	foreach ($keys as $k) {
 		$vars [$k] = defined("XOOPS_$k")? constant ("XOOPS_$k"):'';
 	}
@@ -88,7 +88,7 @@ function quote_sql($sql) {
 }
 
 function getDbCharsets($link) {
-	static $charsets = array( );
+	static $charsets = [];
 	if ($charsets) {
 		return $charsets;
 	}
@@ -117,7 +117,7 @@ function getDbCharsets($link) {
  * @return	array	Character sets supported by the db, as strings
  */
 function getDbCollations($link, $charset) {
-	static $collations = array( );
+	static $collations = [];
 
 	if ($result = exec_query("SHOW COLLATION WHERE Charset=" . quote_sql($charset), $link)) {
 		while ($row = fetch_assoc($result)) {
@@ -223,7 +223,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'GET' && isset ($_GET ['charset']) && @$_GET 
 }
 
 if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
-	$params = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT');
+	$params = ['DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT'];
 	foreach ($params as $name) {
 		$vars [$name] = isset ($_POST [$name])?$_POST [$name]:"";
 	}
@@ -284,7 +284,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 
 if (@empty ($vars ['DB_NAME'])) {
 	// Fill with default values
-	$vars = array_merge($vars, array('DB_NAME' => '', 'DB_CHARSET' => 'utf8', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt()));
+	$vars = array_merge($vars, ['DB_NAME' => '', 'DB_CHARSET' => 'utf8', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt()]);
 }
 
 function xoFormField($name, $value, $label, $maxlength, $help = '') {
@@ -310,7 +310,7 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 		return "";
 	}
 
-	$charsets = array( );
+	$charsets = [];
 	if (isset ($chars ["utf8"])) {
 		$charsets ["utf8"] = $chars ["utf8"];
 		unset ($chars ["utf8"]);

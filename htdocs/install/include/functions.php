@@ -25,13 +25,14 @@ function imcms_get_base_domain($url)
 	$base_domain = '';
 
 	// generic tlds (source: http://en.wikipedia.org/wiki/Generic_top-level_domain)
-	$G_TLD = array(
+	$G_TLD = [
      'biz','com','edu','gov','info','int','mil','name','net','org','aero','asia','cat','coop','jobs','mobi','museum','pro','tel','travel',
      'arpa','root','berlin','bzh','cym','gal','geo','kid','kids','lat','mail','nyc','post','sco','web','xxx',
-     'nato', 'example','invalid','localhost','test','bitnet','csnet','ip','local','onion','uucp','co');
+     'nato', 'example','invalid','localhost','test','bitnet','csnet','ip','local','onion','uucp','co'
+    ];
 
 	// country tlds (source: http://en.wikipedia.org/wiki/Country_code_top-level_domain)
-	$C_TLD = array(
+	$C_TLD = [
 	// active
      'ac','ad','ae','af','ag','ai','al','am','an','ao','aq','ar','as','at','au','aw','ax','az',
      'ba','bb','bd','be','bf','bg','bh','bi','bj','bm','bn','bo','br','bs','bt','bw','by','bz',
@@ -48,7 +49,8 @@ function imcms_get_base_domain($url)
      'tz','ua','ug','uk','us','uy','uz','va','vc','ve','vg','vi','vn','vu','wf','ws','ye','yu',
      'za','zm','zw',
 	// inactive
-     'eh','kp','me','rs','um','bv','gb','pm','sj','so','yt','su','tp','bu','cs','dd','zr');
+     'eh','kp','me','rs','um','bv','gb','pm','sj','so','yt','su','tp','bu','cs','dd','zr'
+    ];
 
 	// get domain
 	if (!$full_domain = imcms_get_url_domain($url)) {return $base_domain;}
