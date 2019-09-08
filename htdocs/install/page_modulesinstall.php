@@ -66,8 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$content .= _INSTALL_NO_PLUS_MOD;
 		}
 		//Install protector module by default if found.
-		//TODO: Insert Protector installation - leads to blank page as it is now.
-		if (version_compare( phpversion(), '7.0', '<')) {
 			if (file_exists(ICMS_ROOT_PATH . '/modules/protector/xoops_version.php')) {
 				$content .= xoops_module_install('protector');
 				/*        	include_once "./class/mainfilemanager.php";
@@ -78,7 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  $result = $mm->doRewrite();
                  $mm->report();*/
 			}
-		}
 
 		$tables = array();
 		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>".$dbm->report()."</div>";
