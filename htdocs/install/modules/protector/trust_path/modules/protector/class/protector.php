@@ -275,7 +275,7 @@ class Protector
 
     public function get_bwlimit()
     {
-        list($expire) = @file(self::get_filepath4bwlimit()) ;
+        list($expire) = @file($this->get_filepath4bwlimit()) ;
         $expire = min((int)$expire, time() + 300) ;
 
         return $expire ;
@@ -323,7 +323,7 @@ class Protector
 
     public function get_bad_ips($with_jailed_time = false)
     {
-        list($bad_ips_serialized) = @file(self::get_filepath4badips()) ;
+        list($bad_ips_serialized) = @file($this->get_filepath4badips()) ;
         $bad_ips = empty($bad_ips_serialized) ? [] : @unserialize($bad_ips_serialized) ;
         if (! is_array($bad_ips) || isset($bad_ips[0])) {
             $bad_ips = [];
@@ -355,7 +355,7 @@ class Protector
 
     public function get_group1_ips($with_info = false)
     {
-        list($group1_ips_serialized) = @file(self::get_filepath4group1ips()) ;
+        list($group1_ips_serialized) = @file($this->get_filepath4group1ips()) ;
         $group1_ips = empty($group1_ips_serialized) ? [] : @unserialize($group1_ips_serialized) ;
         if (! is_array($group1_ips)) {
             $group1_ips = [];
