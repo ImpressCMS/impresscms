@@ -214,7 +214,7 @@ class TextSanitizer
 
 	function makeTareaData4Edit($text)
 	{
-		return htmlSpecialChars($text, ENT_QUOTES);
+		return htmlspecialchars($text, ENT_QUOTES);
 	}
 
 	function &makeTareaData4Preview(&$text, $html=1, $smiley=1, $xcode=1)
@@ -226,7 +226,7 @@ class TextSanitizer
 	{
 		//if magic_quotes_gpc is on, do stipslashes
 		$text = $this->stripSlashesGPC($text);
-		return htmlSpecialChars($text, ENT_QUOTES);
+		return htmlspecialchars($text, ENT_QUOTES);
 	}
 
 	function makeTareaData4InsideQuotes($text)
@@ -260,7 +260,7 @@ class TextSanitizer
 
 	function &oopsNl2Br($text)
 	{
-		return $this->nl2br($text);
+		return $this->nl2Br($text);
 	}
 }
 ?>
