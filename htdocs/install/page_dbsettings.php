@@ -261,8 +261,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 					$character_sets[$row['Variable_name']] = $row['Value'];
 				}
                 $vars['DB_CHARSET'] = $character_sets['character_set_database']
-					? $character_sets['character_set_database']
-					: $character_sets['character_set_server'];
+					?: $character_sets['character_set_server'];
 
 				/* get the collation for the current database */
 				$sql = "SHOW VARIABLES LIKE 'collation%'";
@@ -271,8 +270,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 					$collations[$row['Variable_name']] = $row['Value'];
 				}
                 $vars['DB_COLLATION'] = $collations['collation_database']
-					? $collations['collation_database']
-					: $collations['collation_server'];
+					?: $collations['collation_server'];
 			}
 		}
 	}
