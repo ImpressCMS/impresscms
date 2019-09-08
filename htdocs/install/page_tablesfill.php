@@ -24,7 +24,7 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once "../mainfile.php";
+include_once '../mainfile.php';
 include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
@@ -32,7 +32,7 @@ if (!$dbm->isConnectable()) {
 	$wizard->redirectToPage( 'dbsettings' );
 	exit();
 }
-$res = $dbm->query( "SELECT COUNT(*) FROM " . $dbm->db->prefix( "users" ) );
+$res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('users') );
 if (!$res) {
 	$wizard->redirectToPage( 'dbsettings' );
 	exit();

@@ -12,10 +12,10 @@ $constpref = '_MI_' . strtoupper($mydirname) ;
 $modversion['name'] = constant($constpref.'_NAME') ;
 $modversion['description'] = constant($constpref.'_DESC') ;
 $modversion['version'] = file_get_contents(__DIR__ . '/include/version.txt') ;
-$modversion['credits'] = "PEAK Corp." ;
-$modversion['author'] = "GIJ=CHECKMATE<br />PEAK Corp.(http://www.peak.ne.jp/)" ;
-$modversion['help'] = "" ;
-$modversion['license'] = "GPL" ;
+$modversion['credits'] = 'PEAK Corp.';
+$modversion['author'] = 'GIJ=CHECKMATE<br />PEAK Corp.(http://www.peak.ne.jp/)';
+$modversion['help'] = '';
+$modversion['license'] = 'GPL';
 $modversion['official'] = 0 ;
 $modversion['image'] = file_exists($mydirpath.'/module_icon.png') ? 'module_icon.png' : 'module_icon.php' ;
 $modversion['iconbig'] = 'module_icon.php?file=iconbig' ;
@@ -28,8 +28,8 @@ $modversion['tables'] = [];
 
 // Admin things
 $modversion['hasAdmin'] = 1;
-$modversion['adminindex'] = "admin/index.php";
-$modversion['adminmenu'] = "admin/admin_menu.php";
+$modversion['adminindex'] = 'admin/index.php';
+$modversion['adminmenu'] = 'admin/admin_menu.php';
 
 // Templates
 
@@ -41,12 +41,12 @@ $modversion['hasMain'] = 0;
 
 // Config
 $modversion['config'][1] = [
-    'name'			=> 'global_disabled' ,
-    'title'			=> $constpref.'_GLOBAL_DISBL' ,
-    'description'	=> $constpref.'_GLOBAL_DISBLDSC' ,
-    'formtype'		=> 'yesno' ,
-    'valuetype'		=> 'int' ,
-    'default'		=> "0" ,
+    'name'			=> 'global_disabled',
+    'title'			=> $constpref.'_GLOBAL_DISBL',
+    'description'	=> $constpref.'_GLOBAL_DISBLDSC',
+    'formtype'		=> 'yesno',
+    'valuetype'		=> 'int',
+    'default'		=> '0',
     'options'		=> []
 ];
 $modversion['config'][] = [
@@ -77,12 +77,12 @@ $modversion['config'][] = [
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'reliable_ips' ,
-    'title'			=> $constpref.'_RELIABLE_IPS' ,
-    'description'	=> $constpref.'_RELIABLE_IPSDSC' ,
-    'formtype'		=> 'textsarea' ,
-    'valuetype'		=> 'array' ,
-    'default'		=> "^192.168.|127.0.0.1" ,
+    'name'			=> 'reliable_ips',
+    'title'			=> $constpref.'_RELIABLE_IPS',
+    'description'	=> $constpref.'_RELIABLE_IPSDSC',
+    'formtype'		=> 'textsarea',
+    'valuetype'		=> 'array',
+    'default'		=> '^192.168.|127.0.0.1',
     'options'		=> []
 ];
 $modversion['config'][] = [
@@ -104,12 +104,12 @@ $modversion['config'][] = [
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'san_nullbyte' ,
-    'title'			=> $constpref.'_SAN_NULLBYTE' ,
-    'description'	=> $constpref.'_SAN_NULLBYTEDSC' ,
-    'formtype'		=> 'yesno' ,
-    'valuetype'		=> 'int' ,
-    'default'		=> "1" ,
+    'name'			=> 'san_nullbyte',
+    'title'			=> $constpref.'_SAN_NULLBYTE',
+    'description'	=> $constpref.'_SAN_NULLBYTEDSC',
+    'formtype'		=> 'yesno',
+    'valuetype'		=> 'int',
+    'default'		=> '1',
     'options'		=> []
 ];
 /* $modversion['config'][] = array(
@@ -122,12 +122,12 @@ $modversion['config'][] = [
     'options'		=> array()
 ) ; */
 $modversion['config'][] = [
-    'name'			=> 'die_badext' ,
-    'title'			=> $constpref.'_DIE_BADEXT' ,
-    'description'	=> $constpref.'_DIE_BADEXTDSC' ,
-    'formtype'		=> 'yesno' ,
-    'valuetype'		=> 'int' ,
-    'default'		=> "1" ,
+    'name'			=> 'die_badext',
+    'title'			=> $constpref.'_DIE_BADEXT',
+    'description'	=> $constpref.'_DIE_BADEXTDSC',
+    'formtype'		=> 'yesno',
+    'valuetype'		=> 'int',
+    'default'		=> '1',
     'options'		=> []
 ];
 $modversion['config'][] = [
@@ -158,30 +158,30 @@ $modversion['config'][] = [
     'options'		=> [$constpref . '_OPT_NONE' => 0, $constpref . '_OPT_SAN' => 1, $constpref . '_OPT_EXIT' => 3, $constpref . '_OPT_BIPTIME0' => 7, $constpref . '_OPT_BIP' => 15]
 ];
 $modversion['config'][] = [
-    'name'			=> 'id_forceintval' ,
-    'title'			=> $constpref.'_ID_INTVAL' ,
-    'description'	=> $constpref.'_ID_INTVALDSC' ,
-    'formtype'		=> 'yesno' ,
-    'valuetype'		=> 'int' ,
-    'default'		=> "0" ,
+    'name'			=> 'id_forceintval',
+    'title'			=> $constpref.'_ID_INTVAL',
+    'description'	=> $constpref.'_ID_INTVALDSC',
+    'formtype'		=> 'yesno',
+    'valuetype'		=> 'int',
+    'default'		=> '0',
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'file_dotdot' ,
-    'title'			=> $constpref.'_FILE_DOTDOT' ,
-    'description'	=> $constpref.'_FILE_DOTDOTDSC' ,
-    'formtype'		=> 'yesno' ,
-    'valuetype'		=> 'int' ,
-    'default'		=> "1" ,
+    'name'			=> 'file_dotdot',
+    'title'			=> $constpref.'_FILE_DOTDOT',
+    'description'	=> $constpref.'_FILE_DOTDOTDSC',
+    'formtype'		=> 'yesno',
+    'valuetype'		=> 'int',
+    'default'		=> '1',
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'bf_count' ,
-    'title'			=> $constpref.'_BF_COUNT' ,
-    'description'	=> $constpref.'_BF_COUNTDSC' ,
-    'formtype'		=> 'textbox' ,
-    'valuetype'		=> 'int' ,
-    'default'		=> "10" ,
+    'name'			=> 'bf_count',
+    'title'			=> $constpref.'_BF_COUNT',
+    'description'	=> $constpref.'_BF_COUNTDSC',
+    'formtype'		=> 'textbox',
+    'valuetype'		=> 'int',
+    'default'		=> '10',
     'options'		=> []
 ];
 $modversion['config'][] = [
@@ -194,66 +194,66 @@ $modversion['config'][] = [
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'dos_skipmodules' ,
-    'title'			=> $constpref.'_DOS_SKIPMODS' ,
-    'description'	=> $constpref.'_DOS_SKIPMODSDSC' ,
-    'formtype'		=> 'textbox' ,
-    'valuetype'		=> 'text' ,
-    'default'		=> "" ,
+    'name'			=> 'dos_skipmodules',
+    'title'			=> $constpref.'_DOS_SKIPMODS',
+    'description'	=> $constpref.'_DOS_SKIPMODSDSC',
+    'formtype'		=> 'textbox',
+    'valuetype'		=> 'text',
+    'default'		=> '',
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'dos_expire' ,
-    'title'			=> $constpref.'_DOS_EXPIRE' ,
-    'description'	=> $constpref.'_DOS_EXPIREDSC' ,
-    'formtype'		=> 'textbox' ,
-    'valuetype'		=> 'int' ,
-    'default'		=> "60" ,
+    'name'			=> 'dos_expire',
+    'title'			=> $constpref.'_DOS_EXPIRE',
+    'description'	=> $constpref.'_DOS_EXPIREDSC',
+    'formtype'		=> 'textbox',
+    'valuetype'		=> 'int',
+    'default'		=> '60',
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'dos_f5count' ,
-    'title'			=> $constpref.'_DOS_F5COUNT' ,
-    'description'	=> $constpref.'_DOS_F5COUNTDSC' ,
-    'formtype'		=> 'textbox' ,
-    'valuetype'		=> 'int' ,
-    'default'		=> "20" ,
+    'name'			=> 'dos_f5count',
+    'title'			=> $constpref.'_DOS_F5COUNT',
+    'description'	=> $constpref.'_DOS_F5COUNTDSC',
+    'formtype'		=> 'textbox',
+    'valuetype'		=> 'int',
+    'default'		=> '20',
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'dos_f5action' ,
-    'title'			=> $constpref.'_DOS_F5ACTION' ,
-    'description'	=> '' ,
-    'formtype'		=> 'select' ,
-    'valuetype'		=> 'text' ,
-    'default'		=> "exit" ,
+    'name'			=> 'dos_f5action',
+    'title'			=> $constpref.'_DOS_F5ACTION',
+    'description'	=> '',
+    'formtype'		=> 'select',
+    'valuetype'		=> 'text',
+    'default'		=> 'exit',
     'options'		=> [$constpref . '_DOSOPT_NONE' => 'none', $constpref . '_DOSOPT_SLEEP' => 'sleep', $constpref . '_DOSOPT_EXIT' => 'exit', $constpref . '_DOSOPT_BIPTIME0' => 'biptime0', $constpref . '_DOSOPT_BIP' => 'bip', $constpref . '_DOSOPT_HTA' => 'hta']
 ];
 $modversion['config'][] = [
-    'name'			=> 'dos_crcount' ,
-    'title'			=> $constpref.'_DOS_CRCOUNT' ,
-    'description'	=> $constpref.'_DOS_CRCOUNTDSC' ,
-    'formtype'		=> 'textbox' ,
-    'valuetype'		=> 'int' ,
-    'default'		=> "40" ,
+    'name'			=> 'dos_crcount',
+    'title'			=> $constpref.'_DOS_CRCOUNT',
+    'description'	=> $constpref.'_DOS_CRCOUNTDSC',
+    'formtype'		=> 'textbox',
+    'valuetype'		=> 'int',
+    'default'		=> '40',
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'dos_craction' ,
-    'title'			=> $constpref.'_DOS_CRACTION' ,
-    'description'	=> '' ,
-    'formtype'		=> 'select' ,
-    'valuetype'		=> 'text' ,
-    'default'		=> "exit" ,
+    'name'			=> 'dos_craction',
+    'title'			=> $constpref.'_DOS_CRACTION',
+    'description'	=> '',
+    'formtype'		=> 'select',
+    'valuetype'		=> 'text',
+    'default'		=> 'exit',
     'options'		=> [$constpref . '_DOSOPT_NONE' => 'none', $constpref . '_DOSOPT_SLEEP' => 'sleep', $constpref . '_DOSOPT_EXIT' => 'exit', $constpref . '_DOSOPT_BIPTIME0' => 'biptime0', $constpref . '_DOSOPT_BIP' => 'bip', $constpref . '_DOSOPT_HTA' => 'hta']
 ];
 $modversion['config'][] = [
-    'name'			=> 'dos_crsafe' ,
-    'title'			=> $constpref.'_DOS_CRSAFE' ,
-    'description'	=> $constpref.'_DOS_CRSAFEDSC' ,
-    'formtype'		=> 'textbox' ,
-    'valuetype'		=> 'text' ,
-    'default'		=> "/(msnbot|Googlebot|Yahoo! Slurp)/i" ,
+    'name'			=> 'dos_crsafe',
+    'title'			=> $constpref.'_DOS_CRSAFE',
+    'description'	=> $constpref.'_DOS_CRSAFEDSC',
+    'formtype'		=> 'textbox',
+    'valuetype'		=> 'text',
+    'default'		=> '/(msnbot|Googlebot|Yahoo! Slurp)/i',
     'options'		=> []
 ];
 $modversion['config'][] = [
@@ -320,12 +320,12 @@ $modversion['config'][] = [
     'options'		=> []
 ];
 $modversion['config'][] = [
-    'name'			=> 'filters' ,
-    'title'			=> $constpref.'_FILTERS' ,
-    'description'	=> $constpref.'_FILTERSDSC' ,
-    'formtype'		=> 'textsarea' ,
-    'valuetype'		=> 'text' ,
-    'default'		=> "" ,
+    'name'			=> 'filters',
+    'title'			=> $constpref.'_FILTERS',
+    'description'	=> $constpref.'_FILTERSDSC',
+    'formtype'		=> 'textsarea',
+    'valuetype'		=> 'text',
+    'default'		=> '',
     'options'		=> []
 ];
 $modversion['config'][] = [

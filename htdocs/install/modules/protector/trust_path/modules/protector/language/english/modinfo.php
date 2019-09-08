@@ -8,15 +8,15 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || ! defined($constpref.'_LOADED')) {
     define($constpref.'_LOADED', 1) ;
 
     // The name of this module
-    define($constpref."_NAME", "Protector");
+    define($constpref . '_NAME', 'Protector');
 
     // A brief description of this module
-    define($constpref."_DESC", "This module protects your xoops site from various attacks like DoS , SQL Injection , and Variables contaminations.");
+    define($constpref . '_DESC', 'This module protects your xoops site from various attacks like DoS , SQL Injection , and Variables contaminations.');
 
     // Menu
-    define($constpref."_ADMININDEX", "Protect Center");
-    define($constpref."_ADVISORY", "Security Advisory");
-    define($constpref."_PREFIXMANAGER", "Prefix Manager");
+    define($constpref . '_ADMININDEX', 'Protect Center');
+    define($constpref . '_ADVISORY', 'Security Advisory');
+    define($constpref . '_PREFIXMANAGER', 'Prefix Manager');
     define($constpref.'_ADMENU_MYBLOCKSADMIN', 'Permissions') ;
 
     // Configs

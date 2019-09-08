@@ -70,23 +70,23 @@ class setting_manager {
 
 			$this->db_pconnect = 0;
 
-			$this->root_path = str_replace("\\","/",getcwd()); // "
-			$this->root_path = str_replace("/install", "", $this->root_path);
+			$this->root_path = str_replace("\\", '/', getcwd()); // "
+			$this->root_path = str_replace('/install', '', $this->root_path);
 
 			$filepath = (! empty($_SERVER['REQUEST_URI']))
 			? dirname($_SERVER['REQUEST_URI'])
 			: dirname($_SERVER['SCRIPT_NAME']);
 
-			$filepath = str_replace("\\", "/", $filepath); // "
-			$filepath = str_replace("/install", "", $filepath);
-			if (substr($filepath, 0, 1) == "/") {
+			$filepath = str_replace("\\", '/', $filepath); // "
+			$filepath = str_replace('/install', '', $filepath);
+			if (substr($filepath, 0, 1) == '/') {
 				$filepath = substr($filepath,1);
 			}
-			if (substr($filepath, -1) == "/") {
+			if (substr($filepath, -1) == '/') {
 				$filepath = substr($filepath, 0, -1);
 			}
 			$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
-			$this->xoops_url = (!empty($filepath)) ? $protocol.$_SERVER['HTTP_HOST']."/".$filepath : $protocol.$_SERVER['HTTP_HOST'];
+			$this->xoops_url = (!empty($filepath)) ? $protocol.$_SERVER['HTTP_HOST'] . '/' . $filepath : $protocol . $_SERVER['HTTP_HOST'];
 
 			$this->prefix = $this->generatePrefix();
 		}
@@ -182,10 +182,10 @@ class setting_manager {
 			if ($val == $this->database) $ret .= " selected='selected'";
 			$ret .= "'>$val</option>";
 		}
-		$ret .=         "</select>
+		$ret .= '</select>
                     </td>
                 </tr>
-                ";
+                ';
 		$ret .= $this->editform_sub(_INSTALL_L27, _INSTALL_L67, 'dbhost', $this->sanitizer->htmlSpecialChars($this->dbhost));
 		$ret .= $this->editform_sub(_INSTALL_L28, _INSTALL_L65, 'dbuname', $this->sanitizer->htmlSpecialChars($this->dbuname));
 		$ret .= $this->editform_sub(_INSTALL_L52, _INSTALL_L68, 'dbpass', $this->sanitizer->htmlSpecialChars($this->dbpass));
@@ -198,16 +198,16 @@ class setting_manager {
                         <span style='font-size:85%;'>"._INSTALL_L69."</span>
                     </td>
                     <td class='even'>
-                        <input type='radio' name='db_pconnect' value='1'".($this->db_pconnect == 1 ? " checked='checked'" : "" )." />"._INSTALL_L23."
-                        <input type='radio' name='db_pconnect' value='0'".($this->db_pconnect != 1 ? " checked='checked'" : "" )." />"._INSTALL_L24."
+                        <input type='radio' name='db_pconnect' value='1'".($this->db_pconnect == 1 ? " checked='checked'" : '') . ' />' . _INSTALL_L23 . "
+                        <input type='radio' name='db_pconnect' value='0'".($this->db_pconnect != 1 ? " checked='checked'" : '') . ' />' . _INSTALL_L24 . '
                     </td>
                 </tr>
-                ";
+                ';
 
 		$ret .= $this->editform_sub(_INSTALL_L55, _INSTALL_L59, 'root_path', $this->sanitizer->htmlSpecialChars($this->root_path));
 		$ret .= $this->editform_sub(_INSTALL_L56, _INSTALL_L58, 'xoops_url', $this->sanitizer->htmlSpecialChars($this->xoops_url));
 
-		$ret .= "</table>";
+		$ret .= '</table>';
 		return $ret;
 	}
 
@@ -290,7 +290,7 @@ class setting_manager {
 	}
 
 	public function generatePrefix() {
-		include_once $this->root_path."/include/functions.php";
+		include_once $this->root_path . '/include/functions.php';
 		return xoops_makepass(5);
 	}
 }

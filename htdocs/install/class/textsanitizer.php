@@ -72,7 +72,7 @@ class TextSanitizer
 
 	public function &nl2Br($text)
 	{
-		return preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text);
+		return preg_replace("/(\015\012)|(\015)|(\012)/", '<br />', $text);
 	}
 
 	/** @todo	get_magic_quotes_gpc is removed in PHP 5.4 */
@@ -104,12 +104,12 @@ class TextSanitizer
 	 */
 	public function htmlSpecialChars($text)
 	{
-		return preg_replace("/&amp;/i", '&', htmlspecialchars($text, ENT_QUOTES));
+		return preg_replace('/&amp;/i', '&', htmlspecialchars($text, ENT_QUOTES));
 	}
 
 	public function undoHtmlSpecialChars(&$text)
 	{
-		return preg_replace(["/&gt;/i", "/&lt;/i", "/&quot;/i", "/&#039;/i"], [">", "<", "\"", "'"], $text);
+		return preg_replace(['/&gt;/i', '/&lt;/i', '/&quot;/i', '/&#039;/i'], ['>', '<', '"', "'"], $text);
 	}
 
 	/*

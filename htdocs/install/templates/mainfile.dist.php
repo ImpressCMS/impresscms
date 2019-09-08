@@ -15,8 +15,8 @@
 * @version		$Id: mainfile.dist.php 11358 2011-09-02 19:55:40Z phoenyx $
 */
 
-if (!defined("XOOPS_MAINFILE_INCLUDED")) {
-	define("XOOPS_MAINFILE_INCLUDED",1);
+if (!defined('XOOPS_MAINFILE_INCLUDED')) {
+	define('XOOPS_MAINFILE_INCLUDED', 1);
 
 	// XOOPS Physical Path
 	// Physical path to your main XOOPS directory WITHOUT trailing slash
@@ -42,7 +42,7 @@ if (!defined("XOOPS_MAINFILE_INCLUDED")) {
 		if (function_exists('debug_backtrace')) {
 			$xoopsScriptPath = debug_backtrace();
 			if (!count($xoopsScriptPath)) {
-			 	die("ImpressCMS path check: this file cannot be requested directly");
+			 	die('ImpressCMS path check: this file cannot be requested directly');
 			}
 			$xoopsScriptPath = $xoopsScriptPath[0]['file'];
 		} else {
@@ -53,7 +53,7 @@ if (!defined("XOOPS_MAINFILE_INCLUDED")) {
 			$xoopsScriptPath = str_replace( strpos( $xoopsScriptPath, '\\\\', 2 ) ? '\\\\' : DIRECTORY_SEPARATOR, '/', $xoopsScriptPath);
 		}
 		if (strcasecmp( substr($xoopsScriptPath, 0, strlen(XOOPS_ROOT_PATH)), str_replace( DIRECTORY_SEPARATOR, '/', XOOPS_ROOT_PATH))) {
-		 	exit("ImpressCMS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.");
+		 	exit('ImpressCMS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.');
 		}
 	}
 
@@ -98,9 +98,9 @@ if (!defined("XOOPS_MAINFILE_INCLUDED")) {
 	// Example: define('ICMS_LOGGING_HOOK', XOOPS_ROOT_PATH . '/modules/foobar/logging_hook.php');
 	define('ICMS_LOGGING_HOOK', '');
 
-	define("XOOPS_GROUP_ADMIN", "1");
-	define("XOOPS_GROUP_USERS", "2");
-	define("XOOPS_GROUP_ANONYMOUS", "3");
+	define('XOOPS_GROUP_ADMIN', '1');
+	define('XOOPS_GROUP_USERS', '2');
+	define('XOOPS_GROUP_ANONYMOUS', '3');
 
     foreach (['GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'icmsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri']
              as $bad_global) {
@@ -117,6 +117,6 @@ if (!defined("XOOPS_MAINFILE_INCLUDED")) {
 	define( 'ICMS_TRUST_PATH', XOOPS_TRUST_PATH );
 	define( 'ICMS_ROOT_PATH', XOOPS_ROOT_PATH );
 	if (!isset($xoopsOption['nocommon']) && XOOPS_ROOT_PATH != '') {
-		include XOOPS_ROOT_PATH."/include/common.php";
+		include XOOPS_ROOT_PATH . '/include/common.php';
 	}
 }

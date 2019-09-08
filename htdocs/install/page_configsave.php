@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$error = true;
 	} else {
 		clearstatcache();
-		if (! $file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "r" )) {
+		if (! $file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, 'r')) {
 			$error = ERR_READ_SDATA;
 		} else {
 			$content = fread( $file, filesize( $vars['TRUST_PATH'] . '/' . $sdata_file_name ) );
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					//$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
 				}
 			}
-			if (!$file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "w" )) {
+			if (!$file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, 'w')) {
 				$error = ERR_WRITE_SDATA;
 			} else {
 				if (fwrite( $file, $content ) == -1) {
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 		$rewrite = ['GROUP_ADMIN' => 1, 'GROUP_USERS' => 2, 'GROUP_ANONYMOUS' => 3];
 		$rewrite = array_merge( $rewrite, $vars );
-		if (! $file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', "r" )) {
+		if (! $file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', 'r')) {
 			$error = ERR_READ_MAINFILE;
 		} else {
 			$content = fread( $file, filesize( $vars['ROOT_PATH'] . '/mainfile.php' ) );
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					//$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
 				}
 			}
-			if (!$file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', "w" )) {
+			if (!$file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', 'w')) {
 				$error = ERR_WRITE_MAINFILE;
 			} else {
 				if (fwrite( $file, $content ) == -1) {

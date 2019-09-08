@@ -42,7 +42,7 @@ class PathStuffController {
 		if (isset( $_SESSION['settings']['ROOT_PATH'] )) {
 			$this->xoopsRootPath = $_SESSION['settings']['ROOT_PATH'];
 		} else {
-			$path = str_replace( "\\", "/", @realpath( '../' ) );
+			$path = str_replace("\\", '/', @realpath('../' ) );
 			if (file_exists( "$path/mainfile.php" )) {
 				$this->xoopsRootPath = $path;
 			}
@@ -96,14 +96,14 @@ class PathStuffController {
 				),
 				) );*/
 			if (isset($request['ROOT_PATH'])) {
-				$request['ROOT_PATH'] = str_replace( "\\", "/", $request['ROOT_PATH'] );
+				$request['ROOT_PATH'] = str_replace("\\", '/', $request['ROOT_PATH'] );
 				if (substr( $request['ROOT_PATH'], -1 ) == '/') {
 					$request['ROOT_PATH'] = substr( $request['ROOT_PATH'], 0, -1 );
 				}
 				$this->xoopsRootPath = $request['ROOT_PATH'];
 			}
 			if (isset($request['TRUST_PATH'])) {
-				$request['TRUST_PATH'] = str_replace( "\\", "/", $request['TRUST_PATH'] );
+				$request['TRUST_PATH'] = str_replace("\\", '/', $request['TRUST_PATH'] );
 				if (substr( $request['TRUST_PATH'], -1 ) == '/') {
 					$request['TRUST_PATH'] = substr( $request['TRUST_PATH'], 0, -1 );
 				}
@@ -253,18 +253,18 @@ function resolveDocumentRoot() {
 	/* work out how many folders we are away from document_root
 	 by working out how many folders deep we are from the url.
 	 this isn't fool proof */
-	$adjust = explode("/", $current_script);
+	$adjust = explode('/', $current_script);
 	$adjust = count($adjust);
 
 	/* move up the path with ../ */
-	$traverse = str_repeat("../", $adjust);
-	$adjusted_path = sprintf("%s/%s", $current_path, $traverse);
+	$traverse = str_repeat('../', $adjust);
+	$adjusted_path = sprintf('%s/%s', $current_path, $traverse);
 
 	/* real path expands the ../'s to the correct folder names */
 	$rootp = @realpath($adjusted_path);
 
 	// a fix for Windows slashes
-	$rootp = str_replace("\\","/",$rootp);
+	$rootp = str_replace("\\", '/', $rootp);
 	$lastchar = substr($rootp,strlen($rootp)-1,1);
 
 	if ($lastchar != '/' && $lastchar != '\\') {

@@ -79,7 +79,7 @@ echo '<body>';
 <div id="wrapper">
 <div id="header">
 <div id="logo"><img src="img/logo.png" alt="ImpressCMS" /></div>
-<div id="info"><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION)."<br />".INSTALL_STEP; ?>&nbsp;<?php echo ($wizard->currentPage+1) . INSTALL_OUTOF . count($wizard->pages); ?></div>
+<div id="info"><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION) . '<br />' . INSTALL_STEP; ?>&nbsp;<?php echo ($wizard->currentPage + 1) . INSTALL_OUTOF . count($wizard->pages); ?></div>
 </div>
 
 <div id="page_top">&nbsp;</div>

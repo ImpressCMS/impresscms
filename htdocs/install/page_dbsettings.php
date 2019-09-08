@@ -30,7 +30,7 @@ $vars = & $_SESSION ['settings'];
 
 switch ($vars['DB_TYPE']) {
 	case 'mysql':
-		$func_connect = empty($vars['DB_PCONNECT'])?"mysql_connect":"mysql_pconnect";
+		$func_connect = empty($vars['DB_PCONNECT'])? 'mysql_connect' : 'mysql_pconnect';
 		if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
 			$error = ERR_NO_DBCONNECTION;
 		}
@@ -93,18 +93,18 @@ function getDbCharsets($link) {
 		return $charsets;
 	}
 
-	$charsets ["utf8"] = "UTF-8 Unicode";
-	$ut8_available = false;
-	if ($result = exec_query("SHOW CHARSET", $link)) {
+    $charsets ['utf8'] = 'UTF-8 Unicode';
+	$ut8_available     = false;
+	if ($result = exec_query('SHOW CHARSET', $link)) {
 		while ($row = fetch_assoc($result)) {
-			$charsets [$row ["Charset"]] = $row ["Description"];
-			if ($row ["Charset"] == "utf8") {
+			$charsets [$row ['Charset']] = $row ['Description'];
+			if ($row ['Charset'] == 'utf8') {
 				$ut8_available = true;
 			}
 		}
 	}
 	if (!$ut8_available) {
-		unset ($charsets ["utf8"]);
+		unset ($charsets ['utf8']);
 	}
 
 	return $charsets;
@@ -119,9 +119,9 @@ function getDbCharsets($link) {
 function getDbCollations($link, $charset) {
 	static $collations = [];
 
-	if ($result = exec_query("SHOW COLLATION WHERE Charset=" . quote_sql($charset), $link)) {
+	if ($result = exec_query('SHOW COLLATION WHERE Charset=' . quote_sql($charset), $link)) {
 		while ($row = fetch_assoc($result)) {
-			$collations [$charset] [$row ["Collation"]] = $row ["Default"]?1:0;
+			$collations [$charset] [$row ['Collation']] = $row ['Default']?1:0;
 		}
 	}
 
@@ -132,10 +132,10 @@ function validateDbCharset($link, &$charset, &$collation) {
 	$error = null;
 
 	if (empty ($charset)) {
-		$collation = "";
+		$collation = '';
 	}
-	if (version_compare(getDBVersion($link), "4.1.0", "lt")) {
-		$charset = $collation = "";
+	if (version_compare(getDBVersion($link), '4.1.0', 'lt')) {
+		$charset = $collation = '';
 	}
 	if (empty ($charset) && empty ($collation)) {
 		return $error;
@@ -162,11 +162,11 @@ function getDBVersion($link) {
 }
 
 function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset) {
-	if (version_compare(getDBVersion($link), "4.1.0", "lt")) {
-		return "";
+	if (version_compare(getDBVersion($link), '4.1.0', 'lt')) {
+		return '';
 	}
 	if (empty ($charset) || !$collations = getDbCollations($link, $charset)) {
-		return "";
+		return '';
 	}
 
 	$label = htmlspecialchars($label);
@@ -179,20 +179,20 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset
 	}
 	$field .= "<select name='$name' id='$name'\">";
 
-	$collation_default = "";
-	$options = "";
+	$collation_default = '';
+	$options = '';
 	foreach ($collations as $key => $isDefault) {
 		if ($isDefault) {
 			$collation_default = $key;
 			continue;
 		}
-		$options .= "<option value='{$key}'" . (($value == $key)?" selected='selected'":"") . ">{$key}</option>";
+		$options .= "<option value='{$key}'" . (($value == $key)?" selected='selected'": '') . ">{$key}</option>";
 	}
 	if ($collation_default) {
-		$field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty ($value))?" 'selected'":"") . ">{$collation_default} (Default)</option>";
+		$field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty ($value))?" 'selected'": '') . ">{$collation_default} (Default)</option>";
 	}
 	$field .= $options;
-	$field .= "</select>";
+	$field .= '</select>';
 
 	return $field;
 }
@@ -208,7 +208,7 @@ function xoFormBlockCollation($name, $value, $label, $help = '', $link, $charset
 function select_db($db_name, $link) {
 	if ($link instanceof PDO) {
 		try {
-			$link->exec("use `" . $db_name . '`;');
+			$link->exec('use `' . $db_name . '`;');
 			return true;
 		} catch (PDOException $ex) {
 			return false;
@@ -225,7 +225,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'GET' && isset ($_GET ['charset']) && @$_GET 
 if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 	$params = ['DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT'];
 	foreach ($params as $name) {
-		$vars [$name] = isset ($_POST [$name])?$_POST [$name]:"";
+		$vars [$name] = isset ($_POST [$name])?$_POST [$name]: '';
 	}
 }
 
@@ -236,7 +236,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 	if (empty ($error)) {
 		if (!select_db($vars ['DB_NAME'], $link)) {
 			// Database not here: try to create it
-			$result = exec_query("CREATE DATABASE `" . $vars ['DB_NAME'] . '`', $link);
+			$result = exec_query('CREATE DATABASE `' . $vars ['DB_NAME'] . '`', $link);
 			if (!$result) {
 				$error = ERR_NO_DATABASE;
 			} else {
@@ -248,31 +248,31 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 		}
 		if ($db_exist && $vars['DB_CHARSET']) {
 			/* Attempt to set the character set and collation to the selected */
-			$sql = "ALTER DATABASE `" . $vars ['DB_NAME'] . "` DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET']) . ($vars ['DB_COLLATION']?" COLLATE " . quote_sql($vars ['DB_COLLATION']):"");
+			$sql = 'ALTER DATABASE `' . $vars ['DB_NAME'] . '` DEFAULT CHARACTER SET ' . quote_sql($vars ['DB_CHARSET']) . ($vars ['DB_COLLATION']? ' COLLATE ' . quote_sql($vars ['DB_COLLATION']): '');
 			if (!exec_query($sql, $link)) {
 				/* if the alter statement fails, set the constants to match existing */
-				$sql = "USE " . quote_sql($vars["DB_NAME"]);
+				$sql = 'USE ' . quote_sql($vars['DB_NAME']);
 				$result = exec_query($sql, $link);
 
 				/* get the character set variables for the current database */
 				$sql = "SHOW VARIABLES like 'character%'";
 				$result = exec_query($sql, $link);
 				while ($row = fetch_assoc($result)) {
-					$character_sets[$row["Variable_name"]] = $row["Value"];
+					$character_sets[$row['Variable_name']] = $row['Value'];
 				}
-				$vars["DB_CHARSET"] = $character_sets["character_set_database"]
-					?$character_sets["character_set_database"]
-					: $character_sets["character_set_server"];
+                $vars['DB_CHARSET'] = $character_sets['character_set_database']
+					? $character_sets['character_set_database']
+					: $character_sets['character_set_server'];
 
 				/* get the collation for the current database */
 				$sql = "SHOW VARIABLES LIKE 'collation%'";
 				$result = exec_query($sql, $link);
 				while ($row = fetch_assoc($result)) {
-					$collations[$row["Variable_name"]] = $row["Value"];
+					$collations[$row['Variable_name']] = $row['Value'];
 				}
-				$vars["DB_COLLATION"] = $collations["collation_database"]
-					?$collations["collation_database"]
-					: $collations["collation_server"];
+                $vars['DB_COLLATION'] = $collations['collation_database']
+					? $collations['collation_database']
+					: $collations['collation_server'];
 			}
 		}
 	}
@@ -303,17 +303,17 @@ function xoFormField($name, $value, $label, $maxlength, $help = '') {
 }
 
 function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
-	if (version_compare(getDBVersion($link), "4.1.0", "lt")) {
-		return "";
+	if (version_compare(getDBVersion($link), '4.1.0', 'lt')) {
+		return '';
 	}
 	if (!$chars = getDbCharsets($link)) {
-		return "";
+		return '';
 	}
 
 	$charsets = [];
-	if (isset ($chars ["utf8"])) {
-		$charsets ["utf8"] = $chars ["utf8"];
-		unset ($chars ["utf8"]);
+	if (isset ($chars ['utf8'])) {
+        $charsets ['utf8'] = $chars ['utf8'];
+		unset ($chars ['utf8']);
 	}
 	ksort($chars);
 	$charsets = array_merge($charsets, $chars);
@@ -329,9 +329,9 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 	$field .= "<select name='$name' id='$name' onchange=\"setFormFieldCollation('DB_COLLATION_div', this.value)\">";
 	$field .= "<option value=''>None</option>";
 	foreach ($charsets as $key => $desc) {
-		$field .= "<option value='{$key}'" . (($value == $key)?" selected='selected'":"") . ">{$key} - {$desc}</option>";
+		$field .= "<option value='{$key}'" . (($value == $key)?" selected='selected'": '') . ">{$key} - {$desc}</option>";
 	}
-	$field .= "</select></div>";
+	$field .= '</select></div>';
 
 	return $field;
 }

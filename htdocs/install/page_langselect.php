@@ -27,7 +27,7 @@ $wizard->setPage( 'langselect' );
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$lang = htmlentities($_REQUEST['lang']);
 
-	$languages = icms_core_Filesystem::getDirList( "./language/" );
+	$languages = icms_core_Filesystem::getDirList('./language/');
 	if (!in_array($lang, $languages)) {
 		$lang = 'english';
 	}
@@ -40,10 +40,10 @@ $_SESSION = [];
 $pageHasForm = true;
 $pageHasHelp = true;
 $title = LANGUAGE_SELECTION;
-$content = "";
+$content = '';
 
 
-$languages = icms_core_Filesystem::getDirList( "./language/" );
+$languages = icms_core_Filesystem::getDirList('./language/');
 foreach ( $languages as $lang) {
 	$sel = ( $lang == $wizard->language ) ? ' checked="checked"' : '';
 	$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../images/flags/$lang.gif\" alt=\"$lang\" /><br />$lang<br /> <input type=\"radio\" name=\"lang\" value=\"$lang\"$sel /></a></div>";

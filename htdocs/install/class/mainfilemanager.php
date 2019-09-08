@@ -63,17 +63,17 @@ class mainfile_manager {
 
 	public function copyDistFile() {
 		if (! copy($this->distfile, $this->path)) {
-			$this->report .= _NGIMG.sprintf(_INSTALL_L126, "<b>".$this->path."</b>")."<br />\n";
+			$this->report .= _NGIMG.sprintf(_INSTALL_L126, '<b>' . $this->path . '</b>') . "<br />\n";
 			$this->error = true;
 			return false;
 		}
-		$this->report .= _OKIMG.sprintf(_INSTALL_L125, "<b>".$this->path."</b>", "<b>".$this->distfile."</b>")."<br />\n";
+		$this->report .= _OKIMG.sprintf(_INSTALL_L125, '<b>' . $this->path . '</b>', '<b>' . $this->distfile . '</b>') . "<br />\n";
 		return true;
 	}
 
 	public function doRewrite() {
 		clearstatcache();
-		if (! $file = fopen($this->path,"r")) {
+		if (! $file = fopen($this->path, 'r')) {
 			$this->error = true;
 			return false;
 		}
@@ -89,7 +89,7 @@ class mainfile_manager {
 					continue;
 				}
 				$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/"
-				, "define('".$key."', ".$val.")"
+				, "define('".$key."', ".$val . ')'
 				, $content);
 				$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
 			}
@@ -109,7 +109,7 @@ class mainfile_manager {
 			}
 		}
 
-		if (!$file = fopen($this->path,"w")) {
+		if (!$file = fopen($this->path, 'w')) {
 			$this->error = true;
 			return false;
 		}

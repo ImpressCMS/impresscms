@@ -48,7 +48,7 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
 	switch ($vars['DB_TYPE']) {
 		case 'mysql':
-			$func_connect = empty($vars['DB_PCONNECT'])?"mysql_connect":"mysql_pconnect";
+			$func_connect = empty($vars['DB_PCONNECT'])? 'mysql_connect' : 'mysql_pconnect';
 			if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
 				$error = ERR_NO_DBCONNECTION;
 			}
@@ -81,7 +81,7 @@ if (function_exists('mysql_connect') || function_exists('mysql_pconnect')) {
 }
 // Fill with default values
 // check for PDO MySQL and select it, if it is available
-if (class_exists("PDO", false)) {
+if (class_exists('PDO', false)) {
 	$db_connection = ['type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected'];
 	if (isset($connections['mysql'])) {
 		$connections['mysql']['selected'] = '';
@@ -125,9 +125,9 @@ ob_start();
 				<select size="2" name="DB_TYPE" class="db_select">
 					<?php
 					foreach ($connections as $option) {
-						$selected = "";
+						$selected = '';
 						if (!empty($option['selected'])) $selected = " selected='selected'";
-						echo "<option value='" . $option['type'] . "'" . $selected . ">" . $option['name'] . "</option>";
+						echo "<option value='" . $option['type'] . "'" . $selected . '>' . $option['name'] . '</option>';
 					}
 					?>
 				</select> </label>
@@ -144,7 +144,7 @@ ob_start();
 	<label> <?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?> <input
 			class="checkbox" type="checkbox" name="DB_PCONNECT" value="1"
 			onclick="alert('<?php echo htmlspecialchars( DB_PCONNECT_HELPS ); ?>');"
-			<?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?> />
+			<?php echo $vars['DB_PCONNECT'] ? "'checked'" : ''; ?> />
 		<div class="xoform-help"><?php echo htmlspecialchars( DB_PCONNECT_HELP ); ?></div>
 	</label>
 <?php

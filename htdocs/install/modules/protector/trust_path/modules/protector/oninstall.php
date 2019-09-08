@@ -28,7 +28,7 @@ if (! function_exists('protector_oninstall_base')) {
         $sql_file_path = __DIR__ . '/sql/mysql.sql' ;
         $prefix_mod = $db->prefix() . '_' . $mydirname ;
         if (file_exists($sql_file_path)) {
-            $ret[] = "SQL file found at <b>".htmlspecialchars($sql_file_path)."</b>.<br /> Creating tables...";
+            $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br /> Creating tables...';
 
             $sqlutil = new icms_db_legacy_mysql_Utility();
             $sql_query = trim(file_get_contents($sql_file_path)) ;
@@ -37,7 +37,7 @@ if (! function_exists('protector_oninstall_base')) {
             foreach ($pieces as $piece) {
                 $prefixed_query = $sqlutil::prefixQuery($piece, $prefix_mod) ;
                 if (! $prefixed_query) {
-                    $ret[] = "Invalid SQL <b>".htmlspecialchars($piece)."</b><br />";
+                    $ret[] = 'Invalid SQL <b>' . htmlspecialchars($piece) . '</b><br />';
                     return false ;
                 }
                 if (! $db->query($prefixed_query[0])) {
@@ -107,7 +107,7 @@ if (! function_exists('protector_oninstall_base')) {
         ) {
                 $ret[] = 'Successfully moved protector preload<br />';
             } else {
-                $ret[] = icms_core_Message::error("Failed to move protector preload - your site is not protected.", "", false);
+                $ret[] = icms_core_Message::error('Failed to move protector preload - your site is not protected.', '', false);
             }
         }
 

@@ -50,7 +50,7 @@ function xoDiagBoolSetting( $name, $wanted = false, $severe = false) {
 }
 
 function xoDiagIfWritable( $path) {
-	$path = "../" . $path;
+	$path = '../' . $path;
 	$error = true;
 	if (!is_dir( $path )) {
 		if (file_exists( $path )) {
@@ -78,19 +78,19 @@ function imCheckRequirements()
 	}
 	$requirement['php_version']['result']=phpversion();
 
-	$requirement['mysql']['description']="MySQL Handler";
-	$requirement['mysql']['result']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? SUCCESS : FAILED;
-	$requirement['mysql']['status']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? true : false;
+	$requirement['mysql']['description']= 'MySQL Handler';
+	$requirement['mysql']['result']=in_array('mysql', PDO::getAvailableDrivers(), TRUE) ? SUCCESS : FAILED;
+	$requirement['mysql']['status']=in_array('mysql', PDO::getAvailableDrivers(), TRUE) ? true : false;
 
-	$requirement['session']['description']="Session Extension";
+	$requirement['session']['description']= 'Session Extension';
 	$requirement['session']['result']=extension_loaded( 'session' ) ? SUCCESS : FAILED;
 	$requirement['session']['status']=extension_loaded( 'session' ) ? true : false;
 
-	$requirement['pcre']['description']="PCRE Extension";
+	$requirement['pcre']['description']= 'PCRE Extension';
 	$requirement['pcre']['result']=extension_loaded( 'PCRE' ) ? SUCCESS : FAILED;
 	$requirement['pcre']['status']=extension_loaded( 'PCRE' ) ? true : false;
 
-	$requirement['file_upload']['description']="File uploads";
+	$requirement['file_upload']['description']= 'File uploads';
 	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? _YES : _NO;
 	$requirement['file_upload']['status']=xoDiagBoolSetting( 'file_uploads', true ) ? true : false;
 
@@ -106,7 +106,7 @@ $requirements_array = imCheckRequirements();
 	 {
 	 ?>
 <h4><?php echo $requirement['description']; ?>:&nbsp; <?php echo xoDiag($requirement['status'], $requirement['result']); ?> <img
-	src="img/<?php echo $requirement['status'] ? "yes" : "no"; ?>.png" alt="<?php echo $requirement['status'] ? SUCCESS : FAILED; ?>" class="rootimg" /></h4>
+            src="img/<?php echo $requirement['status'] ? 'yes' : 'no'; ?>.png" alt="<?php echo $requirement['status'] ? SUCCESS : FAILED; ?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 		 <?php } ?>
 </fieldset>
@@ -158,7 +158,7 @@ if (empty($ext)) {
     	<tr><th>Path</th><th>Status</th></tr>
     </thead>
 	<?php
-		$paths = ["uploads/", "cache/", "templates_c/", "mainfile.php"];
+		$paths = ['uploads/', 'cache/', 'templates_c/', 'mainfile.php'];
 		foreach ( $paths as $path) {
 	?>
 	<tr>

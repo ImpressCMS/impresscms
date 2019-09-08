@@ -132,8 +132,8 @@ class XoopsInstallWizard {
 
 		$this->setPage(0);
 		// Prevent client caching
-		header( "Cache-Control: no-store, no-cache, must-revalidate", false );
-		header( "Pragma: no-cache" );
+		header('Cache-Control: no-store, no-cache, must-revalidate', false );
+		header('Pragma: no-cache');
 		return true;
 	}
 

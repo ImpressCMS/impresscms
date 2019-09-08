@@ -1,18 +1,18 @@
 <?php
 //cpascalweb
-define("_INSTALL_WEBMASTER","Webmasters");
-define("_INSTALL_WEBMASTERD","Webmasters de ce site");
-define("_INSTALL_REGUSERS","Utilisateurs enregistr&eacute;s");
-define("_INSTALL_REGUSERSD","Groupe des utilisateurs enregistr&eacute;s");
-define("_INSTALL_ANONUSERS","Utilisateurs anonymes");
-define("_INSTALL_ANONUSERSD","Groupe des utilisateurs anonymes");
+define('_INSTALL_WEBMASTER', 'Webmasters');
+define('_INSTALL_WEBMASTERD', 'Webmasters de ce site');
+define('_INSTALL_REGUSERS', 'Utilisateurs enregistr&eacute;s');
+define('_INSTALL_REGUSERSD', 'Groupe des utilisateurs enregistr&eacute;s');
+define('_INSTALL_ANONUSERS', 'Utilisateurs anonymes');
+define('_INSTALL_ANONUSERSD', 'Groupe des utilisateurs anonymes');
 
-define("_INSTALL_L165","Le site est actuellement ferm&eacute; pour maintenance. Merci de revenir plus tard.");
+define('_INSTALL_L165', 'Le site est actuellement ferm&eacute; pour maintenance. Merci de revenir plus tard.');
 
 
-define("_INSTALL_ANON","Anonyme");
+define('_INSTALL_ANON', 'Anonyme');
 
-define("_INSTALL_DISCLMR", "Bien que les administrateurs et mod&eacute;rateurs de ce site s'efforceront de supprimer ou modifier tout sujet, articles et autres &agrave; caract&egrave;re r&eacute;pr&eacute;hensible aussi rapidement que possible, il est impossible de passer en revue tous les messages. Vous admettez donc que tous les posts effectu&eacute;s sur ce site expriment les point de vues et les opinions de leurs auteurs et non pas des administrateurs, ou mod&eacute;rateurs, ou webmasters (except&eacute; les messages post&eacute;s par eux-m&ecirc;me) et, par cons&eacute;quent, ils ne seront pas tenu responsable.
+define('_INSTALL_DISCLMR', "Bien que les administrateurs et mod&eacute;rateurs de ce site s'efforceront de supprimer ou modifier tout sujet, articles et autres &agrave; caract&egrave;re r&eacute;pr&eacute;hensible aussi rapidement que possible, il est impossible de passer en revue tous les messages. Vous admettez donc que tous les posts effectu&eacute;s sur ce site expriment les point de vues et les opinions de leurs auteurs et non pas des administrateurs, ou mod&eacute;rateurs, ou webmasters (except&eacute; les messages post&eacute;s par eux-m&ecirc;me) et, par cons&eacute;quent, ils ne seront pas tenu responsable.
 
 Vous acceptez de ne poster aucun post abusif, obsc&egrave;ne, vulgaire, diffamatoire, haineux, mena&ccedil;ant, sexuel r&eacute;pr&eacute;hensible ou tout autre sujet qui violerait les lois applicables en france. Attention, en cas de non respect de ces r&egrave;gles vous serez imm&eacute;diatement interdit de connexion a ce site (et votre fournisseur de service pourra &ecirc;tre inform&eacute;). L'adresse IP de chaque message est enregistr&eacute;e afin d'aider &agrave; faire respecter ces conditions. En outre, la cr&eacute;ation de multiples comptes pour un seul utilisateur n'est pas autoris&eacute;. Vous acceptez le fait que le webmaster, l'administrateur et les mod&eacute;rateurs de ce site ont le droit absolu de supprimer, modifier, d&eacute;placer ou fermer n'importe quel compte ou sujet de discussion et autres posts &agrave; tout moment si elles le jugent r&eacute;pr&eacute;hensible. En tant qu'utilisateur, vous vous engagez &agrave; l'exactitude de toute information que vous aurez entr&eacute; ci-apr&egrave;s. Bien que ces informations ne seront pas divulgu&eacute;es &agrave; de tierce personne sans votre consentement, le webmaster, l'administrateur et les mod&eacute;rateurs ne peuvent pas &ecirc;tre tenue pour responsable de toute tentative de piratage informatique malgr&eacute; toutes les dispositions prises.
 
@@ -20,7 +20,7 @@ Ce site utilisent des cookies pour stocker des informations sur votre ordinateur
 
 En cliquant ci-dessous lors de votre inscription &agrave; ce site vous acceptez ces conditions sinon refuser de vous inscrire.");
 
-define("_INSTALL_PRIVPOLICY", "<p>Cette politique de confidentialit&eacute; fixe les modalit&eacute;s de ce site l'utilisation et la protection de toute information que vous donnez sur ce site Lorsque vous utilisez ce site Web. Ont s'engagent &agrave; veiller &agrave; ce que votre vie priv&eacute;e soit prot&eacute;g&eacute;e. Si nous vous demandons de nous fournir certaines informations permettant de vous identifier lorsque vous utilisez ce site, vous pouvez &ecirc;tre assur&eacute; que ces informations seront utilis&eacute; conform&eacute;ment &agrave; la pr&eacute;sente d&eacute;claration de confidentialit&eacute;. Nous pouvons changer cette politique de temps en temps en la mettant &agrave; jour. Vous devez v&eacute;rifier cette page de temps &agrave; autre pour veiller que vous acceptez toujours ces conditions malgr&eacute; ces changements.
+define('_INSTALL_PRIVPOLICY', "<p>Cette politique de confidentialit&eacute; fixe les modalit&eacute;s de ce site l'utilisation et la protection de toute information que vous donnez sur ce site Lorsque vous utilisez ce site Web. Ont s'engagent &agrave; veiller &agrave; ce que votre vie priv&eacute;e soit prot&eacute;g&eacute;e. Si nous vous demandons de nous fournir certaines informations permettant de vous identifier lorsque vous utilisez ce site, vous pouvez &ecirc;tre assur&eacute; que ces informations seront utilis&eacute; conform&eacute;ment &agrave; la pr&eacute;sente d&eacute;claration de confidentialit&eacute;. Nous pouvons changer cette politique de temps en temps en la mettant &agrave; jour. Vous devez v&eacute;rifier cette page de temps &agrave; autre pour veiller que vous acceptez toujours ces conditions malgr&eacute; ces changements.
 </p><p>
 Cette politique est effective &agrave; partir du [date].
 </p>
@@ -70,7 +70,7 @@ Attention ! Jamais nous vendrons, ne distribuerons ou louerons vos informations 
 </p><p>
 Si vous pensez que toutes les informations sur vous sont incorrecte ou incompl&egrave;te, Merci d'&eacute;crire ou de nous envoyer un Email d&egrave;s que possible. Nous corrigerons rapidement toutes les informations r&eacute;v&eacute;l&eacute;e inexacte.
 </p>");
-define("_WELCOME_MSG_CONTENT", "Bienvenue {UNAME},
+define('_WELCOME_MSG_CONTENT', "Bienvenue {UNAME},
 
 Votre compte a &eacute;t&eacute; activ&eacute; avec succ&egrave;s sur {X_SITENAME}. En tant que membre de notre site, vous b&eacute;n&eacute;ficierez de toutes les fonctionnalit&eacute;s r&eacute;serv&eacute;es aux membres inscrits !
 
