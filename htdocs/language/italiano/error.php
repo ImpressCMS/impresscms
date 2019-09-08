@@ -14,7 +14,7 @@ define('_ERR_401_TITLE', 'Proibito');
 define('_ERR_401_DESC', '');
 define('_ERR_402_TITLE', '&Egrave; richiesto il pagamento');
 define('_ERR_402_DESC', '');
-define('_ERR_403_TITLE', 'Proibito'):
+define('_ERR_403_TITLE', 'Proibito');
 define('_ERR_403_DESC', '');
 define('_ERR_404_TITLE', 'Pagina non trovata');
 define('_ERR_404_DESC', 'La pagina che stai provando a accedere non pu&ograve; essere trovata.');
