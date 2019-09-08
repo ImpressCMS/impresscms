@@ -46,21 +46,21 @@
  **/
 class db_manager {
 
-	var $s_tables = [];
-	var $f_tables = [];
-	var $db;
+	public $s_tables = [];
+	public $f_tables = [];
+	public $db;
 
-	function __construct() {
+	public function __construct() {
 		$this->db = icms_db_legacy_Factory::getDatabase();
 		$this->db->setPrefix(XOOPS_DB_PREFIX);
 		$this->db->setLogger(icms_core_Logger::instance());
 	}
 
-	function isConnectable() {
+	public function isConnectable() {
 		return ($this->db->connect(false) != false) ? true : false;
 	}
 
-	function queryFromFile($sql_file_path) {
+	public function queryFromFile($sql_file_path) {
 		$tables = [];
 
 		if (!file_exists($sql_file_path)) {
@@ -127,13 +127,13 @@ class db_manager {
 		return true;
 	}
 
-	var $successStrings = [
+	public $successStrings = [
     	'create'	=> TABLE_CREATED,
     	'insert'	=> ROWS_INSERTED,
     	'alter'		=> TABLE_ALTERED,
     	'drop'		=> TABLE_DROPPED,
     ];
-	var $failureStrings = [
+	public $failureStrings = [
     	'create'	=> TABLE_NOT_CREATED,
     	'insert'	=> ROWS_FAILED,
     	'alter'		=> TABLE_NOT_ALTERED,
@@ -141,7 +141,7 @@ class db_manager {
     ];
 
 
-	function report() {
+	public function report() {
 		$commands = ['create', 'insert', 'alter', 'drop'];
 		$content = '<ul class="log">';
 		foreach ( $commands as $cmd) {
@@ -166,22 +166,22 @@ class db_manager {
 		return $content;
 	}
 
-	function query($sql) {
+	public function query($sql) {
 		$this->db->connect();
 		return $this->db->query($sql);
 	}
 
-	function prefix($table) {
+	public function prefix($table) {
 		$this->db->connect();
 		return $this->db->prefix($table);
 	}
 
-	function fetchArray($ret) {
+	public function fetchArray($ret) {
 		$this->db->connect();
 		return $this->db->fetchArray($ret);
 	}
 
-	function insert($table, $query) {
+	public function insert($table, $query) {
 		$this->db->connect();
 		$table = $this->db->prefix($table);
 		$query = 'INSERT INTO '.$table.' '.$query;
@@ -204,11 +204,11 @@ class db_manager {
 		}
 	}
 
-	function isError() {
+	public function isError() {
 		return (isset($this->f_tables)) ? true : false;
 	}
 
-	function tableExists($table) {
+	public function tableExists($table) {
 		$table = trim($table);
 		$ret = false;
 		if ($table != '') {

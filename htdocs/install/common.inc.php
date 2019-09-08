@@ -42,16 +42,16 @@ error_reporting( E_ALL );
 
 class XoopsInstallWizard {
 
-	var $pages = [];
-	var $titles = [];
-	var $currentPage = 0;
-	var $lastpage;
-	var $secondlastpage;
-	var $language = 'english';
-	var $no_php5 = false;
-	var $safe_mode = false;
+	public $pages       = [];
+	public $titles      = [];
+	public $currentPage = 0;
+	public $lastpage;
+	public $secondlastpage;
+	public $language    = 'english';
+	public $no_php5     = false;
+	public $safe_mode   = false;
 
-	function xoInit() {
+	public function xoInit() {
 		if (!$this->checkAccess()) {
 			return false;
 		}
@@ -137,7 +137,7 @@ class XoopsInstallWizard {
 		return true;
 	}
 
-	function checkAccess() {
+	public function checkAccess() {
 		if (INSTALL_USER != '' && INSTALL_PASSWORD != '') {
 			if (!isset($_SERVER['PHP_AUTH_USER'])) {
 				header('WWW-Authenticate: Basic realm="ImpressCMS Installer"');
@@ -159,7 +159,7 @@ class XoopsInstallWizard {
 		return true;
 	}
 
-	function loadLangFile( $file) {
+	public function loadLangFile( $file) {
 		if (file_exists( "./language/$this->language/$file.php" )) {
 			include_once "./language/$this->language/$file.php";
 		} else {
@@ -167,7 +167,7 @@ class XoopsInstallWizard {
 		}
 	}
 
-	function initLanguage( $language) {
+	public function initLanguage( $language) {
 		//echo $language;
 		if (!file_exists( "./language/$language/install.php" )) {
 			$language = 'english';
@@ -176,7 +176,7 @@ class XoopsInstallWizard {
 		$this->loadLangFile( 'install' );
 	}
 
-	function setPage( $page) {
+	public function setPage( $page) {
 		/**
 		 * If server is PHP 4, display the php4 page and stop the install
 		 */
@@ -204,7 +204,7 @@ class XoopsInstallWizard {
 		return $this->currentPage;
 	}
 
-	function baseLocation() {
+	public function baseLocation() {
 		$proto	= ( @$_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
 		$host	= htmlentities($_SERVER['HTTP_HOST']);
 		$server_php_self = htmlentities($_SERVER['PHP_SELF']);
@@ -212,7 +212,7 @@ class XoopsInstallWizard {
 		return "$proto://$host$base";
 	}
 
-	function pageURI( $page) {
+	public function pageURI( $page) {
 		if (!(int)$page{0}) {
 			if ($page{0} == '+') {
 				$page = $this->currentPage + substr( $page, 1 );
@@ -226,7 +226,7 @@ class XoopsInstallWizard {
 		return $this->baseLocation() . "/page_$page.php";
 	}
 
-	function redirectToPage( $page, $status = 303, $message = 'See other') {
+	public function redirectToPage( $page, $status = 303, $message = 'See other') {
 		$location = $this->pageURI( $page );
 		$proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
 		header( "$proto $status $message" );

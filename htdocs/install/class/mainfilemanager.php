@@ -47,21 +47,21 @@
  **/
 class mainfile_manager {
 
-	var $path = '../mainfile.php';
-	var $distfile = './templates/mainfile.dist.php';
-	var $rewrite = [];
+	public $path     = '../mainfile.php';
+	public $distfile = './templates/mainfile.dist.php';
+	public $rewrite  = [];
 
-	var $report = '';
-	var $error = false;
+	public $report = '';
+	public $error  = false;
 
-	function __construct() {
+	public function __construct() {
 	}
 
-	function setRewrite($def, $val) {
+	public function setRewrite($def, $val) {
 		$this->rewrite[$def] = $val;
 	}
 
-	function copyDistFile() {
+	public function copyDistFile() {
 		if (! copy($this->distfile, $this->path)) {
 			$this->report .= _NGIMG.sprintf(_INSTALL_L126, "<b>".$this->path."</b>")."<br />\n";
 			$this->error = true;
@@ -71,7 +71,7 @@ class mainfile_manager {
 		return true;
 	}
 
-	function doRewrite() {
+	public function doRewrite() {
 		clearstatcache();
 		if (! $file = fopen($this->path,"r")) {
 			$this->error = true;
@@ -125,14 +125,14 @@ class mainfile_manager {
 		return true;
 	}
 
-	function report() {
+	public function report() {
 		$content = "<table align='center'><tr><td align='left'>\n";
 		$content .= $this->report;
 		$content .= "</td></tr></table>\n";
 		return $content;
 	}
 
-	function error() {
+	public function error() {
 		return $this->error;
 	}
 }

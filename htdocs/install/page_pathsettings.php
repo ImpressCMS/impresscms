@@ -28,17 +28,17 @@ $pageHasHelp = true;
 
 
 class PathStuffController {
-	var $xoopsRootPath = '';
-	var $xoopsTrustPath = '';
-	var $xoopsUrl = '';
+	public $xoopsRootPath  = '';
+	public $xoopsTrustPath = '';
+	public $xoopsUrl       = '';
 
-	var $validRootPath = false;
-	var $validTrustPath = false;
-	var $validUrl = false;
+	public $validRootPath  = false;
+	public $validTrustPath = false;
+	public $validUrl       = false;
 
-	var $permErrors = [];
+	public $permErrors = [];
 
-	function __construct() {
+	public function __construct() {
 		if (isset( $_SESSION['settings']['ROOT_PATH'] )) {
 			$this->xoopsRootPath = $_SESSION['settings']['ROOT_PATH'];
 		} else {
@@ -69,7 +69,7 @@ class PathStuffController {
 		}
 	}
 
-	function execute() {
+	public function execute() {
 		$this->readRequest();
 		$valid = $this->validate();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -84,7 +84,7 @@ class PathStuffController {
 		}
 	}
 
-	function readRequest() {
+	public function readRequest() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$request = $_POST;
 			/*
@@ -118,7 +118,7 @@ class PathStuffController {
 		}
 	}
 
-	function validate() {
+	public function validate() {
 		if ($this->checkRootPath()) {
 			$this->checkPermissions();
 		}
@@ -133,7 +133,7 @@ class PathStuffController {
 	 * Check if the specified folder is a valid "XOOPS_ROOT_PATH" value
 	 * @return bool
 	 */
-	function checkRootPath() {
+	public function checkRootPath() {
 		if (@is_dir( $this->xoopsRootPath ) && @is_readable( $this->xoopsRootPath )) {
 			@include_once "$this->xoopsRootPath/include/version.php";
 			if (file_exists( "$this->xoopsRootPath/mainfile.php" ) && defined( 'XOOPS_VERSION' )) {
@@ -147,14 +147,14 @@ class PathStuffController {
 	 * Check if the specified folder is a valid "XOOPS_ROOT_PATH" value
 	 * @return bool
 	 */
-	function checkTrustPath() {
+	public function checkTrustPath() {
 		if (@is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath )) {
 			return $this->validTrustPath = true;
 		}
 		return $this->validTrustPath = false;
 	}
 
-	function createTrustPath() {
+	public function createTrustPath() {
 		if (@icms_core_Filesystem::mkdir($this->xoopsTrustPath, 0777, '', ['[', '?', '"', '<', '>', '|', ' '])) {
 			if (@is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath )) {
 				$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
@@ -164,7 +164,7 @@ class PathStuffController {
 		return $this->validTrustPath = false;
 	}
 
-	function checkPermissions() {
+	public function checkPermissions() {
 		$paths = ['mainfile.php', 'uploads', 'modules', 'templates_c', 'cache'];
 		$errors = [];
 		foreach ( $paths as $path) {
@@ -177,7 +177,7 @@ class PathStuffController {
 		return true;
 	}
 
-	function checkTrustPathPermissions() {
+	public function checkTrustPathPermissions() {
 		$errors = [];
 		$errors['trustpath'] = $this->makeWritable( "$this->xoopsTrustPath" );
 		if (in_array( false, $errors )) {
@@ -195,7 +195,7 @@ class PathStuffController {
 	 * @param bool $recurse
 	 * @return false on failure, method (u-ser,g-roup,w-orld) on success
 	 */
-	function makeWritable( $path, $group = false, $recurse = false) {
+	public function makeWritable( $path, $group = false, $recurse = false) {
 		if (!file_exists( $path )) {
 			return false;
 		}
@@ -231,7 +231,7 @@ class PathStuffController {
 	 * Find the webserved Group ID
 	 * @return int
 	 */
-	function findServerGID() {
+	public function findServerGID() {
 		$name = tempnam( '/non-existent/', 'XOOPS' );
 		$group = 0;
 		if ($name) {
