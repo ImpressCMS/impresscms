@@ -1,7 +1,9 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%	Admin Module Name  Version 	%%%%%
-if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","数据库更新成功!");}
+if (!defined('_AM_DBUPDATED')) {
+    define("_AM_DBUPDATED", "数据库更新成功!");
+}
 define("_AM_VERSION_TITLE", 'ImpressCMS 版本检查');
 define("_AM_VERSION_NO_UPDATE", '现在已是最新版本的ImpressCMS !');
 define("_AM_VERSION_UPDATE_NEEDED", '有新版本的ImpressCMS了! 强烈建议使用最新的版本.');
@@ -20,4 +22,3 @@ define("_AM_VERSION_MYSQL_SYSTEM", 'MYSQL版本:');
 define("_AM_VERSION_PHP_SYSTEM", 'PHP版本:');
 define("_AM_VERSION_API_SYSTEM", 'API名称:');
 define("_AM_VERSION_SYSTEM_INFO", '点击这里查看系统信息');
-?>

@@ -1,6 +1,6 @@
 <?php
-/* 
- * ISO 3166 Maintenance agency (ISO 3166/MA) - ISO's focal point for country codes 
+/*
+ * ISO 3166 Maintenance agency (ISO 3166/MA) - ISO's focal point for country codes
  * Website: http://www.iso.org/iso/country_codes.htm
  *
  */
@@ -257,4 +257,3 @@ define('_COUNTRY_ZA', 'SZuid Afrika');
 define('_COUNTRY_ZM', 'Zambia');
 define('_COUNTRY_ZR', 'Zaire');	//  Not listed in ISO 3166
 define('_COUNTRY_ZW', 'Zimbabwe');
-?>

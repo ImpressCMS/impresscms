@@ -16,10 +16,11 @@
  *
  * @param string $text the search terms
  */
-function textsanitizer_syntaxhighlightjs($text) {
-	return preg_replace_callback("/\[code_js](.*)\[\/code_js\]/sU", function ($matches) {
-		return textsanitizer_geshi_js_highlight($matches[1]);
-	}, $text);
+function textsanitizer_syntaxhighlightjs($text)
+{
+    return preg_replace_callback("/\[code_js](.*)\[\/code_js\]/sU", function ($matches) {
+        return textsanitizer_geshi_js_highlight($matches[1]);
+    }, $text);
 }
 
 /**
@@ -27,24 +28,27 @@ function textsanitizer_syntaxhighlightjs($text) {
  *
  * @param $source
  */
-function textsanitizer_geshi_js_highlight( $source) {
-	if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
-	$source = icms_core_DataFilter::undoHtmlSpecialChars($source);
+function textsanitizer_geshi_js_highlight($source)
+{
+    if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') {
+        return false;
+    }
+    $source = icms_core_DataFilter::undoHtmlSpecialChars($source);
 
-	// Create the new GeSHi object, passing relevant stuff
-	$geshi = new GeSHi($source, 'javascript');
-	// Enclose the code in a <div>
-	$geshi->set_header_type(GESHI_HEADER_NONE);
+    // Create the new GeSHi object, passing relevant stuff
+    $geshi = new GeSHi($source, 'javascript');
+    // Enclose the code in a <div>
+    $geshi->set_header_type(GESHI_HEADER_NONE);
 
-	// Sets the proper encoding charset other than "ISO-8859-1"
-	$geshi->set_encoding(_CHARSET);
+    // Sets the proper encoding charset other than "ISO-8859-1"
+    $geshi->set_encoding(_CHARSET);
 
-	$geshi->set_link_target ( "_blank" );
+    $geshi->set_link_target('_blank');
 
-	// Parse the code
-	$code = $geshi->parse_code();
-	$code = "<div class=\"icmsCodeJs\"><code>" . $code . "</code></div>";
-	return $code;
+    // Parse the code
+    $code = $geshi->parse_code();
+    $code = '<div class="icmsCodeJs"><code>' . $code . '</code></div>';
+    return $code;
 }
 
 /**
@@ -52,22 +56,24 @@ function textsanitizer_geshi_js_highlight( $source) {
  *  Adds button and script to the editor
  * @param $ele_name
  */
-function render_syntaxhighlightjs($ele_name) {
-	global $xoTheme;
-	$javascript='';
-	$dirname = basename(dirname(__FILE__));
-	if (isset($xoTheme)) {
-		$xoTheme->addScript(
-			ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
-			array('type' => 'text/javascript'));
-	}
-	$code = "<img
-        	onclick='javascript:icmsCodeJS(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERJSCODE, ENT_QUOTES, _CHARSET) . "\");'
+function render_syntaxhighlightjs($ele_name)
+{
+    global $xoTheme;
+    $javascript='';
+    $dirname = basename(__DIR__);
+    if (isset($xoTheme)) {
+        $xoTheme->addScript(
+            ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
+            ['type' => 'text/javascript']
+        );
+    }
+    $code = "<img
+        	onclick='javascript:icmsCodeJS(\"" . $ele_name . '", "' . htmlspecialchars(_ENTERJSCODE, ENT_QUOTES, _CHARSET) . "\");'
         	onmouseover='style.cursor=\"pointer\"'
-        	src='" . ICMS_URL."/plugins/textsanitizer/" . $dirname . "/js.png'
+        	src='" . ICMS_URL . '/plugins/textsanitizer/' . $dirname . "/js.png'
         	alt='js'
         	title='Javascript' />&nbsp;";
-	return array($code, $javascript);
+    return [$code, $javascript];
 }
 /*function style_syntaxhighlightjs() {
  $style_info = '.icmsCodeJs { background-color: #FAFAFA; color: #444; font-size: .9em; line-height: 1.2em; text-align: justify; border: #c2cdd6 1px dashed;}';

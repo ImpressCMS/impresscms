@@ -65,22 +65,21 @@ define("_CAL_WK", "sem"); // raccourcir de week-end
 define("_CAL_WEEKEND", "0,6");
 define("_CAL_DSPFIRST", "Afficher %s en premier");
 //Ce sont des constantes pour le calendrier Jalali inclus dans la bibliothèque
-define('_CAL_Far','Farvardin');
-define('_CAL_Ord','Ordibehest');
-define('_CAL_Kho','Khordad');
-define('_CAL_Tir','Tir');
-define('_CAL_Mor','Mordad');
-define('_CAL_Sha','Shahrivar');
-define('_CAL_Meh','Mehr');
-define('_CAL_Aba','Aban');
-define('_CAL_Aza','Azar');
-define('_CAL_Dey','Day');
-define('_CAL_Bah','Bahman');
-define('_CAL_Esf','Esfand');
+define('_CAL_Far', 'Farvardin');
+define('_CAL_Ord', 'Ordibehest');
+define('_CAL_Kho', 'Khordad');
+define('_CAL_Tir', 'Tir');
+define('_CAL_Mor', 'Mordad');
+define('_CAL_Sha', 'Shahrivar');
+define('_CAL_Meh', 'Mehr');
+define('_CAL_Aba', 'Aban');
+define('_CAL_Aza', 'Azar');
+define('_CAL_Dey', 'Day');
+define('_CAL_Bah', 'Bahman');
+define('_CAL_Esf', 'Esfand');
 define("_CAL_NUMS_ARRAY", "'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'"); // des valeurs numériques peuvent être différentes dans différentes langues
 define("_CAL_TT_DATE_FORMAT", "%a, %b %e");
 ############# added since 1.2 #############
 define("_CAL_SUFFIX", "th");
-define('_CAL_AM_LONG','avant midi');
-define('_CAL_PM_LONG','après midi');
-?>
+define('_CAL_AM_LONG', 'avant midi');
+define('_CAL_PM_LONG', 'après midi');

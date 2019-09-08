@@ -1,10 +1,12 @@
-﻿<?php
+<?php
 
 /**
  * $Id: blauer-fisch $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS根目录未定义");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS根目录未定义");
+}
 
 define('_CO_ICMS_FILTER', "选择器");
 define('_CO_ICMS_NONE', "无");
@@ -185,5 +187,4 @@ define('_CO_ICMS_UPDATE_DBVERSION', "数据库迁移至版本 '<em>%s</em>' <br 
 define('_CO_ICMS_ON', "On");
 define('_CO_ICMS_OFF', "Off");
 define('_CO_ICMS_WARNING_ALPHA', "本模块不附带任何保证承诺。模块尚在ALPHA版, 表示它还在开发中。发布这类版本是为了<b>让开发者测试</b> ，<b>强烈建议</b>你不要应用于实际的网络环境中");
-define('_CO_ICMS_UPDATE_NEEDED','系统模块需升级');
-?>
+define('_CO_ICMS_UPDATE_NEEDED', '系统模块需升级');

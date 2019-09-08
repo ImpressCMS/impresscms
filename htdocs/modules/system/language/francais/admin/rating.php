@@ -9,7 +9,9 @@
 * @version		$Id$
 */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 define('_CO_ICMS_RATING_RATE_IT', 'Coter !');
 define('_CO_ICMS_RATING_DUPLICATE_ENTRY', 'Désolé! Vous avez déjà coté ceci! Vous ne pouvez pas coter quelque chose deux fois.');

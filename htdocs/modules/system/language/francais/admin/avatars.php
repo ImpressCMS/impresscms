@@ -10,4 +10,3 @@ define('_MD_RUDELIMG', 'Etes-vous s&ucirc;r de vouloir supprimer cette image ava
 define('_MD_FAILDEL', 'Echec de suppression d\'avatar %s de la base de donn&eacute;es');
 // added in 1.3
 define('_MD_RESTRICTIONS', 'Restrictions');
-?>

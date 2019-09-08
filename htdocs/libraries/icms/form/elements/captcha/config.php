@@ -23,8 +23,8 @@
  * @version		SVN: $Id: config.php 12340 2013-09-22 04:11:09Z skenow $
  */
 
-$config = array(
-	"name" => 'icmscaptcha',
-);
+$config = [
+    "name" => 'icmscaptcha',
+];
 
 return $config;

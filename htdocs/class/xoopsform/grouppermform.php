@@ -51,7 +51,7 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
+    die('ImpressCMS root path not defined');
 }
 
 
@@ -63,12 +63,14 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @package kernel
  * @subpackage form
  */
-class XoopsGroupPermForm extends icms_form_Groupperm {
-	private $_deprecated;
-	public function __construct($title, $modid, $permname, $permdesc, $url = "") {
-		parent::__construct($title, $modid, $permname, $permdesc, $url);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_Groupperm', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsGroupPermForm extends icms_form_Groupperm
+{
+    private $_deprecated;
+    public function __construct($title, $modid, $permname, $permdesc, $url = '')
+    {
+        parent::__construct($title, $modid, $permname, $permdesc, $url);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_Groupperm', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -81,10 +83,10 @@ class XoopsGroupPermForm extends icms_form_Groupperm {
  */
 class XoopsGroupFormCheckBox extends icms_form_elements_Groupperm
 {
-	private $_deprecated;
-	public function __construct($caption, $name, $groupId, $values = null) {
-		parent::__construct($caption, $name, $groupId, $values);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Groupperm', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    private $_deprecated;
+    public function __construct($caption, $name, $groupId, $values = null)
+    {
+        parent::__construct($caption, $name, $groupId, $values);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Groupperm', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-?>

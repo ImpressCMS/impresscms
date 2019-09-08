@@ -61,4 +61,3 @@ define('_MI_SYSTEM_BLOCK_BOOKMARKS', 'Mes favoris');
 define('_MI_SYSTEM_BLOCK_BOOKMARKS_DESC', 'Rajouts à mes favoris');
 define('_MI_SYSTEM_ADMENU25', 'Taches automatiques');
 define('_MI_SYSTEM_REMOVEUSERS', 'Desactiver utilisateurs');
-?>

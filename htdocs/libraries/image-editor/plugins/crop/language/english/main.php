@@ -4,4 +4,3 @@ define('_CROP_PLUGDESC', 'Plugin to allow the DHTML Image Editor crop images. Ch
 
 define('_CROP_PREVIEW', 'Preview');
 define('_CROP_EXECUTE', 'Crop');
-?>

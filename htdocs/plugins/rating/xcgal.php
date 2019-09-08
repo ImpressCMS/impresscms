@@ -12,15 +12,14 @@
  * @version		$Id$
  */
 
-function icms_plugin_xcgal() {
-	global $icmsConfig;
+function icms_plugin_xcgal()
+{
+    global $icmsConfig;
 
-	$pluginInfo = array();
-	$pluginInfo['items']['album']['caption'] = 'Album';
-	$pluginInfo['items']['item']['url'] = 'thumbnails.php?album=%u';
-	$pluginInfo['items']['item']['request'] = 'album';
+    $pluginInfo = [];
+    $pluginInfo['items']['album']['caption'] = 'Album';
+    $pluginInfo['items']['item']['url'] = 'thumbnails.php?album=%u';
+    $pluginInfo['items']['item']['request'] = 'album';
 
-	return $pluginInfo;
+    return $pluginInfo;
 }
-
-?>

@@ -15,7 +15,7 @@
 $xoopsOption['pagetype'] = 'privpolicy';
 include 'mainfile.php';
 if ($icmsConfigUser['priv_dpolicy'] == false) {
-	redirect_header('index.php', 2, _US_NOPERMISS);
+    redirect_header('index.php', 2, _US_NOPERMISS);
 }
 
 $xoopsOption['template_main'] = 'system_privpolicy.html';

@@ -16,69 +16,80 @@
  * @since 1.2
  *
  */
-class IcmsPreloadAdsense extends icms_preload_Item {
-	/**
-	 * Function to be triggered at the end of the core boot process
-	 */
-	function eventFinishCoreBoot() {
-		icms_loadLanguageFile('system', 'adsense', TRUE);
-	}
+class IcmsPreloadAdsense extends icms_preload_Item
+{
+    /**
+     * Function to be triggered at the end of the core boot process
+     */
+    public function eventFinishCoreBoot()
+    {
+        icms_loadLanguageFile('system', 'adsense', true);
+    }
 
-	/**
-	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
-	 *
-	 * The $array var is structured like this:
-	 * $array[0] = $text
-	 * $array[1] = $html
-	 * $array[2] = $smiley
-	 * $array[3] = $xcode
-	 * $array[4] = $image
-	 * $array[5] = $br
-	 *
-	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
-	 *
-	 * @return	void
-	 */
-	public function eventAfterPreviewTarea($array) {
-		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
-			'icms_sanitizeAdsenses_callback', $array[0]);
-	}
+    /**
+     * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
+     *
+     * The $array var is structured like this:
+     * $array[0] = $text
+     * $array[1] = $html
+     * $array[2] = $smiley
+     * $array[3] = $xcode
+     * $array[4] = $image
+     * $array[5] = $br
+     *
+     * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
+     *
+     * @return	void
+     */
+    public function eventAfterPreviewTarea($array)
+    {
+        $array[0] = preg_replace_callback(
+            ["/\[adsense](.*)\[\/adsense\]/sU"],
+            'icms_sanitizeAdsenses_callback',
+            $array[0]
+        );
+    }
 
-	/**
-	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
-	 *
-	 * The $array var is structured like this:
-	 * $array[0] = $text
-	 * $array[1] = $html
-	 * $array[2] = $smiley
-	 * $array[3] = $xcode
-	 * $array[4] = $image
-	 * $array[5] = $br
-	 *
-	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
-	 *
-	 * @return	void
-	 */
-	public function eventAfterDisplayTarea($array) {
-		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
-			'icms_sanitizeAdsenses_callback', $array[0]);
-	}
+    /**
+     * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
+     *
+     * The $array var is structured like this:
+     * $array[0] = $text
+     * $array[1] = $html
+     * $array[2] = $smiley
+     * $array[3] = $xcode
+     * $array[4] = $image
+     * $array[5] = $br
+     *
+     * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
+     *
+     * @return	void
+     */
+    public function eventAfterDisplayTarea($array)
+    {
+        $array[0] = preg_replace_callback(
+            ["/\[adsense](.*)\[\/adsense\]/sU"],
+            'icms_sanitizeAdsenses_callback',
+            $array[0]
+        );
+    }
 
-	/**
-	 * Function to be triggered at the end of the output init process
-	 *
-	 * @return	void
-	 */
-	public function eventStartOutputInit() {
-		global $icmsTpl;
-		$icms_adsense_handler = icms_getModuleHandler("adsense", "system");
-		$icms_adsensesObj = $icms_adsense_handler->getAdsensesByTag();
-		$adsenses_array = array();
-		if (is_object($icmsTpl)) {
-			foreach ($icms_adsensesObj as $k => $v) {
-				$adsenses_array[$k] = $v->render();
-			}
-			$icmsTpl->assign('icmsAdsenses', $adsenses_array);
-		}
-	}
+    /**
+     * Function to be triggered at the end of the output init process
+     *
+     * @return	void
+     */
+    public function eventStartOutputInit()
+    {
+        global $icmsTpl;
+        $icms_adsense_handler = icms_getModuleHandler('adsense', 'system');
+        $icms_adsensesObj = $icms_adsense_handler->getAdsensesByTag();
+        $adsenses_array = [];
+        if (is_object($icmsTpl)) {
+            foreach ($icms_adsensesObj as $k => $v) {
+                $adsenses_array[$k] = $v->render();
+            }
+            $icmsTpl->assign('icmsAdsenses', $adsenses_array);
+        }
+    }
 }

@@ -1,23 +1,23 @@
 <?php
 // 08/2008 Updated and adapted for ImpressCMS by evoc - webmaster of www.impresscms.it
 // Published by ImpressCMS Italian Official Support Site - www.impresscms.it
-define("_ERR_SEARCH","Cerca");
-define("_ERR_SEARCH_OUR_SITE","Cerca il nostro sito:");
-define("_ERR_ADVANCED_SEARCH","Ricerca avanzata");
-define("_ERR_START_AGAIN","Ripartire nuovamente dalla <a href='" . XOOPS_URL . "'>pagina home</a>.");
-define("_ERR_CONTACT","Contatta il <a href='mailto:%s'>webmaster</a> e riporta questo errore.");
-define("_ERR_NO", "Errore %u");
+define('_ERR_SEARCH', 'Cerca');
+define('_ERR_SEARCH_OUR_SITE', 'Cerca il nostro sito:');
+define('_ERR_ADVANCED_SEARCH', 'Ricerca avanzata');
+define('_ERR_START_AGAIN', "Ripartire nuovamente dalla <a href='" . XOOPS_URL . "'>pagina home</a>.");
+define('_ERR_CONTACT', "Contatta il <a href='mailto:%s'>webmaster</a> e riporta questo errore.");
+define('_ERR_NO', 'Errore %u');
 
-define("_ERR_400_TITLE", "Richiesta errata");
-define("_ERR_400_DESC", "La richiesta contiene una errata sintassi o non pu&ograve; essere eseguita.");
-define("_ERR_401_TITLE", "Proibito");
-define("_ERR_401_DESC", "");
-define("_ERR_402_TITLE", "&Egrave; richiesto il pagamento");
-define("_ERR_402_DESC", "");
-define("_ERR_403_TITLE", "Proibito"):
-define("_ERR_403_DESC", "");
-define("_ERR_404_TITLE", "Pagina non trovata");
-define("_ERR_404_DESC", "La pagina che stai provando a accedere non pu&ograve; essere trovata.");
+define('_ERR_400_TITLE', 'Richiesta errata');
+define('_ERR_400_DESC', 'La richiesta contiene una errata sintassi o non pu&ograve; essere eseguita.');
+define('_ERR_401_TITLE', 'Proibito');
+define('_ERR_401_DESC', '');
+define('_ERR_402_TITLE', '&Egrave; richiesto il pagamento');
+define('_ERR_402_DESC', '');
+define('_ERR_403_TITLE', 'Proibito'):
+define('_ERR_403_DESC', '');
+define('_ERR_404_TITLE', 'Pagina non trovata');
+define('_ERR_404_DESC', 'La pagina che stai provando a accedere non pu&ograve; essere trovata.');
 
 /*
  *  // TODO: Define all the other errors constants (4xx and 5xx). Can be found in "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
@@ -84,4 +84,3 @@ Response status codes beginning with the digit "5" indicate cases in which the s
     This status code, while used by many servers, is not an official HTTP status code.
 510 Not Extended (RFC 2774)
 */
-?>

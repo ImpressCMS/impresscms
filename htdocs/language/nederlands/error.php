@@ -1,10 +1,10 @@
 <?php
 
-define("_ERR_SEARCH","Zoeken");
-define("_ERR_SEARCH_OUR_SITE","Zoek op onze website:");
-define("_ERR_ADVANCED_SEARCH","Geavanceerd zoeken");
-define("_ERR_START_AGAIN","Begin nogmaals vanaf de <a href='" . XOOPS_URL . "'>beginpagina</a>.");
-define("_ERR_CONTACT","Neem contact op met de <a href='mailto:%s'>webmaster</a> om deze fout te melden.");
+define("_ERR_SEARCH", "Zoeken");
+define("_ERR_SEARCH_OUR_SITE", "Zoek op onze website:");
+define("_ERR_ADVANCED_SEARCH", "Geavanceerd zoeken");
+define("_ERR_START_AGAIN", "Begin nogmaals vanaf de <a href='" . XOOPS_URL . "'>beginpagina</a>.");
+define("_ERR_CONTACT", "Neem contact op met de <a href='mailto:%s'>webmaster</a> om deze fout te melden.");
 define("_ERR_NO", "Fout %u");
 
 define("_ERR_400_TITLE", "Fout verzoek");
@@ -83,4 +83,3 @@ Response status codes beginning with the digit "5" indicate cases in which the s
     This status code, while used by many servers, is not an official HTTP status code.
 510 Not Extended (RFC 2774)
 */
-?>

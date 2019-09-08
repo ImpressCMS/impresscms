@@ -1,7 +1,8 @@
 <?php
 // $Id: mailusers.php 19775 2010-07-11 18:54:25Z malanciault $
 //%%%%%%	Admin Module Name  MailUsers	%%%%%
-if (!defined('_AM_DBUPDATED')) {define('_AM_DBUPDATED', 'Base de donn&eacute;es mise &agrave; jour avec succ&egrave;s!');
+if (!defined('_AM_DBUPDATED')) {
+    define('_AM_DBUPDATED', 'Base de donn&eacute;es mise &agrave; jour avec succ&egrave;s!');
 }
 
 //%%%%%%	mailusers.php 	%%%%%
@@ -36,4 +37,3 @@ define('_AM_SENTNUM', '%s - %s (total: %s utilisateurs)');
 define('_AM_SENDNEXT', 'Suivant');
 define('_AM_NOUSERMATCH', 'Pas d\'utilisateur correspondant');
 define('_AM_SENDCOMP', 'Envoi du message termin&eacute;.');
-?>

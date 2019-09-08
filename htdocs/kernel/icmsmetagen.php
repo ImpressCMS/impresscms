@@ -12,18 +12,20 @@
  * @version		$Id: icmsmetagen.php 10461 2010-07-30 16:40:31Z skenow $
  */
 
-if (!defined("ICMS_ROOT_PATH")) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die('ImpressCMS root path not defined');
+}
 /**
  * @deprecated	Use icms_ipf_Metagen
  * @todo		Remove in version 1.4
  *
  */
-class IcmsMetagen extends icms_ipf_Metagen {
-	private $_deprecated;
-	public function __construct($title, $keywords=false, $description=false, $categoryPath=false) {
-		parent::__construct($title, $keywords, $description, $categoryPath);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_Metagen', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class IcmsMetagen extends icms_ipf_Metagen
+{
+    private $_deprecated;
+    public function __construct($title, $keywords=false, $description=false, $categoryPath=false)
+    {
+        parent::__construct($title, $keywords, $description, $categoryPath);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_Metagen', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>

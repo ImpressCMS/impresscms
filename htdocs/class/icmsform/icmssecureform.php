@@ -10,7 +10,7 @@
  * @version		$Id: icmssecureform.php 10850 2010-12-05 19:10:48Z phoenyx $
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 class IcmsSecureForm extends icms_ipf_form_Secure {
 	private $_deprecated;

@@ -12,4 +12,3 @@ $content .=
 <h3>Uw website</h3>
 <p>U kunt nu naar uw website gaan door op de onderstaande knop te klikken en de installatieassistent te voltooien.</p>
 ";
-?>

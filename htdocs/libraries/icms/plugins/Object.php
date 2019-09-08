@@ -16,45 +16,48 @@
   * Enter description here ...
   *
   */
-class icms_plugins_Object {
+class icms_plugins_Object
+{
+    public $_infoArray;
 
-	public $_infoArray;
+    public function __construct($array)
+    {
+        $this->_infoArray = $array;
+    }
 
-	public function __construct($array) {
-		$this->_infoArray = $array;
-	}
+    public function getItemInfo($item)
+    {
+        if (isset($this->_infoArray['items'][$item])) {
+            return $this->_infoArray['items'][$item];
+        } else {
+            return false;
+        }
+    }
 
-	public function getItemInfo($item) {
-		if (isset($this->_infoArray['items'][$item])) {
-			return $this->_infoArray['items'][$item];
-		} else {
-			return false;
-		}
-	}
+    public function getItemList()
+    {
+        $itemsArray = $this->_infoArray['items'];
+        foreach ($itemsArray as $k=>$v) {
+            $ret[$k] = $v['caption'];
+        }
+        return $ret;
+    }
 
-	public function getItemList() {
-		$itemsArray = $this->_infoArray['items'];
-		foreach ($itemsArray as $k=>$v) {
-			$ret[$k] = $v['caption'];
-		}
-		return $ret;
-	}
+    public function getItem()
+    {
+        $ret = false;
+        foreach ($this->_infoArray['items'] as $k => $v) {
+            $search_str = str_replace('%u', '', $v['url']);
+            if (strpos($_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'], $search_str) > 0) {
+                $ret = $k;
+                break;
+            }
+        }
+        return $ret;
+    }
 
-	public function getItem() {
-		$ret = false;
-		foreach($this->_infoArray['items'] as $k => $v) {
-			$search_str = str_replace('%u', '', $v['url']);
-			if (strpos($_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'], $search_str) > 0) {
-				$ret = $k;
-				break;
-			}
-		}
-		return $ret;
-	}
-
-	public function getItemIdForItem($item) {
-		return $_REQUEST[$this->_infoArray['items'][$item]['request']];
-	}
+    public function getItemIdForItem($item)
+    {
+        return $_REQUEST[$this->_infoArray['items'][$item]['request']];
+    }
 }
-
-

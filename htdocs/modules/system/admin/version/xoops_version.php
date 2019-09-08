@@ -37,17 +37,18 @@
  * @version	$Id: xoops_version.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-$modversion = array(
-	'name' => _MD_AM_VRSN,
-	'version' => "1.0",
-	'description' => _MD_AM_VRSN_DSC,
-	'author' => "marcan (marcan@impresscms.org)",
-	'credits' => "The ImpressCMS Project",
-	'help' => "",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "version.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=version",
-	'category' => XOOPS_SYSTEM_VERSION,
-	'group' => _MD_AM_GROUPS_SYSTEMTOOLS);
+$modversion = [
+    'name' => _MD_AM_VRSN,
+    'version' => '1.0',
+    'description' => _MD_AM_VRSN_DSC,
+    'author' => 'marcan (marcan@impresscms.org)',
+    'credits' => 'The ImpressCMS Project',
+    'help' => '',
+    'license' => 'GPL see LICENSE',
+    'official' => 1,
+    'image' => 'version.gif',
+    'hasAdmin' => 1,
+    'adminpath' => 'admin.php?fct=version',
+    'category' => XOOPS_SYSTEM_VERSION,
+    'group' => _MD_AM_GROUPS_SYSTEMTOOLS
+];

@@ -15,22 +15,23 @@ defined('ICMS_ROOT_PATH') or exit();
 global $icmsTheme;
 global $icmsConfig;
 icms_loadLanguageFile('core', 'calendar');
-function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
-    $chars = array(
+function dateFormatTojQueryUIDatePickerFormat($dateFormat)
+{
+    $chars = [
         // Day
         'd' => 'dd', 'j' => 'd', 'l' => 'DD', 'D' => 'D',
         // Month
         'm' => 'mm', 'n' => 'm', 'F' => 'MM', 'M' => 'M',
         // Year
         'Y' => 'yy', 'y' => 'y',
-    );
+    ];
     return strtr((string)$dateFormat, $chars);
 }
 $dateFormatTojQueryUIDatePickerFormat = dateFormatTojQueryUIDatePickerFormat(_SHORTDATESTRING);
 define('_DATEFORMATCHANGED', $dateFormatTojQueryUIDatePickerFormat);
 
-if (_LANGCODE  !== 'en' && file_exists (ICMS_ROOT_PATH.'/language/'.$icmsConfig['language']."/datepicker-" ._LANGCODE. ".js")) {
-    $icmsTheme->addScript(ICMS_URL . "/language/" .$icmsConfig['language']. "/datepicker-" ._LANGCODE. ".js",  array("type" => "text/javascript"));
+if (_LANGCODE  !== 'en' && file_exists(ICMS_ROOT_PATH.'/language/'.$icmsConfig['language']."/datepicker-" ._LANGCODE. ".js")) {
+    $icmsTheme->addScript(ICMS_URL . "/language/" .$icmsConfig['language']. "/datepicker-" ._LANGCODE. ".js", ["type" => "text/javascript"]);
 }
 
 
@@ -49,4 +50,4 @@ showAnim: "slideDown"
 $(".ui-datepicker-trigger").attr("alt", "' ._CALENDAR. '").attr("title", "' ._CALENDAR. '");
 });';
 
-$icmsTheme->addScript("", array("type" => "text/javascript"), $src);
+$icmsTheme->addScript("", ["type" => "text/javascript"], $src);

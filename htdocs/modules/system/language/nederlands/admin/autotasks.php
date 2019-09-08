@@ -23,4 +23,3 @@ define('_CO_ICMS_AUTOTASKS_TYPE_ADDON', 'Systeem');
 define('_CO_ICMS_AUTOTASKS_FOREVER', 'altijd');
 define('_CO_ICMS_AUTOTASKS_INIT_ERROR', 'FOUT: Kan het geselecteerde auto taak sub-systeem niet initialiseren.');
 define('_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR', 'FOUT in Autotaak Bron Code: Kan automatische taak niet uitvoeren');
-?>

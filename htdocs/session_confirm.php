@@ -15,25 +15,29 @@
 include "mainfile.php";
 
 // security check
-if (!isset($_SESSION['AUTOLOGIN_REQUEST_URI'])) exit;
+if (!isset($_SESSION['AUTOLOGIN_REQUEST_URI'])) {
+    exit;
+}
 
 // get URI
 $url = $_SESSION['AUTOLOGIN_REQUEST_URI'];
 unset($_SESSION['AUTOLOGIN_REQUEST_URI']);
-if (preg_match('/javascript:/si', $url)) exit; // black list of url
+if (preg_match('/javascript:/si', $url)) {
+    exit;
+} // black list of url
 $url4disp = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES));
 
 if (isset($_SESSION['AUTOLOGIN_POST'])) {
-	// posting confirmation
-	$old_post = $_SESSION['AUTOLOGIN_POST'];
-	unset($_SESSION['AUTOLOGIN_POST']);
+    // posting confirmation
+    $old_post = $_SESSION['AUTOLOGIN_POST'];
+    unset($_SESSION['AUTOLOGIN_POST']);
 
-	$hidden_str = '' ;
-	foreach ($old_post as $k => $v) {
-		$hidden_str .= "\t".'      <input type="hidden" name="'.htmlspecialchars($k,ENT_QUOTES).'" value="'.htmlspecialchars($v,ENT_QUOTES).'" />'."\n" ;
-	}
+    $hidden_str = '' ;
+    foreach ($old_post as $k => $v) {
+        $hidden_str .= "\t".'      <input type="hidden" name="'.htmlspecialchars($k, ENT_QUOTES).'" value="'.htmlspecialchars($v, ENT_QUOTES).'" />'."\n" ;
+    }
 
-	echo '<html>
+    echo '<html>
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset='._CHARSET.'" />
 		<title>'.$icmsConfig['sitename'].'</title>
@@ -49,14 +53,14 @@ if (isset($_SESSION['AUTOLOGIN_POST'])) {
 		</body>
 		</html>
 	' ;
-	exit ;
+    exit ;
 } else {
-	// just redirecting
-	$time = 1 ;
-	// $message = empty( $message ) ? _TAKINGBACK : $message ;
-	$message = _TAKINGBACK ;
+    // just redirecting
+    $time = 1 ;
+    // $message = empty( $message ) ? _TAKINGBACK : $message ;
+    $message = _TAKINGBACK ;
 
-	echo '<html>
+    echo '<html>
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset='._CHARSET.'" />
 		<meta http-equiv="Refresh" content="'.$time.'; url='.$url4disp.'" />
@@ -70,5 +74,5 @@ if (isset($_SESSION['AUTOLOGIN_POST'])) {
 		</body>
 		</html>
 	' ;
-	exit ;
+    exit ;
 }

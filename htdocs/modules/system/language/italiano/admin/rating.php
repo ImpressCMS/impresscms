@@ -6,8 +6,8 @@
 * Author: The SmartFactory <www.smartfactory.ca>
 * Licence: GNU
 */
-if (!defined("XOOPS_ROOT_PATH")) {
- 	die("XOOPS root path not defined");
+if (!defined('XOOPS_ROOT_PATH')) {
+    die('XOOPS root path not defined');
 }
 
 define('_CO_ICMS_RATING_RATE_IT', 'Vota!');

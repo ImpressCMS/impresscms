@@ -1,22 +1,22 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%% Image Manager %%%%%
 
-define('_MD_IMGMAIN','图像管理');
+define('_MD_IMGMAIN', '图像管理');
 
-define('_MD_ADDIMGCAT','新建分类:');
-define('_MD_EDITIMGCAT','编辑分类:');
-define('_MD_IMGCATNAME','分类名称:');
-define('_MD_IMGCATRGRP','选择可使用图像管理的群组:<br /><br /><span style="font-weight: normal;">这些组可对选定的图像使用图像管理器，但不能上传。网站管理员自动访问。</span>');
-define('_MD_IMGCATWGRP','选择允许上传图像的群组:<br /><br /><span style="font-weight: normal;">通常给管理员使用</span>');
-define('_MD_IMGCATWEIGHT','图像管理器的显示次序:');
-define('_MD_IMGCATDISPLAY','要显示此分类?');
-define('_MD_IMGCATSTRTYPE','图片上传至:');
-define('_MD_STRTYOPENG','此设定以后不能更改!');
-define('_MD_INDB',' 储存在数据库(以二进制"blob"数据格式)');
-define('_MD_ASFILE',' 以文件方式储存(在目录 %s)<br />');
-define('_MD_RUDELIMGCAT','确认要删除此分类以及分类下的图像文件吗?');
-define('_MD_RUDELIMG','确认要删除这个图像文件吗?');
+define('_MD_ADDIMGCAT', '新建分类:');
+define('_MD_EDITIMGCAT', '编辑分类:');
+define('_MD_IMGCATNAME', '分类名称:');
+define('_MD_IMGCATRGRP', '选择可使用图像管理的群组:<br /><br /><span style="font-weight: normal;">这些组可对选定的图像使用图像管理器，但不能上传。网站管理员自动访问。</span>');
+define('_MD_IMGCATWGRP', '选择允许上传图像的群组:<br /><br /><span style="font-weight: normal;">通常给管理员使用</span>');
+define('_MD_IMGCATWEIGHT', '图像管理器的显示次序:');
+define('_MD_IMGCATDISPLAY', '要显示此分类?');
+define('_MD_IMGCATSTRTYPE', '图片上传至:');
+define('_MD_STRTYOPENG', '此设定以后不能更改!');
+define('_MD_INDB', ' 储存在数据库(以二进制"blob"数据格式)');
+define('_MD_ASFILE', ' 以文件方式储存(在目录 %s)<br />');
+define('_MD_RUDELIMGCAT', '确认要删除此分类以及分类下的图像文件吗?');
+define('_MD_RUDELIMG', '确认要删除这个图像文件吗?');
 
 define('_MD_FAILDEL', '从数据库删除图像 %s 失败');
 define('_MD_FAILDELCAT', '从数据库删除图像分类 %s 失败');
@@ -26,11 +26,11 @@ define('_MD_FAILUNLINK', '从服务器目录中删除图像 %s 失败');
 define('_MD_FAILADDCAT', '添加图像分类失败');
 define('_MD_FAILEDIT', '上传图像失败');
 define('_MD_FAILEDITCAT', '分类更新失败');
-define('_MD_IMGCATPARENT','上级分类:');
-define('_MD_DELETEIMGCAT','删除图像分类');
+define('_MD_IMGCATPARENT', '上级分类:');
+define('_MD_DELETEIMGCAT', '删除图像分类');
 
-define('_MD_ADDIMGCATBTN','新建分类');
-define('_MD_ADDIMGBTN','新加图像');
+define('_MD_ADDIMGCATBTN', '新建分类');
+define('_MD_ADDIMGBTN', '新加图像');
 
 define('_MD_IMAGESIN', '图像 %s');
 define('_MD_IMAGESTOT', '<b>全部图像:</b> %s');

@@ -35,55 +35,60 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *  - use control parameter "delay" to specify the delay before the autocomplete function starts
  *    to work. Use with caution since it can result in high server load! (default: 500)
  */
-class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text {
-	private $_file;
+class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text
+{
+    private $_file;
 
-	/**
-	 * Constructor
-	 * @param	icms_ipf_Object	$object	reference to targetobject (@link icms_ipf_Object)
-	 * @param	string			$key	the form name
-	 */
-	public function __construct($object, $key) {
-		$var = $object->vars[$key];
-		$control = $object->controls[$key];
-		$form_maxlength = isset($control['maxlength']) ? $control['maxlength'] : (isset($var['maxlength']) ? $var['maxlength'] : 255);
-		$form_size = isset($control['size']) ? $control['size'] : 50;
-		$this->_file = $control['file'];
+    /**
+     * Constructor
+     * @param	icms_ipf_Object	$object	reference to targetobject (@link icms_ipf_Object)
+     * @param	string			$key	the form name
+     */
+    public function __construct($object, $key)
+    {
+        $var = $object->vars[$key];
+        $control = $object->controls[$key];
+        $form_maxlength = isset($control['maxlength']) ? $control['maxlength'] : (isset($var['maxlength']) ? $var['maxlength'] : 255);
+        $form_size = isset($control['size']) ? $control['size'] : 50;
+        $this->_file = $control['file'];
 
-		parent::__construct($var['form_caption'], $key, $form_size, $form_maxlength, $object->getVar($key, 'e'));
-	}
+        parent::__construct($var['form_caption'], $key, $form_size, $form_maxlength, $object->getVar($key, 'e'));
+    }
 
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @global	icms_view_theme_Object	$xoTheme	theme object
-	 * @return	string					$ret		the constructed HTML
-	 */
-	public function render() {
-		global $xoTheme;
+    /**
+     * Prepare HTML for output
+     *
+     * @global	icms_view_theme_Object	$xoTheme	theme object
+     * @return	string					$ret		the constructed HTML
+     */
+    public function render()
+    {
+        global $xoTheme;
 
-		if (!is_file(ICMS_ROOT_PATH . "/" . $this->_file)) return parent::render();
+        if (!is_file(ICMS_ROOT_PATH . "/" . $this->_file)) {
+            return parent::render();
+        }
 
-		$minlength = isset($control['minlength']) ? $control['minlength'] : 3;
-		$delay = isset($control['delay']) ? $control['delay'] : 500;
+        $minlength = isset($control['minlength']) ? $control['minlength'] : 3;
+        $delay = isset($control['delay']) ? $control['delay'] : 500;
 
-		$js  = "jQuery(document).ready(function() {\n";
-		$js .= " jQuery('#" . $this->getName() . "').autocomplete({\n";
-		$js .= "  source: function(req, add){\n";
-		$js .= "   jQuery.getJSON('" . ICMS_URL . "/" . $this->_file . "?callback=?', req, function(data) {\n";
-		$js .= "    var suggestions = [];\n";
-		$js .= "    jQuery.each(data, function(i, val){ suggestions.push(val.item); });\n";
-		$js .= "    add(suggestions);\n";
-		$js .= "   });\n";
-		$js .= "  }\n";
-		$js .= " }, {\n";
-		$js .= "  minLength:" . $minlength . ",\n";
-		$js .= "  delay:" . $delay . "\n";
-		$js .= " });\n";
-		$js .= "});";
+        $js  = "jQuery(document).ready(function() {\n";
+        $js .= " jQuery('#" . $this->getName() . "').autocomplete({\n";
+        $js .= "  source: function(req, add){\n";
+        $js .= "   jQuery.getJSON('" . ICMS_URL . "/" . $this->_file . "?callback=?', req, function(data) {\n";
+        $js .= "    var suggestions = [];\n";
+        $js .= "    jQuery.each(data, function(i, val){ suggestions.push(val.item); });\n";
+        $js .= "    add(suggestions);\n";
+        $js .= "   });\n";
+        $js .= "  }\n";
+        $js .= " }, {\n";
+        $js .= "  minLength:" . $minlength . ",\n";
+        $js .= "  delay:" . $delay . "\n";
+        $js .= " });\n";
+        $js .= "});";
 
-		$xoTheme->addScript('', array('type' => 'text/javascript'), $js);
+        $xoTheme->addScript('', ['type' => 'text/javascript'], $js);
 
-		return parent::render();
-	}
+        return parent::render();
+    }
 }

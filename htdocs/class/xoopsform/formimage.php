@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /**
  * Creates a form attribute which is able to select an image
  *
@@ -23,26 +23,28 @@
  * @version	$Id: formimage.php 12278 2013-08-31 22:12:36Z fiammy $
  */
 
-defined('ICMS_ROOT_PATH') or die("Oooops!!");
+defined('ICMS_ROOT_PATH') or die('Oooops!!');
 
 /**
  * Image select control for a form
  * @deprecated	Use icms_form_elements_select_Image, instead
  * @todo		Remove in 1.4
  */
-class MastopFormSelectImage extends icms_form_elements_select_Image {
-	private $_deprecated;
-	
-	/**
-	 * Construtor
-	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	mixed	  $value	Value for the Select attribute
-	 * @param	string	$cat    Name of the Category
-	 */
-	function __construct($caption, $name, $value = null, $cat = null) {
-		parent::__construct($caption, $name, $value, $cat);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Image', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class MastopFormSelectImage extends icms_form_elements_select_Image
+{
+    private $_deprecated;
+    
+    /**
+     * Construtor
+     *
+     * @param	string	$caption
+     * @param	string	$name
+     * @param	mixed	  $value	Value for the Select attribute
+     * @param	string	$cat    Name of the Category
+     */
+    public function __construct($caption, $name, $value = null, $cat = null)
+    {
+        parent::__construct($caption, $name, $value, $cat);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Image', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

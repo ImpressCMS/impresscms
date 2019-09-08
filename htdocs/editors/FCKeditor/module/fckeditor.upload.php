@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * FCKeditor adapter for XOOPS
  *
@@ -14,4 +14,3 @@ require "header.php";
 define("FCKUPLOAD_DISABLED", 0);
 define("XOOPS_FCK_FOLDER", $icmsModule->getVar("dirname"));
 include ICMS_ROOT_PATH."/class/xoopseditor/FCKeditor/editor/filemanager/upload/php/upload.php";
-?>

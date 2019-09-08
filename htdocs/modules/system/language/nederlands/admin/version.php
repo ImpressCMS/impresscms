@@ -1,7 +1,8 @@
 <?php
 // $Id: version.php 10326 2010-07-11 18:54:25Z malanciault $
 //%%%%%%	Admin Module Name  Version 	%%%%%
-if (!defined('_AM_DBUPDATED')) {define('_AM_DBUPDATED', 'Database succesvol bijgewerkt!');
+if (!defined('_AM_DBUPDATED')) {
+    define('_AM_DBUPDATED', 'Database succesvol bijgewerkt!');
 }
 define('_AM_VERSION_TITLE', 'ImpressCMS Versie Controle');
 define('_AM_VERSION_NO_UPDATE', 'U maakt gebruik van de meest recente versie van ImpressCMS !');
@@ -20,4 +21,3 @@ define('_AM_VERSION_MYSQL_SYSTEM', 'Uw MYSQL versie:');
 define('_AM_VERSION_PHP_SYSTEM', 'Uw PHP versie:');
 define('_AM_VERSION_API_SYSTEM', 'Uw API naam:');
 define('_AM_VERSION_SYSTEM_INFO', 'Klik hier om uw systeem informatie te bekijken');
-?>

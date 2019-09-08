@@ -38,7 +38,7 @@
  * @subpackage	Elements
  * @version		SVN: $Id: Group.php 12313 2013-09-15 21:14:35Z skenow $
  */
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * A field with a choice of available groups
@@ -50,25 +50,26 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Group extends icms_form_elements_Select {
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	bool	$include_anon	Include group "anonymous"?
-	 * @param	mixed	$value	    	Pre-selected value (or array of them).
-	 * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
-	 * @param	bool    $multiple       Allow multiple selections?
-	 */
-	public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false) {
-		parent::__construct($caption, $name, $value, $size, $multiple);
-		$member_handler = icms::handler('icms_member');
-		if (!$include_anon) {
-			$this->addOptionArray($member_handler->getGroupList(new icms_db_criteria_Item('groupid', ICMS_GROUP_ANONYMOUS, '!=')));
-		} else {
-			$this->addOptionArray($member_handler->getGroupList());
-		}
-	}
+class icms_form_elements_select_Group extends icms_form_elements_Select
+{
+    /**
+     * Constructor
+     *
+     * @param	string	$caption
+     * @param	string	$name
+     * @param	bool	$include_anon	Include group "anonymous"?
+     * @param	mixed	$value	    	Pre-selected value (or array of them).
+     * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
+     * @param	bool    $multiple       Allow multiple selections?
+     */
+    public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
+    {
+        parent::__construct($caption, $name, $value, $size, $multiple);
+        $member_handler = icms::handler('icms_member');
+        if (!$include_anon) {
+            $this->addOptionArray($member_handler->getGroupList(new icms_db_criteria_Item('groupid', ICMS_GROUP_ANONYMOUS, '!=')));
+        } else {
+            $this->addOptionArray($member_handler->getGroupList());
+        }
+    }
 }
-

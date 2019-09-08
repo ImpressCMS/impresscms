@@ -13,4 +13,3 @@
  * Assocated with editor_registry.php
  */
 define("_ICMS_SOURCEEDITOR_EDITAREA", "EditArea");
-?>

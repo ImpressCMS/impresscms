@@ -9,60 +9,64 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-class IcmsAutoTasksInternal
-extends icms_sys_autotasks_System {
+class IcmsAutoTasksInternal extends icms_sys_autotasks_System
+{
 
-	/**
-	 * check if can run
-	 * @return bool
-	 */
-	function canRun() {
-		return true;
-	}
+    /**
+     * check if can run
+     * @return bool
+     */
+    public function canRun()
+    {
+        return true;
+    }
 
-	/**
-	 * Set Checking Interval (if not enabled enables automated tasks system
-	 * @param  int	$interval	interval of checking for new tasks
-	 * @return bool				returns true if start was succesfull
-	 */
-	public function start(int $interval) {
-		return true;
-	}
+    /**
+     * Set Checking Interval (if not enabled enables automated tasks system
+     * @param  int	$interval	interval of checking for new tasks
+     * @return bool				returns true if start was succesfull
+     */
+    public function start(int $interval)
+    {
+        return true;
+    }
 
-	/**
-	 * Stops automated tasks system
-	 * @return bool returns true if was succesfull
-	 */
-	function stop() {
-		return false;
-	}
+    /**
+     * Stops automated tasks system
+     * @return bool returns true if was succesfull
+     */
+    public function stop()
+    {
+        return false;
+    }
 
-	/**
-	 *  checks if core is enabled
-	 *
-	 * @return bool
-	 */
-	function isEnabled() {
-		return true;
-	}
+    /**
+     *  checks if core is enabled
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return true;
+    }
 
-	/**
-	 *  Checks if need set new timer when automated task object was executed
-	 *
-	 *  @return bool
-	 */
-	function needStart() {
-		return false;
-	}
+    /**
+     *  Checks if need set new timer when automated task object was executed
+     *
+     *  @return bool
+     */
+    public function needStart()
+    {
+        return false;
+    }
 
-	public function needExecution() {
-		return true;
-	}
+    public function needExecution()
+    {
+        return true;
+    }
 
-	public function needExit() {
-		return false;
-	}
-
+    public function needExit()
+    {
+        return false;
+    }
 }
-
-?>

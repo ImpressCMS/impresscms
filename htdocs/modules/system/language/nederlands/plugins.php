@@ -21,4 +21,3 @@ define('_PI_WAITING_ASKED', 'Gevraagd');
 define('_PI_WAITING_NEWANSWERS', 'Nieuwe antwoorden');
 define('_PI_WAITING_ANSWERED', 'Beantwoord');
 define('_PI_WAITING_WAITINGS_FMT', 'Wachtenden (%s)');
-?>

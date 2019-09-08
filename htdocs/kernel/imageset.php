@@ -44,7 +44,7 @@
 
 
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  *
@@ -65,12 +65,14 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsImageset extends XoopsObject {
-	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_image_set_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsImageset extends XoopsObject
+{
+    private $_deprecated;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_image_set_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -81,11 +83,12 @@ class XoopsImageset extends XoopsObject {
 *
 * @author  Kazumi Ono <onokazu@xoops.org>
 */
-class XoopsImagesetHandler extends XoopsObjectHandler {
-	private $_deprecated;
-	public function __construct(&$db) {
-		parent::__construct($db);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_image_set_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsImagesetHandler extends XoopsObjectHandler
+{
+    private $_deprecated;
+    public function __construct(&$db)
+    {
+        parent::__construct($db);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_image_set_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-?>

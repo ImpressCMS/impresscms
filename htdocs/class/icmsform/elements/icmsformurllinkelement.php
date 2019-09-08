@@ -10,13 +10,15 @@
  * @version		$Id: icmsformurllinkelement.php 10849 2010-12-05 18:46:02Z phoenyx $
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-class IcmsFormUrlLinkElement extends icms_ipf_form_elements_Urllink {
-	private $_deprecated;
+class IcmsFormUrlLinkElement extends icms_ipf_form_elements_Urllink
+{
+    private $_deprecated;
 
-	public function __construct($object, $key) {
-		parent::__construct($object, $key);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Urllink', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct($object, $key)
+    {
+        parent::__construct($object, $key);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Urllink', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

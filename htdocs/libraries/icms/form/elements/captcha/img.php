@@ -18,9 +18,9 @@
  * @version		SVN: $Id: img.php 12340 2013-09-22 04:11:09Z skenow $
  */
 
-include "../../../../../mainfile.php";
+include '../../../../../mainfile.php';
 error_reporting(0);
-icms::$logger->activated = FALSE;
+icms::$logger->activated = false;
 
 $image_handler = icms::handler('icms_form_elements_captcha_Image');
 $image_handler->loadImage();

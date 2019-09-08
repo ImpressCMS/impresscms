@@ -1,30 +1,30 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 // Blocks
-define("_MB_SYSTEM_ADMENU","管理员菜单");
-define("_MB_SYSTEM_RNOW","现在注册!");
-define("_MB_SYSTEM_LPASS","忘记密码?");
-define("_MB_SYSTEM_SEARCH","查找");
-define("_MB_SYSTEM_ADVS","高级查找");
-define("_MB_SYSTEM_VACNT","查看帐户");
-define("_MB_SYSTEM_EACNT","编辑帐户");
+define("_MB_SYSTEM_ADMENU", "管理员菜单");
+define("_MB_SYSTEM_RNOW", "现在注册!");
+define("_MB_SYSTEM_LPASS", "忘记密码?");
+define("_MB_SYSTEM_SEARCH", "查找");
+define("_MB_SYSTEM_ADVS", "高级查找");
+define("_MB_SYSTEM_VACNT", "查看帐户");
+define("_MB_SYSTEM_EACNT", "编辑帐户");
 // RMV-NOTIFY
 define("_MB_SYSTEM_NOTIF", "通知");
-define("_MB_SYSTEM_LOUT","登出");
-define("_MB_SYSTEM_INBOX","收件箱");
-define("_MB_SYSTEM_HOME","首页"); // link to home page in main menu block
-define("_MB_SYSTEM_RECO","提出建议");
-define("_MB_SYSTEM_PWWIDTH","弹出窗口宽度");
-define("_MB_SYSTEM_PWHEIGHT","弹出窗口高度");
-define("_MB_SYSTEM_LOGO","Logo图片文件在 %s 文件夹");  // %s is your root image directory name
+define("_MB_SYSTEM_LOUT", "登出");
+define("_MB_SYSTEM_INBOX", "收件箱");
+define("_MB_SYSTEM_HOME", "首页"); // link to home page in main menu block
+define("_MB_SYSTEM_RECO", "提出建议");
+define("_MB_SYSTEM_PWWIDTH", "弹出窗口宽度");
+define("_MB_SYSTEM_PWHEIGHT", "弹出窗口高度");
+define("_MB_SYSTEM_LOGO", "Logo图片文件在 %s 文件夹");  // %s is your root image directory name
 
-define("_MB_SYSTEM_SADMIN","显示管理员用户组");
+define("_MB_SYSTEM_SADMIN", "显示管理员用户组");
 
-define("_MB_SYSTEM_DISPLAY","显示 %s 成员");
-define("_MB_SYSTEM_DISPLAYA","显示头像");
-define("_MB_SYSTEM_NODISPGR","此级别用户不显示:");
+define("_MB_SYSTEM_DISPLAY", "显示 %s 成员");
+define("_MB_SYSTEM_DISPLAYA", "显示头像");
+define("_MB_SYSTEM_NODISPGR", "此级别用户不显示:");
 
-define("_MB_SYSTEM_DISPLAYC","显示 %s 留言");
+define("_MB_SYSTEM_DISPLAYC", "显示 %s 留言");
 define("_MB_SYSTEM_SECURE", "安全登录");
 
 define("_MB_SYSTEM_NUMTHEME", "%s 主题");
@@ -44,10 +44,10 @@ define("_MB_SYSTEM_OPENID_NORMAL_LOGIN", "返回常规登录");
 define("_MB_SYSTEM_TOTAL_USERS", "共有用户");
 define("_MB_SYSTEM_ACT_USERS", "已激活用户");
 define("_MB_SYSTEM_INACT_USERS", "未激活用户");
-define("_MB_SYSTEM_DISPLAYTOT","要显示全部成员的信息吗?");
+define("_MB_SYSTEM_DISPLAYTOT", "要显示全部成员的信息吗?");
 // waiting content
-define("_MB_SYSTEM_NOWAITING_DISPLAY","总是显示");
-define("_MB_SYSTEM_SQL_CACHE","SQL 缓存");
+define("_MB_SYSTEM_NOWAITING_DISPLAY", "总是显示");
+define("_MB_SYSTEM_SQL_CACHE", "SQL 缓存");
 // Social bookmarking
 define("_MB_SYSTEM_SOCIAL_PROVIDER_SELECT", "选择要显示的社交网站");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK", "社交网站: ");
@@ -83,4 +83,3 @@ define("_MB_SYSTEM_SOCIAL_PROVIDER_28", "Propeller");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_29", "Buzz");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_30", "Sphinn");
 define("_MB_SYSTEM_SOCIAL_PROVIDER_31", "Jumptags");
-?>

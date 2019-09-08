@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 
 // $Id: blauer-fisch $
 
-define('_CO_ICMS_MIMETYPES','文件类型');
+define('_CO_ICMS_MIMETYPES', '文件类型');
 define('_CO_ICMS_MIMETYPES_DSC', '现有文件类型列表');
 define('_CO_ICMS_MIMETYPE', '文件类型');
 define('_CO_ICMS_MIMETYPE_CREATE', '新建文件类型');
@@ -29,4 +29,3 @@ define('_CO_ICMS_MIMETYPE_PERMISSION_VIEW_DSC', '只有被选中的群组才有�
 define('_CO_ICMS_MIMETYPES_EXPLAIN_TITLE', '什么是文件类型 ?');
 define('_CO_ICMS_MIMETYPES_EXPLAIN', '文件类型就是上传至网站服务器的文件的扩展名(后缀名), 本功能帮助你控制用户所允许的文件类型! 关于这一功能的完整文档，可以在这里找到: <a rel="external" href="http://wiki.impresscms.org/index.php?title=MimeTypes">文件类型</a>.');
 define('_CO_ICMS_MIMETYPE_DIRNAME', '选择允许使用这一文件类型的模块');
-?>

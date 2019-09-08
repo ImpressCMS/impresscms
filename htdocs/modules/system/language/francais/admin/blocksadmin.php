@@ -1,8 +1,11 @@
 <?php
 // $Id: blocksadmin.php 8889 2009-06-19 14:38:08Z pesianstranger $
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
-if(!defined('_AM_DBUPDATED')){if(!defined('_AM_DBUPDATED')){define('_AM_DBUPDATED', 'Base de donn&eacute;es mise &agrave; jour avec succ&egrave;s!');
-}}
+if (!defined('_AM_DBUPDATED')) {
+    if (!defined('_AM_DBUPDATED')) {
+        define('_AM_DBUPDATED', 'Base de donn&eacute;es mise &agrave; jour avec succ&egrave;s!');
+    }
+}
 
 //%%%%%%	blocks.php 	%%%%%
 define('_AM_BADMIN', 'Administration des blocs');
@@ -120,4 +123,3 @@ define('_AM_CBCENTER_ADMIN', 'Administration bloc central - centre');
 define('_AM_CBBOTTOMLEFT_ADMIN', 'Administration bloc central - Gauche-dessous');
 define('_AM_CBBOTTOMRIGHT_ADMIN', 'Administration bloc central - Droit-dessous');
 define('_AM_CBBOTTOM_ADMIN', 'Administration bloc central - dessous');
-?>

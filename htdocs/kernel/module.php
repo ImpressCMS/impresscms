@@ -46,7 +46,9 @@
 
 
 
-if(!defined('ICMS_ROOT_PATH')){exit();}
+if (!defined('ICMS_ROOT_PATH')) {
+    exit();
+}
 
 
 /**
@@ -58,19 +60,18 @@ if(!defined('ICMS_ROOT_PATH')){exit();}
  * @deprecated	Use icms_module_Object, instead
  * @todo		Remove in version 1.4
  **/
-class XoopsModule extends icms_module_Object {
+class XoopsModule extends icms_module_Object
+{
+    private $_deprecated;
 
-	private $_deprecated;
-
-	/**
-	 * Constructor
-	 */
-	function XoopsModule()
-	{
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_module_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_module_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -85,10 +86,12 @@ class XoopsModule extends icms_module_Object {
  * @deprecated	Use icms_module_Handler, instead
  * @todo		Remove in version 1.4
  **/
-class XoopsModuleHandler extends icms_module_Handler {
-	private $_deprecated;
-	public function __construct(&$db) {
-		parent::__construct($db);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_module_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsModuleHandler extends icms_module_Handler
+{
+    private $_deprecated;
+    public function __construct(&$db)
+    {
+        parent::__construct($db);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_module_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

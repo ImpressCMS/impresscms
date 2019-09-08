@@ -1,14 +1,14 @@
 <?php
 //============================================================+
-// File name   : en.php 
-// Begin       : 2004-03-03 
-// Last Update : 2008-01-08 
-// 
-// Description : Language module for TCPDF 
-//               (contains translated texts) 
-// 
+// File name   : en.php
+// Begin       : 2004-03-03
+// Last Update : 2008-01-08
+//
+// Description : Language module for TCPDF
+//               (contains translated texts)
+//
 // Author: Nicola Asuni
-// 
+//
 // (c) Copyright:
 //               Nicola Asuni
 //               Tecnick.com s.r.l.
@@ -39,7 +39,7 @@
 */
 // Dutch
 
-$l = Array();
+$l = [];
 
 // PAGE META DESCRIPTORS --------------------------------------
 
@@ -51,6 +51,5 @@ $l['a_meta_language'] = "nl";
 $l['w_page'] = "pagina";
 
 //============================================================+
-// END OF FILE                                                 
+// END OF FILE
 //============================================================+
-?>

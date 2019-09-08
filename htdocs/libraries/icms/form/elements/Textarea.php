@@ -38,7 +38,7 @@
  * @subpackage	Elements
  * @version		SVN: $Id: Textarea.php 12313 2013-09-15 21:14:35Z skenow $
  */
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * A textarea
@@ -50,92 +50,98 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Textarea extends icms_form_Element {
-	/**
-	 * number of columns
-	 * @var	int
-	 */
-	protected $_cols;
+class icms_form_elements_Textarea extends icms_form_Element
+{
+    /**
+     * number of columns
+     * @var	int
+     */
+    protected $_cols;
 
-	/**
-	 * number of rows
-	 * @var	int
-	 */
-	protected $_rows;
+    /**
+     * number of rows
+     * @var	int
+     */
+    protected $_rows;
 
-	/**
-	 * initial content
-	 * @var	string
-	 */
-	protected $_value;
+    /**
+     * initial content
+     * @var	string
+     */
+    protected $_value;
 
-	/**
-	 * Constuctor
-	 *
-	 * @param	string  $caption    caption
-	 * @param	string  $name       name
-	 * @param	string  $value      initial content
-	 * @param	int     $rows       number of rows
-	 * @param	int     $cols       number of columns
-	 */
-	public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50) {
-		$this->setCaption($caption);
-		$this->setName($name);
-		$this->_rows = (int) $rows;
-		$this->_cols = (int) $cols;
-		$this->setValue($value);
-	}
+    /**
+     * Constuctor
+     *
+     * @param	string  $caption    caption
+     * @param	string  $name       name
+     * @param	string  $value      initial content
+     * @param	int     $rows       number of rows
+     * @param	int     $cols       number of columns
+     */
+    public function __construct($caption, $name, $value = '', $rows = 5, $cols = 50)
+    {
+        $this->setCaption($caption);
+        $this->setName($name);
+        $this->_rows = (int) $rows;
+        $this->_cols = (int) $cols;
+        $this->setValue($value);
+    }
 
-	/**
-	 * get number of rows
-	 *
-	 * @return	int
-	 */
-	public function getRows() {
-		return $this->_rows;
-	}
+    /**
+     * get number of rows
+     *
+     * @return	int
+     */
+    public function getRows()
+    {
+        return $this->_rows;
+    }
 
-	/**
-	 * Get number of columns
-	 *
-	 * @return	int
-	 */
-	public function getCols() {
-		return $this->_cols;
-	}
+    /**
+     * Get number of columns
+     *
+     * @return	int
+     */
+    public function getCols()
+    {
+        return $this->_cols;
+    }
 
-	/**
-	 * Get initial content
-	 *
-	 * @param	bool    $encode To sanitize the text? Default value should be "true"; however we have to set "false" for backward compatibility
-	 * @return	string
-	 */
-	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value) : $this->_value;
-	}
+    /**
+     * Get initial content
+     *
+     * @param	bool    $encode To sanitize the text? Default value should be "true"; however we have to set "false" for backward compatibility
+     * @return	string
+     */
+    public function getValue($encode = false)
+    {
+        return $encode ? htmlspecialchars($this->_value) : $this->_value;
+    }
 
-	/**
-	 * Set initial content
-	 *
-	 * @param	$value	string
-	 */
-	public function setValue($value){
-		$this->_value = $value;
-	}
+    /**
+     * Set initial content
+     *
+     * @param	$value	string
+     */
+    public function setValue($value)
+    {
+        $this->_value = $value;
+    }
 
-	/**
-	 * prepare HTML for output
-	 *
-	 * @return string HTML
-	 */
-	public function render(){
-		return "<textarea name='" . $this->getName()
-			. "' id='" . $this->getName() . '_tarea'
-			. "' rows='" . $this->getRows()
-			. "' cols='" . $this->getCols()
-			. "'" . $this->getExtra() . ">"
-			. $this->getValue()
-			. "</textarea>";
-	}
+    /**
+     * prepare HTML for output
+     *
+     * @return string HTML
+     */
+    public function render()
+    {
+        return "<textarea name='" . $this->getName()
+            . "' id='" . $this->getName() . '_tarea'
+            . "' rows='" . $this->getRows()
+            . "' cols='" . $this->getCols()
+            . "'" . $this->getExtra() . '>'
+            . $this->getValue()
+               . '</textarea>';
+    }
 }
-

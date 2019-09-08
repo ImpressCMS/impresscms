@@ -15,17 +15,18 @@
  *
  * @var unknown_type
  */
-define('WIKI_LINK',	'http://'._LANGCODE.'.wikipedia.org/wiki/%s');
+define('WIKI_LINK', 'http://'._LANGCODE.'.wikipedia.org/wiki/%s');
 /**
  *
  * Locates and replaced marked text with a link to the wiki
  *
  * @param unknown_type $text
  */
-function textsanitizer_wiki($text) {
-	return preg_replace_callback("/\[\[([^\]]*)\]\]/sU", function ($matches) {
-		return wikiLink($matches[1]);
-	}, $text);
+function textsanitizer_wiki($text)
+{
+    return preg_replace_callback("/\[\[([^\]]*)\]\]/sU", function ($matches) {
+        return wikiLink($matches[1]);
+    }, $text);
 }
 
 /**
@@ -33,13 +34,16 @@ function textsanitizer_wiki($text) {
  * Creates the link to the wiki page
  * @param $text
  */
-function wikiLink($text) {
-	if (empty($text) ) return $text;
-	$ret = "<a
+function wikiLink($text)
+{
+    if (empty($text)) {
+        return $text;
+    }
+    $ret = "<a
 		href='" . sprintf(WIKI_LINK, $text) . "'
 		target='_blank'
 		title=''>".$text."</a>";
-	return $ret;
+    return $ret;
 }
 
 /**
@@ -47,32 +51,36 @@ function wikiLink($text) {
  * Adds button and script to the editor
  * @param $ele_name
  */
-function render_wiki($ele_name) {
-	global $xoTheme;
-	$dirname = basename(dirname(__FILE__));
-	if (isset($xoTheme)) {
-		$xoTheme->addScript(
-			ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
-			array('type' => 'text/javascript'));
-	}
-	$code = "<img
+function render_wiki($ele_name)
+{
+    global $xoTheme;
+    $dirname = basename(__DIR__);
+    if (isset($xoTheme)) {
+        $xoTheme->addScript(
+            ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
+            ['type' => 'text/javascript']
+        );
+    }
+    $code = "<img
 		onclick='javascript:icmsCodeWIKI(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES, _CHARSET)."\");'
 		onmouseover='style.cursor=\"pointer\"'
 		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/wiki.png'
 		alt='wiki'
 		title='Wiki' />&nbsp;";
-	/**
-	 * Using this method You can add a file to load your java script informations
-	 */
-	$javascript = 'plugins/textsanitizer/' . $dirname . '/wiki.js';;
-	return array($code, $javascript);
+    /**
+     * Using this method You can add a file to load your java script informations
+     */
+    $javascript = 'plugins/textsanitizer/' . $dirname . '/wiki.js';
+    ;
+    return [$code, $javascript];
 }
 
 /**
  *
  * Enter specific styling for this plugin
  */
-function style_wiki() {
-	$style_info = '';
-	return $style_info;
+function style_wiki()
+{
+    $style_info = '';
+    return $style_info;
 }

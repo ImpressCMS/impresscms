@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define('_MODABOUT_DEVELOPER_CONTRIBUTOR', '贡献者');
 define('_MODABOUT_DEVELOPER_CREDITS', '认证');
@@ -33,4 +33,3 @@ define('_MODABOUT_WARNING_ALPHA', "本模块不附带任何保证承诺。模块
 define('_MODABOUT_MODULE_LICENSE', '许可证');
 define('_MODABOUT_MANUAL', '手册');
 define('_MODABOUT_MANUAL_WIKI', 'ImpressCMS Wiki');
-?>

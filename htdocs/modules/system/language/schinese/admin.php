@@ -1,37 +1,39 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%	File Name  admin.php 	%%%%%
 //define('_MD_AM_CONFIG','系统设置');
 define('_INVALID_ADMIN_FUNCTION', '无效管理命令');
 
 // Admin Module Names
-define('_MD_AM_ADGS','群组');
-define('_MD_AM_BANS','广告条');
-define('_MD_AM_BKAD','区块');
-define('_MD_AM_MDAD','模块管理');
-define('_MD_AM_SMLS','表情');
-define('_MD_AM_RANK','用户等级');
-define('_MD_AM_USER','编辑用户');
+define('_MD_AM_ADGS', '群组');
+define('_MD_AM_BANS', '广告条');
+define('_MD_AM_BKAD', '区块');
+define('_MD_AM_MDAD', '模块管理');
+define('_MD_AM_SMLS', '表情');
+define('_MD_AM_RANK', '用户等级');
+define('_MD_AM_USER', '编辑用户');
 define('_MD_AM_FINDUSER', '查找用户');
-define('_MD_AM_PREF','首选项');
-define('_MD_AM_VRSN','版本检查');
+define('_MD_AM_PREF', '首选项');
+define('_MD_AM_VRSN', '版本检查');
 define('_MD_AM_MLUS', '通知用户');
 define('_MD_AM_IMAGES', '图片管理');
 define('_MD_AM_AVATARS', '头像');
 define('_MD_AM_TPLSETS', '模板');
 define('_MD_AM_COMMENTS', '留言');
-define('_MD_AM_BKPOSAD','区块位置');
-define('_MD_AM_PAGES','符号链接管理');
+define('_MD_AM_BKPOSAD', '区块位置');
+define('_MD_AM_PAGES', '符号链接管理');
 define('_MD_AM_CUSTOMTAGS', '自定义标签');
 
 // Group permission phrases
 define('_MD_AM_PERMADDNG', '不能给予群组 %s 添加 %s 的权限');
-define('_MD_AM_PERMADDOK','添加 %s 权限 %s 给群组 %s');
-define('_MD_AM_PERMRESETNG','不能为模块 %s 重设群组权限');
+define('_MD_AM_PERMADDOK', '添加 %s 权限 %s 给群组 %s');
+define('_MD_AM_PERMRESETNG', '不能为模块 %s 重设群组权限');
 define('_MD_AM_PERMADDNGP', '所有上级项目都要选');
 
 // added in 1.2
-if (!defined('_MD_AM_AUTOTASKS')) {define('_MD_AM_AUTOTASKS', '自动任务');}
+if (!defined('_MD_AM_AUTOTASKS')) {
+    define('_MD_AM_AUTOTASKS', '自动任务');
+}
 define('_MD_AM_ADSENSES', 'Adsenses广告');
 define('_MD_AM_RATINGS', '等级Ratings');
 define('_MD_AM_MIMETYPES', 'Mime类型');
@@ -65,4 +67,4 @@ define('_MD_AM_PAGES_DSC', '符号管理允许为页面创建唯一的链接，�
 define('_MD_AM_TPLSETS_DSC', '模板是一套html/css文件，用来渲染模块的布局');
 define('_MD_AM_RANK_DSC', '用户等级，可谓不同用户设置不同的等级');
 define('_MD_AM_VRSN_DSC', '检查系统是否需要更新');
-define('_MD_AM_PREF_DSC',"ImpressCMS 网站参考");
+define('_MD_AM_PREF_DSC', "ImpressCMS 网站参考");

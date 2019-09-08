@@ -23,4 +23,3 @@ define('_CO_ICMS_AUTOTASKS_TYPE_ADDON', 'Système');
 define('_CO_ICMS_AUTOTASKS_FOREVER', 'toujours');
 define('_CO_ICMS_AUTOTASKS_INIT_ERROR', 'Erreur: Impossible de initialiser le sous-système des tâches spécifié');
 define('_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR', 'Erreur dans le code source de Autotask : impossible de executer Autotask');
-?>

@@ -37,17 +37,18 @@
  * @subpackage	Modules
  * @version		SVN: $Id: xoops_version.php 12313 2013-09-15 21:14:35Z skenow $
  */
-$modversion = array(
-	'name' => _MD_AM_MDAD,
-	'version' => "",
-	'description' => _MD_AM_MDAD_DSC,
-	'author' => "Kazumi Ono<br />( http://www.mywebaddons.com/ )",
-	'credits' => "",
-	'help' => "modulesadmin.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "modulesadmin.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=modulesadmin",
-	'category' => XOOPS_SYSTEM_MODULE,
-	'group' => _MD_AM_GROUPS_SITECONFIGURATION);
+$modversion = [
+    'name' => _MD_AM_MDAD,
+    'version' => '',
+    'description' => _MD_AM_MDAD_DSC,
+    'author' => 'Kazumi Ono<br />( http://www.mywebaddons.com/ )',
+    'credits' => '',
+    'help' => 'modulesadmin.html',
+    'license' => 'GPL see LICENSE',
+    'official' => 1,
+    'image' => 'modulesadmin.gif',
+    'hasAdmin' => 1,
+    'adminpath' => 'admin.php?fct=modulesadmin',
+    'category' => XOOPS_SYSTEM_MODULE,
+    'group' => _MD_AM_GROUPS_SITECONFIGURATION
+];

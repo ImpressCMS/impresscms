@@ -37,7 +37,7 @@
  * @subpackage	Elements
  * @version		SVN: $Id: Theme.php 12313 2013-09-15 21:14:35Z skenow $
  */
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * A select box with available themes
@@ -48,18 +48,19 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Theme extends icms_form_elements_Select {
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * @param	int		$size	Number or rows. "1" makes a drop-down-list
-	 */
-	public function __construct($caption, $name, $value = null, $size = 1) {
-		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(icms_view_theme_Factory::getThemesList());
-	}
+class icms_form_elements_select_Theme extends icms_form_elements_Select
+{
+    /**
+     * Constructor
+     *
+     * @param	string	$caption
+     * @param	string	$name
+     * @param	mixed	$value	Pre-selected value (or array of them).
+     * @param	int		$size	Number or rows. "1" makes a drop-down-list
+     */
+    public function __construct($caption, $name, $value = null, $size = 1)
+    {
+        parent::__construct($caption, $name, $value, $size);
+        $this->addOptionArray(icms_view_theme_Factory::getThemesList());
+    }
 }
-

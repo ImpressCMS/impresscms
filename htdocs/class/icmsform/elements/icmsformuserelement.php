@@ -10,13 +10,15 @@
  * @version		$Id: icmsformuserelement.php 10705 2010-10-10 15:46:52Z phoenyx $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-class IcmsFormUserElement extends icms_ipf_form_elements_User {
-	private $_deprecated;
+class IcmsFormUserElement extends icms_ipf_form_elements_User
+{
+    private $_deprecated;
 
-	public function __construct($object, $key) {
-		parent::__construct($object, $key);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_User', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct($object, $key)
+    {
+        parent::__construct($object, $key);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_User', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

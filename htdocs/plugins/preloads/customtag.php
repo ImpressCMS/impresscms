@@ -15,69 +15,78 @@
  * @since	1.2
  *
  */
-class IcmsPreloadCustomtag extends icms_preload_Item {
-	/**
-	 * Function to be triggered at the end of the core boot process
-	 */
-	function eventFinishCoreBoot() {
-		icms_loadLanguageFile("system", "customtag", TRUE);
-	}
+class IcmsPreloadCustomtag extends icms_preload_Item
+{
+    /**
+     * Function to be triggered at the end of the core boot process
+     */
+    public function eventFinishCoreBoot()
+    {
+        icms_loadLanguageFile('system', 'customtag', true);
+    }
 
-	/**
-	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
-	 *
-	 * The $array var is structured like this:
-	 * $array[0] = $text
-	 * $array[1] = $html
-	 * $array[2] = $smiley
-	 * $array[3] = $xcode
-	 * $array[4] = $image
-	 * $array[5] = $br
-	 *
-	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
-	 *
-	 * @return	void
-	 */
-	function eventBeforePreviewTarea($array) {
-		$array[0] = preg_replace_callback(array('/\[customtag](.*)\[\/customtag\]/sU'),
-			"icms_sanitizeCustomtags_callback", $array[0]);
-	}
+    /**
+     * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
+     *
+     * The $array var is structured like this:
+     * $array[0] = $text
+     * $array[1] = $html
+     * $array[2] = $smiley
+     * $array[3] = $xcode
+     * $array[4] = $image
+     * $array[5] = $br
+     *
+     * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
+     *
+     * @return	void
+     */
+    public function eventBeforePreviewTarea($array)
+    {
+        $array[0] = preg_replace_callback(
+            ['/\[customtag](.*)\[\/customtag\]/sU'], 'icms_sanitizeCustomtags_callback',
+            $array[0]
+        );
+    }
 
-	/**
-	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
-	 *
-	 * The $array var is structured like this:
-	 * $array[0] = $text
-	 * $array[1] = $html
-	 * $array[2] = $smiley
-	 * $array[3] = $xcode
-	 * $array[4] = $image
-	 * $array[5] = $br
-	 *
-	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
-	 *
-	 * @return	void
-	 */
-	function eventBeforeDisplayTarea($array) {
-		$array[0] = preg_replace_callback(array('/\[customtag](.*)\[\/customtag\]/sU'),
-			"icms_sanitizeCustomtags_callback", $array[0]);
-	}
+    /**
+     * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
+     *
+     * The $array var is structured like this:
+     * $array[0] = $text
+     * $array[1] = $html
+     * $array[2] = $smiley
+     * $array[3] = $xcode
+     * $array[4] = $image
+     * $array[5] = $br
+     *
+     * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
+     *
+     * @return	void
+     */
+    public function eventBeforeDisplayTarea($array)
+    {
+        $array[0] = preg_replace_callback(
+            ['/\[customtag](.*)\[\/customtag\]/sU'], 'icms_sanitizeCustomtags_callback',
+            $array[0]
+        );
+    }
 
-	/**
-	 * Function to be triggered at the end of the output init process
-	 *
-	 * @return	void
-	 */
-	function eventStartOutputInit() {
-		global $icmsTpl;
-		$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
-		$icms_customTagsObj = $icms_customtag_handler->getCustomtagsByName();
-		$customtags_array = array();
-		if (is_object($icmsTpl)) {
-			foreach ($icms_customTagsObj as $k => $v) {
-				$customtags_array[$k] = $v->render();
-			}
-			$icmsTpl->assign("icmsCustomtags", $customtags_array);
-		}
-	}
+    /**
+     * Function to be triggered at the end of the output init process
+     *
+     * @return	void
+     */
+    public function eventStartOutputInit()
+    {
+        global $icmsTpl;
+        $icms_customtag_handler = icms_getModuleHandler('customtag', 'system');
+        $icms_customTagsObj = $icms_customtag_handler->getCustomtagsByName();
+        $customtags_array = [];
+        if (is_object($icmsTpl)) {
+            foreach ($icms_customTagsObj as $k => $v) {
+                $customtags_array[$k] = $v->render();
+            }
+            $icmsTpl->assign('icmsCustomtags', $customtags_array);
+        }
+    }
 }

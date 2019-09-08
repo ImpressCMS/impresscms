@@ -53,9 +53,8 @@ define('_CORE_DB_NOTRACE', 'notrace:mysql extensie niet geladen');
 define('_CORE_DB_NOTALLOWEDINGET', 'Database updates zijn niet toegestaan gedurende de uitvoering van een GET verzoek');
 define('_CORE_DB_NOTRACEDB', 'notrace: Niet mogelijk om te verbinden met database');
 define('_CORE_DB_INVALIDEMAIL', 'Ongeldige e-mail');
-define('_CORE_PASSLEVEL1','Te kort');
-define('_CORE_PASSLEVEL2','Zwak');
-define('_CORE_PASSLEVEL3','Goed');
-define('_CORE_PASSLEVEL4','Sterk');
-define('_CORE_UNAMEPASS_IDENTIC','Gebruikernaam en wachtwoord zijn identiek.');
-?>
+define('_CORE_PASSLEVEL1', 'Te kort');
+define('_CORE_PASSLEVEL2', 'Zwak');
+define('_CORE_PASSLEVEL3', 'Goed');
+define('_CORE_PASSLEVEL4', 'Sterk');
+define('_CORE_UNAMEPASS_IDENTIC', 'Gebruikernaam en wachtwoord zijn identiek.');

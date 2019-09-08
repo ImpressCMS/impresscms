@@ -30,7 +30,7 @@
  * @global array $data['csstidy']['whitespace']
  * @version 1.0
  */
-$data['csstidy']['whitespace'] = array(' ',"\n","\t","\r","\x0B");
+$data['csstidy']['whitespace'] = [' ', "\n", "\t", "\r", "\x0B"];
 
 /**
  * All CSS tokens used by csstidy
@@ -47,7 +47,7 @@ $data['csstidy']['tokens'] = '/@}{;:=\'"(,\\!$%&)*+.<>?[]^`|~';
  * @global array $data['csstidy']['units']
  * @version 1.0
  */
-$data['csstidy']['units'] = array('in','cm','mm','pt','pc','px','rem','em','%','ex','gd','vw','vh','vm','deg','grad','rad','turn','ms','s','khz','hz','ch','vmin','vmax','dpi','dpcm','dppx');
+$data['csstidy']['units'] = ['in', 'cm', 'mm', 'pt', 'pc', 'px', 'rem', 'em', '%', 'ex', 'gd', 'vw', 'vh', 'vm', 'deg', 'grad', 'rad', 'turn', 'ms', 's', 'khz', 'hz', 'ch', 'vmin', 'vmax', 'dpi', 'dpcm', 'dppx'];
 
 /**
  * Available at-rules
@@ -55,7 +55,7 @@ $data['csstidy']['units'] = array('in','cm','mm','pt','pc','px','rem','em','%','
  * @global array $data['csstidy']['at_rules']
  * @version 1.1
  */
-$data['csstidy']['at_rules'] = array('page' => 'is','font-face' => 'atis','charset' => 'iv', 'import' => 'iv','namespace' => 'iv','media' => 'at','keyframes' => 'at','-moz-keyframes' => 'at','-o-keyframes' => 'at','-webkit-keyframes' => 'at','-ms-keyframes' => 'at');
+$data['csstidy']['at_rules'] = ['page' => 'is', 'font-face' => 'atis', 'charset' => 'iv', 'import' => 'iv', 'namespace' => 'iv', 'media' => 'at', 'keyframes' => 'at', '-moz-keyframes' => 'at', '-o-keyframes' => 'at', '-webkit-keyframes' => 'at', '-ms-keyframes' => 'at'];
 
  /**
  * Properties that need a value with unit
@@ -65,11 +65,13 @@ $data['csstidy']['at_rules'] = array('page' => 'is','font-face' => 'atis','chars
  * @global array $data['csstidy']['unit_values']
  * @version 1.2
  */
-$data['csstidy']['unit_values'] = array ('background', 'background-position', 'background-size', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-width',
-											'border-top-width', 'border-right-width', 'border-left-width', 'border-bottom-width', 'bottom', 'border-spacing', 'column-gap', 'column-width',
-											'font-size', 'height', 'left', 'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'max-height',
-											'max-width', 'min-height', 'min-width', 'outline', 'outline-width', 'padding', 'padding-top', 'padding-right',
-											'padding-bottom', 'padding-left', 'perspective', 'right', 'top', 'text-indent', 'letter-spacing', 'word-spacing', 'width');
+$data['csstidy']['unit_values'] = [
+    'background', 'background-position', 'background-size', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-width',
+    'border-top-width', 'border-right-width', 'border-left-width', 'border-bottom-width', 'bottom', 'border-spacing', 'column-gap', 'column-width',
+    'font-size', 'height', 'left', 'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'max-height',
+    'max-width', 'min-height', 'min-width', 'outline', 'outline-width', 'padding', 'padding-top', 'padding-right',
+    'padding-bottom', 'padding-left', 'perspective', 'right', 'top', 'text-indent', 'letter-spacing', 'word-spacing', 'width'
+];
 
 /**
  * Properties that allow <color> as value
@@ -79,7 +81,7 @@ $data['csstidy']['unit_values'] = array ('background', 'background-position', 'b
  * @global array $data['csstidy']['color_values']
  * @version 1.0
  */
-$data['csstidy']['color_values'] = array();
+$data['csstidy']['color_values'] = [];
 $data['csstidy']['color_values'][] = 'background-color';
 $data['csstidy']['color_values'][] = 'border-color';
 $data['csstidy']['color_values'][] = 'border-top-color';
@@ -99,7 +101,7 @@ $data['csstidy']['color_values'][] = 'column-rule-color';
  * @see merge_bg()
  * @version 1.0
  */
-$data['csstidy']['background_prop_default'] = array();
+$data['csstidy']['background_prop_default'] = [];
 $data['csstidy']['background_prop_default']['background-image'] = 'none';
 $data['csstidy']['background_prop_default']['background-size'] = 'auto';
 $data['csstidy']['background_prop_default']['background-repeat'] = 'repeat';
@@ -116,7 +118,7 @@ $data['csstidy']['background_prop_default']['background-color'] = 'transparent';
  * @see merge_fonts()
  * @version 1.3
  */
-$data['csstidy']['font_prop_default'] = array();
+$data['csstidy']['font_prop_default'] = [];
 $data['csstidy']['font_prop_default']['font-style'] = 'normal';
 $data['csstidy']['font_prop_default']['font-variant'] = 'normal';
 $data['csstidy']['font_prop_default']['font-weight'] = 'normal';
@@ -131,7 +133,7 @@ $data['csstidy']['font_prop_default']['font-family'] = '';
  * @see cut_color()
  * @version 1.0
  */
-$data['csstidy']['replace_colors'] = array();
+$data['csstidy']['replace_colors'] = [];
 $data['csstidy']['replace_colors']['aliceblue'] = '#f0f8ff';
 $data['csstidy']['replace_colors']['antiquewhite'] = '#faebd7';
 $data['csstidy']['replace_colors']['aquamarine'] = '#7fffd4';
@@ -268,16 +270,16 @@ $data['csstidy']['replace_colors']['yellowgreen'] = '#9acd32';
  * @see merge_4value_shorthands()
  * @version 1.0
  */
-$data['csstidy']['shorthands'] = array();
-$data['csstidy']['shorthands']['border-color'] = array('border-top-color','border-right-color','border-bottom-color','border-left-color');
-$data['csstidy']['shorthands']['border-style'] = array('border-top-style','border-right-style','border-bottom-style','border-left-style');
-$data['csstidy']['shorthands']['border-width'] = array('border-top-width','border-right-width','border-bottom-width','border-left-width');
-$data['csstidy']['shorthands']['margin'] = array('margin-top','margin-right','margin-bottom','margin-left');
-$data['csstidy']['shorthands']['padding'] = array('padding-top','padding-right','padding-bottom','padding-left');
+$data['csstidy']['shorthands'] = [];
+$data['csstidy']['shorthands']['border-color'] = ['border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color'];
+$data['csstidy']['shorthands']['border-style'] = ['border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style'];
+$data['csstidy']['shorthands']['border-width'] = ['border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width'];
+$data['csstidy']['shorthands']['margin'] = ['margin-top', 'margin-right', 'margin-bottom', 'margin-left'];
+$data['csstidy']['shorthands']['padding'] = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
 
-$data['csstidy']['radius_shorthands']['border-radius'] = array('border-top-left-radius','border-top-right-radius','border-bottom-right-radius','border-bottom-left-radius');
-$data['csstidy']['radius_shorthands']['-webkit-border-radius'] = array('-webkit-border-top-left-radius','-webkit-border-top-right-radius','-webkit-border-bottom-right-radius','-webkit-border-bottom-left-radius');
-$data['csstidy']['radius_shorthands']['-moz-border-radius'] = array('-moz-border-radius-topleft','-moz-border-radius-topright','-moz-border-radius-bottomright','-moz-border-radius-bottomleft');
+$data['csstidy']['radius_shorthands']['border-radius'] = ['border-top-left-radius', 'border-top-right-radius', 'border-bottom-right-radius', 'border-bottom-left-radius'];
+$data['csstidy']['radius_shorthands']['-webkit-border-radius'] = ['-webkit-border-top-left-radius', '-webkit-border-top-right-radius', '-webkit-border-bottom-right-radius', '-webkit-border-bottom-left-radius'];
+$data['csstidy']['radius_shorthands']['-moz-border-radius'] = ['-moz-border-radius-topleft', '-moz-border-radius-topright', '-moz-border-radius-bottomright', '-moz-border-radius-bottomleft'];
 
 /**
  * All CSS Properties. Needed for csstidy::property_is_next()
@@ -572,14 +574,14 @@ $data['csstidy']['all_properties']['z-index'] = 'CSS2.0,CSS2.1,CSS3.0';
  *
  * @global array $data['csstidy']['quoted_string_properties']
  */
-$data['csstidy']['quoted_string_properties'] = array('content', 'font-family', 'quotes');
+$data['csstidy']['quoted_string_properties'] = ['content', 'font-family', 'quotes'];
 
 /**
  * An array containing all properties that can be defined multiple times without being overwritten.
  *
  * @global array $data['csstidy']['quoted_string_properties']
  */
-$data['csstidy']['multiple_properties'] = array('background', 'background-image');
+$data['csstidy']['multiple_properties'] = ['background', 'background-image'];
 
 /**
  * An array containing all predefined templates.

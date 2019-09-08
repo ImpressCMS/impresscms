@@ -17,16 +17,16 @@
  */
 
 
-class IcmsSimpleRss extends icms_feeds_Simplerss {
+class IcmsSimpleRss extends icms_feeds_Simplerss
+{
+    private $_deprecated;
 
-	private $_deprecated;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_feeds_Simplerss', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_feeds_Simplerss', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

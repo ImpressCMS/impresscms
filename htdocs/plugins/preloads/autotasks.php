@@ -15,54 +15,58 @@
  * @since	1.2
  *
  */
-class IcmsPreloadAutotasks extends icms_preload_Item {
+class IcmsPreloadAutotasks extends icms_preload_Item
+{
 
-	/**
-	 * Function to be triggered at the end of the core boot process
-	 */
-	function eventFinishCoreBoot() {
-		$handler = &icms_getModuleHandler('autotasks', 'system');
-		if ($handler->needExecution()) {
-			$handler->execTasks();
-			$handler->startIfNeeded();
-			if ($handler->needExit()) {
-				exit(0);
-			}
-		}
-	}
+    /**
+     * Function to be triggered at the end of the core boot process
+     */
+    public function eventFinishCoreBoot()
+    {
+        $handler = &icms_getModuleHandler('autotasks', 'system');
+        if ($handler->needExecution()) {
+            $handler->execTasks();
+            $handler->startIfNeeded();
+            if ($handler->needExit()) {
+                exit(0);
+            }
+        }
+    }
 
-	/**
-	 * Do this event when saving item
-	 *
-	 * @param array config array
-	 */
-	function eventAfterSaveSystemAdminPreferencesItems($array) {
-		if (!isset($array[ICMS_CONF_AUTOTASKS])) return;
-		$handler = icms_getModuleHandler('autotasks', 'system');
-		$handler->virtual_config = array();
-		$array = &$array[ICMS_CONF_AUTOTASKS];
-		$vconfig1 = array();
-		$vconfig2 = array();
-		foreach ($array as $key => $values) {
-			$vconfig1[$key] = $values[0];
-			$vconfig2[$key] = $values[1];
-		}
-		$handler->enableVirtualConfig($vconfig1);
-		$system = $handler->getCurrentSystemHandler(true);
-		if ($system->isEnabled()) {
-			$system->stop();
-		}
-		$handler->enableVirtualConfig($vconfig2);
-		$system = $handler->getCurrentSystemHandler(true);
-		if ($rez = $system->canRun()) {
-			$time = (int) ($handler->getRealTasksRunningTime());
-			$rez = $system->start($time);
-		} else {
-			icms_loadLanguageFile('system', 'autotasks', true);
-			icms_core_Message::error(_CO_ICMS_AUTOTASKS_INIT_ERROR);
-			return false;
-		}
-		$handler->disableVirtualConfig();
-	}
-
+    /**
+     * Do this event when saving item
+     *
+     * @param array config array
+     */
+    public function eventAfterSaveSystemAdminPreferencesItems($array)
+    {
+        if (!isset($array[ICMS_CONF_AUTOTASKS])) {
+            return;
+        }
+        $handler = icms_getModuleHandler('autotasks', 'system');
+        $handler->virtual_config = [];
+        $array = &$array[ICMS_CONF_AUTOTASKS];
+        $vconfig1 = [];
+        $vconfig2 = [];
+        foreach ($array as $key => $values) {
+            $vconfig1[$key] = $values[0];
+            $vconfig2[$key] = $values[1];
+        }
+        $handler->enableVirtualConfig($vconfig1);
+        $system = $handler->getCurrentSystemHandler(true);
+        if ($system->isEnabled()) {
+            $system->stop();
+        }
+        $handler->enableVirtualConfig($vconfig2);
+        $system = $handler->getCurrentSystemHandler(true);
+        if ($rez = $system->canRun()) {
+            $time = (int) ($handler->getRealTasksRunningTime());
+            $rez = $system->start($time);
+        } else {
+            icms_loadLanguageFile('system', 'autotasks', true);
+            icms_core_Message::error(_CO_ICMS_AUTOTASKS_INIT_ERROR);
+            return false;
+        }
+        $handler->disableVirtualConfig();
+    }
 }

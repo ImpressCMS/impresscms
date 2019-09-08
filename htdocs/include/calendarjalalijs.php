@@ -14,17 +14,18 @@ defined('ICMS_ROOT_PATH') or exit();
 
 global $icmsConfig, $icmsTheme;
 icms_loadLanguageFile('core', 'calendar');
-$icmsTheme->addScript(ICMS_URL . "/libraries/jalalijscalendar/jquery.ui.datepicker-cc-fa.js", array("type" => "text/javascript"));
+$icmsTheme->addScript(ICMS_URL . "/libraries/jalalijscalendar/jquery.ui.datepicker-cc-fa.js", ["type" => "text/javascript"]);
 
-function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
-    $chars = array(
+function dateFormatTojQueryUIDatePickerFormat($dateFormat)
+{
+    $chars = [
         // Day
         'd' => 'dd', 'j' => 'd', 'l' => 'DD', 'D' => 'D',
         // Month
         'm' => 'mm', 'n' => 'm', 'F' => 'MM', 'M' => 'M',
         // Year
         'Y' => 'yy', 'y' => 'y',
-    );
+    ];
     return strtr((string)$dateFormat, $chars);
 }
 $dateFormatTojQueryUIDatePickerFormat = dateFormatTojQueryUIDatePickerFormat(_SHORTDATESTRING);
@@ -44,4 +45,4 @@ showAnim: "slideDown"
 $(".ui-datepicker-trigger").attr("alt", "' ._CALENDAR. '").attr("title", "' ._CALENDAR. '");
 });';
 
-$icmsTheme->addScript("", array("type" => "text/javascript"), $src);
+$icmsTheme->addScript("", ["type" => "text/javascript"], $src);

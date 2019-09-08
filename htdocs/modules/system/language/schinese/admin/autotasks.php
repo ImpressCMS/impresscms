@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define("_CO_ICMS_AUTOTASKS_NAME", "任务名称");
 define("_CO_ICMS_AUTOTASKS_NAME_DSC", "输入任务名称.");
@@ -31,4 +31,3 @@ define("_CO_ICMS_AUTOTASKS_FOREVER", "永久");
 define("_CO_ICMS_AUTOTASKS_INIT_ERROR", "出错: 初始化所选任务子系统失败");
 
 define("_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR", "出错：自动任务源代码不能执行");
-?>

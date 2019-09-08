@@ -28,19 +28,19 @@
 
 
 if (isset($_GET['lang'])) {
-	$l = $_GET['lang'];
+    $l = $_GET['lang'];
 } elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-	$l = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-	$l = strtolower(substr($l, 0, 2));
+    $l = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+    $l = strtolower(substr($l, 0, 2));
 } else {
-	$l = '';
+    $l = '';
 }
 
-$l = (in_array($l, array('de', 'fr', 'zh'))) ? $l : 'en';
+$l = (in_array($l, ['de', 'fr', 'zh'])) ? $l : 'en';
 
 // note 67 in all but English&French, and 5 and 40 in all are orphaned
 
-$lang = array();
+$lang = [];
 $lang['en'][0] = 'CSS Formatter and Optimiser/Optimizer (based on CSSTidy ';
 $lang['en'][1] = 'CSS Formatter and Optimiser';
 $lang['en'][2] = '(based on';

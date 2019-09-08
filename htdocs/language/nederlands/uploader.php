@@ -19,4 +19,3 @@ define("_ER_UP_INVALIDIMAGEFILE", "Ongeldig afbeeldingen bestand");
 define("_ER_UP_SUSPICIOUSREFUSED", "Uploaden verdachte afbeelding geweigerd");
 define("_ER_UP_INVALIDFILENAME", "Ongeldige bestandsnaam");
 define("_ER_UP_FAILEDSAVEFILE", "Mislukt om bestand op te slaan in %s");
-?>

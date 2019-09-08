@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define("_ER_UP_MIMETYPELOAD", "加载MIME类型定义时出错。");
 define("_ER_UP_FILENOTFOUND", "未发现文件");
@@ -24,4 +24,3 @@ define("_ER_UP_FAILEDSAVEFILE", "保存文件%s失败");
 define("_ER_UP_PARTIALLY", "只能分块上传文件");
 define("_ER_UP_NO_TMP_DIR", "丢失了一个临时文件夹，请联系管理员。");
 define("_ER_UP_CANT_WRITE", "文件写入磁盘时出错，请联系管理员。");
-?>

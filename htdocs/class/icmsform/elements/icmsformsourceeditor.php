@@ -10,13 +10,15 @@
  * @version		$Id: icmsformsourceeditorelement.php 01 2009-06-09 11:34:22Z mekdrop $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-class IcmsFormSourceEditor extends icms_ipf_form_elements_Source {
-	private $_deprecated;
+class IcmsFormSourceEditor extends icms_ipf_form_elements_Source
+{
+    private $_deprecated;
 
-	public function __construct($object, $key) {
-		parent::__construct($object, $key);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Source', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct($object, $key)
+    {
+        parent::__construct($object, $key);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Source', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

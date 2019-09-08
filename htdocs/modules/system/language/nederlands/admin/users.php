@@ -1,7 +1,8 @@
 <?php
 // $Id: users.php 11034 2011-02-19 20:12:41Z skenow $
 //%%%%%%	Admin Module Name  Users 	%%%%%
-if (!defined('_AM_DBUPDATED')) {define('_AM_DBUPDATED', 'Database succesvol bijgewerkt!');
+if (!defined('_AM_DBUPDATED')) {
+    define('_AM_DBUPDATED', 'Database succesvol bijgewerkt!');
 }
 
 define('_AM_AYSYWTDU', 'Weet u zeker dat u gebruiker %s wilt verwijderen?');

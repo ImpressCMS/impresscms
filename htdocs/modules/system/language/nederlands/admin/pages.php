@@ -9,4 +9,3 @@ define('_CO_SYSTEM_PAGES_PAGE_URL', 'Pagina URL');
 define('_CO_SYSTEM_PAGES_PAGE_TITLE', 'Titel');
 define('_CO_SYSTEM_PAGES_PAGE_STATUS', 'Pagina status');
 define('_CO_SYSTEM_PAGES_PAGE_MODULEID', 'Module');
-?>

@@ -31,4 +31,3 @@ define('_CO_ICMS_CUSTOMTAGS_EXPLAIN', 'Standaard tag zijn tags die u kunt define
 define(\'_CO_ICMS_CUSTOMTAGS_TAG_CODE\', \'IcmsCode');
 ######################## Added in 1.2 ###################################
 define('_CO_ICMS_CUSTOMTAGS_TAG_CODE', 'IcmsCode');
-?>

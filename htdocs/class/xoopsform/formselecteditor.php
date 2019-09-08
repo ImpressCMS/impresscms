@@ -26,11 +26,12 @@
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectEditor extends icms_form_elements_select_Editor {
-	private $_errors;
-	public function __construct(&$form, $name="editor", $value=null, $noHtml=false) {
-		parent::__construct($form, $name, $value, $noHtml);
-		$this->_errors = icms_core_Debug::setDeprecated('icms_form_elements_select_Editor', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormSelectEditor extends icms_form_elements_select_Editor
+{
+    private $_errors;
+    public function __construct(&$form, $name= 'editor', $value=null, $noHtml=false)
+    {
+        parent::__construct($form, $name, $value, $noHtml);
+        $this->_errors = icms_core_Debug::setDeprecated('icms_form_elements_select_Editor', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-?>

@@ -22,4 +22,3 @@ define('_PI_WAITING_ASKED', 'Questions');
 define('_PI_WAITING_NEWANSWERS', 'Nouvelles Réponses');
 define('_PI_WAITING_ANSWERED', 'Réponses');
 define('_PI_WAITING_WAITINGS_FMT', 'En Attentes (%s)');
-?>

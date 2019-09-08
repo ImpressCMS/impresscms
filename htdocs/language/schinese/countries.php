@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  * ISO 3166 Maintenance agency (ISO 3166/MA) - ISO's focal point for country codes
  * Website: http://www.iso.org/iso/country_codes.htm
@@ -261,4 +261,3 @@ define('_COUNTRY_ZA', '南非');
 define('_COUNTRY_ZM', '赞比亚');
 // define('_COUNTRY_ZR', 'Zaire');	transitionally reserved
 define('_COUNTRY_ZW', '津巴布韦');
-?>

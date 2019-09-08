@@ -13,17 +13,18 @@
  * @version		SVN: $Id: xoops_version.php 11009 2011-02-05 21:17:31Z skenow $
  */
 
-$modversion = array(
-	'name' => _MD_AM_BKPOSAD,
-	'version' => "",
-	'description' => _MD_AM_BKPOSAD_DSC,
-	'author' => "",
-	'credits' => "The ImpressCMS Project",
-	'help' => "blocksp.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "blockspadmin.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=blockspadmin",
-	'category' => XOOPS_SYSTEM_BLOCKP,
-	'group' => _MD_AM_GROUPS_LAYOUT);
+$modversion = [
+    'name' => _MD_AM_BKPOSAD,
+    'version' => '',
+    'description' => _MD_AM_BKPOSAD_DSC,
+    'author' => '',
+    'credits' => 'The ImpressCMS Project',
+    'help' => 'blocksp.html',
+    'license' => 'GPL see LICENSE',
+    'official' => 1,
+    'image' => 'blockspadmin.gif',
+    'hasAdmin' => 1,
+    'adminpath' => 'admin.php?fct=blockspadmin',
+    'category' => XOOPS_SYSTEM_BLOCKP,
+    'group' => _MD_AM_GROUPS_LAYOUT
+];

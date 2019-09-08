@@ -44,7 +44,7 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
+    die('ImpressCMS root path not defined');
 }
 /**
  * @package     kernel
@@ -62,11 +62,12 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormCheckBox extends icms_form_elements_Checkbox {
-	private $_deprecated;
-	public function __construct($caption, $name, $value = null, $delimeter = "&nbsp;") {
-		parent::__construct($caption, $name, $value, $delimeter);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Checkbox', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormCheckBox extends icms_form_elements_Checkbox
+{
+    private $_deprecated;
+    public function __construct($caption, $name, $value = null, $delimeter = '&nbsp;')
+    {
+        parent::__construct($caption, $name, $value, $delimeter);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Checkbox', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-?>

@@ -52,23 +52,23 @@ define('_CORE_DB_NOTRACE', 'notrace:mysql extension not loaded');
 define('_CORE_DB_NOTALLOWEDINGET', 'Database updates are not allowed during processing of a GET request');
 define('_CORE_DB_NOTRACEDB', 'notrace:Unable to connect to database');
 define('_CORE_DB_INVALIDEMAIL', 'Invalid Email');
-define('_CORE_PASSLEVEL1','Too short');
-define('_CORE_PASSLEVEL2','Weak');
-define('_CORE_PASSLEVEL3','Good');
-define('_CORE_PASSLEVEL4','Strong');
-define('_CORE_UNAMEPASS_IDENTIC','Username and Password identical.');
+define('_CORE_PASSLEVEL1', 'Too short');
+define('_CORE_PASSLEVEL2', 'Weak');
+define('_CORE_PASSLEVEL3', 'Good');
+define('_CORE_PASSLEVEL4', 'Strong');
+define('_CORE_UNAMEPASS_IDENTIC', 'Username and Password identical.');
 
 /* Added in 1.3 */
 
-define('_CORE_CHECKSUM_FILES_ADDED',' files have been added');
-define('_CORE_CHECKSUM_FILES_REMOVED',' files have been removed');
-define('_CORE_CHECKSUM_ALTERED_REMOVED',' files have been altered or removed');
-define('_CORE_CHECKSUM_CHECKFILE','Checking against the file ');
-define('_CORE_CHECKSUM_PERMISSIONS_ALTERED',' files have had their permissions altered');
+define('_CORE_CHECKSUM_FILES_ADDED', ' files have been added');
+define('_CORE_CHECKSUM_FILES_REMOVED', ' files have been removed');
+define('_CORE_CHECKSUM_ALTERED_REMOVED', ' files have been altered or removed');
+define('_CORE_CHECKSUM_CHECKFILE', 'Checking against the file ');
+define('_CORE_CHECKSUM_PERMISSIONS_ALTERED', ' files have had their permissions altered');
 define('_CORE_CHECKSUM_CHECKFILE_UNREADABLE', 'The file containing the checksums is unavailable or unreadable. Validation cannot be completed');
-define('_CORE_CHECKSUM_ADDING',' Adding');
-define('_CORE_CHECKSUM_CHECKSUM',' Checksum');
-define('_CORE_CHECKSUM_PERMISSIONS',' Permissions');
+define('_CORE_CHECKSUM_ADDING', ' Adding');
+define('_CORE_CHECKSUM_CHECKSUM', ' Checksum');
+define('_CORE_CHECKSUM_PERMISSIONS', ' Permissions');
 
 define('_CORE_DEPRECATED', 'Deprecated');
 define('_CORE_DEPRECATED_REPLACEMENT', 'use %s instead');
@@ -80,7 +80,6 @@ define('_CORE_DEBUG', 'Debug');
 define('_CORE_DEVELOPER_DASHBOARD', 'Developer Dashboard');
 
 define('_CORE_OID_URL_EXPECTED', 'Expected an OpenID URL.');
-define("_CORE_OID_URL_INVALID", 'Authentication error; not a valid OpenID.');
-define("_CORE_OID_REDIRECT_FAILED", 'Could not redirect to server: %s');
-define("_CORE_OID_INPROGRESS", "OpenID transaction in progress");
-
+define('_CORE_OID_URL_INVALID', 'Authentication error; not a valid OpenID.');
+define('_CORE_OID_REDIRECT_FAILED', 'Could not redirect to server: %s');
+define('_CORE_OID_INPROGRESS', 'OpenID transaction in progress');

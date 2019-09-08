@@ -37,17 +37,18 @@
  * @subpackage	Groups
  * @version		SVN: $Id: xoops_version.php 12313 2013-09-15 21:14:35Z skenow $
  */
-$modversion = array(
-	'name' => _MD_AM_ADGS,
-	'version' => "",
-	'description' => _MD_AM_ADGS_DSC,
-	'author' => "",
-	'credits' => "",
-	'help' => "groups.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "groups.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=groups",
-	'category' => XOOPS_SYSTEM_GROUP,
-	'group' => _MD_AM_GROUPS_USERSANDGROUPS);
+$modversion = [
+    'name' => _MD_AM_ADGS,
+    'version' => '',
+    'description' => _MD_AM_ADGS_DSC,
+    'author' => '',
+    'credits' => '',
+    'help' => 'groups.html',
+    'license' => 'GPL see LICENSE',
+    'official' => 1,
+    'image' => 'groups.gif',
+    'hasAdmin' => 1,
+    'adminpath' => 'admin.php?fct=groups',
+    'category' => XOOPS_SYSTEM_GROUP,
+    'group' => _MD_AM_GROUPS_USERSANDGROUPS
+];

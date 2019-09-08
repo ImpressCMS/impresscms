@@ -48,85 +48,88 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-abstract class icms_file_DownloadHandler {
+abstract class icms_file_DownloadHandler
+{
 
-	/**#@+
-	 * file information
-	 */
-	protected $mimetype;
-	protected $ext;
-	protected $archiver;
-	/**#@-*/
+    /**#@+
+     * file information
+     */
+    protected $mimetype;
+    protected $ext;
+    protected $archiver;
+    /**#@-*/
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		//EMPTY
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        //EMPTY
+    }
 
-	/**
-	 * Send the HTTP header
-	 *
-	 * @param	string  $filename
-	 *
-	 */
-	protected function _header($filename) {
-		if (function_exists('mb_http_output')) {
-			mb_http_output('pass');
-		}
-		header('Content-Type: ' . $this->mimetype);
-		if (preg_match("/MSIE ([0-9]\.[0-9]{1,2})/", $_SERVER['HTTP_USER_AGENT'])) {
-			header('Content-Disposition: attachment; filename="' . $filename . '"');
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-			header('Pragma: public');
-		} else {
-			header('Content-Disposition: attachment; filename="' . $filename . '"');
-			header('Expires: 0');
-			header('Pragma: no-cache');
-		}
-	}
+    /**
+     * Send the HTTP header
+     *
+     * @param	string  $filename
+     *
+     */
+    protected function _header($filename)
+    {
+        if (function_exists('mb_http_output')) {
+            mb_http_output('pass');
+        }
+        header('Content-Type: ' . $this->mimetype);
+        if (preg_match("/MSIE ([0-9]\.[0-9]{1,2})/", $_SERVER['HTTP_USER_AGENT'])) {
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+        } else {
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            header('Expires: 0');
+            header('Pragma: no-cache');
+        }
+    }
 
-	/**
-	 *
-	 *
-	 * @param   string    $filepath
-	 * @param   string    $newfilename
-	 **/
-	abstract function addFile($filepath, $newfilename = NULL);
+    /**
+     *
+     *
+     * @param   string    $filepath
+     * @param   string    $newfilename
+     **/
+    abstract public function addFile($filepath, $newfilename = null);
 
-	/**
-	 * addBinaryFile()
-	 *
-	 * @param   string    $filepath
-	 * @param   string    $newfilename
-	 **/
-	abstract function addBinaryFile($filepath, $newfilename = NULL);
+    /**
+     * addBinaryFile()
+     *
+     * @param   string    $filepath
+     * @param   string    $newfilename
+     **/
+    abstract public function addBinaryFile($filepath, $newfilename = null);
 
-	/**
-	 * addFileData()
-	 *
-	 * @param   mixed     $data
-	 * @param   string    $filename
-	 * @param   integer   $time
-	 **/
-	abstract function addFileData(&$data, $filename, $time = 0);
+    /**
+     * addFileData()
+     *
+     * @param   mixed     $data
+     * @param   string    $filename
+     * @param   integer   $time
+     **/
+    abstract public function addFileData(&$data, $filename, $time = 0);
 
-	/**
-	 * addBinaryFileData()
-	 *
-	 * @param   mixed   $data
-	 * @param   string  $filename
-	 * @param   integer $time
-	 **/
-	abstract function addBinaryFileData(&$data, $filename, $time = 0);
+    /**
+     * addBinaryFileData()
+     *
+     * @param   mixed   $data
+     * @param   string  $filename
+     * @param   integer $time
+     **/
+    abstract public function addBinaryFileData(&$data, $filename, $time = 0);
 
-	/**
-	 * download()
-	 *
-	 * @param   string  $name
-	 * @param   boolean $gzip
-	 **/
-	abstract function download($name, $gzip = true);
+    /**
+     * download()
+     *
+     * @param   string  $name
+     * @param   boolean $gzip
+     **/
+    abstract public function download($name, $gzip = true);
 }

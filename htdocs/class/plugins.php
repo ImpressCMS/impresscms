@@ -17,14 +17,15 @@
  * @todo		Remove in 1.4
  *
  */
-class IcmsPlugins extends icms_plugins_Object {
+class IcmsPlugins extends icms_plugins_Object
+{
+    private $_deprecated;
 
-	private $_deprecated;
-
-	function IcmsPlugins(&$array) {
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_plugins_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		parent::__construct($array);
-	}
+    public function __construct(&$array)
+    {
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_plugins_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+        parent::__construct($array);
+    }
 }
 
 /**
@@ -32,11 +33,13 @@ class IcmsPlugins extends icms_plugins_Object {
  * @todo		Remove in 1.4
  *
  */
-class IcmsPluginsHandler extends icms_plugins_Handler {	
-	private $_deprecated;
-	
-	public function __construct() {
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_plugins_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return new parent; 
-	}
+class IcmsPluginsHandler extends icms_plugins_Handler
+{
+    private $_deprecated;
+    
+    public function __construct()
+    {
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_plugins_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+        return new parent;
+    }
 }

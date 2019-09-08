@@ -20,4 +20,3 @@ define("_ER_UP_INVALIDIMAGEFILE", "Fichier image invalide");
 define("_ER_UP_SUSPICIOUSREFUSED", "Refus de t&eacute;l&eacute;charger cette image suspecte");
 define("_ER_UP_INVALIDFILENAME", "Nom de fichier invalide");
 define("_ER_UP_FAILEDSAVEFILE", "Echec pour sauvegarder le fichier dans %s");
-?>

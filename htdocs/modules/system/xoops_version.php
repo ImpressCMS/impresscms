@@ -36,11 +36,10 @@
  * @package		core
  * @version		$Id: xoops_version.php 12313 2013-09-15 21:14:35Z skenow $
  */
-defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
+defined('ICMS_ROOT_PATH') || die('ICMS root path not defined');
 
 /**
  * For now, let's manually include icms_version.php. In ImpressCMS 1.2, this shall be done automatically of course :-)'
  */
 
-include dirname( __FILE__ ) . '/icms_version.php' ;
-
+include __DIR__ . '/icms_version.php' ;

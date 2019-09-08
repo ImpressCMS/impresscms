@@ -6,7 +6,7 @@
 * Licence: GNU
 */
 if (!defined("XOOPS_ROOT_PATH")) {
- 	die("ImpressCMS root path is niet gedefineerd");
+    die("ImpressCMS root path is niet gedefineerd");
 }
 
 define("_DATABASEUPDATER_IMPORT", "Importeer");
@@ -38,4 +38,3 @@ define("_DATABASEUPDATER_MSG_DB_VERSION_ERR", "Bijwerken van module dbversie nie
 define("_DATABASEUPDATER_LATESTVER", "Laatste database versie : <span class='currentVer'>%s</span><br />");
 define("_DATABASEUPDATER_MSG_CONFIG_ERR", "Niet mogelijk om config %s in te voegen<br />");
 define("_DATABASEUPDATER_MSG_CONFIG_SCC", "%s config succesvol ingevoegd<br />");
-?>

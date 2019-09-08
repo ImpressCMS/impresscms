@@ -4,7 +4,9 @@
 * $Id$
 */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 define('_CO_ICMS_FILTER', "Filtro");
 define('_CO_ICMS_NONE', "Nessuno");
@@ -190,7 +192,7 @@ define('_CO_ICMS_UPDATE_DBVERSION', "Database portato alla versione '<em>%s</em>
 define('_CO_ICMS_ON', "Attivo");
 define('_CO_ICMS_OFF', "Spento");
 define('_CO_ICMS_WARNING_ALPHA', "Questo modulo è distribuito così com'è senza alcun tipo di garanzia. Questo modulo è ALPHA, ciò significa che è ancora in stato di attivo sviluppo. Questo rilascio è inteso solo per <b>motivi di sviluppo e test</b>, e noi raccomandiamo <b>energicamente</b> di non utilizzarlo in siti produttivi o pubblicati.");
-define('_CO_ICMS_UPDATE_NEEDED','Il tuo modulo sistema richiede di essere aggiornato');
+define('_CO_ICMS_UPDATE_NEEDED', 'Il tuo modulo sistema richiede di essere aggiornato');
 
 // moved in 1.3.3
-define("_MD_AM_HELP_TIP","Vedi testo aiuto");
+define("_MD_AM_HELP_TIP", "Vedi testo aiuto");

@@ -13,7 +13,7 @@
  * @version		$Id: icmsprinterfriendly.php 10764 2010-11-15 22:06:37Z skenow $
  */
 
-defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
 /**
  * Class to manage a printer friendly page
@@ -24,18 +24,17 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
  * @deprecated	Use icms_view_Printerfriendly, instead
  * @todo		Remove in version 1.4
  */
-class IcmsPrinterFriendly extends icms_view_Printerfriendly {
-
-	private $_deprecated;
-	/**
-	 * Constructor
-	 *
-	 * @param field_type bare_field_name
-	 */
-	public function __construct($content, $title=false, $dsc=false) {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_view_Printerfriendly', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
+class IcmsPrinterFriendly extends icms_view_Printerfriendly
+{
+    private $_deprecated;
+    /**
+     * Constructor
+     *
+     * @param field_type bare_field_name
+     */
+    public function __construct($content, $title=false, $dsc=false)
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_view_Printerfriendly', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-

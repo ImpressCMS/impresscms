@@ -8,20 +8,19 @@
 #                                                                        #
 # Last modified on 21.04.2005                                            #
 /*************************************************************************/
-function b_waiting_smartsection() {
-	$ret = array() ;
+function b_waiting_smartsection()
+{
+    $ret = [];
 
-	// smartsection submitted
-	$block = array();
-	$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("smartsection_items")." WHERE status=1");
-	if ($result) {
-		$block['adminlink'] = ICMS_URL."/modules/smartsection/admin/index.php?statussel=1";
-		list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
-		$block['lang_linkname'] = _PI_WAITING_SUBMITTED;
-	}
-	$ret[] = $block ;
+    // smartsection submitted
+    $block = [];
+    $result = icms::$xoopsDB->query('SELECT COUNT(*) FROM ' . icms::$xoopsDB->prefix('smartsection_items') . ' WHERE status=1');
+    if ($result) {
+        $block['adminlink'] = ICMS_URL . '/modules/smartsection/admin/index.php?statussel=1';
+        list($block['pendingnum']) = icms::$xoopsDB->fetchRow($result);
+        $block['lang_linkname'] = _PI_WAITING_SUBMITTED;
+    }
+    $ret[] = $block ;
 
-	return $ret;
+    return $ret;
 }
-
-?>

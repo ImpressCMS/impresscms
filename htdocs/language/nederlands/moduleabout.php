@@ -32,4 +32,3 @@ define('_MODABOUT_WARNING_ALPHA', 'Deze module komt zoals hij is, zonder welke g
 define('_MODABOUT_MODULE_LICENSE', 'Licentie');
 define('_MODABOUT_MANUAL', 'Handleiding');
 define('_MODABOUT_MANUAL_WIKI', 'ImpressCMS Wiki');
-?>

@@ -42,8 +42,8 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  * @version	$Id: xoopsmultimailer.php 12329 2013-09-19 13:53:36Z skenow $
  */
-if (!defined("ICMS_ROOT_PATH")) {
-	die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die('ImpressCMS root path not defined');
 }
 
 /**
@@ -55,14 +55,13 @@ if (!defined("ICMS_ROOT_PATH")) {
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  * @version		$Revision: 1083 $ - changed by $Author$ on $Date: 2007-10-16 12:42:51 -0400 (mar., 16 oct. 2007) $
  */
-class XoopsMultiMailer extends icms_messaging_EmailHandler {
+class XoopsMultiMailer extends icms_messaging_EmailHandler
+{
+    private $_deprecated;
 
-	private $_deprecated;
-
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_messaging_EmailHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_messaging_EmailHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>

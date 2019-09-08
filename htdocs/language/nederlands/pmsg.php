@@ -39,4 +39,3 @@ define('_PM_REPLY', 'Beantwoorden');
 define('_PM_PLZREG', 'Registreer of log in alvorens een bericht te verzenden!');
 define('_PM_ONLINE', 'Online');
 define('_PM_MESSAGEPOSTED_EMAILSUBJ', '[%s] Privébericht notificatie');
-?>

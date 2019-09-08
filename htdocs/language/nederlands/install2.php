@@ -1,16 +1,16 @@
 <?php
 // $Id: install2.php 8549 2009-04-11 10:45:09Z icmsunderdog $
-define("_INSTALL_WEBMASTER","Webmasters");
-define("_INSTALL_WEBMASTERD","Webmasters van deze website");
-define("_INSTALL_REGUSERS","Geregistreerde gebruikers");
-define("_INSTALL_REGUSERSD","Geregistreerde gebruikersgroep");
-define("_INSTALL_ANONUSERS","Anonieme gebruikers");
-define("_INSTALL_ANONUSERSD","Anonieme gebruikersgroep");
+define("_INSTALL_WEBMASTER", "Webmasters");
+define("_INSTALL_WEBMASTERD", "Webmasters van deze website");
+define("_INSTALL_REGUSERS", "Geregistreerde gebruikers");
+define("_INSTALL_REGUSERSD", "Geregistreerde gebruikersgroep");
+define("_INSTALL_ANONUSERS", "Anonieme gebruikers");
+define("_INSTALL_ANONUSERSD", "Anonieme gebruikersgroep");
 
-define("_INSTALL_L165","In verband met onderhoud werkzaamheden is de website momenteel gesloten. Komt u alstublieft op een later moment terug.<br />Excuses voor dit ongemak.");
+define("_INSTALL_L165", "In verband met onderhoud werkzaamheden is de website momenteel gesloten. Komt u alstublieft op een later moment terug.<br />Excuses voor dit ongemak.");
 
 
-define("_INSTALL_ANON","Anoniem");
+define("_INSTALL_ANON", "Anoniem");
 
 define("_INSTALL_DISCLMR", "Hoewel de website administrator/beheerder en moderatoren van deze website zoveel mogelijk proberen elke aanwezig aanstootgevend en ongewenst materiaal zo snel mogelijk te verwijderen dan wel aan te passen, is het onmogelijk alle berichten te controleren. Daarom erkent u dat alle reacties en/of berichten die gemaakt worden op deze website de mening weergeven van de auteur, en dus niet van de website administrator/beheerder en/of moderatoren (uitgezonderd uitlatingen afkomstig van deze personen) en derhalve hiervoor niet aansprakelijk zijn.
 
@@ -84,4 +84,3 @@ Met vriendelijke groet,
 {X_SITEURL}
 -----------
 Dit is een automatisch gegenereerde e-mail. Gelieve hier niet op te reageren.");
-?>

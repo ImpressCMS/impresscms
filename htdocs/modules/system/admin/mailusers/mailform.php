@@ -39,7 +39,7 @@
  * @subpackage	Users
  * @version		SVN: $Id: mailform.php 12313 2013-09-15 21:14:35Z skenow $
  */
-$form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', TRUE);
+$form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', true);
 /*
  * GET variables
  *
@@ -49,46 +49,46 @@ $form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailus
  */
 // from finduser section
 if (!empty($_POST['memberslist_id'])) {
-	$user_count = count($_POST['memberslist_id']);
-	$display_names = "";
-	for ($i = 0; $i < $user_count; $i++) {
-		$uid_hidden = new icms_form_elements_Hidden("mail_to_user[]", $_POST['memberslist_id'][$i]);
-		$form->addElement($uid_hidden);
-		$display_names .= "<a href='" . ICMS_URL . "/userinfo.php?uid="
-			. $_POST['memberslist_id'][$i] . "' target='_blank'>"
-			. $_POST['memberslist_uname'][$_POST['memberslist_id'][$i]] . "</a>, ";
-		unset($uid_hidden);
-	}
-	$users_label = new icms_form_elements_Label(_AM_SENDTOUSERS2, substr($display_names, 0, -2));
-	$form->addElement($users_label);
-	$display_criteria = 0;
+    $user_count = count($_POST['memberslist_id']);
+    $display_names = "";
+    for ($i = 0; $i < $user_count; $i++) {
+        $uid_hidden = new icms_form_elements_Hidden("mail_to_user[]", $_POST['memberslist_id'][$i]);
+        $form->addElement($uid_hidden);
+        $display_names .= "<a href='" . ICMS_URL . "/userinfo.php?uid="
+            . $_POST['memberslist_id'][$i] . "' target='_blank'>"
+            . $_POST['memberslist_uname'][$_POST['memberslist_id'][$i]] . "</a>, ";
+        unset($uid_hidden);
+    }
+    $users_label = new icms_form_elements_Label(_AM_SENDTOUSERS2, substr($display_names, 0, -2));
+    $form->addElement($users_label);
+    $display_criteria = 0;
 }
 
 if (!empty($display_criteria)) {
-	$selected_groups = array();
-	$group_select = new icms_form_elements_select_Group(_AM_GROUPIS . "<br />", "mail_to_group", FALSE, $selected_groups, 5, TRUE);
-	$lastlog_min = new icms_form_elements_Text(_AM_LASTLOGMIN . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_lastlog_min", 20, 10);
-	$lastlog_max = new icms_form_elements_Text(_AM_LASTLOGMAX . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_lastlog_max", 20, 10);
-	$regd_min = new icms_form_elements_Text(_AM_REGDMIN . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_regd_min", 20, 10);
-	$regd_max = new icms_form_elements_Text(_AM_REGDMAX . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_regd_max", 20, 10);
-	$idle_more = new icms_form_elements_Text(_AM_IDLEMORE . "<br />", "mail_idle_more", 10, 5);
-	$idle_less = new icms_form_elements_Text(_AM_IDLELESS . "<br />", "mail_idle_less", 10, 5);
-	$mailok_cbox = new icms_form_elements_Checkbox('', 'mail_mailok');
-	$mailok_cbox->addOption(1, _AM_MAILOK);
-	$inactive_cbox = new icms_form_elements_Checkbox('', 'mail_inactive');
-	$inactive_cbox->addOption(1, _AM_INACTIVE . '. ' . _AMIFCHECKD);
-	$inactive_cbox->setExtra("onclick='javascript:disableElement(\"mail_lastlog_min\");disableElement(\"mail_lastlog_max\");disableElement(\"mail_idle_more\");disableElement(\"mail_idle_less\");disableElement(\"mail_to_group[]\");'");
-	$criteria_tray = new icms_form_elements_Tray(_AM_SENDTOUSERS, "<br /><br />");
-	$criteria_tray->addElement($group_select);
-	$criteria_tray->addElement($lastlog_min);
-	$criteria_tray->addElement($lastlog_max);
-	$criteria_tray->addElement($idle_more);
-	$criteria_tray->addElement($idle_less);
-	$criteria_tray->addElement($mailok_cbox);
-	$criteria_tray->addElement($inactive_cbox);
-	$criteria_tray->addElement($regd_min);
-	$criteria_tray->addElement($regd_max);
-	$form->addElement($criteria_tray);
+    $selected_groups = [];
+    $group_select = new icms_form_elements_select_Group(_AM_GROUPIS . "<br />", "mail_to_group", false, $selected_groups, 5, true);
+    $lastlog_min = new icms_form_elements_Text(_AM_LASTLOGMIN . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_lastlog_min", 20, 10);
+    $lastlog_max = new icms_form_elements_Text(_AM_LASTLOGMAX . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_lastlog_max", 20, 10);
+    $regd_min = new icms_form_elements_Text(_AM_REGDMIN . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_regd_min", 20, 10);
+    $regd_max = new icms_form_elements_Text(_AM_REGDMAX . "<br />" . _AM_TIMEFORMAT . "<br />", "mail_regd_max", 20, 10);
+    $idle_more = new icms_form_elements_Text(_AM_IDLEMORE . "<br />", "mail_idle_more", 10, 5);
+    $idle_less = new icms_form_elements_Text(_AM_IDLELESS . "<br />", "mail_idle_less", 10, 5);
+    $mailok_cbox = new icms_form_elements_Checkbox('', 'mail_mailok');
+    $mailok_cbox->addOption(1, _AM_MAILOK);
+    $inactive_cbox = new icms_form_elements_Checkbox('', 'mail_inactive');
+    $inactive_cbox->addOption(1, _AM_INACTIVE . '. ' . _AMIFCHECKD);
+    $inactive_cbox->setExtra("onclick='javascript:disableElement(\"mail_lastlog_min\");disableElement(\"mail_lastlog_max\");disableElement(\"mail_idle_more\");disableElement(\"mail_idle_less\");disableElement(\"mail_to_group[]\");'");
+    $criteria_tray = new icms_form_elements_Tray(_AM_SENDTOUSERS, "<br /><br />");
+    $criteria_tray->addElement($group_select);
+    $criteria_tray->addElement($lastlog_min);
+    $criteria_tray->addElement($lastlog_max);
+    $criteria_tray->addElement($idle_more);
+    $criteria_tray->addElement($idle_less);
+    $criteria_tray->addElement($mailok_cbox);
+    $criteria_tray->addElement($inactive_cbox);
+    $criteria_tray->addElement($regd_min);
+    $criteria_tray->addElement($regd_max);
+    $form->addElement($criteria_tray);
 }
 
 $fname_text = new icms_form_elements_Text(_AM_MAILFNAME, "mail_fromname", 30, 255, htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES));
@@ -117,4 +117,3 @@ $form->addElement($submit_button);
 $form->setRequired($subject_text);
 $form->setRequired($body_text);
 //$form->setRequired($to_checkbox);
-

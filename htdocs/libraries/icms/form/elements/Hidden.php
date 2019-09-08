@@ -38,7 +38,7 @@
  * @version		$Id: Hidden.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * A hidden field
@@ -50,62 +50,66 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Hidden extends icms_form_Element {
+class icms_form_elements_Hidden extends icms_form_Element
+{
 
-	/**
-	 * Value
-	 * @var	string
-	 */
-	private $_value;
+    /**
+     * Value
+     * @var	string
+     */
+    private $_value;
 
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$name	"name" attribute
-	 * @param	string	$value	"value" attribute
-	 */
-	public function __construct($name, $value) {
-		$this->setName($name);
-		$this->setHidden();
-		$this->setValue($value);
-		$this->setCaption("");
-	}
+    /**
+     * Constructor
+     *
+     * @param	string	$name	"name" attribute
+     * @param	string	$value	"value" attribute
+     */
+    public function __construct($name, $value)
+    {
+        $this->setName($name);
+        $this->setHidden();
+        $this->setValue($value);
+        $this->setCaption('');
+    }
 
-	/**
-	 * Get the "value" attribute
-	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	string
-	 */
-	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
-	}
+    /**
+     * Get the "value" attribute
+     *
+     * @param	bool    $encode To sanitizer the text?
+     * @return	string
+     */
+    public function getValue($encode = false)
+    {
+        return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+    }
 
-	/**
-	 * Sets the "value" attribute
-	 *
-	 * @param  $value	string
-	 */
-	public function setValue($value) {
-		$this->_value = $value;
-	}
+    /**
+     * Sets the "value" attribute
+     *
+     * @param  $value	string
+     */
+    public function setValue($value)
+    {
+        $this->_value = $value;
+    }
 
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @return	string	HTML
-	 */
-	public function render() {
-		if (is_array($this->getValue())) {
-			$ret = '';
-			foreach ($this->getValue() as $value){
-				$ret .= "<input type='hidden' name='" . $this->getName() . "[]' id='" . $this->getName() . "' value='" . $value . "' />\n";
-			}
-		} else {
-			$ret = "<input type='hidden' name='" . $this->getName() . "' id='" . $this->getName() . "' value='" . $this->getValue() . "' />";
-		}
+    /**
+     * Prepare HTML for output
+     *
+     * @return	string	HTML
+     */
+    public function render()
+    {
+        if (is_array($this->getValue())) {
+            $ret = '';
+            foreach ($this->getValue() as $value) {
+                $ret .= "<input type='hidden' name='" . $this->getName() . "[]' id='" . $this->getName() . "' value='" . $value . "' />\n";
+            }
+        } else {
+            $ret = "<input type='hidden' name='" . $this->getName() . "' id='" . $this->getName() . "' value='" . $this->getValue() . "' />";
+        }
 
-		return $ret;
-	}
+        return $ret;
+    }
 }
-

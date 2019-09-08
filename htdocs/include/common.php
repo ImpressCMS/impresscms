@@ -39,10 +39,9 @@
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 /** @todo when this is no longer possible to run under PHP 5.x, we can remove the check - fiammybe 12 may 2019 */
-if(get_magic_quotes_runtime())
-{
-	// Deactivate
-	set_magic_quotes_runtime(false);
+if (get_magic_quotes_runtime()) {
+    // Deactivate
+    set_magic_quotes_runtime(false);
 }
 
 // -- Include common functions and constants file
@@ -51,7 +50,9 @@ include_once ICMS_INCLUDE_PATH . "/functions.php";
 include_once ICMS_INCLUDE_PATH . "/debug_functions.php";
 include_once ICMS_INCLUDE_PATH . "/version.php";
 
-if (!isset($xoopsOption)) $xoopsOption = array();
+if (!isset($xoopsOption)) {
+    $xoopsOption = [];
+}
 
 // load core language file before the initialization of the boot sequence
 icms_loadLanguageFile('core', 'theme');
@@ -66,29 +67,29 @@ icms::boot();
 // Disable gzip compression if PHP is run under CLI mode or if multi-language is enabled
 // To be refactored
 if (empty($_SERVER['SERVER_NAME'])
-		|| substr(PHP_SAPI, 0, 3) == 'cli'
-		|| $GLOBALS['icmsConfigMultilang']
+        || substr(PHP_SAPI, 0, 3) == 'cli'
+        || $GLOBALS['icmsConfigMultilang']
 ) {
-	$icmsConfig['gzip_compression'] = 0;
+    $icmsConfig['gzip_compression'] = 0;
 }
 
 if ($icmsConfig['gzip_compression'] == 1
-	&& extension_loaded('zlib')
-	&& !ini_get('zlib.output_compression')
-	) {
-		ini_set('zlib.output_compression', TRUE);
-		if (ini_get( 'zlib.output_compression_level') < 0 ) {
-			ini_set( 'zlib.output_compression_level', 6 );
-		}
-		if (!zlib_get_coding_type()) {
-			ini_set('zlib.output_compression', FALSE);
-			ob_start('ob_gzhandler');
-		}
+    && extension_loaded('zlib')
+    && !ini_get('zlib.output_compression')
+    ) {
+    ini_set('zlib.output_compression', true);
+    if (ini_get('zlib.output_compression_level') < 0) {
+        ini_set('zlib.output_compression_level', 6);
+    }
+    if (!zlib_get_coding_type()) {
+        ini_set('zlib.output_compression', false);
+        ob_start('ob_gzhandler');
+    }
 }
 
 // Include openid common functions if needed
 if (defined('ICMS_INCLUDE_OPENID')) {
-	require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
+    require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
 }
 /* This address the strict compliance for PHP 5.3/5.4, but the rest of our timezone handling
  * can be improved beyond this. ~skenow
@@ -103,35 +104,40 @@ icms_loadLanguageFile('system', 'common');
 @define('_GLOBAL_RIGHT', @_ADM_USE_RTL == 1 ? 'left' : 'right');
 
 // -- Include page-specific lang file
-if (isset($xoopsOption['pagetype']) && FALSE === strpos($xoopsOption['pagetype'], '.')) {
-	icms_loadLanguageFile('core', $xoopsOption['pagetype']);
+if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
+    icms_loadLanguageFile('core', $xoopsOption['pagetype']);
 }
 
 defined("XOOPS_USE_MULTIBYTES") or define("XOOPS_USE_MULTIBYTES", 0);
 
 if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
-	$_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
+    $icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
+    $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
 } elseif (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_POST['theme_select'];
-	$_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
+    $icmsConfig['theme_set'] = $_POST['theme_select'];
+    $_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
 } elseif (!empty($_SESSION['xoopsUserTheme'])
-		&& in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
+        && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
+    $icmsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
 }
 
 if ($icmsConfig['closesite'] == 1) {
-	include ICMS_INCLUDE_PATH . '/site-closed.php';
+    include ICMS_INCLUDE_PATH . '/site-closed.php';
 }
 
 icms::launchModule();
 
 if ($icmsConfigPersona['multi_login']) {
-	if (is_object(icms::$user)) {
-		$online_handler = icms::handler('icms_core_Online');
-		$online_handler->write(icms::$user->getVar('uid'), icms::$user->getVar('uname'),
-							   time(), 0, $_SERVER['REMOTE_ADDR']);
-	}
+    if (is_object(icms::$user)) {
+        $online_handler = icms::handler('icms_core_Online');
+        $online_handler->write(
+            icms::$user->getVar('uid'),
+            icms::$user->getVar('uname'),
+            time(),
+            0,
+            $_SERVER['REMOTE_ADDR']
+        );
+    }
 }
 
 // -- finalize boot process

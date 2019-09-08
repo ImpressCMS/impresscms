@@ -43,7 +43,7 @@
  * @version		$Id: Colorpicker.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * Color Picker
@@ -57,44 +57,47 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Colorpicker extends icms_form_elements_Text {
+class icms_form_elements_Colorpicker extends icms_form_elements_Text
+{
 
-	/**
-	 * Constructor
-	 * @param	string  $caption  Caption of the element
-	 * @param	string  $name     Name of the element
-	 * @param	string  $value    Value of the element
-	 */
-	public function __construct($caption, $name, $value = "#FFFFFF") {
-		parent::__construct($caption, $name, 9, 7, $value);
-	}
+    /**
+     * Constructor
+     * @param	string  $caption  Caption of the element
+     * @param	string  $name     Name of the element
+     * @param	string  $value    Value of the element
+     */
+    public function __construct($caption, $name, $value = '#FFFFFF')
+    {
+        parent::__construct($caption, $name, 9, 7, $value);
+    }
 
-	/**
-	 * Render the color picker
-	 * @return  $string	rendered color picker HTML
-	 */
-	public function render() {
-		if (isset($GLOBALS ['xoTheme'])) {
-			$GLOBALS ['xoTheme']->addScript('include/color-picker.js');
-		} else {
-			echo "<script type=\"text/javascript\" src=\"" . ICMS_URL . "/include/color-picker.js\"></script>";
-		}
-		$this->setExtra(' style="background-color:' . $this->getValue() . ';"');
-		return parent::render() . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . ICMS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\">\n";
-	}
+    /**
+     * Render the color picker
+     * @return  $string	rendered color picker HTML
+     */
+    public function render()
+    {
+        if (isset($GLOBALS ['xoTheme'])) {
+            $GLOBALS ['xoTheme']->addScript('include/color-picker.js');
+        } else {
+            echo '<script type="text/javascript" src="' . ICMS_URL . '/include/color-picker.js"></script>';
+        }
+        $this->setExtra(' style="background-color:' . $this->getValue() . ';"');
+        return parent::render() . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . ICMS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\">\n";
+    }
 
-	/**
-	 * Returns custom validation Javascript
-	 *
-	 * @return	string	Element validation Javascript
-	 */
-	public function renderValidationJS() {
-		$eltname = $this->getName();
-		$eltcaption = $this->getCaption();
-		$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
-		$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
-		$eltmsg = strip_tags($eltmsg);
-		return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
-	}
-
+    /**
+     * Returns custom validation Javascript
+     *
+     * @return	string	Element validation Javascript
+     */
+    public function renderValidationJS()
+    {
+        $eltname = $this->getName();
+        $eltcaption = $this->getCaption();
+        $eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+        $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+        $eltmsg = strip_tags($eltmsg);
+        return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+    }
 }

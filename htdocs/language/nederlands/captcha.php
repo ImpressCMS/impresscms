@@ -11,4 +11,3 @@ define("ICMS_CAPTCHA_REFRESH", "Is de code onduidelijk, klik dan op de afbeeldin
 
 // For text mode
 define("ICMS_CAPTCHA_RULE_TEXT", "Vul de weergegeven code uit de afbeelding in");
-?>

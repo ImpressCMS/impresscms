@@ -11,4 +11,3 @@ define('_AUTH_LDAP_XOOPS_USER_NOTFOUND', 'Er is geen corresponderende gebruikers
  %s <br />" .
 		"Controleer alstublieft uw gebruikersgegevens of stel in op automatisch verkrijgen.');
 define('_AUTH_LDAP_START_TLS_FAILED', 'Openen van een TLS verbinding is mislukt');
-?>

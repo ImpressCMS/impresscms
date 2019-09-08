@@ -43,7 +43,9 @@
  */
 
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die('ImpressCMS root path not defined');
+}
 require_once ICMS_ROOT_PATH . '/kernel/user.php';
 require_once ICMS_ROOT_PATH . '/kernel/group.php';
 
@@ -60,11 +62,13 @@ require_once ICMS_ROOT_PATH . '/kernel/group.php';
  * @todo		Remove in version 1.4
  *
  */
-class XoopsMemberHandler extends icms_member_Handler {
-	private $_deprecated;
+class XoopsMemberHandler extends icms_member_Handler
+{
+    private $_deprecated;
 
-	public function __construct(&$db) {
-		parent::__construct($db);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_member_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct(&$db)
+    {
+        parent::__construct($db);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_member_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

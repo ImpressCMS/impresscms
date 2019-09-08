@@ -1,10 +1,10 @@
 <?php
 
-define("_ERR_SEARCH","Search");
-define("_ERR_SEARCH_OUR_SITE","Search our site:");
-define("_ERR_ADVANCED_SEARCH","Advanced Search");
-define("_ERR_START_AGAIN","Start again from the <a href='" . ICMS_URL . "'>home page</a>.");
-define("_ERR_CONTACT","Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
+define("_ERR_SEARCH", "Search");
+define("_ERR_SEARCH_OUR_SITE", "Search our site:");
+define("_ERR_ADVANCED_SEARCH", "Advanced Search");
+define("_ERR_START_AGAIN", "Start again from the <a href='" . ICMS_URL . "'>home page</a>.");
+define("_ERR_CONTACT", "Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
 define("_ERR_NO", "Error %u");
 
 define("_ERR_400_TITLE", "Bad Request");
@@ -83,4 +83,3 @@ define("_ERR_404_DESC", "The page you are trying to access could not be found.")
  This status code, while used by many servers, is not an official HTTP status code.
  510 Not Extended (RFC 2774)
  */
-?>

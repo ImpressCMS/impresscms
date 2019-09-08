@@ -37,17 +37,18 @@
  * @subpackage	Users
  * @version		SVN: $Id: xoops_version.php 12313 2013-09-15 21:14:35Z skenow $
  */
-$modversion = array(
-	'name' => _MD_AM_RANK,
-	'version' => "",
-	'description' => _MD_AM_RANK_DSC,
-	'author' => "phpBB Group ( http://www.phpbb.com/ )",
-	'credits' => "",
-	'help' => "userrank.html",
-	'license' => "GPL see LICENSE",
-	'official' => 1,
-	'image' => "userrank.gif",
-	'hasAdmin' => 1,
-	'adminpath' => "admin.php?fct=userrank",
-	'category' => XOOPS_SYSTEM_URANK,
-	'group' => _MD_AM_GROUPS_USERSANDGROUPS);
+$modversion = [
+    'name' => _MD_AM_RANK,
+    'version' => '',
+    'description' => _MD_AM_RANK_DSC,
+    'author' => 'phpBB Group ( http://www.phpbb.com/ )',
+    'credits' => '',
+    'help' => 'userrank.html',
+    'license' => 'GPL see LICENSE',
+    'official' => 1,
+    'image' => 'userrank.gif',
+    'hasAdmin' => 1,
+    'adminpath' => 'admin.php?fct=userrank',
+    'category' => XOOPS_SYSTEM_URANK,
+    'group' => _MD_AM_GROUPS_USERSANDGROUPS
+];

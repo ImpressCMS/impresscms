@@ -38,7 +38,7 @@
  * @version		SVN: $Id: Date.php 12495 2015-06-15 19:43:10Z fiammy $
  **/
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * A text field with calendar popup
@@ -49,7 +49,8 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_form_elements_Date extends icms_form_elements_Text {
+class icms_form_elements_Date extends icms_form_elements_Text
+{
 
 
     /**
@@ -60,7 +61,8 @@ class icms_form_elements_Date extends icms_form_elements_Text {
      * @param int		$size
      * @param mixed		$value
      */
-    public function __construct($caption, $name, $size = 15, $value= 0) {
+    public function __construct($caption, $name, $size = 15, $value= 0)
+    {
         $value = !is_numeric($value) ? time() : (int) ($value);
         parent::__construct($caption, $name, $size, 25, $value);
     }
@@ -68,7 +70,8 @@ class icms_form_elements_Date extends icms_form_elements_Text {
     /**
      * Render the Date field
      */
-    public function render() {
+    public function render()
+    {
         global $icmsConfigPersona;
         $ele_name = $this->getName();
         $ele_value = $this->getValue(false);
@@ -80,7 +83,7 @@ class icms_form_elements_Date extends icms_form_elements_Text {
             include_once ICMS_ROOT_PATH . '/include/jalali.php';
         }
 
-        $result = "<input type='text' class='datepick'  name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date(_SHORTDATESTRING, $ele_value)."'".$this->getExtra()." />";
+        $result = "<input type='text' class='datepick'  name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date(_SHORTDATESTRING, $ele_value)."'".$this->getExtra() . ' />';
 
         return $result;
     }

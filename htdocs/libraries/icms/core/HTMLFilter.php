@@ -20,122 +20,128 @@
  * @package		Core
  *
  */
-class icms_core_HTMLFilter extends icms_core_DataFilter {
+class icms_core_HTMLFilter extends icms_core_DataFilter
+{
 
-	/**
-	 * variable used by HTML Filter Library
-	 **/
-	public $purifier;
+    /**
+     * variable used by HTML Filter Library
+     **/
+    public $purifier;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	/**
-	 * Access the only instance of this class
-	 * @return      object
-	 * @static      $instance
-	 * @staticvar   object
-	 **/
-	public static function getInstance() {
-		static $instance;
-		if (!isset($instance)) {
-			$instance = new self();
-		}
-		return $instance;
-	}
+    /**
+     * Access the only instance of this class
+     * @return      object
+     * @static      $instance
+     * @staticvar   object
+     **/
+    public static function getInstance()
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new self();
+        }
+        return $instance;
+    }
 
-// ----- Public Functions -----
+    // ----- Public Functions -----
 
-	/**
-	 * Gets the selected HTML Filter & filters the content
-	 * @param    string  $html    input to be cleaned
-	 * @TODO	allow the webmasters to select which HTML Filter they want to use such as
-	 *			HTMLPurifier, HTMLLawed etc, for now we just have HTMLPurifier.
-	 * @return   string
-	 **/
-	public static function filterHTML($html) {
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+    /**
+     * Gets the selected HTML Filter & filters the content
+     * @param    string  $html    input to be cleaned
+     * @TODO	allow the webmasters to select which HTML Filter they want to use such as
+     *			HTMLPurifier, HTMLLawed etc, for now we just have HTMLPurifier.
+     * @return   string
+     **/
+    public static function filterHTML($html)
+    {
+        $icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
         
         $fcomment = '<!-- filtered with htmlpurifier -->';
         
         $purified = strpos($html, $fcomment);
-        if ($purified !== FALSE) {
+        if ($purified !== false) {
             $html = str_replace($fcomment, '', $html);
         }
 
         if ($icmsConfigPurifier['enable_purifier'] !== 0) {
-			ICMS_PLUGINS_PATH;
-			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
-			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
-			if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
-				require_once ICMS_PLUGINS_PATH . '/csstidy/class.csstidy.php';
-			}
-			// get the Config Data
-			$icmsPurifyConf = self::getHTMLFilterConfig();
-			// uncomment for specific config debug info
-			//parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
+            ICMS_PLUGINS_PATH;
+            require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
+            require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
+            if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
+                require_once ICMS_PLUGINS_PATH . '/csstidy/class.csstidy.php';
+            }
+            // get the Config Data
+            $icmsPurifyConf = self::getHTMLFilterConfig();
+            // uncomment for specific config debug info
+            //parent::filterDebugInfo('icmsPurifyConf', $icmsPurifyConf);
 
             $purifier = new HTMLPurifier($icmsPurifyConf);
-			$html = $purifier->purify($html);
+            $html = $purifier->purify($html);
             
             $html .= $fcomment;
-		}
+        }
         
-		return $html;
-	}
+        return $html;
+    }
 
-// ----- Private Functions -----
+    // ----- Private Functions -----
 
-	/*
-	 * Get list of current custom Filters & return them as objects in array
-	 * Custom Filters are located in libraries/htmlpurifier/standalone/HTMLPurifier/Filter/
-	 *
-	 * @return	object	array list of filter objects
-	 */
-	private static function getCustomFilterList() {
-		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
-		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
-			$filterList = array();
+    /*
+     * Get list of current custom Filters & return them as objects in array
+     * Custom Filters are located in libraries/htmlpurifier/standalone/HTMLPurifier/Filter/
+     *
+     * @return	object	array list of filter objects
+     */
+    private static function getCustomFilterList()
+    {
+        $dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
+        $icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+        if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
+            $filterList = [];
 
-			$fileList = icms_core_Filesystem::getFileList($dirPath, '', array('php'), true);
-			unset($fileList['ExtractStyleBlocks.php'], $fileList['YouTube.php']);
-			$fileList = array_values($fileList);
+            $fileList = icms_core_Filesystem::getFileList($dirPath, '', ['php'], true);
+            unset($fileList['ExtractStyleBlocks.php'], $fileList['YouTube.php']);
+            $fileList = array_values($fileList);
 
-			foreach ($fileList as &$val) {
-				$val = "HTMLPurifier_Filter_".substr($val, 0,strrpos($val,'.'));
-				$newObject = new $val;
-				$filterList[] = $newObject;
-			}
-		} else {
-			$filterList = '';
-		}
+            foreach ($fileList as &$val) {
+                $val = 'HTMLPurifier_Filter_' . substr($val, 0, strrpos($val, '.'));
+                $newObject = new $val;
+                $filterList[] = $newObject;
+            }
+        } else {
+            $filterList = '';
+        }
 
-		return $filterList;
-	}
-	
-	/**
-	 * Gets Custom Purifier configurations ** this function will improve in time **
-	 * @return  array    $icmsPurifierConf
-	 **/
-	protected static function getHTMLFilterConfig() {
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+        return $filterList;
+    }
+    
+    /**
+     * Gets Custom Purifier configurations ** this function will improve in time **
+     * @return  array    $icmsPurifierConf
+     **/
+    protected static function getHTMLFilterConfig()
+    {
+        $icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
         
         $IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];
         if ($IframeRegExp !== '') {
-            $pos = strpos( $IframeRegExp, '|' );
-            if ($pos === FALSE) {
+            $pos = strpos($IframeRegExp, '|');
+            if ($pos === false) {
                 $IframeRegExp = '%^' . $IframeRegExp . '%';
             } else {
                 $IframeRegExp = '%^(' . $IframeRegExp . ')%';
             }
         }
  
-		$icmsPurifierConf = array(
+        $icmsPurifierConf = [
             'HTML.DefinitionID' => $icmsConfigPurifier['purifier_HTML_DefinitionID'],
             'HTML.DefinitionRev' => $icmsConfigPurifier['purifier_HTML_DefinitionRev'],
             'HTML.Doctype' => $icmsConfigPurifier['purifier_HTML_Doctype'],
@@ -167,7 +173,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
             'AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbspExceptions'],
             'Core.EscapeNonASCIICharacters' => $icmsConfigPurifier['purifier_Core_EscapeNonASCIICharacters'],
             'Core.HiddenElements' => $icmsConfigPurifier['purifier_Core_HiddenElements'],
-			'Core.NormalizeNewlines' => $icmsConfigPurifier['purifier_Core_NormalizeNewlines'],
+            'Core.NormalizeNewlines' => $icmsConfigPurifier['purifier_Core_NormalizeNewlines'],
             'Core.RemoveInvalidImg' => $icmsConfigPurifier['purifier_Core_RemoveInvalidImg'],
             'Core.Encoding' => _CHARSET,
             'Cache.DefinitionImpl' => 'Serializer',
@@ -201,7 +207,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
             'Filter.ExtractStyleBlocks' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'],
             'Filter.YouTube' => $icmsConfigPurifier['purifier_Filter_YouTube'],
             'Filter.Custom' => self::getCustomFilterList(),
-		);
-		return parent::cleanArray($icmsPurifierConf);
-	}
+        ];
+        return parent::cleanArray($icmsPurifierConf);
+    }
 }

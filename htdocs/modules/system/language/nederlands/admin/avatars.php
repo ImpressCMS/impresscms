@@ -10,4 +10,3 @@ define('_MD_RUDELIMG', 'Weet u zeker dat u deze pasfoto wilt verwijderen?');
 define('_MD_FAILDEL', 'Het verwijderen van de pasfoto %s uit de database is mislukt!');
 // added in 1.3
 define('_MD_RESTRICTIONS', 'Beperkingen');
-?>

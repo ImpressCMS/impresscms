@@ -29,10 +29,12 @@ defined('ICMS_ROOT_PATH') or exit();
  * @deprecated	Use icms_view_PageBuilder, instead
  * @todo		Remove in version 1.4 - there are no other occurrences in the core
  */
-class xos_logos_PageBuilder extends icms_view_PageBuilder {
-	private $_deprecated;
-	public function xoInit($options = array()) {
-		parent::xoInit($options);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_view_PageBuilder', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class xos_logos_PageBuilder extends icms_view_PageBuilder
+{
+    private $_deprecated;
+    public function xoInit($options = [])
+    {
+        parent::xoInit($options);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_view_PageBuilder', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

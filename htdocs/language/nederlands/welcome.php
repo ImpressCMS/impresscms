@@ -27,4 +27,3 @@ $content .= '
 	<li>Zorg er voor dat uw webbrowser cookies en javascript accepteert.</li>
 </ul>
 ';
-?>

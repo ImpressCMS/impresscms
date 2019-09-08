@@ -42,7 +42,9 @@
  * @version		$Id: formdhtmltextarea.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die('ImpressCMS root path not defined');
+}
 
 // Make sure you have included /include/xoopscodes.php, otherwise DHTML will not work properly!
 
@@ -55,12 +57,12 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package	 kernel
  * @subpackage  form
  */
-class XoopsFormDhtmlTextArea extends icms_form_elements_Dhtmltextarea {
-	private $_deprecated;
-	public function __construct($caption, $name, $value, $rows=5, $cols=50, $hiddentext="xoopsHiddenText", $options = array()) {
-		parent::__construct($caption, $name, $value, $rows, $cols, $hiddentext, $options);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Dhtmltextarea', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
+{
+    private $_deprecated;
+    public function __construct($caption, $name, $value, $rows=5, $cols=50, $hiddentext= 'xoopsHiddenText', $options = [])
+    {
+        parent::__construct($caption, $name, $value, $rows, $cols, $hiddentext, $options);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Dhtmltextarea', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>

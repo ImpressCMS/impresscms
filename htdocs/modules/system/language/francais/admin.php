@@ -28,9 +28,9 @@ define('_MD_AM_PERMADDOK', 'La permission: %s au groupe: %s a &eacute;t&eacute; 
 define('_MD_AM_PERMRESETNG', 'Impossible de r&eacute;-initialiser la permission de groupe pour le module %s');
 define('_MD_AM_PERMADDNGP', 'Tous les &eacute;l&eacute;ments parents doivent &ecirc;tre s&eacute;lectionn&eacute;s.');
 ######################## Added in 1.2 ###################################
-if(!defined('_MD_AM_AUTOTASKS')){define('_MD_AM_AUTOTASKS', 'Taches automatiques');
+if (!defined('_MD_AM_AUTOTASKS')) {
+    define('_MD_AM_AUTOTASKS', 'Taches automatiques');
 }
 define('_MD_AM_ADSENSES', 'Adsenses');
 define('_MD_AM_RATINGS', 'Ratings');
 define('_MD_AM_MIMETYPES', 'Mime Types');
-?>

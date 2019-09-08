@@ -44,7 +44,9 @@
 
 
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die('ImpressCMS root path not defined');
+}
 
 // RMV-NOTIFY
 include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
@@ -73,18 +75,16 @@ include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
  */
 class XoopsNotification extends icms_data_notification_Object
 {
-	private $_deprecated;
+    private $_deprecated;
 
-	/**
-	 * Constructor
-	 **/
-	function XoopsNotification()
-	{
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_data_notification_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
-
+    /**
+     * Constructor
+     **/
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_data_notification_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -102,10 +102,12 @@ class XoopsNotification extends icms_data_notification_Object
  * @deprecated	Use icms_data_notification_Handler, instead
  * @todo		Remove in version 1.4
  */
-class XoopsNotificationHandler extends icms_data_notification_Handler {
-	private $_deprecated;
-	public function __construct(&$db) {
-		parent::__construct($db);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_data_notification_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsNotificationHandler extends icms_data_notification_Handler
+{
+    private $_deprecated;
+    public function __construct(&$db)
+    {
+        parent::__construct($db);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_data_notification_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

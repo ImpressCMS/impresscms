@@ -42,12 +42,14 @@
  * @todo Remove in version 1.4
 */
 
-class IcmsMediaUploader extends icms_file_MediaUploadHandler {
-	private $_deprecated;
-	public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
-		parent::__construct($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_file_MediaUploadHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class IcmsMediaUploader extends icms_file_MediaUploadHandler
+{
+    private $_deprecated;
+    public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null)
+    {
+        parent::__construct($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_file_MediaUploadHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
 
 /**
@@ -59,16 +61,16 @@ class IcmsMediaUploader extends icms_file_MediaUploadHandler {
  * @author       The XOOPS Project Community <http://www.xoops.org>
  * @deprecated
  */
-class XoopsMediaUploader extends icms_file_MediaUploadHandler {
-
-	private $_deprecated;
-	/**
-	 * @deprecated	Use icms_file_MediaUploadHandler, instead
-	 * @todo		Remove in version 1.4
-	 */
-	function XoopsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
-		parent::__construct($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_file_MediaUploadHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-
+class XoopsMediaUploader extends icms_file_MediaUploadHandler
+{
+    private $_deprecated;
+    /**
+     * @deprecated	Use icms_file_MediaUploadHandler, instead
+     * @todo		Remove in version 1.4
+     */
+    public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null)
+    {
+        parent::__construct($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_file_MediaUploadHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

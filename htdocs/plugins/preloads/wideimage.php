@@ -17,22 +17,25 @@
  * @since	1.2
  *
  */
-class IcmsPreloadWideimage extends icms_preload_Item {
-	/**
-	 * Function to be triggered at the end of the output init process
-	 *
-	 * @return	void
-	 */
-	function eventStartOutputInit() {
-		// just including the file... more to come
-		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
-	}
+class IcmsPreloadWideimage extends icms_preload_Item
+{
+    /**
+     * Function to be triggered at the end of the output init process
+     *
+     * @return	void
+     */
+    public function eventStartOutputInit()
+    {
+        // just including the file... more to come
+        include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+    }
 
-	/**
-	 *
-	 * Events to be triggered at the start of the admin pages loading
-	 */
-	function eventAdminHeader() {
-		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
-	}
+    /**
+     *
+     * Events to be triggered at the start of the admin pages loading
+     */
+    public function eventAdminHeader()
+    {
+        include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+    }
 }

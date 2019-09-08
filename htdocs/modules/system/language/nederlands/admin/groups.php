@@ -1,7 +1,8 @@
 <?php
 // $Id: groups.php 10326 2010-07-11 18:54:25Z malanciault $
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
-if (!defined('_AM_DBUPDATED')) {define('_AM_DBUPDATED', 'Database is succesvol bijgewerkt!');
+if (!defined('_AM_DBUPDATED')) {
+    define('_AM_DBUPDATED', 'Database is succesvol bijgewerkt!');
 }
 
 define('_AM_EDITADG', 'Groepen beheer');
@@ -56,4 +57,3 @@ define('_AM_CBCENTER_ADMIN', 'Administratie centrum blok - Midden');
 define('_AM_CBBOTTOMLEFT_ADMIN', 'Administratie centrum blok - Linksonder');
 define('_AM_CBBOTTOMRIGHT_ADMIN', 'Administratie centrum blok - Rechtsonder');
 define('_AM_CBBOTTOM_ADMIN', 'Administratie centrum blok - Onder');
-?>

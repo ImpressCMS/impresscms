@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
-define("_ERR_SEARCH","搜索");
-define("_ERR_SEARCH_OUR_SITE","搜索我们的网站:");
-define("_ERR_ADVANCED_SEARCH","高级搜索");
-define("_ERR_START_AGAIN","从<a href='" . ICMS_URL . "'>主页</a>重新开始.");
-define("_ERR_CONTACT","联系<a href='mailto:%s'>管理员</a>报告这一错误.");
+define("_ERR_SEARCH", "搜索");
+define("_ERR_SEARCH_OUR_SITE", "搜索我们的网站:");
+define("_ERR_ADVANCED_SEARCH", "高级搜索");
+define("_ERR_START_AGAIN", "从<a href='" . ICMS_URL . "'>主页</a>重新开始.");
+define("_ERR_CONTACT", "联系<a href='mailto:%s'>管理员</a>报告这一错误.");
 define("_ERR_NO", "出错%u");
 
 define("_ERR_400_TITLE", "错误请求");
@@ -83,4 +83,3 @@ define("_ERR_404_DESC", "要访问的页面不存在.");
  This status code, while used by many servers, is not an official HTTP status code.
  510 Not Extended (RFC 2774)
  */
-?>

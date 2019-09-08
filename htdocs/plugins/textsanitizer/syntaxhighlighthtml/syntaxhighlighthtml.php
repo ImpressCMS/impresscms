@@ -16,10 +16,11 @@
  *
  * @param string $text the search terms
  */
-function textsanitizer_syntaxhighlighthtml($text) {
-	return preg_replace_callback("/\[code_html](.*)\[\/code_html\]/sU", function ($matches) {
-		return textsanitizer_geshi_html_highlight($matches[1]);
-	}, $text);
+function textsanitizer_syntaxhighlighthtml($text)
+{
+    return preg_replace_callback("/\[code_html](.*)\[\/code_html\]/sU", function ($matches) {
+        return textsanitizer_geshi_html_highlight($matches[1]);
+    }, $text);
 }
 
 /**
@@ -27,24 +28,27 @@ function textsanitizer_syntaxhighlighthtml($text) {
  *
  * @param $source
  */
-function textsanitizer_geshi_html_highlight($source) {
-	if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
-	$source = icms_core_DataFilter::undoHtmlSpecialChars($source);
+function textsanitizer_geshi_html_highlight($source)
+{
+    if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') {
+        return false;
+    }
+    $source = icms_core_DataFilter::undoHtmlSpecialChars($source);
 
-	// Create the new GeSHi object, passing relevant stuff
-	$geshi = new GeSHi($source, 'html4strict');
-	// Enclose the code in a <div>
-	$geshi->set_header_type(GESHI_HEADER_NONE);
+    // Create the new GeSHi object, passing relevant stuff
+    $geshi = new GeSHi($source, 'html4strict');
+    // Enclose the code in a <div>
+    $geshi->set_header_type(GESHI_HEADER_NONE);
 
-	// Sets the proper encoding charset other than "ISO-8859-1"
-	$geshi->set_encoding(_CHARSET);
+    // Sets the proper encoding charset other than "ISO-8859-1"
+    $geshi->set_encoding(_CHARSET);
 
-	$geshi->set_link_target ( "_blank" );
+    $geshi->set_link_target('_blank');
 
-	// Parse the code
-	$code = $geshi->parse_code();
-	$code = "<div class=\"icmsCodeHtml\"><pre><code>".$code."</code></pre></div>";
-	return $code;
+    // Parse the code
+    $code = $geshi->parse_code();
+    $code = '<div class="icmsCodeHtml"><pre><code>' . $code . '</code></pre></div>';
+    return $code;
 }
 
 /**
@@ -52,29 +56,32 @@ function textsanitizer_geshi_html_highlight($source) {
  *
  * @param $ele_name
  */
-function render_syntaxhighlighthtml($ele_name) {
-	global $xoTheme;
-	$javascript='';
-	$dirname = basename(dirname(__FILE__));
-	if (isset($xoTheme)) {
-		$xoTheme->addScript(
-			ICMS_URL.'/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
-			array('type' => 'text/javascript'));
-	}
-	$code = "<img
-		onclick='javascript:icmsCodeHTML(\"" . $ele_name . "\", \"" . htmlspecialchars(_ENTERHTMLCODE, ENT_QUOTES, _CHARSET) . "\");'
+function render_syntaxhighlighthtml($ele_name)
+{
+    global $xoTheme;
+    $javascript='';
+    $dirname = basename(__DIR__);
+    if (isset($xoTheme)) {
+        $xoTheme->addScript(
+            ICMS_URL.'/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
+            ['type' => 'text/javascript']
+        );
+    }
+    $code = "<img
+		onclick='javascript:icmsCodeHTML(\"" . $ele_name . '", "' . htmlspecialchars(_ENTERHTMLCODE, ENT_QUOTES, _CHARSET) . "\");'
 		onmouseover='style.cursor=\"pointer\"'
-		src='" . ICMS_URL . "/plugins/textsanitizer/" . $dirname . "/html.png'
+		src='" . ICMS_URL . '/plugins/textsanitizer/' . $dirname . "/html.png'
 		alt='html'
 		title='HTML' />&nbsp;";
-	return array($code, $javascript);
+    return [$code, $javascript];
 }
 
 /**
  *
  * Enter specific styling for this plugin
  */
-function style_syntaxhighlighthtml() {
-	$style_info = '';
-	return $style_info;
+function style_syntaxhighlighthtml()
+{
+    $style_info = '';
+    return $style_info;
 }

@@ -47,9 +47,9 @@ global $xoopsOption, $icmsConfig, $icmsModule;
 $xoopsOption['theme_use_smarty'] = 1;
 
 if (@$xoopsOption['template_main']) {
-	if (FALSE === strpos($xoopsOption['template_main'], ':')) {
-		$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];
-	}
+    if (false === strpos($xoopsOption['template_main'], ':')) {
+        $xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];
+    }
 }
 $xoopsThemeFactory = new icms_view_theme_Factory();
 $xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
@@ -58,7 +58,7 @@ $xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
 /**
  * @var icms_view_theme_Object
  */
-$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
+$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(['contentTemplate' => @$xoopsOption['template_main'],]);
 $xoopsTpl = $icmsTpl =& $xoTheme->template;
 // no longer needed because of ticket #751
 //if ($icmsConfigMetaFooter['use_google_analytics'] === TRUE
@@ -75,54 +75,55 @@ $xoopsTpl = $icmsTpl =& $xoTheme->template;
 //	}
 //}
 if (isset($icmsConfigMetaFooter['google_meta']) && $icmsConfigMetaFooter['google_meta'] != '') {
-	$xoTheme->addMeta('meta', 'verify-v1', $icmsConfigMetaFooter['google_meta']);
-	$xoTheme->addMeta('meta', 'google-site-verification', $icmsConfigMetaFooter['google_meta']);
+    $xoTheme->addMeta('meta', 'verify-v1', $icmsConfigMetaFooter['google_meta']);
+    $xoTheme->addMeta('meta', 'google-site-verification', $icmsConfigMetaFooter['google_meta']);
 }
 // ################# Preload Trigger startOutputInit ##############
 icms::$preload->triggerEvent('startOutputInit');
 
-$xoTheme->addScript(ICMS_URL . '/include/xoops.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_URL . '/include/linkexternal.js', array('type' => 'text/javascript'));
+$xoTheme->addScript(ICMS_URL . '/include/xoops.js', ['type' => 'text/javascript']);
+$xoTheme->addScript(ICMS_URL . '/include/linkexternal.js', ['type' => 'text/javascript']);
 /**
  * @todo	Remove icms.css in 2.0
  * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
  */
 icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
-$xoTheme->addStylesheet(ICMS_URL . '/icms' . (@_ADM_USE_RTL === TRUE?'_rtl':'') . '.css', array('media' => 'screen'));
+$xoTheme->addStylesheet(ICMS_URL . '/icms' . (@_ADM_USE_RTL === true?'_rtl':'') . '.css', ['media' => 'screen']);
 
 $style_info = '';
 if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
-	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-		if (empty($key))
-		continue;
-		if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
-			$xoTheme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', array('media' => 'screen'));
-		} else {
-			$extension = include_once ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.php';
-			$func = 'style_' . $key;
-			if (function_exists($func)) {
-				$style_info = $func();
-				if (!empty($style_info)) {
-					if (!file_exists(ICMS_ROOT_PATH . '/' . $style_info)) {
-						$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
-					} else {
-						$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
-					}
-				}
-			}
-		}
-	}
+    foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+        if (empty($key)) {
+            continue;
+        }
+        if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
+            $xoTheme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', ['media' => 'screen']);
+        } else {
+            $extension = include_once ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.php';
+            $func = 'style_' . $key;
+            if (function_exists($func)) {
+                $style_info = $func();
+                if (!empty($style_info)) {
+                    if (!file_exists(ICMS_ROOT_PATH . '/' . $style_info)) {
+                        $xoTheme->addStylesheet('', ['media' => 'screen'], $style_info);
+                    } else {
+                        $xoTheme->addStylesheet($style_info, ['media' => 'screen']);
+                    }
+                }
+            }
+        }
+    }
 }
 
-$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/jquery.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/helptip.js', array( 'type' => 'text/javascript'));
-$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css', array('media' => 'screen'));
+$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/jquery.js', ['type' => 'text/javascript']);
+$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js', ['type' => 'text/javascript']);
+$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/helptip.js', ['type' => 'text/javascript']);
+$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css', ['media' => 'screen']);
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/jgrowl'
-	. (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'') . '.css', array('media' => 'screen'));
-if (! empty( $_SESSION['redirect_message'])) {
-	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/jgrowl.js', array('type' => 'text/javascript'));
-	$xoTheme->addScript('', array('type' => 'text/javascript'), '
+    . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?'_rtl':'') . '.css', ['media' => 'screen']);
+if (! empty($_SESSION['redirect_message'])) {
+    $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/jgrowl.js', ['type' => 'text/javascript']);
+    $xoTheme->addScript('', ['type' => 'text/javascript'], '
 	if (!window.console || !console.firebug) {
 		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd",
 					"time", "timeEnd", "count", "trace", "profile", "profileEnd"];
@@ -137,33 +138,36 @@ if (! empty( $_SESSION['redirect_message'])) {
 		});
 	})(jQuery);
 	');
-	unset( $_SESSION['redirect_message'] ) ;
+    unset($_SESSION['redirect_message']) ;
 }
 
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css');
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/colorbox/jquery.colorbox-min.js');
 
 if (@is_object($xoTheme->plugins['icms_view_PageBuilder'])) {
-	$aggreg =& $xoTheme->plugins['icms_view_PageBuilder'];
-	$xoopsTpl->assign_by_ref('xoBlocks', $aggreg->blocks);
+    $aggreg =& $xoTheme->plugins['icms_view_PageBuilder'];
+    $xoopsTpl->assign_by_ref('xoBlocks', $aggreg->blocks);
 
-	// Backward compatibility code for pre 2.0.14 themes
-	$xoopsTpl->assign_by_ref('xoops_lblocks', $aggreg->blocks['canvas_left']);
-	$xoopsTpl->assign_by_ref('xoops_rblocks', $aggreg->blocks['canvas_right']);
-	$xoopsTpl->assign_by_ref('xoops_ccblocks', $aggreg->blocks['page_topcenter']);
-	$xoopsTpl->assign_by_ref('xoops_clblocks', $aggreg->blocks['page_topleft']);
-	$xoopsTpl->assign_by_ref('xoops_crblocks', $aggreg->blocks['page_topright']);
+    // Backward compatibility code for pre 2.0.14 themes
+    $xoopsTpl->assign_by_ref('xoops_lblocks', $aggreg->blocks['canvas_left']);
+    $xoopsTpl->assign_by_ref('xoops_rblocks', $aggreg->blocks['canvas_right']);
+    $xoopsTpl->assign_by_ref('xoops_ccblocks', $aggreg->blocks['page_topcenter']);
+    $xoopsTpl->assign_by_ref('xoops_clblocks', $aggreg->blocks['page_topleft']);
+    $xoopsTpl->assign_by_ref('xoops_crblocks', $aggreg->blocks['page_topright']);
 
-	$xoopsTpl->assign('xoops_showlblock', !empty($aggreg->blocks['canvas_left']));
-	$xoopsTpl->assign('xoops_showrblock', !empty($aggreg->blocks['canvas_right']));
-	$xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter'])
-												|| !empty($aggreg->blocks['page_topleft'])
-												|| !empty($aggreg->blocks['page_topright'])
-											);
+    $xoopsTpl->assign('xoops_showlblock', !empty($aggreg->blocks['canvas_left']));
+    $xoopsTpl->assign('xoops_showrblock', !empty($aggreg->blocks['canvas_right']));
+    $xoopsTpl->assign(
+        'xoops_showcblock',
+        !empty($aggreg->blocks['page_topcenter'])
+                                                || !empty($aggreg->blocks['page_topleft'])
+                                                || !empty($aggreg->blocks['page_topright'])
+                                            );
 }
 
-if ($icmsModule )
-$xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$icmsModule->getVar('mid', 'n')];
+if ($icmsModule) {
+    $xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$icmsModule->getVar('mid', 'n')];
+}
 
 // Assigning the selected language as a smarty var
 $xoopsTpl->assign('icmsLang', $icmsConfig['language']);

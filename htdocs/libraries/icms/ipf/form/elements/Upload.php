@@ -12,27 +12,30 @@
  * @version		$Id: Upload.php 11454 2011-11-25 12:29:04Z sato-san $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-class icms_ipf_form_elements_Upload extends icms_form_elements_File {
-	/**
-	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
-	 * @param	string    $key      the form name
-	 */
-	public function __construct($object, $key) {
-		parent::__construct($object->vars[$key]['form_caption'], $key, isset($object->vars[$key]['form_maxfilesize']) ? $object->vars[$key]['form_maxfilesize'] : 0);
-		$this->setExtra(" size=30");
-	}
+class icms_ipf_form_elements_Upload extends icms_form_elements_File
+{
+    /**
+     * Constructor
+     * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+     * @param	string    $key      the form name
+     */
+    public function __construct($object, $key)
+    {
+        parent::__construct($object->vars[$key]['form_caption'], $key, isset($object->vars[$key]['form_maxfilesize']) ? $object->vars[$key]['form_maxfilesize'] : 0);
+        $this->setExtra(' size=30');
+    }
 
-	/**
-	 * prepare HTML for output
-	 *
-	 * @return	string	HTML
-	 */
-	public function render() {
-		return "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />
+    /**
+     * prepare HTML for output
+     *
+     * @return	string	HTML
+     */
+    public function render()
+    {
+        return "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />
 		        <input type='file' name='" . $this->getName() . "' id='" . $this->getName() . "'" . $this->getExtra() . " />
 		        <input type='hidden' name='icms_upload_file[]' id='icms_upload_file[]' value='" . $this->getName() . "' />";
-	}
+    }
 }

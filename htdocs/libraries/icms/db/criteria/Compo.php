@@ -49,7 +49,7 @@
  * @version		SVN: $Id: Compo.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * Collection of multiple {@link icms_db_criteria_Element}s
@@ -61,97 +61,102 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_db_criteria_Compo extends icms_db_criteria_Element {
+class icms_db_criteria_Compo extends icms_db_criteria_Element
+{
 
-	/**
-	 * The elements of the collection
-	 * @var	array   Array of {@link icms_db_criteria_Element} objects
-	 */
-	public $criteriaElements = array();
+    /**
+     * The elements of the collection
+     * @var	array   Array of {@link icms_db_criteria_Element} objects
+     */
+    public $criteriaElements = [];
 
-	/**
-	 * Conditions
-	 * @var	array
-	 */
-	public $conditions = array();
+    /**
+     * Conditions
+     * @var	array
+     */
+    public $conditions = [];
 
-	/**
-	 * Constructor
-	 *
-	 * @param   object  $ele
-	 * @param   string  $condition
-	 **/
-	public function __construct($ele=null, $condition='AND') {
-		if (isset($ele) && is_object($ele)) {
-			$this->add($ele, $condition);
-		}
-	}
+    /**
+     * Constructor
+     *
+     * @param   object  $ele
+     * @param   string  $condition
+     **/
+    public function __construct($ele=null, $condition='AND')
+    {
+        if (isset($ele) && is_object($ele)) {
+            $this->add($ele, $condition);
+        }
+    }
 
-	/**
-	 * Add an element
-	 *
-	 * @param   object  &$criteriaElement
-	 * @param   string  $condition
-	 *
-	 * @return  object  reference to this collection
-	 **/
-	public function &add(&$criteriaElement, $condition='AND') {
-		$this->criteriaElements[] =& $criteriaElement;
-		$this->conditions[] = $condition;
-		return $this;
-	}
+    /**
+     * Add an element
+     *
+     * @param   object  &$criteriaElement
+     * @param   string  $condition
+     *
+     * @return  object  reference to this collection
+     **/
+    public function &add($criteriaElement, $condition='AND')
+    {
+        $this->criteriaElements[] =& $criteriaElement;
+        $this->conditions[] = $condition;
+        return $this;
+    }
 
-	/**
-	 * Make the criteria into a query string
-	 *
-	 * @return	string
-	 */
-	public function render() {
-		$ret = '';
-		$count = count($this->criteriaElements);
-		if ($count > 0) {
-			$ret = '(' . $this->criteriaElements[0]->render();
-			for ($i = 1; $i < $count; $i++) {
-				$ret .= ' ' . $this->conditions[$i] . ' ' . $this->criteriaElements[$i]->render();
-			}
-			$ret .= ')';
-		}
-		return $ret;
-	}
+    /**
+     * Make the criteria into a query string
+     *
+     * @return	string
+     */
+    public function render()
+    {
+        $ret = '';
+        $count = count($this->criteriaElements);
+        if ($count > 0) {
+            $ret = '(' . $this->criteriaElements[0]->render();
+            for ($i = 1; $i < $count; $i++) {
+                $ret .= ' ' . $this->conditions[$i] . ' ' . $this->criteriaElements[$i]->render();
+            }
+            $ret .= ')';
+        }
+        return $ret;
+    }
 
-	/**
-	 * Make the criteria into a SQL "WHERE" clause
-	 *
-	 * @return	string
-	 */
-	public function renderWhere() {
-		$ret = $this->render();
-		$ret = ($ret != '') ? 'WHERE ' . $ret : $ret;
-		return $ret;
-	}
+    /**
+     * Make the criteria into a SQL "WHERE" clause
+     *
+     * @return	string
+     */
+    public function renderWhere()
+    {
+        $ret = $this->render();
+        $ret = ($ret != '') ? 'WHERE ' . $ret : $ret;
+        return $ret;
+    }
 
-	/**
-	 * Generate an LDAP filter from criteria
-	 *
-	 * @return string
-	 * @author Nathan Dial ndial@trillion21.com
-	 */
-	public function renderLdap() {
-		$retval = '';
-		$count = count($this->criteriaElements);
-		if ($count > 0) {
-			$retval = $this->criteriaElements[0]->renderLdap();
-			for ($i = 1; $i < $count; $i++) {
-				$cond = $this->conditions[$i];
-				if (strtoupper($cond) == 'AND') {
-					$op = '&';
-				} elseif (strtoupper($cond) == 'OR') {
-					$op = '|';
-				}
-				$retval = "(" . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ")";
-			}
-		}
-		return $retval;
-	}
+    /**
+     * Generate an LDAP filter from criteria
+     *
+     * @return string
+     * @author Nathan Dial ndial@trillion21.com
+     */
+    public function renderLdap()
+    {
+        $retval = '';
+        $count = count($this->criteriaElements);
+        if ($count > 0) {
+            $retval = $this->criteriaElements[0]->renderLdap();
+            for ($i = 1; $i < $count; $i++) {
+                $cond = $this->conditions[$i];
+                if (strtoupper($cond) == 'AND') {
+                    $op = '&';
+                } elseif (strtoupper($cond) == 'OR') {
+                    $op = '|';
+                }
+                $retval = '(' . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ')';
+            }
+        }
+        return $retval;
+    }
 }
-

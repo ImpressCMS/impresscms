@@ -20,12 +20,15 @@
  * @version		$Id: captcha.php 10679 2010-09-25 17:16:09Z skenow $
  */
 
-class IcmsCaptcha extends icms_form_elements_captcha_Object {
-	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_captcha_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class IcmsCaptcha extends icms_form_elements_captcha_Object
+{
+    private $_deprecated;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_captcha_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-class XoopsCaptcha extends IcmsCaptcha { /* For backwards compatibility */ }
-?>
+class XoopsCaptcha extends IcmsCaptcha
+{ /* For backwards compatibility */
+}

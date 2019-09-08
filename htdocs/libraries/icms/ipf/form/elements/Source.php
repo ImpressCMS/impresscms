@@ -12,45 +12,52 @@
  * @version		$Id: Source.php 10866 2010-12-08 04:40:32Z skenow $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
-	/*
-	 * Editor's class instance
-	 */
-	private $_editor = null;
+class icms_ipf_form_elements_Source extends icms_form_elements_Textarea
+{
+    /*
+     * Editor's class instance
+     */
+    private $_editor = null;
 
-	/**
-	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
-	 * @param	string    $key      the form name
-	 */
-	public function __construct($object, $key) {
-		global $icmsConfig;
+    /**
+     * Constructor
+     * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+     * @param	string    $key      the form name
+     */
+    public function __construct($object, $key)
+    {
+        global $icmsConfig;
 
-		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e'));
+        parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e'));
 
-		$control = $object->getControl($key);
+        $control = $object->getControl($key);
 
-		$editor_handler = icms_plugins_EditorHandler::getInstance('source');
-		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
-			array('name' => $key,
-				'value' => $object->getVar($key, 'e'),
-				'language' => isset($control['language']) ? $control['language'] : _LANGCODE,
-				'width' => isset($control['width']) ? $control['width'] : '100%',
-				'height' => isset($control['height']) ? $control['height'] : '400px',
-				'syntax' => isset($control['syntax']) ? $control['syntax'] : 'php'));
-	}
+        $editor_handler = icms_plugins_EditorHandler::getInstance('source');
+        $this->_editor = &$editor_handler->get(
+            $icmsConfig['sourceeditor_default'],
+            [
+                                                   'name'     => $key,
+                                                   'value'    => $object->getVar($key, 'e'),
+                                                   'language' => isset($control['language']) ? $control['language'] : _LANGCODE,
+                                                   'width'    => isset($control['width']) ? $control['width'] : '100%',
+                                                   'height'   => isset($control['height']) ? $control['height'] : '400px',
+                                                   'syntax'   => isset($control['syntax']) ? $control['syntax'] : 'php'
+                                               ]
+        );
+    }
 
-	/**
-	 * Renders the editor
-	 * @return	string  the constructed html string for the editor
-	 */
-	public function render() {
-		if ($this->_editor) {
-			return $this->_editor->render();
-		} else {
-			return parent::render();
-		}
-	}
+    /**
+     * Renders the editor
+     * @return	string  the constructed html string for the editor
+     */
+    public function render()
+    {
+        if ($this->_editor) {
+            return $this->_editor->render();
+        } else {
+            return parent::render();
+        }
+    }
 }

@@ -20,9 +20,8 @@
  * @version		$Id: config.php 19090 2010-03-13 17:41:42Z skenow $
  */
 
-$config = array(
-	"name"				=> 'icmscaptcha', 
-);
+$config = [
+    "name"				=> 'icmscaptcha',
+];
 
 return $config;
-?>

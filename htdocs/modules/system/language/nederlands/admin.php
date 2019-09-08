@@ -28,7 +28,8 @@ define('_MD_AM_PERMADDOK', 'Gebruikers-groeprechten succesvol toegevoegd (Permis
 define('_MD_AM_PERMRESETNG', 'Het was niet mogelijk de gebruikers-groeprechten voor %s te resetten');
 define('_MD_AM_PERMADDNGP', 'Alle moeder items moeten geselecteerd worden.');
 // added in 1.2
-if (!defined('_MD_AM_AUTOTASKS')) {define('_MD_AM_AUTOTASKS', 'Automatische Taken');
+if (!defined('_MD_AM_AUTOTASKS')) {
+    define('_MD_AM_AUTOTASKS', 'Automatische Taken');
 }
 define('_MD_AM_ADSENSES', 'Adsenses');
 define('_MD_AM_RATINGS', 'Beoordelingen');

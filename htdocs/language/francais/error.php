@@ -1,10 +1,10 @@
 <?php
 //traduction CPascalWeb
-define("_ERR_SEARCH","Recherche");
-define("_ERR_SEARCH_OUR_SITE","Recherche sur notre site:");
-define("_ERR_ADVANCED_SEARCH","Recherche avanc&eacute;e");
-define("_ERR_START_AGAIN","Recommencez la recherche de la <a href='" . XOOPS_URL . "'>Page d'accueil</a>.");
-define("_ERR_CONTACT","Contactez le <a href='mailto:%s'>webmaster</a> pour lui signal&eacute; cette erreur.");
+define("_ERR_SEARCH", "Recherche");
+define("_ERR_SEARCH_OUR_SITE", "Recherche sur notre site:");
+define("_ERR_ADVANCED_SEARCH", "Recherche avanc&eacute;e");
+define("_ERR_START_AGAIN", "Recommencez la recherche de la <a href='" . XOOPS_URL . "'>Page d'accueil</a>.");
+define("_ERR_CONTACT", "Contactez le <a href='mailto:%s'>webmaster</a> pour lui signal&eacute; cette erreur.");
 define("_ERR_NO", "Erreur %u");
 
 define("_ERR_400_TITLE", "Votre demande n'est pas bonne");
@@ -83,4 +83,3 @@ Response status codes beginning with the digit "5" indicate cases in which the s
     This status code, while used by many servers, is not an official HTTP status code.
 510 Not Extended (RFC 2774)
 */
-?>

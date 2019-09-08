@@ -42,7 +42,7 @@
  * @version	$Id: formdatetime.php 12329 2013-09-19 13:53:36Z skenow $
  */
 if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
+    die('ImpressCMS root path not defined');
 }
 
 /**
@@ -64,12 +64,12 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @package     kernel
  * @subpackage  form
  */
-class XoopsFormDateTime extends icms_form_elements_Datetime {
-	private $_deprecated;
-	public function __construct($caption, $name, $size = 15, $value=0) {
-		parent::__construct($caption, $name, $size, $value);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Datetime', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class XoopsFormDateTime extends icms_form_elements_Datetime
+{
+    private $_deprecated;
+    public function __construct($caption, $name, $size = 15, $value=0)
+    {
+        parent::__construct($caption, $name, $size, $value);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Datetime', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }
-
-?>

@@ -1,7 +1,8 @@
 <?php
 // $Id: mailusers.php 10326 2010-07-11 18:54:25Z malanciault $
 //%%%%%%	Admin Module Name  MailUsers	%%%%%
-if (!defined('_AM_DBUPDATED')) {define('_AM_DBUPDATED', 'Database succesvol bijgewerkt!');
+if (!defined('_AM_DBUPDATED')) {
+    define('_AM_DBUPDATED', 'Database succesvol bijgewerkt!');
 }
 
 //%%%%%%	mailusers.php 	%%%%%
@@ -36,4 +37,3 @@ define('_AM_SENTNUM', '%s - %s (totaal: %s gebruikers)');
 define('_AM_SENDNEXT', 'Volgende');
 define('_AM_NOUSERMATCH', 'Geen overeenkomstige gebruiker(s)');
 define('_AM_SENDCOMP', 'Bericht is verzonden.');
-?>

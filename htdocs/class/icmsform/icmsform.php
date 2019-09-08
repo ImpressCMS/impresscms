@@ -10,7 +10,7 @@
  * @version		$Id: icmsform.php 10854 2010-12-05 20:30:06Z skenow $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * IcmsForm base class
@@ -25,7 +25,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @version		$Id: icmsform.php 10854 2010-12-05 20:30:06Z skenow $
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 class IcmsForm extends icms_ipf_form_Base {
 	private $_deprecated;

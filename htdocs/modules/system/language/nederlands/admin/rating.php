@@ -9,7 +9,9 @@
 * @version		$Id$
 */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 define('_CO_ICMS_RATING_RATE_IT', 'Beoordelen !');
 define('_CO_ICMS_RATING_DUPLICATE_ENTRY', 'Excuses! U heeft dit al beoordeeld! U kunt iets niet tweemaal beoordelen.');

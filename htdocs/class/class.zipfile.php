@@ -13,9 +13,11 @@
  * @deprecated	Use icms_file_ZipFileHandler instead
  * @todo Remove in version 1.4
 */
-class zipfile extends icms_file_ZipFileHandler {
-	private $_deprecated;
-	public function __construct() {
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_file_ZipFileHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+class zipfile extends icms_file_ZipFileHandler
+{
+    private $_deprecated;
+    public function __construct()
+    {
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_file_ZipFileHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

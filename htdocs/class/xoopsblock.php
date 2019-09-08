@@ -43,6 +43,8 @@
  * @todo		Remove from this file from the core on ImpressCMS 1.4
  */
 
-if (!defined('ICMS_ROOT_PATH')) { exit(); }
-icms_core_Debug::setDeprecated( 'class icms_core_Block', 'this file will be removed in ImpressCMS 1.4 - the classes are automatically loaded when instantiated' );
+if (!defined('ICMS_ROOT_PATH')) {
+    exit();
+}
+icms_core_Debug::setDeprecated('class icms_core_Block', 'this file will be removed in ImpressCMS 1.4 - the classes are automatically loaded when instantiated');
 require_once ICMS_ROOT_PATH . '/kernel/block.php' ;

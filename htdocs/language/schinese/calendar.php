@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%		Time Zone	%%%%
 define("_CAL_SUNDAY", "星期天");
@@ -67,22 +67,21 @@ define("_CAL_WK", "周"); // shorten of week-end
 define("_CAL_WEEKEND", "0,6");
 define("_CAL_DSPFIRST", "首先显示 %s ");
 //This constants are for the jalali calendar included in the library
-define('_CAL_FARVARDIN','Farvardin');
-define('_CAL_ORDIBEHESHT','Ordibehest');
-define('_CAL_KHORDAD','Khordad');
-define('_CAL_TIR','Tir');
-define('_CAL_MORDAD','Mordad');
-define('_CAL_SHAHRIVAR','Shahrivar');
-define('_CAL_MEHR','Mehr');
-define('_CAL_ABAN','Aban');
-define('_CAL_AZAR','Azar');
-define('_CAL_DEY','Day');
-define('_CAL_BAHMAN','Bahman');
-define('_CAL_ESFAND','Esfand');
+define('_CAL_FARVARDIN', 'Farvardin');
+define('_CAL_ORDIBEHESHT', 'Ordibehest');
+define('_CAL_KHORDAD', 'Khordad');
+define('_CAL_TIR', 'Tir');
+define('_CAL_MORDAD', 'Mordad');
+define('_CAL_SHAHRIVAR', 'Shahrivar');
+define('_CAL_MEHR', 'Mehr');
+define('_CAL_ABAN', 'Aban');
+define('_CAL_AZAR', 'Azar');
+define('_CAL_DEY', 'Day');
+define('_CAL_BAHMAN', 'Bahman');
+define('_CAL_ESFAND', 'Esfand');
 define("_CAL_NUMS_ARRAY", "'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'"); // numeric values can differ in different languages
 define("_CAL_TT_DATE_FORMAT", "%a, %b %e");
 ############# added since 1.2 #############
 define("_CAL_SUFFIX", "th");
-define('_CAL_AM_LONG','上午');
-define('_CAL_PM_LONG','下午');
-?>
+define('_CAL_AM_LONG', '上午');
+define('_CAL_PM_LONG', '下午');

@@ -10,13 +10,15 @@
  * @version		$Id: icmsformcheckelement.php 10731 2010-10-16 13:55:24Z phoenyx $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-class IcmsFormCheckElement extends icms_ipf_form_elements_Checkbox {
-	private $_deprecated;
+class IcmsFormCheckElement extends icms_ipf_form_elements_Checkbox
+{
+    private $_deprecated;
 
-	public function __construct($object, $key) {
-		parent::__construct($object, $key);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Checkbox', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct($object, $key)
+    {
+        parent::__construct($object, $key);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Checkbox', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

@@ -12,13 +12,15 @@
  * @version		$Id: icmsformlanguageelement.php 10717 2010-10-11 18:59:29Z phoenyx $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-class IcmsFormLanguageElement extends icms_ipf_form_elements_Language {
-	private $_deprecated;
+class IcmsFormLanguageElement extends icms_ipf_form_elements_Language
+{
+    private $_deprecated;
 
-	public function __construct($object, $key) {
-		parent::__construct($object, $key);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Language', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct($object, $key)
+    {
+        parent::__construct($object, $key);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Language', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

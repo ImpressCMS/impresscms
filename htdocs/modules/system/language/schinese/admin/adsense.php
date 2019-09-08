@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
 * Adsense.php definations
 *
@@ -9,7 +9,9 @@
 * @version		$Id: blauer-fisch$
 */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS根目录未定义");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS根目录未定义");
+}
 
 define('_CO_ICMS_ADSENSES', 'Adsense广告');
 define('_CO_ICMS_ADSENSES_DSC', '可用的adsense广告列表');

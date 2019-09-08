@@ -45,45 +45,41 @@ icms::$logger->disableLogger();
 
 $response = new XoopsXmlRpcResponse();
 $parser = new XoopsXmlRpcParser(rawurlencode($GLOBALS['HTTP_RAW_POST_DATA']));
-if (!$parser->parse())
-{
-	$response->add(new XoopsXmlRpcFault(102));
+if (!$parser->parse()) {
+    $response->add(new XoopsXmlRpcFault(102));
 } else {
-	$module_handler = icms::handler('icms_module');
-	$module =& $module_handler->getByDirname('news');
-	if (!is_object($module))
-	{
-		$response->add(new XoopsXmlRpcFault(110));
-	} else {
-		$methods = explode('.', $parser->getMethodName());
-		switch($methods[0])
-		{
-			case 'blogger':
-				include_once ICMS_LIBRARIES_PATH. ' /xml/rpc/bloggerapi.php';
-				$rpc_api = new BloggerApi($parser->getParam(), $response, $module);
-				break;
-			case 'metaWeblog':
-				include_once ICMS_LIBRARIES_PATH . '/xml/rpc/metaweblogapi.php';
-				$rpc_api = new MetaWeblogApi($parser->getParam(), $response, $module);
-				break;
-			case 'mt':
-				include_once ICMS_LIBRARIES_PATH . '/xml/rpc/movabletypeapi.php';
-				$rpc_api = new MovableTypeApi($parser->getParam(), $response, $module);
-				break;
-			case 'xoops':
-			default:
-				include_once ICMS_LIBRARIES_PATH . '/xml/rpc/xoopsapi.php';
-				$rpc_api = new XoopsApi($parser->getParam(), $response, $module);
-				break;
-		}
-		$method = $methods[1];
-		if (!method_exists($rpc_api, $method))
-		{
-			$response->add(new XoopsXmlRpcFault(107));
-		} else {
-			$rpc_api->$method();
-		}
-	}
+    $module_handler = icms::handler('icms_module');
+    $module = $module_handler->getByDirname('news');
+    if (!is_object($module)) {
+        $response->add(new XoopsXmlRpcFault(110));
+    } else {
+        $methods = explode('.', $parser->getMethodName());
+        switch ($methods[0]) {
+            case 'blogger':
+                include_once ICMS_LIBRARIES_PATH. ' /xml/rpc/bloggerapi.php';
+                $rpc_api = new BloggerApi($parser->getParam(), $response, $module);
+                break;
+            case 'metaWeblog':
+                include_once ICMS_LIBRARIES_PATH . '/xml/rpc/metaweblogapi.php';
+                $rpc_api = new MetaWeblogApi($parser->getParam(), $response, $module);
+                break;
+            case 'mt':
+                include_once ICMS_LIBRARIES_PATH . '/xml/rpc/movabletypeapi.php';
+                $rpc_api = new MovableTypeApi($parser->getParam(), $response, $module);
+                break;
+            case 'xoops':
+            default:
+                include_once ICMS_LIBRARIES_PATH . '/xml/rpc/xoopsapi.php';
+                $rpc_api = new XoopsApi($parser->getParam(), $response, $module);
+                break;
+        }
+        $method = $methods[1];
+        if (!method_exists($rpc_api, $method)) {
+            $response->add(new XoopsXmlRpcFault(107));
+        } else {
+            $rpc_api->$method();
+        }
+    }
 }
 $payload =& $response->render();
 //$fp = fopen(ICMS_CACHE_PATH.'/xmllog.txt', 'w');
@@ -93,4 +89,3 @@ header('Server: XOOPS XML-RPC Server');
 header('Content-type: text/xml');
 header('Content-Length: '.strlen($payload));
 echo $payload;
-?>

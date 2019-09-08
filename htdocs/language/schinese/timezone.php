@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%		Time Zone	%%%%
 define("_TZ_GMTM12", "(GMT-12:00) Eniwetok, Kwajalein");
@@ -31,4 +31,3 @@ define("_TZ_GMTP95", "(GMT+9:30) Adelaide, Darwin");
 define("_TZ_GMTP10", "(GMT+10:00) Brisbane, Canberra, Melbourne, Sydney, Guam,Vlasdiostok");
 define("_TZ_GMTP11", "(GMT+11:00) Magadan, Solomon Islands, New Caledonia");
 define("_TZ_GMTP12", "(GMT+12:00) Auckland, Wellington, Fiji, Kamchatka, Marshall Island");
-?>

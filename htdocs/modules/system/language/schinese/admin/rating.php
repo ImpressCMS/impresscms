@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
 * rating definations
 *
@@ -9,7 +9,9 @@
 * @version		$Id: blauer-fisch$
 */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS 根路径未定义");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS 根路径未定义");
+}
 
 define('_CO_ICMS_RATING_RATE_IT', 'Rate it !');
 define('_CO_ICMS_RATING_DUPLICATE_ENTRY', 'Sorry ! You have already rated this ! You cannot rate something twice.');

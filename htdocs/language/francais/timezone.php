@@ -33,4 +33,3 @@ define("_TZ_GMTP95", "(GMT+9:30) Ad&eacute;la&iuml;de, Darwin");
 define("_TZ_GMTP10", "(GMT+10:00) Brisbane, Canberra, Melbourne, Sydney, Guam, Vladivostok");
 define("_TZ_GMTP11", "(GMT+11:00) Magadan, Les Iles Salomon, Nouvelle Cal&eacute;donie");
 define("_TZ_GMTP12", "(GMT+12:00) Auckland, Wellington, Fiji, Kamchatka, Marshall Island");
-?>

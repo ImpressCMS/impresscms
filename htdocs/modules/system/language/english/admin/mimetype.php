@@ -1,6 +1,6 @@
 <?php
 
-define('_CO_ICMS_MIMETYPES','Mime types');
+define('_CO_ICMS_MIMETYPES', 'Mime types');
 define('_CO_ICMS_MIMETYPES_DSC', 'Here is a list of the mime types available in the system.');
 define('_CO_ICMS_MIMETYPE', 'Mime type');
 define('_CO_ICMS_MIMETYPE_CREATE', 'Create a mime type');
@@ -27,4 +27,3 @@ define('_CO_ICMS_MIMETYPE_PERMISSION_VIEW_DSC', 'Only the selected groups will b
 define('_CO_ICMS_MIMETYPES_EXPLAIN_TITLE', 'What are Mime Types ?');
 define('_CO_ICMS_MIMETYPES_EXPLAIN', 'Mime Types are extensions used to upload files into a web server, this section helps you to control all allowed mimetypes for your users ! Complete documentation of this feature can be found here: <a rel="external" href="https://www.impresscms.org/modules/simplywiki/index.php?page=MimeTypes">Mime Types</a>.');
 define('_CO_ICMS_MIMETYPE_DIRNAME', 'Select Modules allowed to use this mimetype.');
-?>

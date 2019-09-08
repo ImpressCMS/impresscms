@@ -39,27 +39,27 @@
 
 $image_id = isset($_GET["id"]) ? (int) $_GET["id"] : 0;
 if (empty($image_id)) {
-	header("Content-type: image/gif");
-	readfile(ICMS_UPLOAD_PATH . "/blank.gif");
-	exit();
+    header("Content-type: image/gif");
+    readfile(ICMS_UPLOAD_PATH . "/blank.gif");
+    exit();
 }
 
 include "mainfile.php";
 icms::$logger->disableLogger();
 
-$criteria = icms_buildCriteria(array("i.image_display" => 1, "i.image_id" => $image_id));
-$images = icms::handler("icms_image")->getObjects($criteria, FALSE, TRUE);
+$criteria = icms_buildCriteria(["i.image_display" => 1, "i.image_id" => $image_id]);
+$images = icms::handler("icms_image")->getObjects($criteria, false, true);
 
-if (count($images) == 1 && $images[0]->getVar("image_body") !== NULL) {
-	header("Content-type: ".$images[0]->getVar("image_mimetype"));
-	header("Cache-control: max-age=31536000");
-	header("Expires: " . gmdate("D, d M Y H:i:s", time() + 31536000) . "GMT");
-	header("Content-disposition: filename=" . $images[0]->getVar("image_name"));
-	header("Content-Length: " . strlen($images[0]->getVar("image_body")));
-	header("Last-Modified: " . gmdate("D, d M Y H:i:s", $images[0]->getVar("image_created"))  . "GMT");
-	echo $images[0]->getVar("image_body");
+if (count($images) == 1 && $images[0]->getVar("image_body") !== null) {
+    header("Content-type: ".$images[0]->getVar("image_mimetype"));
+    header("Cache-control: max-age=31536000");
+    header("Expires: " . gmdate("D, d M Y H:i:s", time() + 31536000) . "GMT");
+    header("Content-disposition: filename=" . $images[0]->getVar("image_name"));
+    header("Content-Length: " . strlen($images[0]->getVar("image_body")));
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s", $images[0]->getVar("image_created"))  . "GMT");
+    echo $images[0]->getVar("image_body");
 } else {
-	header("Content-type: image/gif");
-	readfile(ICMS_UPLOAD_PATH . "/blank.gif");
-	exit();
+    header("Content-type: image/gif");
+    readfile(ICMS_UPLOAD_PATH . "/blank.gif");
+    exit();
 }

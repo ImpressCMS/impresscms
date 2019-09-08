@@ -30,4 +30,3 @@ define("_CO_ICMS_AUTOTASKS_FOREVER", "forever");
 define("_CO_ICMS_AUTOTASKS_INIT_ERROR", "Error: Can't  initialize selected auto tasks subsystem.");
 
 define("_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR", "Error in Autotask SourceCode: Can't execute Autotask");
-?>

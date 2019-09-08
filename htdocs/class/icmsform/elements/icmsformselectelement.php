@@ -10,13 +10,15 @@
  * @version		$Id: icmsformselectelement.php 10712 2010-10-11 16:59:46Z phoenyx $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-class IcmsFormSelectElement extends icms_ipf_form_elements_Select {
-	private $_deprecated;
+class IcmsFormSelectElement extends icms_ipf_form_elements_Select
+{
+    private $_deprecated;
 
-	public function __construct($object, $key) {
-		parent::__construct($object, $key);
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Select', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+    public function __construct($object, $key)
+    {
+        parent::__construct($object, $key);
+        $this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_form_elements_Select', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+    }
 }

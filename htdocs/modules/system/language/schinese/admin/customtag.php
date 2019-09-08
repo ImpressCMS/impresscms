@@ -1,7 +1,7 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 
-define('_CO_ICMS_CUSTOMTAGS','自定义标签');
+define('_CO_ICMS_CUSTOMTAGS', '自定义标签');
 define('_CO_ICMS_CUSTOMTAGS_DSC', '自定义标签列表.');
 define('_CO_ICMS_CUSTOMTAG', '自定义标签');
 define('_CO_ICMS_CUSTOMTAG_CREATE', '新建标签');
@@ -35,4 +35,3 @@ define('_CO_ICMS_CUSTOMTAGS_EXPLAIN_TITLE', '什么是自定义标签?');
 define('_CO_ICMS_CUSTOMTAGS_EXPLAIN', '自定义标签就是可定义在网站任何地方使用的标签. 可视作是扩展的BB代码, 但却是多语言、可定义群组权限、支持PHP，可在所有模板的文本区使用! 完整的说明文档可在这里找到: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Custom_Tags">自定义标签</a>.');
 ######################## Added in 1.2 ###################################
 define('_CO_ICMS_CUSTOMTAGS_TAG_CODE', 'Icms代码');
-?>

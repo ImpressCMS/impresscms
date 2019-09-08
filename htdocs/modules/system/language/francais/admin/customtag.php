@@ -29,4 +29,3 @@ define('_CO_ICMS_CUSTOMTAGS_EXPLAIN_TITLE', 'Quels sont tags \'Standard\'?');
 define('_CO_ICMS_CUSTOMTAGS_EXPLAIN', 'Tags Standard sont des tags que vous pouvez définir et utiliser partout sur votre site ImpressCMS. Ils sont similaire aux codes BBCodes, mais multi-lingue, avec des droits de groupe, permettant du PHP et a utiliser dans tous les champs texte et tous les templates en ImpressCMS');
 ######################## Added in 1.2 ###################################
 define('_CO_ICMS_CUSTOMTAGS_TAG_CODE', 'IcmsCode');
-?>

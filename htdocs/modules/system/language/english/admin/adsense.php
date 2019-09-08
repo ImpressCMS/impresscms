@@ -9,7 +9,9 @@
 * @version		$Id$
 */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 define('_CO_ICMS_ADSENSES', 'Adsense ads');
 define('_CO_ICMS_ADSENSES_DSC', 'Here is a list of the adsense ads available in the system.');

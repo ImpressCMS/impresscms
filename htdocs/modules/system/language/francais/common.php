@@ -4,7 +4,9 @@
  * $Id: common.php 20473 2010-12-04 22:23:11Z phoenyx $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 define('_CO_ICMS_FILTER', 'Filtre');
 define('_CO_ICMS_NONE', 'Aucun');
@@ -180,4 +182,3 @@ define('_CO_ICMS_ON', 'Actif');
 define('_CO_ICMS_OFF', 'Inactif');
 define('_CO_ICMS_WARNING_ALPHA', 'Ce module est proposer tel quel, sans aucune garantie d\'aucune sorte. Ce module c\'est une version dite \'ALPHA\', c\'est &agrave; dire qu\'il est encore en cours d\'&eacute;laboration. Cette version est destin&eacute;e uniquement pour <b>des tests et du developement</b> et nous vous <b>recommandons fortement</b> de ne pas l\'utiliser sur un site Web en ligne.');
 define('_CO_ICMS_UPDATE_NEEDED', 'Votre module syst&egrave;me n&eacute;cessite une mise-a-jour');
-?>
