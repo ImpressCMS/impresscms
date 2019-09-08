@@ -53,4 +53,3 @@ Se non sei tu a esserti registrato al nostro sito, sei pregato di contattarci al
 Cordiali saluti,
 {X_SITENAME}
 {X_SITEURL}");
-?>

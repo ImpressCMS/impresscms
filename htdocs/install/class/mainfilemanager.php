@@ -137,4 +137,4 @@ class mainfile_manager {
 	}
 }
 
-?>
+

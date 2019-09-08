@@ -10,4 +10,3 @@ $content .=
 "<li class=\"success\"><a href='http://addons.impresscms.org/' target='_blank'>addons.impresscms.org</a> - Modules & Themes</li>" .
 "<li class=\"success\"><a href='http://wiki.impresscms.org/' target='_blank'>wiki.impresscms.org</a> - Community Documentation</li>".
 "</ul>";
-?>

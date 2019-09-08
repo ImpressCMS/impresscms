@@ -13,4 +13,3 @@ $content .=
 <h3>Il tuo sito</h3>
 <p>Ora puoi accedere alla tua home page cliccando sul bottone sottostante.</p>
 ";
-?>

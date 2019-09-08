@@ -15,4 +15,3 @@ $content .=
 <h3>Uw nieuwe website</h3>
 <p>De startpagina van uw site is beschikbaar door te klikken op de knop hieronder en de wizard af te sluiten.</p>
 ";
-?>

@@ -57,9 +57,9 @@ Vous pouvez choisir d'accepter ou de refuser les cookies. La plupart des navigat
 </p>
 <h2>Liens vers d'autres sites</h2>
 <p>
-Notre site Web contient des liens pour vous permettre de visiter d'autres sites. Cependant, une fois que vous avez utilis&eacute; ces liens vous quitter notre site, Il convient de noter que nous n'avons pas de contrôle sur les autres sites. Par cons&eacute;quent, nous ne pouvons pas &ecirc;tre responsables de la protection et la confidentialit&eacute; de toute information que vous fournissez en visitant ces sites et ces sites ne sont pas r&eacute;gies par la pr&eacute;sente d&eacute;claration de confidentialit&eacute;. Vous devez faire preuve de prudence et de regarder la d&eacute;claration de confidentialit&eacute; applicable au site Web en question.
+Notre site Web contient des liens pour vous permettre de visiter d'autres sites. Cependant, une fois que vous avez utilis&eacute; ces liens vous quitter notre site, Il convient de noter que nous n'avons pas de contrï¿½le sur les autres sites. Par cons&eacute;quent, nous ne pouvons pas &ecirc;tre responsables de la protection et la confidentialit&eacute; de toute information que vous fournissez en visitant ces sites et ces sites ne sont pas r&eacute;gies par la pr&eacute;sente d&eacute;claration de confidentialit&eacute;. Vous devez faire preuve de prudence et de regarder la d&eacute;claration de confidentialit&eacute; applicable au site Web en question.
 </p>
-<h2>Contrôle de vos informations personnelles</h2>
+<h2>Contrï¿½le de vos informations personnelles</h2>
 <p>
 A vous de choisir de restreindre la collecte ou d'utiliser vos renseignements personnels par les moyens suivants:
 <ul>
@@ -82,4 +82,3 @@ Si vous ne vous &ecirc;tes pas inscrit sur notre site, merci de nous contacter &
 Cordialement,
 {X_SITENAME}
 {X_SITEURL}");
-?>

@@ -263,4 +263,4 @@ class TextSanitizer
 		return $this->nl2Br($text);
 	}
 }
-?>
+

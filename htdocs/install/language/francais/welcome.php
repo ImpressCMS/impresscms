@@ -26,4 +26,3 @@ $content .= '
 	<li>Configurez votre navigateur web de sorte &agrave; ce qu\'il accepte les cookies et permette l\'usage de JavaScript.</li>
 </ul>
 ';
-?>

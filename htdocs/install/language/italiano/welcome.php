@@ -27,4 +27,3 @@ $content .= '
 	<li>Nel vostro browser Internet attivare i permessi per cookies e JavaScript.</li>
 </ul>
 ';
-?>
