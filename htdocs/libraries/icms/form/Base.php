@@ -92,7 +92,7 @@ abstract class icms_form_Base
      * array of {@link icms_form_Element} objects
      * @var  array
      */
-    private $_elements = [];
+    protected $_elements = [];
 
     /**
      * extra information for the <form> tag
