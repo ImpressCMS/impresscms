@@ -50,12 +50,6 @@ checks:
   #    threshold: # language-specific defaults. an override will affect all languages.
 
 plugins:
-
-  # engine offers style checking for all CSS stylesheets. It also includes basic
-  # syntax checking and can check your code against a configured standard.
-  csslint:
-    enabled: true
-
   # helps developers define and maintain consistent coding styles between different
   # editors and IDEs.  The Code Climate EditorConfig plugin will validate your project
   # files with your .editorconfig configuration.
