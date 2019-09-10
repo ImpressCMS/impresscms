@@ -1,18 +1,19 @@
 version: "2"
-#prepare:
-#  fetch:
-#    - url: "https://gist.githubusercontent.com/Ovsyanka/e2ab2ff76e7c0d7e75a1e4213a03ff95/raw/afd91af92a68500d24636791f56a48daea034dfa/ruleset.xml"
-#      path: ".cs-ruleset.xml"
 
-# exclude_patterns:
-#- "libraries/phpopenid/"
-#- "libraries/smarty/"
-#- "libraries/wideimage/"
-#- "plugins/"
-#- "language/"
-#- "htdocs/editors/"
-#- "htdocs/libraries/"
-#- "tests/"
+prepare:
+  fetch:
+    - url: "https://gist.githubusercontent.com/Ovsyanka/e2ab2ff76e7c0d7e75a1e4213a03ff95/raw/afd91af92a68500d24636791f56a48daea034dfa/ruleset.xml"
+      path: ".cs-ruleset.xml"
+
+exclude_patterns:
+  - "libraries/phpopenid/"
+  - "libraries/smarty/"
+  - "libraries/wideimage/"
+  - "plugins/"
+  - "language/"
+  - "htdocs/editors/"
+  - "htdocs/libraries/"
+  - "tests/"
 
 checks:
   argument-count:
@@ -38,9 +39,7 @@ checks:
       threshold: 4
   return-statements:
     config:
-      threshold: 4  
-  Controversial/CamelCaseParameterName:
-    enabled: false
+      threshold: 4
   #similar-code:
   #  config:
   #    threshold: # language-specific defaults. an override will affect all languages.
@@ -49,10 +48,16 @@ checks:
   #    threshold: # language-specific defaults. an override will affect all languages.
 
 plugins:
+
+  # engine offers style checking for all CSS stylesheets. It also includes basic
+  # syntax checking and can check your code against a configured standard.
+  csslint:
+    enabled: true
+
   # helps developers define and maintain consistent coding styles between different
   # editors and IDEs.  The Code Climate EditorConfig plugin will validate your project
   # files with your .editorconfig configuration.
-   editorconfig:
+  editorconfig:
     enabled: true
     channel: beta
     config:
@@ -87,13 +92,6 @@ plugins:
   # a tool designed to check markdown files and flag style issues.
   markdownlint:
     enabled: true
-    checks:
-      # line length
-      MD013:
-        enabled: false
-      # raw html
-      MD033:
-        enabled: false
 
   # a Static analyzer for PHP by the creators of PHP.
   phan:
@@ -121,12 +119,4 @@ plugins:
     enabled: true
     config:
       file_extensions:
-        - php
-
-  # enable dublications detection
-  duplication:
-    enabled: true
-    config:
-      languages:
-        - javascript
         - php
