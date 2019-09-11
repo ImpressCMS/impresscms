@@ -34,7 +34,7 @@ define( "_AM_FMT_CONFIGSNOTWRITABLE" , "Turn the configs directory writable: %s"
 // advisory.php
 define("_AM_ADV_NOTSECURE","Not secure");
 
-define("_AM_ADV_TRUSTPATHPUBLIC","If you can look an image -NG- or the link returns normal page, your ICMS_TRUST_PATH is not placed properly. The best place for ICMS_TRUST_PATH is outside of DocumentRoot. If you cannot do that, you have to put .htaccess (DENY FROM ALL) just under ICMS_TRUST_PATH as the second best way.");
+define("_AM_ADV_TRUSTPATHPUBLIC","If you can see an image -NG- or the link returns normal page, your ICMS_TRUST_PATH is not placed properly. The best place for ICMS_TRUST_PATH is outside of DocumentRoot. If you cannot do that, you have to put .htaccess (DENY FROM ALL) just under ICMS_TRUST_PATH as the second best way.");
 define("_AM_ADV_TRUSTPATHPUBLICLINK","Check php files inside TRUST_PATH are private (it must be 404,403 or 500 error");
 define("_AM_ADV_REGISTERGLOBALS","This setting invites a variety of injecting attacks.<br />If you can put .htaccess, edit or create...");
 define("_AM_ADV_ALLOWURLFOPEN","This setting allows attackers to execute arbitrary scripts on remote servers.<br />Only administrator can change this option.<br />If you are an admin, edit php.ini or httpd.conf.<br /><b>Sample of httpd.conf:<br /> &nbsp; php_admin_flag &nbsp; allow_url_fopen &nbsp; off</b><br />Else, claim it to your administrators.");

@@ -10,7 +10,7 @@ define( $constpref.'_LOADED' , 1 ) ;
 define($constpref."_NAME","Protector");
 
 // A brief description of this module
-define($constpref."_DESC","This module protects your xoops site from various attacks like DoS , SQL Injection , and Variables contaminations.");
+define($constpref."_DESC","This module protects your site from various attacks like DoS , SQL Injection , and Variables contaminations.");
 
 // Menu
 define($constpref."_ADMININDEX","Protect Center");
@@ -20,7 +20,7 @@ define($constpref.'_ADMENU_MYBLOCKSADMIN','Permissions') ;
 
 // Configs
 define($constpref.'_GLOBAL_DISBL','Temporary disabled');
-define($constpref.'_GLOBAL_DISBLDSC','All protections are disabled in temporary.<br />Don\'t forget turn this off after shooting the trouble');
+define($constpref.'_GLOBAL_DISBLDSC','All protections are disabled in temporary.<br />Don\'t forget turn this off after troubleshooting');
 
 define($constpref.'_DEFAULT_LANG','Default language');
 define($constpref.'_DEFAULT_LANGDSC','Specify the language set to display messages before processing common.php');
@@ -56,7 +56,7 @@ define($constpref.'_UNION_ACTION','Action if a UNION is found');
 define($constpref.'_UNION_ACTIONDSC','Anti SQL Injection:<br />Select the action when some syntax like UNION of SQL.<br />"Sanitizing" means changing "union" to "uni-on".<br />(recommended option is Sanitizing)');
 define($constpref.'_ID_INTVAL','Force intval to variables like id');
 define($constpref.'_ID_INTVALDSC','All requests named "*id" will be treated as integer.<br />This option protects you from some kind of XSS and SQL Injections.<br />Though I recommend to turn this option on, it can cause problems with some modules.');
-define($constpref.'_FILE_DOTDOT','Protection from Directroy Traversals');
+define($constpref.'_FILE_DOTDOT','Protection from Directory Traversals');
 define($constpref.'_FILE_DOTDOTDSC','It eliminates ".." from all requests looks like Directory Traversals');
 
 define($constpref.'_BF_COUNT','Anti Brute Force');
@@ -98,7 +98,7 @@ define($constpref.'_DOSOPT_HTA','DENY by .htaccess(Experimental)');
 define($constpref.'_BIP_EXCEPT','Groups never registered as Bad IP');
 define($constpref.'_BIP_EXCEPTDSC','A user who belongs to the group specified here will never be banned.<br />(I recommend to turn Administrator on.)');
 
-define($constpref.'_DISABLES','Disable dangerous features in XOOPS');
+define($constpref.'_DISABLES','Disable dangerous features in ImpressCMS');
 
 define($constpref.'_DBLAYERTRAP','Enable DB Layer trapping anti-SQL-Injection');
 define($constpref.'_DBLAYERTRAPDSC','Almost SQL Injection attacks will be canceled by this feature. This feature is required a support from databasefactory. You can check it on Security Advisory page. This setting must be on. Never turn it off casually.');
