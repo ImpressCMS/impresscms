@@ -4,7 +4,7 @@
 class ProtectorFilterAbstract {
 	var $protector = null ;
 
-	function ProtectorFilterAbstract()
+	function __construct()
 	{
 		$this->protector =& Protector::getInstance() ;
 		$lang = empty( $GLOBALS['xoopsConfig']['language'] ) ? @$this->protector->_conf['default_lang'] : $GLOBALS['xoopsConfig']['language'] ;
