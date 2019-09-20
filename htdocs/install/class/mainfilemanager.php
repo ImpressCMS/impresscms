@@ -54,7 +54,7 @@ class mainfile_manager {
 	var $report = '';
 	var $error = false;
 
-	function mainfile_manager() {
+	function __construct() {
 	}
 
 	function setRewrite($def, $val) {
