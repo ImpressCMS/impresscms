@@ -62,7 +62,7 @@ if (!isset ($vars ['DB_NAME']) || false !== @strpos($_SERVER ['HTTP_CACHE_CONTRO
 	}
 }
 
-function exec_query($sql, $link) {
+public function exec_query($sql, $link) {
 	if ($link instanceof PDO) {
 		return $link->query($sql);
 	} else {
@@ -70,7 +70,7 @@ function exec_query($sql, $link) {
 	}
 }
 
-function fetch_assoc($result) {
+public function fetch_assoc($result) {
 	if ($result instanceof PDOStatement) {
 		return $result->fetch(PDO::FETCH_ASSOC);
 	} else {
@@ -78,7 +78,7 @@ function fetch_assoc($result) {
 	}
 }
 
-function quote_sql($sql) {
+public function quote_sql($sql) {
 	global $link;
 	if ($link instanceof PDO) {
 		return $link->quote($sql);
@@ -87,7 +87,7 @@ function quote_sql($sql) {
 	}
 }
 
-function getDbCharsets($link) {
+public function getDbCharsets($link) {
 	static $charsets = array( );
 	if ($charsets) {
 		return $charsets;
@@ -116,7 +116,7 @@ function getDbCharsets($link) {
  * @param 	string $charset
  * @return	array	Character sets supported by the db, as strings
  */
-function getDbCollations($link, $charset) {
+public function getDbCollations($link, $charset) {
 	static $collations = array( );
 
 	if ($result = exec_query("SHOW COLLATION WHERE Charset=" . quote_sql($charset), $link)) {
@@ -128,7 +128,7 @@ function getDbCollations($link, $charset) {
 	return $collations [$charset];
 }
 
-function validateDbCharset($link, &$charset, &$collation) {
+public function validateDbCharset($link, &$charset, &$collation) {
 	$error = null;
 
 	if (empty ($charset)) {
@@ -154,14 +154,14 @@ function validateDbCharset($link, &$charset, &$collation) {
 	return $error;
 }
 
-function getDBVersion($link) {
+public function getDBVersion($link) {
 	if ($link instanceof PDO) {
 		return $link->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}
 	return mysql_get_server_info($link);
 }
 
-function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset) {
+public function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset) {
 	if (version_compare(getDBVersion($link), "4.1.0", "lt")) {
 		return "";
 	}
@@ -197,7 +197,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset
 	return $field;
 }
 
-function xoFormBlockCollation($name, $value, $label, $help = '', $link, $charset) {
+public function xoFormBlockCollation($name, $value, $label, $help = '', $link, $charset) {
 	$block = '<div id="' . $name . '_div">';
 	$block .= xoFormFieldCollation($name, $value, $label, $help, $link, $charset);
 	$block .= '</div>';
@@ -205,7 +205,7 @@ function xoFormBlockCollation($name, $value, $label, $help = '', $link, $charset
 	return $block;
 }
 
-function select_db($db_name, $link) {
+public function select_db($db_name, $link) {
 	if ($link instanceof PDO) {
 		try {
 			$link->exec("use `" . $db_name . '`;');
@@ -261,8 +261,8 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 					$character_sets[$row["Variable_name"]] = $row["Value"];
 				}
 				$vars["DB_CHARSET"] = $character_sets["character_set_database"]
-					?$character_sets["character_set_database"]
-					: $character_sets["character_set_server"];
+				?: $character_sets['character_set_server'];
+
 
 				/* get the collation for the current database */
 				$sql = "SHOW VARIABLES LIKE 'collation%'";
@@ -271,8 +271,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 					$collations[$row["Variable_name"]] = $row["Value"];
 				}
 				$vars["DB_COLLATION"] = $collations["collation_database"]
-					?$collations["collation_database"]
-					: $collations["collation_server"];
+					?: $collations['collation_server'];
 			}
 		}
 	}
@@ -287,7 +286,7 @@ if (@empty ($vars ['DB_NAME'])) {
 	$vars = array_merge($vars, array('DB_NAME' => '', 'DB_CHARSET' => 'utf8', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt()));
 }
 
-function xoFormField($name, $value, $label, $maxlength, $help = '') {
+public function xoFormField($name, $value, $label, $maxlength, $help = '') {
 	$label = htmlspecialchars($label);
 	$name = htmlspecialchars($name, ENT_QUOTES);
 	$value = htmlspecialchars($value, ENT_QUOTES);
@@ -302,7 +301,7 @@ function xoFormField($name, $value, $label, $maxlength, $help = '') {
 	return $field;
 }
 
-function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
+public function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 	if (version_compare(getDBVersion($link), "4.1.0", "lt")) {
 		return "";
 	}
@@ -345,7 +344,7 @@ if (!empty ($error)) {
 }
 ?>
 	<script type="text/javascript">
-		function setFormFieldCollation(id, val) {
+		public function setFormFieldCollation(id, val) {
 			if (val == '') {
 				$(id).style.display='display';
 			} else {

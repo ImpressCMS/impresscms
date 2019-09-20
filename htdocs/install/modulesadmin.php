@@ -19,7 +19,7 @@
  */
 icms_loadLanguageFile('system', 'modulesadmin', true);
 
-function xoops_module_install($dirname) {
+public function xoops_module_install($dirname) {
 	$dirname = trim($dirname);
 	$db =& icms_db_Factory::instance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
@@ -45,7 +45,7 @@ function xoops_module_install($dirname) {
 		$errs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
 		if ($sqlfile != false && is_array($sqlfile)) {
 			// handle instances when XOOPS_DB_TYPE includes 'pdo.'
-			
+
 			if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
 				$driver = substr(XOOPS_DB_TYPE, 4);
 			} else {
@@ -450,7 +450,7 @@ function xoops_module_install($dirname) {
 	}
 }
 
-function &xoops_module_gettemplate($dirname, $template, $block=false) {
+public function &xoops_module_gettemplate($dirname, $template, $block=false) {
 	$ret = '';
 	if ($block) {
 		$path = ICMS_ROOT_PATH.'/modules/'.$dirname.'/templates/blocks/'.$template;
@@ -472,7 +472,7 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 	return $ret;
 }
 
-function icms_module_update($dirname) {
+public function icms_module_update($dirname) {
 	$dirname = trim($dirname);
 	$db =& icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');

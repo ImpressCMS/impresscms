@@ -13,7 +13,7 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @author		David Janssens <david.j@impresscms.org> 
+ * @author		David Janssens <david.j@impresscms.org>
  */
 
 /**
@@ -28,7 +28,7 @@ $pageHasForm = false;
 
 $diagsOK = false;
 
-function xoDiag( $status = -1, $str = '') {
+public function xoDiag( $status = -1, $str = '') {
 	if ($status == -1) {
 		$GLOBALS['error'] = true;
 	}
@@ -39,7 +39,7 @@ function xoDiag( $status = -1, $str = '') {
 	}
 	return '<td class="' . $classes[$status] . '">' . $str . '</td>';
 }
-function xoDiagBoolSetting( $name, $wanted = false, $severe = false) {
+public function xoDiagBoolSetting( $name, $wanted = false, $severe = false) {
 	$setting = strtolower( ini_get( $name ) );
 	$setting = ( empty( $setting ) || $setting == 'off' || $setting == 'false' ) ? false : true;
 	if ($setting == $wanted) {
@@ -49,7 +49,7 @@ function xoDiagBoolSetting( $name, $wanted = false, $severe = false) {
 	}
 }
 
-function xoDiagIfWritable( $path) {
+public function xoDiagIfWritable( $path) {
 	$path = "../" . $path;
 	$error = true;
 	if (!is_dir( $path )) {
@@ -64,7 +64,7 @@ function xoDiagIfWritable( $path) {
 	return xoDiag( $error ? -1 : 1, $error ? 'Not writable' : 'Writable' );
 }
 
-function imCheckRequirements()
+public function imCheckRequirements()
 {
 	$requirement['server_api']['description']=PHP_SAPI;
 	$requirement['server_api']['result']=php_sapi_name();
