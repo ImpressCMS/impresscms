@@ -97,5 +97,3 @@ function imcms_get_url_domain($url)
 	if (!empty($_URL) || !empty($_URL['host'])) {$domain = $_URL['host'];}
 	return $domain;
 }
-
-?>
