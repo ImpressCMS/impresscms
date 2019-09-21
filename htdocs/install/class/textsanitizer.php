@@ -49,7 +49,7 @@ class TextSanitizer
 	 * <br> should not be allowed since nl2br will be used
 	 * when storing data
 	 */
-	public function TextSanitizer()
+	public function __construct()
 	{
 
 	}
@@ -72,11 +72,11 @@ class TextSanitizer
 
 	public function &nl2Br($text)
 	{
-		return preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text);
+		return preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $text);
 	}
 
-	/** @todo	get_magic_quotes_gpc is removed in PHP 5.4 */
-	public function &addSlashes($text, $force=false)
+	/** @todo    get_magic_quotes_gpc is removed in PHP 5.4 */
+	public function &addSlashes($text, $force = false)
 	{
 		if ($force) {
 			return addslashes($text);
@@ -115,9 +115,9 @@ class TextSanitizer
 	/*
 	 *  Filters textarea form data in DB for display
 	 */
-	public function &displayText($text, $html=false)
+	public function &displayText($text, $html = false)
 	{
-		if (! $html) {
+		if (!$html) {
 			// html not allowed
 			$text =& $this->htmlSpecialChars($text);
 		}
@@ -129,137 +129,137 @@ class TextSanitizer
 	/*
 	 *  Filters textarea form data submitted for preview
 	 */
-	public function &previewText($text, $html=false)
+	public function &previewText($text, $html = false)
 	{
 		$text =& $this->stripSlashesGPC($text);
 		return $this->displayText($text, $html);
 	}
-
-	##################### Deprecated Methods ######################
-
-	public function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
-	{
-		if ($allowhtml == 0) {
-			$text = $this->htmlSpecialChars($text);
-		} else {
-			$text = $this->makeClickable($text);
-		}
-		if ($smiley == 1) {
-			$text = $this->smiley($text);
-		}
-		if ($bbcode == 1) {
-			$text = $this->xoopsCodeDecode($text);
-		}
-		$text = $this->nl2Br($text);
-		return $text;
-	}
-
-	public function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
-	{
-		$text = $this->stripSlashesGPC($text);
-		if ($allowhtml == 0) {
-			$text = $this->htmlSpecialChars($text);
-		} else {
-			$text = $this->makeClickable($text);
-		}
-		if ($smiley == 1) {
-			$text = $this->smiley($text);
-		}
-		if ($bbcode == 1) {
-			$text = $this->xoopsCodeDecode($text);
-		}
-		$text = $this->nl2Br($text);
-		return $text;
-	}
-
-	public function makeTboxData4Save($text)
-	{
-		//$text = $this->undoHtmlSpecialChars($text);
-		return $this->addSlashes($text);
-	}
-
-	public function makeTboxData4Show($text, $smiley=0)
-	{
-		$text = $this->htmlSpecialChars($text);
-		return $text;
-	}
-
-	public function makeTboxData4Edit($text)
-	{
-		return $this->htmlSpecialChars($text);
-	}
-
-	public function makeTboxData4Preview($text, $smiley=0)
-	{
-		$text = $this->stripSlashesGPC($text);
-		$text = $this->htmlSpecialChars($text);
-		return $text;
-	}
-
-	public function makeTboxData4PreviewInForm($text)
-	{
-		$text = $this->stripSlashesGPC($text);
-		return $this->htmlSpecialChars($text);
-	}
-
-	public function makeTareaData4Save($text)
-	{
-		return $this->addSlashes($text);
-	}
-
-	public function &makeTareaData4Show(&$text, $html=1, $smiley=1, $xcode=1)
-	{
-		return $this->displayTarea($text, $html, $smiley, $xcode);
-	}
-
-	public function makeTareaData4Edit($text)
-	{
-		return htmlSpecialChars($text, ENT_QUOTES);
-	}
-
-	public function &makeTareaData4Preview(&$text, $html=1, $smiley=1, $xcode=1)
-	{
-		return $this->previewTarea($text, $html, $smiley, $xcode);
-	}
-
-	public function makeTareaData4PreviewInForm($text)
-	{
-		//if magic_quotes_gpc is on, do stipslashes
-		$text = $this->stripSlashesGPC($text);
-		return htmlSpecialChars($text, ENT_QUOTES);
-	}
-
-	public function makeTareaData4InsideQuotes($text)
-	{
-		return $this->htmlSpecialChars($text);
-	}
-
-	public function &oopsStripSlashesGPC($text)
-	{
-		return $this->stripSlashesGPC($text);
-	}
-
-	/** @todo	get_magic_quotes_runtime is deprecated in PHP 5.4 and will always return FALSE */
-	public function &oopsStripSlashesRT($text)
-	{
-		if (get_magic_quotes_runtime()) {
-			$text =& stripslashes($text);
-		}
-		return $text;
-	}
-
-	public function &oopsAddSlashes($text)
-	{
-		return $this->addSlashes($text);
-	}
-
-	public function &oopsHtmlSpecialChars($text)
-	{
-		return $this->htmlSpecialChars($text);
-	}
-
-	public function &oopsNl2Br($text)
-	{
-		return $this->nl2br($text);
-	}
 }
+//	##################### Deprecated Methods ######################
+// comment out in alpha, remove in beta!
+/*	public function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
+{
+	if ($allowhtml == 0) {
+		$text = $this->htmlSpecialChars($text);
+	} else {
+		$text = $this->makeClickable($text);
+	}
+	if ($smiley == 1) {
+		$text = $this->smiley($text);
+	}
+	if ($bbcode == 1) {
+		$text = $this->xoopsCodeDecode($text);
+	}
+	$text = $this->nl2Br($text);
+	return $text;
+}
+
+public function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
+{
+	$text = $this->stripSlashesGPC($text);
+	if ($allowhtml == 0) {
+		$text = $this->htmlSpecialChars($text);
+	} else {
+		$text = $this->makeClickable($text);
+	}
+	if ($smiley == 1) {
+		$text = $this->smiley($text);
+	}
+	if ($bbcode == 1) {
+		$text = $this->xoopsCodeDecode($text);
+	}
+	$text = $this->nl2Br($text);
+	return $text;
+}
+
+public function makeTboxData4Save($text)
+{
+	//$text = $this->undoHtmlSpecialChars($text);
+	return $this->addSlashes($text);
+}
+
+public function makeTboxData4Show($text, $smiley=0)
+{
+	$text = $this->htmlSpecialChars($text);
+	return $text;
+}
+
+public function makeTboxData4Edit($text)
+{
+	return $this->htmlSpecialChars($text);
+}
+
+public function makeTboxData4Preview($text, $smiley=0)
+{
+	$text = $this->stripSlashesGPC($text);
+	$text = $this->htmlSpecialChars($text);
+	return $text;
+}
+
+public function makeTboxData4PreviewInForm($text)
+{
+	$text = $this->stripSlashesGPC($text);
+	return $this->htmlSpecialChars($text);
+}
+
+public function makeTareaData4Save($text)
+{
+	return $this->addSlashes($text);
+}
+
+public function &makeTareaData4Show(&$text, $html=1, $smiley=1, $xcode=1)
+{
+	return $this->displayTarea($text, $html, $smiley, $xcode);
+}
+
+public function makeTareaData4Edit($text)
+{
+	return htmlSpecialChars($text, ENT_QUOTES);
+}
+
+public function &makeTareaData4Preview(&$text, $html=1, $smiley=1, $xcode=1)
+{
+	return $this->previewTarea($text, $html, $smiley, $xcode);
+}
+
+public function makeTareaData4PreviewInForm($text)
+{
+	//if magic_quotes_gpc is on, do stipslashes
+	$text = $this->stripSlashesGPC($text);
+	return htmlSpecialChars($text, ENT_QUOTES);
+}
+
+public function makeTareaData4InsideQuotes($text)
+{
+	return $this->htmlSpecialChars($text);
+}
+
+public function &oopsStripSlashesGPC($text)
+{
+	return $this->stripSlashesGPC($text);
+}
+
+// @todo	get_magic_quotes_runtime is deprecated in PHP 5.4 and will always return FALSE
+public function &oopsStripSlashesRT($text)
+{
+	if (get_magic_quotes_runtime()) {
+		$text =& stripslashes($text);
+	}
+	return $text;
+}
+
+public function &oopsAddSlashes($text)
+{
+	return $this->addSlashes($text);
+}
+
+public function &oopsHtmlSpecialChars($text)
+{
+	return $this->htmlSpecialChars($text);
+}
+
+public function &oopsNl2Br($text)
+{
+	return $this->nl2br($text);
+}
+}*/
