@@ -55,14 +55,15 @@ if (isset($error)) {
 }
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
-if (!isset ($vars ['DB_NAME']) || false !== @strpos($_SERVER ['HTTP_CACHE_CONTROL'], 'max-age=0')) {
+if (!isset ($vars ['DB_NAME']) || false !== @strpos($_SERVER ['HTTP_CACHE_CONTROL'], 'max-age=0'))
+{
 	$keys = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT');
 	foreach ($keys as $k) {
 		$vars [$k] = defined("XOOPS_$k")? constant ("XOOPS_$k"):'';
 	}
 }
 
-public function exec_query($sql, $link) {
+function exec_query($sql, $link) {
 	if ($link instanceof PDO) {
 		return $link->query($sql);
 	} else {
@@ -70,7 +71,7 @@ public function exec_query($sql, $link) {
 	}
 }
 
-public function fetch_assoc($result) {
+function fetch_assoc($result) {
 	if ($result instanceof PDOStatement) {
 		return $result->fetch(PDO::FETCH_ASSOC);
 	} else {
@@ -78,7 +79,7 @@ public function fetch_assoc($result) {
 	}
 }
 
-public function quote_sql($sql) {
+function quote_sql($sql) {
 	global $link;
 	if ($link instanceof PDO) {
 		return $link->quote($sql);
@@ -87,7 +88,7 @@ public function quote_sql($sql) {
 	}
 }
 
-public function getDbCharsets($link) {
+function getDbCharsets($link) {
 	static $charsets = array( );
 	if ($charsets) {
 		return $charsets;
@@ -116,7 +117,7 @@ public function getDbCharsets($link) {
  * @param 	string $charset
  * @return	array	Character sets supported by the db, as strings
  */
-public function getDbCollations($link, $charset) {
+function getDbCollations($link, $charset) {
 	static $collations = array( );
 
 	if ($result = exec_query("SHOW COLLATION WHERE Charset=" . quote_sql($charset), $link)) {
@@ -128,7 +129,7 @@ public function getDbCollations($link, $charset) {
 	return $collations [$charset];
 }
 
-public function validateDbCharset($link, &$charset, &$collation) {
+function validateDbCharset($link, &$charset, &$collation) {
 	$error = null;
 
 	if (empty ($charset)) {
@@ -154,14 +155,14 @@ public function validateDbCharset($link, &$charset, &$collation) {
 	return $error;
 }
 
-public function getDBVersion($link) {
+function getDBVersion($link) {
 	if ($link instanceof PDO) {
 		return $link->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}
 	return mysql_get_server_info($link);
 }
 
-public function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset) {
+function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset) {
 	if (version_compare(getDBVersion($link), "4.1.0", "lt")) {
 		return "";
 	}
@@ -197,7 +198,7 @@ public function xoFormFieldCollation($name, $value, $label, $help = '', $link, $
 	return $field;
 }
 
-public function xoFormBlockCollation($name, $value, $label, $help = '', $link, $charset) {
+function xoFormBlockCollation($name, $value, $label, $help = '', $link, $charset) {
 	$block = '<div id="' . $name . '_div">';
 	$block .= xoFormFieldCollation($name, $value, $label, $help, $link, $charset);
 	$block .= '</div>';
@@ -205,7 +206,7 @@ public function xoFormBlockCollation($name, $value, $label, $help = '', $link, $
 	return $block;
 }
 
-public function select_db($db_name, $link) {
+function select_db($db_name, $link) {
 	if ($link instanceof PDO) {
 		try {
 			$link->exec("use `" . $db_name . '`;');
@@ -286,7 +287,7 @@ if (@empty ($vars ['DB_NAME'])) {
 	$vars = array_merge($vars, array('DB_NAME' => '', 'DB_CHARSET' => 'utf8', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt()));
 }
 
-public function xoFormField($name, $value, $label, $maxlength, $help = '') {
+function xoFormField($name, $value, $label, $maxlength, $help = '') {
 	$label = htmlspecialchars($label);
 	$name = htmlspecialchars($name, ENT_QUOTES);
 	$value = htmlspecialchars($value, ENT_QUOTES);
@@ -301,7 +302,7 @@ public function xoFormField($name, $value, $label, $maxlength, $help = '') {
 	return $field;
 }
 
-public function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
+function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 	if (version_compare(getDBVersion($link), "4.1.0", "lt")) {
 		return "";
 	}
@@ -344,7 +345,7 @@ if (!empty ($error)) {
 }
 ?>
 	<script type="text/javascript">
-		public function setFormFieldCollation(id, val) {
+		function setFormFieldCollation(id, val) {
 			if (val == '') {
 				$(id).style.display='display';
 			} else {
