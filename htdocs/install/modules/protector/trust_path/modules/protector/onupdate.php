@@ -11,14 +11,7 @@ function protector_onupdate_base( $module , $mydirname )
 
 	global $msgs ; // TODO :-D
 
-	// for Cube 2.1
-	if( defined( 'XOOPS_CUBE_LEGACY' ) ) {
-		$root =& XCube_Root::getSingleton();
-		$root->mDelegateManager->add( 'Legacy.Admin.Event.ModuleUpdate.' . ucfirst($mydirname) . '.Success', 'protector_message_append_onupdate' ) ;
-		$msgs = array() ;
-	} else {
-		if( ! is_array( $msgs ) ) $msgs = array() ;
-	}
+	if( ! is_array( $msgs ) ) $msgs = array() ;
 
 	$db = icms_db_Factory::instance() ;
 	$mid = $module->getVar('mid') ;
@@ -101,7 +94,6 @@ function protector_message_append_onupdate( &$module_obj , &$log )
 		}
 	}
 
-	// use mLog->addWarning() or mLog->addError() if necessary
 }
 
 }

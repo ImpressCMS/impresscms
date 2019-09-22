@@ -11,14 +11,7 @@ function protector_onuninstall_base( $module , $mydirname )
 
 	global $ret ; // TODO :-D
 
-	// for Cube 2.1
-	if( defined( 'XOOPS_CUBE_LEGACY' ) ) {
-		$root =& XCube_Root::getSingleton();
-		$root->mDelegateManager->add( 'Legacy.Admin.Event.ModuleUninstall.' . ucfirst($mydirname) . '.Success' , 'protector_message_append_onuninstall' ) ;
-		$ret = array() ;
-	} else {
-		if( ! is_array( $ret ) ) $ret = array() ;
-	}
+	if( ! is_array( $ret ) ) $ret = array() ;
 
 	$db = icms_db_Factory::instance() ;
 	$mid = $module->getVar('mid') ;
@@ -41,21 +34,6 @@ function protector_onuninstall_base( $module , $mydirname )
 		}
 	}
 
-	// TEMPLATES (Not necessary because modulesadmin removes all templates)
-	/* $tplfile_handler =& icms::handler('icms_view_template_file') ;
-	$templates =& $tplfile_handler->find( null , 'module' , $mid ) ;
-	$tcount = count( $templates ) ;
-	if( $tcount > 0 ) {
-		$ret[] = 'Deleting templates...' ;
-		for( $i = 0 ; $i < $tcount ; $i ++ ) {
-			if( ! $tplfile_handler->delete( $templates[$i] ) ) {
-				$ret[] = '<span style="color:#ff0000;">ERROR: Could not delete template '.$templates[$i]->getVar('tpl_file','s').' from the database. Template ID: <b>'.$templates[$i]->getVar('tpl_id','s').'</b></span><br />';
-			} else {
-				$ret[] = 'Template <b>'.$templates[$i]->getVar('tpl_file','s').'</b> deleted from the database. Template ID: <b>'.$templates[$i]->getVar('tpl_id','s').'</b><br />';
-			}
-		}
-	}
-	unset($templates); */
 
 if(defined('ICMS_PRELOAD_PATH') && file_exists(ICMS_PRELOAD_PATH.'/protector.php')){
     icms_core_Filesystem::deleteFile(ICMS_PRELOAD_PATH.'/protector.php');
@@ -72,7 +50,6 @@ function protector_message_append_onuninstall( &$module_obj , &$log )
 		}
 	}
 
-	// use mLog->addWarning() or mLog->addError() if necessary
 }
 
 }

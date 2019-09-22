@@ -11,14 +11,8 @@ function protector_oninstall_base( $module , $mydirname )
 
 	global $ret ; // TODO :-D
 
-	// for Cube 2.1
-	if( defined( 'XOOPS_CUBE_LEGACY' ) ) {
-		$root =& XCube_Root::getSingleton();
-		$root->mDelegateManager->add( 'Legacy.Admin.Event.ModuleInstall.' . ucfirst($mydirname) . '.Success' , 'protector_message_append_oninstall' ) ;
-		$ret = array() ;
-	} else {
-		if( ! is_array( $ret ) ) $ret = array() ;
-	}
+
+	if( ! is_array( $ret ) ) $ret = array() ;
 
 	$db = icms_db_Factory::instance() ;
 	$mid = $module->getVar('mid') ;

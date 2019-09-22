@@ -19,9 +19,6 @@ if( ! empty( $_GET['file'] ) ) {
 if( defined( 'ICMS_TRUST_PATH' ) ) {
 	$draw_dirname = false ;
 	$file_base .= '_icms' ;
-} else if( defined( 'XOOPS_CUBE_LEGACY' ) ) {
-	$draw_dirname = false ;
-	$file_base .= '_xcl' ;
 } else {
 	$draw_dirname = true ;
 }
