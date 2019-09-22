@@ -94,10 +94,12 @@ echo "</dl>\n" ;
 // patch to databasefactory.php
 echo "<dl><dt>'databasefactory.php' : " ;
 $db = icms_db_Factory::instance() ;
-if( strtolower( get_class( $db ) ) != 'protectormysqldatabase' ) {
+if((strtolower( get_class( $db ) ) != 'protectormysqldatabase') 
+        && (substr(XOOPS_DB_TYPE, 0, 4) != 'pdo.') 
+    ) {
 	echo "<span style='color:red;font-weight:bold;'>"._AM_ADV_DBFACTORYUNPATCHED."</span></dt>\n" ;
 } else {
-	echo _AM_ADV_DBFACTORYPATCHED."<span style='color:green;font-weight:bold;'>ok</span></dt>\n" ;
+	echo _AM_ADV_DBFACTORYPATCHED." &nbsp; <span style='color:green;font-weight:bold;'>ok</span></dt>\n" ;
 }
 echo "</dl>\n" ;
 
