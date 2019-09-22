@@ -28,7 +28,7 @@ $pageHasForm = false;
 
 $diagsOK = false;
 
-public function xoDiag( $status = -1, $str = '') {
+function xoDiag( $status = -1, $str = '') {
 	if ($status == -1) {
 		$GLOBALS['error'] = true;
 	}
@@ -39,7 +39,7 @@ public function xoDiag( $status = -1, $str = '') {
 	}
 	return '<td class="' . $classes[$status] . '">' . $str . '</td>';
 }
-public function xoDiagBoolSetting( $name, $wanted = false, $severe = false) {
+function xoDiagBoolSetting( $name, $wanted = false, $severe = false) {
 	$setting = strtolower( ini_get( $name ) );
 	$setting = ( empty( $setting ) || $setting == 'off' || $setting == 'false' ) ? false : true;
 	if ($setting == $wanted) {
@@ -49,7 +49,7 @@ public function xoDiagBoolSetting( $name, $wanted = false, $severe = false) {
 	}
 }
 
-public function xoDiagIfWritable( $path) {
+function xoDiagIfWritable( $path) {
 	$path = "../" . $path;
 	$error = true;
 	if (!is_dir( $path )) {
@@ -64,7 +64,7 @@ public function xoDiagIfWritable( $path) {
 	return xoDiag( $error ? -1 : 1, $error ? 'Not writable' : 'Writable' );
 }
 
-public function imCheckRequirements()
+function imCheckRequirements()
 {
 	$requirement['server_api']['description']=PHP_SAPI;
 	$requirement['server_api']['result']=php_sapi_name();

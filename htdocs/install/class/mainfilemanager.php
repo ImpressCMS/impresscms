@@ -54,14 +54,14 @@ class mainfile_manager {
 	public $report = '';
 	public $error = false;
 
-	public function __construct() {
+	function __construct() {
 	}
 
-	public function setRewrite($def, $val) {
+	function setRewrite($def, $val) {
 		$this->rewrite[$def] = $val;
 	}
 
-	public function copyDistFile() {
+	function copyDistFile() {
 		if (! copy($this->distfile, $this->path)) {
 			$this->report .= _NGIMG.sprintf(_INSTALL_L126, "<b>".$this->path."</b>")."<br />\n";
 			$this->error = true;
@@ -71,7 +71,7 @@ class mainfile_manager {
 		return true;
 	}
 
-	public function doRewrite() {
+	function doRewrite() {
 		clearstatcache();
 		if (! $file = fopen($this->path,"r")) {
 			$this->error = true;
@@ -125,14 +125,14 @@ class mainfile_manager {
 		return true;
 	}
 
-	public function report() {
+	function report() {
 		$content = "<table align='center'><tr><td align='left'>\n";
 		$content .= $this->report;
 		$content .= "</td></tr></table>\n";
 		return $content;
 	}
 
-	public function error() {
+	function error() {
 		return $this->error;
 	}
 }
