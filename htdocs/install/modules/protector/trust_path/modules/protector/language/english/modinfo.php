@@ -101,7 +101,7 @@ define($constpref.'_BIP_EXCEPTDSC','A user who belongs to the group specified he
 define($constpref.'_DISABLES','Disable dangerous features in ImpressCMS');
 
 define($constpref.'_DBLAYERTRAP','Enable DB Layer trapping anti-SQL-Injection');
-define($constpref.'_DBLAYERTRAPDSC','Most SQL Injection attacks will be stopped by this feature. This feature requires a support from ImpressCMS Database Factory. You can check it on Security Advisory page. This setting must be on. Never turn it off casually.');
+define($constpref.'_DBLAYERTRAPDSC','Most SQL Injection attacks will be stopped by this feature. This feature requires support from ImpressCMS Database Factory. You can check it on Security Advisory page. This setting must be on. Never turn it off casually.');
 define($constpref.'_DBTRAPWOSRV','Never check _SERVER for anti-SQL-Injection');
 define($constpref.'_DBTRAPWOSRVDSC','Some servers always enable DB Layer trapping. It causes wrong detections as SQL Injection attack. If you got such errors, turn this option on. You should know this option weakens the security of DB Layer trapping anti-SQL-Injection.');
 
@@ -114,7 +114,7 @@ define($constpref.'_SPAMURI4G','anti-SPAM: URLs for guests');
 define($constpref.'_SPAMURI4GDSC','If this number of URLs are found in POST data from guests, the POST is considered as SPAM. Entering 0 disables this feature.');
 
 define($constpref.'_FILTERS','filters enabled in this site');
-define($constpref.'_FILTERSDSC','specify each file names inside of filters_byconfig/ per a paragraph. (eg. postcommon_post_deny_by_httpbl.php)');
+define($constpref.'_FILTERSDSC','specify each file names inside of filters_byconfig - 1 per line. (eg. postcommon_post_deny_by_httpbl.php)');
 
 define($constpref.'_MANIPUCHECK','enable manipulation checking');
 define($constpref.'_MANIPUCHECKDSC','notify to admin if your root folder or index.php is modified.');
