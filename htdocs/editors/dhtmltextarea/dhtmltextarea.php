@@ -25,7 +25,7 @@ class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
    * @param	array   $configs  Editor Options
    * @param	binary 	$checkCompatible  true - return false on failure
 	 */
-	function FormDhtmlTextArea($configs, $checkCompatible = false)
+	function __construct($configs, $checkCompatible = false)
 	{
 		if (!empty($configs)) {
 			foreach ($configs as $key => $val) {
@@ -40,4 +40,3 @@ class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
 		parent::__construct(@$caption, $name, $value, $rows, $cols, $hiddentext,$configs);
 	}
 }
-?>
