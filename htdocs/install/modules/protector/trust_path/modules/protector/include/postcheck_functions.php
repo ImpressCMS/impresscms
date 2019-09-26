@@ -32,7 +32,7 @@ function protector_postcommon()
 	if( in_array( substr( XOOPS_VERSION , 0 , 12 ) , array( 'XOOPS 2.0.16' , 'XOOPS 2.0.13' , 'XOOPS 2.2.4' ) ) ) {
 		$config_handler = icms::handler('icms_config');
 		$xoopsMailerConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
-		if( $xoopsMailerConfig['mailmethod'] == 'sendmail' && md5_file( XOOPS_ROOT_PATH.'/class/mail/phpmailer/class.phpmailer.php' ) == 'ee1c09a8e579631f0511972f929fe36a' ) {
+		if( $xoopsMailerConfig['mailmethod'] == 'sendmail' && md5_file( ICMS_ROOT_PATH.'/class/mail/phpmailer/class.phpmailer.php' ) == 'ee1c09a8e579631f0511972f929fe36a' ) {
 			echo '<strong>phpmailer security hole! Change the preferences of mail from "sendmail" to another, or upgrade the core right now! (message by protector)</strong>' ;
 		}
 	}
@@ -148,7 +148,7 @@ function protector_postcommon()
 	}
 
 	// register.php Protection
-	if( $_SERVER['SCRIPT_FILENAME'] == XOOPS_ROOT_PATH.'/register.php' ) {
+	if( $_SERVER['SCRIPT_FILENAME'] == ICMS_ROOT_PATH.'/register.php' ) {
 		$protector->call_filter( 'postcommon_register' ) ;
 	}
 

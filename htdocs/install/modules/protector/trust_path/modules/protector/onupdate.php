@@ -11,16 +11,9 @@ function protector_onupdate_base( $module , $mydirname )
 
 	global $msgs ; // TODO :-D
 
-	// for Cube 2.1
-	if( defined( 'XOOPS_CUBE_LEGACY' ) ) {
-		$root =& XCube_Root::getSingleton();
-		$root->mDelegateManager->add( 'Legacy.Admin.Event.ModuleUpdate.' . ucfirst($mydirname) . '.Success', 'protector_message_append_onupdate' ) ;
-		$msgs = array() ;
-	} else {
-		if( ! is_array( $msgs ) ) $msgs = array() ;
-	}
+	if( ! is_array( $msgs ) ) $msgs = array() ;
 
-	$db =& icms_db_Factory::instance() ;
+	$db = icms_db_Factory::instance() ;
 	$mid = $module->getVar('mid') ;
 
 	// TABLES (write here ALTER TABLE etc. if necessary)
@@ -80,10 +73,15 @@ function protector_onupdate_base( $module , $mydirname )
 		}
 		closedir( $handler ) ;
 	}
-if((defined(ICMS_PRELOAD_PATH) && !file_exists(ICMS_PRELOAD_PATH.'/protector.php')) && (! defined( 'PROTECTOR_POSTCHECK_INCLUDED' )||! defined( 'PROTECTOR_PRECHECK_INCLUDED' )) && function_exists('icms_copyr')){
+
+if((defined('ICMS_PRELOAD_PATH') && !file_exists(ICMS_PRELOAD_PATH.'/protector.php')) && (! defined( 'PROTECTOR_POSTCHECK_INCLUDED' )||! defined( 'PROTECTOR_PRECHECK_INCLUDED' )) && function_exists('icms_copyr')){
 	icms_core_Filesystem::copyRecursive(ICMS_TRUST_PATH.'/modules/protector/patches/ImpressCMS1.1/preload_protector.php',ICMS_PRELOAD_PATH.'/protector.php');
 }
-	icms_view_Tpl::template_clear_module_cache( $mid ) ;
+
+    // Remove the prefix_manager page - no longer relevant, especially in this module
+    icms_core_Filesystem::deleteFile(ICMS_TRUST_PATH .'/modules/protector/admin/prefix_manager.php');
+
+    icms_view_Tpl::template_clear_module_cache( $mid ) ;
 
 	return true ;
 }
@@ -96,7 +94,6 @@ function protector_message_append_onupdate( &$module_obj , &$log )
 		}
 	}
 
-	// use mLog->addWarning() or mLog->addError() if necessary
 }
 
 }

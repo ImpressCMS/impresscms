@@ -25,13 +25,13 @@ if( file_exists( "$mydirpath/language/$language/modinfo.php" ) ) {
 
 include dirname(dirname(__FILE__)).'/admin_menu.php' ;
 
-if( file_exists( XOOPS_TRUST_PATH.'/libs/altsys/mytplsadmin.php' ) ) {
+if( file_exists( ICMS_TRUST_PATH.'/libs/altsys/mytplsadmin.php' ) ) {
 	// mytplsadmin (TODO check if this module has tplfile)
 	$title = defined( '_MD_A_MYMENU_MYTPLSADMIN' ) ? _MD_A_MYMENU_MYTPLSADMIN : 'tplsadmin' ;
 	array_push( $adminmenu , array( 'title' => $title , 'link' => 'admin/index.php?mode=admin&lib=altsys&page=mytplsadmin' ) ) ;
 }
 
-if( file_exists( XOOPS_TRUST_PATH.'/libs/altsys/myblocksadmin.php' ) ) {
+if( file_exists( ICMS_TRUST_PATH.'/libs/altsys/myblocksadmin.php' ) ) {
 	// myblocksadmin
 	$title = defined( '_MD_A_MYMENU_MYBLOCKSADMIN' ) ? _MD_A_MYMENU_MYBLOCKSADMIN : 'blocksadmin' ;
 	array_push( $adminmenu , array( 'title' => $title , 'link' => 'admin/index.php?mode=admin&lib=altsys&page=myblocksadmin' ) ) ;
@@ -40,13 +40,13 @@ if( file_exists( XOOPS_TRUST_PATH.'/libs/altsys/myblocksadmin.php' ) ) {
 // preferences
 $config_handler = icms::handler('icms_config');
 if( count( $config_handler->getConfigs( new icms_db_criteria_Item( 'conf_modid' , $xoopsModule->getVar('mid') ) ) ) > 0 ) {
-	if( file_exists( XOOPS_TRUST_PATH.'/libs/altsys/mypreferences.php' ) ) {
+	if( file_exists( ICMS_TRUST_PATH.'/libs/altsys/mypreferences.php' ) ) {
 		// mypreferences
 		$title = defined( '_MD_A_MYMENU_MYPREFERENCES' ) ? _MD_A_MYMENU_MYPREFERENCES : _PREFERENCES ;
 		array_push( $adminmenu , array( 'title' => $title , 'link' => 'admin/index.php?mode=admin&lib=altsys&page=mypreferences' ) ) ;
 	} else {
 		// system->preferences
-		array_push( $adminmenu , array( 'title' => _PREFERENCES , 'link' => XOOPS_URL.'/modules/system/admin.php?fct=preferences&op=showmod&mod='.$xoopsModule->getVar('mid') ) ) ;
+		array_push( $adminmenu , array( 'title' => _PREFERENCES , 'link' => ICMS_URL.'/modules/system/admin.php?fct=preferences&op=showmod&mod='.$xoopsModule->getVar('mid') ) ) ;
 	}
 }
 
@@ -77,8 +77,8 @@ if( empty( $adminmenu_hilighted ) ) {
 
 // link conversion from relative to absolute
 foreach( array_keys( $adminmenu ) as $i ) {
-	if( stristr( $adminmenu[$i]['link'] , XOOPS_URL ) === false ) {
-		$adminmenu[$i]['link'] = XOOPS_URL."/modules/$mydirname/" . $adminmenu[$i]['link'] ;
+	if( stristr( $adminmenu[$i]['link'] , ICMS_URL ) === false ) {
+		$adminmenu[$i]['link'] = ICMS_URL."/modules/$mydirname/" . $adminmenu[$i]['link'] ;
 	}
 }
 

@@ -16,7 +16,7 @@ var $doubtful_needles = array(
 ) ;
 
 
-function ProtectorMySQLDatabase()
+function __construct()
 {
 	$protector =& Protector::getInstance() ;
 	$this->doubtful_requests = $protector->getDblayertrapDoubtfuls() ;
