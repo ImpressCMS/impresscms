@@ -8,6 +8,8 @@
  * @subpackage	Images
  */
 
+use WideImage\WideImage;
+
 /*
  * GET variarbles
  * file

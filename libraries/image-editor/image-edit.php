@@ -10,6 +10,8 @@
  * @since		1.2
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
  */
+use WideImage\WideImage;
+
 $xoopsOption ['nodebug'] = 1;
 
 if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {

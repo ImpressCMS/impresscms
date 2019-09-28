@@ -9,6 +9,8 @@
  * @package core
  * @since 1.2
  */
+use WideImage\WideImage;
+
 $xoopsOption['nodebug'] = 1;
 
 /* 2 critical parameters must exist - and must be safe */
@@ -33,8 +35,6 @@ if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . ba
 if (!isset($image_path) || !isset($image_url)) {
 	echo "alert('" . _ERROR . "');";
 } else {
-	include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
-
 	$x = (int) $_GET['x'];
 	$y = (int) $_GET['y'];
 	$width = (int) $_GET['width'];

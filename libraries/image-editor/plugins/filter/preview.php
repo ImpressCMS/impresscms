@@ -1,4 +1,6 @@
 <?php
+use WideImage\WideImage;
+
 $xoopsOption['nodebug'] = 1;
 
 $file = $_GET['file'];

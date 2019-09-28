@@ -9,6 +9,8 @@
  * @package core
  * @since 1.2
  */
+use WideImage\WideImage;
+
 $xoopsOption['nodebug'] = 1;
 
 /* 3 critical parameters must exist - and must be safe */
