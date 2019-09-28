@@ -57,6 +57,51 @@ abstract class icms_db_Factory {
 	static protected $xoopsInstance = false;
 
 	/**
+	 * Get a reference to the only instance of database class and connects to DB
+	 *
+	 * if the class has not been instantiated yet, this will also take
+	 * care of that
+	 *
+	 * @copyright    copyright (c) 2000-2007 XOOPS.org
+	 * @author        modified by arcandier, The ImpressCMS Project
+	 *
+	 * @static
+	 * @return      object  Reference to the only instance of database class
+	 */
+	static public function instance()
+	{
+		if (self::$xoopsInstance !== false) {
+			return self::$xoopsInstance;
+		}
+		$type = env('DB_TYPE');
+		$allowWebChanges = defined('XOOPS_DB_PROXY') ? false : true;
+		if (substr($type, 0, 4) == 'pdo.') {
+			if (false === self::$pdoInstance) {
+				self::pdoInstance();
+			}
+			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
+		} else {
+			$class = env('DB_ALTERNATIVE');
+			if (!($class && class_exists($class))) {
+				$class = 'icms_db_legacy_' . $type;
+				$class .= $allowWebChanges ? '_Safe' : '_Proxy';
+			}
+			self::$xoopsInstance = new $class();
+			/* during a new installation, the icms object does not exist */
+			//self::$xoopsInstance->setLogger(icms::$logger);
+			/* @todo remove the dependency on the logger class */
+			self::$xoopsInstance->setLogger(icms_core_Logger::instance());
+			if (!self::$xoopsInstance->connect()) {
+				/* this requires that include/functions.php has been loaded */
+				icms_loadLanguageFile('core', 'core');
+				trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
+			}
+		}
+		self::$xoopsInstance->setPrefix(env('DB_PREFIX'));
+		return self::$xoopsInstance;
+	}
+
+	/**
 	 * Instanciate the PDO compatible DB adapter (if appropriate).
 	 *
 	 * @copyright	The ImpressCMS Project <http://www.impresscms.org>
@@ -68,7 +113,7 @@ abstract class icms_db_Factory {
 			return self::$pdoInstance;
 		}
 
-		$type = getenv('DB_TYPE');
+		$type = env('DB_TYPE');
 
 		if (substr($type, 0, 4) != 'pdo.') {
 			return self::$pdoInstance = null;
@@ -78,11 +123,9 @@ abstract class icms_db_Factory {
 		}
 
 		// --> added by Claudia, ImpressCMS.org
-		$string_conn = "host=" . getenv('DB_HOST') . ";dbname=" . getenv('DB_NAME');
-		if (getenv('DB_PORT')) {
-			$string_conn .= ';port=' . getenv('DB_PORT');
-		}
-		$string_conn .= ';charset=' . getenv('DB_CHARSET');
+		$string_conn = "host=" . env('DB_HOST', 'localhost') . ";dbname=" . env('DB_NAME', 'impresscms');
+		$string_conn .= ';port=' . env('DB_PORT', 3306);
+		$string_conn .= ';charset=' . env('DB_CHARSET');
 		define('ICMS_DB_DSN', $string_conn);
 		// <--
 
@@ -107,7 +150,7 @@ abstract class icms_db_Factory {
 		* If you do, you will get segmentation faults during the PHP process shutdown.
 		* Please see this bug report for more information: https://bugs.php.net/bug.php?id=63176
 		*/
-		$options[PDO::ATTR_PERSISTENT] = (getenv('DB_PCONNECT') == 1);
+		$options[PDO::ATTR_PERSISTENT] = (env('DB_PCONNECT', 0) == 1);
 
 		$driver = substr($type, 4);
 		$dsn = $driver . ':' . ICMS_DB_DSN;
@@ -115,49 +158,6 @@ abstract class icms_db_Factory {
 		if (!class_exists($class)) {
 			$class = "icms_db_Connection";
 		}
-		return self::$pdoInstance = new $class($dsn, getenv('DB_USER'), getenv('DB_PASS'), $options);
-	}
-	/**
-	 * Get a reference to the only instance of database class and connects to DB
-	 *
-	 * if the class has not been instantiated yet, this will also take
-	 * care of that
-	 *
-	 * @copyright	copyright (c) 2000-2007 XOOPS.org
-	 * @author		modified by arcandier, The ImpressCMS Project
-	 *
-	 * @static
-	 * @return      object  Reference to the only instance of database class
-	 */
-	static public function instance() {
-		if (self::$xoopsInstance !== false) {
-			return self::$xoopsInstance;
-		}
-		$type = getenv('DB_TYPE');
-		$allowWebChanges = defined('XOOPS_DB_PROXY')? false : true;
-		if (substr($type, 0, 4) == 'pdo.') {
-			if (false === self::$pdoInstance) {
-				self::pdoInstance();
-			}
-			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
-		} else {
-			$class = getenv('DB_ALTERNATIVE');
-			if (!($class && class_exists($class))) {
-				$class = 'icms_db_legacy_' . $type;
-				$class .= $allowWebChanges?'_Safe':'_Proxy';
-			}
-			self::$xoopsInstance = new $class();
-			/* during a new installation, the icms object does not exist */
-			//self::$xoopsInstance->setLogger(icms::$logger);
-			/* @todo remove the dependency on the logger class */
-			self::$xoopsInstance->setLogger(icms_core_Logger::instance());
-			if (!self::$xoopsInstance->connect()) {
-				/* this requires that include/functions.php has been loaded */
-				icms_loadLanguageFile('core', 'core');
-				trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
-			}
-		}
-		self::$xoopsInstance->setPrefix(getenv('DB_PREFIX'));
-		return self::$xoopsInstance;
+		return self::$pdoInstance = new $class($dsn, env('DB_USER'), env('DB_PASS'), $options);
 	}
 }

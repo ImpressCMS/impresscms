@@ -70,10 +70,10 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 			return false;
 		}
 
-		if (getenv('DB_PCONNECT') == 1) {
-			$this->conn = @ mysql_pconnect(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'));
+		if (env('DB_PCONNECT') == 1) {
+			$this->conn = @ mysql_pconnect(env('DB_HOST'), env('DB_USER'), env('DB_PASS'));
 		} else {
-			$this->conn = @ mysql_connect(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'));
+			$this->conn = @ mysql_connect(env('DB_HOST'), env('DB_USER'), env('DB_PASS'));
 		}
 
 		if (!$this->conn) {
@@ -81,14 +81,14 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 			return false;
 		}
 		if ($selectdb != false) {
-			if (!mysql_select_db(getenv('DB_NAME'))) {
+			if (!mysql_select_db(env('DB_NAME'))) {
 				$this->logger->addQuery('', $this->error(), $this->errno());
 				return false;
 			}
 		}
 
-		if (!isset ($db_charset_set) && getenv('DB_CHARSET') && getenv('DB_CHARSET') !== 'ucs2') {
-			$this->queryF("SET NAMES '" . getenv('DB_CHARSET') . "'");
+		if (!isset ($db_charset_set) && env('DB_CHARSET') && env('DB_CHARSET') !== 'ucs2') {
+			$this->queryF("SET NAMES '" . env('DB_CHARSET') . "'");
 		}
 		$db_charset_set = 1;
 

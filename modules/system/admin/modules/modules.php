@@ -160,8 +160,8 @@ function xoops_module_install($dirname) {
 			. _MD_AM_INSTALLING . $module->getInfo('name') . '</h4>';
 		if ($sqlfile !== false && is_array($sqlfile)) {
 			// handle instances when DB_TYPE includes 'pdo.'
-			if (substr(getenv('DB_TYPE'), 0, 4) == 'pdo.') {
-				$driver = substr(getenv('DB_TYPE'), 4);
+			if (substr(env('DB_TYPE'), 0, 4) == 'pdo.') {
+				$driver = substr(env('DB_TYPE'), 4);
 			}
 			$sql_file_path = ICMS_MODULES_PATH . "/" . $dirname . "/" . $sqlfile[$driver];
 			if (!file_exists($sql_file_path)) {
@@ -793,7 +793,7 @@ function xoops_module_uninstall($dirname) {
 				$msgs[] = _MD_AM_MOD_TABLES_DELETE;
 				foreach ($modtables as $table) {
 					if ($is_IPF) {
-						$table = str_replace(getenv('DB_PREFIX') . '_', '', $table);
+						$table = str_replace(env('DB_PREFIX') . '_', '', $table);
 					}
 					$prefix_table = $db->prefix($table);
 					// prevent deletion of reserved core tables!

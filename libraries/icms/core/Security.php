@@ -83,7 +83,7 @@ class icms_core_Security {
 		$validFound = false;
 		$token_data = & $_SESSION[$name . '_SESSION'];
 		foreach (array_keys($token_data) as $i) {
-			if ($token === md5($token_data[$i]['id'] . $_SERVER['HTTP_USER_AGENT'] . getenv('DB_PREFIX'))) {
+			if ($token === md5($token_data[$i]['id'] . $_SERVER['HTTP_USER_AGENT'] . env('DB_PREFIX'))) {
 				if ($this->filterToken($token_data[$i])) {
 					if ($clearIfValid) {
 						// token should be valid once, so clear it once validated
@@ -150,7 +150,7 @@ class icms_core_Security {
 		}
 		$token_data = array('id' => $token_id, 'expire' => time() + (int)($timeout));
 		array_push($_SESSION[$name . '_SESSION'], $token_data);
-		return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . getenv('DB_PREFIX'));
+		return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . env('DB_PREFIX'));
 	}
 
 	/**

@@ -144,7 +144,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 			if ($authenticated) {
 				icms::$session->securityLevel = 3;
 				icms::$session->check_ip_blocks = 2;
-				icms::$session->salt_key = getenv('DB_SALT');
+				icms::$session->salt_key = env('DB_SALT');
 				icms::$session->enableRegenerateId = true;
 				icms::$session->sessionOpen();
 				// We load the User database

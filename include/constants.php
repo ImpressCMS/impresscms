@@ -4,7 +4,7 @@
 \Dotenv\Dotenv::create(dirname(__DIR__))->safeLoad();
 
 define('ICMS_ROOT_PATH', dirname(__DIR__));
-define('ICMS_URL', getenv('URL'));
+define('ICMS_URL', env('URL'));
 
 /**#@+
  * Creating ICMS specific constants
@@ -46,7 +46,7 @@ define('XOOPS_MATCH_EQUAL', 2);
 define('XOOPS_MATCH_CONTAIN', 3);
 
 if (!defined('ICMS_PUBLIC_PATH')) {
-	$path = getenv('public_path');
+	$path = env('public_path');
 	if (empty($path)) {
 		foreach (['public_html', 'htdocs', 'wwwroot'] as $dirname) {
 			if (file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $dirname)) {
