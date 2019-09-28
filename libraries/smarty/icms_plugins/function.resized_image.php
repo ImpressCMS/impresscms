@@ -5,6 +5,7 @@
  * @subpackage plugins
  */
 
+use WideImage\WideImage;
 
 /**
  * Smarty {resized_image} function plugin for impressCMS
