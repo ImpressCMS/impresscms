@@ -305,16 +305,12 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 		if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
 			$class = XOOPS_DB_ALTERNATIVE;
 			$protectorDB = new $class();
-
-			$sql4check = substr($sql , 7);
-			foreach ($protectorDB->doubtful_needles as $needle) {
-				if(stristr($sql4check , $needle)) {
-					$protectorDB->checkSql($sql) ;
-					return FALSE;
-				}
-			}
+			$protectorDB->checkSql($sql) ; // if this finds an injection attempt, it exits
 		}
-
-		return TRUE;
+		
+		/* Protector preload is not loaded, so we cannot check.
+		 * Or, the checks have succeeded and there are no detected injections
+		 * Return true */
+		return true;
 	}
 }
