@@ -145,16 +145,16 @@
         },
         {
             "name": "cerdic/css-tidy",
-            "version": "v1.7.0",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Cerdic/CSSTidy.git",
-                "reference": "292084eb9d944bc3dead73ab3ed5df43dfb0e7ff"
+                "reference": "47bc70fc6d78a37cb91f9df4518585a9e62b565a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Cerdic/CSSTidy/zipball/292084eb9d944bc3dead73ab3ed5df43dfb0e7ff",
-                "reference": "292084eb9d944bc3dead73ab3ed5df43dfb0e7ff",
+                "url": "https://api.github.com/repos/Cerdic/CSSTidy/zipball/47bc70fc6d78a37cb91f9df4518585a9e62b565a",
+                "reference": "47bc70fc6d78a37cb91f9df4518585a9e62b565a",
                 "shasum": ""
             },
             "require": {
@@ -164,6 +164,9 @@
                 "pear/text_diff": "^1.2",
                 "simpletest/simpletest": "^1.1"
             },
+            "bin": [
+                "bin/pcsstidy"
+            ],
             "type": "library",
             "autoload": {
                 "classmap": [
@@ -183,7 +186,7 @@
                 }
             ],
             "description": "CSSTidy is a CSS minifier",
-            "time": "2019-07-31T13:41:17+00:00"
+            "time": "2019-09-14T17:59:23+00:00"
         },
         {
             "name": "erusev/parsedown",
