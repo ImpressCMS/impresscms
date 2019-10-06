@@ -274,15 +274,6 @@ final class icms extends Container {
 	 */
 	public function boot()
 	{
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\PreloadServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\LoggerServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\FilesystemServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\DatabaseServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\SecurityServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\SessionServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\ConfigServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\ModuleServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\CacheServiceProvider::class);
 		// register links for compatibility
 		self::$db = $this->get('db');
 		self::$xoopsDB = $this->get('xoopsDB');
