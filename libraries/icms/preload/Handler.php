@@ -42,13 +42,11 @@ class icms_preload_Handler {
 	 * @return	void
 	 */
 	public function __construct() {
-		$preloadFilesArray = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_PRELOAD_PATH, '', array('php')));
-		foreach ($preloadFilesArray as $filename) {
-			// exclude index.html
-			if (!in_array($this->getClassName($filename), get_declared_classes())) {
-				$this->_preloadFilesArray[] = $filename;
-				$this->addPreloadEvents($filename);
-			}
+		foreach (icms::getInstance()->get('preload') as $preloadClass) {
+			// todo: fix this
+			$this->registerEvents(
+				icms::getInstance()->get($preloadClass)
+			);
 		}
 
 		// add ondemand preload
@@ -57,6 +55,31 @@ class icms_preload_Handler {
 			foreach ($icmsOnDemandPreload as $onDemandPreload) {
 				$this->_preloadFilesArray[] = $onDemandPreload['filename'];
 				$this->addPreloadEvents($onDemandPreload['filename'], $onDemandPreload['module']);
+			}
+		}
+	}
+
+	/**
+	 * Register preload events
+	 *
+	 * @param object $instance Preload instance
+	 */
+	protected function registerEvents($instance)
+	{
+		$class_methods = get_class_methods($instance);
+		foreach ($class_methods as $method) {
+			if (strpos($method, 'event') === 0) {
+				$preload_event = strtolower(str_replace('event', '', $method));
+
+				icms_Event::attach('icms', $preload_event, [$instance, $method]);
+				/*
+                $preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
+                if (defined($preload_event_weight_define_name)) {
+                    $preload_event_weight = constant($preload_event_weight_define_name);
+                    $this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
+                } else {
+                    $this->_preloadEventsArray[$preload_event][] = $preload_event_array;
+                }*/
 			}
 		}
 	}
@@ -83,26 +106,27 @@ class icms_preload_Handler {
 		$classname = $this->getClassName($filename);
 
 		if (in_array($classname, get_declared_classes())) {
-			$preloadItem = new $classname();
-
-			$class_methods = get_class_methods($classname);
-			foreach ($class_methods as $method) {
-				if (strpos($method, 'event') === 0) {
-					$preload_event = strtolower(str_replace('event', '', $method));
-
-					$callback = array($preloadItem, $method);
-					icms_Event::attach('icms', $preload_event, $callback);
-					/*
-					$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
-					if (defined($preload_event_weight_define_name)) {
-						$preload_event_weight = constant($preload_event_weight_define_name);
-						$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
-					} else {
-						$this->_preloadEventsArray[$preload_event][] = $preload_event_array;
-					}*/
-				}
-			}
+			$this->registerEvents(
+				new $classname()
+			);
 		}
+	}
+
+	/**
+	 * Construct the name of the class based on the filename
+	 *
+	 * All preloads will be discovered if the class name is the
+	 * file name without the extension (uppercase the first letter) prefixed with 'IcmsPreload'
+	 * For example, file name = protectEmail.php -> class name = IcmsPreloadProtectEmail
+	 *
+	 * @todo    switch to use the PSR-0 naming convention (plugin_preload_{filename})
+	 *
+	 * @param    $filename string filename where the class is located
+	 * @return    string name of the class
+	 */
+	public function getClassName($filename)
+	{
+		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename));
 	}
 
 	/**
@@ -154,22 +178,6 @@ class icms_preload_Handler {
 	public function triggerEvent($event, $array = array()) {
 		$event = strtolower($event);
 		icms_Event::trigger('icms', $event, null, $array);
-	}
-
-	/**
-	 * Construct the name of the class based on the filename
-	 *
-	 * All preloads will be discovered if the class name is the
-	 * file name without the extension (uppercase the first letter) prefixed with 'IcmsPreload'
-	 * For example, file name = protectEmail.php -> class name = IcmsPreloadProtectEmail
-	 *
-	 * @todo	switch to use the PSR-0 naming convention (plugin_preload_{filename})
-	 *
-	 * @param	$filename string filename where the class is located
-	 * @return	string name of the class
-	 */
-	public function getClassName($filename) {
-		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename));
 	}
 
 }

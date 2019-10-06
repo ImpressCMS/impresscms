@@ -11,6 +11,7 @@
  * @internal    for convenience, as we are not targetting php 5.3+ yet
  */
 
+use Imponeer\ComposerContainerServicesRegistrationPlugin\PredefinedContainerFactory;
 use League\Container\Container;
 
 /**
@@ -136,7 +137,7 @@ final class icms extends Container {
 	{
 		static $instance = null;
 		if ($instance === null) {
-			$instance = new self();
+			$instance = PredefinedContainerFactory::create();
 		}
 		return $instance;
 	}
@@ -286,7 +287,7 @@ final class icms extends Container {
 		self::$db = $this->get('db');
 		self::$xoopsDB = $this->get('xoopsDB');
 		self::$logger = $this->get('logger');
-		self::$preload = $this->get('preload');
+		self::$preload = $this->get(icms_preload_Handler::class);
 		self::$config = $this->get('config');
 		self::$security = $this->get('security');
 		self::$session = $this->get('session');
