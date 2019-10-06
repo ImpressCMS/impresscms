@@ -27,10 +27,6 @@ class icms_preload_Handler {
 	 */
 	private $_preloadFilesArray = array();
 
-	/**
-	 * @var array $_preloadEventsArray array containing a list of all events for all preload file, indexed by event name and sorted by order of execution
-	 */
-	private $_preloadEventsArray = array();
 
 	/**
 	 * Constructor
@@ -43,10 +39,7 @@ class icms_preload_Handler {
 	 */
 	public function __construct() {
 		foreach (icms::getInstance()->get('preload') as $preloadClass) {
-			// todo: fix this
-			$this->registerEvents(
-				icms::getInstance()->get($preloadClass)
-			);
+			$this->registerEvents($preloadClass);
 		}
 
 		// add ondemand preload

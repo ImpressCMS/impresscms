@@ -63,7 +63,8 @@
       "": "libraries/"
     },
     "classmap": [
-      "modules/"
+      "modules/",
+      "plugins/preloads/"
     ],
     "psr-4": {
       "ImpressCMS\\Core\\": "core/"
