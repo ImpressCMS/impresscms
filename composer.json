@@ -45,11 +45,11 @@
     "phpexperts/laravel-env-polyfill": "^1.0",
     "phpmailer/phpmailer": "6.0.7",
     "simplepie/simplepie": "^1.5",
+    "symfony/polyfill-iconv": "^1.12",
     "tecnickcom/tcpdf": "^6.2",
     "vlucas/phpdotenv": "3.3.3"
   },
   "suggest": {
-    "ext-iconv": "Iconv is needed to handle conversions between charsets",
     "ext-xml": "Faster way then with PHP scripts to handle XML documents",
     "ext-openssl": "Without it OpenID will not work",
     "ext-bcmath": "Better precistions in math operations",
