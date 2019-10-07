@@ -626,12 +626,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/composer-container-services-registration-plugin.git",
-                "reference": "f3339b20957bc961f2eb9b7b5d67e7c5fbd69ce5"
+                "reference": "2136155ca1c1ad7306741bc802acce94387ab5b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/composer-container-services-registration-plugin/zipball/f3339b20957bc961f2eb9b7b5d67e7c5fbd69ce5",
-                "reference": "f3339b20957bc961f2eb9b7b5d67e7c5fbd69ce5",
+                "url": "https://api.github.com/repos/imponeer/composer-container-services-registration-plugin/zipball/2136155ca1c1ad7306741bc802acce94387ab5b7",
+                "reference": "2136155ca1c1ad7306741bc802acce94387ab5b7",
                 "shasum": ""
             },
             "require": {
@@ -665,7 +665,7 @@
                 "source": "https://github.com/imponeer/composer-container-services-registration-plugin/tree/master",
                 "issues": "https://github.com/imponeer/composer-container-services-registration-plugin/issues"
             },
-            "time": "2019-10-06T23:02:28+00:00"
+            "time": "2019-10-07T00:09:06+00:00"
         },
         {
             "name": "imponeer/composer-custom-commands",
