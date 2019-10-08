@@ -108,6 +108,6 @@ function showRSS() {
 		$icmsAdminTpl->assign('admin_rss_feeditems', $feeditems);
 	}
 
-	$icmsAdminTpl->display('db:admin/system_adm_rss.html');
+	$icmsAdminTpl->display('db:system_adm_rss.html');
 }
 icms_cp_footer();
