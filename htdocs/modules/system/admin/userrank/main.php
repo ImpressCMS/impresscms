@@ -60,13 +60,13 @@ function edituserrank($showmenu = FALSE, $rank_id = 0, $clone = FALSE) {
 		$sform = $userrankObj->getForm(_CO_ICMS_USERRANKS_EDIT, "adduserrank");
 		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->assign("icms_userrank_title", _CO_ICMS_USERRANKS_EDIT_INFO);
-		$icmsAdminTpl->display("db:admin/userrank/system_adm_userrank.html");
+		$icmsAdminTpl->display('db:system_adm_userrank.html');
 	} else {
 		$userrankObj->setVar("rank_id", 0);
 		$sform = $userrankObj->getForm(_CO_ICMS_USERRANKS_CREATE, "adduserrank");
 		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->assign("icms_userrank_title", _CO_ICMS_USERRANKS_CREATE_INFO);
-		$icmsAdminTpl->display("db:admin/userrank/system_adm_userrank.html");
+		$icmsAdminTpl->display('db:system_adm_userrank.html');
 	}
 }
 
@@ -110,7 +110,7 @@ switch ($op) {
 		$icmsAdminTpl->assign("icms_userrank_table", $objectTable->fetch());
 		$icmsAdminTpl->assign("icms_userrank_explain", TRUE);
 		$icmsAdminTpl->assign("icms_userrank_title", _CO_ICMS_USERRANKS_DSC);
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . "/system/templates/admin/userrank/system_adm_userrank.html");
+		$icmsAdminTpl->display('db:system_adm_userrank.html');
 		break;
 }
 
