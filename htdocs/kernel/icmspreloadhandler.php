@@ -56,5 +56,5 @@ class IcmsPreloadHandler extends icms_preload_Handler {
  * @todo		Remove in version 1.4
  */
 class IcmsPreloadItem  extends icms_preload_Item {
-	function IcmsPreloadItem() {}
+	function __construct() {}
 }
