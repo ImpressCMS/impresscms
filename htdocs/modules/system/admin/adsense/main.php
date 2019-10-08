@@ -86,7 +86,7 @@ switch ($op) {
 		$icmsAdminTpl->assign('icms_adsense_table', $objectTable->fetch());
 		$icmsAdminTpl->assign('icms_adsense_explain', TRUE);
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_DSC);
-		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
+		$icmsAdminTpl->display('db:system_adm_adsense.html');
 		break;
 }
 
