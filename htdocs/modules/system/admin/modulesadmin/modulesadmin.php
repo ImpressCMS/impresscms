@@ -115,7 +115,7 @@ function xoops_module_list() {
 			unset($module);
 	}
 
-	return $icmsAdminTpl->fetch('db:admin/modulesadmin/system_adm_modulesadmin.html');
+	return $icmsAdminTpl->fetch('db:system_adm_modulesadmin.html');
 }
 
 /**
