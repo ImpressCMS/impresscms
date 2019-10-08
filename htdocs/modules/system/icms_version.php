@@ -279,211 +279,46 @@ $modversion['blocks'][] = array(
 	);
 
 /** Templates information */
-$modversion['templates'][1] = array(
-	'file' => 'system_imagemanager.html',
-	'description' => '');
-
-$modversion['templates'][] = array(
-	'file' => 'system_imagemanager2.html',
-	'description' => ''
-	);
-
-$modversion['templates'][]= array(
-	'file' => 'system_userinfo.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_userform.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_rss.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_comment.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_comments_flat.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_comments_thread.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_comments_nest.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_siteclosed.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_redirect.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_dummy.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_notification_list.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_notification_select.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_block_dummy.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_privpolicy.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_error.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_openid.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/blockspadmin/system_adm_blockspadmin.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/pages/system_adm_pagemanager_index.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/blocksadmin/system_adm_blocksadmin.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/modulesadmin/system_adm_modulesadmin.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_common_form.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_persistabletable_display.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/customtag/system_adm_customtag.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_default_form.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/images/system_adm_imagemanager.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/images/system_adm_imagemanager_imglist.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/images/system_adm_imagemanager_img.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/images/system_adm_imagemanager_editimg.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/images/system_adm_imagemanager_cloneimg.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/system_adm_rss.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_search.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_persistable_singleview.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_breadcrumb.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/adsense/system_adm_adsense.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_print.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/rating/system_adm_rating.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'system_rating_form.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/mimetype/system_adm_mimetype.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/userrank/system_adm_userrank.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
-	'file' => 'admin/autotasks/system_adm_autotasks.html',
-	'description' => ''
-	);
+$modversion['templates'] = array(
+	array(	'file' => 'system_imagemanager.html',	'description' => ''),
+	array(	'file' => 'system_imagemanager2.html','description' => ''),
+	array(	'file' => 'system_userinfo.html',	'description' => ''	),
+	array(	'file' => 'system_userform.html',	'description' => ''	),
+	array(	'file' => 'system_rss.html',	'description' => ''	),
+	array(	'file' => 'system_comment.html',	'description' => ''	),
+	array(	'file' => 'system_comments_flat.html','description' => ''),
+	array(	'file' => 'system_comments_thread.html',	'description' => ''	),
+	array(	'file' => 'system_comments_nest.html',	'description' => ''	),
+	array(	'file' => 'system_siteclosed.html',	'description' => ''	),
+	array(	'file' => 'system_redirect.html',	'description' => ''	),
+	array(	'file' => 'system_dummy.html',	'description' => ''	),
+	array(	'file' => 'system_notification_list.html',	'description' => ''	),
+	array(	'file' => 'system_notification_select.html',	'description' => ''	),
+	array(	'file' => 'system_block_dummy.html',	'description' => ''	),
+	array(	'file' => 'system_privpolicy.html',	'description' => ''	),
+	array(	'file' => 'system_error.html',	'description' => ''	),
+	array(	'file' => 'system_openid.html',	'description' => ''	),
+	array(	'file' => 'system_adm_blockspadmin.html',	'description' => ''	),
+	array(	'file' => 'system_adm_pagemanager_index.html',	'description' => ''	),
+	array(	'file' => 'system_adm_blocksadmin.html',	'description' => ''	),
+	array(	'file' => 'system_adm_modulesadmin.html',	'description' => ''	),
+	array(	'file' => 'system_common_form.html',	'description' => ''	),
+	array(	'file' => 'system_persistabletable_display.html',	'description' => ''	),
+	array(	'file' => 'system_adm_customtag.html',	'description' => ''	),
+	array(	'file' => 'system_default_form.html',	'description' => ''	),
+	array(	'file' => 'system_adm_imagemanager.html',	'description' => ''	),
+	array(	'file' => 'system_adm_imagemanager_imglist.html',	'description' => ''	),
+	array(	'file' => 'system_adm_imagemanager_img.html',	'description' => ''	),
+	array(	'file' => 'system_adm_imagemanager_editimg.html',	'description' => ''	),
+	array(	'file' => 'system_adm_imagemanager_cloneimg.html',	'description' => ''	),
+	array(	'file' => 'system_adm_rss.html',	'description' => ''	),
+	array(	'file' => 'system_search.html',	'description' => ''	),
+	array(	'file' => 'system_persistable_singleview.html',	'description' => ''	),
+	array(	'file' => 'system_breadcrumb.html',	'description' => ''	),
+	array(	'file' => 'system_adm_adsense.html',	'description' => ''	),
+	array(	'file' => 'system_print.html',	'description' => ''	),
+	array(	'file' => 'system_adm_rating.html',	'description' => ''	),
+	array(	'file' => 'system_rating_form.html',	'description' => ''	),
+	array(	'file' => 'system_adm_mimetype.html',	'description' => ''	),
+	array(	'file' => 'system_adm_userrank.html',	'description' => ''	),
+	array(	'file' => 'system_adm_autotasks.html',	'description' => ''	));
