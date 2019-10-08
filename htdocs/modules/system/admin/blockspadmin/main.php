@@ -38,7 +38,7 @@ function editblockposition($id = 0) {
 	}
 	$icmsAdminTpl->assign('id', $id);
 	$icmsAdminTpl->assign('lang_badmin', _AM_SYSTEM_BLOCKSPADMIN_TITLE);
-	$icmsAdminTpl->display('db:admin/blockspadmin/system_adm_blockspadmin.html');
+	$icmsAdminTpl->display('db:system_adm_blockspadmin.html');
 }
 
 $icms_blockposition_handler = icms_getModuleHandler('blockspadmin');
@@ -89,7 +89,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icmsAdminTpl->assign('lang_badmin', _AM_SYSTEM_BLOCKSPADMIN_TITLE);
 			$icmsAdminTpl->assign('icms_blockposition_info', _AM_SYSTEM_BLOCKSPADMIN_INFO);
 
-			$icmsAdminTpl->display('db:admin/blockspadmin/system_adm_blockspadmin.html');
+			$icmsAdminTpl->display('db:system_adm_blockspadmin.html');
 			break;
 	}
 	icms_cp_footer();
