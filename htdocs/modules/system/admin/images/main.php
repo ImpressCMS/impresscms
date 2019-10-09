@@ -359,7 +359,7 @@ function imanager_index($imgcat_id = NULL) {
 	$form->addElement($tray1);
 	$icmsAdminTpl->assign('addcatform', $form->render());
 
-	return $icmsAdminTpl->fetch('db:admin/images/system_adm_imagemanager.html');
+	return $icmsAdminTpl->fetch('db:system_adm_imagemanager.html');
 }
 
 /**
@@ -569,7 +569,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	}
 	$icmsAdminTpl->assign('addimgform', showAddImgForm($imgcat_id));
 
-	return $icmsAdminTpl->fetch('db:admin/images/system_adm_imagemanager_imglist.html');
+	return $icmsAdminTpl->fetch('db:system_adm_imagemanager_imglist.html');
 }
 
 /**

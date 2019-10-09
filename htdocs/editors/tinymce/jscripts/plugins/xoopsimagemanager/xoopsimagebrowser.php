@@ -258,7 +258,7 @@ function imanager_index($imgcat_id=null) {
 	$form->addElement($tray1);
 	$icmsTpl->assign('addcatform',$form->render());
 
-	return $icmsTpl->fetch(ICMS_ROOT_PATH.'/modules/system/templates/admin/images/system_popup_imagemanager.html');
+	return $icmsTpl->fetch('db:system_popup_imagemanager.html');
 }
 
 function imanager_listimg($imgcat_id,$start=0) {
@@ -467,7 +467,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	}
 	$icmsTpl->assign('addimgform',showAddImgForm($imgcat_id));
 
-	return $icmsTpl->fetch(ICMS_ROOT_PATH.'/modules/system/templates/admin/images/system_popup_imagemanager_imglist.html');
+	return $icmsTpl->fetch('db:system_popup_imagemanager_imglist.html');
 }
 
 function imanager_addcat() {

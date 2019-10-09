@@ -28,7 +28,7 @@ function editrating($showmenu = FALSE, $ratingid = 0) {
 
 		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_EDIT_INFO);
-		$icmsAdminTpl->display('db:admin/rating/system_adm_rating.html');
+		$icmsAdminTpl->display('db:system_adm_rating.html');
 	} else {
 		$ratingObj->hideFieldFromForm(array('item', 'itemid', 'uid', 'date', 'rate'));
 
@@ -49,7 +49,7 @@ function editrating($showmenu = FALSE, $ratingid = 0) {
 		$sform->assign($icmsAdminTpl);
 
 		$icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_CREATE_INFO);
-		$icmsAdminTpl->display('db:admin/rating/system_adm_rating.html');
+		$icmsAdminTpl->display('db:system_adm_rating.html');
 	}
 }
 icms_loadLanguageFile('system', 'common');
@@ -58,7 +58,7 @@ $icms_rating_handler = icms_getmodulehandler('rating');
 
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op'])) 
+$op = (isset($_POST['op']))
 	? trim(filter_input(INPUT_POST, 'op'))
 	: ((isset($_GET['op']))
 		? trim(filter_input(INPUT_GET, 'op'))
@@ -111,7 +111,7 @@ switch ($op) {
 		$icmsAdminTpl->assign('icms_rating_explain', TRUE);
 		$icmsAdminTpl->assign('icms_rating_title', _CO_ICMS_RATINGS_DSC);
 
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/rating/system_adm_rating.html');
+		$icmsAdminTpl->display('db:system_adm_rating.html');
 
 		break;
 }

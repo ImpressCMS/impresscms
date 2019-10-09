@@ -17,7 +17,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 
 /**
  * Logic and rendering for mimetypes management
- * 
+ *
  * @param bool	$showmenu	Doesn't appear to have any current functionality
  * @param int	$mimetypeid	Unique ID for mimetype entry
  */
@@ -32,7 +32,7 @@ function editmimetype($showmenu = FALSE, $mimetypeid = 0) {
 		$sform->assign($icmsAdminTpl);
 
 		$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPE_EDIT_INFO);
-		$icmsAdminTpl->display('db:admin/mimetype/system_adm_mimetype.html');
+		$icmsAdminTpl->display('db:system_adm_mimetype.html');
 	} else {
 		$mimetypeObj->setVar('mimetypeid', 0);
 		$mimetypeObj->setVar('extension', '');
@@ -41,7 +41,7 @@ function editmimetype($showmenu = FALSE, $mimetypeid = 0) {
 		$sform->assign($icmsAdminTpl);
 
 		$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPE_CREATE_INFO);
-		$icmsAdminTpl->display('db:admin/mimetype/system_adm_mimetype.html');
+		$icmsAdminTpl->display('db:system_adm_mimetype.html');
 	}
 }
 icms_loadLanguageFile('system', 'common');
@@ -81,7 +81,7 @@ switch ($op) {
 		$icmsAdminTpl->assign('icms_mimetype_table', $objectTable->fetch());
 		$icmsAdminTpl->assign('icms_mimetype_explain', TRUE);
 		$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPES_DSC);
-		$icmsAdminTpl->display(ICMS_MODULES_PATH . '/system/templates/admin/mimetype/system_adm_mimetype.html');
+		$icmsAdminTpl->display('db:system_adm_mimetype.html');
 		break;
 }
 

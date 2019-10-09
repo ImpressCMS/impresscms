@@ -15,7 +15,7 @@ if (!is_object(icms::$user) || !is_object($xoopsModule) || !icms::$user->isAdmin
 
 /**
  * Method for editing autotask entries
- * 
+ *
  * @param boolean	$showmenu		This parameter is not used - why is it here?
  * @param int		$autotasksid	The unique identifier for the autotask
  * @param boolean	$clone			Indicator if an autotask is being created from another
@@ -31,13 +31,13 @@ function editautotasks($showmenu = FALSE, $autotasksid = 0, $clone = FALSE) {
 
 		$sform = $autotasksObj->getForm(_CO_ICMS_AUTOTASKS_EDIT, 'addautotasks');
 		$sform->assign($icmsAdminTpl);
-		$icmsAdminTpl->display('db:admin/autotasks/system_adm_autotasks.html');
+		$icmsAdminTpl->display('db:system_adm_autotasks.html');
 	} else {
 		$autotasksObj->setVar('sat_id', 0);
 
 		$sform = $autotasksObj->getForm(_CO_ICMS_AUTOTASKS_CREATE, 'addautotasks');
 		$sform->assign($icmsAdminTpl);
-		$icmsAdminTpl->display('db:admin/autotasks/system_adm_autotasks.html');
+		$icmsAdminTpl->display('db:system_adm_autotasks.html');
 	}
 
 }
@@ -98,7 +98,7 @@ switch ($op) {
 
 		$icmsAdminTpl->assign('icms_autotasks_table', $objectTable->fetch());
 
-		$icmsAdminTpl->display('db:admin/autotasks/system_adm_autotasks.html');
+		$icmsAdminTpl->display('db:system_adm_autotasks.html');
 
 		//echo $objectTable->fetch();
 

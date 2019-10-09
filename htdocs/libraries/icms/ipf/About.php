@@ -223,7 +223,7 @@ class icms_ipf_About {
 			fclose($handle);
 		}
 
-		$this->_tpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/system_adm_moduleabout.html');
+		$this->_tpl->display('db:system_adm_moduleabout.html');
 
 		icms_cp_footer();
 	}

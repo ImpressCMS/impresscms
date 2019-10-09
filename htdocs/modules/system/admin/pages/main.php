@@ -39,7 +39,7 @@ function editpage($page_id = 0, $clone = FALSE) {
 	}
 	$icmsAdminTpl->assign('page_id', $page_id);
 	$icmsAdminTpl->assign('icms_page_title', _AM_SYSTEM_PAGES_TITLE);
-	$icmsAdminTpl->display('db:admin/pages/system_adm_pagemanager_index.html');
+	$icmsAdminTpl->display('db:system_adm_pagemanager_index.html');
 }
 
 $icms_page_handler = icms_getModuleHandler('pages');
@@ -111,7 +111,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addFilter('page_moduleid', 'getModulesArray');
 			$icmsAdminTpl->assign('icms_page_table', $objectTable->fetch());
 			$icmsAdminTpl->assign('icms_page_title', _AM_SYSTEM_PAGES_TITLE);
-			$icmsAdminTpl->display('db:admin/pages/system_adm_pagemanager_index.html');
+			$icmsAdminTpl->display('db:system_adm_pagemanager_index.html');
 			break;
 	}
 	icms_cp_footer();

@@ -60,7 +60,7 @@ function editblock($bid = 0, $clone = FALSE) {
 		$controller = new icms_ipf_Controller($icms_block_handler);
 		$controller->postDataToObject($blockObj);
 	}
-	
+
 	if ($blockObj->getVar("c_type") == "H") {
 		$blockObj->setControl("content", array("name" => "source", "syntax" => "html"));
 	} elseif ($blockObj->getVar("c_type") == "P") {
@@ -90,7 +90,7 @@ function editblock($bid = 0, $clone = FALSE) {
 	}
 
 	$icmsAdminTpl->assign('bid', $bid);
-	$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
+	$icmsAdminTpl->display('db:system_adm_blocksadmin.html');
 }
 
 $icms_block_handler = icms_getModuleHandler('blocksadmin');
@@ -254,7 +254,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 			$icmsAdminTpl->assign('icms_block_table', $objectTable->fetch());
 
-			$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
+			$icmsAdminTpl->display('db:system_adm_blocksadmin.html');
 			break;
 	}
 	icms_cp_footer();

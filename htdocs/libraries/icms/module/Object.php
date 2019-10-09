@@ -330,7 +330,7 @@ class icms_module_Object extends icms_core_Object {
 				'submenuscount' => count($submenus)
 			)
 		);
-		$tpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/system_adm_modulemenu.html');
+		$tpl->display('db:system_adm_modulemenu.html');
 	}
 
 	/**#@+
