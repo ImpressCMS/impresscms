@@ -2,8 +2,8 @@
 
 ## ImpressCMS 1.4 beta
 Date: 11 Oct 2019
-DB Version: 
-Build Version: 
+DB Version: 45 
+Build Version: 94 
 
 ### Improvements
 
