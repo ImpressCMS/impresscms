@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "49271dea0a42894a7a32bc11b58fb4b9",
+    "content-hash": "2c9e18e106b0dd232abb30fb496ebb8f",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -625,20 +625,21 @@
         },
         {
             "name": "imponeer/composer-container-services-registration-plugin",
-            "version": "dev-master",
+            "version": "0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/composer-container-services-registration-plugin.git",
-                "reference": "2136155ca1c1ad7306741bc802acce94387ab5b7"
+                "reference": "472fccb877b7fe30e0ebc4d04f802187a62d3660"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/composer-container-services-registration-plugin/zipball/2136155ca1c1ad7306741bc802acce94387ab5b7",
-                "reference": "2136155ca1c1ad7306741bc802acce94387ab5b7",
+                "url": "https://api.github.com/repos/imponeer/composer-container-services-registration-plugin/zipball/472fccb877b7fe30e0ebc4d04f802187a62d3660",
+                "reference": "472fccb877b7fe30e0ebc4d04f802187a62d3660",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.1",
+                "imponeer/project-cached-code-generator-from-composer.json-data-base": "^0.1.0",
                 "psr/container": "^1.0"
             },
             "require-dev": {
@@ -654,6 +655,7 @@
                     "Imponeer\\ComposerContainerServicesRegistrationPlugin\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -664,11 +666,7 @@
                 }
             ],
             "description": "Plugin that register services from composer.json data",
-            "support": {
-                "source": "https://github.com/imponeer/composer-container-services-registration-plugin/tree/master",
-                "issues": "https://github.com/imponeer/composer-container-services-registration-plugin/issues"
-            },
-            "time": "2019-10-07T00:09:06+00:00"
+            "time": "2019-10-13T18:13:51+00:00"
         },
         {
             "name": "imponeer/composer-custom-commands",
@@ -713,6 +711,46 @@
             ],
             "description": "Adds possibility to define console commands as composer commands with Symfony console component syntax",
             "time": "2018-03-22T08:11:04+00:00"
+        },
+        {
+            "name": "imponeer/project-cached-code-generator-from-composer.json-data-base",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/project-cached-code-generator-from-composer.json-data-base.git",
+                "reference": "3b9210f9e96970faea1cf593a5639e3e36a01f7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/project-cached-code-generator-from-composer.json-data-base/zipball/3b9210f9e96970faea1cf593a5639e3e36a01f7c",
+                "reference": "3b9210f9e96970faea1cf593a5639e3e36a01f7c",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "composer/composer": "^1.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\ProjectCachedCodeGeneratorFromComposerJSONDataBase\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Library that can be used for plugins that can be used for composer-plugins that register services or configuration based on project composer.json files",
+            "time": "2019-10-13T17:41:23+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -3997,9 +4035,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "imponeer/composer-container-services-registration-plugin": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

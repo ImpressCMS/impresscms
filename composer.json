@@ -37,7 +37,7 @@
     "erusev/parsedown": "^1.7.0",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
-    "imponeer/composer-container-services-registration-plugin": "dev-master",
+    "imponeer/composer-container-services-registration-plugin": "^0.1.0",
     "imponeer/composer-custom-commands": "^0.1.0",
     "keo/iso-639": "^1.0",
     "league/container": "^3.2",
@@ -136,12 +136,6 @@
       }
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/imponeer/composer-container-services-registration-plugin"
-    }
-  ],
   "config": {
     "optimize-autoloader": true,
     "sort-packages": true
