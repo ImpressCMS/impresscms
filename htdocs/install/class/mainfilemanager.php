@@ -136,5 +136,3 @@ class mainfile_manager {
 		return $this->error;
 	}
 }
-
-?>
