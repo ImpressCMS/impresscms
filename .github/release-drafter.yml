@@ -3,3 +3,7 @@ template: |
 
   $CHANGES
 
+branches:
+- master
+- impresscms_1.3
+- impresscms_1.4
