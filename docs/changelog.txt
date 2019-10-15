@@ -1,66 +1,74 @@
-ImpressCMS ChangeLog
-====================
-ImpressCMS 1.3.11
--------------------------------
+# ImpressCMS ChangeLog
 
+## ImpressCMS 1.4 beta
+Date: 11 Oct 2019
+DB Version: 45 
+Build Version: 94 
+
+### Improvements
+
+### Fixes
+
+### Update
+
+
+## ImpressCMS 1.3.11
 Date: 08 dec 2018
 DB Version: 44
 Build Version: 91
 
-##Security
+### Security
 Fix XSS vulnerabilities in installer (as found by Omar Kurt, security researcher at Netsparker (https://www.netsparker.com) 
 
-##Improvements
+### Improvements
 109 - Add extra metadata types property and itemprop
 121 - System module now shows the correct version number after install
 316 - Add extra languages in installer and core
 
-##Fixes
+### Fixes
 102 - pagination in the backend generates wrong URLs
 116 - Update the links to our website
 119 - Update system requirements in installer
 117 - update links to translations in installer
 
-##Update
+### Update
 296 - Update HTMLPurifier to 4.10
 297 - Update GeSHI to 1.0.8.13
 299 - Update jQuery to 3.3.1
 125 - Upgrade PHPMailer to 5.2.26
 
-ImpressCMS 1.3.10
--------------------------------
+## ImpressCMS 1.3.10
 Date: 30 december 2016
 DB Version: 43
 Build Version: 82
 
-##Fixes
+### Fixes
 913 - Comment preview loses text of comment
 930 - correct the link to the adsense wiki pages
 925 - Illegal string offset 'options' core/datafilter in PHP 5.6
 919 - System imagemanager clone UI-side feature redirects to invalid URL
 922 - Templates for Adsenses ACP cannot be overridden
 
-##Security
+### Security
 927 - SSRF vulnerability in image manager
 931 - Vulnerability in PHPMailer 5.2.18
 
-ImpressCMS 1.3.9
--------------------------------
+## ImpressCMS 1.3.9
 Date: 2 March 2016
 DB Version: 43
 Build Version: 80
 
-##Improved:
+### Improved:
 809 : Move minimal PHP version to PHP 5.5
 884 : PHP 5.4 Strict errors
 751 : Migrating to Universal Google Analytics
 868 : Duplicate entry in HTMLValidator class
 
-##Fixed:
+### Fixed:
 898 : Database patch message for Formulise module always remains
 889 : Missing definition for for Non-PDO users
 881 : Check all button in Group administration does not work consistently
 
-##Update:
+### Update:
 877 : Update HTMLPurifier to v4.7.0
 807 : Upgrade PHPMailer
