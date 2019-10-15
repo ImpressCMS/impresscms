@@ -4,6 +4,8 @@
 
 ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool. ImpressCMS is a powerful system that gets outstanding results and it is free!
 
+Starting with the 1.4 branch of ImpressCMS, we are also fully compatible with PHP 7.x.
+
 ### What can you do with it?
 
 ImpressCMS can be used for many types of web sites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company. 
