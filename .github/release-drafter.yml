@@ -4,4 +4,4 @@ template: |
   $CHANGES
 
 branches:
-- master
+- branches/impresscms_1.4
