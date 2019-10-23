@@ -96,7 +96,7 @@ class icms_view_theme_Factory {
 				}
 			} elseif (isset($_SESSION[$this->xoBundleIdentifier]['defaultTheme'])) {
 				$options['folderName'] = $_SESSION[$this->xoBundleIdentifier]['defaultTheme'];
-			} elseif ((isset($options['folderName']) && empty($options['folderName'])) || !$this->isThemeAllowed($options ['folderName'])) {
+			} elseif (!isset($options['folderName']) || empty($options['folderName']) || !$this->isThemeAllowed($options['folderName'])) {
 				$options['folderName'] = $this->defaultTheme;
 			}
 			$GLOBALS['icmsConfig']['theme_set'] = $options['folderName'];
