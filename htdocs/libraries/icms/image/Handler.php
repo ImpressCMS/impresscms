@@ -267,18 +267,29 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Get a list of images
 	 *
-	 * @param   int     $imgcat_id
-	 * @param   bool    $image_display
-	 * @return  array   Array of {@link icms_image_Object} objects
-	 **/
-	public function getList($imgcat_id, $image_display = null) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id)));
-		if (isset($image_display)) {
+	 * @param int|null $imgcat_id Image category ID
+	 * @param bool|null|int $image_display List only displayed images?
+	 * @param int $notinuse Not use param (only added for fixing Declaration of icms_image_Handler::getList($imgcat_id, $image_display = NULL, $notinuse1 = 0, $debug = false) should be compatible with icms_ipf_Handler::getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) error)
+	 * @param bool $debug Enable debug mode?
+	 *
+	 * @return icms_image_Object[]
+	 * objects
+	 *
+	 * @todo Do better fix here for declaration compatibility
+	 */
+	public function getList($imgcat_id = null, $image_display = 0, $notinuse = 0, $debug = false) {
+		$criteria = new icms_db_criteria_Compo();
+		if ($imgcat_id !== null) {
+			$criteria->add(
+				new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id))
+			);
+		}
+		if ($image_display) {
 			$criteria->add(new icms_db_criteria_Item('image_display', (int) ($image_display)));
 		}
-		$images = &$this->getObjects($criteria, false, true);
+		$images = & $this->getObjects($criteria, false, true, falsse, true);
 		$ret = array();
-		foreach ( array_keys($images) as $i) {
+		foreach (array_keys($images) as $i) {
 			$ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');
 		}
 		return $ret;
