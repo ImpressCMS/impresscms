@@ -212,8 +212,12 @@ if (!function_exists('redirect_header')) {
 		}
 		$theme = $icmsConfig['theme_set'];
 		// if the user selected a theme in the theme block, let's use this theme
-		if (isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
-			$theme = $_SESSION['xoopsUserTheme'];
+
+		$session = \icms::getInstance()->get('session');
+		$userSegment = $session->getSegment(icms_member_user_Object::class);
+		$userTheme = $userSegment->get('theme');
+		if ($userTheme && in_array($userTheme, $icmsConfig['theme_set_allowed'])) {
+			$theme = $userTheme;
 		}
 
 		$xoopsThemeFactory = new icms_view_theme_Factory();
@@ -254,7 +258,16 @@ if (!function_exists('redirect_header')) {
 		}
 
 		if (!headers_sent() && $icmsConfigPersona['use_custom_redirection'] == 1) {
-			$_SESSION['redirect_message'] = $message;
+			/**
+			 * @var \Aura\Session\Session $session
+			 */
+			$session = \icms::getInstance()
+				->get('session');
+
+			$session
+				->getSegment(\icms::class)
+				->setFlash('redirect_message', $message);
+
 			header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
 			exit();
 		}

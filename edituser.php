@@ -267,8 +267,14 @@ switch ($op) {
 				$edituser->setVar('user_mailok', $user_mailok);
 				if (isset($theme_selected)) {
 					$edituser->setVar('theme', $theme_selected);
-					$_SESSION['xoopsUserTheme'] = $theme_selected;
-					$icmsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
+
+					/**
+					 * @var Aura\Session\Session $session
+					 */
+					$session = \icms::getInstance()->get('session');
+					$userSegment = $session->getSegment(icms_member_user_Object::class);
+					$userSegment->set('theme', $theme_selected);
+					$icmsConfig['theme_set'] = $theme_selected;
 				} else {
 					$edituser->setVar('theme', $icmsConfig['theme_set']);
 				}
