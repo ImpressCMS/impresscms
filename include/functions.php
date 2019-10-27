@@ -1782,7 +1782,6 @@ if (!function_exists('icms_getModuleHandler')) {
 	 */
 	function &icms_getModuleHandler($name = null, $module_dir = null, $module_basename = null, $optional = false)
 	{
-		static $handlers;
 		// if $module_dir is not specified
 		if (!isset($module_dir)) {
 			//if a module is loaded
@@ -1794,18 +1793,22 @@ if (!function_exists('icms_getModuleHandler')) {
 		} else {
 			$module_dir = trim($module_dir);
 		}
-		$module_basename = isset($module_basename) ? trim($module_basename) : $module_dir;
-		$name = (!isset($name)) ? $module_dir : trim($name);
-		if (!isset($handlers[$module_dir][$name])) {
+
+		$realname = sprintf('ImpressCMS/Modules/%s/%s', ucfirst(($module_basename === null) ? $module_dir : $module_basename), $name);
+		$container = icms::getInstance();
+		if (!$container->has($realname)) {
+			$module_basename = isset($module_basename) ? trim($module_basename) : $module_dir;
+			$instance = false;
+			$name = (!isset($name)) ? $module_dir : trim($name);
 			$class = 'mod_' . $module_dir . '_' . ucfirst($name) . 'Handler';
 			if (class_exists($class)) {
-				$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
+				$instance = new $class($container->get('xoopsDB'));
 			} elseif (file_exists($hnd_file = ICMS_MODULES_PATH . "/{$module_dir}/class/" . ucfirst($name) . "Handler.php")) {
 				include_once $hnd_file;
 				include_once ICMS_MODULES_PATH . "/{$module_dir}/class/" . ucfirst($name) . ".php";
 				$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
 				if (class_exists($class)) {
-					$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
+					$instance = new $class($container->get('xoopsDB'));
 				}
 			} else {
 				$hnd_file = ICMS_MODULES_PATH . "/{$module_dir}/class/{$name}.php";
@@ -1814,18 +1817,19 @@ if (!function_exists('icms_getModuleHandler')) {
 				}
 				$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
 				if (class_exists($class)) {
-					$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
+					$instance = new $class($container->get('xoopsDB'));
 				}
 			}
+			$container->add($class, $instance);
+			$container->add($realname, $instance);
+		} else {
+			$instance = $container->get($realname);
 		}
-		if (!isset($handlers[$module_dir][$name]) && !$optional) {
+
+		if (!$instance && !$optional) {
 			trigger_error(sprintf(_CORE_MODULEHANDLER_NOTAVAILABLE, $module_dir, $name), E_USER_ERROR);
 		}
-		if (isset($handlers[$module_dir][$name])) {
-			return $handlers[$module_dir][$name];
-		}
-		$inst = false;
-		return $inst;
+		return $instance;
 	}
 }
 
