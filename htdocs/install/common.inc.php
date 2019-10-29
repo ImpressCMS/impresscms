@@ -53,6 +53,7 @@ $pageHasHelp = false;
 $pageHasForm = false;
 
 $wizard = new XoopsInstallWizard();
+\icms::getInstance()->boot();
 if (!$wizard->xoInit()) {
 	exit();
 }
