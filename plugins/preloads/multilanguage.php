@@ -35,6 +35,12 @@ class icms_MultilanguageEventHandler {
 			require_once ICMS_INCLUDE_PATH . '/im_multilanguage.php';
 			$easiestml_langs = explode(',', $icmsConfigMultilang['ml_tags']);
 
+			/**
+			 * @var Aura\Session\Session $session
+			 */
+			$session = \icms::getInstance()->get('session');
+			$userSegment = $session->getSegment(icms_member_user_Object::class);
+
 			$easiestml_langpaths = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/");
 			$langs = array_combine($easiestml_langs, explode(',', $icmsConfigMultilang['ml_names']));
 
@@ -48,17 +54,19 @@ class icms_MultilanguageEventHandler {
 				}
 			}
 
+			$sessionLanguage = $userSegment->get('language');
 			if (isset($_GET['lang']) && isset($_COOKIE['lang'])) {
 				if (in_array($_GET['lang'], $easiestml_langs)) {
 					$icmsConfig['language'] = $langs[$_GET['lang']];
-					if (isset($_SESSION['UserLanguage'])) {
-						$_SESSION['UserLanguage'] = $langs[$_GET['lang']];
+					if ($sessionLanguage) {
+						$userSegment->set('language', $langs[$_GET['lang']]);
+						$sessionLanguage = $langs[$_GET['lang']];
 					}
 				}
-			} elseif (isset($_COOKIE['lang']) && isset($_SESSION['UserLanguage'])) {
-				if ($_COOKIE['lang'] != $_SESSION['UserLanguage']) {
-					if (in_array($_SESSION['UserLanguage'], $langs)) {
-						$icmsConfig['language'] = $_SESSION['UserLanguage'];
+			} elseif (isset($_COOKIE['lang']) && $sessionLanguage) {
+				if ($_COOKIE['lang'] != $sessionLanguage) {
+					if (in_array($sessionLanguage, $langs)) {
+						$icmsConfig['language'] = $sessionLanguage;
 					}
 				} else {
 					if (in_array($_COOKIE['lang'], $easiestml_langs)) {
@@ -68,8 +76,9 @@ class icms_MultilanguageEventHandler {
 			} elseif (isset($_COOKIE['lang'])) {
 				if (in_array($_COOKIE['lang'], $easiestml_langs)) {
 					$icmsConfig['language'] = $langs[$_COOKIE['lang']];
-					if (isset($_SESSION['UserLanguage'])) {
-						$_SESSION['UserLanguage'] = $langs[$_GET['lang']];
+					if ($sessionLanguage) {
+						$userSegment->set('language', $langs[$_GET['lang']]);
+						$sessionLanguage = $langs[$_GET['lang']];
 					}
 				}
 			} elseif (isset($_GET['lang'])) {

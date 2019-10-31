@@ -2,9 +2,8 @@
 
 namespace ImpressCMS\Core\Providers;
 
-use League\Container\ServiceProvider\AbstractServiceProvider;
 use icms_core_Logger;
-use icms_Event;
+use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
@@ -32,9 +31,7 @@ class LoggerServiceProvider extends AbstractServiceProvider implements BootableS
 	 */
 	public function boot()
 	{
-		$this->getContainer()->add('logger', function () {
-			return icms_core_Logger::instance();
-		});
+		$this->getContainer()->add('logger', icms_core_Logger::instance());
 	}
 
 }
