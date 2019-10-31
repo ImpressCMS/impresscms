@@ -45,29 +45,26 @@
  */
 class icms_member_Handler {
 
+	/**
+	 * holds reference to user handler(DAO) class
+	 */
+	protected $_uHandler;
+	/**#@-*/
+
+	protected $db;
 	/**#@+
 	 * holds reference to group handler(DAO) class
 	 * @access private
 	 */
 	private $_gHandler;
-
-	/**
-	 * holds reference to user handler(DAO) class
-	 */
-	protected $_uHandler;
-
 	/**
 	 * holds reference to membership handler(DAO) class
 	 */
 	private $_mHandler;
-
 	/**
 	 * holds temporary user objects
 	 */
 	private $_members = array();
-	/**#@-*/
-
-	protected $db;
 
 	/**
 	 * constructor
@@ -98,29 +95,6 @@ class icms_member_Handler {
 	public function &createUser(&$isNew = true) {
 		$inst = & $this->_uHandler->create();
 		return $inst;
-	}
-
-	/**
-	 * retrieve a group
-	 *
-	 * @param int $id ID for the group
-	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the group
-	 */
-	public function &getGroup($id) {
-		return $this->_gHandler->get($id);
-	}
-
-	/**
-	 * retrieve a user
-	 *
-	 * @param int $id ID for the user
-	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the user
-	 */
-	public function &getUser($id) {
-		if (!isset($this->_members[$id])) {
-			$this->_members[$id] = & $this->_uHandler->get($id);
-		}
-		return $this->_members[$id];
 	}
 
 	/**
@@ -156,17 +130,6 @@ class icms_member_Handler {
 	 */
 	public function insertGroup(&$group) {
 		return $this->_gHandler->insert($group);
-	}
-
-	/**
-	 * insert a user into the database
-	 *
-	 * @param object $user {@link icms_member_user_Object} reference to the user to insert
-	 * @return bool TRUE if already in database and unchanged
-	 * FALSE on failure
-	 */
-	public function insertUser(&$user, $force = false) {
-		return $this->_uHandler->insert($user, $force);
 	}
 
 	/**
@@ -285,40 +248,17 @@ class icms_member_Handler {
 	}
 
 	/**
-	 * get a list of groups that a user is member of
+	 * retrieve a user
 	 *
-	 * @param int $user_id ID of the user
-	 * @param bool $asobject return groups as {@link icms_member_group_Object} objects or arrays?
-	 * @return array array of objects or arrays
+	 * @param int $id ID for the user
+	 * @return icms_member_user_Object icms_member_user_Object reference to the user
 	 */
-	public function &getGroupsByUser($user_id, $asobject = false) {
-		$group_ids = $this->_mHandler->getGroupsByUser($user_id);
-		if (!$asobject) {
-			return $group_ids;
-		} else {
-			foreach ($group_ids as $g_id) {
-				$ret[] = & $this->getGroup($g_id);
-			}
-			return $ret;
+	public function &getUser($id)
+	{
+		if (!isset($this->_members[$id])) {
+			$this->_members[$id] = &$this->_uHandler->get($id);
 		}
-	}
-
-	public function icms_getLoginFromUserEmail($email = '') {
-		$table = new icms_db_legacy_updater_Table('users');
-
-		if ($email !== '') {
-			if ($table->fieldExists('loginname')) {
-				$sql = icms::$xoopsDB->query("SELECT loginname, email FROM " . icms::$xoopsDB->prefix('users')
-					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
-			} elseif ($table->fieldExists('login_name')) {
-				$sql = icms::$xoopsDB->query("SELECT login_name, email FROM " . icms::$xoopsDB->prefix('users')
-					 . " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
-			}
-			list($uname, $email) = icms::$xoopsDB->fetchRow($sql);
-		} else {
-			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
-		}
-		return $uname;
+		return $this->_members[$id];
 	}
 
 	/**
@@ -359,30 +299,24 @@ class icms_member_Handler {
 		return $user[0];
 	}
 
-	/**
-	 * logs in a user with an md5 encrypted password
-	 *
-	 * @param string $uname username
-	 * @param string $md5pwd password encrypted with md5
-	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
-	 */
-	/*	function &loginUserMd5($uname, $md5pwd) {
-	 $table = new icms_db_legacy_updater_Table('users');
-	 if ($table->fieldExists('loginname')) {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
-	 } elseif ($table->fieldExists('login_name')) {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
-	 } else {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
-	 }
-	 $criteria->add(new icms_db_criteria_Item('pass', $md5pwd));
-	 $user = $this->_uHandler->getObjects($criteria, false);
-	 if (! $user || count($user) != 1) {
-	 $user = false;
-	 return $user;
-	 }
-	 return $user [0];
-	 } */
+	public function icms_getLoginFromUserEmail($email = '')
+	{
+		$table = new icms_db_legacy_updater_Table('users');
+
+		if ($email !== '') {
+			if ($table->fieldExists('loginname')) {
+				$sql = icms::$xoopsDB->query("SELECT loginname, email FROM " . icms::$xoopsDB->prefix('users')
+					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
+			} elseif ($table->fieldExists('login_name')) {
+				$sql = icms::$xoopsDB->query("SELECT login_name, email FROM " . icms::$xoopsDB->prefix('users')
+					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
+			}
+			list($uname, $email) = icms::$xoopsDB->fetchRow($sql);
+		} else {
+			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
+		}
+		return $uname;
+	}
 
 	/**
 	 * count users matching certain conditions
@@ -415,6 +349,43 @@ class icms_member_Handler {
 	public function updateUserByField(&$user, $fieldName, $fieldValue) {
 		$user->setVar($fieldName, $fieldValue);
 		return $this->insertUser($user);
+	}
+
+	/**
+	 * logs in a user with an md5 encrypted password
+	 *
+	 * @param string $uname username
+	 * @param string $md5pwd password encrypted with md5
+	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
+	 */
+	/*	function &loginUserMd5($uname, $md5pwd) {
+	 $table = new icms_db_legacy_updater_Table('users');
+	 if ($table->fieldExists('loginname')) {
+	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
+	 } elseif ($table->fieldExists('login_name')) {
+	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
+	 } else {
+	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
+	 }
+	 $criteria->add(new icms_db_criteria_Item('pass', $md5pwd));
+	 $user = $this->_uHandler->getObjects($criteria, false);
+	 if (! $user || count($user) != 1) {
+	 $user = false;
+	 return $user;
+	 }
+	 return $user [0];
+	 } */
+
+	/**
+	 * insert a user into the database
+	 *
+	 * @param object $user {@link icms_member_user_Object} reference to the user to insert
+	 * @return bool TRUE if already in database and unchanged
+	 * FALSE on failure
+	 */
+	public function insertUser(&$user, $force = false)
+	{
+		return $this->_uHandler->insert($user, $force);
 	}
 
 	/**
@@ -563,5 +534,36 @@ class icms_member_Handler {
 		}
 
 		return $ret;
+	}
+
+	/**
+	 * get a list of groups that a user is member of
+	 *
+	 * @param int $user_id ID of the user
+	 * @param bool $asobject return groups as {@link icms_member_group_Object} objects or arrays?
+	 * @return array array of objects or arrays
+	 */
+	public function &getGroupsByUser($user_id, $asobject = false)
+	{
+		$group_ids = $this->_mHandler->getGroupsByUser($user_id);
+		if (!$asobject) {
+			return $group_ids;
+		} else {
+			foreach ($group_ids as $g_id) {
+				$ret[] = &$this->getGroup($g_id);
+			}
+			return $ret;
+		}
+	}
+
+	/**
+	 * retrieve a group
+	 *
+	 * @param int $id ID for the group
+	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the group
+	 */
+	public function &getGroup($id)
+	{
+		return $this->_gHandler->get($id);
 	}
 }

@@ -194,7 +194,7 @@ final class icms extends Container {
 					}
 				}
 			}
-			self::$handlers[$name] = $class?new $class(self::$xoopsDB):false;
+			self::$handlers[$name] = $class ? new $class(self::getInstance()->get('xoopsDB')) : false;
 		}
 		if (!self::$handlers[$name] && !$optional) {
 			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);

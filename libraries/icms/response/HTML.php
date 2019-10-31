@@ -56,9 +56,12 @@ class icms_response_HTML extends icms_response_Text {
 		global $icmsTheme;
 		$GLOBALS['icmsTheme'] = $icmsTheme = &$this->theme;
 
-		if (!empty($_SESSION['redirect_message'])) {
-			$this->addRedirectMessageScripts();
-			unset($_SESSION['redirect_message']);
+		$redirect_message = \icms::getInstance()
+			->get('session')
+			->getSegment(\icms::class)
+			->getFlash('redirect_message');
+		if ($redirect_message) {
+			$this->addRedirectMessageScripts($redirect_message);
 		}
 
 		if (isset($this->theme->plugins['icms_view_PageBuilder']) && is_object($this->theme->plugins['icms_view_PageBuilder'])) {
@@ -78,16 +81,205 @@ class icms_response_HTML extends icms_response_Text {
 	}
 
 	/**
-	 * Sets default variables for admin
+	 * Sets theme from config
+	 *
+	 * @param array $config Current configuration
 	 */
-	private function setAdminDefaultVars() {
-		global $icmsConfigPersona;
-		$this->theme->template->assign('adm_left_logo', $icmsConfigPersona['adm_left_logo']);
-		$this->theme->template->assign('adm_left_logo_url', $icmsConfigPersona['adm_left_logo_url']);
-		$this->theme->template->assign('adm_left_logo_alt', $icmsConfigPersona['adm_left_logo_alt']);
-		$this->theme->template->assign('adm_right_logo', $icmsConfigPersona['adm_right_logo']);
-		$this->theme->template->assign('adm_right_logo_url', $icmsConfigPersona['adm_right_logo_url']);
-		$this->theme->template->assign('adm_right_logo_alt', $icmsConfigPersona['adm_right_logo_alt']);
+	private function setThemeFromConfig(array &$config)
+	{
+
+		if (isset($config['template_main']) && is_string($config['template_main'])) {
+			if (false === strpos($config['template_main'], ':')) {
+				$config['template_main'] = 'db:' . $config['template_main'];
+			}
+		} else {
+			$config['template_main'] = null;
+		}
+
+		$tplConfig = [
+			'contentTemplate' => $config['template_main']
+		];
+
+		if (isset($config['template_folder'])) {
+			$tplConfig['folderName'] = $config['template_folder'];
+		}
+
+		if (isset($config['template_canvas'])) {
+			$tplConfig['canvasTemplate'] = $config['template_canvas'];
+		}
+
+		if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
+			global $icmsConfig;
+
+			$tplConfig['plugins'] = ['icms_view_PageBuilder'];
+
+			if (!isset($tplConfig['canvasTemplate'])) {
+				$tplConfig['canvasTemplate'] = 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') ||
+						file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')) ? '_admin' : '') . '.html';
+			}
+
+			if (!isset($tplConfig['folderName'])) {
+				$tplConfig['folderName'] = $icmsConfig['theme_admin_set'];
+			}
+		}
+		$this->theme = \icms_view_theme_Factory::getInstance()->createInstance($tplConfig);
+	}
+
+	/**
+	 * Sets google meta
+	 *
+	 * @global array $icmsConfigMetaFooter Footer meta configuration array
+	 */
+	private function setGoogleMeta()
+	{
+		global $icmsConfigMetaFooter;
+		if (isset($icmsConfigMetaFooter['google_meta']) && $icmsConfigMetaFooter['google_meta'] != '') {
+			$this->theme->addMeta('meta', 'verify-v1', $icmsConfigMetaFooter['google_meta']);
+			$this->theme->addMeta('meta', 'google-site-verification', $icmsConfigMetaFooter['google_meta']);
+		}
+	}
+
+	/**
+	 * Set default metas for theme instance
+	 */
+	private function setDefaultMetas()
+	{
+		$jgrowl_css = ICMS_LIBRARIES_URL . '/jquery/jgrowl'
+			. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css';
+
+		$this->theme->metas['head']['stylesheet'] = [
+			ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css' => [
+				'value' => [
+					'type' => 'text/css',
+					'href' => ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css',
+					'media' => 'screen'
+				],
+				'weight' => 0
+			],
+			ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css' => [
+				'value' => [
+					'type' => 'text/css',
+					'href' => ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css',
+					'media' => 'screen'
+				],
+				'weight' => 0
+			],
+			$jgrowl_css => [
+				'value' => [
+					'type' => 'text/css',
+					'href' => $jgrowl_css,
+					'media' => 'screen'
+				],
+				'weight' => 0
+			],
+			ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css' => [
+				'value' => [
+					'type' => 'text/css',
+					'href' => ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css',
+					'media' => 'screen'
+				],
+				'weight' => 0
+			]
+		];
+
+		$this->theme->metas['module']['script'] = [
+			ICMS_URL . '/include/xoops.js' => [
+				'value' => [
+					'type' => 'text/javascript',
+					'src' => ICMS_URL . '/include/xoops.js'
+				],
+				'weight' => 0
+			],
+			ICMS_URL . '/include/linkexternal.js' => [
+				'value' => [
+					'src' => ICMS_URL . '/include/linkexternal.js',
+					'type' => 'text/javascript'
+				],
+				'weight' => 0
+			],
+			ICMS_LIBRARIES_URL . '/jquery/jquery.js' => [
+				'value' => [
+					'type' => 'text/javascript',
+					'src' => ICMS_LIBRARIES_URL . '/jquery/jquery.js'
+				],
+				'weight' => 0
+			],
+			ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js' => [
+				'value' => [
+					'type' => 'text/javascript',
+					'src' => ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js'
+				],
+				'weight' => 0
+			],
+			ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.js' => [
+				'value' => [
+					'type' => 'text/javascript',
+					'src' => ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.js'
+				],
+				'weight' => 0
+			],
+			ICMS_LIBRARIES_URL . '/jquery/colorbox/jquery.colorbox-min.js' => [
+				'value' => [
+					'type' => 'text/javascript',
+					'src' => ICMS_LIBRARIES_URL . '/jquery/colorbox/jquery.colorbox-min.js'
+				],
+				'weight' => 0
+			]
+		];
+	}
+
+	/**
+	 * Adds all enabled santitizer plugins to the theme
+	 *
+	 * @global array $icmsConfigPlugins Plugins configuration
+	 */
+	private function addSanitizerPlugins()
+	{
+		global $icmsConfigPlugins;
+		if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
+			foreach (array_filter($icmsConfigPlugins['sanitizer_plugins']) as $key) {
+				if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
+					$this->theme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', array('media' => 'screen'));
+				} else {
+					include_once ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.php';
+					$func = 'style_' . $key;
+					if (function_exists($func)) {
+						$style_info = $func();
+						if (!empty($style_info)) {
+							if (!file_exists(ICMS_ROOT_PATH . '/' . $style_info)) {
+								$this->theme->addStylesheet('', array('media' => 'screen'), $style_info);
+							} else {
+								$this->theme->addStylesheet($style_info, array('media' => 'screen'));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Ads admin metas
+	 */
+	private function addAdminMetas()
+	{
+		$this->theme->addScript('', array('type' => 'text/javascript'), 'startList = function() {
+						if (document.all&&document.getElementById) {
+							navRoot = document.getElementById("nav");
+							for (i=0; i<navRoot.childNodes.length; i++) {
+								node = navRoot.childNodes[i];
+								if (node.nodeName=="LI") {
+									node.onmouseover=function() {
+										this.className+=" over";
+									}
+									node.onmouseout=function() {
+										this.className=this.className.replace(" over", "");
+									}
+								}
+							}
+						}
+					}
+					window.onload=startList;');
 	}
 
 	/**
@@ -248,47 +440,55 @@ class icms_response_HTML extends icms_response_Text {
 	}
 
 	/**
-	 * Ads admin metas
+	 * Sets default variables for admin
 	 */
-	private function addAdminMetas() {
-		$this->theme->addScript('', array('type' => 'text/javascript'), 'startList = function() {
-						if (document.all&&document.getElementById) {
-							navRoot = document.getElementById("nav");
-							for (i=0; i<navRoot.childNodes.length; i++) {
-								node = navRoot.childNodes[i];
-								if (node.nodeName=="LI") {
-									node.onmouseover=function() {
-										this.className+=" over";
-									}
-									node.onmouseout=function() {
-										this.className=this.className.replace(" over", "");
-									}
-								}
-							}
-						}
-					}
-					window.onload=startList;');
+	private function setAdminDefaultVars()
+	{
+		global $icmsConfigPersona;
+		$this->theme->template->assign('adm_left_logo', $icmsConfigPersona['adm_left_logo']);
+		$this->theme->template->assign('adm_left_logo_url', $icmsConfigPersona['adm_left_logo_url']);
+		$this->theme->template->assign('adm_left_logo_alt', $icmsConfigPersona['adm_left_logo_alt']);
+		$this->theme->template->assign('adm_right_logo', $icmsConfigPersona['adm_right_logo']);
+		$this->theme->template->assign('adm_right_logo_url', $icmsConfigPersona['adm_right_logo_url']);
+		$this->theme->template->assign('adm_right_logo_alt', $icmsConfigPersona['adm_right_logo_alt']);
 	}
 
 	/**
-	 * Magic function to call work directly with template
+	 * Adds scripts for redirect message
 	 *
-	 * @param string $name          Function name to call
-	 * @param array  $arguments     Array with arguments
-	 *
-	 * @return mixed
+	 * @param string $redirect_message Redirect message
 	 */
-	public function __call($name, $arguments) {
-		return call_user_func_array([$this->theme->template, $name], $arguments);
+	private function addRedirectMessageScripts($redirect_message)
+	{
+		$this->theme->addScript(ICMS_LIBRARIES_URL . '/jquery/jgrowl.js', array('type' => 'text/javascript'));
+		$this->theme->addScript('', array('type' => 'text/javascript'), '
+	if (!window.console || !console.firebug) {
+		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd",
+					"time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+		window.console = {};
+
+		for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
+	}
+
+	(function($) {
+		$(document).ready(function() {
+			$.jGrowl("' . $redirect_message . '", {  life:5000 , position: "center", speed: "slow" });
+		});
+	})(jQuery);
+	');
 	}
 
 	/**
-	 * Renders response
+	 * Update cache time for module
+	 *
+	 * @global object $icmsModule Current module
+	 * @global array $icmsConfig Configuration array
 	 */
-	public function render() {
-		/* check if the module is cached and retrieve it, otherwise, render the page */
-		if (!$this->theme->checkCache()) {
-			$this->theme->render();
+	private function updateCacheTime()
+	{
+		global $icmsModule, $icmsConfig;
+		if (!empty($icmsModule) && isset($icmsConfig['module_cache']) && isset($icmsConfig['module_cache'][$icmsModule->mid])) {
+			$this->theme->contentCacheLifetime = $icmsConfig['module_cache'][$icmsModule->mid];
 		}
 	}
 
@@ -309,211 +509,26 @@ class icms_response_HTML extends icms_response_Text {
 	}
 
 	/**
-	 * Update cache time for module
+	 * Magic function to call work directly with template
 	 *
-	 * @global object   $icmsModule    Current module
-	 * @global array    $icmsConfig    Configuration array
-	 */
-	private function updateCacheTime() {
-		global $icmsModule, $icmsConfig;
-		if (!empty($icmsModule) && isset($icmsConfig['module_cache']) && isset($icmsConfig['module_cache'][$icmsModule->mid])) {
-			$this->theme->contentCacheLifetime = $icmsConfig['module_cache'][$icmsModule->mid];
-		}
-	}
-
-	/**
-	 * Set default metas for theme instance
-	 */
-	private function setDefaultMetas() {
-		$jgrowl_css = ICMS_LIBRARIES_URL . '/jquery/jgrowl'
-				. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?'_rtl':'') . '.css';
-
-		$this->theme->metas['head']['stylesheet'] = [
-			ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css' => [
-				'value' => [
-					'type' => 'text/css',
-					'href' => ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css',
-					'media' => 'screen'
-				],
-				'weight' => 0
-			],
-			ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css' => [
-				'value' => [
-					'type' => 'text/css',
-					'href' => ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css',
-					'media' => 'screen'
-				],
-				'weight' => 0
-			],
-			$jgrowl_css => [
-				'value' => [
-					'type' => 'text/css',
-					'href' => $jgrowl_css,
-					'media' => 'screen'
-				],
-				'weight' => 0
-			],
-			ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css' => [
-				'value' => [
-					'type' => 'text/css',
-					'href' => ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css',
-					'media' => 'screen'
-				],
-				'weight' => 0
-			]
-		];
-
-		$this->theme->metas['module']['script'] = [
-			ICMS_URL . '/include/xoops.js' => [
-				'value' => [
-					'type' => 'text/javascript',
-					'src' => ICMS_URL . '/include/xoops.js'
-				],
-				'weight' => 0
-			],
-			ICMS_URL . '/include/linkexternal.js' => [
-				'value' => [
-					'src' => ICMS_URL . '/include/linkexternal.js',
-					'type' => 'text/javascript'
-				],
-				'weight' => 0
-			],
-			ICMS_LIBRARIES_URL . '/jquery/jquery.js' => [
-				'value' => [
-					'type' => 'text/javascript',
-					'src' => ICMS_LIBRARIES_URL . '/jquery/jquery.js'
-				],
-				'weight' => 0
-			],
-			ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js' => [
-				'value' => [
-					'type' => 'text/javascript',
-					'src' => ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js'
-				],
-				'weight' => 0
-			],
-			ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.js' => [
-				'value' => [
-					'type' => 'text/javascript',
-					'src' => ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.js'
-				],
-				'weight' => 0
-			],
-			ICMS_LIBRARIES_URL . '/jquery/colorbox/jquery.colorbox-min.js' => [
-				'value' => [
-					'type' => 'text/javascript',
-					'src' => ICMS_LIBRARIES_URL . '/jquery/colorbox/jquery.colorbox-min.js'
-				],
-				'weight' => 0
-			]
-		];
-	}
-
-	/**
-	 * Sets theme from config
+	 * @param string $name Function name to call
+	 * @param array $arguments Array with arguments
 	 *
-	 * @param array $config     Current configuration
+	 * @return mixed
 	 */
-	private function setThemeFromConfig(array &$config) {
-
-		if (isset($config['template_main']) && is_string($config['template_main'])) {
-			if (false === strpos($config['template_main'], ':')) {
-				$config['template_main'] = 'db:' . $config['template_main'];
-			}
-		} else {
-			$config['template_main'] = null;
-		}
-
-		$tplConfig = [
-			'contentTemplate' => $config['template_main']
-		];
-
-		if (isset($config['template_folder'])) {
-			$tplConfig['folderName'] = $config['template_folder'];
-		}
-
-		if (isset($config['template_canvas'])) {
-			$tplConfig['canvasTemplate'] = $config['template_canvas'];
-		}
-
-		if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
-			global $icmsConfig;
-
-			$tplConfig['plugins'] = ['icms_view_PageBuilder'];
-
-			if (!isset($tplConfig['canvasTemplate'])) {
-				$tplConfig['canvasTemplate'] = 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') ||
-												file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html'))?'_admin':'') . '.html';
-			}
-
-			if (!isset($tplConfig['folderName'])) {
-				$tplConfig['folderName'] = $icmsConfig['theme_admin_set'];
-			}
-		}
-		$this->theme = \icms_view_theme_Factory::getInstance()->createInstance($tplConfig);
+	public function __call($name, $arguments)
+	{
+		return call_user_func_array([$this->theme->template, $name], $arguments);
 	}
 
 	/**
-	 * Sets google meta
-	 *
-	 * @global array $icmsConfigMetaFooter          Footer meta configuration array
+	 * Renders response
 	 */
-	private function setGoogleMeta() {
-		global $icmsConfigMetaFooter;
-		if (isset($icmsConfigMetaFooter['google_meta']) && $icmsConfigMetaFooter['google_meta'] != '') {
-			$this->theme->addMeta('meta', 'verify-v1', $icmsConfigMetaFooter['google_meta']);
-			$this->theme->addMeta('meta', 'google-site-verification', $icmsConfigMetaFooter['google_meta']);
-		}
-	}
-
-	/**
-	 * Adds scripts for redirect message
-	 */
-	private function addRedirectMessageScripts() {
-		$this->theme->addScript(ICMS_LIBRARIES_URL . '/jquery/jgrowl.js', array('type' => 'text/javascript'));
-		$this->theme->addScript('', array('type' => 'text/javascript'), '
-	if (!window.console || !console.firebug) {
-		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd",
-					"time", "timeEnd", "count", "trace", "profile", "profileEnd"];
-		window.console = {};
-
-		for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
-	}
-
-	(function($) {
-		$(document).ready(function() {
-			$.jGrowl("' . $_SESSION['redirect_message'] . '", {  life:5000 , position: "center", speed: "slow" });
-		});
-	})(jQuery);
-	');
-	}
-
-	/**
-	 * Adds all enabled santitizer plugins to the theme
-	 *
-	 * @global array $icmsConfigPlugins         Plugins configuration
-	 */
-	private function addSanitizerPlugins() {
-		global $icmsConfigPlugins;
-		if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
-			foreach (array_filter($icmsConfigPlugins['sanitizer_plugins']) as $key) {
-				if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
-					$this->theme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', array('media' => 'screen'));
-				} else {
-					include_once ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.php';
-					$func = 'style_' . $key;
-					if (function_exists($func)) {
-						$style_info = $func();
-						if (!empty($style_info)) {
-							if (!file_exists(ICMS_ROOT_PATH . '/' . $style_info)) {
-								$this->theme->addStylesheet('', array('media' => 'screen'), $style_info);
-							} else {
-								$this->theme->addStylesheet($style_info, array('media' => 'screen'));
-							}
-						}
-					}
-				}
-			}
+	public function render()
+	{
+		/* check if the module is cached and retrieve it, otherwise, render the page */
+		if (!$this->theme->checkCache()) {
+			$this->theme->render();
 		}
 	}
 

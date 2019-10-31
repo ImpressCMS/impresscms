@@ -14,6 +14,7 @@ exclude_patterns:
   - "htdocs/editors/"
   - "htdocs/libraries/"
   - "tests/"
+  - "composer.lock"
 
 checks:
   argument-count:
