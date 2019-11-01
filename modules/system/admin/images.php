@@ -43,6 +43,8 @@
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
  */
 
+use \WideImage\WideImage as WideImage;
+
 /* set filter types, if not strings */
 $filter_get = array(
 	'limit' => 'int',
