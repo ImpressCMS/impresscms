@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "56e649793a2dde639ec145321973964c",
@@ -345,20 +345,20 @@
         },
         {
             "name": "geshi/geshi",
-            "version": "v1.0.9.0",
+            "version": "v1.0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "5a7b461338d322d941986a656d4d1651452e73dd"
+                "reference": "fd22ab78481bf90337862b590e6f7517863926b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/5a7b461338d322d941986a656d4d1651452e73dd",
-                "reference": "5a7b461338d322d941986a656d4d1651452e73dd",
+                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/fd22ab78481bf90337862b590e6f7517863926b8",
+                "reference": "fd22ab78481bf90337862b590e6f7517863926b8",
                 "shasum": ""
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7"
+                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.2"
             },
             "type": "library",
             "autoload": {
@@ -381,7 +381,7 @@
             ],
             "description": "Generic Syntax Highlighter",
             "homepage": "http://qbnz.com/highlighter/",
-            "time": "2017-05-05T05:51:25+00:00"
+            "time": "2019-10-20T20:54:46+00:00"
         },
         {
             "name": "imponeer/composer-custom-commands",
@@ -1398,7 +1398,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
