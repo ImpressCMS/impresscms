@@ -2,9 +2,9 @@
 
 namespace ImpressCMS\Core\Providers;
 
+use icms_preload_Handler as PreloadHandler;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
-use icms_preload_Handler as PreloadHandler;
 
 /**
  * Preload service provider
@@ -32,10 +32,9 @@ class PreloadServiceProvider extends AbstractServiceProvider implements Bootable
 	 */
 	public function boot()
 	{
-		$this->getContainer()->add('preload', function () {
-			$preload = PreloadHandler::getInstance();
-			$preload->triggerEvent('startCoreBoot');
-			return $preload;
-		});
+		$preload = PreloadHandler::getInstance();
+		$preload->triggerEvent('startCoreBoot');
+
+		$this->getContainer()->add('preload', $preload);
 	}
 }

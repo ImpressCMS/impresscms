@@ -23,6 +23,10 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 	function eventStartOutputInit() {
 		global $xoopsTpl;
 		if (is_object(icms::$user)) {
+
+			$userSection = \icms::getInstance()
+				->get('session')
+				->getSegment(\icms_member_user_Object::class);
 			foreach (icms::$user->vars as $key => $value) {
 				$user[$key] = $value;
 			}
@@ -31,9 +35,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 					if ($key1 == 'value') {
 						if ($key == 'last_login') {
 							$value1 = formatTimestamp(
-								isset($_SESSION['xoopsUserLastLogin'])
-										?$_SESSION['xoopsUserLastLogin']
-										: time(),
+								$userSection->get('last_login', time()),
 								_DATESTRING
 							);
 						}

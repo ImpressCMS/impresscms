@@ -33,10 +33,8 @@ class icms_auth_method_Local extends icms_auth_Object {
 	public function authenticate($uname, $pwd = null) {
 		$member_handler = icms::handler('icms_member');
 		$user = $member_handler->loginUser($uname, $pwd);
-		icms::$session->enableRegenerateId = true;
-		icms::$session->sessionOpen();
+
 		if ($user == false) {
-			icms::$session->destroy(session_id());
 			$this->setErrors(1, _US_INCORRECTLOGIN);
 		}
 		return ($user);
