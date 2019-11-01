@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "56e649793a2dde639ec145321973964c",
@@ -56,16 +56,16 @@
         },
         {
             "name": "apix/cache",
-            "version": "1.3.3",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apix/cache.git",
-                "reference": "06a9e5080a4aa4433eb067cf439c82619643fc71"
+                "reference": "9bddf271f878e7a09eadc81461e1793ea328afd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apix/cache/zipball/06a9e5080a4aa4433eb067cf439c82619643fc71",
-                "reference": "06a9e5080a4aa4433eb067cf439c82619643fc71",
+                "url": "https://api.github.com/repos/apix/cache/zipball/9bddf271f878e7a09eadc81461e1793ea328afd5",
+                "reference": "9bddf271f878e7a09eadc81461e1793ea328afd5",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
             "suggest": {
                 "ext-apc": "Allows to cache into APC data store ~ up to PHP 5.4.",
                 "ext-apcu": "Allows to use APCu userland caching ~ any PHP version.",
-                "ext-igbinbary": "Fast and small serialization format",
+                "ext-igbinary": "Fast and small serialization format",
                 "ext-memcached": "Allows to use Memcached distributed memory caching system",
                 "ext-mongo": "Allows to cache into MongoDB instances using http://php.net/mongo  ~ up to PHP 5.6.",
                 "ext-mongodb": "Allows to cache into MongoDB instances using https://php.net/mongodb ~ from PHP 7 and above and HHVM.",
@@ -141,7 +141,7 @@
                 "sqlite",
                 "tagging"
             ],
-            "time": "2018-05-18T16:35:58+00:00"
+            "time": "2019-10-30T13:14:01+00:00"
         },
         {
             "name": "aura/session",
@@ -1398,7 +1398,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
