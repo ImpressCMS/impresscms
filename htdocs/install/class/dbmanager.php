@@ -46,7 +46,6 @@ class db_manager {
 
 	var $s_tables = array();
 	var $f_tables = array();
-	var $db;
 	var $successStrings = array(
 		'create' => TABLE_CREATED,
 		'insert' => ROWS_INSERTED,
@@ -59,17 +58,22 @@ class db_manager {
 		'alter' => TABLE_NOT_ALTERED,
 		'drop' => TABLE_NOT_DROPPED,
 	);
+	/**
+	 * Database connection
+	 *
+	 * @var icms_db_Connection
+	 */
+	protected $db;
 
-	function __construct() {
-		$this->db = icms_db_legacy_Factory::getDatabase();
-		$this->db->setPrefix(
-			env('DB_PREFIX')
-		);
-		$this->db->setLogger(icms_core_Logger::instance());
+	public function __construct()
+	{
+		$this->db = \icms::getInstance()->get('db');
+		\icms::$xoopsDB = $this->db;
+		\icms::$db = $this->db;
 	}
 
 	function isConnectable() {
-		return ($this->db->connect(false) != false)? true : false;
+		return $this->db->isConnected();
 	}
 
 	function queryFromFile($sql_file_path) {

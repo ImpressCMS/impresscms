@@ -161,8 +161,11 @@ if (!function_exists('impresscms_get_adminmenu')) {
 		#########################################################################
 		# System Preferences menu
 		#########################################################################
+		/**
+		 * @var icms_module_Handler $module_handler
+		 */
 		$module_handler = icms::handler('icms_module');
-		$mod = &$module_handler->getByDirname('system');
+		$mod = $module_handler->getByDirname('system');
 		$menu = array();
 		foreach ($mod->getAdminMenu() as $lkn) {
 			$lkn['dir'] = 'system';

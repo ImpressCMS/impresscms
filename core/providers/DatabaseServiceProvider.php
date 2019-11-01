@@ -90,25 +90,30 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 	 * @param string $user Username
 	 * @param string $pass Password
 	 * @param $persistentConnection Use persistent connection?
-	 * @param string $name Database name
-	 * @param string $charset Charset used for connection
+	 * @param string|null $name Database name
+	 * @param string|null $charset Charset used for connection
 	 * @param string $prefix Database tables prefix
 	 * @param int $port Port
 	 *
 	 * @return ExtendedPdoInterface
 	 */
-	protected function createDatabaseConnection(string $type, string $host, string $user, ?string $pass, $persistentConnection, string $name, string $charset, ?string $prefix, int $port): ExtendedPdoInterface
+	protected function createDatabaseConnection(string $type, string $host, string $user, ?string $pass, $persistentConnection, ?string $name, ?string $charset, ?string $prefix, int $port): ExtendedPdoInterface
 	{
 		if (substr($type, 0, 4) == 'pdo.') {
 			$type = substr($type, 4);
 		}
 
-		$dsn = $type . ":host=" . $host . ";dbname=" . $name;
+		$dsn = $type . ":host=" . $host;
+		if ($name) {
+			$dsn .= ";dbname=" . $name;
+		}
 		$dsn .= ';port=' . $port;
-		$dsn .= ';charset=' . $charset;
+		if ($charset) {
+			$dsn .= ';charset=' . $charset;
+		}
 
 		$options = [
-			\PDO::ATTR_ERRMODE => \PDO::ERRMODE_SILENT, // default is ERRMODE_SILENT (returns error code, only)
+			\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING,
 			\PDO::ATTR_PERSISTENT => (bool)$persistentConnection,
 		];
 

@@ -34,15 +34,17 @@ if (!$dbm->isConnectable()) {
 	exit();
 }
 
-icms::$db = &$dbm->db;
-icms::$xoopsDB = &$dbm->db;
-
-$res = $dbm->query("SELECT COUNT(*) FROM " . $dbm->db->prefix("users"));
+/**
+ * @var icms_db_Connection $db
+ */
+$db = \icms::getInstance()->get('db');
+$res = $dbm->query("SELECT COUNT(*) FROM " . $db->prefix("users"));
 if (!$res) {
 	$wizard->redirectToPage('dbsettings');
 	exit();
 }
-list ($count) = $dbm->db->fetchRow($res);
+list ($count) = $db->fetchRow($res);
+$count = $count;
 $process = $count?'':'insert';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -30,7 +30,7 @@ $vars = & $_SESSION['settings'];
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
 if (!isset($vars['DB_HOST']) || false !== @strpos($_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0')) {
-	$keys = array('DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT');
+	$keys = array('DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECTCONNECT');
 	foreach ($keys as $k) {
 		$vars[$k] = defined("XOOPS_$k")? constant("XOOPS_$k"):'';
 	}
@@ -47,26 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
-	switch ($vars['DB_TYPE']) {
-		case 'mysql':
-			$func_connect = empty($vars['DB_PCONNECT'])?"mysql_connect":"mysql_pconnect";
-			if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
-				$error = ERR_NO_DBCONNECTION;
-			}
-		break;
-		case 'pdo.mysql':
-			try {
-				$dbh = new PDO('mysql:host=' . $vars['DB_HOST'],
-					$vars['DB_USER'],
-					$vars['DB_PASS'],
-					array(
-						PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-						PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
-					));
-			} catch (PDOException $ex) {
-				$error = ERR_NO_DBCONNECTION;
-			}
-		break;
+	try {
+		/**
+		 * @var \icms_db_Connection $db
+		 */
+		$db = \icms::getInstance()->get('db');
+	} catch (\Exception $exception) {
+		var_dump($exception);
+		$error = ERR_NO_DBCONNECTION;
 	}
 	if (empty($error)) {
 		$wizard->redirectToPage('+1');
@@ -74,12 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($
 	}
 }
 
-//so far, mysql extension has to exist and be loaded
-$connections = [];
-if (function_exists('mysql_connect') || function_exists('mysql_pconnect')) {
-	$connections['mysql'] = array('type' => 'mysql', 'name' => 'MySQL', 'selected' => 'selected');
-	$db_connection = $connections['mysql'];
-}
 // Fill with default values
 // check for PDO MySQL and select it, if it is available
 if (class_exists("PDO", false)) {

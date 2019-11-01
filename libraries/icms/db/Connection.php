@@ -40,23 +40,36 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 	/**
 	 * Executes an SQL statement and returns a result set as an SQL statement object
 	 * @see PDO::query()
-	 * @return
+	 * @param string $statement
+	 * @param array $fetch
+	 * @return icms_db_Statement|mixed|PDOStatement
 	 */
 	public function query($statement, ...$fetch)
 	{
-		$args = func_get_args();
-		$sql = $args[0];
-		// the use of icms_db_IConnection is correct - without it, the query count in debug is not correct
-		$result = call_user_func_array(array('parent', 'query'), $args);
-
-		// trigger events for the debug console - see plugins/preloads/debug_mode.php
-		if ($result) {
-			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => null, 'error' => null));
-		} else {
-			$errorinfo = $this->errorInfo();
-			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
+		if (func_num_args() === 3) {
+			return $this->queryF($statement, $fetch[0], $fetch[1]);
 		}
 
+		return call_user_func_array(['parent', 'query'], func_get_args());
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function queryF($sql, $limit = 0, $start = 0)
+	{
+		if (!empty($limit)) {
+			$sql = $sql . ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
+		}
+		$result = $this->perform($sql);
+		if ($result) {
+			$this->lastRowCount = $result->rowCount();
+			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $sql, 'errorno' => null, 'error' => null));
+		} else {
+			$this->lastRowCount = null;
+			$errorinfo = $this->errorInfo();
+			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $sql, 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
+		}
 		return $result;
 	}
 
@@ -99,7 +112,7 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 	 */
 	public function fetchRow($result)
 	{
-		return ($result instanceof PDOStatement) ? $result->fetchAll(self::FETCH_NUM) : false;
+		return ($result instanceof PDOStatement) ? $result->fetch(self::FETCH_NUM) : false;
 	}
 
 	/**
@@ -135,7 +148,7 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 	{
 		trigger_error('getRowsNum will be removed.', E_USER_DEPRECATED);
 
-		return $result->rowCount();
+		return $result ? $result->rowCount() : 0;
 	}
 
 	/**
@@ -196,27 +209,6 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 		trigger_error('Use quote instead.', E_USER_DEPRECATED);
 
 		return parent::quote($str);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function queryF($sql, $limit = 0, $start = 0)
-	{
-		if (!empty($limit)) {
-			$sql = $sql . ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
-		}
-		$statement = $this->prepare($sql);
-		$result = $statement->execute();
-		if ($result) {
-			$this->lastRowCount = $result->rowCount();
-			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $sql, 'errorno' => null, 'error' => null));
-		} else {
-			$this->lastRowCount = null;
-			$errorinfo = $this->errorInfo();
-			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $sql, 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
-		}
-		return $result;
 	}
 
 	/**
