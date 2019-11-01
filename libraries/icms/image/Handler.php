@@ -98,43 +98,55 @@ class icms_image_Handler extends \icms_ipf_Handler {
 	/**
 	 * Load {@link icms_image_Object}s from the database
 	 *
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
-	 * @param   boolean $id_as_key  Use the ID as key into the array
-	 * @param   boolean $getbinary  Get binary image?
+	 * @param null|icms_db_criteria_Item $criteria {@link icms_db_criteria_Element}
+	 * @param bool $id_as_key Use the ID as key into the array
+	 * @param bool $getbinary Get binary image?
+	 * @param bool|string $sql  Extra sql
+	 * @param bool $debug Debug mode?
 	 *
-	 * @return  array   Array of {@link icms_image_Object} objects
+	 * @return icms_image_Object[]
 	 */
-	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false) {
+	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false, $sql = false, $debug = false) {
 		if ($getbinary) {
 			$this->generalSQL = "SELECT i.*, b.image_body FROM " . $this->table . " i LEFT JOIN " . $this->imagebody_handler->table . " b ON b.image_id=i.image_id";
 		} else {
 			$this->generalSQL = '';
 		}
 		if ($criteria instanceof \icms_db_criteria_Element) {
-					if (!in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))) {
-						$criteria->setSort('image_weight');
-					}
-					if (($criteria instanceof icms_db_criteria_Item) && (!$criteria->prefix)) {
-						 $criteria->prefix = 'i';
-					}
+			if (!in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))) {
+				$criteria->setSort('image_weight');
+			}
+			if (($criteria instanceof icms_db_criteria_Item) && (!$criteria->prefix)) {
+				$criteria->prefix = 'i';
+			}
 		}
-		return parent::getObjects($criteria, $id_as_key, true);
+		return parent::getObjects($criteria, $id_as_key, true, $sql, $debug);
 	}
 
 	/**
 	 * Get a list of images
 	 *
-	 * @param   int         $imgcat_id      Image category ID
-	 * @param   bool|null   $image_display  List only displaed images?
+	 * @param int|null $imgcat_id Image category ID
+	 * @param bool|null|int $image_display List only displayed images?
+	 * @param int $notinuse Not use param (only added for fixing Declaration of icms_image_Handler::getList($imgcat_id, $image_display = NULL, $notinuse1 = 0, $debug = false) should be compatible with icms_ipf_Handler::getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) error)
+	 * @param bool $debug Enable debug mode?
 	 *
-	 * @return  array                       Array of {@link icms_image_Object} objects
+	 * @return array Array of <a href='psi_element://icms_image_Object'>icms_image_Object</a> objects
+	 * objects
+	 *
+	 * @todo Do better fix here for declaration compatibility
 	 */
-	public function getList($imgcat_id, $image_display = null) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id)));
-		if (isset($image_display)) {
+	public function getList($imgcat_id = null, $image_display = 0, $notinuse = 0, $debug = false) {
+		$criteria = new icms_db_criteria_Compo();
+		if ($imgcat_id !== null) {
+			$criteria->add(
+				new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id))
+			);
+		}
+		if ($image_display) {
 			$criteria->add(new icms_db_criteria_Item('image_display', (int) ($image_display)));
 		}
-		$images = & $this->getObjects($criteria, false, true);
+		$images = & $this->getObjects($criteria, false, true, false, true);
 		$ret = array();
 		foreach (array_keys($images) as $i) {
 			$ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');
