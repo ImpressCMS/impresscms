@@ -32,6 +32,7 @@
     "ext-pcre": "*",
     "ext-session": "*",
     "apix/cache": "^1.3",
+    "aura/session": "^2.1",
     "aura/sql": "^3.0",
     "aura/sqlschema": "^2.0",
     "cerdic/css-tidy": "^1.5",
@@ -39,6 +40,7 @@
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "imponeer/composer-custom-commands": "^0.1.0",
+    "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",
     "league/container": "^3.2",
     "league/flysystem": "1.0.51",
@@ -47,11 +49,13 @@
     "phpexperts/laravel-env-polyfill": "^1.0",
     "phpmailer/phpmailer": "6.0.7",
     "simplepie/simplepie": "^1.5",
+    "symfony/polyfill-iconv": "^1.12",
     "tecnickcom/tcpdf": "^6.2",
-    "vlucas/phpdotenv": "3.3.3"
+    "vlucas/phpdotenv": "3.3.3",
+    "smottt/wideimage": "v1.1.3"
+
   },
   "suggest": {
-    "ext-iconv": "Iconv is needed to handle conversions between charsets",
     "ext-xml": "Faster way then with PHP scripts to handle XML documents",
     "ext-openssl": "Without it OpenID will not work",
     "ext-bcmath": "Better precistions in math operations",

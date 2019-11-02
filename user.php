@@ -105,8 +105,7 @@ switch ($op) {
 		break;
 
 	case $op == 'logout':
-		$sessHandler = icms::$session;
-		$sessHandler->sessionClose(icms::$user->getVar('uid'));
+		$sessHandler = icms::getInstance()->get('session')->destroy();
 		redirect_header(ICMS_URL . '/', 3, _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT);
 		break;
 
