@@ -214,9 +214,13 @@ class db_manager {
 		$ret = false;
 		if ($table != '') {
 			$this->db->connect();
-			$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix($table);
-			$ret = (false != $this->db->query($sql))? true : false;
+			try {
+				$sql = 'SELECT 1 FROM ' . $this->db->prefix($table);
+				return $this->db->query($sql) != false;
+			} catch (\Exception $exception) {
+				return false;
+			}
 		}
-		return $ret;
+		return false;
 	}
 }

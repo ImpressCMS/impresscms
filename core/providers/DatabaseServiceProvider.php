@@ -104,7 +104,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 		}
 
 		$dsn = $type . ":host=" . $host;
-		if ($name) {
+		if ($name && !(defined('DB_NO_AUTO_SELECT') && DB_NO_AUTO_SELECT)) {
 			$dsn .= ";dbname=" . $name;
 		}
 		$dsn .= ';port=' . $port;
@@ -113,7 +113,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 		}
 
 		$options = [
-			\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING,
+			\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
 			\PDO::ATTR_PERSISTENT => (bool)$persistentConnection,
 		];
 

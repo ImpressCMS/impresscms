@@ -17,6 +17,7 @@
 /**
  *
  */
+define('DB_NO_AUTO_SELECT', 1);
 require_once 'common.inc.php';
 if (!defined('XOOPS_INSTALL')) {
 	exit ();
@@ -72,13 +73,9 @@ function getDbCollations($charset)
 
 	if (!isset($collations [$charset])) {
 		$collations[$charset] = [];
-		try {
 			foreach ($db->fetchAssoc('SHOW COLLATION WHERE Charset=:cht', ['cht' => $charset]) as $row) {
 				$collations[$charset][$row ["Collation"]] = $row["Default"] ? 1 : 0;
 			}
-		} catch (Exception $exception) {
-			var_dump($charset, $exception);
-		}
 	}
 
 	return $collations [$charset];
@@ -205,7 +202,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 		}
 		if ($db_exist && $vars['DB_CHARSET']) {
 			/* Attempt to set the character set and collation to the selected */
-			if (!$db->exec(
+			if (!$db->perform(
 				"ALTER DATABASE `" . $vars['DB_NAME'] . "` DEFAULT CHARACTER SET :chr COLLATE :collation",
 				[
 					'chr' => $vars['DB_CHARSET'],
@@ -213,7 +210,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 				])
 			) {
 				/* if the alter statement fails, set the constants to match existing */
-				$result = $db->exec("USE :db;", ['db' => $vars["DB_NAME"]]);
+				$result = $db->perform("USE :db;", ['db' => $vars["DB_NAME"]]);
 
 				/* get the character set variables for the current database */
 				$sql = "SHOW VARIABLES like 'character%'";
