@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d418a8d17605835f79bae8b77cc1a7d",
+    "content-hash": "af25a16532caa0e09f865d36aaedc961",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -204,6 +204,117 @@
                 "sessions"
             ],
             "time": "2016-10-03T20:28:32+00:00"
+        },
+        {
+            "name": "aura/sql",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/auraphp/Aura.Sql.git",
+                "reference": "2be02d5dfd9fdee6df199de1a19572aa490bb744"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/auraphp/Aura.Sql/zipball/2be02d5dfd9fdee6df199de1a19572aa490bb744",
+                "reference": "2be02d5dfd9fdee6df199de1a19572aa490bb744",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "pds/skeleton": "~1.0",
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Aura\\Sql\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aura.Sql Contributors",
+                    "homepage": "https://github.com/auraphp/Aura.Sql/contributors"
+                }
+            ],
+            "description": "A PDO extension that provides lazy connections, array quoting, query profiling, value binding, and convenience methods for common fetch styles. Because it extends PDO, existing code that uses PDO can use this without any changes to the existing code.",
+            "homepage": "https://github.com/auraphp/Aura.Sql",
+            "keywords": [
+                "mysql",
+                "pdo",
+                "pgsql",
+                "postgres",
+                "postgresql",
+                "sql server",
+                "sqlite",
+                "sqlserver",
+                "sqlsrv"
+            ],
+            "time": "2018-06-11T12:57:42+00:00"
+        },
+        {
+            "name": "aura/sqlschema",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/auraphp/Aura.SqlSchema.git",
+                "reference": "0670487532731e51fcd7b8088e9920b4671453b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/auraphp/Aura.SqlSchema/zipball/0670487532731e51fcd7b8088e9920b4671453b2",
+                "reference": "0670487532731e51fcd7b8088e9920b4671453b2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "aura": {
+                    "type": "library"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Aura\\SqlSchema\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Aura.SqlSchema Contributors",
+                    "homepage": "https://github.com/auraphp/Aura.SqlSchema/contributors"
+                }
+            ],
+            "description": "Provides facilities to read table names and table columns from a database using PDO.",
+            "homepage": "https://github.com/auraphp/Aura.SqlSchema",
+            "keywords": [
+                "database",
+                "db",
+                "ddl",
+                "mysql",
+                "pdo",
+                "pgsql",
+                "postgres",
+                "postgresql",
+                "schema",
+                "sql",
+                "sql server",
+                "sqlite",
+                "sqlserver",
+                "sqlsrv"
+            ],
+            "time": "2016-04-29T13:48:25+00:00"
         },
         {
             "name": "cerdic/css-tidy",
@@ -420,7 +531,7 @@
             ],
             "authors": [
                 {
-                    "name": "Raimondas Rimkevicius",
+                    "name": "Raimondas Rimkevičius",
                     "email": "mekdrop@impresscms.org"
                 }
             ],
