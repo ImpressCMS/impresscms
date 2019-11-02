@@ -185,23 +185,36 @@ class db_manager {
 	function insert($table, $query) {
 		$this->db->connect();
 		$table = $this->db->prefix($table);
-		$query = 'INSERT INTO ' . $table . ' ' . $query;
-		if (!$this->db->queryF($query)) {
-			//var_export($query);
-			//echo '<br />' . mysql_error() . '<br />';
-			if (!isset($this->f_tables['insert'][$table])) {
-				$this->f_tables['insert'][$table] = 1;
-			} else {
-				$this->f_tables['insert'][$table]++;
+		$sql = sprintf(
+			'INSERT INTO `%s`(%s) VALUES',
+			$table,
+			'`' . implode('`,`', array_keys($query[0])) . '`'
+		);
+		$prep_data = [];
+		$groups_sql = [];
+		foreach ($query as $i => $row) {
+			$keys = [];
+			foreach ($row as $key => $value) {
+				$vkey = $key . '_' . $i;
+				$prep_data[$vkey] = $value;
+				$keys[] = ':' . $vkey;
 			}
+			$groups_sql[] = '(' . implode(',', $keys) . ')';
+		}
+		$sql .= implode(', ', $groups_sql);
+		if (!$count = $this->db->fetchAffected($sql, $prep_data)) {
+			if (!isset($this->f_tables['insert'][$table])) {
+				$this->f_tables['insert'][$table] = 0;
+			}
+			$this->f_tables['insert'][$table]++;
 			return false;
 		} else {
 			if (!isset($this->s_tables['insert'][$table])) {
-				$this->s_tables['insert'][$table] = $this->db->getAffectedRows();
-			} else {
-				$this->s_tables['insert'][$table] += $this->db->getAffectedRows();
+				$this->s_tables['insert'][$table] = 0;
 			}
-			return $this->db->getInsertId();
+			$this->s_tables['insert'][$table] += $count;
+
+			return $this->db->lastInsertId();
 		}
 	}
 

@@ -66,10 +66,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} else {
 		$driver = $type;
 	}
-	$result = $dbm->queryFromFile('./sql/' . $driver . '.data.sql');
-	$result = $dbm->queryFromFile('./language/' . $language . '/' . $driver . '.lang.data.sql');
+
+	if (!$adminname || !$adminlogin_name || !$adminpass || !$adminmail || !$language) {
+		$wizard->redirectToPage('-1');
+		exit();
+	}
+
+	/**
+	 * @var icms_db_Connection $db
+	 */
+	$db = \icms::getInstance()->get('db');
 	$group = make_groups($dbm);
+	$db->beginTransaction();
 	$result = make_data($dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $group);
+	$db->commit();
 	$content = $dbm->report();
 } else {
 	$msg = $process? READY_INSERT_DATA : DATA_ALREADY_INSERTED;

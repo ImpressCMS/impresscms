@@ -120,7 +120,7 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 	 */
 	public function fetchArray($result)
 	{
-		return ($result instanceof PDOStatement) ? $result->fetchAll(self::FETCH_ASSOC) : false;
+		return ($result instanceof PDOStatement) ? $result->fetch(self::FETCH_ASSOC) : false;
 	}
 
 	/**
@@ -128,7 +128,7 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 	 */
 	public function fetchBoth($result)
 	{
-		return ($result instanceof PDOStatement) ? $result->fetchAll(self::FETCH_BOTH) : false;
+		return ($result instanceof PDOStatement) ? $result->fetch(self::FETCH_BOTH) : false;
 	}
 
 	/**
