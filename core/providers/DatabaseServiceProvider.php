@@ -45,7 +45,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 			);
 		})->addTag('database_connection');
 
-		/* These lines should be enabled in the feature
+		/* These lines should be enabled in the future
 		 *
 		 * $i = 1;
 		while($host = env('DB_HOST_' . (++$i), null)) {
