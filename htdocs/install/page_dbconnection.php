@@ -48,12 +48,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
 	try {
+		foreach ($vars as $key => $value) {
+			$_SESSION['settings'][$key] = $value;
+			putenv("$key=" . $value);
+			$_ENV[$key] = $value;
+			$_SERVER[$key] = $value;
+		}
 		/**
 		 * @var \icms_db_Connection $db
 		 */
 		$db = \icms::getInstance()->get('db');
 	} catch (\Exception $exception) {
-		var_dump($exception);
 		$error = ERR_NO_DBCONNECTION;
 	}
 	if (empty($error)) {
@@ -62,15 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($
 	}
 }
 
-// Fill with default values
-// check for PDO MySQL and select it, if it is available
-if (class_exists("PDO", false)) {
-	$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
-	if (isset($connections['mysql'])) {
-		$connections['mysql']['selected'] = '';
-	}
-	$connections['pdo'] = $db_connection;
+$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
+if (isset($connections['mysql'])) {
+	$connections['mysql']['selected'] = '';
 }
+$connections['pdo'] = $db_connection;
 
 if (@empty($vars['DB_HOST'])) {
 	$vars = array_merge($vars, array(
@@ -82,7 +83,6 @@ if (@empty($vars['DB_HOST'])) {
 	));
 
 }
-
 
 function xoFormField($name, $value, $label, $help = '', $type = 'text') {
 	$label = htmlspecialchars($label);
