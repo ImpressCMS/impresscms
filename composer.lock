@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d418a8d17605835f79bae8b77cc1a7d",
+    "content-hash": "920b74c0225e542edb226ddec6f1d28d",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -420,7 +420,7 @@
             ],
             "authors": [
                 {
-                    "name": "Raimondas Rimkevicius",
+                    "name": "Raimondas Rimkevičius",
                     "email": "mekdrop@impresscms.org"
                 }
             ],
