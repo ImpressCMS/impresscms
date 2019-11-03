@@ -347,9 +347,9 @@ if (!empty ($error)) {
 	<script type="text/javascript">
 		function setFormFieldCollation(id, val) {
 			if (val == '') {
-				$(id).style.display='display';
+				document.getElementById(id).style.display='none';
 			} else {
-				$(id).style.display='display';
+				document.getElementById(id).style.display='display';
 			}
 			new Ajax.Updater(
 				id, '<?php
