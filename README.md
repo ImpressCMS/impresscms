@@ -1,4 +1,5 @@
 [![license](https://img.shields.io/badge/dynamic/json.svg?label=license&url=https%3A%2F%2Fraw.githubusercontent.com%2FImpressCMS%2Fimpresscms%2Fmaster%2Fcomposer.json&query=license&maxAge=86400)](https://github.com/ImpressCMS/impresscms/blob/master/LICENSE) [![GitHub release](https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=86400&logo=github&logoColor=white&label=latest%20release)](github.com/ImpressCMS/impresscms/releases/latest) [![GitHub tag (latest SemVer pre-release)](https://img.shields.io/packagist/vpre/impresscms/impresscms.svg?label=preview&logo=github)](https://github.com/ImpressCMS/impresscms/releases) [![GitHub issues](https://img.shields.io/github/issues-raw/ImpressCMS/impresscms.svg?maxAge=3600&logo=github&logoColor=white)](https://github.com/ImpressCMS/impresscms/issues) [![Build Status](https://img.shields.io/travis/ImpressCMS/impresscms.svg?branch=master&maxAge=3600&logo=travis)](https://travis-ci.org/ImpressCMS/impresscms) [![Test Coverage](https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/test_coverage)](https://codeclimate.com/github/ImpressCMS/impresscms/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/maintainability)](https://codeclimate.com/github/ImpressCMS/impresscms/maintainability) [![Website](https://img.shields.io/website-up-down-green-red/https/naereen.github.io.svg?maxAge=3600)](https://impresscms.org/) [![Twitter Follow](https://img.shields.io/twitter/follow/ImpressCMS.svg?color=%2338A1F3&label=twitter&style=flat&logo=twitter)](https://twitter.com/ImpressCMS) [![FaceBook](https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook)](https://www.facebook.com/ImpressCMS/) [![Slack](http://invite.impresscms.org/badge.svg)](http://invite.impresscms.org)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_shield)
 
 # ImpressCMS
 
@@ -57,3 +58,7 @@ Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us 
 All development for 2.0 version happens on the *master* branch, so it is always the most up-to-date. 
 
 If you are going to be submitting a pull request, please branch from *master*, and submit your pull request back to same branch.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_large)
