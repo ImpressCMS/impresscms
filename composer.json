@@ -31,6 +31,11 @@
     "chat": "http://invite.impresscms.org",
     "rss": "https://www.impresscms.org/modules/news/rss.php"
   },
+  "keywords": [
+    "impresscms",
+    "cms",
+    "content-management-system"
+  ],
   "require": {
     "php": ">=7.2.0",
     "ext-curl": "*",
