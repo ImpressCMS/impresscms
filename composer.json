@@ -23,6 +23,14 @@
       "role": "developer"
     }
   ],
+  "support": {
+    "email": "support@impresscms.org",
+    "issues": "https://github.com/ImpressCMS/impresscms/issues",
+    "forum": "https://www.impresscms.org/modules/iforum",
+    "source": "https://github.com/ImpressCMS/impresscms/",
+    "chat": "http://invite.impresscms.org",
+    "rss": "https://www.impresscms.org/modules/news/rss.php"
+  },
   "require": {
     "php": ">=7.2.0",
     "ext-curl": "*",
