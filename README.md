@@ -5,7 +5,6 @@
 </p>	
 <p align="center">
 <a href="https://github.com/ImpressCMS/impresscms/blob/master/LICENSE"><img src="https://img.shields.io/badge/dynamic/json.svg?label=license&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2FImpressCMS%2Fimpresscms%2Fmaster%2Fcomposer.json&amp;query=license&amp;maxAge=86400" alt="license" /></a> <a href="github.com/ImpressCMS/impresscms/releases/latest"><img src="https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=86400&amp;logo=github&amp;logoColor=white&amp;label=latest%20release" alt="GitHub release" /></a> <a href="https://github.com/ImpressCMS/impresscms/releases"><img src="https://img.shields.io/packagist/vpre/impresscms/impresscms.svg?label=preview&amp;logo=github" alt="GitHub tag (latest SemVer pre-release)" /></a> <a href="https://travis-ci.org/ImpressCMS/impresscms"><img src="https://img.shields.io/travis/ImpressCMS/impresscms.svg?branch=master&amp;maxAge=3600&amp;logo=travis" alt="Build Status" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/test_coverage" alt="Test Coverage" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/maintainability"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/maintainability" alt="Maintainability" /></a> <a href="https://twitter.com/ImpressCMS"><img src="https://img.shields.io/twitter/follow/ImpressCMS.svg?color=%2338A1F3&amp;label=twitter&amp;style=flat&amp;logo=twitter" alt="Twitter Follow" /></a> <a href="https://www.facebook.com/ImpressCMS/"><img src="https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook" alt="FaceBook" /></a> <a href="http://invite.impresscms.org"><img src="http://invite.impresscms.org/badge.svg" alt="Slack" /></a>
-<a href="https://app.fossa.io/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=shield" alt="FOSSA Status" /></a>
 </p>
 
 ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool. 
@@ -62,4 +61,9 @@ If you are going to be submitting a pull request, please branch from *master*, a
 
 ## License
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_large)
+<a href="https://app.fossa.io/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_large"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=large" alt="FOSSA Status" align="right" /></a>
+ImpressCMS is licensed right now in <a href="https://github.com/ImpressCMS/impresscms/blob/master/LICENSE">GPL 2.0 license</a> but is depended on libraries that uses other compatible open source licenses.
+
+Quick summary what GPL 2.0 really means can be found at [TLDRLegal website](https://tldrlegal.com/license/gnu-general-public-license-v2). 
+
+We use FOSSA to detect if there are any incompatibilities and if there is any solve them. The graphic on the right is used to iliustrate what licenses are used when project is installed.
