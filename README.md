@@ -8,7 +8,29 @@
 <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=shield" alt="FOSSA Status" /></a>
 </p>
 
-ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool. ImpressCMS is a powerful system that gets outstanding results and it is free!
+ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool. 
+
+ImpressCMS has these features:
+<details>
+	<summary>:package: Modules support</summary>
+	<p>Website content is managed by separate content modules/web applications. Simply install the module which has the features you need: a news module, forum module, photo album module, there are many many third party modules to choose from.</p>
+</details>
+<details>
+	<summary>🗃️ Database-driven</summary>
+	<p>ImpressCMS uses a database to store the data required for running your ImpressCMS site. MySQL and MariaDB is currently supported. Support for other DBMS's is coming soon.</p>
+</details>
+<details>
+	<summary>:rainbow: Theme-based skinnable interface</summary>
+	<p>ImpressCMS is driven by a powerful theme system. Both admins and users can change the look of the entire web site with just a click of a mouse. There are also hundreds of quality themes available for download!</p>
+</details>
+<details>
+	<summary>:busts_in_silhouette: Versatile Group Permissions System</summary>
+	<p>Powerful and user-friendly permissions system which enables administrators to set permissions by group for any registered or all anoymous users.</p>
+</details>
+<details>
+	<summary>:globe_with_meridians: Multi-byte Language Support</summary>
+	<p>Fully supports multi-byte languages, including Japanese, Simplified and Traditional Chinese, Korean, etc.</p>
+</details>
 
 ## What can you do with it?
 
@@ -23,33 +45,6 @@ For each type of website ImpressCMS offers different functionality with a collec
 * Add a forum to your site
 * Sell products through your web site using an online store
 * ...and many more
-
-## Key features
-
-<details>
-	<summary>:package: Fully modularized</summary>
-	Website content is managed by separate content modules/web applications. Simply install the module which has the features you need: a news module, forum module, photo album module, there are many many third party modules to choose from.
-</details>
-<details>
-	<summary>:earth_africa: Supported World-wide</summary>
-	ImpressCMS was created and is maintained by a team of hard-working volunteers working from all over the world. The ImpressCMS community has support sites around the world for support of non-English speaking users.
-</details>
-<details>
-	<summary>🗃️ Database-driven</summary>
-	ImpressCMS uses a database to store the data required for running your ImpressCMS site. MySQL and MariaDB is currently supported. Support for other DBMS's is coming soon.
-</details>
-<details>
-	<summary>:rainbow: Theme-based skinnable interface</summary>
-	ImpressCMS is driven by a powerful theme system. Both admins and users can change the look of the entire web site with just a click of a mouse. There are also hundreds of quality themes available for download!
-</details>
-<details>
-	<summary>:busts_in_silhouette: Versatile Group Permissions System</summary>
-	Powerful and user-friendly permissions system which enables administrators to set permissions by group for any registered or all anoymous users.
-</details>
-<details>
-	<summary>:globe_with_meridians: Multi-byte Language Support</summary>
-	Fully supports multi-byte languages, including Japanese, Simplified and Traditional Chinese, Korean, etc.
-</details>
 
 ## Do you need any help?
 
