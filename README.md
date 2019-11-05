@@ -12,23 +12,23 @@ ImpressCMS is a community developed Content Management System. With this tool ma
 ImpressCMS has these features:
 <details>
 	<summary>:package: Modules support</summary>
-	<p>Website content is managed by separate content modules/web applications. Simply install the module which has the features you need: a news module, forum module, photo album module, there are many many third party modules to choose from.</p>
+	<blockquote>Website content is managed by separate content modules/web applications. Simply install the module which has the features you need: a news module, forum module, photo album module, there are many many third party modules to choose from.</blockquote>
 </details>
 <details>
 	<summary>🗃️ Database-driven</summary>
-	<p>ImpressCMS uses a database to store the data required for running your ImpressCMS site. MySQL and MariaDB is currently supported. Support for other DBMS's is coming soon.</p>
+	<blockquote>ImpressCMS uses a database to store the data required for running your ImpressCMS site. MySQL and MariaDB is currently supported. Support for other DBMS's is coming soon.</blockquote>
 </details>
 <details>
 	<summary>:rainbow: Theme-based skinnable interface</summary>
-	<p>ImpressCMS is driven by a powerful theme system. Both admins and users can change the look of the entire web site with just a click of a mouse. There are also hundreds of quality themes available for download!</p>
+	<blockquote>ImpressCMS is driven by a powerful theme system. Both admins and users can change the look of the entire web site with just a click of a mouse. There are also hundreds of quality themes available for download!</blockquote>
 </details>
 <details>
 	<summary>:busts_in_silhouette: Versatile Group Permissions System</summary>
-	<p>Powerful and user-friendly permissions system which enables administrators to set permissions by group for any registered or all anoymous users.</p>
+	<blockquote>Powerful and user-friendly permissions system which enables administrators to set permissions by group for any registered or all anoymous users.</blockquote>
 </details>
 <details>
 	<summary>:globe_with_meridians: Multi-byte Language Support</summary>
-	<p>Fully supports multi-byte languages, including Japanese, Simplified and Traditional Chinese, Korean, etc.</p>
+	<blockquote>Fully supports multi-byte languages, including Japanese, Simplified and Traditional Chinese, Korean, etc.</blockquote>
 </details>
 
 ## What can you do with it?
