@@ -7,29 +7,31 @@ class icms_AutologinEventHandler {
 		icms_Event::attach('icms_core_Session', 'sessionClose', array(__CLASS__, 'onSessionClose'));
 	}
 	static public function onSessionStart() {
+		/**
+		 * @var Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()->get('session');
+		$userSegment = $session->getSegment(icms_member_user_Object::class);
+
 		// Autologin if correct cookie present.
-		if (empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass'])) {
+		if ($userSegment->get('userid') && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass'])) {
 			self::sessionAutologin($_COOKIE['autologin_uname'], $_COOKIE['autologin_pass']);
 		}
 	}
-	static public function onSessionClose() {
-		// autologin hack GIJ (clear autologin cookies)
-		$icms_cookie_path = defined('ICMS_COOKIE_PATH')? ICMS_COOKIE_PATH
-				: preg_replace('?http://[^/]+(/.*)$?', '$1', ICMS_URL);
-		if ($icms_cookie_path == ICMS_URL) {
-			$icms_cookie_path = '/';
-		}
-		setcookie('autologin_uname', '', time() - 3600, $icms_cookie_path, '', 0, 0);
-		setcookie('autologin_pass', '', time() - 3600, $icms_cookie_path, '', 0, 0);
-	}
 
 	static public function sessionAutologin($autologinName, $autologinPass) {
+		/**
+		 * @var Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()->get('session');
+		$autologinSegment = $session->getSegment('autologin');
+
 		if (!empty($_POST)) {
-			$_SESSION['AUTOLOGIN_POST'] = $_POST;
-			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
+			$autologinSegment->set('post', $_POST);
+			$autologinSegment->set('request_uri', $_SERVER['REQUEST_URI']);
 			redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
 		} elseif (!empty($_SERVER['QUERY_STRING']) && substr($_SERVER['SCRIPT_NAME'], -19) != 'session_confirm.php') {
-			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
+			$autologinSegment->set('request_uri', $_SERVER['REQUEST_URI']);
 			redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
 		}
 
@@ -65,17 +67,23 @@ class icms_AutologinEventHandler {
 			$user->setVar('last_login', time());
 			if (!icms::handler('icms_member')->insertUser($user, true)) {
 			}
-			//$_SESSION = array();
-			$_SESSION['xoopsUserId'] = $user->getVar('uid');
-			$_SESSION['xoopsUserGroups'] = $user->getGroups();
+
+			/**
+			 * @var Aura\Session\Session $session
+			 */
+			$session = \icms::getInstance()->get('session');
+			$userSegment = $session->getSegment(icms_member_user_Object::class);
+
+			$userSegment->set('userid', $user->getVar('uid'));
+			$userSegment->set('groups', $user->getGroups());
 
 			global $icmsConfig;
 			$user_theme = $user->getVar('theme');
 			$user_language = $user->getVar('language');
 			if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
-				$_SESSION['xoopsUserTheme'] = $user_theme;
+				$userSegment->set('theme', $user_theme);
 			}
-			$_SESSION['UserLanguage'] = $user_language;
+			$userSegment->set('language', $user_language);
 
 			// update autologin cookies
 			// we need to secure cookie when using SSL
@@ -93,6 +101,18 @@ class icms_AutologinEventHandler {
 			setcookie('autologin_uname', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 			setcookie('autologin_pass', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 		}
+	}
+
+	static public function onSessionClose()
+	{
+		// autologin hack GIJ (clear autologin cookies)
+		$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH
+			: preg_replace('?http://[^/]+(/.*)$?', '$1', ICMS_URL);
+		if ($icms_cookie_path == ICMS_URL) {
+			$icms_cookie_path = '/';
+		}
+		setcookie('autologin_uname', '', time() - 3600, $icms_cookie_path, '', 0, 0);
+		setcookie('autologin_pass', '', time() - 3600, $icms_cookie_path, '', 0, 0);
 	}
 
 }

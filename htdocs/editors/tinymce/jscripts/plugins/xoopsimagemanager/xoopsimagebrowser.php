@@ -18,6 +18,8 @@ if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
+use WideImage\WideImage;
+
 $icmsTpl = new icms_view_Tpl( );
 
 $op = (isset($_GET['op']))? filter_input(INPUT_GET, 'op'):((isset($_POST['op']))? filter_input(INPUT_POST, 'op'):'list');
