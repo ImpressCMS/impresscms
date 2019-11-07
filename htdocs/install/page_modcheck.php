@@ -90,9 +90,9 @@ function imCheckRequirements()
 	$requirement['pcre']['result']=extension_loaded( 'PCRE' ) ? SUCCESS : FAILED;
 	$requirement['pcre']['status']=extension_loaded( 'PCRE' ) ? true : false;
 
-	$requirement['pcre']['description']="CURL Extension";
-	$requirement['pcre']['result']=extension_loaded( 'curl' ) ? SUCCESS : FAILED;
-	$requirement['pcre']['status']=extension_loaded( 'curl' ) ? true : false;
+	$requirement['curl']['description']="CURL Extension";
+	$requirement['curl']['result']=extension_loaded( 'curl' ) ? SUCCESS : FAILED;
+	$requirement['curl']['status']=extension_loaded( 'curl' ) ? true : false;
 
 	$requirement['file_upload']['description']="File uploads";
 	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? _YES : _NO;
