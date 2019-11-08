@@ -13,7 +13,7 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @author		David Janssens <david.j@impresscms.org> 
+ * @author		David Janssens <david.j@impresscms.org>
  */
 
 /**
@@ -90,6 +90,10 @@ function imCheckRequirements()
 	$requirement['pcre']['result']=extension_loaded( 'PCRE' ) ? SUCCESS : FAILED;
 	$requirement['pcre']['status']=extension_loaded( 'PCRE' ) ? true : false;
 
+	$requirement['curl']['description']="CURL Extension";
+	$requirement['curl']['result']=extension_loaded( 'curl' ) ? SUCCESS : FAILED;
+	$requirement['curl']['status']=extension_loaded( 'curl' ) ? true : false;
+
 	$requirement['file_upload']['description']="File uploads";
 	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? _YES : _NO;
 	$requirement['file_upload']['status']=xoDiagBoolSetting( 'file_uploads', true ) ? true : false;
@@ -140,7 +144,6 @@ if (empty($ext)) {
 <div class="clear">&nbsp;</div>
 <h4><?php printf( PHP_EXTENSION, OPEN_ID ); ?>:&nbsp; <?php
 $ext = array();
-if (extension_loaded( 'curl' ) )		$ext[] = 'Curl  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
 if (extension_loaded( 'bcmath' ) )		$ext[] = ' Math Support  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
 if (extension_loaded( 'openssl' ) )	$ext[] = ' OpenSSL  <img src="img/yes.png" alt="Success" class="rootimg" />';
 if (empty($ext)) {
