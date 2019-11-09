@@ -79,7 +79,6 @@
       "ImpressCMS\\Core\\Providers\\": "core/providers/"
     },
     "files": [
-      "vendor/phpexperts/laravel-env-polyfill/src/env-shim.php",
       "include/version.php",
       "include/constants.php",
       "include/functions.php",
