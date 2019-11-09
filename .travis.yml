@@ -40,14 +40,14 @@ jobs:
     - stage: test
       php: 7.2
       before_script:
-        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        - chmod +x ./cc-test-reporter
-        - ./cc-test-reporter before-build
+        - [[ "$TRAVIS_BRANCH" == "master" ]] && curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - [[ "$TRAVIS_BRANCH" == "master" ]] && chmod +x ./cc-test-reporter
+        - [[ "$TRAVIS_BRANCH" == "master" ]] && ./cc-test-reporter before-build
       script:
         - composer test
       after_script:
         - mv ./storage/log/clover.xml ./clover.xml
-        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type clover
+        - [[ "$TRAVIS_BRANCH" == "master" ]] && ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type clover
     - stage: test
       php: 7.3
       script:
