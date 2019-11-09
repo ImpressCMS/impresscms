@@ -46,7 +46,7 @@ jobs:
       script:
         - composer test
       after_script:
-        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type clover -d
     - stage: test
       php: 7.3
       script:
