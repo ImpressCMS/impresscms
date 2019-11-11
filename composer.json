@@ -5,6 +5,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "license": "GPL-2.0-only",
+  "homepage": "https://impresscms.org",
   "authors": [
     {
       "name": "marcan",
@@ -31,6 +32,11 @@
     "chat": "http://invite.impresscms.org",
     "rss": "https://www.impresscms.org/modules/news/rss.php"
   },
+  "keywords": [
+    "impresscms",
+    "cms",
+    "content-management-system"
+  ],
   "require": {
     "php": ">=7.2.0",
     "ext-PDO": "*",
@@ -86,7 +92,6 @@
     ]
   },
   "require-dev": {
-    "codeclimate/php-test-reporter": "^0.4.4",
     "phpunit/phpunit": "5.7.27"
   },
   "extra": {
