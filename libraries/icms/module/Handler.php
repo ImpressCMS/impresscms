@@ -271,11 +271,520 @@ class icms_module_Handler
 	/**
 	 * Function and rendering for installation of a module
 	 *
-	 * @param    string $dirname
+	 * @param string $dirname Module dirname
+	 *
+	 * @param \Psr\Log\LoggerInterface|null $logger Logger where to put action messages
 	 * @return    string    Results of the installation process
 	 */
-	public function install($dirname) {
+	public function install($dirname, ?\Psr\Log\LoggerInterface $logger = null) {
+		if ($logger === null) {
+			$logger = new \Psr\Log\NullLogger();
+		}
+		global $icmsConfig, $icmsAdminTpl;
+		$dirname = trim($dirname);
+		$reservedTables = [
+			'avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments',
+			'config', 'configcategory', 'configoption', 'image', 'imagebody',
+			'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups',
+			'groups_users_link', 'group_permission', 'online',
+			'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks',
+			'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications',
+		];
+		if ($this->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
+			$module = & $this->create();
+			$module->loadInfoAsVar($dirname);
+			$module->registerClassPath();
+			$module->setVar('weight', 1);
+			$error = false;
+			$sqlfile = & $module->getInfo('sqlfile');
+			$logger->info(_MD_AM_INSTALLING . $module->getInfo('name') );
+			$logger->debug(_VERSION . ': ' . icms_conv_nr2local($module->getInfo('version')));
+			if (($module->getInfo('author') !== false) && trim($module->getInfo('author'))) {
+				$logger->debug(_AUTHOR . ': ' . trim($module->getInfo('author')));
+			}
+			if (($sqlfile !== false) && is_array($sqlfile)) {
+				// handle instances when DB_TYPE includes 'pdo.'
+				if (substr(env('DB_TYPE'), 0, 4) == 'pdo.') {
+					$driver = substr(env('DB_TYPE'), 4);
+				}
+				$sql_file_path = ICMS_MODULES_PATH . '/' . $dirname . '/' . $sqlfile[$driver];
+				if (!file_exists($sql_file_path)) {
+					$logger->error(
+						sprintf(_MD_AM_SQL_NOT_FOUND, $sql_file_path )
+					);
+					$error = true;
+				} else {
+					$logger->info(
+						sprintf(_MD_AM_SQL_FOUND, $sql_file_path)
+					);
+					$sql_query = trim(
+						file_get_contents($sql_file_path)
+					);
+					icms_db_legacy_mysql_Utility::splitSqlFile($pieces, $sql_query);
+					$created_tables = array();
+					foreach ($pieces as $piece) {
+						// [0] contains the prefixed query
+						// [4] contains unprefixed table name
+						$prefixed_query = icms_db_legacy_mysql_Utility::prefixQuery($piece, $db->prefix());
+						if (!$prefixed_query) {
+							$logger->error(
+								sprintf('"%s", %s', addslashes($piece), _MD_SQL_NOT_VALID)
+							);
+							$error = true;
+							break;
+						}
+						// check if the table name is reserved
+						if (!in_array($prefixed_query[4], $reservedTables, true)) {
+							// not reserved, so try to create one
+							if (!$db->query($prefixed_query[0])) {
+								$logger->error($db->error());
+								$error = true;
+								break;
+							} else {
+								if (!in_array($prefixed_query[4], $created_tables, true)) {
+									$logger->info(
+										sprintf('  ' . _MD_AM_TABLE_CREATED,
+											$db->prefix($prefixed_query[4])
+										)
+									);
+									$created_tables[] = $prefixed_query[4];
+								} else {
+									$logger->info(
+										sprintf('  ' . _MD_AM_DATA_INSERT_SUCCESS,
+											$db->prefix($prefixed_query[4])
+										)
+									);
+								}
+							}
+						} else {
+							// the table name is reserved, so halt the installation
+							$logger->emergency(
+								sprintf(_MD_AM_RESERVED_TABLE,   $prefixed_query[4])
+							);
+							$error = true;
+							break;
+						}
+					}
 
+					// if there was an error, delete the tables created so far, so the next installation will not fail
+					if ($error === true) {
+						foreach ($created_tables as $ct) {
+							$db->query('DROP TABLE ' . $db->prefix($ct));
+						}
+					}
+				}
+			}
+
+			// if no error, save the module info and blocks info associated with it
+			if ($error === false) {
+				if (!$this->save($module)) {
+					$logger->error(
+						sprintf(_MD_AM_DATA_INSERT_FAIL, $module->getVar('name'))
+					);
+					foreach ($created_tables as $ct) {
+						$db->query("DROP TABLE " . $db->prefix($ct));
+					}
+					$logger->error(
+						$logger->sprintf(_MD_AM_FAILINS, $module->getVar('name') )
+					);
+					return false;
+				} else {
+					$newmid = $module->getVar('mid');
+					unset($created_tables);
+					$logger->info(
+						sprintf(_MD_AM_MOD_DATA_INSERT_SUCCESS,  icms_conv_nr2local($newmid) )
+					);
+					$tplfile_handler = & icms::handler('icms_view_template_file');
+					$templates = $module->getInfo('templates');
+					if ($templates !== false) {
+						$logger->info(_MD_AM_TEMPLATES_ADDING);
+						foreach ($templates as $tpl) {
+							$tplfile = & $tplfile_handler->create();
+							$tpldata = & xoops_module_gettemplate($dirname, $tpl['file']);
+							$tplfile->setVar('tpl_source', $tpldata, true);
+							$tplfile->setVar('tpl_refid', $newmid);
+
+							$tplfile->setVar('tpl_tplset', 'default');
+							$tplfile->setVar('tpl_file', $tpl['file']);
+							$tplfile->setVar('tpl_desc', $tpl['description'], true);
+							$tplfile->setVar('tpl_module', $dirname);
+							$tplfile->setVar('tpl_lastmodified', time());
+							$tplfile->setVar('tpl_lastimported', 0);
+							$tplfile->setVar('tpl_type', 'module');
+							if (!$tplfile_handler->insert($tplfile)) {
+								$logger->error(
+									sprintf( '  ' . _MD_AM_TEMPLATE_INSERT_FAIL , $tpl['file'] )
+								);
+							} else {
+								$newtplid = $tplfile->getVar('tpl_id');
+								$logger->info(
+									sprintf('  ' . _MD_AM_TEMPLATE_INSERTED, $tpl['file'] ,   $newtplid )
+								);
+
+								// generate compiled file
+								if (!icms_view_Tpl::template_touch($newtplid)) {
+									$logger->error(
+										sprintf('  ' . _MD_AM_TEMPLATE_COMPILE_FAIL ,$tpl['file'],  $newtplid )
+									);
+								} else {
+									$logger->info(
+										sprintf('  ' . _MD_AM_TEMPLATE_COMPILED, $tpl['file'] )
+									);
+								}
+							}
+							unset($tpldata);
+						}
+					}
+					icms_view_Tpl::template_clear_module_cache($newmid);
+					$blocks = $module->getInfo('blocks');
+					if ($blocks !== false) {
+						$logger->info(_MD_AM_BLOCKS_ADDING);
+						foreach ($blocks as $blockkey => $block) {
+							// break the loop if missing block config
+							if (!isset($block['file']) || !isset($block['show_func'])) {
+								break;
+							}
+							$options = '';
+							if (!empty($block['options'])) {
+								$options = trim($block['options']);
+							}
+							$newbid = $db->genId($db->prefix('newblocks') . '_bid_seq');
+							$edit_func = isset($block['edit_func'])? trim($block['edit_func']):'';
+							$template = '';
+							if ((isset($block['template']) && trim($block['template']) != '')) {
+								$content = & xoops_module_gettemplate($dirname, $block['template'], true);
+							}
+							if (empty($content)) {
+								$content = '';
+							} else {
+								$template = trim($block['template']);
+							}
+							$block_name = addslashes(trim($block['name']));
+							$sql = "INSERT INTO " . $db->prefix("newblocks")
+								. " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('"
+								. (int) $newbid . "', '" . (int) $newmid . "', '" . (int) $blockkey . "', '$options', '" . $block_name . "', '" . $block_name . "', '', '1', '0', '0', 'M', 'H', '1', '" . addslashes($dirname) . "', '" . addslashes(trim($block['file'])) . "', '" . addslashes(trim($block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', '0', '" . time() . "')";
+							if (!$db->query($sql)) {
+								$logger->error(
+									sprintf('  ' . _MD_AM_BLOCKS_ADD_FAIL , $block['name'] ,  $db->error())
+								);
+							} else {
+								if (empty($newbid)) {
+									$newbid = $db->getInsertId();
+								}
+								$logger->info(
+									sprintf(_MD_AM_BLOCK_ADDED, $block['name'], icms_conv_nr2local($newbid) )
+								);
+								$sql = 'INSERT INTO ' . $db->prefix('block_module_link')
+									. ' (block_id, module_id, page_id) VALUES ('
+									. (int) $newbid . ', 0, 1)';
+								$db->query($sql);
+								if ($template != '') {
+									$tplfile = & $tplfile_handler->create();
+									$tplfile->setVar('tpl_refid', $newbid);
+									$tplfile->setVar('tpl_source', $content, true);
+									$tplfile->setVar('tpl_tplset', 'default');
+									$tplfile->setVar('tpl_file', $block['template']);
+									$tplfile->setVar('tpl_module', $dirname);
+									$tplfile->setVar('tpl_type', 'block');
+									$tplfile->setVar('tpl_desc', isset($block['description'])?$block['description']:'', true);
+									$tplfile->setVar('tpl_lastimported', 0);
+									$tplfile->setVar('tpl_lastmodified', time());
+									if (!$tplfile_handler->insert($tplfile)) {
+										$logger->error('  ' . _MD_AM_TEMPLATE_INSERT_FAIL, $block['template']);
+									} else {
+										$newtplid = $tplfile->getVar('tpl_id');
+										$logger->info('  ' . _MD_AM_TEMPLATE_INSERTED,  $block['template'], icms_conv_nr2local($newtplid) );
+										// generate compiled file
+										if (!icms_view_Tpl::template_touch($newtplid)) {
+											$logger->error('  ' . _MD_AM_TEMPLATE_COMPILE_FAIL, $block['template'],icms_conv_nr2local($newtplid)  );
+										} else {
+											$logger->info('  ' . _MD_AM_TEMPLATE_COMPILED , $block['template']  );
+										}
+									}
+								}
+							}
+							unset($content);
+						}
+						unset($blocks);
+					}
+					$configs = $module->getInfo('config');
+					if ($configs !== false) {
+						if ($module->getVar('hascomments') != 0) {
+							include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
+							$configs[] = array(
+								'name' => 'com_rule',
+								'title' => '_CM_COMRULES',
+								'description' => '',
+								'formtype' => 'select',
+								'valuetype' => 'int',
+								'default' => 1,
+								'options' => array(
+									'_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE,
+									'_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL,
+									'_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER,
+									'_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN
+								)
+							);
+							$configs[] = array(
+								'name' => 'com_anonpost',
+								'title' => '_CM_COMANONPOST',
+								'description' => '',
+								'formtype' => 'yesno',
+								'valuetype' => 'int',
+								'default' => 0,
+							);
+						}
+					} else {
+						if ($module->getVar('hascomments') != 0) {
+							include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
+							$configs[] = array(
+								'name' => 'com_rule',
+								'title' => '_CM_COMRULES',
+								'description' => '',
+								'formtype' => 'select',
+								'valuetype' => 'int',
+								'default' => 1,
+								'options' => array(
+									'_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE,
+									'_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL,
+									'_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER,
+									'_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN
+								)
+							);
+							$configs[] = array(
+								'name' => 'com_anonpost',
+								'title' => '_CM_COMANONPOST',
+								'description' => '',
+								'formtype' => 'yesno',
+								'valuetype' => 'int',
+								'default' => 0
+							);
+						}
+					}
+
+					if ($module->getVar('hasnotification') != 0) {
+						if (empty($configs)) {
+							$configs = array();
+						}
+						// Main notification options
+						include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
+						$options = array(
+							'_NOT_CONFIG_DISABLE'=> XOOPS_NOTIFICATION_DISABLE,
+							'_NOT_CONFIG_ENABLEBLOCK' => XOOPS_NOTIFICATION_ENABLEBLOCK,
+							'_NOT_CONFIG_ENABLEINLINE' => XOOPS_NOTIFICATION_ENABLEINLINE,
+							'_NOT_CONFIG_ENABLEBOTH' => XOOPS_NOTIFICATION_ENABLEBOTH,
+						);
+						$configs[] = array(
+							'name' => 'notification_enabled',
+							'title' => '_NOT_CONFIG_ENABLE',
+							'description' => '_NOT_CONFIG_ENABLEDSC',
+							'formtype' => 'select',
+							'valuetype' => 'int',
+							'default' => XOOPS_NOTIFICATION_ENABLEBOTH,
+							'options' => $options,
+						);
+						// Event-specific notification options
+						// FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
+						$options = array();
+						$notification_handler = icms::handler('icms_data_notification');
+						$categories = & $notification_handler->categoryInfo('', $module->getVar('mid'));
+						foreach ($categories as $category) {
+							$events = & $notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
+							foreach ($events as $event) {
+								if (!empty($event['invisible'])) {
+									continue;
+								}
+								$option_name = $category['title'] . ' : ' . $event['title'];
+								$option_value = $category['name'] . '-' . $event['name'];
+								$options[$option_name] = $option_value;
+							}
+						}
+						$configs[] = array(
+							'name' => 'notification_events',
+							'title' => '_NOT_CONFIG_EVENTS',
+							'description' => '_NOT_CONFIG_EVENTSDSC',
+							'formtype' => 'select_multi',
+							'valuetype' => 'array',
+							'default' => array_values($options),
+							'options' => $options
+						);
+					}
+
+					if ($configs !== false) {
+						$logger->info(_MD_AM_CONFIG_ADDING);
+						$config_handler = icms::handler('icms_config');
+						$order = 0;
+						foreach ($configs as $config) {
+							$confobj = & $config_handler->createConfig();
+							$confobj->setVar('conf_modid', $newmid);
+							$confobj->setVar('conf_catid', 0);
+							$confobj->setVar('conf_name', $config['name']);
+							$confobj->setVar('conf_title', $config['title'], true);
+							$confobj->setVar('conf_desc', $config['description'], true);
+							$confobj->setVar('conf_formtype', $config['formtype']);
+							$confobj->setVar('conf_valuetype', $config['valuetype']);
+							$confobj->setConfValueForInput($config['default'], true);
+							$confobj->setVar('conf_order', $order);
+							$confop_msgs = [];
+							if (isset($config['options']) && is_array($config['options'])) {
+								foreach ($config['options'] as $key => $value) {
+									$confop = & $config_handler->createConfigOption();
+									$confop->setVar('confop_name', $key, true);
+									$confop->setVar('confop_value', $value, true);
+									$confobj->setConfOptions($confop);
+									$confop_msgs[] = sprintf('    ' . _MD_AM_CONFIGOPTION_ADDED, $key ,  $value );
+									unset($confop);
+								}
+							}
+							$order++;
+							if ($config_handler->insertConfig($confobj) !== false) {
+								$logger->info(
+									sprintf('  ' . _MD_AM_CONFIG_ADDED . implode(PHP_EOL, $confop_msgs), $config['name'])
+								);
+							} else {
+								$logger->error(
+									sprintf('  ' . _MD_AM_CONFIG_ADD_FAIL . implode(PHP_EOL, $confop_msgs), $config['name'])
+								);
+							}
+							unset($confobj);
+						}
+						unset($configs);
+					}
+				}
+
+				if ($module->getInfo('hasMain')) {
+					$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+				} else {
+					$groups = array(XOOPS_GROUP_ADMIN);
+				}
+
+				// retrieve all block ids for this module
+				$icms_block_handler = icms::handler('icms_view_block');
+				$blocks = & $icms_block_handler->getByModule($newmid, false);
+				$logger->info(_MD_AM_PERMS_ADDING);
+				$gperm_handler = icms::handler('icms_member_groupperm');
+				foreach ($groups as $mygroup) {
+					if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
+						$mperm = & $gperm_handler->create();
+						$mperm->setVar('gperm_groupid', $mygroup);
+						$mperm->setVar('gperm_itemid', $newmid);
+						$mperm->setVar('gperm_name', 'module_admin');
+						$mperm->setVar('gperm_modid', 1);
+						if (!$gperm_handler->insert($mperm)) {
+							$logger->error(
+								sprintf('  ' . _MD_AM_ADMIN_PERM_ADD_FAIL,  icms_conv_nr2local($mygroup))
+							);
+						} else {
+							$logger->info(
+								sprintf('  ' . _MD_AM_ADMIN_PERM_ADDED,  icms_conv_nr2local($mygroup))
+							);
+						}
+						unset($mperm);
+					}
+					$mperm = & $gperm_handler->create();
+					$mperm->setVar('gperm_groupid', $mygroup);
+					$mperm->setVar('gperm_itemid', $newmid);
+					$mperm->setVar('gperm_name', 'module_read');
+					$mperm->setVar('gperm_modid', 1);
+					if (!$gperm_handler->insert($mperm)) {
+						$logger->error(
+							sprintf('  ' . _MD_AM_USER_PERM_ADD_FAIL,  icms_conv_nr2local($mygroup))
+						);
+					} else {
+						$logger->info(
+							sprintf('  ' . _MD_AM_USER_PERM_ADDED,  icms_conv_nr2local($mygroup))
+						);
+					}
+					unset($mperm);
+					foreach ($blocks as $blc) {
+						$bperm = & $gperm_handler->create();
+						$bperm->setVar('gperm_groupid', $mygroup);
+						$bperm->setVar('gperm_itemid', $blc);
+						$bperm->setVar('gperm_name', 'block_read');
+						$bperm->setVar('gperm_modid', 1);
+						if (!$gperm_handler->insert($bperm)) {
+							$logger->error(
+								sprintf('  ' . _MD_AM_BLOCK_ACCESS_FAIL, icms_conv_nr2local($blc),  icms_conv_nr2local($mygroup))
+							);
+						} else {
+							$logger->info(
+								sprintf('  ' . _MD_AM_BLOCK_ACCESS_ADDED, icms_conv_nr2local($blc),  icms_conv_nr2local($mygroup))
+							);
+						}
+						unset($bperm);
+					}
+				}
+				unset($blocks);
+				unset($groups);
+
+				// add module specific tasks to system autotasks list
+
+
+				// execute module specific install script if any
+				$install_script = $module->getInfo('onInstall');
+				$ModName = ($module->getInfo('modname') != '')? trim($module->getInfo('modname')):$dirname;
+				if (false !== $install_script && trim($install_script) != '') {
+					include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . trim($install_script);
+
+					$is_IPF = $module->getInfo('object_items');
+					if (!empty($is_IPF)) {
+						$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+						$icmsDatabaseUpdater->moduleUpgrade($module, true);
+						array_merge($msgs, $icmsDatabaseUpdater->_messages);
+					}
+
+					if (function_exists('xoops_module_install_' . $ModName)) {
+						$func = 'xoops_module_install_' . $ModName;
+						if (!($lastmsg = $func($module))) {
+							$logger->error(
+								sprintf(_MD_AM_FAIL_EXEC, $func )
+							);
+						} else {
+							$logger->notice($module->messages);
+							$logger->info(
+								sprintf(_MD_AM_FUNCT_EXEC,  $func )
+							);
+							if (is_string($lastmsg)) {
+								$logger->info($lastmsg);
+							}
+						}
+					} elseif (function_exists('icms_module_install_' . $ModName)) {
+						$func = 'icms_module_install_' . $ModName;
+						if (!($lastmsg = $func($module))) {
+							$logger->error(
+								sprintf(_MD_AM_FAIL_EXEC, $func )
+							);
+						} else {
+							$logger->notice($module->messages);
+							$logger->info(
+								sprintf(_MD_AM_FUNCT_EXEC,  $func )
+							);
+							if (is_string($lastmsg)) {
+								$logger->info($lastmsg);
+							}
+						}
+					}
+				}
+				$logger->info(
+					sprintf(_MD_AM_OKINS,  $module->getVar('name') )
+				);
+				unset($module);
+				return true;
+			} else {
+				$logger->emergency(
+					sprintf(_MD_AM_FAILINS,  $dirname)
+				);
+				return false;
+			}
+		} else {
+			$logger->emergency(
+				sprintf(_MD_AM_FAILINS,  $dirname)
+			);
+			$logger->error(
+				sprintf(_MD_AM_ALEXISTS, $dirname)
+			);
+			return false;
+		}
 	}
 
 	/**

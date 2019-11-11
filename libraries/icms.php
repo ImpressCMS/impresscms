@@ -280,6 +280,8 @@ final class icms extends Container {
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\ConfigServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\ModuleServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\CacheServiceProvider::class);
+		// register module installation helpers
+		$this->add(mod_system_AutotasksHandler::class, mod_system_AutotasksHandler::class)->addTag('module_installation_helper');
 		// register links for compatibility
 		self::$db = $this->get('db');
 		self::$xoopsDB = $this->get('xoopsDB');
