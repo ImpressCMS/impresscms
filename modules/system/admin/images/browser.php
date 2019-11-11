@@ -16,6 +16,8 @@ if (!icms::$user) {
 	redirect_header(ICMS_URL . '/index.php', 6, _NOPERM);
 }
 
+use WideImage\WideImage;
+
 $icmsTpl = new icms_view_Tpl();
 /*
  * GET variables

@@ -11,24 +11,30 @@
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+/**
+ * @var Aura\Session\Session $session
+ */
+$session = \icms::getInstance()->get('session');
+$autologinSegment = $session->getSegment('autologin');
+
 // security check
-if (!isset($_SESSION['AUTOLOGIN_REQUEST_URI'])) {
+$url = $autologinSegment->get('request_uri');
+if (!$url) {
 	exit;
 }
 
 // get URI
-$url = $_SESSION['AUTOLOGIN_REQUEST_URI'];
-unset($_SESSION['AUTOLOGIN_REQUEST_URI']);
+$autologinSegment->set('request_uri', null);
 if (preg_match('/javascript:/si', $url)) {
 	exit;
 }
 // black list of url
 $url4disp = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES, _CHARSET));
 
-if (isset($_SESSION['AUTOLOGIN_POST'])) {
+$old_post = $autologinSegment->get('post');
+if ($old_post) {
 	// posting confirmation
-	$old_post = $_SESSION['AUTOLOGIN_POST'];
-	unset($_SESSION['AUTOLOGIN_POST']);
+	$autologinSegment->set('post', null);
 
 	$hidden_str = '';
 	foreach ($old_post as $k => $v) {

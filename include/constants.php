@@ -3,6 +3,10 @@
 // Loads environment data
 \Dotenv\Dotenv::create(dirname(__DIR__))->safeLoad();
 
+if (!function_exists('env')) {
+	return;
+}
+
 define('ICMS_ROOT_PATH', dirname(__DIR__));
 define('ICMS_URL', env('URL'));
 

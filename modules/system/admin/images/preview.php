@@ -8,8 +8,8 @@
  * @subpackage	Images
  */
 
-/** the library for handling the image manipulation */
-include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
+use WideImage\WideImage;
+
 /*
  * GET variarbles
  * file
