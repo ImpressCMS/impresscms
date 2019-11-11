@@ -216,6 +216,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 				}
 			}
 		}
+
 		return $block;
 	}
 

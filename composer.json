@@ -5,6 +5,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "license": "GPL-2.0-only",
+  "homepage": "https://impresscms.org",
   "authors": [
     {
       "name": "marcan",
@@ -23,6 +24,19 @@
       "role": "developer"
     }
   ],
+  "support": {
+    "email": "support@impresscms.org",
+    "issues": "https://github.com/ImpressCMS/impresscms/issues",
+    "forum": "https://www.impresscms.org/modules/iforum",
+    "source": "https://github.com/ImpressCMS/impresscms/",
+    "chat": "http://invite.impresscms.org",
+    "rss": "https://www.impresscms.org/modules/news/rss.php"
+  },
+  "keywords": [
+    "impresscms",
+    "cms",
+    "content-management-system"
+  ],
   "require": {
     "php": ">=7.2.0",
     "ext-curl": "*",
@@ -32,6 +46,7 @@
     "ext-pcre": "*",
     "ext-session": "*",
     "apix/cache": "^1.3",
+    "aura/session": "^2.1",
     "cerdic/css-tidy": "^1.5",
     "composer/composer": "^1.9",
     "erusev/parsedown": "^1.7.0",
@@ -39,6 +54,7 @@
     "geshi/geshi": "^1.0",
     "imponeer/composer-container-services-registration-plugin": "^0.1.0",
     "imponeer/composer-custom-commands": "^0.1.0",
+    "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",
     "league/container": "^3.2",
     "league/flysystem": "1.0.51",
@@ -47,11 +63,13 @@
     "phpexperts/laravel-env-polyfill": "^1.0",
     "phpmailer/phpmailer": "6.0.7",
     "simplepie/simplepie": "^1.5",
+    "symfony/polyfill-iconv": "^1.12",
     "tecnickcom/tcpdf": "^6.2",
-    "vlucas/phpdotenv": "3.3.3"
+    "vlucas/phpdotenv": "3.3.3",
+    "smottt/wideimage": "v1.1.3"
+
   },
   "suggest": {
-    "ext-iconv": "Iconv is needed to handle conversions between charsets",
     "ext-xml": "Faster way then with PHP scripts to handle XML documents",
     "ext-openssl": "Without it OpenID will not work",
     "ext-bcmath": "Better precistions in math operations",
@@ -77,7 +95,6 @@
     ]
   },
   "require-dev": {
-    "codeclimate/php-test-reporter": "^0.4.4",
     "phpunit/phpunit": "5.7.27"
   },
   "extra": {
