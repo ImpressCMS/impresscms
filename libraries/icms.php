@@ -54,11 +54,6 @@ final class icms extends Container {
 	 * @var icms_member_user_Object|null
 	 */
 	public static $user;
-	/**
-	 * array of handlers
-	 * @var array
-	 */
-	static protected $handlers;
 
 	/**
 	 * Finalizes all processes as the script exits
@@ -175,7 +170,9 @@ final class icms extends Container {
 	 */
 	static public function &handler($name, $optional = false)
 	{
-		if (!isset(self::$handlers[$name])) {
+		$instance = static::getInstance();
+		$real_name = $name . '_handler';
+		if (!$instance->has($real_name)) {
 			$class = $name . "Handler";
 			if (!class_exists($class)) {
 				$class = $name . "_Handler";
@@ -194,13 +191,14 @@ final class icms extends Container {
 					}
 				}
 			}
-			self::$handlers[$name] = $class?new $class(self::$xoopsDB):false;
+			$instance->add($real_name, $class ? (new $class($instance->get('xoopsDB'))) : false);
 		}
-		if (!self::$handlers[$name] && !$optional) {
+		$handler = $instance->get($real_name);
+		if (!$handler && !$optional) {
 			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);
 			throw new RuntimeException(sprintf("Handler <b>%s</b> does not exist", $name));
 		}
-		return self::$handlers[$name];
+		return $handler;
 	}
 
 	/**
