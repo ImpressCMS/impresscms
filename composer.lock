@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad5990d63cac5a75450754d59113774e",
+    "content-hash": "88fa37d775b747f1bdd328ae9e2d9ba2",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -767,12 +767,52 @@
             ],
             "authors": [
                 {
-                    "name": "Raimondas Rimkevicius",
+                    "name": "Raimondas Rimkevičius",
                     "email": "mekdrop@impresscms.org"
                 }
             ],
             "description": "Adds possibility to define console commands as composer commands with Symfony console component syntax",
             "time": "2018-03-22T08:11:04+00:00"
+        },
+        {
+            "name": "imponeer/project-cached-code-generator-from-composer.json-data-base",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/project-cached-code-generator-from-composer.json-data-base.git",
+                "reference": "3b9210f9e96970faea1cf593a5639e3e36a01f7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/project-cached-code-generator-from-composer.json-data-base/zipball/3b9210f9e96970faea1cf593a5639e3e36a01f7c",
+                "reference": "3b9210f9e96970faea1cf593a5639e3e36a01f7c",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "composer/composer": "^1.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\ProjectCachedCodeGeneratorFromComposerJSONDataBase\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Library that can be used for plugins that can be used for composer-plugins that register services or configuration based on project composer.json files",
+            "time": "2019-10-13T17:41:23+00:00"
         },
         {
             "name": "ircmaxell/random-lib",
@@ -874,46 +914,6 @@
             "description": "A Base Security Library",
             "homepage": "https://github.com/ircmaxell/SecurityLib",
             "time": "2015-03-20T14:31:23+00:00"
-        },
-        {
-            "name": "imponeer/project-cached-code-generator-from-composer.json-data-base",
-            "version": "0.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/imponeer/project-cached-code-generator-from-composer.json-data-base.git",
-                "reference": "3b9210f9e96970faea1cf593a5639e3e36a01f7c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/project-cached-code-generator-from-composer.json-data-base/zipball/3b9210f9e96970faea1cf593a5639e3e36a01f7c",
-                "reference": "3b9210f9e96970faea1cf593a5639e3e36a01f7c",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1",
-                "php": ">=7.2"
-            },
-            "require-dev": {
-                "composer/composer": "^1.9"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Imponeer\\ProjectCachedCodeGeneratorFromComposerJSONDataBase\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Raimondas Rimkevičius",
-                    "email": "github@mekdrop.name"
-                }
-            ],
-            "description": "Library that can be used for plugins that can be used for composer-plugins that register services or configuration based on project composer.json files",
-            "time": "2019-10-13T17:41:23+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -2079,10 +2079,6 @@
                 {
                     "name": "Symfony Community",
                     "homepage": "https://symfony.com/contributors"
-                },
-                {
-                    "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
