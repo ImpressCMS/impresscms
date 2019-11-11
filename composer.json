@@ -5,6 +5,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "license": "GPL-2.0-only",
+  "homepage": "https://impresscms.org",
   "authors": [
     {
       "name": "marcan",
