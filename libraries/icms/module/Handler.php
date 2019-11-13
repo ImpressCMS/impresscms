@@ -605,54 +605,8 @@ class icms_module_Handler
 				unset($blocks);
 				unset($groups);
 
-				// add module specific tasks to system autotasks list
-
-
 				// execute module specific install script if any
-				$install_script = $module->getInfo('onInstall');
-				$ModName = ($module->getInfo('modname') != '')? trim($module->getInfo('modname')):$dirname;
-				if (false !== $install_script && trim($install_script) != '') {
-					include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . trim($install_script);
 
-					$is_IPF = $module->getInfo('object_items');
-					if (!empty($is_IPF)) {
-						$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-						$icmsDatabaseUpdater->moduleUpgrade($module, true);
-						array_merge($msgs, $icmsDatabaseUpdater->_messages);
-					}
-
-					if (function_exists('xoops_module_install_' . $ModName)) {
-						$func = 'xoops_module_install_' . $ModName;
-						if (!($lastmsg = $func($module))) {
-							$logger->error(
-								sprintf(_MD_AM_FAIL_EXEC, $func )
-							);
-						} else {
-							$logger->notice($module->messages);
-							$logger->info(
-								sprintf(_MD_AM_FUNCT_EXEC,  $func )
-							);
-							if (is_string($lastmsg)) {
-								$logger->info($lastmsg);
-							}
-						}
-					} elseif (function_exists('icms_module_install_' . $ModName)) {
-						$func = 'icms_module_install_' . $ModName;
-						if (!($lastmsg = $func($module))) {
-							$logger->error(
-								sprintf(_MD_AM_FAIL_EXEC, $func )
-							);
-						} else {
-							$logger->notice($module->messages);
-							$logger->info(
-								sprintf(_MD_AM_FUNCT_EXEC,  $func )
-							);
-							if (is_string($lastmsg)) {
-								$logger->info($lastmsg);
-							}
-						}
-					}
-				}
 				$logger->info(
 					sprintf(_MD_AM_OKINS,  $module->getVar('name') )
 				);

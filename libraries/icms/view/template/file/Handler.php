@@ -43,7 +43,7 @@
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class icms_view_template_file_Handler extends icms_ipf_Handler implements \ImpressCMS\Core\Interfaces\ModuleInstallationHelperInterface {
+class icms_view_template_file_Handler extends icms_ipf_Handler {
 	private $_prefetch_cache = array();
 
 	public function __construct(&$db) {
@@ -260,66 +260,5 @@ class icms_view_template_file_Handler extends icms_ipf_Handler implements \Impre
 		$blocks = $this->find($tplset, null, null, null, $tpl_name, true);
 		$this->_prefetch_cache = array_merge($this->_prefetch_cache, $blocks);
 				return $blocks;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function executeModuleInstallStep(\icms_module_Object $module, \Psr\Log\LoggerInterface $logger): bool
-	{
-		$newmid = $module->getVar('mid');
-		$templates = $module->getInfo('templates');
-		if ($templates !== false) {
-			$logger->info(_MD_AM_TEMPLATES_ADDING);
-			$dirname = $module->getVar('dirname');
-			foreach ($templates as $tpl) {
-				/**
-				 * @var icms_view_template_file_Object $tplfile
-				 */
-				$tplfile = $this->create();
-				$tpldata = & xoops_module_gettemplate($dirname, $tpl['file']);
-				$tplfile->setVar('tpl_source', $tpldata, true);
-				$tplfile->setVar('tpl_refid', $newmid);
-
-				$tplfile->setVar('tpl_tplset', 'default');
-				$tplfile->setVar('tpl_file', $tpl['file']);
-				$tplfile->setVar('tpl_desc', $tpl['description'], true);
-				$tplfile->setVar('tpl_module', $dirname);
-				$tplfile->setVar('tpl_lastmodified', time());
-				$tplfile->setVar('tpl_lastimported', 0);
-				$tplfile->setVar('tpl_type', 'module');
-				if (!$tplfile->store()) {
-					$logger->error(
-						sprintf( '  ' . _MD_AM_TEMPLATE_INSERT_FAIL , $tpl['file'] )
-					);
-				} else {
-					$newtplid = $tplfile->getVar('tpl_id');
-					$logger->info(
-						sprintf('  ' . _MD_AM_TEMPLATE_INSERTED, $tpl['file'] ,   $newtplid )
-					);
-
-					// generate compiled file
-					if (!icms_view_Tpl::template_touch($newtplid)) {
-						$logger->error(
-							sprintf('  ' . _MD_AM_TEMPLATE_COMPILE_FAIL ,$tpl['file'],  $newtplid )
-						);
-					} else {
-						$logger->info(
-							sprintf('  ' . _MD_AM_TEMPLATE_COMPILED, $tpl['file'] )
-						);
-					}
-				}
-				unset($tpldata);
-			}
-		}
-		icms_view_Tpl::template_clear_module_cache($newmid);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getModuleInstallStepPriority(): int
-	{
-		return 0;
 	}
 }

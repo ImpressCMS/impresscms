@@ -11,7 +11,7 @@
  *
  * @package ImpressCMS\Modules\System\Class\Autotasks
  */
-class mod_system_AutotasksHandler extends icms_ipf_Handler implements \ImpressCMS\Core\Interfaces\ModuleInstallationHelperInterface
+class mod_system_AutotasksHandler extends icms_ipf_Handler
 {
 
 	private $_use_virtual_config = false;
@@ -252,55 +252,5 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler implements \ImpressCM
 	private function getSystemHandlerNameFromFileName($filename)
 	{
 		return substr($filename, strlen(ICMS_PLUGINS_PATH . '/autotasks/'), -strlen('.php'));
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function executeModuleInstallStep(\icms_module_Object $module, \Psr\Log\LoggerInterface $logger): bool
-	{
-		$atasks = $module->getInfo('autotasks');
-		if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
-			foreach ($atasks as $taskID => $taskData) {
-				/**
-				 * @var $task mod_system_Autotasks
-				 */
-				$task = $this->create();
-				if (isset($taskData['enabled'])) {
-					$task->setVar('sat_enabled', $taskData['enabled']);
-				}
-				if (isset($taskData['repeat'])) {
-					$task->setVar('sat_repeat', $taskData['repeat']);
-				}
-				if (isset($taskData['interval'])) {
-					$task->setVar('sat_interval', $taskData['interval']);
-				}
-				if (isset($taskData['onfinish'])) {
-					$task->setVar('sat_onfinish', $taskData['onfinish']);
-				}
-				$task->setVar('sat_name', $taskData['name']);
-				$task->setVar('sat_code', $taskData['code']);
-				$task->setVar('sat_type', 'addon/' . $module->getInfo('dirname'));
-				$task->setVar('sat_addon_id', (int)$taskID);
-				if (!$task->store()) {
-					$logger->error(
-						sprintf('  ' . _MD_AM_AUTOTASK_FAIL, $taskData['name'])
-					);
-				} else {
-					$logger->info(
-						sprintf('  ' . _MD_AM_AUTOTASK_ADDED, $taskData['name'])
-					);
-				}
-			}
-			unset($task, $criteria, $items, $taskID);
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getModuleInstallStepPriority(): int
-	{
-		return 10;
 	}
 }
