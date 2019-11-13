@@ -44,7 +44,7 @@
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class icms_view_block_Handler extends icms_ipf_Handler implements \ImpressCMS\Core\Interfaces\ModuleInstallationHelperInterface {
+class icms_view_block_Handler extends icms_ipf_Handler {
 
 	private $block_positions;
 	private $modules_name;
