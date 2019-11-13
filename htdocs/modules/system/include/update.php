@@ -120,6 +120,9 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/modules/system/admin/banners", true);
 			icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . "/modules/system/admin/banners.php");
 
+			// Remove the system template files that are no longer necessary
+			icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/modules/system/templates/admin", true);
+
 			/* Finish up this portion of the db update */
 
 			if (!$abortUpdate) {
