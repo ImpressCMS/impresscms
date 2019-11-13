@@ -35,6 +35,8 @@ class InstallScriptModuleInstallationHelper implements ModuleInstallationHelperI
 				$this->execOnInstall($func, $module, $logger);
 			}
 		}
+
+		return true;
 	}
 
 	/**

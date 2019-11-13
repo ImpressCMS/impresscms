@@ -2,6 +2,7 @@
 
 namespace ImpressCMS\Core\ModuleInstallationHelpers;
 
+use icms;
 use icms_module_Object;
 use Psr\Log\LoggerInterface;
 
@@ -17,16 +18,12 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 			$logger->info(_MD_AM_BLOCKS_ADDING);
 			$dirname = $module->getVar('dirname');
 			$newmid = $module->getVar('mid');
-			$handler = \icms::handler('icms_view_block');
+			$handler = icms::handler('icms_view_block');
 			foreach ($blocks as $blockkey => $block) {
-				// break the loop if missing block config
 				if (!isset($block['file']) || !isset($block['show_func'])) {
-					break;
+					continue;
 				}
-				$options = '';
-				if (!empty($block['options'])) {
-					$options = trim($block['options']);
-				}
+				$options =!empty($block['options']) ? trim($block['options']) : '';
 				$template = '';
 				if ((isset($block['template']) && trim($block['template']) != '')) {
 					$content = & xoops_module_gettemplate($dirname, $block['template'], true);
@@ -39,7 +36,7 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 				/**
 				 * @var icms_view_block_Object $newBlock
 				 */
-				$newBlock = $this->create();
+				$newBlock = $handler->create();
 				$newBlock->setVar('name', trim($block['name']));
 				$newBlock->setVar('mid', $newmid);
 				$newBlock->setVar('func_num', $blockkey);
@@ -105,6 +102,9 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 				unset($content);
 			}
 		}
+		$this->updateBlocksPermissions($module, $logger);
+
+		return true;
 	}
 
 	/**
@@ -113,5 +113,71 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 	public function getModuleInstallStepPriority(): int
 	{
 		return 1;
+	}
+
+	/**
+	 * Updates blocks permissions
+	 *
+	 * @param icms_module_Object $module Module to update
+	 * @param LoggerInterface $logger Logger to print messages
+	 */
+	protected function updateBlocksPermissions(icms_module_Object $module, LoggerInterface $logger) {
+		$groups = $module->getInfo('hasMain')?[XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS]: [XOOPS_GROUP_ADMIN];
+		$icms_block_handler = icms::handler('icms_view_block');
+		$newmid = $module->getVar('mid');
+		$blocks = & $icms_block_handler->getByModule($newmid, false);
+		$logger->info(_MD_AM_PERMS_ADDING);
+		$gperm_handler = icms::handler('icms_member_groupperm');
+		foreach ($groups as $mygroup) {
+			if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
+				$mperm = & $gperm_handler->create();
+				$mperm->setVar('gperm_groupid', $mygroup);
+				$mperm->setVar('gperm_itemid', $newmid);
+				$mperm->setVar('gperm_name', 'module_admin');
+				$mperm->setVar('gperm_modid', 1);
+				if (!$gperm_handler->insert($mperm)) {
+					$logger->error(
+						sprintf('  ' . _MD_AM_ADMIN_PERM_ADD_FAIL,  icms_conv_nr2local($mygroup))
+					);
+				} else {
+					$logger->info(
+						sprintf('  ' . _MD_AM_ADMIN_PERM_ADDED,  icms_conv_nr2local($mygroup))
+					);
+				}
+				unset($mperm);
+			}
+			$mperm = & $gperm_handler->create();
+			$mperm->setVar('gperm_groupid', $mygroup);
+			$mperm->setVar('gperm_itemid', $newmid);
+			$mperm->setVar('gperm_name', 'module_read');
+			$mperm->setVar('gperm_modid', 1);
+			if (!$gperm_handler->insert($mperm)) {
+				$logger->error(
+					sprintf('  ' . _MD_AM_USER_PERM_ADD_FAIL,  icms_conv_nr2local($mygroup))
+				);
+			} else {
+				$logger->info(
+					sprintf('  ' . _MD_AM_USER_PERM_ADDED,  icms_conv_nr2local($mygroup))
+				);
+			}
+			unset($mperm);
+			foreach ($blocks as $blc) {
+				$bperm = & $gperm_handler->create();
+				$bperm->setVar('gperm_groupid', $mygroup);
+				$bperm->setVar('gperm_itemid', $blc);
+				$bperm->setVar('gperm_name', 'block_read');
+				$bperm->setVar('gperm_modid', 1);
+				if (!$gperm_handler->insert($bperm)) {
+					$logger->error(
+						sprintf('  ' . _MD_AM_BLOCK_ACCESS_FAIL, icms_conv_nr2local($blc),  icms_conv_nr2local($mygroup))
+					);
+				} else {
+					$logger->info(
+						sprintf('  ' . _MD_AM_BLOCK_ACCESS_ADDED, icms_conv_nr2local($blc),  icms_conv_nr2local($mygroup))
+					);
+				}
+				unset($bperm);
+			}
+		}
 	}
 }

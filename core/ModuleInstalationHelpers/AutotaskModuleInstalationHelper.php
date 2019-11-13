@@ -49,6 +49,8 @@ class AutotaskModuleInstalationHelper implements ModuleInstallationHelperInterfa
 			}
 			unset($task, $criteria, $items, $taskID);
 		}
+
+		return true;
 	}
 
 	/**

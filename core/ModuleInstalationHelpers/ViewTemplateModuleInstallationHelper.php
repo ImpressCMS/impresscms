@@ -4,7 +4,6 @@
 namespace ImpressCMS\Core\ModuleInstallationHelpers;
 
 use icms_module_Object;
-use icms_view_template_file_Object;
 use icms_view_Tpl;
 use Psr\Log\LoggerInterface;
 
@@ -26,7 +25,7 @@ class ViewTemplateModuleInstallationHelper implements ModuleInstallationHelperIn
 				 * @var \icms_view_template_file_Object $tplfile
 				 */
 				$tplfile = $handler->create();
-				$tpldata = & xoops_module_gettemplate($dirname, $tpl['file']);
+				$tpldata = &xoops_module_gettemplate($dirname, $tpl['file']);
 				$tplfile->setVar('tpl_source', $tpldata, true);
 				$tplfile->setVar('tpl_refid', $newmid);
 
@@ -39,22 +38,22 @@ class ViewTemplateModuleInstallationHelper implements ModuleInstallationHelperIn
 				$tplfile->setVar('tpl_type', 'module');
 				if (!$tplfile->store()) {
 					$logger->error(
-						sprintf( '  ' . _MD_AM_TEMPLATE_INSERT_FAIL , $tpl['file'] )
+						sprintf('  ' . _MD_AM_TEMPLATE_INSERT_FAIL, $tpl['file'])
 					);
 				} else {
 					$newtplid = $tplfile->getVar('tpl_id');
 					$logger->info(
-						sprintf('  ' . _MD_AM_TEMPLATE_INSERTED, $tpl['file'] ,   $newtplid )
+						sprintf('  ' . _MD_AM_TEMPLATE_INSERTED, $tpl['file'], $newtplid)
 					);
 
 					// generate compiled file
 					if (!icms_view_Tpl::template_touch($newtplid)) {
 						$logger->error(
-							sprintf('  ' . _MD_AM_TEMPLATE_COMPILE_FAIL ,$tpl['file'],  $newtplid )
+							sprintf('  ' . _MD_AM_TEMPLATE_COMPILE_FAIL, $tpl['file'], $newtplid)
 						);
 					} else {
 						$logger->info(
-							sprintf('  ' . _MD_AM_TEMPLATE_COMPILED, $tpl['file'] )
+							sprintf('  ' . _MD_AM_TEMPLATE_COMPILED, $tpl['file'])
 						);
 					}
 				}
@@ -62,6 +61,7 @@ class ViewTemplateModuleInstallationHelper implements ModuleInstallationHelperIn
 			}
 		}
 		icms_view_Tpl::template_clear_module_cache($newmid);
+		return true;
 	}
 
 	/**

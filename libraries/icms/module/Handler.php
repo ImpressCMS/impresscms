@@ -390,227 +390,26 @@ class icms_module_Handler
 					return false;
 				} else {
 					$newmid = $module->getVar('mid');
-					unset($created_tables);
 					$logger->info(
 						sprintf(_MD_AM_MOD_DATA_INSERT_SUCCESS,  icms_conv_nr2local($newmid) )
 					);
-
-					$configs = $module->getInfo('config');
-					if ($configs !== false) {
-						if ($module->getVar('hascomments') != 0) {
-							include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
-							$configs[] = array(
-								'name' => 'com_rule',
-								'title' => '_CM_COMRULES',
-								'description' => '',
-								'formtype' => 'select',
-								'valuetype' => 'int',
-								'default' => 1,
-								'options' => array(
-									'_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE,
-									'_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL,
-									'_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER,
-									'_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN
-								)
-							);
-							$configs[] = array(
-								'name' => 'com_anonpost',
-								'title' => '_CM_COMANONPOST',
-								'description' => '',
-								'formtype' => 'yesno',
-								'valuetype' => 'int',
-								'default' => 0,
-							);
-						}
-					} else {
-						if ($module->getVar('hascomments') != 0) {
-							include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
-							$configs[] = array(
-								'name' => 'com_rule',
-								'title' => '_CM_COMRULES',
-								'description' => '',
-								'formtype' => 'select',
-								'valuetype' => 'int',
-								'default' => 1,
-								'options' => array(
-									'_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE,
-									'_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL,
-									'_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER,
-									'_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN
-								)
-							);
-							$configs[] = array(
-								'name' => 'com_anonpost',
-								'title' => '_CM_COMANONPOST',
-								'description' => '',
-								'formtype' => 'yesno',
-								'valuetype' => 'int',
-								'default' => 0
-							);
-						}
-					}
-
-					if ($module->getVar('hasnotification') != 0) {
-						if (empty($configs)) {
-							$configs = array();
-						}
-						// Main notification options
-						include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
-						$options = array(
-							'_NOT_CONFIG_DISABLE'=> XOOPS_NOTIFICATION_DISABLE,
-							'_NOT_CONFIG_ENABLEBLOCK' => XOOPS_NOTIFICATION_ENABLEBLOCK,
-							'_NOT_CONFIG_ENABLEINLINE' => XOOPS_NOTIFICATION_ENABLEINLINE,
-							'_NOT_CONFIG_ENABLEBOTH' => XOOPS_NOTIFICATION_ENABLEBOTH,
-						);
-						$configs[] = array(
-							'name' => 'notification_enabled',
-							'title' => '_NOT_CONFIG_ENABLE',
-							'description' => '_NOT_CONFIG_ENABLEDSC',
-							'formtype' => 'select',
-							'valuetype' => 'int',
-							'default' => XOOPS_NOTIFICATION_ENABLEBOTH,
-							'options' => $options,
-						);
-						// Event-specific notification options
-						// FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
-						$options = array();
-						$notification_handler = icms::handler('icms_data_notification');
-						$categories = & $notification_handler->categoryInfo('', $module->getVar('mid'));
-						foreach ($categories as $category) {
-							$events = & $notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
-							foreach ($events as $event) {
-								if (!empty($event['invisible'])) {
-									continue;
-								}
-								$option_name = $category['title'] . ' : ' . $event['title'];
-								$option_value = $category['name'] . '-' . $event['name'];
-								$options[$option_name] = $option_value;
-							}
-						}
-						$configs[] = array(
-							'name' => 'notification_events',
-							'title' => '_NOT_CONFIG_EVENTS',
-							'description' => '_NOT_CONFIG_EVENTSDSC',
-							'formtype' => 'select_multi',
-							'valuetype' => 'array',
-							'default' => array_values($options),
-							'options' => $options
-						);
-					}
-
-					if ($configs !== false) {
-						$logger->info(_MD_AM_CONFIG_ADDING);
-						$config_handler = icms::handler('icms_config');
-						$order = 0;
-						foreach ($configs as $config) {
-							$confobj = & $config_handler->createConfig();
-							$confobj->setVar('conf_modid', $newmid);
-							$confobj->setVar('conf_catid', 0);
-							$confobj->setVar('conf_name', $config['name']);
-							$confobj->setVar('conf_title', $config['title'], true);
-							$confobj->setVar('conf_desc', $config['description'], true);
-							$confobj->setVar('conf_formtype', $config['formtype']);
-							$confobj->setVar('conf_valuetype', $config['valuetype']);
-							$confobj->setConfValueForInput($config['default'], true);
-							$confobj->setVar('conf_order', $order);
-							$confop_msgs = [];
-							if (isset($config['options']) && is_array($config['options'])) {
-								foreach ($config['options'] as $key => $value) {
-									$confop = & $config_handler->createConfigOption();
-									$confop->setVar('confop_name', $key, true);
-									$confop->setVar('confop_value', $value, true);
-									$confobj->setConfOptions($confop);
-									$confop_msgs[] = sprintf('    ' . _MD_AM_CONFIGOPTION_ADDED, $key ,  $value );
-									unset($confop);
-								}
-							}
-							$order++;
-							if ($config_handler->insertConfig($confobj) !== false) {
-								$logger->info(
-									sprintf('  ' . _MD_AM_CONFIG_ADDED . implode(PHP_EOL, $confop_msgs), $config['name'])
-								);
-							} else {
-								$logger->error(
-									sprintf('  ' . _MD_AM_CONFIG_ADD_FAIL . implode(PHP_EOL, $confop_msgs), $config['name'])
-								);
-							}
-							unset($confobj);
-						}
-						unset($configs);
-					}
 				}
 
-				if ($module->getInfo('hasMain')) {
-					$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
-				} else {
-					$groups = array(XOOPS_GROUP_ADMIN);
+				// execute module instalation scripts
+				/**
+				 * @var \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface[] $helpers
+				 */
+				$helpers = (array)\icms::getInstance()->get('module_installation_helper');
+				usort($helpers, function (\ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperA, \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperB) {
+					return $helperA->getModuleInstallStepPriority() > $helperB->getModuleInstallStepPriority();
+				});
+				foreach ($helpers as $helper) {
+					$helper->executeModuleInstallStep($module, $logger);
 				}
-
-				// retrieve all block ids for this module
-				$icms_block_handler = icms::handler('icms_view_block');
-				$blocks = & $icms_block_handler->getByModule($newmid, false);
-				$logger->info(_MD_AM_PERMS_ADDING);
-				$gperm_handler = icms::handler('icms_member_groupperm');
-				foreach ($groups as $mygroup) {
-					if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
-						$mperm = & $gperm_handler->create();
-						$mperm->setVar('gperm_groupid', $mygroup);
-						$mperm->setVar('gperm_itemid', $newmid);
-						$mperm->setVar('gperm_name', 'module_admin');
-						$mperm->setVar('gperm_modid', 1);
-						if (!$gperm_handler->insert($mperm)) {
-							$logger->error(
-								sprintf('  ' . _MD_AM_ADMIN_PERM_ADD_FAIL,  icms_conv_nr2local($mygroup))
-							);
-						} else {
-							$logger->info(
-								sprintf('  ' . _MD_AM_ADMIN_PERM_ADDED,  icms_conv_nr2local($mygroup))
-							);
-						}
-						unset($mperm);
-					}
-					$mperm = & $gperm_handler->create();
-					$mperm->setVar('gperm_groupid', $mygroup);
-					$mperm->setVar('gperm_itemid', $newmid);
-					$mperm->setVar('gperm_name', 'module_read');
-					$mperm->setVar('gperm_modid', 1);
-					if (!$gperm_handler->insert($mperm)) {
-						$logger->error(
-							sprintf('  ' . _MD_AM_USER_PERM_ADD_FAIL,  icms_conv_nr2local($mygroup))
-						);
-					} else {
-						$logger->info(
-							sprintf('  ' . _MD_AM_USER_PERM_ADDED,  icms_conv_nr2local($mygroup))
-						);
-					}
-					unset($mperm);
-					foreach ($blocks as $blc) {
-						$bperm = & $gperm_handler->create();
-						$bperm->setVar('gperm_groupid', $mygroup);
-						$bperm->setVar('gperm_itemid', $blc);
-						$bperm->setVar('gperm_name', 'block_read');
-						$bperm->setVar('gperm_modid', 1);
-						if (!$gperm_handler->insert($bperm)) {
-							$logger->error(
-								sprintf('  ' . _MD_AM_BLOCK_ACCESS_FAIL, icms_conv_nr2local($blc),  icms_conv_nr2local($mygroup))
-							);
-						} else {
-							$logger->info(
-								sprintf('  ' . _MD_AM_BLOCK_ACCESS_ADDED, icms_conv_nr2local($blc),  icms_conv_nr2local($mygroup))
-							);
-						}
-						unset($bperm);
-					}
-				}
-				unset($blocks);
-				unset($groups);
-
-				// execute module specific install script if any
 
 				$logger->info(
 					sprintf(_MD_AM_OKINS,  $module->getVar('name') )
 				);
-				unset($module);
 				return true;
 			} else {
 				$logger->emergency(

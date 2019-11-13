@@ -301,6 +301,11 @@ final class icms extends Container {
 				\ImpressCMS\Core\ModuleInstallationHelpers\InstallScriptModuleInstallationHelper::class,
 				\ImpressCMS\Core\ModuleInstallationHelpers\InstallScriptModuleInstallationHelper::class)
 			->addTag('module_installation_helper');
+		$this
+			->add(
+				\ImpressCMS\Core\ModuleInstallationHelpers\ConfigModuleInstallationHelper::class,
+				\ImpressCMS\Core\ModuleInstallationHelpers\ConfigModuleInstallationHelper::class)
+			->addTag('module_installation_helper');
 		// register links for compatibility
 		self::$db = $this->get('db');
 		self::$xoopsDB = $this->get('xoopsDB');
