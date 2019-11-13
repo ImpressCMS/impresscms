@@ -25,7 +25,7 @@ class ViewTemplateModuleInstallationHelper implements ModuleInstallationHelperIn
 				 * @var \icms_view_template_file_Object $tplfile
 				 */
 				$tplfile = $handler->create();
-				$tpldata = &xoops_module_gettemplate($dirname, $tpl['file']);
+				$tpldata = $this->readTemplate($dirname, $tpl['file']);
 				$tplfile->setVar('tpl_source', $tpldata, true);
 				$tplfile->setVar('tpl_refid', $newmid);
 
@@ -70,5 +70,22 @@ class ViewTemplateModuleInstallationHelper implements ModuleInstallationHelperIn
 	public function getModuleInstallStepPriority(): int
 	{
 		return 0;
+	}
+
+	/**
+	 * Read template from file
+	 *
+	 * @param string $dirname Dirname from where to read
+	 * @param string $filename Filename to read
+	 *
+	 * @return string
+	 */
+	protected function readTemplate(string $dirname, string $filename): string {
+		$ret = '';
+		$file = ICMS_MODULES_PATH . '/' . $dirname . '/templates/' . $filename;
+		if (!file_exists($file)) {
+			return $ret;
+		}
+		return str_replace(["\r\n", "\n"], ["\n", "\r\n"], file_get_contents($file));
 	}
 }

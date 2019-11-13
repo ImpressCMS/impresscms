@@ -196,10 +196,20 @@ switch ($op) {
 			break;
 
 		case 'install_ok':
-			$ret = array();
-			$ret[] = xoops_module_install($module);
+			/**
+			 * @var icms_module_Handler $module_handler
+			 */
+			$module_handler = icms::handler('icms_module');
+			$logger = new \Psr\Log\NullLogger(); // TODO: change this to normal
+			$module_handler->install(
+				$module->getVar('dirname'),
+				$logger
+			);
 			if ($from_112) {
-				$ret[] = icms_module_update($module);
+				$module_handler->update(
+					$module->getVar('dirname'),
+					$logger
+				);
 			}
 			$contents = impresscms_get_adminmenu();
 			if (!xoops_module_write_admin_menu($contents)) {
@@ -232,8 +242,12 @@ switch ($op) {
 			break;
 
 		case 'uninstall_ok':
-			$ret = array();
-			$ret[] = xoops_module_uninstall($module);
+			$module_handler = icms::handler('icms_module');
+			$logger = new \Psr\Log\NullLogger(); // TODO: change this to normal
+			$module_handler->uninstall(
+				$module->getVar('dirname'),
+				$logger
+			);
 			$contents = impresscms_get_adminmenu();
 			if (!xoops_module_write_admin_menu($contents)) {
 				$ret[] = "<p>" . _MD_AM_FAILWRITE . "</p>";
@@ -271,8 +285,12 @@ switch ($op) {
 			break;
 
 		case 'update_ok':
-			$ret = array();
-			$ret[] = icms_module_update($module);
+			$module_handler = icms::handler('icms_module');
+			$logger = new \Psr\Log\NullLogger(); // TODO: change this to normal
+			$module_handler->update(
+				$module->getVar('dirname'),
+				$logger
+			);
 			$contents = impresscms_get_adminmenu();
 			if (!xoops_module_write_admin_menu($contents)) {
 				$ret[] = "<p>" . _MD_AM_FAILWRITE . "</p>";

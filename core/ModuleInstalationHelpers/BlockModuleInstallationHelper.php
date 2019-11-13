@@ -26,7 +26,7 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 				$options =!empty($block['options']) ? trim($block['options']) : '';
 				$template = '';
 				if ((isset($block['template']) && trim($block['template']) != '')) {
-					$content = & xoops_module_gettemplate($dirname, $block['template'], true);
+					$content = $this->readTemplate($dirname, $block['template']);
 				}
 				if (empty($content)) {
 					$content = '';
@@ -122,7 +122,7 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 	 * @param LoggerInterface $logger Logger to print messages
 	 */
 	protected function updateBlocksPermissions(icms_module_Object $module, LoggerInterface $logger) {
-		$groups = $module->getInfo('hasMain')?[XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS]: [XOOPS_GROUP_ADMIN];
+		$groups = $module->getInfo('hasMain')?[ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS]: [ICMS_GROUP_ADMIN];
 		$icms_block_handler = icms::handler('icms_view_block');
 		$newmid = $module->getVar('mid');
 		$blocks = & $icms_block_handler->getByModule($newmid, false);
@@ -179,5 +179,22 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 				unset($bperm);
 			}
 		}
+	}
+
+	/**
+	 * Read template from file
+	 *
+	 * @param string $dirname Dirname from where to read
+	 * @param string $filename Filename to read
+	 *
+	 * @return string
+	 */
+	protected function readTemplate(string $dirname, string $filename): string {
+		$ret = '';
+		$file = ICMS_MODULES_PATH . '/' . $dirname . '/templates/blocks/' . $filename;
+		if (!file_exists($file)) {
+			return $ret;
+		}
+		return str_replace(["\r\n", "\n"], ["\n", "\r\n"], file_get_contents($file));
 	}
 }

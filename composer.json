@@ -76,7 +76,8 @@
       "modules/"
     ],
     "psr-4": {
-      "ImpressCMS\\Core\\Providers\\": "core/providers/"
+      "ImpressCMS\\Core\\Providers\\": "core/providers/",
+      "ImpressCMS\\Core\\ModuleInstalationHelpers\\": "core/ModuleInstalationHelpers/"
     },
     "files": [
       "include/version.php",
