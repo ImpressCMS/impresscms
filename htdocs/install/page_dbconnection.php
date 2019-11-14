@@ -48,6 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
 	try {
+		if (!defined('DB_NO_AUTO_SELECT')) {
+			define('DB_NO_AUTO_SELECT', 1);
+		}
 		foreach ($vars as $key => $value) {
 			$_SESSION['settings'][$key] = $value;
 			putenv("$key=" . $value);

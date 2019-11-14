@@ -190,12 +190,12 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 	if (empty ($error)) {
 		if (!select_db($vars['DB_NAME'])) {
 			// Database not here: try to create it
-			$result = $db->exec("CREATE DATABASE `" . $vars ['DB_NAME'] . '`');
-			if (!$result) {
-				$error = ERR_NO_DATABASE;
-			} else {
+			try {
+				$db->exec("CREATE DATABASE `" . $vars ['DB_NAME'] . '`');
 				$error = sprintf(DATABASE_CREATED, $vars ['DB_NAME']);
 				$db_exist = true;
+			} catch (\Exception $exception) {
+				$error = ERR_NO_DATABASE;
 			}
 		} else {
 			$db_exist = true;
