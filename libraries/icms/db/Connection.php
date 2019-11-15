@@ -234,4 +234,13 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 	{
 		return $result ? $result->columnCount() : false;
 	}
+
+	/**
+	 * Gets server version
+	 *
+	 * @return string
+	 */
+	public function getServerVersion() {
+		return $this->fetchCol('SELECT version();')[0];
+	}
 }
