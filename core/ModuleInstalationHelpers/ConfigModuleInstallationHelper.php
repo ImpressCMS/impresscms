@@ -85,9 +85,15 @@ class ConfigModuleInstallationHelper implements ModuleInstallationHelperInterfac
 
 		if ($configs !== false) {
 			$logger->info(_MD_AM_CONFIG_ADDING);
+			/**
+			 * @var \icms_config_Handler $config_handler
+			 */
 			$config_handler = icms::handler('icms_config');
 			$order = 0;
 			foreach ($configs as $config) {
+				/**
+				 * @var \icms_config_item_Object $confobj
+				 */
 				$confobj = & $config_handler->createConfig();
 				$confobj->setVar('conf_modid', $module->getVar('mid'));
 				$confobj->setVar('conf_catid', 0);

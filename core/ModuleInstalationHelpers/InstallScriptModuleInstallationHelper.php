@@ -16,8 +16,8 @@ class InstallScriptModuleInstallationHelper implements ModuleInstallationHelperI
 	{
 		$install_script = $module->getInfo('onInstall');
 		$dirname = $module->getVar('dirname');
-		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
-		if (false !== $install_script && trim($install_script) != '') {
+		$ModName = ($module->getInfo('modname') !== '') ? trim($module->getInfo('modname')) : $dirname;
+		if (false !== $install_script && trim($install_script) !== '') {
 			include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . trim($install_script);
 
 			$is_IPF = $module->getInfo('object_items');
