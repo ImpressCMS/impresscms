@@ -29,4 +29,21 @@ interface ModuleInstallationHelperInterface
 	 * @return int
 	 */
 	public function getModuleInstallStepPriority(): int;
+
+	/**
+	 * Execute module uninstall step
+	 *
+	 * @param icms_module_Object $module Current module that is uninstalling
+	 * @param LoggerInterface $logger  Logger where to print messages
+	 *
+	 * @return bool
+	 */
+	public function executeModuleUninstallStep(icms_module_Object $module, LoggerInterface $logger): bool;
+
+	/**
+	 * Get priority to use to uninstall module
+	 *
+	 * @return int
+	 */
+	public function getModuleUninstallStepPriority(): int;
 }

@@ -23,7 +23,7 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 				if (!isset($block['file']) || !isset($block['show_func'])) {
 					continue;
 				}
-				$options =!empty($block['options']) ? trim($block['options']) : '';
+				$options = !empty($block['options']) ? trim($block['options']) : '';
 				$template = '';
 				if ((isset($block['template']) && trim($block['template']) != '')) {
 					$content = $this->readTemplate($dirname, $block['template']);
@@ -53,23 +53,23 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 				$newBlock->setVar('dirname', $dirname);
 				$newBlock->setVar('func_file', $block['file']);
 				$newBlock->setVar('show_func', $block['show_func']);
-				$newBlock->setVar('edit_func', isset($block['edit_func'])? trim($block['edit_func']):'');
-				$newBlock->setVar('template',$template);
-				$newBlock->setVar('bcachetime',0);
-				$newBlock->setVar('last_modified',time());
+				$newBlock->setVar('edit_func', isset($block['edit_func']) ? trim($block['edit_func']) : '');
+				$newBlock->setVar('template', $template);
+				$newBlock->setVar('bcachetime', 0);
+				$newBlock->setVar('last_modified', time());
 
 				if (!$newBlock->store()) {
 					$logger->error(
-						sprintf('  ' . _MD_AM_BLOCKS_ADD_FAIL , $block['name'] )
+						sprintf('  ' . _MD_AM_BLOCKS_ADD_FAIL, $block['name'])
 					);
 				} else {
 					$newbid = $newBlock->id();
 					$logger->info(
-						sprintf(_MD_AM_BLOCK_ADDED, $block['name'], icms_conv_nr2local($newbid) )
+						sprintf(_MD_AM_BLOCK_ADDED, $block['name'], icms_conv_nr2local($newbid))
 					);
 					$sql = 'INSERT INTO ' . $this->db->prefix('block_module_link')
 						. ' (block_id, module_id, page_id) VALUES ('
-						. (int) $newbid . ', 0, 1)';
+						. (int)$newbid . ', 0, 1)';
 					$this->db->query($sql);
 					if ($template != '') {
 						/**
@@ -82,19 +82,19 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 						$tplfile->setVar('tpl_file', $block['template']);
 						$tplfile->setVar('tpl_module', $dirname);
 						$tplfile->setVar('tpl_type', 'block');
-						$tplfile->setVar('tpl_desc', isset($block['description'])?$block['description']:'', true);
+						$tplfile->setVar('tpl_desc', isset($block['description']) ? $block['description'] : '', true);
 						$tplfile->setVar('tpl_lastimported', 0);
 						$tplfile->setVar('tpl_lastmodified', time());
 						if (!$tplfile->store()) {
 							$logger->error('  ' . _MD_AM_TEMPLATE_INSERT_FAIL, $block['template']);
 						} else {
 							$newtplid = $tplfile->getVar('tpl_id');
-							$logger->info('  ' . _MD_AM_TEMPLATE_INSERTED,  $block['template'], icms_conv_nr2local($newtplid) );
+							$logger->info('  ' . _MD_AM_TEMPLATE_INSERTED, $block['template'], icms_conv_nr2local($newtplid));
 							// generate compiled file
 							if (!icms_view_Tpl::template_touch($newtplid)) {
-								$logger->error('  ' . _MD_AM_TEMPLATE_COMPILE_FAIL, $block['template'],icms_conv_nr2local($newtplid)  );
+								$logger->error('  ' . _MD_AM_TEMPLATE_COMPILE_FAIL, $block['template'], icms_conv_nr2local($newtplid));
 							} else {
-								$logger->info('  ' . _MD_AM_TEMPLATE_COMPILED , $block['template']  );
+								$logger->info('  ' . _MD_AM_TEMPLATE_COMPILED, $block['template']);
 							}
 						}
 					}
@@ -108,11 +108,21 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 	}
 
 	/**
-	 * @inheritDoc
+	 * Read template from file
+	 *
+	 * @param string $dirname Dirname from where to read
+	 * @param string $filename Filename to read
+	 *
+	 * @return string
 	 */
-	public function getModuleInstallStepPriority(): int
+	protected function readTemplate(string $dirname, string $filename): string
 	{
-		return 1;
+		$ret = '';
+		$file = ICMS_MODULES_PATH . '/' . $dirname . '/templates/blocks/' . $filename;
+		if (!file_exists($file)) {
+			return $ret;
+		}
+		return str_replace(["\r\n", "\n"], ["\n", "\r\n"], file_get_contents($file));
 	}
 
 	/**
@@ -121,59 +131,60 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 	 * @param icms_module_Object $module Module to update
 	 * @param LoggerInterface $logger Logger to print messages
 	 */
-	protected function updateBlocksPermissions(icms_module_Object $module, LoggerInterface $logger) {
-		$groups = $module->getInfo('hasMain')?[ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS]: [ICMS_GROUP_ADMIN];
+	protected function updateBlocksPermissions(icms_module_Object $module, LoggerInterface $logger)
+	{
+		$groups = $module->getInfo('hasMain') ? [ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS] : [ICMS_GROUP_ADMIN];
 		$icms_block_handler = icms::handler('icms_view_block');
 		$newmid = $module->getVar('mid');
-		$blocks = & $icms_block_handler->getByModule($newmid, false);
+		$blocks = &$icms_block_handler->getByModule($newmid, false);
 		$logger->info(_MD_AM_PERMS_ADDING);
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		foreach ($groups as $mygroup) {
 			if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
-				$mperm = & $gperm_handler->create();
+				$mperm = &$gperm_handler->create();
 				$mperm->setVar('gperm_groupid', $mygroup);
 				$mperm->setVar('gperm_itemid', $newmid);
 				$mperm->setVar('gperm_name', 'module_admin');
 				$mperm->setVar('gperm_modid', 1);
 				if (!$gperm_handler->insert($mperm)) {
 					$logger->error(
-						sprintf('  ' . _MD_AM_ADMIN_PERM_ADD_FAIL,  icms_conv_nr2local($mygroup))
+						sprintf('  ' . _MD_AM_ADMIN_PERM_ADD_FAIL, icms_conv_nr2local($mygroup))
 					);
 				} else {
 					$logger->info(
-						sprintf('  ' . _MD_AM_ADMIN_PERM_ADDED,  icms_conv_nr2local($mygroup))
+						sprintf('  ' . _MD_AM_ADMIN_PERM_ADDED, icms_conv_nr2local($mygroup))
 					);
 				}
 				unset($mperm);
 			}
-			$mperm = & $gperm_handler->create();
+			$mperm = &$gperm_handler->create();
 			$mperm->setVar('gperm_groupid', $mygroup);
 			$mperm->setVar('gperm_itemid', $newmid);
 			$mperm->setVar('gperm_name', 'module_read');
 			$mperm->setVar('gperm_modid', 1);
 			if (!$gperm_handler->insert($mperm)) {
 				$logger->error(
-					sprintf('  ' . _MD_AM_USER_PERM_ADD_FAIL,  icms_conv_nr2local($mygroup))
+					sprintf('  ' . _MD_AM_USER_PERM_ADD_FAIL, icms_conv_nr2local($mygroup))
 				);
 			} else {
 				$logger->info(
-					sprintf('  ' . _MD_AM_USER_PERM_ADDED,  icms_conv_nr2local($mygroup))
+					sprintf('  ' . _MD_AM_USER_PERM_ADDED, icms_conv_nr2local($mygroup))
 				);
 			}
 			unset($mperm);
 			foreach ($blocks as $blc) {
-				$bperm = & $gperm_handler->create();
+				$bperm = &$gperm_handler->create();
 				$bperm->setVar('gperm_groupid', $mygroup);
 				$bperm->setVar('gperm_itemid', $blc);
 				$bperm->setVar('gperm_name', 'block_read');
 				$bperm->setVar('gperm_modid', 1);
 				if (!$gperm_handler->insert($bperm)) {
 					$logger->error(
-						sprintf('  ' . _MD_AM_BLOCK_ACCESS_FAIL, icms_conv_nr2local($blc),  icms_conv_nr2local($mygroup))
+						sprintf('  ' . _MD_AM_BLOCK_ACCESS_FAIL, icms_conv_nr2local($blc), icms_conv_nr2local($mygroup))
 					);
 				} else {
 					$logger->info(
-						sprintf('  ' . _MD_AM_BLOCK_ACCESS_ADDED, icms_conv_nr2local($blc),  icms_conv_nr2local($mygroup))
+						sprintf('  ' . _MD_AM_BLOCK_ACCESS_ADDED, icms_conv_nr2local($blc), icms_conv_nr2local($mygroup))
 					);
 				}
 				unset($bperm);
@@ -182,19 +193,74 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 	}
 
 	/**
-	 * Read template from file
-	 *
-	 * @param string $dirname Dirname from where to read
-	 * @param string $filename Filename to read
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
-	protected function readTemplate(string $dirname, string $filename): string {
-		$ret = '';
-		$file = ICMS_MODULES_PATH . '/' . $dirname . '/templates/blocks/' . $filename;
-		if (!file_exists($file)) {
-			return $ret;
+	public function getModuleInstallStepPriority(): int
+	{
+		return 1;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function executeModuleUninstallStep(icms_module_Object $module, LoggerInterface $logger): bool
+	{
+		$icms_block_handler = \icms::handler('icms_view_block');
+		$block_arr = $icms_block_handler->getByModule($module->getVar('mid'));
+		if (!is_array($block_arr)) {
+			return true;
 		}
-		return str_replace(["\r\n", "\n"], ["\n", "\r\n"], file_get_contents($file));
+		$bcount = count($block_arr);
+		$logger->info(_MD_AM_BLOCKS_DELETE);
+		$tplfile_handler = \icms::handler('icms_view_template_file');
+		for ($i = 0; $i < $bcount; $i++) {
+			if (!$icms_block_handler->delete($block_arr[$i])) {
+				$logger->error(
+					sprintf('  ' . _MD_AM_BLOCK_DELETE_FAIL,
+						$block_arr[$i]->getVar('name'),
+						icms_conv_nr2local($block_arr[$i]->getVar('bid'))
+					)
+				);
+			} else {
+				$logger->info(
+					sprintf('  ' . _MD_AM_BLOCK_DELETED,
+						$block_arr[$i]->getVar('name'),
+						icms_conv_nr2local($block_arr[$i]->getVar('bid'))
+					)
+				);
+			}
+			if ($block_arr[$i]->getVar('template') != '') {
+				$templates = $tplfile_handler->find(null, 'block', $block_arr[$i]->getVar('bid'));
+				$btcount = count($templates);
+				if ($btcount > 0) {
+					for ($j = 0; $j < $btcount; $j++) {
+						if (!$tplfile_handler->delete($templates[$j])) {
+							$logger->error(
+								sprintf('  ' . _MD_AM_BLOCK_TMPLT_DELETE_FAILED,
+									$templates[$j]->getVar('tpl_file'),
+									icms_conv_nr2local($templates[$j]->getVar('tpl_id'))
+								)
+							);
+						} else {
+							$logger->info(
+								sprintf('  ' . _MD_AM_BLOCK_TMPLT_DELETED,
+									$templates[$j]->getVar('tpl_file'),
+									icms_conv_nr2local($templates[$j]->getVar('tpl_id'))
+								)
+							);
+						}
+					}
+				}
+				unset($templates);
+			}
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getModuleUninstallStepPriority(): int
+	{
+		return 2;
 	}
 }

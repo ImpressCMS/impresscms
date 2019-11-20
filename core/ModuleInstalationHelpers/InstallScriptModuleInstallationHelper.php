@@ -30,9 +30,9 @@ class InstallScriptModuleInstallationHelper implements ModuleInstallationHelperI
 			}
 
 			if (function_exists($func = 'xoops_module_install_' . $ModName)) {
-				$this->execOnInstall($func, $module, $logger);
+				$this->execFunc($func, $module, $logger);
 			} elseif (function_exists($func = 'icms_module_install_' . $ModName)) {
-				$this->execOnInstall($func, $module, $logger);
+				$this->execFunc($func, $module, $logger);
 			}
 		}
 
@@ -44,7 +44,7 @@ class InstallScriptModuleInstallationHelper implements ModuleInstallationHelperI
 	 * @param icms_module_Object $module Module that is installed
 	 * @param LoggerInterface $logger Logger where to write messages
 	 */
-	protected function execOnInstall($func, icms_module_Object $module, LoggerInterface $logger)
+	protected function execFunc($func, icms_module_Object $module, LoggerInterface $logger)
 	{
 		if (!($lastmsg = $func($module))) {
 			$logger->error(
@@ -65,6 +65,42 @@ class InstallScriptModuleInstallationHelper implements ModuleInstallationHelperI
 	 * @inheritDoc
 	 */
 	public function getModuleInstallStepPriority(): int
+	{
+		return PHP_INT_MAX;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function executeModuleUninstallStep(icms_module_Object $module, LoggerInterface $logger): bool
+	{
+		$uninstall_script = $module->getInfo('onUninstall');
+		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $module->getInfo('dirname');
+
+		if (false !== $uninstall_script && trim($uninstall_script) !== '') {
+			include_once ICMS_MODULES_PATH . '/' . $module->getInfo('dirname') . '/' . trim($uninstall_script);
+
+			$is_IPF = $module->getInfo('object_items');
+			if (!empty($is_IPF)) {
+				$icmsDatabaseUpdater = \icms_db_legacy_Factory::getDatabaseUpdater();
+				$icmsDatabaseUpdater->moduleUpgrade($module, true);
+				foreach ($icmsDatabaseUpdater->_messages as $message) {
+					$logger->notice($message);
+				}
+			}
+
+			if (function_exists($func = 'xoops_module_uninstall_' . $ModName)) {
+				$this->execFunc($func, $module, $logger);
+			} elseif (function_exists($func = 'icms_module_uninstall_' . $ModName)) {
+				$this->execFunc($func, $module, $logger);
+			}
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getModuleUninstallStepPriority(): int
 	{
 		return PHP_INT_MAX;
 	}

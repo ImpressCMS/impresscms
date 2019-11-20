@@ -167,113 +167,9 @@ class icms_module_Handler
 		return true;
 	}
 
-	/**
-	 * Load a module by its dirname
-	 *
-	 * @param string $dirname
-	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @return    object  {@link icms_module_Object} FALSE on fail
-	 * @todo Make caching work!
-	 *
-	 */
-	public function getByDirname($dirname, $loadConfig = false)
-	{
-		//if (!($module = $this->getFromCache('dirname', $dirname))) {
-		$criteria = new icms_db_criteria_Item('dirname', trim($dirname));
-		$criteria->setLimit(1);
-		$objs = $this->getObjects($criteria);
-		if (isset($objs[0])) {
-			$module = $objs[0];
-		} else {
-			$module = null;
-		}
-		//}
-		if ($module && $loadConfig) {
-			$this->loadConfig($module);
-		}
-		return $module;
-	}
-
 	public function beforeSave(icms_module_Object &$module)
 	{
 		$module->setVar('last_update', time());
-		return true;
-	}
-
-	/**
-	 * Delete a module from the database
-	 *
-	 * @param icms_module_Object &$module
-	 * @param bool $force Force to delete?
-	 *
-	 * @return  bool
-	 */
-	public function delete(&$module, $force = false)
-	{
-		if (!parent::delete($module, $force)) {
-			return false;
-		}
-		// delete admin permissions assigned for this module
-		$sql = sprintf(
-			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
-		);
-		$this->db->query($sql);
-		// delete read permissions assigned for this module
-		$sql = sprintf(
-			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
-		);
-		$this->db->query($sql);
-
-		$sql = sprintf(
-			"SELECT block_id FROM %s WHERE module_id = '%u'",
-			$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
-		);
-		if ($result = $this->db->query($sql)) {
-			$block_id_arr = array();
-			while ($myrow = $this->db->fetchArray($result)) {
-				array_push($block_id_arr, $myrow['block_id']);
-			}
-		}
-
-		// loop through block_id_arr
-		if (isset($block_id_arr)) {
-			foreach ($block_id_arr as $i) {
-				$sql = sprintf(
-					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
-					$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
-				);
-				if ($result2 = $this->db->query($sql)) {
-					if (0 < $this->db->getRowsNum($result2)) {
-						// this block has other entries, so delete the entry for this module
-						$sql = sprintf(
-							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
-						);
-						$this->db->query($sql);
-					} else {
-						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
-						$sql = sprintf(
-							"UPDATE %s SET visible = '0' WHERE bid = '%u'",
-							$this->db->prefix('newblocks'), (int)$i
-						);
-						$this->db->query($sql);
-						$sql = sprintf(
-							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
-						);
-						$this->db->query($sql);
-					}
-				}
-			}
-		}
-		if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
-			unset($this->_cachedModule[$module->getVar('dirname')]);
-		}
-		if (!empty($this->_cachedModule_lookup[$module->getVar('mid')])) {
-			unset($this->_cachedModule_lookup[$module->getVar('mid')]);
-		}
 		return true;
 	}
 
@@ -290,7 +186,6 @@ class icms_module_Handler
 		if ($logger === null) {
 			$logger = new \Psr\Log\NullLogger();
 		}
-		global $icmsConfig, $icmsAdminTpl;
 		$dirname = trim($dirname);
 		$reservedTables = [
 			'avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments',
@@ -312,6 +207,22 @@ class icms_module_Handler
 			if (($module->getInfo('author') !== false) && trim($module->getInfo('author'))) {
 				$logger->debug(_AUTHOR . ': ' . trim($module->getInfo('author')));
 			}
+			/**
+			 * @var \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface[] $helpers
+			 */
+			$helpers = (array)\icms::getInstance()->get('module_installation_helper');
+			usort($helpers, function (\ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperA, \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperB) {
+				return $helperA->getModuleInstallStepPriority() > $helperB->getModuleInstallStepPriority();
+			});
+
+			// execute module steps that needs to be runned before module installation
+			foreach ($helpers as $helper) {
+				if ($helper->getModuleInstallStepPriority() >= 0) {
+					continue;
+				}
+				$helper->executeModuleInstallStep($module, $logger);
+			}
+
 			if (($sqlfile !== false) && is_array($sqlfile)) {
 				// handle instances when DB_TYPE includes 'pdo.'
 				if (substr(env('DB_TYPE'), 0, 4) == 'pdo.') {
@@ -405,15 +316,11 @@ class icms_module_Handler
 					);
 				}
 
-				// execute module instalation scripts
-				/**
-				 * @var \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface[] $helpers
-				 */
-				$helpers = (array)\icms::getInstance()->get('module_installation_helper');
-				usort($helpers, function (\ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperA, \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperB) {
-					return $helperA->getModuleInstallStepPriority() > $helperB->getModuleInstallStepPriority();
-				});
+				// execute module steps that needs to be runned after module installation
 				foreach ($helpers as $helper) {
+					if ($helper->getModuleInstallStepPriority() < 0) {
+						continue;
+					}
 					$helper->executeModuleInstallStep($module, $logger);
 				}
 
@@ -449,6 +356,244 @@ class icms_module_Handler
 		if ($logger === null) {
 			$logger = new \Psr\Log\NullLogger();
 		}
+		global $icmsConfig;
+
+		$reservedTables = [
+			'avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config',
+			'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset',
+			'imgset_tplset_link', 'imgsetimg', 'groups', 'groups_users_link', 'group_permission',
+			'online', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks',
+			'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications'];
+
+		$module = $this->getByDirname($dirname);
+		$module->registerClassPath();
+		icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
+		if ($module->getVar('dirname') == 'system') {
+			$logger->emergency(
+				sprintf(_MD_AM_FAILUNINS, $module->getVar('name')) . ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_SYSNO
+			);
+			return false;
+		} elseif ($module->getVar('dirname') === $icmsConfig['startpage']) {
+			$logger->emergency(
+				sprintf(_MD_AM_FAILUNINS, $module->getVar('name'))
+				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+			);
+			return false;
+		} else {
+			/**
+			 * @var icms_member_Handler $member_handler
+			 */
+			$member_handler = \icms::handler('icms_member');
+			$grps = $member_handler->getGroupList();
+			foreach ($grps as $k => $v) {
+				$stararr = explode('-', $icmsConfig['startpage'][$k]);
+				if (count($stararr) > 0) {
+					if ($module->getVar('mid') == $stararr[0]) {
+						$logger->emergency(
+							sprintf(_MD_AM_FAILDEACT, $module->getVar('name')
+							) . ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+						);
+						return false;
+					}
+				}
+			}
+			if (in_array($module->getVar('dirname'), $icmsConfig['startpage'], true)) {
+				$logger->emergency(
+					sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
+					. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+				);
+				return false;
+			}
+
+			/**
+			 * @var \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface[] $helpers
+			 */
+			$helpers = (array)\icms::getInstance()->get('module_installation_helper');
+			usort($helpers, function (\ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperA, \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperB) {
+				return $helperA->getModuleUninstallStepPriority() > $helperB->getModuleUninstallStepPriority();
+			});
+
+			// execute module steps that needs to be runned before module uninstallation
+			foreach ($helpers as $helper) {
+				if ($helper->getModuleUninstallStepPriority() >= 0) {
+					continue;
+				}
+				$helper->executeModuleUninstallStep($module, $logger);
+			}
+
+			if (!$this->delete($module)) {
+				$logger->error(
+					sprintf('  ' . _MD_AM_DELETE_FAIL, $module->getVar('name'))
+				);
+			} else {
+
+				// delete tables used by this module
+				$modtables = $module->getInfo('tables');
+				$is_IPF = $module->getInfo('object_items');
+				if ($modtables !== false && is_array($modtables)) {
+					$logger->info(
+						_MD_AM_MOD_TABLES_DELETE
+					);
+					foreach ($modtables as $table) {
+						if ($is_IPF) {
+							$table = str_replace(env('DB_PREFIX') . '_', '', $table);
+						}
+						$prefix_table = $db->prefix($table);
+						// prevent deletion of reserved core tables!
+						if (!in_array($table, $reservedTables)) {
+							$sql = 'DROP TABLE ' . $prefix_table;
+							if (!$db->query($sql)) {
+								$logger->error(
+									sprintf('  ' . _MD_AM_MOD_TABLE_DELETE_FAIL, $prefix_table)
+								);
+							} else {
+								$logger->info(
+									sprintf('  ' . _MD_AM_MOD_TABLE_DELETED,  $prefix_table )
+								);
+							}
+						} else {
+							$logger->error(
+								sprintf('  ' . _MD_AM_MOD_TABLE_DELETE_NOTALLOWED, $prefix_table)
+							);
+						}
+					}
+				}
+
+				// delete permissions if any
+				$logger->info(_MD_AM_GROUPPERM_DELETE);
+				$gperm_handler = icms::handler('icms_member_groupperm');
+				if (!$gperm_handler->deleteByModule($module->getVar('mid'))) {
+					$logger->error('  ' . _MD_AM_GROUPPERM_DELETE_FAIL);
+				} else {
+					$logger->info('  ' . _MD_AM_GROUPPERM_DELETED);
+				}
+
+				// delete urllinks
+				$urllink_handler = icms::handler('icms_data_urllink');
+				$urllink_handler->deleteAll(icms_buildCriteria(array("mid" => $module->getVar("mid"))));
+
+				// delete files
+				$file_handler = icms::handler('icms_data_file');
+				$file_handler->deleteAll(icms_buildCriteria(array("mid" => $module->getVar("mid"))));
+
+				// execute module steps that needs to be runned after module uninstallation
+				foreach ($helpers as $helper) {
+					if ($helper->getModuleUninstallStepPriority() < 0) {
+						continue;
+					}
+					$helper->executeModuleUninstallStep($module, $logger);
+				}
+
+				$logger->info(
+					sprintf(_MD_AM_OKUNINS, $module->getVar('name'))
+				);
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Load a module by its dirname
+	 *
+	 * @param string $dirname
+	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
+	 * @return    object  {@link icms_module_Object} FALSE on fail
+	 * @todo Make caching work!
+	 *
+	 */
+	public function getByDirname($dirname, $loadConfig = false)
+	{
+		//if (!($module = $this->getFromCache('dirname', $dirname))) {
+		$criteria = new icms_db_criteria_Item('dirname', trim($dirname));
+		$criteria->setLimit(1);
+		$objs = $this->getObjects($criteria);
+		if (isset($objs[0])) {
+			$module = $objs[0];
+		} else {
+			$module = null;
+		}
+		//}
+		if ($module && $loadConfig) {
+			$this->loadConfig($module);
+		}
+		return $module;
+	}
+
+	/**
+	 * Delete a module from the database
+	 *
+	 * @param icms_module_Object &$module
+	 * @param bool $force Force to delete?
+	 *
+	 * @return  bool
+	 */
+	public function delete(&$module, $force = false)
+	{
+		if (!parent::delete($module, $force)) {
+			return false;
+		}
+		// delete admin permissions assigned for this module
+		$sql = sprintf(
+			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
+			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
+		);
+		$this->db->query($sql);
+		// delete read permissions assigned for this module
+		$sql = sprintf(
+			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
+			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
+		);
+		$this->db->query($sql);
+
+		$sql = sprintf(
+			"SELECT block_id FROM %s WHERE module_id = '%u'",
+			$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+		);
+		if ($result = $this->db->query($sql)) {
+			$block_id_arr = array();
+			while ($myrow = $this->db->fetchArray($result)) {
+				array_push($block_id_arr, $myrow['block_id']);
+			}
+		}
+
+		// loop through block_id_arr
+		if (isset($block_id_arr)) {
+			foreach ($block_id_arr as $i) {
+				$sql = sprintf(
+					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
+					$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+				);
+				if ($result2 = $this->db->query($sql)) {
+					if (0 < $this->db->getRowsNum($result2)) {
+						// this block has other entries, so delete the entry for this module
+						$sql = sprintf(
+							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
+							$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+						);
+						$this->db->query($sql);
+					} else {
+						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
+						$sql = sprintf(
+							"UPDATE %s SET visible = '0' WHERE bid = '%u'",
+							$this->db->prefix('newblocks'), (int)$i
+						);
+						$this->db->query($sql);
+						$sql = sprintf(
+							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
+							$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+						);
+						$this->db->query($sql);
+					}
+				}
+			}
+		}
+		if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
+			unset($this->_cachedModule[$module->getVar('dirname')]);
+		}
+		if (!empty($this->_cachedModule_lookup[$module->getVar('mid')])) {
+			unset($this->_cachedModule_lookup[$module->getVar('mid')]);
+		}
+		return true;
 	}
 
 	/**
@@ -478,12 +623,78 @@ class icms_module_Handler
 	/**
 	 * Logic for deactivating a module
 	 *
-	 * @param int $mid
-	 * @return    string    Result message for deactivating the module
+	 * @param int $mid Module id
+	 * @param \Psr\Log\LoggerInterface $logger Logger where to write messages
+	 *
+	 * @return bool
 	 */
-	public function deactivate($mid)
+	public function deactivate($mid, \Psr\Log\LoggerInterface $logger)
 	{
+		global $icms_page_handler, $icms_block_handler, $icmsConfig;
+		if (!isset($icms_page_handler)) {
+			$icms_page_handler = icms_getModuleHandler('pages', 'system');
+		}
 
+		$module = $this->get($mid);
+		icms_view_Tpl::template_clear_module_cache($mid);
+		$module->setVar('isactive', 0);
+		if ($module->getVar('dirname') == "system") {
+			$logger->emergency(
+				sprintf(_MD_AM_FAILDEACT,  $module->getVar('name') )
+				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_SYSNO
+			);
+			return false;
+		} elseif ($module->getVar('dirname') == $icmsConfig['startpage']) {
+			$logger->emergency(
+				sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
+				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+			);
+			return false;
+		} else {
+			$member_handler = icms::handler('icms_member');
+			$grps = $member_handler->getGroupList();
+			foreach ($grps as $k => $v) {
+				$stararr = explode('-', $icmsConfig['startpage'][$k]);
+				if (count($stararr) > 0) {
+					if ($module->getVar('mid') == $stararr[0]) {
+						$logger->emergency(
+							sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
+							. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+						);
+						return false;
+					}
+				}
+			}
+			if (in_array($module->getVar('dirname'), $icmsConfig['startpage'], true)) {
+				$logger->emergency(
+					sprintf(_MD_AM_FAILDEACT,  $module->getVar('name') )
+					. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+				);
+				return false;
+			}
+			if (!$module->store()) {
+				$logger->emergency(
+					sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
+					. ' ' . _MD_AM_ERRORSC
+				);
+				$logger->notice(
+					$module->getHtmlErrors()
+				);
+				return false;
+			}
+
+			$icms_block_handler = icms_getModuleHandler('blocks', 'system');
+			$blocks = & $icms_block_handler->getByModule($module->getVar('mid'));
+			$bcount = count($blocks);
+			for ($i = 0; $i < $bcount; $i++) {
+				$blocks[$i]->setVar('isactive', false);
+				$icms_block_handler->insert($blocks[$i]);
+			}
+			$logger->info(
+				sprintf(_MD_AM_OKDEACT, $module->getVar('name') )
+			);
+			return true;
+		}
 	}
 
 	/**
@@ -492,10 +703,29 @@ class icms_module_Handler
 	 * @param int $mid Unique ID for the module to change
 	 * @param int $weight Integer value of the weight to be applied to the module
 	 * @param str $name Name to be applied to the module
+	 * @param \Psr\Log\LoggerInterface $logger Logger where to write messages
+	 *
+	 * @return bool
 	 */
-	public function change($mid, $weight, $name)
+	public function change($mid, $weight, $name, \Psr\Log\LoggerInterface $logger)
 	{
-
+		$module =  $this->get($mid);
+		$module->setVar('weight', $weight);
+		$module->setVar('name', $name);
+		if (!$module->store()) {
+			$logger->emergency(
+				sprintf(_MD_AM_FAILORDER,  icms_core_DataFilter::stripSlashesGPC($name))
+				. ' ' . _MD_AM_ERRORSC
+			);
+			$logger->notice(
+				$module->getHtmlErrors()
+			);
+			return false;
+		}
+		$logger->info(
+			sprintf(_MD_AM_OKORDER,  icms_core_DataFilter::stripSlashesGPC($name))
+		);
+		return true;
 	}
 
 	/**

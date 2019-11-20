@@ -65,6 +65,24 @@ class ViewTemplateModuleInstallationHelper implements ModuleInstallationHelperIn
 	}
 
 	/**
+	 * Read template from file
+	 *
+	 * @param string $dirname Dirname from where to read
+	 * @param string $filename Filename to read
+	 *
+	 * @return string
+	 */
+	protected function readTemplate(string $dirname, string $filename): string
+	{
+		$ret = '';
+		$file = ICMS_MODULES_PATH . '/' . $dirname . '/templates/' . $filename;
+		if (!file_exists($file)) {
+			return $ret;
+		}
+		return str_replace(["\r\n", "\n"], ["\n", "\r\n"], file_get_contents($file));
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function getModuleInstallStepPriority(): int
@@ -73,19 +91,45 @@ class ViewTemplateModuleInstallationHelper implements ModuleInstallationHelperIn
 	}
 
 	/**
-	 * Read template from file
-	 *
-	 * @param string $dirname Dirname from where to read
-	 * @param string $filename Filename to read
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
-	protected function readTemplate(string $dirname, string $filename): string {
-		$ret = '';
-		$file = ICMS_MODULES_PATH . '/' . $dirname . '/templates/' . $filename;
-		if (!file_exists($file)) {
-			return $ret;
+	public function executeModuleUninstallStep(icms_module_Object $module, LoggerInterface $logger): bool
+	{
+		$tplfile_handler = \icms::handler('icms_view_template_file');
+		$templates = $tplfile_handler->find(null, 'module', $module->getVar('mid'));
+		$tcount = count($templates);
+		if ($tcount === 0) {
+			return true;
 		}
-		return str_replace(["\r\n", "\n"], ["\n", "\r\n"], file_get_contents($file));
+
+		$logger->info(_MD_AM_TEMPLATES_DELETE);
+		for ($i = 0; $i < $tcount; $i++) {
+			if (!$tplfile_handler->delete($templates[$i])) {
+				$logger->error(
+					sprintf(
+						'  ' . _MD_AM_TEMPLATE_DELETE_FAIL,
+						$templates[$i]->getVar('tpl_file'),
+						icms_conv_nr2local($templates[$i]->getVar('tpl_id'))
+					)
+				);
+			} else {
+				$logger->info(
+					sprintf('  ' . _MD_AM_TEMPLATE_DELETED,
+						icms_conv_nr2local($templates[$i]->getVar('tpl_file')),
+						icms_conv_nr2local($templates[$i]->getVar('tpl_id'))
+					)
+				);
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getModuleUninstallStepPriority(): int
+	{
+		return 1;
 	}
 }
