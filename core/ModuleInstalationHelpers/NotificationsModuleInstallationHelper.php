@@ -34,7 +34,8 @@ class NotificationsModuleInstallationHelper implements ModuleInstallationHelperI
 			return true;
 		}
 		$logger->info(_MD_AM_NOTIFICATIONS_DELETE);
-		if (!xoops_notification_deletebymodule($module->getVar('mid'))) {
+		$notification_handler = \icms::handler('icms_data_notification');
+		if (!$notification_handler->unsubscribeByModule($module->getVar('mid'))) {
 			$logger->error('  ' . _MD_AM_NOTIFICATION_DELETE_FAIL);
 		} else {
 			$logger->info('  ' . _MD_AM_NOTIFICATION_DELETED);

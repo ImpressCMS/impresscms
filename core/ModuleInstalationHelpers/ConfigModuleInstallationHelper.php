@@ -59,7 +59,7 @@ class ConfigModuleInstallationHelper implements ModuleInstallationHelperInterfac
 			];
 			// Event-specific notification options
 			$options = [];
-			$notification_handler = icms::handler('icms_data_notification');
+			$notification_handler = \icms::handler('icms_data_notification');
 			$categories = &$notification_handler->categoryInfo('', $module->getVar('mid'));
 			foreach ($categories as $category) {
 				$events = &$notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
@@ -88,7 +88,7 @@ class ConfigModuleInstallationHelper implements ModuleInstallationHelperInterfac
 			/**
 			 * @var \icms_config_Handler $config_handler
 			 */
-			$config_handler = icms::handler('icms_config');
+			$config_handler = \icms::handler('icms_config');
 			$order = 0;
 			foreach ($configs as $config) {
 				/**

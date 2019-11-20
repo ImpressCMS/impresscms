@@ -2,7 +2,6 @@
 
 namespace ImpressCMS\Core\ModuleInstallationHelpers;
 
-use icms;
 use icms_module_Object;
 use Psr\Log\LoggerInterface;
 
@@ -18,7 +17,7 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 			$logger->info(_MD_AM_BLOCKS_ADDING);
 			$dirname = $module->getVar('dirname');
 			$newmid = $module->getVar('mid');
-			$handler = icms::handler('icms_view_block');
+			$handler = \icms::handler('icms_view_block');
 			foreach ($blocks as $blockkey => $block) {
 				if (!isset($block['file']) || !isset($block['show_func'])) {
 					continue;
@@ -75,7 +74,7 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 						/**
 						 * @var icms_view_template_file_Object $tplfile
 						 */
-						$tplfile = icms::handler('icms_view_template_file')->create();
+						$tplfile = \icms::handler('icms_view_template_file')->create();
 						$tplfile->setVar('tpl_refid', $newbid);
 						$tplfile->setVar('tpl_source', $content, true);
 						$tplfile->setVar('tpl_tplset', 'default');
@@ -134,11 +133,11 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 	protected function updateBlocksPermissions(icms_module_Object $module, LoggerInterface $logger)
 	{
 		$groups = $module->getInfo('hasMain') ? [ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS] : [ICMS_GROUP_ADMIN];
-		$icms_block_handler = icms::handler('icms_view_block');
+		$icms_block_handler = \icms::handler('icms_view_block');
 		$newmid = $module->getVar('mid');
 		$blocks = &$icms_block_handler->getByModule($newmid, false);
 		$logger->info(_MD_AM_PERMS_ADDING);
-		$gperm_handler = icms::handler('icms_member_groupperm');
+		$gperm_handler = \icms::handler('icms_member_groupperm');
 		foreach ($groups as $mygroup) {
 			if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
 				$mperm = &$gperm_handler->create();
