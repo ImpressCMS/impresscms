@@ -66,16 +66,16 @@ class AutotaskModuleInstalationHelper implements ModuleInstallationHelperInterfa
 	 */
 	public function executeModuleUninstallStep(icms_module_Object $module, LoggerInterface $logger): bool
 	{
-		$atasks = $module->getInfo('autotasks');
-		if (!isset($atasks) || !is_array($atasks) || (count($atasks) === 0)) {
+		$autotasks = $module->getInfo('autotasks');
+		if (!isset($autotasks) || !is_array($autotasks) || (count($autotasks) === 0)) {
 			return true;
 		}
 
 		$logger->info(_MD_AM_AUTOTASKS_DELETE);
-		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
+		$handler = &icms_getModuleHandler('autotasks', 'system');
 		$criteria = new \icms_db_criteria_Compo();
 		$criteria->add(new \icms_db_criteria_Item('sat_type', 'addon/' . $module->getInfo('dirname')));
-		$atasks_handler->deleteAll($criteria);
+		$handler->deleteAll($criteria);
 
 		return true;
 	}

@@ -179,9 +179,10 @@ class icms_module_Handler
 	 * @param string $dirname Module dirname
 	 *
 	 * @param \Psr\Log\LoggerInterface|null $logger Logger where to put action messages
-	 * @return    string    Results of the installation process
+	 *
+	 * @return bool
 	 */
-	public function install($dirname, ?\Psr\Log\LoggerInterface $logger = null)
+	public function install($dirname, ?\Psr\Log\LoggerInterface $logger = null): bool
 	{
 		if ($logger === null) {
 			$logger = new \Psr\Log\NullLogger();
@@ -612,12 +613,39 @@ class icms_module_Handler
 	/**
 	 * Logic for activating a module
 	 *
-	 * @param int $mid
-	 * @return    string    Result message for activating the module
+	 * @param int $mid Module id
+	 * @param \Psr\Log\LoggerInterface $logger Logger where write messages
+	 *
+	 * @return   bool
 	 */
-	public function activate($mid)
+	public function activate($mid, ?\Psr\Log\LoggerInterface $logger = null)
 	{
-
+		if ($logger === null) {
+			$logger = new \Psr\Log\NullLogger();
+		}
+		$module = $this->get($mid);
+		icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
+		$module->setVar('isactive', 1);
+		if (!$module->store()) {
+			$logger->emergency(
+				sprintf(_MD_AM_FAILACT, $module->getVar('name')) . ' ' . _MD_AM_ERRORSC
+			);
+			$logger->notice(
+				$module->getHtmlErrors()
+			);
+			return false;
+		}
+		$icms_block_handler = icms_getModuleHandler('blocks', 'system');
+		$blocks = &$icms_block_handler->getByModule($module->getVar('mid'));
+		$bcount = count($blocks);
+		for ($i = 0; $i < $bcount; $i++) {
+			$blocks[$i]->setVar('isactive', 1);
+			$blocks[$i]->store();
+		}
+		$logger->info(
+			sprintf(_MD_AM_OKACT, $module->getVar('name'))
+		);
+		return true;
 	}
 
 	/**
@@ -628,11 +656,12 @@ class icms_module_Handler
 	 *
 	 * @return bool
 	 */
-	public function deactivate($mid, \Psr\Log\LoggerInterface $logger)
+	public function deactivate($mid, ?\Psr\Log\LoggerInterface $logger = null)
 	{
-		global $icms_page_handler, $icms_block_handler, $icmsConfig;
-		if (!isset($icms_page_handler)) {
-			$icms_page_handler = icms_getModuleHandler('pages', 'system');
+		global $icmsConfig;
+
+		if ($logger === null) {
+			$logger = new \Psr\Log\NullLogger();
 		}
 
 		$module = $this->get($mid);
@@ -640,7 +669,7 @@ class icms_module_Handler
 		$module->setVar('isactive', 0);
 		if ($module->getVar('dirname') == "system") {
 			$logger->emergency(
-				sprintf(_MD_AM_FAILDEACT,  $module->getVar('name') )
+				sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
 				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_SYSNO
 			);
 			return false;
@@ -707,14 +736,18 @@ class icms_module_Handler
 	 *
 	 * @return bool
 	 */
-	public function change($mid, $weight, $name, \Psr\Log\LoggerInterface $logger)
+	public function change($mid, $weight, $name, ?\Psr\Log\LoggerInterface $logger = null)
 	{
-		$module =  $this->get($mid);
+		if ($logger === null) {
+			$logger = new \Psr\Log\NullLogger();
+		}
+
+		$module = $this->get($mid);
 		$module->setVar('weight', $weight);
 		$module->setVar('name', $name);
 		if (!$module->store()) {
 			$logger->emergency(
-				sprintf(_MD_AM_FAILORDER,  icms_core_DataFilter::stripSlashesGPC($name))
+				sprintf(_MD_AM_FAILORDER, icms_core_DataFilter::stripSlashesGPC($name))
 				. ' ' . _MD_AM_ERRORSC
 			);
 			$logger->notice(

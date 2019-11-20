@@ -119,33 +119,6 @@ function xoops_module_list() {
 }
 
 /**
- * Logic for activating a module
- *
- * @param	int	$mid
- * @return	string	Result message for activating the module
- */
-function xoops_module_activate($mid) {
-	global $icms_block_handler, $icmsAdminTpl;
-	$module_handler = icms::handler('icms_module');
-	$module = & $module_handler->get($mid);
-	icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
-	$module->setVar('isactive', 1);
-	if (!$module_handler->insert($module)) {
-		$ret = "<p>" . sprintf(_MD_AM_FAILACT, "<strong>" . $module->getVar('name') . "</strong>") . "&nbsp;"
-			. _MD_AM_ERRORSC . "<br />" . $module->getHtmlErrors();
-		return $ret . "</p>";
-	}
-	$icms_block_handler = icms_getModuleHandler('blocks', 'system');
-	$blocks = & $icms_block_handler->getByModule($module->getVar('mid'));
-	$bcount = count($blocks);
-	for ($i = 0; $i < $bcount; $i++) {
-		$blocks[$i]->setVar('isactive', 1);
-		$icms_block_handler->insert($blocks[$i]);
-	}
-	return "<p>" . sprintf(_MD_AM_OKACT, "<strong>" . $module->getVar('name') . "</strong>") . "</p>";
-}
-
-/**
  * Logic for updating a module
  *
  * @param 	str $dirname

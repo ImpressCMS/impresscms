@@ -145,7 +145,7 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 				$mperm->setVar('gperm_itemid', $newmid);
 				$mperm->setVar('gperm_name', 'module_admin');
 				$mperm->setVar('gperm_modid', 1);
-				if (!$gperm_handler->insert($mperm)) {
+				if (!$mperm->store()) {
 					$logger->error(
 						sprintf('  ' . _MD_AM_ADMIN_PERM_ADD_FAIL, icms_conv_nr2local($mygroup))
 					);
@@ -161,7 +161,7 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 			$mperm->setVar('gperm_itemid', $newmid);
 			$mperm->setVar('gperm_name', 'module_read');
 			$mperm->setVar('gperm_modid', 1);
-			if (!$gperm_handler->insert($mperm)) {
+			if (!$mperm->store()) {
 				$logger->error(
 					sprintf('  ' . _MD_AM_USER_PERM_ADD_FAIL, icms_conv_nr2local($mygroup))
 				);
@@ -177,7 +177,7 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 				$bperm->setVar('gperm_itemid', $blc);
 				$bperm->setVar('gperm_name', 'block_read');
 				$bperm->setVar('gperm_modid', 1);
-				if (!$gperm_handler->insert($bperm)) {
+				if (!$bperm->store()) {
 					$logger->error(
 						sprintf('  ' . _MD_AM_BLOCK_ACCESS_FAIL, icms_conv_nr2local($blc), icms_conv_nr2local($mygroup))
 					);
