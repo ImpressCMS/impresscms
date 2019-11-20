@@ -44,13 +44,13 @@ class DataPageModuleInstallationHelper implements ModuleInstallationHelperInterf
 		$pages = $page_handler->getObjects($criteria);
 		$logger->info(_MD_AM_SYMLINKS_DELETE);
 		foreach ($pages as $page) {
-			if (!$page_handler->delete($page)) {
-				$logger->error(
-					sprintf('  ' . _MD_AM_SYMLINK_DELETE_FAIL, $page->getVar('page_title'), $page->getVar('page_id'))
-				);
-			} else {
+			if ($page_handler->delete($page)) {
 				$logger->info(
 					sprintf('  ' . _MD_AM_SYMLINK_DELETED, $page->getVar('page_title'), $page->getVar('page_id'))
+				);
+			} else {
+				$logger->error(
+					sprintf('  ' . _MD_AM_SYMLINK_DELETE_FAIL, $page->getVar('page_title'), $page->getVar('page_id'))
 				);
 			}
 		}

@@ -16,51 +16,52 @@ class ViewTemplateModuleInstallationHelper implements ModuleInstallationHelperIn
 	{
 		$newmid = $module->getVar('mid');
 		$templates = $module->getInfo('templates');
-		if ($templates !== false) {
-			$logger->info(_MD_AM_TEMPLATES_ADDING);
-			$dirname = $module->getVar('dirname');
-			$handler = \icms::handler('icms_view_template_file');
-			foreach ($templates as $tpl) {
-				/**
-				 * @var \icms_view_template_file_Object $tplfile
-				 */
-				$tplfile = $handler->create();
-				$tpldata = $this->readTemplate($dirname, $tpl['file']);
-				$tplfile->setVar('tpl_source', $tpldata, true);
-				$tplfile->setVar('tpl_refid', $newmid);
+		if ($templates === false) {
+			return true;
+		}
+		$logger->info(_MD_AM_TEMPLATES_ADDING);
+		$dirname = $module->getVar('dirname');
+		$handler = \icms::handler('icms_view_template_file');
+		foreach ($templates as $tpl) {
+			/**
+			 * @var \icms_view_template_file_Object $tplfile
+			 */
+			$tplfile = $handler->create();
+			$tpldata = $this->readTemplate($dirname, $tpl['file']);
+			$tplfile->setVar('tpl_source', $tpldata, true);
+			$tplfile->setVar('tpl_refid', $newmid);
 
-				$tplfile->setVar('tpl_tplset', 'default');
-				$tplfile->setVar('tpl_file', $tpl['file']);
-				$tplfile->setVar('tpl_desc', $tpl['description'], true);
-				$tplfile->setVar('tpl_module', $dirname);
-				$tplfile->setVar('tpl_lastmodified', time());
-				$tplfile->setVar('tpl_lastimported', 0);
-				$tplfile->setVar('tpl_type', 'module');
-				if (!$tplfile->store()) {
-					$logger->error(
-						sprintf('  ' . _MD_AM_TEMPLATE_INSERT_FAIL, $tpl['file'])
+			$tplfile->setVar('tpl_tplset', 'default');
+			$tplfile->setVar('tpl_file', $tpl['file']);
+			$tplfile->setVar('tpl_desc', $tpl['description'], true);
+			$tplfile->setVar('tpl_module', $dirname);
+			$tplfile->setVar('tpl_lastmodified', time());
+			$tplfile->setVar('tpl_lastimported', 0);
+			$tplfile->setVar('tpl_type', 'module');
+			if ($tplfile->store()) {
+				$newtplid = $tplfile->getVar('tpl_id');
+				$logger->info(
+					sprintf('  ' . _MD_AM_TEMPLATE_INSERTED, $tpl['file'], $newtplid)
+				);
+
+				if (icms_view_Tpl::template_touch($newtplid)) {
+					$logger->info(
+						sprintf('  ' . _MD_AM_TEMPLATE_COMPILED, $tpl['file'])
 					);
 				} else {
-					$newtplid = $tplfile->getVar('tpl_id');
-					$logger->info(
-						sprintf('  ' . _MD_AM_TEMPLATE_INSERTED, $tpl['file'], $newtplid)
+					$logger->error(
+						sprintf('  ' . _MD_AM_TEMPLATE_COMPILE_FAIL, $tpl['file'], $newtplid)
 					);
-
-					// generate compiled file
-					if (!icms_view_Tpl::template_touch($newtplid)) {
-						$logger->error(
-							sprintf('  ' . _MD_AM_TEMPLATE_COMPILE_FAIL, $tpl['file'], $newtplid)
-						);
-					} else {
-						$logger->info(
-							sprintf('  ' . _MD_AM_TEMPLATE_COMPILED, $tpl['file'])
-						);
-					}
 				}
-				unset($tpldata);
+			} else {
+				$logger->error(
+					sprintf('  ' . _MD_AM_TEMPLATE_INSERT_FAIL, $tpl['file'])
+				);
 			}
 		}
+
 		icms_view_Tpl::template_clear_module_cache($newmid);
+
 		return true;
 	}
 

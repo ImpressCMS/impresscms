@@ -16,24 +16,25 @@ class InstallScriptModuleInstallationHelper implements ModuleInstallationHelperI
 	{
 		$install_script = $module->getInfo('onInstall');
 		$dirname = $module->getVar('dirname');
-		$ModName = ($module->getInfo('modname') !== '') ? trim($module->getInfo('modname')) : $dirname;
-		if (false !== $install_script && trim($install_script) !== '') {
-			include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . trim($install_script);
+		$module_name = ($module->getInfo('modname') !== '') ? trim($module->getInfo('modname')) : $dirname;
+		if ($install_script === false || empty($install_script = trim($install_script))) {
+			return true;
+		}
+		include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . $install_script;
 
-			$is_IPF = $module->getInfo('object_items');
-			if (!empty($is_IPF)) {
-				$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-				$icmsDatabaseUpdater->moduleUpgrade($module, true);
-				foreach ($icmsDatabaseUpdater->_messages as $message) {
-					$logger->notice($message);
-				}
+		$is_IPF = $module->getInfo('object_items');
+		if (!empty($is_IPF)) {
+			$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+			$icmsDatabaseUpdater->moduleUpgrade($module, true);
+			foreach ($icmsDatabaseUpdater->_messages as $message) {
+				$logger->notice($message);
 			}
+		}
 
-			if (function_exists($func = 'xoops_module_install_' . $ModName)) {
-				$this->execFunc($func, $module, $logger);
-			} elseif (function_exists($func = 'icms_module_install_' . $ModName)) {
-				$this->execFunc($func, $module, $logger);
-			}
+		if (function_exists($func = 'xoops_module_install_' . $module_name)) {
+			$this->execFunc($func, $module, $logger);
+		} elseif (function_exists($func = 'icms_module_install_' . $module_name)) {
+			$this->execFunc($func, $module, $logger);
 		}
 
 		return true;
@@ -46,18 +47,20 @@ class InstallScriptModuleInstallationHelper implements ModuleInstallationHelperI
 	 */
 	protected function execFunc($func, icms_module_Object $module, LoggerInterface $logger)
 	{
-		if (!($lastmsg = $func($module))) {
+		$last_messages = $func($module);
+		if (!$last_messages) {
 			$logger->error(
 				sprintf(_MD_AM_FAIL_EXEC, $func)
 			);
-		} else {
-			$logger->notice($module->messages);
-			$logger->info(
-				sprintf(_MD_AM_FUNCT_EXEC, $func)
-			);
-			if (is_string($lastmsg)) {
-				$logger->info($lastmsg);
-			}
+			return;
+		}
+
+		$logger->notice($module->messages);
+		$logger->info(
+			sprintf(_MD_AM_FUNCT_EXEC, $func)
+		);
+		if (is_string($last_messages)) {
+			$logger->info($last_messages);
 		}
 	}
 
@@ -75,25 +78,27 @@ class InstallScriptModuleInstallationHelper implements ModuleInstallationHelperI
 	public function executeModuleUninstallStep(icms_module_Object $module, LoggerInterface $logger): bool
 	{
 		$uninstall_script = $module->getInfo('onUninstall');
-		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $module->getInfo('dirname');
+		$module_name = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $module->getInfo('dirname');
 
-		if (false !== $uninstall_script && trim($uninstall_script) !== '') {
-			include_once ICMS_MODULES_PATH . '/' . $module->getInfo('dirname') . '/' . trim($uninstall_script);
+		if (false === $uninstall_script || empty($uninstall_script = trim($uninstall_script))) {
+			return true;
+		}
 
-			$is_IPF = $module->getInfo('object_items');
-			if (!empty($is_IPF)) {
-				$icmsDatabaseUpdater = \icms_db_legacy_Factory::getDatabaseUpdater();
-				$icmsDatabaseUpdater->moduleUpgrade($module, true);
-				foreach ($icmsDatabaseUpdater->_messages as $message) {
-					$logger->notice($message);
-				}
+		include_once ICMS_MODULES_PATH . '/' . $module->getInfo('dirname') . '/' . $uninstall_script;
+
+		$is_IPF = $module->getInfo('object_items');
+		if (!empty($is_IPF)) {
+			$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+			$icmsDatabaseUpdater->moduleUpgrade($module, true);
+			foreach ($icmsDatabaseUpdater->_messages as $message) {
+				$logger->notice($message);
 			}
+		}
 
-			if (function_exists($func = 'xoops_module_uninstall_' . $ModName)) {
-				$this->execFunc($func, $module, $logger);
-			} elseif (function_exists($func = 'icms_module_uninstall_' . $ModName)) {
-				$this->execFunc($func, $module, $logger);
-			}
+		if (function_exists($func = 'xoops_module_uninstall_' . $module_name)) {
+			$this->execFunc($func, $module, $logger);
+		} elseif (function_exists($func = 'icms_module_uninstall_' . $module_name)) {
+			$this->execFunc($func, $module, $logger);
 		}
 	}
 

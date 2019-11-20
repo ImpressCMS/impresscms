@@ -56,8 +56,7 @@ abstract class icms_core_ObjectHandler {
 	/**
 	 * holds referenced to {@link icms_db_legacy_Database} class object
 	 *
-	 * @var object
-	 * @see icms_db_legacy_Database
+	 * @var \icms_db_legacy_Database
 	 * @access public
 	 */
 	public $db;
