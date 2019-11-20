@@ -66,10 +66,10 @@ class BlockModuleInstallationHelper implements ModuleInstallationHelperInterface
 					$logger->info(
 						sprintf(_MD_AM_BLOCK_ADDED, $block['name'], icms_conv_nr2local($newbid))
 					);
-					$sql = 'INSERT INTO ' . $this->db->prefix('block_module_link')
+					$sql = 'INSERT INTO ' . $module->handler->db->prefix('block_module_link')
 						. ' (block_id, module_id, page_id) VALUES ('
 						. (int)$newbid . ', 0, 1)';
-					$this->db->query($sql);
+					$module->handler->db->query($sql);
 					if ($template != '') {
 						/**
 						 * @var icms_view_template_file_Object $tplfile
