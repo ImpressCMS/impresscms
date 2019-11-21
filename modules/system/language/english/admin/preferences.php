@@ -78,10 +78,6 @@ define("_MD_AM_REGINVITE", "Registration by invitation");
 define("_MD_AM_ACTVTYPE", "Select activation type of newly registered users");
 define("_MD_AM_ACTVGROUP", "Select group to which activation mail will be sent");
 define("_MD_AM_ACTVGROUPDSC", "Valid only when 'Activation by administrators' is selected");
-define('_MD_AM_USESSL', 'Use SSL for login?');
-define('_MD_AM_USESSLDSC', 'Select YES only if you have a SSL certificate. If you like to use this option, please copy the right files from your downloaded ImpressCMS EXTRA folder in your root-path.');
-define('_MD_AM_SSLPOST', 'SSL Post variable name');
-define('_MD_AM_SSLPOSTDSC', 'The name of variable used to transfer session value via POST. If you are unsure, set any name that is hard to guess.');
 define('_MD_AM_DEBUGMODE0', 'Off');
 define('_MD_AM_DEBUGMODE1', 'Enable debug (inline mode)');
 define('_MD_AM_DEBUGMODE2', 'Enable debug (popup mode)');
@@ -160,7 +156,6 @@ define('_MD_AM_MODCACHEDSC', 'Caches module contents for a specified amount of t
 define('_MD_AM_NOMODULE', 'There is no module that can be cached.');
 define('_MD_AM_DTPLSET', 'Default template set');
 define('_MD_AM_DTPLSETDSC', 'If you like to select an other Template-Set as a default, you must create first a new clone in your system. After them you can set this clone as default.');
-define('_MD_AM_SSLLINK', 'URL where SSL login page is located');
 
 // added for mailer
 define("_MD_AM_MAILER", "Mail Setup");

@@ -36,23 +36,22 @@
 					<{$lang_rememberme}>
 				</label>
 			</div>
-			<{/if}>  
+			<{/if}>
 	        <div class="control-group">
 				<input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>">
 				<input type="hidden" name="op" value="login" />
 				<input class="btn btn-primary" type="submit" value="<{$lang_login}>">
-	          <{$sslloginlink}>
 	        </div>
 	      </form>
 	    </div>
-			<{if $auth_openid}>  
+			<{if $auth_openid}>
 		    <div id="openid-form" class="tab-pane">
 		      <form class="form-inline" role="form" method="get" action="<{$icms_url}>/try_auth.php">
 		        <div class="form-group">
 		          <{$smarty.const._MB_SYSTEM_OPENID_URL}>
 		          <input type="hidden" name="action" value="verify" />
 		          <input type="text" class="form-control openid_url" name="openid_identifier" size="12" value="">
-		          <input class="btn btn-primary" type="submit" value="<{$lang_login}>">          
+		          <input class="btn btn-primary" type="submit" value="<{$lang_login}>">
 		        </div>
 		      </form>
 		    </div>
@@ -66,7 +65,7 @@
 						<input type="hidden" name="t" value="<{$mailpasswd_token}>">
 			     	<input class="btn btn-primary" type="submit" value="<{$lang_sendpassword}>">
 			     </div>
-				</form>		  	
+				</form>
 		  </div>
 	  </div>
 	</div>
