@@ -35,7 +35,7 @@ interface icms_db_legacy_IDatabase {
 	 * @param bool $selectdb select the database now?
 	 * @return bool successful?
 	 */
-	public function connect($selectdb = true);
+	//public function connect($selectdb = true);
 	/**
 	 * generate an ID for a new row
 	 *
@@ -143,7 +143,7 @@ interface icms_db_legacy_IDatabase {
 	 * @param int $start offset of first record to return
 	 *
 	 */
-	public function query($sql, $limit = 0, $start = 0);
+	//public function query($sql, $limit = 0, $start = 0);
 	/**
 	 * Get field name
 	 *

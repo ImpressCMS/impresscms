@@ -63,11 +63,7 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function &instance() {
-		static $instance;
-		if (!isset($instance)) {
-			$instance = parent::instance();
-		}
-		return $instance;
+		return icms::getInstance()->get('db');
 	}
 
 	/**
@@ -79,11 +75,7 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function &getDatabase() {
-		static $database;
-		if (!isset($database)) {
-			$database = parent::instance();
-		}
-		return $database;
+		return icms::getInstance()->get('db');
 	}
 
 	/**
