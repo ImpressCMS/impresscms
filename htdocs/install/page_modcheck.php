@@ -82,17 +82,20 @@ if (version_compare(phpversion(), '5.6', '>=')) {
 	src="img/<?php echo (isset($php_version_error)?"no":"yes") ?>.png"
 	alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf(PHP_EXTENSION, 'MySQL'); ?>:&nbsp; <?php echo xoDiag((function_exists('mysql_connect') || class_exists('PDO'))?1:-1); ?>
-<img src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<h4><?php printf(PHP_EXTENSION, 'MySQL'); ?>:&nbsp; <?php echo xoDiag($lastCheck = (function_exists('mysql_connect') || class_exists('PDO'))?1:-1); ?>
+<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf(PHP_EXTENSION, 'Session'); ?>:&nbsp; <?php echo xoDiag(extension_loaded('session')?1:-1); ?>
-<img src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<h4><?php printf(PHP_EXTENSION, 'Session'); ?>:&nbsp; <?php echo xoDiag($lastCheck = extension_loaded('session')?1:-1); ?>
+<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf(PHP_EXTENSION, 'PCRE'); ?>:&nbsp; <?php echo xoDiag(extension_loaded('pcre')?1:-1); ?>
-<img src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<h4><?php printf(PHP_EXTENSION, 'PCRE'); ?>:&nbsp; <?php echo xoDiag($lastCheck = extension_loaded('pcre')?1:-1); ?>
+<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4>file_uploads:&nbsp; <?php echo xoDiagBoolSetting('file_uploads', true); ?>
-<img src="img/yes.png" alt="Success" class="rootimg" /></h4>
+<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
+	<div class="clear">&nbsp;</div>
+	<h4><?php printf(PHP_EXTENSION, 'CURL'); ?>:&nbsp; <?php echo xoDiag($lastCheck = extension_loaded('curl')?1:-1); ?>
+		<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 	<h4>URL Rewrite:&nbsp; <span id="url-rewrite-check"></span>
 	<img src="" alt="Success" class="rootimg" />
@@ -175,9 +178,6 @@ if (empty($ext)) {
 <div class="clear">&nbsp;</div>
 <h4><?php printf(PHP_EXTENSION, OPEN_ID); ?>:&nbsp; <?php
 $ext = array();
-if (extension_loaded('curl')) {
-	$ext[] = 'Curl  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
-}
 if (extension_loaded('bcmath')) {
 	$ext[] = ' Math Support  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
 }
