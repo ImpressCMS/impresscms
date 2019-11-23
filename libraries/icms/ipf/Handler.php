@@ -345,7 +345,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * retrieve objects with debug mode - so will show the query
 	 *
-	 * @deprecated Use getObjects() instead
+	 * @deprecated Use getObjects() instead. Since 2.0
 	 *
 	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
@@ -645,7 +645,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * retrieve a {@link icms_ipf_Object}
 	 *
-	 * @deprecated Use get() instead
+	 * @deprecated Use get() instead. Since 2.0
 	 *
 	 * @param mixed $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
@@ -735,7 +735,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 *
-	 * @deprecated Use getList() instead
+	 * @deprecated Use getList() instead. Since 2.0
 	 *
 	 * @param object $criteria
 	 * @param int $limit
@@ -828,7 +828,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 *
-	 * @deprecated Use save() instead
+	 * @deprecated Use save() instead. Since 2.0
 	 *
 	 * @param    obj $obj
 	 * @param    bool $force
@@ -1127,7 +1127,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * insert a new object in the database
 	 *
-	 * @deprecated Use save() instead
+	 * @deprecated Use save() instead. Since 2.0
 	 *
 	 * @param object $obj reference to the object
 	 * @param bool $force whether to force the query execution despite security settings
@@ -1476,29 +1476,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		$this->_maxFileSize = $maxFileSize?$maxFileSize:$this->_maxFileSize;
 		$this->_maxWidth = $maxWidth?$maxWidth:$this->_maxWidth;
 		$this->_maxHeight = $maxHeight?$maxHeight:$this->_maxHeight;
-	}
-
-	/*     * ******** Deprecated ************** */
-
-	/**
-	 * Set the uploader config options.
-	 * @deprecated please use enableUpload() instead
-	 * @param str $_uploadPath
-	 * @param array $_allowedMimeTypes
-	 * @param int $_maxFileSize
-	 * @param int $_maxFileWidth
-	 * @param int $_maxFileHeight
-	 * @return VOID
-	 */
-	public function setUploaderConfig($_uploadPath = false, $_allowedMimeTypes = false, $_maxFileSize = false, $_maxWidth = false, $_maxHeight = false) {
-		trigger_error('Use enableUpload() instead', E_USER_DEPRECATED);
-
-		$this->uploadEnabled = true;
-		$this->_uploadPath = $_uploadPath?$_uploadPath:$this->_uploadPath;
-		$this->_allowedMimeTypes = $_allowedMimeTypes?$_allowedMimeTypes:$this->_allowedMimeTypes;
-		$this->_maxFileSize = $_maxFileSize?$_maxFileSize:$this->_maxFileSize;
-		$this->_maxWidth = $_maxWidth?$_maxWidth:$this->_maxWidth;
-		$this->_maxHeight = $_maxHeight?$_maxHeight:$this->_maxHeight;
 	}
 
 }

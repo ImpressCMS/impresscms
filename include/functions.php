@@ -554,26 +554,6 @@ if (!function_exists('xoops_convert_encoding')) {
 	}
 }
 
-if (!function_exists('xoops_getLinkedUnameFromId')) {
-	/**
-	 * Gets Username from UserID and creates a link to the userinfo (!) page
-	 *
-	 * @deprecated    icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact)
-	 *
-	 * @param    int $userid The User ID
-	 *
-	 * @return    string    The linked username (from userID or "Anonymous")
-	 *
-	 * @todo    Remove in next major release
-	 */
-	function xoops_getLinkedUnameFromId($userid)
-	{
-		trigger_error('use icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact)', E_USER_DEPRECATED);
-
-		return icms_member_user_Handler::getUserLink($userid);
-	}
-}
-
 if (!function_exists('icms_getModuleInfo')) {
 	/**
 	 * Get the icmsModule object of a specified module
@@ -830,22 +810,6 @@ if (!function_exists('icms_currency')) {
 			$ret = $ret . ' ' . $currencyObj->getCode();
 		}
 		return $ret;
-	}
-}
-
-if (!function_exists('icms_float')) {
-	/**
-	 * Use this snippet to extract any currency out of a string
-	 *
-	 * @see icms_currency
-	 * @deprecated Use icms_currency
-	 * @todo remove in version 2.1
-	 */
-	function icms_float($var)
-	{
-		trigger_error('Use icms_currency', E_USER_DEPRECATED);
-
-		return icms_currency($var);
 	}
 }
 
@@ -1817,22 +1781,6 @@ if (!function_exists('icms_getImageSize')) {
 	}
 }
 
-if (!function_exists('icms_getCurrentUrls')) {
-	/**
-	 * Gets all types of urls in one array
-	 *
-	 * @return array The array of urls
-	 * @todo Move to a static class method - HTTP or URI
-	 * @deprecated    Use icms::$urls
-	 */
-	function icms_getCurrentUrls()
-	{
-		trigger_error('Use \icms::$urls', E_USER_DEPRECATED);
-
-		return \icms::$urls;
-	}
-}
-
 if (!function_exists('icms_imageResize')) {
 	/**
 	 * Resizes an image to maxheight and maxwidth
@@ -1982,7 +1930,7 @@ if (!function_exists('icms_getCurrentPage')) {
 	 *
 	 * @return string The URL of the current page
 	 * @todo Move to a static class method - HTTP or URI
-	 * @deprecated Use \icms::$urls['full']
+	 * @deprecated Use \icms::$urls['full']. Since 2.0
 	 */
 	function icms_getCurrentPage()
 	{
