@@ -6,7 +6,6 @@ prepare:
       path: ".cs-ruleset.xml"
 
 exclude_patterns:
-  - "libraries/phpopenid/"
   - "libraries/smarty/"
   - "libraries/wideimage/"
   - "plugins/"

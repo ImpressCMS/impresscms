@@ -54,14 +54,6 @@ $email_tray->addElement($email_text, true);
 $email_cbox = new icms_form_elements_Checkbox("", "user_viewemail", $email_cbox_value);
 $email_cbox->addOption(1, _AM_AOUTVTEAD);
 $email_tray->addElement($email_cbox);
-if ($icmsConfigAuth['auth_openid'] == 1) {
-	$openid_tray = new icms_form_elements_Tray(_AM_OPENID, "<br />");
-	$openid_text = new icms_form_elements_Text("", "openid", 30, 255, $openid_value);
-	$openid_tray->addElement($openid_text);
-	$openid_cbox = new icms_form_elements_Checkbox("", "user_viewoid", $openid_cbox_value);
-	$openid_cbox->addOption(1, _AM_AOUTVTOIAD);
-	$openid_tray->addElement($openid_cbox);
-}
 $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_select = new icms_form_elements_Select("", "user_avatar", $avatar_value);
 //  $avatar_array = icms_core_Filesystem::getImgList(XOOPS_ROOT_PATH."/images/avatar/");
@@ -170,7 +162,6 @@ $form->addElement($uname_text, true);
 $form->addElement($login_name_text, true);
 $form->addElement($name_text);
 $form->addElement($email_tray, true);
-$form->addElement($openid_tray, true);
 $form->addElement($url_text);
 $form->addElement($timezone_select);
 $form->addElement($location_text);
