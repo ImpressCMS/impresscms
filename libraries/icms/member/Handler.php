@@ -135,7 +135,7 @@ class icms_member_Handler {
 	/**
 	 * retrieve groups from the database
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 * @return array array of {@link icms_member_group_Object} objects
 	 */
@@ -146,7 +146,7 @@ class icms_member_Handler {
 	/**
 	 * retrieve users from the database
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 * @return array array of {@link icms_member_user_Object} objects
 	 */
@@ -157,7 +157,7 @@ class icms_member_Handler {
 	/**
 	 * get a list of groupnames and their IDs
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
 	 * @return array associative array of group-IDs and names
 	 */
 	public function getGroupList($criteria = null) {
@@ -174,7 +174,7 @@ class icms_member_Handler {
 	 *
 	 * @deprecated	This isn't really a membership method, but for the user handler
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
 	 * @return array associative array of user-IDs and names
 	 */
 	public function getUserList($criteria = null) {
@@ -321,7 +321,7 @@ class icms_member_Handler {
 	/**
 	 * count users matching certain conditions
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
 	 * @return int
 	 */
 	public function getUserCount($criteria = null) {
@@ -393,7 +393,7 @@ class icms_member_Handler {
 	 *
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
 	 * @return bool TRUE if success or unchanged, FALSE on failure
 	 */
 	public function updateUsersByField($fieldName, $fieldValue, $criteria = null) {
@@ -419,7 +419,7 @@ class icms_member_Handler {
 	 * Temporary solution
 	 *
 	 * @param int $groups IDs of groups
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
 	 * @param bool $asobject return the users as objects?
 	 * @param bool $id_as_key use the UID as key for the array if $asobject is TRUE
 	 * @return array Array of {@link icms_member_user_Object} objects (if $asobject is TRUE)

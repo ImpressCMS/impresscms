@@ -18,9 +18,9 @@ class icms_auth_method_ldap_Provisioning {
 	private $_auth_instance;
 
 	/**
-	 * Gets instance of {@link icms_auth_method_ldap_Provisioning}
+	 * Gets instance
 	 * @param   object $auth_instance
-	 * @return  object $provis_instance {@link icms_auth_method_ldap_Provisioning}
+	 * @return  \icms_auth_method_ldap_Provisioning
 	 */
 	static public function &getInstance(&$auth_instance) {
 		static $provis_instance;
@@ -32,7 +32,7 @@ class icms_auth_method_ldap_Provisioning {
 
 	/**
 	 * Authentication Service constructor
-	 * @param object $auth_instance {@link icms_auth_method_ldap_Provisioning}
+	 * @param \icms_auth_method_ldap_Provisioning $auth_instance icms_auth_method_ldap_Provisioning instance
 	 */
 	public function __construct(&$auth_instance) {
 		$this->_auth_instance = &$auth_instance;
@@ -49,7 +49,7 @@ class icms_auth_method_ldap_Provisioning {
 	/**
 	 * Return a User Object
 	 * @param   string $uname Username of the user
-	 * @return  mixed icms_member_user_Object {@link icms_member_user_Object} or false if failed
+	 * @return  \icms_member_user_Object|false icms_member_user_Object or false if failed
 	 */
 	public function geticms_member_user_Object($uname) {
 		$member_handler = icms::handler('icms_member');
@@ -67,7 +67,7 @@ class icms_auth_method_ldap_Provisioning {
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user
-	 * @return object icms_member_user_Object {@link icms_member_user_Object}
+	 * @return \icms_member_user_Object icms_member_user_Object
 	 */
 	public function sync($datas, $uname, $pwd = null) {
 		$icmsUser = $this->geticms_member_user_Object($uname);
@@ -130,11 +130,11 @@ class icms_auth_method_ldap_Provisioning {
 
 	/**
 	 * Modify user information
-	 * @param object {@link icms_member_user_Object} reference to icms_member_user_Object Object
+	 * @param icms_member_user_Object $icmsUser reference
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user
-	 * @return object icms_member_user_Object {@link icms_member_user_Object}
+	 * @return \icms_member_user_Object
 	 */
 	public function change(&$icmsUser, $datas, $uname, $pwd = null) {
 		$ret = false;

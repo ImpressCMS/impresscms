@@ -347,7 +347,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @deprecated Use getObjects() instead
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
+	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
@@ -362,7 +362,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * retrieve objects from the database
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
+	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
@@ -751,7 +751,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
+	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
 	 * @param int   $limit      Max number of objects to fetch
 	 * @param int   $start      Which record to start at
 	 *
@@ -766,7 +766,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param string $keyName  Key name
 	 * @param string $keyValue Key value
-	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
+	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
 	 * @param int   $limit     Max number of objects to fetch
 	 * @param int   $start     Which record to start at
 	 * @param bool $debug Debug mode?
@@ -1175,7 +1175,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * query the database with the constructed $criteria object
 	 *
 	 * @param string $sql The SQL Query
-	 * @param object $criteria {@link icms_db_criteria_Element} conditions to be met
+	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
 	 * @param bool $force Force the query?
 	 * @param bool $debug Turn Debug on?
 	 *
@@ -1217,7 +1217,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * count objects matching a condition
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} to match
+	 * @param \icms_db_criteria_Element $criteria Criteria to match
 	 * @return int count of objects
 	 */
 	public function getCount($criteria = null) {
@@ -1294,7 +1294,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element $criteria Criteria
 	 *
 	 * @return  bool
 	 * */
@@ -1325,7 +1325,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} with conditions to meet
+	 * @param \icms_db_criteria_Element $criteria Criteria with conditions to meet
 	 * @param bool $quick Do not load object on deletion?
 	 *
 	 * @return bool

@@ -57,7 +57,7 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	/**
 	 * Retrieve array of {@link icms_image_category_Object}s meeting certain conditions
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} with conditions for the image categories
+	 * @param \icms_db_criteria_Element $criteria Criteria with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
 	 *
 	 * @return array {@link icms_image_category_Object}s matching the conditions

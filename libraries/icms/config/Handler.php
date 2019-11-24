@@ -156,7 +156,7 @@ class icms_config_Handler {
 	 * Create a config
 	 *
 	 * @see     icms_config_Item_Object
-	 * @return	object  reference to the new {@link icms_config_Item_Object}
+	 * @return	\icms_config_Item_Object
 	 */
 	public function &createConfig() {
 		$instance = & $this->_cHandler->create();
@@ -168,7 +168,7 @@ class icms_config_Handler {
 	 *
 	 * @param	int     $id             ID of the config
 	 * @param	bool    $withoptions    load the config's options now?
-	 * @return	object  reference to the {@link icms_config_Item_Object}
+	 * @return	\icms_config_Item_Object
 	 */
 	public function &getConfig($id, $withoptions = false) {
 		$config = & $this->_cHandler->get($id);
@@ -181,7 +181,7 @@ class icms_config_Handler {
 	/**
 	 * insert a new config in the database
 	 *
-	 * @param	object  &$config    reference to the {@link icms_config_Item_Object}
+	 * @param	\icms_config_Item_Object  &$config    reference
 	 * @return	true|false if inserting config succeeded or not
 	 */
 	public function insertConfig(&$config) {
@@ -209,8 +209,8 @@ class icms_config_Handler {
 	/**
 	 * Delete a config from the database
 	 *
-	 * @param	object  &$config    reference to a {@link icms_config_Item_Object}
-	 * @return	true|false if deleting config item succeeded or not
+	 * @param	\icms_config_Item_Object  &$config    refence
+	 * @return	bool if deleting config item succeeded or not
 	 */
 	public function deleteConfig(&$config) {
 		if (!$this->_cHandler->delete($config)) {
@@ -236,11 +236,11 @@ class icms_config_Handler {
 	/**
 	 * get one or more Configs
 	 *
-	 * @param	object  $criteria       {@link icms_db_criteria_Element}
+	 * @param	\icms_db_criteria_Element  $criteria      Criteria
 	 * @param	bool    $id_as_key      Use the configs' ID as keys?
 	 * @param	bool    $with_options   get the options now?
 	 *
-	 * @return	array   Array of {@link icms_config_Item_Object} objects
+	 * @return	\icms_config_Item_Object[]
 	 */
 	public function getConfigs($criteria = null, $id_as_key = false, $with_options = false) {
 		return $this->_cHandler->getObjects($criteria, $id_as_key);
@@ -249,7 +249,7 @@ class icms_config_Handler {
 	/**
 	 * Count some configs
 	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
+	 * @param	\icms_db_criteria_Element  $criteria   Criteria
 	 * @return	int count result
 	 */
 	public function getConfigCount($criteria = null) {
@@ -262,7 +262,7 @@ class icms_config_Handler {
 	 * @param	int $category   ID of a category
 	 * @param	int $module     ID of a module
 	 *
-	 * @return	array   array of {@link icms_config_Item_Object}s
+	 * @return	\icms_config_Item_Object[]
 	 */
 	public function &getConfigsByCat($category, $module = 0) {
 		if (is_array($category)) {
@@ -300,9 +300,9 @@ class icms_config_Handler {
 	}
 
 	/**
-	 * Make a new {@link icms_config_option_Object}
+	 * Make a new
 	 *
-	 * @return	object  {@link icms_config_option_Object}
+	 * @return	\icms_config_option_Object
 	 */
 	public function &createConfigOption() {
 		$inst = & $this->_oHandler->create();
@@ -310,11 +310,11 @@ class icms_config_Handler {
 	}
 
 	/**
-	 * Get a {@link icms_config_option_Object}
+	 * Get a option by id
 	 *
 	 * @param	int $id ID of the config option
 	 *
-	 * @return	object  {@link icms_config_option_Object}
+	 * @return	\icms_config_option_Object
 	 */
 	public function &getConfigOption($id) {
 		$inst = & $this->_oHandler->get($id);
@@ -322,23 +322,23 @@ class icms_config_Handler {
 	}
 
 	/**
-	 * Get one or more {@link icms_config_option_Object}s
+	 * Get one or more object(s)
 	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
+	 * @param	\icms_db_criteria_Element  $criteria   Criteria
 	 * @param	bool    $id_as_key  Use IDs as keys in the array?
 	 *
-	 * @return	array   Array of {@link icms_config_option_Object}s
+	 * @return	\icms_config_option_Object[]
 	 */
 	public function getConfigOptions($criteria = null, $id_as_key = false) {
 		return $this->_oHandler->getObjects($criteria, $id_as_key);
 	}
 
 	/**
-	 * Count some {@link icms_config_option_Object}s
+	 * Count
 	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
+	 * @param	\icms_db_criteria_Element|null  $criteria   Criteria or null if none criteria should be used
 	 *
-	 * @return	int     Count of {@link icms_config_option_Object}s matching $criteria
+	 * @return	int
 	 */
 	public function getConfigOptionsCount($criteria = null) {
 		return $this->_oHandler->getCount($criteria);

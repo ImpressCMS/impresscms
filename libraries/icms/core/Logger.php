@@ -47,7 +47,7 @@ class icms_core_Logger {
 	/**
 	 * Get a reference to the only instance of this class
 	 *
-	 * @return  object icms_core_Logger  (@link icms_core_Logger) reference to the only instance
+	 * @return  static
 	 * @static
 	 */
 	static public function &instance()
