@@ -121,7 +121,6 @@ icms_makeSmarty(array(
 	'lang_realname' => _US_REALNAME,
 	'lang_avatar' => _US_AVATAR,
 	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
-	'user_alwopenid' => $icmsConfigAuth['auth_openid'],
 	'lang_email' => _US_EMAIL,
 	'lang_privmsg' => _US_PM,
 	'lang_icq' => _US_ICQ,
