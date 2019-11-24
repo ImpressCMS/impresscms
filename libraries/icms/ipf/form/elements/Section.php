@@ -25,7 +25,7 @@ class icms_ipf_form_elements_Section extends icms_form_Element {
 	/**
 	 * Constructor
 	 *
-	 * @param	icms_ipf_Object	$object	reference to targetobject (@link icms_ipf_Object)
+	 * @param	icms_ipf_Object	$object	reference to targetobject
 	 * @param	string			$key	name of the form section
 	 */
 	public function __construct($object, $key) {

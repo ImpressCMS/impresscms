@@ -62,9 +62,11 @@ class icms_form_elements_Captcha extends icms_form_Element {
 
 	/**
 	 * Sets the Config
+	 *
 	 * @param   string $name Config Name
 	 * @param   string $val Config Value
-	 * @return  object reference to the icms_form_elements_captcha_Object Object (@link icms_form_elements_captcha_Object)
+	 *
+	 * @return  \icms_form_elements_captcha_Object
 	 */
 	public function setConfig($name, $val) {
 		return $this->_captchaHandler->setConfig($name, $val);

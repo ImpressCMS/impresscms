@@ -66,10 +66,10 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	 * This can be:
 	 * <li>mail (standard PHP function "mail()") (default)
 	 * <li>smtp	(send through any SMTP server, SMTPAuth is supported.
-	 * You must set {@link $Host}, for SMTPAuth also {@link $SMTPAuth},
-	 * {@link $Username}, and {@link $Password}.)
+	 * You must set $Host, for SMTPAuth also $SMTPAuth,
+	 * $Username, and $Password.)
 	 * <li>sendmail (manually set the path to your sendmail program
-	 * to something different than "mail()" uses in {@link $Sendmail})
+	 * to something different than "mail()" uses in $Sendmail)
 	 *
 	 * @var 	string
 	 * @access	private
@@ -79,7 +79,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	/**
 	 * set if $Mailer is "sendmail"
 	 *
-	 * Only used if {@link $Mailer} is set to "sendmail".
+	 * Only used if $Mailer is set to "sendmail".
 	 * Contains the full path to your sendmail program or replacement.
 	 * @var 	string
 	 * @access	private
@@ -89,7 +89,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	/**
 	 * SMTP Host.
 	 *
-	 * Only used if {@link $Mailer} is set to "smtp"
+	 * Only used if $Mailer is set to "smtp"
 	 * @var 	string
 	 * @access	private
 	 */
@@ -112,7 +112,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	/**
 	 * Username for authentication with your SMTP host.
 	 *
-	 * Only used if {@link $Mailer} is "smtp" and {@link $SMTPAuth} is TRUE
+	 * Only used if $Mailer is "smtp" and $SMTPAuth is TRUE
 	 * @var 	string
 	 * @access	private
 	 */
@@ -121,7 +121,7 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	/**
 	 * Password for SMTPAuth.
 	 *
-	 * Only used if {@link $Mailer} is "smtp" and {@link $SMTPAuth} is TRUE
+	 * Only used if $Mailer is "smtp" and $SMTPAuth is TRUE
 	 * @var 	string
 	 * @access	private
 	 */

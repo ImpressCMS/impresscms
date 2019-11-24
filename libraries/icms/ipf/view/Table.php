@@ -62,12 +62,10 @@ class icms_ipf_view_Table {
 	/**
 	 * Constructor
 	 *
-	 * @param object $objectHandler {@link icms_ipf_Handler}
-	 * @param array $columns array representing the columns to display in the table
-	 * @param object $criteria
-	 * @param array $actions array representing the actions to offer
-	 *
-	 * @return array
+	 * @param \icms_ipf_Handler $objectHandler Handler
+	 * @param bool|\icms_db_criteria_Element $criteria Criteria
+	 * @param string[] $actions array representing the actions to offer
+	 * @param bool $userSide For user side?
 	 */
 	public function __construct(&$objectHandler, $criteria = false, $actions = array('edit', 'delete'), $userSide = false) {
 		$this->_id = $objectHandler->className;
