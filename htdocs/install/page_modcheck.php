@@ -176,21 +176,6 @@ if (empty($ext)) {
 }
 ?> <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf(PHP_EXTENSION, OPEN_ID); ?>:&nbsp; <?php
-$ext = array();
-if (extension_loaded('bcmath')) {
-	$ext[] = ' Math Support  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
-}
-if (extension_loaded('openssl')) {
-	$ext[] = ' OpenSSL  <img src="img/yes.png" alt="Success" class="rootimg" />';
-}
-if (empty($ext)) {
-	echo xoDiag(0, NONE);
-} else {
-	echo xoDiag(1, implode(' ', $ext));
-}
-?></h4>
-<div class="clear">&nbsp;</div>
 </fieldset>
 <!--
 	<table class="diags">
