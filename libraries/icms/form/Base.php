@@ -70,8 +70,9 @@ abstract class icms_form_Base {
 	private $_title;
 
 	/**
-	 * array of {@link icms_form_Element} objects
-	 * @var  array
+	 * Elements of form
+	 *
+	 * @var  icms_form_Element[]
 	 */
 	protected $_elements = array();
 
@@ -155,7 +156,7 @@ abstract class icms_form_Base {
 	/**
 	 * Add an element to the form
 	 *
-	 * @param	object  &$formElement   reference to a {@link icms_form_Element}
+	 * @param	icms_form_Element  &$formElement   Form element
 	 * @param	bool    $required       is this a "required" element?
 	 */
 	public function addElement(&$formElement, $required = false) {
@@ -182,7 +183,7 @@ abstract class icms_form_Base {
 	 * get an array of forms elements
 	 *
 	 * @param	  bool	  get elements recursively?
-	 * @return	array   array of {@link icms_form_Element}s
+	 * @return	icms_form_Element[]
 	 */
 	public function &getElements($recurse = false) {
 		if (!$recurse) {
@@ -224,10 +225,11 @@ abstract class icms_form_Base {
 	}
 
 	/**
-	 * get a reference to a {@link icms_form_Element} object by its "name"
+	 * get a reference form object by its "name"
 	 *
-	 * @param  string  $name	"name" attribute assigned to a {@link icms_form_Element}
-	 * @return mixed  reference to a {@link icms_form_Element}, false if not found
+	 * @param  string  $name	"name" attribute assigned to a form element
+	 *
+	 * @return icms_form_Element|false
 	 */
 	public function &getElementByName($name) {
 		$elements = $this->getElements(true);
@@ -332,7 +334,7 @@ abstract class icms_form_Base {
 	/**
 	 * make an element "required"
 	 *
-	 * @param	object  &$formElement    reference to a {@link icms_form_Element}
+	 * @param	icms_form_Element  &$formElement   Form element
 	 */
 	public function setRequired(&$formElement) {
 		$this->_required[] = & $formElement;
@@ -341,7 +343,7 @@ abstract class icms_form_Base {
 	/**
 	 * get an array of "required" form elements
 	 *
-	 * @return	array   array of {@link icms_form_Element}s
+	 * @return	icms_form_Element[]
 	 */
 	public function &getRequired() {
 		return $this->_required;
@@ -418,7 +420,8 @@ abstract class icms_form_Base {
 	/**
 	 * assign to smarty form template instead of displaying directly
 	 *
-	 * @param	object  &$tpl    reference to a {@link Smarty} object
+	 * @param	Smarty  &$tpl    Smarty template
+	 *
 	 * @see     Smarty
 	 */
 	public function assign(&$tpl) {
