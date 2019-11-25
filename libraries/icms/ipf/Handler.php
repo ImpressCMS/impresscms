@@ -39,7 +39,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public $_itemname = '';
 	/**
-	 * Name of the table use to store this {@link icms_ipf_Object}
+	 * Name of the table use to store objects linked with this handler
 	 *
 	 * Note that the name of the table needs to be free of the database prefix.
 	 * For example "smartsection_categories"
@@ -47,14 +47,14 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public $table = '';
 	/**
-	 * Name of the table key that uniquely identify each {@link icms_ipf_Object}
+	 * Name of the table key that uniquely identify each object
 	 *
 	 * For example : "categoryid"
 	 * @var string
 	 */
 	public $keyName = '';
 	/**
-	 * Name of the class derived from {@link icms_ipf_Object} and which this handler is handling
+	 * Name of the class derived from object and which this handler is handling
 	 *
 	 * Note that this string needs to be lowercase
 	 *
@@ -63,7 +63,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public $className = '';
 	/**
-	 * Name of the field which properly identify the {@link icms_ipf_Object}
+	 * Name of the field which properly identify the object
 	 *
 	 * For example : "name" (this will be the category's name)
 	 * @var string
@@ -77,7 +77,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public $summaryName = '';
 	/**
-	 * Page name use to basically manage and display the {@link icms_ipf_Object}
+	 * Page name use to basically manage and display the object
 	 *
 	 * This page needs to be the same in user side and admin side
 	 *
@@ -89,7 +89,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public $_page = '';
 	/**
-	 * Full path of the module using this {@link icms_ipf_Object}
+	 * Full path of the module using this object
 	 *
 	 * <code>ICMS_URL . "/modules/smartsection/"</code>
 	 * @todo this could probably be automatically deducted from the class name as it is always prefixed with the module name
@@ -204,15 +204,14 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Constructor - called from child classes
 	 *
-	 * @param object $db Database object {@link XoopsDatabase}
+	 * @param icms_db_IConnection $db Database object
 	 * @param string $itemname Object to be managed
-	 * @param string $keyname Name of the table key that uniquely identify each {@link icms_ipf_Object}
-	 * @param string $idenfierName Name of the field which properly identify the {@link icms_ipf_Object}
+	 * @param string $keyname Name of the table key that uniquely identify each object
+	 * @param string $idenfierName Name of the field which properly identify the object
 	 * @param string $summaryName Name of the field which will be use as a summary for the object
 	 * @param string $modulename Directory name of the module controlling this object
-	 * @param string/null $table    Table which will be used for this object
-	 * @param bool/object $cacheHandler IDs for caching
-	 * @return object
+	 * @param null|string $table Table to use for this handler
+	 * @param bool $cacheHandler Cache handler
 	 */
 	public function __construct(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename = null, $table = null, $cacheHandler = false) {
 
@@ -643,13 +642,14 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * retrieve a {@link icms_ipf_Object}
+	 * retrieve object
 	 *
 	 * @deprecated Use get() instead
 	 *
-	 * @param mixed $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
+	 * @param string|float|int $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
-	 * @return mixed reference to the {@link icms_ipf_Object}, FALSE if failed
+	 *
+	 * @return icms_ipf_Object|false
 	 */
 	public function &getD($id, $as_object = true)
 	{
@@ -659,11 +659,12 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * retrieve a {@link icms_ipf_Object}
+	 * retrieve a object by id
 	 *
-	 * @param mixed $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
+	 * @param string|int|float $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
-	 * @return mixed reference to the {@link icms_ipf_Object}, FALSE if failed
+	 *
+	 * @return icms_ipf_Object|false
 	 */
 	public function &get($id, $as_object = true, $debug = false, $criteria = false)
 	{
@@ -711,11 +712,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * create a new {@link icms_ipf_Object}
+	 * create a new object
 	 *
 	 * @param bool $isNew Flag the new objects as "new"?
 	 *
-	 * @return object {@link icms_ipf_Object}
+	 * @return icms_ipf_Object
 	 */
 	public function &create($isNew = true)
 	{

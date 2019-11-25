@@ -26,7 +26,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param	string    $form_caption             the form caption
 	 * @param	string    $form_action              the form action
 	 * @param	string    $form_fields              the form fields
-	 * @param	string    $submit_button_caption    whether to add a caption to the submit button
+	 * @param	string|false    $submit_button_caption    whether to add a caption to the submit button
 	 * @param	bool      $cancel_js_action         whether to invoke a javascript action when cancel button is clicked
 	 * @param	bool      $captcha                  whether to add captcha
 	 */
