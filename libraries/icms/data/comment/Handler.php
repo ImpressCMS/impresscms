@@ -54,8 +54,6 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 			parent::__construct($db, 'data_comment', 'com_id', 'com_title', 'com_text', 'icms', 'xoopscomments', 'com_id');
 		}
 
-
-
 	/**
 	 * Get a list of comments
 	 *
