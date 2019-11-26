@@ -152,7 +152,7 @@ function b_system_main_show() {
 	$criteria->add(new icms_db_criteria_Item('weight', 0, '>'));
 	$modules = $module_handler->getObjects($criteria, true);
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
-	$groups = is_object(icms::$user)? icms::$user->getGroups():XOOPS_GROUP_ANONYMOUS;
+	$groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 	$read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
 	foreach (array_keys($modules) as $i) {
 		if (in_array($i, $read_allowed)) {
@@ -392,7 +392,7 @@ function b_system_comments_show($options) {
 
 	// Check modules permissions
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
-	$gperm_groupid = is_object(icms::$user)? icms::$user->getGroups():array(XOOPS_GROUP_ANONYMOUS);
+	$gperm_groupid = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 	$criteria1 = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', 'module_read', '='));
 	$criteria1->add(new icms_db_criteria_Item('gperm_groupid', '(' . implode(',', $gperm_groupid) . ')', 'IN'));
 	$perms = $moduleperm_handler->getObjects($criteria1, true);

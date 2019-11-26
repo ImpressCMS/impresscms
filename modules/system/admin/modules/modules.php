@@ -484,9 +484,9 @@ function xoops_module_install($dirname) {
 			}
 
 			if ($module->getInfo('hasMain')) {
-				$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+				$groups = array(ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS);
 			} else {
-				$groups = array(XOOPS_GROUP_ADMIN);
+				$groups = array(ICMS_GROUP_ADMIN);
 			}
 
 			// retrieve all block ids for this module

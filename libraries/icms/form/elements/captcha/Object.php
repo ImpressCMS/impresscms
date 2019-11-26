@@ -136,7 +136,7 @@ class icms_form_elements_captcha_Object {
 
 		// Skip CAPTCHA for group
 		//$gperm_handler = icms::handler('icms_member_groupperm');
-		$groups = is_object(icms::$user)? icms::$user->getGroups():array(XOOPS_GROUP_ANONYMOUS);
+		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$this->active = false;
 		} elseif ($icmsConfigCaptcha['captcha_mode'] == 'none') {
@@ -163,7 +163,7 @@ class icms_form_elements_captcha_Object {
 
 		$is_valid = false;
 
-		$groups = is_object(icms::$user)? icms::$user->getGroups():array(XOOPS_GROUP_ANONYMOUS);
+		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$is_valid = true;
 		} elseif (!empty($maxAttempts) && $captchaSection->get('attempt_' . $sessionName) > $maxAttempts) {
