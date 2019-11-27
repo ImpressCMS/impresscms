@@ -162,7 +162,7 @@ switch ($op) {
 			redirect_header('index.php', 5, _US_NOPERMISS);
 		} else {
 			$groups = icms::$user->getGroups();
-			if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
+			if (in_array(ICMS_GROUP_ADMIN, $groups)) {
 				redirect_header('user.php', 5, _US_ADMINNO);
 			}
 			$ok = !isset($_POST['ok']) ? 0 : (int)$_POST['ok'];

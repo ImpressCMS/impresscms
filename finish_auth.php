@@ -111,7 +111,7 @@ switch ($xoopsAuth->step) {
 			$newid = $newUser->getVar('uid');
 			$mship_handler = icms::handler('icms_member_group_membership');
 			$mship = & $mship_handler->create();
-			$mship->setVar('groupid', XOOPS_GROUP_USERS);
+			$mship->setVar('groupid', ICMS_GROUP_USERS);
 			$mship->setVar('uid', $newid);
 			if (!$mship_handler->insert($mship)) {
 				redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP);
