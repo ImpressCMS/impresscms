@@ -5,6 +5,7 @@ namespace ImpressCMS\Core\Providers;
 use Aura\Sql\ExtendedPdoInterface;
 use League\Container\Container;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Monolog\Logger;
 
 /**
  * Database service provider
@@ -133,6 +134,21 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 			icms_loadLanguageFile('core', 'core');
 			trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
 		}
+
+		$connection->setProfiler(
+			new \Aura\Sql\Profiler\Profiler(
+				new Logger(
+					'DB',
+					[
+						new \Monolog\Handler\StreamHandler(
+							ICMS_LOGGING_PATH . '/db.log'
+						)
+					]
+				)
+			)
+		);
+
+		$connection->getProfiler()->setActive(true);
 
 		return $connection;
 	}
