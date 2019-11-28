@@ -946,18 +946,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			'confop_value' => 1,
 			'conf_id' => $i
 		],
-		[
-			'confop_id' => $ci++,
-			'confop_name' => '_MD_AM_DEBUGMODE2',
-			'confop_value' => 2,
-			'conf_id' => $i
-		],
-		[
-			'confop_id' => $ci++,
-			'confop_name' => '_MD_AM_DEBUGMODE3',
-			'confop_value' => 3,
-			'conf_id' => $i
-		]
 	]);
 
 	// ----------
