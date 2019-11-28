@@ -918,35 +918,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 				'conf_valuetype' => 'int',
 				'conf_order' => $p++
 			],
-			[
-				'conf_id' => ++$i,
-				'conf_modid' => 0,
-				'conf_catid' => $c,
-				'conf_name' => 'debug_mode',
-				'conf_title' => '_MD_AM_DEBUGMODE',
-				'conf_value' => 0,
-				'conf_desc' => '_MD_AM_DEBUGMODEDSC',
-				'conf_formtype' => 'select',
-				'conf_valuetype' => 'int',
-				'conf_order' => $p++
-			],
 		]);
-
-	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', [
-		[
-			'confop_id' => $ci++,
-			'confop_name' => '_MD_AM_DEBUGMODE0',
-			'confop_value' => 0,
-			'conf_id' => $i
-		],
-		[
-			'confop_id' => $ci++,
-			'confop_name' => '_MD_AM_DEBUGMODE1',
-			'confop_value' => 1,
-			'conf_id' => $i
-		],
-	]);
 
 	// ----------
 	$dbm->insert('config',
@@ -960,6 +932,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 				'conf_value' => 0,
 				'conf_desc' => '_MD_AM_CLOSESITEDSC',
 				'conf_formtype' => 'yesno',
+				'conf_valuetype' => 'int',
 				'conf_valuetype' => 'int',
 				'conf_order' => $p++
 			],
