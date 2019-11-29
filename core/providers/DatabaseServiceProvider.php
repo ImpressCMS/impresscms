@@ -5,7 +5,6 @@ namespace ImpressCMS\Core\Providers;
 use Aura\Sql\ExtendedPdoInterface;
 use League\Container\Container;
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use Monolog\Logger;
 
 /**
  * Database service provider
@@ -97,6 +96,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 	 * @param int $port Port
 	 *
 	 * @return ExtendedPdoInterface
+	 * @throws \Exception
 	 */
 	protected function createDatabaseConnection(string $type, string $host, string $user, ?string $pass, $persistentConnection, ?string $name, ?string $charset, ?string $prefix, int $port): ExtendedPdoInterface
 	{
@@ -104,9 +104,9 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 			$type = substr($type, 4);
 		}
 
-		$dsn = $type . ":host=" . $host;
+		$dsn = $type . ':host=' . $host;
 		if ($name && !(defined('DB_NO_AUTO_SELECT') && DB_NO_AUTO_SELECT)) {
-			$dsn .= ";dbname=" . $name;
+			$dsn .= ';dbname=' . $name;
 		}
 		$dsn .= ';port=' . $port;
 		if ($charset) {
@@ -135,20 +135,27 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 			trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
 		}
 
-		$connection->setProfiler(
-			new \Aura\Sql\Profiler\Profiler(
-				new Logger(
-					'DB',
-					[
-						new \Monolog\Handler\StreamHandler(
-							ICMS_LOGGING_PATH . '/db.log'
-						)
-					]
+		$enabled = (bool)env('LOGGING_ENABLED', false);
+		$logger = new \icms_core_Logger(
+			'DB',
+			[
+				new \Monolog\Handler\RotatingFileHandler(
+					ICMS_LOGGING_PATH . '/db.log',
+					0,
+					$enabled ? \Monolog\Logger::DEBUG : \Monolog\Logger::ERROR
 				)
-			)
+			]
+		);
+		if ($enabled) {
+			$logger->enableRendering();
+		}
+
+		$connection->setProfiler(
+			new \Aura\Sql\Profiler\Profiler($logger)
 		);
 
-		$connection->getProfiler()->setActive(true);
+		$connection->getProfiler()->setLogFormat('{function} ({duration} seconds): {statement}');
+		$connection->getProfiler()->setActive($enabled);
 
 		return $connection;
 	}
