@@ -1,11 +1,17 @@
 <?php
 
+use Monolog\Handler\BrowserConsoleHandler;
+use Monolog\Handler\ChromePHPHandler;
+use Monolog\Handler\FirePHPHandler;
+use Monolog\Handler\PHPConsoleHandler;
 use Monolog\Handler\ProcessableHandlerInterface;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
 
 /**
  * Proxy logger class to add some compatibility stuff with older ICMS versions
  */
-class icms_core_Logger extends \Monolog\Logger
+class icms_core_Logger extends Logger
 {
 
 	/**
@@ -28,10 +34,10 @@ class icms_core_Logger extends \Monolog\Logger
 		if (!isset($instance)) {
 			$enabled = (bool)env('LOGGING_ENABLED', false);
 			$instance = new static('default', [
-				new \Monolog\Handler\RotatingFileHandler(
+				new RotatingFileHandler(
 					ICMS_LOGGING_PATH . '/default.log',
 					0,
-					$enabled ? \Monolog\Logger::DEBUG : \Monolog\Logger::ERROR
+					$enabled ? Logger::DEBUG : Logger::ERROR
 				)
 			]);
 			// Always catch errors, for security reasons
@@ -44,6 +50,58 @@ class icms_core_Logger extends \Monolog\Logger
 			}
 		}
 		return $instance;
+	}
+
+	/**
+	 * Enable logger output
+	 */
+	public function enableRendering()
+	{
+		$this->disableRendering();
+		foreach ($this->getDebugHandlersFromConfig() as $handler) {
+			$this->pushHandler($handler);
+		}
+	}
+
+	/**
+	 * Disable logger output rendering.
+	 */
+	public function disableRendering()
+	{
+		$this->handlers = array_filter($this->handlers, function ($handler) {
+			return !($handler instanceof BrowserConsoleHandler) &&
+				!($handler instanceof PHPConsoleHandler) &&
+				!($handler instanceof FirePHPHandler) &&
+				!($handler instanceof ChromePHPHandler);
+		});
+	}
+
+	/**
+	 * Gets handlers from env variable DEBUG_TOOL
+	 *
+	 * @return ProcessableHandlerInterface[]
+	 */
+	protected function getDebugHandlersFromConfig()
+	{
+		$handlers = [];
+		foreach (explode(',', env('DEBUG_TOOL')) as $debugTool) {
+			switch (strtolower(trim($debugTool))) {
+				case 'firephp':
+					$handlers[] = new FirePHPHandler();
+					break;
+				case 'chromephp':
+					$handlers[] = new ChromePHPHandler();
+					break;
+				case 'browserconsole':
+				case 'default':
+					$handlers[] = new BrowserConsoleHandler();
+					break;
+				case 'phpconsole':
+					$handlers[] = new PHPConsoleHandler();
+					break;
+			}
+		}
+		return $handlers;
 	}
 
 	/**
@@ -66,64 +124,13 @@ class icms_core_Logger extends \Monolog\Logger
 	}
 
 	/**
-	 * Gets handlers from env variable DEBUG_TOOL
-	 *
-	 * @return ProcessableHandlerInterface[]
-	 */
-	protected function getDebugHandlersFromConfig() {
-		$handlers = [];
-		foreach(explode(',', env('DEBUG_TOOL')) as $debugTool) {
-			switch (strtolower(trim($debugTool))) {
-				case 'firephp':
-					$handlers[]= new \Monolog\Handler\FirePHPHandler();
-				break;
-				case 'chromephp':
-					$handlers[] = new \Monolog\Handler\ChromePHPHandler();
-				break;
-				case 'browserconsole':
-				case 'default':
-					$handlers[] = new \Monolog\Handler\BrowserConsoleHandler();
-				break;
-				case 'phpconsole':
-					$handlers[] = new \Monolog\Handler\PHPConsoleHandler();
-				break;
-			}
-		}
-		return $handlers;
-	}
-
-	/**
-	 * Enable logger output
-	 */
-	public function enableRendering()
-	{
-		$this->disableRendering();
-		foreach ($this->getDebugHandlersFromConfig() as $handler) {
-			$this->pushHandler($handler);
-		}
-	}
-
-	/**
-	 * Disable logger output rendering.
-	 */
-	public function disableRendering()
-	{
-		$this->handlers = array_filter($this->handlers, function ($handler) {
-			return !($handler instanceof \Monolog\Handler\BrowserConsoleHandler) &&
-				!($handler instanceof \Monolog\Handler\PHPConsoleHandler) &&
-			!($handler instanceof \Monolog\Handler\FirePHPHandler) &&
-			!($handler instanceof \Monolog\Handler\ChromePHPHandler);
-		});
-	}
-
-	/**
 	 * Disabling logger
 	 */
 	public function disableLogger()
 	{
 		error_reporting(0);
 		$this->handlers = array_filter($this->handlers, function ($handler) {
-			return !($handler instanceof \Monolog\Handler\RotatingFileHandler);
+			return !($handler instanceof RotatingFileHandler);
 		});
 	}
 
@@ -290,7 +297,6 @@ class icms_core_Logger extends \Monolog\Logger
 
 	/**
 	 * Output buffering callback inserting logger dump in page output
-
 	 * @param string $output
 	 *
 	 * @return string
