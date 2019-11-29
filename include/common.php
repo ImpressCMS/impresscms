@@ -118,15 +118,12 @@ if ($icmsConfig['closesite'] == 1) {
 }
 
 global $xoopsOption, $icmsConfig;
-if (!isset ($xoopsOption ['nodebug']) || !$xoopsOption ['nodebug']) {
-	if ($icmsConfig ['debug_mode'] == 1 || $icmsConfig ['debug_mode'] == 2) {
-		error_reporting(E_ALL);
-		icms::getInstance()->get('logger')->enableRendering();
-		icms::getInstance()->get('logger')->usePopup = ($icmsConfig ['debug_mode'] == 2);
-	} else {
-		error_reporting(0);
-		icms::getInstance()->get('logger')->activated = false;
-	}
+if (isset($xoopsOption['nodebug']) && $xoopsOption['nodebug']) {
+	/**
+	 * @var icms_core_Logger $logger
+	 */
+	$logger = icms::getInstance()->get('logger');
+	$logger->disableLogger();
 }
 //TODO: change this, because it is using deprecated notations
 icms::$module = icms::getInstance()->get('module');
