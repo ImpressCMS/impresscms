@@ -75,10 +75,11 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @deprecated setLogger method does nothing is deprecated.
 	 */
 	public function setLogger($logger)
 	{
-		trigger_error('setLogger method does nothing is deprecated.', E_USER_DEPRECATED);
 	}
 
 	/**
@@ -99,11 +100,11 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @deprecated genId will be removed in near future
 	 */
 	public function genId($sequence)
 	{
-		trigger_error('genId will be removed', E_USER_DEPRECATED);
-
 		return 0;
 	}
 
@@ -133,51 +134,51 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @deprecated Use lastInsertId instead of getInsertId.
 	 */
 	public function getInsertId()
 	{
-		trigger_error('Use lastInsertId instead of getInsertId.', E_USER_DEPRECATED);
-
 		return parent::lastInsertId();
 	}
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @deprecated getRowsNum will be removed in 2.1
 	 */
 	public function getRowsNum($result)
 	{
-		trigger_error('getRowsNum will be removed.', E_USER_DEPRECATED);
-
 		return $result ? $result->rowCount() : 0;
 	}
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @deprecated getAffectedRows will be removed in 2.1
 	 */
 	public function getAffectedRows()
 	{
-		trigger_error('getAffectedRows will be removed.', E_USER_DEPRECATED);
-
 		return $this->lastRowCount;
 	}
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @deprecated close method is replaced with disconnect.
 	 */
 	public function close()
 	{
-		trigger_error('close method is replaced with disconnect.', E_USER_DEPRECATED);
-
 		return parent::disconnect();
 	}
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @deprecated freeRecordSet method will be removed in 2.1
 	 */
 	public function freeRecordSet($result)
 	{
-		trigger_error('freeRecordSet method will be removed.', E_USER_DEPRECATED);
-
 		return ($result instanceof \PDOStatement) && $result->closeCursor();
 	}
 
@@ -203,11 +204,11 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @deprecated Use quote instead.
 	 */
 	public function quoteString($str)
 	{
-		trigger_error('Use quote instead.', E_USER_DEPRECATED);
-
 		return parent::quote($str);
 	}
 

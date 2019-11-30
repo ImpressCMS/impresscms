@@ -75,7 +75,7 @@ function b_system_admin_cp_show() {
 		$groups = array();
 	}
 	$all_ok = false;
-	if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
+	if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 		$sysperm_handler = icms::handler('icms_member_groupperm');
 		$ok_syscats = & $sysperm_handler->getItemIds('system_admin', $groups);
 	} else {$all_ok = true; }

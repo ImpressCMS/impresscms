@@ -92,8 +92,4 @@ define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
 
 define('SMARTY_DIR', ICMS_LIBRARIES_PATH . '/smarty/');
 
-if (!defined('XOOPS_XMLRPC')) {
-	define('XOOPS_DB_CHKREF', 1);
-} else {
-	define('XOOPS_DB_CHKREF', 0);
-}
+define('XOOPS_DB_CHKREF', 1);

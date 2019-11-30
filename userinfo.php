@@ -61,9 +61,9 @@ if ($uid <= 0) {
 }
 
 $gperm_handler = icms::handler('icms_member_groupperm');
-$groups = is_object(icms::$user)? icms::$user->getGroups():XOOPS_GROUP_ANONYMOUS;
+$groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 
-$isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
+$isAdmin = $gperm_handler->checkRight('system_admin', ICMS_SYSTEM_USER, $groups);
 
 if (is_object(icms::$user)) {
 	if ($uid == icms::$user->getVar('uid')) {

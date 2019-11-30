@@ -176,7 +176,7 @@ switch ($op) {
 				exit();
 			}
 			$newid = (int) $newuser->getVar('uid');
-			if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
+			if (!$member_handler->addUserToGroup(ICMS_GROUP_USERS, $newid)) {
 				echo "<div id='registerng'>" . _US_REGISTERNG . "</div>";
 				include 'footer.php';
 				exit();
