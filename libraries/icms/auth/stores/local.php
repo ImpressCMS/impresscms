@@ -33,7 +33,7 @@
 *	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'allow_htsig', '_MD_AM_ALLWHTSIG', '1', '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', " . $p++ . ")");
 *	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', " . $p++ . ")");
 *	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'new_user_notify', '_MD_AM_NEWUNOTIFY', '1', '_MD_AM_NEWUNOTIFYDSC', 'yesno', 'int', " . $p++ . ")");
-*	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'new_user_notify_group', '_MD_AM_NOTIFYTO', ".$gruops['XOOPS_GROUP_ADMIN'].", '_MD_AM_NOTIFYTODSC', 'group', 'int', " . $p++ . ")");
+*	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'new_user_notify_group', '_MD_AM_NOTIFYTO', ".$gruops['ICMS_GROUP_ADMIN'].", '_MD_AM_NOTIFYTODSC', 'group', 'int', " . $p++ . ")");
 *	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'activation_type', '_MD_AM_ACTVTYPE', '0', '_MD_AM_ACTVTYPEDSC', 'select', 'int', " . $p++ . ")");
 *	// Insert data for Config Options in selection field. (must be placed before //$i++)
 *		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_USERACTV', '0', $i)");
@@ -41,7 +41,7 @@
 *		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ADMINACTV', '2', $i)");
 *		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_REGINVITE', '3', $i)");
 *	// ----------
-*	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'activation_group', '_MD_AM_ACTVGROUP', ".$gruops['XOOPS_GROUP_ADMIN'].", '_MD_AM_ACTVGROUPDSC', 'group', 'int', " . $p++ . ")");
+*	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'activation_group', '_MD_AM_ACTVGROUP', ".$gruops['ICMS_GROUP_ADMIN'].", '_MD_AM_ACTVGROUPDSC', 'group', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'uname_test_level', '_MD_AM_UNAMELVL', '0', '_MD_AM_UNAMELVLDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_STRICT', '0', $i)");

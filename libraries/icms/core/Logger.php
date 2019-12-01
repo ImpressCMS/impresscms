@@ -1,236 +1,292 @@
 <?php
-/**
- * icms_core_Logger component main class file
- *
- * @copyright	The XOOPS project http://www.xoops.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @since		XOOPS 2.0
- *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- */
+
+use Monolog\Handler\BrowserConsoleHandler;
+use Monolog\Handler\ChromePHPHandler;
+use Monolog\Handler\FirePHPHandler;
+use Monolog\Handler\PHPConsoleHandler;
+use Monolog\Handler\ProcessableHandlerInterface;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
 
 /**
- * Collects information for a page request
- *
- * Records information about database queries, blocks, and execution time
- * and can display it as HTML. It also catches php runtime errors.
- *
- * @since		XOOPS
- * @author		Kazumi Ono  <onokazu@xoops.org>
- * @author		Skalpa Keo <skalpa@xoops.org>
- *
- * @package	ICMS\Core
+ * Proxy logger class to add some compatibility stuff with older ICMS versions
  */
-class icms_core_Logger {
-
-	public $queries = array();
-	public $blocks = array();
-	public $extra = array();
-	public $logstart = array();
-	public $logend = array();
-	public $errors = array();
-	public $deprecated = array();
-
-	public $usePopup = false;
-	public $activated = true;
-
-	private $renderingEnabled = false;
+class icms_core_Logger extends Logger
+{
 
 	/**
-	 * Constructor
+	 * Started timers list
+	 *
+	 * @var array
 	 */
-	private function __construct() {
-/* Empty! */
-	}
+	public $timers = [];
 
 	/**
-	 * Get a reference to the only instance of this class
+	 * Get a instance for default logger
 	 *
 	 * @return  object icms_core_Logger  (@link icms_core_Logger) reference to the only instance
-	 * @static
+	 *
+	 * @throws Exception
 	 */
-	static public function &instance()
+	public static function &instance()
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_core_Logger();
+			$enabled = (bool)env('LOGGING_ENABLED', false);
+			$instance = new static('default', [
+				new RotatingFileHandler(
+					ICMS_LOGGING_PATH . '/default.log',
+					0,
+					$enabled ? Logger::DEBUG : Logger::ERROR
+				)
+			]);
 			// Always catch errors, for security reasons
 			error_reporting(E_ALL);
 			ini_set('display_errors', 1);
-			set_error_handler(array($instance, 'handleError'));
-			set_exception_handler(array($instance, 'handleException'));
+			set_error_handler([$instance, 'handleError']);
+			set_exception_handler([$instance, 'handleException']);
+			if ($enabled) {
+				$instance->enableRendering();
+			}
 		}
 		return $instance;
 	}
 
 	/**
-	 * Enable logger output rendering
-	 * When output rendering is enabled, the logger will insert its output within the page content.
-	 * If the string <!--{xo-logger-output}--> is found in the page content, the logger output will
-	 * replace it, otherwise it will be inserted after all the page output.
+	 * Enable logger output
 	 */
-	public function enableRendering() {
-		if (!$this->renderingEnabled) {
-			ob_start(array(&$this, 'render'));
-			$this->renderingEnabled = true;
+	public function enableRendering()
+	{
+		$this->disableRendering();
+		foreach ($this->getDebugHandlersFromConfig() as $handler) {
+			$this->pushHandler($handler);
 		}
 	}
 
 	/**
 	 * Disable logger output rendering.
 	 */
-	public function disableRendering() {
-		if ($this->renderingEnabled) {
-			$this->renderingEnabled = false;
-		}
+	public function disableRendering()
+	{
+		$this->handlers = array_filter($this->handlers, function ($handler) {
+			return !($handler instanceof BrowserConsoleHandler) &&
+				!($handler instanceof PHPConsoleHandler) &&
+				!($handler instanceof FirePHPHandler) &&
+				!($handler instanceof ChromePHPHandler);
+		});
 	}
 
 	/**
-	 * Disabling logger for some special occasion like AJAX requests and XML
+	 * Gets handlers from env variable DEBUG_TOOL
 	 *
-	 * When the logger absolutely needs to be disabled whatever it is enabled or not in the preferences
-	 * and whether user has permission or not to view it
+	 * @return ProcessableHandlerInterface[]
 	 */
-	public function disableLogger() {
-		$this->activated = false;
+	protected function getDebugHandlersFromConfig()
+	{
+		$handlers = [];
+		foreach (explode(',', env('DEBUG_TOOL')) as $debugTool) {
+			switch (strtolower(trim($debugTool))) {
+				case 'firephp':
+					$handlers[] = new FirePHPHandler();
+					break;
+				case 'chromephp':
+					$handlers[] = new ChromePHPHandler();
+					break;
+				case 'browserconsole':
+				case 'default':
+					$handlers[] = new BrowserConsoleHandler();
+					break;
+				case 'phpconsole':
+					$handlers[] = new PHPConsoleHandler();
+					break;
+			}
+		}
+		return $handlers;
 	}
 
 	/**
-	 * Returns the current microtime in seconds.
-	 * @return float
+	 * @inheritDoc
 	 */
-	private function microtime() {
-		$now = explode(' ', microtime());
-		return (float) $now[0] + (float) $now[1];
+	public function log($level, $message, array $context = []): void
+	{
+		// this is needed to automatically add context substrings
+		if (preg_match_all('/{([^}]+)}/', $message, $matches)) {
+			foreach ($matches[0] as $i => $str) {
+				if (!isset($context[$matches[1][$i]])) {
+					continue;
+				}
+				$message = str_replace($str, $context[$matches[1][$i]], $message);
+				unset($context[$matches[1][$i]]);
+			}
+		}
+
+		parent::log($level, $message, $context);
+	}
+
+	/**
+	 * Disabling logger
+	 */
+	public function disableLogger()
+	{
+		error_reporting(0);
+		$this->handlers = array_filter($this->handlers, function ($handler) {
+			return !($handler instanceof RotatingFileHandler);
+		});
 	}
 
 	/**
 	 * Start a timer
-	 * @param   string  $name   name of the timer
+	 *
+	 * @param string $name name of the timers
 	 */
-	public function startTime($name = 'ICMS') {
-		$this->logstart[$name] = $this->microtime();
+	public function startTime($name = 'ICMS')
+	{
+		$this->timers[$name] = microtime(true);
 	}
 
 	/**
-	 * Stop a timer
-	 * @param   string  $name   name of the timer
+	 * Stop a timer and prints to log
+	 *
+	 * @param string $name name of the timers
 	 */
-	public function stopTime($name = 'ICMS') {
-		$this->logend[$name] = $this->microtime();
+	public function stopTime($name = 'ICMS')
+	{
+		if (isset($this->timers[$name])) {
+			return;
+		}
+		$this->info(
+			sprintf('%s took %d', $name, microtime(true) - $this->timers[$name])
+		);
+		unset($this->timers[$name]);
 	}
 
 	/**
 	 * Log a database query
-	 * @param   string  $sql    SQL string
-	 * @param   string  $error  error message (if any)
-	 * @param   int     $errno  error number (if any)
+	 *
+	 * @param string $sql SQL string
+	 * @param string $error error message (if any)
+	 * @param int $errno error number (if any)
+	 *
+	 * @deprecated This method does nothing. Use Aura.SQL logging possibilities!
 	 */
-	public function addQuery($sql, $error = null, $errno = null) {
-		if ($this->activated) {
-			$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
-		}
-		if (defined('ICMS_LOGGING_HOOK') and ICMS_LOGGING_HOOK != '') {
-			include ICMS_LOGGING_HOOK;
-		}
+	public function addQuery($sql, $error = null, $errno = null)
+	{
+
 	}
 
 	/**
 	 * Log display of a block
-	 * @param   string  $name       name of the block
-	 * @param   bool    $cached     was the block cached?
-	 * @param   int     $cachetime  cachetime of the block
-	 */
-	public function addBlock($name, $cached = false, $cachetime = 0) {
-		if ($this->activated) {
-				$this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
-		}
-	}
-
-	/**
-	 * Log extra information
-	 * @param   string  $name       name for the entry
-	 * @param   int     $msg  text message for the entry
-	 */
-	public function addExtra($name, $msg) {
-		if ($this->activated) {
-			$this->extra[] = array('name' => $name, 'msg' => $msg);
-		}
-	}
-
-	public function addDeprecated($msg) {
-		if ($this->activated) {
-			$this->deprecated[] = $msg;
-		}
-	}
-
-	/**
-	 * Handles exception
 	 *
-	 * @param Throwable $ex
+	 * @param string $name name of the block
+	 * @param bool $cached was the block cached?
+	 * @param int $cachetime cachetime of the block
+	 *
+	 * @deprecated Use PSR logging functionality!
 	 */
-	public function handleException($ex) {
-	   if (!headers_sent()) {
-		   header('HTTP/1.0 500 ' . $ex->getMessage(), true, 500);
-	   }
-	   echo '<h1>Uncaught exception</h1>';
-	   echo '<b>Message: </b>' . $ex->getMessage() . '<br />';
-	   echo '<b>Code: </b>' . $ex->getCode() . '<br />';
-	   echo '<b>File: </b>' . $ex->getFile() . '<br />';
-	   echo '<b>Line: </b>' . $ex->getLine() . '<br />';
-	   echo '<b>Trace: </b><pre>' . $ex->getTraceAsString() . '</pre>';
+	public function addBlock($name, $cached = false, $cachetime = 0)
+	{
+		$this->info('Blocks', [
+			'name' => $name,
+			'cached' => $cached,
+			'cachetime' => $cachetime
+		]);
 	}
 
 	/**
-	 * Error handling callback (called by the zend engine)
-	 * @param  string  $errno
-	 * @param  string  $errstr
-	 * @param  string  $errfile
-	 * @param  string  $errline
+	 * Log extra info
+	 *
+	 * @param string $name name
+	 * @param int $msg message
+	 *
+	 * @deprecated Use standar PSR logger functionality
 	 */
-	public function handleError($errno, $errstr, $errfile, $errline) {
-		$errstr = $this->sanitizePath($errstr);
-		$errfile = $this->sanitizePath($errfile);
-		if ($this->activated && ($errno & error_reporting())) {
-			// NOTE: we only store relative pathnames
-			$this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
+	public function addExtra($name, $msg)
+	{
+		$this->info('Extra', [
+			'name' => $name,
+			'msg' => $msg
+		]);
+	}
+
+	/**
+	 * Marks as deprecated
+	 *
+	 * @param string $msg Message/reason for deprecating
+	 *
+	 * @deprecated Will be removed in 2.1. Use @deprecated comments.
+	 */
+	public function addDeprecated($msg)
+	{
+		$this->handleError(E_USER_DEPRECATED, $msg, '', '');
+	}
+
+	/**
+	 * Error handling
+	 *
+	 * @param int $errorNumber
+	 * @param string $message
+	 * @param string $file
+	 * @param string $line
+	 */
+	public function handleError($errorNumber, $message, $file, $line)
+	{
+		$message = $this->sanitizePath($message);
+		$file = $this->sanitizePath($file);
+
+		$trace = array_slice(
+			debug_backtrace(),
+			1
+		);
+		$trace_data = [];
+		foreach ($trace as $step) {
+			if (!isset($step['file'])) {
+				continue;
+			}
+			$trace_data[] = $this->sanitizePath($step['file']) . ' (' . $step['line'] . ')';
 		}
 
-		if ($errno == E_USER_ERROR) {
-			$trace = true;
-			if (substr($errstr, 0, '8') == 'notrace:') {
-				$trace = false;
-				$errstr = substr($errstr, 8);
-			}
+		$data = compact('errorNumber', 'file', 'line', 'trace_data');
 
-			icms_loadLanguageFile('core', 'core');
-
-			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
-			echo $errortext;
-			if ($trace && function_exists('debug_backtrace')) {
-				echo "<div style='color:#ffffff;background-color:#ffffff'>Backtrace:<br />";
-				$trace = debug_backtrace();
-				array_shift($trace);
-				foreach ($trace as $step) {
-					if (isset($step['file'])) {
-						echo $this->sanitizePath($step['file']);
-						echo ' (' . $step['line'] . ")\n<br />";
-					}
-				}
-				echo '</div>';
-			}
-			exit();
+		switch ($errorNumber) {
+			case E_USER_DEPRECATED:
+			case E_DEPRECATED:
+				$this->info($message, $data);
+				break;
+			case E_NOTICE:
+			case E_USER_NOTICE:
+				$this->notice($message, $data);
+				break;
+			case E_PARSE:
+			case E_STRICT:
+			case E_COMPILE_ERROR:
+				$this->emergency($message, $data);
+				break;
+			case E_CORE_ERROR:
+			case E_ERROR:
+			case E_RECOVERABLE_ERROR:
+			case E_USER_ERROR:
+				$this->error($message, $data);
+				break;
+			case E_WARNING:
+			case E_USER_WARNING:
+			case E_CORE_WARNING:
+			case E_COMPILE_WARNING:
+				$this->warning($message, $data);
+				break;
 		}
 	}
 
 	/**
 	 * Sanitize path / url to file in erorr report
-	 * @param  string  $path   path to sanitize
+	 *
+	 * @param string $path path to sanitize
+	 *
 	 * @return string  $path   sanitized path
+	 *
 	 * @access protected
 	 */
-	function sanitizePath($path) {
+	protected function sanitizePath($path)
+	{
 		$path = str_replace(
 			array('\\', ICMS_ROOT_PATH, str_replace('\\', '/', realpath(ICMS_ROOT_PATH))),
 			array('/', '', ''),
@@ -241,55 +297,44 @@ class icms_core_Logger {
 
 	/**
 	 * Output buffering callback inserting logger dump in page output
-	 * Determines wheter output can be shown (based on permissions)
-	 * @param  string  $output
-	 * @return string  $output
+	 * @param string $output
+	 *
+	 * @return string
+	 *
+	 * @deprecated Does nothing. Use Monolog handler for selecting how and where data should be printed.
 	 */
-	public function render($output) {
-		global $icmsModule;
-		$this->addExtra('Included files', count(get_included_files()) . ' files');
-		$this->addExtra(_CORE_MEMORYUSAGE, icms_conv_nr2local(icms_convert_size(memory_get_usage())));
-		$groups   = (is_object(icms::$user))? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
-		$moduleid = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('mid'):1;
-		$gperm_handler = icms::handler('icms_member_groupperm');
-		if (!$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
-			return $output;
-		}
-		$this->renderingEnabled = $this->activated = false;
-		$log = $this->dump($this->usePopup?'popup':'');
-		$pattern = '<!--{xo-logger-output}-->';
-		$pos = strpos($output, $pattern);
-		if ($pos !== false) {
-			return substr($output, 0, $pos) . $log . substr($output, $pos + strlen($pattern));
-		} else {
-			return $output . $log;
-		}
+	public function render($output)
+	{
+		return '';
 	}
 
 	/**
-	 * dump the logger output
+	 * Prints the logger output data
 	 *
-	 * @param   string  $mode
-	 * @return  string  $ret
-	 * @access protected
+	 * @param string $mode
+	 *
+	 * @return  string
+	 *
+	 * @deprecated Does nothing
+	 *
 	 */
-	public function dump($mode = '') {
-		include ICMS_LIBRARIES_PATH . '/icms/core/Logger_render.php';
-		return $ret;
+	public function dump($mode = '')
+	{
+		return '';
 	}
 
 	/**
-	 * get the current execution time of a timer
+	 * Gets the execution time of specific timer
 	 *
-	 * @param   string  $name   name of the counter
-	 * @return  float   current execution time of the counter
+	 * @param string $name name of the counter
+	 *
+	 * @return  float
+	 *
+	 * @deprecated Does nothing. Stopping timer logs time automatically.
 	 */
-	public function dumpTime($name = 'ICMS') {
-		if (!isset($this->logstart[$name])) {
-			return 0;
-		}
-		$stop = isset($this->logend[$name])?$this->logend[$name]:$this->microtime();
-		return $stop - $this->logstart[$name];
+	public function dumpTime($name = 'ICMS')
+	{
+		return 0;
 	}
 
 }

@@ -17,11 +17,6 @@
 interface icms_db_IConnection {
 
 	/**
-	 * Public contructor
-	 */
-	public function __construct($dsn, $user, $pwd, $options = array());
-
-	/**
 	 * Set the value of a database connection attribute.
 	 * @param int $attribute
 	 * @param mixed $value
@@ -102,7 +97,7 @@ interface icms_db_IConnection {
 	 * @param string $sql
 	 * @return icms_db_Statement
 	 */
-	public function query();
+	public function query($statement, ...$fetch);
 
 	/**
 	 * Returns the ID of the last inserted row or the last value from a sequence object.

@@ -3,6 +3,10 @@
 // Loads environment data
 \Dotenv\Dotenv::create(dirname(__DIR__))->safeLoad();
 
+if (!function_exists('env')) {
+	return;
+}
+
 define('ICMS_ROOT_PATH', dirname(__DIR__));
 define('ICMS_URL', env('URL'));
 
@@ -71,6 +75,7 @@ define('ICMS_THEME_PATH', ICMS_PUBLIC_PATH . '/themes');
 define('ICMS_THEME_URL', ICMS_URL . '/themes');
 define('ICMS_STORAGE_PATH', ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'storage');
 define('ICMS_CACHE_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'cache');
+define('ICMS_LOGGING_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'log');
 define('ICMS_PURIFIER_CACHE', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'htmlpurifier');
 define('ICMS_COMPILE_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'templates_c');
 define('ICMS_IMAGES_URL', ICMS_URL . '/images');
@@ -88,8 +93,4 @@ define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
 
 define('SMARTY_DIR', ICMS_LIBRARIES_PATH . '/smarty/');
 
-if (!defined('XOOPS_XMLRPC')) {
-	define('XOOPS_DB_CHKREF', 1);
-} else {
-	define('XOOPS_DB_CHKREF', 0);
-}
+define('XOOPS_DB_CHKREF', 1);

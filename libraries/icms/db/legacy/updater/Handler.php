@@ -28,11 +28,13 @@ icms_loadLanguageFile('core', 'databaseupdater');
 class icms_db_legacy_updater_Handler {
 
 	/**
-	 * xoopsDB database object
-	 *
-	 * @var @link XoopsDatabase object
+	 * @var \icms_db_Connection
 	 */
 	var $_db;
+
+	/**
+	 * @var \icms_db_Connection
+	 */
 	var $db;
 
 	/**
@@ -43,8 +45,8 @@ class icms_db_legacy_updater_Handler {
 
 	function __construct() {
 		// backward compat
-		$this->_db = icms::$xoopsDB;
-		$this->db = icms::$xoopsDB;
+		$this->_db = \icms::getInstance()->get('db');
+		$this->db = \icms::getInstance()->get('db');
 	}
 
 	/**

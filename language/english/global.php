@@ -222,21 +222,6 @@ define('_CT_NAV','Home');
 define('_CT_RELATEDS','Related pages');
 //Security image (captcha)
 define("_SECURITYIMAGE_GETCODE","Enter the security code");
-define("_QUERIES", "Queries");
-define("_BLOCKS", "Blocks");
-define("_EXTRA", "Extra");
-define("_TIMERS", "Timers");
-define("_CACHED", "Cached");
-define("_REGENERATES", "Regenerates every %s seconds");
-define("_TOTAL", "Total :");
-define("_ERR_NR", "Error number:");
-define("_ERR_MSG", "Error message:");
-define("_NOTICE", "Notice");
-define("_WARNING", "Warning");
-define("_STRICT", "Strict");
-define("_ERROR", "Error(s)");
-define("_TOOKXLONG", " took %s seconds to load.");
-define("_BLOCK", "Block(s)");
 define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
 
 // This shows local support site in ImpressCMS menu, (if selected language is not English)

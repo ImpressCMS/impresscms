@@ -39,7 +39,7 @@ if (file_exists(ICMS_ROOT_PATH . "/modules/system/language/" . $icmsConfig['lang
 }
 
 if (!is_object(icms::$user)) {
-	$groups = array(XOOPS_GROUP_ANONYMOUS);
+	$groups = array(ICMS_GROUP_ANONYMOUS);
 	$admin = false;
 } else {
 	$groups = & icms::$user->getGroups();
@@ -98,7 +98,7 @@ function imanager_index($imgcat_id = null) {
 	global $icmsTpl, $icmsConfig, $target, $type;
 
 	if (!is_object(icms::$user)) {
-		$groups = array(XOOPS_GROUP_ANONYMOUS);
+		$groups = array(ICMS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
 		$groups = & icms::$user->getGroups();
@@ -249,8 +249,8 @@ function imanager_index($imgcat_id = null) {
 	$sup->addOptionArray($list);
 	$form->addElement($sup);
 	$form->addElement(new icms_form_elements_Text(_MD_IMGCATNAME, 'imgcat_name', 50, 255), true);
-	$form->addElement(new icms_form_elements_select_Group(_MD_IMGCATRGRP, 'readgroup', true, XOOPS_GROUP_ADMIN, 5, true));
-	$form->addElement(new icms_form_elements_select_Group(_MD_IMGCATWGRP, 'writegroup', true, XOOPS_GROUP_ADMIN, 5, true));
+	$form->addElement(new icms_form_elements_select_Group(_MD_IMGCATRGRP, 'readgroup', true, ICMS_GROUP_ADMIN, 5, true));
+	$form->addElement(new icms_form_elements_select_Group(_MD_IMGCATWGRP, 'writegroup', true, ICMS_GROUP_ADMIN, 5, true));
 	$form->addElement(new icms_form_elements_Text(_IMGMAXSIZE, 'imgcat_maxsize', 10, 10, 50000));
 	$form->addElement(new icms_form_elements_Text(_IMGMAXWIDTH, 'imgcat_maxwidth', 3, 4, 120));
 	$form->addElement(new icms_form_elements_Text(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, 120));
@@ -282,7 +282,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	global $icmsTpl, $target, $type;
 
 	if (!is_object(icms::$user)) {
-		$groups = array(XOOPS_GROUP_ANONYMOUS);
+		$groups = array(ICMS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
 		$groups = & icms::$user->getGroups();
@@ -527,8 +527,8 @@ function imanager_addcat() {
 	if (!isset($readgroup)) {
 		$readgroup = array();
 	}
-	if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
-		array_push($readgroup, XOOPS_GROUP_ADMIN);
+	if (!in_array(ICMS_GROUP_ADMIN, $readgroup)) {
+		array_push($readgroup, ICMS_GROUP_ADMIN);
 	}
 	foreach ($readgroup as $rgroup) {
 		$imagecategoryperm = & $imagecategoryperm_handler->create();
@@ -542,8 +542,8 @@ function imanager_addcat() {
 	if (!isset($writegroup)) {
 		$writegroup = array();
 	}
-	if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
-		array_push($writegroup, XOOPS_GROUP_ADMIN);
+	if (!in_array(ICMS_GROUP_ADMIN, $writegroup)) {
+		array_push($writegroup, ICMS_GROUP_ADMIN);
 	}
 	foreach ($writegroup as $wgroup) {
 		$imagecategoryperm = & $imagecategoryperm_handler->create();
