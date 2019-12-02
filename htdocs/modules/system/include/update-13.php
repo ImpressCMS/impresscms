@@ -372,10 +372,4 @@ if ($dbVersion < $newDbVersion) {
 		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
-
-	/* Add this as the last instruction of the last version update - outside of this and it will notify every time
-     * they update the system module, even if there isn't an update being applied
-     *
-     * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.*/
-	icms_module_Handler::installation_notify($newDbVersion, ICMS_URL);
 }
