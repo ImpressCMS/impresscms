@@ -45,7 +45,7 @@ final class icms extends Container {
 	/**
 	 * Some vars for compatibility
 	 *
-	 * @deprecated
+	 * @deprecated 2.0 Use get method for getting any of these
 	 */
 	public static $db, $xoopsDB, $logger, $preload, $config, $security, $session, $module;
 	/**

@@ -66,91 +66,91 @@ abstract class icms_properties_Handler implements Serializable {
 	/**
 	 * Specifies property that a property stores a file (old format)
 	 *
-	 * @deprecated Use DTYPE_INTEGER with VARCFG_DATA_HANDLER = "file"
+	 * @deprecated Use DTYPE_INTEGER with VARCFG_DATA_HANDLER = "file". Since 2.0
 	 */
 	const DTYPE_DEP_FILE = 204; //XOBJ_DTYPE_FILE
 
 	/**
 	 * Specifies property that a property stores a long string)
 	 *
-	 * @deprecated Use DTYPE_STRING with specified VARCFG_MAX_LENGTH = 255
+	 * @deprecated Use DTYPE_STRING with specified VARCFG_MAX_LENGTH = 255. Since 2.0
 	 */
 	const DTYPE_DEP_TXTBOX = 1; // XOBJ_DTYPE_TXTBOX
 
 	/**
 	 * Specifies property that a property stores a url string
 	 *
-	 * @deprecated Use DTYPE_STRING with specified VARCFG_VALIDATE_RULE VALIDATE_RULE_LINKS
+	 * @deprecated Use DTYPE_STRING with specified VARCFG_VALIDATE_RULE VALIDATE_RULE_LINKS. Since 2.0
 	 */
 	const DTYPE_DEP_URL = 4; // XOBJ_DTYPE_URL
 
 	/**
 	 * Specifies property that a property stores a email address
 	 *
-	 * @deprecated Use DTYPE_STRING with specified VARCFG_VALIDATE_RULE VALIDATE_RULE_EMAIL
+	 * @deprecated Use DTYPE_STRING with specified VARCFG_VALIDATE_RULE VALIDATE_RULE_EMAIL. Since 2.0
 	 */
 	const DTYPE_DEP_EMAIL = 5; // XOBJ_DTYPE_EMAIL
 
 	/**
 	 * Specifies property that a property stores a source code
 	 *
-	 * @deprecated Use DTYPE_STRING with specified VARCFG_SOURCE_FORMATING
+	 * @deprecated Use DTYPE_STRING with specified VARCFG_SOURCE_FORMATING. Since 2.0
 	 */
 	const DTYPE_DEP_SOURCE = 8; // XOBJ_DTYPE_SOURCE
 
 	/**
 	 * Specifies property that a property stores a short time
 	 *
-	 * @deprecated Use DTYPE_DATETIME with VARCFG_FORMAT _SHORTDATESTRING
+	 * @deprecated Use DTYPE_DATETIME with VARCFG_FORMAT _SHORTDATESTRING. Since 2.0
 	 */
 	const DTYPE_DEP_STIME = 9; // XOBJ_DTYPE_STIME
 
 	/**
 	 * Specifies property that a property stores a middle time
 	 *
-	 * @deprecated Use DTYPE_DATETIME with VARCFG_FORMAT _MEDIUMDATESTRING
+	 * @deprecated Use DTYPE_DATETIME with VARCFG_FORMAT _MEDIUMDATESTRING. Since 2.0
 	 */
 	const DTYPE_DEP_MTIME = 10; // XOBJ_DTYPE_MTIME
 
 	/**
 	 * Specifies property that a property stores a currency
 	 *
-	 * @deprecated Use DTYPE_FLOAT with VARCFG_FORMAT "%01.2f"
+	 * @deprecated Use DTYPE_FLOAT with VARCFG_FORMAT "%01.2f". Since 2.0
 	 */
 	const DTYPE_DEP_CURRENCY = 200; // XOBJ_DTYPE_CURRENCY
 
 	/**
 	 * Specifies property that a property stores a time only data
 	 *
-	 * @deprecated Use DTYPE_DATETIME with VARCFG_FORMAT "s:i"
+	 * @deprecated Use DTYPE_DATETIME with VARCFG_FORMAT "s:i". Since 2.0
 	 */
 	const DTYPE_DEP_TIME_ONLY = 202; // XOBJ_DTYPE_TIME_ONLY
 
 	/**
 	 * Specifies property that a property stores a urllink
 	 *
-	 * @deprecated Use DTYPE_INTEGER with VARCFG_DATA_HANDLER = "link"
+	 * @deprecated Use DTYPE_INTEGER with VARCFG_DATA_HANDLER = "link". Since 2.0
 	 */
 	const DTYPE_DEP_URLLINK = 203; // XOBJ_DTYPE_URLLINK
 
 	/**
 	 * Specifies property that a property stores a image
 	 *
-	 * @deprecated Use DTYPE_INTEGER with VARCFG_DATA_HANDLER = "image"
+	 * @deprecated Use DTYPE_INTEGER with VARCFG_DATA_HANDLER = "image". Since 2.0
 	 */
 	const DTYPE_DEP_IMAGE = 205; // XOBJ_DTYPE_IMAGE
 
 	/**
 	 * Specifies property that a property stores a form section opening
 	 *
-	 * @deprecated Output formating can't be defined as data type so this does nothing and will be removed in future
+	 * @deprecated Output formating can't be defined as data type so this does nothing and will be removed in future. Since 2.0
 	 */
 	const DTYPE_DEP_FORM_SECTION = 210; // XOBJ_DTYPE_FORM_SECTION
 
 	/**
 	 * Specifies property that a property stores a form section closing
 	 *
-	 * @deprecated Output formating can't be defined as data type so this does nothing and will be removed in future
+	 * @deprecated Output formating can't be defined as data type so this does nothing and will be removed in future. Since 2.0
 	 */
 	const DTYPE_DEP_FORM_SECTION_CLOSE = 211; // XOBJ_DTYPE_FORM_SECTION_CLOSE
 
@@ -525,7 +525,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 * @param	bool            $displayOnForm      Display on form
 	 * @param	string		$default            Default value
 	 *
-	 * @deprecated initCommonVar will be removed in the future
+	 * @deprecated initCommonVar will be removed in the future. Since 2.0
 	 */
 	public function initCommonVar($varname, $displayOnForm = true, $default = 'notdefined') {
 		trigger_error('initCommonVar will be removed in the future', E_USER_DEPRECATED);
@@ -762,7 +762,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 * @param string $key Var name
 	 * @param int $type Type
 	 *
-	 * @deprecated use setVarInfo with self::VARCFG_TYPE option instead
+	 * @deprecated use setVarInfo with self::VARCFG_TYPE option instead. Since 2.0
 	 */
 	public function setType($key, $type) {
 		trigger_error('use setVarInfo with self::VARCFG_TYPE option instead', E_USER_DEPRECATED);
@@ -776,7 +776,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 * @param string $key Var name
 	 * @param bool $is_required Is required?
 	 *
-	 * @deprecated use setVarInfo with required option instead
+	 * @deprecated use setVarInfo with required option instead. Since 2.0
 	 */
 	public function doSetFieldAsRequired($key, $is_required = true) {
 		trigger_error('use setVarInfo with required option instead', E_USER_DEPRECATED);
@@ -789,7 +789,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 *
 	 * @return array
 	 *
-	 * @deprecated use toArray instead!
+	 * @deprecated use toArray instead!. Since 2.0
 	 */
 	public function cleanVars() {
 		trigger_error('use toArray instead!', E_USER_DEPRECATED);

@@ -249,7 +249,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * - $maxlength = 0 unless $data_type is a TEXTBOX, then $maxlength will be 255
 	 * - all other vars are NULL or '' depending of the parameter
 	 *
-	 * @deprecated Use initVar instead
+	 * @deprecated Use initVar instead. Since 2.0
 	 *
 	 * @param string $key
 	 *        key of this field. This needs to be the name of the field in the related database table
