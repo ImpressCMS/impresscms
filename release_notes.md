@@ -1,6 +1,6 @@
-# ImpressCMS 1.4 Beta
+# ImpressCMS 1.4 RC
 
-ImpressCMS 1.4 is a intermediate release between the legacy 1.3 series and the upcoming 2.0 release. The focus is on providing compatibility with PHP 7 and code cleanup. Existing modules that are compatible with PHP 7 should still work.
+ImpressCMS 1.4 is a intermediate release between the legacy 1.3 series and the upcoming 2.0 release. The focus is on providing compatibility with PHP 7 and code cleanup. Existing modules that are compatible with PHP 7 should still work, as long as they are compatible with PHP7 and the obligatory PDO database driver that switching to PHP7 brings with it.
 
 ## Installation
 
@@ -12,4 +12,4 @@ When updating from a previous version in the 1.3 series, overwrite your existing
 
 ## Known issues
 
-The upgrade step that takes care of moving some templates from the system module to a new location is not yet present. These non-used files can be removed by hand. #508 takes care of this
+None so far. If you encounter any problems, please log a ticket at https://github.com/ImpressCMS/impresscms/issues/new/choose
