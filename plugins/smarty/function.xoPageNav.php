@@ -10,9 +10,12 @@
 */
 
 function smarty_function_xoPageNav( $params, &$smarty ) {
-	global $xoops;
-
-	extract( $params );
+	$pageSize = isset($params['pageSize'])?(int)$params['pageSize']:10;
+	$itemsCount = isset($params['itemsCount'])?(int)$params['itemsCount']:10;
+	$offset = isset($params['offset'])?(int)$params['offset']:0;
+	$linksCount = isset($params['linksCount'])?(int)$params['linksCount']:0;
+	$url = $params['url'] ?? '#';
+	$class = $params['class'] ?? '';
 	if ( $pageSize < 1 ) {
 		$pageSize = 10;
 	}

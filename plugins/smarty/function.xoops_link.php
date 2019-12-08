@@ -48,14 +48,14 @@
  */
 
 function smarty_function_xoops_link($params, $smarty) {
-	$urlstr='';
+	$urlStr='';
 	if (isset($params['urlvars'])) {
 		$szvars=explode( '&', $params['urlvars'] );
 		$vars=array();
 		// Split the string making an array from the ('name','value') pairs
 		foreach ($szvars as $szvar) {
 			$pos=strpos($szvar,'=');
-			if ( $pos != false ) {			// If a value is specified, use it
+			if ( $pos !== false ) {			// If a value is specified, use it
 				$vars[] = array( 'name' => substr($szvar,0,$pos), 'value' => substr($szvar,$pos+1) );
 			} else {						// Otherwise use current one (if any)
 				if ( isset($_POST[$szvar]) ) {
@@ -67,23 +67,15 @@ function smarty_function_xoops_link($params, $smarty) {
 		}
 		// Now reconstruct query string from specified variables
 		foreach ($vars as $var) {
-			$urlstr = "$urlstr&{$var['name']}={$var['value']}";
+			$urlStr = "$urlStr&{$var['name']}={$var['value']}";
 		}
-		if ( strlen($urlstr) > 0 ) {
-			$urlstr = '?' . substr( $urlstr, 1 );
+		if ($urlStr !== '') {
+			$urlStr = '?' . substr( $urlStr, 1 );
 		}
 	}
 
 	// Get default module/page from current ones if necessary
-	$module='';
-	$page='';
-	if ( !isset($params['module']) ) {
-		if ( isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ) {
-			$module = $GLOBALS['xoopsModule']->getVar('dirname');
-		}
-	} else {
-		$module = $params['module'];
-	}
+	$module = $params['module'] ?? \icms::getInstance()->get('module')->getVar('dirname');
 	if ( !isset($params['page']) ) {
 		$cur = $_SERVER['PHP_SELF'];
 		$page = substr( $cur, strrpos( $cur, '/' ) + 1 );
@@ -92,9 +84,9 @@ function smarty_function_xoops_link($params, $smarty) {
 	}
 	// Now, return entire link URL :-)
 	if ( empty($module) ) {
-		echo ICMS_URL . "/$page" . $urlstr;
+		echo ICMS_URL . "/$page" . $urlStr;
 	} else {
-		echo ICMS_URL . "/modules/$module/$page" . $urlstr;
+		echo ICMS_URL . "/modules/$module/$page" . $urlStr;
 	}
 }
 

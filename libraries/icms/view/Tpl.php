@@ -100,7 +100,7 @@ class icms_view_Tpl extends SmartyBC
 	/**
 	 * Renders output from template data
 	 *
-	 * @param   string  $data		The template to render
+	 * @param   string  $tplSource		The template to render
 	 * @param	bool	$display	If rendered text should be output or returned
 	 * @return  string  			Rendered output if $display was false
 	 */
@@ -118,8 +118,9 @@ class icms_view_Tpl extends SmartyBC
 	/**
 	 * Touch the resource (file) which means get it to recompile the resource
 	 *
-	 * @param   string  $resourcename	Resourcename to touch
-	 * @return  string  $result         Was the resource recompiled
+	 * @param   string  $resourceName	Resource name to touch
+	 *
+	 * @return  int
 	 */
 	public function touch($resourceName) {
 		return $this->clearCache($resourceName);
@@ -132,16 +133,28 @@ class icms_view_Tpl extends SmartyBC
 	 *
 	 * @return  boolean
 	 */
-	static public function template_touch($tpl_id) {
-		$tplfile_handler = & icms::handler('icms_view_template_file');
-		$tplfile = & $tplfile_handler->get($tpl_id);
+	public static function template_touch($tpl_id) {
+		$tplFileHandler = & icms::handler('icms_view_template_file');
+		$tplFile = & $tplFileHandler->get($tpl_id);
 
-		if (is_object($tplfile)) {
-			$file = $tplfile->tpl_file;
-			$tpl = new icms_view_Tpl();
-			return $tpl->touch("db:$file");
+		if (!is_object($tplFile)) {
+			return false;
 		}
-		return false;
+
+		$file = $tplFile->tpl_file;
+
+		/**
+		 * @var \Psr\Cache\CacheItemPoolInterface $cache
+		 */
+		$cache = \icms::getInstance()->get('cache');
+		$cachedTemplate = $cache->getItem('tpl_db_' . base64_encode($file));
+		$cachedTemplate->expiresAfter(-1);
+
+		$tpl = new icms_view_Tpl();
+
+		$tpl->touch("db:$file");
+
+		return true;
 	}
 
 	/**

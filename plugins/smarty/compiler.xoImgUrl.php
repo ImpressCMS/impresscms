@@ -31,12 +31,11 @@
  */
 function smarty_compiler_xoImgUrl($args, Smarty &$smarty)
 {
-	global $xoops, $xoTheme;
+	global $xoTheme;
 
 	$argStr = trim($args[0]);
 	$path = ( isset($xoTheme) && is_object( $xoTheme ) ) ? $xoTheme->resourcePath( $argStr ) : $argStr;
 	return addslashes(icms::url($path));
-
 }
 
 

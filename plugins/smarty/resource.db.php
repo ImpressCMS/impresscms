@@ -26,9 +26,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 			$source = $tpl->getVar('tpl_source', 'n');
 			$mtime = $tpl->getVar('tpl_lastmodified', 'n');
 		} else {
-			$fp = fopen($tpl, 'r');
-			$source = fread($fp, filesize($tpl));
-			fclose($fp);
+			$source = file_get_contents($tpl);
 			$mtime = filemtime($tpl);
 		}
 	}
@@ -53,36 +51,43 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 	 * @param string $tpl_name Template name
 	 *
 	 * @return bool|mixed|string
+	 * @throws \Psr\Cache\InvalidArgumentException
 	 */
 	protected function tplinfo($tpl_name)
 	{
 		global $icmsConfig;
 
-		static $cache = array();
+		/**
+		 * @var \Psr\Cache\CacheItemPoolInterface $cache
+		 */
+		$cache = \icms::getInstance()->get('cache');
+		$cachedTemplate = $cache->getItem('tpl_db_' . base64_encode($tpl_name));
 
-		if (isset($cache[$tpl_name])) {
-			return $cache[$tpl_name];
+		if ($cachedTemplate->isHit()) {
+			return $cachedTemplate->get();
 		}
+
 		$tplset = $icmsConfig['template_set'];
-		$theme = isset($icmsConfig['theme_set']) ? $icmsConfig['theme_set'] : 'default';
+		$theme = $icmsConfig['theme_set'] ?? 'default';
 
 		$tplfile_handler = icms::handler('icms_view_template_file');
 		// If we're not using the "default" template set, then get the templates from the DB
-		if ($tplset != "default") {
+		if ($tplset != 'default') {
 			$tplobj = $tplfile_handler->getPrefetchedBlock($tplset, $tpl_name);
 			if (count($tplobj)) {
-				return $cache[$tpl_name] = $tplobj[0];
+				$cachedTemplate->set($tplobj[0]);
+				return $tplobj[0];
 			}
 		}
 		// If we'using the default tplset, get the template from the filesystem
-		$tplobj = $tplfile_handler->getPrefetchedBlock("default", $tpl_name);
+		$tplobj = $tplfile_handler->getPrefetchedBlock('default', $tpl_name);
 
 		if (!count($tplobj)) {
-			return $cache[$tpl_name] = false;
+			$cachedTemplate->set(false);
+			return false;
 		}
-		$tplobj = $tplobj[0];
-		$module = $tplobj->getVar('tpl_module', 'n');
-		$type = $tplobj->getVar('tpl_type', 'n');
+		$module = $tplobj[0]->getVar('tpl_module', 'n');
+		$type = $tplobj[0]->getVar('tpl_type', 'n');
 		$blockpath = ($type == 'block') ? 'blocks/' : '';
 		// First, check for an overloaded version within the theme folder
 		$filepath = ICMS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
@@ -90,10 +95,12 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 			// If no custom version exists, get the tpl from its default location
 			$filepath = ICMS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
 			if (!file_exists($filepath)) {
-				return $cache[$tpl_name] = $tplobj;
+				$cachedTemplate->set($tplobj[0]);
+				return $tplobj[0];
 			}
 		}
-		return $cache[$tpl_name] = $filepath;
+		$cachedTemplate->set($filepath);
+		return $filepath;
 	}
 
 }

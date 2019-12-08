@@ -48,23 +48,21 @@
  */
 function smarty_compiler_xoAppUrl($args, &$compiler)
 {
-	global $xoops;
-
 	$url = trim($args[0]);
 	$params = array_slice($args, 1);
 
-	if ( substr( $url, 0, 1 ) == '/' ) {
+	if (strpos($url, '/') === 0) {
 		$url = 'www' . $url;
 	}
 	// Static URL generation
-	if (strpos($url[0], '$') === false && $url != '.') {
+	if ($url !== '.' && strpos($url[0], '$') === false) {
 		if ( isset($params) ) {
 			foreach ( $params as $k => $v ) {
 				if ( in_array( substr( $v, 0, 1 ), array( '"', "'" ) ) ) {
 					$params[$k] = substr( $v, 1, -1 );
 				}
 			}
-			$url = $xoops->buildUrl( $url, $params );
+			$url = \icms::buildUrl( $url, $params );
 		}
 		$url = icms::path( $url, true );
 		return htmlspecialchars($url);
@@ -73,15 +71,15 @@ function smarty_compiler_xoAppUrl($args, &$compiler)
 	if ( $url == '.' ) {
 		$str = "\$_SERVER['REQUEST_URI']";
 	} else {
-		$str = "icms::path( '$url', true )";
+		$str = "\\icms::path( '$url', true )";
 	}
 	if ( isset($params) ) {
 		$str = "\\icms::buildUrl( $str, array(\n";
 		foreach ( $params as $k => $v ) {
 			$str .= var_export( $k, true ) . " => $v,\n";
 		}
-		$str .= ") )";
+		$str .= ') )';
 	}
-	return "<?php echo htmlspecialchars( $str ); ?" . ">";
+	return "<?php echo htmlspecialchars( $str ); ?" . '>';
 }
 
