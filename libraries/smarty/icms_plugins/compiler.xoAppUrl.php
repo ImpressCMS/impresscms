@@ -37,8 +37,7 @@
  * The is the slowest mode, and its use should be prevented unless necessary. Here,
  * the URL is generated dynamically each time the template is displayed, thus allowing
  * you to use the value of a template variable in the location string. To use it, you
- * must surround your location with double-quotes ("), and use the
- * {@link http://smarty.php.net/manual/en/language.syntax.quotes.php Smarty quoted strings}
+ * must surround your location with double-quotes ("), and use the Smarty quoted strings
  * syntax to insert variables values.
  *
  * <code>

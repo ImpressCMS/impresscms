@@ -96,7 +96,8 @@ class icms_form_elements_Tray extends icms_form_Element {
 	/**
 	 * Add an element to the group
 	 *
-	 * @param	object  &$element    {@link icms_form_Element} to add
+	 * @param \icms_form_Element  &$formElement Element to add
+	 * @param bool $required Is required?
 	 */
 	public function addElement(&$formElement, $required = false) {
 		$this->_elements[] = & $formElement;
@@ -117,7 +118,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	/**
 	 * get an array of "required" form elements
 	 *
-	 * @return	array   array of {@link icms_form_Element}s
+	 * @return	\icms_form_Element[]
 	 */
 	public function &getRequired() {
 		return $this->_required;
@@ -127,7 +128,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 * Get an array of the elements in this group
 	 *
 	 * @param	bool	$recurse	get elements recursively?
-	 * @return  array   Array of {@link icms_form_Element} objects.
+	 * @return  \icms_form_Element[]
 	 */
 	public function &getElements($recurse = false) {
 		if (!$recurse) {

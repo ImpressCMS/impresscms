@@ -2096,7 +2096,7 @@ if (!function_exists('icms_buildCriteria')) {
 	 * Build criteria automatically from an array of key=>value
 	 *
 	 * @param array $criterias array of fieldname=>value criteria
-	 * @return object (@link icms_db_criteria_Compo) the icms_db_criteria_Compo object
+	 * @return icms_db_criteria_Element
 	 * @todo Move to a static class method - Criteria
 	 */
 	function icms_buildCriteria($criterias)

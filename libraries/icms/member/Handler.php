@@ -80,7 +80,7 @@ class icms_member_Handler {
 	/**
 	 * create a new group
 	 *
-	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the new group
+	 * @return icms_member_group_Object
 	 */
 	public function &createGroup(&$isNew = true) {
 		$inst = & $this->_gHandler->create();
@@ -90,7 +90,7 @@ class icms_member_Handler {
 	/**
 	 * create a new user
 	 *
-	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the new user
+	 * @return icms_member_user_Object
 	 */
 	public function &createUser(&$isNew = true) {
 		$inst = & $this->_uHandler->create();
@@ -100,8 +100,8 @@ class icms_member_Handler {
 	/**
 	 * delete a group
 	 *
-	 * @param object $group {@link icms_member_group_Object} reference to the group to delete
-	 * @return bool FALSE if failed
+	 * @param icms_member_group_Object $group reference to the group to delete
+	 * @return bool
 	 */
 	public function deleteGroup(&$group) {
 		$this->_gHandler->delete($group);
@@ -112,8 +112,9 @@ class icms_member_Handler {
 	/**
 	 * delete a user
 	 *
-	 * @param object $user {@link icms_member_user_Object} reference to the user to delete
-	 * @return bool FALSE if failed
+	 * @param icms_member_user_Object $user reference to the user to delete
+	 *
+	 * @return bool
 	 */
 	public function deleteUser(&$user) {
 		$this->_uHandler->delete($user);
@@ -124,9 +125,8 @@ class icms_member_Handler {
 	/**
 	 * insert a group into the database
 	 *
-	 * @param object $group {@link icms_member_group_Object} reference to the group to insert
-	 * @return bool TRUE if already in database and unchanged
-	 * FALSE on failure
+	 * @param icms_member_group_Object $group reference to the group to insert
+	 * @return bool
 	 */
 	public function insertGroup(&$group) {
 		return $this->_gHandler->insert($group);
@@ -135,9 +135,10 @@ class icms_member_Handler {
 	/**
 	 * retrieve groups from the database
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
-	 * @return array array of {@link icms_member_group_Object} objects
+	 *
+	 * @return icms_member_group_Object[]
 	 */
 	public function &getGroups($criteria = null, $id_as_key = false) {
 		return $this->_gHandler->getObjects($criteria, $id_as_key);
@@ -146,9 +147,10 @@ class icms_member_Handler {
 	/**
 	 * retrieve users from the database
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
-	 * @return array array of {@link icms_member_user_Object} objects
+	 *
+	 * @return icms_member_user_Object[]
 	 */
 	public function getUsers($criteria = null, $id_as_key = false) {
 		return $this->_uHandler->getObjects($criteria, $id_as_key);
@@ -157,7 +159,8 @@ class icms_member_Handler {
 	/**
 	 * get a list of groupnames and their IDs
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
+	 *
 	 * @return array associative array of group-IDs and names
 	 */
 	public function getGroupList($criteria = null) {
@@ -174,7 +177,7 @@ class icms_member_Handler {
 	 *
 	 * @deprecated	This isn't really a membership method, but for the user handler
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
 	 * @return array associative array of user-IDs and names
 	 */
 	public function getUserList($criteria = null) {
@@ -193,7 +196,8 @@ class icms_member_Handler {
 	 *
 	 * @param int $group_id ID of the group
 	 * @param int $user_id ID of the user
-	 * @return object icms_member_group_membership_Object {@link icms_member_group_membership_Object}
+	 *
+	 * @return bool
 	 */
 	public function addUserToGroup($group_id, $user_id) {
 		$mship = & $this->_mHandler->create();
@@ -227,7 +231,7 @@ class icms_member_Handler {
 	 * @param bool $asobject return the users as objects?
 	 * @param int $limit number of users to return
 	 * @param int $start index of the first user to return
-	 * @return array Array of {@link icms_member_user_Object} objects (if $asobject is TRUE)
+	 * @return array|icms_member_user_Object[]
 	 * or of associative arrays matching the record structure in the database.
 	 */
 	public function &getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
@@ -265,7 +269,7 @@ class icms_member_Handler {
 	 * log in a user
 	 * @param string $uname username as entered in the login form
 	 * @param string $pwd password entered in the login form
-	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
+	 * @return icms_member_user_Object|false
 	 */
 	public function loginUser($uname, $pwd) {
 
@@ -321,7 +325,7 @@ class icms_member_Handler {
 	/**
 	 * count users matching certain conditions
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
 	 * @return int
 	 */
 	public function getUserCount($criteria = null) {
@@ -341,7 +345,7 @@ class icms_member_Handler {
 	/**
 	 * updates a single field in a users record
 	 *
-	 * @param object $user {@link icms_member_user_Object} reference to the {@link icms_member_user_Object} object
+	 * @param icms_member_user_Object $user reference
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
 	 * @return bool TRUE if success or unchanged, FALSE on failure
@@ -352,34 +356,9 @@ class icms_member_Handler {
 	}
 
 	/**
-	 * logs in a user with an md5 encrypted password
-	 *
-	 * @param string $uname username
-	 * @param string $md5pwd password encrypted with md5
-	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
-	 */
-	/*	function &loginUserMd5($uname, $md5pwd) {
-	 $table = new icms_db_legacy_updater_Table('users');
-	 if ($table->fieldExists('loginname')) {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
-	 } elseif ($table->fieldExists('login_name')) {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
-	 } else {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
-	 }
-	 $criteria->add(new icms_db_criteria_Item('pass', $md5pwd));
-	 $user = $this->_uHandler->getObjects($criteria, false);
-	 if (! $user || count($user) != 1) {
-	 $user = false;
-	 return $user;
-	 }
-	 return $user [0];
-	 } */
-
-	/**
 	 * insert a user into the database
 	 *
-	 * @param object $user {@link icms_member_user_Object} reference to the user to insert
+	 * @param \icms_member_user_Object $user User
 	 * @return bool TRUE if already in database and unchanged
 	 * FALSE on failure
 	 */
@@ -393,7 +372,7 @@ class icms_member_Handler {
 	 *
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
 	 * @return bool TRUE if success or unchanged, FALSE on failure
 	 */
 	public function updateUsersByField($fieldName, $fieldValue, $criteria = null) {
@@ -403,7 +382,7 @@ class icms_member_Handler {
 	/**
 	 * activate a user
 	 *
-	 * @param object $user {@link icms_member_user_Object} reference to the object
+	 * @param icms_member_user_Object $user User
 	 * @return bool successful?
 	 */
 	public function activateUser(&$user) {
@@ -419,11 +398,11 @@ class icms_member_Handler {
 	 * Temporary solution
 	 *
 	 * @param int $groups IDs of groups
-	 * @param object $criteria {@link icms_db_criteria_Element} object
+	 * @param \icms_db_criteria_Element $criteria Criteria object
 	 * @param bool $asobject return the users as objects?
 	 * @param bool $id_as_key use the UID as key for the array if $asobject is TRUE
-	 * @return array Array of {@link icms_member_user_Object} objects (if $asobject is TRUE)
-	 * or of associative arrays matching the record structure in the database.
+	 *
+	 * @return array|icms_member_user_Object[]
 	 */
 	public function getUsersByGroupLink($groups, $criteria = null, $asobject = false, $id_as_key = false) {
 		$ret = array();
@@ -540,8 +519,9 @@ class icms_member_Handler {
 	 * get a list of groups that a user is member of
 	 *
 	 * @param int $user_id ID of the user
-	 * @param bool $asobject return groups as {@link icms_member_group_Object} objects or arrays?
-	 * @return array array of objects or arrays
+	 * @param bool $asobject return groups as icms_member_group_Object objects or arrays?
+	 *
+	 * @return array|icms_member_group_Object[]
 	 */
 	public function &getGroupsByUser($user_id, $asobject = false)
 	{
@@ -560,7 +540,8 @@ class icms_member_Handler {
 	 * retrieve a group
 	 *
 	 * @param int $id ID for the group
-	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the group
+	 *
+	 * @return icms_member_group_Object|null
 	 */
 	public function &getGroup($id)
 	{

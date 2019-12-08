@@ -26,7 +26,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param	string    $form_caption             the form caption
 	 * @param	string    $form_action              the form action
 	 * @param	string    $form_fields              the form fields
-	 * @param	string    $submit_button_caption    whether to add a caption to the submit button
+	 * @param	string|false    $submit_button_caption    whether to add a caption to the submit button
 	 * @param	bool      $cancel_js_action         whether to invoke a javascript action when cancel button is clicked
 	 * @param	bool      $captcha                  whether to add captcha
 	 */
@@ -81,10 +81,10 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	/**
 	 * Add an element to the form
 	 *
-	 * @param	object  &$formElement   reference to a {@link icms_form_Element}
-	 * @param	string  $key            encrypted key string for the form
-	 * @param	string  $var            some form variables?
-	 * @param	bool    $required       is this a "required" element?
+	 * @param	\icms_form_Element  &$formElement   reference
+	 * @param	string|false  $key            encrypted key string for the form
+	 * @param	string|false  $var            some form variables?
+	 * @param	bool|string    $required       is this a "required" element?
 	 */
 	public function addElement(&$formElement, $key = false, $var = false, $required = 'notset') {
 		if ($key) {
@@ -512,8 +512,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	/**
 	 * assign to smarty form template instead of displaying directly
 	 *
-	 * @param	object  &$tpl         reference to a {@link Smarty} object
-	 * @see           Smarty
+	 * @param	\Smarty  &$tpl         reference
 	 * @param	mixed   $smartyName   if smartyName is passed, assign it to the smarty call else assign the name of the form element
 	 */
 	public function assign(&$tpl, $smartyName = false) {

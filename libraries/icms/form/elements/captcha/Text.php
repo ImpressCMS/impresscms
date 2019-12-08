@@ -25,7 +25,8 @@ class icms_form_elements_captcha_Text {
 
 	/**
 	 * Creates icms_form_elements_captcha_Text object
-	 * @return object	reference to icms_form_elements_captcha_Text (@link icms_form_elements_captcha_Text) Object
+	 *
+	 * @return \icms_form_elements_captcha_Text
 	 */
 	public function &instance() {
 		static $instance;

@@ -54,7 +54,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * Loads Template source from DataBase
 	 *
 	 * @see icms_view_template_file_Object
-	 * @param object $tplfile {@link icms_view_template_file_Object} object of the template file to load
+	 * @param \icms_view_template_file_Object $tplfile object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 */
 	public function loadSource(icms_view_template_file_Object &$tplfile) {
@@ -72,7 +72,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 
 	/**
 	 * forces Template source into the DataBase
-	 * @param object $tplfile {@link icms_view_template_file_Object} object of the template file to load
+	 * @param icms_view_template_file_Object $tplfile object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 */
 	public function forceUpdate(&$tplfile) {

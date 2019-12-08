@@ -167,7 +167,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 *
 	 * @param  int  $user_id  ID of the user
 	 *
-	 * @return array  Array of {@link icms_data_notification_Object} objects
+	 * @return \icms_data_notification_Object[]
 	 */
 	public function getByUser($user_id) {
 		$criteria = new icms_db_criteria_Item('not_uid', $user_id);
@@ -181,7 +181,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param  int      $item_id  ID of the subscribed items
 	 * @param  int      $module_id  ID of the module of the subscribed items
 	 * @param  int      $user_id  ID of the user of the subscribed items
-	 * @return array    Array of {@link icms_data_notification_Object} objects
+	 * @return \icms_data_notification_Object[]
 	 */
 	public function getSubscribedEvents($category, $item_id, $module_id, $user_id) {
 		$criteria = new icms_db_criteria_Compo();
@@ -208,7 +208,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	 * @param   string  $order      Sort order
 	 * @param   string  $status     status
 	 *
-	 * @return  array   Array of {@link icms_data_notification_Object} objects
+	 * @return  \icms_data_notification_Object[]
 	 */
 	public function getByItemId($module_id, $item_id, $order = null, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
@@ -474,7 +474,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 	/**
 	 * Update
 	 *
-	 * @param   object  &$notification  {@link icms_data_notification_Object} object
+	 * @param   \icms_data_notification_Object  &$notification  Notification object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *

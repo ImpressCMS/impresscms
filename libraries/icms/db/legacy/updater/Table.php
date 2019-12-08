@@ -75,7 +75,7 @@ class icms_db_legacy_updater_Table {
 	/**
 	 * xoopsDB database object
 	 *
-	 * @var @link XoopsDatabase object
+	 * @var \icms_db_legacy_IDatabase
 	 */
 	var $db;
 
@@ -240,12 +240,10 @@ class icms_db_legacy_updater_Table {
 	/**
 	 * Add item to be updated on the the table via the UpdateAll method
 	 *
-	 * @param   string  $fieldname  Name of the field
-	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
-	 * @param 	bool	$fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
-	 *
-	 * @return  bool
+	 * @param string $fieldname Name of the field
+	 * @param string $fieldvalue Value to write
+	 * @param \icms_db_criteria_Element $criteria Criteria
+	 * @param bool $fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
 	 */
 	function addUpdateAll($fieldname, $fieldvalue, $criteria, $fieldvalueIsOperation) {
 		$item['fieldname'] = $fieldname;
@@ -258,11 +256,9 @@ class icms_db_legacy_updater_Table {
 	/**
 	 * Add item to be updated on the the table via the UpdateAll method
 	 *
-	 * @param   string  $fieldname  Name of the field
-	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element $criteria Criteria
 	 *
-	 * @return  bool
+	 * @return void
 	 */
 	function addDeleteAll($criteria) {
 		$item['criteria'] = $criteria;
@@ -453,7 +449,7 @@ class icms_db_legacy_updater_Table {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element $criteria Criteria
 	 *
 	 * @return  bool
 	 */
@@ -504,7 +500,7 @@ class icms_db_legacy_updater_Table {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} with conditions to meet
+	 * @param \icms_db_criteria_Element $criteria Criteria with conditions to meet
 	 * @return bool
 	 */
 
