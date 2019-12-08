@@ -129,9 +129,10 @@ class icms_view_Tpl extends SmartyBC
 	/**
 	 * Touch template by id
 	 *
-	 * @param   string  $tpl_id
+	 * @param string $tpl_id
 	 *
 	 * @return  boolean
+	 * @throws \Psr\Cache\InvalidArgumentException
 	 */
 	public static function template_touch($tpl_id) {
 		$tplFileHandler = & icms::handler('icms_view_template_file');
