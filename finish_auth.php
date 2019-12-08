@@ -111,7 +111,7 @@ switch ($xoopsAuth->step) {
 			$newid = $newUser->getVar('uid');
 			$mship_handler = icms::handler('icms_member_group_membership');
 			$mship = & $mship_handler->create();
-			$mship->setVar('groupid', XOOPS_GROUP_USERS);
+			$mship->setVar('groupid', ICMS_GROUP_USERS);
 			$mship->setVar('uid', $newid);
 			if (!$mship_handler->insert($mship)) {
 				redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP);
@@ -126,12 +126,18 @@ switch ($xoopsAuth->step) {
 				redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED);
 			}
 
-			$_SESSION['xoopsUserId'] = $newUser->getVar('uid');
-			$_SESSION['xoopsUserGroups'] = $newUser->getGroups();
+			/**
+			 * @var Aura\Session\Session $session
+			 */
+			$session = \icms::getInstance()->get('session');
+			$userSegment = $session->getSegment(icms_member_user_Object::class);
+			$userSegment->set('user_id', $newUser->getVar('uid'));
+			$userSegment->set('groups', $newUser->getGroups());
+
 			$user_theme = $newUser->getVar('theme');
 
 			if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
-				$_SESSION['xoopsUserTheme'] = $user_theme;
+				$userSegment->set('theme', $user_theme);
 			}
 
 			unset ($_SESSION['openid_response']);
@@ -176,12 +182,18 @@ switch ($xoopsAuth->step) {
 				redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_CANNOT_SAVE);
 			}
 
-			$_SESSION['xoopsUserId'] = $thisUser->getVar('uid');
-			$_SESSION['xoopsUserGroups'] = $thisUser->getGroups();
+			/**
+			 * @var Aura\Session\Session $session
+			 */
+			$session = \icms::getInstance()->get('session');
+			$userSegment = $session->getSegment(icms_member_user_Object::class);
+
+			$userSegment->set('user_id', $thisUser->getVar('uid'));
+			$userSegment->set('groups', $thisUser->getGroups());
 			$user_theme = $thisUser->getVar('theme');
 
 			if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
-				$_SESSION['xoopsUserTheme'] = $user_theme;
+				$userSegment->set('theme', $user_theme);
 			}
 
 			unset ($_SESSION['openid_response']);

@@ -9,6 +9,8 @@
  * @package core
  * @since 1.2
  */
+use WideImage\WideImage;
+
 $xoopsOption['nodebug'] = 1;
 
 /* 3 critical parameters must exist - and must be safe */
@@ -58,8 +60,6 @@ if (!isset($image_path) || !isset($image_url)) {
 	 * because errors occur when previewing the filter effect
 	 */
 	if (!isset($filter)) exit();
-
-	include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 
 	$args = array ();
 

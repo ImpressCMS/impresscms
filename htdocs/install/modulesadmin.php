@@ -44,7 +44,7 @@ function xoops_module_install($dirname) {
 		$errs[] = '<h4 style="text-align:' . _GLOBAL_LEFT . ';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing ' . $module->getInfo('name') . '</h4>';
 		if ($sqlfile != false && is_array($sqlfile)) {
 			// handle instances when DB_TYPE includes 'pdo.'
-			$type = getenv('DB_TYPE');
+			$type = env('DB_TYPE');
 			if (substr($type, 0, 4) == 'pdo.') {
 				$driver = substr($type, 4);
 			} else {

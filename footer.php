@@ -11,11 +11,15 @@
 (\icms::$response instanceof \icms_response_Text) || die('There are no unused response (Maybe you are trying to include footer.php twice?');
 
 $_SESSION['ad_sess_regen'] = false;
+/**
+ * @var \Aura\Session\Session $session
+ */
+$session = \icms::getInstance()->get('session');
 if (isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
-	\icms::$session->sessionOpen(true);
-	$_SESSION['sess_regen'] = false;
+	$session->start();
+	$session->regenerateId();
 } else {
-	\icms::$session->sessionOpen();
+	$session->resume();
 }
 
 // ################# Preload Trigger beforeFooter ##############

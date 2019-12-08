@@ -130,7 +130,7 @@ if (empty($mode) || $mode == 'queries') {
 		}
 		$class = ($class == 'odd')?'even':'odd';
 	}
-	$ret .= str_replace(getenv('DB_PREFIX') . '_', '', $sqlmessages);
+	$ret .= str_replace(env('DB_PREFIX') . '_', '', $sqlmessages);
 	$ret .= '<div class="foot"><h5>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->queries)) . '</span> ' . _QUERIES . '</h5></div></div>';
 }
 

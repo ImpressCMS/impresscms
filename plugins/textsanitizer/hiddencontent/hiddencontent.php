@@ -17,7 +17,7 @@
  */
 function textsanitizer_hiddencontent($text) {
 	$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
-	if (!empty($_SESSION['xoopsUserId']) && $_SESSION['xoopsUserId']) {
+	if (\icms::$user) {
 		$replacements[] = _HIDDENC . '<div class="icmsHidden">\\1</div>';
 	} else {
 		$replacements[] = _HIDDENC . '<div class="icmsHidden">' . _HIDDENTEXT . '</div>';

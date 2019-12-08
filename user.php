@@ -105,8 +105,7 @@ switch ($op) {
 		break;
 
 	case $op == 'logout':
-		$sessHandler = icms::$session;
-		$sessHandler->sessionClose(icms::$user->getVar('uid'));
+		$sessHandler = icms::getInstance()->get('session')->destroy();
 		redirect_header(ICMS_URL . '/', 3, _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT);
 		break;
 
@@ -163,7 +162,7 @@ switch ($op) {
 			redirect_header('index.php', 5, _US_NOPERMISS);
 		} else {
 			$groups = icms::$user->getGroups();
-			if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
+			if (in_array(ICMS_GROUP_ADMIN, $groups)) {
 				redirect_header('user.php', 5, _US_ADMINNO);
 			}
 			$ok = !isset($_POST['ok']) ? 0 : (int)$_POST['ok'];

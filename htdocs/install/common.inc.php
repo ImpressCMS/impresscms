@@ -58,6 +58,18 @@ if (!$wizard->xoInit()) {
 }
 session_start();
 
+foreach ((isset($_SESSION['settings']) ? $_SESSION['settings'] : []) as $key => $value) {
+	putenv("$key=" . $value);
+	$_ENV[$key] = $value;
+	$_SERVER[$key] = $value;
+}
+if (isset($_ENV['DB_HOST']) && !isset($_ENV['DB_CHARSET'])) {
+	putenv("DB_CHARSET=utf8");
+	$_ENV['DB_CHARSET'] = 'utf8';
+	$_SERVER['DB_CHARSET'] = 'utf8';
+}
+\icms::getInstance()->addServiceProvider(\ImpressCMS\Core\Providers\DatabaseServiceProvider::class);
+
 if (!@is_array($_SESSION['settings'])) {
 	$_SESSION['settings'] = array();
 }

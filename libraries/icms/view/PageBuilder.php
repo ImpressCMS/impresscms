@@ -45,16 +45,13 @@
 class icms_view_PageBuilder {
 
 	/** */
+	static private $modid;
+	/** */
 	public $theme = false;
-
 	/** */
 	public $blocks = array();
-
 	/** */
 	private $uagroups = array();
-
-	/** */
-	static private $modid;
 
 	/**
 	 * Initializes the page object and loads all the blocks
@@ -67,22 +64,6 @@ class icms_view_PageBuilder {
 		}
 		return true;
 	}
-
-	/**
-	 * Called before a specific zone is rendered
-	 *
-	 * @param string $zone
-	 */
-	public function preRender($zone = '') {
-/* Empty! */ }
-
-	/**
-	 * Called after a specific zone is rendered
-	 *
-	 * @param string $zone
-	 */
-	public function postRender($zone = '') {
-/* Empty! */ }
 
 	/**
 	 * Retrieve Blocks for the page and loads their templates
@@ -219,13 +200,6 @@ class icms_view_PageBuilder {
 		return self::$modid;
 	}
 
-	public function generateCacheId($cache_id) {
-		if ($this->theme) {
-			$cache_id = $this->theme->generateCacheId($cache_id);
-		}
-		return $cache_id;
-	}
-
 	/**
 	 * The lame type workaround will change
 	 * bid is added temporarily as workaround for specific block manipulation
@@ -288,11 +262,39 @@ class icms_view_PageBuilder {
 				return false;
 			}
 			$template->assign('block', $bresult);
-			$block['content'] = $template->fetch($tplName, $cacheid);
+			$block['content'] = $bresult['content'] ? $bresult['content'] : $template->fetch($tplName, $cacheid);
 		} else {
 			icms::$logger->addBlock($xobject->getVar('name'), true, $bcachetime);
 			$block['content'] = $template->fetch($tplName, $cacheid);
 		}
 		return $block;
+	}
+
+	public function generateCacheId($cache_id)
+	{
+		if ($this->theme) {
+			$cache_id = $this->theme->generateCacheId($cache_id);
+		}
+		return $cache_id;
+	}
+
+	/**
+	 * Called before a specific zone is rendered
+	 *
+	 * @param string $zone
+	 */
+	public function preRender($zone = '')
+	{
+		/* Empty! */
+	}
+
+	/**
+	 * Called after a specific zone is rendered
+	 *
+	 * @param string $zone
+	 */
+	public function postRender($zone = '')
+	{
+		/* Empty! */
 	}
 }

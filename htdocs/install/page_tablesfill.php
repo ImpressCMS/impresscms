@@ -34,15 +34,17 @@ if (!$dbm->isConnectable()) {
 	exit();
 }
 
-icms::$db = &$dbm->db;
-icms::$xoopsDB = &$dbm->db;
-
-$res = $dbm->query("SELECT COUNT(*) FROM " . $dbm->db->prefix("users"));
+/**
+ * @var icms_db_Connection $db
+ */
+$db = \icms::getInstance()->get('db');
+$res = $dbm->query("SELECT COUNT(*) FROM " . $db->prefix("users"));
 if (!$res) {
 	$wizard->redirectToPage('dbsettings');
 	exit();
 }
-list ($count) = $dbm->db->fetchRow($res);
+list ($count) = $db->fetchRow($res);
+$count = $count;
 $process = $count?'':'insert';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -58,16 +60,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	extract($_SESSION['siteconfig'], EXTR_SKIP);
 	$language = $wizard->language;
 
-	$type = getenv('DB_TYPE');
+	$type = env('DB_TYPE');
 	if (substr($type, 0, 4) == 'pdo.') {
 		$driver = substr($type, 4);
 	} else {
 		$driver = $type;
 	}
-	$result = $dbm->queryFromFile('./sql/' . $driver . '.data.sql');
-	$result = $dbm->queryFromFile('./language/' . $language . '/' . $driver . '.lang.data.sql');
+
+	if (!$adminname || !$adminlogin_name || !$adminpass || !$adminmail || !$language) {
+		$wizard->redirectToPage('-1');
+		exit();
+	}
+
+	/**
+	 * @var icms_db_Connection $db
+	 */
+	$db = \icms::getInstance()->get('db');
 	$group = make_groups($dbm);
+	$db->beginTransaction();
 	$result = make_data($dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $group);
+	$db->commit();
 	$content = $dbm->report();
 } else {
 	$msg = $process? READY_INSERT_DATA : DATA_ALREADY_INSERTED;
