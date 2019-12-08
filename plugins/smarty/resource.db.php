@@ -32,20 +32,6 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 	}
 
 	/**
-	 * @inheritDoc
-	 */
-	protected function fetchTimestamp($name)
-	{
-		if (!$tpl = $this->tplinfo($name)) {
-			return 0;
-		}
-		if (is_object($tpl)) {
-			return $tpl->getVar('tpl_lastmodified', 'n');
-		}
-		return filemtime($tpl);
-	}
-
-	/**
 	 * Gets template from database
 	 *
 	 * @param string $tpl_name Template name
@@ -76,7 +62,8 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 			$tplobj = $tplfile_handler->getPrefetchedBlock($tplset, $tpl_name);
 			if (count($tplobj)) {
 				$cachedTemplate->set($tplobj[0]);
-				return $tplobj[0];
+				$cache->save($cachedTemplate);
+				return $cachedTemplate->get();
 			}
 		}
 		// If we'using the default tplset, get the template from the filesystem
@@ -84,23 +71,41 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 
 		if (!count($tplobj)) {
 			$cachedTemplate->set(false);
-			return false;
+			$cache->save($cachedTemplate);
+			return $cachedTemplate->get();
 		}
 		$module = $tplobj[0]->getVar('tpl_module', 'n');
 		$type = $tplobj[0]->getVar('tpl_type', 'n');
 		$blockpath = ($type == 'block') ? 'blocks/' : '';
 		// First, check for an overloaded version within the theme folder
 		$filepath = ICMS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
-		if ( !file_exists( $filepath ) ) {
+		if (!file_exists($filepath)) {
 			// If no custom version exists, get the tpl from its default location
 			$filepath = ICMS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
 			if (!file_exists($filepath)) {
 				$cachedTemplate->set($tplobj[0]);
-				return $tplobj[0];
+				$cache->save($cachedTemplate);
+				return $cachedTemplate->get();
 			}
 		}
 		$cachedTemplate->set($filepath);
-		return $filepath;
+		$cache->save($cachedTemplate);
+		return $cachedTemplate->get();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function fetchTimestamp($name)
+	{
+		if (!$tpl = $this->tplinfo($name)) {
+			var_dump($tpl);
+			return 0;
+		}
+		if (is_object($tpl)) {
+			return $tpl->getVar('tpl_lastmodified', 'n');
+		}
+		return filemtime($tpl);
 	}
 
 }

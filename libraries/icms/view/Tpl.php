@@ -149,7 +149,7 @@ class icms_view_Tpl extends SmartyBC
 		 */
 		$cache = \icms::getInstance()->get('cache');
 		$cachedTemplate = $cache->getItem('tpl_db_' . base64_encode($file));
-		$cachedTemplate->expiresAfter(-1);
+		$cache->deleteItem($cachedTemplate);
 
 		$tpl = new icms_view_Tpl();
 
