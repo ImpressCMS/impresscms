@@ -71,10 +71,11 @@ class icms_data_comment_Renderer {
 	/**
 	 * Access the only instance of this class
 	 *
-	 * @param   object  $tpl        reference to a {@link Smarty} object
-	 * @param   boolean $use_icons
-	 * @param   boolean $do_iconcheck
-	 * @return
+	 * @param \Smarty $tpl reference to a Smarty object
+	 * @param boolean $use_icons
+	 * @param boolean $do_iconcheck
+	 *
+	 * @return icms_data_comment_Renderer
 	 */
 	static function &instance(&$tpl, $use_icons = true, $do_iconcheck = false) {
 		static $instance;
@@ -87,7 +88,7 @@ class icms_data_comment_Renderer {
 	/**
 	 * Accessor
 	 *
-	 * @param   object  &$comments_arr  array of {@link XoopsComment} objects
+	 * @param   \icms_data_comment_Object[]  &$comments_arr  array of comments
 	 */
 	public function setComments(&$comments_arr) {
 		if (isset($this->_comments)) {

@@ -503,12 +503,12 @@ class icms_db_legacy_updater_Handler {
 	/**
 	 * Use to update a table
 	 *
-	 * @param object $table {@link icms_db_legacy_updater_Table} that will be updated
+	 * @param \icms_db_legacy_updater_Table $table Table that will be updated
 	 * @param bool $force force the query even in a GET process
 	 *
 	 * @see icms_db_legacy_updater_Table
 	 *
-	 * @return bool true if success, false if an error occured
+	 * @return bool true if success, false if an error occurred
 	 */
 	function updateTable($table, $force = false)
 	{
@@ -549,7 +549,7 @@ class icms_db_legacy_updater_Handler {
 	/**
 	 * Update the DBVersion of a module
 	 *
-	 * @param int $newDVersion new database version
+	 * @param int $newDBVersion new database version
 	 * @param string $dirname dirname of the module
 	 *
 	 * @return bool TRUE if success FALSE if not

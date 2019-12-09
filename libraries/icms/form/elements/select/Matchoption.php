@@ -48,8 +48,8 @@ class icms_form_elements_select_Matchoption extends icms_form_elements_Select {
 	 * @param	string	$caption
 	 * @param	string	$name
 	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * 							Legal values are {@link XOOPS_MATCH_START}, {@link XOOPS_MATCH_END},
-	 * 							{@link XOOPS_MATCH_EQUAL}, and {@link XOOPS_MATCH_CONTAIN}
+	 * 							Legal values are XOOPS_MATCH_START, XOOPS_MATCH_END,
+	 * 							XOOPS_MATCH_EQUAL, and XOOPS_MATCH_CONTAIN
 	 * @param	int		$size	Number of rows. "1" makes a drop-down-list
 	 */
 	public function __construct($caption, $name, $value = null, $size = 1) {

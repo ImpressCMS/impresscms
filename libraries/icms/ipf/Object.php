@@ -116,31 +116,22 @@ class icms_ipf_Object extends icms_core_Object {
 	}
 
 	/**
+	 * Inits variable
 	 *
-	 * @param string $key
-	 *        key of this field. This needs to be the name of the field in the related database table
-	 * @param int $data_type
-	 *        set to one of self::DTYPE_XXX constants
-	 * @param mixed $value
-	 *        default value of this variable
-	 * @param bool $required
-	 *        set to TRUE if this variable needs to have a value set before storing the object in the table
-	 * @param int $maxlength
-	 *        maximum length of this variable, for self::DTYPE_STRING and self::DTYPE_INTEGER types only
-	 * @param string $options
-	 *        does this data have any select options?
-	 * @param bool $multilingual
-	 *        is this field needs to support multilingual features (NOT YET IMPLEMENTED...)
-	 * @param string $form_caption
-	 *        caption of this variable in a {@link icms_ipf_form_Base} and title of a column in a {@link icms_ipf_ObjectTable}
-	 * @param string $form_dsc
-	 *        description of this variable in a {@link icms_ipf_form_Base}
-	 * @param bool $sortby
-	 *        set to TRUE to make this field used to sort objects in icms_ipf_ObjectTable
-	 * @param bool $persistent
-	 *        set to FALSE if this field is not to be saved in the database
-	 * @param bool $displayOnForm
-	 *        to be displayed on the form or not
+	 * @param string $key key of this field. This needs to be the name of the field in the related database table
+	 * @param int $data_type set to one of self::DTYPE_XXX constants
+	 * @param mixed $value default value of this variable
+	 * @param bool $required set to TRUE if this variable needs to have a value set before storing the object in the table
+	 * @param int $maxlength maximum length of this variable, for self::DTYPE_STRING and self::DTYPE_INTEGER types only
+	 * @param string $options does this data have any select options?
+	 * @param bool $multilingual is this field needs to support multilingual features (NOT YET IMPLEMENTED...)
+	 * @param string $form_caption caption of this variable in a icms_ipf_form_Base and title of a column in a icms_ipf_ObjectTable
+	 * @param string $form_dsc description of this variable in a icms_ipf_form_Base
+	 * @param bool $sortby set to TRUE to make this field used to sort objects in icms_ipf_ObjectTable
+	 * @param bool $persistent set to FALSE if this field is not to be saved in the database
+	 * @param bool $displayOnForm to be displayed on the form or not
+	 *
+	 * @return bool
 	 */
 	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $multilingual = false, $form_caption = '', $form_dsc = '', $sortby = false, $persistent = true, $displayOnForm = true) {
 		// url_ is reserved for files.
@@ -249,20 +240,14 @@ class icms_ipf_Object extends icms_core_Object {
 	 * - $maxlength = 0 unless $data_type is a TEXTBOX, then $maxlength will be 255
 	 * - all other vars are NULL or '' depending of the parameter
 	 *
-	 * @deprecated Use initVar instead
+	 * @deprecated Use initVar instead. Since 2.0
 	 *
-	 * @param string $key
-	 *        key of this field. This needs to be the name of the field in the related database table
-	 * @param int $data_type
-	 *        set to one of XOBJ_DTYPE_XXX constants (set to self::DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
-	 * @param bool $required
-	 *        set to TRUE if this variable needs to have a value set before storing the object in the table
-	 * @param string $form_caption
-	 *        caption of this variable in a {@link icms_ipf_form_Base} and title of a column in a {@link icms_ipf_ObjectTable}
-	 * @param string $form_dsc
-	 *        description of this variable in a {@link icms_ipf_form_Base}
-	 * @param mixed $value
-	 *        default value of this variable
+	 * @param string $key key of this field. This needs to be the name of the field in the related database table
+	 * @param int $data_type set to one of XOBJ_DTYPE_XXX constants (set to self::DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
+	 * @param bool $required set to TRUE if this variable needs to have a value set before storing the object in the table
+	 * @param string $form_caption caption of this variable in a icms_ipf_form_Base and title of a column in a icms_ipf_ObjectTable
+	 * @param string $form_dsc description of this variable in a icms_ipf_form_Base
+	 * @param mixed $value default value of this variable
 	 */
 	public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
 		trigger_error('Use enableUpload() instead', E_USER_DEPRECATED);
@@ -458,7 +443,14 @@ class icms_ipf_Object extends icms_core_Object {
 	/**
 	 * Create the form for this object
 	 *
-	 * @return a {@link SmartobjectForm} object for this object
+	 * @param string $form_caption Form caption
+	 * @param string $form_name Form name
+	 * @param false|string $form_action Form action
+	 * @param string $submit_button_caption Submit button caption
+	 * @param bool $cancel_js_action Cancels JS action
+	 * @param bool $captcha Needs captcha?
+	 *
+	 * @return icms_ipf_form_Base
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
@@ -469,7 +461,14 @@ class icms_ipf_Object extends icms_core_Object {
 	/**
 	 * Create the secure form for this object
 	 *
-	 * @return a {@link icms_ipf_form_Secure} object for this object
+	 * @param string $form_caption Form caption
+	 * @param string $form_name Form name
+	 * @param false|string $form_action Form action
+	 * @param string $submit_button_caption Submit button caption
+	 * @param bool $cancel_js_action Cancels JS action
+	 * @param bool $captcha Needs captcha?
+	 *
+	 * @return icms_ipf_form_Secure
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */

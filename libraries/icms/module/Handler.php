@@ -130,7 +130,7 @@ class icms_module_Handler
 	 * @param    bool $debug Debug enabled for object?
 	 * @param   bool|object $criteria Criteria for getting object if needed
 	 *
-	 * @return    object  {@link icms_module_Object} FALSE on fail
+	 * @return    \icms_module_Object|false
 	 */
 	public function &get($id, $loadConfig = false, $debug = false, $criteria = false)
 	{
@@ -168,7 +168,7 @@ class icms_module_Handler
 	 *
 	 * @param    string $dirname
 	 * @param    bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @return    object  {@link icms_module_Object} FALSE on fail
+	 * @return    \icms_module_Object|false
 	 */
 	public function getByDirname($dirname, $loadConfig = false) {
 		//if (!($module = $this->getFromCache('dirname', $dirname))) {

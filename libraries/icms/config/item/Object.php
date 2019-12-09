@@ -181,9 +181,9 @@ class icms_config_item_Object extends icms_ipf_Object {
 	}
 
 	/**
-	 * Assign one or more {@link icms_config_Item_ObjectOption}s
+	 * Assign one or more
 	 *
-	 * @param	mixed   $option either a {@link icms_config_Item_ObjectOption} object or an array of them
+	 * @param	icms_config_Item_ObjectOption|icms_config_Item_ObjectOption[]
 	 */
 	public function setConfOptions($option) {
 		if (is_array($option)) {
@@ -199,9 +199,9 @@ class icms_config_item_Object extends icms_ipf_Object {
 	}
 
 	/**
-	 * Get the {@link icms_config_Item_ObjectOption}s of this Config
+	 * Get the options of this Config
 	 *
-	 * @return	array   array of {@link icms_config_Item_ObjectOption}
+	 * @return	\icms_config_Item_ObjectOption[]
 	 */
 	public function &getConfOptions() {
 		return $this->_confOptions;

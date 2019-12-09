@@ -83,7 +83,7 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	 *
 	 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 	 *
-	 * @return	object  @link icms_db_legacy_updater_Handler
+	 * @return	\icms_db_legacy_updater_Handler  Updater handler
 	 * @static
 	 */
 	static public function getDatabaseUpdater() {

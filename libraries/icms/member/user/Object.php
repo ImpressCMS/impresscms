@@ -405,7 +405,7 @@ class icms_member_user_Object extends icms_ipf_Object {
 	/**
 	 * Returns uid of user
 	 *
-	 * @deprecated Use $this->uid instead!
+	 * @deprecated Use $this->uid instead! Since 2.0
 	 *
 	 * @return int
 	 */

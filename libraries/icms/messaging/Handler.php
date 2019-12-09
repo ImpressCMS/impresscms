@@ -59,7 +59,8 @@ class icms_messaging_Handler {
 	protected $encoding = '8bit';
 
 	/**
-	 * reference to a {@link icms_messaging_EmailHandler}
+	 * reference
+	 *
 	 * @var		icms_messaging_EmailHandler
 	 */
 	private $multimailer;

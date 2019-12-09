@@ -14,10 +14,11 @@
 /**
  * Generates a pdf file
  *
- * @param string $content	The content to put in the PDF file
- * @param string $doc_title	The title for the PDF file
- * @param string $doc_keywords	The keywords to put in the PDF file
- * @return string Generated output by the pdf (@link TCPDF) class
+ * @param string $content The content to put in the PDF file
+ * @param string $doc_title The title for the PDF file
+ * @param string $doc_keywords The keywords to put in the PDF file
+ * @return string Generated output
+ * @throws ReflectionException
  */
 function Generate_PDF($content, $doc_title, $doc_keywords) {
 	global $icmsConfig;

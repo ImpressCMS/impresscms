@@ -11,7 +11,7 @@
 class icms_ipf_form_elements_Parentcategory extends icms_form_elements_Select {
 	/**
 	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+	 * @param	\icms_ipf_Object    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -41,7 +41,7 @@ class icms_ipf_form_elements_Parentcategory extends icms_form_elements_Select {
 	/**
 	 * Get options for a category select with hierarchy (recursive)
 	 *
-	 * @param object  $tree         icms_ipf_Tree $tree (@link icms_ipf_Tree)
+	 * @param \icms_ipf_Tree  $tree       Tree instance
 	 * @param string  $fieldName    The fieldname to get the option array for
 	 * @param int     $key          the key to get the optionarray for
 	 * @param string  $prefix_curr  the prefix

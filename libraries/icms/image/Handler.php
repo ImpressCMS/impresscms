@@ -96,9 +96,9 @@ class icms_image_Handler extends \icms_ipf_Handler {
 		}
 
 	/**
-	 * Load {@link icms_image_Object}s from the database
+	 * Load image from the database
 	 *
-	 * @param null|icms_db_criteria_Item $criteria {@link icms_db_criteria_Element}
+	 * @param null|icms_db_criteria_Item $criteria Criteria
 	 * @param bool $id_as_key Use the ID as key into the array
 	 * @param bool $getbinary Get binary image?
 	 * @param bool|string $sql  Extra sql

@@ -210,7 +210,14 @@ class mod_system_Blocks extends icms_view_block_Object {
 	/**
 	 * Create the form for this object
 	 *
-	 * @return a {@link SmartobjectForm} object for this object
+	 * @param string $form_caption Form caption
+	 * @param string $form_name Form name
+	 * @param bool|string $form_action Form action
+	 * @param string $submit_button_caption Submit button caption
+	 * @param bool $cancel_js_action Cancel JS action?
+	 * @param bool $captcha Use captcha?
+	 *
+	 * @return icms_form_Base
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
@@ -220,8 +227,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 			$this->hideFieldFromForm('c_type');
 		}
 
-		$form = new icms_ipf_form_Base($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
-		return $form;
+		return new icms_ipf_form_Base($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 	}
 
 	/**
