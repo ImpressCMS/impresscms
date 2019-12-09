@@ -17,7 +17,7 @@
  * Quick foreach template plug-in
  *
  * This plug-in works as a direct replacement for the original Smarty
- * {@link http://smarty.php.net/manual/en/language.function.foreach.php foreach} function.
+ * http://smarty.php.net/manual/en/language.function.foreach.php function.
  *
  * The difference with <var>foreach</var> is minimal in terms of functionality, but can boost your templates
  * a lot: foreach duplicates the content of the variable that is iterated, to ensure non-array
