@@ -8,10 +8,10 @@
  */
 interface icms_db_legacy_IDatabase {
 	/**
-	 * assign a {@link icms_core_Logger} object to the database
+	 * assign a logger to the database
 	 *
 	 * @see icms_core_Logger
-	 * @param object $logger reference to a {@link icms_core_Logger} object
+	 * @param \icms_core_Logger $logger reference to a logger object
 	 */
 	public function setLogger($logger);
 	/**

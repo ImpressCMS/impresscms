@@ -126,7 +126,7 @@ class icms_core_DataFilter {
 	}
 
 	/**
-	 * Reverses {@link htmlSpecialChars()}
+	 * Reverses htmlSpecialChars
 	 *
 	 * @param   string  $text
 	 * @return  string
@@ -136,8 +136,11 @@ class icms_core_DataFilter {
 	}
 
 	/**
+	 * Converts text string with HTML entities
 	 *
-	 * @param unknown_type $text
+	 * @param string $text Text to add HTML entities
+	 *
+	 * @return string|string[]|null
 	 */
 	static public function htmlEntities($text) {
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
@@ -790,11 +793,10 @@ class icms_core_DataFilter {
 	/**
 	 * This function gets allowed plugins from DB and loads them in the sanitizer
 	 *
-	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
-	 *
-	 * @param	int	 $id			 ID of the config
-	 * @param	bool	$withoptions	load the config's options now?
-	 * @return	object  reference to the {@link IcmsConfig}
+	 * @param string $text Plugin name
+	 * @param int $allowimage Allow image?
+	 * @return string
+	 * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 */
 	static public function codeDecode_extended($text, $allowimage = 1) {
 		global $icmsConfigPlugins;
@@ -827,7 +829,7 @@ class icms_core_DataFilter {
 	 *
 	 * @param	 string	$name	 Name of the file to load
 	 * @param	 string	$text	 Text to show if the function doesn't exist
-	 * @return	array	 the return of the called function
+	 * @return	string	 the return of the called function
 	 */
 	static public function executeExtension($name, $text) {
 		self::loadExtension($name);

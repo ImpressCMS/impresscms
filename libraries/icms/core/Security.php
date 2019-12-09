@@ -222,7 +222,9 @@ class icms_core_Security {
 	}
 
 	/**
-	 * Get the HTML code for a @link icms_form_elements_Hiddentoken object - used in forms that do not use XoopsForm elements
+	 * Get the HTML code for a token
+	 *
+	 * @param string $name Token field name
 	 *
 	 * @return string
 	 */

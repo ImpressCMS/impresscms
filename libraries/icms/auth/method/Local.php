@@ -28,7 +28,7 @@ class icms_auth_method_Local extends icms_auth_Object {
 	 * Authenticate user
 	 * @param string $uname
 	 * @param string $pwd
-	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
+	 * @return \icms_member_user_Object
 	 */
 	public function authenticate($uname, $pwd = null) {
 		$member_handler = icms::handler('icms_member');

@@ -159,7 +159,6 @@ class icms_core_Textsanitizer {
 	 */
 	public function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
 		 /* @deprecated Use icms_core_DataFilter::checkVar, instead - the events for previewTarea need to be added, first */
-		//icms_core_Debug::setDeprecated('icms_core_DataFilter::checkVar - type = text or html, $options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 
 		/* trigger all the events tied to the beforePreviewTarea event */
 		icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));

@@ -13,7 +13,7 @@ class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
 
 	/**
 	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+	 * @param	\icms_ipf_Object    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

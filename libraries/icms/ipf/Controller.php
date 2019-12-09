@@ -428,7 +428,7 @@ class icms_ipf_Controller {
 	}
 
 	/**
-	 * Retrieve the object admin side link for a {@link icms_ipf_view_Single} page
+	 * Retrieve the object admin side link for a page
 	 *
 	 * @param	object	$icmsObj	reference to the object from which we want the user side link
 	 * @param	bool	$onlyUrl	whether or not to return a simple URL or a full <a> link

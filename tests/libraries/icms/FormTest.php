@@ -18,7 +18,6 @@ class FormTest extends \PHPUnit_Framework_TestCase {
             'icms_form_Base' => null,
             'icms_form_Theme' => ['icms_form_Base'],
             'icms_form_Table' => ['icms_form_Base'],
-            'icms_form_Simple' => ['icms_form_Base'],
             'icms_form_Groupperm' => ['icms_form_Base'],
             'icms_form_elements_Tray' => ['icms_form_Element'],
             'icms_form_elements_Textarea' => ['icms_form_Element'],
@@ -285,9 +284,6 @@ class FormTest extends \PHPUnit_Framework_TestCase {
                 'addItem',
                 'render',
                 'insertBreak'
-            ],
-            'icms_form_Simple' => [
-                'render'
             ],
             'icms_form_Table' => [
                 'insertBreak',
