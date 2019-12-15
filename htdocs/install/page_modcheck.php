@@ -95,7 +95,7 @@ function imCheckRequirements()
 	$requirement['curl']['status']=extension_loaded( 'curl' ) ? true : false;
 
 	$requirement['file_upload']['description']="File uploads";
-	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? _YES : _NO;
+	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? SUCCESS : FAILED;
 	$requirement['file_upload']['status']=xoDiagBoolSetting( 'file_uploads', true ) ? true : false;
 
 	return $requirement;
