@@ -762,7 +762,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 				'conf_catid' => $c,
 				'conf_name' => 'theme_admin_set',
 				'conf_title' => '_MD_AM_ADMIN_DTHEME',
-				'conf_value' => 'iTheme',
+				'conf_value' => 'core',
 				'conf_desc' => '_MD_AM_ADMIN_DTHEME_DESC',
 				'conf_formtype' => 'theme_admin',
 				'conf_valuetype' => 'other',
@@ -787,7 +787,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 				'conf_name' => 'theme_set_allowed',
 				'conf_title' => '_MD_AM_THEMEOK',
 				'conf_value' => serialize([
-					'iTheme'
+					'core'
 				]),
 				'conf_desc' => '_MD_AM_THEMEOKDSC',
 				'conf_formtype' => 'theme_multi',
