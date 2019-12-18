@@ -109,7 +109,7 @@ a, a:visited {
 #searchbar {margin-top:8px}
 .input-sm {
   border-radius: 3px;
- 
+
   height: 30px !important;
   line-height: 1.5;
   padding: 5px 9px;
@@ -159,7 +159,7 @@ clear: right;
 
 .navbar-nav > li > .dropdown-menu {
   margin-top: 2px;
-   
+
 }
 .dropdown-menu > li > a {
     border-bottom: 1px solid transparent !important;
@@ -188,7 +188,7 @@ clear: right;
 /* Preface and Footer Backgrounds */
 .preface_wrapper, .footer_wrapper {
   width: 100%;
-  min-height: 100px;  
+  min-height: 100px;
   background-color:#0254a6;
   background-image:-webkit-gradient(radial, center top, 0, center top, 600, color-stop(0, #08abf0), color-stop(1, #0254a6));
   background-image:-webkit-radial-gradient(top center, ellipse farthest-side, #08abf0, #0254a6);
@@ -245,7 +245,7 @@ aside .well {padding:7px 19px}
 .goToTop .navbar-right {
    padding-top: 11px;
   height: 54px;padding-right:25px
-  
+
 }
 .goToTop .navbar a,.goToTop .navbar-nav > li > a {
   color: #dddddd !important;
@@ -499,7 +499,7 @@ select[name="theme_select"] {
 }
 /* For Left, Central or Right Blocks */
 .infobox {
-	
+
 }
 
 /* Menu Custom Block Position */
@@ -770,15 +770,6 @@ div.jGrowl > .ui-state-highlight {
 }
 
 #register {padding-bottom:20px}
-.openid_url {
-  background-position: 4px center;
-  padding-left: 23px !important;
-  padding-top: 10px !important; margin-bottom: 0px;
-  background-attachment: scroll;
-    background-image: url("../../../images/openid-inputicon.gif");
-    background-repeat: no-repeat;
-
-}
 .search_block form {
     margin: 0;
 }
@@ -862,7 +853,7 @@ div.jGrowl > .ui-state-highlight {
 }
 .content_content_tags .label-info {
  background-color: #fff;
-} 
+}
 .content_content_tags .label-info a {
   background-color: #5bc0de;
    padding: 0.2em 0.6em 0.3em;
@@ -884,7 +875,7 @@ div.jGrowl > .ui-state-highlight {
 
 div#profile-profile-visitors, div#profile-profile-search-results, div#profile-profile-visual, div#profile-profile-statistics, div.profile-profile-details {
   float: none;
-  
+
 }
 div.profile-form h2, div#profile-profile-pictures h3, div#profile-profile-audio h3, div#profile-profile-visitors h3, div#profile-profile-tribes h3, div#profile-profile-search-results p, div#profile-profile-statistics p, div.profile-profile-details p, div#profile-profile-search-results h3, div#profile-profile-search-results h4, div#profile-profile-friends h3, div#profile-profile-visual h3, div#profile-profile-statistics h3, div.profile-profile-details h3, div#profile-profile-videos h3 {
   margin: 10px 0;

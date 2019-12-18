@@ -31,23 +31,7 @@ define('_CORE_TOKENINVALID', 'No valid token found in request/session');
 define('_CORE_TOKENISVALID', 'Valid token found');
 define('_CORE_TOKENEXPIRED', 'Valid token expired');
 define('_CORE_CLASSNOTINSTANIATED', 'This class cannot be instantiated!');
-define('_CORE_OID_INSESSIONS', 'we already have an openid_response in SESSION');
-define('_CORE_OID_FETCHING', 'fetching the response from the OID server');
-define('_CORE_OID_STATCANCEL', 'OOI Server response status is Auth_OpenID_CANCEL');
-define('_CORE_OID_VERIFCANCEL', 'Verification cancelled.');
-define('_CORE_OID_SERVERFAILED', 'OOI Server response status is Auth_OpenID_FAILURE');
-define('_CORE_OID_FAILED', 'OpenID authentication failed: ');
-define('_CORE_OID_DUMPREQ', 'Outputing the REQUEST');
-define('_CORE_OID_SUCESSFULLYIDENTIFIED', 'You have successfully verified %s (%s) as your identity.');
-define('_CORE_OID_SERVERSUCCESS', 'OOI Server response status is Auth_OpenID_SUCCESS');
-define('_CORE_OID_DISPID', 'displayid: ');
-define('_CORE_OID_OPENID', 'openid: ');
-define('_CORE_OID_DUMPING', 'dumping sreg info');
-define('_CORE_OID_CANONID', '  (XRI CanonicalID: %s) ');
-define('_CORE_OID_STEPIS', 'Step is ');
-define('_CORE_OID_CHECKINGID', 'Checking if we have a user with this OpenID');
-define('_CORE_OID_FOUNDSTEPIS', 'We found a user, step is now ');
-define('_CORE_OID_NOTFOUNDSTEPIS', 'No user found for this OpenID, step is now ');
+
 define('_CORE_DB_NOTRACE', 'notrace:mysql extension not loaded');
 define('_CORE_DB_NOTALLOWEDINGET', 'Database updates are not allowed during processing of a GET request');
 define('_CORE_DB_NOTRACEDB', 'notrace:Unable to connect to database');
@@ -78,9 +62,3 @@ define('_CORE_DEPRECATED_CALLEDBY', 'Called by: ');
 define('_CORE_REMOVE_IN_VERSION', 'This will be removed in version %s');
 define('_CORE_DEBUG', 'Debug');
 define('_CORE_DEVELOPER_DASHBOARD', 'Developer Dashboard');
-
-define('_CORE_OID_URL_EXPECTED', 'Expected an OpenID URL.');
-define("_CORE_OID_URL_INVALID", 'Authentication error; not a valid OpenID.');
-define("_CORE_OID_REDIRECT_FAILED", 'Could not redirect to server: %s');
-define("_CORE_OID_INPROGRESS", "OpenID transaction in progress");
-
