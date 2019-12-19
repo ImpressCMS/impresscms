@@ -1,15 +1,38 @@
 # ImpressCMS ChangeLog
 
-## ImpressCMS 1.4 beta
-Date: 11 Oct 2019
+## ImpressCMS 1.4.0
+Date: 19 Dec 2019
 DB Version: 45 
-Build Version: 94 
+Build Version: 96
 
 ### Improvements
+- curl extension in installer now is requirement not optional (#530) @MekDrop
+- PHP7 improvements based on mamba7x PR (#507) @fiammybe
+- make expiration header dynamic in the past (#504) @fiammybe
+- check mysql using PDO now (#487) @fiammybe
+- Add a warning when PHP used is below 7.2
 
 ### Fixes
+- Move prototype inclusion so trust_path creation works fixes #569 (#571) @skenow
+- Fixed PathStuffController's constructor (#528) @MekDrop
+- Fixed suppressed warning if variable $options['folderName'] is undefined or empty when creating theme (1.4.x) (#510) @MekDrop
+- Fixed function signatures in icms_image_Handler (1.4) (#512) @MekDrop
+- Fixed installer collation selection (#529) @MekDrop
+- Fix the template handling in the system module (#503) @fiammybe
+- Add a warning when PHP used is below 7.2
 
 ### Update
+- Protector update for PDO SQL sanitizing Close #496 (#497) @skenow
+- Update Protector for PHP7 (#492) @skenow
+- Update php requirements to 5.6 (#505) @fiammybe
+- Update of Smarty to 2.6.31 (the latest 2.x release)
+- Update of CSS-tidy to work in PHP7
+- PHPMailer update to 5.2.7
+- PHPOpenID updated for better PHP7 compatibility
+
+### Removed
+- Removed installation_notify (#566) @MekDrop
+- Remove admin template folder in system module on upgrade (#509) @fiammybe
 
 
 ## ImpressCMS 1.3.11
