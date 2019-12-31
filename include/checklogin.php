@@ -76,13 +76,6 @@ if ($pos !== false) {
 	}
 }
 
-/* Commented out for OpenID , we need to change it to make a better validation if OpenID is used
- if ($uname == '' || $pass == '') {
- redirect_header(ICMS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
- exit();
- }
- */
-
 $member_handler = icms::handler('icms_member');
 
 icms_loadLanguageFile('core', 'auth');

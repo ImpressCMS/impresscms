@@ -385,11 +385,6 @@ $modversion['templates'][] = array(
 	);
 
 $modversion['templates'][] = array(
-	'file' => 'system_openid.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
 	'file' => 'admin/positions/system_adm_positions.html',
 	'description' => ''
 	);

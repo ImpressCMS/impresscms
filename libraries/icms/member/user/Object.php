@@ -70,8 +70,6 @@
  * @property string $user_intrest      Interests
  * @property int    $user_mailok       Are sending mails ok?
  * @property string $language          Language
- * @property string $openid            OpenID address
- * @property int    $user_viewoid      Allow view OpenID email?
  * @property bool   $pass_expired      Is password expired?
  * @property string $login_name        Login name
  */
@@ -135,8 +133,6 @@ class icms_member_user_Object extends icms_ipf_Object {
 		$this->initVar('user_mailok', self::DTYPE_INTEGER, 1, false, null, null, null, _US_MAILOK);
 
 		$this->initVar('language', self::DTYPE_STRING, null, false, null, null, null, _US_SELECT_LANG);
-		$this->initVar('openid', self::DTYPE_STRING, '', false, 255, null, null, _US_OPENID_YOUR);
-		$this->initVar('user_viewoid', self::DTYPE_INTEGER, 0, false, null, null, null, _US_ALLOWVIEWEMAILOPENID);
 		$this->initVar('pass_expired', self::DTYPE_BOOLEAN, 0, false, null, null, null, 'Pass Expired?');
 		$this->initVar('login_name', self::DTYPE_STRING, null, true, 255, null, null, _US_LOGINNAME);
 
@@ -505,7 +501,6 @@ class icms_member_user_Object extends icms_ipf_Object {
       $data = parent::toArray();
       if ($this->isSameAsLoggedInUser()) {
       if (!$data['user_viewoid'])
-      unset($data['openid']);
       unset($data['pass_expired'], $data['login_name'], $data['pass']);
       foreach (array_keys($data) as $key) {
       if ($key == 'uid')
