@@ -75,8 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		'--config' => dirname(dirname(__DIR__	)) . '/phoenix.php',
 	]), $output) > 0) {
 		$content = nl2br($output->fetch());
-		echo $content;
-		die();
 		$wizard->redirectToPage('dbsettings');
 		exit();
 	}
