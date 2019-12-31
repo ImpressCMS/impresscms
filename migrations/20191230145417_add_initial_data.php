@@ -567,7 +567,7 @@ class AddInitialData extends AbstractMigration
 				'attachsig' => 0,
 				'rank' => 7,
 				'level' => 5,
-				'theme' => 'iTheme',
+				'theme' => 'core',
 				'timezone_offset' => '0.0',
 				'last_login' => time(),
 				'umode' => 'thread',
@@ -704,7 +704,7 @@ class AddInitialData extends AbstractMigration
 					'conf_catid' => $c,
 					'conf_name' => 'theme_set',
 					'conf_title' => '_MD_AM_DTHEME',
-					'conf_value' => 'iTheme',
+					'conf_value' => 'core',
 					'conf_desc' => '_MD_AM_DTHEMEDSC',
 					'conf_formtype' => 'theme',
 					'conf_valuetype' => 'other',
@@ -716,7 +716,7 @@ class AddInitialData extends AbstractMigration
 					'conf_catid' => $c,
 					'conf_name' => 'theme_admin_set',
 					'conf_title' => '_MD_AM_ADMIN_DTHEME',
-					'conf_value' => 'iTheme',
+					'conf_value' => 'core',
 					'conf_desc' => '_MD_AM_ADMIN_DTHEME_DESC',
 					'conf_formtype' => 'theme_admin',
 					'conf_valuetype' => 'other',
@@ -741,7 +741,7 @@ class AddInitialData extends AbstractMigration
 					'conf_name' => 'theme_set_allowed',
 					'conf_title' => '_MD_AM_THEMEOK',
 					'conf_value' => serialize([
-						'iTheme'
+						'core'
 					]),
 					'conf_desc' => '_MD_AM_THEMEOKDSC',
 					'conf_formtype' => 'theme_multi',
