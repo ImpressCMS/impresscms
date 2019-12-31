@@ -52,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$wizard->redirectToPage('+0');
 		exit();
 	}
-	include_once './makedata.php';
 	$cm = 'dummy';
 
 	$wizard->loadLangFile('install2');
@@ -72,15 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 
-	/**
-	 * @var icms_db_Connection $db
-	 */
-	$db = \icms::getInstance()->get('db');
-	$group = make_groups($dbm);
-	$db->beginTransaction();
-	$result = make_data($dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $group);
-	$db->commit();
-	$content = $dbm->report();
+	$symfonyConsoleApplication = new \Symfony\Component\Console\Application('icms-installer');
+	$symfonyConsoleApplication->setAutoExit(false);
+	$symfonyConsoleApplication->add(new \Phoenix\Command\MigrateCommand());
+	$input = new \Symfony\Component\Console\Input\ArrayInput([
+		'command' => 'migrate',
+		'dir' => 'core'
+	]);
+	$output = new \Symfony\Component\Console\Output\BufferedOutput();
+	$symfonyConsoleApplication->run($input, $output);
+	$content = nl2br($output->fetch());
 } else {
 	$msg = $process? READY_INSERT_DATA : DATA_ALREADY_INSERTED;
 	$pageHasForm = $process? true : false;

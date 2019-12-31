@@ -76,6 +76,7 @@ final class icms extends Container {
 	 * @param mixed $factory
 	 * @param array $args Factory/Constructor arguments
 	 * @return object
+	 * @throws ReflectionException
 	 */
 	static public function create($factory, $args = array()) {
 		if (is_string($factory) && substr($factory, 0, 1) == '\\') {
