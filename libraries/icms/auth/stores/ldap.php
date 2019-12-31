@@ -17,7 +17,6 @@
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_LDAP', 'ldap', $i)");
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_AD', 'ads', $i)");
 	// ----------
-	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'auth_openid','_MD_AM_AUTHOPENID','0','_MD_AM_AUTHOPENIDDSC','yesno','int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'ldap_port','_MD_AM_LDAP_PORT','389','_MD_AM_LDAP_PORT','textbox','int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'ldap_server','_MD_AM_LDAP_SERVER','your directory server','_MD_AM_LDAP_SERVER_DESC','textbox','text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'ldap_base_dn','_MD_AM_LDAP_BASE_DN','dc=icms,dc=org','_MD_AM_LDAP_BASE_DN_DESC','textbox','text', " . $p++ . ")");

@@ -64,7 +64,6 @@ $op = '';
 	'user_from'=> 'str',
 	'openid'=> 'str',
 	'user_viewemail' => 'int',
-	'user_viewoid' => 'int',
 	'user_aim'=> 'str',
 	'user_yim'=> 'str',
 	'user_msnm'=> 'str',
@@ -230,7 +229,6 @@ switch ($op) {
 				$edituser->setVar('url', formatURL($url));
 				$edituser->setVar('user_icq', $user_icq);
 				$edituser->setVar('user_from', $user_from);
-				$edituser->setVar('openid', isset($openid)? trim($openid):'');
 				if ($icmsConfigUser['allwshow_sig'] == 1) {
 					if ($icmsConfigUser['allow_htsig'] == 0) {
 						$signature = strip_tags(icms_core_DataFilter::checkVar($user_sig, 'text', 'input'));
@@ -243,8 +241,6 @@ switch ($op) {
 
 				$user_viewemail = (!empty($user_viewemail))?1:0;
 				$edituser->setVar('user_viewemail', $user_viewemail);
-				$user_viewoid = (!empty($user_viewoid))?1:0;
-				$edituser->setVar('user_viewoid', $user_viewoid);
 				$edituser->setVar('user_aim', $user_aim);
 				$edituser->setVar('user_yim', $user_yim);
 				$edituser->setVar('user_msnm', $user_msnm);
@@ -326,18 +322,6 @@ switch ($op) {
 			$email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
 			$email_tray->addElement($email_cbox);
 			$form->addElement($email_tray);
-
-			if ($icmsConfigAuth['auth_openid'] == 1) {
-				$openid_tray = new icms_form_elements_Tray(_US_OPENID_FORM_CAPTION, '<br />');
-				$openid_text = new icms_form_elements_Text('', 'openid', 30, 255, icms::$user->getVar('openid'));
-				$openid_tray->setDescription(_US_OPENID_FORM_DSC);
-				$openid_tray->addElement($openid_text);
-				$openid_cbox_value = icms::$user->getVar('user_viewoid')?1:0;
-				$openid_cbox = new icms_form_elements_Checkbox('', 'user_viewoid', $openid_cbox_value);
-				$openid_cbox->addOption(1, _US_ALLOWVIEWEMAILOPENID);
-				$openid_tray->addElement($openid_cbox);
-				$form->addElement($openid_tray);
-			}
 
 			if ($icmsConfigUser['allow_chguname'] == 1) {
 				$uname_label = new icms_form_elements_Text(_US_NICKNAME, 'uname', 30, 60, icms::$user->getVar('uname', 'E'));
