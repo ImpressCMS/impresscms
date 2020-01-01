@@ -2,9 +2,9 @@
 
 namespace ImpressCMS\Core\Providers;
 
-use League\Container\ServiceProvider\AbstractServiceProvider;
 use icms_core_Security;
 use icms_Event;
+use League\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
  * Security service provider
