@@ -43,7 +43,7 @@
  */
 
 /**
- * Collection of multiple {@link icms_db_criteria_Element}s
+ * Collection of multiple criteria elements
  *
  * @package	ICMS\Database\Criteria
  * @author	Kazumi Ono	<onokazu@xoops.org>
@@ -53,7 +53,8 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 
 	/**
 	 * The elements of the collection
-	 * @var	array   Array of {@link icms_db_criteria_Element} objects
+	 *
+	 * @var	\icms_db_criteria_Element[] $criteriaElements
 	 */
 	public $criteriaElements = array();
 

@@ -16,7 +16,7 @@
 /**
  * Inserts the URL of a file resource customizable by themes
  *
- * This plug-in works like the {@link smarty_compiler_xoAppUrl() xoAppUrl} plug-in,
+ * This plug-in works like the smarty_compiler_xoAppUrl plug-in,
  * except that it is intended to generate the URL of resource files customizable by
  * themes.
  *

@@ -7,7 +7,7 @@ Build Version: 75
 For a detailed list of changes in this version, please check https://github.com/ImpressCMS/impresscms/milestone/6?closed=1
 
 === ImpressCMS 2.0.0 Alpha 6 ===
-Release date: 
+Release date:
 DB Version: 44
 Build Version: 74
 
@@ -27,7 +27,7 @@ Improvements:
 Private Messaging Improvements
 * #747 - New mobile-friendly personal message system
 * #812 - HTML is out of the code and into templates
-* #813 - Result is provided in the UI 
+* #813 - Result is provided in the UI
 * #816 - New pop-up is used in the admin area
 * #753 - Textsanitizer plugins work in messages
 * #814 - members cannot send a message to themselves
@@ -106,10 +106,10 @@ Build Version: 70
 
 ###Bugfixes:###
     Correcting a misspelled word in the installation_notify code
-    
+
 ** Complete list of tickets addressed in the 1.3.5 Milestone - https://impresscmsdev.assembla.com/spaces/dW4voyNP0r4ldbeJe5cbLr/tickets?report[estimate_show]=true&report[id]=0&report[milestone_id_cond]=0&report[milestone_id_val][]=2260293&report[title]=ImpressCMS+1.3.5+Tickets
 
-    
+
 ImpressCMS 1.3.5 RC2
 -------------------
 Creation Date: 27 Aug 2013
@@ -215,7 +215,7 @@ Changed
 
 Fixed
 * Pages with redirects were slow to load when gzip was enabled
-* OpenID works on systems where /dev/urandom is not accessible
+* OenID works on systems where /dev/urandom is not accessible
 * LDAP authentication now works after fixing typos
 
 === ImpressCMS 2.0 Alpha 2 ===
@@ -274,7 +274,7 @@ Details of this release are found on Assembla - http://impresscmsdev.assembla.co
 Release date: January 2012
 Revision: 11535
 DB Version: 42
-Build Version: 55 (56) 
+Build Version: 55 (56)
 
 1st alpha release of 2.0 - removal of legacy code support
 
@@ -337,7 +337,7 @@ Updated external libraries
 
 === ImpressCMS 1.3 Beta ===
 Release date: 6 March 2011
-Revision: 
+Revision:
 DB Version: 41
 Build Version: 42 (should have been 43)
 
@@ -433,12 +433,12 @@ Build Version: 34
 
 http://trac.impresscms.org/core/query?status=closed&group=resolution&milestone=ImpressCMS+1.2.1
 
-Note: 	From this release forward, the detailed changelog will not be included with the 
+Note: 	From this release forward, the detailed changelog will not be included with the
 		release package. The tickets are all in Trac and can easily be found and retrieved
 		from there.
-		
-		The release notes will contain a summary of new features introduced, items that were 
-		improved and any bugs from previous versions that were fixed. 
+
+		The release notes will contain a summary of new features introduced, items that were
+		improved and any bugs from previous versions that were fixed.
 
 === ImpressCMS 1.2.1 Beta ===
 Release date: 11 Feb 2010

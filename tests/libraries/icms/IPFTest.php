@@ -215,7 +215,6 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'executeEvent',
                 'getIdentifierName',
                 'enableUpload',
-                'setUploaderConfig'
             ],
             'icms_ipf_Controller' => [
                 'postDataToObject',

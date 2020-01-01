@@ -65,10 +65,6 @@ if ($icmsConfig['gzip_compression'] == 1
 		}
 }
 
-// Include openid common functions if needed
-if (defined('ICMS_INCLUDE_OPENID')) {
-	require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
-}
 /* This address the strict compliance for PHP 5.3/5.4, but the rest of our timezone handling
  * can be improved beyond this. ~skenow
  */

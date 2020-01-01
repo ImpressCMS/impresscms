@@ -182,7 +182,7 @@ class icms_core_Object extends icms_properties_Handler {
 	 *
 	 * @return object
 	 *
-	 * @deprecated Use php function clone
+	 * @deprecated Use php function clone! Since 2.0
 	 */
 	public function xoopsClone() {
 		trigger_error('Use php function clone!', E_USER_DEPRECATED);
@@ -193,7 +193,7 @@ class icms_core_Object extends icms_properties_Handler {
 	/**
 	 * Sets object modified
 	 *
-	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead
+	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead. Since 2.0
 	 */
 	public function setDirty() {
 		trigger_error('Use setVarInfo with self::VARCFG_CHANGED instead', E_USER_DEPRECATED);
@@ -204,7 +204,7 @@ class icms_core_Object extends icms_properties_Handler {
 	/**
 	 * Sets object unmodified
 	 *
-	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead
+	 * @deprecated Use setVarInfo with self::VARCFG_CHANGED instead. Since 2.0
 	 */
 	public function unsetDirty() {
 		trigger_error('Use setVarInfo with self::VARCFG_CHANGED instead', E_USER_DEPRECATED);
@@ -215,7 +215,7 @@ class icms_core_Object extends icms_properties_Handler {
 	/**
 	 * Is object modified?
 	 *
-	 * @deprecated Use count($this->getChangedVars()) > 0 instead
+	 * @deprecated Use count($this->getChangedVars()) > 0 instead. Since 2.0
 	 */
 	public function isDirty() {
 		trigger_error('Use count($this->getChangedVars()) > 0 instead', E_USER_DEPRECATED);

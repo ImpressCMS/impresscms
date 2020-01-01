@@ -595,9 +595,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			'user_intrest' => '',
 			'user_mailok' => 0,
 			'language' => $language,
-			'openid' => '',
 			'salt' => '',
-			'user_viewoid' => 0,
 			'pass_expired' => 0,
 			'enc_type' => 1,
 			'login_name' => $adminlogin_name
@@ -762,7 +760,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 				'conf_catid' => $c,
 				'conf_name' => 'theme_admin_set',
 				'conf_title' => '_MD_AM_ADMIN_DTHEME',
-				'conf_value' => 'iTheme',
+				'conf_value' => 'core',
 				'conf_desc' => '_MD_AM_ADMIN_DTHEME_DESC',
 				'conf_formtype' => 'theme_admin',
 				'conf_valuetype' => 'other',
@@ -787,7 +785,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 				'conf_name' => 'theme_set_allowed',
 				'conf_title' => '_MD_AM_THEMEOK',
 				'conf_value' => serialize([
-					'iTheme'
+					'core'
 				]),
 				'conf_desc' => '_MD_AM_THEMEOKDSC',
 				'conf_formtype' => 'theme_multi',
@@ -2326,18 +2324,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 	// ----------
 	$dbm->insert('config', [
-		[
-			'conf_id' => ++$i,
-			'conf_modid' => 0,
-			'conf_catid' => $c,
-			'conf_name' => 'auth_openid',
-			'conf_title' => '_MD_AM_AUTHOPENID',
-			'conf_value' => '0',
-			'conf_desc' => '_MD_AM_AUTHOPENIDDSC',
-			'conf_formtype' => 'yesno',
-			'conf_valuetype' => 'int',
-			'conf_order' => $p++
-		],
 		[
 			'conf_id' => ++$i,
 			'conf_modid' => 0,

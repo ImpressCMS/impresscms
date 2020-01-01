@@ -16,10 +16,9 @@
 /**
  * Quick include template plug-in
  *
- * Like {@link smarty_compiler_foreachq() foreachq}, this plug-in has been written to provide
+ * Like smarty_compiler_foreachq, this plug-in has been written to provide
  * a faster version of an already existing Smarty function. <var>includeq</var> can be used
- * as a replacement for the Smarty
- * {@link http://smarty.php.net/manual/en/language.function.include.php include} function as long
+ * as a replacement for the Smarty include function as long
  * as you are aware of the differences between them.
  *
  * Normally, when you include a template, Smarty does the following:

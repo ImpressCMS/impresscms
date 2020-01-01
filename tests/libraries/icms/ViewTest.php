@@ -70,7 +70,6 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
                 'get',
                 'getMultiple',
                 'getCountSimilarBlocks',
-                'getAllBlocksByGroup'
             ],
             'icms_view_block_Object' => [
                 'getContent',

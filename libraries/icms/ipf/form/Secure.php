@@ -10,13 +10,13 @@
 class icms_ipf_form_Secure extends icms_ipf_form_Base {
 	/**
 	 * Constructor
-	 * Sets all the values / variables for the icms_ipf_form_Base (@link icms_ipf_form_Base) (parent) class
+	 * Sets all the values / variables for the icms_ipf_form_Base (parent) class
 	 * @param	string    &$target                  reference to targetobject (@todo, which object will be passed here?)
 	 * @param	string    $form_name                the form name
 	 * @param	string    $form_caption             the form caption
 	 * @param	string    $form_action              the form action
 	 * @param	string    $form_fields              the form fields
-	 * @param	string    $submit_button_caption    whether to add a caption to the submit button
+	 * @param	string|false    $submit_button_caption    whether to add a caption to the submit button
 	 * @param	bool      $cancel_js_action         whether to invoke a javascript action when cancel button is clicked
 	 * @param	bool      $captcha                  whether to add captcha
 	 */

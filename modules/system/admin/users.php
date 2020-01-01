@@ -75,12 +75,6 @@ switch ($op) {
 		if (!isset($user_viewemail)) {
 			$user_viewemail = null;
 		}
-		if (!isset($user_viewoid)) {
-			$user_viewoid = null;
-		}
-		if (!isset($openid)) {
-			$openid = null;
-		}
 		$groups = isset($_POST['groups'])?$groups:array(ICMS_GROUP_ANONYMOUS);
 		if (@is_array($groups_hidden)) {
 			$groups = array_unique(array_merge($groups, $groups_hidden));
@@ -88,7 +82,7 @@ switch ($op) {
 		updateUser($uid, $username, $login_name, $name, $url, $email,
 					$user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig,
 					$theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode,
-					$timezone_offset, $user_mailok, $language, $openid, $user_viewoid, $pass_expired, $groups
+					$timezone_offset, $user_mailok, $language, $pass_expired, $groups
 				);
 		break;
 
@@ -199,9 +193,6 @@ switch ($op) {
 				if (isset($user_viewemail)) {
 					$newuser->setVar('user_viewemail', $user_viewemail);
 				}
-				if (isset($user_viewoid)) {
-					$newuser->setVar('user_viewoid', $user_viewoid);
-				}
 				if (isset($attachsig)) {
 					$newuser->setVar('attachsig', $attachsig);
 				}
@@ -249,8 +240,6 @@ switch ($op) {
 				$newuser->setVar('user_mailok', $user_mailok);
 				$newuser->setVar('language', $language);
 
-				if ($icmsConfigAuth['auth_openid'] == 1) {
-					$newuser->setVar('openid', $openid); }
 					if (!$user_handler->insert($newuser)) {
 						$adduser_errormsg = _AM_CNRNU;
 					} else {

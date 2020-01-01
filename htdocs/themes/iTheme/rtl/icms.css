@@ -281,21 +281,14 @@ div.cpicon span.unor{
 	color: #000;
 }
 div#disclaimer{
-	background-color: #eee; 
-	border: #CCC 1px solid; 
-	padding: 2px; 
-	width: 98%; 
-	height: 8em; 
-	overflow: auto; 
-	font-size: 1em; 
+	background-color: #eee;
+	border: #CCC 1px solid;
+	padding: 2px;
+	width: 98%;
+	height: 8em;
+	overflow: auto;
+	font-size: 1em;
 	font-family: Tahoma, verdana,arial, helvetica, sans-serif;
-}
-.openid_url {
-	background-image: url(images/openid-inputicon.gif);
-	background-repeat: no-repeat;
-	background-attachment: scroll;
-	background-color: #ffffff;
-	padding-left: 18px;
 }
 
 /*Default ImpressCMS Pagination Style*/
@@ -336,7 +329,7 @@ div.pagination.default span.disabled {
 	display:block;
 }
 .top_shortPass span{
-	
+
 }
 .top_badPass{
 	background:#edabab;
@@ -344,7 +337,7 @@ div.pagination.default span.disabled {
 	display:block;
 }
 .top_badPass span{
-	
+
 }
 .top_goodPass{
 	background:#ede3ab;

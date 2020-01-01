@@ -34,7 +34,7 @@
 
 /**
  * Authentification class factory
- * 
+ *
  * @copyright   http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license     http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -65,20 +65,6 @@ class icms_auth_Factory {
 				$auth_method = 'local';
 			} else {
 				$auth_method = $icmsConfigAuth['auth_method'];
-
-				// However if auth_method is Local, and Openid login is activated and a user is trying to authenticate with his openid
-
-				/*
-				 * @todo remove this from the factory class!
-				 * this actually should NOT be part of the factory class
-				 */
-
-				if ($icmsConfigAuth['auth_method'] == 'local'
-					&& $icmsConfigAuth['auth_openid']
-					&& (isset($_REQUEST['openid_identity']) || isset($_SESSION['openid_response']))
-				) {
-					$auth_method = 'openid';
-				}
 			}
 
 			$class = 'icms_auth_method_' . ucfirst($auth_method);

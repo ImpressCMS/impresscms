@@ -45,8 +45,7 @@
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
 class icms_module_Handler
-	extends icms_ipf_Handler
-{
+	extends icms_ipf_Handler {
 
 	/**
 	 * Constructor
@@ -131,6 +130,25 @@ class icms_module_Handler
 	{
 		$module->setVar('last_update', time());
 		return true;
+	}
+
+	/**
+	 * Load a module from the database
+	 *
+	 * @param    int $id ID of the module
+	 * @param    bool $loadConfig set to TRUE in case you want to load the module config in addition
+	 * @param    bool $debug Debug enabled for object?
+	 * @param   bool|object $criteria Criteria for getting object if needed
+	 *
+	 * @return    \icms_module_Object|false
+	 */
+	public function &get($id, $loadConfig = false, $debug = false, $criteria = false)
+	{
+		$module = parent::get($id, true, $debug, $criteria);
+		if ($loadConfig) {
+			$this->loadConfig($module);
+		}
+		return $module;
 	}
 
 	/**
@@ -324,9 +342,8 @@ class icms_module_Handler
 	 *
 	 * @param string $dirname
 	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @return    object  {@link icms_module_Object} FALSE on fail
-	 * @todo Make caching work!
-	 *
+	 * @return    \icms_module_Object|false
+	 * @todo Make caching work
 	 */
 	public function getByDirname($dirname, $loadConfig = false)
 	{
