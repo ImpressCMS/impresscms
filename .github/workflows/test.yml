@@ -75,7 +75,7 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           INSTALL_ADMIN_PASS: test
           INSTALL_ADMIN_LOGIN: test
-          INSTALL_ADMIN_NAME: GitHubActionTest
+          INSTALL_ADMIN_NAME: test
           INSTALL_ADMIN_EMAIL: test@impresscms.org
           INSTALL_LANGUAGE: english
         run: |
