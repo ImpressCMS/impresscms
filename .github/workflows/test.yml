@@ -83,7 +83,7 @@ jobs:
           chmod -R 777 ./storage
           ./bin/phoenix migrate -vvv
       - name: Prepare CodeClimate
-        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$(git rev-parse origin/$GITHUB_HEAD_REF) ./cc-test-reporter before-build
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter before-build
       - name: Testing with PHPUnit
         env:
           URL: http://localhost
@@ -104,4 +104,4 @@ jobs:
       - name: Commiting CodeClimate data
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$(git rev-parse origin/$GITHUB_HEAD_REF) ./cc-test-reporter after-build --exit-code $? --coverage-input-type clover
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover
