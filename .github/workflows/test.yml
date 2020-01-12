@@ -30,9 +30,6 @@ jobs:
       - uses: mirromutth/mysql-action@v1.1
         with:
           mysql database: icms
-          mysql root password: icms
-          mysql user: icms
-          mysql password: icms
       - name: Cache PHP dependencies
         uses: actions/cache@v1
         with:
@@ -48,7 +45,7 @@ jobs:
           DB_TYPE: pdo.mysql
           DB_HOST: localhost
           DB_USER: root
-          DB_PASS: icms
+          DB_PASS: ''
           DB_PCONNECT: 0
           DB_NAME: icms
           DB_CHARSET: utf8
