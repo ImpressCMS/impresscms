@@ -43,7 +43,7 @@ jobs:
         with:
           command: composer install --no-dev --no-interaction
       - name: PHPUnit tests
-        uses: php-actions/phpunit@v1
+        uses: php-actions/phpunit@v1.0.0
         env:
           DB_TYPE: pdo.mysql
           DB_HOST: localhost
