@@ -39,7 +39,7 @@ jobs:
       - name: Verify MySQL connection
         run: |
           sudo apt-get install -y mysql-client
-          mysql --host 127.0.0.1 --port 3306 -uroot -picms -e "SHOW DATABASES"
+          mysql --host localhost --port ${{ job.services.mysql.ports['3306'] }} -uroot -picms -e "SHOW DATABASES"
       - name: Cache PHP dependencies
         uses: actions/cache@v1
         with:
@@ -62,6 +62,7 @@ jobs:
           DB_COLLATION: utf8_general_ci
           DB_PREFIX: icms
           DB_SALT: icms
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
         with:
           config: ./tests/configuration.xml
           memory: 256M
