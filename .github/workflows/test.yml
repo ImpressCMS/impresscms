@@ -78,7 +78,7 @@ jobs:
           INSTALL_ADMIN_PASS: test
           INSTALL_ADMIN_LOGIN: test
         run: |
-          chmod +R 0777 ./storage
+          chmod +R 777 ./storage
           ./bin/phoenix migrate
       - name: Testing with PHPUnit
         env:
