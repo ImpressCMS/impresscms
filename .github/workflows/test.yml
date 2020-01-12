@@ -82,6 +82,8 @@ jobs:
         run: |
           chmod -R 777 ./storage
           ./bin/phoenix migrate -vvv
+      - name: Prepare CodeClimate
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$(git rev-parse origin/$GITHUB_HEAD_REF) ./cc-test-reporter before-build
       - name: Testing with PHPUnit
         env:
           URL: http://localhost
@@ -97,7 +99,9 @@ jobs:
           DB_SALT: icms
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
         run: |
-          ./cc-test-reporter before-build
           phpunit -c tests/configuration.xml
           mv ./storage/log/clover.xml ./clover.xml
-          ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type clover
+      - name: Commiting CodeClimate data
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$(git rev-parse origin/$GITHUB_HEAD_REF) ./cc-test-reporter after-build --exit-code $? --coverage-input-type clover
