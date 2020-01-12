@@ -3,4 +3,4 @@ template: |
 
   $CHANGES
   
-branches: "retro","impresscms_1.3"
+branches: "master","impresscms_1.4"
