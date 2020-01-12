@@ -1,5 +1,6 @@
 on:
   - push
+  - pull_request
 
 jobs:
   run:
@@ -35,6 +36,7 @@ jobs:
           extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
           ini-values: post_max_size=256M
           coverage: xdebug
+          tools: phpunit:5.7.27
       - name: Check PHP Version
         run: php -v
       - name: Verify MySQL connection
@@ -54,7 +56,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
-      - name: Run Tests
+      - name: Testing with PHPUnit
         env:
           DB_TYPE: pdo.mysql
           DB_HOST: 127.0.0.1
@@ -67,4 +69,4 @@ jobs:
           DB_PREFIX: icms
           DB_SALT: icms
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-        run: php bin/phpunit --coverage-text ./tests/configuration.xml
+        run: phpunit -c tests/configuration.xml
