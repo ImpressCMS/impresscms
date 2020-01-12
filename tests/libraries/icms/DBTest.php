@@ -246,14 +246,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'force' => 'bool',
                 'db' => 'null'
             ],
-            'icms_db_legacy_Database' => [
-                'prefix' => 'string',
-                'logger' => 'null',
-                'allowWebChanges' => 'bool'
-            ],
-            'icms_db_legacy_PdoDatabase' => [
-                'conn' => 'null'
-            ]
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
             foreach ($variables as $variable => $type) {
