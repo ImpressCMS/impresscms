@@ -5777,7 +5777,6 @@ class AddInitialData extends AbstractMigration
 		if (empty($data)) {
 			return $this;
 		}
-		$this->select()
 		return $this->insert(
 			\icms::getInstance()->get('db-connection-1')->prefix($table),
 			$data
