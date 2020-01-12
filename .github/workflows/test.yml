@@ -18,12 +18,7 @@ jobs:
           - 7.4
         database-system:
           - mysql:5.6
-          - mysql:5.7
-          - mysql:8.0
           - mariadb:10.1
-          - mariadb:10.2
-          - mariadb:10.3
-          - mariadb:10.4
     name: PHP ${{ matrix.php-versions }} with ${{ matrix.database-system }} test on ${{ matrix.operating-system }}
     services:
       mysql:
