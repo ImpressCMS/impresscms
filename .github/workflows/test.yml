@@ -10,7 +10,7 @@ jobs:
       matrix:
         operating-system:
           - ubuntu-latest
-          - windows-latest
+          #- windows-latest # Todo: make it work also for windows
           - macOS-latest
         php-versions:
           - 7.2
@@ -29,6 +29,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
+      - name: Setup CodeClimate
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
       - name: Install PHP
         uses: shivammathur/setup-php@master
         with:
@@ -69,4 +73,8 @@ jobs:
           DB_PREFIX: icms
           DB_SALT: icms
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-        run: phpunit -c tests/configuration.xml
+        run: |
+          ./cc-test-reporter before-build
+          phpunit -c tests/configuration.xml
+          mv ./storage/log/clover.xml ./clover.xml
+          ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type clover
