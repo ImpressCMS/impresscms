@@ -14,7 +14,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-            'icms_db_legacy_Database' => ['icms_db_legacy_IDatabase'],
             'icms_db_Factory' => null,
             'icms_db_criteria_Element' => null,
             'icms_db_criteria_Compo' => ['icms_db_criteria_Element'],
@@ -23,14 +22,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
             'icms_db_legacy_updater_Handler' => null,
             'icms_db_legacy_updater_Table' => null,
             'icms_db_legacy_Factory' => ['icms_db_Factory'],
-            'icms_db_legacy_PdoDatabase' => [
-                'icms_db_legacy_Database',
-                'icms_db_legacy_IDatabase'
-            ],
-            'icms_db_mysql_Connection' => [
-                'PDO',
-                'icms_db_IConnection'
-            ],
             'icms_db_mysql_Utility' => ['icms_db_IUtility'],
             'icms_db_Connection' => [
                 'PDO',
@@ -137,40 +128,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'updateAll',
                 'deleteAll',
                 'dropFields'
-            ],
-            'icms_db_legacy_Database' => [
-                'setLogger',
-                'setPrefix',
-                'prefix'
-            ],
-            'icms_db_legacy_PdoDatabase' => [
-                'connect',
-                'close',
-                'quoteString',
-                'quote',
-                'escape',
-                'error',
-                'errno',
-                'genId',
-                'query',
-                'queryF',
-                'getInsertId',
-                'getAffectedRows',
-                'getFieldName',
-                'getFieldType',
-                'getFieldsNum',
-                'fetchRow',
-                'fetchArray',
-                'fetchBoth',
-                'getRowsNum',
-                'freeRecordSet',
-                'queryFromFile',
-                'getConnection',
-                'getServerVersion'
-            ],
-            'icms_db_mysql_Connection' => [
-                'escape',
-                'query'
             ],
             'icms_db_Connection' => [
                 'escape',
