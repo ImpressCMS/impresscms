@@ -60,6 +60,26 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
+      - name: Installing ImpressCMS
+        env:
+          DB_TYPE: pdo.mysql
+          DB_HOST: 127.0.0.1
+          DB_USER: root
+          DB_PASS: icms
+          DB_PCONNECT: 0
+          DB_NAME: icms
+          DB_CHARSET: utf8
+          DB_COLLATION: utf8_general_ci
+          DB_PREFIX: icms
+          DB_SALT: icms
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          INSTALL_ADMIN_EMAIL: test@impresscms.org
+          INSTALL_ADMIN_NAME: GitHubActionTest
+          INSTALL_ADMIN_PASS: test
+          INSTALL_ADMIN_LOGIN: test
+        run: |
+          chmod +R 0777 ./storage
+          ./bin/phoenix migrate
       - name: Testing with PHPUnit
         env:
           DB_TYPE: pdo.mysql
