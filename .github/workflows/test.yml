@@ -1,0 +1,60 @@
+on:
+  - push
+
+jobs:
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      max-parallel: 3
+      matrix:
+        operating-system:
+          - ubuntu-latest
+          - windows-latest
+          - macOS-latest
+        php-versions:
+          - 7.2
+          - 7.3
+          - 7.4
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Install PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: curl gd PDO json mbstring pcre session
+          ini-values: post_max_size=256M
+      - name: Check PHP Version
+        run: php -v
+      - uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql database: 'icms'
+          mysql root password: ''
+          mysql user: 'icms'
+          mysql password: ''
+      - name: Cache PHP dependencies
+        uses: actions/cache@v1
+        with:
+          path: vendor
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
+      - name: Composer install
+        uses: php-actions/composer@v1
+        with:
+          command: composer install --no-dev --no-interaction
+      - name: PHPUnit tests
+        uses: php-actions/phpunit@v1
+        env:
+          DB_TYPE: pdo.mysql
+          DB_HOST: localhost
+          DB_USER: root
+          DB_PASS:
+          DB_PCONNECT: 0
+          DB_NAME: icms
+          DB_CHARSET: utf8
+          DB_COLLATION: utf8_general_ci
+          DB_PREFIX: icms
+          DB_SALT: icms
+        with:
+          config: ./tests/configuration.xml
+          memory: 256M
