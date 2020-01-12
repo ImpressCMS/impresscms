@@ -39,7 +39,7 @@ jobs:
       - name: Verify MySQL connection
         run: |
           sudo apt-get install -y mysql-client
-          mysql --host localhost --port ${{ job.services.mysql.ports['3306'] }} -uroot -picms -e "SHOW DATABASES"
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -picms -e "SHOW DATABASES"
       - name: Cache PHP dependencies
         uses: actions/cache@v1
         with:
@@ -53,7 +53,7 @@ jobs:
         uses: php-actions/phpunit@v1.0.0
         env:
           DB_TYPE: pdo.mysql
-          DB_HOST: localhost
+          DB_HOST: 127.0.0.1
           DB_USER: root
           DB_PASS: icms
           DB_PCONNECT: 0
