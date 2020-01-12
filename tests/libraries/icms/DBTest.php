@@ -19,9 +19,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
             'icms_db_criteria_Element' => null,
             'icms_db_criteria_Compo' => ['icms_db_criteria_Element'],
             'icms_db_criteria_Item' => ['icms_db_criteria_Element'],
-            'icms_db_legacy_mysql_Database' => ['icms_db_legacy_Database'],
-            'icms_db_legacy_mysql_Proxy' => ['icms_db_legacy_mysql_Database'],
-            'icms_db_legacy_mysql_Safe' => ['icms_db_legacy_mysql_Database'],
             'icms_db_legacy_mysql_Utility' => ['icms_db_IUtility'],
             'icms_db_legacy_updater_Handler' => null,
             'icms_db_legacy_updater_Table' => null,
@@ -98,35 +95,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'render',
                 'renderLdap',
                 'renderWhere'
-            ],
-            'icms_db_legacy_mysql_Database' => [
-                'connect',
-                'genId',
-                'fetchRow',
-                'fetchArray',
-                'fetchBoth',
-                'getInsertId',
-                'getRowsNum',
-                'getAffectedRows',
-                'close',
-                'freeRecordSet',
-                'error',
-                'errno',
-                'quoteString',
-                'quote',
-                'escape',
-                'queryF',
-                'queryFromFile',
-                'getFieldName',
-                'getFieldType',
-                'getFieldsNum',
-                'getServerVersion'
-            ],
-            'icms_db_legacy_mysql_Proxy' => [
-                'query'
-            ],
-            'icms_db_legacy_mysql_Safe' => [
-                'query'
             ],
             'icms_db_legacy_updater_Handler' => [
                 'runQuery',
@@ -270,9 +238,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'limit' => 'int',
                 'start' => 'int',
                 'groupby' => 'string'
-            ],
-            'icms_db_legacy_mysql_Database' => [
-                'conn' => 'null'
             ],
             'icms_db_legacy_updater_Handler' => [
                 'db' => 'null'
