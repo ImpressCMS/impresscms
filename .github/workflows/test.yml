@@ -39,7 +39,7 @@ jobs:
           path: vendor
           key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
       - name: Composer install
-        uses: php-actions/composer@latest
+        uses: php-actions/composer@v1.0.0
         with:
           command: composer install --no-dev --no-interaction
       - name: PHPUnit tests
