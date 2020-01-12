@@ -80,7 +80,7 @@ jobs:
           INSTALL_ADMIN_PASS: test
           INSTALL_ADMIN_LOGIN: test
           INSTALL_ADMIN_NAME: test
-          INSTALL_ADMIN_EMAIL: test@impresscms.org
+          INSTALL_ADMIN_EMAIL: noreply@impresscms.org
           INSTALL_LANGUAGE: english
         run: |
           chmod -R 777 ./storage
