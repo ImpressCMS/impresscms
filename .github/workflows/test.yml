@@ -11,15 +11,23 @@ jobs:
         operating-system:
           - ubuntu-latest
           #- windows-latest # Todo: make it work also for windows
-          - macOS-latest
+          #- macOS-latest # Todo: make it work also for macos
         php-versions:
           - 7.2
           - 7.3
           - 7.4
-    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+        database-system:
+          - mysql:5.6
+          - mysql:5.7
+          - mysql:8.0
+          - mariadb:10.1
+          - mariadb:10.2
+          - mariadb:10.3
+          - mariadb:10.4
+    name: PHP ${{ matrix.php-versions }} with ${{ matrix.database-system }} test on ${{ matrix.operating-system }}
     services:
       mysql:
-        image: mysql:5.6
+        image: ${{ matrix.database-system }}
         env:
           MYSQL_ROOT_PASSWORD: icms
           MYSQL_DATABASE: icms
