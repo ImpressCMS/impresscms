@@ -79,7 +79,7 @@ jobs:
           INSTALL_ADMIN_LOGIN: test
         run: |
           chmod -R 777 ./storage
-          ./bin/phoenix migrate
+          ./bin/phoenix migrate -vvv
       - name: Testing with PHPUnit
         env:
           DB_TYPE: pdo.mysql
