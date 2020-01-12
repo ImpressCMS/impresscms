@@ -32,25 +32,29 @@ jobs:
         uses: shivammathur/setup-php@master
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: curl gd PDO json mbstring pcre session
+          extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
           ini-values: post_max_size=256M
+          coverage: xdebug
       - name: Check PHP Version
         run: php -v
       - name: Verify MySQL connection
         run: |
           sudo apt-get install -y mysql-client
           mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -picms -e "SHOW DATABASES"
-      - name: Cache PHP dependencies
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer dependencies
         uses: actions/cache@v1
         with:
-          path: vendor
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
-      - name: Composer install
-        uses: php-actions/composer@v1.0.0
-        with:
-          args: install --no-dev --no-interaction
-      - name: PHPUnit tests
-        uses: php-actions/phpunit@v1.0.0
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
+      - name: Run Tests
         env:
           DB_TYPE: pdo.mysql
           DB_HOST: 127.0.0.1
@@ -63,6 +67,4 @@ jobs:
           DB_PREFIX: icms
           DB_SALT: icms
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-        with:
-          config: ./tests/configuration.xml
-          memory: 256M
+        run: php bin/phpunit --coverage-text ./tests/configuration.xml
