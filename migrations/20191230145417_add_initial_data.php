@@ -549,6 +549,42 @@ class AddInitialData extends AbstractMigration
 		$temp = $pwd->encryptPass($adminpass);
 		$regdate = time();
 		// RMV-NOTIFY (updated for extra columns in user table)
+		var_dump(			[
+			'uid' => 1,
+			'name' => '',
+			'uname' => $adminname,
+			'email' => $adminmail,
+			'url' => ICMS_URL,
+			'user_avatar' => 'blank.gif',
+			'user_regdate' => $regdate,
+			'user_from' => '',
+			'user_sig' => '',
+			'user_viewemail' => 0,
+			'actkey' => '',
+			'pass' => $temp,
+			'posts' => 0,
+			'attachsig' => 0,
+			'rank' => 7,
+			'level' => 5,
+			'theme' => 'core',
+			'timezone_offset' => '0.0',
+			'last_login' => time(),
+			'umode' => 'thread',
+			'uorder' => 0,
+			'notify_method' => 1,
+			'notify_mode' => 0,
+			'user_occ' => '',
+			'bio' => '',
+			'user_intrest' => '',
+			'user_mailok' => 0,
+			'language' => $language,
+			'openid' => '',
+			'salt' => '',
+			'user_viewoid' => 0,
+			'pass_expired' => 0,
+			'enc_type' => 1,
+			'login_name' => $adminlogin_name
+		]);
 		$this->insertWithPrefix('users', [
 			[
 				'uid' => 1,
