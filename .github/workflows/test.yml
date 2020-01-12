@@ -62,6 +62,7 @@ jobs:
         run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
       - name: Installing ImpressCMS
         env:
+          URL: http://localhost
           DB_TYPE: pdo.mysql
           DB_HOST: 127.0.0.1
           DB_USER: root
@@ -83,6 +84,7 @@ jobs:
           ./bin/phoenix migrate -vvv
       - name: Testing with PHPUnit
         env:
+          URL: http://localhost
           DB_TYPE: pdo.mysql
           DB_HOST: 127.0.0.1
           DB_USER: root
