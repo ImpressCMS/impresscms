@@ -16,6 +16,15 @@ jobs:
           - 7.3
           - 7.4
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: icms
+          MYSQL_DATABASE: icms
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -27,9 +36,10 @@ jobs:
           ini-values: post_max_size=256M
       - name: Check PHP Version
         run: php -v
-      - uses: mirromutth/mysql-action@v1.1
-        with:
-          mysql database: icms
+      - name: Verify MySQL connection
+        run: |
+          sudo apt-get install -y mysql-client
+          mysql --host 127.0.0.1 --port 3306 -uroot -picms -e "SHOW DATABASES"
       - name: Cache PHP dependencies
         uses: actions/cache@v1
         with:
@@ -45,7 +55,7 @@ jobs:
           DB_TYPE: pdo.mysql
           DB_HOST: localhost
           DB_USER: root
-          DB_PASS: ''
+          DB_PASS: icms
           DB_PCONNECT: 0
           DB_NAME: icms
           DB_CHARSET: utf8
