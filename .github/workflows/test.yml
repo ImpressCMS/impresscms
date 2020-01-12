@@ -105,6 +105,4 @@ jobs:
           phpunit -c tests/configuration.xml
           mv ./storage/log/clover.xml ./clover.xml
       - name: Commiting CodeClimate data
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
