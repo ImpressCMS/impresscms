@@ -73,9 +73,14 @@ jobs:
           DB_PREFIX: icms
           DB_SALT: icms
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          INSTALL_ADMIN_PASS: test
+          INSTALL_ADMIN_LOGIN: test
+          INSTALL_ADMIN_NAME: GitHubActionTest
+          INSTALL_ADMIN_EMAIL: test@impresscms.org
+          INSTALL_LANGUAGE: english
         run: |
           chmod -R 777 ./storage
-          INSTALL_ADMIN_PASS=test INSTALL_ADMIN_LOGIN=test INSTALL_ADMIN_NAME=GitHubActionTest INSTALL_ADMIN_EMAIL=test@impresscms.org  ./bin/phoenix migrate -vvv
+          ./bin/phoenix migrate -vvv
       - name: Testing with PHPUnit
         env:
           DB_TYPE: pdo.mysql
