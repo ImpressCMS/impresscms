@@ -160,7 +160,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertInternalType('null', $mock->v, $name . ' must have null uncoverted');
 
-        foreach ([[52], [59 => 'aaa'], true, 1, 1.0, -9, 'test', [], function () {}] as $v) {
+        foreach ([[52], [59 => 'aaa'], true, 1, 1.0, -9, 'test', []] as $v) {
             $mock->v = $v;
 			if ($mock->v === null) {
 				continue;
