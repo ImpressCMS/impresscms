@@ -90,19 +90,27 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	/**
 	 * Get if current autotask handler needs execution
 	 *
-	 * @return TRUE
+	 * @return bool
 	 */
 	public function needExecution() {
-		return $this->getCurrentSystemHandler()->needExecution();
+		$handler = $this->getCurrentSystemHandler();
+		if ($handler === null) {
+			return false;
+		}
+		return $handler->needExecution();
 	}
 
 	/**
 	 * Returns if all tasks was executed to do no more php lines processing
 	 *
-	 * @param bool
+	 * @return  bool
 	 */
 	public function needExit() {
-		return $this->getCurrentSystemHandler()->needExit();
+		$handler = $this->getCurrentSystemHandler();
+		if ($handler === null) {
+			return false;
+		}
+		return $handler->needExit();
 	}
 
 	/**
@@ -110,7 +118,7 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 */
 	public function startIfNeeded() {
 		$system = $this->getCurrentSystemHandler();
-		if ($system->needStart()) {
+		if ($system !== null && $system->needStart()) {
 			if ($system->canRun()) {
 				$system->start($this->getRealTasksRunningTime());
 			} else {
@@ -198,10 +206,13 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @param bool force update handler
 	 *
-	 * @return AutomatedTasks
+	 * @return AutomatedTasks|null
 	 */
 	public function getCurrentSystemHandler($forceUpdate = false) {
 		static $handler = false;
+		if (defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE) {
+			return null;
+		}
 		if ($forceUpdate || ($handler === false)) {
 			$config_atasks = $this->getConfig();
 			$handler = $this->getSelectedSystemHandler($config_atasks['autotasks_system']);
