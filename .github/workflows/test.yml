@@ -1,0 +1,108 @@
+on:
+  - push
+  - pull_request
+
+jobs:
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      max-parallel: 3
+      matrix:
+        operating-system:
+          - ubuntu-latest
+          #- windows-latest # Todo: make it work also for windows
+          #- macOS-latest # Todo: make it work also for macos
+        php-versions:
+          - 7.2
+          - 7.3
+          - 7.4
+        database-system:
+          - mysql:5.6
+          - mariadb:10.1
+    name: PHP ${{ matrix.php-versions }} with ${{ matrix.database-system }} test on ${{ matrix.operating-system }}
+    services:
+      mysql:
+        image: ${{ matrix.database-system }}
+        env:
+          MYSQL_ROOT_PASSWORD: icms
+          MYSQL_DATABASE: icms
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Setup CodeClimate
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+      - name: Install PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
+          ini-values: post_max_size=256M
+          coverage: xdebug
+          tools: phpunit:5.7.27
+      - name: Check PHP Version
+        run: php -v
+      - name: Verify MySQL connection
+        run: |
+          sudo apt-get install -y mysql-client
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -picms -e "SHOW DATABASES"
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
+      - name: Installing ImpressCMS
+        env:
+          URL: http://localhost
+          DB_TYPE: pdo.mysql
+          DB_HOST: 127.0.0.1
+          DB_USER: root
+          DB_PASS: icms
+          DB_PCONNECT: 0
+          DB_NAME: icms
+          DB_CHARSET: utf8
+          DB_COLLATION: utf8_general_ci
+          DB_PREFIX: icms
+          DB_SALT: icms
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          INSTALL_ADMIN_PASS: test
+          INSTALL_ADMIN_LOGIN: test
+          INSTALL_ADMIN_NAME: test
+          INSTALL_ADMIN_EMAIL: noreply@impresscms.org
+          INSTALL_LANGUAGE: english
+        run: |
+          chmod -R 777 ./storage
+          ./bin/phoenix migrate -vvv
+      - name: Prepare CodeClimate
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter before-build
+      - name: Testing with PHPUnit
+        env:
+          URL: http://localhost
+          DB_TYPE: pdo.mysql
+          DB_HOST: 127.0.0.1
+          DB_USER: root
+          DB_PASS: icms
+          DB_PCONNECT: 0
+          DB_NAME: icms
+          DB_CHARSET: utf8
+          DB_COLLATION: utf8_general_ci
+          DB_PREFIX: icms
+          DB_SALT: icms
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+        run: |
+          phpunit -c tests/configuration.xml
+          mv ./storage/log/clover.xml ./clover.xml
+      - name: Commiting CodeClimate data
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7

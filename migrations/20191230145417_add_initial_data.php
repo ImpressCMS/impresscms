@@ -24,6 +24,10 @@ class AddInitialData extends AbstractMigration
 			throw new RuntimeException('INSTALL_ADMIN_EMAIL environment variable must be defined');
 		}
 
+		if (empty(ICMS_URL)) {
+			throw new RuntimeException('ICMS_URL must be not empty');
+		}
+
 		/**
 		 * @var \icms_db_Connection $dbm
 		 */
