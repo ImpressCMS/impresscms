@@ -1,7 +1,11 @@
 on:
-  - push
-  - pull_request
-
+  push:
+    branches: 
+      - master    
+  pull_request:
+    branches: 
+      - master
+      - 'branches/**'
 jobs:
   run:
     runs-on: ${{ matrix.operating-system }}
