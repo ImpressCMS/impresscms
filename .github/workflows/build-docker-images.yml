@@ -52,6 +52,7 @@ jobs:
           mv htdocs build/
           mv core build/
           mv bin build/
-          mv .github/packages/docker/${{ matrix.dockerpath }} ./
+          mv .github/packages/docker/${{ matrix.dockerpath }}/* ./
           rm -rf .github
-          ls
+          ls -la ./
+          ls -la build/
