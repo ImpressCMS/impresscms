@@ -16,7 +16,7 @@ jobs:
         dockerpath:
           - nginx-php
           - nginx-php-mysql
-    name: Builds {{ matrix.dockerpath }} on ${{ matrix.operating-system }}
+    name: Builds ${{ matrix.dockerpath }} on ${{ matrix.operating-system }}
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -52,6 +52,6 @@ jobs:
           mv htdocs build/
           mv core build/
           mv bin build/
-          mv .github/packages/docker/{{ matrix.dockerpath }} ./
+          mv .github/packages/docker/${{ matrix.dockerpath }} ./
           rm -rf .github
           ls
