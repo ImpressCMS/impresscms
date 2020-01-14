@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.11
 
 ENV URL=http://localhost \
     DB_TYPE=pdo.mysql \
@@ -18,5 +18,21 @@ ENV URL=http://localhost \
     INSTALL_ADMIN_EMAIL="" \
     INSTALL_LANGUAGE=english
 
+COPY ./build/ /srv/www
+
 RUN apk add --no-cache \
-		nginx \
+		nginx \ # /etc/nginx/conf.d/default.conf
+		php7-fpm \
+		php7-json \
+		php7-pdo \
+		php7-gd \
+		php7-curl \
+		php7-mbstring \
+		php7-session \
+		yarn \
+		gettext && \
+	chmod +x /usr/local/bin/*.sh && \
+	rm -rf /var/www && \
+	mkdir -p www && \
+	ln -s /srv/www /var/www && \
+	yarn global add pm2
