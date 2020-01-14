@@ -1,0 +1,57 @@
+name: Builds packages images
+
+on:
+  push:
+#    tags:
+#      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        operating-system:
+          - ubuntu-latest
+        dockerpath:
+          - nginx-php
+          - nginx-php-mysql
+    name: Builds {{ matrix.dockerpath }} on ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
+      - name: Restructuring files for build
+        run: |
+          mkdir build
+          mv *.php build/
+          mv LICENSE build/
+          mv XOOPS_copyrights.txt build/
+          mv *.html build/
+          mv composer.* build/
+          mv vendor build/
+          mv storage build/
+          mv plugins build/
+          mv modules build/
+          mv migrations build/
+          mv libraries build/
+          mv language build/
+          mv include build/
+          mv htdocs build/
+          mv core build/
+          mv bin build/
+          mv .github/packages/docker/{{ matrix.dockerpath }} ./
+          rm -rf .github
+          ls
