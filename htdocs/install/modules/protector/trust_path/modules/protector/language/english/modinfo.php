@@ -10,7 +10,7 @@ define( $constpref.'_LOADED' , 1 ) ;
 define($constpref."_NAME","Protector");
 
 // A brief description of this module
-define($constpref."_DESC","This module protects your xoops site from various attacks like DoS , SQL Injection , and Variables contaminations.");
+define($constpref."_DESC","This module protects your site from various attacks like DoS , SQL Injection , and Variables contaminations.");
 
 // Menu
 define($constpref."_ADMININDEX","Protect Center");
@@ -20,13 +20,13 @@ define($constpref.'_ADMENU_MYBLOCKSADMIN','Permissions') ;
 
 // Configs
 define($constpref.'_GLOBAL_DISBL','Temporary disabled');
-define($constpref.'_GLOBAL_DISBLDSC','All protections are disabled in temporary.<br />Don\'t forget turn this off after shooting the trouble');
+define($constpref.'_GLOBAL_DISBLDSC','All protections are disabled temporarily.<br />Don\'t forget turn this off after troubleshooting');
 
 define($constpref.'_DEFAULT_LANG','Default language');
 define($constpref.'_DEFAULT_LANGDSC','Specify the language set to display messages before processing common.php');
 
 define($constpref.'_RELIABLE_IPS','Reliable IPs');
-define($constpref.'_RELIABLE_IPSDSC','set IPs you can rely separated with | . ^ matches the head of string, $ matches the tail of string.');
+define($constpref.'_RELIABLE_IPSDSC','set IPs you can rely on separated with | . ^ matches the head of string, $ matches the tail of string.');
 
 define($constpref.'_LOG_LEVEL','Logging level');
 define($constpref.'_LOG_LEVELDSC','');
@@ -47,16 +47,16 @@ define($constpref.'_SAN_NULLBYTEDSC','The terminating character "\\0" is often u
 define($constpref.'_DIE_NULLBYTE','Exit if null bytes are found');
 define($constpref.'_DIE_NULLBYTEDSC','The terminating character "\\0" is often used in malicious attacks.<br />(highly recommended as On)');
 define($constpref.'_DIE_BADEXT','Exit if bad files are uploaded');
-define($constpref.'_DIE_BADEXTDSC','If someone tries to upload files which have bad extensions like .php , this module exits your XOOPS.<br />If you often attach php files into B-Wiki or PukiWikiMod, turn this off.');
+define($constpref.'_DIE_BADEXTDSC','If someone tries to upload files which have bad extensions like .php , this module exits your CMS.<br />If you often attach php files into B-Wiki or PukiWikiMod, turn this off.');
 define($constpref.'_CONTAMI_ACTION','Action if a contamination is found');
-define($constpref.'_CONTAMI_ACTIONDS','Select the action when someone tries to contaminate system global variables into your XOOPS.<br />(recommended option is blank screen)');
+define($constpref.'_CONTAMI_ACTIONDS','Select the action when someone tries to contaminate system global variables into your CMS.<br />(recommended option is blank screen)');
 define($constpref.'_ISOCOM_ACTION','Action if an isolated comment-in is found');
 define($constpref.'_ISOCOM_ACTIONDSC','Anti SQL Injection:<br />Select the action when an isolated "/*" is found.<br />"Sanitizing" means adding another "*/" in tail.<br />(recommended option is Sanitizing)');
 define($constpref.'_UNION_ACTION','Action if a UNION is found');
 define($constpref.'_UNION_ACTIONDSC','Anti SQL Injection:<br />Select the action when some syntax like UNION of SQL.<br />"Sanitizing" means changing "union" to "uni-on".<br />(recommended option is Sanitizing)');
 define($constpref.'_ID_INTVAL','Force intval to variables like id');
 define($constpref.'_ID_INTVALDSC','All requests named "*id" will be treated as integer.<br />This option protects you from some kind of XSS and SQL Injections.<br />Though I recommend to turn this option on, it can cause problems with some modules.');
-define($constpref.'_FILE_DOTDOT','Protection from Directroy Traversals');
+define($constpref.'_FILE_DOTDOT','Protection from Directory Traversals');
 define($constpref.'_FILE_DOTDOTDSC','It eliminates ".." from all requests looks like Directory Traversals');
 
 define($constpref.'_BF_COUNT','Anti Brute Force');
@@ -98,23 +98,23 @@ define($constpref.'_DOSOPT_HTA','DENY by .htaccess(Experimental)');
 define($constpref.'_BIP_EXCEPT','Groups never registered as Bad IP');
 define($constpref.'_BIP_EXCEPTDSC','A user who belongs to the group specified here will never be banned.<br />(I recommend to turn Administrator on.)');
 
-define($constpref.'_DISABLES','Disable dangerous features in XOOPS');
+define($constpref.'_DISABLES','Disable dangerous features in ImpressCMS');
 
 define($constpref.'_DBLAYERTRAP','Enable DB Layer trapping anti-SQL-Injection');
-define($constpref.'_DBLAYERTRAPDSC','Almost SQL Injection attacks will be canceled by this feature. This feature is required a support from databasefactory. You can check it on Security Advisory page. This setting must be on. Never turn it off casually.');
-define($constpref.'_DBTRAPWOSRV','Never checking _SERVER for anti-SQL-Injection');
+define($constpref.'_DBLAYERTRAPDSC','Most SQL Injection attacks will be stopped by this feature. This feature requires support from ImpressCMS Database Factory. You can check it on Security Advisory page. This setting must be on. Never turn it off casually.');
+define($constpref.'_DBTRAPWOSRV','Never check _SERVER for anti-SQL-Injection');
 define($constpref.'_DBTRAPWOSRVDSC','Some servers always enable DB Layer trapping. It causes wrong detections as SQL Injection attack. If you got such errors, turn this option on. You should know this option weakens the security of DB Layer trapping anti-SQL-Injection.');
 
 define($constpref.'_BIGUMBRELLA','enable anti-XSS (BigUmbrella)');
 define($constpref.'_BIGUMBRELLADSC','This protects you from almost attacks via XSS vulnerabilities. But it is not 100%');
 
 define($constpref.'_SPAMURI4U','anti-SPAM: URLs for normal users');
-define($constpref.'_SPAMURI4UDSC','If this number of URLs are found in POST data from users other than admin, the POST is considered as SPAM. 0 means disabling this feature.');
+define($constpref.'_SPAMURI4UDSC','If this number of URLs are found in POST data from users other than admin, the POST is considered as SPAM. Entering 0 disables this feature.');
 define($constpref.'_SPAMURI4G','anti-SPAM: URLs for guests');
-define($constpref.'_SPAMURI4GDSC','If this number of URLs are found in POST data from guests, the POST is considered as SPAM. 0 means disabling this feature.');
+define($constpref.'_SPAMURI4GDSC','If this number of URLs are found in POST data from guests, the POST is considered as SPAM. Entering 0 disables this feature.');
 
 define($constpref.'_FILTERS','filters enabled in this site');
-define($constpref.'_FILTERSDSC','specify each file names inside of filters_byconfig/ per a paragraph. (eg. postcommon_post_deny_by_httpbl.php)');
+define($constpref.'_FILTERSDSC','specify each file names inside of filters_byconfig - 1 per line. (eg. postcommon_post_deny_by_httpbl.php)');
 
 define($constpref.'_MANIPUCHECK','enable manipulation checking');
 define($constpref.'_MANIPUCHECKDSC','notify to admin if your root folder or index.php is modified.');

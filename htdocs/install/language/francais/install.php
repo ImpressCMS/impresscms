@@ -56,10 +56,10 @@ define( "WELCOME_TITLE", "Installation du site compl&eacute;te" );		// L0
 define( "MODULES_INSTALL", "Installation des scripts" );
 define( "MODULES_INSTALL_TITLE", "Installation des scripts " );
 define( "NO_PHP5_TITLE", "No PHP 5" );
-define( "NO_PHP5_CONTENT","PHP 5 is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to PHP5 before attempting to install again. For more information, read <a href='http://community.impresscms.org/modules/smartsection/item.php?itemid=122' >ImpressCMS on PHP5 </a>.");
+define( "NO_PHP5_CONTENT","PHP version 5.6 est requis, et PHP 7.2 est conseillé pour un bon fonctionnement.");
 define( "SAFE_MODE", "Safe Mode On" );
 define( "SAFE_MODE_TITLE", "Safe Mode On" );
-define( "SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again." );
+define( "SAFE_MODE_CONTENT", "L installation ne peut pas continuer parce que ImpressCMS a détecté que PHP tourne en mode 'Safe'. Veuillez contacter votre fournisseur de hébergement pour rectifier la situation." );
 
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "Chemin physique de la racine de votre site" ); // L55
@@ -206,11 +206,11 @@ define("_MD_AM_MULTLOGINMSG_TXT",'Impossible de vous connectez avec ce nom d\'ut
          - Vous avez quitter le site ou fermez la fenêtre du navigateur sans cliquer sur le bouton de déconnexion.<br />
         </p>
         Effacez les traces de votre navigateur (historique, cookies, sessions etc... Si le problème persiste contactez le webmasteur du site.');
-define("_MD_AM_RSSLOCALLINK_DESC",'http://community.impresscms.org/modules/smartsection/backend.php'); //Lien vers le RRS de soutien local site
-define("_INSTALL_LOCAL_SITE",'http://www.impresscms.org/'); //Lien vers le site de support local
+define("_MD_AM_RSSLOCALLINK_DESC",'https://www.impresscms.org/modules/news/rss.php'); //Lien vers le RRS de soutien local site
+define("_INSTALL_LOCAL_SITE",'https://www.impresscms.org/'); //Lien vers le site de support local
 define("_LOCAOL_STNAME",'ImpressCMS'); //Lien vers le site de support local
 define("_LOCAL_SLOCGAN",'Make a lasting impression'); 
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">ImpressCMS Projet</a>'); //Lien footer (pied de page) pour le soutien local site
+define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">ImpressCMS Projet</a>'); //Lien footer (pied de page) pour le soutien local site
 define("_LOCAL_SENSORTXT",'#OOPS#'); 
 define("_ADM_USE_RTL","0"); // tourner à 1 si votre langue est droite à gauche
 define("_DEF_LANG_TAGS",'fr,en'); 

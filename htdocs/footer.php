@@ -84,7 +84,7 @@ if (isset($xoopsOption['theme_use_smarty']) && $xoopsOption['theme_use_smarty'] 
 
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset=' . _CHARSET);
-		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+		header('Expires:' . gmdate("D, d M Y H:i:s T", strtotime("yesterday")) );
 		header('Cache-Control: private, no-cache');
 		header('Pragma: no-cache');
 	}

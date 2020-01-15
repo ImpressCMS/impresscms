@@ -344,12 +344,13 @@ if (!empty ($error)) {
 	echo '<div class="x2-note error">' . $error . "</div>\n";
 }
 ?>
+	<script type="text/javascript" src="prototype.js"></script>
 	<script type="text/javascript">
 		function setFormFieldCollation(id, val) {
 			if (val == '') {
-				$(id).style.display='display';
+				document.getElementById(id).style.display='none';
 			} else {
-				$(id).style.display='display';
+				document.getElementById(id).style.display='display';
 			}
 			new Ajax.Updater(
 				id, '<?php

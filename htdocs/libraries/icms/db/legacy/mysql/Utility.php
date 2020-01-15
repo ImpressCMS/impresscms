@@ -301,20 +301,24 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 	 * @return bool
 	 */
 	static public function checkSQL($sql) {
-		/* use Protector's db layer to prevent SQLi */
+		/* use Protector's db layer to prevent SQLi
+		 * Make sure Protector is loaded
+		 */
 		if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
 			$class = XOOPS_DB_ALTERNATIVE;
 			$protectorDB = new $class();
-
-			$sql4check = substr($sql , 7);
+			$sql4check = substr($sql, 7) ;
 			foreach ($protectorDB->doubtful_needles as $needle) {
-				if(stristr($sql4check , $needle)) {
-					$protectorDB->checkSql($sql) ;
-					return FALSE;
+				if (stristr($sql4check, $needle)) {
+					$protectorDB->checkSql($sql) ; // if this finds an injection attempt, it exits
+					break;
 				}
 			}
 		}
-
-		return TRUE;
+		
+		/* Protector preload is not loaded, so we cannot check.
+		 * Or, the checks have succeeded and there are no detected injections
+		 * Return true */
+		return true;
 	}
 }

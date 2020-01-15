@@ -11,16 +11,10 @@ function protector_oninstall_base( $module , $mydirname )
 
 	global $ret ; // TODO :-D
 
-	// for Cube 2.1
-	if( defined( 'XOOPS_CUBE_LEGACY' ) ) {
-		$root =& XCube_Root::getSingleton();
-		$root->mDelegateManager->add( 'Legacy.Admin.Event.ModuleInstall.' . ucfirst($mydirname) . '.Success' , 'protector_message_append_oninstall' ) ;
-		$ret = array() ;
-	} else {
-		if( ! is_array( $ret ) ) $ret = array() ;
-	}
 
-	$db =& icms_db_Factory::instance() ;
+	if( ! is_array( $ret ) ) $ret = array() ;
+
+	$db = icms_db_Factory::instance() ;
 	$mid = $module->getVar('mid') ;
 
 	// TABLES (loading mysql.sql)
@@ -55,7 +49,7 @@ function protector_oninstall_base( $module , $mydirname )
 	}
 
 	// TEMPLATES
-	$tplfile_handler =& new icms_view_template_file_Handler(icms::$xoopsDB);
+	$tplfile_handler = new icms_view_template_file_Handler(icms::$xoopsDB);
 	$tpl_path = dirname(__FILE__).'/templates' ;
 	if( $handler = @opendir( $tpl_path . '/' ) ) {
 		while( ( $file = readdir( $handler ) ) !== false ) {

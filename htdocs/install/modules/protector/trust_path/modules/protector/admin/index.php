@@ -1,8 +1,9 @@
 <?php
+// PHP7 compliance
 
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
-$myts =& icms_core_Textsanitizer::getInstance() ;
-$db =& icms_db_Factory::instance() ;
+$myts = icms_core_Textsanitizer::getInstance() ;
+$db = icms_db_Factory::instance() ;
 
 // GET vars
 $pos = empty( $_GET[ 'pos' ] ) ? 0 : intval( $_GET[ 'pos' ] ) ;
@@ -17,8 +18,8 @@ $log_table = $db->prefix( $mydirname."_log" ) ;
 
 // Protector object
 require_once dirname(dirname(__FILE__)).'/class/protector.php' ;
-$db =& icms_db_Factory::instance() ;
-$protector =& Protector::getInstance( $db->conn ) ;
+
+$protector = Protector::getInstance( $db->conn ) ;
 $conf = $protector->getConf() ;
 
 
@@ -30,7 +31,7 @@ if( ! empty( $_POST['action'] ) ) {
 
 	// Ticket check
 	if ( ! $xoopsGTicket->check( true , 'protector_admin' ) ) {
-		redirect_header(XOOPS_URL.'/',3,$xoopsGTicket->getErrors());
+		redirect_header(ICMS_URL.'/',3,$xoopsGTicket->getErrors());
 	}
 
 	if( $_POST['action'] == 'update_ips' ) {
@@ -123,11 +124,11 @@ foreach( $num_array as $n ) {
 }
 
 // beggining of Output
-xoops_cp_header();
+icms_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 
 // title
-echo "<h3 style='text-align:"._GLOBAL_LEFT.";'>".$xoopsModule->name()."</h3>\n" ;
+echo "<h3 style='text-align:"._GLOBAL_LEFT.";'>". $xoopsModule->getVar('name') ."</h3>\n" ;
 
 // configs writable check
 if( ! is_writable( dirname(dirname(__FILE__)).'/configs' ) ) {
@@ -268,7 +269,7 @@ echo "
 </td></tr></table>
 " ;
 
-xoops_cp_footer();
+icms_cp_footer();
 
 
 function protector_ip_cmp( $a , $b )

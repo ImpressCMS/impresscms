@@ -47,19 +47,19 @@
  **/
 class setting_manager {
 
-	public $database;
-	public $dbhost;
-	public $dbuname;
-	public $dbpass;
-	public $dbname;
-	public $prefix;
-	public $db_pconnect;
-	public $root_path;
-	public $xoops_url;
+	var $database;
+	var $dbhost;
+	var $dbuname;
+	var $dbpass;
+	var $dbname;
+	var $prefix;
+	var $db_pconnect;
+	var $root_path;
+	var $xoops_url;
 
-	public $sanitizer;
+	var $sanitizer;
 
-	public function setting_manager($post=false) {
+	function __construct($post=false) {
 
 		$this->sanitizer =& icms_core_Textsanitizer::getInstance();
 		if ($post) {
@@ -92,7 +92,7 @@ class setting_manager {
 		}
 	}
 
-	public function readPost() {
+	function readPost() {
 		if (isset($_POST['database']))
 		$this->database = $this->sanitizer->stripSlashesGPC($_POST['database']);
 		if (isset($_POST['dbhost']))
@@ -113,7 +113,7 @@ class setting_manager {
 		$this->xoops_url = $this->sanitizer->stripSlashesGPC($_POST['xoops_url']);
 	}
 
-	public function readConstant() {
+	function readConstant() {
 		if (defined('XOOPS_DB_TYPE'))
 		$this->database = XOOPS_DB_TYPE;
 		if (defined('XOOPS_DB_HOST'))
@@ -134,7 +134,7 @@ class setting_manager {
 		$this->xoops_url = XOOPS_URL;
 	}
 
-	public function checkData() {
+	function checkData() {
 		$ret = '';
 		$error = array();
 
@@ -163,7 +163,7 @@ class setting_manager {
 		return $ret;
 	}
 
-	public function editform() {
+	function editform() {
 		$ret =
             "<table width='100%' class='outer' cellspacing='5'>
                 <tr>
@@ -211,7 +211,7 @@ class setting_manager {
 		return $ret;
 	}
 
-	public function editform_sub($title, $desc, $name, $value) {
+	function editform_sub($title, $desc, $name, $value) {
 		$inputType = 'text';
 		return  "<tr valign='top' align='left'>
                     <td class='head'>
@@ -225,7 +225,7 @@ class setting_manager {
                 ";
 	}
 
-	public function confirmForm() {
+	function confirmForm() {
 		$yesno = empty($this->db_pconnect) ? _INSTALL_L24 : _INSTALL_L23;
 		$ret =
             "<table border='0' cellpadding='0' cellspacing='0' valign='top' width='90%'><tr><td class='bg2'>
@@ -281,7 +281,7 @@ class setting_manager {
 		return $ret;
 	}
 
-	public function getDBList()
+	function getDBList()
 	{
 		$dirname = '../class/database/drivers';
 		$list = icms_core_Filesystem::getDirList($dirname);
@@ -289,8 +289,8 @@ class setting_manager {
 		return $list;
 	}
 
-	public function generatePrefix() {
-		include_once $this->root_path."/include/public functions.php";
+	function generatePrefix() {
+		include_once $this->root_path."/include/functions.php";
 		return xoops_makepass(5);
 	}
 }

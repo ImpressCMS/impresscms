@@ -16,7 +16,7 @@ if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmi
 
 /**
  * Edit AdSense entries
- * 
+ *
  * @param $showmenu		This parameter is not used (why is it here?)
  * @param $adsenseid	Unique identifier of the AdSense unit
  * @param $clone		Is this cloning an existing AdSense unit?
@@ -31,14 +31,14 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 		$sform = $adsenseObj->getForm(_CO_ICMS_ADSENSES_EDIT, 'addadsense');
 		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_EDIT_INFO);
-		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
+		$icmsAdminTpl->display('db:system_adm_adsense.html');
 	} else {
 		$adsenseObj->setVar('adsenseid', 0);
 		$adsenseObj->setVar('tag', '');
 		$sform = $adsenseObj->getForm(_CO_ICMS_ADSENSES_CREATE, 'addadsense');
 		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_CREATE_INFO);
-		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
+		$icmsAdminTpl->display('db:system_adm_adsense.html');
 	}
 }
 
@@ -48,10 +48,10 @@ $icms_adsense_handler = icms_getModuleHandler("adsense", "system");
 
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op'])) 
-	? trim(StopXSS($_POST['op'])) 
-	: ((isset($_GET['op'])) 
-		? trim(StopXSS($_GET['op'])) 
+$op = (isset($_POST['op']))
+	? trim(StopXSS($_POST['op']))
+	: ((isset($_GET['op']))
+		? trim(StopXSS($_GET['op']))
 		: '');
 
 switch ($op) {
@@ -86,7 +86,7 @@ switch ($op) {
 		$icmsAdminTpl->assign('icms_adsense_table', $objectTable->fetch());
 		$icmsAdminTpl->assign('icms_adsense_explain', TRUE);
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_DSC);
-		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
+		$icmsAdminTpl->display('db:system_adm_adsense.html');
 		break;
 }
 

@@ -47,14 +47,14 @@
  **/
 class mainfile_manager {
 
-	public $path = '../mainfile.php';
-	public $distfile = './templates/mainfile.dist.php';
-	public $rewrite = array();
+	var $path = '../mainfile.php';
+	var $distfile = './templates/mainfile.dist.php';
+	var $rewrite = array();
 
-	public $report = '';
-	public $error = false;
+	var $report = '';
+	var $error = false;
 
-	function __construct() {
+	function  __construct() {
 	}
 
 	function setRewrite($def, $val) {
