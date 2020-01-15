@@ -1,0 +1,41 @@
+apps:
+  - name: nginx
+    instances: 1
+    script: /usr/sbin/nginx
+    cwd: /etc/nginx
+    args: -c nginx.conf -g "daemon off;"
+    interpreter: /bin/sh
+    exec_mode: fork
+    watch: true
+    source_map_support: false
+    error_file: /var/log/nginx/error.pm2.log
+    out_file: /var/log/nginx/out.pm2.log
+    max_restarts: 4000
+    restart_delay: 4000
+    autorestart: true
+  - name: php
+    instances: 1
+    interpreter: /bin/sh
+    exec_mode: fork
+    watch: true
+    source_map_support: false
+    error_file: /var/log/php-fpm/error.pm2.log
+    out_file: /var/log/php-fpm/out.pm2.log
+    max_restarts: 4000
+    restart_delay: 4000
+    autorestart: true
+    script: /usr/sbin/php-fpm7
+    args: --nodaemonize -R
+  - name: mysql
+    instances: 1
+    interpreter: /bin/sh
+    exec_mode: fork
+    watch: true
+    source_map_support: false
+    error_file: /var/log/mysql/error.pm2.log
+    out_file: /var/log/mysql/out.pm2.log
+    max_restarts: 4000
+    restart_delay: 4000
+    autorestart: true
+    script:
+    args:

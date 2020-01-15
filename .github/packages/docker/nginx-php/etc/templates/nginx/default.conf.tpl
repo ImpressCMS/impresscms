@@ -1,7 +1,7 @@
 server {
-    listen 80;
-    server_name example.com;
-    root /example.com/public;
+    listen ${WEB_PORT} default;
+    server_name ${SERVER_NAME};
+    root /var/www/htdocs/;
 
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-XSS-Protection "1; mode=block";
@@ -12,7 +12,7 @@ server {
     charset utf-8;
 
     location / {
-        try_files $uri $uri/ /index.php?$query_string;
+        try_files ${DOLLAR}uri ${DOLLAR}uri/ /index.php?${DOLLAR}query_string;
     }
 
     location = /favicon.ico { access_log off; log_not_found off; }
@@ -20,10 +20,10 @@ server {
 
     error_page 404 /index.php;
 
-    location ~ \.php$ {
+    location ~ \.php${DOLLAR} {
         fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
         fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME $realpath_root${DOLLAR}fastcgi_script_name;
         include fastcgi_params;
     }
 

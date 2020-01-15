@@ -16,9 +16,13 @@ ENV URL=http://localhost \
     INSTALL_ADMIN_LOGIN="" \
     INSTALL_ADMIN_NAME="" \
     INSTALL_ADMIN_EMAIL="" \
-    INSTALL_LANGUAGE=english
+    INSTALL_LANGUAGE=english \
+    WEB_PORT=80 \
+    SERVER_NAME=ICMSServer
 
-COPY ./build/ /srv/www
+COPY ./build/ /srv/www/
+COPY ./etc/ /etc/
+COPY ./bin/ /usr/local/bin/
 
 RUN apk add --no-cache \
 		nginx \ # /etc/nginx/conf.d/default.conf
@@ -36,3 +40,5 @@ RUN apk add --no-cache \
 	mkdir -p www && \
 	ln -s /srv/www /var/www && \
 	yarn global add pm2
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
