@@ -75,12 +75,12 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
 		}
 
 	/**
-	 * Retrieve array of {@link icms_image_set_Object}s meeting certain conditions
+	 * Retrieve array of images meeting certain conditions
 	 *
-	 * @param object $criteria {@link CriteriaElement} with conditions for the imagesets
+	 * @param \icms_db_criteria_Element $criteria Criteria with conditions for the imagesets
 	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
 	 *
-	 * @return array {@link icms_image_set_Object}s matching the conditions
+	 * @return \icms_image_set_Object[]
 	 */
 	public function &getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
@@ -108,7 +108,7 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
 	}
 
 	/**
-	 * Links a {@link icms_image_set_Object} to a themeset (tplset)
+	 * Links a image set to a themeset (tplset)
 	 * @param int $imgset_id image set id to link
 	 * @param int $tplset_name theme set to link
 	 *
@@ -132,7 +132,7 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
 	}
 
 	/**
-	 * Unlinks a {@link icms_image_set_Object} from a themeset (tplset)
+	 * Unlinks a image set from a themeset (tplset)
 	 *
 	 * @param int $imgset_id image set id to unlink
 	 * @param int $tplset_name theme set to unlink
@@ -154,11 +154,12 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
 	}
 
 	/**
-	 * Get a list of {@link icms_image_set_Object}s matching certain conditions
+	 * Get a list of image set objects matching certain conditions
 	 *
 	 * @param int $refid conditions to match
 	 * @param int $tplset conditions to match
-	 * @return array array of {@link icms_image_set_Object}s matching the conditions
+	 *
+	 * @return \icms_image_set_Object[]
 	 * */
 	public function getList($refid = null, $tplset = null) {
 		$criteria = new CriteriaCompo();

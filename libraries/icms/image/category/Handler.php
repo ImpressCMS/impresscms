@@ -55,12 +55,12 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 		}
 
 	/**
-	 * Retrieve array of {@link icms_image_category_Object}s meeting certain conditions
+	 * Retrieve array meeting certain conditions
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element} with conditions for the image categories
+	 * @param \icms_db_criteria_Element $criteria Criteria with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
 	 *
-	 * @return array {@link icms_image_category_Object}s matching the conditions
+	 * @return icms_image_category_Object[]
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
 			$this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
@@ -78,11 +78,11 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	}
 
 	/**
-	 * get number of {@link icms_image_category_Object}s matching certain conditions
+	 * Get number matching certain conditions
 	 *
-	 * @param string $criteria conditions to match
+	 * @param null|icms_db_criteria_Element $criteria conditions to match
 	 *
-	 * @return int number of {@link icms_image_category_Object}s matching the conditions
+	 * @return int
 	 */
 	public function getCount($criteria = null) {
 			$this->generalSQL = 'SELECT COUNT(*) FROM ' . $this->table . ' i LEFT JOIN '
@@ -100,14 +100,14 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 	}
 
 		/**
-		 * Get a list of {@link icms_image_category_Object}s matching certain conditions
+		 * Get a list matching certain conditions
 		 *
 		 * @param array         $groups         Groups list
 		 * @param string        $perm           Permission name
 		 * @param null|integer  $display        Do we need to list only visible or hidden items?
 		 * @param string|null   $storetype      How to store images of this category?
 		 *
-		 * @return array                        array of {@link icms_image_category_Object}s matching the conditions
+		 * @return icms_image_category_Object[]
 		 */
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
 		$criteria = new icms_db_criteria_Compo();

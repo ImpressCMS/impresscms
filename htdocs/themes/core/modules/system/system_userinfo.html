@@ -8,11 +8,11 @@
           <div class="avatar">
             <img class="img-thumbnail" src="<{$user_avatarurl}>" alt="Avatar" />
             <div><{if $user_rankimage}><{$user_rankimage}><br /><{/if}><{$user_ranktitle}></div>
-          </div>          
+          </div>
         </td>
         <td>
           <div class="btn-group btn-group-sm">
-  
+
 			<button class="btn btn-default btn-info" onclick="javascript:openWithSelfMain('<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$user_uid}>', 'pmlite', 800,680);"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <{$lang_privmsg}></button>
             <{if $user_ownpage == true || $xoops_isadmin == true}>
               <{if $user_ownpage == true}>
@@ -51,7 +51,7 @@
           <td><{$lang_posts}></td>
           <td><{$user_posts}></td>
         </tr>
-      <{/if}>      
+      <{/if}>
       <{if $user_joindate}>
         <tr>
           <td><{$lang_membersince}></td>
@@ -63,7 +63,7 @@
           <td><{$lang_lastlogin}></td>
           <td><{$user_lastlogin}></td>
         </tr>
-      <{/if}>      
+      <{/if}>
       <{if $user_websiteurl}>
         <tr>
           <td><{$lang_website}></td>
@@ -75,12 +75,6 @@
           <td><{$lang_email}></td>
           <td><{$user_email}></td>
         </tr>
-      <{/if}>
-      <{if $user_openid}>
-        <tr>
-          <td><{$lang_openid}></td>
-          <td><{$user_openid}></td>
-        </tr>      
       <{/if}>
       <{if $user_icq}>
         <tr>
@@ -99,7 +93,7 @@
           <td><{$lang_yim}></td>
           <td><{$user_yim}></td>
         </tr>
-      <{/if}>      
+      <{/if}>
       <{if $user_msnm}>
         <tr>
           <td><{$lang_msnm}></td>
@@ -132,17 +126,17 @@
           </td>
 		  <td></td>
         </tr>
-      <{/if}>      
+      <{/if}>
       <{if $user_signature}>
         <tr>
           <td>
-            <h4><{$lang_signature}></h4>            
+            <h4><{$lang_signature}></h4>
             <{$user_signature}>
           </td>
 		  <td></td>
         </tr>
-      <{/if}>        
-    </table>    
+      <{/if}>
+    </table>
   </div>
 </div>
 

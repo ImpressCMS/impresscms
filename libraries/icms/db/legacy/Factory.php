@@ -63,11 +63,7 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function &instance() {
-		static $instance;
-		if (!isset($instance)) {
-			$instance = parent::instance();
-		}
-		return $instance;
+		return icms::getInstance()->get('db');
 	}
 
 	/**
@@ -79,11 +75,7 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function &getDatabase() {
-		static $database;
-		if (!isset($database)) {
-			$database = parent::instance();
-		}
-		return $database;
+		return icms::getInstance()->get('db');
 	}
 
 	/**
@@ -91,7 +83,7 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	 *
 	 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 	 *
-	 * @return	object  @link icms_db_legacy_updater_Handler
+	 * @return	\icms_db_legacy_updater_Handler  Updater handler
 	 * @static
 	 */
 	static public function getDatabaseUpdater() {

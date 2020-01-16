@@ -65,10 +65,6 @@ if ($icmsConfig['gzip_compression'] == 1
 		}
 }
 
-// Include openid common functions if needed
-if (defined('ICMS_INCLUDE_OPENID')) {
-	require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
-}
 /* This address the strict compliance for PHP 5.3/5.4, but the rest of our timezone handling
  * can be improved beyond this. ~skenow
  */
@@ -95,15 +91,22 @@ if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype']
 
 defined("XOOPS_USE_MULTIBYTES") or define("XOOPS_USE_MULTIBYTES", 0);
 
+/**
+ * @var Aura\Session\Session $session
+ */
+$session = \icms::getInstance()->get('session');
+$userSegment = $session->getSegment(icms_member_user_Object::class);
+
 if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $icmsConfig['theme_set_allowed'])) {
 	$icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
-	$_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
+	$userSegment->set('theme', $_POST['xoops_theme_select']);
 } elseif (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $icmsConfig['theme_set_allowed'])) {
 	$icmsConfig['theme_set'] = $_POST['theme_select'];
-	$_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
-} elseif (!empty($_SESSION['xoopsUserTheme'])
-		&& in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
+	$userSegment->set('theme', $_POST['theme_select']);
+} elseif ($userSegment->get('theme')
+	&& in_array($userSegment->get('theme'), $icmsConfig['theme_set_allowed'])
+) {
+	$icmsConfig['theme_set'] = $userSegment->get('theme');
 }
 
 if ($icmsConfig['closesite'] == 1) {

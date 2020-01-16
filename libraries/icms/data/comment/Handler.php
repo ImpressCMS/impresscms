@@ -57,11 +57,15 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	/**
 	 * Get a list of comments
 	 *
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element|null $criteria Criteria
 	 *
-	 * @return  array   Array of raw database records
+	 * @param int $limit How many to get?
+	 * @param int $start From where to start?
+	 * @param bool $debug Debug action?
+	 *
+	 * @return  string[]
 	 */
-	public function getList($criteria = null, $limit, $start, $debug) {
+	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 			$comments = parent::getList($criteria, $limit, $start, $debug);
 			return array_keys($comments);
 	}
@@ -76,7 +80,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   int     $limit      Max num of comments to retrieve
 	 * @param   int     $start      Start offset
 	 *
-	 * @return  array   Array of {@link icms_data_comment_Object} objects
+	 * @return  \icms_data_comment_Object[]
 	 */
 	public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
@@ -101,7 +105,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   int     $item_id    Item ID
 	 * @param   int     $status     Status of the comment
 	 *
-	 * @return  array   Array of {@link icms_data_comment_Object} objects
+	 * @return  \icms_data_comment_Object[]
 	 */
 	public function getCountByItemId($module_id, $item_id, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
@@ -113,14 +117,14 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	}
 
 	/**
-	 * Get the top {@link icms_data_comment_Object}s
+	 * Get the top comments
 	 *
 	 * @param   int     $module_id
 	 * @param   int     $item_id
 	 * @param   strint  $order
 	 * @param   int     $status
 	 *
-	 * @return  array   Array of {@link icms_data_comment_Object} objects
+	 * @return  \icms_data_comment_Object[]
 	 */
 	public function getTopComments($module_id, $item_id, $order, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
@@ -140,7 +144,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 * @param   int     $comment_id
 	 * @param   int     $status
 	 *
-	 * @return  array   Array of {@link icms_data_comment_Object} objects
+	 * @return \icms_data_comment_Object[]
 	 */
 	public function getThread($comment_rootid, $comment_id, $status = null) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_rootid', (int) $comment_rootid));
@@ -154,7 +158,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	/**
 	 * Update
 	 *
-	 * @param   object  &$comment       {@link icms_data_comment_Object} object
+	 * @param   \icms_data_comment_Object  &$comment      Comment object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *
@@ -175,29 +179,5 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	public function deleteByModule($module_id) {
 		return $this->deleteAll(new icms_db_criteria_Item('com_modid', (int) $module_id));
 	}
-
-	/**
-	 * Change a value in multiple comments
-	 *
-	 * @param   string  $fieldname  Name of the field
-	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
-	 *
-	 * @return  bool
-	 */
-	/*
-	 function updateAll($fieldname, $fieldvalue, $criteria = null)
-	 {
-	 $set_clause = is_numeric($fieldvalue) ? $filedname.' = '.$fieldvalue : $filedname.' = '.$this->db->quoteString($fieldvalue);
-	 $sql = 'UPDATE '.$this->db->prefix('xoopscomments').' SET '.$set_clause;
-	 if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-	 $sql .= ' '.$criteria->renderWhere();
-	 }
-	 if (!$result = $this->db->query($sql)) {
-	 return false;
-	 }
-	 return true;
-	 }
-	 */
 }
 

@@ -188,8 +188,7 @@ class icms_module_Object
 	 * Get module info
 	 *
 	 * @param   string  	$name
-	 * @return  array|string	Array of module information.
-	 * If {@link $name} is set, returns a single module information item as string.
+	 * @return  array|string|false	Array of module information.
 	 */
 	public function &getInfo($name = null) {
 		if (!isset($this->modinfo)) {$this->loadInfo($this->getVar('dirname')); }

@@ -82,7 +82,7 @@ if ($action == "results") {
 	}
 }
 
-$groups = is_object(icms::$user)? icms::$user->getGroups():XOOPS_GROUP_ANONYMOUS;
+$groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 $gperm_handler = icms::handler('icms_member_groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 

@@ -62,12 +62,10 @@ class icms_ipf_view_Table {
 	/**
 	 * Constructor
 	 *
-	 * @param object $objectHandler {@link icms_ipf_Handler}
-	 * @param array $columns array representing the columns to display in the table
-	 * @param object $criteria
-	 * @param array $actions array representing the actions to offer
-	 *
-	 * @return array
+	 * @param \icms_ipf_Handler $objectHandler Handler
+	 * @param bool|\icms_db_criteria_Element $criteria Criteria
+	 * @param string[] $actions array representing the actions to offer
+	 * @param bool $userSide For user side?
 	 */
 	public function __construct(&$objectHandler, $criteria = false, $actions = array('edit', 'delete'), $userSide = false) {
 		$this->_id = $objectHandler->className;
@@ -145,9 +143,7 @@ class icms_ipf_view_Table {
 	 *
 	 */
 	public function addPrinterFriendlyLink() {
-		global $impresscms;
-
-		$current_url = $impresscms->urls['full'];
+		$current_url = \icms::$urls['full'];
 		$this->_printerFriendlyPage = $current_url . '&print';
 	}
 
@@ -502,9 +498,8 @@ class icms_ipf_view_Table {
 	 * @param $params_of_the_options_sel
 	 */
 	public function renderOptionSelection($limitsArray, $params_of_the_options_sel) {
-		global $impresscms;
 		// Rendering the form to select options on the table
-		$current_url = $impresscms->urls['full'];
+		$current_url = \icms::$urls['full'];
 
 		/**
 		 * What was $params_of_the_options_sel doing again ?
@@ -603,8 +598,6 @@ class icms_ipf_view_Table {
 	 * @param $debug
 	 */
 	public function render($fetchOnly = false, $debug = false) {
-		global $impresscms;
-
 		$this->_tpl = new icms_view_Tpl();
 
 		/**
@@ -716,8 +709,8 @@ class icms_ipf_view_Table {
 		$this->renderOptionSelection($limitsArray, $params_of_the_options_sel);
 
 		// retreive the current url and the query string
-		$current_url = $impresscms->urls['full_phpself'];
-		$query_string = $impresscms->urls['querystring'];
+		$current_url = \icms::$urls['full_phpself'];
+		$query_string = \icms::$urls['querystring'];
 		if ($query_string) {
 			$query_string = str_replace('?', '', $query_string);
 		}

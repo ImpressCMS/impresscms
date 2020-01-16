@@ -3,8 +3,12 @@
 // Loads environment data
 \Dotenv\Dotenv::create(dirname(__DIR__))->safeLoad();
 
+if (!function_exists('env')) {
+	return;
+}
+
 define('ICMS_ROOT_PATH', dirname(__DIR__));
-define('ICMS_URL', getenv('URL'));
+define('ICMS_URL', env('URL'));
 
 /**#@+
  * Creating ICMS specific constants
@@ -46,7 +50,7 @@ define('XOOPS_MATCH_EQUAL', 2);
 define('XOOPS_MATCH_CONTAIN', 3);
 
 if (!defined('ICMS_PUBLIC_PATH')) {
-	$path = getenv('public_path');
+	$path = env('public_path');
 	if (empty($path)) {
 		foreach (['public_html', 'htdocs', 'wwwroot'] as $dirname) {
 			if (file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $dirname)) {
@@ -88,8 +92,4 @@ define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
 
 define('SMARTY_DIR', ICMS_LIBRARIES_PATH . '/smarty/');
 
-if (!defined('XOOPS_XMLRPC')) {
-	define('XOOPS_DB_CHKREF', 1);
-} else {
-	define('XOOPS_DB_CHKREF', 0);
-}
+define('XOOPS_DB_CHKREF', 1);

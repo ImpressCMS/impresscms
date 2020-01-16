@@ -25,7 +25,8 @@ class icms_form_elements_captcha_Text {
 
 	/**
 	 * Creates icms_form_elements_captcha_Text object
-	 * @return object	reference to icms_form_elements_captcha_Text (@link icms_form_elements_captcha_Text) Object
+	 *
+	 * @return \icms_form_elements_captcha_Text
 	 */
 	public function &instance() {
 		static $instance;
@@ -42,13 +43,6 @@ class icms_form_elements_captcha_Text {
 	public function loadConfig($config = array()) {
 		// Loading default preferences
 		$this->config = & $config;
-	}
-
-	/**
-	 * Sets CAPTCHA code
-	 */
-	public function setCode() {
-		$_SESSION['icms_form_elements_captcha_Object_sessioncode'] = strval($this->code);
 	}
 
 	/**
@@ -89,6 +83,18 @@ class icms_form_elements_captcha_Text {
 		}
 
 		return "<span style='font-style: normal; font-weight: bold; font-size: 100%; font-color: #333; border: 1px solid #333; padding: 1px 5px;'>{$expression}</span>";
+	}
+
+	/**
+	 * Sets CAPTCHA code
+	 */
+	public function setCode()
+	{
+		/**
+		 * @var Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()->get('session');
+		$session->getSegment(icms_form_elements_captcha_Object::class)->set('session_code', strval($this->code));
 	}
 
 }

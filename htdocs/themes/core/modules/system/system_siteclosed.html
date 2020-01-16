@@ -42,8 +42,8 @@
                 <div class="col-md-6 col-xs-12">
                 	<h2>Our Site is coming soon</h2>
                 	<div class="subscribe">
-						<p>Want you be notified when the site launches and other cool stuff happens here?</p> 
-						<div class="field"><input class="form-control" name="email" type="text" placeholder="Enter Your Name" /></div>      
+						<p>Want you be notified when the site launches and other cool stuff happens here?</p>
+						<div class="field"><input class="form-control" name="email" type="text" placeholder="Enter Your Name" /></div>
 						<div class="field"><input class="form-control" name="email" type="text" placeholder="Enter Your Email ID" /></div>
 						<button class="btn btn-default">Subscribe</button>
                     </div>
@@ -52,42 +52,8 @@
 							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 								<button class="btn btn-link" type="button"><{$lang_login}></button>
 							</a>
-						</h4> 
-						<{php}> global $icmsConfig, $icmsConfigAuth, $icmsConfigUser,$icmsTpl;
-								if ($icmsConfigAuth['auth_openid']) {$icmsTpl->assign ( 'auth_openid',  true  );}
-						<{/php}>
-						<{if $auth_openid}>
-						<div id="collapseOne" class="collapse">    
-							<{php}> global $icmsConfig, $icmsConfigAuth, $icmsConfigUser,$icmsTpl;
-								if ($icmsConfigAuth['auth_openid']) {$icmsTpl->assign ( 'auth_openid',  true  );}
-							<{/php}>
-							<!-- Nav tabs -->
-							<ul class="nav nav-tabs" role="tablist">
-							  <li style="padding_left:0;margin-bottom:0;background: none repeat scroll 0 0 rgba(0, 0, 0, 0);"><a class="active" href="#normal" role="tab" data-toggle="tab">Normal</a></li>
-							 <li style="padding_left:0;margin-bottom:0;background: none repeat scroll 0 0 rgba(0, 0, 0, 0);"><a href="#openid" role="tab" data-toggle="tab">OpenID</a></li>
-							</ul>	
-							<!-- Tab panes -->
-							<div class="tab-content">
-								<div class="tab-pane" id="normal">
-									<form class="form-horizontal" role="form" action="<{$icms_url}>/user.php" method="post">
-										<div style="margin:12px" class="form-group"><input class="form-control" name="uname" type="text" placeholder="<{$lang_username}>"></div>
-										<div style="margin:12px" class="form-group"><input class="form-control" type="password" name="pass" placeholder="<{$lang_password}>">	</div>
-										<input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>">
-										<input type="hidden" name="xoops_login" value="1">
-										<button style="margin-left:12px" class="btn btn-primary" type="submit"><{$lang_login}></button>
-									</form>
-								</div>
-								<div class="tab-pane" id="openid"> 	
-									<form role="form" class="form-inline" method="get" action="<{$icms_url}>/try_auth.php">          
-										<input type="hidden" name="action" value="verify">
-										<div style="margin:12px" class="form-group"><input style="padding: 6px 12px;" placeholder="OpenID URL" type="text" class="form-control openid_url" name="openid_identifier" value="" ></div>
-										<input class="btn btn-primary" type="submit" value="<{$lang_login}>">
-									</form>
-								</div>
-							</div>
-						</div>
-						<{else}>
-							<div id="collapseOne" class="collapse">    	
+						</h4>
+							<div id="collapseOne" class="collapse">
 								<form class="form-horizontal" role="form" action="<{$icms_url}>/user.php" method="post">
 									<div style="margin:12px" class="form-group"><input class="form-control" name="uname" type="text" placeholder="<{$lang_username}>"></div>
 									<div style="margin:12px" class="form-group"><input class="form-control" type="password" name="pass" placeholder="<{$lang_password}>"></div>
@@ -96,7 +62,6 @@
 									<button style="margin-left:12px" class="btn btn-primary" type="submit"><{$lang_login}></button>
 								</form>
 							</div>
-						<{/if}>
 					</div> <!-- End accordion -->
                 </div>
             </div>

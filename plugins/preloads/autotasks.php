@@ -34,6 +34,7 @@ class IcmsPreloadAutotasks extends icms_preload_Item {
 	 * Do this event when saving item
 	 *
 	 * @param array config array
+	 * @return bool|void
 	 */
 	function eventAfterSaveSystemAdminPreferencesItems($array) {
 		if (!isset($array[\icms_config_Handler::CATEGORY_AUTOTASKS])) {

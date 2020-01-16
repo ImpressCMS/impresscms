@@ -55,7 +55,7 @@ class icms_core_OnlineHandler {
 	/**
 	 * Constructor
 	 *
-	 * @param	object  &$db    {@link XoopsHandlerFactory}
+	 * @param	\icms_db_legacy_Database  &$db   Linked database instance
 	 */
 	public function __construct(&$db) {
 		$this->db = & $db;
@@ -137,8 +137,8 @@ class icms_core_OnlineHandler {
 	/**
 	 * Get an array of online information
 	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
-	 * @return	array   Array of associative arrays of online information
+	 * @param \icms_db_criteria_Element|null $criteria Criteria
+	 * @return \icms_db_criteria_Element[]|bool
 	 */
 	public function getAll($criteria = null) {
 		$ret = array();
@@ -163,7 +163,8 @@ class icms_core_OnlineHandler {
 	/**
 	 * Count the number of online users
 	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element $criteria Criteria
+	 * @return bool
 	 */
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online');

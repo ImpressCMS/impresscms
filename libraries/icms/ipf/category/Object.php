@@ -7,7 +7,6 @@
  * @since	1.2
  * @author	marcan <marcan@impresscms.org>
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @todo	Properly set visibility of variables - in version 1.4
  */
 
 /**

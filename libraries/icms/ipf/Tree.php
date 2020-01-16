@@ -74,16 +74,16 @@ class icms_ipf_Tree {
 	public $_tree = array();
 
 		/**
-		 * Array of {@link icms_core_Object}s
+		 * Array of objects
 		 *
-		 * @var array
+		 * @var \icms_core_Object[]
 		 */
 	private $_objects = array();
 
 	/**
 	 * Constructor
 	 *
-	 * @param   array	$objectArr  Array of {@link icms_core_Object}s
+	 * @param   \icms_core_Object	$objectArr  Array of objects
 	 * @param   string	$myId       field name of object ID
 	 * @param   string	$parentId   field name of parent object ID
 	 * @param   string	$rootId     field name of root object ID

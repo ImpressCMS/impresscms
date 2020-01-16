@@ -184,13 +184,6 @@ div#disclaimer{
 	font-size: 1em;
 	font-family: verdana,arial, helvetica, sans-serif;
 }
-.openid_url {
-	background-image: url(images/openid-inputicon.gif);
-	background-repeat: no-repeat;
-	background-attachment: scroll;
-	background-color: #ffffff;
-	padding-left: 18px;
-}
 
 /*Default ImpressCMS Pagination Style*/
 div.pagination.default{
@@ -230,7 +223,7 @@ div.pagination.default span.disabled {
 	display:block;
 }
 .top_shortPass span{
-	
+
 }
 .top_badPass{
 	background:#edabab;
@@ -238,7 +231,7 @@ div.pagination.default span.disabled {
 	display:block;
 }
 .top_badPass span{
-	
+
 }
 .top_goodPass{
 	background:#ede3ab;

@@ -68,7 +68,7 @@ class icms_core_Security {
 	/**
 	 * Check if a token is valid. If no token is specified, $_REQUEST[$name . '_REQUEST'] is checked
 	 *
-	 * @param string $token token to validate
+	 * @param string|bool $token token to validate
 	 * @param bool   $clearIfValid whether to clear the token value if valid
 	 * @param string $name session name to validate
 	 *
@@ -76,33 +76,21 @@ class icms_core_Security {
 	 */
 	public function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN) {
 		$token = ($token !== false)?$token:(isset($_REQUEST[$name . '_REQUEST'])?$_REQUEST[$name . '_REQUEST']:'');
-		if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
+
+		/**
+		 * @var Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()->get('session');
+
+		$tokenData = $session->getCsrfToken();
+		if (!$tokenData->isValid($token)) {
 			icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
 			return false;
 		}
-		$validFound = false;
-		$token_data = & $_SESSION[$name . '_SESSION'];
-		foreach (array_keys($token_data) as $i) {
-			if ($token === md5($token_data[$i]['id'] . $_SERVER['HTTP_USER_AGENT'] . getenv('DB_PREFIX'))) {
-				if ($this->filterToken($token_data[$i])) {
-					if ($clearIfValid) {
-						// token should be valid once, so clear it once validated
-						unset($token_data[$i]);
-					}
-					icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENISVALID);
-					$validFound = true;
-				} else {
-					$str = _CORE_TOKENEXPIRED;
-					$this->setErrors($str);
-					icms::$logger->addExtra(_CORE_TOKENVALID, $str);
-				}
-			}
+		if ($clearIfValid) {
+			$tokenData->regenerateValue();
 		}
-		if (!$validFound) {
-			icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENINVALID);
-		}
-		$this->garbageCollection($name);
-		return $validFound;
+		return true;
 	}
 
 	/**
@@ -111,9 +99,13 @@ class icms_core_Security {
 	 * @param string $token
 	 *
 	 * @return bool
+	 *
+	 * @deprecated Not required anymore. Will be removed in 2.1
 	 */
 	public function filterToken($token) {
-		return (!empty($token['expire']) && $token['expire'] >= time());
+		trigger_error('garbageCollection will be removed in 2.1 and now does nothing');
+
+		return false;
 	}
 
 	/**
@@ -122,11 +114,11 @@ class icms_core_Security {
 	 * @param string $name session name
 	 *
 	 * @return void
+	 *
+	 * @deprecated Not required anymore. Will be removed in 2.1
 	 */
 	public function garbageCollection($name = _CORE_TOKEN) {
-		if (isset($_SESSION[$name . '_SESSION']) && count($_SESSION[$name . '_SESSION']) > 0) {
-			$_SESSION[$name . '_SESSION'] = array_filter($_SESSION[$name . '_SESSION'], array($this, 'filterToken'));
-		}
+		trigger_error('garbageCollection will be removed in 2.1 and now does nothing');
 	}
 
 	/**
@@ -139,28 +131,31 @@ class icms_core_Security {
 	 */
 	public function createToken($timeout = 0, $name = _CORE_TOKEN)
 	{
-		$this->garbageCollection($name);
-		if ($timeout == 0) {
-			$timeout = $GLOBALS['icmsConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
+		if ($timeout !== 0) {
+			trigger_error('$timeout parameter for createToken is deprecated. Right now does nothing', E_USER_DEPRECATED);
 		}
-		$token_id = md5(uniqid(rand(), true));
-		// save token data on the server
-		if (!isset($_SESSION[$name . '_SESSION'])) {
-			$_SESSION[$name . '_SESSION'] = array();
+		if ($name !== _CORE_TOKEN) {
+			trigger_error('$name parameter for createToken is deprecated. Right now does nothing', E_USER_DEPRECATED);
 		}
-		$token_data = array('id' => $token_id, 'expire' => time() + (int)($timeout));
-		array_push($_SESSION[$name . '_SESSION'], $token_data);
-		return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . getenv('DB_PREFIX'));
+
+		/**
+		 * @var Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()->get('session');
+
+		return $session->getCsrfToken()->getValue();
 	}
 
 	/**
 	 * Clear all token values from user's session
 	 *
 	 * @param string $name session name
+	 *
+	 * @deprecated Will be removed in 2.1. Right now does nothing.
 	 */
 	public function clearTokens($name = _CORE_TOKEN)
 	{
-		$_SESSION[$name . '_SESSION'] = array();
+		trigger_error('Will be removed in 2.1. Right now does nothing.', E_USER_DEPRECATED);
 	}
 
 	/**
@@ -227,7 +222,9 @@ class icms_core_Security {
 	}
 
 	/**
-	 * Get the HTML code for a @link icms_form_elements_Hiddentoken object - used in forms that do not use XoopsForm elements
+	 * Get the HTML code for a token
+	 *
+	 * @param string $name Token field name
 	 *
 	 * @return string
 	 */

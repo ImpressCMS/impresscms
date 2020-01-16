@@ -44,7 +44,7 @@ include ICMS_ROOT_PATH . '/include/cp_functions.php';
 if (is_object(icms::$user)) {
 	$module_handler = icms::handler('icms_module');
 	$icmsModule = & $module_handler->getByDirname('system');
-	if (!in_array(XOOPS_GROUP_ADMIN, icms::$user->getGroups())) {
+	if (!in_array(ICMS_GROUP_ADMIN, icms::$user->getGroups())) {
 		$sysperm_handler = icms::handler('icms_member_groupperm');
 		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 			redirect_header(ICMS_URL . '/', 3, _NOPERM); ;

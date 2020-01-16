@@ -89,7 +89,7 @@ if ($delete != 0) {
 $xoopsOption['template_main'] = 'system_readmsg.html';
 require ICMS_ROOT_PATH . '/header.php';
 
-$form = new icms_form_Simple('', 'delete', 'readpmsg.php', 'post', true);
+$form = new icms_form_Theme('', 'delete', 'readpmsg.php', 'post', true);
 
 $criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
 $criteria->setLimit(1);

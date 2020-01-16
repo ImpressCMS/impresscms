@@ -141,16 +141,20 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 			}
 			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userDN, stripslashes($pwd));
+
+			/**
+			 * @var \Aura\Session\Session $session
+			 */
+			$session = icms::getInstance()->get('session');
 			if ($authenticated) {
-				icms::$session->securityLevel = 3;
-				icms::$session->check_ip_blocks = 2;
-				icms::$session->salt_key = getenv('DB_SALT');
-				icms::$session->enableRegenerateId = true;
-				icms::$session->sessionOpen();
+				//icms::$session->securityLevel = 3;
+				//icms::$session->check_ip_blocks = 2;
+				$session->regenerateId();
+				$session->start();
 				// We load the User database
 				return $this->getMember($userDN, $uname, $pwd);
 			} else {
-				icms::$session->destroy(session_id());
+				$session->destroy();
 				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userDN . ')');
 			}
 		} else {
@@ -190,7 +194,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	/**
 	 * Load user from ImpressCMS Database
 	 * @param string $uname UserName
-	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
+	 * @return \icms_member_user_Object
 	 */
 	public function getFilter($uname) {
 		$filter = '';
@@ -207,7 +211,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	 * @param string $userdn
 	 * @param string $uname Username
 	 * @param string $pwd Password
-	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
+	 * @return \icms_member_user_Object
 	 */
 	public function getMember($userdn, $uname, $pwd = null) {
 		$provisHandler = icms_auth_method_ldap_Provisioning::getInstance($this);

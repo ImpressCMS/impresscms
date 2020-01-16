@@ -54,8 +54,6 @@ class icms_member_group_membership_Handler extends icms_ipf_Handler {
 	 * retrieve groups for a user
 	 *
 	 * @param int $uid ID of the user
-	 * @param bool $asobject should the groups be returned as {@link icms_member_group_Object}
-	 * objects? FALSE returns associative array.
 	 * @return array array of groups the user belongs to
 	 */
 	public function getGroupsByUser($uid) {
@@ -76,8 +74,6 @@ class icms_member_group_membership_Handler extends icms_ipf_Handler {
 	 * retrieve users belonging to a group
 	 *
 	 * @param int $groupid ID of the group
-	 * @param bool $asobject return users as {@link icms_user_Object} objects?
-	 * FALSE will return arrays
 	 * @param int $limit number of entries to return
 	 * @param int $start offset of first entry to return
 	 * @return array array of users belonging to the group

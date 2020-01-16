@@ -61,9 +61,9 @@ if ($uid <= 0) {
 }
 
 $gperm_handler = icms::handler('icms_member_groupperm');
-$groups = is_object(icms::$user)? icms::$user->getGroups():XOOPS_GROUP_ANONYMOUS;
+$groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 
-$isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
+$isAdmin = $gperm_handler->checkRight('system_admin', ICMS_SYSTEM_USER, $groups);
 
 if (is_object(icms::$user)) {
 	if ($uid == icms::$user->getVar('uid')) {
@@ -121,8 +121,6 @@ icms_makeSmarty(array(
 	'lang_realname' => _US_REALNAME,
 	'lang_avatar' => _US_AVATAR,
 	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
-	'user_alwopenid' => $icmsConfigAuth['auth_openid'],
-	'lang_openid', $icmsConfigAuth['auth_openid'] == true? _US_OPENID_FORM_CAPTION : '',
 	'lang_email' => _US_EMAIL,
 	'lang_privmsg' => _US_PM,
 	'lang_icq' => _US_ICQ,

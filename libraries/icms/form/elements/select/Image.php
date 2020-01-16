@@ -79,7 +79,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 	public function getImageList($cat = null) {
 		$ret = array();
 		if (!is_object(icms::$user)) {
-			$group = array(XOOPS_GROUP_ANONYMOUS);
+			$group = array(ICMS_GROUP_ANONYMOUS);
 		} else {
 			$group = & icms::$user->getGroups();
 		}
@@ -150,7 +150,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 	 */
 	public function render() {
 		if (!is_object(icms::$user)) {
-			$group = array(XOOPS_GROUP_ANONYMOUS);
+			$group = array(ICMS_GROUP_ANONYMOUS);
 		} else {
 			$group = & icms::$user->getGroups();
 		}

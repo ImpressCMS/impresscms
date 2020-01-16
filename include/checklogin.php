@@ -76,13 +76,6 @@ if ($pos !== false) {
 	}
 }
 
-/* Commented out for OpenID , we need to change it to make a better validation if OpenID is used
- if ($uname == '' || $pass == '') {
- redirect_header(ICMS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
- exit();
- }
- */
-
 $member_handler = icms::handler('icms_member');
 
 icms_loadLanguageFile('core', 'auth');
@@ -150,18 +143,24 @@ if (false != $user) {
 	$user->setVar('last_login', time());
 	if (!$member_handler->insertUser($user)) {}
 	// Regenerate a new session id and destroy old session
-	session_regenerate_id(true);
-	$_SESSION = array();
-	$_SESSION['xoopsUserId'] = $user->getVar('uid');
-	$_SESSION['xoopsUserGroups'] = $user->getGroups();
-	if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
-		setcookie($icmsConfig['session_name'], session_id(), time() + (60 * $icmsConfig['session_expire']), '/', '', 0);
-	}
-	$_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
+
+	/**
+	 * @var Aura\Session\Session $session
+	 */
+	$session = \icms::getInstance()->get('session');
+	$session->resume();
+	$session->regenerateId();
+	$session->clear();
+
+	$userSegment = $session->getSegment(icms_member_user_Object::class);
+	$userSegment->set('userid', $user->getVar('uid'));
+	$userSegment->set('groups', $user->getGroups());
+	$userSegment->set('last_login', $user->getVar('last_login'));
+
 	if (!$member_handler->updateUserByField($user, 'last_login', time())) {}
 	$user_theme = $user->getVar('theme');
 	if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
-		$_SESSION['xoopsUserTheme'] = $user_theme;
+		$session->getSegment(icms_view_theme_Object::class)->set('name', $user_theme);
 	}
 
 	// autologin hack V3.1 GIJ (set cookie)

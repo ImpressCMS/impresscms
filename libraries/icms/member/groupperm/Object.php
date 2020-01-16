@@ -38,7 +38,7 @@
 /**
  * A group permission
  *
- * These permissions are managed through a {@link icms_member_groupperm_Handler} object
+ * These permissions are managed through a icms_member_groupperm_Handler object
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org

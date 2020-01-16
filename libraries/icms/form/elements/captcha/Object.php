@@ -47,35 +47,6 @@ class icms_form_elements_captcha_Object {
 	}
 
 	/**
-	 * Creates instance of icms_form_elements_captcha_Object Object
-	 * @return  object Reference to the icms_form_elements_captcha_Object Object
-	 */
-	static public function &instance() {
-		static $instance;
-		if (!isset($instance)) {
-			$instance = new self();
-		}
-		return $instance;
-	}
-
-	/**
-	 * Sets the Captcha Config
-	 * @param   string $name Config Name
-	 * @param   string $val Config Value
-	 * @return  bool  Always returns true if the setting of the config has succeeded
-	 */
-	public function setConfig($name, $val) {
-		if ($name == "mode") {
-			$this->setMode($val);
-		} elseif (isset($this->$name)) {
-			$this->$name = $val;
-		} else {
-			$this->config[$name] = $val;
-		}
-		return true;
-	}
-
-	/**
 	 * Set CAPTCHA mode
 	 *
 	 * For future possible modes, right now force to use text or image
@@ -110,6 +81,37 @@ class icms_form_elements_captcha_Object {
 	}
 
 	/**
+	 * Creates instance of icms_form_elements_captcha_Object Object
+	 * @return  object Reference to the icms_form_elements_captcha_Object Object
+	 */
+	static public function &instance()
+	{
+		static $instance;
+		if (!isset($instance)) {
+			$instance = new self();
+		}
+		return $instance;
+	}
+
+	/**
+	 * Sets the Captcha Config
+	 * @param   string $name Config Name
+	 * @param   string $val Config Value
+	 * @return  bool  Always returns true if the setting of the config has succeeded
+	 */
+	public function setConfig($name, $val)
+	{
+		if ($name == "mode") {
+			$this->setMode($val);
+		} elseif (isset($this->$name)) {
+			$this->$name = $val;
+		} else {
+			$this->config[$name] = $val;
+		}
+		return true;
+	}
+
+	/**
 	 * Initializing the CAPTCHA class
 	 * @param   string  $name			 name of the instance
 	 * @param   string  $skipmember	   Skip the captcha because the user is member / logged in
@@ -134,7 +136,7 @@ class icms_form_elements_captcha_Object {
 
 		// Skip CAPTCHA for group
 		//$gperm_handler = icms::handler('icms_member_groupperm');
-		$groups = is_object(icms::$user)? icms::$user->getGroups():array(XOOPS_GROUP_ANONYMOUS);
+		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$this->active = false;
 		} elseif ($icmsConfigCaptcha['captcha_mode'] == 'none') {
@@ -148,56 +150,47 @@ class icms_form_elements_captcha_Object {
 	 */
 	public function verify($skipMember = null) {
 		global $icmsConfig, $icmsConfigCaptcha;
-		$sessionName	= @$_SESSION['icms_form_elements_captcha_Object_name'];
-		$skipMember		= ($skipMember === null)?@$_SESSION['icms_form_elements_captcha_Object_skipmember']:$skipMember;
-		$maxAttempts	= (int) (@$_SESSION['icms_form_elements_captcha_Object_maxattempts']);
+
+		/**
+		 * @var Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()->get('session');
+		$captchaSection = $session->getSegment(icms_form_elements_captcha_Object::class);
+
+		$sessionName = $captchaSection->get('name');
+		$skipMember = ($skipMember === null) ? $captchaSection->get('skip_member') : $skipMember;
+		$maxAttempts = (int)$captchaSection->get('max_attempts');
 
 		$is_valid = false;
 
-		$groups = is_object(icms::$user)? icms::$user->getGroups():array(XOOPS_GROUP_ANONYMOUS);
+		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$is_valid = true;
-		} elseif (!empty($maxAttempts) && $_SESSION['icms_form_elements_captcha_Object_attempt_' . $sessionName] > $maxAttempts) {
+		} elseif (!empty($maxAttempts) && $captchaSection->get('attempt_' . $sessionName) > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 			// Verify the code
-		} elseif (!empty($_SESSION['icms_form_elements_captcha_Object_sessioncode'])) {
+		} elseif ($session_code = $captchaSection->get('session_code')) {
 			$func = ($icmsConfigCaptcha['captcha_casesensitive'])?"strcmp":"strcasecmp";
-			$is_valid = !$func(trim(@$_POST[$sessionName]), $_SESSION['icms_form_elements_captcha_Object_sessioncode']);
+			$is_valid = !$func(trim(@$_POST[$sessionName]), $session_code);
 		}
 
 		if (!empty($maxAttempts)) {
 			if (!$is_valid) {
 				// Increase the attempt records on failure
-				$_SESSION['icms_form_elements_captcha_Object_attempt_' . $sessionName]++;
+				$captchaSection->set('attempt_' . $sessionName, $captchaSection->get('attempt_' . $sessionName) + 1);
 				// Log the error message
 				$this->message[] = ICMS_CAPTCHA_INVALID_CODE;
 
 			} else {
 				// reset attempt records on success
-				$_SESSION['icms_form_elements_captcha_Object_attempt_' . $sessionName] = null;
+				$captchaSection->set('attempt_' . $sessionName, null);
 			}
 		}
 
 		$this->destroyGarbage(true);
 
 		return $is_valid;
-	}
-
-	/**
-	 * Get Caption
-	 * @return string	The Caption Constant
-	 */
-	public function getCaption() {
-		return defined("ICMS_CAPTCHA_CAPTION")? constant("ICMS_CAPTCHA_CAPTION"):"";
-	}
-
-	/**
-	 * Set Message
-	 * @return string	The message
-	 */
-	public function getMessage() {
-		return implode("<br />", $this->message);
 	}
 
 	/**
@@ -214,13 +207,37 @@ class icms_form_elements_captcha_Object {
 		}
 
 		if ($clearSession) {
-			$_SESSION['icms_form_elements_captcha_Object_name'] = null;
-			$_SESSION['icms_form_elements_captcha_Object_skipmember'] = null;
-			$_SESSION['icms_form_elements_captcha_Object_sessioncode'] = null;
-			$_SESSION['icms_form_elements_captcha_Object_maxattempts'] = null;
+			/**
+			 * @var Aura\Session\Session $session
+			 */
+			$session = \icms::getInstance()->get('session');
+			$captchaSection = $session->getSegment(icms_form_elements_captcha_Object::class);
+
+			$captchaSection->set('name', null);
+			$captchaSection->set('skip_member', null);
+			$captchaSection->set('session_code', null);
+			$captchaSection->set('max_attempts', null);
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get Caption
+	 * @return string    The Caption Constant
+	 */
+	public function getCaption()
+	{
+		return defined("ICMS_CAPTCHA_CAPTION") ? constant("ICMS_CAPTCHA_CAPTION") : "";
+	}
+
+	/**
+	 * Set Message
+	 * @return string    The message
+	 */
+	public function getMessage()
+	{
+		return implode("<br />", $this->message);
 	}
 
 	/**
@@ -234,18 +251,25 @@ class icms_form_elements_captcha_Object {
 		if (!$this->active || empty($this->config["name"])) {
 			return $form;
 		}
-		$_SESSION['icms_form_elements_captcha_Object_name'] = $this->config["name"];
-		$_SESSION['icms_form_elements_captcha_Object_skipmember'] = $icmsConfigCaptcha['captcha_skipmember'];
+
+		/**
+		 * @var Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()->get('session');
+		$captchaSection = $session->getSegment(icms_form_elements_captcha_Object::class);
+
+		$captchaSection->set('name', $this->config["name"]);
+		$captchaSection->set('skip_member', $icmsConfigCaptcha['captcha_skipmember']);
 		$maxAttempts = $icmsConfigCaptcha['captcha_maxattempt'];
-		$_SESSION['icms_form_elements_captcha_Object_maxattempts'] = $maxAttempts;
+		$captchaSection->set('max_attempts', $maxAttempts);
 
 		 if (!empty($maxAttempts)) {
-			$_SESSION['icms_form_elements_captcha_Object_maxattempts_' . $_SESSION['icms_form_elements_captcha_Object_name']] = $maxAttempts;
+			 $captchaSection->set('max_attempts_' . $captchaSection->get('name'), $maxAttempts);
 		}
 
 
 		// Fail on too many attempts
-		if (!empty($maxAttempts) && @$_SESSION['icms_form_elements_captcha_Object_attempt_' . $this->config["name"]] > $maxAttempts) {
+		if (!empty($maxAttempts) && $captchaSection->get('max_attempts_' . $captchaSection->get('name')) > $maxAttempts) {
 			$form = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 			// Load the form element
 		} else {

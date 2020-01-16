@@ -47,26 +47,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
-	switch ($vars['DB_TYPE']) {
-		case 'mysql':
-			$func_connect = empty($vars['DB_PCONNECT'])?"mysql_connect":"mysql_pconnect";
-			if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
-				$error = ERR_NO_DBCONNECTION;
-			}
-		break;
-		case 'pdo.mysql':
-			try {
-				$dbh = new PDO('mysql:host=' . $vars['DB_HOST'],
-					$vars['DB_USER'],
-					$vars['DB_PASS'],
-					array(
-						PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-						PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
-					));
-			} catch (PDOException $ex) {
-				$error = ERR_NO_DBCONNECTION;
-			}
-		break;
+	try {
+		if (!defined('DB_NO_AUTO_SELECT')) {
+			define('DB_NO_AUTO_SELECT', 1);
+		}
+		foreach ($vars as $key => $value) {
+			$_SESSION['settings'][$key] = $value;
+			putenv("$key=" . $value);
+			$_ENV[$key] = $value;
+			$_SERVER[$key] = $value;
+		}
+		/**
+		 * @var \icms_db_Connection $db
+		 */
+		$db = \icms::getInstance()->get('db');
+	} catch (\Exception $exception) {
+		$error = ERR_NO_DBCONNECTION;
 	}
 	if (empty($error)) {
 		$wizard->redirectToPage('+1');
@@ -74,21 +70,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($
 	}
 }
 
-//so far, mysql extension has to exist and be loaded
-$connections = [];
-if (function_exists('mysql_connect') || function_exists('mysql_pconnect')) {
-	$connections['mysql'] = array('type' => 'mysql', 'name' => 'MySQL', 'selected' => 'selected');
-	$db_connection = $connections['mysql'];
+$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
+if (isset($connections['mysql'])) {
+	$connections['mysql']['selected'] = '';
 }
-// Fill with default values
-// check for PDO MySQL and select it, if it is available
-if (class_exists("PDO", false)) {
-	$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
-	if (isset($connections['mysql'])) {
-		$connections['mysql']['selected'] = '';
-	}
-	$connections['pdo'] = $db_connection;
-}
+$connections['pdo'] = $db_connection;
 
 if (@empty($vars['DB_HOST'])) {
 	$vars = array_merge($vars, array(
@@ -100,7 +86,6 @@ if (@empty($vars['DB_HOST'])) {
 	));
 
 }
-
 
 function xoFormField($name, $value, $label, $help = '', $type = 'text') {
 	$label = htmlspecialchars($label);

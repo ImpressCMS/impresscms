@@ -98,7 +98,7 @@ class icms_member_user_Handler
 	/**
 	 * delete users matching a set of conditions
 	 *
-	 * @param object $criteria {@link icms_db_criteria_Element}
+	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @return bool FALSE if deletion failed
 	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
 	 */

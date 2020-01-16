@@ -24,9 +24,9 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 	/**
 	 * Construct the tree object
 	 *
-	 * @param object $objectHandler (@link icms_ipf_Handler)
-	 * @param object $criteria		(@link icms_db_criteria_Compo)
-	 * @param array $actions		An array of actions for this object
+	 * @param icms_ipf_Handler $objectHandler Handler
+	 * @param icms_db_criteria_Compo|false $criteria		Criteria to filter results
+	 * @param string[] $actions		An array of actions for this object
 	 * @param boolean $userSide		TRUE - display on the user side; FALSE - do not display
 	 */
 	public function __construct(&$objectHandler, $criteria = false, $actions = array('edit', 'delete'), $userSide = false) {
@@ -47,7 +47,7 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 	/**
 	 * Create a row based on the item and children
 	 *
-	 * @param object	$object	@link icms_ipf_Object
+	 * @param icms_ipf_Object	$object	@IPF object to use add to table row
 	 * @param integer	$level	sub-level of the item
 	 */
 	public function createTableRow($object, $level = 0) {

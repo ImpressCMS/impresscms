@@ -34,23 +34,12 @@ if (!$dbm->isConnectable()) {
 	exit();
 }
 
-icms::$db = &$dbm->db;
-icms::$xoopsDB = &$dbm->db;
-
-$res = $dbm->query("SELECT COUNT(*) FROM " . $dbm->db->prefix("users"));
-if (!$res) {
-	$wizard->redirectToPage('dbsettings');
-	exit();
-}
-list ($count) = $dbm->db->fetchRow($res);
-$process = $count?'':'insert';
+/**
+ * @var icms_db_Connection $db
+ */
+$db = \icms::getInstance()->get('db');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if (!$process) {
-		$wizard->redirectToPage('+0');
-		exit();
-	}
-	include_once './makedata.php';
 	$cm = 'dummy';
 
 	$wizard->loadLangFile('install2');
@@ -58,20 +47,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	extract($_SESSION['siteconfig'], EXTR_SKIP);
 	$language = $wizard->language;
 
-	$type = getenv('DB_TYPE');
+	$type = env('DB_TYPE');
 	if (substr($type, 0, 4) == 'pdo.') {
 		$driver = substr($type, 4);
 	} else {
 		$driver = $type;
 	}
-	$result = $dbm->queryFromFile('./sql/' . $driver . '.data.sql');
-	$result = $dbm->queryFromFile('./language/' . $language . '/' . $driver . '.lang.data.sql');
-	$group = make_groups($dbm);
-	$result = make_data($dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $group);
-	$content = $dbm->report();
+
+	if (!$adminname || !$adminlogin_name || !$adminpass || !$adminmail || !$language) {
+		$wizard->redirectToPage('-1');
+		exit();
+	}
+
+	putenv('INSTALL_ADMIN_EMAIL=' . $adminmail);
+	putenv('INSTALL_ADMIN_NAME=' . $adminname);
+	putenv('INSTALL_ADMIN_PASS=' . $adminpass);
+	putenv('INSTALL_ADMIN_LOGIN=' . $adminlogin_name);
+	putenv('INSTALL_LANGUAGE=' . $language);
+	$symfonyConsoleApplication = new \Symfony\Component\Console\Application('icms-installer');
+	$symfonyConsoleApplication->setAutoExit(false);
+	$symfonyConsoleApplication->add(new \Phoenix\Command\InitCommand());
+	$symfonyConsoleApplication->add(new \Phoenix\Command\MigrateCommand());
+	$output = new \Symfony\Component\Console\Output\BufferedOutput();
+	if ($symfonyConsoleApplication->run(new \Symfony\Component\Console\Input\ArrayInput([
+		'command' => 'init',
+		'--config_type' => 'php',
+		'--config' => dirname(dirname(__DIR__	)) . '/phoenix.php',
+	]), $output) > 0) {
+		$content = nl2br($output->fetch());
+		$wizard->redirectToPage('dbsettings');
+		exit();
+	}
+	$symfonyConsoleApplication->run(new \Symfony\Component\Console\Input\ArrayInput([
+		'command' => 'migrate',
+		'--dir' => ['core'],
+		'--config_type' => 'php',
+		'--config' => dirname(dirname(__DIR__	)). '/phoenix.php',
+	]), $output);
+	$content = nl2br($output->fetch());
 } else {
-	$msg = $process? READY_INSERT_DATA : DATA_ALREADY_INSERTED;
-	$pageHasForm = $process? true : false;
+	$msg = READY_INSERT_DATA;
+	$pageHasForm = true;
 
 	$content = "<p class='x2-note'>$msg</p>";
 }

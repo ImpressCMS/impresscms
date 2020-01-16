@@ -46,18 +46,34 @@ class db_manager {
 
 	var $s_tables = array();
 	var $f_tables = array();
-	var $db;
+	var $successStrings = array(
+		'create' => TABLE_CREATED,
+		'insert' => ROWS_INSERTED,
+		'alter' => TABLE_ALTERED,
+		'drop' => TABLE_DROPPED,
+	);
+	var $failureStrings = array(
+		'create' => TABLE_NOT_CREATED,
+		'insert' => ROWS_FAILED,
+		'alter' => TABLE_NOT_ALTERED,
+		'drop' => TABLE_NOT_DROPPED,
+	);
+	/**
+	 * Database connection
+	 *
+	 * @var icms_db_Connection
+	 */
+	protected $db;
 
-	function __construct() {
-		$this->db = icms_db_legacy_Factory::getDatabase();
-		$this->db->setPrefix(
-			getenv('DB_PREFIX')
-		);
-		$this->db->setLogger(icms_core_Logger::instance());
+	public function __construct()
+	{
+		$this->db = \icms::getInstance()->get('db');
+		\icms::$xoopsDB = $this->db;
+		\icms::$db = $this->db;
 	}
 
 	function isConnectable() {
-		return ($this->db->connect(false) != false)? true : false;
+		return $this->db->isConnected();
 	}
 
 	function queryFromFile($sql_file_path) {
@@ -126,20 +142,6 @@ class db_manager {
 		return true;
 	}
 
-	var $successStrings = array(
-		'create'	=> TABLE_CREATED,
-		'insert'	=> ROWS_INSERTED,
-		'alter'		=> TABLE_ALTERED,
-		'drop'		=> TABLE_DROPPED,
-	);
-	var $failureStrings = array(
-		'create'	=> TABLE_NOT_CREATED,
-		'insert'	=> ROWS_FAILED,
-		'alter'		=> TABLE_NOT_ALTERED,
-		'drop'		=> TABLE_NOT_DROPPED,
-	);
-
-
 	function report() {
 		$commands = array('create', 'insert', 'alter', 'drop');
 		$content = '<ul class="log">';
@@ -183,23 +185,36 @@ class db_manager {
 	function insert($table, $query) {
 		$this->db->connect();
 		$table = $this->db->prefix($table);
-		$query = 'INSERT INTO ' . $table . ' ' . $query;
-		if (!$this->db->queryF($query)) {
-			//var_export($query);
-			//echo '<br />' . mysql_error() . '<br />';
-			if (!isset($this->f_tables['insert'][$table])) {
-				$this->f_tables['insert'][$table] = 1;
-			} else {
-				$this->f_tables['insert'][$table]++;
+		$sql = sprintf(
+			'INSERT INTO `%s`(%s) VALUES',
+			$table,
+			'`' . implode('`,`', array_keys($query[0])) . '`'
+		);
+		$prep_data = [];
+		$groups_sql = [];
+		foreach ($query as $i => $row) {
+			$keys = [];
+			foreach ($row as $key => $value) {
+				$vkey = $key . '_' . $i;
+				$prep_data[$vkey] = $value;
+				$keys[] = ':' . $vkey;
 			}
+			$groups_sql[] = '(' . implode(',', $keys) . ')';
+		}
+		$sql .= implode(', ', $groups_sql);
+		if (!$count = $this->db->fetchAffected($sql, $prep_data)) {
+			if (!isset($this->f_tables['insert'][$table])) {
+				$this->f_tables['insert'][$table] = 0;
+			}
+			$this->f_tables['insert'][$table]++;
 			return false;
 		} else {
 			if (!isset($this->s_tables['insert'][$table])) {
-				$this->s_tables['insert'][$table] = $this->db->getAffectedRows();
-			} else {
-				$this->s_tables['insert'][$table] += $this->db->getAffectedRows();
+				$this->s_tables['insert'][$table] = 0;
 			}
-			return $this->db->getInsertId();
+			$this->s_tables['insert'][$table] += $count;
+
+			return $this->db->lastInsertId();
 		}
 	}
 
@@ -212,9 +227,13 @@ class db_manager {
 		$ret = false;
 		if ($table != '') {
 			$this->db->connect();
-			$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix($table);
-			$ret = (false != $this->db->query($sql))? true : false;
+			try {
+				$sql = 'SELECT 1 FROM ' . $this->db->prefix($table);
+				return $this->db->query($sql) != false;
+			} catch (\Exception $exception) {
+				return false;
+			}
 		}
-		return $ret;
+		return false;
 	}
 }

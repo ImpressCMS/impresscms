@@ -14,26 +14,14 @@ class DBTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-            'icms_db_legacy_Database' => ['icms_db_legacy_IDatabase'],
             'icms_db_Factory' => null,
             'icms_db_criteria_Element' => null,
             'icms_db_criteria_Compo' => ['icms_db_criteria_Element'],
             'icms_db_criteria_Item' => ['icms_db_criteria_Element'],
-            'icms_db_legacy_mysql_Database' => ['icms_db_legacy_Database'],
-            'icms_db_legacy_mysql_Proxy' => ['icms_db_legacy_mysql_Database'],
-            'icms_db_legacy_mysql_Safe' => ['icms_db_legacy_mysql_Database'],
             'icms_db_legacy_mysql_Utility' => ['icms_db_IUtility'],
             'icms_db_legacy_updater_Handler' => null,
             'icms_db_legacy_updater_Table' => null,
             'icms_db_legacy_Factory' => ['icms_db_Factory'],
-            'icms_db_legacy_PdoDatabase' => [
-                'icms_db_legacy_Database',
-                'icms_db_legacy_IDatabase'
-            ],
-            'icms_db_mysql_Connection' => [
-                'PDO',
-                'icms_db_IConnection'
-            ],
             'icms_db_mysql_Utility' => ['icms_db_IUtility'],
             'icms_db_Connection' => [
                 'PDO',
@@ -99,35 +87,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'renderLdap',
                 'renderWhere'
             ],
-            'icms_db_legacy_mysql_Database' => [
-                'connect',
-                'genId',
-                'fetchRow',
-                'fetchArray',
-                'fetchBoth',
-                'getInsertId',
-                'getRowsNum',
-                'getAffectedRows',
-                'close',
-                'freeRecordSet',
-                'error',
-                'errno',
-                'quoteString',
-                'quote',
-                'escape',
-                'queryF',
-                'queryFromFile',
-                'getFieldName',
-                'getFieldType',
-                'getFieldsNum',
-                'getServerVersion'
-            ],
-            'icms_db_legacy_mysql_Proxy' => [
-                'query'
-            ],
-            'icms_db_legacy_mysql_Safe' => [
-                'query'
-            ],
             'icms_db_legacy_updater_Handler' => [
                 'runQuery',
                 'renameTable',
@@ -169,40 +128,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'updateAll',
                 'deleteAll',
                 'dropFields'
-            ],
-            'icms_db_legacy_Database' => [
-                'setLogger',
-                'setPrefix',
-                'prefix'
-            ],
-            'icms_db_legacy_PdoDatabase' => [
-                'connect',
-                'close',
-                'quoteString',
-                'quote',
-                'escape',
-                'error',
-                'errno',
-                'genId',
-                'query',
-                'queryF',
-                'getInsertId',
-                'getAffectedRows',
-                'getFieldName',
-                'getFieldType',
-                'getFieldsNum',
-                'fetchRow',
-                'fetchArray',
-                'fetchBoth',
-                'getRowsNum',
-                'freeRecordSet',
-                'queryFromFile',
-                'getConnection',
-                'getServerVersion'
-            ],
-            'icms_db_mysql_Connection' => [
-                'escape',
-                'query'
             ],
             'icms_db_Connection' => [
                 'escape',
@@ -271,9 +196,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'start' => 'int',
                 'groupby' => 'string'
             ],
-            'icms_db_legacy_mysql_Database' => [
-                'conn' => 'null'
-            ],
             'icms_db_legacy_updater_Handler' => [
                 'db' => 'null'
             ],
@@ -281,14 +203,6 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'force' => 'bool',
                 'db' => 'null'
             ],
-            'icms_db_legacy_Database' => [
-                'prefix' => 'string',
-                'logger' => 'null',
-                'allowWebChanges' => 'bool'
-            ],
-            'icms_db_legacy_PdoDatabase' => [
-                'conn' => 'null'
-            ]
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
             foreach ($variables as $variable => $type) {

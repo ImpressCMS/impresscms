@@ -37,7 +37,7 @@
 /**
  * An image category
  *
- * These categories are managed through a {@link icms_image_category_Handler} object
+ * These categories are managed through a icms_image_category_Handler object
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org

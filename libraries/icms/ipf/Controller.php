@@ -151,7 +151,6 @@ class icms_ipf_Controller {
 	 * @param	bool	$debug					Whether to display debug information, or not
 	 */
 	public function &doStoreFromDefaultForm(&$icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page = false, $debug = false) {
-		global $impresscms;
 		$this->postDataToObject($icmsObj);
 
 		if ($icmsObj->isNew()) {
@@ -241,7 +240,7 @@ class icms_ipf_Controller {
 			return $icmsObj;
 		} else {
 			if (!$storeResult) {
-				redirect_header($impresscms->urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header(\icms::$urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
 			} else {
 				$redirect_page = $redirect_page?$redirect_page:icms_get_page_before_form();
 				redirect_header($redirect_page, 2, $redirect_msg);
@@ -338,8 +337,6 @@ class icms_ipf_Controller {
 	 * @return bool
 	 */
 	public function handleObjectDeletion($confirm_msg = false, $op = 'del', $userSide = false) {
-		global $impresscms;
-
 		$objectid = (isset($_REQUEST[$this->handler->keyName]))?(int) $_REQUEST[$this->handler->keyName]:0;
 		$icmsObj = $this->handler->get($objectid);
 
@@ -370,7 +367,7 @@ class icms_ipf_Controller {
 						'op' => $op,
 						$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 						'confirm' => 1,
-						'redirect_page' => $impresscms->urls['previouspage']
+						'redirect_page' => \icms::$urls['previouspage']
 			);
 			if ($this->handler->_moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct'])?$_GET['fct']:false;
@@ -389,7 +386,7 @@ class icms_ipf_Controller {
 	 * @param	string	$op
 	 */
 	public function handleObjectDeletionFromUserSide($confirm_msg = false, $op = 'del') {
-		global $icmsTpl, $impresscms;
+		global $icmsTpl;
 
 		$objectid = (isset($_REQUEST[$this->handler->keyName]))?(int) ($_REQUEST[$this->handler->keyName]):0;
 		$icmsObj = $this->handler->get($objectid);
@@ -419,7 +416,7 @@ class icms_ipf_Controller {
 				'op' => $op,
 				$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 				'confirm' => 1,
-				'redirect_page' => $impresscms->urls['previouspage']),
+				'redirect_page' => \icms::$urls['previouspage']),
 				xoops_getenv('SCRIPT_NAME'),
 				sprintf($confirm_msg,
 				$icmsObj->getVar($this->handler->identifierName)),
@@ -431,7 +428,7 @@ class icms_ipf_Controller {
 	}
 
 	/**
-	 * Retrieve the object admin side link for a {@link icms_ipf_view_Single} page
+	 * Retrieve the object admin side link for a page
 	 *
 	 * @param	object	$icmsObj	reference to the object from which we want the user side link
 	 * @param	bool	$onlyUrl	whether or not to return a simple URL or a full <a> link
@@ -617,7 +614,7 @@ class icms_ipf_Controller {
 	 * @todo	Needs to be completed
 	 */
 	public function getPrintAndMailLink($icmsObj) {
-		global $icmsConfig, $impresscms;
+		global $icmsConfig;
 
 		$ret = '';
 		/*		$printlink = $this->handler->_moduleUrl . "print.php?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
@@ -625,7 +622,7 @@ class icms_ipf_Controller {
 		 $printlink = '<a href="' . $js . '"><img  src="' . ICMS_IMAGES_SET_URL . '/actions/fileprint.png" alt="" style="vertical-align: middle;"/></a>';
 
 		 $icmsModule = icms_getModuleInfo($icmsObj->handler->_moduleName);
-		 $link = $impresscms->urls['full']();
+		 $link = \icms::$urls['full']();
 		 $mid = $icmsModule->getVar('mid');
 		 $friendlink = "<a href=\"javascript:openWithSelfMain('".SMARTOBJECT_URL."sendlink.php?link=" . $link . "&amp;mid=" . $mid . "', ',',',',',','sendmessage', 674, 500);\"><img src=\"".SMARTOBJECT_IMAGES_ACTIONS_URL . "mail_send.png\"  alt=\"" . _CO_ICMS_EMAIL . "\" title=\"" . _CO_ICMS_EMAIL . "\" style=\"vertical-align: middle;\"/></a>";
 

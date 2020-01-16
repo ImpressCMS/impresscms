@@ -128,7 +128,7 @@ class icms_view_theme_Object {
 	 * Initializes this theme
 	 *
 	 * Upon initialization, the theme creates its template engine and instanciates the
-	 * plug-ins from the specified {@link $plugins} list. If the theme is a 2.0 theme, that does not
+	 * plug-ins from the specified $plugins list. If the theme is a 2.0 theme, that does not
 	 * display redirection messages, the HTTP redirections system is disabled to ensure users will
 	 * see the redirection screen.
 	 *

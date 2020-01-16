@@ -70,24 +70,20 @@
  * @property string $user_intrest      Interests
  * @property int    $user_mailok       Are sending mails ok?
  * @property string $language          Language
- * @property string $openid            OpenID address
- * @property int    $user_viewoid      Allow view OpenID email?
  * @property bool   $pass_expired      Is password expired?
  * @property string $login_name        Login name
  */
 class icms_member_user_Object extends icms_ipf_Object {
 
 	/**
+	 * @var bool is the user admin?
+	 */
+	static private $_isAdmin = array();
+	/**
 	 * Array of groups that user belongs to
 	 * @var array
 	 */
 	private $_groups = array();
-
-	/**
-	 * @var bool is the user admin?
-	 */
-	static private $_isAdmin = array();
-
 	/**
 	 * @var string user's rank
 	 */
@@ -137,8 +133,6 @@ class icms_member_user_Object extends icms_ipf_Object {
 		$this->initVar('user_mailok', self::DTYPE_INTEGER, 1, false, null, null, null, _US_MAILOK);
 
 		$this->initVar('language', self::DTYPE_STRING, null, false, null, null, null, _US_SELECT_LANG);
-		$this->initVar('openid', self::DTYPE_STRING, '', false, 255, null, null, _US_OPENID_YOUR);
-		$this->initVar('user_viewoid', self::DTYPE_INTEGER, 0, false, null, null, null, _US_ALLOWVIEWEMAILOPENID);
 		$this->initVar('pass_expired', self::DTYPE_BOOLEAN, 0, false, null, null, null, 'Pass Expired?');
 		$this->initVar('login_name', self::DTYPE_STRING, null, true, 255, null, null, _US_LOGINNAME);
 
@@ -152,6 +146,21 @@ class icms_member_user_Object extends icms_ipf_Object {
 		}
 
 		parent::__construct($handler, $data);
+	}
+
+	/**
+	 * Updated by Catzwolf 11 Jan 2004
+	 * find the username for a given ID
+	 *
+	 * @param int $userid ID of the user to find
+	 * @param int $usereal switch for usename or realname
+	 * @return string name of the user. name for "anonymous" if not found.
+	 */
+	static public function getUnameFromId($userid, $usereal = 0)
+	{
+		trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
+		$handler = icms::handler('icms_member_user');
+		return $handler->getUnameFromId($userid, (bool)$usereal);
 	}
 
 	/**
@@ -224,31 +233,6 @@ class icms_member_user_Object extends icms_ipf_Object {
 	}
 
 	/**
-	 * Updated by Catzwolf 11 Jan 2004
-	 * find the username for a given ID
-	 *
-	 * @param int $userid ID of the user to find
-	 * @param int $usereal switch for usename or realname
-	 * @return string name of the user. name for "anonymous" if not found.
-	 */
-	static public function getUnameFromId($userid, $usereal = 0) {
-		trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
-		$handler = icms::handler('icms_member_user');
-		return $handler->getUnameFromId($userid, (bool) $usereal);
-	}
-
-	/**
-	 * set the groups for the user
-	 *
-	 * @param array $groupsArr Array of groups that user belongs to
-	 */
-	public function setGroups($groupsArr) {
-		if (is_array($groupsArr)) {
-			$this->_groups = & $groupsArr;
-		}
-	}
-
-	/**
 	 * sends a welcome message to the user which account has just been activated
 	 *
 	 * return TRUE if success, FALSE if not
@@ -312,19 +296,6 @@ class icms_member_user_Object extends icms_ipf_Object {
     }
 
 	/**
-	 * get the groups that the user belongs to
-	 *
-	 * @return array array of groups
-	 */
-	public function &getGroups() {
-		if (empty($this->_groups)) {
-			$member_handler = icms::handler('icms_member');
-			$this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
-		}
-		return $this->_groups;
-	}
-
-	/**
 	 * Is the user admin ?
 	 *
 	 * This method will return true if this user has admin rights for the specified module.<br />
@@ -351,14 +322,29 @@ class icms_member_user_Object extends icms_ipf_Object {
 	}
 
 	/**
-	 * get the user's rank
-	 * @return array array of rank ID and title
+	 * get the groups that the user belongs to
+	 *
+	 * @return array array of groups
 	 */
-	public function rank() {
-		if (!isset($this->_rank)) {
-			$this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
+	public function &getGroups()
+	{
+		if (empty($this->_groups)) {
+			$member_handler = icms::handler('icms_member');
+			$this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
 		}
-		return $this->_rank;
+		return $this->_groups;
+	}
+
+	/**
+	 * set the groups for the user
+	 *
+	 * @param array $groupsArr Array of groups that user belongs to
+	 */
+	public function setGroups($groupsArr)
+	{
+		if (is_array($groupsArr)) {
+			$this->_groups = &$groupsArr;
+		}
 	}
 
 	/**
@@ -396,7 +382,7 @@ class icms_member_user_Object extends icms_ipf_Object {
 		if (!$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif') {
 			return ICMS_UPLOAD_URL . '/' . $this->getVar('user_avatar');
 		}
-		$ret = "http://www.gravatar.com/avatar/" . md5(strtolower($this->getVar('email', 'E'))) . "?d=identicon";
+		$ret = "//www.gravatar.com/avatar/" . md5(strtolower($this->getVar('email', 'E'))) . "?d=identicon";
 		if ($rating && $rating != '') {
 			$ret .= "&amp;rating=" . $rating;
 		}
@@ -412,17 +398,10 @@ class icms_member_user_Object extends icms_ipf_Object {
 		return $ret;
 	}
 
-	public function setVar($name, $value, $options = null) {
-		parent::setVar($name, $value, $options);
-		if ($this->isSameAsLoggedInUser()) {
-			$_SESSION['icmsUser'][$name] = parent::getVar($name);
-		}
-	}
-
 	/**
 	 * Returns uid of user
 	 *
-	 * @deprecated Use $this->uid instead!
+	 * @deprecated Use $this->uid instead! Since 2.0
 	 *
 	 * @return int
 	 */
@@ -441,30 +420,29 @@ class icms_member_user_Object extends icms_ipf_Object {
 		$data['_rank'] = $this->rank();
 		$data['_groups'] = $this->getGroups();
 		unset($data['itemLink'], $data['itemUrl'], $data['editItemLink'], $data['deleteItemLink'], $data['printAndMailLink']);
-		$class = get_class($this->handler);
-		$_SESSION = array(
-			'icmsUser' => $data,
-			'icmsUserHandler' => $class,
-			'icmsUserPaths' => array(
-				icms_Autoloader::classPath($class),
-				icms_Autoloader::classPath(get_class($this))
-			)
-		);
+
+		/**
+		 * @var Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()->get('session');
+		$userSegment = $session->getSegment(icms_member_user_Object::class);
+		foreach ($data as $key => $value) {
+			$userSegment->set($key, $value);
+		}
 	}
 
-	/**
-	 * Logs out current user
-	 *
-	 * @return boolean
-	 */
-	public function logout() {
-		if (!isset($_SESSION['icmsUser']['uid'])) {
-					return false;
+	public function setVar($name, $value, $options = null)
+	{
+		parent::setVar($name, $value, $options);
+		if ($this->isSameAsLoggedInUser()) {
+
+			/**
+			 * @var Aura\Session\Session $session
+			 */
+			$session = \icms::getInstance()->get('session');
+			$userSegment = $session->getSegment(icms_member_user_Object::class);
+			$userSegment->set($name, parent::getVar($name));
 		}
-		if ($_SESSION['icmsUser']['uid'] != $this->getVar('uid')) {
-					return false;
-		}
-		$_SESSION = array();
 	}
 
 	/**
@@ -472,11 +450,46 @@ class icms_member_user_Object extends icms_ipf_Object {
 	 *
 	 * @return boolean
 	 */
-	public function isSameAsLoggedInUser() {
+	public function isSameAsLoggedInUser()
+	{
 		if (!icms::$user) {
 					return false;
 		}
 		return icms::$user->getVar('uid') == $this->getVar('uid');
+	}
+
+	/**
+	 * get the user's rank
+	 * @return array array of rank ID and title
+	 */
+	public function rank()
+	{
+		if (!isset($this->_rank)) {
+			$this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
+		}
+		return $this->_rank;
+	}
+
+	/**
+	 * Logs out current user
+	 *
+	 * @return boolean
+	 */
+	public function logout()
+	{
+		/**
+		 * @var Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()->get('session');
+		$userSegment = $session->getSegment(icms_member_user_Object::class);
+
+		if ($userid = $userSegment->get('userid')) {
+					return false;
+		}
+		if ($userid != $this->getVar('uid')) {
+			return false;
+		}
+		$session->clear();
 	}
 
 	/*  /**
@@ -488,7 +501,6 @@ class icms_member_user_Object extends icms_ipf_Object {
       $data = parent::toArray();
       if ($this->isSameAsLoggedInUser()) {
       if (!$data['user_viewoid'])
-      unset($data['openid']);
       unset($data['pass_expired'], $data['login_name'], $data['pass']);
       foreach (array_keys($data) as $key) {
       if ($key == 'uid')

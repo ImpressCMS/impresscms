@@ -23,6 +23,7 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 
 	public function __construct(&$handler) {
 		parent::__construct($handler);
+		$this->initiateSEO();
 	}
 
 	public function initiateSEO() {
@@ -30,15 +31,6 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 		$this->initCommonVar('meta_description');
 		$this->initCommonVar('short_url');
 		$this->seoEnabled = true;
-	}
-
-	/**
-	 * Backward compat
-	 *
-	 * @todo to be removed in 1.4
-	 */
-	function IcmsPersistableSeoObject() {
-		$this->initiateSEO();
 	}
 
 	/**
