@@ -31,48 +31,109 @@
  * ImpressCMS Block Persistable Class
  * This is a highly rewritten class for defining blocks
  *
- * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @license	GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @copyright    The ImpressCMS Project <http://www.impresscms.org>
+ * @license    GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * @author    Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
 /**
  * ImpressCMS Core Block Object Class
  *
- * @since	ImpressCMS 1.2
- * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @since    ImpressCMS 1.2
+ * @author    Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @package     ICMS\View\Block
  *
  * @property string $name           Name
- * @property int    $bid            Block ID
- * @property int    $mid            Module ID
- * @property int    $func_num
+ * @property int $bid            Block ID
+ * @property int $mid            Module ID
+ * @property int $func_num
  * @property string $title          Title
  * @property string $content        Content
- * @property int    $side           Side
- * @property int    $weight         Weight used for sorting positions
- * @property int    $visible        Is visible?
+ * @property int $side           Side
+ * @property int $weight         Weight used for sorting positions
+ * @property int $visible        Is visible?
  * @property string $block_type     Type
  * @property string $c_type
- * @property int    $isactive       Is active?
+ * @property int $isactive       Is active?
  * @property string $dirname        Directory name
  * @property string $func_file      Function file
  * @property string $show_func      Show function
  * @property string $edit_func      Edit function
  * @property string $template       Template
- * @property int    $bcachetime     Cache time
- * @property int    $last_modified  When it was last modified?
+ * @property int $bcachetime     Cache time
+ * @property int $last_modified  When it was last modified?
  * @property string $options        Options
  */
-class icms_view_block_Object extends icms_ipf_Object {
+class icms_view_block_Object extends icms_ipf_Object
+{
 
-		public $visiblein = [];
+	/**
+	 * System block
+	 */
+	const BLOCK_TYPE_SYSTEM = 'S';
+
+	/**
+	 * Block from a Module (other than system)
+	 */
+	const BLOCK_TYPE_MODULE = 'M';
+
+	/**
+	 * Custom block
+	 */
+	const BLOCK_TYPE_CUSTOM = 'C';
+
+	/**
+	 * Block cloned from another block
+	 */
+	const BLOCK_TYPE_DUPLICATED = 'K';
+
+	/**
+	 * Block cloned from another block
+	 *
+	 * @deprecated will be removed in 2.1. Use BLOCK_TYPE_DUPLICATED
+	 */
+	const BLOCK_TYPE_LEGACY_DUPLICATED = 'D';
+
+	/**
+	 * Custom block
+	 *
+	 * @deprecated will be removed in 2.1. Use BLOCK_TYPE_CUSTOM
+	 */
+	const BLOCK_TYPE_LEGACY_CUSTOM = 'E';
+
+	/**
+	 * Block uses HTML for displaying content
+	 */
+	const CONTENT_TYPE_HTML = 'H';
+
+	/**
+	 * Block uses PHP for displaying content
+	 */
+	const CONTENT_TYPE_PHP = 'P';
+
+	/**
+	 * Block uses Auto Format (smilies and HTML enabled)
+	 */
+	const CONTENT_TYPE_AUTO_FORMAT = 'S';
+
+	/**
+	 * Block uses no Auto Format (smilies and HTML disabled)
+	 */
+	const CONTENT_TYPE_NO_AUTO_FORMAT = 'T';
+
+	/**
+	 * Visible areas for block
+	 *
+	 * @var array
+	 */
+	public $visiblein = [];
 
 	/**
 	 * Constructor for the block object
 	 * @param $handler
 	 */
-	public function __construct(& $handler, $data = array()) {
+	public function __construct(&$handler, $data = array())
+	{
 
 		$this->initVar('name', self::DTYPE_STRING, '', false, 150);
 		$this->initVar('bid', self::DTYPE_INTEGER, 0, true, 8);
@@ -83,22 +144,8 @@ class icms_view_block_Object extends icms_ipf_Object {
 		$this->initVar('side', self::DTYPE_INTEGER, 0, true, 1);
 		$this->initVar('weight', self::DTYPE_INTEGER, 0, true, 5);
 		$this->initVar('visible', self::DTYPE_INTEGER, 0, true, 1);
-		/**
-		 * @var string $block_type Holds the type of block
-		 * 	S - System block
-		 * 	M - block from a Module (other than system)
-		 * 	C - Custom block (legacy type 'E')
-		 * 	K - block cloned from another block (legacy type 'D')
-		 */
 		$this->initVar('block_type', self::DTYPE_STRING, '', true, 1);
-		/**
-		 * @var	string	$c_type	The type of content in the block
-		 * 	H - HTML
-		 * 	P - PHP
-		 * 	S - Auto Format (smilies and HTML enabled)
-		 *  T - Auto Format (smilies and HTML disabled)
-		 */
-		$this->initVar('c_type', self::DTYPE_STRING, 'S', true, 1);
+		$this->initVar('c_type', self::DTYPE_STRING, static::CONTENT_TYPE_AUTO_FORMAT, true, 1);
 		$this->initVar('isactive', self::DTYPE_INTEGER, 0, false, 1);
 		$this->initVar('dirname', self::DTYPE_STRING, '', false, 50);
 		$this->initVar('func_file', self::DTYPE_STRING, '', false, 50);
@@ -109,62 +156,52 @@ class icms_view_block_Object extends icms_ipf_Object {
 		$this->initVar('last_modified', self::DTYPE_INTEGER, 0, false, 10);
 		$this->initVar('options', self::DTYPE_STRING, '', false, 255);
 
-	  //  $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
-				parent::__construct($handler, $data);
-
+		parent::__construct($handler, $data);
 	}
 
-		/**
-		 * sets var
-		 *
-		 * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
-		 *
-		 * @param string $name
-		 * @param string $format
-		 * @return mixed
-		 */
-		public function setVar($name, $value, $options = null) {
-			if ($name == 'visiblein') {
-				$this->visiblein = $value;
-			} else {
-				parent::setVar($name, $value, $options);
-			}
+	/**
+	 * @inheritDoc
+	 */
+	public function setVar($name, $value, $options = null)
+	{
+		if ($name === 'visiblein') {
+			$this->visiblein = $value;
+		} else {
+			parent::setVar($name, $value, $options);
 		}
+	}
 
 	/**
 	 * (HTML-) form for setting the options of the block
 	 *
 	 * @return string|FALSE $edit_form is HTML for the form, FALSE if no options defined for this block
 	 */
-	public function getOptions() {
-		if ($this->getVar('block_type') != 'C') {
-			$edit_func = $this->getVar('edit_func');
-			if (!$edit_func) {
-				return false;
-			}
-			icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file');
-			$options = explode('|', $this->getVar('options'));
-			$edit_form = $edit_func($options);
-			if (!$edit_form) {
-				return false;
-			}
-			return $edit_form;
-		} else {
+	public function getOptions()
+	{
+		if (
+			($this->block_type === static::BLOCK_TYPE_CUSTOM) ||
+			!($edit_func = $this->edit_func) ||
+			!file_exists($func_file = ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/blocks/' . $this->func_file)
+		) {
 			return false;
 		}
+
+		icms_loadLanguageFile($this->dirname, 'blocks');
+		include_once $func_file;
+
+		$options = explode('|', $this->getVar('options'));
+		$edit_form = $edit_func($options);
+		if (!$edit_form) {
+			return false;
+		}
+
+		return $edit_form;
 	}
 
 	// The next Methods are for backward Compatibility
 
 	/**
-	 * gets var
-	 *
-	 * @todo We use this function only for visiblein code. We should find a better way to deal with this issue.
-	 *
-	 * @param string $name
-	 * @param string $format
-	 * @return mixed
+	 * @inheritDoc
 	 */
 	public function getVar($name, $format = 's')
 	{
@@ -173,77 +210,80 @@ class icms_view_block_Object extends icms_ipf_Object {
 		} else {
 			return parent::getVar($name, $format);
 		}
-		}
+	}
 
 	/**
 	 * Builds the block
 	 *
-	 * @return array $block the block information array
-	 *
-	 * @todo improve with IPF
+	 * @return array $block the block information
 	 */
-	public function buildBlock() {
-		global $icmsConfig, $xoopsOption;
-		$block = array();
-		// M for module block, S for system block C for Custom
+	public function buildBlock()
+	{
+		$block = [];
+
 		if ($this->isCustom()) {
-			// it is a custom block, so just return the contents
-			$block['content'] = $this->getContent("S", $this->getVar("c_type"));
-			if (empty($block['content'])) {
-				return false;
-			}
-		} else {
-			// get block display function
-			$show_func = $this->getVar('show_func');
-			if (!$show_func) {
-				return false;
-			}
-			// Must get lang files before execution of the function.
-			if (!file_exists(ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file'))) {
-				return false;
-			} else {
-				icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
-				include_once ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file');
-				$options = explode("|", $this->getVar("options"));
-				if (!function_exists($show_func)) {
-					return false;
-				} else {
-					// execute the function
-					$block = $show_func($options);
-					if (!$block) {
-						return false;
-					}
-				}
-			}
+			$block['content'] = $this->getContent(self::BLOCK_TYPE_SYSTEM, $this->c_type);
+
+			return empty($block['content']) ? false : $block;
+		}
+
+		if (!$this->show_func) {
+			return false;
+		}
+
+		$block_template_file = ICMS_ROOT_PATH . "/modules/" . $this->dirname . "/blocks/" . $this->func_file;
+		if (!file_exists($block_template_file)) {
+			return false;
+		}
+
+		icms_loadLanguageFile($this->dirname, 'blocks');
+		global $icmsConfig, $xoopsOption;
+		/** @noinspection PhpIncludeInspection */
+		include_once $block_template_file;
+		$options = explode("|", $this->getVar("options"));
+		if (!function_exists($this->show_func)) {
+			return false;
+		}
+
+		$show_func = $this->show_func;
+		$block = $show_func($options);
+		if (!$block) {
+			return false;
 		}
 
 		return $block;
 	}
 
 	/**
+	 * Gets if block is of type custom
+	 *
 	 * For backward compatibility
 	 *
-	 * @todo improve with IPF
-	 * @return unknown
+	 * @return bool
 	 */
 	public function isCustom()
 	{
-		if ($this->getVar("block_type") == "C" || $this->getVar("block_type") == "E") {
-			return true;
-		}
-		return false;
+		return ($this->block_type == static::BLOCK_TYPE_CUSTOM || $this->block_type == static::BLOCK_TYPE_LEGACY_CUSTOM);
 	}
 
-	public function getContent($format = 'S', $c_type = 'T')
+	/**
+	 * Gets content for block
+	 *
+	 * @param string $format Block type
+	 * @param string $c_type Content type
+	 *
+	 * @return array|bool|false|mixed|string|string[]
+	 */
+	public function getContent($format = self::BLOCK_TYPE_SYSTEM, $c_type = self::CONTENT_TYPE_NO_AUTO_FORMAT)
 	{
 		switch ($format) {
-			case 'S':
-				if ($c_type == 'H') {
+			case self::BLOCK_TYPE_SYSTEM:
+				if ($c_type == static::CONTENT_TYPE_HTML) {
 					$content = $this->content;
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
 					$content = str_replace(env('DB_SALT'), '', $content);
 					return $content;
-				} elseif ($c_type == 'P') {
+				} elseif ($c_type == static::CONTENT_TYPE_PHP) {
 					ob_start();
 					echo eval(icms_core_DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
 					$content = ob_get_contents();
@@ -251,7 +291,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
 					$content = str_replace(env('DB_SALT'), '', $content);
 					return $content;
-				} elseif ($c_type == 'S') {
+				} elseif ($c_type == static::CONTENT_TYPE_AUTO_FORMAT) {
 					$myts = icms_core_Textsanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
 					return $myts->displayTarea($content, 1, 1);
@@ -261,49 +301,11 @@ class icms_view_block_Object extends icms_ipf_Object {
 				}
 				break;
 
-			case 'E':
+			case static::BLOCK_TYPE_CUSTOM:
 				return $this->getVar('content', 'e');
-				break;
 
 			default:
 				return $this->content;
-				break;
 		}
-	}
-
-	/**
-	 * Aligns the content of a block
-	 * If position is 0, content in DB is positioned
-	 * before the original content
-	 * If position is 1, content in DB is positioned
-	 * after the original content
-	 *
-	 * @todo remove this? It is not found anywhere else in the core
-	 */
-	public function buildContent($position, $content = "", $contentdb = "") {
-		if ($position == 0) {
-			$ret = $contentdb . $content;
-		} elseif ($position == 1) {
-			$ret = $content . $contentdb;
-		}
-		return $ret;
-	}
-
-	/**
-	 * Build Block Title
-	 *
-	 * @param string $originaltitle
-	 * @param string $newtitle
-	 * @return string
-	 *
-	 * @todo remove this? it is not found anywhere else in the core
-	 */
-	public function buildTitle($originaltitle, $newtitle = "") {
-		if ($newtitle != "") {
-			$ret = $newtitle;
-		} else {
-			$ret = $originaltitle;
-		}
-		return $ret;
 	}
 }
