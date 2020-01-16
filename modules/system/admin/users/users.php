@@ -123,8 +123,6 @@ function displayUsers() {
 	$name_value = '';
 	$email_value = '';
 	$email_cbox_value = 0;
-	$openid_value = '';
-	$openid_cbox_value = 0;
 	$url_value = '';
 	$timezone_value = $icmsConfig['default_TZ'];
 	$location_value = '';
@@ -174,8 +172,6 @@ function modifyUser($user) {
 		$name_value = $user->getVar('name', 'E');
 		$email_value = $user->getVar('email', 'E');
 		$email_cbox_value = $user->getVar('user_viewemail')?1:0;
-		$openid_value = $user->getVar('openid', 'E');
-		$openid_cbox_value = $user->getVar('user_viewoid')?1:0;
 		$url_value = $user->getVar('url', 'E');
 		$temp = $user->getVar('theme');
 		$timezone_value = $user->getVar('timezone_offset');
@@ -245,8 +241,6 @@ function modifyUser($user) {
  * @param $timezoneOffset
  * @param $userMailOk
  * @param $language
- * @param $openid
- * @param $userViewOID
  * @param $passExpired
  * @param $groups
  */
@@ -276,8 +270,6 @@ function updateUser(
 	$timezoneOffset,
 	$userMailOk,
 	$language,
-	$openid,
-	$userViewOID,
 	$passExpired,
 	$groups = array()
 ) {
@@ -293,9 +285,6 @@ function updateUser(
 		$edituser->setVar('uname', $uname);
 		$edituser->setVar('login_name', $loginName);
 		$edituser->setVar('email', $email);
-		$edituser->setVar('openid', $openid);
-		$userViewOID = (isset($userViewOID) && $userViewOID == 1)?1:0;
-		$edituser->setVar('user_viewoid', $userViewOID);
 		$url = isset($url)? formatURL($url):'';
 		$edituser->setVar('url', $url);
 		$edituser->setVar('user_from', $userFrom);

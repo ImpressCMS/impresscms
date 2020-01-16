@@ -25,8 +25,14 @@ class ModuleServiceProvider extends AbstractServiceProvider
 	{
 		$this->getContainer()->add('module', function () {
 			$module_handler = icms::handler("icms_module");
-			$modules = $module_handler->getObjects();
-			foreach ($modules as $module) $module->registerClassPath(TRUE);
+			try {
+				$modules = $module_handler->getObjects();
+				foreach ($modules as $module) {
+					$module->registerClassPath(TRUE);
+				}
+			} catch (\Exception $exception) {
+
+			}
 
 			$inAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
 

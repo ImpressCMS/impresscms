@@ -93,15 +93,27 @@ foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VAR
 	}
 }
 
-// ImpressCMS is not installed yet.
-if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) {
-	header('Location: install/index.php');
-	exit();
-}
-
 define('ICMS_PUBLIC_PATH', __DIR__);
 
-include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+// ImpressCMS is not installed yet.
+if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) {
+	try {
+		include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+		/**
+		 * @var \icms_db_Connection $dbm
+		 */
+		$dbm = \icms::getInstance()->get('db-connection-1');
+		$isInstalled = $dbm->fetchCol('SELECT COUNT(*) FROM `' . $dbm->prefix('users') . '`;') > 0;
+	} catch (\Exception $exception) {
+		$isInstalled = false;
+	}
+	if (!$isInstalled) {
+		header('Location: install/index.php');
+		exit();
+	}
+} else {
+	include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+}
 
 if (file_exists($full_path)) {
 
@@ -115,6 +127,11 @@ if (file_exists($full_path)) {
 
 	if (!is_file($full_path)) {
 		$full_path .= DIRECTORY_SEPARATOR . 'index.php';
+	} elseif (strpos($_SERVER['SCRIPT_NAME'] , 'phoenix.php') !== false) {
+		$_REQUEST['e'] = 401;
+		http_response_code(401);
+		include 'error.php';
+		exit();
 	}
 	require $full_path;
 } elseif (preg_match_all('|([^/]+)/([^/]+)/([^/]+)(.*)|', preg_replace('/[^a-zA-Z0-9\-\._\/]/', '', $requested_path), $params, PREG_SET_ORDER) === 1) {

@@ -20,7 +20,6 @@ define("SERVER_API", "Server API");
 define("PHP_EXTENSION", "%s extension");
 define("CHAR_ENCODING", "Character encoding");
 define("XML_PARSING", "XML parsing");
-define("OPEN_ID", "OpenID");
 define("REQUIREMENTS", "Requirements");
 define("_PHP_VERSION", "PHP version");
 define("RECOMMENDED_SETTINGS", "Recommended settings");
@@ -182,9 +181,6 @@ define("_INSTALL_CHARSET", "utf-8");
 
 define("_INSTALL_PHYSICAL_PATH", "Physical path");
 
-// welcome custom blocks
-define("WELCOME_WEBMASTER", "Welcome Webmaster !");
-define("WELCOME_ANONYMOUS", "Welcome to an ImpressCMS powered website !");
 define("_MD_AM_MULTLOGINMSG_TXT", 'It was not possible to login on the site!! <br />
         <p align="left" style="color:red;">
         Possible causes:<br />
@@ -193,17 +189,9 @@ define("_MD_AM_MULTLOGINMSG_TXT", 'It was not possible to login on the site!! <b
          - You left the site or close the browser window without clicking the logout button.<br />
         </p>
         Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
-define("_MD_AM_RSSLOCALLINK_DESC", 'https://www.impresscms.org/modules/news/rss.php'); //Link to the rrs of local support site
 define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Link to local support site
-define("_LOCAOL_STNAME", 'ImpressCMS'); //Link to local support site
-define("_LOCAL_SLOCGAN", 'Make a lasting impression'); //Link to local support site
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
-define("_LOCAL_SENSORTXT", '#OOPS#'); //Add local translation
 define("_ADM_USE_RTL", "0"); // turn this to 1 if your language is right to left
-define("_DEF_LANG_TAGS", 'en,de'); //Add local translation
-define("_DEF_LANG_NAMES", 'english,german'); //Add local translation
-define("_LOCAL_LANG_NAMES", 'English,Deutsch'); //Add local translation
-define("_EXT_DATE_FUNC", "0"); // change 0 to 1 if this language has an extended date function
 
 ######################## Added in 1.2 ###################################
 define("ADMIN_DISPLAY_LABEL", "Admin Display Name"); // L37

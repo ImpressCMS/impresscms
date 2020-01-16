@@ -5,11 +5,6 @@
 	    <li class="active">
 	      <a role="tab" data-toggle="tab" href="#login_form"><{$smarty.const._MB_SYSTEM_OPENID_NORMAL_LOGIN}></a>
 	    </li>
-    	<{if $auth_openid}>
-		    <li>
-		      <a role="tab" data-toggle="tab" href="#openid-form"><{$smarty.const._MB_SYSTEM_OPENID_LOGIN}></a>
-		    </li>
-		  <{/if}>
 	    <li>
 	    	<a role="tab" data-toggle="tab" href="#lostpass-form"><{$lang_lostpassword}></a>
 	    </li>
@@ -44,18 +39,6 @@
 	        </div>
 	      </form>
 	    </div>
-			<{if $auth_openid}>
-		    <div id="openid-form" class="tab-pane">
-		      <form class="form-inline" role="form" method="get" action="<{$icms_url}>/try_auth.php">
-		        <div class="form-group">
-		          <{$smarty.const._MB_SYSTEM_OPENID_URL}>
-		          <input type="hidden" name="action" value="verify" />
-		          <input type="text" class="form-control openid_url" name="openid_identifier" size="12" value="">
-		          <input class="btn btn-primary" type="submit" value="<{$lang_login}>">
-		        </div>
-		      </form>
-		    </div>
-		  <{/if}>
 		  <div id="lostpass-form" class="tab-pane">
 		  	<p><{$lang_noproblem}></p>
 				<form class="form-inline" action="<{$icms_url}>/lostpass.php" method="post">

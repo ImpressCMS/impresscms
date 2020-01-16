@@ -2,9 +2,9 @@
 
 namespace ImpressCMS\Core\Providers;
 
-use League\Container\ServiceProvider\AbstractServiceProvider;
 use icms;
 use icms_config_Handler as Config;
+use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
@@ -34,14 +34,19 @@ class ConfigServiceProvider extends AbstractServiceProvider implements BootableS
 	public function boot()
 	{
 		$this->getContainer()->add('config', function () {
+			/**
+			 * @var \icms_config_Handler $instance
+			 */
 			$instance = icms::handler('icms_config');
-			$configs = $instance->getConfigsByCat(
-				array(
-					Config::CATEGORY_MAIN, Config::CATEGORY_USER, Config::CATEGORY_METAFOOTER, Config::CATEGORY_MAILER,
-					Config::CATEGORY_AUTH, Config::CATEGORY_MULILANGUAGE, Config::CATEGORY_PERSONA, Config::CATEGORY_PLUGINS,
-					Config::CATEGORY_CAPTCHA, Config::CATEGORY_SEARCH
-				)
-			);
+			$configs = !defined('ICMS_MIGRATION_MODE') || !ICMS_MIGRATION_MODE ? $instance->getConfigsByCat([
+				Config::CATEGORY_MAIN, Config::CATEGORY_USER, Config::CATEGORY_METAFOOTER, Config::CATEGORY_MAILER,
+				Config::CATEGORY_AUTH, Config::CATEGORY_MULILANGUAGE, Config::CATEGORY_PERSONA, Config::CATEGORY_PLUGINS,
+				Config::CATEGORY_CAPTCHA, Config::CATEGORY_SEARCH
+			]) : [
+				Config::CATEGORY_MAIN => [], Config::CATEGORY_USER => [], Config::CATEGORY_METAFOOTER => [], Config::CATEGORY_MAILER => [],
+				Config::CATEGORY_AUTH => [], Config::CATEGORY_MULILANGUAGE => [], Config::CATEGORY_PERSONA => [], Config::CATEGORY_PLUGINS => [],
+				Config::CATEGORY_CAPTCHA => [], Config::CATEGORY_SEARCH => []
+			];
 			$GLOBALS['icmsConfig'] = $configs[Config::CATEGORY_MAIN];
 			$GLOBALS['xoopsConfig'] =& $GLOBALS['icmsConfig'];
 			$GLOBALS['icmsConfigUser'] = $configs[Config::CATEGORY_USER];

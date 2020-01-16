@@ -112,9 +112,6 @@ function b_system_login_show() {
 		$block['lang_lostpass'] = _MB_SYSTEM_LPASS;
 		$block['lang_registernow'] = _MB_SYSTEM_RNOW;
 		$block['lang_rememberme'] = _MB_SYSTEM_REMEMBERME;
-		$block['lang_youoid'] = _MB_SYSTEM_OPENID_URL;
-		$block['lang_login_oid'] = _MB_SYSTEM_OPENID_LOGIN;
-		$block['lang_back2normoid'] = _MB_SYSTEM_OPENID_NORMAL_LOGIN;
 
 		if ($icmsConfigUser['allow_register'] == 1) {
 			$block['registration'] = $icmsConfigUser['allow_register'];
@@ -124,9 +121,6 @@ function b_system_login_show() {
 			$block['rememberme'] = $icmsConfigUser['remember_me'];
 		}
 
-		if ($icmsConfigAuth['auth_openid']) {
-			$block['auth_openid'] = true;
-		}
 		return $block;
 	}
 	return false;
