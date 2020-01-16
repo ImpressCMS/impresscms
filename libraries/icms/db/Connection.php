@@ -59,7 +59,7 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 	public function queryF($sql, $limit = 0, $start = 0)
 	{
 		if (!empty($limit)) {
-			$sql = $sql . ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
+			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
 		}
 		$result = $this->perform($sql);
 		if ($result) {
