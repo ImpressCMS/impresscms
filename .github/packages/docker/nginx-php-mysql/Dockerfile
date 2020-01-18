@@ -16,4 +16,4 @@ RUN apk add --no-cache \
 	echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'icmsdocker';" >> /tmp/install.sql && \
 	echo "FLUSH PRIVILEGES;" >> /tmp/install.sql && \
 	mysql_embedded -vvv < /tmp/install.sql && \
-	rn -rf /tmp/install.sql
+	rm -rf /tmp/install.sql
