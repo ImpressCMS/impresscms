@@ -14,7 +14,7 @@ RUN apk add --no-cache \
 	echo "DROP DATABASE IF EXISTS test;" > /tmp/install.sql && \
 	echo "CREATE DATABASE IF NOT EXISTS impresscms;" >> /tmp/install.sql && \
 	echo "use mysql;" >> /tmp/install.sql && \
-	echo "UPDATE user SET password=PASSWORD('icmsdocker') WHERE User='root';" >> /tmp/install.sql && \
+	echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'icmsdocker';" >> /tmp/install.sql && \
 	echo "FLUSH PRIVILEGES;" >> /tmp/install.sql && \
 	mysqld --datadir=/srv/mysql --bootstrap --verbose=0 < /tmp/install.sql && \
 	rn -rf /tmp/install.sql
