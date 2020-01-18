@@ -39,4 +39,8 @@ pushd /etc/templates/
     done
 popd
 
+pushd /var/www
+	./bin/phoenix migrate
+popd
+
 pm2-runtime /etc/pm2/ecosystem.yml

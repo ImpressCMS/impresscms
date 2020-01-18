@@ -56,9 +56,15 @@ jobs:
           rm -rf .github
           ls -la ./
           ls -la build/
+      - name: Chmoding bin files
+        run: chmod +x ./bin/*.sh
+      - name: Chmoding storage path
+        run: chmod -R 777 ./storage
+      - name: Removing installer from ImpressCMS files
+        run: rm -rf /build/htdocs/install
       - name: Build docker and publish
         env:
-          CONTAINER_IMAGE: docker.pkg.github.com/$GITHUB_REPOSITORY/${{ matrix.dockerpath }}
+          CONTAINER_IMAGE: docker.pkg.github.com/${{ github.repository }/${{ matrix.dockerpath }}
           CONTAINER_TAG: latest
         run: |
           docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{ secrets.GITHUB_TOKEN }}
