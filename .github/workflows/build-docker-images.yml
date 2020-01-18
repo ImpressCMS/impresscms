@@ -63,11 +63,9 @@ jobs:
       - name: Removing installer from ImpressCMS files
         run: rm -rf /build/htdocs/install
       - name: Build docker and publish
+        uses: pangzineng/Github-Action-One-Click-Docker@v1.1.1
         env:
-          CONTAINER_IMAGE: docker.pkg.github.com/${{ github.repository }}/${{ matrix.dockerpath }}
-          CONTAINER_TAG: latest
-        run: |
-          docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{ secrets.GITHUB_TOKEN }}
-          docker pull ${CONTAINER_IMAGE}:${CONTAINER_TAG} || true
-          docker build --cache-from ${CONTAINER_IMAGE}:${CONTAINER_TAG} --build-arg	GITHUB_REPOSITORY=$GITHUB_REPOSITORY --build-arg CONTAINER_TAG=$CONTAINER_TAG --tag ${CONTAINER_IMAGE}:${CONTAINER_TAG} .
-          docker push ${CONTAINER_IMAGE}:${CONTAINER_TAG}
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_IMAGE_NAME: ${{ matrix.dockerpath }}
+          DOCKER_IMAGE_TAG: latest
