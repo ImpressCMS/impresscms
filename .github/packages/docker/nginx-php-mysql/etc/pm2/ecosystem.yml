@@ -38,4 +38,4 @@ apps:
     restart_delay: 4000
     autorestart: true
     script: mysqld
-    args: --user=root --socket=/var/run/mysql.sock --datadir=/srv/mysql
+    args: --user=root --socket=/var/run/mysql.sock
