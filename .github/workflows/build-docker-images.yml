@@ -62,15 +62,13 @@ jobs:
         run: chmod -R 777 ./build/storage
       - name: Removing installer from ImpressCMS files
         run: rm -rf /build/htdocs/install
-      - name: Setting DOCKER_NAMESPACE variable
-        run: |
-          export DOCKER_NAMESPACE=$(echo $GITHUB_REPOSITORY | awk '{print tolower($0)}')
-          echo $DOCKER_NAMESPACE
       - name: Build docker and publish
-        uses: pangzineng/Github-Action-One-Click-Docker@v1.1.1
         env:
-          DOCKER_USERNAME: ${{ github.actor }}
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          DOCKER_IMAGE_NAME: ${{ matrix.dockerpath }}
-          DOCKER_IMAGE_TAG: latest
-          DOCKER_REGISTRY_URL: docker.pkg.github.com
+          CONTAINER_TAG: latest
+        run: |
+          CONTAINER_IMAGE=$(echo "docker.pkg.github.com/${{ github.repository }}/${{ matrix.dockerpath }}" | awk '{print tolower($0)}')
+          echo $CONTAINER_IMAGE
+          docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{ secrets.GITHUB_TOKEN }}
+          docker pull ${CONTAINER_IMAGE}:${CONTAINER_TAG} || true
+          docker build --cache-from ${CONTAINER_IMAGE}:${CONTAINER_TAG} --build-arg	GITHUB_REPOSITORY=$GITHUB_REPOSITORY --build-arg CONTAINER_TAG=$CONTAINER_TAG --tag ${CONTAINER_IMAGE}:${CONTAINER_TAG} .
+          docker push ${CONTAINER_IMAGE}:${CONTAINER_TAG}
