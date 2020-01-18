@@ -38,4 +38,3 @@ apps:
     restart_delay: 4000
     autorestart: true
     script: mysqld
-    args: --nodaemonize -R
