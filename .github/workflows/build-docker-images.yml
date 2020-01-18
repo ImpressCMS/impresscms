@@ -70,5 +70,5 @@ jobs:
           echo $CONTAINER_IMAGE
           docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{ secrets.GITHUB_TOKEN }}
           docker pull ${CONTAINER_IMAGE}:${CONTAINER_TAG} || true
-          docker build --cache-from ${CONTAINER_IMAGE}:${CONTAINER_TAG} --build-arg	GITHUB_REPOSITORY=$GITHUB_REPOSITORY --build-arg CONTAINER_TAG=$CONTAINER_TAG --tag ${CONTAINER_IMAGE}:${CONTAINER_TAG} .
+          docker build --cache-from ${CONTAINER_IMAGE}:${CONTAINER_TAG} --build-arg	GITHUB_REPOSITORY=$(echo $GITHUB_REPOSITORY  | awk '{print tolower($0)}') --build-arg CONTAINER_TAG=$CONTAINER_TAG --tag ${CONTAINER_IMAGE}:${CONTAINER_TAG} .
           docker push ${CONTAINER_IMAGE}:${CONTAINER_TAG}
