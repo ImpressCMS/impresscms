@@ -64,7 +64,7 @@ jobs:
         run: rm -rf /build/htdocs/install
       - name: Build docker and publish
         env:
-          CONTAINER_IMAGE: docker.pkg.github.com/${{ github.repository }/${{ matrix.dockerpath }}
+          CONTAINER_IMAGE: docker.pkg.github.com/${{ github.repository }}/${{ matrix.dockerpath }}
           CONTAINER_TAG: latest
         run: |
           docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{ secrets.GITHUB_TOKEN }}
