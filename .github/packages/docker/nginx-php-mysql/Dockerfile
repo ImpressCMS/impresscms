@@ -9,9 +9,12 @@ COPY ./bin/ /bin/
 RUN apk add --no-cache \
 	mysql \
 	mysql-client && \
+	mkdir -p /srv/mysql && \
+	mysql_install_db --user=root --datadir=/srv/mysql && \
 	echo "DROP DATABASE IF EXISTS test;" > /tmp/install.sql && \
-	echo "CREATE DATABASE impresscms;" >> /tmp/install.sql && \
-	echo "CREATE USER 'icms'@'127.0.0.1' IDENTIFIED BY 'docker';" >> /tmp/install.sql && \
-	echo "GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON impresscms.* TO 'icms'@'docker';" >> /tmp/install.sql && \
-	mysqld --bootstrap --verbose=0 < /tmp/install.sql && \
+	echo "CREATE DATABASE IF NOT EXISTS impresscms;" >> /tmp/install.sql && \
+	echo "use mysql;" >> /tmp/install.sql && \
+	echo "UPDATE user SET password=PASSWORD('icmsdocker') WHERE User='root';" >> /tmp/install.sql && \
+	echo "FLUSH PRIVILEGES;" >> /tmp/install.sql && \
+	mysqld --datadir=/srv/mysql --bootstrap --verbose=0 < /tmp/install.sql && \
 	rn -rf /tmp/install.sql
