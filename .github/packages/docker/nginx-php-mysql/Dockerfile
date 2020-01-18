@@ -1,6 +1,6 @@
 ARG GITHUB_REPOSITORY
 ARG CONTAINER_TAG
-FROM docker.pkg.github.com/$GITHUB_REPOSITORY/nginx-php:$VERSION
+FROM docker.pkg.github.com/$GITHUB_REPOSITORY/nginx-php:$CONTAINER_TAG
 
 COPY ./etc/ /etc/
 
