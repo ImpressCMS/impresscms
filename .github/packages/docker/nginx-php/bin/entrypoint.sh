@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+if [ -f /var/local/bin/do-custom-vars-tasks.sh ]; then
+  /var/local/bin/do-custom-vars-tasks.sh
+fi;
+
 random-file-env-var.sh "$DB_SALT" DB_SALT 32
 random-file-env-var.sh "$DB_PREFIX" DB_PREFIX 4
 
@@ -25,4 +29,14 @@ if [ -z "$DB_PASS" ]; then
   echo "WARNING: DB_PASS is empty. We do not recommend to use such value in production."
 fi;
 
-pm2-runtime /etc/ecosystem.pm2.yml
+echo Parsing templates...
+pushd /etc/templates/
+    DOLLAR='$'
+    for filename in *.tpl; do
+        RESULT_TEMPLATE_FILE=$(echo "$filename" | sed 's/\/templates\//\//g' | sed 's/\.tpl$//g')
+        echo " [*] $filename -> $RESULT_TEMPLATE_FILE"
+        envsubst < $filename > $RESULT_TEMPLATE_FILE
+    done
+popd
+
+pm2-runtime /etc/pm2/ecosystem.yml

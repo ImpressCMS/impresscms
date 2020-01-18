@@ -19,8 +19,8 @@ apps:
     exec_mode: fork
     watch: true
     source_map_support: false
-    error_file: /var/log/php-fpm/error.pm2.log
-    out_file: /var/log/php-fpm/out.pm2.log
+    error_file: /var/log/php7/error.pm2.log
+    out_file: /var/log/php7/out.pm2.log
     max_restarts: 4000
     restart_delay: 4000
     autorestart: true
@@ -37,5 +37,5 @@ apps:
     max_restarts: 4000
     restart_delay: 4000
     autorestart: true
-    script:
-    args:
+    script: mysqld
+    args: --nodaemonize -R

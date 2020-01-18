@@ -25,7 +25,7 @@ COPY ./etc/ /etc/
 COPY ./bin/ /usr/local/bin/
 
 RUN apk add --no-cache \
-		nginx \ # /etc/nginx/conf.d/default.conf
+		nginx \
 		php7-fpm \
 		php7-json \
 		php7-pdo \
@@ -33,9 +33,17 @@ RUN apk add --no-cache \
 		php7-curl \
 		php7-mbstring \
 		php7-session \
+		php7-ctype \
+		php7-fileinfo \
+		php7-gettext \
+		php7-iconv \
+		php7-opcache \
+		php7-pcntl \
+		php7-pdo_mysql \
+		php7-phar \
+		php7-posix \
 		yarn \
 		gettext && \
-	chmod +x /usr/local/bin/*.sh && \
 	rm -rf /var/www && \
 	mkdir -p www && \
 	ln -s /srv/www /var/www && \
