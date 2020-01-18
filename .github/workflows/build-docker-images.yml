@@ -59,7 +59,7 @@ jobs:
       - name: Chmoding bin files
         run: chmod +x ./bin/*.sh
       - name: Chmoding storage path
-        run: chmod -R 777 ./storage
+        run: chmod -R 777 ./build/storage
       - name: Removing installer from ImpressCMS files
         run: rm -rf /build/htdocs/install
       - name: Build docker and publish
