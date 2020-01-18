@@ -56,12 +56,17 @@ jobs:
           rm -rf .github
           ls -la ./
           ls -la build/
-      - name: Build docker
+      - name: Log in to registry
+        uses: actions/docker/login@master
+        env:
+          DOCKER_REGISTRY_URL: docker.pkg.github.com
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build docker and publish
         env:
           CONTAINER_IMAGE: docker.pkg.github.com/$GITHUB_REPOSITORY/${{ matrix.dockerpath }}
           CONTAINER_TAG: latest
         run: |
-          docker login docker.pkg.github.com --username $GITHUB_ACTOR
           docker pull ${CONTAINER_IMAGE}:${CONTAINER_TAG} || true
           docker build --cache-from ${CONTAINER_IMAGE}:${CONTAINER_TAG} --build-arg	GITHUB_REPOSITORY=$GITHUB_REPOSITORY --build-arg CONTAINER_TAG=$CONTAINER_TAG --tag ${CONTAINER_IMAGE}:${CONTAINER_TAG} .
           docker push ${CONTAINER_IMAGE}:${CONTAINER_TAG}
