@@ -67,6 +67,6 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          DOCKER_IMAGE_NAME: docker.pkg.github.com/mekdrop/impresscms/{{ matrix.dockerpath }}
+          DOCKER_IMAGE_NAME: docker.pkg.github.com/mekdrop/impresscms/${{ matrix.dockerpath }}
           DOCKER_IMAGE_TAG: latest
           DOCKER_REGISTRY_URL: docker.pkg.github.com
