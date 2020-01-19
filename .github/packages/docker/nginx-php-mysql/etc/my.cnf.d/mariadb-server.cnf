@@ -1,6 +1,6 @@
 # this is for client
 [client]
-socket=/var/run/mysql.sockv
+socket=/var/run/mysql.sock
 
 # this is read by the standalone daemon and embedded servers
 [server]
