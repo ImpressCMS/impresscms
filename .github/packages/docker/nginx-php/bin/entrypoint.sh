@@ -34,6 +34,7 @@ fi;
 . update-configs-from-templates.sh
 
 pm2 resurrect
+pm2 restart php-fpm -a
 . migrate.sh
 exec "$@"
 
