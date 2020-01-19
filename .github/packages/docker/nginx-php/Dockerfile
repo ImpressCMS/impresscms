@@ -51,8 +51,8 @@ RUN rm -rf /var/www && \
 	ln -s /srv/www /var/www
 
 RUN yarn global add pm2 && \
-	pm2 start --pid /var/run/nginx.pid --interpreter none /usr/sbin/nginx -- -c /etc/nginx/nginx.conf -g "daemon off;" && \
-	pm2 start --pid /var/run/php-fpm.pid --interpreter none --name php-fpm /usr/sbin/php-fpm7 -- --nodaemonize -R && \
+	pm2 start --pid /var/run/nginx.pid --interpreter none /usr/sbin/nginx -- -c /etc/nginx/nginx.conf && \
+	pm2 start --pid /var/run/php-fpm.pid --interpreter none --name php-fpm /usr/sbin/php-fpm7 -- -R && \
 	pm2 save
 
 WORKDIR /srv/www
