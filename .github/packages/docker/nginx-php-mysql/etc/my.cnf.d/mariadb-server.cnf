@@ -4,6 +4,8 @@
 
 # this is read by the standalone daemon and embedded servers
 [server]
+socket=/var/run/mysql.sock
+user=root
 
 # this is only for the mysqld standalone daemon
 [mysqld]

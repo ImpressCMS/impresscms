@@ -18,5 +18,6 @@ RUN apk add --no-cache \
 	mysql_embedded -vvv < /tmp/install.sql && \
 	rm -rf /tmp/install.sql
 
-RUN pm2 start --pid /var/run/mysql.pid --interpreter none --name mysql /usr/bin/mysqld -- --user=root --socket=/var/run/mysql.sock && \
+RUN pm2 resurrect && \
+	pm2 start --pid /var/run/mysql.pid --interpreter none --name mysql /usr/bin/mysqld -- --user=root && \
 	pm2 save
