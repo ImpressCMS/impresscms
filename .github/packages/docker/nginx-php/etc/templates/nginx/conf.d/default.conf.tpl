@@ -21,10 +21,10 @@ server {
     error_page 404 /index.php;
 
     location ~ \.php${DOLLAR} {
-		fastcgi_pass php;
+        fastcgi_pass php;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME ${DOLLAR}realpath_root${DOLLAR}fastcgi_script_name;
-		include fastcgi_params;
+        include fastcgi_params;
     }
 
     location ~ /\.(?!well-known).* {
