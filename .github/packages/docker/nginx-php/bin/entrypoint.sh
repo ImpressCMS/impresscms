@@ -37,4 +37,4 @@ pm2 resurrect
 . migrate.sh
 exec "$@"
 
-/bin/sh
+pm2-runtime /root/.pm2/dump.pm2
