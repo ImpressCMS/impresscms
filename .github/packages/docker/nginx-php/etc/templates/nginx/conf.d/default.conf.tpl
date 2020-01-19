@@ -21,7 +21,7 @@ server {
     error_page 404 /index.php;
 
     location ~ \.php${DOLLAR} {
-        fastcgi_pass unix:/var/run/php/php-fpm.sock;
+        fastcgi_pass unix:/var/run/php-fpm.sock;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $realpath_root${DOLLAR}fastcgi_script_name;
         include fastcgi_params;
