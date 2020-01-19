@@ -32,11 +32,12 @@ if [ -z "$DB_PASS" ]; then
 fi;
 
 . update-configs-from-templates.sh
-. migrate.sh &
 
-if [ "$@" == "" ]; then
+if [ "$#" -le 1 ] ; then
+  	. migrate.sh &
 	pm2-docker /root/.pm2/dump.pm2
 else
   	pm2 resurrect
+  	. migrate.sh
 	exec "$@"
 fi;
