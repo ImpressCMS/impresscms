@@ -3,7 +3,7 @@ name: Builds packages images
 on:
   push:
     tags:
-      - '*' # Initializes on any new tag
+      - 'v*' # Initializes on any new tag
 
 jobs:
   build:
