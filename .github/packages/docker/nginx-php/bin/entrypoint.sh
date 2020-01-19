@@ -33,11 +33,8 @@ fi;
 
 . update-configs-from-templates.sh
 
-if [ "$#" -le 1 ] ; then
-  	. migrate.sh &
-	pm2-docker /root/.pm2/dump.pm2
-else
-  	pm2 resurrect
-  	. migrate.sh
-	exec "$@"
-fi;
+pm2 resurrect
+. migrate.sh
+exec "$@"
+
+/bin/sh
