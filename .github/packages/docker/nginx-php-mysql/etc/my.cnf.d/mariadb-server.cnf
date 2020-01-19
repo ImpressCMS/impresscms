@@ -1,6 +1,6 @@
-#
-# These groups are read by MariaDB server.
-# Use it for options that only the server (but not clients) should see
+# this is for client
+[client]
+socket=/var/run/mysql.sockv
 
 # this is read by the standalone daemon and embedded servers
 [server]
