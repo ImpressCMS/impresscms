@@ -5,6 +5,7 @@ apps:
     cwd: /etc/nginx
     args: -c nginx.conf -g "daemon off;"
     interpreter: /bin/sh
+    exec_interpreter: /bin/sh
     exec_mode: fork
     watch: true
     source_map_support: false
@@ -16,6 +17,7 @@ apps:
   - name: php
     instances: 1
     interpreter: /bin/sh
+    exec_interpreter: /bin/sh
     exec_mode: fork
     watch: true
     source_map_support: false
@@ -29,6 +31,7 @@ apps:
   - name: mysql
     instances: 1
     interpreter: /bin/sh
+    exec_interpreter: /bin/sh
     exec_mode: fork
     watch: true
     source_map_support: false
