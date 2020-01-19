@@ -9,7 +9,7 @@ user=root
 
 # this is only for the mysqld standalone daemon
 [mysqld]
-skip-networking
+#skip-networking
 
 # Galera-related settings
 [galera]
