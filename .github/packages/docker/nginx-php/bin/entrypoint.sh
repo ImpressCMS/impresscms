@@ -31,14 +31,12 @@ if [ -z "$DB_PASS" ]; then
   echo "WARNING: DB_PASS is empty. We do not recommend to use such value in production."
 fi;
 
-echo Parsing templates...
-DOLLAR='$'
-for filename in $(find /etc/templates -name \*.tpl -print); do
-	RESULT_TEMPLATE_FILE=$(echo "$filename" | sed 's/\/templates\//\//g' | sed 's/\.tpl$//g')
-    echo " [*] $filename -> $RESULT_TEMPLATE_FILE"
-    envsubst < $filename > $RESULT_TEMPLATE_FILE
-done
-
+. update-configs-from-templates.sh
 . migrate.sh &
 
-pm2-docker /root/.pm2/dump.pm2
+if [ "$@" == "" ]; then
+	pm2-docker /root/.pm2/dump.pm2
+else
+  	pm2 resurrect
+	exec "$@"
+fi;
