@@ -49,4 +49,11 @@ RUN apk add --no-cache \
 	ln -s /srv/www /var/www && \
 	yarn global add pm2
 
+WORKDIR /srv/www
+
+VOLUME /srv/www/storage
+VOLUME /srv/www/htdocs/uploads
+
+EXPOSE $WEB_PORT/tcp
+
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

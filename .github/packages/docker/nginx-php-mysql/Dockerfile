@@ -4,7 +4,7 @@ FROM docker.pkg.github.com/$GITHUB_REPOSITORY/nginx-php:$CONTAINER_TAG
 
 COPY ./etc/ /etc/
 
-COPY ./bin/ /bin/
+COPY ./bin/ /usr/local/bin/
 
 RUN apk add --no-cache \
 	mysql \
