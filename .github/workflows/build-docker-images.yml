@@ -2,8 +2,8 @@ name: Builds packages images
 
 on:
   push:
-#    tags:
-#      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    tags:
+      - '*' # Initializes on any new tag
 
 jobs:
   build:
@@ -62,13 +62,14 @@ jobs:
         run: chmod -R 777 ./build/storage
       - name: Removing installer from ImpressCMS files
         run: rm -rf /build/htdocs/install
+      - name: Set RELEASE_VERSION env variable
+        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
       - name: Build docker and publish
-        env:
-          CONTAINER_TAG: latest
         run: |
           CONTAINER_IMAGE=$(echo "docker.pkg.github.com/${{ github.repository }}/${{ matrix.dockerpath }}" | awk '{print tolower($0)}')
           echo $CONTAINER_IMAGE
           docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{ secrets.GITHUB_TOKEN }}
-          docker pull ${CONTAINER_IMAGE}:${CONTAINER_TAG} || true
-          docker build --cache-from ${CONTAINER_IMAGE}:${CONTAINER_TAG} --build-arg	GITHUB_REPOSITORY=$(echo $GITHUB_REPOSITORY  | awk '{print tolower($0)}') --build-arg CONTAINER_TAG=$CONTAINER_TAG --tag ${CONTAINER_IMAGE}:${CONTAINER_TAG} .
-          docker push ${CONTAINER_IMAGE}:${CONTAINER_TAG}
+          docker pull ${CONTAINER_IMAGE}:latest || true
+          docker build --cache-from ${CONTAINER_IMAGE}:latest --build-arg GITHUB_REPOSITORY=$(echo $GITHUB_REPOSITORY  | awk '{print tolower($0)}') --build-arg CONTAINER_TAG=${RELEASE_VERSION} --tag ${CONTAINER_IMAGE}:${RELEASE_VERSION} --tag ${CONTAINER_IMAGE}:latest .
+          docker push ${CONTAINER_IMAGE}:${RELEASE_VERSION}
+          docker push ${CONTAINER_IMAGE}:latest
