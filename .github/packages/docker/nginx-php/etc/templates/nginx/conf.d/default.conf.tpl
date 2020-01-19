@@ -1,7 +1,7 @@
 server {
     listen ${WEB_PORT} default;
     server_name ${SERVER_NAME};
-    root /var/www/htdocs/;
+    root /srv/www/htdocs/;
 
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-XSS-Protection "1; mode=block";
@@ -21,10 +21,10 @@ server {
     error_page 404 /index.php;
 
     location ~ \.php${DOLLAR} {
-        fastcgi_pass unix:/var/run/php-fpm.sock;
+		fastcgi_pass php;
         fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $realpath_root${DOLLAR}fastcgi_script_name;
-        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME ${DOLLAR}realpath_root${DOLLAR}fastcgi_script_name;
+		include fastcgi_params;
     }
 
     location ~ /\.(?!well-known).* {
