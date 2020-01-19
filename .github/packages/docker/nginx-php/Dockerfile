@@ -53,6 +53,7 @@ WORKDIR /srv/www
 
 VOLUME /srv/www/storage
 VOLUME /srv/www/htdocs/uploads
+VOLUME /etc/impresscms
 
 EXPOSE $WEB_PORT/tcp
 

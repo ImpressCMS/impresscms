@@ -39,6 +39,6 @@ for filename in $(find /etc/templates -name \*.tpl -print); do
     envsubst < $filename > $RESULT_TEMPLATE_FILE
 done
 
-./bin/phoenix migrate
+. migrate.sh &
 
 pm2-docker /etc/pm2/ecosystem.yml

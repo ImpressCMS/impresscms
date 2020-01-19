@@ -4,7 +4,9 @@ ENV_CURRENT_VALUE=$1
 ENV_VAR_NAME=$2
 ENV_VAR_LENGTH=$3
 
-ENV_VAR_FILE="/etc/$ENV_VAR_NAME.impresscms.cfg"
+mkdir -p /etc/impresscms
+
+ENV_VAR_FILE="/etc/impresscms/$ENV_VAR_NAME.cfg"
 
 if [ -z "$ENV_CURRENT_VALUE" ]; then
   if [ ! -f "$ENV_VAR_FILE" ]; then
