@@ -41,4 +41,4 @@ done
 
 . migrate.sh &
 
-pm2-docker /etc/pm2/ecosystem.yml
+pm2-docker /root/.pm2/dump.pm2

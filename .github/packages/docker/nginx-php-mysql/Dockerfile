@@ -17,3 +17,6 @@ RUN apk add --no-cache \
 	echo "FLUSH PRIVILEGES;" >> /tmp/install.sql && \
 	mysql_embedded -vvv < /tmp/install.sql && \
 	rm -rf /tmp/install.sql
+
+RUN pm2 start --pid /var/run/mysql.pid --interpreter none --name mysql /usr/bin/mysqld -- --user=root --socket=/var/run/mysql.sock && \
+	pm2 save
