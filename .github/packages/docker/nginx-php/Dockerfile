@@ -43,6 +43,7 @@ RUN apk add --no-cache \
 		php7-phar \
 		php7-posix \
 		yarn \
+		netcat-openbsd \
 		gettext && \
 	rm -rf /var/www && \
 	mkdir -p www && \
