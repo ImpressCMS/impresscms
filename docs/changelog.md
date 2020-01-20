@@ -85,7 +85,7 @@ Fixes:
 
 2nd alpha release - system module file/folder layout changes per IPF convention
 
-## ImpressCMS 2.0 Alpha 1 ===
+## ImpressCMS 2.0 Alpha 1
 * Release date: January 2012
 * DB Version: 42
 * Build Version: 55 (56)
