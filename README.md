@@ -4,7 +4,7 @@
 	</a>
 </p>
 <p align="center">
-<a href="https://github.com/ImpressCMS/impresscms/blob/master/LICENSE"><img src="https://img.shields.io/badge/dynamic/json.svg?label=license&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2FImpressCMS%2Fimpresscms%2Fmaster%2Fcomposer.json&amp;query=license&amp;maxAge=86400" alt="license" /></a> <a href="github.com/ImpressCMS/impresscms/releases/latest"><img src="https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=86400&amp;logo=github&amp;logoColor=white&amp;label=latest%20release" alt="GitHub release" /></a> <a href="https://github.com/ImpressCMS/impresscms/releases"><img src="https://img.shields.io/packagist/vpre/impresscms/impresscms.svg?label=preview&amp;logo=github" alt="GitHub tag (latest SemVer pre-release)" /></a> <a href="https://github.com/ImpressCMS/impresscms/actions?query=workflow%3ATests"><img src="https://github.com/ImpressCMS/impresscms/workflows/.github/workflows/test.yml/badge.svg?branch=master" alt="Tests" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/test_coverage" alt="Test Coverage" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/maintainability"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/maintainability" alt="Maintainability" /></a> <a href="https://twitter.com/ImpressCMS"><img src="https://img.shields.io/twitter/follow/ImpressCMS.svg?color=%2338A1F3&amp;label=twitter&amp;style=flat&amp;logo=twitter" alt="Twitter Follow" /></a> <a href="https://www.facebook.com/ImpressCMS/"><img src="https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook" alt="FaceBook" /></a> <a href="http://invite.impresscms.org"><img src="http://invite.impresscms.org/badge.svg" alt="Slack" /></a> 
+<a href="https://github.com/ImpressCMS/impresscms/blob/master/LICENSE"><img src="https://img.shields.io/badge/dynamic/json.svg?label=license&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2FImpressCMS%2Fimpresscms%2Fmaster%2Fcomposer.json&amp;query=license&amp;maxAge=86400" alt="license" /></a> <a href="github.com/ImpressCMS/impresscms/releases/latest"><img src="https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=86400&amp;logo=github&amp;logoColor=white&amp;label=latest%20release" alt="GitHub release" /></a> <a href="https://github.com/ImpressCMS/impresscms/releases"><img src="https://img.shields.io/packagist/vpre/impresscms/impresscms.svg?label=preview&amp;logo=github" alt="GitHub tag (latest SemVer pre-release)" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/test_coverage" alt="Test Coverage" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/maintainability"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/maintainability" alt="Maintainability" /></a> <a href="https://twitter.com/ImpressCMS"><img src="https://img.shields.io/twitter/follow/ImpressCMS.svg?color=%2338A1F3&amp;label=twitter&amp;style=flat&amp;logo=twitter" alt="Twitter Follow" /></a> <a href="https://www.facebook.com/ImpressCMS/"><img src="https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook" alt="FaceBook" /></a> <a href="http://invite.impresscms.org"><img src="http://invite.impresscms.org/badge.svg" alt="Slack" /></a>
 </p>
 
 ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool.
@@ -33,7 +33,7 @@ ImpressCMS has these features:
 
 ## What can you do with it?
 
-ImpressCMS can be used for many types of web sites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company. 
+ImpressCMS can be used for many types of web sites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company.
 The system is extremely useful for managing online communities because it has the ability to create user groups and assign permissions for managing content to each different group.
 
 For each type of website ImpressCMS offers different functionality with a collection of free modules that are available on [https://www.impresscms.org/modules/downloads/](https://www.impresscms.org/modules/downloads/). A few examples of what you can do with them:
@@ -47,7 +47,7 @@ For each type of website ImpressCMS offers different functionality with a collec
 
 ## Do you need any help?
 
-You can find our official documentation at [our wiki](https://www.impresscms.org/modules/simplywiki/). 
+You can find our official documentation at [our wiki](https://www.impresscms.org/modules/simplywiki/).
 
 Also, help could be found on [our official forums](https://www.impresscms.org/modules/iforum/).
 
@@ -55,7 +55,7 @@ Also, help could be found on [our official forums](https://www.impresscms.org/mo
 
 Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls)
 
-All development for 2.0 version happens on the *master* branch, so it is always the most up-to-date. 
+All development for 2.0 version happens on the *master* branch, so it is always the most up-to-date.
 
 If you are going to be submitting a pull request, please branch from *master*, and submit your pull request back to same branch.
 
