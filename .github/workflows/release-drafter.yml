@@ -3,8 +3,8 @@ name: Release Drafter
 on: 
   push:
     branches: 
-      - master
-      - branches/impresscms_1.4
+      - 'master'
+      - 'branches/impresscms_1.4'
 
 jobs:
   update_release_draft:
@@ -12,6 +12,5 @@ jobs:
     steps:
       # Drafts your next Release notes as Pull Requests are merged into "master"
       - uses: release-drafter/release-drafter@v5
-        
-        env:
+        with:       
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
