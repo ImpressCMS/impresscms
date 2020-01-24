@@ -61,7 +61,7 @@ $modversion = array(
 /*  Development information */
 	'status_version'=> "Alpha 8",
 	'status'=> "Alpha",
-	'date'=> "20 january 2020",
+	'date'=> "24 january 2020",
 	'author_word'=> "This should be the last alpha for 2.0.0",
 	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
