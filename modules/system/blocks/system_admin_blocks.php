@@ -2,22 +2,23 @@
 /**
  * System Admin Blocks File
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Blocks
- * @since		ImpressCMS 1.2
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        System
+ * @subpackage    Blocks
+ * @since        ImpressCMS 1.2
  */
 
 /**
  * Admin Warnings Block
  *
- * @since ImpressCMS 1.2
- * @author Gustavo Pilla (aka nekro) <gpilla@nubee.com.ar>
  * @return array
+ * @author Gustavo Pilla (aka nekro) <gpilla@nubee.com.ar>
+ * @since ImpressCMS 1.2
  * @todo This code is the copy of the one which was in the admin.php, it should be improved.
  */
-function b_system_admin_warnings_show() {
+function b_system_admin_warnings_show()
+{
 	$block = array();
 	$block['msg'] = array();
 
@@ -41,13 +42,13 @@ function b_system_admin_warnings_show() {
 
 	// ###### Output warn messages for correct functionality  ######
 	if (!is_writable(ICMS_CACHE_PATH)) {
-			array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_CACHE_PATH)), '', false);
+		array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_CACHE_PATH)), '', false);
 	}
 	if (!is_writable(ICMS_UPLOAD_PATH)) {
-			array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_UPLOAD_PATH)), '', false);
+		array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_UPLOAD_PATH)), '', false);
 	}
 	if (!is_writable(ICMS_COMPILE_PATH)) {
-			array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_COMPILE_PATH)), '', false);
+		array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE, ICMS_COMPILE_PATH)), '', false);
 	}
 
 	if (count($block['msg']) > 0) {
@@ -62,7 +63,8 @@ function b_system_admin_warnings_show() {
  * @return array
  * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
-function b_system_admin_cp_show() {
+function b_system_admin_cp_show()
+{
 	global $icmsTpl, $icmsConfig;
 
 	$block['lang_cp'] = _CPHOME;
@@ -77,8 +79,10 @@ function b_system_admin_cp_show() {
 	$all_ok = false;
 	if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 		$sysperm_handler = icms::handler('icms_member_groupperm');
-		$ok_syscats = & $sysperm_handler->getItemIds('system_admin', $groups);
-	} else {$all_ok = true; }
+		$ok_syscats = &$sysperm_handler->getItemIds('system_admin', $groups);
+	} else {
+		$all_ok = true;
+	}
 
 	require_once ICMS_MODULES_PATH . '/system/constants.php';
 
@@ -96,7 +100,7 @@ function b_system_admin_cp_show() {
 		icms_loadLanguageFile('system', $file, true);
 		include $admin_dir . '/' . $file . '/' . $mod_version_file;
 		if ($modversion['hasAdmin']) {
-			$category = isset($modversion['category'])?(int) ($modversion['category']):0;
+			$category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
 			if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
 				$sysmod = array('title' => $modversion['name'], 'link' => ICMS_MODULES_URL . '/system/admin.php?fct=' . $file, 'image' => ICMS_MODULES_URL . '/system/admin/' . $file . '/images/' . $file . '_big.png');
 				array_push($block['sysmod'], $sysmod);
@@ -107,7 +111,7 @@ function b_system_admin_cp_show() {
 	if (count($block['sysmod']) > 0) {
 		return $block;
 	}
-	}
+}
 
 /**
  * System Admin Modules Block Show Fuction
@@ -115,7 +119,8 @@ function b_system_admin_cp_show() {
  * @return array
  * @todo Maybe it can be improved a little, is just a copy of the generate menu function.
  */
-function b_system_admin_modules_show() {
+function b_system_admin_modules_show()
+{
 	$block['mods'] = array();
 	$module_handler = icms::handler('icms_module');
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
@@ -126,8 +131,8 @@ function b_system_admin_modules_show() {
 	$modules = $module_handler->getObjects($criteria);
 	foreach ($modules as $module) {
 		$rtn = array();
-		$inf = & $module->getInfo();
-		$rtn['link'] = ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . (isset($inf['adminindex'])?$inf['adminindex']:'');
+		$inf = &$module->getInfo();
+		$rtn['link'] = ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . (isset($inf['adminindex']) ? $inf['adminindex'] : '');
 		$rtn['title'] = $module->getVar('name');
 		$rtn['dir'] = $module->getVar('dirname');
 		if (isset($inf['iconsmall']) && $inf['iconsmall'] != '') {
@@ -166,7 +171,7 @@ function b_system_admin_modules_show() {
 			$systemadm = true;
 		}
 		if (is_object(icms::$user)) {
-				$admin_perm = $moduleperm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
+			$admin_perm = $moduleperm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
 		}
 		if ($admin_perm) {
 			if ($rtn['dir'] != 'system') {
@@ -177,18 +182,19 @@ function b_system_admin_modules_show() {
 	}
 
 	// If there is any module listed, then show the block.
-	if (count($block['mods'] > 0)) {
+	if (count($block['mods']) > 0) {
 		return $block;
 	}
-	}
+}
 
 /**
  * New Admin Control Panel Block, with grouping of items
  *
- * @since ImpressCMS 1.3
  * @return array
+ * @since ImpressCMS 1.3
  */
-function b_system_admin_cp_new_show() {
+function b_system_admin_cp_new_show()
+{
 	global $icmsTpl, $icmsConfig;
 
 	$block['lang_cp'] = _CPHOME;
@@ -202,7 +208,7 @@ function b_system_admin_cp_new_show() {
 	$all_ok = false;
 	if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 		$sysperm_handler = icms::handler('icms_member_groupperm');
-		$ok_syscats = & $sysperm_handler->getItemIds('system_admin', $groups);
+		$ok_syscats = &$sysperm_handler->getItemIds('system_admin', $groups);
 	} else {
 		$all_ok = true;
 	}
@@ -223,7 +229,7 @@ function b_system_admin_cp_new_show() {
 		icms_loadLanguageFile('system', $file, true);
 		include $admin_dir . '/' . $file . '/' . $mod_version_file;
 		if ($modversion['hasAdmin']) {
-			$category = isset($modversion['category'])?(int) ($modversion['category']):0;
+			$category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
 			if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
 				$block[$modversion['group']][] = array(
 					'title' => $modversion['name'],

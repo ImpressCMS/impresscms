@@ -84,7 +84,7 @@
       "modules/"
     ],
     "psr-4": {
-      "ImpressCMS\\Core\\Providers\\": "core/providers/"
+      "ImpressCMS\\Core\\": "core/"
     },
     "files": [
       "include/version.php",
