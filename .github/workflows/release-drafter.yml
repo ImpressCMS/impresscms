@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - impresscms_1.4
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run a one-line script
+      run: echo Hello, world!
+    - name: Release Drafter
+     ====================== uses: release-drafter/release-drafter@v5.6.1
