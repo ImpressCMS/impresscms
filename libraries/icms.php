@@ -192,7 +192,8 @@ final class icms extends Container {
 					}
 				}
 			}
-			$instance->add($real_name, $class ? (new $class($instance->get('xoopsDB'))) : false);
+			$db = $instance->get('xoopsDB');
+			$instance->add($real_name, $class ? (new $class($db)) : false);
 		}
 		$handler = $instance->get($real_name);
 		if (!$handler && !$optional) {

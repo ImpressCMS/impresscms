@@ -1,0 +1,75 @@
+name: Builds packages images
+
+on:
+  push:
+    tags:
+      - 'v*' # Initializes on any new tag
+
+jobs:
+  build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        operating-system:
+          - ubuntu-latest
+        dockerpath:
+          - nginx-php
+          - nginx-php-mysql
+    name: Builds ${{ matrix.dockerpath }} on ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
+      - name: Restructuring files for build
+        run: |
+          mkdir build
+          mv *.php build/
+          mv LICENSE build/
+          mv XOOPS_copyrights.txt build/
+          mv *.html build/
+          mv composer.* build/
+          mv vendor build/
+          mv storage build/
+          mv plugins build/
+          mv modules build/
+          mv migrations build/
+          mv libraries build/
+          mv language build/
+          mv include build/
+          mv htdocs build/
+          mv core build/
+          mv bin build/
+          mv .github/packages/docker/${{ matrix.dockerpath }}/* ./
+          rm -rf .github
+          ls -la ./
+          ls -la build/
+      - name: Chmoding bin files
+        run: chmod +x ./bin/*.sh
+      - name: Chmoding storage path
+        run: chmod -R 777 ./build/storage
+      - name: Removing installer from ImpressCMS files
+        run: rm -rf /build/htdocs/install
+      - name: Set RELEASE_VERSION env variable
+        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+      - name: Build docker and publish
+        run: |
+          CONTAINER_IMAGE=$(echo "docker.pkg.github.com/${{ github.repository }}/${{ matrix.dockerpath }}" | awk '{print tolower($0)}')
+          echo $CONTAINER_IMAGE
+          docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{ secrets.GITHUB_TOKEN }}
+          docker pull ${CONTAINER_IMAGE}:latest || true
+          docker build --cache-from ${CONTAINER_IMAGE}:latest --build-arg GITHUB_REPOSITORY=$(echo $GITHUB_REPOSITORY  | awk '{print tolower($0)}') --build-arg CONTAINER_TAG=${RELEASE_VERSION} --tag ${CONTAINER_IMAGE}:${RELEASE_VERSION} --tag ${CONTAINER_IMAGE}:latest .
+          docker push ${CONTAINER_IMAGE}:${RELEASE_VERSION}
+          docker push ${CONTAINER_IMAGE}:latest

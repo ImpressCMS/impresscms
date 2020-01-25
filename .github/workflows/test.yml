@@ -1,11 +1,14 @@
+name: Tests
+
 on:
   push:
-    branches: 
-      - master    
+    branches:
+      - master
   pull_request:
-    branches: 
+    branches:
       - master
       - 'branches/**'
+
 jobs:
   run:
     runs-on: ${{ matrix.operating-system }}
