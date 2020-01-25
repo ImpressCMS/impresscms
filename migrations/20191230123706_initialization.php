@@ -5,7 +5,6 @@ use Phoenix\Migration\AbstractMigration;
 class Initialization extends AbstractMigration
 {
 
-
 	/**
 	 * Prefix table
 	 *
