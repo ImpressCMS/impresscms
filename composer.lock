@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0ef8579c0a46253fb1cd453be07dc33",
+    "content-hash": "1d2b042cdff97760226d5fbbf0e46bdc",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -976,6 +976,87 @@
             "time": "2016-11-19T20:47:44+00:00"
         },
         {
+            "name": "monolog/monolog",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "f9d56fd2f5533322caccdfcddbb56aedd622ef1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/f9d56fd2f5533322caccdfcddbb56aedd622ef1c",
+                "reference": "f9d56fd2f5533322caccdfcddbb56aedd622ef1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2",
+                "psr/log": "^1.0.1"
+            },
+            "provide": {
+                "psr/log-implementation": "1.0.0"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "^2.4.9 || ^3.0",
+                "doctrine/couchdb": "~1.0@dev",
+                "elasticsearch/elasticsearch": "^6.0",
+                "graylog2/gelf-php": "^1.4.2",
+                "jakub-onderka/php-parallel-lint": "^0.9",
+                "php-amqplib/php-amqplib": "~2.4",
+                "php-console/php-console": "^3.1.3",
+                "phpspec/prophecy": "^1.6.1",
+                "phpunit/phpunit": "^8.3",
+                "predis/predis": "^1.1",
+                "rollbar/rollbar": "^1.3",
+                "ruflin/elastica": ">=0.90 <3.0",
+                "swiftmailer/swiftmailer": "^5.3|^6.0"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+                "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+                "elasticsearch/elasticsearch": "Allow sending log messages to an Elasticsearch server via official client",
+                "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+                "ext-mbstring": "Allow to work properly with unicode symbols",
+                "ext-mongodb": "Allow sending log messages to a MongoDB server (via driver)",
+                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
+                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+                "php-console/php-console": "Allow sending log messages to Google Chrome",
+                "rollbar/rollbar": "Allow sending log messages to Rollbar",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Monolog\\": "src/Monolog"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                }
+            ],
+            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+            "homepage": "http://github.com/Seldaek/monolog",
+            "keywords": [
+                "log",
+                "logging",
+                "psr-3"
+            ],
+            "time": "2019-11-13T10:27:43+00:00"
+        },
+        {
             "name": "old-xoops-libraries/php-downloader",
             "version": "1.0.1",
             "source": {
@@ -1008,6 +1089,57 @@
             ],
             "description": "Some classes from php-downloader v1.0 by www.ipunkt.biz package that were used in Xoops but can't be found outside",
             "time": "2018-01-29T12:09:44+00:00"
+        },
+        {
+            "name": "php-console/php-console",
+            "version": "3.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barbushin/php-console.git",
+                "reference": "aa1d71d4ea3dc91e126edc9aa4f3c10eb8559cff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barbushin/php-console/zipball/aa1d71d4ea3dc91e126edc9aa4f3c10eb8559cff",
+                "reference": "aa1d71d4ea3dc91e126edc9aa4f3c10eb8559cff",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "ext-mbstring": "*",
+                "phpunit/phpunit": "^4.8",
+                "psr/log": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpConsole\\": "src/PhpConsole"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Barbushin",
+                    "email": "barbushin@gmail.com",
+                    "homepage": "http://linkedin.com/in/barbushin"
+                }
+            ],
+            "description": "PHP library for Google Chrome extension \"PHP Console\".",
+            "homepage": "https://github.com/barbushin/php-console",
+            "keywords": [
+                "chrome",
+                "debug",
+                "error handler",
+                "errors",
+                "google chrome",
+                "php"
+            ],
+            "time": "2019-07-25T03:43:28+00:00"
         },
         {
             "name": "phpexperts/laravel-env-polyfill",
