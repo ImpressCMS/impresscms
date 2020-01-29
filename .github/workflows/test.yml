@@ -7,7 +7,10 @@ on:
   pull_request:
     branches:
       - master
-      - 'branches/**'
+    paths:
+      - .github/workflows/test.yml
+      - '**.js'
+      - '**.php'
 
 jobs:
   run:
