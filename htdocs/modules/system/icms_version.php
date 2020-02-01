@@ -321,4 +321,5 @@ $modversion['templates'] = array(
 	array(	'file' => 'system_rating_form.html',	'description' => ''	),
 	array(	'file' => 'system_adm_mimetype.html',	'description' => ''	),
 	array(	'file' => 'system_adm_userrank.html',	'description' => ''	),
+	array(	'file' => 'system_adm_version.html',	'description' => 'Version information template'	),
 	array(	'file' => 'system_adm_autotasks.html',	'description' => ''	));
