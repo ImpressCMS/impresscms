@@ -2,14 +2,14 @@ name: Auto update project Wiki
 
 on:
   push:
-    branches:
-      - master
-    tags:
-      - 'v*' # Initializes on any new tag
-    paths:
-      - .github/workflows/update-wiki.yml
-      - '**.js'
-      - '**.php'
+    #branches:
+    #  - master
+    #tags:
+    #  - 'v*' # Initializes on any new tag
+    #paths:
+    #  - .github/workflows/update-wiki.yml
+    #  - '**.js'
+    #  - '**.php'
 
 jobs:
   update_wiki:
@@ -25,6 +25,7 @@ jobs:
           if [ "$BRANCH_NAME" == 'HEAD' ]; then
             BRANCH_NAME=$(git describe --tags --abbrev=0)
           fi;
+          BRANCH_NAME=master
           echo "::set-env name=BRANCH_NAME::$BRANCH_NAME"
       - name: Checking for required secrets
         run: |
@@ -117,6 +118,7 @@ jobs:
             echo "Fixing links in $i..."
             OLD_SIZE=$(stat --printf="%s" "$i")
             php -r 'file_put_contents($argv[1], preg_replace("/\(.+\/(.+)\.md\)/m", "($1)", file_get_contents($argv[1])));' -- "$i"
+            php -r 'file_put_contents($argv[1], preg_replace("/\.md\)/m", ")", file_get_contents($argv[1])));' -- "$i"
             NEW_SIZE=$(stat --printf="%s" "$i")
             if [ "$OLD_SIZE" -ne "$NEW_SIZE" ]; then
               echo "  Changed."
