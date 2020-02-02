@@ -25,6 +25,7 @@ jobs:
           if [ "$BRANCH_NAME" == 'HEAD' ]; then
             BRANCH_NAME=$(git describe --tags --abbrev=0)
           fi;
+          BRANCH_NAME=master
           echo "::set-env name=BRANCH_NAME::$BRANCH_NAME"
       - name: Checking for required secrets
         run: |
