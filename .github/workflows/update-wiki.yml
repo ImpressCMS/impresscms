@@ -2,14 +2,14 @@ name: Auto update project Wiki
 
 on:
   push:
-    #branches:
-    #  - master
-    #tags:
-    #  - 'v*' # Initializes on any new tag
-    #paths:
-    #  - .github/workflows/update-wiki.yml
-    #  - '**.js'
-    #  - '**.php'
+    branches:
+      - master
+    tags:
+      - 'v*' # Initializes on any new tag
+    paths:
+      - .github/workflows/update-wiki.yml
+      - '**.js'
+      - '**.php'
 
 jobs:
   update_wiki:
@@ -25,7 +25,6 @@ jobs:
           if [ "$BRANCH_NAME" == 'HEAD' ]; then
             BRANCH_NAME=$(git describe --tags --abbrev=0)
           fi;
-          BRANCH_NAME=master
           echo "::set-env name=BRANCH_NAME::$BRANCH_NAME"
       - name: Checking for required secrets
         run: |
