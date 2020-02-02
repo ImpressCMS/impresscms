@@ -85,7 +85,7 @@ jobs:
       - name: View config
         run: cat .phpdoc-md
       - name: Genereting docs...
-        run: ./vendor/bin/phpdoc-md
+        run: ./bin/phpdoc-md
       - name: Updating docs folder
         run: cp -r ./.docs.old/.git ./.docs/.git
       - name: Renaming README.md -> HOME.md
