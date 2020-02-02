@@ -141,4 +141,4 @@ jobs:
           git commit -m "Automatically generated for https://github.com/${{ github.repository }}/commit/${GITHUB_SHA}" || true
       - name: Pushing docs update
         working-directory: .docs/
-        run: git push -u origin ${BRANCH_NAME}
+        run: git push || git push -u origin ${BRANCH_NAME}
