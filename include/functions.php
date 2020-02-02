@@ -745,15 +745,16 @@ if (!function_exists('icms_loadLanguageFile')) {
 
 if (!function_exists('icms_getfloat')) {
 	/**
+	 * @param string $str String to get float value from
+	 * @param mixed $set Array of settings of False if no settings were passed
+	 * @param mixed    Float value or 0 if no match was found in the string
+	 * @return float|int
+	 * @todo Move to a static class method - String/Data
 	 * @author pillepop2003 at yahoo dot de
 	 *
 	 * Use this snippet to extract any float out of a string. You can choose how a single dot is treated with the (bool) 'single_dot_as_decimal' directive.
 	 * This function should be able to cover almost all floats that appear in an european environment.
 	 *
-	 * @param string $str String to get float value from
-	 * @param mixed $set Array of settings of False if no settings were passed
-	 * @param mixed    Float value or 0 if no match was found in the string
-	 * @todo Move to a static class method - String/Data
 	 */
 	function icms_getfloat($str, $set = false)
 	{
