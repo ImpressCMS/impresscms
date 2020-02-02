@@ -57,30 +57,30 @@ jobs:
           cat > .phpdoc-md <<'EOF'
           <?php
           return (object)[
-            'rootNamespace' => 'ImpressCMS\',
-            'destDirectory' => '.docs',
-            'format' => 'github',
-            'classes' => array_unique(
-                         	array_filter(
-                         		array_merge(
-                         			array_map(
-                         				function ($file) {
-                         					return substr(str_replace(['./core/', '/'], ['\\ImpressCMS\\Core\\', '\\'], $file), 0, -4);
-                         				},
-                         				glob('./core/**/*.php')
-                         			),
-                         			array_map(
-                         				function ($file) {
-                         					return substr(str_replace(['./libraries/icms/', '/'], ['icms_', '_'], $file), 0, -4);
-                         				},
-                         				glob('./libraries/icms/**/*.php')
-                         			)
-                         		),
-                         		function ($item) {
-                         			return is_a($item, $item, true);
-                         		}
-                         	)
-                         ),
+              'rootNamespace' => 'ImpressCMS',
+              'destDirectory' => '.docs',
+              'format' => 'github',
+              'classes' => array_unique(
+                  array_filter(
+                      array_merge(
+                          array_map(
+                              function ($file) {
+                                  return substr(str_replace(['./core/', '/'], ['\\ImpressCMS\\Core\\', '\\'], $file), 0, -4);
+                              },
+                              glob('./core/**/*.php')
+                          ),
+                          array_map(
+                              function ($file) {
+                                  return substr(str_replace(['./libraries/icms/', '/'], ['icms_', '_'], $file), 0, -4);
+                              },
+                              glob('./libraries/icms/**/*.php')
+                          )
+                      ),
+                      function ($item) {
+                          return is_a($item, $item, true);
+                      }
+                  )
+              ),
           ];
           EOF
       - name: View config
