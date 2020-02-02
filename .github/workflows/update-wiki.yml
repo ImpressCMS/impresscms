@@ -77,7 +77,7 @@ jobs:
                           )
                       ),
                       function ($item) {
-                          return class_exists($item) && !in_array($item, ['\icms_image_Object']);
+                          return class_exists($item) && !in_array($item, ['icms_module_Object', 'icms_ipf_Object', 'icms_image_Object']);
                       }
                   )
               ),
@@ -104,7 +104,7 @@ jobs:
           INSTALL_ADMIN_NAME: test
           INSTALL_ADMIN_EMAIL: noreply@impresscms.org
           INSTALL_LANGUAGE: english
-        run: ./bin/phpdoc-md
+        run: ./bin/phpdoc-md -v
       - name: Updating docs folder
         run: cp -r ./.docs.old/.git ./.docs/.git
       - name: Renaming README.md -> HOME.md
