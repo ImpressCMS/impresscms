@@ -1,23 +1,23 @@
 <?php
 
-define("_MSC_YOURNAMEC","Il tuo nome: ");
-define("_MSC_YOUREMAILC","Il tuo indirizzo email: ");
-define("_MSC_FRIENDNAMEC","Il nome del tuo amico: ");
-define("_MSC_FRIENDEMAILC","L'indirizzo email del tuo amico: ");
-define("_MSC_RECOMMENDSITE","Consiglia questo sito a un amico!");
+define("_MSC_YOURNAMEC","Your Name: ");
+define("_MSC_YOUREMAILC","Your Email: ");
+define("_MSC_FRIENDNAMEC","Friend Name: ");
+define("_MSC_FRIENDEMAILC","Friend Email: ");
+define("_MSC_RECOMMENDSITE","Recommend this Site to a Friend");
 // %s is your site name
-define("_MSC_INTSITE","Visita questo sito!  %s");
-define("_MSC_REFERENCESENT","Grazie per aver consigliato questo sito a un tuo amico.");
-define("_MSC_ENTERYNAME","Prego, inserisci il tuo nome");
-define("_MSC_ENTERFNAME","Prego, inserisci il nome del tuo amico");
-define("_MSC_ENTERFMAIL","Prego, inserisci l'indirizzo email del tuo amico");
-define("_MSC_NEEDINFO","Non hai riempito tutti i campi richiesti!");
-define("_MSC_INVALIDEMAIL1","L'indirizzo email che ci hai fornito non sembra essere un indirizzo valido!");
-define("_MSC_INVALIDEMAIL2","Per favore controlla e riprova.");
+define("_MSC_INTSITE","Interesting Site: %s");
+define("_MSC_REFERENCESENT","The reference to our site has been sent to your friend. Thanks!");
+define("_MSC_ENTERYNAME","Please enter your name");
+define("_MSC_ENTERFNAME","Please enter your friend's name");
+define("_MSC_ENTERFMAIL","Please enter your friend's email address");
+define("_MSC_NEEDINFO","You need to enter required info!");
+define("_MSC_INVALIDEMAIL1","The email address you provided is not a valid address.");
+define("_MSC_INVALIDEMAIL2","Please check the address and try again.");
 
-define("_MSC_AVAVATARS","Avatar disponibili");
+define("_MSC_AVAVATARS","Available Avatars");
 
-define("_MSC_SMILIES","Faccine");
-define("_MSC_CLICKASMILIE","Clicca col mouse sulla faccina, si inserir&agrave; automaticamente nel messaggio.");
-define("_MSC_CODE","Codice");
-define("_MSC_EMOTION","Emoticon");
+define("_MSC_SMILIES","Smilies");
+define("_MSC_CLICKASMILIE","Click a smilie to insert it into your message.");
+define("_MSC_CODE","Code");
+define("_MSC_EMOTION","Emotion");
