@@ -12,7 +12,7 @@
  * @version		$Id
  */
 
-define('_CORE_MEMORYUSAGE', 'Memory usage');
+define('_CORE_MEMORYUSAGE', 'Utilizzo della memoria: %s');
 define('_CORE_BYTES', 'bytes');
 define('_CORE_KILOBYTES', 'Kilo Bytes');
 define('_CORE_MEGABYTES', 'Mega Bytes');
@@ -20,45 +20,45 @@ define('_CORE_GIGABYTES', 'Giga Bytes');
 define('_CORE_KILOBYTES_SHORTEN', 'Kb');
 define('_CORE_MEGABYTES_SHORTEN', 'Mb');
 define('_CORE_GIGABYTES_SHORTEN', 'Gb');
-define('_CORE_MODULEHANDLER_NOTAVAILABLE', 'Handler does not exist<br />Module: %s<br />Name: %s');
-define('_CORE_COREHANDLER_NOTAVAILABLE', 'Class <b>%s</b> does not exist<br />Handler Name: %s');
-define('_CORE_NOMODULE', 'No Module is loaded');
-define('_CORE_PAGENOTDISPLAYED', 'This page cannot be displayed due to an internal error.<br/><br/>You can provide the following information to the administrators of this site to help them solve the problem:<br /><br />Error: %s<br />');
+define('_CORE_MODULEHANDLER_NOTAVAILABLE', 'Non esiste handler<br />Modulo: %s<br />Nome: %s');
+define('_CORE_COREHANDLER_NOTAVAILABLE', 'Class <b>%s</b> Non esiste<br />Handler Nome: %s');
+define('_CORE_NOMODULE', 'Non si è caricato nessun modulo');
+define('_CORE_PAGENOTDISPLAYED', 'Questa pagina non può essere visualizzata a causa di un errore interno.<br/><br/>Puoi fornire all\'amministratore del sito la seguente informazione utile a risolvere il problema:<br /><br />Errore: %s<br />');
 define('_CORE_TOKEN', 'XOOPS_TOKEN');
-define('_CORE_TOKENVALID', 'Token Validation');
-define('_CORE_TOKENNOVALID', 'No valid token found in request/session');
-define('_CORE_TOKENINVALID', 'No valid token found in request/session');
-define('_CORE_TOKENISVALID', 'Valid token found');
-define('_CORE_TOKENEXPIRED', 'Valid token expired');
-define('_CORE_CLASSNOTINSTANIATED', 'This class cannot be instantiated!');
+define('_CORE_TOKENVALID', 'Convalida Token');
+define('_CORE_TOKENNOVALID', 'Nessun token valido è stato trovato nella richiesta/sessione');
+define('_CORE_TOKENINVALID', 'Nessun token valido è stato trovato nella richiesta/sessione');
+define('_CORE_TOKENISVALID', 'Nessun token valido è stato trovato');
+define('_CORE_TOKENEXPIRED', 'Token valido scaduto');
+define('_CORE_CLASSNOTINSTANIATED', 'Questa classe non può essere instanziata!');
 
-define('_CORE_DB_NOTRACE', 'notrace:mysql extension not loaded');
-define('_CORE_DB_NOTALLOWEDINGET', 'Database updates are not allowed during processing of a GET request');
-define('_CORE_DB_NOTRACEDB', 'notrace:Unable to connect to database');
-define('_CORE_DB_INVALIDEMAIL', 'Invalid Email');
-define('_CORE_PASSLEVEL1','Too short');
-define('_CORE_PASSLEVEL2','Weak');
-define('_CORE_PASSLEVEL3','Good');
-define('_CORE_PASSLEVEL4','Strong');
-define('_CORE_UNAMEPASS_IDENTIC','Username and Password identical.');
+define('_CORE_DB_NOTRACE', 'notrace: estensione mysql non caricata');
+define('_CORE_DB_NOTALLOWEDINGET', 'Gli aggiornamenti del database non sono consentiti durante una procedura di richiesta GET');
+define('_CORE_DB_NOTRACEDB', 'notrace: connessione al database impossibile');
+define('_CORE_DB_INVALIDEMAIL', 'Email non valida');
+define('_CORE_PASSLEVEL1','Troppo breve');
+define('_CORE_PASSLEVEL2','Debole');
+define('_CORE_PASSLEVEL3','Buona');
+define('_CORE_PASSLEVEL4','Forte');
+define('_CORE_UNAMEPASS_IDENTIC','Il nome utente e la password sono identici.');
 
 /* Added in 1.3 */
 
-define('_CORE_CHECKSUM_FILES_ADDED',' files have been added');
-define('_CORE_CHECKSUM_FILES_REMOVED',' files have been removed');
-define('_CORE_CHECKSUM_ALTERED_REMOVED',' files have been altered or removed');
-define('_CORE_CHECKSUM_CHECKFILE','Checking against the file ');
-define('_CORE_CHECKSUM_PERMISSIONS_ALTERED',' files have had their permissions altered');
-define('_CORE_CHECKSUM_CHECKFILE_UNREADABLE', 'The file containing the checksums is unavailable or unreadable. Validation cannot be completed');
-define('_CORE_CHECKSUM_ADDING',' Adding');
+define('_CORE_CHECKSUM_FILES_ADDED',' files sono stati aggiunti');
+define('_CORE_CHECKSUM_FILES_REMOVED',' files sono stati rimossi');
+define('_CORE_CHECKSUM_ALTERED_REMOVED',' files sono stati modificati o rimossi');
+define('_CORE_CHECKSUM_CHECKFILE','File in corso di controllo ');
+define('_CORE_CHECKSUM_PERMISSIONS_ALTERED',' files hanno ricevuto modifiche nei permessi');
+define('_CORE_CHECKSUM_CHECKFILE_UNREADABLE', 'Il file contenente il checksum non è disponibile o è illeggibile. La convalida non può essere completata');
+define('_CORE_CHECKSUM_ADDING',' in corso di aggiunta');
 define('_CORE_CHECKSUM_CHECKSUM',' Checksum');
-define('_CORE_CHECKSUM_PERMISSIONS',' Permissions');
+define('_CORE_CHECKSUM_PERMISSIONS',' Permessi');
 
-define('_CORE_DEPRECATED', 'Deprecated');
-define('_CORE_DEPRECATED_REPLACEMENT', 'use %s instead');
+define('_CORE_DEPRECATED', 'Deprecato');
+define('_CORE_DEPRECATED_REPLACEMENT', 'usa %s invece');
 define('_CORE_DEPRECATED_CALLSTACK', '<br />Call Stack: <br />');
-define('_CORE_DEPRECATED_MSG', '%s in %s, line %u <br />');
-define('_CORE_DEPRECATED_CALLEDBY', 'Called by: ');
-define('_CORE_REMOVE_IN_VERSION', 'This will be removed in version %s');
+define('_CORE_DEPRECATED_MSG', '%s in %s, linea %u <br />');
+define('_CORE_DEPRECATED_CALLEDBY', 'Chiamato da: ');
+define('_CORE_REMOVE_IN_VERSION', 'Questo sarà rimosso nella versione %s');
 define('_CORE_DEBUG', 'Debug');
-define('_CORE_DEVELOPER_DASHBOARD', 'Developer Dashboard');
+define('_CORE_DEVELOPER_DASHBOARD', 'Cruscotto sviluppatore');
