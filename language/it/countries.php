@@ -115,7 +115,7 @@ define('_COUNTRY_IO', 'British Indian Ocean Territory');
 define('_COUNTRY_IQ', 'Iraq');
 define('_COUNTRY_IR', 'Iran');
 define('_COUNTRY_IS', 'Iceland');
-define('_COUNTRY_IT', 'Italy');
+define('_COUNTRY_IT', 'Italia');
 define('_COUNTRY_JE', 'Jersey');
 define('_COUNTRY_JM', 'Jamaica');
 define('_COUNTRY_JO', 'Jordan');
