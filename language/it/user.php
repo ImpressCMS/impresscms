@@ -1,191 +1,191 @@
 <?php
 
 //%%%%%%		File Name user.php 		%%%%%
-define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
-define('_US_LOSTPASSWORD','Lost your password?');
-define('_US_NOPROBLEM','No problem. Simply enter the e-mail address we have on file for your account.');
-define('_US_YOUREMAIL','Your Email: ');
-define('_US_SENDPASSWORD','Send Password');
-define('_US_LOGGEDOUT','You are now logged out');
-define('_US_THANKYOUFORVISIT','Thank you for your visit to our site!');
-define('_US_INCORRECTLOGIN','Incorrect Login!');
-define('_US_LOGGINGU','Thank you for logging in, %s.');
-define('_US_RESETPASSWORD','Reset your password');
-define('_US_SUBRESETPASSWORD','Reset Password');
-define('_US_RESETPASSTITLE','Your password has expired!');
-define('_US_RESETPASSINFO','Please complete the following form in order to reset your password. If your email, login name and current password all match our record, your password will be changed instantly and you will be able to log back in!');
-define('_US_PASSEXPIRED','Your password has expired.<br />You will now be redirected to a form where you will be able to reset your password.');
-define('_US_SORRYUNAMENOTMATCHEMAIL','The login name entered is not associated with the given Email address!');
-define('_US_PWDRESET','Your password has been reset successfully!');
-define('_US_SORRYINCORRECTPASS','You have entered your current password incorrectly!');
+define('_US_NOTREGISTERED','Non sei iscritto? Clicca <a href=register.php>qui</a> per iscriverti.');
+define('_US_LOSTPASSWORD','Hai dimenticato la password?');
+define('_US_NOPROBLEM','Non ti preoccupare, inserisci l\'indirizzo email che hai utilizzato durante l\'iscrizione e riceverai al pi&ugrave; presto una nuova password.');
+define('_US_YOUREMAIL','Il tuo indirizzo email: ');
+define('_US_SENDPASSWORD','Invia password');
+define('_US_LOGGEDOUT','Ti sei disconnesso');
+define('_US_THANKYOUFORVISIT','La tua sessione &egrave; chiusa, ciao e a presto!');
+define('_US_INCORRECTLOGIN','Login non riuscito');
+define('_US_LOGGINGU','Ora sei un utente registrato, %s.');
+define('_US_RESETPASSWORD','Ripristina la tua password');
+define('_US_SUBRESETPASSWORD','Ripristina password');
+define('_US_RESETPASSTITLE','La tua password &egrave; scaduta!');
+define('_US_RESETPASSINFO','Sei pregato di completare il seguente modulo per ripristinare la tua password. Se la tua email, nome utente e attuale password coincidono con i dati contenuti nel database la tua password sar&agrave; cambiata istantaneamente e tu sarai in grado di fare subito il login!');
+define('_US_PASSEXPIRED','La tua password &egrave; scaduta.<br />Sarai subito reindirizzato a un modulo dove sarai in grado di ripristinare la password.');
+define('_US_SORRYUNAMENOTMATCHEMAIL','Il nome utente inserito non &egrave; associato a nessun indirizzo email memorizzato nel database!');
+define('_US_PWDRESET','La tua password &egrave; stata ripristinata con successo!');
+define('_US_SORRYINCORRECTPASS','Hai inserito la tua password in modo errato!');
 
 // 2001-11-17 ADD
-define('_US_NOACTTPADM','The selected user has been deactivated or has not been activated yet.<br />Please contact the administrator for details.');
-define('_US_ACTKEYNOT','Activation key not correct!');
-define('_US_ACONTACT','Selected account is already activated!');
-define('_US_ACTLOGIN','Your account has been activated. Please login with the registered password.');
-define('_US_NOPERMISS','Sorry, you dont have the permission to perform this action!');
-define('_US_SURETODEL','Are you sure you want to delete your account?');
-define('_US_REMOVEINFO','This will remove all your info from our database.');
-define('_US_BEENDELED','Your account has been deleted.');
-define('_US_REMEMBERME', 'Remember me');
+define('_US_NOACTTPADM','Questo utente &egrave; stato disattivato.<br> Per maggiori informazioni contatta l\'amministratore di questo sito.');
+define('_US_ACTKEYNOT','Chiave di attivazione errata!');
+define('_US_ACONTACT','Il nome che hai scelto esiste gi&ugrave;!');
+define('_US_ACTLOGIN','Il tuo account &egrave; stato attivato. Ora puoi fare il login ed accedere alle aree riservate del sito.');
+define('_US_NOPERMISS','Spiacente, ma non hai il permesso di eseguire questa operazione!');
+define('_US_SURETODEL','Sei sicuro di voler eliminare la tua iscrizione?');
+define('_US_REMOVEINFO','Tutti i tuoi dati saranno eliminati.');
+define('_US_BEENDELED','La tua iscrizione &egrave; stata cancellata.');
+define('_US_REMEMBERME', 'Ricordami');
 
 //%%%%%%		File Name register.php 		%%%%%
-define('_US_USERREG','User Registration');
+define('_US_USERREG','Iscrizione utente');
 define('_US_EMAIL','Email');
-define('_US_ALLOWVIEWEMAIL','Allow other users to view my email address');
-define('_US_WEBSITE','Website');
-define('_US_TIMEZONE','Time Zone');
+define('_US_ALLOWVIEWEMAIL','Permetti agli altri utenti di vedere il tuo indirizzo email');
+define('_US_WEBSITE','Sito Web');
+define('_US_TIMEZONE','Fuso orario');
 define('_US_AVATAR','Avatar');
-define('_US_VERIFYPASS','Verify Password');
-define('_US_SUBMIT','Submit');
+define('_US_VERIFYPASS','Verifica password');
+define('_US_SUBMIT','Invia');
 define('_US_LOGINNAME','Username');
-define('_US_FINISH','Finish');
-define('_US_REGISTERNG','Could not register new user.');
-define('_US_MAILOK','Receive occasional email notices from administrators and moderators?');
-define('_US_DISCLAIMER','Disclaimer');
-define('_US_IAGREE','I agree to the above');
-define('_US_UNEEDAGREE', 'Sorry, you have to agree to our disclaimer to get registered.');
-define('_US_NOREGISTER','Sorry, we are currently closed for new user registrations');
+define('_US_FINISH','Termina la iscrizione');
+define('_US_REGISTERNG','Non puoi iscrivere un altro utente.');
+define('_US_MAILOK','Consenti agli amministratori del sito e ai moderatori di inviarti occasionali newsletters?');
+define('_US_DISCLAIMER','Condizioni di utilizzo del servizio');
+define('_US_IAGREE','Accetto tutte le condizioni sopra riportate');
+define('_US_UNEEDAGREE', 'Spiacente ma &egrave; necessario accettare le condizioni di utilizzo del servizio, per completare l\'iscrizione.');
+define('_US_NOREGISTER','Spiacente ma al momento non &egrave; possibile accettare ulteriori nuove iscrizioni.');
 
 // %s is username. This is a subject for email
-define('_US_USERKEYFOR','User activation key for %s');
+define('_US_USERKEYFOR','Chiave di attivazione per l\'utente %s');
 
-define('_US_YOURREGISTERED','You are now registered. An email containing a user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
-define('_US_YOURREGMAILNG','You are now registered. However, we were unable to send the activation mail to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
-define('_US_YOURREGISTERED2','You are now registered.  Please wait for your account to be activated by the adminstrators.  You will receive an email once you are activated.  This could take a while so please be patient.');
+define('_US_YOURREGISTERED','Ora sei un utente iscritto. Presto riceverai un email con i dati che hai inserito durante l\'iscrizione, segui le istruzioni che riceverai per accedere al sito.');
+define('_US_YOURREGMAILNG','Adesso sei iscritto come utente del sito. Purtroppo non &egrave; stato possibile inviarti l\'email con il link per attivare la tua utenza a causa di un errore interno verificatosi sul nostro server di posta elettronica.<br /> Ti preghiamo di contattare il webmaster via email e segnalare il problema.');
+define('_US_YOURREGISTERED2','Adesso sei un utente iscritto. Sei pregato di attendere l\'attivazione dell\'iscrizione da parte di un amministratore del sito. Riceverai un\'email di notifica una volta che il tuo account sar&agrave; stato attivato. Questa operazione potrebbe richiedere del tempo, cerca di essere paziente.');
 
 // %s is your site name
-define('_US_NEWUSERREGAT','New user registration at %s');
+define('_US_NEWUSERREGAT','Nuovo utente su %s');
 // %s is a username
-define('_US_HASJUSTREG','%s has just registered!');
+define('_US_HASJUSTREG','%s si &egrave; appena iscritto!');
 
-define('_US_INVALIDMAIL','ERROR: Invalid email');
-define('_US_INVALIDNICKNAME','ERROR: Invalid Loginname, please try an other Loginname.');
-define('_US_NICKNAMETOOLONG','Username is too long. It must be less than %s characters.');
-define('_US_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');
-define('_US_NAMERESERVED','ERROR: Name is reserved.');
-define('_US_NICKNAMENOSPACES','There cannot be any spaces in the Username.');
-define('_US_LOGINNAMETAKEN','ERROR: Username taken.');
-define('_US_NICKNAMETAKEN','ERROR: Display Name taken.');
-define('_US_EMAILTAKEN','ERROR: Email address already registered.');
-define('_US_ENTERPWD','ERROR: You must provide a password.');
-define('_US_SORRYNOTFOUND','Sorry, no corresponding user info was found.');
+define('_US_INVALIDMAIL','ERRORE: L\'indirizzo email non &egrave; valido');
+define('_US_INVALIDNICKNAME','ERRORE: Nick non valido');
+define('_US_NICKNAMETOOLONG','Nick troppo lungo. Il nick non deve superare i %s caratteri.');
+define('_US_NICKNAMETOOSHORT','Nick troppo corto. Il nick deve contenere almeno %s caratteri.');
+define('_US_NAMERESERVED','ERRORE: Questo &egrave; un nick riservato.');
+define('_US_NICKNAMENOSPACES','Non possono esserci spazi nel nick.');
+define('_US_LOGINNAMETAKEN','ERRORE: Nome Utente gi&agrave; utilizzato.');
+define('_US_NICKNAMETAKEN','ERRORE: Nick gi&agrave; utilizzato.');
+define('_US_EMAILTAKEN','ERRORE: Indirizzo email gi&agrave; utilizzato.');
+define('_US_ENTERPWD','ERRORE: Devi inserire una password.');
+define('_US_SORRYNOTFOUND','Spiacenti, ma non &egrave; stata trovata alcuna informazione sull\'utente.');
 
-define('_US_USERINVITE', 'Membership invitation');
-define('_US_INVITENONE','ERROR: Registration is by invitation only.');
-define('_US_INVITEINVALID','ERROR: Incorrect invitation code.');
-define('_US_INVITEEXPIRED','ERROR: Invitation code is already used or expired.');
+define('_US_USERINVITE', 'Iscrizione al sito su invito');
+define('_US_INVITENONE','ERRORE: la registrazione al sito &egrave; solo su invito.');
+define('_US_INVITEINVALID','ERRORE: Errato codice di invito.');
+define('_US_INVITEEXPIRED','ERRORE: Questo codice di invito &egrave; gi&agrave; stato utilizzato o &egrave; scaduto.');
 
-define('_US_INVITEBYMEMBER','Only an existing member can invite new members; please request an invitation email from some registered member.');
-define('_US_INVITEMAILERR','We were unable to send the mail with registration link to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
-define('_US_INVITEDBERR','We were unable to process your registration request due to an internal error. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
-define('_US_INVITESENT','An email containing registration link has been sent to the email account you provided. Please follow the instructions in the mail to register your account. This could take few minutes so please be patient.');
+define('_US_INVITEBYMEMBER','Solo un utente registrato pu&ograve; invitare nuovi utenti. Sei pregato di richiedere un invito email da un utente esistente.');
+define('_US_INVITEMAILERR','Non siamo in grado di inviare la mail contenente il link di registrazione a causa di un errore interno dovuto al nostro server. Siamo spiacenti per l\'inconveniente, ti preghiamo di provare ancora e, se il problema persiste, di contattare l\'amministratore del sito con una email notificando la situazione. <br />');
+define('_US_INVITEDBERR','Non siamo in grado di procedere nella tua richiesta di registrazione a causa di un errore interno. Siamo spiacenti, ti preghiamo di provare ancora e se il problema persiste, di contattare l\'amministratore del sito con una email notificando la situazione. <br />');
+define('_US_INVITESENT','Una email contenente il link di registrazione &egrave; stata inviata all\'account email indicato. Si prega di seguire le istruzioni contenute per registrare la tua iscrizione. Ci&ograve; impiegher&agrave; qualche minuto di pazienza nell\'attesa.');
 // %s is your site name
-define('_US_INVITEREGLINK','Registration invitation from %s');
+define('_US_INVITEREGLINK','Invito alla iscrizione da parte di %s');
 
 // %s is your site name
-define('_US_NEWPWDREQ','New Password Request at %s');
-define('_US_YOURACCOUNT', 'Your account at %s');
+define('_US_NEWPWDREQ','Nuova password richiesta su %s');
+define('_US_YOURACCOUNT', 'Il tuo account su %s');
 
-define('_US_MAILPWDNG','mail_password: could not update user entry. Contact the Administrator');
-define('_US_RESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
+define('_US_MAILPWDNG','mail_password: aggiornamento non riuscito. Contatta l\'amministratore.');
+define('_US_RESETPWDNG','reset_password: aggiornamento della password non riuscito. Contatta l\'amministratore');
 
-define('_US_RESETPWDREQ','Reset Password Request at %s');
-define('_US_MAILRESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
-define('_US_NEWPASSWORD','New Password');
-define('_US_YOURUSERNAME','Your Username');
-define('_US_CURRENTPASS','Your Current Password');
-define('_US_BADPWD','Bad Password, Password can not contain username.');
+define('_US_RESETPWDREQ','Richiesta di ripristino della password su %s');
+define('_US_MAILRESETPWDNG','reset_password: aggiornamento dati utente non riuscito. Contatta l\'amministratore');
+define('_US_NEWPASSWORD','Nuova password');
+define('_US_YOURUSERNAME','Il tuo nome utente');
+define('_US_CURRENTPASS','La tua attuale password');
+define('_US_BADPWD','Password scadente, la password non pu&ograve; contenere il nome utente.');
 
 // %s is a username
-define('_US_PWDMAILED','Password for %s mailed.');
-define('_US_CONFMAIL','Confirmation Mail for %s mailed.');
-define('_US_ACTVMAILNG', 'Failed sending notification mail to %s');
-define('_US_ACTVMAILOK', 'Notification mail to %s sent.');
+define('_US_PWDMAILED','La nuova password per l\'utente %s &egrave; stata inviata.');
+define('_US_CONFMAIL','L\'email di conferma per l\'utente %s &egrave; stata inviata.');
+define('_US_ACTVMAILNG', 'L\'invio dell\'email di notifica all\'utente %s &egrave; fallito!');
+define('_US_ACTVMAILOK', 'Email di notifica per l\'utente %s inviata con successo!');
 
 //%%%%%%		File Name userinfo.php 		%%%%%
-define('_US_SELECTNG','No User Selected! Please go back and try again.');
+define('_US_SELECTNG','Nessun utente selezionato! Per favore, torna indietro e riprova.');
 define('_US_PM','PM');
 define('_US_ICQ','ICQ');
 define('_US_AIM','AIM');
 define('_US_YIM','YIM');
-define('_US_MSNM','MSNM');
-define('_US_LOCATION','Location');
-define('_US_OCCUPATION','Occupation');
-define('_US_INTEREST','Interest');
-define('_US_SIGNATURE','Signature');
-define('_US_EXTRAINFO','Extra Info');
-define('_US_EDITPROFILE','Edit Profile');
+define('_US_MSNM','MSN');
+define('_US_LOCATION','Localit&agrave;');
+define('_US_OCCUPATION','Occupazione');
+define('_US_INTEREST','Interessi');
+define('_US_SIGNATURE','Firma');
+define('_US_EXTRAINFO','Ulteriori informazioni');
+define('_US_EDITPROFILE','Modifica profilo');
 define('_US_LOGOUT','Logout');
-define('_US_INBOX','Inbox');
-define('_US_MEMBERSINCE','Member Since');
-define('_US_RANK','Rank');
-define('_US_POSTS','Comments/Posts');
-define('_US_LASTLOGIN','Last Login');
-define('_US_ALLABOUT','All about %s');
-define('_US_STATISTICS','Statistics');
-define('_US_MYINFO','My Info');
-define('_US_BASICINFO','Basic information');
-define('_US_MOREABOUT','More About Me');
-define('_US_SHOWALL','Show All');
+define('_US_INBOX','In arrivo');
+define('_US_MEMBERSINCE','Iscritto il');
+define('_US_RANK','Livello');
+define('_US_POSTS','Messaggi');
+define('_US_LASTLOGIN','Ultimo login');
+define('_US_ALLABOUT','Profilo di %s');
+define('_US_STATISTICS','Statistiche');
+define('_US_MYINFO','I miei dati');
+define('_US_BASICINFO','Dati di base');
+define('_US_MOREABOUT','Altro su di me');
+define('_US_SHOWALL','Mostra tutto');
 
 //%%%%%%		File Name edituser.php 		%%%%%
-define('_US_PROFILE','Profile');
-define('_US_REALNAME','Real Name');
-define('_US_SHOWSIG','Always attach my signature');
-define('_US_CDISPLAYMODE','Comments Display Mode');
-define('_US_CSORTORDER','Comments Sort Order');
+define('_US_PROFILE','Profilo');
+define('_US_REALNAME','Nome');
+define('_US_SHOWSIG','Aggiungi sempre la mia firma');
+define('_US_CDISPLAYMODE','Visualizzazione dei commenti');
+define('_US_CSORTORDER','Ordine di visualizzazione dei commenti');
 define('_US_PASSWORD','Password');
-define('_US_TYPEPASSTWICE','(type a new password twice to change it)');
-define('_US_SAVECHANGES','Save Changes');
-define('_US_NOEDITRIGHT',"Sorry, you don't have the right to edit this user's info.");
-define('_US_PASSNOTSAME','Both passwords are different. They must be identical.');
-define('_US_PWDTOOSHORT','Sorry, your password must be at least <b>%s</b> characters long.');
-define('_US_PROFUPDATED','Your Profile Updated!');
-define('_US_USECOOKIE','Store my user name in a cookie for 1 year');
+define('_US_TYPEPASSTWICE','(scrivere la nuova password due volte nel caso si desideri cambiarla)');
+define('_US_SAVECHANGES','Salva le modifiche');
+define('_US_NOEDITRIGHT',"Spiacenti, ma non hai i privilegi per modificare i dati di questo utente.");
+define('_US_PASSNOTSAME','Le due password sono diverse. E\' necessario che siano identiche!');
+define('_US_PWDTOOSHORT','Spiacenti, ma la tua password deve essere lunga almeno <b>%s</b> caratteri.');
+define('_US_PROFUPDATED','Il tuo profilo &egrave; stato aggiornato con successo!');
+define('_US_USECOOKIE','Scrivi il mio nick in un cookie per il periodo di un anno');
 //define('_US_NO','No');
-define('_US_DELACCOUNT','Delete Account');
-define('_US_MYAVATAR', 'My Avatar');
-define('_US_UPLOADMYAVATAR', 'Upload Avatar');
-define('_US_MAXPIXEL','Max Pixels');
-define('_US_MAXIMGSZ','Max Image Size (Bytes)');
-define('_US_SELFILE','Select file');
-define('_US_OLDDELETED','Your old avatar will be deleted!');
-define('_US_CHOOSEAVT', 'Choose avatar from the available list');
-define('_US_SELECT_THEME', 'Default Theme');
-define('_US_SELECT_LANG', 'Default Language');
+define('_US_DELACCOUNT','Elimina l\'account');
+define('_US_MYAVATAR', 'Il mio avatar');
+define('_US_UPLOADMYAVATAR', 'Trasferisci un avatar personale sul server');
+define('_US_MAXPIXEL','Numero massimo di pixel');
+define('_US_MAXIMGSZ','Dimensione massima dell\'immagine (in byte)');
+define('_US_SELFILE','Scegli il file');
+define('_US_OLDDELETED','Il tuo vecchio avatar sar&agrave; cancellato dal server!');
+define('_US_CHOOSEAVT', 'Scegli dalla lista uno degli avatar disponibili.');
+define('_US_SELECT_THEME', 'Tema grafico selezionato');
+define('_US_SELECT_LANG', 'Lingua di Default');
 
-define('_US_PRESSLOGIN', 'Press the button below to login');
+define('_US_PRESSLOGIN', 'Premere il pulsante seguente per effettuare il login');
 
-define('_US_ADMINNO', 'User in the webmasters group cannot be removed');
-define('_US_GROUPS', 'User\'s Groups');
+define('_US_ADMINNO', 'Gli utenti del gruppo dei Webmaster non possono essere eliminati');
+define('_US_GROUPS', 'Gruppo/i dell\'utente');
 
-define('_US_YOURREGISTRATION', 'Your registration at %s');
-define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
-define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
-define('_US_REGFORM_NOJAVASCRIPT', 'To log in at the site it\'s necessary that your browser has javascript enabled.');
-define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
-define('_US_CHANGE_PASSWORD', 'Change Password?');
-define('_US_POSTSNOTENOUGH','Sorry, at least you need to have <b>%s</b> posts, to be able to upload your avatar.');
-define('_US_UNCHOOSEAVT', 'Until you reach this amount you can choose avatar from the list below.');
+define('_US_YOURREGISTRATION', 'La tua registrazione su %s');
+define('_US_WELCOMEMSGFAILED', 'Errore nell\'invio della email di benvenuto.');
+define('_US_NEWUSERNOTIFYADMINFAIL', 'Notifica all\'amministrazione di un nuovo utente fallita.');
+define('_US_REGFORM_NOJAVASCRIPT', 'Per il login al sito &egrave; necessario che il tuo browser abbia i javascript abilitati.');
+define('_US_REGFORM_WARNING', 'Per iscriverti come utente al sito &egrave; necessaria una password sicura. Prova a crearne una mescolando caratteri (maiuscoli e minuscoli), numeri e simboli, la pi&ugrave; complessa che sia ancora possibile da ricordare.');
+define('_US_CHANGE_PASSWORD', 'Cambia Password?');
+define('_US_POSTSNOTENOUGH','Spiacente, per inviare il tuo avatar personalizzato devi avere almeno <b>%s</b> posts.');
+define('_US_UNCHOOSEAVT', 'Finch&eacute; non raggiungi questo numero di posts non potrai scegliere un avatar da questa lista sottostante.');
 
 
-define('_US_SERVER_PROBLEM_OCCURRED','There was an issue while checking for spammers list!');
-define('_US_INVALIDIP','ERROR: This IP adress is not allowed to register');
+define('_US_SERVER_PROBLEM_OCCURRED','Si è verificato un problema nel controllo della lista degli spammer!');
+define('_US_INVALIDIP','ERROR: A questo indirizzo IP non è consentito registrarsi');
 
 ######################## Added in 1.2 ###################################
-define('_US_LOGIN_NAME', "Login Name");
-define('_US_OLD_PASSWORD', "Old Password");
-define('_US_NICKNAME','Display Name');
-define('_US_MULTLOGIN', 'It was not possible to login on the site!! <br />
+define('_US_LOGIN_NAME', "Nome login");
+define('_US_OLD_PASSWORD', "Vecchia password");
+define('_US_NICKNAME','Nome visualizzato');
+define('_US_MULTLOGIN', 'Non è possibile fare il login sul sito!<br />
         <p align="left" style="color:red;">
-        Possible causes:<br />
-         - You are already logged in on the site.<br />
-         - Someone else logged in on the site using your username and password.<br />
-         - You left the site or close the browser window without clicking the logout button.<br />
+        Possibili cause:<br />
+         - Sei già registrato nel sito.<br />
+         - Qualcun altro è registrato nel sito usando il tuo nome utente e password.<br />
+         - Hai lasciato il sito o chiuso la finestra del browser senza cliccare il bottone "Esci".<br />
         </p>
-        Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
+        Attendi alcuni minuti e prova ancora. Se il problema persiste contatta l\'amministratore del sito.');
 
 // added in 1.3
 define('_US_NOTIFICATIONS', "Notifications");
@@ -193,64 +193,64 @@ define('_US_NOTIFICATIONS', "Notifications");
 // relocated from finduser.php in 2.0
 // formselectuser.php
 
-define("_MA_USER_MORE", "Search users");
-define("_MA_USER_REMOVE", "Remove unselected users");
+define("_MA_USER_MORE", "Ricerca Utenti");
+define("_MA_USER_REMOVE", "Rimuovi gli utenti non selezionati");
 
 //%%%%%%	File Name findusers.php 	%%%%%
-define("_MA_USER_ADD_SELECTED", "Add selected users");
+define("_MA_USER_ADD_SELECTED", "Aggiungi utenti selezionati");
 
-define("_MA_USER_GROUP", "Group");
-define("_MA_USER_LEVEL", "Level");
-define("_MA_USER_LEVEL_ACTIVE", "Active");
-define("_MA_USER_LEVEL_INACTIVE", "Inactive");
-define("_MA_USER_LEVEL_DISABLED", "Disabled");
-define("_MA_USER_RANK", "Rank");
+define("_MA_USER_GROUP", "Gruppo");
+define("_MA_USER_LEVEL", "Stato");
+define("_MA_USER_LEVEL_ACTIVE", "Attivo");
+define("_MA_USER_LEVEL_INACTIVE", "Non attivo");
+define("_MA_USER_LEVEL_DISABLED", "Disabilitato");
+define("_MA_USER_RANK", "Livello");
 
-define("_MA_USER_FINDUS","Find Users");
-define("_MA_USER_REALNAME","Real Name");
-define("_MA_USER_REGDATE","Joined Date");
+define("_MA_USER_FINDUS","Trova Utenti");
+define("_MA_USER_REALNAME","Nome reale");
+define("_MA_USER_REGDATE","Data di registrazione");
 define("_MA_USER_EMAIL","Email");
-define("_MA_USER_PREVIOUS","Previous");
-define("_MA_USER_NEXT","Next");
-define("_MA_USER_USERSFOUND","%s user(s) found");
+define("_MA_USER_PREVIOUS","Precedente");
+define("_MA_USER_NEXT","Successivo");
+define("_MA_USER_USERSFOUND","%s utente/i trovato/i");
 
-define("_MA_USER_ACTUS", "Active Users: %s");
-define("_MA_USER_INACTUS", "Inactive Users: %s");
-define("_MA_USER_NOFOUND","No Users Found");
-define("_MA_USER_UNAME","User Name");
-define("_MA_USER_ICQ","ICQ Number");
-define("_MA_USER_AIM","AIM Handle");
-define("_MA_USER_YIM","YIM Handle");
-define("_MA_USER_MSNM","MSNM Handle");
-define("_MA_USER_LOCATION","Location contains");
-define("_MA_USER_OCCUPATION","Occupation contains");
-define("_MA_USER_INTEREST","Interest contains");
-define("_MA_USER_URLC","URL contains");
-define("_MA_USER_SORT","Sort by");
-define("_MA_USER_ORDER","Order");
-define("_MA_USER_LASTLOGIN","Last login");
-define("_MA_USER_POSTS","Number of posts");
-define("_MA_USER_ASC","Ascending order");
-define("_MA_USER_DESC","Descending order");
-define("_MA_USER_LIMIT","Number of users per page");
-define("_MA_USER_RESULTS", "Search results");
-define("_MA_USER_SHOWMAILOK", "Type of users to show");
-define("_MA_USER_MAILOK","Only users that accept mail");
-define("_MA_USER_MAILNG","Only users that don't accept mail");
-define("_MA_USER_BOTH", "All");
+define("_MA_USER_ACTUS", "Utenti attivi: %s");
+define("_MA_USER_INACTUS", "Utenti non attivi: %s");
+define("_MA_USER_NOFOUND","Nessun Utente trovato");
+define("_MA_USER_UNAME","Nome Utente");
+define("_MA_USER_ICQ","ICQ");
+define("_MA_USER_AIM","AIM");
+define("_MA_USER_YIM","YIM");
+define("_MA_USER_MSNM","MSNM");
+define("_MA_USER_LOCATION","La localit&agrave; contiene");
+define("_MA_USER_OCCUPATION","L'occupazione contiene");
+define("_MA_USER_INTEREST","Gli interessi contengono");
+define("_MA_USER_URLC","L'URL contiene");
+define("_MA_USER_SORT","Ordina per");
+define("_MA_USER_ORDER","Modalit&agrave; ordine");
+define("_MA_USER_LASTLOGIN","Ultimo login");
+define("_MA_USER_POSTS","Numero di messaggi");
+define("_MA_USER_ASC","Ordinamento ascendente");
+define("_MA_USER_DESC","Ordinamento discendente");
+define("_MA_USER_LIMIT","Numero di utenti per pagina");
+define("_MA_USER_RESULTS", "Risultati della ricerca");
+define("_MA_USER_SHOWMAILOK", "Tipologia di utenti da visualizzare");
+define("_MA_USER_MAILOK","Solo utenti che accettano mail");
+define("_MA_USER_MAILNG","Solo utenti che non accettano mail");
+define("_MA_USER_BOTH", "Tutti");
 
-define("_MA_USER_RANGE_LAST_LOGIN","Logged in past <span style='color:#ff0000;'>X</span>days");
-define("_MA_USER_RANGE_USER_REGDATE","Registered in past <span style='color:#ff0000;'>X</span>days");
-define("_MA_USER_RANGE_POSTS","Posts");
+define("_MA_USER_RANGE_LAST_LOGIN","Login negli ultimi <span style='color:#ff0000;'>X</span>giorni");
+define("_MA_USER_RANGE_USER_REGDATE","Registrati negli ultimi <span style='color:#ff0000;'>X</span>giorni");
+define("_MA_USER_RANGE_POSTS","Messaggi");
 
-define("_MA_USER_HASAVATAR", "Has avatar");
-define("_MA_USER_MODE_SIMPLE", "Simple mode");
-define("_MA_USER_MODE_ADVANCED", "Advanced mode");
-define("_MA_USER_MODE_QUERY", "Query mode");
+define("_MA_USER_HASAVATAR", "Utenti con avatar");
+define("_MA_USER_MODE_SIMPLE", "Modalit&agrave; Semplice");
+define("_MA_USER_MODE_ADVANCED", "Modalit&agrave; avanzata");
+define("_MA_USER_MODE_QUERY", "Modalit&agrave; di query");
 define("_MA_USER_QUERY", "Query");
 
-define("_MA_USER_SEARCHAGAIN", "Search again");
-define("_MA_USER_NOUSERSELECTED", "No user selected");
-define("_MA_USER_USERADDED", "Users have been added");
+define("_MA_USER_SEARCHAGAIN", "Cerca ancora");
+define("_MA_USER_NOUSERSELECTED", "Nessun utente selezionato");
+define("_MA_USER_USERADDED", "Gli utenti sono stati aggiunti");
 
-define("_MA_USER_SENDMAIL","Send Email");
+define("_MA_USER_SENDMAIL","Invia Email");
