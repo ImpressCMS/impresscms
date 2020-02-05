@@ -15,7 +15,7 @@ define("_TZ_GMTM3", "(GMT-3:00) Brasilia, Buenos Aires, Georgetown");
 define("_TZ_GMTM2", "(GMT-2:00) Mid-Atlantic");
 define("_TZ_GMTM1", "(GMT-1:00) Azores, Cape Verde Islands");
 define("_TZ_GMT0", "(GMT) Greenwich Mean Time, London, Dublin, Lisbon, Casablanca, Monrovia");
-define("_TZ_GMTP1", "(GMT+1:00) Amsterdam, Berlin, Roma, Copenhagen, Brussels, Madrid, Paris");
+define("_TZ_GMTP1", "(GMT+1:00) Amsterdam, Berlin, Rome, Copenhagen, Brussels, Madrid, Paris");
 define("_TZ_GMTP2", "(GMT+2:00) Athens, Istanbul, Minsk, Helsinki, Jerusalem, South Africa");
 define("_TZ_GMTP3", "(GMT+3:00) Baghdad, Kuwait, Riyadh, Moscow, St. Petersburg");
 define("_TZ_GMTP35", "(GMT+3:30) Tehran");
