@@ -1,36 +1,36 @@
 <?php
 
-define("_ERR_SEARCH","Search");
-define("_ERR_SEARCH_OUR_SITE","Search our site:");
-define("_ERR_ADVANCED_SEARCH","Advanced Search");
+define("_ERR_SEARCH","Cerca");
+define("_ERR_SEARCH_OUR_SITE","Cerca il nostro sito:");
+define("_ERR_ADVANCED_SEARCH","Ricerca avanzata");
 define("_ERR_START_AGAIN","Start again from the <a href='" . ICMS_URL . "'>home page</a>.");
-define("_ERR_CONTACT","Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
-define("_ERR_NO", "Error %u");
+define("_ERR_CONTACT","Contatta il <a href='mailto:%s'>webmaster</a> e riporta questo errore.");
+define("_ERR_NO", "Errore %u");
 
-define("_ERR_400_TITLE", "Bad Request");
-define("_ERR_400_DESC", "The request contains bad syntax or cannot be fulfilled.");
-define("_ERR_401_TITLE", "Forbidden");
+define("_ERR_400_TITLE", "Richiesta errata");
+define("_ERR_400_DESC", "La richiesta contiene una errata sintassi o non pu&ograve; essere eseguita.");
+define("_ERR_401_TITLE", "Proibito");
 define("_ERR_401_DESC", "");
-define("_ERR_402_TITLE", "Payment Required");
+define("_ERR_402_TITLE", "&Egrave; richiesto il pagamento");
 define("_ERR_402_DESC", "");
-define("_ERR_403_TITLE", "Forbidden");
+define("_ERR_403_TITLE", "Proibito");
 define("_ERR_403_DESC", "");
-define("_ERR_404_TITLE", "Not Found");
-define("_ERR_404_DESC", "The page you are trying to access could not be found.");
-define("_ERR_405_TITLE", "Method Not Allowed");
+define("_ERR_404_TITLE", "Pagina non trovata");
+define("_ERR_404_DESC", "La pagina che stai provando a accedere non pu&ograve; essere trovata.");
+define("_ERR_405_TITLE", "Metodo non autorizzato");
 define("_ERR_405_DESC", "");
-define("_ERR_406_TITLE", "Not Acceptable");
+define("_ERR_406_TITLE", "Non accettabile");
 define("_ERR_406_DESC", "");
-define("_ERR_407_TITLE", "Proxy Authentication Required");
+define("_ERR_407_TITLE", "Autenticazione proxy necessaria");
 define("_ERR_407_DESC", "");
-define("_ERR_408_TITLE", "Request Timeout");
+define("_ERR_408_TITLE", "Timeout della richiesta");
 define("_ERR_408_DESC", "");
-define("_ERR_409_TITLE", "Conflict");
+define("_ERR_409_TITLE", "Conflitto");
 define("_ERR_409_DESC", "");
-define("_ERR_500_TITLE", "Internal Server Error");
+define("_ERR_500_TITLE", "Errore interno del server");
 define("_ERR_500_DESC", "");
 
-define('_ERR_MSG_NO_MOD_REWRITE', 'No mod rewrite was installed on the server. Without it ICMS can\'t work');
+define('_ERR_MSG_NO_MOD_REWRITE', 'Nessun modulo \'mod_rewrite\' è stato installato sul server. Senza di esso ImpressCMS non può funzionare');
 
 /*
  *  // TODO: Define all the other errors constants (4xx and 5xx). Can be found in "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
