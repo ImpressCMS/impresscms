@@ -1,22 +1,22 @@
 <?php
 
-define("_ERR_SEARCH","Pesquisar");
-define("_ERR_SEARCH_OUR_SITE","Pesquisa no site:");
-define("_ERR_ADVANCED_SEARCH","Pesquisa Avançada");
+define("_ERR_SEARCH","Search");
+define("_ERR_SEARCH_OUR_SITE","Search our site:");
+define("_ERR_ADVANCED_SEARCH","Advanced Search");
 define("_ERR_START_AGAIN","Start again from the <a href='" . ICMS_URL . "'>home page</a>.");
-define("_ERR_CONTACT","Entre em Contato com a <a href='mailto:%s'>administração</a> para informar este erro.");
-define("_ERR_NO", "Erro %u");
+define("_ERR_CONTACT","Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
+define("_ERR_NO", "Error %u");
 
-define("_ERR_400_TITLE", "Solicitação Ruim");
-define("_ERR_400_DESC", "O pedido contém uma sintaxe ruim ou não pode ser cumprida.");
-define("_ERR_401_TITLE", "Proibido");
+define("_ERR_400_TITLE", "Bad Request");
+define("_ERR_400_DESC", "The request contains bad syntax or cannot be fulfilled.");
+define("_ERR_401_TITLE", "Forbidden");
 define("_ERR_401_DESC", "");
-define("_ERR_402_TITLE", "Pagamento Solicitado");
+define("_ERR_402_TITLE", "Payment Required");
 define("_ERR_402_DESC", "");
-define("_ERR_403_TITLE", "Proibido");
+define("_ERR_403_TITLE", "Forbidden");
 define("_ERR_403_DESC", "");
-define("_ERR_404_TITLE", "404 - Não encontrado");
-define("_ERR_404_DESC", "404 - Descrição do Erro");
+define("_ERR_404_TITLE", "Not Found");
+define("_ERR_404_DESC", "The page you are trying to access could not be found.");
 define("_ERR_405_TITLE", "Method Not Allowed");
 define("_ERR_405_DESC", "");
 define("_ERR_406_TITLE", "Not Acceptable");
