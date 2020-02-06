@@ -3,51 +3,51 @@
 /**
  * Constants used for migrations
  */
-define('_MIGRATION_RANK_1', 'Just popping in');
-define('_MIGRATION_RANK_2', 'Not too shy to talk');
-define('_MIGRATION_RANK_3', 'Quite a regular');
-define('_MIGRATION_RANK_4', 'Just can not stay away');
-define('_MIGRATION_RANK_5', 'Home away from home');
-define('_MIGRATION_RANK_6', 'Moderator');
+define('_MIGRATION_RANK_1', 'Solo apareciendo');
+define('_MIGRATION_RANK_2', 'No demasiado tímido para hablar');
+define('_MIGRATION_RANK_3', 'Muy normal');
+define('_MIGRATION_RANK_4', 'Sólo no se puede alejar');
+define('_MIGRATION_RANK_5', 'Hogar lejos de casa');
+define('_MIGRATION_RANK_6', 'Moderador');
 define('_MIGRATION_RANK_7', 'Webmaster');
 
-define('_MIGRATION_SMILE_1', 'Very Happy');
-define('_MIGRATION_SMILE_2', 'Smile');
-define('_MIGRATION_SMILE_3', 'Sad');
-define('_MIGRATION_SMILE_4', 'Surprised');
-define('_MIGRATION_SMILE_5', 'Confused');
-define('_MIGRATION_SMILE_6',  'Cool');
-define('_MIGRATION_SMILE_7', 'Laughing');
-define('_MIGRATION_SMILE_8', 'Mad');
+define('_MIGRATION_SMILE_1', 'Muy feliz');
+define('_MIGRATION_SMILE_2', 'Sonrisa');
+define('_MIGRATION_SMILE_3', 'Triste');
+define('_MIGRATION_SMILE_4', 'Sorprendido');
+define('_MIGRATION_SMILE_5', 'Confundido');
+define('_MIGRATION_SMILE_6',  'Herramienta');
+define('_MIGRATION_SMILE_7', 'Risas');
+define('_MIGRATION_SMILE_8', 'Loco');
 define('_MIGRATION_SMILE_9', 'Razz');
-define('_MIGRATION_SMILE_10', 'Embarrassed');
-define('_MIGRATION_SMILE_11', 'Crying (very sad)');
-define('_MIGRATION_SMILE_12', 'Evil or Very Mad');
-define('_MIGRATION_SMILE_13', 'Rolling Eyes');
-define('_MIGRATION_SMILE_14', 'Wink');
-define('_MIGRATION_SMILE_15', 'Another pint of beer');
-define('_MIGRATION_SMILE_16', 'ToolTimes at work');
-define('_MIGRATION_SMILE_17', 'I have an idea');
+define('_MIGRATION_SMILE_10', 'Embarazado');
+define('_MIGRATION_SMILE_11', 'Llorar (muy triste)');
+define('_MIGRATION_SMILE_12', 'Malvado o muy loco');
+define('_MIGRATION_SMILE_13', 'Ojos Rolling');
+define('_MIGRATION_SMILE_14', 'Vestido');
+define('_MIGRATION_SMILE_15', 'Otra pinta de cerveza');
+define('_MIGRATION_SMILE_16', 'Horarios de trabajo');
+define('_MIGRATION_SMILE_17', 'Tengo una idea');
 
-define('_MIGRATION_PAGE_2', 'Admin Control Panel');
-define('_MIGRATION_PAGE_3', 'Avatars');
+define('_MIGRATION_PAGE_2', 'Panel de control de admin');
+define('_MIGRATION_PAGE_3', 'Avatares');
 define('_MIGRATION_PAGE_4', 'Banners');
-define('_MIGRATION_PAGE_5', 'Blocks Admin');
-define('_MIGRATION_PAGE_6', 'Block Positions');
-define('_MIGRATION_PAGE_7', 'Comments');
-define('_MIGRATION_PAGE_9', 'Find Users');
-define('_MIGRATION_PAGE_10', 'Custom Tag');
-define('_MIGRATION_PAGE_11', 'Groups');
-define('_MIGRATION_PAGE_12', 'Image Manager');
-define('_MIGRATION_PAGE_13', 'Mail Users');
-define('_MIGRATION_PAGE_14', 'Modules Admin');
-define('_MIGRATION_PAGE_15', 'Symlink Manager');
-define('_MIGRATION_PAGE_16', 'Preferences');
-define('_MIGRATION_PAGE_17', 'Smilies');
-define('_MIGRATION_PAGE_18', 'Templates');
-define('_MIGRATION_PAGE_19',  'User Ranks');
-define('_MIGRATION_PAGE_20', 'User Edit');
-define('_MIGRATION_PAGE_21', 'Version Checker');
+define('_MIGRATION_PAGE_5', 'Administrador de bloques');
+define('_MIGRATION_PAGE_6', 'Bloquear posiciones');
+define('_MIGRATION_PAGE_7', 'Comentarios');
+define('_MIGRATION_PAGE_9', 'Buscar usuarios');
+define('_MIGRATION_PAGE_10', 'Etiqueta personalizada');
+define('_MIGRATION_PAGE_11', 'Grupos');
+define('_MIGRATION_PAGE_12', 'Gestor de imágenes');
+define('_MIGRATION_PAGE_13', 'Usuarios de correo');
+define('_MIGRATION_PAGE_14', 'Administrador de módulos');
+define('_MIGRATION_PAGE_15', 'Gestor de enlaces');
+define('_MIGRATION_PAGE_16', 'Preferencias');
+define('_MIGRATION_PAGE_17', 'Sonrisas');
+define('_MIGRATION_PAGE_18', 'Plantillas');
+define('_MIGRATION_PAGE_19',  'Rango de usuario');
+define('_MIGRATION_PAGE_20', 'Editar usuario');
+define('_MIGRATION_PAGE_21', 'Comprobador de versiones');
 
 define('_MIGRATION_WELCOME_ANONYMOUS', <<<EOF
 This is sample text for a block. If you are the administrator please log in to view more information.
@@ -76,29 +76,29 @@ EOF
 );
 
 define('_MIGRATIONS_LOCAOL_STNAME', 'ImpressCMS');
-define('_MIGRATIONS_LOCAL_SLOCGAN', 'Make a lasting impression');
+define('_MIGRATIONS_LOCAL_SLOCGAN', 'Hacer una impresión duradera');
 define('_MIGRATIONS_EXT_DATE_FUNC', '0');
-define('_MIGRATIONS_INSTALL_ANON', 'Anonymous');
-define('_MIGRATIONS_INSTALL_L165', 'The site is currently closed for maintenance. Please come back later.');
-define('_MIGRATIONS_WELCOME_MSG_CONTENT', 'Welcome {UNAME},
+define('_MIGRATIONS_INSTALL_ANON', 'Anónimo');
+define('_MIGRATIONS_INSTALL_L165', 'El sitio está actualmente cerrado por mantenimiento. Por favor, vuelva más tarde.');
+define('_MIGRATIONS_WELCOME_MSG_CONTENT', 'Bienvenido {UNAME},
 
-Your account has been successfully activated on {X_SITENAME}. As a member of our site, you will benefit from all the features reserved to registered members !
+Su cuenta ha sido activada con éxito en {X_SITENAME}. Como miembro de nuestro sitio, usted se beneficiará de todas las características reservadas a los miembros registrados.
 
-Once again, welcome to our site. Visit us often !
+Una vez más, bienvenido a nuestro sitio. Visítenos a menudo !
 
-If you did not registered to our site, please contact us at the following address {X_ADMINMAIL}, and we will fix the situation.
+Si no se registró en nuestro sitio, por favor contáctenos a la siguiente dirección {X_ADMINMAIL}y arreglaremos la situación.
 
 -----------
-Yours truly,
+Verdaderamente,
 {X_SITENAME}
 {X_SITEURL}');
-define('_MIGRATIONS_INSTALL_DISCLMR', 'While the administrators and moderators of this site will attempt to remove or edit any generally objectionable material as quickly as possible, it is impossible to review every message. Therefore you acknowledge that all posts made to this site express the views and opinions of the author and not the administrators, moderators or webmaster (except for posts by these people) and hence will not be held liable.
+define('_MIGRATIONS_INSTALL_DISCLMR', 'Mientras que los administradores y moderadores de este sitio intentarán eliminar o editar cualquier material generalmente censurable lo antes posible, es imposible revisar cada mensaje. Por lo tanto, usted reconoce que todos los mensajes realizados en este sitio expresan las opiniones y opiniones del autor y no de los administradores, los moderadores o webmaster (excepto los mensajes de estas personas) y por lo tanto no serán considerados responsables.
 
-You agree not to post any abusive, obscene, vulgar, slanderous, hateful, threatening, sexually-orientated or any other material that may violate any applicable laws. Doing so may lead to you being immediately and permanently banned (and your service provider being informed). The IP address of all posts is recorded to aid in enforcing these conditions. Creating multiple accounts for a single user is not allowed. You agree that the webmaster, administrator and moderators of this site have the right to remove, edit, move or close any topic at any time should they see fit. As a user you agree to any information you have entered above being stored in a database. While this information will not be disclosed to any third party without your consent the webmaster, administrator and moderators cannot be held responsible for any hacking attempt that may lead to the data being compromised.
+Usted acepta no publicar ningún material abusivo, oscuro, vulgar, calumnioso, odioso, amenazante, de orientación sexual o cualquier otro material que pueda violar cualquier ley aplicable. Hacerlo puede llevar a que usted sea prohibido de forma inmediata y permanente (y a que su proveedor de servicios esté informado). La dirección IP de todos los mensajes se registra para ayudar a hacer cumplir estas condiciones. No se permite la creación de cuentas múltiples para un solo usuario. Usted acepta que el webmaster, el administrador y los moderadores de este sitio tienen derecho a eliminar, editar, mover o cerrar cualquier tema en cualquier momento si lo considera oportuno. Como usuario, usted acepta que cualquier información que haya introducido anteriormente sea almacenada en una base de datos. Aunque esta información no será revelada a ningún tercero sin su consentimiento del webmaster, el administrador y los moderadores no pueden ser considerados responsables de cualquier intento de piratería que pueda llevar a que los datos se vean comprometidos.
 
-This site system uses cookies to store information on your local computer. These cookies do not contain any of the information you have entered above, they serve only to improve your viewing pleasure. The email address is used only for confirming your registration details and password (and for sending new passwords should you forget your current one).
+Este sistema de sitio utiliza cookies para almacenar información en su computadora local. Estas cookies no contienen ninguna de las informaciones que usted ha introducido anteriormente, sólo sirven para mejorar su placer visual. La dirección de correo electrónico se utiliza sólo para confirmar sus datos de registro y contraseña (y para enviar nuevas contraseñas si usted olvida su actual).
 
-By clicking Register below you agree to be bound by these conditions.');
+Al hacer clic en Registro, usted acepta estar obligado por estas condiciones.');
 define('_MIGRATIONS_INSTALL_PRIVPOLICY', <<<EOF
 <p>This privacy policy sets out how {X_SITENAME} uses and protects any information that you provide when you use this website. {X_SITENAME} is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. {X_SITENAME} may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
 </p><p>
@@ -154,15 +154,15 @@ EOF
 );
 define('_MIGRATIONS_LOCAL_FOOTER', 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define('_MIGRATIONS_LOCAL_SENSORTXT', '#OOPS#'); //Add local translation
-define('_MIGRATIONS_DEF_LANG_TAGS', 'en,de'); //Add local translation
-define('_MIGRATIONS_DEF_LANG_NAMES', 'english,german'); //Add local translation
-define('_MIGRATIONS_LOCAL_LANG_NAMES', 'English,Deutsch'); //Add local translation
+define('_MIGRATIONS_DEF_LANG_TAGS', 'es,de'); //Add local translation
+define('_MIGRATIONS_DEF_LANG_NAMES', 'chico'); //Add local translation
+define('_MIGRATIONS_LOCAL_LANG_NAMES', 'Inglés,Deutsch'); //Add local translation
 define('_MIGRATIONS_AM_RSSLOCALLINK_DESC', 'https://www.impresscms.org/modules/news/rss.php'); //Link to the rrs of local support site
 define('_MIGRATIONS_INSTALL_WEBMASTER', 'Webmasters');
-define('_MIGRATIONS_INSTALL_WEBMASTERD', 'Webmasters of this site');
-define('_MIGRATIONS_INSTALL_REGUSERS', 'Registered Users');
-define('_MIGRATIONS_INSTALL_REGUSERSD', 'Registered Users Group');
-define('_MIGRATIONS_INSTALL_ANONUSERS', 'Anonymous Users');
-define('_MIGRATIONS_INSTALL_ANONUSERSD', 'Anonymous Users Group');
-define('_MIGRATIONS_WELCOME_WEBMASTER', 'Welcome Webmaster !');
-define('_MIGRATIONS_WELCOME_ANONYMOUS', 'Welcome to an ImpressCMS powered website !');
+define('_MIGRATIONS_INSTALL_WEBMASTERD', 'Webmasters de este sitio');
+define('_MIGRATIONS_INSTALL_REGUSERS', 'Usuarios registrados');
+define('_MIGRATIONS_INSTALL_REGUSERSD', 'Grupo de usuarios registrados');
+define('_MIGRATIONS_INSTALL_ANONUSERS', 'Usuarios anónimos');
+define('_MIGRATIONS_INSTALL_ANONUSERSD', 'Grupo de usuarios anónimo');
+define('_MIGRATIONS_WELCOME_WEBMASTER', '¡Bienvenido Webmaster !');
+define('_MIGRATIONS_WELCOME_ANONYMOUS', 'Bienvenidos a un sitio web basado en ImpressCMS !');
