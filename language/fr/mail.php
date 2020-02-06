@@ -1,7 +1,7 @@
 <?php
-define("_MAIL_MSGBODY", "Message body is not set.");
-define("_MAIL_FAILOPTPL", "Failed opening template file.");
-define("_MAIL_SENDMAILNG", "Could not send mail to %s.");
-define("_MAIL_MAILGOOD", "Mail sent to %s.");
-define("_MAIL_SENDPMNG", "Could not send private message to %s.");
-define("_MAIL_PMGOOD", "Private message sent to %s.");
+define("_MAIL_MSGBODY", "Le corps du message n'est pas saisi.");
+define("_MAIL_FAILOPTPL", "Echec de l'ouverture du fichier template.");
+define("_MAIL_SENDMAILNG", "Impossible d'envoyer le mail &agrave; %s.");
+define("_MAIL_MAILGOOD", "Email envoy&eacute; &agrave; %s.");
+define("_MAIL_SENDPMNG", "Impossible d'envoyer le message priv&eacute; &agrave; %s.");
+define("_MAIL_PMGOOD", "Message priv&eacute; envoy&eacute; &agrave; %s.");
