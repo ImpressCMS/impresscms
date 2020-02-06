@@ -1,22 +1,22 @@
 <?php
 
-define("_ERR_SEARCH","Search");
-define("_ERR_SEARCH_OUR_SITE","Search our site:");
-define("_ERR_ADVANCED_SEARCH","Advanced Search");
+define("_ERR_SEARCH","Zoeken");
+define("_ERR_SEARCH_OUR_SITE","Zoek op onze website:");
+define("_ERR_ADVANCED_SEARCH","Geavanceerd zoeken");
 define("_ERR_START_AGAIN","Start again from the <a href='" . ICMS_URL . "'>home page</a>.");
-define("_ERR_CONTACT","Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
-define("_ERR_NO", "Error %u");
+define("_ERR_CONTACT","Neem contact op met de <a href='mailto:%s'>webmaster</a> om deze fout te melden.");
+define("_ERR_NO", "Fout %u");
 
-define("_ERR_400_TITLE", "Bad Request");
-define("_ERR_400_DESC", "The request contains bad syntax or cannot be fulfilled.");
-define("_ERR_401_TITLE", "Forbidden");
+define("_ERR_400_TITLE", "Fout verzoek");
+define("_ERR_400_DESC", "Het verzoek bevat een verkeerde syntax of kan niet worden beantwoord.");
+define("_ERR_401_TITLE", "Verboden");
 define("_ERR_401_DESC", "");
-define("_ERR_402_TITLE", "Payment Required");
+define("_ERR_402_TITLE", "Betaling vereist");
 define("_ERR_402_DESC", "");
-define("_ERR_403_TITLE", "Forbidden");
+define("_ERR_403_TITLE", "Verboden");
 define("_ERR_403_DESC", "");
-define("_ERR_404_TITLE", "Not Found");
-define("_ERR_404_DESC", "The page you are trying to access could not be found.");
+define("_ERR_404_TITLE", "Niet gevonden");
+define("_ERR_404_DESC", "De pagina waartoe u toegang probeert te krijgen kon niet worden gevonden.");
 define("_ERR_405_TITLE", "Method Not Allowed");
 define("_ERR_405_DESC", "");
 define("_ERR_406_TITLE", "Not Acceptable");
