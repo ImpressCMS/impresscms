@@ -1,7 +1,7 @@
 <?php
 
 define("_MSC_YOURNAMEC","Your Name: ");
-define("_MSC_YOUREMAILC","Your Email: ");
+define("_MSC_YOUREMAILC","Ваш e-mail адрес: ");
 define("_MSC_FRIENDNAMEC","Friend Name: ");
 define("_MSC_FRIENDEMAILC","Friend Email: ");
 define("_MSC_RECOMMENDSITE","Recommend this Site to a Friend");
