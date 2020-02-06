@@ -1,76 +1,76 @@
 <?php
 
 //%%%%%%		File Name user.php 		%%%%%
-define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
-define('_US_LOSTPASSWORD','Lost your password?');
-define('_US_NOPROBLEM','No problem. Simply enter the e-mail address we have on file for your account.');
-define('_US_YOUREMAIL','Your Email: ');
-define('_US_SENDPASSWORD','Send Password');
-define('_US_LOGGEDOUT','You are now logged out');
-define('_US_THANKYOUFORVISIT','Thank you for your visit to our site!');
-define('_US_INCORRECTLOGIN','Incorrect Login!');
-define('_US_LOGGINGU','Thank you for logging in, %s.');
-define('_US_RESETPASSWORD','Reset your password');
-define('_US_SUBRESETPASSWORD','Reset Password');
-define('_US_RESETPASSTITLE','Your password has expired!');
-define('_US_RESETPASSINFO','Please complete the following form in order to reset your password. If your email, login name and current password all match our record, your password will be changed instantly and you will be able to log back in!');
-define('_US_PASSEXPIRED','Your password has expired.<br />You will now be redirected to a form where you will be able to reset your password.');
-define('_US_SORRYUNAMENOTMATCHEMAIL','The login name entered is not associated with the given Email address!');
-define('_US_PWDRESET','Your password has been reset successfully!');
-define('_US_SORRYINCORRECTPASS','You have entered your current password incorrectly!');
+define('_US_NOTREGISTERED','Вы не зарегистрированы?  Нажмите <a href=register.php>здесь</a>.');
+define('_US_LOSTPASSWORD','Забыли свой пароль?');
+define('_US_NOPROBLEM','Нет проблем. Просто введите e-mail Вашей учетной записи.');
+define('_US_YOUREMAIL','Ваш e-mail адрес: ');
+define('_US_SENDPASSWORD','Выслать пароль');
+define('_US_LOGGEDOUT','Теперь Вы завершили сеанс');
+define('_US_THANKYOUFORVISIT','Спасибо за визит на наш сайт!');
+define('_US_INCORRECTLOGIN','Неверный вход!');
+define('_US_LOGGINGU','Спасибо за визит на наш сайт, %s.');
+define('_US_RESETPASSWORD','Сброс Вашего пароля');
+define('_US_SUBRESETPASSWORD','Сброс пароля');
+define('_US_RESETPASSTITLE','Срок Вашего пароля истек!');
+define('_US_RESETPASSINFO','Пожалуйста заполните следующую форму заказа на сброс Вашего пароля. Если Ваш email, имя пользователя и текущий пароль соответствуют Вашей записи, пароль будет изменен и Вы сможете залогироваться вновь!');
+define('_US_PASSEXPIRED','Срок Вашего пароля истек.<br />Сейчас Вы будете перенаправлены на форму, где Вы сможете сбросить Ваш пароль.');
+define('_US_SORRYUNAMENOTMATCHEMAIL','Введенное имя пользователя не ассоциируется с Email адресом!');
+define('_US_PWDRESET','Ваш пароль сброшен (очищен)!');
+define('_US_SORRYINCORRECTPASS','Вы неверно ввели Ваш текущий пароль!');
 
 // 2001-11-17 ADD
-define('_US_NOACTTPADM','The selected user has been deactivated or has not been activated yet.<br />Please contact the administrator for details.');
-define('_US_ACTKEYNOT','Activation key not correct!');
-define('_US_ACONTACT','Selected account is already activated!');
-define('_US_ACTLOGIN','Your account has been activated. Please login with the registered password.');
-define('_US_NOPERMISS','Sorry, you dont have the permission to perform this action!');
-define('_US_SURETODEL','Are you sure you want to delete your account?');
-define('_US_REMOVEINFO','This will remove all your info from our database.');
-define('_US_BEENDELED','Your account has been deleted.');
-define('_US_REMEMBERME', 'Remember me');
+define('_US_NOACTTPADM','Выбранный пользователь был дезактивирован или еще не был активирован.<br />Пожалуйста свяжитесь с администратором для уточнения.');
+define('_US_ACTKEYNOT','Код активации не верен!');
+define('_US_ACONTACT','Выбранная учетная запись уже активирована!');
+define('_US_ACTLOGIN','Ваша учетная запись была активирована. Пожалуйста используйте имя и пароль введенные при регистрации.');
+define('_US_NOPERMISS','Извините, Вы не имеете прав для выполнения этой операции!');
+define('_US_SURETODEL','Вы уверены, что хотите удалить свою учетную запись?');
+define('_US_REMOVEINFO','Это приведет к удалению всей информации о Вас из нашей базы данных.');
+define('_US_BEENDELED','Ваша учетная запись была удалена.');
+define('_US_REMEMBERME', 'Запомнить меня');
 
 //%%%%%%		File Name register.php 		%%%%%
-define('_US_USERREG','User Registration');
-define('_US_EMAIL','Email');
-define('_US_ALLOWVIEWEMAIL','Allow other users to view my email address');
-define('_US_WEBSITE','Website');
-define('_US_TIMEZONE','Time Zone');
-define('_US_AVATAR','Avatar');
-define('_US_VERIFYPASS','Verify Password');
-define('_US_SUBMIT','Submit');
-define('_US_LOGINNAME','Username');
-define('_US_FINISH','Finish');
-define('_US_REGISTERNG','Could not register new user.');
-define('_US_MAILOK','Receive occasional email notices from administrators and moderators?');
-define('_US_DISCLAIMER','Disclaimer');
-define('_US_IAGREE','I agree to the above');
-define('_US_UNEEDAGREE', 'Sorry, you have to agree to our disclaimer to get registered.');
-define('_US_NOREGISTER','Sorry, we are currently closed for new user registrations');
+define('_US_USERREG','Регистрация пользователя');
+define('_US_EMAIL','E-mail');
+define('_US_ALLOWVIEWEMAIL','Разрешить другим пользователям видеть e-mail адрес');
+define('_US_WEBSITE','Адрес сайта');
+define('_US_TIMEZONE','Временная зона');
+define('_US_AVATAR','Аватар');
+define('_US_VERIFYPASS','Проверка пароля');
+define('_US_SUBMIT','Выполнить');
+define('_US_LOGINNAME','Имя пользователя');
+define('_US_FINISH','Завершить');
+define('_US_REGISTERNG','Не могу зарегистрировать нового пользователя.');
+define('_US_MAILOK','Принимать рассылаемые иногда предупреждения<br /> от администраторов и модераторов сайта?');
+define('_US_DISCLAIMER','Условия');
+define('_US_IAGREE','Я согласен со сказанным выше');
+define('_US_UNEEDAGREE', 'Извините, для регистрации Вы должны согласиться с нашими условиями.');
+define('_US_NOREGISTER','Извините, на данный момент сайт не принимает новых регистраций.');
 
 // %s is username. This is a subject for email
-define('_US_USERKEYFOR','User activation key for %s');
+define('_US_USERKEYFOR','Код активации пользователя для %s');
 
-define('_US_YOURREGISTERED','You are now registered. An email containing a user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
-define('_US_YOURREGMAILNG','You are now registered. However, we were unable to send the activation mail to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
-define('_US_YOURREGISTERED2','You are now registered.  Please wait for your account to be activated by the adminstrators.  You will receive an email once you are activated.  This could take a while so please be patient.');
+define('_US_YOURREGISTERED','Теперь Вы зарегистрированы. На введенный Вами при регистрации E-mail адрес выслано сообщение содержащее ключ активации пользователя. Пожалуйста следуйте инструкциям, указанным в e-mail сообщении для активации учетной записи. ');
+define('_US_YOURREGMAILNG','Теперь Вы зарегистрированы. Однако, мы не смогли выслать ключ активации на Ваш e-mail адрес по причине внутренней ошибки на нашем сервере. Мы приносим свои извинения за причиненные неудобства, пожалуйста свяжитесь с администратором сайта по e-mail для решения возникшей проблемы.');
+define('_US_YOURREGISTERED2','Теперь Вы зарегистрированы. Пожалуйста подождите пока ваша учетная запись не будет активирована администратором. Вы получите e-mail сообщение когда это произойдет. Это может занять некоторое время, поэтому будьте терпеливы.');
 
 // %s is your site name
-define('_US_NEWUSERREGAT','New user registration at %s');
+define('_US_NEWUSERREGAT','Новая регистрация пользователя на сайте %s');
 // %s is a username
-define('_US_HASJUSTREG','%s has just registered!');
+define('_US_HASJUSTREG','%s был только-что зарегистрирован!');
 
-define('_US_INVALIDMAIL','ERROR: Invalid email');
-define('_US_INVALIDNICKNAME','ERROR: Invalid Loginname, please try an other Loginname.');
-define('_US_NICKNAMETOOLONG','Username is too long. It must be less than %s characters.');
-define('_US_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');
-define('_US_NAMERESERVED','ERROR: Name is reserved.');
-define('_US_NICKNAMENOSPACES','There cannot be any spaces in the Username.');
+define('_US_INVALIDMAIL','ОШИБКА: Неверный e-mail');
+define('_US_INVALIDNICKNAME','ОШИБКА: Неверное имя пользователя');
+define('_US_NICKNAMETOOLONG','Имя пользователя слишком длинное. Оно должно быть менее %s символов.');
+define('_US_NICKNAMETOOSHORT','Имя пользователя слишком короткое. Оно должно быть более %s символов.');
+define('_US_NAMERESERVED','ОШИБКА: Имя зарезервировано.');
+define('_US_NICKNAMENOSPACES','Нельзя использовать пробелы в имени пользователя.');
 define('_US_LOGINNAMETAKEN','ERROR: Username taken.');
-define('_US_NICKNAMETAKEN','ERROR: Display Name taken.');
-define('_US_EMAILTAKEN','ERROR: Email address already registered.');
-define('_US_ENTERPWD','ERROR: You must provide a password.');
-define('_US_SORRYNOTFOUND','Sorry, no corresponding user info was found.');
+define('_US_NICKNAMETAKEN','ОШИБКА: Это имя пользователя уже занято.');
+define('_US_EMAILTAKEN','ОШИБКА: Такой e-mail адрес уже зарегистрирован.');
+define('_US_ENTERPWD','ОШИБКА: Вы должны ввести пароль.');
+define('_US_SORRYNOTFOUND','Извините, информация о введенном пользователе не найдена.');
 
 define('_US_USERINVITE', 'Membership invitation');
 define('_US_INVITENONE','ERROR: Registration is by invitation only.');
@@ -85,99 +85,99 @@ define('_US_INVITESENT','An email containing registration link has been sent to 
 define('_US_INVITEREGLINK','Registration invitation from %s');
 
 // %s is your site name
-define('_US_NEWPWDREQ','New Password Request at %s');
-define('_US_YOURACCOUNT', 'Your account at %s');
+define('_US_NEWPWDREQ','Запрос нового пароля на сайт %s');
+define('_US_YOURACCOUNT', 'Ваша учетная запись на сайте %s');
 
-define('_US_MAILPWDNG','mail_password: could not update user entry. Contact the Administrator');
-define('_US_RESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
+define('_US_MAILPWDNG','mail_password: не могу обновить запись пользователя. Свяжитесь с администратором');
+define('_US_RESETPWDNG','reset_password: невозможно обновить запись пользователя. Contact the Administrator');
 
-define('_US_RESETPWDREQ','Reset Password Request at %s');
-define('_US_MAILRESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
-define('_US_NEWPASSWORD','New Password');
-define('_US_YOURUSERNAME','Your Username');
-define('_US_CURRENTPASS','Your Current Password');
-define('_US_BADPWD','Bad Password, Password can not contain username.');
+define('_US_RESETPWDREQ','Запрос сброса пароля от %s');
+define('_US_MAILRESETPWDNG','reset_password: невозможно обновить запись пользователя. Contact the Administrator');
+define('_US_NEWPASSWORD','Новый пароль');
+define('_US_YOURUSERNAME','Ваше имя');
+define('_US_CURRENTPASS','Ваш текущий пароль');
+define('_US_BADPWD','Плохой пароль, Пароль не может сожержать имя пользователя.');
 
 // %s is a username
-define('_US_PWDMAILED','Password for %s mailed.');
-define('_US_CONFMAIL','Confirmation Mail for %s mailed.');
-define('_US_ACTVMAILNG', 'Failed sending notification mail to %s');
-define('_US_ACTVMAILOK', 'Notification mail to %s sent.');
+define('_US_PWDMAILED','Пароль для %s отправлен по e-mail.');
+define('_US_CONFMAIL','E-mail подтверждение для %s отправлено.');
+define('_US_ACTVMAILNG', 'Ошибка отправки e-mail сообщения для %s');
+define('_US_ACTVMAILOK', 'E-mail сообщение для %s отправлено.');
 
 //%%%%%%		File Name userinfo.php 		%%%%%
-define('_US_SELECTNG','No User Selected! Please go back and try again.');
-define('_US_PM','PM');
+define('_US_SELECTNG','Не выбран пользователь! Пожалуйста вернитесь назад и попробуйте снова.');
+define('_US_PM','Личные сообщения');
 define('_US_ICQ','ICQ');
 define('_US_AIM','AIM');
 define('_US_YIM','YIM');
 define('_US_MSNM','MSNM');
-define('_US_LOCATION','Location');
-define('_US_OCCUPATION','Occupation');
-define('_US_INTEREST','Interest');
-define('_US_SIGNATURE','Signature');
-define('_US_EXTRAINFO','Extra Info');
-define('_US_EDITPROFILE','Edit Profile');
-define('_US_LOGOUT','Logout');
-define('_US_INBOX','Inbox');
-define('_US_MEMBERSINCE','Member Since');
-define('_US_RANK','Rank');
-define('_US_POSTS','Comments/Posts');
-define('_US_LASTLOGIN','Last Login');
-define('_US_ALLABOUT','All about %s');
-define('_US_STATISTICS','Statistics');
-define('_US_MYINFO','My Info');
-define('_US_BASICINFO','Basic information');
-define('_US_MOREABOUT','More About Me');
-define('_US_SHOWALL','Show All');
+define('_US_LOCATION','Местожительство');
+define('_US_OCCUPATION','Род занятий');
+define('_US_INTEREST','Интересы');
+define('_US_SIGNATURE','Подпись');
+define('_US_EXTRAINFO','Дополнительная информация');
+define('_US_EDITPROFILE','Редактировать');
+define('_US_LOGOUT','Выход');
+define('_US_INBOX','Сообщения');
+define('_US_MEMBERSINCE','Дата регистрации');
+define('_US_RANK','Ранг');
+define('_US_POSTS','Комментариев/Сообщений');
+define('_US_LASTLOGIN','Последний вход');
+define('_US_ALLABOUT','Все о %s');
+define('_US_STATISTICS','Статистика');
+define('_US_MYINFO','Моя информация');
+define('_US_BASICINFO','Основная информация');
+define('_US_MOREABOUT','Дальше обо мне');
+define('_US_SHOWALL','Показать все');
 
 //%%%%%%		File Name edituser.php 		%%%%%
-define('_US_PROFILE','Profile');
-define('_US_REALNAME','Real Name');
-define('_US_SHOWSIG','Always attach my signature');
-define('_US_CDISPLAYMODE','Comments Display Mode');
-define('_US_CSORTORDER','Comments Sort Order');
-define('_US_PASSWORD','Password');
-define('_US_TYPEPASSTWICE','(type a new password twice to change it)');
-define('_US_SAVECHANGES','Save Changes');
-define('_US_NOEDITRIGHT',"Sorry, you don't have the right to edit this user's info.");
-define('_US_PASSNOTSAME','Both passwords are different. They must be identical.');
-define('_US_PWDTOOSHORT','Sorry, your password must be at least <b>%s</b> characters long.');
-define('_US_PROFUPDATED','Your Profile Updated!');
-define('_US_USECOOKIE','Store my user name in a cookie for 1 year');
+define('_US_PROFILE','Учетная запись');
+define('_US_REALNAME','Настоящее имя');
+define('_US_SHOWSIG','Всегда добавлять мою подпись');
+define('_US_CDISPLAYMODE','Режим отображения комментариев');
+define('_US_CSORTORDER','Порядок сортировки комментариев');
+define('_US_PASSWORD','Пароль');
+define('_US_TYPEPASSTWICE','(введите новый пароль дважды для его смены)');
+define('_US_SAVECHANGES','Сохранить изменения');
+define('_US_NOEDITRIGHT',"Извините, Вы не имеете прав для редактирования этой информации пользователя.");
+define('_US_PASSNOTSAME','Введенные пароли различаются. Они должны быть идентичными.');
+define('_US_PWDTOOSHORT','Извините, Ваш пароль должен содержать не менее <b>%s</b> символов.');
+define('_US_PROFUPDATED','Ваша учетная запись обновлена!');
+define('_US_USECOOKIE','Сохранить мое имя в "Cookie" на 1 год');
 //define('_US_NO','No');
-define('_US_DELACCOUNT','Delete Account');
-define('_US_MYAVATAR', 'My Avatar');
-define('_US_UPLOADMYAVATAR', 'Upload Avatar');
-define('_US_MAXPIXEL','Max Pixels');
-define('_US_MAXIMGSZ','Max Image Size (Bytes)');
-define('_US_SELFILE','Select file');
-define('_US_OLDDELETED','Your old avatar will be deleted!');
-define('_US_CHOOSEAVT', 'Choose avatar from the available list');
-define('_US_SELECT_THEME', 'Default Theme');
-define('_US_SELECT_LANG', 'Default Language');
+define('_US_DELACCOUNT','Удалить');
+define('_US_MYAVATAR', 'Мой аватар');
+define('_US_UPLOADMYAVATAR', 'Загрузка аватара');
+define('_US_MAXPIXEL','Максимум точек');
+define('_US_MAXIMGSZ','Максимальный размер рисунка (байт)');
+define('_US_SELFILE','Выбор файла');
+define('_US_OLDDELETED','Ваш старый аватар будет удален!');
+define('_US_CHOOSEAVT', 'Выберите аватар из доступного списка');
+define('_US_SELECT_THEME', 'Тема по умолчанию');
+define('_US_SELECT_LANG', 'Язык по умолчанию');
 
-define('_US_PRESSLOGIN', 'Press the button below to login');
+define('_US_PRESSLOGIN', 'Нажмите кнопку для входа в систему');
 
-define('_US_ADMINNO', 'User in the webmasters group cannot be removed');
-define('_US_GROUPS', 'User\'s Groups');
+define('_US_ADMINNO', 'Пользователь из группы вэбмастеров не может быть удалён');
+define('_US_GROUPS', 'Группы пользователей');
 
-define('_US_YOURREGISTRATION', 'Your registration at %s');
-define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
-define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
-define('_US_REGFORM_NOJAVASCRIPT', 'To log in at the site it\'s necessary that your browser has javascript enabled.');
-define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
-define('_US_CHANGE_PASSWORD', 'Change Password?');
-define('_US_POSTSNOTENOUGH','Sorry, at least you need to have <b>%s</b> posts, to be able to upload your avatar.');
-define('_US_UNCHOOSEAVT', 'Until you reach this amount you can choose avatar from the list below.');
+define('_US_YOURREGISTRATION', 'Ваша регистрация на %s');
+define('_US_WELCOMEMSGFAILED', 'Ощибка во время отправки приветственного email.');
+define('_US_NEWUSERNOTIFYADMINFAIL', 'Сбой во время оповещения администратора о регистрации нового пользователя.');
+define('_US_REGFORM_NOJAVASCRIPT', 'Чтобы войти в систему, Вам необходимо в браузере разрешить использование javascript.');
+define('_US_REGFORM_WARNING', 'Для регистрации на сайте Вам необходимо использовать защищенный пароль. Создайте пароль, используя буквы (верхний или нижний регистр), числа и символы. Создайте пароль по-возможности более комплексный, но чтобы Вы смогли его запомнить.');
+define('_US_CHANGE_PASSWORD', 'Изменить пароль?');
+define('_US_POSTSNOTENOUGH','Извините, Вы должны иметь не менее <b>%s</b> постов, чтобы обновить Ваш аватар.');
+define('_US_UNCHOOSEAVT', 'Вы можете выбрать аватар из списка.');
 
 
-define('_US_SERVER_PROBLEM_OCCURRED','There was an issue while checking for spammers list!');
-define('_US_INVALIDIP','ERROR: This IP adress is not allowed to register');
+define('_US_SERVER_PROBLEM_OCCURRED','Проблема при проверке списка спамеров!');
+define('_US_INVALIDIP','ОШИБКА: Этому IP-адресу не разрешено регистрироваться');
 
 ######################## Added in 1.2 ###################################
 define('_US_LOGIN_NAME', "Login Name");
 define('_US_OLD_PASSWORD', "Old Password");
-define('_US_NICKNAME','Display Name');
+define('_US_NICKNAME','Имя пользователя');
 define('_US_MULTLOGIN', 'It was not possible to login on the site!! <br />
         <p align="left" style="color:red;">
         Possible causes:<br />
@@ -201,17 +201,17 @@ define("_MA_USER_ADD_SELECTED", "Add selected users");
 
 define("_MA_USER_GROUP", "Group");
 define("_MA_USER_LEVEL", "Level");
-define("_MA_USER_LEVEL_ACTIVE", "Active");
+define("_MA_USER_LEVEL_ACTIVE", "Активный");
 define("_MA_USER_LEVEL_INACTIVE", "Inactive");
 define("_MA_USER_LEVEL_DISABLED", "Disabled");
-define("_MA_USER_RANK", "Rank");
+define("_MA_USER_RANK", "Ранг");
 
 define("_MA_USER_FINDUS","Find Users");
-define("_MA_USER_REALNAME","Real Name");
+define("_MA_USER_REALNAME","Настоящее имя");
 define("_MA_USER_REGDATE","Joined Date");
-define("_MA_USER_EMAIL","Email");
-define("_MA_USER_PREVIOUS","Previous");
-define("_MA_USER_NEXT","Next");
+define("_MA_USER_EMAIL","E-mail");
+define("_MA_USER_PREVIOUS","<< Пред.");
+define("_MA_USER_NEXT","След. >>");
 define("_MA_USER_USERSFOUND","%s user(s) found");
 
 define("_MA_USER_ACTUS", "Active Users: %s");
@@ -227,21 +227,21 @@ define("_MA_USER_OCCUPATION","Occupation contains");
 define("_MA_USER_INTEREST","Interest contains");
 define("_MA_USER_URLC","URL contains");
 define("_MA_USER_SORT","Sort by");
-define("_MA_USER_ORDER","Order");
+define("_MA_USER_ORDER","Порядок отображения в менеджере рисунков");
 define("_MA_USER_LASTLOGIN","Last login");
 define("_MA_USER_POSTS","Number of posts");
-define("_MA_USER_ASC","Ascending order");
-define("_MA_USER_DESC","Descending order");
+define("_MA_USER_ASC","По возрастанию");
+define("_MA_USER_DESC","По убывания");
 define("_MA_USER_LIMIT","Number of users per page");
 define("_MA_USER_RESULTS", "Search results");
 define("_MA_USER_SHOWMAILOK", "Type of users to show");
 define("_MA_USER_MAILOK","Only users that accept mail");
 define("_MA_USER_MAILNG","Only users that don't accept mail");
-define("_MA_USER_BOTH", "All");
+define("_MA_USER_BOTH", "Все");
 
 define("_MA_USER_RANGE_LAST_LOGIN","Logged in past <span style='color:#ff0000;'>X</span>days");
 define("_MA_USER_RANGE_USER_REGDATE","Registered in past <span style='color:#ff0000;'>X</span>days");
-define("_MA_USER_RANGE_POSTS","Posts");
+define("_MA_USER_RANGE_POSTS","Сообщений");
 
 define("_MA_USER_HASAVATAR", "Has avatar");
 define("_MA_USER_MODE_SIMPLE", "Simple mode");
