@@ -1,168 +1,168 @@
 <?php
 
 //%%%%%%	File Name mainfile.php 	%%%%%
-define('_PLEASEWAIT','Please Wait');
-define('_FETCHING','Loading...');
-define('_TAKINGBACK','Taking you back to where you were....');
-define('_LOGOUT','Logout');
-define('_SUBJECT','Subject');
-define('_MESSAGEICON','Message Icon');
-define('_COMMENTS','Comments');
-define('_POSTANON','Post Anonymously');
-define('_DISABLESMILEY','Disable smiley');
-define('_DISABLEHTML','Disable html');
-define('_PREVIEW','Preview');
+define('_PLEASEWAIT','Even geduld aub');
+define('_FETCHING','Bezig met inladen...');
+define('_TAKINGBACK','We brengen u terug naar waar u vandaan komt....');
+define('_LOGOUT','Uitloggen');
+define('_SUBJECT','Onderwerp');
+define('_MESSAGEICON','Bericht icoon');
+define('_COMMENTS','Reacties');
+define('_POSTANON','Anoniem posten');
+define('_DISABLESMILEY','Smileys uitschakelen');
+define('_DISABLEHTML','Html uitschakelen');
+define('_PREVIEW','Voorbeeld');
 
-define('_GO','Go!');
-define('_NESTED','Nested');
-define('_NOCOMMENTS','No Comments');
-define('_FLAT','Flat');
-define('_THREADED','Threaded');
-define('_OLDESTFIRST','Oldest First');
-define('_NEWESTFIRST','Newest First');
-define('_MORE','more...');
-define('_IFNOTRELOAD','If the page does not automatically reload, please click <a href="%s">here</a>');
-define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.');
-define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
-define('_WARNINNOTWRITEABLE','WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)');
+define('_GO','Start!');
+define('_NESTED','Genest');
+define('_NOCOMMENTS','Geen reacties');
+define('_FLAT','Plat');
+define('_THREADED','Ingekort');
+define('_OLDESTFIRST','Oudste Eerst');
+define('_NEWESTFIRST','Nieuwste Eerst');
+define('_MORE','meer...');
+define('_IFNOTRELOAD','Indien de pagina niet automatisch vernieuwt, klik dan <a href=%s>HIER</a>');
+define('_WARNINSTALL2','WAARSCHUWING: de map install staat nog op uw server. Verwijder deze om veiligheidsredenen.');
+define('_WARNINWRITEABLE','WAARSCHUWING: Bestand %s is overschrijfbaar door de server. <br />Verander de rechten voor dit bestand vanwege veiligheidsredenen.<br /> in Unix (444), in Win32 (alleen-lezen)');
+define('_WARNINNOTWRITEABLE','WAARSCHUWING: Bestand %s is niet overschrijfbaar door de server. <br />Verander de rechten voor dit bestand vanwege functionaliteitsredenen.<br /> in Unix (777), in Win32 (schrijfbaar)');
 
 // Error messages issued by icms_core_Object::cleanVars()
-define( '_XOBJ_ERR_REQUIRED', '%s is required' );
-define( '_XOBJ_ERR_SHORTERTHAN', '%s must be shorter than %d characters.' );
+define( '_XOBJ_ERR_REQUIRED', '%s is vereist' );
+define( '_XOBJ_ERR_SHORTERTHAN', '%s dient korter te zijn dan %d karakters.' );
 
 //%%%%%%	File Name themeuserpost.php 	%%%%%
-define('_PROFILE','Profile');
-define('_POSTEDBY','Posted by');
-define('_VISITWEBSITE','Visit Website');
-define('_SENDPMTO','Send Private Message to %s');
-define('_SENDEMAILTO','Send Email to %s');
-define('_ADD','Add');
-define('_REPLY','Reply');
-define('_DATE','Date');   // Posted date
+define('_PROFILE','Profiel');
+define('_POSTEDBY','Gepost door');
+define('_VISITWEBSITE','Bezoek website');
+define('_SENDPMTO','Stuur PM naar %s');
+define('_SENDEMAILTO','Verstuur E-mail naar %s');
+define('_ADD','Toevoegen');
+define('_REPLY','Beantwoorden');
+define('_DATE','Datum');   // Posted date
 
 //%%%%%%	File Name admin_functions.php 	%%%%%
-define('_MAIN','Main');
-define('_MANUAL','Manual');
+define('_MAIN','Hoofd');
+define('_MANUAL','Handleiding');
 define('_INFO','Info');
-define('_CPHOME','Admin Control Panel');
-define('_YOURHOME','Home Page');
+define('_CPHOME','Systeembeheer');
+define('_YOURHOME','Uw Homepage');
 
 //%%%%%%	File Name misc.php (who's-online popup)	%%%%%
-define('_WHOSONLINE','Who\'s Online');
-define('_GUESTS', 'Guests');
-define('_MEMBERS', 'Members');
-define('_ONLINEPHRASE','<b>%s</b> user(s) are online');
-define('_ONLINEPHRASEX','<b>%s</b> user(s) are browsing <b>%s</b>');
-define('_CLOSE','Close');  // Close window
+define('_WHOSONLINE','Wie is on-line');
+define('_GUESTS', 'Gasten');
+define('_MEMBERS', 'Leden');
+define('_ONLINEPHRASE','<b>%s</b> gebruiker(s) zijn on-line');
+define('_ONLINEPHRASEX','<b>%s</b> gebruiker(s) zijn op <b>%s</b>');
+define('_CLOSE','Sluit venster');  // Close window
 
 //%%%%%%	File Name module.textsanitizer.php 	%%%%%
-define('_QUOTEC','Quote:');
+define('_QUOTEC','Citaat:');
 
 //%%%%%%	File Name admin.php 	%%%%%
-define("_NOPERM","Sorry, you don't have permission to access this area.");
+define("_NOPERM","Sorry, u hebt geen toegang tot dit gedeelte.");
 
 //%%%%%		Common Phrases		%%%%%
-define("_NO","No");
-define("_YES","Yes");
-define("_EDIT","Edit");
-define("_DELETE","Delete");
-define("_SUBMIT","Submit");
-define("_MODULENOEXIST","Selected module does not exist!");
-define("_ALIGN","Align");
-define("_LEFT","Left");
-define("_CENTER","Center");
-define("_RIGHT","Right");
-define("_FORM_ENTER", "Please enter %s");
+define("_NO","Nee");
+define("_YES","Ja");
+define("_EDIT","Wijzig");
+define("_DELETE","Verwijder");
+define("_SUBMIT","Verstuur");
+define("_MODULENOEXIST","Geselecteerde module bestaat niet!");
+define("_ALIGN","Uitlijnen");
+define("_LEFT","Links");
+define("_CENTER","Midden");
+define("_RIGHT","Rechts");
+define("_FORM_ENTER", "Bestandsnaam %s");
 // %s represents file name
-define("_MUSTWABLE","File %s must be writable by the server!");
+define("_MUSTWABLE","Bestand %s moet overschrijfbaar zijn op de server!");
 // Module info
-define('_PREFERENCES', 'Preferences');
-define("_VERSION", "Version");
-define("_DESCRIPTION", "Description");
-define("_ERRORS", "Errors");
-define("_NONE", "None");
-define('_ON','on');
-define('_READS','reads');
-define('_SEARCH','Search');
-define('_ALL', 'All');
-define('_TITLE', 'Title');
-define('_OPTIONS', 'Options');
-define('_QUOTE', 'Quote');
-define('_HIDDENC', 'Hidden Content:');
+define('_PREFERENCES', 'Instellingen');
+define("_VERSION", "Versie");
+define("_DESCRIPTION", "Beschrijving");
+define("_ERRORS", "Fouten");
+define("_NONE", "Geen");
+define('_ON','op');
+define('_READS','gelezen');
+define('_SEARCH','Zoeken');
+define('_ALL', 'Allemaal');
+define('_TITLE', 'Titel');
+define('_OPTIONS', 'Opties');
+define('_QUOTE', 'Citeer');
+define('_HIDDENC', 'Verborgen inhoud:');
 define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registration at ' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
-define('_LIST', 'List');
-define('_LOGIN','User Login');
-define('_USERNAME','Username: ');
-define('_PASSWORD','Password: ');
-define("_SELECT","Select");
-define("_IMAGE","Image");
-define("_SEND","Send");
-define("_CANCEL","Cancel");
-define("_ASCENDING","Ascending order");
-define("_DESCENDING","Descending order");
-define('_BACK', 'Back');
-define('_NOTITLE', 'No title');
+define('_LIST', 'Lijst');
+define('_LOGIN','Inloggen');
+define('_USERNAME','Gebruikersnaam: ');
+define('_PASSWORD','Wachtwoord: ');
+define("_SELECT","Selecteer");
+define("_IMAGE","Afbeelding");
+define("_SEND","Verstuur");
+define("_CANCEL","Annuleren");
+define("_ASCENDING","Oplopende volgorde");
+define("_DESCENDING","Aflopende volgorde");
+define('_BACK', 'Terug');
+define('_NOTITLE', 'Geen titel');
 
 /* Image manager */
-define('_IMGMANAGER','Image Manager');
-define('_NUMIMAGES', '%s images');
-define('_ADDIMAGE','Add Image File');
-define('_IMAGENAME','Name:');
-define('_IMGMAXSIZE','Max size allowed (bytes):');
-define('_IMGMAXWIDTH','Max width allowed (pixels):');
-define('_IMGMAXHEIGHT','Max height allowed (pixels):');
-define('_IMAGECAT','Category:');
-define('_IMAGEFILE','Image file:');
-define('_IMGWEIGHT','Order:');
-define('_IMGDISPLAY','Display this image?');
+define('_IMGMANAGER','Afbeelding manager');
+define('_NUMIMAGES', '%s afbeeldingen');
+define('_ADDIMAGE','Voeg afbeelding bestand toe');
+define('_IMAGENAME','Naam:');
+define('_IMGMAXSIZE','Max grootte toegelaten (bytes):');
+define('_IMGMAXWIDTH','Max breedte toegelaten (pixels):');
+define('_IMGMAXHEIGHT','Max hoogte toegelaten (pixels):');
+define('_IMAGECAT','Categorie:');
+define('_IMAGEFILE','Afbeelding bestand:');
+define('_IMGWEIGHT','Toon volgorde in afb. manager:');
+define('_IMGDISPLAY','Tonen van afbeelding?');
 define('_IMAGEMIME','MIME type:');
-define('_FAILFETCHIMG', 'Could not get uploaded file %s');
-define('_FAILSAVEIMG', 'Failed storing image %s into the database');
-define('_NOCACHE', 'No Cache');
-define('_CLONE', 'Clone');
-define('_INVISIBLE', 'Invisible');
+define('_FAILFETCHIMG', 'Kon het bestand niet uploaden %s');
+define('_FAILSAVEIMG', 'Mislukt uploaden afbeelding %s in de database');
+define('_NOCACHE', 'Geen cache');
+define('_CLONE', 'Kloon');
+define('_INVISIBLE', 'Onzichtbaar');
 
 //%%%%%	File Name class/xoopsform/formmatchoption.php 	%%%%%
-define("_STARTSWITH", "Starts with");
-define("_ENDSWITH", "Ends with");
-define("_MATCHES", "Matches");
-define("_CONTAINS", "Contains");
+define("_STARTSWITH", "Start met");
+define("_ENDSWITH", "Eindigend op");
+define("_MATCHES", "Vergelijkend");
+define("_CONTAINS", "Bevat");
 
 //%%%%%%	File Name commentform.php 	%%%%%
-define("_REGISTER","Register");
+define("_REGISTER","Registreer");
 
 //%%%%%%	File Name xoopscodes.php 	%%%%%
-define("_SIZE","SIZE");  // font size
-define("_FONT","FONT");  // font family
-define("_COLOR","COLOR");  // font color
-define("_EXAMPLE","SAMPLE");
-define("_ENTERURL","Enter the URL of the link you want to add:");
-define("_ENTERWEBTITLE","Enter the web site title:");
-define("_ENTERIMGURL","Enter the URL of the image you want to add.");
-define("_ENTERIMGPOS","Now, enter the position of the image.");
-define("_IMGPOSRORL","'R' or 'r' for right, 'L' or 'l' for left, 'C' or 'c' for center, or leave it blank.");
-define("_ERRORIMGPOS","ERROR! Enter the position of the image.");
-define("_ENTEREMAIL","Enter the email address you want to add.");
-define("_ENTERCODE","Enter the codes that you want to add.");
-define("_ENTERQUOTE","Enter the text that you want to be quoted.");
-define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
-define("_ENTERTEXTBOX","Please input text into the textbox.");
+define("_SIZE","Lettertype grootte");  // font size
+define("_FONT","Lettertype");  // font family
+define("_COLOR","KLEUR");  // font color
+define("_EXAMPLE","VOORBEELD");
+define("_ENTERURL","Type de URL van de link die u wilt invoegen:");
+define("_ENTERWEBTITLE","Type de titel van de website:");
+define("_ENTERIMGURL","Type de URL van het plaatje dat u wilt invoegen.");
+define("_ENTERIMGPOS","Bepaal de plaats van het plaatje.");
+define("_IMGPOSRORL","'R' or 'r' voor rechts, 'L' or 'l' voor links, of laat het leeg.");
+define("_ERRORIMGPOS","FOUT! Bepaal de plaats voor het plaatje.");
+define("_ENTEREMAIL","Type het email adres dat u wilt invoegen.");
+define("_ENTERCODE","Type de codes die je wilt toevoegen");
+define("_ENTERQUOTE","Type de tekst die u wilt als quote.");
+define("_ENTERHIDDEN","Type de tekst die niet zichtbaar dient te zijn voor anonieme gebruikers.");
+define("_ENTERTEXTBOX","type uw tekst in de tekstbox.");
 
 //%%%%%		TIME FORMAT SETTINGS   %%%%%
-define('_SECOND', '1 second');
-define('_SECONDS', '%s seconds');
-define('_MINUTE', '1 minute');
-define('_MINUTES', '%s minutes');
-define('_HOUR', '1 hour');
-define('_HOURS', '%s hours');
-define('_DAY', '1 day');
-define('_DAYS', '%s days');
+define('_SECOND', '1 seconde');
+define('_SECONDS', '%s seconden');
+define('_MINUTE', '1 minuut');
+define('_MINUTES', '%s minuten');
+define('_HOUR', '1 uur');
+define('_HOURS', '%s uren');
+define('_DAY', '1 dag');
+define('_DAYS', '%s dagen');
 define('_WEEK', '1 week');
-define('_MONTH', '1 month');
+define('_MONTH', '1 maand');
 
-define("_DATESTRING","Y/n/j G:i:s");
-define("_MEDIUMDATESTRING","Y/n/j G:i");
-define("_SHORTDATESTRING","Y/n/j");
+define("_DATESTRING","j/n/Y G:i:s");
+define("_MEDIUMDATESTRING","j/n/Y G:i");
+define("_SHORTDATESTRING","j/n/Y");
 /*
  The following characters are recognized in the format string:
  a - "am" or "pm"
@@ -195,7 +195,7 @@ define("_SHORTDATESTRING","Y/n/j");
 
 //%%%%%		LANGUAGE SPECIFIC SETTINGS   %%%%%
 define('_CHARSET', 'utf-8');
-define('_LANGCODE', 'en');
+define('_LANGCODE', 'nl');
 
 // change 0 to 1 if this language is a multi-bytes language
 define("XOOPS_USE_MULTIBYTES", "0");
@@ -203,45 +203,47 @@ define("XOOPS_USE_MULTIBYTES", "0");
 define("_ADM_USE_RTL","0");
 
 define('_MODULES','Modules');
-define('_SYSTEM','System');
-define('_IMPRESSCMS_NEWS','News');
-define('_ABOUT','ImpressCMS Project');
-define('_IMPRESSCMS_HOME','Project Home');
-define('_IMPRESSCMS_COMMUNITY','Community');
-define('_IMPRESSCMS_ADDONS','Addons');
+define('_SYSTEM','Systeem');
+define('_IMPRESSCMS_NEWS','Nieuws');
+define('_ABOUT','Het ImpressCMS project');
+define('_IMPRESSCMS_HOME','Project pagina');
+define('_IMPRESSCMS_COMMUNITY','Gemeenschap');
+define('_IMPRESSCMS_ADDONS','Toevoegingen');
 define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
-define('_IMPRESSCMS_DONATE','Donate!');
-define("_IMPRESSCMS_Support","Support the project !");
-define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
-define('_IMPRESSCMS_ADMIN','Administration of');
+define('_IMPRESSCMS_DONATE','Doneren!');
+define("_IMPRESSCMS_Support","Ondersteun het project !");
+define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project pagina');
+define('_IMPRESSCMS_ADMIN','Beheerpagina van');
 /** The default separator used in icms_view_Tree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
 //Content Manager
-define('_CT_NAV','Home');
-define('_CT_RELATEDS','Related pages');
+define('_CT_NAV','Beginpagina');
+define('_CT_RELATEDS','Gerelateerde pagina\'s');
 //Security image (captcha)
-define("_SECURITYIMAGE_GETCODE","Enter the security code");
-define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
+define("_SECURITYIMAGE_GETCODE","Vul de beveiligingscode in");
+define("_WARNINGUPDATESYSTEM","Proficiat, u heeft zonet uw website met succes naar de laatste versie van ImpressCMS
+geupgrade!<br />Om het upgrade process te voltooien dient u op onderstaande te klikken en de
+systeem module te updaten.");
 
 // This shows local support site in ImpressCMS menu, (if selected language is not English)
-define('_IMPRESSCMS_LOCAL_SUPPORT', 'https://www.impresscms.org'); //add the local support site's URL
-define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Local support site');
-define("_ALLEFTCON","Enter the text to be aligned on the Left side.");
-define("_ALCENTERCON","Enter the text to be aligned on the Center side.");
-define("_ALRIGHTCON","Enter the text to be aligned on the Right side.");
+define('_IMPRESSCMS_LOCAL_SUPPORT', 'http://www.impresscms.be'); //add the local support site's URL
+define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','ImpressCMS.be');
+define("_ALLEFTCON","Geef de tekst in die aan links uitgelijnd moet worden.");
+define("_ALCENTERCON","Geef de tekst in die gecentreerd moet worden.");
+define("_ALRIGHTCON","Geef de tekst in die aan rechts uitgelijnd moet worden.");
 
-define('_MODABOUT_ABOUT', 'About');
+define('_MODABOUT_ABOUT', 'Over');
 // if you have troubles with this font on your language or it is not working, download tcpdf from: http://www.tecnick.com/public/code/cp_dpage.php?aiocp_dp=tcpdf and add the required font in libraries/tcpdf/fonts then write down the font name here. system will then load this font for your language.
 define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE',''); // this value is for the local calendar used in this system, if you're not sure about this leave this value as it is!
-define('_CALENDAR','Calendar');
-define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
+define('_CALENDAR','Kalender');
+define('_RETRYPOST','Sorry, er heeft zich een time-out voorgedaan. Wilt u nogmaals posten ?'); // autologin hack GIJ
 
 ############# added since 1.2 #############
-define('_QSEARCH','Quick Search');
-define('_PREV','Prev');
-define('_NEXT','Next');
+define('_QSEARCH','Snel zoeken');
+define('_PREV','Vorige');
+define('_NEXT','Volgende');
 define('_LCL_NUM0','0');
 define('_LCL_NUM1','1');
 define('_LCL_NUM2','2');
@@ -254,32 +256,32 @@ define('_LCL_NUM8','8');
 define('_LCL_NUM9','9');
 // change 0 to 1 if your language has a different numbering than latin`s alphabet
 define("_USE_LOCAL_NUM","0");
-define("_ICMS_DBUPDATED","Database Updated Successfully!");
+define("_ICMS_DBUPDATED","Database succesvol bijgewerkt !");
 define('_MD_AM_DBUPDATED',_ICMS_DBUPDATED);
 
 define('_TOGGLETINY','Toggle Editor');
-define("_ENTERHTMLCODE","Enter the HTML codes that you want to add.");
-define("_ENTERPHPCODE","Enter the PHP codes that you want to add.");
-define("_ENTERCSSCODE","Enter the CSS codes that you want to add.");
-define("_ENTERJSCODE","Enter the JavaScript codes that you want to add.");
-define("_ENTERWIKICODE","Enter the wiki term that you want to add.");
-define("_ENTERLANGCONTENT","Enter the text that you want to be in %s.");
-define('_LANGNAME', 'English');
-define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
-define('_ENTERHEIGHT', 'Enter frame\'s height');
-define('_ENTERWIDTH', 'Enter frame\'s width');
-define('_ENTERMEDIAURL', 'Enter media url:');
+define("_ENTERHTMLCODE","Voer de HTML codes in die u wilt toevoegen.");
+define("_ENTERPHPCODE","Voer de PHP codes in die u wilt toevoegen.");
+define("_ENTERCSSCODE","Voer de CSS codes in die u wilt toevoegen.");
+define("_ENTERJSCODE","Voer de JavaScript codes in die u wilt toevoegen.");
+define("_ENTERWIKICODE","Voer de wiki term in die u wilt toevoegen.");
+define("_ENTERLANGCONTENT","Voer de text in die u wilt toevoegen in %s.");
+define('_LANGNAME', 'Nederlands');
+define('_ENTERYOUTUBEURL', 'Voer YouTube url in:');
+define('_ENTERHEIGHT', 'Voer frame\'s hoogte in');
+define('_ENTERWIDTH', 'Voer frame\'s breedte in');
+define('_ENTERMEDIAURL', 'Voer media url in:');
 // !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"
 // insert double '\' before 't', 'r', 'n'
-define("_TODAY", "	\\o\\d\\a\\y G:i");
-define("_YESTERDAY", "\\Y\e\\s\\t\e\\r\\d\\a\\y G:i");
+define("_TODAY", "\\a\\n\\d\\a\\a\\g G:i");
+define("_YESTERDAY", "\\G\\i\\s\\t\e\\r\e\\n G:i");
 define("_MONTHDAY", "n/j G:i");
-define("_YEARMONTHDAY", "Y/n/j G:i");
+define("_YEARMONTHDAY", "j/n/Y G:i");
 define("_ELAPSE", "%s ago");
-define('_VISIBLE', 'Visible');
-define('_UP', 'Up');
-define('_DOWN', 'Down');
-define('_CONFIGURE', 'Configure');
+define('_VISIBLE', 'Zichtbaar');
+define('_UP', 'Boven');
+define('_DOWN', 'Onders');
+define('_CONFIGURE', 'Instellen');
 
 // Added in 1.2.2
 define('_FILE_DELETED', 'File %s was deleted successfully');
