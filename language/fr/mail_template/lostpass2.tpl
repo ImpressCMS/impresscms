@@ -1,4 +1,4 @@
-Hello {X_UNAME},
+Bonjour {X_UNAME},
 
 A web user from {IP} has just requested that password be sent.
 Here are your login details at {SITENAME}.
