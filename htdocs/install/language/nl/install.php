@@ -132,7 +132,7 @@ define("DATA_ALREADY_INSERTED", "ImpressCMS data is stored in your database alre
 define("DATABASE_CREATED", "Database %s created!"); // L43
 // %s is table name
 define("TABLE_NOT_CREATED", "Unable to create table %s"); // L118
-define("TABLE_CREATED", "Table %s created."); // L45
+define("TABLE_CREATED", "Tabel %s is aangemaakt."); // L45
 define("ROWS_INSERTED", "%d entries inserted to table %s."); // L119
 define("ROWS_FAILED", "Failed inserting %d entries to table %s."); // L120
 define("TABLE_ALTERED", "Table %s updated."); // L133
@@ -189,7 +189,7 @@ define("_MD_AM_MULTLOGINMSG_TXT", 'Het was niet mogelijk in te loggen op de webs
          - U heeft de website verlaten of uw browser afgesloten zonder uit te loggen.<br />
         </p>
         Wacht een paar minuten en probeer het nogmaals. Wanneer het probleem zich nog voordoet neem dan contact op met de beheerder van de website.');
-define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Link to local support site
+define("_INSTALL_LOCAL_SITE", 'http://www.impresscms.be/'); //Link to local support site
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_ADM_USE_RTL", "0"); // turn this to 1 if your language is right to left
 
