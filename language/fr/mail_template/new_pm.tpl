@@ -1,4 +1,4 @@
-Hello {X_UNAME},
+Bonjour {X_UNAME},
 
 "{X_FROMUNAME}" just sent you a Private Message :
 
