@@ -7,3 +7,11 @@ files:
     translation: /install/language/%two_letters_code%/%original_file_name%
   - source: /install/language/english/*.tpl
     translation: /install/language/%two_letters_code%/%original_file_name%
+  - source: /htdocs/language/english/*.php
+    translation: /htdocs/language/%two_letters_code%/%original_file_name%
+  - source: /htdocs/language/english/mail_template/*.tpl
+    translation: /htdocs/language/%two_letters_code%/mail_template/%original_file_name%
+  - source: /htdocs/install/language/english/*.php
+    translation: /htdocs/install/language/%two_letters_code%/%original_file_name%
+  - source: /htdocs/install/language/english/*.tpl
+    translation: /htdocs/install/language/%two_letters_code%/%original_file_name%
