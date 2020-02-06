@@ -1,4 +1,4 @@
-Hello {X_UNAME},
+Bonjour {X_UNAME},
 
 A web user from {IP} has just requested to reset the password for your account at {SITENAME}.
 
