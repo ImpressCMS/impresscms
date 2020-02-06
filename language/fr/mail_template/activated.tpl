@@ -1,8 +1,8 @@
-Hello {X_UNAME},
+Bonjour {X_UNAME},
 
-Your new account at {SITENAME} has been activated by the administrator.
+Votre nouveau compte sur {SITENAME} a été activé par l'administrateur.
 
-You can now login from the following URL with the password you have provided upon registration.
+Vous pouvez maintenant vous connecter à partir de l'URL suivante avec le mot de passe que vous avez fourni lors de votre inscription.
 
 {SITEURL}/user.php
 
