@@ -1,46 +1,46 @@
 <?php
 // general
-define("THEME_UPTOP","Back to Top");
-define("THEME_VALIDCSS","This theme template is W3C Validated for CSS 1 and 2");
-define("THEME_VALIDXHTML","This theme template is W3C Validated for XHTML 1.01");
-define("THEME_LICENSE","See Creative Commons Licence");
-define("THEME_W3C","Valid W3C - XHTML 1.01 and CSS 1/2/3");
+define("THEME_UPTOP","Вернуться");
+define("THEME_VALIDCSS","Этот шаблон темы W3C-валиден для CSS 1 и 2");
+define("THEME_VALIDXHTML","Этот шаблон темы W3C-валиден для XHTML 1.01");
+define("THEME_LICENSE","Смотрите Creative Commons Licence");
+define("THEME_W3C","Валидность W3C - XHTML 1.01 и CSS 1/2/3");
 
 // userbar.html
-define("THEME_REGISTER","Register");
-define("THEME_REGISTERATION",'User Registration');
-define("THEME_REMEMBER"," Remember me ?");
-define("THEME_PSEUDO"," Login");
-define("THEME_DESC_PSEUDO"," Write your login");
-define("THEME_PASSWORD"," Password");
-define("THEME_DESC_PASSWORD"," Write your password");
+define("THEME_REGISTER","Регистрация");
+define("THEME_REGISTERATION",'Регистрация пользователя');
+define("THEME_REMEMBER"," Запомнить меня ?");
+define("THEME_PSEUDO"," Логин");
+define("THEME_DESC_PSEUDO"," Введите Ваш логин");
+define("THEME_PASSWORD"," Пароль");
+define("THEME_DESC_PASSWORD"," Введите Ваш пароль");
 
-define("THEME_WELLCOME","Welcome");
-define("THEME_PROFILE","Your profile");
-define("THEME_NOTIFICATION","Bookmarks");
-define("THEME_MESSAGE","Show your inbox content");
-define("THEME_INBOX","Inbox");
-define("THEME_YOUHAVE","You have ");
-define("THEME_NOTREAD","unread message(s)");
-define("THEME_MYACCOUNT","My profile");
-define("THEME_LOGOUT","Logout");
-define("THEME_ADMIN","Admin");
-define("THEME_OR","or");
+define("THEME_WELLCOME","Добро пожаловать");
+define("THEME_PROFILE","Просмотр профиля");
+define("THEME_NOTIFICATION","Просмотр оповещений");
+define("THEME_MESSAGE","Просмотр сообщений");
+define("THEME_INBOX","Входящие");
+define("THEME_YOUHAVE","У Вас ");
+define("THEME_NOTREAD","сообщение(й) непрочитано");
+define("THEME_MYACCOUNT","Мой профиль");
+define("THEME_LOGOUT","Выход");
+define("THEME_ADMIN","Админ");
+define("THEME_OR","или");
 
 // searchbar.html
-define("THEME_SEARCH","Search");
-define("THEME_DESC_SEARCH","Search this site");
-define("THEME_KEYWORDS","Put the keywords");
+define("THEME_SEARCH","Поиск");
+define("THEME_DESC_SEARCH","Искать на этом сайт");
+define("THEME_KEYWORDS","Введите ключевые слова");
 
 // globalnav.html
-define("THEME_CONTACT","Contact");
-define("THEME_CONTACT_DESC","Contact us ?");
-define("THEME_SITEMAP","Sitemap");
-define("THEME_RSS","RSS");
+define("THEME_CONTACT","Контакт");
+define("THEME_CONTACT_DESC","Контакт с нами ?");
+define("THEME_SITEMAP","Карта сайта");
+define("THEME_RSS","RSS каналы");
 
-define("THEME_NAVTITLE","Navigation");
-define("THEME_HOME","Home");
-define("THEME_HOME_DESC","Back to home");
+define("THEME_NAVTITLE","Навигация");
+define("THEME_HOME","Главная");
+define("THEME_HOME_DESC","Вернуться на главную");
 
 // Theme accessibility
 define("THEME_Aa","Aa");
@@ -48,11 +48,11 @@ define("THEME_Amin","-");
 define("THEME_Aplus","+");
 
 // ImpressCMS Description Links
-define("THEME_Support_DESC","Support the ImpressCMS Project !");
-define("THEME_Blogs_DESC","Read the ImpressCMS blogs");
-define("THEME_Wiki_DESC","Learn more in the community-driven wiki for ImpressCMS");
-define("THEME_Addons_DESC","Download modules, themes and more documentation");
-define("THEME_Community_DESC","Join the ImpressCMS Community");
-define("THEME_ImpressCMS_DESC","Visit the ImpressCMS main site");
-define("THEME_FEEDS","Feeds");
-define("THEME_PARTNERS","Partners");
+define("THEME_Support_DESC","Поддержите проект ImpressCMS!");
+define("THEME_Blogs_DESC","Прочитайте блог ImpressCMS");
+define("THEME_Wiki_DESC","Узнайте больше в ВИКИ об ImpressCMS");
+define("THEME_Addons_DESC","Скачивание модулей, тем и документации");
+define("THEME_Community_DESC","Присоединяйтесь к сообществу ImpressCMS");
+define("THEME_ImpressCMS_DESC","Посетите основной сайт ImpressCMS");
+define("THEME_FEEDS","Каналы");
+define("THEME_PARTNERS","Партнеры");
