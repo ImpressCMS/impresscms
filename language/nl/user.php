@@ -1,191 +1,191 @@
 <?php
 
 //%%%%%%		File Name user.php 		%%%%%
-define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
-define('_US_LOSTPASSWORD','Lost your password?');
-define('_US_NOPROBLEM','No problem. Simply enter the e-mail address we have on file for your account.');
-define('_US_YOUREMAIL','Your Email: ');
-define('_US_SENDPASSWORD','Send Password');
-define('_US_LOGGEDOUT','You are now logged out');
-define('_US_THANKYOUFORVISIT','Thank you for your visit to our site!');
-define('_US_INCORRECTLOGIN','Incorrect Login!');
-define('_US_LOGGINGU','Thank you for logging in, %s.');
-define('_US_RESETPASSWORD','Reset your password');
-define('_US_SUBRESETPASSWORD','Reset Password');
-define('_US_RESETPASSTITLE','Your password has expired!');
-define('_US_RESETPASSINFO','Please complete the following form in order to reset your password. If your email, login name and current password all match our record, your password will be changed instantly and you will be able to log back in!');
-define('_US_PASSEXPIRED','Your password has expired.<br />You will now be redirected to a form where you will be able to reset your password.');
-define('_US_SORRYUNAMENOTMATCHEMAIL','The login name entered is not associated with the given Email address!');
-define('_US_PWDRESET','Your password has been reset successfully!');
-define('_US_SORRYINCORRECTPASS','You have entered your current password incorrectly!');
+define('_US_NOTREGISTERED','Nog niet geregistreerd?  Klik <a href=register.php>hier</a>.');
+define('_US_LOSTPASSWORD','Wachtwoord vergeten?');
+define('_US_NOPROBLEM','Geen probleem. Vul het e-mailadres in waarmee u op deze website staat geregistreerd.');
+define('_US_YOUREMAIL','E-mail: ');
+define('_US_SENDPASSWORD','Verstuur wachtwoord');
+define('_US_LOGGEDOUT','Uitgelogd');
+define('_US_THANKYOUFORVISIT','Bedankt voor uw bezoek aan onze website!');
+define('_US_INCORRECTLOGIN','Foute login!');
+define('_US_LOGGINGU','%s is ingelogd.');
+define('_US_RESETPASSWORD','Reset uw wachtwoord');
+define('_US_SUBRESETPASSWORD','Wachtwoord resetten');
+define('_US_RESETPASSTITLE','Uw wachtwoord is verlopen!');
+define('_US_RESETPASSINFO','Vult het onderstaande formulier in om uw wachtwoord te resetten. Wanneer uw e-mail, gebruikersnaam en huidige wachtwoord overeenkomen met ons bestand, dan zal uw wachtwoord direct worden gewijzigd waarna u weer kunt inloggen!');
+define('_US_PASSEXPIRED','Uw wachtwoord is verlopen.<br />U wordt doorgestuurd naar een pagina waar u, uw wachtwoord kunt resetten.');
+define('_US_SORRYUNAMENOTMATCHEMAIL','De opgegeven gebruikersnaam komt niet overeen met het gegeven e-mailadres!');
+define('_US_PWDRESET','Uw wachtwoord is succesvol gereset!');
+define('_US_SORRYINCORRECTPASS','U heeft uw huidige wachtwoord onjuist ingevoerd!');
 
 // 2001-11-17 ADD
-define('_US_NOACTTPADM','The selected user has been deactivated or has not been activated yet.<br />Please contact the administrator for details.');
-define('_US_ACTKEYNOT','Activation key not correct!');
-define('_US_ACONTACT','Selected account is already activated!');
-define('_US_ACTLOGIN','Your account has been activated. Please login with the registered password.');
-define('_US_NOPERMISS','Sorry, you dont have the permission to perform this action!');
-define('_US_SURETODEL','Are you sure you want to delete your account?');
-define('_US_REMOVEINFO','This will remove all your info from our database.');
-define('_US_BEENDELED','Your account has been deleted.');
-define('_US_REMEMBERME', 'Remember me');
+define('_US_NOACTTPADM','De geselecteerde gebruiker is niet actief of is nog niet geactiveerd.<br />Neem A.u.b contact op met de webmaster voor verdere details.');
+define('_US_ACTKEYNOT','Activerings code is niet geldig!');
+define('_US_ACONTACT','Geselecteerde account is al actief!');
+define('_US_ACTLOGIN','Uw account is geactiveerd. Login met uw wachtwoord.');
+define('_US_NOPERMISS','Sorry, u heeft geen rechten voor deze actie!');
+define('_US_SURETODEL','Weet u zeker dat u dit account wilt verwijderen?');
+define('_US_REMOVEINFO','Deze actie verwijdert alle betreffende data uit onze database!.');
+define('_US_BEENDELED','Het account is verwijderd.');
+define('_US_REMEMBERME', 'Onthoud mij');
 
 //%%%%%%		File Name register.php 		%%%%%
-define('_US_USERREG','User Registration');
-define('_US_EMAIL','Email');
-define('_US_ALLOWVIEWEMAIL','Allow other users to view my email address');
+define('_US_USERREG','Gebruikersregistratie');
+define('_US_EMAIL','E-mail');
+define('_US_ALLOWVIEWEMAIL','Sta anderen toe mijn e-mailadres te bekijken');
 define('_US_WEBSITE','Website');
-define('_US_TIMEZONE','Time Zone');
-define('_US_AVATAR','Avatar');
-define('_US_VERIFYPASS','Verify Password');
-define('_US_SUBMIT','Submit');
-define('_US_LOGINNAME','Username');
-define('_US_FINISH','Finish');
-define('_US_REGISTERNG','Could not register new user.');
-define('_US_MAILOK','Receive occasional email notices from administrators and moderators?');
+define('_US_TIMEZONE','Tijdzone');
+define('_US_AVATAR','Pasfoto');
+define('_US_VERIFYPASS','Verifieer wachtwoord');
+define('_US_SUBMIT','Verzenden');
+define('_US_LOGINNAME','Gebruikersnaam');
+define('_US_FINISH','Volgende');
+define('_US_REGISTERNG','Kon nieuwe gebruiker niet registreren.');
+define('_US_MAILOK','Toestaan dat webmasters en<br /> moderators mij e-mail berichten mogen toesturen?');
 define('_US_DISCLAIMER','Disclaimer');
-define('_US_IAGREE','I agree to the above');
-define('_US_UNEEDAGREE', 'Sorry, you have to agree to our disclaimer to get registered.');
-define('_US_NOREGISTER','Sorry, we are currently closed for new user registrations');
+define('_US_IAGREE','Ik ga akkoord met bovenstaande verklaring');
+define('_US_UNEEDAGREE', 'Om u te kunnen registreren dient u akkoord te gaan met de disclaimer!');
+define('_US_NOREGISTER','Sorry, er kunnen momenteel geen nieuwe gebruikersregistraties plaatsvinden.');
 
 // %s is username. This is a subject for email
-define('_US_USERKEYFOR','User activation key for %s');
+define('_US_USERKEYFOR','Gebruikers activeringscode voor %s');
 
-define('_US_YOURREGISTERED','You are now registered. An email containing a user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
-define('_US_YOURREGMAILNG','You are now registered. However, we were unable to send the activation mail to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
-define('_US_YOURREGISTERED2','You are now registered.  Please wait for your account to be activated by the adminstrators.  You will receive an email once you are activated.  This could take a while so please be patient.');
+define('_US_YOURREGISTERED','U bent nu geregistreerd. Een Email met een activeringscode is verzonden naar het e-mail adres dat u heeft opgegeven. Volg a.u.b. de instructies in de e-mail om uw account te activeren. ');
+define('_US_YOURREGMAILNG','U bent nu geregistreerd. Door een interne serverfout hebben we geen email kunnen verzenden om uw account te activeren. Onze excuses voor dit ongemak. Stuur de webmaster een Email om hem/haar hiervan op de hoogte stellen.');
+define('_US_YOURREGISTERED2','U bent nu geregistreerd.  Uw account moet worden geactiveerd door een beheerder. Hiervoor vragen wij uw geduld. Zodra uw account is geactiveerd ontvangt u daarvan een Emailbericht. Houd er rekening mee dat het even kan duren.');
 
 // %s is your site name
-define('_US_NEWUSERREGAT','New user registration at %s');
+define('_US_NEWUSERREGAT','Nieuwe gebruikersregistratie bij %s');
 // %s is a username
-define('_US_HASJUSTREG','%s has just registered!');
+define('_US_HASJUSTREG','%s heeft zich net geregistreerd!');
 
-define('_US_INVALIDMAIL','ERROR: Invalid email');
-define('_US_INVALIDNICKNAME','ERROR: Invalid Loginname, please try an other Loginname.');
-define('_US_NICKNAMETOOLONG','Username is too long. It must be less than %s characters.');
-define('_US_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');
-define('_US_NAMERESERVED','ERROR: Name is reserved.');
-define('_US_NICKNAMENOSPACES','There cannot be any spaces in the Username.');
-define('_US_LOGINNAMETAKEN','ERROR: Username taken.');
-define('_US_NICKNAMETAKEN','ERROR: Display Name taken.');
-define('_US_EMAILTAKEN','ERROR: Email address already registered.');
-define('_US_ENTERPWD','ERROR: You must provide a password.');
-define('_US_SORRYNOTFOUND','Sorry, no corresponding user info was found.');
+define('_US_INVALIDMAIL','FOUT: Ongeldig emailadres');
+define('_US_INVALIDNICKNAME','FOUT: Ongeldige gebruikersnaam');
+define('_US_NICKNAMETOOLONG','Gebruikersnaam is te lang. Het mogen niet meer dan %s karakters zijn.');
+define('_US_NICKNAMETOOSHORT','Gebruikersnaam is te kort. Het moeten minstens %s karakters zijn.');
+define('_US_NAMERESERVED','FOUT: Deze naam is gereserveerd.');
+define('_US_NICKNAMENOSPACES','Gebruik geen spaties in uw gebrukersnaam.');
+define('_US_LOGINNAMETAKEN','FOUT: Loginnaam is al in gebruik.');
+define('_US_NICKNAMETAKEN','FOUT: Gebruikersnaam is al in gebruik.');
+define('_US_EMAILTAKEN','FOUT: Dit emailadres is al in gebruik.');
+define('_US_ENTERPWD','FOUT: U dient een wachtwoord in te voeren.');
+define('_US_SORRYNOTFOUND','Sorry, de juiste gebruikers info is niet gevonden.');
 
-define('_US_USERINVITE', 'Membership invitation');
-define('_US_INVITENONE','ERROR: Registration is by invitation only.');
-define('_US_INVITEINVALID','ERROR: Incorrect invitation code.');
-define('_US_INVITEEXPIRED','ERROR: Invitation code is already used or expired.');
+define('_US_USERINVITE', 'Lidmaatschap uitnodiging');
+define('_US_INVITENONE','FOUT: Registratie kan alleen maar op uitnodiging plaatsvinden.');
+define('_US_INVITEINVALID','FOUT: Incorrecte uitnodigingscode.');
+define('_US_INVITEEXPIRED','FOUT: Uitnodigingscode is al gebruikt of verlopen.');
 
-define('_US_INVITEBYMEMBER','Only an existing member can invite new members; please request an invitation email from some registered member.');
-define('_US_INVITEMAILERR','We were unable to send the mail with registration link to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
-define('_US_INVITEDBERR','We were unable to process your registration request due to an internal error. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
-define('_US_INVITESENT','An email containing registration link has been sent to the email account you provided. Please follow the instructions in the mail to register your account. This could take few minutes so please be patient.');
+define('_US_INVITEBYMEMBER','Alleen een bestaand lid kan nieuwe leden uitnodigen; verzoek alstublieft een bestaand lid om een uitnodigingsemail te verzenden.');
+define('_US_INVITEMAILERR','Door een interne server fout was het niet mogelijk om een email aan u te verzenden met daarin de registratie link. Excusses voor het ongemak, probeert u het alstublieft nogmaals. Bestaat het probleem nog, neem dan contact op met de beheerder van de website om hem of haar op de hoogte te brengen van de situatie. <br />');
+define('_US_INVITEDBERR','Door een interne fout was het niet mogelijk om u wregistratieverzoek uit te voeren. Excusses voor het ongemak, probeert u het alstublieft nogmaals. Bestaat het probleem nog, neem dan contact op met de beheerder van de website om hem of haar op de hoogte te brengen van de situatie. <br />');
+define('_US_INVITESENT','Een e-mail, die de registratie link bevat, is verzonden naar het e-mailadres dat u heeft opgegeven. Volg alstublieft de instructie op die in de e-mail staan om u als lid te registreren. Dit kan een paar minuten duren, een ogenblik geduld alstublieft.');
 // %s is your site name
-define('_US_INVITEREGLINK','Registration invitation from %s');
+define('_US_INVITEREGLINK','Uitnodiging om u te registreren op %s');
 
 // %s is your site name
-define('_US_NEWPWDREQ','New Password Request at %s');
-define('_US_YOURACCOUNT', 'Your account at %s');
+define('_US_NEWPWDREQ','Verzoek tot een nieuw wachtwoord voor %s');
+define('_US_YOURACCOUNT', 'Uw account op %s');
 
-define('_US_MAILPWDNG','mail_password: could not update user entry. Contact the Administrator');
-define('_US_RESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
+define('_US_MAILPWDNG','mail_wachtwoord: Kan gebruiker niet bijwerken. Neem contact op met de webmaster.');
+define('_US_RESETPWDNG','reset_wachtwoord: Kan gebruiker invoer niet bijwerken. Neem contact op met de webmaster');
 
-define('_US_RESETPWDREQ','Reset Password Request at %s');
-define('_US_MAILRESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
-define('_US_NEWPASSWORD','New Password');
-define('_US_YOURUSERNAME','Your Username');
-define('_US_CURRENTPASS','Your Current Password');
-define('_US_BADPWD','Bad Password, Password can not contain username.');
+define('_US_RESETPWDREQ','Verzoek wachtwoord reset op %s');
+define('_US_MAILRESETPWDNG','reset_wachtwoord: Kan gebruiker invoer niet bijwerken. Neem contact op met de webmaster');
+define('_US_NEWPASSWORD','Nieuw wachtwoord');
+define('_US_YOURUSERNAME','Uw gebruikersnaam');
+define('_US_CURRENTPASS','Uw huidige wachtwoord');
+define('_US_BADPWD','Fout wachtwoord, het wachtwoord mag niet de gebruikersnaam bevatten.');
 
 // %s is a username
-define('_US_PWDMAILED','Password for %s mailed.');
-define('_US_CONFMAIL','Confirmation Mail for %s mailed.');
-define('_US_ACTVMAILNG', 'Failed sending notification mail to %s');
-define('_US_ACTVMAILOK', 'Notification mail to %s sent.');
+define('_US_PWDMAILED','Wachtwoord van %s is verstuurd.');
+define('_US_CONFMAIL','Bevestigings e-mail voor %s is verzonden.');
+define('_US_ACTVMAILNG', 'Verzenden van mededelings e-mail naar %s is mislukt');
+define('_US_ACTVMAILOK', 'Mededelings e-mail naar %s is verzonden.');
 
 //%%%%%%		File Name userinfo.php 		%%%%%
-define('_US_SELECTNG','No User Selected! Please go back and try again.');
+define('_US_SELECTNG','Geen gebruiker geselecteerd! Ga terug en probeer het opnieuw.');
 define('_US_PM','PM');
 define('_US_ICQ','ICQ');
 define('_US_AIM','AIM');
 define('_US_YIM','YIM');
 define('_US_MSNM','MSNM');
-define('_US_LOCATION','Location');
-define('_US_OCCUPATION','Occupation');
-define('_US_INTEREST','Interest');
-define('_US_SIGNATURE','Signature');
-define('_US_EXTRAINFO','Extra Info');
-define('_US_EDITPROFILE','Edit Profile');
-define('_US_LOGOUT','Logout');
-define('_US_INBOX','Inbox');
-define('_US_MEMBERSINCE','Member Since');
-define('_US_RANK','Rank');
-define('_US_POSTS','Comments/Posts');
-define('_US_LASTLOGIN','Last Login');
-define('_US_ALLABOUT','All about %s');
-define('_US_STATISTICS','Statistics');
-define('_US_MYINFO','My Info');
-define('_US_BASICINFO','Basic information');
-define('_US_MOREABOUT','More About Me');
-define('_US_SHOWALL','Show All');
+define('_US_LOCATION','Lokatie');
+define('_US_OCCUPATION','Beroep');
+define('_US_INTEREST','Interessen');
+define('_US_SIGNATURE','Handtekening');
+define('_US_EXTRAINFO','Aanvullende info');
+define('_US_EDITPROFILE','Wijzig profiel');
+define('_US_LOGOUT','Uitloggen');
+define('_US_INBOX','Postvak in');
+define('_US_MEMBERSINCE','Lid sinds');
+define('_US_RANK','Status');
+define('_US_POSTS','Reacties/Postings');
+define('_US_LASTLOGIN','Laatste login');
+define('_US_ALLABOUT','Alles over %s');
+define('_US_STATISTICS','Statistieken');
+define('_US_MYINFO','Mijn info');
+define('_US_BASICINFO','Basis informatie');
+define('_US_MOREABOUT','Alles over mij');
+define('_US_SHOWALL','Toon alles');
 
 //%%%%%%		File Name edituser.php 		%%%%%
-define('_US_PROFILE','Profile');
-define('_US_REALNAME','Real Name');
-define('_US_SHOWSIG','Always attach my signature');
-define('_US_CDISPLAYMODE','Comments Display Mode');
-define('_US_CSORTORDER','Comments Sort Order');
-define('_US_PASSWORD','Password');
-define('_US_TYPEPASSTWICE','(type a new password twice to change it)');
-define('_US_SAVECHANGES','Save Changes');
-define('_US_NOEDITRIGHT',"Sorry, you don't have the right to edit this user's info.");
-define('_US_PASSNOTSAME','Both passwords are different. They must be identical.');
-define('_US_PWDTOOSHORT','Sorry, your password must be at least <b>%s</b> characters long.');
-define('_US_PROFUPDATED','Your Profile Updated!');
-define('_US_USECOOKIE','Store my user name in a cookie for 1 year');
+define('_US_PROFILE','Profiel');
+define('_US_REALNAME','Echte naam');
+define('_US_SHOWSIG','Gebruik altijd mijn handtekening');
+define('_US_CDISPLAYMODE','Reactie weergave');
+define('_US_CSORTORDER','Volgorde reactie(s)');
+define('_US_PASSWORD','Wachtwoord');
+define('_US_TYPEPASSTWICE','(typ het nieuwe wachtwoord 2x om het te wijzigen)');
+define('_US_SAVECHANGES','Verandering(en) Opslaan');
+define('_US_NOEDITRIGHT',"Sorry, u heeft geen rechten om deze gebruikers info aan te passen.");
+define('_US_PASSNOTSAME','U heeft verschillende wachtwoorden ingevuld. Deze behoren hetzelfde te zijn!.');
+define('_US_PWDTOOSHORT','Sorry, uw wachtwoord dient tenminste <b>%s</b> karakters te bezitten.');
+define('_US_PROFUPDATED','Uw profiel is aangepast!');
+define('_US_USECOOKIE','Bewaar mijn gebruikersnaam in een cookie voor 1 jaar');
 //define('_US_NO','No');
-define('_US_DELACCOUNT','Delete Account');
-define('_US_MYAVATAR', 'My Avatar');
-define('_US_UPLOADMYAVATAR', 'Upload Avatar');
-define('_US_MAXPIXEL','Max Pixels');
-define('_US_MAXIMGSZ','Max Image Size (Bytes)');
-define('_US_SELFILE','Select file');
-define('_US_OLDDELETED','Your old avatar will be deleted!');
-define('_US_CHOOSEAVT', 'Choose avatar from the available list');
-define('_US_SELECT_THEME', 'Default Theme');
-define('_US_SELECT_LANG', 'Default Language');
+define('_US_DELACCOUNT','Verwijder account');
+define('_US_MYAVATAR', 'Mijn pasfoto');
+define('_US_UPLOADMYAVATAR', 'Upload pasfoto');
+define('_US_MAXPIXEL','Max pixels');
+define('_US_MAXIMGSZ','Max afbeeldingsgrootte (Bytes)');
+define('_US_SELFILE','Selecteer bestand');
+define('_US_OLDDELETED','Oude pasfoto zal worden verwijderd!');
+define('_US_CHOOSEAVT', 'Kies een pasfoto (avatar) uit de beschikbare lijst');
+define('_US_SELECT_THEME', 'Standaard thema');
+define('_US_SELECT_LANG', 'Standaard taal');
 
-define('_US_PRESSLOGIN', 'Press the button below to login');
+define('_US_PRESSLOGIN', 'klik op de onderstaande knop om in te loggen');
 
-define('_US_ADMINNO', 'User in the webmasters group cannot be removed');
-define('_US_GROUPS', 'User\'s Groups');
+define('_US_ADMINNO', 'Gebruikers in de webmastergroep kunnen niet verwijderd worden');
+define('_US_GROUPS', 'Gebruikersgroepen');
 
-define('_US_YOURREGISTRATION', 'Your registration at %s');
-define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
-define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
-define('_US_REGFORM_NOJAVASCRIPT', 'To log in at the site it\'s necessary that your browser has javascript enabled.');
-define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
-define('_US_CHANGE_PASSWORD', 'Change Password?');
-define('_US_POSTSNOTENOUGH','Sorry, at least you need to have <b>%s</b> posts, to be able to upload your avatar.');
-define('_US_UNCHOOSEAVT', 'Until you reach this amount you can choose avatar from the list below.');
+define('_US_YOURREGISTRATION', 'Uw registratie op %s');
+define('_US_WELCOMEMSGFAILED', 'Er is een fout opgetreden tijdens het versturen van de welkoms email.');
+define('_US_NEWUSERNOTIFYADMINFAIL', 'Berichtgeving naar de website beheerder over een nieuwe gebruikersregistratie is mislukt.');
+define('_US_REGFORM_NOJAVASCRIPT', 'Om in te loggen op de website is het noodzakelijk dat het gebruik van Java is ingeschakeld in uw browser.');
+define('_US_REGFORM_WARNING', 'Om u te registreren op de website dient u een veilig wachtwoord te gebruiken. Probeer een wachtwoord te maken met letters en cijfers (Hoofd en kleine letters), nummers en symbolen. Probeer een zo complex mogelijk, maar toch te onthouden wachtwoord te maken.');
+define('_US_CHANGE_PASSWORD', 'Wachtwoord wijzigen?');
+define('_US_POSTSNOTENOUGH','Sorry, uw moet tenminste <b>%s</b> postingen/berichten hebben gedaan, om het uploaden van een eigen avatar/pasfoto mogelijk te maken.');
+define('_US_UNCHOOSEAVT', 'Totdat u dit aantal bereikt kunt u een avatar/pasfoto uit de onderstaade lijst selecteren.');
 
 
-define('_US_SERVER_PROBLEM_OCCURRED','There was an issue while checking for spammers list!');
-define('_US_INVALIDIP','ERROR: This IP adress is not allowed to register');
+define('_US_SERVER_PROBLEM_OCCURRED','Er was een probleem tijdens de controle tav spammers lijsten!');
+define('_US_INVALIDIP','FOUT: Het is met dit IP adres niet toegestaan te registreren');
 
 ######################## Added in 1.2 ###################################
-define('_US_LOGIN_NAME', "Login Name");
-define('_US_OLD_PASSWORD', "Old Password");
-define('_US_NICKNAME','Display Name');
-define('_US_MULTLOGIN', 'It was not possible to login on the site!! <br />
+define('_US_LOGIN_NAME', "Loginnaam");
+define('_US_OLD_PASSWORD', "Oude wachtwoord");
+define('_US_NICKNAME','Weergave naam');
+define('_US_MULTLOGIN', 'Het was niet mogelijk in te loggen op de website!! <br />
         <p align="left" style="color:red;">
-        Possible causes:<br />
-         - You are already logged in on the site.<br />
-         - Someone else logged in on the site using your username and password.<br />
-         - You left the site or close the browser window without clicking the logout button.<br />
+        Mogelijke oorzaken:<br />
+         - U bent reeds ingelogd op de website.<br />
+         - Iemand anders is ingelogd op de website en gebruikt uw gebruikernaam en wachtwoord.<br />
+         - U heeft de website verlaten of uw browser afgesloten zonder uit te loggen.<br />
         </p>
-        Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
+        Wacht een paar minuten en probeer het nogmaals. Wanneer het probleem zich nog voordoet neem dan contact op met de beheerder van de website.');
 
 // added in 1.3
 define('_US_NOTIFICATIONS', "Notifications");
@@ -201,17 +201,17 @@ define("_MA_USER_ADD_SELECTED", "Add selected users");
 
 define("_MA_USER_GROUP", "Group");
 define("_MA_USER_LEVEL", "Level");
-define("_MA_USER_LEVEL_ACTIVE", "Active");
+define("_MA_USER_LEVEL_ACTIVE", "Actief");
 define("_MA_USER_LEVEL_INACTIVE", "Inactive");
 define("_MA_USER_LEVEL_DISABLED", "Disabled");
-define("_MA_USER_RANK", "Rank");
+define("_MA_USER_RANK", "Status");
 
 define("_MA_USER_FINDUS","Find Users");
-define("_MA_USER_REALNAME","Real Name");
+define("_MA_USER_REALNAME","Echte naam");
 define("_MA_USER_REGDATE","Joined Date");
-define("_MA_USER_EMAIL","Email");
-define("_MA_USER_PREVIOUS","Previous");
-define("_MA_USER_NEXT","Next");
+define("_MA_USER_EMAIL","E-mail");
+define("_MA_USER_PREVIOUS","Vorige");
+define("_MA_USER_NEXT","Volgende");
 define("_MA_USER_USERSFOUND","%s user(s) found");
 
 define("_MA_USER_ACTUS", "Active Users: %s");
@@ -230,18 +230,18 @@ define("_MA_USER_SORT","Sort by");
 define("_MA_USER_ORDER","Order");
 define("_MA_USER_LASTLOGIN","Last login");
 define("_MA_USER_POSTS","Number of posts");
-define("_MA_USER_ASC","Ascending order");
-define("_MA_USER_DESC","Descending order");
+define("_MA_USER_ASC","Oplopende volgorde");
+define("_MA_USER_DESC","Aflopende volgorde");
 define("_MA_USER_LIMIT","Number of users per page");
 define("_MA_USER_RESULTS", "Search results");
 define("_MA_USER_SHOWMAILOK", "Type of users to show");
 define("_MA_USER_MAILOK","Only users that accept mail");
 define("_MA_USER_MAILNG","Only users that don't accept mail");
-define("_MA_USER_BOTH", "All");
+define("_MA_USER_BOTH", "Allemaal");
 
 define("_MA_USER_RANGE_LAST_LOGIN","Logged in past <span style='color:#ff0000;'>X</span>days");
 define("_MA_USER_RANGE_USER_REGDATE","Registered in past <span style='color:#ff0000;'>X</span>days");
-define("_MA_USER_RANGE_POSTS","Posts");
+define("_MA_USER_RANGE_POSTS","Aantal posten");
 
 define("_MA_USER_HASAVATAR", "Has avatar");
 define("_MA_USER_MODE_SIMPLE", "Simple mode");
