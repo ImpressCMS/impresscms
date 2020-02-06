@@ -1,22 +1,22 @@
 <?php
 
-define("_ERR_SEARCH","Search");
-define("_ERR_SEARCH_OUR_SITE","Search our site:");
-define("_ERR_ADVANCED_SEARCH","Advanced Search");
+define("_ERR_SEARCH","Поиск");
+define("_ERR_SEARCH_OUR_SITE","Поиск на сайте:");
+define("_ERR_ADVANCED_SEARCH","Расширенный поиск");
 define("_ERR_START_AGAIN","Start again from the <a href='" . ICMS_URL . "'>home page</a>.");
-define("_ERR_CONTACT","Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
-define("_ERR_NO", "Error %u");
+define("_ERR_CONTACT","Свяжитесь с <a href='mailto:%s'>вэбмастером</a> для фиксации этой ошибки.");
+define("_ERR_NO", "Ошибка %u");
 
-define("_ERR_400_TITLE", "Bad Request");
-define("_ERR_400_DESC", "The request contains bad syntax or cannot be fulfilled.");
-define("_ERR_401_TITLE", "Forbidden");
+define("_ERR_400_TITLE", "Неверный запрос");
+define("_ERR_400_DESC", "Запрос содержит неверный синтаксис или cannot be fulfilled.");
+define("_ERR_401_TITLE", "Запрещено");
 define("_ERR_401_DESC", "");
-define("_ERR_402_TITLE", "Payment Required");
+define("_ERR_402_TITLE", "Требуется оплата");
 define("_ERR_402_DESC", "");
-define("_ERR_403_TITLE", "Forbidden");
+define("_ERR_403_TITLE", "Запрещено");
 define("_ERR_403_DESC", "");
-define("_ERR_404_TITLE", "Not Found");
-define("_ERR_404_DESC", "The page you are trying to access could not be found.");
+define("_ERR_404_TITLE", "Не найден");
+define("_ERR_404_DESC", "Страница, которую Вы пытаетесь загрузить, не найдена.");
 define("_ERR_405_TITLE", "Method Not Allowed");
 define("_ERR_405_DESC", "");
 define("_ERR_406_TITLE", "Not Acceptable");
