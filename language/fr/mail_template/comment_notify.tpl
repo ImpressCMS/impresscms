@@ -1,4 +1,4 @@
-Hello {X_UNAME},
+Bonjour {X_UNAME},
 
 A comment has been added to the {X_ITEM_TYPE} "{X_ITEM_NAME}" you are monitoring in the {X_MODULE} module at our site.
 
