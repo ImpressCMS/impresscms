@@ -14,7 +14,7 @@ Click on the following link to view, reply or delete this message :
 
 You received this notification because you selected email notification method.
 
-Please do not reply to this message.
+Reageer niet op dit bericht.
 
 -----------
 {X_SITENAME} ({X_SITEURL})
