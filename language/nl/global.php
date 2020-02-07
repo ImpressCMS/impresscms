@@ -202,7 +202,7 @@ define("XOOPS_USE_MULTIBYTES", "0");
 // change 0 to 1 if this language is a RTL (right to left) language
 define("_ADM_USE_RTL","0");
 
-define('_MODULES','Modules');
+define('_MODULES','modules');
 define('_SYSTEM','Systeem');
 define('_IMPRESSCMS_NEWS','Nieuws');
 define('_ABOUT','Het ImpressCMS project');
@@ -259,7 +259,7 @@ define("_USE_LOCAL_NUM","0");
 define("_ICMS_DBUPDATED","Database succesvol bijgewerkt !");
 define('_MD_AM_DBUPDATED',_ICMS_DBUPDATED);
 
-define('_TOGGLETINY','Toggle Editor');
+define('_TOGGLETINY','Editor in-/uitschakelen');
 define("_ENTERHTMLCODE","Voer de HTML codes in die u wilt toevoegen.");
 define("_ENTERPHPCODE","Voer de PHP codes in die u wilt toevoegen.");
 define("_ENTERCSSCODE","Voer de CSS codes in die u wilt toevoegen.");
@@ -275,40 +275,40 @@ define('_ENTERMEDIAURL', 'Voer media url in:');
 // insert double '\' before 't', 'r', 'n'
 define("_TODAY", "\\a\\n\\d\\a\\a\\g G:i");
 define("_YESTERDAY", "\\G\\i\\s\\t\e\\r\e\\n G:i");
-define("_MONTHDAY", "n/j G:i");
+define("_MONTHDAY", "j/n/Y G:i");
 define("_YEARMONTHDAY", "j/n/Y G:i");
-define("_ELAPSE", "%s ago");
+define("_ELAPSE", "%s geleden");
 define('_VISIBLE', 'Zichtbaar');
 define('_UP', 'Boven');
 define('_DOWN', 'Onders');
 define('_CONFIGURE', 'Instellen');
 
 // Added in 1.2.2
-define('_FILE_DELETED', 'File %s was deleted successfully');
+define('_FILE_DELETED', 'Bestand %s is met succes verwijderd');
 
 // added in 1.3
-define('_CHECKALL', 'Check all');
-define('_COPYRIGHT', 'Copyright');
+define('_CHECKALL', 'Alles aanvinken');
+define('_COPYRIGHT', 'Auteursrecht');
 define("_LONGDATESTRING", "F jS Y, h:iA");
-define('_AUTHOR', 'Author');
-define("_CREDITS", "Credits");
-define("_LICENSE", "License");
+define('_AUTHOR', 'Auteur');
+define("_CREDITS", "Vermeldingen");
+define("_LICENSE", "Licentie");
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
-define("_BLOCK_ID", "Block ID");
-define('_IMPRESSCMS_PROJECT','Project Development');
+define("_BLOCK_ID", "Blok ID");
+define('_IMPRESSCMS_PROJECT','Project ontwikkeling');
 
 // added in 1.3.5
 define("_FILTERS","Filters");
 define("_FILTER","Filter");
-define("_FILTERS_MSG1","Input Filter: ");
-define("_FILTERS_MSG2","Input Filter (HTMLPurifier): ");
-define("_FILTERS_MSG3","Output Filter: ");
-define("_FILTERS_MSG4","Output Filter (HTMLPurifier): ");
+define("_FILTERS_MSG1","Invoer filter: ");
+define("_FILTERS_MSG2","Invoer Filter (HTMLPurifier): ");
+define("_FILTERS_MSG3","Uitvoer Filter: ");
+define("_FILTERS_MSG4","Uitvoer Filter (HTMLPurifier): ");
 
 
 // added in 2.0
-define('_ENTER_MENTION', 'Enter the user name to mention:');
-define( '_ENTER_HASHTAG', 'Enter the term(s) to tag:');
-define('_NAME', 'Name');
+define('_ENTER_MENTION', 'Voer de gebruikersnaam in om te vermelden:');
+define( '_ENTER_HASHTAG', 'Voer de term(en) in om te taggen:');
+define('_NAME', 'Naam');
 
-define('_OR', 'or');
+define('_OR', 'of');
