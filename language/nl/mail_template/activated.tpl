@@ -1,8 +1,8 @@
-Hello {X_UNAME},
+Hallo {X_UNAME},
 
-Your new account at {SITENAME} has been activated by the administrator.
+Uw nieuwe account op {SITENAME} is geactiveerd door de beheerder.
 
-You can now login from the following URL with the password you have provided upon registration.
+U kunt nu inloggen vanaf de volgende URL met het wachtwoord dat u bij de registratie hebt opgegeven.
 
 {SITEURL}/user.php
 
