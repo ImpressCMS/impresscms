@@ -3,37 +3,37 @@
 /**
  * Constants used for migrations
  */
-define('_MIGRATION_RANK_1', 'Just popping in');
-define('_MIGRATION_RANK_2', 'Not too shy to talk');
-define('_MIGRATION_RANK_3', 'Quite a regular');
-define('_MIGRATION_RANK_4', 'Just can not stay away');
-define('_MIGRATION_RANK_5', 'Home away from home');
+define('_MIGRATION_RANK_1', 'Springt gewoon even binnen');
+define('_MIGRATION_RANK_2', 'Niet te verlegen om te praten');
+define('_MIGRATION_RANK_3', 'Regelmatige bezoeker');
+define('_MIGRATION_RANK_4', 'Kan gewoon niet weg blijven');
+define('_MIGRATION_RANK_5', 'Woont hier');
 define('_MIGRATION_RANK_6', 'Moderator');
 define('_MIGRATION_RANK_7', 'Webmaster');
 
-define('_MIGRATION_SMILE_1', 'Very Happy');
-define('_MIGRATION_SMILE_2', 'Smile');
-define('_MIGRATION_SMILE_3', 'Sad');
-define('_MIGRATION_SMILE_4', 'Surprised');
-define('_MIGRATION_SMILE_5', 'Confused');
+define('_MIGRATION_SMILE_1', 'Heel blij');
+define('_MIGRATION_SMILE_2', 'Glimlach');
+define('_MIGRATION_SMILE_3', 'Triest');
+define('_MIGRATION_SMILE_4', 'Verrast');
+define('_MIGRATION_SMILE_5', 'Verward');
 define('_MIGRATION_SMILE_6',  'Cool');
-define('_MIGRATION_SMILE_7', 'Laughing');
-define('_MIGRATION_SMILE_8', 'Mad');
+define('_MIGRATION_SMILE_7', 'Lachend');
+define('_MIGRATION_SMILE_8', 'Boos');
 define('_MIGRATION_SMILE_9', 'Razz');
-define('_MIGRATION_SMILE_10', 'Embarrassed');
-define('_MIGRATION_SMILE_11', 'Crying (very sad)');
-define('_MIGRATION_SMILE_12', 'Evil or Very Mad');
-define('_MIGRATION_SMILE_13', 'Rolling Eyes');
-define('_MIGRATION_SMILE_14', 'Wink');
-define('_MIGRATION_SMILE_15', 'Another pint of beer');
-define('_MIGRATION_SMILE_16', 'ToolTimes at work');
-define('_MIGRATION_SMILE_17', 'I have an idea');
+define('_MIGRATION_SMILE_10', 'Verlegen');
+define('_MIGRATION_SMILE_11', 'Huilen (erg verdrietig)');
+define('_MIGRATION_SMILE_12', 'Kwaadaardig of Zeer Kwaad');
+define('_MIGRATION_SMILE_13', 'Rollende ogen');
+define('_MIGRATION_SMILE_14', 'Knipoog');
+define('_MIGRATION_SMILE_15', 'Nog een pintje bier');
+define('_MIGRATION_SMILE_16', 'Werktijden tijdens het werk');
+define('_MIGRATION_SMILE_17', 'Ik heb een idee');
 
 define('_MIGRATION_PAGE_2', 'Systeembeheer');
 define('_MIGRATION_PAGE_3', 'Avatars');
-define('_MIGRATION_PAGE_4', 'Banners');
-define('_MIGRATION_PAGE_5', 'Blocks Admin');
-define('_MIGRATION_PAGE_6', 'Block Positions');
+define('_MIGRATION_PAGE_4', 'Advertenties');
+define('_MIGRATION_PAGE_5', 'Blokken Beheer');
+define('_MIGRATION_PAGE_6', 'Blok posities');
 define('_MIGRATION_PAGE_7', 'Reacties');
 define('_MIGRATION_PAGE_9', 'Find Users');
 define('_MIGRATION_PAGE_10', 'Custom Tag');
