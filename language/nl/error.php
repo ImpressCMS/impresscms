@@ -21,16 +21,16 @@ define("_ERR_405_TITLE", "Methode niet toegestaan");
 define("_ERR_405_DESC", "");
 define("_ERR_406_TITLE", "Niet accepteerbaar");
 define("_ERR_406_DESC", "");
-define("_ERR_407_TITLE", "Proxy Authentication Required");
+define("_ERR_407_TITLE", "Proxyverificatie vereist");
 define("_ERR_407_DESC", "");
-define("_ERR_408_TITLE", "Request Timeout");
+define("_ERR_408_TITLE", "Verzoek time-out");
 define("_ERR_408_DESC", "");
 define("_ERR_409_TITLE", "Conflict");
 define("_ERR_409_DESC", "");
-define("_ERR_500_TITLE", "Internal Server Error");
+define("_ERR_500_TITLE", "Interne serverfout");
 define("_ERR_500_DESC", "");
 
-define('_ERR_MSG_NO_MOD_REWRITE', 'No mod rewrite was installed on the server. Without it ICMS can\'t work');
+define('_ERR_MSG_NO_MOD_REWRITE', 'Er is geen mod rewrite geïnstalleerd op de server. Zonder dit kan ImpressCMS niet werken');
 
 /*
  *  // TODO: Define all the other errors constants (4xx and 5xx). Can be found in "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
