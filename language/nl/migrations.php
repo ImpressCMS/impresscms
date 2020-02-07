@@ -35,19 +35,19 @@ define('_MIGRATION_PAGE_4', 'Advertenties');
 define('_MIGRATION_PAGE_5', 'Blokken Beheer');
 define('_MIGRATION_PAGE_6', 'Blok posities');
 define('_MIGRATION_PAGE_7', 'Reacties');
-define('_MIGRATION_PAGE_9', 'Find Users');
-define('_MIGRATION_PAGE_10', 'Custom Tag');
-define('_MIGRATION_PAGE_11', 'Groups');
+define('_MIGRATION_PAGE_9', 'Gebruikers zoeken');
+define('_MIGRATION_PAGE_10', 'Eigen tag');
+define('_MIGRATION_PAGE_11', 'Groepen');
 define('_MIGRATION_PAGE_12', 'Afbeelding manager');
-define('_MIGRATION_PAGE_13', 'Mail Users');
-define('_MIGRATION_PAGE_14', 'Modules Admin');
-define('_MIGRATION_PAGE_15', 'Symlink Manager');
+define('_MIGRATION_PAGE_13', 'Gebruikers e-mailen');
+define('_MIGRATION_PAGE_14', 'Modules Beheer');
+define('_MIGRATION_PAGE_15', 'Symlink beheer');
 define('_MIGRATION_PAGE_16', 'Instellingen');
 define('_MIGRATION_PAGE_17', 'Smilies');
-define('_MIGRATION_PAGE_18', 'Templates');
-define('_MIGRATION_PAGE_19',  'User Ranks');
-define('_MIGRATION_PAGE_20', 'User Edit');
-define('_MIGRATION_PAGE_21', 'Version Checker');
+define('_MIGRATION_PAGE_18', 'Sjablonen');
+define('_MIGRATION_PAGE_19',  'Gebruiker rangen');
+define('_MIGRATION_PAGE_20', 'Gebruiker bewerken');
+define('_MIGRATION_PAGE_21', 'Versie Controle');
 
 define('_MIGRATION_WELCOME_ANONYMOUS', <<<EOF
 This is sample text for a block. If you are the administrator please log in to view more information.
@@ -76,29 +76,29 @@ EOF
 );
 
 define('_MIGRATIONS_LOCAOL_STNAME', 'ImpressCMS');
-define('_MIGRATIONS_LOCAL_SLOCGAN', 'Make a lasting impression');
+define('_MIGRATIONS_LOCAL_SLOCGAN', 'Maak een blijvende indruk');
 define('_MIGRATIONS_EXT_DATE_FUNC', '0');
-define('_MIGRATIONS_INSTALL_ANON', 'Anonymous');
-define('_MIGRATIONS_INSTALL_L165', 'The site is currently closed for maintenance. Please come back later.');
-define('_MIGRATIONS_WELCOME_MSG_CONTENT', 'Welcome {UNAME},
+define('_MIGRATIONS_INSTALL_ANON', 'Anoniem');
+define('_MIGRATIONS_INSTALL_L165', 'De site is momenteel gesloten voor onderhoud. Kom later terug.');
+define('_MIGRATIONS_WELCOME_MSG_CONTENT', 'Welkom {UNAME},
 
-Your account has been successfully activated on {X_SITENAME}. As a member of our site, you will benefit from all the features reserved to registered members !
+Uw account is succesvol geactiveerd op {X_SITENAME}. Als lid van onze site profiteert u van alle functies die voorbehouden zijn aan geregistreerde leden!
 
-Once again, welcome to our site. Visit us often !
+Nogmaals welkom bij onze site. Bezoek ons vaak!
 
-If you did not registered to our site, please contact us at the following address {X_ADMINMAIL}, and we will fix the situation.
+Als u zich niet op onze site hebt geregistreerd, neem dan contact met ons op via het volgende adres {X_ADMINMAIL}, en we zullen de situatie oplossen.
 
 -----------
-Yours truly,
+Vriendelijke groeten,
 {X_SITENAME}
 {X_SITEURL}');
-define('_MIGRATIONS_INSTALL_DISCLMR', 'While the administrators and moderators of this site will attempt to remove or edit any generally objectionable material as quickly as possible, it is impossible to review every message. Therefore you acknowledge that all posts made to this site express the views and opinions of the author and not the administrators, moderators or webmaster (except for posts by these people) and hence will not be held liable.
+define('_MIGRATIONS_INSTALL_DISCLMR', 'Terwijl de beheerders en moderators van deze site zo snel mogelijk proberen om aanstootbaar materiaal te verwijderen of te bewerken. het is onmogelijk om elk bericht te bekijken. Daarom erkent u dat alle geplaatste posten op deze site de standpunten en meningen van de auteur weergeven, en niet van de beheerders. moderators of webmaster (behalve voor berichten van deze mensen) zullen dus niet aansprakelijk worden gesteld.
 
-You agree not to post any abusive, obscene, vulgar, slanderous, hateful, threatening, sexually-orientated or any other material that may violate any applicable laws. Doing so may lead to you being immediately and permanently banned (and your service provider being informed). The IP address of all posts is recorded to aid in enforcing these conditions. Creating multiple accounts for a single user is not allowed. You agree that the webmaster, administrator and moderators of this site have the right to remove, edit, move or close any topic at any time should they see fit. As a user you agree to any information you have entered above being stored in a database. While this information will not be disclosed to any third party without your consent the webmaster, administrator and moderators cannot be held responsible for any hacking attempt that may lead to the data being compromised.
+Je gaat akkoord met het plaatsen van geen enkel kwaad, obscene, vulgaire en slanderende, haatzaam, bedreigend, seksueel georiënteerd of ander materiaal dat de toepasselijke wetten kan overtreden. Door dit te doen, kan je direct en permanent verbannen (en je serviceprovider wordt geïnformeerd). Het IP-adres van alle berichten wordt opgenomen om te helpen bij het afdwingen van deze voorwaarden. Het creëren van meerdere accounts voor één gebruiker is niet toegestaan. Je gaat ermee akkoord dat de webmaster, beheerder en moderators van deze site het recht hebben om te verwijderen, Bewerk, verplaats of sluit elk onderwerp op elk gewenst moment. Als gebruiker gaat u akkoord met de informatie die u hierboven hebt ingevoerd en die wordt opgeslagen in een database. Hoewel deze informatie niet zonder uw toestemming aan een derde partij zal worden doorgegeven, is de webmaster beheerder en moderators kunnen niet verantwoordelijk worden gesteld voor eventuele hackpogingen die kunnen leiden tot het in gevaar brengen van de gegevens.
 
-This site system uses cookies to store information on your local computer. These cookies do not contain any of the information you have entered above, they serve only to improve your viewing pleasure. The email address is used only for confirming your registration details and password (and for sending new passwords should you forget your current one).
+Dit site systeem gebruikt cookies om informatie op uw lokale computer op te slaan. Deze cookies bevatten geen van de informatie die u hierboven hebt ingevoerd, ze dienen alleen om uw kijkplezier te verbeteren. Het e-mailadres wordt alleen gebruikt voor het bevestigen van uw registratiegegevens en wachtwoord (en voor het verzenden van nieuwe wachtwoorden als u uw huidige wachtwoord vergeten).
 
-By clicking Register below you agree to be bound by these conditions.');
+Als u klikt op Registreer hieronder gaat u akkoord om gebonden te zijn aan deze voorwaarden.');
 define('_MIGRATIONS_INSTALL_PRIVPOLICY', <<<EOF
 <p>This privacy policy sets out how {X_SITENAME} uses and protects any information that you provide when you use this website. {X_SITENAME} is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. {X_SITENAME} may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
 </p><p>
@@ -159,10 +159,10 @@ define('_MIGRATIONS_DEF_LANG_NAMES', 'english,german'); //Add local translation
 define('_MIGRATIONS_LOCAL_LANG_NAMES', 'English,Deutsch'); //Add local translation
 define('_MIGRATIONS_AM_RSSLOCALLINK_DESC', 'https://www.impresscms.org/modules/news/rss.php'); //Link to the rrs of local support site
 define('_MIGRATIONS_INSTALL_WEBMASTER', 'Webmasters');
-define('_MIGRATIONS_INSTALL_WEBMASTERD', 'Webmasters of this site');
-define('_MIGRATIONS_INSTALL_REGUSERS', 'Registered Users');
-define('_MIGRATIONS_INSTALL_REGUSERSD', 'Registered Users Group');
-define('_MIGRATIONS_INSTALL_ANONUSERS', 'Anonymous Users');
-define('_MIGRATIONS_INSTALL_ANONUSERSD', 'Anonymous Users Group');
-define('_MIGRATIONS_WELCOME_WEBMASTER', 'Welcome Webmaster !');
-define('_MIGRATIONS_WELCOME_ANONYMOUS', 'Welcome to an ImpressCMS powered website !');
+define('_MIGRATIONS_INSTALL_WEBMASTERD', 'Webmasters van deze website');
+define('_MIGRATIONS_INSTALL_REGUSERS', 'Geregistreerde Gebruikers');
+define('_MIGRATIONS_INSTALL_REGUSERSD', 'Geregistreerde Gebruikersgroep');
+define('_MIGRATIONS_INSTALL_ANONUSERS', 'Anonieme gebruikers');
+define('_MIGRATIONS_INSTALL_ANONUSERSD', 'Anonieme gebruikersgroep');
+define('_MIGRATIONS_WELCOME_WEBMASTER', 'Welkom Webmaster !');
+define('_MIGRATIONS_WELCOME_ANONYMOUS', 'Welkom op een ImpressCMS aangedreven website!');
