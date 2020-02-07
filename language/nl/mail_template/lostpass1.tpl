@@ -1,4 +1,4 @@
-Hello {X_UNAME},
+Hallo {X_UNAME},
 
 A web user from {IP} has just requested a new password for your account at {SITENAME}.
 You can get your new password by clicking on the link below:
