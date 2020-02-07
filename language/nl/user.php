@@ -206,7 +206,7 @@ define("_MA_USER_LEVEL_INACTIVE", "Inactive");
 define("_MA_USER_LEVEL_DISABLED", "Disabled");
 define("_MA_USER_RANK", "Status");
 
-define("_MA_USER_FINDUS","Find Users");
+define("_MA_USER_FINDUS","Gebruikers zoeken");
 define("_MA_USER_REALNAME","Echte naam");
 define("_MA_USER_REGDATE","Joined Date");
 define("_MA_USER_EMAIL","E-mail");
