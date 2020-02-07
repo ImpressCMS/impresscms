@@ -9,10 +9,10 @@ You can view the {X_ITEM_TYPE} here:
 
 You have subscribed to receive notifications of this sort.
 
-If this is an error or you wish not to receive further such notifications, please update your subscriptions by visiting the link below:
+Als dit een fout is of als u niet meer zulke meldingen wenst te ontvangen, update dan uw abonnementen door de link hieronder te bezoeken:
 {X_UNSUBSCRIBE_URL}
 
-Please do not reply to this message.
+Reageer niet op dit bericht.
 
 -----------
 {X_SITENAME} ({X_SITEURL}) 
