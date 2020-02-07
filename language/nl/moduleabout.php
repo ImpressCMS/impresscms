@@ -1,6 +1,6 @@
 <?php
 define('_MODABOUT_DEVELOPER_CONTRIBUTOR', 'Bijdrager(s)');
-define('_MODABOUT_DEVELOPER_CREDITS', 'Credits');
+define('_MODABOUT_DEVELOPER_CREDITS', 'Vermeldingen');
 define('_MODABOUT_DEVELOPER_EMAIL', 'E-mail');
 define('_MODABOUT_DEVELOPER_WEBSITE', 'Website');
 define('_MODABOUT_GOTOMODULE', 'Ga naar module');
