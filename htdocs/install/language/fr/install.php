@@ -63,28 +63,28 @@ define("DATA_INSERTION_TITLE", "Enregistrement de vos paramètres dans la base d
 define("WELCOME", "Bienvenue,");
 define("NO_PHP5", "Pas de PHP 5");
 define("WELCOME_TITLE", "Installation de ImpressCMS complété"); // L0
-define("MODULES_INSTALL", "Install modules");
-define("MODULES_INSTALL_TITLE", "Installation of modules ");
+define("MODULES_INSTALL", "Installation de modules");
+define("MODULES_INSTALL_TITLE", "Installation de modules ");
 define("NO_PHP5_TITLE", "Pas de PHP 5");
-define("NO_PHP5_CONTENT", "PHP 5.2.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.2.0 (5.2.8 + is recommended) before attempting to install again. For more information, read <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS on PHP5 </a>.");
-define("SAFE_MODE", "Safe Mode On");
-define("SAFE_MODE_TITLE", "Safe Mode On");
-define("SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again.");
+define("NO_PHP5_CONTENT", "Un minimum de PHP 5.6.0 est requis pour que ImpressCMS fonctionne correctement - votre installation ne peut pas continuer. Veuillez travailler avec votre hébergeur pour mettre à jour votre environnement vers une version de PHP plus récente que 5.6.0 (7.2 + est recommandé) avant d'essayer de réinstaller. Pour plus d'informations, lisez <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS sur PHP5 </a>.");
+define("SAFE_MODE", "Safe Mode activé");
+define("SAFE_MODE_TITLE", "Safe Mode activé");
+define("SAFE_MODE_CONTENT", "ImpressCMS a détecté que PHP fonctionne en 'safe mode'. Par conséquent, votre installation ne peut pas continuer. Veuillez travailler avec votre hébergeur pour modifier votre environnement avant d'essayer de réinstaller.");
 
 // Settings (labels and help text)
-define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path"); // L55
-define("XOOPS_ROOT_PATH_HELP", "This is the physical path of the ImpressCMS documents folder, the very web root of your ImpressCMS application"); // L59
+define("XOOPS_ROOT_PATH_LABEL", "Chemin physique racine de documents ImpressCMS"); // L55
+define("XOOPS_ROOT_PATH_HELP", "Ceci est le chemin physique du dossier de documents ImpressCMS, la racine web même de votre application ImpressCMS"); // L59
 
-define("XOOPS_URL_LABEL", "Website location (URL)"); // L56
-define("XOOPS_URL_HELP", "Main URL that will be used to access your ImpressCMS installation"); // L58
+define("XOOPS_URL_LABEL", "Emplacement du site web (URL)"); // L56
+define("XOOPS_URL_HELP", "URL principale qui sera utilisée pour accéder à votre installation ImpressCMS"); // L58
 
-define("LEGEND_CONNECTION", "Server connection");
-define("LEGEND_DATABASE", "Database"); // L51
+define("LEGEND_CONNECTION", "Connexion serveur");
+define("LEGEND_DATABASE", "Base de données"); // L51
 
-define("DB_HOST_LABEL", "Server hostname"); // L27
-define("DB_HOST_HELP", "Hostname of the database server. If you are unsure, <em>localhost</em> works in most cases"); // L67
-define("DB_USER_LABEL", "User name"); // L28
-define("DB_USER_HELP", "Name of the user account that will be used to connect to the database server"); // L65
+define("DB_HOST_LABEL", "Nom d'hôte du serveur"); // L27
+define("DB_HOST_HELP", "Nom d'hôte du serveur de base de données. Si vous n'êtes pas sûr, <em>localhost</em> fonctionne dans la plupart des cas"); // L67
+define("DB_USER_LABEL", "Nom d'utilisateur"); // L28
+define("DB_USER_HELP", "Nom du compte utilisateur qui sera utilisé pour se connecter au serveur de base de données"); // L65
 define("DB_PASS_LABEL", "Mot de passe"); // L52
 define("DB_PASS_HELP", "Password of your database user account"); // L68
 define("DB_NAME_LABEL", "Database name"); // L29
@@ -143,28 +143,28 @@ define("TABLE_NOT_DROPPED", "Failed deleting table %s."); // L164
 define("ERR_COULD_NOT_ACCESS", "Could not access the specified folder. Please verify that it exists and is readable by the server.");
 define("ERR_NO_XOOPS_FOUND", "No ImpressCMS installation could be found in the specified folder.");
 define("ERR_INVALID_EMAIL", "Addresse email invalide"); // L73
-define("ERR_REQUIRED", "Please enter all the required info."); // L41
-define("ERR_PASSWORD_MATCH", "The two passwords do not match");
-define("ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folders<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)"); // L72
-define("ERR_NO_DATABASE", "Could not create database. Contact the server administrator for details."); // L31
-define("ERR_NO_DBCONNECTION", "Could not connect to the database server."); // L106
-define("ERR_WRITING_CONSTANT", "Failed writing constant %s."); // L122
-define('ERR_WRITE_ENV_DATA', 'Error write .env data');
-define("ERR_INVALID_DBCHARSET", "The charset '%s' is not supported.");
-define("ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported.");
-define("ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database.");
+define("ERR_REQUIRED", "Merci de saisir toutes les donn&eacute;es requises."); // L41
+define("ERR_PASSWORD_MATCH", "Les deux mots de passe ne correspondent pas");
+define("ERR_NEED_WRITE_ACCESS", "Le serveur doit avoir un accès en écriture aux fichiers et dossiers suivants<br />(i.e. <em>chmod 777 directory_name</em> sur un serveur UNIX/LINUX)"); // L72
+define("ERR_NO_DATABASE", "Impossible de créer la base de données. Contactez l'administrateur du serveur pour plus de détails."); // L31
+define("ERR_NO_DBCONNECTION", "Impossible de se connecter au serveur de base de données."); // L106
+define("ERR_WRITING_CONSTANT", "Échec d'écriture de la constante %s."); // L122
+define('ERR_WRITE_ENV_DATA', 'Erreur lors de l\'écriture des données .env');
+define("ERR_INVALID_DBCHARSET", "Le jeu de caractères '%s' n'est pas supporté.");
+define("ERR_INVALID_DBCOLLATION", "Le collationnement '%s' n'est pas supporté.");
+define("ERR_CHARSET_NOT_SET", "Le jeu de caractères par défaut n'est pas défini pour la base de données ImpressCMS.");
 
 //
-define("_INSTALL_SELECT_MODS_INTRO", 'From the list below, please select the modules that you wish to install on this site. <br /><br />
-All the installed modules are accessible by the Administrators group and the Registered Users group by default. <br /><br />
-If you need to set permissions for Anonymous Users please do so in the Administration Panel after you complete this installer. <br /><br />
-For more information regarding Group Administration, please visit the <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">wiki</a>.');
+define("_INSTALL_SELECT_MODS_INTRO", 'Dans la liste ci-dessous, veuillez sélectionner les modules que vous souhaitez installer sur ce site. <br /><br />
+Tous les modules installés sont accessibles par défaut par le groupe Administrateurs et le groupe Utilisateurs Enregistrés. <br /><br />
+Si vous avez besoin de définir les permissions pour les utilisateurs anonymes, veuillez le faire dans le panneau d\'administration après avoir terminé cet installateur. <br /><br />
+Pour plus d\'informations concernant l\'administration du groupe, veuillez visiter le <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">wiki</a>.');
 
-define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
-define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
-define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Module %s could not be installed.");
+define("_INSTALL_SELECT_MODULES", 'Sélectionner les modules à installer');
+define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Sélectionnez les modules visibles aux visiteurs');
+define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Le module %s n'a pas pu être installé.");
 define("_INSTALL_ERRORS", 'Erreurs');
-define("_INSTALL_MOD_ALREADY_INSTALLED", "Module %s has already been installed");
+define("_INSTALL_MOD_ALREADY_INSTALLED", "Le module %s a déjà été installé");
 define("_INSTALL_FAILED_TO_EXECUTE", "Failed to execute ");
 define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
 
