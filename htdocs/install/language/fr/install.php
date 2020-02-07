@@ -9,64 +9,63 @@
  * @package 		installer
  */
 
-define("SHOW_HIDE_HELP", "Show/hide help text");
+define("SHOW_HIDE_HELP", "Afficher/masquer le texte d'aide");
 
-define("ALTERNATE_LANGUAGE_MSG", "Download an alternate language pack from the ImpressCMS website");
-define("ALTERNATE_LANGUAGE_LNK_MSG", "Select another language not listed here.");
+define("ALTERNATE_LANGUAGE_MSG", "Téléchargez un pack de langue alternatif sur le site Web ImpressCMS");
+define("ALTERNATE_LANGUAGE_LNK_MSG", "Sélectionnez une autre langue qui n'est pas listée ici.");
 define("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 
 // Configuration check page
-define("SERVER_API", "Server API");
-define("PHP_EXTENSION", "%s extension");
-define("CHAR_ENCODING", "Character encoding");
+define("SERVER_API", "API du serveur");
+define("PHP_EXTENSION", "Extension %s");
+define("CHAR_ENCODING", "Encodage des caractères");
 define("XML_PARSING", "XML parsing");
-define("REQUIREMENTS", "Requirements");
-define("_PHP_VERSION", "PHP version");
-define("RECOMMENDED_SETTINGS", "Recommended settings");
-define("RECOMMENDED_EXTENSIONS", "Recommended extensions");
-define("SETTING_NAME", "Setting name");
-define("RECOMMENDED", "Recommended");
-define("CURRENT", "Current");
-define("RECOMMENDED_EXTENSIONS_MSG", "These extensions are not required for normal use, but may be necessary to exploit
-	some specific features (like the multi-language or RSS support). Thus, it is recommended to have them installed." );
+define("REQUIREMENTS", "Besoins");
+define("_PHP_VERSION", "Version PHP");
+define("RECOMMENDED_SETTINGS", "Paramètres recommandés");
+define("RECOMMENDED_EXTENSIONS", "Extensions recommandées");
+define("SETTING_NAME", "Nom du paramètre");
+define("RECOMMENDED", "Recommandé");
+define("CURRENT", "Actuel");
+define("RECOMMENDED_EXTENSIONS_MSG", "Ces extensions ne sont pas nécessaires pour une utilisation normale, mais peuvent être nécessaires pour exploiter certaines fonctionnalités spécifiques (comme le support du multilangage ou RSS). Il est donc recommandé de les installer." );
 define("NONE", "Aucun");
-define("SUCCESS", "Success");
-define("WARNING", "Warning");
-define("FAILED", "Failed");
+define("SUCCESS", "Succès");
+define("WARNING", "Attention");
+define("FAILED", "Échoué");
 
 // Titles (main and pages)
-define("XOOPS_INSTALL_WIZARD", " %s - Installation Wizard");
-define("INSTALL_STEP", "Step");
-define("INSTALL_H3_STEPS", "Steps");
-define("INSTALL_OUTOF", " out of ");
+define("XOOPS_INSTALL_WIZARD", " %s - Assistant d'installation");
+define("INSTALL_STEP", "Étape");
+define("INSTALL_H3_STEPS", "Étapes");
+define("INSTALL_OUTOF", " hors de ");
 define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"https://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>");
 
-define("LANGUAGE_SELECTION", "Language selection");
-define("LANGUAGE_SELECTION_TITLE", "Choose your language"); // L128
+define("LANGUAGE_SELECTION", "Sélection de la langue");
+define("LANGUAGE_SELECTION_TITLE", "Sélectionnez votre langue"); // L128
 define("INTRODUCTION", "Introduction");
-define("INTRODUCTION_TITLE", "Welcome to the ImpressCMS installation assistant"); // L0
-define("CONFIGURATION_CHECK", "Configuration check");
-define("CONFIGURATION_CHECK_TITLE", "Checking your server configuration");
-define("PATHS_SETTINGS", "Paths settings");
-define("PATHS_SETTINGS_TITLE", "Paths settings");
-define("DATABASE_CONNECTION", "Database connection");
-define("DATABASE_CONNECTION_TITLE", "Database connection");
-define("DATABASE_CONFIG", "Database configuration");
-define("DATABASE_CONFIG_TITLE", "Database configuration");
-define("CONFIG_SAVE", "Configuration save");
-define("CONFIG_SAVE_TITLE", "Saving your system configuration");
-define("TABLES_CREATION", "Tables creation");
-define("TABLES_CREATION_TITLE", "Database tables creation");
-define("INITIAL_SETTINGS", "Initial settings");
-define("INITIAL_SETTINGS_TITLE", "Please enter your initial settings");
-define("DATA_INSERTION", "Data insertion");
-define("DATA_INSERTION_TITLE", "Saving your settings to the database");
+define("INTRODUCTION_TITLE", "Bienvenue dans l'assistant d'installation ImpressCMS"); // L0
+define("CONFIGURATION_CHECK", "Vérification de la configuration");
+define("CONFIGURATION_CHECK_TITLE", "Vérification de la configuration de votre serveur");
+define("PATHS_SETTINGS", "Paramétrages des chemins");
+define("PATHS_SETTINGS_TITLE", "Paramétrages des chemins");
+define("DATABASE_CONNECTION", "Connexion à la base de données");
+define("DATABASE_CONNECTION_TITLE", "Connexion à la base de données");
+define("DATABASE_CONFIG", "Configuration de la base de données");
+define("DATABASE_CONFIG_TITLE", "Configuration de la base de données");
+define("CONFIG_SAVE", "Enregistrer la configuration");
+define("CONFIG_SAVE_TITLE", "Enregistrement de la configuration du système");
+define("TABLES_CREATION", "Création des tables");
+define("TABLES_CREATION_TITLE", "Création des tables dans la base de données");
+define("INITIAL_SETTINGS", "Paramètres initiaux");
+define("INITIAL_SETTINGS_TITLE", "Veuillez entrer vos paramètres initiaux");
+define("DATA_INSERTION", "Insertion de données");
+define("DATA_INSERTION_TITLE", "Enregistrement de vos paramètres dans la base de données");
 define("WELCOME", "Bienvenue,");
-define("NO_PHP5", "No PHP 5");
-define("WELCOME_TITLE", "Installation of ImpressCMS completed"); // L0
+define("NO_PHP5", "Pas de PHP 5");
+define("WELCOME_TITLE", "Installation de ImpressCMS complété"); // L0
 define("MODULES_INSTALL", "Install modules");
 define("MODULES_INSTALL_TITLE", "Installation of modules ");
-define("NO_PHP5_TITLE", "No PHP 5");
+define("NO_PHP5_TITLE", "Pas de PHP 5");
 define("NO_PHP5_CONTENT", "PHP 5.2.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.2.0 (5.2.8 + is recommended) before attempting to install again. For more information, read <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS on PHP5 </a>.");
 define("SAFE_MODE", "Safe Mode On");
 define("SAFE_MODE_TITLE", "Safe Mode On");
