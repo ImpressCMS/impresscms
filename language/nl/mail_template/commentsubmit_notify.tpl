@@ -7,7 +7,7 @@ Je kunt de opmerking hier bekijken (als je toestemming hebt):
 
 -----------
 
-You are receiving this message because you selected to be notified when comments are submitted to this {X_ITEM_TYPE}.
+U ontvangt dit bericht omdat u ervoor had gekozen om op de hoogte te blijven wanneer reacties worden toegevoegd aan deze {X_ITEM_TYPE}.
 
 Als dit een fout is of als u niet meer zulke meldingen wenst te ontvangen, update dan uw abonnementen door de link hieronder te bezoeken:
 {X_UNSUBSCRIBE_URL}
