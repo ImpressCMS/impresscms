@@ -18,7 +18,8 @@ jobs:
       - name: Checkouting main code
         uses: actions/checkout@v2
       - name: Update wiki
-        uses: mekdrop/phpdocs-wiki-update-action@latest
+        uses: ./
+        id: phpdocs-wiki-update-action
         env:
           URL: http://localhost
           DB_TYPE: pdo.mysql
