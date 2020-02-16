@@ -41,6 +41,6 @@ jobs:
           WIKI_GITHUB_UPDATE_TOKEN: ${{secrets.WIKI_GITHUB_UPDATE_TOKEN}}
           WIKI_GITHUB_UPDATE_USER: ${{secrets.WIKI_GITHUB_UPDATE_USER}}
           CLASS_ROOT_NAMESPACE: ImpressCMS
-          INCLUDE:
-            - \\ImpressCMS\\Core\\
-            - \\icms_*
+          INCLUDE: |
+            \\ImpressCMS\\Core\\
+            \\icms_*
