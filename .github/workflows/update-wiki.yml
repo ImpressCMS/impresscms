@@ -38,9 +38,9 @@ jobs:
           INSTALL_ADMIN_EMAIL: noreply@impresscms.org
           INSTALL_LANGUAGE: english
         with:
-          WIKI_GITHUB_UPDATE_TOKEN: ${{secrets.WIKI_GITHUB_UPDATE_TOKEN}}
-          WIKI_GITHUB_UPDATE_USER: ${{secrets.WIKI_GITHUB_UPDATE_USER}}
-          CLASS_ROOT_NAMESPACE: ImpressCMS
-          INCLUDE: |
+          wiki_github_update_token: ${{secrets.WIKI_GITHUB_UPDATE_TOKEN}}
+          wiki_github_update_user: ${{secrets.WIKI_GITHUB_UPDATE_USER}}
+          class_root_namespace: ImpressCMS
+          include: |
             \\ImpressCMS\\Core\\
             \\icms_*
