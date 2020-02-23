@@ -42,5 +42,5 @@ jobs:
           wiki_github_update_user: ${{secrets.WIKI_GITHUB_UPDATE_USER}}
           class_root_namespace: ImpressCMS
           include: |
-            \\ImpressCMS\\Core\\
+            \\ImpressCMS\\Core\\**\\*
             \\icms_*
