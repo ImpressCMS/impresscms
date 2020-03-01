@@ -41,4 +41,4 @@ jobs:
           wiki_github_update_token: ${{secrets.WIKI_GITHUB_UPDATE_TOKEN}}
           wiki_github_update_user: ${{secrets.WIKI_GITHUB_UPDATE_USER}}
           class_root_namespace: ImpressCMS
-          include: \\ImpressCMS\\**
+          include: ImpressCMS\**
