@@ -318,6 +318,7 @@ $modversion['templates'] = array(
 	array(	'file' => 'system_adm_adsense.html',	'description' => ''	),
 	array(	'file' => 'system_print.html',	'description' => ''	),
 	array(	'file' => 'system_adm_rating.html',	'description' => ''	),
+	array(	'file' => 'system_adm_modulemenu.html',	'description' => ''	),
 	array(	'file' => 'system_rating_form.html',	'description' => ''	),
 	array(	'file' => 'system_adm_mimetype.html',	'description' => ''	),
 	array(	'file' => 'system_adm_userrank.html',	'description' => ''	),
