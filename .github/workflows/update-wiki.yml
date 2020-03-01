@@ -18,7 +18,7 @@ jobs:
       - name: Checkouting main code
         uses: actions/checkout@v2
       - name: Update wiki
-        uses: imponeer/phpdocs-wiki-update-action@master
+        uses: impresscms-dev/phpdocs-wiki-update-action@master
         env:
           URL: http://localhost
           DB_TYPE: pdo.mysql
