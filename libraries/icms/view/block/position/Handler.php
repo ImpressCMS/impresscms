@@ -11,7 +11,7 @@
  */
 
 /* This may be loaded by other modules - and not just through the cpanel */
-icms_loadLanguageFile('system', 'positions', true);
+
 /**
  * icms_view_block_position_Handler
  *
@@ -25,6 +25,8 @@ class icms_view_block_position_Handler extends icms_ipf_Handler {
 	 * @param IcmsDatabase $db
 	 */
 	public function __construct(& $db) {
+		icms_loadLanguageFile('system', 'positions', true);
+
 		parent::__construct($db, 'blockposition', 'id', 'title', 'description', 'icms');
 		$this->className = 'icms_view_block_position_Object';
 		$this->table = $this->db->prefix('block_positions');

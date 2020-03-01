@@ -34,9 +34,6 @@
  * @license	LICENSE.txt
  * @package	ICMS\Member\User
  */
-icms_loadLanguageFile('core', 'user');
-icms_loadLanguageFile('core', 'notification');
-icms_loadLanguageFile('core', 'global');
 
 include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
 
@@ -56,6 +53,11 @@ class icms_member_user_Handler
 			if (!$module) {
 							$module = 'icms_member';
 			}
+
+			icms_loadLanguageFile('core', 'user');
+			icms_loadLanguageFile('core', 'notification');
+			icms_loadLanguageFile('core', 'global');
+
 			$objName = ($module == 'icms')?'member_user':'user';
 			parent::__construct($db, $objName, 'uid', 'uname', 'email', $module, 'users');
 		}
