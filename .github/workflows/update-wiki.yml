@@ -2,13 +2,13 @@ name: Auto update project Wiki
 
 on:
   push:
-    branches:
-      - master
-    tags:
-      - 'v*' # Initializes on any new tag
-    paths:
-      - .github/workflows/update-wiki.yml
-      - '**.php'
+#    branches:
+#      - master
+#    tags:
+#      - 'v*' # Initializes on any new tag
+#    paths:
+#      - .github/workflows/update-wiki.yml
+#      - '**.php'
 
 jobs:
   update_wiki:
