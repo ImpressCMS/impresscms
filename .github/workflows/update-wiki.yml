@@ -12,6 +12,7 @@ on:
 
 jobs:
   update_wiki:
+    name: Updating wiki...
     runs-on: ubuntu-latest
     steps:
       - name: Checkouting main code
