@@ -48,3 +48,5 @@ jobs:
             docs/*
             bin/*
             htdocs/install/*
+            plugins/sourceeditors/*
+            libraries/smarty/*
