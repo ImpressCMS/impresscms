@@ -15,9 +15,9 @@ jobs:
     name: Updating wiki...
     runs-on: ubuntu-latest
     steps:
-      - name: Checkouting main code
+      - name: Checkouting main code...
         uses: actions/checkout@v2
-      - name: Update wiki
+      - name: Updating wiki...
         uses: impresscms-dev/phpdocs-wiki-update-action@master
         env:
           URL: http://localhost
