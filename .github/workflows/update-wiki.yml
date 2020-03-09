@@ -1,0 +1,58 @@
+name: Auto update project Wiki
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*' # Initializes on any new tag
+    paths:
+      - .github/workflows/update-wiki.yml
+      - '**.php'
+
+jobs:
+  update_wiki:
+    name: Updating wiki...
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkouting main code...
+        uses: actions/checkout@v2
+      - name: Updating wiki...
+        uses: impresscms-dev/phpdocs-wiki-update-action@master
+        env:
+          URL: http://localhost
+          DB_TYPE: pdo.mysql
+          DB_HOST: 127.0.0.1
+          DB_USER: root
+          DB_PASS: icms
+          DB_PCONNECT: 0
+          DB_NAME: icms
+          DB_CHARSET: utf8
+          DB_COLLATION: utf8_general_ci
+          DB_PREFIX: icms
+          DB_SALT: icms
+          DB_PORT: 3306
+          INSTALL_ADMIN_PASS: test
+          INSTALL_ADMIN_LOGIN: test
+          INSTALL_ADMIN_NAME: test
+          INSTALL_ADMIN_EMAIL: noreply@impresscms.org
+          INSTALL_LANGUAGE: english
+        with:
+          wiki_github_update_token: ${{secrets.WIKI_GITHUB_UPDATE_TOKEN}}
+          wiki_github_update_user: ${{secrets.WIKI_GITHUB_UPDATE_USER}}
+          engine: evert/phpdoc-md
+          ignore_files: |
+            vendor/
+            migrations/
+            tests/
+            storage/
+            languages/
+            htdocs/install/
+            .github/
+            .homestead/
+            .vagrant/
+            htdocs/editors/CKeditor/ceditfinder
+            htdocs/editors/CKeditor/ckeditor
+            htdocs/editors/tinymce/tinymce.php
+            libraries/smarty
+            plugins/sourceeditors/editarea/editor/edit_area_compressor.php
