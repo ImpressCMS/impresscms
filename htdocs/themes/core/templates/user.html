@@ -1,32 +1,24 @@
-<{php}>include_once ICMS_ROOT_PATH.'/modules/system/blocks/system_blocks.php'; 
-		$block = b_system_user_show($options);
-		global $icmsConfigUser;
-		if ($icmsConfigUser['avatar_allow_gravatar'] == "1") {
-				$block['useravatar'] = icms::$user->gravatar('G', $icmsConfigUser['avatar_width']);
-			} elseif (icms::$user->getVar('user_avatar') && icms::$user->getVar('user_avatar') != 'blank.gif' && icms::$user->getVar('user_avatar') != '') {
-				$block['useravatar'] = ICMS_UPLOAD_URL . '/' . icms::$user->getVar('user_avatar');
-			} else {
-				$block['useravatar'] = '';
-			}
-		$this->assign('block',$block);
-<{/php}>
 <div class="btn-group user">
 	<a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" style="color:#444">
 		<i class="fa fa-user"></i> <span>Welcome <{$icms_uname}></span> <i class="fa fa-caret-down"></i>
 	</a>
 	<ul class="dropdown-menu" role="menu">
 		<!-- User image -->
-		<li class="user-header bg-light-blue"><img alt="<{$block.name}>" class="img-circle" src="<{$block.useravatar}>"></li>
+		<li class="user-header bg-light-blue">
+			<{if $globals.icmsConfigUser.avatar_allow_gravatar == "1"}>
+				<img alt="<{$block.name}>" class="img-circle" src="<{icms::$user->gravatar('G', $icmsConfigUser['avatar_width']) }>">
+			<{elseif (icms::$user->getVar('user_avatar') && icms::$user->getVar('user_avatar') != 'blank.gif' && icms::$user->getVar('user_avatar') != '') }>
+				<img alt="<{$block.name}>" class="img-circle" src="<{ $smarty.const.ICMS_UPLOAD_URL }>/<{ icms::$user->getVar('user_avatar') }>">
+			<{else}>
+				<img alt="<{$block.name}>" class="img-circle" src="<{$smarty.const.ICMS_UPLOAD_URL}>/blank.gif">
+			<{/if}>
+		</li>
 		<!-- Menu Body -->
 		<li class="user-body">
-			<a href="<{$icms_url}>/user.php" title="<{$block.lang_youraccount}>"><i class="fa fa-info-circle"></i><{$block.lang_youraccount}></a>
-			<a href="<{$icms_url}>/edituser.php" title="<{$block.lang_editaccount}>"><i class="fa fa-user-md"></i><{$block.lang_editaccount}></a>
-			<a href="<{$icms_url}>/notifications.php" title="<{$block.lang_notifications}>"><i class="fa fa-share-square"></i><{$block.lang_notifications}></a>
-			<{if $block.new_messages > 0}>
-			<a href="<{$icms_url}>/viewpmsg.php" title="<{$block.lang_inbox}>"><i class="fa fa-envelope"></i><span><{$block.lang_inbox}></span>  <small class="badge bg-red"><{$block.new_messages}></small></a>
-			<{else}>
-			<a href="<{$icms_url}>/viewpmsg.php" title="<{$block.lang_inbox}>"><i class="fa fa-envelope"></i><{$block.lang_inbox}></a>
-			<{/if}>
+			<a href="<{$icms_url}>/user.php" title="<{$block.lang_youraccount}>"><i class="fa fa-info-circle"></i><{$smarty.const._MB_SYSTEM_VACNT}></a>
+			<a href="<{$icms_url}>/edituser.php" title="<{$block.lang_editaccount}>"><i class="fa fa-user-md"></i><{$smarty.const._MB_SYSTEM_EACNT}></a>
+			<a href="<{$icms_url}>/notifications.php" title="<{$block.lang_notifications}>"><i class="fa fa-share-square"></i><{$smarty.const._MB_SYSTEM_NOTIF}></a>
+			<a href="<{$icms_url}>/viewpmsg.php" title="<{$block.lang_inbox}>"><i class="fa fa-envelope"></i><span><{$smarty.const._MB_SYSTEM_INBOX}></span><{if icms::handler('icms_data_privmessage')->getCountForUser() > 0}>  <small class="badge bg-red"><{icms::handler('icms_data_privmessage')->getCountForUser()}></small><{/if}></a>
 		</li>
 	</ul>
 </div>

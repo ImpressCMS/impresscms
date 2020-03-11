@@ -92,9 +92,12 @@ class icms_view_Tpl extends SmartyBC
 			'xoops_langcode' => _LANGCODE,
 			'xoops_charset' => _CHARSET,
 			'xoops_version' => ICMS_VERSION_NAME,
-			'xoops_upload_url' => ICMS_UPLOAD_URL
+			'xoops_upload_url' => ICMS_UPLOAD_URL,
+			'globals' => $GLOBALS
 			)
 		);
+
+		$this->registerObject('icms',icms::getInstance(),null,false);
 	}
 
 	/**

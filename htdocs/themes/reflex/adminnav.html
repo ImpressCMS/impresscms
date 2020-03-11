@@ -1,9 +1,9 @@
 <ul id="nav" class="sf-menu">
 <{foreach item=item from=$navitems}>
-<li class="divider"><img src="<{$image_url}>img/divider.jpg" height="27" alt="" /></li>
+<li class="divider"><img src="<{$icms_imageurl}>img/divider.jpg" height="27" alt="" /></li>
 <{if ($systemadm || $item.id != 'opsystem') && ($item.id != 'news' || $show_impresscms_menu)}>
 <{if $modulesadm || $item.id != 'modules'}>
- <li class="current"><a class="sf-with-ul <{if $item.id == 'cphome'}>noarrow<{/if}>" href="<{$item.link}>"><{if $item.id == 'cphome'}><a href="<{$url}>"><img src="<{$image_url}>img/home_icon.png" alt="" height="12" /></a><{else}><{$item.text}><{/if}></a>
+ <li class="current"><a class="sf-with-ul <{if $item.id == 'cphome'}>noarrow<{/if}>" href="<{$item.link}>"><{if $item.id == 'cphome'}><a href="<{$url}>"><img src="<{$icms_imageurl}>img/home_icon.png" alt="" height="12" /></a><{else}><{$item.text}><{/if}></a>
   <ul>
   <{foreach item=sub from=$item.menu}>
   <{if $item.id == 'cphome'}>
@@ -22,7 +22,7 @@
       </ul>
      <{/if}>
      </li>
-    <{/foreach}>  
+    <{/foreach}>
     </ul>
    <{/if}>
    </li>
@@ -32,7 +32,7 @@
     <ul>
     <{foreach item=subitem from=$sub.subs}>
      <li><a href="<{$subitem.link}>"><{$subitem.title}></a></li>
-    <{/foreach}>  
+    <{/foreach}>
     </ul>
    <{/if}>
    </li>
@@ -45,19 +45,19 @@
 <{/if}>
 <{/if}>
 <{/foreach}>
-<li class="divider"><img src="<{$image_url}>img/divider.jpg" height="27" alt="" /></li>
+<li class="divider"><img src="<{$icms_imageurl}>img/divider.jpg" height="27" alt="" /></li>
 </ul>
 <ul id="fontsizer">
-<li class="divider"><img src="<{$image_url}>img/divider.jpg" height="27" alt="" /></li>
+<li class="divider"><img src="<{$icms_imageurl}>img/divider.jpg" height="27" alt="" /></li>
 <li><a href="javascript:void(0);" class="FontSizeInc">A+</a></li>
-<li class="divider"><img src="<{$image_url}>img/divider.jpg" height="27" alt="" /></li>
+<li class="divider"><img src="<{$icms_imageurl}>img/divider.jpg" height="27" alt="" /></li>
 <li><a href="javascript:void(0);" class="FontSizeDec">A-</a></li>
-<li class="divider"><img src="<{$image_url}>img/divider.jpg" height="27" alt="" /></li>
+<li class="divider"><img src="<{$icms_imageurl}>img/divider.jpg" height="27" alt="" /></li>
 <li><a href="javascript:void(0);" class="FontSizeReset">Aa</a></li>
-<li class="divider"><img src="<{$image_url}>img/divider.jpg" height="27" alt="" /></li>
+<li class="divider"><img src="<{$icms_imageurl}>img/divider.jpg" height="27" alt="" /></li>
 <{if $ml_is_enabled}>
 <li id="nav-change-language">[mlimg]</li>
-<li class="divider"><img src="<{$image_url}>img/divider.jpg" height="27" alt="" /></li>
+<li class="divider"><img src="<{$icms_imageurl}>img/divider.jpg" height="27" alt="" /></li>
 <{/if}>
 </ul>
 
@@ -104,6 +104,6 @@ var sitefunctions = {
 	}
 }
 $(document).ready(function(){
-		sitefunctions.textresize();	
+		sitefunctions.textresize();
 })
 </script>
