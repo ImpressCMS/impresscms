@@ -76,8 +76,6 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
                 'getOptions',
                 'isCustom',
                 'buildBlock',
-                'buildContent',
-                'buildTitle'
             ],
             'icms_view_template_file_Handler' => [
                 'loadSource',

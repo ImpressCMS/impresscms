@@ -24,9 +24,9 @@ class icms_core_Logger extends Logger
 	/**
 	 * Get a instance for default logger
 	 *
-	 * @return  object icms_core_Logger  (@link icms_core_Logger) reference to the only instance
+	 * @return  static
 	 *
-	 * @throws Exception
+	 * @static
 	 */
 	public static function &instance()
 	{

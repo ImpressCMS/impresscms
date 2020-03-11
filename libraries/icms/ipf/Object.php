@@ -7,7 +7,6 @@
  * @since 1.1
  * @author marcan <marcan@impresscms.org>
  */
-icms_loadLanguageFile('system', 'common');
 
 /**
  * icms_ipf_Object base class
@@ -1114,6 +1113,8 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param array $data Data used when loading/creating object
 	 */
 	public function __construct(&$handler, $data = array()) {
+		icms_loadLanguageFile('system', 'common');
+
 		$this->handler = $handler;
 		if ($data === true) {
 			$this->setNew();

@@ -76,6 +76,7 @@ final class icms extends Container {
 	 * @param mixed $factory
 	 * @param array $args Factory/Constructor arguments
 	 * @return object
+	 * @throws ReflectionException
 	 */
 	static public function create($factory, $args = array()) {
 		if (is_string($factory) && substr($factory, 0, 1) == '\\') {
@@ -191,7 +192,8 @@ final class icms extends Container {
 					}
 				}
 			}
-			$instance->add($real_name, $class ? (new $class($instance->get('xoopsDB'))) : false);
+			$db = $instance->get('xoopsDB');
+			$instance->add($real_name, $class ? (new $class($db)) : false);
 		}
 		$handler = $instance->get($real_name);
 		if (!$handler && !$optional) {

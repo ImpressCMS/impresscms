@@ -43,7 +43,7 @@
 /*  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
-	'version'=> 2.0,
+	'version'=> '2.0.0',
 	'description'=> _MI_SYSTEM_DESC,
 	'author'=> "",
 	'credits'=> "The ImpressCMS Project",
@@ -59,10 +59,10 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /*  Development information */
-	'status_version'=> "Alpha 7",
+	'status_version'=> "Alpha 8",
 	'status'=> "Alpha",
-	'date'=> "26 April 2018",
-	'author_word'=> "",
+	'date'=> "24 january 2020",
+	'author_word'=> "This should be the last alpha for 2.0.0",
 	'warning'=>_CO_ICMS_WARNING_ALPHA,
 
 /* Contributors */

@@ -36,7 +36,7 @@ class icms_plugins_Handler {
 	/**
 	 * Get an array of plugins
 	 * @param string $path
-	 * @return multitype:
+	 * @return array
 	 */
 	public function getPluginsArray($path) {
 

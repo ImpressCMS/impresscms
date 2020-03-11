@@ -33,7 +33,6 @@
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-icms_loadLanguageFile('core', 'mail');
 
 /**
  * Class for sending messages.
@@ -142,6 +141,7 @@ class icms_messaging_Handler {
 
 	public function __construct() {
 		icms_loadLanguageFile('core', 'xoopsmailerlocal');
+		icms_loadLanguageFile('core', 'mail');
 		if (class_exists('XoopsMailerLocal')) {
 			$this->multimailer = new XoopsMailerLocal();
 		} else {

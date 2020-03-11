@@ -14,7 +14,6 @@
  * Include the language constants for the icms_db_legacy_updater_Handler
  */
 global $icmsConfigPersona;
-icms_loadLanguageFile('core', 'databaseupdater');
 
 /**
  * icms_db_legacy_updater_Handler class
@@ -44,6 +43,7 @@ class icms_db_legacy_updater_Handler {
 	var $_messages = array();
 
 	function __construct() {
+		icms_loadLanguageFile('core', 'databaseupdater');
 		// backward compat
 		$this->_db = \icms::getInstance()->get('db');
 		$this->db = \icms::getInstance()->get('db');

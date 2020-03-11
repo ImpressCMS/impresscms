@@ -13,7 +13,7 @@
  * Class to manage a printer friendly page
  *
  * @package	ICMS\View
- * @author      The IcmsFactory <www.smartfactory.ca>
+ * @link       The IcmsFactory <www.smartfactory.ca>
  */
 class icms_view_Printerfriendly {
 

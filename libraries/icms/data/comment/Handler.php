@@ -65,7 +65,7 @@ class icms_data_comment_Handler extends icms_ipf_Handler {
 	 *
 	 * @return  string[]
 	 */
-	public function getList($criteria = null, $limit, $start, $debug) {
+	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 			$comments = parent::getList($criteria, $limit, $start, $debug);
 			return array_keys($comments);
 	}

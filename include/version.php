@@ -6,11 +6,11 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @since		Xoops
- * @author		phppp
+ * @author		fiammybe
  */
 
-define('ICMS_VERSION_NAME', 'ImpressCMS 2.0.0 Alpha 7');
-define("ICMS_VERSION", "2.0.0-alpha7");
+define('ICMS_VERSION_NAME', 'ImpressCMS 2.0.0 Alpha 8');
+define("ICMS_VERSION", "2.0.0-alpha8");
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
@@ -31,7 +31,7 @@ define('ICMS_VERSION_STATUS', 1);
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
 // 2.0 alpha 2 = 62
-define('ICMS_VERSION_BUILD', 75);
+define('ICMS_VERSION_BUILD', 1008);
 
 /**
  * Latest dbversion of the System Module
@@ -42,4 +42,4 @@ define('ICMS_VERSION_BUILD', 75);
  * So, developers, everytime you add an upgrade block in system/include/update.php to upgrade something in the DB,
  * please also change this constant
  */
-define('ICMS_SYSTEM_DBVERSION', 44);
+define('ICMS_SYSTEM_DBVERSION', 1001);
