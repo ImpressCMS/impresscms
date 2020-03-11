@@ -18,7 +18,6 @@
  * @package	ICMS\Form\Elements\Captcha
  */
 
-icms_loadLanguageFile('core', 'captcha');
 /**
  * Creates the captcha object
  *
@@ -39,8 +38,10 @@ class icms_form_elements_captcha_Object {
 	 * Constructor
 	 */
 	public function __construct() {
+		icms_loadLanguageFile('core', 'captcha');
+
 		// Loading default preferences
-		$this->config = @include __DIR__ . "/config.php";
+		$this->config = @include __DIR__ . '/config.php';
 
 		global $icmsConfigCaptcha;
 		$this->setMode($icmsConfigCaptcha['captcha_mode']);
